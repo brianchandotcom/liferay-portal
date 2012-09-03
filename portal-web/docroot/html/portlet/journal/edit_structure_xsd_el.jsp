@@ -19,9 +19,9 @@
 <%
 Element el = (Element)request.getAttribute(WebKeys.JOURNAL_STRUCTURE_EL);
 
-String elName = JS.decodeURIComponent(el.attributeValue("name", StringPool.BLANK));
-String elType = JS.decodeURIComponent(el.attributeValue("type", StringPool.BLANK));
-String elIndexType = JS.decodeURIComponent(el.attributeValue("index-type", StringPool.BLANK));
+String elName = el.attributeValue("name", StringPool.BLANK);
+String elType = el.attributeValue("type", StringPool.BLANK);
+String elIndexType = el.attributeValue("index-type", StringPool.BLANK);
 boolean repeatable = GetterUtil.getBoolean(el.attributeValue("repeatable"));
 
 String elMetadataXML = StringPool.BLANK;
@@ -51,7 +51,7 @@ if (MathUtil.isEven(count.getValue())) {
 <tr class="<%= className %>">
 	<td>
 		<input id="<portlet:namespace />structure_el<%= count.getValue() %>_depth" type="hidden" value="<%= depth %>" />
-		<input id="<portlet:namespace />structure_el<%= count.getValue() %>_metadata_xml" type="hidden" value="<%= HttpUtil.encodeURL(elMetadataXML) %>" />
+		<input id="<portlet:namespace />structure_el<%= count.getValue() %>_metadata_xml" type="hidden" value="<%= HtmlUtil.escapeAttribute(elMetadataXML) %>" />
 
 		<table class="lfr-table">
 		<tr>
@@ -60,12 +60,12 @@ if (MathUtil.isEven(count.getValue())) {
 			</c:if>
 
 			<td>
-				<input id="<portlet:namespace />structure_el<%= count.getValue() %>_name" size="20" tabindex="<%= tabIndex.getValue() %>" type="text" value="<%= elName %>" />
+				<input id="<portlet:namespace />structure_el<%= count.getValue() %>_name" size="20" tabindex="<%= tabIndex.getValue() %>" type="text" value="<%= HtmlUtil.escapeAttribute(elName) %>" />
 			</td>
 			<td>
 				<c:choose>
 					<c:when test='<%= parentElType.equals("list") || parentElType.equals("multi-list") %>'>
-						<input id="<portlet:namespace />structure_el<%= count.getValue() %>_type" size="20" tabindex="<%= tabIndex.getValue() %>" type="text" value="<%= elType %>" />
+						<input id="<portlet:namespace />structure_el<%= count.getValue() %>_type" size="20" tabindex="<%= tabIndex.getValue() %>" type="text" value="<%= HtmlUtil.escapeAttribute(elType) %>" />
 					</c:when>
 					<c:otherwise>
 						<aui:column>

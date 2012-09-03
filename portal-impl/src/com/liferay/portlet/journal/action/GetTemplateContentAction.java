@@ -21,7 +21,6 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMXMLUtil;
 import com.liferay.portlet.journal.model.JournalTemplateConstants;
 import com.liferay.portlet.journal.util.JournalUtil;
-import com.liferay.util.JS;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -43,8 +42,7 @@ public class GetTemplateContentAction extends Action {
 		throws Exception {
 
 		try {
-			String xslContent = JS.decodeURIComponent(
-				ParamUtil.getString(request, "xslContent"));
+			String xslContent = ParamUtil.getString(request, "xslContent");
 			boolean formatXsl = ParamUtil.getBoolean(request, "formatXsl");
 			String langType = ParamUtil.getString(
 				request, "langType", JournalTemplateConstants.LANG_TYPE_XSL);

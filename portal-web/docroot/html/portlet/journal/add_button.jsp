@@ -64,7 +64,7 @@ List<JournalStructure> structures = JournalStructureServiceUtil.getStructures(Po
 			</liferay-portlet:renderURL>
 
 			<%
-			String structureName = structure.getName(themeDisplay.getLocale());
+			String structureName = HtmlUtil.escape(structure.getName(themeDisplay.getLocale()));
 
 			if (structure.getGroupId() == themeDisplay.getCompanyGroupId()) {
 				structureName += " (" + LanguageUtil.get(themeDisplay.getLocale(), "global") + ")";

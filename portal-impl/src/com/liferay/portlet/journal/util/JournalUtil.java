@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.templateparser.TransformerListener;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -81,7 +82,6 @@ import com.liferay.portlet.journal.util.comparator.ArticleTitleComparator;
 import com.liferay.portlet.journal.util.comparator.ArticleVersionComparator;
 import com.liferay.util.ContentUtil;
 import com.liferay.util.FiniteUniqueStack;
-import com.liferay.util.JS;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -997,14 +997,6 @@ public class JournalUtil {
 		try {
 			Document document = SAXReaderUtil.read(xsd);
 
-			Element rootElement = document.getRootElement();
-
-			List<Element> elements = new ArrayList<Element>();
-
-			elements.addAll(rootElement.elements());
-
-			_decodeXMLAttributes(elements);
-
 			return document.asXML();
 		}
 		catch (Exception e) {
@@ -1182,32 +1174,12 @@ public class JournalUtil {
 		}
 	}
 
-	private static void _decodeXMLAttributes(List<Element> elements) {
-		for (Element element : elements) {
-			String elName = element.attributeValue("name", StringPool.BLANK);
-			String elType = element.attributeValue("type", StringPool.BLANK);
-
-			if (Validator.isNotNull(elName)) {
-				elName = JS.decodeURIComponent(elName);
-
-				element.addAttribute("name", elName);
-			}
-
-			if (Validator.isNotNull(elType)) {
-				elType = JS.decodeURIComponent(elType);
-
-				element.addAttribute("type", elType);
-			}
-
-			_decodeXMLAttributes(element.elements());
-		}
-	}
-
 	private static Element _getElementByInstanceId(
 		Document document, String instanceId) {
 
 		XPath xPathSelector = SAXReaderUtil.createXPath(
-			"//dynamic-element[@instance-id='" + instanceId + "']");
+			"//dynamic-element[@instance-id=" +
+				HtmlUtil.escapeXPathAttribute(instanceId) + "]");
 
 		List<Node> nodes = xPathSelector.selectNodes(document);
 
@@ -1617,7 +1589,9 @@ public class JournalUtil {
 			return;
 		}
 
-		String localPath = "dynamic-element[@name='" + name + "']";
+		String localPath =
+			"dynamic-element[@name=" + HtmlUtil.escapeXPathAttribute(name) +
+				"]";
 
 		String fullPath = elementPath + "/" + localPath;
 

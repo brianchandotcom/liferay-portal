@@ -36,7 +36,6 @@ import com.liferay.portlet.dynamicdatamapping.TemplateScriptException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateServiceUtil;
-import com.liferay.util.JS;
 
 import java.util.Locale;
 import java.util.Map;
@@ -223,8 +222,8 @@ public class EditTemplateAction extends PortletAction {
 			DDMTemplateConstants.LANG_TYPE_VM);
 
 		String script = ParamUtil.getString(uploadPortletRequest, "script");
-		String scriptContent = JS.decodeURIComponent(
-			ParamUtil.getString(uploadPortletRequest, "scriptContent"));
+		String scriptContent = ParamUtil.getString(
+			uploadPortletRequest, "scriptContent");
 
 		if (Validator.isNull(script)) {
 			script = scriptContent;

@@ -18,13 +18,13 @@
 String scriptContent = ParamUtil.getString(request, "scriptContent");
 
 if (Validator.isNotNull(scriptContent)) {
-	script = JS.decodeURIComponent(scriptContent);
+	script = scriptContent;
 }
 
 String language = BeanParamUtil.getString(template, request, "language", DDMTemplateConstants.LANG_TYPE_VM);
 %>
 
-<aui:input name="scriptContent" type="hidden" value="<%= JS.encodeURIComponent(script) %>" />
+<aui:input name="scriptContent" type="hidden" value="<%= script %>" />
 
 <aui:select label="language-type" name="language">
 

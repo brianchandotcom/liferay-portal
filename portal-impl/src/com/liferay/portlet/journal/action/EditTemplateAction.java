@@ -44,7 +44,6 @@ import com.liferay.portlet.journal.model.JournalTemplate;
 import com.liferay.portlet.journal.model.JournalTemplateConstants;
 import com.liferay.portlet.journal.service.JournalTemplateServiceUtil;
 import com.liferay.portlet.journal.util.JournalUtil;
-import com.liferay.util.JS;
 
 import java.io.File;
 import java.io.IOException;
@@ -260,8 +259,9 @@ public class EditTemplateAction extends PortletAction {
 			LocalizationUtil.getLocalizationMap(actionRequest, "description");
 
 		String xsl = getXsl(uploadPortletRequest);
-		String xslContent = JS.decodeURIComponent(
-			ParamUtil.getString(uploadPortletRequest, "xslContent"));
+		String xslContent = ParamUtil.getString(
+			uploadPortletRequest, "xslContent");
+
 		boolean formatXsl = ParamUtil.getBoolean(
 			uploadPortletRequest, "formatXsl");
 

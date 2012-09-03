@@ -712,11 +712,11 @@ AUI.add(
 							structureDescriptionInput.val(dialogFields.dialogDescription.val());
 							structureIdInput.val(message.structureId);
 							structureNameInput.val(dialogFields.dialogStructureName.val());
-							storedStructureXSD.val(encodeURIComponent(dialogFields.contentXSD));
+							storedStructureXSD.val(dialogFields.contentXSD);
 
 							dialogFields.dialogStructureGroupId.val(message.structureGroupId);
 							dialogFields.dialogStructureId.val(message.structureId);
-							dialogFields.structureNameLabel.html(dialogFields.dialogStructureName.val());
+							dialogFields.structureNameLabel.html(Liferay.Util.escapeHTML(dialogFields.dialogStructureName.val()));
 							dialogFields.saveStructureAutogenerateIdCheckbox.hide();
 
 							if (dialogFields.loadDefaultStructure) {
@@ -1324,7 +1324,7 @@ AUI.add(
 
 				var storedStructureXSD = instance.getByName(form, 'structureXSD').val();
 
-				var hasChanged = (storedStructureXSD != encodeURIComponent(instance.getStructureXSD()));
+				var hasChanged = (storedStructureXSD != instance.getStructureXSD());
 
 				return hasChanged;
 			},
@@ -1526,8 +1526,8 @@ AUI.add(
 							'dynamic-element',
 							{
 								'instance-id': instanceId,
-								name: encodeURIComponent(fieldInstance.get('variableName')),
-								type: encodeURIComponent(type),
+								name: Liferay.Util.escapeHTML(fieldInstance.get('variableName')),
+								type: Liferay.Util.escapeHTML(type),
 								'index-type': indexType
 							}
 						);
@@ -1536,8 +1536,8 @@ AUI.add(
 						typeElement = instance._createDynamicNode(
 							'dynamic-element',
 							{
-								name: encodeURIComponent(fieldInstance.get('variableName')),
-								type: encodeURIComponent(type),
+								name: Liferay.Util.escapeHTML(fieldInstance.get('variableName')),
+								type: Liferay.Util.escapeHTML(type),
 								'index-type': indexType,
 								repeatable: fieldInstance.get('repeatable')
 							}
@@ -1696,8 +1696,8 @@ AUI.add(
 								var typeElementOption = instance._createDynamicNode(
 									'dynamic-element',
 									{
-										name: encodeURIComponent(optionKey),
-										type: encodeURIComponent(optionValue),
+										name: Liferay.Util.escapeHTML(optionKey),
+										type: Liferay.Util.escapeHTML(optionValue),
 										'repeatable': fieldInstance.get('repeatable')
 									}
 								);
@@ -1935,7 +1935,7 @@ AUI.add(
 						if (fieldInstance) {
 							var instructions = fieldInstance.get('instructions');
 
-							Liferay.Portal.ToolTip.show(this, instructions);
+							Liferay.Portal.ToolTip.show(this, Liferay.Util.escapeHTML(instructions));
 						}
 					},
 					'img.journal-article-instructions-container'
@@ -2747,8 +2747,7 @@ AUI.add(
 				var instance = this;
 
 				var form = instance.getPrincipalForm();
-
-				var currentXSD = encodeURIComponent(instance.getStructureXSD());
+				var currentXSD = instance.getStructureXSD();
 
 				var structureXSDInput = instance.getByName(form, 'structureXSD');
 
@@ -3055,7 +3054,7 @@ AUI.add(
 					},
 
 					createInstructionsContainer: function(value) {
-						return A.Node.create(TPL_INSTRUCTIONS_CONTAINER).html(value);
+						return A.Node.create(TPL_INSTRUCTIONS_CONTAINER).html(Liferay.Util.escapeHTML(value));
 					},
 
 					createTooltipImage: function() {
@@ -3311,7 +3310,7 @@ AUI.add(
 							value = instance.get('variableName');
 						}
 
-						fieldLabel.one('span').html(value);
+						fieldLabel.one('span').html(Liferay.Util.escapeHTML(value));
 
 						instance.setAttribute('fieldLabel', value);
 

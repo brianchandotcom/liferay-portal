@@ -22,6 +22,9 @@ import java.io.Serializable;
  */
 public class TransientValue<V> implements Serializable {
 
+	public TransientValue() {
+	}
+
 	public TransientValue(V value) {
 		_value = value;
 	}

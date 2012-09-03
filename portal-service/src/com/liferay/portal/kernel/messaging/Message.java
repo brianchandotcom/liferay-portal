@@ -161,6 +161,14 @@ public class Message implements Cloneable, Serializable {
 	}
 
 	public void put(String key, Object value) {
+		if (value == null) {
+			if (_values != null) {
+				_values.remove(key);
+			}
+
+			return;
+		}
+
 		if (_values == null) {
 			_values = new HashMap<String, Object>();
 		}

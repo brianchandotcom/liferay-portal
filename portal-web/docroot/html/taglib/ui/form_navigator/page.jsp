@@ -32,7 +32,11 @@ for (String[] categorySection : categorySections) {
 	allSections = ArrayUtil.append(allSections, categorySection);
 }
 
-String curSection = categorySections[0][0];
+String curSection = StringPool.BLANK;
+
+if (categorySections[0].length > 0) {
+	curSection = categorySections[0][0];
+}
 
 String historyKey = ParamUtil.getString(request, "historyKey");
 

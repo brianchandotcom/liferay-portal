@@ -263,7 +263,8 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 		}
 
 		String xPathExpression =
-			"meta-data[@locale=\"".concat(locale).concat("\"]");
+			"meta-data[@locale=".concat(HtmlUtil.escapeXPathAttribute(locale))
+				.concat("]");
 
 		XPath xPathSelector = SAXReaderUtil.createXPath(xPathExpression);
 

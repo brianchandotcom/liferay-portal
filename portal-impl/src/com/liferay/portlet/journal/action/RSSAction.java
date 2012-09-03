@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -264,7 +265,8 @@ public class RSSAction extends com.liferay.portal.struts.RSSAction {
 				article.getContentByLocale(languageId));
 
 			XPath xPathSelector = SAXReaderUtil.createXPath(
-				"//dynamic-element[@name='" + contentField + "']");
+				"//dynamic-element[@name=" +
+					HtmlUtil.escapeXPathAttribute(contentField) + "]");
 
 			List<Node> results = xPathSelector.selectNodes(document);
 

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
@@ -342,7 +343,8 @@ public class JournalFeedLocalServiceImpl
 				Document document = SAXReaderUtil.read(structure.getXsd());
 
 				XPath xPathSelector = SAXReaderUtil.createXPath(
-					"//dynamic-element[@name='"+ contentField + "']");
+					"//dynamic-element[@name=" +
+						HtmlUtil.escapeXPathAttribute(contentField) + "]");
 
 				Node node = xPathSelector.selectSingleNode(document);
 

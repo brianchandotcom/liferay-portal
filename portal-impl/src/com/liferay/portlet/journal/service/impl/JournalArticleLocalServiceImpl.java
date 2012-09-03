@@ -1032,7 +1032,9 @@ public class JournalArticleLocalServiceImpl
 
 					if (Validator.isNotNull(targetPage)) {
 						XPath xPathSelector = SAXReaderUtil.createXPath(
-							"/root/page[@id = '" + targetPage + "']");
+							"/root/page[@id = " +
+								HtmlUtil.escapeXPathAttribute(targetPage) +
+								"]");
 
 						pageElement = (Element)xPathSelector.selectSingleNode(
 							document);

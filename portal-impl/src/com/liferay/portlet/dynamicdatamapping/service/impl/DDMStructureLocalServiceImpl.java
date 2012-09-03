@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringPool;
@@ -441,7 +442,8 @@ public class DDMStructureLocalServiceImpl
 			String name = element.attributeValue("name");
 
 			XPath templateXPath = SAXReaderUtil.createXPath(
-				"//dynamic-element[@name=\"" + name + "\"]");
+				"//dynamic-element[@name=" +
+					HtmlUtil.escapeXPathAttribute(name) + "]");
 
 			if (!templateXPath.booleanValueOf(templateDocument)) {
 				templateElement.add(element.createCopy());

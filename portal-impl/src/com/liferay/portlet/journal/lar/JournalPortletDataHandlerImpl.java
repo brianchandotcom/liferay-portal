@@ -782,14 +782,6 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 				article.getArticleId(), importedArticle.getArticleId());
 		}
 
-		Group companyGroup = GroupLocalServiceUtil.getCompanyGroup(
-			portletDataContext.getCompanyId());
-
-		if (importedArticle.getGroupId() == companyGroup.getGroupId()) {
-			portletDataContext.addCompanyReference(
-				JournalArticle.class, importedArticle.getArticleId());
-		}
-
 		if (!articleId.equals(importedArticle.getArticleId())) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(

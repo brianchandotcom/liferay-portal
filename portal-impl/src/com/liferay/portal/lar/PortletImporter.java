@@ -423,7 +423,6 @@ public class PortletImporter {
 		boolean importData = importPortletData && (portletDataElement != null);
 
 		try {
-
 			// Portlet preferences
 
 			importPortletPreferences(
@@ -1690,7 +1689,9 @@ public class PortletImporter {
 						}
 					}
 				}
+			}
 
+			if (scopeGroup != null) {
 				portletDataContext.setScopeGroupId(scopeGroup.getGroupId());
 			}
 		}

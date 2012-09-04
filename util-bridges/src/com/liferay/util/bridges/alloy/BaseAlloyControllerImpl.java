@@ -16,6 +16,7 @@ package com.liferay.util.bridges.alloy;
 
 import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
+import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -24,13 +25,20 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletBag;
 import com.liferay.portal.kernel.portlet.PortletBagPool;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
+import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchContextFactory;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.MethodHandler;
+import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -49,6 +57,7 @@ import com.liferay.portal.util.PortalUtil;
 
 import java.lang.reflect.Method;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -251,6 +260,49 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 		return sb.toString();
 	}
 
+	protected Object getModel(String className, String method, long primaryKey)
+		throws Exception {
+
+		MethodKey modelMethodKey = new MethodKey(className, method, long.class);
+
+		MethodHandler methodHandler = new MethodHandler(
+			modelMethodKey, primaryKey);
+
+		return methodHandler.invoke(false);
+	}
+
+	protected List<Object> getModels(Hits hits, String className)
+		throws Exception {
+
+		List<Object> objects = new ArrayList<Object>();
+
+		for (int i = 0; i < hits.getDocs().length; i++) {
+			Document document = hits.doc(i);
+
+			long entryClassPK = GetterUtil.getLong(
+				document.get(Field.ENTRY_CLASS_PK));
+
+			int pos = className.indexOf(".model.");
+
+			String simpleClassName = className.substring(pos + 7);
+
+			String serviceClassName =
+				className.substring(0, pos) + ".service." + simpleClassName +
+					"LocalServiceUtil";
+
+			Object model = getModel(
+				serviceClassName, "fetch" + simpleClassName, entryClassPK);
+
+			if (model == null) {
+				continue;
+			}
+
+			objects.add(model);
+		}
+
+		return objects;
+	}
+
 	protected long increment(String name) throws Exception {
 		return CounterLocalServiceUtil.increment(name);
 	}
@@ -329,6 +381,14 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 
 		if (log.isDebugEnabled()) {
 			log.debug("Action path " + actionPath);
+		}
+
+		if (mimeResponse != null) {
+			portletURL = mimeResponse.createRenderURL();
+
+			portletURL.setParameter("action", actionPath);
+			portletURL.setParameter("controller", controllerPath);
+			portletURL.setParameter("format", "html");
 		}
 
 		viewPath = GetterUtil.getString(
@@ -436,6 +496,27 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 		portletRequest.setAttribute("pattern", pattern);
 
 		render(_VIEW_PATH_ERROR);
+	}
+
+	protected Hits search(String keywords) throws Exception {
+		if (indexer == null) {
+			throw new Exception("No indexer found for " + controllerPath);
+		}
+
+		SearchContainer searchContainer = new SearchContainer(
+			portletRequest, portletURL, null, null);
+
+		SearchContext searchContext = SearchContextFactory.getInstance(request);
+
+		searchContext.setEnd(searchContainer.getEnd());
+
+		if (Validator.isNotNull(keywords)) {
+			searchContext.setKeywords(keywords);
+		}
+
+		searchContext.setStart(searchContainer.getStart());
+
+		return indexer.search(searchContext);
 	}
 
 	protected String translate(String pattern, Object... arguments) {
@@ -546,6 +627,7 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 	protected PortletContext portletContext;
 	protected PortletRequest portletRequest;
 	protected PortletResponse portletResponse;
+	protected PortletURL portletURL;
 	protected String redirect;
 	protected RenderRequest renderRequest;
 	protected RenderResponse renderResponse;

@@ -176,8 +176,8 @@ public class LayoutImporter {
 	}
 
 	protected void deleteMissingLayouts(
-			long groupId, boolean privateLayout, List<Layout> previousLayouts,
-			ServiceContext serviceContext)
+			long groupId, boolean privateLayout, List<Layout> newLayouts,
+			List<Layout> previousLayouts, ServiceContext serviceContext)
 		throws Exception {
 
 		// Layouts
@@ -200,6 +200,11 @@ public class LayoutImporter {
 				}
 			}
 		}
+		else {
+			for (Layout layout : newLayouts) {
+				existingLayoutIds.add(layout.getLayoutId());
+			}
+		}
 
 		if (_log.isDebugEnabled() && !existingLayoutIds.isEmpty()) {
 			_log.debug("Delete missing layouts");
@@ -215,10 +220,6 @@ public class LayoutImporter {
 				}
 			}
 		}
-
-		// Layout set
-
-		LayoutSetLocalServiceUtil.updatePageCount(groupId, privateLayout);
 	}
 
 	protected void doImportLayouts(
@@ -412,6 +413,8 @@ public class LayoutImporter {
 			"layout-set-prototype-uuid");
 
 		if (group.isLayoutPrototype() && larType.equals("layout-prototype")) {
+			deleteMissingLayouts = false;
+
 			LayoutPrototype layoutPrototype =
 				LayoutPrototypeLocalServiceUtil.getLayoutPrototype(
 					group.getClassPK());
@@ -780,7 +783,8 @@ public class LayoutImporter {
 
 		if (deleteMissingLayouts) {
 			deleteMissingLayouts(
-				groupId, privateLayout, previousLayouts, serviceContext);
+				groupId, privateLayout, newLayouts, previousLayouts,
+				serviceContext);
 		}
 
 		// Page count

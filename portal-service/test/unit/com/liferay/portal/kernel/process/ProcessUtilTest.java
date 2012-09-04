@@ -338,6 +338,9 @@ public class ProcessUtilTest extends TestCase {
 
 		future.cancel(true);
 
+		// Cancel after cancel, satisfy code coverage
+		future.cancel(true);
+
 		// Time out on standard out processing
 
 		future = ProcessUtil.execute(

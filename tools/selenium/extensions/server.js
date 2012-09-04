@@ -1,3 +1,13 @@
+Selenium.prototype.doSendKeys = function(locator, value) {
+   if (this.browserbot.controlKeyDown || this.browserbot.altKeyDown || this.browserbot.metaKeyDown) {
+        throw new SeleniumError("type not supported immediately after call to controlKeyDown() or altKeyDown() or metaKeyDown()");
+    }
+        
+    var element = this.browserbot.findElement(locator);
+
+        bot.action.type(element, value);
+};
+
 Selenium.prototype.firstNumber = function(value) {
 	return parseInt(value.replace(/.*?(\d+).*$/, '$1'), 10);
 };

@@ -39,6 +39,8 @@ public interface LiferaySelenium extends Selenium {
 
 	public void saveScreenShotAndSource() throws Exception;
 
+	public void sendKeys(String locator, String value);
+
 	public void setBrowserOption();
 
 	public void uploadCommonFile(String locator, String value);

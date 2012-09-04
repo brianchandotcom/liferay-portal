@@ -97,6 +97,10 @@ public abstract class BaseSeleniumImpl
 		}
 	}
 
+	public void sendKeys(String locator, String value) {
+		_commandProcessor.doCommand("sendKeys", new String[] {locator, value,});
+	}
+
 	public void setBrowserOption() {
 		LiferaySeleniumHelper.setBrowserOption();
 	}
@@ -106,6 +110,11 @@ public abstract class BaseSeleniumImpl
 		super.setTimeout(timeout);
 
 		_timeout = timeout;
+	}
+
+	@Override
+	public void typeKeys(String locator, String value) {
+		sendKeys(locator, value);
 	}
 
 	public void uploadCommonFile(String location, String value) {

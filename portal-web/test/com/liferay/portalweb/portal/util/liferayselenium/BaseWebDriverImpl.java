@@ -127,6 +127,10 @@ public abstract class BaseWebDriverImpl
 	public void saveScreenShotAndSource() throws Exception {
 	}
 
+	public void sendKeys(String locator, String value) {
+		typeKeys(locator, value);
+	}
+
 	public void setBrowserOption() {
 		LiferaySeleniumHelper.setBrowserOption();
 	}

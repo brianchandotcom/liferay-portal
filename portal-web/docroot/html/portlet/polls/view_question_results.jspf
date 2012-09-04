@@ -24,7 +24,7 @@ NumberFormat percentFormat = NumberFormat.getPercentInstance(locale);
 	<td>
 		%
 	</td>
-	<td colspan="6">
+	<td colspan="4">
 		<liferay-ui:message key="votes" />
 	</td>
 </tr>
@@ -59,30 +59,27 @@ for (int i = 0; i < choices.size(); i++) {
 		votesPixelWidth = 100;
 	}
 
-	int votesPercentWidth = (int)Math.floor(votesPercent * votesPixelWidth);
+	int votesPercentWidth = (int)Math.floor(votesPercent * 100);
 %>
 
 <tr class="<%= className %>" onMouseEnter="this.className = '<%= classHoverName %>';" onMouseLeave="this.className = '<%= className %>';" style="font-size: x-small;">
 	<td>
 		<%= percentFormat.format(votesPercent) %>
 	</td>
-	<td colspan="<%= votesPercentWidth > 0 ? "1" : "3" %>">
+	<td colspan="<%= votesPercentWidth > 0 ? "1" : "2" %>">
 		<%= numberFormat.format(choiceVotes) %>
 	</td>
 
 	<c:if test="<%= votesPercentWidth > 0 %>">
-		<td></td>
 		<td>
-			<table border="0" cellpadding="0" cellspacing="0">
-			<tr>
-				<td class="lfr-percentage-bar"><img alt="" border="0" height="5" hspace="0" src="<%= themeDisplay.getPathThemeImages() %>/spacer.png" vspace="0" width="<%= votesPercentWidth %>" /></td>
-				<td class="lfr-percentage-bar-spacer"><img alt="" border="0" height="5" hspace="0" src="<%= themeDisplay.getPathThemeImages() %>/spacer.png" vspace="0" width="<%= votesPixelWidth - votesPercentWidth %>" /></td>
-			</tr>
-			</table>
+			<div class="aui-progress-bar aui-progress-bar-horizontal" style="height: 1.4em; width: <%= votesPixelWidth %>px;">
+				<div class="aui-progress-bar-content">
+					<div class="aui-progress-bar-status" style="height: 100%; top: auto; width: <%= votesPercentWidth %>%; "></div>
+				</div>
+			</div>
 		</td>
 	</c:if>
 
-	<td></td>
 	<td>
 		<strong><%= choice.getName() %>.</strong>
 	</td>

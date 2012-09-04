@@ -195,3 +195,8 @@ body > .lfr-menu-list, body > .lfr-menu-list ul, .lfr-actions, .aui-dialog-conte
 	@include experimental(animation, aui-progress-bar-stripes 0.5s linear infinite);
 	@include single-transition(width, 0.5s, ease-out);
 }
+
+.portlet-boundary.yui3-dd-dragging {
+	@include transform(scale(0.8));
+	@include transition(scale 0.3s ease);
+}

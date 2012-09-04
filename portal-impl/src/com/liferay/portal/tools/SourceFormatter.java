@@ -1758,8 +1758,8 @@ public class SourceFormatter {
 					if (previousLine.endsWith(
 							StringPool.TAB + StringPool.CLOSE_CURLY_BRACE) &&
 						Validator.isNotNull(trimmedLine) &&
-						!trimmedLine.equals(");") &&
 						!trimmedLine.startsWith(StringPool.CLOSE_CURLY_BRACE) &&
+						!trimmedLine.startsWith(StringPool.CLOSE_PARENTHESIS) &&
 						!trimmedLine.startsWith(StringPool.DOUBLE_SLASH) &&
 						!trimmedLine.startsWith("catch ") &&
 						!trimmedLine.startsWith("else ") &&

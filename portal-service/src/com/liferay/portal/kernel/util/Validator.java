@@ -479,6 +479,54 @@ public class Validator {
 		return true;
 	}
 
+	public static boolean isFileName(String name) {
+		if (isNull(name) || name.contains(StringPool.SLASH) ||
+			name.contains(StringPool.BACK_SLASH) ||
+			name.contains(StringPool.NULL_CHAR)) {
+
+			return false;
+		}
+
+		return true;
+	}
+
+	public static boolean isFilePath(String path, boolean isParentDirAllowed) {
+		if (path.contains(StringPool.NULL_CHAR)) {
+			return false;
+		}
+
+		if (isParentDirAllowed) {
+			return true;
+		}
+
+		if (path.equals(StringPool.DOUBLE_PERIOD)) {
+			return false;
+		}
+
+		String normalizedPath = path.replace(
+			CharPool.BACK_SLASH, CharPool.SLASH);
+
+		if (normalizedPath.startsWith(StringPool.DOUBLE_PERIOD +
+			StringPool.SLASH)) {
+
+			return false;
+		}
+
+		if (normalizedPath.endsWith(StringPool.SLASH +
+			StringPool.DOUBLE_PERIOD)) {
+
+			return false;
+		}
+
+		if (normalizedPath.contains(StringPool.SLASH +
+			StringPool.DOUBLE_PERIOD + StringPool.SLASH)) {
+
+			return false;
+		}
+
+		return true;
+	}
+
 	/**
 	 * Returns <code>true</code> if the date is valid in the Gregorian calendar.
 	 *

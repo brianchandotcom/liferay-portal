@@ -267,7 +267,7 @@ public class StrutsPortlet extends LiferayPortlet {
 	protected void checkPath(String path) throws PortletException {
 		if (Validator.isNotNull(path) &&
 			(!path.startsWith(templatePath) ||
-			 path.contains(StringPool.DOUBLE_PERIOD) ||
+			 !Validator.isFilePath(path, false) ||
 			 !PortalUtil.isValidResourceId(path))) {
 
 			throw new PortletException(

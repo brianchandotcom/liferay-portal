@@ -307,6 +307,7 @@ boolean showIconsActions = themeDisplay.isSignedIn() && (showEditArticleIcon || 
 				</liferay-portlet:renderURL>
 
 				<liferay-ui:icon
+					cssClass="icon-action icon-action-edit"
 					image="edit"
 					label="<%= true %>"
 					message="edit"
@@ -323,6 +324,7 @@ boolean showIconsActions = themeDisplay.isSignedIn() && (showEditArticleIcon || 
 				</liferay-portlet:renderURL>
 
 				<liferay-ui:icon
+					cssClass="icon-action icon-action-edit-template"
 					image="../file_system/small/xml"
 					label="<%= true %>"
 					message="edit-template"
@@ -332,7 +334,7 @@ boolean showIconsActions = themeDisplay.isSignedIn() && (showEditArticleIcon || 
 
 			<c:if test="<%= showSelectArticleIcon %>">
 				<liferay-ui:icon
-					cssClass="portlet-configuration"
+					cssClass="icon-action icon-action-configuration"
 					image="configuration"
 					label="<%= true %>"
 					message="select-web-content"
@@ -351,6 +353,7 @@ boolean showIconsActions = themeDisplay.isSignedIn() && (showEditArticleIcon || 
 				</liferay-portlet:renderURL>
 
 				<liferay-ui:icon
+					cssClass="icon-action icon-action-add"
 					image="add_article"
 					label="<%= true %>"
 					message="add"

@@ -1,35 +1,4 @@
 .portlet-journal-content {
-	.icon-actions {
-		background: #333;
-		float: left;
-		font-size: 10px;
-		margin: 1px 10px 1px 1px;
-		opacity: 0.3;
-		padding: 4px 0 3px 8px;
-		text-shadow: -1px -1px #000;
-
-		.taglib-icon {
-			/*display: inline-block;*/
-			height: 16px;
-			margin-right: 1em;
-		}
-
-		.taglib-text {
-			color: #FFF;
-			display: none;
-			text-decoration: none;
-			vertical-align: middle;
-		}
-	}
-
-	&:hover .icon-actions {
-		opacity: 1;
-
-		.taglib-text {
-			display: inline;
-		}
-	}
-
 	.icons-container {
 		clear: both;
 		height: auto;

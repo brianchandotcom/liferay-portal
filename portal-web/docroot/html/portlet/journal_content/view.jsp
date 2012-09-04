@@ -307,8 +307,10 @@ boolean showIconsActions = themeDisplay.isSignedIn() && (showEditArticleIcon || 
 				</liferay-portlet:renderURL>
 
 				<liferay-ui:icon
+					cssClass="icon-action icon-action-edit"
 					image="edit"
-					message="edit-web-content"
+					label="<%= true %>"
+					message="edit"
 					url="<%= editURL %>"
 				/>
 			</c:if>
@@ -322,7 +324,9 @@ boolean showIconsActions = themeDisplay.isSignedIn() && (showEditArticleIcon || 
 				</liferay-portlet:renderURL>
 
 				<liferay-ui:icon
+					cssClass="icon-action icon-action-edit-template"
 					image="../file_system/small/xml"
+					label="<%= true %>"
 					message="edit-template"
 					url="<%= editTemplateURL %>"
 				/>
@@ -330,8 +334,9 @@ boolean showIconsActions = themeDisplay.isSignedIn() && (showEditArticleIcon || 
 
 			<c:if test="<%= showSelectArticleIcon %>">
 				<liferay-ui:icon
-					cssClass="portlet-configuration"
+					cssClass="icon-action icon-action-configuration"
 					image="configuration"
+					label="<%= true %>"
 					message="select-web-content"
 					method="get"
 					onClick="<%= portletDisplay.getURLConfigurationJS() %>"
@@ -348,8 +353,10 @@ boolean showIconsActions = themeDisplay.isSignedIn() && (showEditArticleIcon || 
 				</liferay-portlet:renderURL>
 
 				<liferay-ui:icon
+					cssClass="icon-action icon-action-add"
 					image="add_article"
-					message="add-web-content"
+					label="<%= true %>"
+					message="add"
 					url="<%= addArticleURL %>"
 				/>
 			</c:if>

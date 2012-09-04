@@ -133,7 +133,6 @@ boolean useAssetEntryQuery = false;
 		long defaultFolderId = GetterUtil.getLong(preferences.getValue("rootFolderId", StringPool.BLANK), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		long folderId = BeanParamUtil.getLong(folder, request, "folderId", defaultFolderId);
-
 		%>
 
 		<%@ include file="/html/portlet/image_gallery_display/view_images.jspf" %>

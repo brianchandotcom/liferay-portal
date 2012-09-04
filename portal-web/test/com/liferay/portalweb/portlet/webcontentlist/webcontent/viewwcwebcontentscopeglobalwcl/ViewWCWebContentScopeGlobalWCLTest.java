@@ -37,7 +37,7 @@ public class ViewWCWebContentScopeGlobalWCLTest extends BaseTestCase {
 				"//tr[@class='portlet-section-header results-header']/th[3]"));
 		assertEquals(RuntimeVariables.replace("Web Content Name"),
 			selenium.getText("//td[1]/a"));
-		assertTrue(selenium.isPartialText("//td[2]/a", ""));
+		assertTrue(selenium.isVisible("//td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
 			selenium.getText("//td[3]/a"));
 		assertEquals(RuntimeVariables.replace("Showing 1 result."),

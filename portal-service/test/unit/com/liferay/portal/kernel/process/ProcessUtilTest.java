@@ -14,11 +14,8 @@
 
 package com.liferay.portal.kernel.process;
 
-import com.liferay.portal.kernel.log.Jdk14LogImpl;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.log.LogWrapper;
+import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.test.TestCase;
-import com.liferay.portal.kernel.util.ReflectionUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -32,7 +29,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.Callable;
-import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -41,10 +37,8 @@ import java.util.concurrent.RejectedExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicReference;
-import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
-import java.util.logging.Logger;
 
 /**
  * @author Shuyang Zhou
@@ -190,51 +184,31 @@ public class ProcessUtilTest extends TestCase {
 	}
 
 	public void testEchoLogging() throws Exception {
-		Logger logger = _getLogger();
+		List<LogRecord> logRecords = JDKLoggerTestUtil.configureJDKLogger(
+			LoggingOutputProcessor.class.getName(), Level.INFO);
 
-		Level level = logger.getLevel();
+		Future<?> future = ProcessUtil.execute(
+			ProcessUtil.LOGGING_OUTPUT_PROCESSOR,
+			_buildArguments(Echo.class, "2"));
 
-		logger.setLevel(Level.INFO);
+		future.get();
 
-		CaptureHandler captureHandler = new CaptureHandler();
+		future.cancel(true);
 
-		logger.addHandler(captureHandler);
+		List<String> messageRecords = new ArrayList<String>();
 
-		try {
-			Future<?> future = ProcessUtil.execute(
-				ProcessUtil.LOGGING_OUTPUT_PROCESSOR,
-				_buildArguments(Echo.class, "2"));
-
-			future.get();
-
-			future.cancel(true);
-
-			List<LogRecord> logRecords = captureHandler.getLogRecords();
-
-			List<String> messageRecords = new ArrayList<String>();
-
-			for (LogRecord logRecord : logRecords) {
-				messageRecords.add(logRecord.getMessage());
-			}
-
-			assertTrue(
-				messageRecords.contains(
-					"{stdErr}" + Echo.class.getName() + "0"));
-			assertTrue(
-				messageRecords.contains(
-					"{stdErr}" + Echo.class.getName() + "1"));
-			assertTrue(
-				messageRecords.contains(
-					"{stdOut}" + Echo.class.getName() + "0"));
-			assertTrue(
-				messageRecords.contains(
-					"{stdOut}" + Echo.class.getName() + "1"));
+		for (LogRecord logRecord : logRecords) {
+			messageRecords.add(logRecord.getMessage());
 		}
-		finally {
-			logger.removeHandler(captureHandler);
 
-			logger.setLevel(level);
-		}
+		assertTrue(
+			messageRecords.contains("{stdErr}" + Echo.class.getName() + "0"));
+		assertTrue(
+			messageRecords.contains("{stdErr}" + Echo.class.getName() + "1"));
+		assertTrue(
+			messageRecords.contains("{stdOut}" + Echo.class.getName() + "0"));
+		assertTrue(
+			messageRecords.contains("{stdOut}" + Echo.class.getName() + "1"));
 	}
 
 	public void testErrorExit() throws Exception {
@@ -484,19 +458,6 @@ public class ProcessUtilTest extends TestCase {
 		return (ExecutorService)field.get(null);
 	}
 
-	private static Logger _getLogger() throws Exception {
-		LogWrapper loggerWrapper = (LogWrapper)LogFactoryUtil.getLog(
-			LoggingOutputProcessor.class);
-
-		Field field = ReflectionUtil.getDeclaredField(LogWrapper.class, "_log");
-
-		Jdk14LogImpl jdk14LogImpl = (Jdk14LogImpl)field.get(loggerWrapper);
-
-		field = ReflectionUtil.getDeclaredField(Jdk14LogImpl.class, "_log");
-
-		return (Logger)field.get(jdk14LogImpl);
-	}
-
 	private static ExecutorService _invokeGetExecutorService()
 		throws Exception {
 
@@ -534,37 +495,6 @@ public class ProcessUtilTest extends TestCase {
 		int index = path.lastIndexOf(name);
 
 		_CLASS_PATH = path.substring(0, index);
-	}
-
-	private static class CaptureHandler extends Handler {
-
-		@Override
-		public void close() throws SecurityException {
-			_logRecords.clear();
-		}
-
-		@Override
-		public void flush() {
-			_logRecords.clear();
-		}
-
-		public List<LogRecord> getLogRecords() {
-			return _logRecords;
-		}
-
-		@Override
-		public boolean isLoggable(LogRecord logRecord) {
-			return true;
-		}
-
-		@Override
-		public void publish(LogRecord logRecord) {
-			_logRecords.add(logRecord);
-		}
-
-		private List<LogRecord> _logRecords =
-			new CopyOnWriteArrayList<LogRecord>();
-
 	}
 
 	private static class DummyJob implements Callable<Void> {

@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.cluster.Address;
 import com.liferay.portal.kernel.cluster.Priority;
 import com.liferay.portal.kernel.cluster.messaging.ClusterForwardMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ReflectionUtil;
@@ -34,19 +35,15 @@ import java.lang.reflect.Field;
 import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
-import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.Exchanger;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
-import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
-import java.util.logging.Logger;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
 
 import org.jgroups.JChannel;
 import org.jgroups.View;
@@ -113,14 +110,15 @@ public class ClusterLinkImplTest {
 
 	@AdviseWith(
 		adviceClasses = {
-			EnableClusterLinkAdvice.class, LoggerAdvice.class,
+			EnableClusterLinkAdvice.class,
 			TransportationConfigurationAdvice.class
 		}
 
 	)
 	@Test
 	public void testGetChannel() throws Exception {
-		LoggerAdvice.setLoggerInfo(ClusterLinkImpl.class.getName(), Level.FINE);
+		JDKLoggerTestUtil.configureJDKLogger(
+			ClusterLinkImpl.class.getName(), Level.FINE);
 
 		TransportationConfigurationAdvice.setChannelCount(2);
 
@@ -359,16 +357,13 @@ public class ClusterLinkImplTest {
 
 	@AdviseWith(
 		adviceClasses = {
-			EnableClusterLinkAdvice.class, LoggerAdvice.class,
+			EnableClusterLinkAdvice.class,
 			TransportationConfigurationAdvice.class
 		}
 
 	)
 	@Test
 	public void testSendMulticastMessage3() throws Exception {
-		LoggerAdvice.setLoggerInfo(
-			ClusterLinkImpl.class.getName(), Level.WARNING);
-
 		TransportationConfigurationAdvice.setChannelCount(1);
 
 		ClusterLinkImpl clusterLinkImpl = getClusterLinkImpl();
@@ -381,26 +376,27 @@ public class ClusterLinkImplTest {
 
 		jChannel.close();
 
+		List<LogRecord> logRecords = JDKLoggerTestUtil.configureJDKLogger(
+			ClusterLinkImpl.class.getName(), Level.WARNING);
+
 		clusterLinkImpl.sendMulticastMessage(message, Priority.LEVEL1);
 
 		assertLogger(
-			"Unable to send multicast message " + message, Exception.class);
+			logRecords, "Unable to send multicast message " + message,
+			Exception.class);
 
 		clusterLinkImpl.destroy();
 	}
 
 	@AdviseWith(
 		adviceClasses = {
-			EnableClusterLinkAdvice.class, LoggerAdvice.class,
+			EnableClusterLinkAdvice.class,
 			TransportationConfigurationAdvice.class
 		}
 
 	)
 	@Test
 	public void testSendMulticastMessage4() throws Exception {
-		LoggerAdvice.setLoggerInfo(
-			ClusterLinkImpl.class.getName(), Level.WARNING);
-
 		TransportationConfigurationAdvice.setChannelCount(1);
 
 		ClusterLinkImpl clusterLinkImpl = getClusterLinkImpl();
@@ -413,10 +409,14 @@ public class ClusterLinkImplTest {
 
 		jChannel.disconnect();
 
+		List<LogRecord> logRecords = JDKLoggerTestUtil.configureJDKLogger(
+			ClusterLinkImpl.class.getName(), Level.WARNING);
+
 		clusterLinkImpl.sendMulticastMessage(message, Priority.LEVEL1);
 
 		assertLogger(
-			"Unable to send multicast message " + message, Exception.class);
+			logRecords, "Unable to send multicast message " + message,
+			Exception.class);
 
 		clusterLinkImpl.destroy();
 	}
@@ -478,16 +478,13 @@ public class ClusterLinkImplTest {
 
 	@AdviseWith(
 		adviceClasses = {
-			EnableClusterLinkAdvice.class, LoggerAdvice.class,
+			EnableClusterLinkAdvice.class,
 			TransportationConfigurationAdvice.class
 		}
 
 	)
 	@Test
 	public void testSendUnicastMessage3() throws Exception {
-		LoggerAdvice.setLoggerInfo(
-			ClusterLinkImpl.class.getName(), Level.WARNING);
-
 		TransportationConfigurationAdvice.setChannelCount(1);
 
 		ClusterLinkImpl clusterLinkImpl = getClusterLinkImpl();
@@ -500,27 +497,28 @@ public class ClusterLinkImplTest {
 
 		jChannel.close();
 
+		List<LogRecord> logRecords = JDKLoggerTestUtil.configureJDKLogger(
+			ClusterLinkImpl.class.getName(), Level.WARNING);
+
 		clusterLinkImpl.sendUnicastMessage(
 			new AddressImpl(new MockAddress()), message, Priority.LEVEL1);
 
 		assertLogger(
-			"Unable to send unicast message " + message, Exception.class);
+			logRecords, "Unable to send unicast message " + message,
+			Exception.class);
 
 		clusterLinkImpl.destroy();
 	}
 
 	@AdviseWith(
 		adviceClasses = {
-			EnableClusterLinkAdvice.class, LoggerAdvice.class,
+			EnableClusterLinkAdvice.class,
 			TransportationConfigurationAdvice.class
 		}
 
 	)
 	@Test
 	public void testSendUnicastMessage4() throws Exception {
-		LoggerAdvice.setLoggerInfo(
-			ClusterLinkImpl.class.getName(), Level.WARNING);
-
 		TransportationConfigurationAdvice.setChannelCount(1);
 
 		ClusterLinkImpl clusterLinkImpl = getClusterLinkImpl();
@@ -533,11 +531,15 @@ public class ClusterLinkImplTest {
 
 		jChannel.disconnect();
 
+		List<LogRecord> logRecords = JDKLoggerTestUtil.configureJDKLogger(
+			ClusterLinkImpl.class.getName(), Level.WARNING);
+
 		clusterLinkImpl.sendUnicastMessage(
 			new AddressImpl(new MockAddress()), message, Priority.LEVEL1);
 
 		assertLogger(
-			"Unable to send unicast message " + message, Exception.class);
+			logRecords, "Unable to send unicast message " + message,
+			Exception.class);
 
 		clusterLinkImpl.destroy();
 	}
@@ -566,44 +568,6 @@ public class ClusterLinkImplTest {
 
 			return proceedingJoinPoint.proceed(new Object[]{Boolean.TRUE});
 		}
-
-	}
-
-	@Aspect
-	public static class LoggerAdvice {
-
-		public static CaptureHandler getCaptureHandler() {
-			return _captureHandler;
-		}
-
-		public static void setLoggerInfo(String loggerName, Level loggerLevel) {
-			_loggerName = loggerName;
-			_loggerLevel = loggerLevel;
-		}
-
-		@Before(
-			"call(public com.liferay.portal.kernel.log.Jdk14LogImpl.new(" +
-				"java.util.logging.Logger)) && args(logger)")
-		public void createLogger(Logger logger) {
-			String loggerName = logger.getName();
-
-			if (loggerName.equals(_loggerName)) {
-				for (Handler handler : logger.getHandlers()) {
-					logger.removeHandler(handler);
-				}
-
-				logger.setLevel(_loggerLevel);
-				logger.setUseParentHandlers(false);
-
-				_captureHandler = new CaptureHandler();
-
-				logger.addHandler(_captureHandler);
-			}
-		}
-
-		private static CaptureHandler _captureHandler;
-		private static Level _loggerLevel;
-		private static String _loggerName;
 
 	}
 
@@ -645,15 +609,11 @@ public class ClusterLinkImplTest {
 
 	}
 
-	protected void assertLogger(String message, Class<?> exceptionClass) {
-		CaptureHandler captureHandler = LoggerAdvice.getCaptureHandler();
-
-		Assert.assertNotNull(captureHandler);
-
-		List<LogRecord> logRecords = captureHandler.getLogRecords();
+	protected void assertLogger(
+		List<LogRecord> logRecords, String message, Class<?> exceptionClass) {
 
 		if (message == null) {
-			Assert.assertEquals(0, logRecords.size());
+			Assert.assertTrue(logRecords.isEmpty());
 
 			return;
 		}
@@ -671,7 +631,7 @@ public class ClusterLinkImplTest {
 			Assert.assertNotNull(logRecord.getThrown());
 		}
 
-		captureHandler.flush();
+		logRecords.clear();
 	}
 
 	protected Message createMessage() {
@@ -731,37 +691,6 @@ public class ClusterLinkImplTest {
 		JChannel jChannel = jChannels.get(index);
 
 		return (TestReceiver)jChannel.getReceiver();
-	}
-
-	private static class CaptureHandler extends Handler {
-
-		@Override
-		public void close() throws SecurityException {
-			_logRecords.clear();
-		}
-
-		@Override
-		public void flush() {
-			_logRecords.clear();
-		}
-
-		public List<LogRecord> getLogRecords() {
-			return _logRecords;
-		}
-
-		@Override
-		public boolean isLoggable(LogRecord logRecord) {
-			return false;
-		}
-
-		@Override
-		public void publish(LogRecord logRecord) {
-			_logRecords.add(logRecord);
-		}
-
-		private List<LogRecord> _logRecords =
-			new CopyOnWriteArrayList<LogRecord>();
-
 	}
 
 	private class MockAddress implements org.jgroups.Address {

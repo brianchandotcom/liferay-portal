@@ -1,4 +1,6 @@
 (function() {
+	var CKTools = CKEDITOR.tools;
+
 	var CSS_ESCAPED = 'escaped';
 
 	var NEW_LINE = '\n';
@@ -108,28 +110,6 @@
 			return data;
 		},
 
-		_allowNewLine: function(element) {
-			var instance = this;
-
-			var allowNewLine = true;
-
-			if (!instance._skipParse) {
-				var parentNode = element.parentNode;
-
-				if (parentNode) {
-					var parentTagName = parentNode.tagName;
-
-					if (parentTagName) {
-						parentTagName = parentTagName.toLowerCase();
-
-						allowNewLine = (parentTagName == TAG_PARAGRAPH) || (parentTagName == TAG_LIST_ITEM);
-					}
-				}
-			}
-
-			return allowNewLine;
-		},
-
 		_appendNewLines: function(total) {
 			var instance = this;
 
@@ -210,19 +190,20 @@
 		_handleBreak: function(element, listTagsIn, listTagsOut) {
 			var instance = this;
 
+			var newLineCharacter = STR_LIST_ITEM_ESCAPE_CHARACTERS;
+
 			if (instance._skipParse) {
-				listTagsIn.push(NEW_LINE);
+				newLineCharacter = NEW_LINE;
 			}
-			else {
-				instance._handleNewLine(element, listTagsIn, listTagsOut);
-			}
+
+			listTagsIn.push(newLineCharacter);
 		},
 
 		_handleData: function(data, element) {
 			var instance = this;
 
 			if (data) {
-				if (!instance._allowNewLine(element)) {
+				if (!instance._skipParse) {
 					data = data.replace(REGEX_NEWLINE, STR_BLANK);
 				}
 
@@ -247,28 +228,13 @@
 			else if (tagName == TAG_UNORDERED_LIST || tagName == TAG_ORDERED_LIST) {
 				instance._listsStack.pop();
 
-				var nextSibling = element.nextSibling;
+				var neededNewLines = 1;
 
-				if (nextSibling) {
-					while(nextSibling && instance._isIgnorable(nextSibling)) {
-						nextSibling = nextSibling.nextSibling;
-					}
-
-					if (nextSibling) {
-						var siblingTagName = nextSibling.tagName;
-
-						if (siblingTagName) {
-							siblingTagName = siblingTagName.toLowerCase();
-
-							if (siblingTagName != TAG_UNORDERED_LIST && siblingTagName != TAG_ORDERED_LIST) {
-								instance._appendNewLines(2);
-							}
-						}
-					}
-					else if (!instance._isLastItemNewLine()) {
-						instance._endResult.push(NEW_LINE);
-					}
+				if (!instance._hasParentNode(element, TAG_LIST_ITEM)) {
+					neededNewLines = 2;
 				}
+				
+				instance._appendNewLines(neededNewLines);
 			}
 			else if (tagName == TAG_PRE) {
 				if (!instance._isLastItemNewLine()) {
@@ -432,20 +398,6 @@
 			listTagsIn.push(new Array(listsStackLength + 1).join(listsStack[listsStackLength - 1]));
 		},
 
-		_handleNewLine: function(element, listTagsIn, listTagsOut) {
-			var instance = this;
-
-			if (instance._allowNewLine(element)) {
-				var listCharacter = NEW_LINE;
-
-				if (instance._isParentNode(element, TAG_LIST_ITEM) && element.nextSibling) {
-					listCharacter = STR_LIST_ITEM_ESCAPE_CHARACTERS;
-				}
-
-				listTagsIn.push(listCharacter);
-			}
-		},
-
 		_handleOrderedList: function(element, listTagsIn, listTagsOut) {
 			var instance = this;
 
@@ -553,6 +505,36 @@
 			return (STR_SPACE + element.className + STR_SPACE).indexOf(STR_SPACE + className + STR_SPACE) > -1;
 		},
 
+		_hasParentNode: function(element, tags, level) {
+			var instance = this;
+
+			if (!CKTools.isArray(tags)) {
+				tags = [tags];
+			}
+
+			var result = false;
+
+			var parentNode = element.parentNode;
+
+			var tagName = parentNode && parentNode.tagName && parentNode.tagName.toLowerCase();
+
+			if (tagName) {
+				for (var i = 0, length = tags.length; i < length; i++) {
+					result = instance._tagNameMatch(tagName, tags[i]);
+
+					if (result) {
+						break;
+					}
+				}
+			}
+
+			if (!result && parentNode && (!isFinite(level) || --level)) {
+				result = instance._hasParentNode(parentNode, tags, level);
+			}
+
+			return result;
+		},
+
 		_isDataAvailable: function() {
 			var instance = this;
 
@@ -577,9 +559,9 @@
 		},
 
 		_isParentNode: function(element, tagName) {
-			var parentNode = element.parentNode;
+			var instance = this;
 
-			return parentNode && parentNode.tagName && parentNode.tagName.toLowerCase() == tagName;
+			return instance._hasParentNode(element, tagName, 1);
 		},
 
 		_isWhitespace: function(node) {
@@ -599,6 +581,19 @@
 
 				endResult.push(tag);
 			}
+		},
+
+		_tagNameMatch: function(tagSrc, tagDest) {
+			var result;
+
+			if (tagDest instanceof RegExp) {
+				result = tagDest.test(tagSrc);
+			}
+			else {
+				result = tagSrc === tagDest;
+			}
+
+			return result;
 		},
 
 		_endResult: null,

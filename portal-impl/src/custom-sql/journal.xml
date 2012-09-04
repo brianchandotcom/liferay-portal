@@ -232,7 +232,7 @@
 	<sql id="com.liferay.portlet.journal.service.persistence.JournalStructureFinder.countByC_G_S_N_D">
 		<![CDATA[
 			SELECT
-				COUNT(*) AS COUNT_VALUE
+				COUNT(DISTINCT JournalStructure.structureId) AS COUNT_VALUE
 			FROM
 				JournalStructure
 			WHERE
@@ -248,7 +248,7 @@
 	<sql id="com.liferay.portlet.journal.service.persistence.JournalStructureFinder.findByC_G_S_N_D">
 		<![CDATA[
 			SELECT
-				{JournalStructure.*}
+				DISTINCT {JournalStructure.*}
 			FROM
 				JournalStructure
 			WHERE
@@ -266,7 +266,7 @@
 	<sql id="com.liferay.portlet.journal.service.persistence.JournalTemplateFinder.countByC_G_T_S_N_D">
 		<![CDATA[
 			SELECT
-				COUNT(*) AS COUNT_VALUE
+				COUNT(DISTINCT JournalTemplate.templateId) AS COUNT_VALUE
 			FROM
 				JournalTemplate
 			WHERE
@@ -283,7 +283,7 @@
 	<sql id="com.liferay.portlet.journal.service.persistence.JournalTemplateFinder.findByC_G_T_S_N_D">
 		<![CDATA[
 			SELECT
-				{JournalTemplate.*}
+				DISTINCT {JournalTemplate.*}
 			FROM
 				JournalTemplate
 			WHERE

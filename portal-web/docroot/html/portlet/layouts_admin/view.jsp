@@ -86,25 +86,10 @@ SitesUtil.addPortletBreadcrumbEntries(group, pagesName, redirectURL, request, re
 
 		<%
 		PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, TextFormatter.format(tabs1, TextFormatter.O)), redirectURL.toString());
-
-		if ((selLayout != null) && !group.isLayoutPrototype()) {
-			redirectURL.setParameter("selPlid", String.valueOf(selLayout.getPlid()));
-
-			PortalUtil.addPortletBreadcrumbEntry(request, selLayout.getName(locale), currentURL);
-		}
 		%>
 
 	</c:when>
 	<c:otherwise>
-
-		<%
-		if ((selLayout != null) && !group.isLayoutPrototype()) {
-			redirectURL.setParameter("selPlid", String.valueOf(selLayout.getPlid()));
-
-			PortalUtil.addPortletBreadcrumbEntry(request, selLayout.getName(locale), redirectURL.toString());
-		}
-		%>
-
 		<div class="layout-breadcrumb">
 			<liferay-ui:breadcrumb displayStyle="horizontal" showGuestGroup="<%= false %>" showLayout="<%= false %>" showParentGroups="<%= false %>" showPortletBreadcrumb="<%= true %>" />
 		</div>

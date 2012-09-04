@@ -1483,40 +1483,41 @@ public class SourceFormatter {
 							readMethodParameterTypes = true;
 						}
 
-						if (_isInJavaTermTypeGroup(
-								javaTermType, _TYPE_VARIABLE_NOT_FINAL)) {
+						if (excluded == null) {
+							if (_isInJavaTermTypeGroup(
+									javaTermType, _TYPE_VARIABLE_NOT_FINAL)) {
 
-							char firstChar = javaTermName.charAt(0);
+								char firstChar = javaTermName.charAt(0);
 
-							if (firstChar == CharPool.UNDERLINE) {
-								firstChar = javaTermName.charAt(1);
-							}
-
-							if (Character.isUpperCase(firstChar)) {
-								_sourceFormatterHelper.printError(
-									fileName,
-									"final: " + fileName + " " + lineCount);
-							}
-						}
-
-						if (Validator.isNotNull(previousJavaTermName) &&
-							(excluded == null)) {
-
-							if (previousJavaTermType > javaTermType) {
-								_sourceFormatterHelper.printError(
-									fileName,
-									"order: " + fileName + " " + lineCount);
-							}
-							else if (previousJavaTermType == javaTermType) {
-								if (isMethod &&
-									previousJavaTermName.equals(javaTermName)) {
-
-									hasSameMethodName = true;
+								if (firstChar == CharPool.UNDERLINE) {
+									firstChar = javaTermName.charAt(1);
 								}
-								else {
-									_compareJavaTermNames(
-										fileName, previousJavaTermName,
-										javaTermName, lineCount);
+
+								if (Character.isUpperCase(firstChar)) {
+									_sourceFormatterHelper.printError(
+										fileName,
+										"final: " + fileName + " " + lineCount);
+								}
+							}
+
+							if (Validator.isNotNull(previousJavaTermName)) {
+								if (previousJavaTermType > javaTermType) {
+									_sourceFormatterHelper.printError(
+										fileName,
+										"order: " + fileName + " " + lineCount);
+								}
+								else if (previousJavaTermType == javaTermType) {
+									if (isMethod &&
+										previousJavaTermName.equals(
+											javaTermName)) {
+
+										hasSameMethodName = true;
+									}
+									else {
+										_compareJavaTermNames(
+											fileName, previousJavaTermName,
+											javaTermName, lineCount);
+									}
 								}
 							}
 						}

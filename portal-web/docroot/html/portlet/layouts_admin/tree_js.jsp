@@ -173,6 +173,13 @@ if (!selectableTree) {
 										TreeUtil.updateSessionTreeCheckedState('<%= HtmlUtil.escape(treeId) %>SelectedNode', plid, event.newVal);
 									}
 								},
+
+								<c:if test="<%= saveState %>">
+									childrenChange: function(event) {
+										TreeUtil.restoreNodeState(event.target);
+									},
+								</c:if>
+
 								expandedChange: function(event) {
 									var layoutId = TreeUtil.extractLayoutId(event.target);
 

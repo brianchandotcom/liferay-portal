@@ -394,6 +394,10 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 		_assetEntryLocalService.reindex(entries);
 	}
 
+	/**
+	* @deprecated {@link #search(long, long[], long, String, String, int, int,
+	int)}
+	*/
 	public com.liferay.portal.kernel.search.Hits search(long companyId,
 		long[] groupIds, long userId, java.lang.String className,
 		java.lang.String keywords, int start, int end)
@@ -402,6 +406,18 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 			className, keywords, start, end);
 	}
 
+	public com.liferay.portal.kernel.search.Hits search(long companyId,
+		long[] groupIds, long userId, java.lang.String className,
+		java.lang.String keywords, int status, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _assetEntryLocalService.search(companyId, groupIds, userId,
+			className, keywords, status, start, end);
+	}
+
+	/**
+	* @deprecated {@link #search(long, long[], long, String, String, String,
+	String, String, String, int, boolean, int, int)}
+	*/
 	public com.liferay.portal.kernel.search.Hits search(long companyId,
 		long[] groupIds, long userId, java.lang.String className,
 		java.lang.String userName, java.lang.String title,
@@ -413,6 +429,22 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 			assetTagNames, andSearch, start, end);
 	}
 
+	public com.liferay.portal.kernel.search.Hits search(long companyId,
+		long[] groupIds, long userId, java.lang.String className,
+		java.lang.String userName, java.lang.String title,
+		java.lang.String description, java.lang.String assetCategoryIds,
+		java.lang.String assetTagNames, int status, boolean andSearch,
+		int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _assetEntryLocalService.search(companyId, groupIds, userId,
+			className, userName, title, description, assetCategoryIds,
+			assetTagNames, status, andSearch, start, end);
+	}
+
+	/**
+	* @deprecated {@link #search(long, long[], long, String, String, int, int,
+	int)}
+	*/
 	public com.liferay.portal.kernel.search.Hits search(long companyId,
 		long[] groupIds, java.lang.String className, java.lang.String keywords,
 		int start, int end)

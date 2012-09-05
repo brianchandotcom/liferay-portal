@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InstancePool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
@@ -355,9 +356,23 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 		}
 	}
 
+	/**
+	 * @deprecated {@link #search(long, long[], long, String, String, int, int,
+	 *             int)}
+	 */
 	public Hits search(
 			long companyId, long[] groupIds, long userId, String className,
 			String keywords, int start, int end)
+		throws SystemException {
+
+		return search(
+			companyId, groupIds, userId, className, keywords,
+			WorkflowConstants.STATUS_ANY, start, end);
+	}
+
+	public Hits search(
+			long companyId, long[] groupIds, long userId, String className,
+			String keywords, int status, int start, int end)
 		throws SystemException {
 
 		try {
@@ -375,7 +390,14 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 
 			searchContext.addFacet(scopeFacet);
 
-			searchContext.setAttribute("paginationType", "regular");
+			Map<String, Serializable> attributes =
+				new HashMap<String, Serializable>();
+
+			attributes.put("paginationType", "regular");
+			attributes.put("status", status);
+
+			searchContext.setAttributes(attributes);
+
 			searchContext.setCompanyId(companyId);
 			searchContext.setEnd(end);
 			searchContext.setEntryClassNames(getClassNames(className));
@@ -401,6 +423,10 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 		}
 	}
 
+	/**
+	 * @deprecated {@link #search(long, long[], long, String, String, String,
+	 *             String, String, String, int, boolean, int, int)}
+	 */
 	public Hits search(
 			long companyId, long[] groupIds, long userId, String className,
 			String userName, String title, String description,
@@ -408,15 +434,20 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 			int start, int end)
 		throws SystemException {
 
+		return search(
+			companyId, groupIds, userId, className, userName, title,
+			description, assetCategoryIds, assetTagNames,
+			WorkflowConstants.STATUS_ANY, andSearch, start, end);
+	}
+
+	public Hits search(
+			long companyId, long[] groupIds, long userId, String className,
+			String userName, String title, String description,
+			String assetCategoryIds, String assetTagNames, int status,
+			boolean andSearch, int start, int end)
+		throws SystemException {
+
 		try {
-			Map<String, Serializable> attributes =
-				new HashMap<String, Serializable>();
-
-			attributes.put(Field.DESCRIPTION, description);
-			attributes.put(Field.TITLE, title);
-			attributes.put(Field.USER_NAME, userName);
-			attributes.put("paginationType", "regular");
-
 			SearchContext searchContext = new SearchContext();
 
 			Facet assetEntriesFacet = new AssetEntriesFacet(searchContext);
@@ -435,7 +466,18 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 			searchContext.setAssetCategoryIds(
 				StringUtil.split(assetCategoryIds, 0L));
 			searchContext.setAssetTagNames(StringUtil.split(assetTagNames));
+
+			Map<String, Serializable> attributes =
+				new HashMap<String, Serializable>();
+
+			attributes.put(Field.DESCRIPTION, description);
+			attributes.put(Field.TITLE, title);
+			attributes.put(Field.USER_NAME, userName);
+			attributes.put("paginationType", "regular");
+			attributes.put("status", status);
+
 			searchContext.setAttributes(attributes);
+
 			searchContext.setCompanyId(companyId);
 			searchContext.setEnd(end);
 			searchContext.setEntryClassNames(getClassNames(className));
@@ -460,12 +502,18 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 		}
 	}
 
+	/**
+	 * @deprecated {@link #search(long, long[], long, String, String, int, int,
+	 *             int)}
+	 */
 	public Hits search(
 			long companyId, long[] groupIds, String className, String keywords,
 			int start, int end)
 		throws SystemException {
 
-		return search(companyId, groupIds, 0, className, keywords, start, end);
+		return search(
+			companyId, groupIds, 0, className, keywords,
+			WorkflowConstants.STATUS_ANY, start, end);
 	}
 
 	public AssetEntry updateEntry(

@@ -59,6 +59,11 @@ public class ${entity.name}${sessionTypeName}ServiceClpInvoker {
 					</#list>
 
 					);
+
+					<#if returnTypeName == "void">
+						return null;
+					</#if>
+
 				}
 			</#if>
 		</#list>

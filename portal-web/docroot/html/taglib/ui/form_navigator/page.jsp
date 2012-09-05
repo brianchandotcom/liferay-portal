@@ -16,6 +16,8 @@
 
 <%@ include file="/html/taglib/init.jsp" %>
 
+<portlet:defineObjects />
+
 <%
 String backURL = (String)request.getAttribute("liferay-ui:form-navigator:backURL");
 String[][] categorySections = (String[][])request.getAttribute("liferay-ui:form-navigator:categorySections");
@@ -25,6 +27,12 @@ String htmlBottom = (String)request.getAttribute("liferay-ui:form-navigator:html
 String htmlTop = (String)request.getAttribute("liferay-ui:form-navigator:htmlTop");
 String jspPath = (String)request.getAttribute("liferay-ui:form-navigator:jspPath");
 boolean showButtons = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:form-navigator:showButtons"));
+
+if (Validator.isNull(backURL)) {
+	PortletURL portletURL = renderResponse.createRenderURL();
+
+	backURL = portletURL.toString();
+}
 
 String[] allSections = new String[0];
 

@@ -481,7 +481,9 @@ public class Validator {
 	}
 
 	public static boolean isFileName(String name) {
-		if (isNull(name) || name.contains(StringPool.BACK_SLASH) ||
+		if (isNull(name) || name.equals(StringPool.PERIOD) ||
+			name.equals(StringPool.DOUBLE_PERIOD) ||
+			name.contains(StringPool.BACK_SLASH) ||
 			name.contains(StringPool.NULL_CHAR) ||
 			name.contains(StringPool.SLASH)) {
 
@@ -492,6 +494,10 @@ public class Validator {
 	}
 
 	public static boolean isFilePath(String path, boolean isParentDirAllowed) {
+		if (Validator.isNull(path)) {
+			return false;
+		}
+
 		if (path.contains(StringPool.NULL_CHAR)) {
 			return false;
 		}

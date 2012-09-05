@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.servlet.PersistentHttpServletRequestWrapper;
+import com.liferay.portal.kernel.servlet.PortalSessionThreadLocal;
 import com.liferay.portal.kernel.servlet.ServletContextUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
@@ -5263,9 +5264,15 @@ public class PortalImpl implements Portal {
 			}
 		}
 
-		HttpSession session = request.getSession();
+		// LPS-29667
 
-		ServletContext servletContext = session.getServletContext();
+		HttpSession portalSession = PortalSessionThreadLocal.getHttpSession();
+
+		if (portalSession == null) {
+			portalSession = request.getSession();
+		}
+
+		ServletContext portalServletContext = portalSession.getServletContext();
 
 		String redirect = PATH_MAIN + "/portal/status";
 
@@ -5278,7 +5285,7 @@ public class PortalImpl implements Portal {
 			redirect = PropsValues.LAYOUT_FRIENDLY_URL_PAGE_NOT_FOUND;
 
 			RequestDispatcher requestDispatcher =
-				servletContext.getRequestDispatcher(redirect);
+				portalServletContext.getRequestDispatcher(redirect);
 
 			if (requestDispatcher != null) {
 				requestDispatcher.forward(request, response);
@@ -5287,10 +5294,10 @@ public class PortalImpl implements Portal {
 		else if (PropsValues.LAYOUT_SHOW_HTTP_STATUS) {
 			response.setStatus(status);
 
-			SessionErrors.add(request, e.getClass(), e);
+			SessionErrors.add(portalSession, e.getClass(), e);
 
 			RequestDispatcher requestDispatcher =
-				servletContext.getRequestDispatcher(redirect);
+				portalServletContext.getRequestDispatcher(redirect);
 
 			if (requestDispatcher != null) {
 				requestDispatcher.forward(request, response);

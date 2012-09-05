@@ -66,7 +66,7 @@ if (parentStructure != null) {
 String xsd = ParamUtil.getString(request, "xsd");
 
 try {
-	xsd = JournalUtil.processXMLAttributes(xsd);
+	xsd = JournalUtil.validateXSD(xsd);
 }
 catch (StructureXsdException sxe) {
 	xsd = "<root></root>";

@@ -80,7 +80,7 @@ public class JournalStructureLocalServiceImpl
 		Date now = new Date();
 
 		try {
-			xsd = JournalUtil.processXMLAttributes(xsd);
+			xsd = JournalUtil.validateXSD(xsd);
 			xsd = DDMXMLUtil.formatXML(xsd);
 		}
 		catch (Exception e) {
@@ -492,7 +492,7 @@ public class JournalStructureLocalServiceImpl
 		structureId = structureId.trim().toUpperCase();
 
 		try {
-			xsd = JournalUtil.processXMLAttributes(xsd);
+			xsd = JournalUtil.validateXSD(xsd);
 			xsd = DDMXMLUtil.formatXML(xsd);
 		}
 		catch (Exception e) {

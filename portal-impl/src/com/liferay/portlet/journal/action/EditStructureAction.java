@@ -97,7 +97,7 @@ public class EditStructureAction extends PortletAction {
 			else {
 				String xsd = ParamUtil.getString(actionRequest, "xsd");
 
-				JournalUtil.processXMLAttributes(xsd);
+				JournalUtil.validateXSD(xsd);
 			}
 		}
 		catch (Exception e) {

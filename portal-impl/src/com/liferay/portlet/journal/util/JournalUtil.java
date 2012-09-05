@@ -991,7 +991,7 @@ public class JournalUtil {
 		return curContent;
 	}
 
-	public static String processXMLAttributes(String xsd)
+	public static String validateXSD(String xsd)
 		throws PortalException {
 
 		try {

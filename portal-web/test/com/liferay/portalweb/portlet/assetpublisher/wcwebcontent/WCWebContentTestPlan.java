@@ -27,6 +27,7 @@ import com.liferay.portalweb.portlet.assetpublisher.wcwebcontent.viewconfigurepo
 import com.liferay.portalweb.portlet.assetpublisher.wcwebcontent.viewconfigureportletfullcontentwebcontentap.ViewConfigurePortletFullContentWebContentAPTests;
 import com.liferay.portalweb.portlet.assetpublisher.wcwebcontent.viewconfigureportlettablewebcontentap.ViewConfigurePortletTableWebContentAPTests;
 import com.liferay.portalweb.portlet.assetpublisher.wcwebcontent.viewconfigureportlettitlelistwebcontentap.ViewConfigurePortletTitleListWebContentAPTests;
+import com.liferay.portalweb.portlet.assetpublisher.wcwebcontent.viewwcwebcontentscopeglobalap.ViewWCWebContentScopeGlobalAPTests;
 import com.liferay.portalweb.portlet.assetpublisher.wcwebcontent.viewwcwebcontentviewcountap.ViewWCWebContentViewCountAPTests;
 
 import junit.framework.Test;
@@ -56,6 +57,7 @@ public class WCWebContentTestPlan extends BaseTestSuite {
 		testSuite.addTest(ViewConfigurePortletTableWebContentAPTests.suite());
 		testSuite.addTest(
 			ViewConfigurePortletTitleListWebContentAPTests.suite());
+		testSuite.addTest(ViewWCWebContentScopeGlobalAPTests.suite());
 		testSuite.addTest(ViewWCWebContentViewCountAPTests.suite());
 
 		return testSuite;

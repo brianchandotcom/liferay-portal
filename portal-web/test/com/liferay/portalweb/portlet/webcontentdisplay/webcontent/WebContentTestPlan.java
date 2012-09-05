@@ -30,6 +30,7 @@ import com.liferay.portalweb.portlet.webcontentdisplay.webcontent.viewlocalizewe
 import com.liferay.portalweb.portlet.webcontentdisplay.webcontent.viewlocalizewebcontenttemplatelanguagewcd.ViewLocalizeWebContentTemplateLanguageWCDTests;
 import com.liferay.portalweb.portlet.webcontentdisplay.webcontent.viewportletshowlocaleswebcontenttemplatewcd.ViewPortletShowLocalesWebContentTemplateWCDTests;
 import com.liferay.portalweb.portlet.webcontentdisplay.webcontent.viewportletshowlocaleswebcontentwcd.ViewPortletShowLocalesWebContentWCDTests;
+import com.liferay.portalweb.portlet.webcontentdisplay.webcontent.viewwcwebcontentscopeglobalwcd.ViewWCWebContentScopeGlobalWCDTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -60,6 +61,7 @@ public class WebContentTestPlan extends BaseTestSuite {
 		testSuite.addTest(
 			ViewPortletShowLocalesWebContentTemplateWCDTests.suite());
 		testSuite.addTest(ViewPortletShowLocalesWebContentWCDTests.suite());
+		testSuite.addTest(ViewWCWebContentScopeGlobalWCDTests.suite());
 
 		return testSuite;
 	}

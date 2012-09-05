@@ -442,7 +442,7 @@ public class GroupImpl extends GroupBaseImpl {
 
 				showSite = false;
 			}
-			else if (isOrganization() && isSite()) {
+			else if (isOrganization() && !isSite()) {
 				_log.error(
 					"Group " + getGroupId() +
 						" is an organization site that does not have pages");

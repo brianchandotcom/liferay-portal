@@ -34,10 +34,10 @@ int endDateType = ParamUtil.getInteger(request, "endDateType");
 
 if (event.getRepeating() && (recurrence != null)) {
 	if (recurrence.getUntil() != null) {
-		endDateType = 2;
+		endDateType = CalEventConstants.END_DATE_TYPE_END_BY;
 	}
 	else if (recurrence.getOccurrence() > 0) {
-		endDateType = 1;
+		endDateType = CalEventConstants.END_DATE_TYPE_END_AFTER;
 	}
 }
 
@@ -78,7 +78,7 @@ request.setAttribute("view_event.jsp-event", event);
 			</dd>
 			<dt>
 				<c:choose>
-					<c:when test="<%= (endDateType == 0) || (endDateType == 2) %>">
+					<c:when test="<%= (endDateType == CalEventConstants.END_DATE_TYPE_NONE) || (endDateType == CalEventConstants.END_DATE_TYPE_END_BY) %>">
 						<liferay-ui:icon
 							image="../common/calendar"
 							message=""
@@ -92,15 +92,15 @@ request.setAttribute("view_event.jsp-event", event);
 				</c:choose>
 			</dt>
 			<dd>
-				<c:if test="<%= (endDateType == 0) %>">
+				<c:if test="<%= (endDateType == CalEventConstants.END_DATE_TYPE_NONE) %>">
 					<liferay-ui:message key="none" />
 				</c:if>
 
-				<c:if test="<%= (endDateType == 1) %>">
+				<c:if test="<%= (endDateType == CalEventConstants.END_DATE_TYPE_END_AFTER) %>">
 					<%= recurrence.getOccurrence() %>
 				</c:if>
 
-				<c:if test="<%= (endDateType == 2) %>">
+				<c:if test="<%= (endDateType == CalEventConstants.END_DATE_TYPE_END_BY) %>">
 					<%= event.isTimeZoneSensitive() ? dateFormatDate.format(Time.getDate(event.getEndDate(), timeZone)) : dateFormatDate.format(event.getEndDate()) %>
 				</c:if>
 			</dd>

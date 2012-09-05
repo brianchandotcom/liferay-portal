@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
@@ -437,23 +436,15 @@ public class DDMStructureLocalServiceImpl
 
 		List<Node> nodes = structureXPath.selectNodes(structureDocument);
 
-		StringBundler sb = new StringBundler(3);
-
 		for (Node node : nodes) {
 			Element element = (Element)node;
 
-			sb.setIndex(0);
+			String name = element.attributeValue("name");
 
-			sb.append("//dynamic-element[@name=");
+			name = HtmlUtil.escapeXPathAttribute(name);
 
-			String escapedName = HtmlUtil.escapeXPathAttribute(
-				element.attributeValue("name"));
-
-			sb.append(escapedName);
-
-			sb.append("]");
-
-			XPath templateXPath = SAXReaderUtil.createXPath(sb.toString());
+			XPath templateXPath = SAXReaderUtil.createXPath(
+				"//dynamic-element[@name=\"" + name + "\"]");
 
 			if (!templateXPath.booleanValueOf(templateDocument)) {
 				templateElement.add(element.createCopy());

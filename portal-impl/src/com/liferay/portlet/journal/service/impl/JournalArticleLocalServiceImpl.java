@@ -45,7 +45,6 @@ import com.liferay.portal.kernel.util.MathUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
@@ -1032,18 +1031,10 @@ public class JournalArticleLocalServiceImpl
 					Element pageElement = null;
 
 					if (Validator.isNotNull(targetPage)) {
-						StringBundler sb = new StringBundler(3);
-						sb.append("/root/page[@id = ");
-
-						String escapedTargetPage =
-							HtmlUtil.escapeXPathAttribute(targetPage);
-
-						sb.append(escapedTargetPage);
-
-						sb.append("]");
+						targetPage = HtmlUtil.escapeXPathAttribute(targetPage);
 
 						XPath xPathSelector = SAXReaderUtil.createXPath(
-							sb.toString());
+							"/root/page[@id = '" + targetPage + "']");
 
 						pageElement = (Element)xPathSelector.selectSingleNode(
 							document);

@@ -2908,7 +2908,9 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		PasswordPolicy passwordPolicy = user.getPasswordPolicy();
 
-		if (passwordPolicy.isExpireable()) {
+		if (passwordPolicy.isExpireable() &&
+			(passwordPolicy.getWarningTime() != 0)) {
+
 			Date now = new Date();
 
 			if (user.getPasswordModifiedDate() == null) {

@@ -163,6 +163,7 @@ boolean defaultPolicy = BeanParamUtil.getBoolean(passwordPolicy, request, "defau
 					</aui:select>
 
 					<aui:select helpMessage="warning-time-help" name="warningTime">
+						<aui:option label="none" value="0" />
 
 						<%
 						for (int i = 7; i < 16; i++) {

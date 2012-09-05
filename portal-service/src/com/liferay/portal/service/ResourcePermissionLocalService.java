@@ -681,6 +681,17 @@ public interface ResourcePermissionLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	public void populateResourcePermissionActionIds(long groupId,
+		com.liferay.portal.model.Role role,
+		com.liferay.portal.model.Resource resource,
+		java.util.List<java.lang.String> actions,
+		java.util.List<java.lang.String> individualActions,
+		java.util.List<java.lang.String> groupActions,
+		java.util.List<java.lang.String> groupTemplateActions,
+		java.util.List<java.lang.String> companyActions)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	/**
 	* Grants the role default permissions to all the resources of the type and
 	* at the scope stored in the resource permission, deletes the resource

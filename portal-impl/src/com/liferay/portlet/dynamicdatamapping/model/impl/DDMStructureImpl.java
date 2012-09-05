@@ -168,11 +168,22 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 			StringBundler sb = new StringBundler(7);
 
 			sb.append("//dynamic-element[@name=");
-			sb.append(HtmlUtil.escapeXPathAttribute(fieldName));
+
+			String escapedFieldName = HtmlUtil.escapeXPathAttribute(fieldName);
+			sb.append(escapedFieldName);
+
 			sb.append("] //dynamic-element[@");
-			sb.append(HtmlUtil.escapeXPath(attributeName));
+
+			String escapedAttributeName = HtmlUtil.escapeXPath(attributeName);
+			sb.append(escapedAttributeName);
+
 			sb.append("=");
-			sb.append(HtmlUtil.escapeXPathAttribute(attributeValue));
+
+			String escapedAttributeValue = HtmlUtil.escapeXPathAttribute(
+				attributeValue);
+
+			sb.append(escapedAttributeValue);
+
 			sb.append("]");
 
 			XPath xPathSelector = SAXReaderUtil.createXPath(sb.toString());
@@ -262,9 +273,16 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 			locale = getDefaultLocale();
 		}
 
-		String xPathExpression =
-			"meta-data[@locale=".concat(HtmlUtil.escapeXPathAttribute(locale))
-				.concat("]");
+		StringBundler sb = new StringBundler(3);
+
+		sb.append("meta-data[@locale=");
+
+		String escapedLocale = HtmlUtil.escapeXPathAttribute(locale);
+		sb.append(escapedLocale);
+
+		sb.append("]");
+
+		String xPathExpression = sb.toString();
 
 		XPath xPathSelector = SAXReaderUtil.createXPath(xPathExpression);
 

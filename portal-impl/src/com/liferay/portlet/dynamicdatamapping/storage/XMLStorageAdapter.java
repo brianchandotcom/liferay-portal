@@ -361,9 +361,15 @@ public class XMLStorageAdapter extends BaseStorageAdapter {
 	}
 
 	private Element _getElementByName(Document document, String name) {
-		XPath xPathSelector = SAXReaderUtil.createXPath(
-			"//dynamic-element[@name=".concat(
-				HtmlUtil.escapeXPathAttribute(name)).concat("]"));
+		StringBundler sb = new StringBundler(3);
+		sb.append("//dynamic-element[@name=");
+
+		String escapedName = HtmlUtil.escapeXPathAttribute(name);
+		sb.append(escapedName);
+
+		sb.append("]");
+
+		XPath xPathSelector = SAXReaderUtil.createXPath(sb.toString());
 
 		List<Node> nodes = xPathSelector.selectNodes(document);
 

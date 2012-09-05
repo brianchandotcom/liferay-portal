@@ -320,36 +320,12 @@ definePermissionsURL.setParameter(Constants.CMD, Constants.VIEW);
 
 				// Actions
 
-				List<String> currentIndividualActions = null;
-				List<String> currentGroupActions = null;
-				List<String> currentGroupTemplateActions = null;
-				List<String> currentCompanyActions = null;
+				List<String> currentIndividualActions = new ArrayList<String>();
+				List<String> currentGroupActions = new ArrayList<String>();
+				List<String> currentGroupTemplateActions = new ArrayList<String>();
+				List<String> currentCompanyActions = new ArrayList<String>();
 
-				if (ResourceBlockLocalServiceUtil.isSupported(resource.getName())) {
-					ResourceBlock resourceBlock = ResourceBlockLocalServiceUtil.getResourceBlock(resource.getName(), Long.valueOf(resource.getPrimKey()));
-
-					// Individual actions are not stored separately, so currentIndividualActions will include group and company actions as well
-
-					currentIndividualActions = ResourceBlockLocalServiceUtil.getPermissions(resourceBlock, role.getRoleId());
-					currentGroupActions = ResourceBlockLocalServiceUtil.getGroupScopePermissions(resourceBlock, role.getRoleId());
-
-					// Resource blocks do not dinstinguish between company scope and group-template scope permissions, so the distinction must be simulated here
-
-					if (role.getType() == RoleConstants.TYPE_REGULAR) {
-						currentGroupTemplateActions = new ArrayList<String>();
-						currentCompanyActions = ResourceBlockLocalServiceUtil.getCompanyScopePermissions(resourceBlock, role.getRoleId());
-					}
-					else {
-						currentGroupTemplateActions = ResourceBlockLocalServiceUtil.getCompanyScopePermissions(resourceBlock, role.getRoleId());
-						currentCompanyActions = new ArrayList<String>();
-					}
-				}
-				else {
-					currentIndividualActions = ResourcePermissionLocalServiceUtil.getAvailableResourcePermissionActionIds(resource.getCompanyId(), resource.getName(), resource.getScope(), resource.getPrimKey(), role.getRoleId(), actions);
-					currentGroupActions = ResourcePermissionLocalServiceUtil.getAvailableResourcePermissionActionIds(resource.getCompanyId(), resource.getName(), ResourceConstants.SCOPE_GROUP, String.valueOf(groupId), role.getRoleId(), actions);
-					currentGroupTemplateActions = ResourcePermissionLocalServiceUtil.getAvailableResourcePermissionActionIds(resource.getCompanyId(), resource.getName(), ResourceConstants.SCOPE_GROUP_TEMPLATE, "0", role.getRoleId(), actions);
-					currentCompanyActions = ResourcePermissionLocalServiceUtil.getAvailableResourcePermissionActionIds(resource.getCompanyId(), resource.getName(), ResourceConstants.SCOPE_COMPANY, String.valueOf(resource.getCompanyId()), role.getRoleId(), actions);
-				}
+				ResourcePermissionLocalServiceUtil.populateResourcePermissionActionIds(groupId, role, resource, actions, currentIndividualActions, currentGroupActions, currentGroupTemplateActions, currentCompanyActions);
 
 				List<String> currentActions = new ArrayList<String>();
 

@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.Resource;
 import com.liferay.portal.model.ResourceAction;
+import com.liferay.portal.model.ResourceBlock;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.ResourcePermission;
 import com.liferay.portal.model.ResourcePermissionConstants;
@@ -34,6 +35,7 @@ import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
+import com.liferay.portal.service.ResourceBlockLocalServiceUtil;
 import com.liferay.portal.service.base.ResourcePermissionLocalServiceBaseImpl;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
@@ -817,6 +819,69 @@ public class ResourcePermissionLocalServiceImpl
 		roleLocalService.deleteRole(fromRoleId);
 
 		PermissionCacheUtil.clearCache();
+	}
+
+	public void populateResourcePermissionActionIds(
+			long groupId, Role role, Resource resource, List<String> actions,
+			List<String> individualActions, List<String> groupActions,
+			List<String> groupTemplateActions, List<String> companyActions)
+		throws PortalException, SystemException {
+
+		if (ResourceBlockLocalServiceUtil.isSupported(resource.getName())) {
+			ResourceBlock resourceBlock =
+				ResourceBlockLocalServiceUtil.getResourceBlock(
+					resource.getName(), Long.valueOf(resource.getPrimKey()));
+
+			// Individual actions are not stored separately, so
+			// currentIndividualActions will include group and company actions
+			// as well
+
+			individualActions.addAll(
+				ResourceBlockLocalServiceUtil.getPermissions(
+					resourceBlock, role.getRoleId()));
+			groupActions.addAll(
+				ResourceBlockLocalServiceUtil.getGroupScopePermissions(
+					resourceBlock, role.getRoleId()));
+
+			// Resource blocks do not dinstinguish between company scope and
+			// group-template scope permissions, so the distinction must be
+			// simulated here
+
+			if (role.getType() == RoleConstants.TYPE_REGULAR) {
+				companyActions.addAll(
+					ResourceBlockLocalServiceUtil.getCompanyScopePermissions(
+						resourceBlock, role.getRoleId()));
+			}
+			else {
+				groupTemplateActions.addAll(
+					ResourceBlockLocalServiceUtil.getCompanyScopePermissions(
+						resourceBlock, role.getRoleId()));
+			}
+		}
+		else {
+			individualActions.addAll(getAvailableResourcePermissionActionIds(
+				resource.getCompanyId(), resource.getName(),
+				resource.getScope(), resource.getPrimKey(),
+				role.getRoleId(), actions));
+
+			groupActions.addAll(getAvailableResourcePermissionActionIds(
+				resource.getCompanyId(), resource.getName(),
+				ResourceConstants.SCOPE_GROUP, String.valueOf(groupId),
+				role.getRoleId(), actions));
+
+			groupTemplateActions.addAll(
+				getAvailableResourcePermissionActionIds(
+					resource.getCompanyId(), resource.getName(),
+					ResourceConstants.SCOPE_GROUP_TEMPLATE, "0",
+					role.getRoleId(), actions));
+
+			companyActions.addAll(getAvailableResourcePermissionActionIds(
+				resource.getCompanyId(), resource.getName(),
+				ResourceConstants.SCOPE_COMPANY,
+				String.valueOf(resource.getCompanyId()),
+				role.getRoleId(), actions));
+		}
+
 	}
 
 	/**

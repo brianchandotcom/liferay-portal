@@ -21,18 +21,27 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.UniqueList;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.MembershipRequest;
 import com.liferay.portal.model.MembershipRequestConstants;
+import com.liferay.portal.model.Resource;
+import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
+import com.liferay.portal.model.Team;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroupRole;
+import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.security.permission.ResourceActionsUtil;
+import com.liferay.portal.service.ResourceLocalServiceUtil;
+import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.MembershipRequestLocalServiceBaseImpl;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.SubscriptionSender;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -187,6 +196,69 @@ public class MembershipRequestLocalServiceImpl
 		List<Long> userIds = new UniqueList<Long>();
 
 		Group group = groupLocalService.getGroup(groupId);
+		Company company = companyLocalService.getCompany(group.getCompanyId());
+		String modelResource = Group.class.getName();
+		String resourcePrimKey = String.valueOf(group.getGroupId());
+
+		List<Role> roles = ResourceActionsUtil.getRoles(
+			company.getCompanyId(), group, modelResource, null);
+
+		List<Team> teams = teamLocalService.getGroupTeams(groupId);
+
+		if (teams != null) {
+			for (Team team : teams) {
+				Role role = RoleLocalServiceUtil.getTeamRole(
+					team.getCompanyId(), team.getTeamId());
+
+				roles.add(role);
+			}
+		}
+
+		Resource resource = ResourceLocalServiceUtil.getResource(
+			company.getCompanyId(), modelResource,
+			ResourceConstants.SCOPE_INDIVIDUAL, resourcePrimKey);
+
+		List<String> actions = ResourceActionsUtil.getResourceActions(
+			Group.class.getName());
+
+		for (Role role : roles) {
+			if (role.getName().equals(RoleConstants.OWNER) ||
+				role.getName().equals(RoleConstants.SITE_ADMINISTRATOR) ||
+				role.getName().equals(RoleConstants.SITE_OWNER) ||
+				role.getName().equals(
+					RoleConstants.ORGANIZATION_ADMINISTRATOR) ||
+				role.getName().equals(RoleConstants.ORGANIZATION_OWNER)) {
+
+				continue;
+			}
+
+			List<String> currentIndividualActions = new ArrayList<String>();
+			List<String> currentGroupActions = new ArrayList<String>();
+			List<String> currentGroupTemplateActions = new ArrayList<String>();
+			List<String> currentCompanyActions = new ArrayList<String>();
+
+			resourcePermissionLocalService.populateResourcePermissionActionIds(
+				groupId, role, resource, actions, currentIndividualActions,
+				currentGroupActions, currentGroupTemplateActions,
+				currentCompanyActions);
+
+			List<String> currentActions = new ArrayList<String>();
+
+			currentActions.addAll(currentIndividualActions);
+			currentActions.addAll(currentGroupActions);
+			currentActions.addAll(currentGroupTemplateActions);
+			currentActions.addAll(currentCompanyActions);
+
+			if (currentActions.contains(ActionKeys.ASSIGN_MEMBERS)) {
+				List<UserGroupRole> currentUserGroupRoles =
+					userGroupRoleLocalService.getUserGroupRolesByGroupAndRole(
+						groupId, role.getRoleId());
+
+				for (UserGroupRole userGroupRole : currentUserGroupRoles) {
+					userIds.add(userGroupRole.getUserId());
+				}
+			}
+		}
 
 		Role siteAdministratorRole = roleLocalService.getRole(
 			group.getCompanyId(), RoleConstants.SITE_ADMINISTRATOR);

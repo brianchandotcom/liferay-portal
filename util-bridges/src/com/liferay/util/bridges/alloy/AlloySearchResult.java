@@ -23,6 +23,8 @@ import com.liferay.portal.model.BaseModel;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.portlet.PortletURL;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -62,6 +64,10 @@ public class AlloySearchResult {
 		return hits;
 	}
 
+	public PortletURL getPortletURL() {
+		return portletURL;
+	}
+
 	public int getSize() {
 		return size;
 	}
@@ -80,9 +86,14 @@ public class AlloySearchResult {
 		this.hits = hits;
 	}
 
+	protected void setPortletURL(PortletURL portletURL) {
+		this.portletURL = portletURL;
+	}
+
 	protected AlloyServiceInvoker alloyServiceInvoker;
 	protected List<BaseModel<?>> baseModels;
 	protected Hits hits;
+	protected PortletURL portletURL;
 	protected int size;
 
 }

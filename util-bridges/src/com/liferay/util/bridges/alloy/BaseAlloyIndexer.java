@@ -36,6 +36,10 @@ import java.util.List;
  */
 public abstract class BaseAlloyIndexer extends BaseIndexer {
 
+	public AlloyServiceInvoker getAlloyServiceInvoker() {
+		return alloyServiceInvoker;
+	}
+
 	public String[] getClassNames() {
 		return classNames;
 	}

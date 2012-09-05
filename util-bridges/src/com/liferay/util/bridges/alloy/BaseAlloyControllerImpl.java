@@ -277,6 +277,10 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 			indexerClassName);
 
 		if ((existingIndexer != null) && (existingIndexer == indexer)) {
+			BaseAlloyIndexer baseAlloyIndexer = (BaseAlloyIndexer)indexer;
+
+			alloyServiceInvoker = baseAlloyIndexer.getAlloyServiceInvoker();
+
 			return;
 		}
 
@@ -487,6 +491,8 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 		Hits hits = indexer.search(searchContext);
 
 		alloySearchResult.setHits(hits);
+
+		alloySearchResult.setPortletURL(portletURL);
 
 		alloySearchResult.afterPropertiesSet();
 

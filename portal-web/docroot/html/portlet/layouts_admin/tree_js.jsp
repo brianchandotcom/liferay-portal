@@ -174,11 +174,9 @@ if (!selectableTree) {
 									}
 								},
 
-								<c:if test="<%= saveState %>">
-									childrenChange: function(event) {
-										TreeUtil.restoreNodeState(event.target);
-									},
-								</c:if>
+								childrenChange: function(event) {
+									TreeUtil.restoreNodeState(event.target);
+								},
 
 								expandedChange: function(event) {
 									var layoutId = TreeUtil.extractLayoutId(event.target);
@@ -556,10 +554,11 @@ if (!selectableTree) {
 			},
 			on: {
 				<c:if test="<%= saveState %>">
-				append: function(event) {
-					TreeUtil.restoreNodeState(event.tree.node);
-				},
+					append: function(event) {
+						TreeUtil.restoreNodeState(event.tree.node);
+					},
 				</c:if>
+
 				dropAppend: function(event) {
 					var tree = event.tree;
 

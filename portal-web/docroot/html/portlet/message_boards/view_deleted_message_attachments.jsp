@@ -87,7 +87,7 @@ iteratorURL.setParameter("messageId", String.valueOf(messageId));
 
 		row.setPrimaryKey(fileName);
 
-		String displayName = DLAppUtil.stripTrashNamespace(shortFileName, StringPool.UNDERLINE);
+		String displayName = TrashUtil.stripTrashNamespace(shortFileName, StringPool.UNDERLINE);
 		%>
 
 		<liferay-ui:search-container-column-text

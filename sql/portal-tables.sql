@@ -2187,7 +2187,11 @@ create table WikiNode (
 	modifiedDate DATE null,
 	name VARCHAR(75) null,
 	description STRING null,
-	lastPostDate DATE null
+	lastPostDate DATE null,
+	status INTEGER,
+	statusByUserId LONG,
+	statusByUserName VARCHAR(75) null,
+	statusDate DATE null
 );
 
 create table WikiPage (

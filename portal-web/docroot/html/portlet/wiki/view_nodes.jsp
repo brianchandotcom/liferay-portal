@@ -39,6 +39,13 @@ List results = WikiNodeLocalServiceUtil.getNodes(scopeGroupId, searchContainer.g
 searchContainer.setResults(results);
 %>
 
+<portlet:actionURL var="undoTrashURL">
+	<portlet:param name="struts_action" value="/wiki/restore_node" />
+	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
+</portlet:actionURL>
+
+<liferay-ui:trash-undo portletURL="<%= undoTrashURL %>" />
+
 <liferay-portlet:renderURL var="searchURL">
 	<portlet:param name="struts_action" value="/wiki/search" />
 </liferay-portlet:renderURL>

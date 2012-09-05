@@ -2572,6 +2572,10 @@
 			<hint-collection name="TEXTAREA" />
 		</field>
 		<field name="lastPostDate" type="Date" />
+		<field name="status" type="int" />
+		<field name="statusByUserId" type="long" />
+		<field name="statusByUserName" type="String" />
+		<field name="statusDate" type="Date" />
 	</model>
 	<model name="com.liferay.portlet.wiki.model.WikiPage">
 		<field name="uuid" type="String" />

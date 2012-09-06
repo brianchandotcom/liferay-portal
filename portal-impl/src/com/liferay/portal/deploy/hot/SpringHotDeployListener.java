@@ -41,9 +41,9 @@ public class SpringHotDeployListener extends BaseHotDeployListener {
 		ServletContext servletContext = hotDeployEvent.getServletContext();
 
 		try {
-			URL resource = servletContext.getResource("WEB-INF/service.xml");
+			URL url = servletContext.getResource("WEB-INF/service.xml");
 
-			if (resource == null) {
+			if (url == null) {
 				return;
 			}
 

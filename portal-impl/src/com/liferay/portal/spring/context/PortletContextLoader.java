@@ -14,8 +14,6 @@
 
 package com.liferay.portal.spring.context;
 
-import org.springframework.web.context.ContextLoader;
-
 /**
  * @author Brian Wing Shun Chan
  * @deprecated

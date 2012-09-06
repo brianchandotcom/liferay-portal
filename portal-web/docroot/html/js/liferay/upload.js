@@ -32,14 +32,14 @@ AUI.add(
 		var TPL_UPLOAD = [
 			'<div class="upload-target" id="{$ns}uploader">',
 				'<div class="drag-drop-area" id="{$ns}uploaderContent">',
-					'<h4 class="drop-file-text {["', UPLOADER_TYPE, '" == "html5" ? "" : "aui-helper-hidden"]}">{[ this.dropFileText ]}<span>{[ this.orText ]}</span></h4>',
-							'<span class="aui-button" id="{$ns}selectFilesButton">',
-								'<span class="aui-button-content">',
-									'<input class="aui-button-input" type="button" value="{[ this.selectFilesText ]}" />',
-								'</span>',
-							'</span>',
-						'</div>',
-					'</div>',
+					'<tpl if="this.uploaderType == \'html5\'">',
+						'<h4 class="drop-file-text">{[ this.dropFileText ]}<span>{[ this.orText ]}</span></h4>',
+					'</tpl>',
+					'<span class="aui-button" id="{$ns}selectFilesButton">',
+						'<span class="aui-button-content">',
+							'<input class="aui-button-input" type="button" value="{[ this.selectFilesText ]}" />',
+						'</span>',
+					'</span>',
 				'</div>',
 			'</div>',
 
@@ -137,9 +137,9 @@ AUI.add(
 			instance._fileListPendingText = Liferay.Language.get('x-files-ready-to-be-uploaded');
 			instance._filesSelectedText = Liferay.Language.get('x-files-selected');
 			instance._fileTypesDescriptionText = options.fileDescription || instance._allowedFileTypes;
-			instance._invalidFileExtensionText = Liferay.Language.get('document-names-must-end-with-one-of-the-following-extensions') + instance._allowedFileTypes;
+			instance._invalidFileExtensionText = Liferay.Language.get('document-names-must-end-with-one-of-the-following-extensions') + ' ' + instance._allowedFileTypes;
 			instance._invalidFileNameText = Liferay.Language.get('please-enter-a-file-with-a-valid-file-name');
-			instance._invalidFileSizeText = Liferay.Language.get('please-enter-a-file-with-a-valid-file-size-no-larger-than-x');
+			instance._invalidFileSizeText = Lang.sub(Liferay.Language.get('please-enter-a-file-with-a-valid-file-size-no-larger-than-x'), [instance._maxFileSizeInKB]);
 			instance._noFilesSelectedText = Liferay.Language.get('no-files-selected');
 			instance._unexpectedDeleteErrorText = Liferay.Language.get('an-unexpected-error-occurred-while-deleting-the-file');
 			instance._unexpectedUploadErrorText = Liferay.Language.get('an-unexpected-error-occurred-while-uploading-your-file');
@@ -176,32 +176,9 @@ AUI.add(
 				instance._setupUploader();
 
 				instance._setupCallbacks();
-
-				instance._filesQueued = 0;
-				instance._filesTotal = 0;
 			}
 			else {
-				A.Template(
-					'<tpl>',
-						'<div class="upload-target" id="{$ns}uploader">',
-							'<div class="drag-drop-area" id="{$ns}uploaderContent">',
-								'<h4 class="drop-file-text">{notAvailableText}</h4>',
-									'</div>',
-								'</div>',
-							'</div>',
-						'</div>',
-
-						'<div class="upload-list" id="{$ns}fileList">',
-							'<ul class="lfr-component" id="{$ns}fileListContent"></ul>',
-						'</div>',
-					'</tpl>'
-				).render(
-					{
-						$ns: instance._namespaceId,
-						notAvailableText: Liferay.Language.get('multiple-uploading-not-available')
-					}, 
-					A.one('#' + instance._namespaceId + 'fileUpload')
-				);
+				A.one('#' + instance._namespaceId + 'fileUpload').append('<div class="portlet-msg-error">' + Liferay.Language.get('multiple-uploading-not-available') + '</div>');
 			}
 		};
 
@@ -214,7 +191,6 @@ AUI.add(
 				instance._renderFileListTask();
 
 				instance._pendingFileInfo.hide();
-				instance._cancelButton.show();
 			},
 
 			_afterFilesSaved: function(event) {
@@ -323,14 +299,14 @@ AUI.add(
 						var error;
 						var file;
 
-						if (maxFileSizeInKB > 0 && (size > maxFileSize)) {
-							error = Lang.sub(instance._invalidFileSizeText, [maxFileSizeInKB]);
+						if (size === 0) {
+							error = instance._zeroByteFileText;
 						}
 						else if (name.length > 240) {
 							error = instance._invalidFileNameText;
 						}
-						else if (size === 0) {
-							error = instance._zeroByteFileText;
+						else if (maxFileSizeInKB > 0 && (size > maxFileSize)) {
+							error = instance._invalidFileSizeText;
 						}
 
 						if (error) {
@@ -566,25 +542,22 @@ AUI.add(
 
 				var li = A.one('#' + fileId);
 
-				var data = String(event.data);
+				var data = Lang.trim(String(event.data));
 
-				// Check for an HTTP error code in the 490's
-				if (data.indexOf('49') === 0) {;
-					var errorMessage;
-
-					if (data === '493') {
-						errorMessage = Lang.sub(instance._invalidFileSizeText, [instance._maxFileSizeInKB]);
-					}
-					else {
-						errorMessage = instance._errorMessages[data];
-					}
+				if (data.indexOf('49') === 0) {
+					var errorMessage = instance._errorMessages[data];
 
 					file.error = errorMessage;
 
-					instance._fileListContent.append(instance._fileListTPL.parse([file]));
+					var newLi = instance._fileListTPL.parse([file]);
 
 					if (li) {
+						li.placeBefore(newLi);
+
 						li.remove(true);
+					}
+					else {
+						instance._fileListContent.prepend(newLi);
 					}
 				}
 				else {
@@ -612,7 +585,7 @@ AUI.add(
 				var progress = A.one('#' + event.file.id + 'progress');
 
 				if (progress) {
-					var percentLoaded = Math.ceil(event.percentLoaded / 3) * 3;
+					var percentLoaded = Math.min(Math.ceil(event.percentLoaded / 3) * 3, 100);
 
 					progress.setStyle('width', percentLoaded + '%');
 				}
@@ -658,6 +631,8 @@ AUI.add(
 
 					instance._filesTotal += validFilesLength;
 					instance._filesQueued += validFilesLength;
+
+					instance._cancelButton.show();
 
 					if (instance._isUploading()) {
 						var uploadQueue = uploader.queue;
@@ -762,14 +737,15 @@ AUI.add(
 				var templateConfig = {
 					$ns: instance._namespaceId,
 					cancelFileText: instance._cancelFileText,
-					deleteFileText: Liferay.Language.get('delete-file'),
-					clearRecentUploadsText: Liferay.Language.get('clear-documents-already-saved'),
 					cancelUploadsText: instance._cancelUploadsText,
+					clearRecentUploadsText: Liferay.Language.get('clear-documents-already-saved'),
+					deleteFileText: Liferay.Language.get('delete-file'),
 					dropFileText: Liferay.Language.get('drop-files-here-to-upload'),
 					orText: Liferay.Language.get('or'),
 					pendingFileText: Liferay.Language.get('these-files-have-been-previously-uploaded-but-not-actually-saved.-please-save-or-delete-them-before-they-are-removed'),
 					selectFilesText: Liferay.Language.get('select-files'),
-					uploadsCompleteText: instance._uploadsCompleteText
+					uploadsCompleteText: instance._uploadsCompleteText,
+					uploaderType: UPLOADER_TYPE
 				};
 
 				instance._fileListTPL = new A.Template(TPL_FILE_LIST, templateConfig);
@@ -780,7 +756,7 @@ AUI.add(
 					instance._fileListSelector = '#' + instance._namespace('fileList');
 					instance._allRowIdsCheckboxSelector = '#' + instance._namespace('allRowIdsCheckbox');
 
-					var uploadFragment = new A.Template(TPL_UPLOAD, templateConfig).render();
+					var uploadFragment = new A.Template(TPL_UPLOAD, templateConfig).render({});
 
 					instance._allRowIdsCheckbox = uploadFragment.one(instance._allRowIdsCheckboxSelector);
 
@@ -1056,7 +1032,10 @@ AUI.add(
 				if (!totalFiles.size()) {
 					instance._pendingFileInfo.hide();
 				}
-			}
+			},
+
+			_filesQueued: 0,
+			_filesTotal: 0
 		};
 
 		Liferay.Upload = Upload;

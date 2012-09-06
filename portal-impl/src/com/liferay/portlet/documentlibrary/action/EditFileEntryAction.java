@@ -244,16 +244,16 @@ public class EditFileEntryAction extends PortletAction {
 					response.setContentType("text/html");
 
 					if (e instanceof DuplicateFileException) {
-						new ServletResponseUtil().write(response, "file_error::duplicate file");
+						new ServletResponseUtil().write(response, Integer.toString(ServletResponseConstants.SC_DUPLICATE_FILE_EXCEPTION));
 					}
 					else if (e instanceof FileExtensionException) {
-						new ServletResponseUtil().write(response, "file_error::unsupported file extension");
+						new ServletResponseUtil().write(response, Integer.toString(ServletResponseConstants.SC_FILE_EXTENSION_EXCEPTION));
 					}
 					else if (e instanceof FileNameException) {
-						new ServletResponseUtil().write(response, "file_error::invalid characters in file name");
+						new ServletResponseUtil().write(response, Integer.toString(ServletResponseConstants.SC_FILE_NAME_EXCEPTION));
 					}
 					else if (e instanceof FileSizeException) {
-						new ServletResponseUtil().write(response, "file_error::invalid file size");
+						new ServletResponseUtil().write(response, Integer.toString(ServletResponseConstants.SC_FILE_SIZE_EXCEPTION));
 					}
 				}
 
@@ -432,6 +432,18 @@ public class EditFileEntryAction extends PortletAction {
 			DLAppServiceUtil.addTempFileEntry(
 				themeDisplay.getScopeGroupId(), folderId, sourceFileName,
 				_TEMP_FOLDER_NAME, inputStream);
+		}
+		catch (Exception e) {
+			UploadException uploadException =
+				(UploadException)actionRequest.getAttribute(
+					WebKeys.UPLOAD_EXCEPTION);
+
+			if (uploadException != null && uploadException.isExceededSizeLimit()) {
+				throw new FileSizeException(uploadException.getCause());
+			}
+			else {
+				throw e;
+			}
 		}
 		finally {
 			StreamUtil.cleanUp(inputStream);

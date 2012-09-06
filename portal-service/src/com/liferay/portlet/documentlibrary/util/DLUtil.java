@@ -598,14 +598,18 @@ public class DLUtil {
 
 		String thumbnailQueryString = null;
 
-		if (ImageProcessorUtil.hasImages(fileVersion)) {
-			thumbnailQueryString = "&imageThumbnail=1";
-		}
-		else if (PDFProcessorUtil.hasImages(fileVersion)) {
-			thumbnailQueryString = "&documentThumbnail=1";
-		}
-		else if (VideoProcessorUtil.hasVideo(fileVersion)) {
-			thumbnailQueryString = "&videoThumbnail=1";
+		if (GetterUtil.getBoolean(
+				PropsUtil.get(PropsKeys.DL_FILE_ENTRY_THUMBNAIL_ENABLED))) {
+
+			if (ImageProcessorUtil.hasImages(fileVersion)) {
+				thumbnailQueryString = "&imageThumbnail=1";
+			}
+			else if (PDFProcessorUtil.hasImages(fileVersion)) {
+				thumbnailQueryString = "&documentThumbnail=1";
+			}
+			else if (VideoProcessorUtil.hasVideo(fileVersion)) {
+				thumbnailQueryString = "&videoThumbnail=1";
+			}
 		}
 
 		if (Validator.isNotNull(thumbnailQueryString)) {

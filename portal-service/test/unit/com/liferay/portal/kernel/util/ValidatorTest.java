@@ -22,6 +22,100 @@ import com.liferay.portal.kernel.test.TestCase;
  */
 public class ValidatorTest extends TestCase {
 
+	public void testIsFileExtension() throws Exception {
+		String[] validFileExtensions = {
+			"abc", ".abc", "."
+		};
+
+		for (String validFileExtension : validFileExtensions) {
+			if (!Validator.isFileExtension(validFileExtension)) {
+				fail(validFileExtension);
+			}
+		}
+
+		String[] invalidFileExtensions = {
+			null, "", "\u0000", ".\u0000", "abc\u0000\u0000/", "a/b", "c\\d",
+		};
+
+		for (String invalidFileExtension : invalidFileExtensions) {
+			if (Validator.isFileExtension(invalidFileExtension)) {
+				fail(invalidFileExtension);
+			}
+		}
+	}
+
+	public void testIsFileName() throws Exception {
+		String[] validFileNames = {
+			".asdf", "abc", "abc.def", "abc.def.xyz"
+		};
+
+		for (String validFileName : validFileNames) {
+			if (!Validator.isFileName(validFileName)) {
+				fail(validFileName);
+			}
+		}
+
+		String[] invalidFileNames = {
+			null, "", "a/b.txt", "/c", "/c/", "d\\e.txt", "\\f", "\\f\\",
+			"/c\\f", "/", ".", "..", "./", "../", "./..", "a\u0000",
+			"a\u0000/../a"
+		};
+
+		for (String invalidFileName : invalidFileNames) {
+			if (Validator.isFileName(invalidFileName)) {
+				fail(invalidFileName);
+			}
+		}
+	}
+
+	public void testIsFilePath() throws Exception {
+		String[] validFilePaths = {
+			"a", "a/a", "a\\a", "a/./a", "a\\.\\a", "a//a", "a\\\\a", "a//a//",
+			"a\\a\\", "a..", "a.", ".a", "..a", "a../", "a./", ".a/", "..a/",
+			".", "./", "./a", "a/.", "a/./a"
+		};
+
+		for (String validFilePath : validFilePaths) {
+			if (!Validator.isFilePath(validFilePath, false)) {
+				fail(validFilePath);
+			}
+		}
+
+		String[] validFilePathsWithParentDirectories = {
+			"a", "a/a", "a\\a", "a/./a", "a\\.\\a", "a//a", "a\\\\a", "a//a//",
+			"a\\a\\", "a..", "a.", ".a", "..a", "a../", "a./", ".a/", "..a/",
+			".", "./", "/.", "./a", "a/.", "a/./a", "c:\\a", "/", "/a", "..a/",
+			"../a", "/a/../a", "c:\\a\\..\\a"
+		};
+
+		for (String validFilePath : validFilePathsWithParentDirectories) {
+			if (!Validator.isFilePath(validFilePath, true)) {
+				fail(validFilePath);
+			}
+		}
+
+		String[] invalidFilePaths = {
+			null, "", "..", "./..", "../a", "/../a", "\u0000","a\u0000/../a"
+		};
+
+		for (String invalidFilePath : invalidFilePaths) {
+			if (Validator.isFilePath(invalidFilePath, false)) {
+				fail(invalidFilePath);
+			}
+		}
+
+		String[] invalidFilePathsWithParentDirectories = {
+			null, "", "\u0000", "a\u0000/../a"
+		};
+
+		for (String invalidFilePath : invalidFilePathsWithParentDirectories) {
+			if (Validator.isFilePath(invalidFilePath, true)) {
+				fail(invalidFilePath);
+			}
+		}
+
+	}
+
 	public void testIsNull() throws Exception {
 		String[] nullStrings = {
 			null, "", "  ", "null", " null", "null ", "  null  "

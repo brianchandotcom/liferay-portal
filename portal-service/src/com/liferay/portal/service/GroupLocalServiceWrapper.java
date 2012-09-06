@@ -516,6 +516,22 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 	}
 
 	/**
+	* Returns all the sites that are children of the parent group.
+	*
+	* @param companyId the primary key of the company
+	* @param parentGroupId the primary key of the parent group
+	* @param site whether the group is a site
+	* @return the matching groups, or <code>null</code> if no matches were
+	found
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portal.model.Group> getGroups(
+		long companyId, long parentGroupId, boolean site)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _groupLocalService.getGroups(companyId, parentGroupId, site);
+	}
+
+	/**
 	* Returns the groups with the matching primary keys.
 	*
 	* @param groupIds the primary keys of the groups
@@ -578,6 +594,53 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _groupLocalService.getLayoutSetPrototypeGroup(companyId,
 			layoutSetPrototypeId);
+	}
+
+	/**
+	* Returns a range of all sites that are children of the parent group and
+	* that have at least one layout.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end -
+	* start</code> instances. <code>start</code> and <code>end</code> are not
+	* primary keys, they are indexes in the result set. Thus, <code>0</code>
+	* refers to the first result in the set. Setting both <code>start</code>
+	* and <code>end</code> to {@link
+	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	* result set.
+	* </p>
+	*
+	* @param companyId the primary key of the company
+	* @param parentGroupId the primary key of the parent group
+	* @param site whether the group is a site
+	* @param start the lower bound of the range of groups to return
+	* @param end the upper bound of the range of groups to return (not
+	inclusive)
+	* @return the range of matching groups
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portal.model.Group> getLayoutsGroups(
+		long companyId, long parentGroupId, boolean site, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _groupLocalService.getLayoutsGroups(companyId, parentGroupId,
+			site, start, end);
+	}
+
+	/**
+	* Returns the number of sites that are children or the parent group and
+	* that have at least one layout
+	*
+	* @param companyId the primary key of the company
+	* @param parentGroupId the primary key of the parent group
+	* @param site whether the group is a site
+	* @return the number of matching sites
+	* @throws SystemException if a system exception occurred
+	*/
+	public int getLayoutsGroupsCount(long companyId, long parentGroupId,
+		boolean site)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _groupLocalService.getLayoutsGroupsCount(companyId,
+			parentGroupId, site);
 	}
 
 	/**

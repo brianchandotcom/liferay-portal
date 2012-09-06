@@ -21,6 +21,12 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  * @author Brian Wing Shun Chan
  */
 public class GroupFinderUtil {
+	public static int countByLayouts(long companyId, long parentGroupId,
+		boolean site)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder().countByLayouts(companyId, parentGroupId, site);
+	}
+
 	public static int countByG_U(long groupId, long userId, boolean inherit)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getFinder().countByG_U(groupId, userId, inherit);
@@ -42,6 +48,13 @@ public class GroupFinderUtil {
 		return getFinder()
 				   .countByC_C_N_D(companyId, classNameIds, name, realName,
 			description, params);
+	}
+
+	public static java.util.List<com.liferay.portal.model.Group> findByLayouts(
+		long companyId, long parentGroupId, boolean site, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder()
+				   .findByLayouts(companyId, parentGroupId, site, start, end);
 	}
 
 	public static java.util.List<com.liferay.portal.model.Group> findByLiveGroups()

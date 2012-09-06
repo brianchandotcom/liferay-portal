@@ -29,6 +29,21 @@ public interface Group extends GroupModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portal.model.impl.GroupImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public java.util.List<com.liferay.portal.model.Group> getAncestors()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public java.util.List<com.liferay.portal.model.Group> getChildren(
+		boolean site)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public java.util.List<com.liferay.portal.model.Group> getChildrenWithLayouts(
+		boolean site, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public int getChildrenWithLayoutsCount(boolean site)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	public long getDefaultPrivatePlid();
 
 	public long getDefaultPublicPlid();

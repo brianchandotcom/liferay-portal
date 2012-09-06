@@ -1211,7 +1211,8 @@ public class WebDriverToSeleniumBridge
 	}
 
 	protected WebElement getWebElement(String locator) {
-		WebDriverWait webDriverWait = new WebDriverWait(this, 3);
+		WebDriverWait webDriverWait = new WebDriverWait(
+			this, TestPropsValues.TIMEOUT_IMPLICIT_WAIT);
 
 		if (locator.startsWith("//")) {
 			return webDriverWait.until(
@@ -1254,7 +1255,8 @@ public class WebDriverToSeleniumBridge
 	}
 
 	protected List<WebElement> getWebElements(String locator) {
-		WebDriverWait webDriverWait = new WebDriverWait(this, 3);
+		WebDriverWait webDriverWait = new WebDriverWait(
+				this, TestPropsValues.TIMEOUT_IMPLICIT_WAIT);
 
 		if (locator.startsWith("//")) {
 			return webDriverWait.until(

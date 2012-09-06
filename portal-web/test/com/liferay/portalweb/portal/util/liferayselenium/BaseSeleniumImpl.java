@@ -135,7 +135,7 @@ public abstract class BaseSeleniumImpl
 
 	public void waitForConfirmation(String pattern) throws Exception {
 		for (int second = 0;; second++) {
-			if (second >= 30) {
+			if (second >= TestPropsValues.TIMEOUT_EXPLICIT_WAIT) {
 				BaseTestCase.fail("timeout");
 			}
 
@@ -153,7 +153,7 @@ public abstract class BaseSeleniumImpl
 
 	public void waitForElementNotPresent(String locator) throws Exception {
 		for (int second = 0;; second++) {
-			if (second >= 30) {
+			if (second >= TestPropsValues.TIMEOUT_EXPLICIT_WAIT) {
 				BaseTestCase.fail(
 					"Timeout: Still able to find the Locator \"" + locator +
 						"\"");
@@ -173,7 +173,7 @@ public abstract class BaseSeleniumImpl
 
 	public void waitForElementPresent(String locator) throws Exception {
 		for (int second = 0;; second++) {
-			if (second >= 30) {
+			if (second >= TestPropsValues.TIMEOUT_EXPLICIT_WAIT) {
 				BaseTestCase.fail(
 					"Timeout: Unable to find the Locator \"" + locator + "\"");
 			}
@@ -196,7 +196,7 @@ public abstract class BaseSeleniumImpl
 		String valueReplace = RuntimeVariables.replace(value);
 
 		for (int second = 0;; second++) {
-			if (second >= 30) {
+			if (second >= TestPropsValues.TIMEOUT_EXPLICIT_WAIT) {
 				BaseTestCase.fail("timeout");
 			}
 
@@ -216,7 +216,7 @@ public abstract class BaseSeleniumImpl
 		throws Exception {
 
 		for (int second = 0;; second++) {
-			if (second >= 30) {
+			if (second >= TestPropsValues.TIMEOUT_EXPLICIT_WAIT) {
 				BaseTestCase.fail("timeout");
 			}
 
@@ -236,7 +236,7 @@ public abstract class BaseSeleniumImpl
 		String valueReplace = RuntimeVariables.replace(value);
 
 		for (int second = 0;; second++) {
-			if (second >= 30) {
+			if (second >= TestPropsValues.TIMEOUT_EXPLICIT_WAIT) {
 				BaseTestCase.fail("timeout");
 			}
 
@@ -257,7 +257,7 @@ public abstract class BaseSeleniumImpl
 		String valueReplace = RuntimeVariables.replace(value);
 
 		for (int second = 0;; second++) {
-			if (second >= 30) {
+			if (second >= TestPropsValues.TIMEOUT_EXPLICIT_WAIT) {
 				BaseTestCase.fail("timeout");
 			}
 
@@ -276,7 +276,7 @@ public abstract class BaseSeleniumImpl
 
 	public void waitForNotVisible(String locator) throws Exception {
 		for (int second = 0;; second++) {
-			if (second >= 30) {
+			if (second >= TestPropsValues.TIMEOUT_EXPLICIT_WAIT) {
 				BaseTestCase.fail(
 					"Timeout: Still able to find the Locator \"" + locator +
 						"\"");
@@ -305,7 +305,7 @@ public abstract class BaseSeleniumImpl
 		String valueReplace = RuntimeVariables.replace(value);
 
 		for (int second = 0;; second++) {
-			if (second >= 30) {
+			if (second >= TestPropsValues.TIMEOUT_EXPLICIT_WAIT) {
 				BaseTestCase.fail("timeout");
 			}
 
@@ -325,7 +325,7 @@ public abstract class BaseSeleniumImpl
 		throws Exception {
 
 		for (int second = 0;; second++) {
-			if (second >= 30) {
+			if (second >= TestPropsValues.TIMEOUT_EXPLICIT_WAIT) {
 				BaseTestCase.fail("timeout");
 			}
 
@@ -345,7 +345,7 @@ public abstract class BaseSeleniumImpl
 		String valueReplace = RuntimeVariables.replace(value);
 
 		for (int second = 0;; second++) {
-			if (second >= 30) {
+			if (second >= TestPropsValues.TIMEOUT_EXPLICIT_WAIT) {
 				BaseTestCase.fail("timeout");
 			}
 
@@ -364,7 +364,7 @@ public abstract class BaseSeleniumImpl
 
 	public void waitForTextNotPresent(String value) throws Exception {
 		for (int second = 0;; second++) {
-			if (second >= 30) {
+			if (second >= TestPropsValues.TIMEOUT_EXPLICIT_WAIT) {
 				BaseTestCase.fail(
 					"Timeout: Still able to find the Text \"" + value + "\"");
 			}
@@ -383,7 +383,7 @@ public abstract class BaseSeleniumImpl
 
 	public void waitForTextPresent(String value) throws Exception {
 		for (int second = 0;; second++) {
-			if (second >= 30) {
+			if (second >= TestPropsValues.TIMEOUT_EXPLICIT_WAIT) {
 				BaseTestCase.fail(
 					"Timeout: Unable to find the Text \"" + value + "\"");
 			}
@@ -404,7 +404,7 @@ public abstract class BaseSeleniumImpl
 		String valueReplace = RuntimeVariables.replace(value);
 
 		for (int second = 0;; second++) {
-			if (second >= 30) {
+			if (second >= TestPropsValues.TIMEOUT_EXPLICIT_WAIT) {
 				BaseTestCase.fail("timeout");
 			}
 
@@ -423,7 +423,7 @@ public abstract class BaseSeleniumImpl
 
 	public void waitForVisible(String locator) throws Exception {
 		for (int second = 0;; second++) {
-			if (second >= 30) {
+			if (second >= TestPropsValues.TIMEOUT_EXPLICIT_WAIT) {
 				BaseTestCase.fail(
 					"Timeout: Unable to find the Locator \"" + locator + "\"");
 			}

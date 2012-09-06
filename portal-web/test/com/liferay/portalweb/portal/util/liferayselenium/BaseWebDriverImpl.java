@@ -109,11 +109,13 @@ public abstract class BaseWebDriverImpl
 
 		Timeouts timeouts = options.timeouts();
 
-		timeouts.implicitlyWait(3, TimeUnit.MILLISECONDS);
+		timeouts.implicitlyWait(
+			TestPropsValues.TIMEOUT_IMPLICIT_WAIT, TimeUnit.MILLISECONDS);
 
 		List<WebElement> webElements = getWebElements(locator);
 
-		timeouts.implicitlyWait(30, TimeUnit.MILLISECONDS);
+		timeouts.implicitlyWait(
+			TestPropsValues.TIMEOUT_EXPLICIT_WAIT, TimeUnit.MILLISECONDS);
 
 		return webElements.isEmpty();
 	}
@@ -155,8 +157,12 @@ public abstract class BaseWebDriverImpl
 	}
 
 	public void waitForConfirmation(String pattern) throws Exception {
+		int timeout =
+			TestPropsValues.TIMEOUT_EXPLICIT_WAIT /
+				TestPropsValues.TIMEOUT_IMPLICIT_WAIT;
+
 		for (int second = 0;; second++) {
-			if (second >= 10) {
+			if (second >= timeout) {
 				BaseTestCase.fail("timeout");
 			}
 
@@ -172,7 +178,7 @@ public abstract class BaseWebDriverImpl
 
 	public void waitForElementNotPresent(String locator) throws Exception {
 		for (int second = 0;; second++) {
-			if (second >= 30) {
+			if (second >= TestPropsValues.TIMEOUT_EXPLICIT_WAIT) {
 				BaseTestCase.fail(
 					"Timeout: Unable to find the Locator \"" + locator + "\"");
 			}
@@ -190,8 +196,12 @@ public abstract class BaseWebDriverImpl
 	}
 
 	public void waitForElementPresent(String locator) throws Exception {
+		int timeout =
+			TestPropsValues.TIMEOUT_EXPLICIT_WAIT /
+				TestPropsValues.TIMEOUT_IMPLICIT_WAIT;
+
 		for (int second = 0;; second++) {
-			if (second >= 10) {
+			if (second >= timeout) {
 				BaseTestCase.fail(
 					"Timeout: Still able to find the Locator \"" + locator +
 						"\"");
@@ -213,7 +223,7 @@ public abstract class BaseWebDriverImpl
 		String valueReplace = RuntimeVariables.replace(value);
 
 		for (int second = 0;; second++) {
-			if (second >= 30) {
+			if (second >= TestPropsValues.TIMEOUT_EXPLICIT_WAIT) {
 				BaseTestCase.fail("timeout");
 			}
 
@@ -233,7 +243,7 @@ public abstract class BaseWebDriverImpl
 		throws Exception {
 
 		for (int second = 0;; second++) {
-			if (second >= 30) {
+			if (second >= TestPropsValues.TIMEOUT_EXPLICIT_WAIT) {
 				BaseTestCase.fail("timeout");
 			}
 
@@ -253,7 +263,7 @@ public abstract class BaseWebDriverImpl
 		String valueReplace = RuntimeVariables.replace(value);
 
 		for (int second = 0;; second++) {
-			if (second >= 30) {
+			if (second >= TestPropsValues.TIMEOUT_EXPLICIT_WAIT) {
 				BaseTestCase.fail("timeout");
 			}
 
@@ -273,7 +283,7 @@ public abstract class BaseWebDriverImpl
 		String valueReplace = RuntimeVariables.replace(value);
 
 		for (int second = 0;; second++) {
-			if (second >= 30) {
+			if (second >= TestPropsValues.TIMEOUT_EXPLICIT_WAIT) {
 				BaseTestCase.fail("timeout");
 			}
 
@@ -292,7 +302,7 @@ public abstract class BaseWebDriverImpl
 
 	public void waitForNotVisible(String locator) throws Exception {
 		for (int second = 0;; second++) {
-			if (second >= 30) {
+			if (second >= TestPropsValues.TIMEOUT_EXPLICIT_WAIT) {
 				BaseTestCase.fail(
 					"Timeout: Still able to find the Locator \"" + locator +
 						"\"");
@@ -316,7 +326,7 @@ public abstract class BaseWebDriverImpl
 		String valueReplace = RuntimeVariables.replace(value);
 
 		for (int second = 0;; second++) {
-			if (second >= 30) {
+			if (second >= TestPropsValues.TIMEOUT_EXPLICIT_WAIT) {
 				BaseTestCase.fail("timeout");
 			}
 
@@ -336,7 +346,7 @@ public abstract class BaseWebDriverImpl
 		throws Exception {
 
 		for (int second = 0;; second++) {
-			if (second >= 30) {
+			if (second >= TestPropsValues.TIMEOUT_EXPLICIT_WAIT) {
 				BaseTestCase.fail("timeout");
 			}
 
@@ -356,7 +366,7 @@ public abstract class BaseWebDriverImpl
 		String valueReplace = RuntimeVariables.replace(value);
 
 		for (int second = 0;; second++) {
-			if (second >= 30) {
+			if (second >= TestPropsValues.TIMEOUT_EXPLICIT_WAIT) {
 				BaseTestCase.fail("timeout");
 			}
 
@@ -375,7 +385,7 @@ public abstract class BaseWebDriverImpl
 
 	public void waitForTextNotPresent(String value) throws Exception {
 		for (int second = 0;; second++) {
-			if (second >= 30) {
+			if (second >= TestPropsValues.TIMEOUT_EXPLICIT_WAIT) {
 				BaseTestCase.fail(
 					"Timeout: Still able to find the Text \"" + value + "\"");
 			}
@@ -394,7 +404,7 @@ public abstract class BaseWebDriverImpl
 
 	public void waitForTextPresent(String value) throws Exception {
 		for (int second = 0;; second++) {
-			if (second >= 30) {
+			if (second >= TestPropsValues.TIMEOUT_EXPLICIT_WAIT) {
 				BaseTestCase.fail(
 					"Timeout: Unable to find the Text \"" + value + "\"");
 			}
@@ -413,7 +423,7 @@ public abstract class BaseWebDriverImpl
 
 	public void waitForValue(String locator, String value) throws Exception {
 		for (int second = 0;; second++) {
-			if (second >= 30) {
+			if (second >= TestPropsValues.TIMEOUT_EXPLICIT_WAIT) {
 				BaseTestCase.fail("timeout");
 			}
 
@@ -432,7 +442,7 @@ public abstract class BaseWebDriverImpl
 
 	public void waitForVisible(String locator) throws Exception {
 		for (int second = 0;; second++) {
-			if (second >= 30) {
+			if (second >= TestPropsValues.TIMEOUT_EXPLICIT_WAIT) {
 				BaseTestCase.fail(
 					"Timeout: Unable to find the Locator \"" + locator + "\"");
 			}

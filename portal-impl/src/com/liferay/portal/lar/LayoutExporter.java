@@ -789,7 +789,8 @@ public class LayoutExporter {
 		if (layout.isTypeArticle()) {
 			exportJournalArticle(portletDataContext, layout, layoutElement);
 		}
-		else if (layout.isTypeLinkToLayout()) {
+
+		if (layout.isTypeLinkToLayout()) {
 			UnicodeProperties typeSettingsProperties =
 				layout.getTypeSettingsProperties();
 
@@ -812,26 +813,41 @@ public class LayoutExporter {
 				}
 			}
 		}
-		else if (layout.isTypePortlet()) {
-			for (Portlet portlet : portlets) {
-				if (portlet.isScopeable() && layout.hasScopeGroup()) {
-					String key = PortletPermissionUtil.getPrimaryKey(
-						layout.getPlid(), portlet.getPortletId());
 
-					portletIds.put(
-						key,
-						new Object[] {
-							portlet.getPortletId(), layout.getPlid(),
-							layout.getScopeGroup().getGroupId(),
-							StringPool.BLANK, layout.getUuid()
-						});
+		// All of these layout types support embedded portlets
+
+		else if (layout.isTypeArticle() || layout.isTypeEmbedded() ||
+				 layout.isTypePanel() || layout.isTypePortlet()) {
+
+			// However, only portlet type layouts support page scoping
+
+			if (layout.isTypePortlet()) {
+				for (Portlet portlet : portlets) {
+					if (portlet.isScopeable() && layout.hasScopeGroup()) {
+						String key = PortletPermissionUtil.getPrimaryKey(
+							layout.getPlid(), portlet.getPortletId());
+
+						portletIds.put(
+							key,
+							new Object[] {
+								portlet.getPortletId(), layout.getPlid(),
+								layout.getScopeGroup().getGroupId(),
+								StringPool.BLANK, layout.getUuid()
+							});
+					}
 				}
 			}
 
 			LayoutTypePortlet layoutTypePortlet =
 				(LayoutTypePortlet)layout.getLayoutType();
 
-			for (String portletId : layoutTypePortlet.getPortletIds()) {
+			// The getAllPortlets method returns all effective portlets for any
+			// layout type, including embedded portlets, or in the case of panel
+			// type layout, selected portlets
+
+			for (Portlet portlet : layoutTypePortlet.getAllPortlets()) {
+				String portletId = portlet.getPortletId();
+
 				javax.portlet.PortletPreferences jxPreferences =
 					PortletPreferencesFactoryUtil.getLayoutPortletSetup(
 						layout, portletId);

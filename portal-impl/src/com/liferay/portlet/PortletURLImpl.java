@@ -892,15 +892,6 @@ public class PortletURLImpl
 			}
 		}
 
-		String outerPortletId = PortalUtil.getOuterPortletId(_request);
-
-		if (outerPortletId != null) {
-			sb.append("p_o_p_id");
-			sb.append(StringPool.EQUAL);
-			sb.append(processValue(key, outerPortletId));
-			sb.append(StringPool.AMPERSAND);
-		}
-
 		if (_doAsUserId > 0) {
 			try {
 				Company company = PortalUtil.getCompany(_request);

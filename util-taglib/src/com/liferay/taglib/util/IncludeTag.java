@@ -324,6 +324,19 @@ public class IncludeTag extends AttributesTagSupport {
 
 		Theme theme = (Theme)request.getAttribute(WebKeys.THEME);
 
+		if (theme == null) {
+			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+			if (themeDisplay != null) {
+				theme = themeDisplay.getTheme();
+			}
+		}
+
+		if (theme == null) {
+			return false;
+		}
+
 		String portletId = ThemeUtil.getPortletId(request);
 
 		boolean exists = theme.resourceExists(servletContext, portletId, page);

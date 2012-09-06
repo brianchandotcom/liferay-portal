@@ -871,7 +871,14 @@ public class SeleneseToJavaBuilder {
 					 param1.equals("open") || param1.equals("selectFrame") ||
 					 param1.equals("selectPopUp") ||
 					 param1.equals("selectWindow") ||
-					 param1.equals("setTimeout") || param1.equals("uncheck")) {
+					 param1.equals("setTimeout") || param1.equals("uncheck") ||
+					 param1.equals("waitForConfirmation") ||
+					 param1.equals("waitForElementPresent") ||
+					 param1.equals("waitForElementNotPresent") ||
+					 param1.equals("waitForNotVisible") ||
+					 param1.equals("waitForTextNotPresent") ||
+					 param1.equals("waitForTextPresent") ||
+					 param1.equals("waitForVisible")) {
 
 				sb.append("selenium.");
 				sb.append(param1);
@@ -1154,156 +1161,36 @@ public class SeleneseToJavaBuilder {
 				sb.append(param2);
 				sb.append("\", selenium.getTitle());");
 			}
-			else if (param1.equals("waitForConfirmation") ||
-					 param1.equals("waitForElementNotPresent") ||
-					 param1.equals("waitForElementPresent") ||
-					 param1.equals("waitForNotPartialText") ||
+			else if (param1.equals("waitForNotPartialText") ||
 					 param1.equals("waitForNotSelectedLabel") ||
-					 param1.equals("waitForNotTable") ||
 					 param1.equals("waitForNotText") ||
 					 param1.equals("waitForNotValue") ||
-					 param1.equals("waitForNotVisible") ||
 					 param1.equals("waitForPartialText") ||
 					 param1.equals("waitForSelectedLabel") ||
-					 param1.equals("waitForTable") ||
 					 param1.equals("waitForText") ||
-					 param1.equals("waitForTextNotPresent") ||
-					 param1.equals("waitForTextPresent") ||
-					 param1.equals("waitForValue") ||
-					 param1.equals("waitForVisible")) {
+					 param1.equals("waitForValue")) {
 
-				sb.append("for (int second = 0;; second++) {");
-				sb.append("if (second >= 90) {");
-				sb.append("fail(\"timeout\");");
-				sb.append("}");
+				sb.append("selenium.");
+				sb.append(param1);
+				sb.append("(\"");
+				sb.append(param2);
+				sb.append("\",");
 
-				sb.append("try {");
-				sb.append("if (");
+				if (param3.startsWith("${")) {
+					sb.append("RuntimeVariables.getValue(\"");
 
-				if (param1.equals("waitForNotPartialText") ||
-					param1.equals("waitForNotSelectedLabel") ||
-					param1.equals("waitForNotTable") ||
-					param1.equals("waitForNotText") ||
-					param1.equals("waitForNotValue") ||
-					param1.equals("waitForNotVisible") ||
-					param1.equals("waitForTextNotPresent")) {
+					String text = param3.substring(2, param3.length() - 1);
 
-					sb.append("!");
+					sb.append(text);
+					sb.append("\")");
 				}
-
-				if (param1.equals("waitForConfirmation")) {
+				else {
 					sb.append("\"");
-					sb.append(param2);
-					sb.append("\".equals(selenium.getConfirmation())");
-				}
-				else if (param1.equals("waitForElementNotPresent")) {
-					sb.append("selenium.isElementNotPresent");
-					sb.append("(\"");
-					sb.append(param2);
-					sb.append("\")");
-				}
-				else if (param1.equals("waitForElementPresent")) {
-					sb.append("selenium.isElementPresent");
-					sb.append("(\"");
-					sb.append(param2);
-					sb.append("\")");
-				}
-				else if (param1.equals("waitForNotPartialText") ||
-						 param1.equals("waitForPartialText")) {
-
-					sb.append("selenium.isPartialText(\"");
-					sb.append(param2);
-					sb.append("\", ");
-
-					if (param3.startsWith("${")) {
-						sb.append("RuntimeVariables.getValue(\"");
-
-						String text = param3.substring(2, param3.length() - 1);
-
-						sb.append(text);
-						sb.append("\")");
-					}
-					else {
-						sb.append("\"");
-						sb.append(param3);
-						sb.append("\"");
-					}
-
-					sb.append(")");
-				}
-				else if (param1.equals("waitForNotSelectedLabel") ||
-						 param1.equals("waitForSelectedLabel"))
-				{
-
-					if (param3.startsWith("${")) {
-						sb.append("RuntimeVariables.getValue(\"");
-
-						String text = param3.substring(2, param3.length() - 1);
-
-						sb.append(text);
-						sb.append("\")");
-					}
-					else {
-						sb.append("\"");
-						sb.append(param3);
-						sb.append("\"");
-					}
-
-					sb.append(".equals(selenium.getSelectedLabel(\"");
-					sb.append(param2);
-					sb.append("\"))");
-				}
-				else if (param1.equals("waitForNotTable") ||
-						 param1.equals("waitForTable")) {
-
-					sb.append("StringPool.BLANK.equals(selenium.getTable(\"");
-					sb.append(param2);
-					sb.append("\"))");
-				}
-				else if (param1.equals("waitForNotText") ||
-						 param1.equals("waitForText")) {
-
-					sb.append("RuntimeVariables.replace(\"");
 					sb.append(param3);
-					sb.append("\").equals(selenium.getText(\"");
-					sb.append(param2);
-					sb.append("\"))");
-				}
-				else if (param1.equals("waitForNotValue") ||
-						 param1.equals("waitForValue")) {
-
-					sb.append("RuntimeVariables.replace(\"");
-					sb.append(param3);
-					sb.append("\").equals(selenium.getValue(\"");
-					sb.append(param2);
-					sb.append("\"))");
-				}
-				else if (param1.equals("waitForNotVisible") ||
-						 param1.equals("waitForVisible")) {
-
-					sb.append("selenium.isVisible");
-					sb.append("(\"");
-					sb.append(param2);
-					sb.append("\")");
-				}
-				else if (param1.equals("waitForTextNotPresent") ||
-						 param1.equals("waitForTextPresent")) {
-
-					sb.append("selenium.isTextPresent");
-					sb.append("(\"");
-					sb.append(param2);
-					sb.append("\")");
+					sb.append("\"");
 				}
 
-				sb.append(") {");
-				sb.append("break;");
-				sb.append("}");
-				sb.append("}");
-				sb.append("catch (Exception e) {");
-				sb.append("}");
-
-				sb.append("Thread.sleep(1000);");
-				sb.append("}");
+				sb.append(");");
 			}
 			else {
 				System.out.println(

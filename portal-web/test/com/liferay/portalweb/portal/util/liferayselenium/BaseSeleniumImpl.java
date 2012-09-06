@@ -16,6 +16,7 @@ package com.liferay.portalweb.portal.util.liferayselenium;
 
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
 import com.liferay.portalweb.portal.util.TestPropsValues;
 
@@ -132,9 +133,311 @@ public abstract class BaseSeleniumImpl
 		super.type(location, TestPropsValues.OUTPUT_DIR + value);
 	}
 
+	public void waitForConfirmation(String pattern) throws Exception {
+		for (int second = 0;; second++) {
+			if (second >= 30) {
+				BaseTestCase.fail("timeout");
+			}
+
+			try {
+				if (pattern.equals(getConfirmation())) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+	}
+
+	public void waitForElementNotPresent(String locator) throws Exception {
+		for (int second = 0;; second++) {
+			if (second >= 30) {
+				BaseTestCase.fail(
+					"Timeout: Still able to find the Locator \"" + locator +
+						"\"");
+			}
+
+			try {
+				if (!isElementPresent(locator)) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+	}
+
+	public void waitForElementPresent(String locator) throws Exception {
+		for (int second = 0;; second++) {
+			if (second >= 30) {
+				BaseTestCase.fail(
+					"Timeout: Unable to find the Locator \"" + locator + "\"");
+			}
+
+			try {
+				if (isElementPresent(locator)) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+	}
+
+	public void waitForNotPartialText(String locator, String value)
+		throws Exception {
+
+		String valueReplace = RuntimeVariables.replace(value);
+
+		for (int second = 0;; second++) {
+			if (second >= 30) {
+				BaseTestCase.fail("timeout");
+			}
+
+			try {
+				if (!isPartialText(locator, valueReplace)) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+	}
+
+	public void waitForNotSelectedLabel(String selectLocator, String pattern)
+		throws Exception {
+
+		for (int second = 0;; second++) {
+			if (second >= 30) {
+				BaseTestCase.fail("timeout");
+			}
+
+			try {
+				if (!pattern.equals(getSelectedLabel(selectLocator))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+	}
+
+	public void waitForNotText(String locator, String value) throws Exception {
+		String valueReplace = RuntimeVariables.replace(value);
+
+		for (int second = 0;; second++) {
+			if (second >= 30) {
+				BaseTestCase.fail("timeout");
+			}
+
+			try {
+				if (!valueReplace.equals(getText(locator))) {
+
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+	}
+
+	public void waitForNotValue(String locator, String value) throws Exception {
+		String valueReplace = RuntimeVariables.replace(value);
+
+		for (int second = 0;; second++) {
+			if (second >= 30) {
+				BaseTestCase.fail("timeout");
+			}
+
+			try {
+				if (!valueReplace.equals(getValue(locator))) {
+
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+	}
+
+	public void waitForNotVisible(String locator) throws Exception {
+		for (int second = 0;; second++) {
+			if (second >= 30) {
+				BaseTestCase.fail(
+					"Timeout: Still able to find the Locator \"" + locator +
+						"\"");
+			}
+
+			try {
+				if (!isVisible(locator)) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+	}
+
 	@Override
 	public void waitForPageToLoad(String timeout) {
 		super.waitForPageToLoad(_timeout);
+	}
+
+	public void waitForPartialText(String locator, String value)
+		throws Exception {
+
+		String valueReplace = RuntimeVariables.replace(value);
+
+		for (int second = 0;; second++) {
+			if (second >= 30) {
+				BaseTestCase.fail("timeout");
+			}
+
+			try {
+				if (isPartialText(locator, valueReplace)) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+	}
+
+	public void waitForSelectedLabel(String selectLocator, String pattern)
+		throws Exception {
+
+		for (int second = 0;; second++) {
+			if (second >= 30) {
+				BaseTestCase.fail("timeout");
+			}
+
+			try {
+				if (pattern.equals(getSelectedLabel(selectLocator))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+	}
+
+	public void waitForText(String locator, String value) throws Exception {
+		String valueReplace = RuntimeVariables.replace(value);
+
+		for (int second = 0;; second++) {
+			if (second >= 30) {
+				BaseTestCase.fail("timeout");
+			}
+
+			try {
+				if (valueReplace.equals(getText(locator))) {
+
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+	}
+
+	public void waitForTextNotPresent(String value) throws Exception {
+		for (int second = 0;; second++) {
+			if (second >= 30) {
+				BaseTestCase.fail(
+					"Timeout: Still able to find the Text \"" + value + "\"");
+			}
+
+			try {
+				if (!isTextPresent(value)) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+	}
+
+	public void waitForTextPresent(String value) throws Exception {
+		for (int second = 0;; second++) {
+			if (second >= 30) {
+				BaseTestCase.fail(
+					"Timeout: Unable to find the Text \"" + value + "\"");
+			}
+
+			try {
+				if (isTextPresent(value)) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+	}
+
+	public void waitForValue(String locator, String value) throws Exception {
+		String valueReplace = RuntimeVariables.replace(value);
+
+		for (int second = 0;; second++) {
+			if (second >= 30) {
+				BaseTestCase.fail("timeout");
+			}
+
+			try {
+				if (valueReplace.equals(getValue(locator))) {
+
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+	}
+
+	public void waitForVisible(String locator) throws Exception {
+		for (int second = 0;; second++) {
+			if (second >= 30) {
+				BaseTestCase.fail(
+					"Timeout: Unable to find the Locator \"" + locator + "\"");
+			}
+
+			try {
+				if (isVisible(locator)) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
 	}
 
 	protected String getScreenshotFileName() {

@@ -18,6 +18,9 @@ package com.liferay.portal.service.persistence;
  * @author Brian Wing Shun Chan
  */
 public interface GroupFinder {
+	public int countByLayouts(long companyId, long parentGroupId, boolean site)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	public int countByG_U(long groupId, long userId, boolean inherit)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
@@ -30,6 +33,10 @@ public interface GroupFinder {
 		java.lang.String name, java.lang.String realName,
 		java.lang.String description,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public java.util.List<com.liferay.portal.model.Group> findByLayouts(
+		long companyId, long parentGroupId, boolean site, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public java.util.List<com.liferay.portal.model.Group> findByLiveGroups()

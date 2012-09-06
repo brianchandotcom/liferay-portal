@@ -204,6 +204,8 @@ public class PortletKeys {
 
 	public static final String SITES_ADMIN = "134";
 
+	public static final String SITES_DIRECTORY = "184";
+
 	public static final String SOFTWARE_CATALOG = "98";
 
 	public static final String STAGING_BAR = "170";

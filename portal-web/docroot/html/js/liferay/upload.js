@@ -32,8 +32,7 @@ AUI.add(
 		var TPL_UPLOAD = [
 			'<div class="upload-target" id="{$ns}uploader">',
 				'<div class="drag-drop-area" id="{$ns}uploaderContent">',
-					'<h4 class="drop-file-text">{[ this.dropFileText ]}<span>{[ this.orText ]}</span>',
-					'</h4>',
+					'<h4 class="drop-file-text {["', UPLOADER_TYPE, '" == "html5" ? "" : "aui-helper-hidden"]}">{[ this.dropFileText ]}<span>{[ this.orText ]}</span></h4>',
 							'<span class="aui-button" id="{$ns}selectFilesButton">',
 								'<span class="aui-button-content">',
 									'<input class="aui-button-input" type="button" value="{[ this.selectFilesText ]}" />',
@@ -98,11 +97,14 @@ AUI.add(
 
 			options = options || {};
 
+			var maxFileSize = parseInt(options.maxFileSize, 10) || 0;
+
 			instance._namespaceId = options.namespace || '_liferay_pns_' + Liferay.Util.randomInt() + '_';
 
 			instance._allowedFileTypes = options.allowedFileTypes;
 			instance._deleteFile = options.deleteFile;
-			instance._maxFileSize = parseInt(options.maxFileSize, 10) || 0;
+			instance._maxFileSize = maxFileSize;
+			instance._maxFileSizeInKB = Math.floor(maxFileSize / 1024);
 
 			instance._container = A.one(options.container);
 			instance._fallbackContainer = A.one(options.fallbackContainer);
@@ -131,9 +133,11 @@ AUI.add(
 
 			instance._cancelUploadsText = Liferay.Language.get('cancel-all-uploads');
 			instance._cancelFileText = Liferay.Language.get('cancel-upload');
+			instance._duplicateFileText = Liferay.Language.get('please-enter-a-unique-document-name');
 			instance._fileListPendingText = Liferay.Language.get('x-files-ready-to-be-uploaded');
 			instance._filesSelectedText = Liferay.Language.get('x-files-selected');
 			instance._fileTypesDescriptionText = options.fileDescription || instance._allowedFileTypes;
+			instance._invalidFileExtensionText = Liferay.Language.get('document-names-must-end-with-one-of-the-following-extensions') + instance._allowedFileTypes;
 			instance._invalidFileNameText = Liferay.Language.get('please-enter-a-file-with-a-valid-file-name');
 			instance._invalidFileSizeText = Liferay.Language.get('please-enter-a-file-with-a-valid-file-size-no-larger-than-x');
 			instance._noFilesSelectedText = Liferay.Language.get('no-files-selected');
@@ -144,8 +148,8 @@ AUI.add(
 			instance._zeroByteFileText = Liferay.Language.get('the-file-contains-no-data-and-cannot-be-uploaded.-please-use-the-classic-uploader');
 
 			instance._errorMessages = {
-				'490': Liferay.Language.get('please-enter-a-unique-document-name'),
-				'491': Liferay.Language.get('document-names-must-end-with-one-of-the-following-extensions') + instance._allowedFileTypes,
+				'490': instance._duplicateFileText,
+				'491': instance._invalidFileExtensionText,
 				'492': instance._invalidFileNameText,
 				'493': instance._invalidFileSizeText
 			};
@@ -166,7 +170,39 @@ AUI.add(
 			instance._fileListBuffer = [];
 			instance._renderFileListTask = A.debounce(instance._renderFileList, 10, instance);
 
-			instance._setupUploader();
+			if (UPLOADER_TYPE != 'none') {
+				instance._setupControls();
+
+				instance._setupUploader();
+
+				instance._setupCallbacks();
+
+				instance._filesQueued = 0;
+				instance._filesTotal = 0;
+			}
+			else {
+				A.Template(
+					'<tpl>',
+						'<div class="upload-target" id="{$ns}uploader">',
+							'<div class="drag-drop-area" id="{$ns}uploaderContent">',
+								'<h4 class="drop-file-text">{notAvailableText}</h4>',
+									'</div>',
+								'</div>',
+							'</div>',
+						'</div>',
+
+						'<div class="upload-list" id="{$ns}fileList">',
+							'<ul class="lfr-component" id="{$ns}fileListContent"></ul>',
+						'</div>',
+					'</tpl>'
+				).render(
+					{
+						$ns: instance._namespaceId,
+						notAvailableText: Liferay.Language.get('multiple-uploading-not-available')
+					}, 
+					A.one('#' + instance._namespaceId + 'fileUpload')
+				);
+			}
 		};
 
 		Upload.prototype = {
@@ -199,7 +235,6 @@ AUI.add(
 
 				queue.cancelUpload();
 
-				// because of the bug where canceling a single file will not remove the queue. it will be cheaper to just null it then do a comparison every time.
 				uploader.queue = null;
 
 				instance._filesQueued = 0;
@@ -275,7 +310,7 @@ AUI.add(
 				var instance = this;
 
 				var maxFileSize = instance._maxFileSize;
-				var maxFileSizeInKB = Math.floor(maxFileSize / 1024);
+				var maxFileSizeInKB = instance._maxFileSizeInKB;
 
 				return AArray.filter(
 					data,
@@ -531,25 +566,17 @@ AUI.add(
 
 				var li = A.one('#' + fileId);
 
-				var data = event.data;
+				var data = String(event.data);
 
-				if (A.Lang.String.startsWith(data, 'file_error::')) {
-					var errorCode;
+				// Check for an HTTP error code in the 490's
+				if (data.indexOf('49') === 0) {;
+					var errorMessage;
 
-					var errorMessage = instance._unexpectedUploadErrorText;
-
-					if (data === 'file_error::invalid characters in file name') {
-						errorCode = 492;
+					if (data === '493') {
+						errorMessage = Lang.sub(instance._invalidFileSizeText, [instance._maxFileSizeInKB]);
 					}
-					else if (data === 'file_error::unsupported file extension') {
-						errorCode = 491;
-					}
-					else if (data === 'file_error::duplicate file') {
-						errorCode = 490;
-					}
-
-					if (errorCode) {
-						errorMessage = instance._errorMessages[errorCode];
+					else {
+						errorMessage = instance._errorMessages[data];
 					}
 
 					file.error = errorMessage;
@@ -918,39 +945,28 @@ AUI.add(
 			_setupUploader: function() {
 				var instance = this;
 
-				var uploadURL = Liferay.Util.addParams('ts=' + A.Lang.now(), instance._uploadFile);
+				var uploader = new A.Uploader(
+					{
+						fileFieldName: 'file',
+						dragAndDropArea: A.Node.create('<div />'),
+						multipleFiles: true,
+						on: {
+							render: function(event) {
+								instance._container.setContent(instance._uploadFragment);
+							}
+						},
+						selectFilesButton: instance._selectFilesButton,
+						boundingBox: instance._uploaderBoundingBox,
+						contentBox: instance._uploaderContentBox,
+						simLimit: 2,
+						swfURL: Liferay.Util.addParams('ts=' + A.Lang.now(), themeDisplay.getPathContext() + '/html/js/aui/uploader/assets/flashuploader.swf'),
+						uploadURL: Liferay.Util.addParams('ts=' + A.Lang.now(), instance._uploadFile)
+					}
+				);
 
-				instance._setupControls();
+				instance._uploader = uploader;
 
-				if (UPLOADER_TYPE != 'none') {
-					var uploader = new A.Uploader(
-						{
-							fileFieldName: 'file',
-							dragAndDropArea: A.Node.create('<div />'),
-							multipleFiles: true,
-							on: {
-								render: function(event) {
-									instance._container.setContent(instance._uploadFragment);
-								}
-							},
-							selectFilesButton: instance._selectFilesButton,
-							boundingBox: instance._uploaderBoundingBox,
-							contentBox: instance._uploaderContentBox,
-							simLimit: 2,
-							swfURL: Liferay.Util.addParams('ts=' + A.Lang.now(), themeDisplay.getPathContext() + '/html/js/aui/uploader/assets/flashuploader.swf'),
-							uploadURL: uploadURL
-						}
-					);
-
-					instance._uploader = uploader;
-
-					instance._setupCallbacks();
-
-					instance._filesQueued = 0;
-					instance._filesTotal = 0;
-
-					uploader.render();
-				}
+				uploader.render();
 			},
 
 			_updateList: function(listLength, message) {

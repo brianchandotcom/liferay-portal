@@ -17,7 +17,9 @@ package com.liferay.portalweb.portal.controlpanel.webcontent.wcstructure;
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.controlpanel.webcontent.wcstructure.addwcstructure.AddWCStructureTests;
 import com.liferay.portalweb.portal.controlpanel.webcontent.wcstructure.addwcstructures.AddWCStructuresTests;
+import com.liferay.portalweb.portal.controlpanel.webcontent.wcstructure.addwcsubstructures.AddWCSubstructuresTests;
 import com.liferay.portalweb.portal.controlpanel.webcontent.wcstructure.advancedsearchwcstructure.AdvancedSearchWCStructureTests;
+import com.liferay.portalweb.portal.controlpanel.webcontent.wcstructure.editwcsubstructuresdefaultvalues.EditWCSubStructuresDefaultValuesTests;
 import com.liferay.portalweb.portal.controlpanel.webcontent.wcstructure.searchwcstructure.SearchWCStructureTests;
 
 import junit.framework.Test;
@@ -33,7 +35,9 @@ public class WCStructureTestPlan extends BaseTestSuite {
 
 		testSuite.addTest(AddWCStructureTests.suite());
 		testSuite.addTest(AddWCStructuresTests.suite());
+		testSuite.addTest(AddWCSubstructuresTests.suite());
 		testSuite.addTest(AdvancedSearchWCStructureTests.suite());
+		testSuite.addTest(EditWCSubStructuresDefaultValuesTests.suite());
 		testSuite.addTest(SearchWCStructureTests.suite());
 
 		return testSuite;

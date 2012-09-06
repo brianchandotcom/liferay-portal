@@ -267,7 +267,7 @@ public class RSSAction extends com.liferay.portal.struts.RSSAction {
 			contentField = HtmlUtil.escapeXPathAttribute(contentField);
 
 			XPath xPathSelector = SAXReaderUtil.createXPath(
-				"//dynamic-element[@name='" + contentField + "']");
+				"//dynamic-element[@name=" + contentField + "]");
 
 			List<Node> results = xPathSelector.selectNodes(document);
 

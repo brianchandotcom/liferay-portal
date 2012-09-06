@@ -444,7 +444,7 @@ public class DDMStructureLocalServiceImpl
 			name = HtmlUtil.escapeXPathAttribute(name);
 
 			XPath templateXPath = SAXReaderUtil.createXPath(
-				"//dynamic-element[@name=\"" + name + "\"]");
+				"//dynamic-element[@name=" + name + "]");
 
 			if (!templateXPath.booleanValueOf(templateDocument)) {
 				templateElement.add(element.createCopy());

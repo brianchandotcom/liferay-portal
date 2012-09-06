@@ -364,7 +364,7 @@ public class XMLStorageAdapter extends BaseStorageAdapter {
 		name = HtmlUtil.escapeXPathAttribute(name);
 
 		XPath xPathSelector = SAXReaderUtil.createXPath(
-			"//dynamic-element[@name='".concat(name).concat("']"));
+			"//dynamic-element[@name=".concat(name).concat("]"));
 
 		List<Node> nodes = xPathSelector.selectNodes(document);
 

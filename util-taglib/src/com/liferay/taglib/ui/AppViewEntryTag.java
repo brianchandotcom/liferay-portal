@@ -34,6 +34,14 @@ public class AppViewEntryTag extends IncludeTag {
 		_actionJsp = actionJsp;
 	}
 
+	public void setCategoryClassName(String categoryClassName) {
+		_categoryClassName = categoryClassName;
+	}
+
+	public void setCategoryClassPK(long categoryClassPK) {
+		_categoryClassPK = categoryClassPK;
+	}
+
 	public void setData(Map<String, Object> data) {
 		_data = data;
 	}
@@ -74,6 +82,14 @@ public class AppViewEntryTag extends IncludeTag {
 		_status = status;
 	}
 
+	public void setTagClassName(String tagClassName) {
+		_tagClassName = tagClassName;
+	}
+
+	public void setTagClassPK(long tagClassPK) {
+		_tagClassPK = tagClassPK;
+	}
+
 	public void setThumbnailDivStyle(String thumbnailDivStyle) {
 		_thumbnailDivStyle = thumbnailDivStyle;
 	}
@@ -99,6 +115,8 @@ public class AppViewEntryTag extends IncludeTag {
 		super.cleanUp();
 
 		_actionJsp = null;
+		_categoryClassName = null;
+		_categoryClassPK = 0;
 		_data = null;
 		_description = null;
 		_displayStyle = null;
@@ -109,6 +127,8 @@ public class AppViewEntryTag extends IncludeTag {
 		_shortcut = false;
 		_showCheckbox = false;
 		_status = 0;
+		_tagClassName = null;
+		_tagClassPK = 0;
 		_thumbnailDivStyle = null;
 		_thumbnailSrc = null;
 		_thumbnailStyle = null;
@@ -129,6 +149,10 @@ public class AppViewEntryTag extends IncludeTag {
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute("liferay-ui:app-view-entry:actionJsp", _actionJsp);
+		request.setAttribute(
+			"liferay-ui:app-view-entry:categoryClassName", _categoryClassName);
+		request.setAttribute(
+			"liferay-ui:app-view-entry:categoryClassPK", _categoryClassPK);
 		request.setAttribute("liferay-ui:app-view-entry:data", _data);
 		request.setAttribute(
 			"liferay-ui:app-view-entry:description", _description);
@@ -145,6 +169,10 @@ public class AppViewEntryTag extends IncludeTag {
 			"liferay-ui:app-view-entry:showCheckbox", _showCheckbox);
 		request.setAttribute("liferay-ui:app-view-entry:status", _status);
 		request.setAttribute(
+			"liferay-ui:app-view-entry:tagClassName", _tagClassName);
+		request.setAttribute(
+			"liferay-ui:app-view-entry:tagClassPK", _tagClassPK);
+		request.setAttribute(
 			"liferay-ui:app-view-entry:thumbnailDivStyle", _thumbnailDivStyle);
 		request.setAttribute(
 			"liferay-ui:app-view-entry:thumbnailSrc", _thumbnailSrc);
@@ -160,6 +188,8 @@ public class AppViewEntryTag extends IncludeTag {
 		"/html/taglib/ui/app_view_entry/page.jsp";
 
 	private String _actionJsp;
+	private String _categoryClassName;
+	private long _categoryClassPK;
 	private Map<String, Object> _data;
 	private String _description;
 	private String _displayStyle;
@@ -170,6 +200,8 @@ public class AppViewEntryTag extends IncludeTag {
 	private boolean _shortcut;
 	private boolean _showCheckbox = false;
 	private int _status = 0;
+	private String _tagClassName;
+	private long _tagClassPK;
 	private String _thumbnailDivStyle;
 	private String _thumbnailSrc;
 	private String _thumbnailStyle;

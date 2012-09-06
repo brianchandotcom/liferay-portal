@@ -152,9 +152,13 @@
 									%>
 
 									<liferay-ui:app-view-entry
+										categoryClassName="<%= Group.class.getName() %>"
+										categoryClassPK="<%= groupChild.getGroupId() %>"
 										description="<%= groupChild.getDescription() %>"
 										displayStyle="<%= displayStyle%>"
 										showCheckbox="<%= false %>"
+										tagClassName="<%= Group.class.getName() %>"
+										tagClassPK="<%= groupChild.getGroupId() %>"
 										thumbnailSrc='<%= themeDisplay.getPathImage() + "/layout_set_logo?img_id=" + layoutSet.getLogoId() + "&t=" + WebServerServletTokenUtil.getToken(layoutSet.getLogoId()) %>'
 										title="<%= HtmlUtil.escape(groupChild.getDescriptiveName(themeDisplay.getLocale())) %>"
 										url="<%= groupFriendlyURL %>"

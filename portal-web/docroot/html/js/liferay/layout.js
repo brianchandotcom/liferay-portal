@@ -457,7 +457,7 @@ AUI.add(
 			);
 
 			if (layoutContainer) {
-				if (!A.UA.mobile) {
+				if (!A.UA.touch) {
 					layoutContainer.once(
 						'mousemove',
 						function() {

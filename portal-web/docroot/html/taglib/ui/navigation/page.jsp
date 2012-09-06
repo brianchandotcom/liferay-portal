@@ -29,7 +29,7 @@
 
 	if (rootLayoutType.equals("relative")) {
 		if ((rootLayoutLevel >= 0) && (rootLayoutLevel < selBranch.size())) {
-			rootLayout = (Layout) selBranch.get(rootLayoutLevel);
+			rootLayout = (Layout)selBranch.get(rootLayoutLevel);
 		}
 		else {
 			rootLayout = null;

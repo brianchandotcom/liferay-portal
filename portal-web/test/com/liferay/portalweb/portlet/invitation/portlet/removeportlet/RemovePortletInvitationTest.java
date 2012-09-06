@@ -23,6 +23,11 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class RemovePortletInvitationTest extends BaseTestCase {
 	public void testRemovePortletInvitation() throws Exception {
 		selenium.open("/web/guest/home/");
+		selenium.clickAt("link=Invitation Test Page",
+			RuntimeVariables.replace("Invitation Test Page"));
+		selenium.waitForPageToLoad("30000");
+		selenium.clickAt("//img[@alt='Remove']",
+			RuntimeVariables.replace("Remove"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -30,7 +35,8 @@ public class RemovePortletInvitationTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Invitation Test Page")) {
+				if ("Are you sure you want to remove this component?".equals(
+							selenium.getConfirmation())) {
 					break;
 				}
 			}
@@ -39,13 +45,6 @@ public class RemovePortletInvitationTest extends BaseTestCase {
 
 			Thread.sleep(1000);
 		}
-
-		selenium.clickAt("link=Invitation Test Page",
-			RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.click("//img[@alt='Remove']");
-		assertTrue(selenium.getConfirmation()
-						   .matches("^Are you sure you want to remove this component[\\s\\S]$"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

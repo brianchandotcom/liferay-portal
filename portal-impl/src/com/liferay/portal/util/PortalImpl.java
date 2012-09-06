@@ -450,10 +450,6 @@ public class PortalImpl implements Portal {
 
 		_reservedParams.add("p_v_l_s_g_id"); // LPS-23010
 
-		// Portal outer portlet
-
-		_reservedParams.add("p_o_p_id"); // LPS-12097
-
 		// Portal fragment
 
 		_reservedParams.add("p_f_id");
@@ -2803,17 +2799,6 @@ public class PortalImpl implements Portal {
 		return originalRequest;
 	}
 
-	public String getOuterPortletId(HttpServletRequest request) {
-		String outerPortletId = (String)request.getAttribute(
-			WebKeys.OUTER_PORTLET_ID);
-
-		if (outerPortletId == null) {
-			outerPortletId = request.getParameter("p_o_p_id");
-		}
-
-		return outerPortletId;
-	}
-
 	public long getParentGroupId(long groupId)
 		throws PortalException, SystemException {
 
@@ -4615,28 +4600,10 @@ public class PortalImpl implements Portal {
 			return true;
 		}
 
-		if (layout.isTypePortlet()) {
-			String checkPortletId = portletId;
+		if ((layoutTypePortlet != null) &&
+			layoutTypePortlet.hasPortletId(portletId)) {
 
-			String outerPortletId = getOuterPortletId(request);
-
-			if (outerPortletId != null) {
-				checkPortletId = outerPortletId;
-			}
-
-			if (layoutTypePortlet.hasPortletId(checkPortletId)) {
-				return true;
-			}
-
-			String resourcePrimKey = PortletPermissionUtil.getPrimaryKey(
-				themeDisplay.getPlid(), portletId);
-
-			if (ResourcePermissionLocalServiceUtil.getResourcePermissionsCount(
-					themeDisplay.getCompanyId(), portlet.getPortletName(),
-					ResourceConstants.SCOPE_INDIVIDUAL, resourcePrimKey) > 0) {
-
-				return true;
-			}
+			return true;
 		}
 
 		if (themeDisplay.isSignedIn() &&

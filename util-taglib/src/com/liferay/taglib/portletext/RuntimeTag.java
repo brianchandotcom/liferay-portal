@@ -17,21 +17,19 @@ package com.liferay.taglib.portletext;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletContainerUtil;
+import com.liferay.portal.kernel.portlet.PortletLayoutListener;
 import com.liferay.portal.kernel.portlet.RestrictPortletServletRequest;
 import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
-import com.liferay.portal.kernel.servlet.taglib.portletext.RuntimePortletIDs;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.service.PortletLocalServiceUtil;
+import com.liferay.portal.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 
-import java.util.Set;
-
-import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.JspException;
@@ -81,49 +79,43 @@ public class RuntimeTag extends TagSupport {
 		try {
 			request.setAttribute(WebKeys.RENDER_PORTLET_RESOURCE, Boolean.TRUE);
 
-			if (Validator.isNotNull(defaultPreferences)) {
-				PortletPreferencesFactoryUtil.getPortletSetup(
-					request, portletId, defaultPreferences);
-			}
-
 			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 				WebKeys.THEME_DISPLAY);
+
+			if (themeDisplay.isStateMaximized() &&
+				themeDisplay.getLayoutTypePortlet().hasStateMaxPortletId(
+					portletId)) {
+
+				// If the layout display already has the current portlet in the
+				// maximized state, it has already been processed
+
+				return;
+			}
 
 			Portlet portlet = getPortlet(
 				themeDisplay.getCompanyId(), portletId);
 
-			PortletContainerUtil.render(request, response, portlet);
+			if (PortletPreferencesLocalServiceUtil.getPortletPreferencesCount(
+					PortletKeys.PREFS_OWNER_TYPE_LAYOUT, themeDisplay.getPlid(),
+					portletId) < 1) {
 
-			RuntimePortletIDs runtimePortletIDs =
-				(RuntimePortletIDs)request.getAttribute(
-					WebKeys.RUNTIME_PORTLET_IDS);
+				PortletPreferencesFactoryUtil.getPortletSetup(
+					request, portletId, defaultPreferences);
 
-			if (runtimePortletIDs == null) {
-				runtimePortletIDs = new RuntimePortletIDs();
+				PortletLayoutListener portletLayoutListener =
+					portlet.getPortletLayoutListenerInstance();
 
-				request.setAttribute(
-					WebKeys.RUNTIME_PORTLET_IDS, runtimePortletIDs);
+				if (portletLayoutListener != null) {
+					portletLayoutListener.onAddToLayout(
+						portletId, themeDisplay.getPlid());
+				}
 			}
 
-			runtimePortletIDs.addRuntimePortletID(portletName);
+			PortletContainerUtil.render(request, response, portlet);
 		}
 		finally {
 			restrictPortletServletRequest.mergeSharedAttributes();
 		}
-	}
-
-	public static Set<String> getRuntimePortletIDs(
-		ServletRequest servletRequest) {
-
-		RuntimePortletIDs runtimePortletIDs =
-			(RuntimePortletIDs)servletRequest.getAttribute(
-				WebKeys.RUNTIME_PORTLET_IDS);
-
-		if (runtimePortletIDs == null) {
-			return null;
-		}
-
-		return runtimePortletIDs.getRuntimePortletIDs();
 	}
 
 	@Override

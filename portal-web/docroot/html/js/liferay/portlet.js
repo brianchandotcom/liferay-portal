@@ -7,7 +7,6 @@
 
 	var Portlet = {
 		list: [],
-		runtimePortletIds: [],
 
 		isStatic: function(portletId) {
 			var instance = this;

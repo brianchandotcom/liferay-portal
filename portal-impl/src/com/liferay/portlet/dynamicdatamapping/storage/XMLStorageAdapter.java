@@ -15,10 +15,10 @@
 package com.liferay.portlet.dynamicdatamapping.storage;
 
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.Node;
@@ -361,6 +361,8 @@ public class XMLStorageAdapter extends BaseStorageAdapter {
 	}
 
 	private Element _getElementByName(Document document, String name) {
+		name = HtmlUtil.escapeXPathAttribute(name);
+
 		XPath xPathSelector = SAXReaderUtil.createXPath(
 			"//dynamic-element[@name='".concat(name).concat("']"));
 
@@ -419,7 +421,7 @@ public class XMLStorageAdapter extends BaseStorageAdapter {
 
 		sb.append("(@name=");
 
-		String name = StringUtil.quote(
+		String name = HtmlUtil.escapeXPathAttribute(
 			String.valueOf(fieldCondition.getName()));
 
 		sb.append(name);
@@ -434,7 +436,7 @@ public class XMLStorageAdapter extends BaseStorageAdapter {
 			sb.append(" and dynamic-content= ");
 		}
 
-		String value = StringUtil.quote(
+		String value = HtmlUtil.escapeXPathAttribute(
 			String.valueOf(fieldCondition.getValue()));
 
 		sb.append(value);

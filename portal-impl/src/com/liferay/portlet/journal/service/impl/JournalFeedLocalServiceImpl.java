@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
@@ -340,6 +341,8 @@ public class JournalFeedLocalServiceImpl
 					journalStructurePersistence.findByG_S(groupId, structureId);
 
 				Document document = SAXReaderUtil.read(structure.getXsd());
+
+				contentField = HtmlUtil.escapeXPathAttribute(contentField);
 
 				XPath xPathSelector = SAXReaderUtil.createXPath(
 					"//dynamic-element[@name='"+ contentField + "']");

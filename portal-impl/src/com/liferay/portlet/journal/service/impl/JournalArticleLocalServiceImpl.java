@@ -1031,6 +1031,8 @@ public class JournalArticleLocalServiceImpl
 					Element pageElement = null;
 
 					if (Validator.isNotNull(targetPage)) {
+						targetPage = HtmlUtil.escapeXPathAttribute(targetPage);
+
 						XPath xPathSelector = SAXReaderUtil.createXPath(
 							"/root/page[@id = '" + targetPage + "']");
 

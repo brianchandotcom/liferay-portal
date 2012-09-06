@@ -262,6 +262,8 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 			locale = getDefaultLocale();
 		}
 
+		locale = HtmlUtil.escapeXPathAttribute(locale);
+
 		String xPathExpression =
 			"meta-data[@locale=\"".concat(locale).concat("\"]");
 

@@ -562,6 +562,9 @@ public class SeleneseToJavaBuilder {
 		x = 0;
 		y = 0;
 
+		sb.append("selenium.selectWindow(\"null\");");
+		sb.append("selenium.selectFrame(\"relative=top\");");
+
 		while (true) {
 			x = content.indexOf("<tr>", x);
 			y = content.indexOf("\n</tr>", x);

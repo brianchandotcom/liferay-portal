@@ -861,6 +861,12 @@ public class WebDriverToSeleniumBridge
 		else {
 			get(url);
 		}
+
+		if (TestPropsValues.BROWSER_TYPE.equals("*iehta") ||
+			TestPropsValues.BROWSER_TYPE.equals("*iexplore")) {
+
+			refresh();
+		}
 	}
 
 	public void open(String url, String ignoreResponseCode) {

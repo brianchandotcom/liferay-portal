@@ -53,8 +53,6 @@
 				<c:if test="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.VIEW) %>">
 
 					<%
-					DLFileShortcut dlFileShortcut = null;
-
 					FileVersion fileVersion = fileEntry.getFileVersion();
 
 					boolean hasAudio = AudioProcessorUtil.hasAudio(fileVersion);
@@ -63,7 +61,7 @@
 					boolean hasVideo = VideoProcessorUtil.hasVideo(fileVersion);
 
 					String href = themeDisplay.getPathThemeImages() + "/file_system/large/" + DLUtil.getGenericName(fileEntry.getExtension()) + ".png";
-					String src = DLUtil.getThumbnailSrc(fileEntry, fileVersion, dlFileShortcut, themeDisplay);
+					String src = DLUtil.getThumbnailSrc(fileEntry, fileVersion, null, themeDisplay);
 
 					int playerHeight = 500;
 

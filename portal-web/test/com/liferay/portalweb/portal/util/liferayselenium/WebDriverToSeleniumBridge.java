@@ -302,9 +302,11 @@ public class WebDriverToSeleniumBridge
 	}
 
 	public String getAlert() {
+		WebDriverWait wait = new WebDriverWait(this, 1);
+
 		WebDriver.TargetLocator targetLocator = switchTo();
 
-		Alert alert = targetLocator.alert();
+		Alert alert = wait.until(ExpectedConditions.alertIsPresent());
 
 		return alert.getText();
 	}
@@ -356,9 +358,11 @@ public class WebDriverToSeleniumBridge
 	}
 
 	public String getConfirmation() {
+		WebDriverWait wait = new WebDriverWait(this, 1);
+
 		WebDriver.TargetLocator targetLocator = switchTo();
 
-		Alert alert = targetLocator.alert();
+		Alert alert = wait.until(ExpectedConditions.alertIsPresent());
 
 		acceptConfirmation();
 
@@ -1201,7 +1205,7 @@ public class WebDriverToSeleniumBridge
 	}
 
 	protected WebElement getWebElement(String locator) {
-		WebDriverWait wait = new WebDriverWait(this, 1);
+		WebDriverWait wait = new WebDriverWait(this, 3);
 
 		WebElement webElement;
 
@@ -1248,7 +1252,7 @@ public class WebDriverToSeleniumBridge
 	}
 
 	protected List<WebElement> getWebElements(String locator) {
-		WebDriverWait wait = new WebDriverWait(this, 1);
+		WebDriverWait wait = new WebDriverWait(this, 3);
 
 		List<WebElement> webElements;
 

@@ -113,6 +113,8 @@ public class ManifestHelperTask extends Task {
 
 		Manifest manifest = analyzer.calcManifest();
 
+		analyzer.close();
+
 		Attributes attributes = manifest.getMainAttributes();
 
 		project.setProperty(

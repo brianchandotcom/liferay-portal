@@ -68,6 +68,7 @@ public class CacheTemplateResource implements TemplateResource {
 		}
 
 		Reader reader = null;
+		UnsyncCharArrayWriter unsyncCharArrayWriter = null;
 
 		try {
 			reader = _templateResource.getReader();
@@ -76,8 +77,7 @@ public class CacheTemplateResource implements TemplateResource {
 
 			int result = -1;
 
-			UnsyncCharArrayWriter unsyncCharArrayWriter =
-				new UnsyncCharArrayWriter();
+			unsyncCharArrayWriter = new UnsyncCharArrayWriter();
 
 			while ((result = reader.read(buffer)) != -1) {
 				unsyncCharArrayWriter.write(buffer, 0, result);
@@ -90,6 +90,10 @@ public class CacheTemplateResource implements TemplateResource {
 		finally {
 			if (reader != null) {
 				reader.close();
+			}
+
+			if (unsyncCharArrayWriter != null) {
+				unsyncCharArrayWriter.close();
 			}
 		}
 

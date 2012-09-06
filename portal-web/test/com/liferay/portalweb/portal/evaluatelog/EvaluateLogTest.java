@@ -120,8 +120,12 @@ public class EvaluateLogTest extends BaseTestCase {
 
 			System.out.println("\nException Line:\n\n" + line + "\n");
 
+			unsyncBufferedReader.close();
+
 			return false;
 		}
+
+		unsyncBufferedReader.close();
 
 		return true;
 	}

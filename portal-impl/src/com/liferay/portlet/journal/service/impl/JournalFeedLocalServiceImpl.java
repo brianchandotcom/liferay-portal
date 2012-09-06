@@ -345,7 +345,7 @@ public class JournalFeedLocalServiceImpl
 				contentField = HtmlUtil.escapeXPathAttribute(contentField);
 
 				XPath xPathSelector = SAXReaderUtil.createXPath(
-					"//dynamic-element[@name='"+ contentField + "']");
+					"//dynamic-element[@name="+ contentField + "]");
 
 				Node node = xPathSelector.selectSingleNode(document);
 

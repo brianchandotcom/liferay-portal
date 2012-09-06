@@ -234,6 +234,7 @@ public class PortletResponseUtil {
 		}
 		finally {
 			fileChannel.close();
+			fileInputStream.close();
 		}
 	}
 

@@ -349,6 +349,8 @@ public class InstallPluginAction extends PortletAction {
 		String deploymentContext = ParamUtil.getString(
 			actionRequest, "deploymentContext");
 
+		ProgressInputStream pis = null;
+
 		try {
 			HttpImpl httpImpl = (HttpImpl)HttpUtil.getHttp();
 
@@ -396,7 +398,7 @@ public class InstallPluginAction extends PortletAction {
 			String progressId = ParamUtil.getString(
 				actionRequest, Constants.PROGRESS_ID);
 
-			ProgressInputStream pis = new ProgressInputStream(
+			pis = new ProgressInputStream(
 				actionRequest, getMethod.getResponseBodyAsStream(),
 				contentLength, progressId);
 
@@ -466,6 +468,10 @@ public class InstallPluginAction extends PortletAction {
 			}
 
 			PluginPackageUtil.endPluginPackageInstallation(deploymentContext);
+
+			if (pis != null) {
+				pis.close();
+			}
 		}
 
 		return responseCode;

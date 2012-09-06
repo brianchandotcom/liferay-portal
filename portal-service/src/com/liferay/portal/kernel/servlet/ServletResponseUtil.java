@@ -500,6 +500,7 @@ public class ServletResponseUtil {
 			}
 			finally {
 				fileChannel.close();
+				fileInputStream.close();
 			}
 		}
 	}

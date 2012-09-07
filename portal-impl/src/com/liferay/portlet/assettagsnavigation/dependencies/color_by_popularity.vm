@@ -1,0 +1,62 @@
+#set ($assetTagService = $serviceLocator.findService("com.liferay.portlet.asset.service.AssetTagService"))
+
+#if (!$entries.isEmpty())
+	#set ($classNameId = $getterUtil.getLong($classNameId, 0))
+	#set ($groupId = $themeDisplay.getScopeGroupId())
+	#set ($tagURL = $renderResponse.createRenderURL())
+
+	#set ($maxCount = 1)
+	#set ($minCount = 1)
+	#set ($multiplier = 1)
+
+	#foreach ($entry in $entries)
+		#if ($classNameId > 0)
+			#set ($count = $assetTagService.getTagsCount($groupId, $classNameId, $tagName))
+		#else
+			#set ($count = $assetTagService.getTagsCount($groupId, $tagName))
+		#end
+
+		#set ($maxCount = $math.max($maxCount, $count))
+		#set ($minCount = $math.max($minCount, $count))
+	#end
+
+	#if ($maxCount != $minCount)
+		#set ($multiplier = 3 / ($maxCount - $minCount))
+	#end
+
+	#set ($count = 0)
+
+	<ul class="tag-items tag-list">
+		#foreach ($entry in $entries)
+			#set ($tagName = $entry.getName())
+
+			$tagURL.setParameter("resetCur", "true")
+			$tagURL.setParameter("tag", $tagName)
+
+			#if ($classNameId > 0)
+				#set ($count = $assetTagService.getTagsCount($groupId, $classNameId, $tagName))
+			#else
+				#set ($count = $assetTagService.getTagsCount($groupId, $tagName))
+			#end
+
+			#set ($popularity = (1 + (($maxCount - ($maxCount - ($count - $minCount))) * $multiplier)))
+
+			#if ($popularity <= 1)
+				#set ($color = "green")
+			#elseif ($popularity > 1 && $popularity <= 2)
+				#set ($color = "yellow")
+			#else
+				#set ($color = "red")
+			#end
+
+			<li class="taglib-asset-tags-summary">
+				<a class ="tag" style="color:$color" href="$tagURL">
+					$tagName
+					#if ($showAssetCount.equals("true"))
+						($count)
+					#end
+				</a>
+			</li>
+		#end
+	</ul>
+#end

@@ -5,6 +5,7 @@
 }
 
 .lfr-upload-container {
+	padding-right: 1em;
 	margin-bottom: 1em;
 
 	.upload-target {
@@ -22,8 +23,8 @@
 	}
 
 	.manage-upload-target {
-		margin: 0 1.5em 0 0;
 		padding: 5px 0 0 0;
+		position: relative;
 	}
 
 	.browse-button-container {
@@ -45,7 +46,7 @@
 	.upload-file {
 		border: 1px solid transparent;
 		display: block;
-		margin: 0.3em 1.5em 0.3em 0;
+		margin: 0.3em 0;
 		overflow: hidden;
 		padding: 5px;
 		padding-left: 25px;
@@ -66,12 +67,8 @@
 		}
 	}
 
-	.pending-files-info {
-		margin-right: 1.5em;
-	}
-
 	.upload-list-info {
-		margin: 1em 1.5em 0.5em 0;
+		margin: 1em 0 0.5em;
 	}
 
 	.cancel-button {

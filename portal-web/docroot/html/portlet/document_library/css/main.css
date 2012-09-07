@@ -345,6 +345,7 @@
 
 		&.selected {
 			background-color: #D3E8F1;
+			border: 1px solid #38F;
 		}
 
 		.selected-files-count {

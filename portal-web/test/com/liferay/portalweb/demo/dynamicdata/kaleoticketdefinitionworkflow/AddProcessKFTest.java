@@ -22,24 +22,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class AddProcessKFTest extends BaseTestCase {
 	public void testAddProcessKF() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Kaleo Forms Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Kaleo Forms Test Page");
 		selenium.clickAt("link=Kaleo Forms Test Page",
 			RuntimeVariables.replace("Kaleo Forms Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -60,64 +46,16 @@ public class AddProcessKFTest extends BaseTestCase {
 				"//a[@id='_1_WAR_kaleoformsportlet_selectDDMStructure']"));
 		selenium.clickAt("//a[@id='_1_WAR_kaleoformsportlet_selectDDMStructure']",
 			RuntimeVariables.replace("Select"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//iframe")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//iframe");
 		selenium.selectFrame("//iframe");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//tr[3]/td[2]/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//tr[3]/td[2]/a");
 		assertEquals(RuntimeVariables.replace("Ticket Definition"),
 			selenium.getText("//tr[3]/td[2]/a"));
 		selenium.clickAt("//tr[3]/td[2]/a",
 			RuntimeVariables.replace("Ticket Definition"));
 		selenium.selectFrame("relative=top");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//a[@id='_1_WAR_kaleoformsportlet_selectDDMStructureDisplay']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//a[@id='_1_WAR_kaleoformsportlet_selectDDMStructureDisplay']");
 		assertEquals(RuntimeVariables.replace("Ticket Definition"),
 			selenium.getText(
 				"//a[@id='_1_WAR_kaleoformsportlet_selectDDMStructureDisplay']"));
@@ -127,64 +65,16 @@ public class AddProcessKFTest extends BaseTestCase {
 				"//a[@id='_1_WAR_kaleoformsportlet_selectDDMTemplate']"));
 		selenium.clickAt("//a[@id='_1_WAR_kaleoformsportlet_selectDDMTemplate']",
 			RuntimeVariables.replace("Select"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//iframe")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//iframe");
 		selenium.selectFrame("//iframe");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//tr[3]/td[2]/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//tr[3]/td[2]/a");
 		assertEquals(RuntimeVariables.replace("Ticket Creation"),
 			selenium.getText("//tr[3]/td[2]/a"));
 		selenium.clickAt("//tr[3]/td[2]/a",
 			RuntimeVariables.replace("Ticket Creation"));
 		selenium.selectFrame("relative=top");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//a[@id='_1_WAR_kaleoformsportlet_selectDDMTemplateDisplay']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//a[@id='_1_WAR_kaleoformsportlet_selectDDMTemplateDisplay']");
 		assertEquals(RuntimeVariables.replace("Ticket Creation"),
 			selenium.getText(
 				"//a[@id='_1_WAR_kaleoformsportlet_selectDDMTemplateDisplay']"));
@@ -194,63 +84,15 @@ public class AddProcessKFTest extends BaseTestCase {
 				"//a[@id='_1_WAR_kaleoformsportlet_selectWorkflowDefinition']"));
 		selenium.clickAt("//a[@id='_1_WAR_kaleoformsportlet_selectWorkflowDefinition']",
 			RuntimeVariables.replace("Select"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//iframe")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//iframe");
 		selenium.selectFrame("//iframe");
 		Thread.sleep(5000);
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Ticket Process")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Ticket Process");
 		selenium.clickAt("link=Ticket Process",
 			RuntimeVariables.replace("Ticket Process"));
 		selenium.selectFrame("relative=top");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//a[@id='_1_WAR_kaleoformsportlet_selectWorkflowDefinitionDisplay']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//a[@id='_1_WAR_kaleoformsportlet_selectWorkflowDefinitionDisplay']");
 		assertEquals(RuntimeVariables.replace("Ticket Process (Version 1)"),
 			selenium.getText(
 				"//a[@id='_1_WAR_kaleoformsportlet_selectWorkflowDefinitionDisplay']"));
@@ -260,574 +102,128 @@ public class AddProcessKFTest extends BaseTestCase {
 				"//a[@id='_1_WAR_kaleoformsportlet_assignWorkflowTaskForms']"));
 		selenium.clickAt("//a[@id='_1_WAR_kaleoformsportlet_assignWorkflowTaskForms']",
 			RuntimeVariables.replace("Assign"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//iframe")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//iframe");
 		selenium.selectFrame("//iframe");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//div[@id='diagramNode_field_Developer']/div/div/div")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//div[@id='diagramNode_field_Developer']/div/div/div");
 		selenium.clickAt("//div[@id='diagramNode_field_Developer']/div/div/div",
 			RuntimeVariables.replace("Developer"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//tbody[@class='yui3-datatable-data']/tr[1]/td[2]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//tbody[@class='yui3-datatable-data']/tr[1]/td[2]");
 		selenium.doubleClickAt("//tbody[@class='yui3-datatable-data']/tr[1]/td[2]",
 			RuntimeVariables.replace("Forms"));
 		Thread.sleep(5000);
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//input[@name='templateName']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//input[@name='templateName']");
 		selenium.clickAt("//input[@name='templateName']",
 			RuntimeVariables.replace("Developer View"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//li[@data-text='Developer View']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//li[@data-text='Developer View']");
 		assertEquals(RuntimeVariables.replace("Developer View"),
 			selenium.getText("//li[@data-text='Developer View']"));
 		selenium.clickAt("//li[@data-text='Developer View']",
 			RuntimeVariables.replace("Developer View"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("Developer View")
-										.equals(selenium.getValue(
-								"//input[@name='templateName']"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForValue("//input[@name='templateName']", "Developer View");
 		selenium.clickAt("//button[@type='submit']",
 			RuntimeVariables.replace("Save"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("Developer View")
-										.equals(selenium.getText(
-								"//tbody[@class='yui3-datatable-data']/tr[1]/td[2]"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//tbody[@class='yui3-datatable-data']/tr[1]/td[2]",
+			"Developer View");
 		assertEquals(RuntimeVariables.replace("Developer View"),
 			selenium.getText(
 				"//tbody[@class='yui3-datatable-data']/tr[1]/td[2]"));
 		Thread.sleep(5000);
 		selenium.clickAt("//div[@id='diagramNode_field_Code_Review']/div/div/div",
 			RuntimeVariables.replace("Code Review"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//tbody[@class='yui3-datatable-data']/tr[1]/td[2]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//tbody[@class='yui3-datatable-data']/tr[1]/td[2]");
 		selenium.doubleClickAt("//tbody[@class='yui3-datatable-data']/tr[1]/td[2]",
 			RuntimeVariables.replace("Forms"));
 		Thread.sleep(5000);
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//input[@name='templateName']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//input[@name='templateName']");
 		selenium.clickAt("//input[@name='templateName']",
 			RuntimeVariables.replace("Code Review View"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//li[@data-text='Code Review View']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//li[@data-text='Code Review View']");
 		assertEquals(RuntimeVariables.replace("Code Review View"),
 			selenium.getText("//li[@data-text='Code Review View']"));
 		selenium.clickAt("//li[@data-text='Code Review View']",
 			RuntimeVariables.replace("Code Review View"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("Code Review View")
-										.equals(selenium.getValue(
-								"//input[@name='templateName']"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForValue("//input[@name='templateName']",
+			"Code Review View");
 		selenium.clickAt("//button[@type='submit']",
 			RuntimeVariables.replace("Save"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("Code Review View")
-										.equals(selenium.getText(
-								"//tbody[@class='yui3-datatable-data']/tr[1]/td[2]/div"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//tbody[@class='yui3-datatable-data']/tr[1]/td[2]/div",
+			"Code Review View");
 		assertEquals(RuntimeVariables.replace("Code Review View"),
 			selenium.getText(
 				"//tbody[@class='yui3-datatable-data']/tr[1]/td[2]/div"));
 		Thread.sleep(5000);
 		selenium.clickAt("//div[@id='diagramNode_field_QA']/div/div/div",
 			RuntimeVariables.replace("QA"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//tbody[@class='yui3-datatable-data']/tr[1]/td[2]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//tbody[@class='yui3-datatable-data']/tr[1]/td[2]");
 		selenium.doubleClickAt("//tbody[@class='yui3-datatable-data']/tr[1]/td[2]",
 			RuntimeVariables.replace("Forms"));
 		Thread.sleep(5000);
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//input[@name='templateName']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//input[@name='templateName']");
 		selenium.clickAt("//input[@name='templateName']",
 			RuntimeVariables.replace("QA View"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//li[@data-text='QA View']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//li[@data-text='QA View']");
 		assertEquals(RuntimeVariables.replace("QA View"),
 			selenium.getText("//li[@data-text='QA View']"));
 		selenium.clickAt("//li[@data-text='QA View']",
 			RuntimeVariables.replace("QA View"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("QA View")
-										.equals(selenium.getValue(
-								"//input[@name='templateName']"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForValue("//input[@name='templateName']", "QA View");
 		selenium.clickAt("//button[@type='submit']",
 			RuntimeVariables.replace("Save"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("QA View")
-										.equals(selenium.getText(
-								"//tbody[@class='yui3-datatable-data']/tr[1]/td[2]"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//tbody[@class='yui3-datatable-data']/tr[1]/td[2]",
+			"QA View");
 		assertEquals(RuntimeVariables.replace("QA View"),
 			selenium.getText(
 				"//tbody[@class='yui3-datatable-data']/tr[1]/td[2]"));
 		Thread.sleep(5000);
 		selenium.clickAt("//div[@id='diagramNode_field_QA_Management']/div/div/div",
 			RuntimeVariables.replace("QA Management"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//tbody[@class='yui3-datatable-data']/tr[1]/td[2]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//tbody[@class='yui3-datatable-data']/tr[1]/td[2]");
 		selenium.doubleClickAt("//tbody[@class='yui3-datatable-data']/tr[1]/td[2]",
 			RuntimeVariables.replace("Forms"));
 		Thread.sleep(5000);
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//input[@name='templateName']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//input[@name='templateName']");
 		selenium.clickAt("//input[@name='templateName']",
 			RuntimeVariables.replace("QA View"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//li[@data-text='QA View']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//li[@data-text='QA View']");
 		assertEquals(RuntimeVariables.replace("QA View"),
 			selenium.getText("//li[@data-text='QA View']"));
 		selenium.clickAt("//li[@data-text='QA View']",
 			RuntimeVariables.replace("QA View"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("QA View")
-										.equals(selenium.getValue(
-								"//input[@name='templateName']"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForValue("//input[@name='templateName']", "QA View");
 		selenium.clickAt("//button[@type='submit']",
 			RuntimeVariables.replace("Save"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("QA View")
-										.equals(selenium.getText(
-								"//tbody[@class='yui3-datatable-data']/tr[1]/td[2]"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//tbody[@class='yui3-datatable-data']/tr[1]/td[2]",
+			"QA View");
 		assertEquals(RuntimeVariables.replace("QA View"),
 			selenium.getText(
 				"//tbody[@class='yui3-datatable-data']/tr[1]/td[2]"));
 		Thread.sleep(5000);
 		selenium.clickAt("//div[@id='diagramNode_field_Project_Manager_Review']/div/div/div",
 			RuntimeVariables.replace("Project Manager Review"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//tbody[@class='yui3-datatable-data']/tr[1]/td[2]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//tbody[@class='yui3-datatable-data']/tr[1]/td[2]");
 		selenium.doubleClickAt("//tbody[@class='yui3-datatable-data']/tr[1]/td[2]",
 			RuntimeVariables.replace("Forms"));
 		Thread.sleep(5000);
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//input[@name='templateName']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//input[@name='templateName']");
 		selenium.clickAt("//input[@name='templateName']",
 			RuntimeVariables.replace("Project Manager View"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//li[@data-text='Project Manager View']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//li[@data-text='Project Manager View']");
 		assertEquals(RuntimeVariables.replace("Project Manager View"),
 			selenium.getText("//li[@data-text='Project Manager View']"));
 		selenium.clickAt("//li[@data-text='Project Manager View']",
 			RuntimeVariables.replace("Project Manager View"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("Project Manager View")
-										.equals(selenium.getValue(
-								"//input[@name='templateName']"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForValue("//input[@name='templateName']",
+			"Project Manager View");
 		selenium.clickAt("//button[@type='submit']",
 			RuntimeVariables.replace("Save"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("Project Manager View")
-										.equals(selenium.getText(
-								"//tbody[@class='yui3-datatable-data']/tr[1]/td[2]"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//tbody[@class='yui3-datatable-data']/tr[1]/td[2]",
+			"Project Manager View");
 		assertEquals(RuntimeVariables.replace("Project Manager View"),
 			selenium.getText(
 				"//tbody[@class='yui3-datatable-data']/tr[1]/td[2]"));

@@ -23,24 +23,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class SelectPortletScopePage2WCWebContentWCDTest extends BaseTestCase {
 	public void testSelectPortletScopePage2WCWebContentWCD()
 		throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Web Content Display Test Page3")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Web Content Display Test Page3");
 		selenium.clickAt("link=Web Content Display Test Page3",
 			RuntimeVariables.replace("Web Content Display Test Page3"));
 		selenium.waitForPageToLoad("30000");
@@ -49,66 +35,17 @@ public class SelectPortletScopePage2WCWebContentWCDTest extends BaseTestCase {
 			selenium.getText("//div[@class='portlet-msg-info']"));
 		selenium.clickAt("//img[@alt='Select Web Content']",
 			RuntimeVariables.replace("Select Web Content"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=WC WebContent Title")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=WC WebContent Title");
 		selenium.clickAt("link=WC WebContent Title",
 			RuntimeVariables.replace("WC WebContent Title"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isPartialText(
-							"//form[@id='_86_fm1']/div[1]/span[2]",
-							"Displaying Content: WC WebContent Title")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForPartialText("//form[@id='_86_fm1']/div[1]/span[2]",
+			"Displaying Content: WC WebContent Title");
 		assertTrue(selenium.isPartialText(
 				"//form[@id='_86_fm1']/div[1]/span[2]",
 				"Displaying Content: WC WebContent Title"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div[@class='portlet-msg-success']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//div[@class='portlet-msg-success']");
 		assertEquals(RuntimeVariables.replace(
 				"You have successfully updated the setup."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

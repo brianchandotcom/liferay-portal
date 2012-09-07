@@ -22,71 +22,23 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class RateBlogsEntryCommentAPTest extends BaseTestCase {
 	public void testRateBlogsEntryCommentAP() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Asset Publisher Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Asset Publisher Test Page");
 		selenium.clickAt("link=Asset Publisher Test Page",
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isPartialText(
-							"//div[@class='aui-rating-label-element']",
-							"0 Votes")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForPartialText("//div[@class='aui-rating-label-element']",
+			"0 Votes");
 		assertTrue(selenium.isPartialText(
 				"//div[@class='aui-rating-label-element']", "0 Votes"));
 		assertTrue(selenium.isVisible(
 				"//div[@id='zyfa_ratingThumbContent']/a[1]"));
 		selenium.clickAt("//div[@id='zyfa_ratingThumbContent']/a[1]",
 			RuntimeVariables.replace("Rate this as good."));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("+1 (1 Vote)")
-										.equals(selenium.getText(
-								"//div[@class='aui-rating-label-element']"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//div[@class='aui-rating-label-element']",
+			"+1 (1 Vote)");
 		assertEquals(RuntimeVariables.replace("+1 (1 Vote)"),
 			selenium.getText("//div[@class='aui-rating-label-element']"));
 		assertTrue(selenium.isElementPresent(
@@ -95,25 +47,8 @@ public class RateBlogsEntryCommentAPTest extends BaseTestCase {
 				"//div[@id='zyfa_ratingThumbContent']/a[2]"));
 		selenium.clickAt("//div[@id='zyfa_ratingThumbContent']/a[2]",
 			RuntimeVariables.replace("Rate this as bad."));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("-1 (1 Vote)")
-										.equals(selenium.getText(
-								"//div[@class='aui-rating-label-element']"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//div[@class='aui-rating-label-element']",
+			"-1 (1 Vote)");
 		assertEquals(RuntimeVariables.replace("-1 (1 Vote)"),
 			selenium.getText("//div[@class='aui-rating-label-element']"));
 		assertTrue(selenium.isElementPresent(

@@ -22,24 +22,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ViewActivityBlogsEntryXSSTest extends BaseTestCase {
 	public void testViewActivityBlogsEntryXSS() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/group/joebloggs/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Activities Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Activities Test Page");
 		selenium.clickAt("link=Activities Test Page",
 			RuntimeVariables.replace("Activities Test Page"));
 		selenium.waitForPageToLoad("30000");

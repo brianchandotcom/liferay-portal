@@ -23,24 +23,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AddKBAArticleSectionsDevelopmentTest extends BaseTestCase {
 	public void testAddKBAArticleSectionsDevelopment()
 		throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
@@ -52,62 +38,15 @@ public class AddKBAArticleSectionsDevelopmentTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_1_WAR_knowledgebaseportlet_title']",
 			RuntimeVariables.replace("Knowledge Base Article 2"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent(
-							"//textarea[@id='_1_WAR_knowledgebaseportlet_editor' and @style='display: none;']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent(
+			"//textarea[@id='_1_WAR_knowledgebaseportlet_editor' and @style='display: none;']");
 		assertEquals(RuntimeVariables.replace("Source"),
 			selenium.getText("//span[.='Source']"));
 		selenium.clickAt("//span[.='Source']",
 			RuntimeVariables.replace("Source"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//a[@class='cke_button_source cke_on']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//td[@id='cke_contents__1_WAR_knowledgebaseportlet_editor']/textarea")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//a[@class='cke_button_source cke_on']");
+		selenium.waitForVisible(
+			"//td[@id='cke_contents__1_WAR_knowledgebaseportlet_editor']/textarea");
 		selenium.type("//td[@id='cke_contents__1_WAR_knowledgebaseportlet_editor']/textarea",
 			RuntimeVariables.replace(
 				"Testing another publication of the article"));
@@ -115,62 +54,14 @@ public class AddKBAArticleSectionsDevelopmentTest extends BaseTestCase {
 			selenium.getText("//span[.='Source']"));
 		selenium.clickAt("//span[.='Source']",
 			RuntimeVariables.replace("Source"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent(
-							"//textarea[@id='_1_WAR_knowledgebaseportlet_editor' and @style='display: none;']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//td[@id='cke_contents__1_WAR_knowledgebaseportlet_editor']/iframe")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent(
+			"//textarea[@id='_1_WAR_knowledgebaseportlet_editor' and @style='display: none;']");
+		selenium.waitForVisible(
+			"//td[@id='cke_contents__1_WAR_knowledgebaseportlet_editor']/iframe");
 		selenium.selectFrame(
 			"//td[@id='cke_contents__1_WAR_knowledgebaseportlet_editor']/iframe");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace(
-							"Testing another publication of the article")
-										.equals(selenium.getText("//body"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//body",
+			"Testing another publication of the article");
 		selenium.selectFrame("relative=top");
 		selenium.addSelection("//select[@id='_1_WAR_knowledgebaseportlet_sections']",
 			RuntimeVariables.replace("Development"));
@@ -180,44 +71,12 @@ public class AddKBAArticleSectionsDevelopmentTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div[@class='portlet-msg-success']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//div[@class='portlet-msg-success']");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");

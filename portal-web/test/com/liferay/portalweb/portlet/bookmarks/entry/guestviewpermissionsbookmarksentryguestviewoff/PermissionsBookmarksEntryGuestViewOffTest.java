@@ -23,24 +23,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class PermissionsBookmarksEntryGuestViewOffTest extends BaseTestCase {
 	public void testPermissionsBookmarksEntryGuestViewOff()
 		throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Bookmarks Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Bookmarks Test Page");
 		selenium.clickAt("link=Bookmarks Test Page",
 			RuntimeVariables.replace("Bookmarks Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -53,23 +39,7 @@ public class PermissionsBookmarksEntryGuestViewOffTest extends BaseTestCase {
 			selenium.getText("//div[2]/ul/li[2]/a"));
 		selenium.clickAt("//div[2]/ul/li[2]/a",
 			RuntimeVariables.replace("Permissions"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//input[@name='16_ACTION_VIEW']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//input[@name='16_ACTION_VIEW']");
 		assertTrue(selenium.isChecked("//input[@name='16_ACTION_VIEW']"));
 		selenium.uncheck("//input[@name='16_ACTION_VIEW']");
 		assertFalse(selenium.isChecked("//input[@name='16_ACTION_VIEW']"));

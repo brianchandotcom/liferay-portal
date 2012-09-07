@@ -22,27 +22,13 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class AddWebContentScopeMyCommunityTest extends BaseTestCase {
 	public void testAddWebContentScopeMyCommunity() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/user/joebloggs/home/");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Control Panel")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
@@ -57,24 +43,8 @@ public class AddWebContentScopeMyCommunityTest extends BaseTestCase {
 		selenium.type("//input[@id='_15_title_en_US']",
 			RuntimeVariables.replace("Web Content Name"));
 		Thread.sleep(5000);
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/iframe")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/iframe");
 		selenium.selectFrame(
 			"//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/iframe");
 		selenium.type("//body", RuntimeVariables.replace("Web Content Content"));

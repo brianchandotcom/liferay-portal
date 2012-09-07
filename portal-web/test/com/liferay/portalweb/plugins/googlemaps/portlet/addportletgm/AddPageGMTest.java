@@ -22,88 +22,26 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class AddPageGMTest extends BaseTestCase {
 	public void testAddPageGM() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("//div[@id='dockbar']",
 			RuntimeVariables.replace("Dockbar"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent(
-							"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
 		assertEquals(RuntimeVariables.replace("Add"),
 			selenium.getText("//li[@id='_145_addContent']/a/span"));
 		selenium.mouseOver("//li[@id='_145_addContent']/a/span");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//a[@id='addPage']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//a[@id='addPage']");
 		assertEquals(RuntimeVariables.replace("Page"),
 			selenium.getText("//a[@id='addPage']"));
 		selenium.clickAt("//a[@id='addPage']", RuntimeVariables.replace("Page"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//input[@type='text']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//input[@type='text']");
 		selenium.type("//input[@type='text']",
 			RuntimeVariables.replace("Google Maps Test Page"));
 		selenium.clickAt("//button[@id='save']",
 			RuntimeVariables.replace("Save"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Google Maps Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Google Maps Test Page");
 		selenium.clickAt("link=Google Maps Test Page",
 			RuntimeVariables.replace("Google Maps Test Page"));
 		selenium.waitForPageToLoad("30000");

@@ -22,44 +22,14 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class TearDownBirthdayTest extends BaseTestCase {
 	public void testTearDownBirthday() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Joe Bloggs")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Joe Bloggs");
 		selenium.clickAt("link=Joe Bloggs",
 			RuntimeVariables.replace("Joe Bloggs"));
 		Thread.sleep(5000);
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//select[@id='_2_birthdayMonth']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//select[@id='_2_birthdayMonth']");
 		selenium.select("//select[@id='_2_birthdayMonth']",
 			RuntimeVariables.replace("January"));
 		selenium.select("//select[@id='_2_birthdayDay']",

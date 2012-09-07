@@ -22,65 +22,18 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class VerifyReConfigurationTest extends BaseTestCase {
 	public void testVerifyReConfiguration() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent(
-							"link=Currency Converter Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent("link=Currency Converter Test Page");
 		selenium.clickAt("link=Currency Converter Test Page",
 			RuntimeVariables.replace("Currency Converter Test Page"));
 		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("link=Return to Full Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent("link=Return to Full Page");
 		selenium.clickAt("link=Return to Full Page",
 			RuntimeVariables.replace("Return to Full Page"));
 		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (!selenium.isTextPresent("Korean Won")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForTextNotPresent("Korean Won");
 		assertFalse(selenium.isTextPresent("Korean Won"));
 	}
 }

@@ -22,24 +22,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class Guest_NoAccessDmFolderTest extends BaseTestCase {
 	public void testGuest_NoAccessDmFolder() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Documents and Media Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Documents and Media Test Page");
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -50,25 +36,8 @@ public class Guest_NoAccessDmFolderTest extends BaseTestCase {
 				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
 		selenium.clickAt("//a[contains(@class,'document-link')]/span[@class='entry-title']",
 			RuntimeVariables.replace("DM Folder Name"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("DM Folder Name")
-										.equals(selenium.getText(
-								"//li[@class='folder selected']/a/span[2]"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//li[@class='folder selected']/a/span[2]",
+			"DM Folder Name");
 		assertEquals(RuntimeVariables.replace("DM Folder Name"),
 			selenium.getText("//li[@class='folder selected']/a/span[2]"));
 		assertEquals(RuntimeVariables.replace("DM Folder Image Title"),
@@ -81,64 +50,17 @@ public class Guest_NoAccessDmFolderTest extends BaseTestCase {
 			selenium.getText("//a[@class='show-url-file']"));
 		selenium.clickAt("//a[@class='show-url-file']",
 			RuntimeVariables.replace("URL"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//div[contains(@class,'url-file-container')]/input")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
+		selenium.waitForVisible(
+			"//div[contains(@class,'url-file-container')]/input");
 
 		String imageURL = selenium.getValue(
 				"//div[contains(@class,'url-file-container')]/input");
 		RuntimeVariables.setValue("imageURL", imageURL);
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Sign Out")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Sign Out");
 		selenium.clickAt("link=Sign Out", RuntimeVariables.replace("Sign Out"));
 		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//input[@id='_58_login']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//input[@id='_58_login']");
 		assertTrue(selenium.isVisible("//input[@id='_58_login']"));
 		selenium.open(RuntimeVariables.getValue("imageURL"));
 		Thread.sleep(5000);

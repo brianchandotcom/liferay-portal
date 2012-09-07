@@ -22,6 +22,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ViewPortletPetsTest extends BaseTestCase {
 	public void testViewPortletPets() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("link=Pets Test Page",
 			RuntimeVariables.replace("Pets Test Page"));
@@ -34,25 +36,8 @@ public class ViewPortletPetsTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Edit Mode"),
 			selenium.getText("//div/div/a"));
 		selenium.clickAt("//div/div/a", RuntimeVariables.replace("Edit Mode"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("Modify Preferences")
-										.equals(selenium.getText(
-								"//div[@class='portlet-body']/h1"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//div[@class='portlet-body']/h1",
+			"Modify Preferences");
 		assertEquals(RuntimeVariables.replace("Modify Preferences"),
 			selenium.getText("//div[@class='portlet-body']/h1"));
 		assertEquals(RuntimeVariables.replace(
@@ -64,25 +49,7 @@ public class ViewPortletPetsTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("View Mode"),
 			selenium.getText("//div/div/a"));
 		selenium.clickAt("//div/div/a", RuntimeVariables.replace("View Mode"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("Pets")
-										.equals(selenium.getText(
-								"//div[@class='portlet-body']/h1"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//div[@class='portlet-body']/h1", "Pets");
 		assertEquals(RuntimeVariables.replace("Pets"),
 			selenium.getText("//div[@class='portlet-body']/h1"));
 		assertEquals(RuntimeVariables.replace(

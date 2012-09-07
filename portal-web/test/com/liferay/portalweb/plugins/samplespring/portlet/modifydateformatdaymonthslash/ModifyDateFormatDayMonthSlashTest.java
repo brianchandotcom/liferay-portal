@@ -22,6 +22,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ModifyDateFormatDayMonthSlashTest extends BaseTestCase {
 	public void testModifyDateFormatDayMonthSlash() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("link=Pets Test Page",
 			RuntimeVariables.replace("Pets Test Page"));
@@ -29,25 +31,8 @@ public class ModifyDateFormatDayMonthSlashTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Edit Mode"),
 			selenium.getText("//div/div/a"));
 		selenium.clickAt("//div/div/a", RuntimeVariables.replace("Edit Mode"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("Modify Preferences")
-										.equals(selenium.getText(
-								"//div[@class='portlet-body']/h1"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//div[@class='portlet-body']/h1",
+			"Modify Preferences");
 		assertEquals(RuntimeVariables.replace("Modify Preferences"),
 			selenium.getText("//div[@class='portlet-body']/h1"));
 		assertEquals(RuntimeVariables.replace(
@@ -58,50 +43,15 @@ public class ModifyDateFormatDayMonthSlashTest extends BaseTestCase {
 			RuntimeVariables.replace("dd/MM/yyyy"));
 		selenium.clickAt("//button[@type='submit']",
 			RuntimeVariables.replace("Modify"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace(
-							"Current Date Format is: dd/MM/yyyy")
-										.equals(selenium.getText(
-								"//div[@class='portlet-body']/p"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//div[@class='portlet-body']/p",
+			"Current Date Format is: dd/MM/yyyy");
 		assertEquals(RuntimeVariables.replace(
 				"Current Date Format is: dd/MM/yyyy"),
 			selenium.getText("//div[@class='portlet-body']/p"));
 		assertEquals(RuntimeVariables.replace("View Mode"),
 			selenium.getText("//div/div/a"));
 		selenium.clickAt("//div/div/a", RuntimeVariables.replace("View Mode"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("Edit Mode")
-										.equals(selenium.getText("//div/div/a"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//div/div/a", "Edit Mode");
 		assertEquals(RuntimeVariables.replace("Edit Mode"),
 			selenium.getText("//div/div/a"));
 	}

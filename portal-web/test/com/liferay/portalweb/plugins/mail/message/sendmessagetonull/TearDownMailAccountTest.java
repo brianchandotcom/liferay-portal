@@ -27,24 +27,10 @@ public class TearDownMailAccountTest extends BaseTestCase {
 		while (label >= 1) {
 			switch (label) {
 			case 1:
+				selenium.selectWindow("null");
+				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("link=Mail Test Page")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("link=Mail Test Page");
 				selenium.clickAt("link=Mail Test Page",
 					RuntimeVariables.replace("Mail Test Page"));
 				selenium.waitForPageToLoad("30000");
@@ -63,24 +49,8 @@ public class TearDownMailAccountTest extends BaseTestCase {
 					RuntimeVariables.replace("loveispatient"));
 				selenium.clickAt("//input[@value='Login']",
 					RuntimeVariables.replace("Login"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isElementNotPresent(
-									"//input[@id='_1_WAR_mailportlet_password']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForElementNotPresent(
+					"//input[@id='_1_WAR_mailportlet_password']");
 				Thread.sleep(5000);
 
 			case 2:
@@ -100,72 +70,22 @@ public class TearDownMailAccountTest extends BaseTestCase {
 				selenium.clickAt("//div/div/div[1]/div/ul/li/span/span",
 					RuntimeVariables.replace(
 						"liferay.qa.testing.trunk@gmail.com"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (RuntimeVariables.replace("Edit Account")
-												.equals(selenium.getText(
-										"//a[@class='edit-account']"))) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForText("//a[@class='edit-account']",
+					"Edit Account");
 				assertEquals(RuntimeVariables.replace("Edit Account"),
 					selenium.getText("//a[@class='edit-account']"));
 				selenium.clickAt("//a[@class='edit-account']",
 					RuntimeVariables.replace("Edit Account"));
 				Thread.sleep(5000);
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isElementPresent(
-									"//a[@class='delete-account']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForElementPresent("//a[@class='delete-account']");
 				assertTrue(selenium.isElementPresent(
 						"//a[@class='delete-account']"));
 				selenium.clickAt("//a[@class='delete-account']",
 					RuntimeVariables.replace("Delete Account"));
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this account[\\s\\S]$"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//span[@class='message portlet-msg-success']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible(
+					"//span[@class='message portlet-msg-success']");
 				assertEquals(RuntimeVariables.replace(
 						"Account has been deleted."),
 					selenium.getText(
@@ -174,23 +94,7 @@ public class TearDownMailAccountTest extends BaseTestCase {
 
 			case 3:
 				selenium.open("/web/guest/home/");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("link=Mail Test Page")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("link=Mail Test Page");
 				selenium.clickAt("link=Mail Test Page",
 					RuntimeVariables.replace("Mail Test Page"));
 				selenium.waitForPageToLoad("30000");

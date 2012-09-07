@@ -22,6 +22,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ViewPetDateFormatDayMonthSlashTest extends BaseTestCase {
 	public void testViewPetDateFormatDayMonthSlash() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("link=Pets Test Page",
 			RuntimeVariables.replace("Pets Test Page"));
@@ -33,25 +35,8 @@ public class ViewPetDateFormatDayMonthSlashTest extends BaseTestCase {
 				"//div[@class='portlet-body']/table/tbody/tr[contains(.,'Fish')]/td[contains(.,'Bubbles')]/a"));
 		selenium.clickAt("//div[@class='portlet-body']/table/tbody/tr[contains(.,'Fish')]/td[contains(.,'Bubbles')]/a",
 			RuntimeVariables.replace("Bubbles"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("Pet Info for: Bubbles")
-										.equals(selenium.getText(
-								"//div[@class='portlet-body']/h1"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//div[@class='portlet-body']/h1",
+			"Pet Info for: Bubbles");
 		assertEquals(RuntimeVariables.replace("Species: Fish"),
 			selenium.getText("//div[@class='portlet-body']/ul/li[1]"));
 		assertEquals(RuntimeVariables.replace("Breed: Goldfish"),

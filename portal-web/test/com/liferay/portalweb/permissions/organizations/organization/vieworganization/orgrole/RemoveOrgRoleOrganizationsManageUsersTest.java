@@ -23,27 +23,13 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class RemoveOrgRoleOrganizationsManageUsersTest extends BaseTestCase {
 	public void testRemoveOrgRoleOrganizationsManageUsers()
 		throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Control Panel")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
@@ -58,24 +44,8 @@ public class RemoveOrgRoleOrganizationsManageUsersTest extends BaseTestCase {
 			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Define Permissions')]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Define Permissions')]");
 		assertEquals(RuntimeVariables.replace("Define Permissions"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Define Permissions')]"));
@@ -87,23 +57,7 @@ public class RemoveOrgRoleOrganizationsManageUsersTest extends BaseTestCase {
 				"//section[@id='portlet_128']/div/div/div/div[2]/h1/span"));
 		selenium.select("//select[@id='_128_add-permissions']",
 			RuntimeVariables.replace("Organization Administration"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//form[@id='_128_fm']/h3")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//form[@id='_128_fm']/h3");
 		assertEquals(RuntimeVariables.replace("Organization"),
 			selenium.getText("//form[@id='_128_fm']/h3"));
 		assertTrue(selenium.isChecked(

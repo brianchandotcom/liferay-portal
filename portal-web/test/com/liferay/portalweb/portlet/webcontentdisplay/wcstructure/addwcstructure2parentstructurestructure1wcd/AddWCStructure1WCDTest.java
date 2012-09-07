@@ -22,6 +22,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class AddWCStructure1WCDTest extends BaseTestCase {
 	public void testAddWCStructure1WCD() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("link=Web Content Display Test Page",
 			RuntimeVariables.replace("Web Content Display Test Page"));
@@ -29,77 +31,14 @@ public class AddWCStructure1WCDTest extends BaseTestCase {
 		selenium.clickAt("//img[@alt='Add Web Content']",
 			RuntimeVariables.replace("Add Web Content"));
 		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//a[@id='_15_changeStructureButton']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//a[@id='_15_changeStructureButton']");
 		selenium.clickAt("//a[@id='_15_changeStructureButton']",
 			RuntimeVariables.replace("Change"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//iframe[@name='_15_changeStruture']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//iframe[@name='_15_changeStruture']");
 		selenium.selectFrame("//iframe[@name='_15_changeStruture']");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent(
-							"//script[contains(@src,'/liferay/navigation_interaction.js')]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//input[@value='Add Structure']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/liferay/navigation_interaction.js')]");
+		selenium.waitForVisible("//input[@value='Add Structure']");
 		selenium.clickAt("//input[@value='Add Structure']",
 			RuntimeVariables.replace("Add Structure"));
 		selenium.waitForPageToLoad("30000");

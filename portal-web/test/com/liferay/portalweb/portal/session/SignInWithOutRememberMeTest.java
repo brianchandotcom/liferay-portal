@@ -22,64 +22,19 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class SignInWithOutRememberMeTest extends BaseTestCase {
 	public void testSignInWithOutRememberMe() throws Exception {
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("link=Sign Out")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
+		selenium.waitForElementPresent("link=Sign Out");
 		selenium.click(RuntimeVariables.replace("link=Sign Out"));
 		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("link=Sign In")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent("link=Sign In");
 		selenium.click(RuntimeVariables.replace("link=Sign In"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("_58_login", RuntimeVariables.replace("test@liferay.com"));
 		selenium.type("_58_password", RuntimeVariables.replace("test"));
 		selenium.click(RuntimeVariables.replace("//input[@value='Sign In']"));
 		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Session Expiration Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Session Expiration Test Page");
 		selenium.click(RuntimeVariables.replace(
 				"link=Session Expiration Test Page"));
 		selenium.waitForPageToLoad("30000");

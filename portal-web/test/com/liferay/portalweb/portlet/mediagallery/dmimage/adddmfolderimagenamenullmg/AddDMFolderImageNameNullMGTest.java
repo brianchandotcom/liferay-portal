@@ -22,6 +22,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class AddDMFolderImageNameNullMGTest extends BaseTestCase {
 	public void testAddDMFolderImageNameNullMG() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("link=Media Gallery Test Page",
 			RuntimeVariables.replace("Media Gallery Test Page"));
@@ -41,42 +43,10 @@ public class AddDMFolderImageNameNullMGTest extends BaseTestCase {
 				"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li/a[contains(.,'Add Media')]"));
 		selenium.clickAt("//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li/a[contains(.,'Add Media')]",
 			RuntimeVariables.replace("Add Media"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//iframe")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//iframe");
 		selenium.selectFrame("//iframe");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent(
-							"//script[contains(@src,'/liferay/navigation_interaction.js')]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/liferay/navigation_interaction.js')]");
 		assertEquals(RuntimeVariables.replace("Basic Document"),
 			selenium.getText("//td[contains(@id,'name_row-1')]/a"));
 		selenium.clickAt("//td[contains(@id,'name_row-1')]/a",

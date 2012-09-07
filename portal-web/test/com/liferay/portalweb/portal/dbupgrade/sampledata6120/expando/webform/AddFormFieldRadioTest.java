@@ -22,24 +22,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class AddFormFieldRadioTest extends BaseTestCase {
 	public void testAddFormFieldRadio() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/expando-web-form-community/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Web Form Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Web Form Page");
 		selenium.clickAt("link=Web Form Page",
 			RuntimeVariables.replace("Web Form Page"));
 		selenium.waitForPageToLoad("30000");
@@ -48,83 +34,19 @@ public class AddFormFieldRadioTest extends BaseTestCase {
 			selenium.getText("//span[@title='Options']/ul/li/strong/a"));
 		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
 			RuntimeVariables.replace("Options"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
 		assertEquals(RuntimeVariables.replace("Configuration"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
 		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div[3]/span/span/button[1]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//div[3]/span/span/button[1]");
 		selenium.clickAt("//div[3]/span/span/button[1]",
 			RuntimeVariables.replace("Add Row"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//select[@id='_86_fieldType4']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//select[@id='_86_fieldType4']");
 		selenium.select("//select[@id='_86_fieldType4']",
 			RuntimeVariables.replace("label=Radio Buttons"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//input[@id='_86_fieldLabel4_en_US']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//input[@id='_86_fieldLabel4_en_US']");
 		selenium.type("//input[@id='_86_fieldLabel4_en_US']",
 			RuntimeVariables.replace("Gender"));
 		selenium.type("//input[@id='_86_fieldOptions4_en_US']",
@@ -132,43 +54,11 @@ public class AddFormFieldRadioTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div[@class='portlet-msg-success']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//div[@class='portlet-msg-success']");
 		assertEquals(RuntimeVariables.replace(
 				"You have successfully updated the setup."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Web Form Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Web Form Page");
 		selenium.clickAt("link=Web Form Page",
 			RuntimeVariables.replace("Web Form Page"));
 		selenium.waitForPageToLoad("30000");

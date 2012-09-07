@@ -22,6 +22,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ViewPetSiteTest extends BaseTestCase {
 	public void testViewPetSite() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("link=Pet Sites Test Page",
 			RuntimeVariables.replace("Pet Sites Test Page"));
@@ -33,24 +35,8 @@ public class ViewPetSiteTest extends BaseTestCase {
 			RuntimeVariables.replace("Liferay [http://www.liferay.com]"));
 		selenium.clickAt("//button[@type='submit']",
 			RuntimeVariables.replace("View Selected"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//img[@alt='Open Source, Enterprise, For Life']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//img[@alt='Open Source, Enterprise, For Life']");
 		assertTrue(selenium.isVisible(
 				"//img[@alt='Open Source, Enterprise, For Life']"));
 	}

@@ -22,24 +22,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class EditFolderEntryTest extends BaseTestCase {
 	public void testEditFolderEntry() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Bookmarks Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Bookmarks Test Page");
 		selenium.clickAt("link=Bookmarks Test Page",
 			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
@@ -51,24 +37,8 @@ public class EditFolderEntryTest extends BaseTestCase {
 			selenium.getText("//td[2]/a"));
 		selenium.clickAt("//td[5]/span/ul/li/strong/a",
 			RuntimeVariables.replace(""));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent(
+			"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a");
 		selenium.click(RuntimeVariables.replace(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
 		selenium.waitForPageToLoad("30000");

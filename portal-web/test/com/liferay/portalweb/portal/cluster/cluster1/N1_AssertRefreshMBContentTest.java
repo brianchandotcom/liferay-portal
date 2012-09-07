@@ -21,6 +21,8 @@ import com.liferay.portalweb.portal.BaseTestCase;
  */
 public class N1_AssertRefreshMBContentTest extends BaseTestCase {
 	public void testN1_AssertRefreshMBContent() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.refresh();
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isElementPresent("link=Test Category 2"));

@@ -27,25 +27,11 @@ public class AddTasksTask2AssignedToMeTest extends BaseTestCase {
 		while (label >= 1) {
 			switch (label) {
 			case 1:
+				selenium.selectWindow("null");
+				selenium.selectFrame("relative=top");
 				selenium.open("/user/joebloggs/so/dashboard/");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//nav/ul/li[contains(.,'Tasks')]/a/span")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible(
+					"//nav/ul/li[contains(.,'Tasks')]/a/span");
 				selenium.clickAt("//nav/ul/li[contains(.,'Tasks')]/a/span",
 					RuntimeVariables.replace("Tasks"));
 				selenium.waitForPageToLoad("30000");
@@ -55,24 +41,8 @@ public class AddTasksTask2AssignedToMeTest extends BaseTestCase {
 					selenium.getText("link=Add Task"));
 				selenium.clickAt("link=Add Task",
 					RuntimeVariables.replace("Add Task"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//input[@id='_1_WAR_tasksportlet_title']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible(
+					"//input[@id='_1_WAR_tasksportlet_title']");
 				selenium.type("//input[@id='_1_WAR_tasksportlet_title']",
 					RuntimeVariables.replace("Task2 Description"));
 				selenium.select("//select[@name='_1_WAR_tasksportlet_assigneeUserId']",
@@ -98,25 +68,8 @@ public class AddTasksTask2AssignedToMeTest extends BaseTestCase {
 						"//input[@id='_1_WAR_tasksportlet_neverDueCheckbox']"));
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (RuntimeVariables.replace("Task2 Description")
-												.equals(selenium.getText(
-										"//h1[@class='header-title']"))) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForText("//h1[@class='header-title']",
+					"Task2 Description");
 				assertEquals(RuntimeVariables.replace("Task2 Description"),
 					selenium.getText("//h1[@class='header-title']"));
 				assertEquals(RuntimeVariables.replace("Assigned to Joe Bloggs"),

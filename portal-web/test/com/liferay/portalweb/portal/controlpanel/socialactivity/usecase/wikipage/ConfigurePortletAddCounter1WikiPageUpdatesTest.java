@@ -23,24 +23,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ConfigurePortletAddCounter1WikiPageUpdatesTest extends BaseTestCase {
 	public void testConfigurePortletAddCounter1WikiPageUpdates()
 		throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/site-name/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=User Statistics Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=User Statistics Test Page");
 		selenium.clickAt("link=User Statistics Test Page",
 			RuntimeVariables.replace("User Statistics Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -48,87 +34,23 @@ public class ConfigurePortletAddCounter1WikiPageUpdatesTest extends BaseTestCase
 			selenium.getText("//span[@class='portlet-title-text']"));
 		selenium.clickAt("//span[@class='portlet-title-text']",
 			RuntimeVariables.replace("User Statistics"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("//div[@class='yui3-dd-shim']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent("//div[@class='yui3-dd-shim']");
 		assertEquals(RuntimeVariables.replace("Options"),
 			selenium.getText("//span[@title='Options']/ul/li/strong/a"));
 		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
 			RuntimeVariables.replace("Options"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Configuration')]/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Configuration')]/a");
 		assertEquals(RuntimeVariables.replace("Configuration"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Configuration')]/a"));
 		selenium.click(
 			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Configuration')]/a");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//iframe[@id='_180_configurationIframeDialog']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//iframe[@id='_180_configurationIframeDialog']");
 		selenium.selectFrame("//iframe[@id='_180_configurationIframeDialog']");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//select[@id='_86_displayActivityCounterName0']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//select[@id='_86_displayActivityCounterName0']");
 		selenium.select("//select[@id='_86_displayActivityCounterName0']",
 			RuntimeVariables.replace("User's Wiki Page Updates"));
 		selenium.clickAt("//input[@value='Save']",

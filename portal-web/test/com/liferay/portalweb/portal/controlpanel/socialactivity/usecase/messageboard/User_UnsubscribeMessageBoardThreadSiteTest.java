@@ -23,66 +23,20 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class User_UnsubscribeMessageBoardThreadSiteTest extends BaseTestCase {
 	public void testUser_UnsubscribeMessageBoardThreadSite()
 		throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/site-name/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Message Boards Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Message Boards Test Page");
 		selenium.clickAt("link=Message Boards Test Page",
 			RuntimeVariables.replace("Message Boards Test Page"));
 		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementNotPresent("//body[contains(@id,'aui')]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementNotPresent("//body[contains(@id,'aui')]");
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//a[@id='_19_mbThreadsSearchContainer_1_menu_unsubscribe']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//a[@id='_19_mbThreadsSearchContainer_1_menu_unsubscribe']");
 		assertEquals(RuntimeVariables.replace("Unsubscribe"),
 			selenium.getText(
 				"//a[@id='_19_mbThreadsSearchContainer_1_menu_unsubscribe']"));

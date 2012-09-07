@@ -22,29 +22,15 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class SearchWCWebContentQuotesWCDTest extends BaseTestCase {
 	public void testSearchWCWebContentQuotesWCD() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("link=Web Content Display Test Page",
 			RuntimeVariables.replace("Web Content Display Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Configuration",
 			RuntimeVariables.replace("Configuration"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//input[@name='_86_keywords']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//input[@name='_86_keywords']");
 		selenium.type("//input[@name='_86_keywords']",
 			RuntimeVariables.replace("\"WC WebContent Title\""));
 		selenium.clickAt("//input[@value='Search']",

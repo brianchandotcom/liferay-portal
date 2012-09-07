@@ -22,6 +22,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ViewDMDocumentTypeTest extends BaseTestCase {
 	public void testViewDMDocumentType() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
@@ -31,24 +33,8 @@ public class ViewDMDocumentTypeTest extends BaseTestCase {
 			selenium.getText("//span[@title='Add']/ul/li/strong/a"));
 		selenium.clickAt("//span[@title='Add']/ul/li/strong/a",
 			RuntimeVariables.replace("Add"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'DM DocumentType Name')]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'DM DocumentType Name')]");
 		assertEquals(RuntimeVariables.replace("DM DocumentType Name"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'DM DocumentType Name')]"));
@@ -61,88 +47,23 @@ public class ViewDMDocumentTypeTest extends BaseTestCase {
 			selenium.getText("//span[@title='Manage']/ul/li/strong/a/span"));
 		selenium.clickAt("//span[@title='Manage']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Manage"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Document Types')]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Document Types')]");
 		assertEquals(RuntimeVariables.replace("Document Types"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Document Types')]"));
 		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Document Types')]",
 			RuntimeVariables.replace("Document Types"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//iframe[@id='_20_openFileEntryTypeView']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//iframe[@id='_20_openFileEntryTypeView']");
 		selenium.selectFrame("//iframe[@id='_20_openFileEntryTypeView']");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//input[@title='Search Entries']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//input[@title='Search Entries']");
 		selenium.type("//input[@title='Search Entries']",
 			RuntimeVariables.replace("Name"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//tr[contains(.,'DM DocumentType Name')]/td[1]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//tr[contains(.,'DM DocumentType Name')]/td[1]");
 		assertEquals(RuntimeVariables.replace("DM DocumentType Name"),
 			selenium.getText("//tr[contains(.,'DM DocumentType Name')]/td[1]"));
 		selenium.selectFrame("relative=top");

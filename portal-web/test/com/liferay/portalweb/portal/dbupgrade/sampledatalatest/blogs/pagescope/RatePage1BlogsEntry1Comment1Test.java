@@ -22,92 +22,28 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class RatePage1BlogsEntry1Comment1Test extends BaseTestCase {
 	public void testRatePage1BlogsEntry1Comment1() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/blogs-page-scope-community/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Blogs Test Page1")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Blogs Test Page1");
 		selenium.clickAt("link=Blogs Test Page1",
 			RuntimeVariables.replace("Blogs Test Page1"));
 		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("Blogs")
-										.equals(selenium.getText(
-								"//span[@class='portlet-title-text']"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//span[@class='portlet-title-text']", "Blogs");
 		assertEquals(RuntimeVariables.replace("Blogs"),
 			selenium.getText("//span[@class='portlet-title-text']"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry1 Title"),
 			selenium.getText("//div[@class='entry-title']/h2/a"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry1 Content"),
 			selenium.getText("//div[@class='entry-body']/p"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (!selenium.isTextPresent("//span[@class='comments']/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForTextNotPresent("//span[@class='comments']/a");
 		assertEquals(RuntimeVariables.replace("2 Comments"),
 			selenium.getText("//span[@class='comments']/a"));
 		selenium.clickAt("//span[@class='comments']/a",
 			RuntimeVariables.replace("2 Comments"));
 		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"xPath=(//div[@class='lfr-discussion-message'])[1]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"xPath=(//div[@class='lfr-discussion-message'])[1]");
 		assertEquals(RuntimeVariables.replace("Blogs Entry1 Comment1 Body"),
 			selenium.getText(
 				"xPath=(//div[@class='lfr-discussion-message'])[1]"));
@@ -118,25 +54,8 @@ public class RatePage1BlogsEntry1Comment1Test extends BaseTestCase {
 		assertTrue(selenium.isVisible(
 				"//a[contains(@class,'aui-rating-thumb-down')]"));
 		selenium.click("//a[contains(@class,'aui-rating-thumb-up')]");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("+1 (1 Vote)")
-										.equals(selenium.getText(
-								"xPath=(//div[@class='aui-rating-label-element'])[3]"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("xPath=(//div[@class='aui-rating-label-element'])[3]",
+			"+1 (1 Vote)");
 		assertEquals(RuntimeVariables.replace("+1 (1 Vote)"),
 			selenium.getText(
 				"xPath=(//div[@class='aui-rating-label-element'])[3]"));

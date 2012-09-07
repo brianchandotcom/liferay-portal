@@ -24,42 +24,13 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ScreengrabLayoutTest extends BaseTestCase {
 	public void testScreengrabLayout() throws Exception {
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("link=Test Page 8")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
+		selenium.waitForElementPresent("link=Test Page 8");
 		selenium.click(RuntimeVariables.replace("link=Test Page 8"));
 		selenium.waitForPageToLoad("30000");
 		selenium.click("link=Layout Template");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("layoutTemplateId1")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent("layoutTemplateId1");
 		FileUtil.mkdirs(RuntimeVariables.replace(
 				"L:\\portal\\build\\portal-web\\test-output\\brochure\\"));
 		selenium.captureEntirePageScreenshot(RuntimeVariables.replace(

@@ -22,24 +22,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class EditPageLayoutTest extends BaseTestCase {
 	public void testEditPageLayout() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
@@ -62,23 +48,7 @@ public class EditPageLayoutTest extends BaseTestCase {
 				"//td[@id='column-2' and @class='lfr-column seventy']"));
 		selenium.clickAt("link=Layout Template",
 			RuntimeVariables.replace("Layout Template"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//input[@id='layoutTemplateId2']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//input[@id='layoutTemplateId2']");
 		selenium.clickAt("//input[@id='layoutTemplateId2']",
 			RuntimeVariables.replace("2 Columns (50/50)"));
 		selenium.clickAt("//input[5]", RuntimeVariables.replace("Save"));

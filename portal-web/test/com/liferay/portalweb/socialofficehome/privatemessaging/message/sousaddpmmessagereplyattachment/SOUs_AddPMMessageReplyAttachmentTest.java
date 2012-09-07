@@ -23,43 +23,13 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class SOUs_AddPMMessageReplyAttachmentTest extends BaseTestCase {
 	public void testSOUs_AddPMMessageReplyAttachment()
 		throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/user/socialoffice01/home");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//span[@class='notification-count']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//span[@class='notification-count']");
 		selenium.clickAt("//span[@class='notification-count']",
 			RuntimeVariables.replace("Notification Count"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div[@class='title']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//div[@class='title']");
 		assertEquals(RuntimeVariables.replace("Joe Bloggs sent you a message."),
 			selenium.getText("//div[@class='title']"));
 		assertEquals(RuntimeVariables.replace("Mark as Read"),
@@ -67,44 +37,11 @@ public class SOUs_AddPMMessageReplyAttachmentTest extends BaseTestCase {
 		selenium.clickAt("//span[@class='dismiss-notifications']/a",
 			RuntimeVariables.replace("Mark as Read"));
 		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//span[@class='notification-count']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//span[@class='notification-count']");
 		selenium.clickAt("//span[@class='notification-count']",
 			RuntimeVariables.replace("Notification Count"));
 		assertFalse(selenium.isTextPresent("Joe Bloggs sent you a message."));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//nav/ul/li[contains(.,'Messages')]/a/span")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//nav/ul/li[contains(.,'Messages')]/a/span");
 		selenium.clickAt("//nav/ul/li[contains(.,'Messages')]/a/span",
 			RuntimeVariables.replace("Messages"));
 		selenium.waitForPageToLoad("30000");
@@ -139,23 +76,7 @@ public class SOUs_AddPMMessageReplyAttachmentTest extends BaseTestCase {
 				"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\socialofficehome\\message\\sousaddpmmessagereplyattachment\\dependencies\\PM_Attachment.jpg"));
 		selenium.clickAt("//input[@value='Send']",
 			RuntimeVariables.replace("Send"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div[@class='portlet-msg-success']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//div[@class='portlet-msg-success']");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

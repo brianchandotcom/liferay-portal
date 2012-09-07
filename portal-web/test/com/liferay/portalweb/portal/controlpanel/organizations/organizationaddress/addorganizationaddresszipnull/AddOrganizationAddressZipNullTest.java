@@ -22,27 +22,13 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class AddOrganizationAddressZipNullTest extends BaseTestCase {
 	public void testAddOrganizationAddressZipNull() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Control Panel")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
@@ -58,112 +44,30 @@ public class AddOrganizationAddressZipNullTest extends BaseTestCase {
 			selenium.getText("//a[2]/strong"));
 		selenium.clickAt("//a[2]/strong", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li/a");
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText(
 				"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li/a"));
 		selenium.click(RuntimeVariables.replace(
 				"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li/a"));
 		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//a[@id='_125_addressesLink']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//a[@id='_125_addressesLink']");
 		selenium.clickAt("//a[@id='_125_addressesLink']",
 			RuntimeVariables.replace("Addresses"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//input[@id='_125_addressStreet1_0']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//input[@id='_125_addressStreet1_0']");
 		selenium.type("//input[@id='_125_addressStreet1_0']",
 			RuntimeVariables.replace("12345 Selenium St"));
 		selenium.type("//input[@id='_125_addressCity0']",
 			RuntimeVariables.replace("Diamond Bar"));
 		selenium.type("//input[@id='_125_addressZip0']",
 			RuntimeVariables.replace(""));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isPartialText(
-							"//select[@id='_125_addressCountryId0']",
-							"United States")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForPartialText("//select[@id='_125_addressCountryId0']",
+			"United States");
 		selenium.select("//select[@id='_125_addressCountryId0']",
 			RuntimeVariables.replace("label=United States"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isPartialText(
-							"//select[@id='_125_addressRegionId0']",
-							"California")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForPartialText("//select[@id='_125_addressRegionId0']",
+			"California");
 		selenium.select("//select[@id='_125_addressRegionId0']",
 			RuntimeVariables.replace("label=California"));
 		selenium.select("//select[@id='_125_addressTypeId0']",
@@ -175,25 +79,8 @@ public class AddOrganizationAddressZipNullTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("Your request failed to complete.")
-										.equals(selenium.getText(
-								"xPath=(//div[@class='portlet-msg-error'])[1]"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("xPath=(//div[@class='portlet-msg-error'])[1]",
+			"Your request failed to complete.");
 		assertEquals(RuntimeVariables.replace(
 				"Your request failed to complete."),
 			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[1]"));

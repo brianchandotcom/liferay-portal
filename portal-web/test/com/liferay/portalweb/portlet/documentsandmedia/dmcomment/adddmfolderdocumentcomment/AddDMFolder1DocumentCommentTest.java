@@ -22,6 +22,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class AddDMFolder1DocumentCommentTest extends BaseTestCase {
 	public void testAddDMFolder1DocumentComment() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
@@ -31,25 +33,8 @@ public class AddDMFolder1DocumentCommentTest extends BaseTestCase {
 				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
 		selenium.clickAt("//a[contains(@class,'document-link')]/span[@class='entry-title']",
 			RuntimeVariables.replace("DM Folder1 Name"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("DM Folder1 Name")
-										.equals(selenium.getText(
-								"//li[@class='folder selected']/a"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//li[@class='folder selected']/a",
+			"DM Folder1 Name");
 		assertEquals(RuntimeVariables.replace("DM Folder1 Name"),
 			selenium.getText("//li[@class='folder selected']/a"));
 		assertEquals(RuntimeVariables.replace("DM Folder1 Document Title"),
@@ -62,45 +47,13 @@ public class AddDMFolder1DocumentCommentTest extends BaseTestCase {
 			selenium.getText("//fieldset/div/a"));
 		selenium.clickAt("//fieldset/div/a",
 			RuntimeVariables.replace("Be the first."));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//textarea[@name='_20_postReplyBody0']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//textarea[@name='_20_postReplyBody0']");
 		selenium.type("//textarea[@name='_20_postReplyBody0']",
 			RuntimeVariables.replace("DM Folder1 Document Comment"));
 		selenium.clickAt("//input[@value='Reply']",
 			RuntimeVariables.replace("Reply"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//div[@class='lfr-message-response portlet-msg-success']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//div[@class='lfr-message-response portlet-msg-success']");
 		assertEquals(RuntimeVariables.replace(
 				"Your request processed successfully."),
 			selenium.getText(

@@ -22,26 +22,12 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class SignInTest extends BaseTestCase {
 	public void testSignIn() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home");
 		selenium.clickAt("link=Welcome", RuntimeVariables.replace("Welcome"));
 		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//input[@id='_58_login']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//input[@id='_58_login']");
 		selenium.type("//input[@id='_58_login']",
 			RuntimeVariables.replace("test@liferay.com"));
 		selenium.type("//input[@id='_58_password']",

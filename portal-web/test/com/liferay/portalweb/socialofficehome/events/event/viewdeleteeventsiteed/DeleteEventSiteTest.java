@@ -22,46 +22,15 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class DeleteEventSiteTest extends BaseTestCase {
 	public void testDeleteEventSite() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/user/joebloggs/so/dashboard/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//li[contains(@class, 'selected')]/a/span")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//li[contains(@class, 'selected')]/a/span");
 		assertEquals(RuntimeVariables.replace("Dashboard"),
 			selenium.getText("//li[contains(@class, 'selected')]/a/span"));
 		assertEquals(RuntimeVariables.replace("Sites"),
 			selenium.getText("//div[@id='so-sidebar']/h3"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//select[@id='_5_WAR_soportlet_tabs1']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//select[@id='_5_WAR_soportlet_tabs1']");
 		assertTrue(selenium.isPartialText(
 				"//select[@id='_5_WAR_soportlet_tabs1']", "All Sites"));
 		selenium.select("//select[@id='_5_WAR_soportlet_tabs1']",
@@ -78,23 +47,7 @@ public class DeleteEventSiteTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Open Site Name"),
 			selenium.getText("//div[@class='community-title']"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Calendar")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Calendar");
 		selenium.clickAt("link=Calendar", RuntimeVariables.replace("Calendar"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Calendar Event Title"),
@@ -105,24 +58,8 @@ public class DeleteEventSiteTest extends BaseTestCase {
 			selenium.getText("//td[4]/span/ul/li/strong/a"));
 		selenium.clickAt("//td[4]/span/ul/li/strong/a",
 			RuntimeVariables.replace("Actions"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a");
 		assertEquals(RuntimeVariables.replace("Delete"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));

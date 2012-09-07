@@ -22,27 +22,13 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class AddUserJSONTest extends BaseTestCase {
 	public void testAddUserJSON() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/api/jsonws");
 		selenium.type("//input[@id='serviceSearch']",
 			RuntimeVariables.replace("add-user"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//div[@class='lfr-panel-content']/ul/li/a[contains(@href,'add-user-26')]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//div[@class='lfr-panel-content']/ul/li/a[contains(@href,'add-user-26')]");
 		assertEquals(RuntimeVariables.replace("add-user"),
 			selenium.getText(
 				"//div[@class='lfr-panel-content']/ul/li/a[contains(@href,'add-user-26')]"));
@@ -78,44 +64,12 @@ public class AddUserJSONTest extends BaseTestCase {
 			RuntimeVariables.replace("Send Email False"));
 		selenium.clickAt("//input[@value='Invoke']",
 			RuntimeVariables.replace("Invoke"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//li[contains(@class,'tab-active')]/span/a[contains(.,'Result')]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//li[contains(@class,'tab-active')]/span/a[contains(.,'Result')]");
 		assertEquals(RuntimeVariables.replace("Result"),
 			selenium.getText(
 				"//li[contains(@class,'tab-active')]/span/a[contains(.,'Result')]"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//pre[@class='lfr-code-block']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//pre[@class='lfr-code-block']");
 		assertTrue(selenium.isPartialText("//pre[@class='lfr-code-block']", "{"));
 		assertTrue(selenium.isPartialText("//pre[@class='lfr-code-block']",
 				"\"agreedToTermsOfUse\":false,"));

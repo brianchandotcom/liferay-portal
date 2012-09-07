@@ -22,24 +22,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class AssignUserOrganizationLiferayTest extends BaseTestCase {
 	public void testAssignUserOrganizationLiferay() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
@@ -58,24 +44,8 @@ public class AssignUserOrganizationLiferayTest extends BaseTestCase {
 			selenium.getText("//span[@title='Actions']/ul/li/strong/a"));
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
 			RuntimeVariables.replace("Actions"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a");
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
@@ -86,68 +56,20 @@ public class AssignUserOrganizationLiferayTest extends BaseTestCase {
 				"Organizations"));
 		selenium.clickAt("//a[@id='_125_organizationsLink']",
 			RuntimeVariables.replace("Organizations"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div[3]/span/a/span")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//div[3]/span/a/span");
 		assertEquals(RuntimeVariables.replace("Select"),
 			selenium.getText("//div[3]/span/a/span"));
 		selenium.clickAt("//div[3]/span/a/span",
 			RuntimeVariables.replace("Select"));
 		Thread.sleep(5000);
 		selenium.selectWindow("Users and Organizations");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//td[1]/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//td[1]/a");
 		assertEquals(RuntimeVariables.replace("Liferay Chicago"),
 			selenium.getText("//td[1]/a"));
 		selenium.clickAt("//td[1]/a",
 			RuntimeVariables.replace("Liferay Chicago"));
 		selenium.selectWindow("null");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//table/tr/td[1]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//table/tr/td[1]");
 		assertEquals(RuntimeVariables.replace("Liferay Chicago"),
 			selenium.getText("//table/tr/td[1]"));
 		selenium.clickAt("//input[@value='Save']",

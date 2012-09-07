@@ -24,6 +24,8 @@ public class User1_ConfigureMBPermissionsTeamAddCategoryOnTest
 	extends BaseTestCase {
 	public void testUser1_ConfigureMBPermissionsTeamAddCategoryOn()
 		throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/site-name/");
 		selenium.clickAt("link=Message Boards Test Page",
 			RuntimeVariables.replace("Message Boards Test Page"));

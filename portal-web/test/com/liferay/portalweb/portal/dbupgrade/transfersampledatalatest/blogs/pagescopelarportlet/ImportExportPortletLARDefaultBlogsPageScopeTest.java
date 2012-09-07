@@ -24,70 +24,22 @@ public class ImportExportPortletLARDefaultBlogsPageScopeTest
 	extends BaseTestCase {
 	public void testImportExportPortletLARDefaultBlogsPageScope()
 		throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/blogs-page-scope-community/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Blogs Test Page1")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Blogs Test Page1");
 		selenium.clickAt("link=Blogs Test Page1",
 			RuntimeVariables.replace("Blogs Test Page1"));
 		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("Blogs")
-										.equals(selenium.getText(
-								"//span[@class='portlet-title-text']"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//span[@class='portlet-title-text']", "Blogs");
 		assertEquals(RuntimeVariables.replace("Blogs"),
 			selenium.getText("//span[@class='portlet-title-text']"));
 		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Options"),
 			selenium.getText("//strong/a"));
 		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a");
 		assertEquals(RuntimeVariables.replace("Export / Import"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
@@ -96,23 +48,7 @@ public class ImportExportPortletLARDefaultBlogsPageScopeTest
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Import", RuntimeVariables.replace("Import"));
 		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//input[@id='_86_importFileName']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//input[@id='_86_importFileName']");
 		selenium.uploadTempFile("//input[@id='_86_importFileName']",
 			RuntimeVariables.replace("Blogs_Page_Scope.Default.Portlet.lar"));
 		assertFalse(selenium.isChecked(

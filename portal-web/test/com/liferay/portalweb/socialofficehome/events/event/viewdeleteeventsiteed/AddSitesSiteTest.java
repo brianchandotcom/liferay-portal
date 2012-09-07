@@ -22,69 +22,20 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class AddSitesSiteTest extends BaseTestCase {
 	public void testAddSitesSite() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/user/joebloggs/home1/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//li[contains(@class, 'selected')]/a/span")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//li[contains(@class, 'selected')]/a/span");
 		assertEquals(RuntimeVariables.replace("Home"),
 			selenium.getText("//li[contains(@class, 'selected')]/a/span"));
 		assertEquals(RuntimeVariables.replace("Sites"),
 			selenium.getText("//div[@id='so-sidebar']/h3"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//button[contains(.,'Add Site')]/span[2]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//button[contains(.,'Add Site')]/span[2]");
 		assertEquals(RuntimeVariables.replace("Add Site"),
 			selenium.getText("//button[contains(.,'Add Site')]/span[2]"));
 		selenium.clickAt("//button[contains(.,'Add Site')]/span[2]",
 			RuntimeVariables.replace("Add Site"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"xPath=(//h1[@class='header-title']/span)[1]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("xPath=(//h1[@class='header-title']/span)[1]");
 		assertEquals(RuntimeVariables.replace("Information"),
 			selenium.getText("xPath=(//h1[@class='header-title']/span)[1]"));
 		assertTrue(selenium.isVisible("//input[@id='_5_WAR_soportlet_name']"));
@@ -97,24 +48,7 @@ public class AddSitesSiteTest extends BaseTestCase {
 		assertEquals("Next", selenium.getValue("//input[@value='Next']"));
 		selenium.clickAt("//input[@value='Next']",
 			RuntimeVariables.replace("Next"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"xPath=(//h1[@class='header-title']/span)[2]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("xPath=(//h1[@class='header-title']/span)[2]");
 		assertEquals(RuntimeVariables.replace("Settings"),
 			selenium.getText("xPath=(//h1[@class='header-title']/span)[2]"));
 		assertTrue(selenium.isVisible(
@@ -127,24 +61,7 @@ public class AddSitesSiteTest extends BaseTestCase {
 		assertEquals("Next", selenium.getValue("//input[@value='Next']"));
 		selenium.clickAt("//input[@value='Next']",
 			RuntimeVariables.replace("Next"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"xPath=(//h1[@class='header-title']/span)[3]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("xPath=(//h1[@class='header-title']/span)[3]");
 		assertEquals(RuntimeVariables.replace("Customization"),
 			selenium.getText("xPath=(//h1[@class='header-title']/span)[3]"));
 		assertTrue(selenium.isChecked("//div[4]/span[1]/input"));
@@ -157,26 +74,8 @@ public class AddSitesSiteTest extends BaseTestCase {
 		assertEquals("Save", selenium.getValue("//input[@value='Save']"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace(
-							"Your request processed successfully.")
-										.equals(selenium.getText(
-								"//div[@class='portlet-msg-success']"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//div[@class='portlet-msg-success']",
+			"Your request processed successfully.");
 		assertEquals(RuntimeVariables.replace(
 				"Your request processed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

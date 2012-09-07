@@ -22,27 +22,13 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class AddOrganizationPhoneNumber2Test extends BaseTestCase {
 	public void testAddOrganizationPhoneNumber2() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Control Panel")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
@@ -58,86 +44,22 @@ public class AddOrganizationPhoneNumber2Test extends BaseTestCase {
 			selenium.getText("//a[2]/strong"));
 		selenium.clickAt("//a[2]/strong", RuntimeVariables.replace("Selenium"));
 		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li/a");
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText(
 				"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li/a"));
 		selenium.click(RuntimeVariables.replace(
 				"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li/a"));
 		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//a[@id='_125_phoneNumbersLink']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//a[@id='_125_phoneNumbersLink']");
 		selenium.clickAt("//a[@id='_125_phoneNumbersLink']",
 			RuntimeVariables.replace("Phone Numbers"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//div[5]/fieldset/div[2]/div/span/span/button[1]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//div[5]/fieldset/div[2]/div/span/span/button[1]");
 		selenium.clickAt("//div[5]/fieldset/div[2]/div/span/span/button[1]",
 			RuntimeVariables.replace("Add Row"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//input[@id='_125_phoneNumber2']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//input[@id='_125_phoneNumber2']");
 		selenium.type("//input[@id='_125_phoneNumber2']",
 			RuntimeVariables.replace("5628020524"));
 		selenium.type("//input[@id='_125_phoneExtension2']",
@@ -149,23 +71,7 @@ public class AddOrganizationPhoneNumber2Test extends BaseTestCase {
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div[@class='portlet-msg-success']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//div[@class='portlet-msg-success']");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

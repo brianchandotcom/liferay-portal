@@ -22,24 +22,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class User_UnsubscribeBlogsEntry2SiteTest extends BaseTestCase {
 	public void testUser_UnsubscribeBlogsEntry2Site() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/site-name/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Blogs Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Blogs Test Page");
 		selenium.clickAt("link=Blogs Test Page",
 			RuntimeVariables.replace("Blogs Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -52,26 +38,8 @@ public class User_UnsubscribeBlogsEntry2SiteTest extends BaseTestCase {
 			selenium.getText("//span[@class='subscribe-link']/a/span"));
 		selenium.clickAt("//span[@class='subscribe-link']/a/span",
 			RuntimeVariables.replace("Unsubscribe from Comments"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace(
-							"Your request processed successfully.")
-										.equals(selenium.getText(
-								"//div[@id='_33_discussion-status-messages']"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//div[@id='_33_discussion-status-messages']",
+			"Your request processed successfully.");
 		assertEquals(RuntimeVariables.replace(
 				"Your request processed successfully."),
 			selenium.getText("//div[@id='_33_discussion-status-messages']"));

@@ -23,6 +23,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ViewMicroblogsContent150CharacterTest extends BaseTestCase {
 	public void testViewMicroblogsContent150Character()
 		throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/user/joebloggs/so/dashboard");
 		assertEquals(RuntimeVariables.replace("Microblogs Status Update"),
 			selenium.getText("//span[@class='portlet-title-default']"));
@@ -31,24 +33,7 @@ public class ViewMicroblogsContent150CharacterTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"|||||||||1|||||||||2|||||||||3|||||||||4|||||||||5|||||||||6|||||||||7|||||||||8|||||||||9||||||||10||||||||11||||||||12||||||||13||||||||14||||||||15"),
 			selenium.getText("//div[@class='content']"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//nav/ul/li[contains(.,'Microblogs')]/a/span")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//nav/ul/li[contains(.,'Microblogs')]/a/span");
 		selenium.clickAt("//nav/ul/li[contains(.,'Microblogs')]/a/span",
 			RuntimeVariables.replace("Microblogs"));
 		selenium.waitForPageToLoad("30000");

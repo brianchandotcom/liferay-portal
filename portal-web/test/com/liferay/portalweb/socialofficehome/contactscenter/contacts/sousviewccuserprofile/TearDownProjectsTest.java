@@ -27,85 +27,22 @@ public class TearDownProjectsTest extends BaseTestCase {
 		while (label >= 1) {
 			switch (label) {
 			case 1:
+				selenium.selectWindow("null");
+				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home");
 				selenium.clickAt("//div[@id='dockbar']",
 					RuntimeVariables.replace("Dockbar"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isElementPresent(
-									"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForElementPresent(
+					"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
 				assertTrue(selenium.isVisible("//li[@id='_145_userMenu']"));
 				selenium.mouseOver("//li[@id='_145_userMenu']");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("link=My Account")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("link=My Account");
 				selenium.clickAt("link=My Account",
 					RuntimeVariables.replace("My Account"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//iframe[contains(@src,'my_account')]")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("//iframe[contains(@src,'my_account')]");
 				selenium.selectFrame("//iframe[contains(@src,'my_account')]");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isPartialText(
-									"//a[@id='_2_projectsLink']", "Projects")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForPartialText("//a[@id='_2_projectsLink']",
+					"Projects");
 				assertTrue(selenium.isPartialText(
 						"//a[@id='_2_projectsLink']", "Projects"));
 				selenium.clickAt("//a[@id='_2_projectsLink']",
@@ -190,24 +127,7 @@ public class TearDownProjectsTest extends BaseTestCase {
 					selenium.getText("//div[@class='portlet-msg-success']"));
 
 			case 5:
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//button[contains(@class,'delete')]")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("//button[contains(@class,'delete')]");
 				selenium.clickAt("//button[contains(@class,'delete')]",
 					RuntimeVariables.replace("Delete"));
 				selenium.clickAt("//input[@value='Save']",

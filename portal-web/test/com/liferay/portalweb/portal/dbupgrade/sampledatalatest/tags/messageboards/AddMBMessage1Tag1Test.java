@@ -22,6 +22,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class AddMBMessage1Tag1Test extends BaseTestCase {
 	public void testAddMBMessage1Tag1() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/tags-message-board-community/");
 		selenium.clickAt("link=Message Boards Page",
 			RuntimeVariables.replace("Message Boards Page"));
@@ -33,122 +35,25 @@ public class AddMBMessage1Tag1Test extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_19_subject']",
 			RuntimeVariables.replace("Message1 Tag1 Test1"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent(
-							"//textarea[@id='_19_editor' and @style='display: none;']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent(
+			"//textarea[@id='_19_editor' and @style='display: none;']");
 		assertEquals(RuntimeVariables.replace("Source"),
 			selenium.getText("//span[.='Source']"));
 		selenium.clickAt("//span[.='Source']",
 			RuntimeVariables.replace("Source"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//a[@class='cke_button_source cke_on']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//td[@id='cke_contents__19_editor']/textarea")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//a[@class='cke_button_source cke_on']");
+		selenium.waitForVisible("//td[@id='cke_contents__19_editor']/textarea");
 		selenium.type("//td[@id='cke_contents__19_editor']/textarea",
 			RuntimeVariables.replace("This is a message1 tag1 test1."));
 		assertEquals(RuntimeVariables.replace("Source"),
 			selenium.getText("//span[.='Source']"));
 		selenium.clickAt("//span[.='Source']",
 			RuntimeVariables.replace("Source"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent(
-							"//textarea[@id='_19_editor' and @style='display: none;']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//td[@id='cke_contents__19_editor']/iframe")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent(
+			"//textarea[@id='_19_editor' and @style='display: none;']");
+		selenium.waitForVisible("//td[@id='cke_contents__19_editor']/iframe");
 		selenium.selectFrame("//td[@id='cke_contents__19_editor']/iframe");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("This is a message1 tag1 test1.")
-										.equals(selenium.getText("//body"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//body", "This is a message1 tag1 test1.");
 		selenium.selectFrame("relative=top");
 		selenium.type("//li/span/span/input",
 			RuntimeVariables.replace("selenium1"));

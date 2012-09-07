@@ -22,47 +22,16 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class AddMailAccountTest extends BaseTestCase {
 	public void testAddMailAccount() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Mail Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Mail Test Page");
 		selenium.clickAt("link=Mail Test Page",
 			RuntimeVariables.replace("Mail Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("//input[@value='Add Mail Account']",
 			RuntimeVariables.replace("Add Mail Account"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//input[@id='_1_WAR_mailportlet_address']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//input[@id='_1_WAR_mailportlet_address']");
 		selenium.type("//input[@id='_1_WAR_mailportlet_address']",
 			RuntimeVariables.replace("liferay.qa.testing.trunk@gmail.com"));
 		selenium.type("//input[@id='_1_WAR_mailportlet_password']",
@@ -74,24 +43,7 @@ public class AddMailAccountTest extends BaseTestCase {
 				"//input[@id='_1_WAR_mailportlet_savePasswordCheckbox']"));
 		selenium.clickAt("//input[@value='Add Account']",
 			RuntimeVariables.replace("Add Account"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//span[@class='message portlet-msg-success']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//span[@class='message portlet-msg-success']");
 		assertEquals(RuntimeVariables.replace("Account has been created."),
 			selenium.getText("//span[@class='message portlet-msg-success']"));
 	}

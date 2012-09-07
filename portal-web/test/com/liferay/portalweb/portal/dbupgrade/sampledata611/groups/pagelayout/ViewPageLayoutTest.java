@@ -22,24 +22,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ViewPageLayoutTest extends BaseTestCase {
 	public void testViewPageLayout() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/group-page-layout-community/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Page Layout Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Page Layout Page");
 		selenium.clickAt("link=Page Layout Page",
 			RuntimeVariables.replace("Page Layout Page"));
 		selenium.waitForPageToLoad("30000");

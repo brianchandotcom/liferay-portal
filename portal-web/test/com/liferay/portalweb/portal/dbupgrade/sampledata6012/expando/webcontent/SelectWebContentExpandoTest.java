@@ -22,24 +22,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class SelectWebContentExpandoTest extends BaseTestCase {
 	public void testSelectWebContentExpando() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent("link=Control Panel");
 		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Communities", RuntimeVariables.replace(""));
@@ -56,43 +42,11 @@ public class SelectWebContentExpandoTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("//img[@alt='Select Web Content']",
 			RuntimeVariables.replace(""));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Expando Web Content Test")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Expando Web Content Test");
 		selenium.clickAt("link=Expando Web Content Test",
 			RuntimeVariables.replace(""));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isPartialText("//form[@id='_86_fm1']/div",
-							"Displaying Content:")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForPartialText("//form[@id='_86_fm1']/div",
+			"Displaying Content:");
 		assertTrue(selenium.isPartialText("//form[@id='_86_fm1']/div",
 				"Displaying Content:"));
 		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));

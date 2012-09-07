@@ -27,24 +27,10 @@ public class MoveThreadTest extends BaseTestCase {
 		while (label >= 1) {
 			switch (label) {
 			case 1:
+				selenium.selectWindow("null");
+				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isElementPresent("link=Control Panel")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForElementPresent("link=Control Panel");
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
@@ -84,66 +70,18 @@ public class MoveThreadTest extends BaseTestCase {
 					RuntimeVariables.replace("Add post explanation."));
 				assertTrue(selenium.isChecked(
 						"//input[@id='_162_addExplanationPostCheckbox']"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("//input[@id='_162_subject']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("//input[@id='_162_subject']");
 				selenium.type("//input[@id='_162_subject']",
 					RuntimeVariables.replace("Moved to Sujr"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isElementPresent(
-									"//textarea[@id='_162_editor' and @style='display: none;']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForElementPresent(
+					"//textarea[@id='_162_editor' and @style='display: none;']");
 				assertEquals(RuntimeVariables.replace("Source"),
 					selenium.getText(
 						"//span[@id='cke_34_label' and .='Source']"));
 				selenium.clickAt("//span[@id='cke_34_label' and .='Source']",
 					RuntimeVariables.replace("Source"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//td[@id='cke_contents__162_editor']/textarea")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible(
+					"//td[@id='cke_contents__162_editor']/textarea");
 				selenium.type("//td[@id='cke_contents__162_editor']/textarea",
 					RuntimeVariables.replace(
 						"Trust and paths will be straightened."));
@@ -152,63 +90,14 @@ public class MoveThreadTest extends BaseTestCase {
 						"//span[@id='cke_34_label' and .='Source']"));
 				selenium.clickAt("//span[@id='cke_34_label' and .='Source']",
 					RuntimeVariables.replace("Source"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isElementPresent(
-									"//textarea[@id='_162_editor' and @style='display: none;']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//td[@id='cke_contents__162_editor']/iframe")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForElementPresent(
+					"//textarea[@id='_162_editor' and @style='display: none;']");
+				selenium.waitForVisible(
+					"//td[@id='cke_contents__162_editor']/iframe");
 				selenium.selectFrame(
 					"//td[@id='cke_contents__162_editor']/iframe");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (RuntimeVariables.replace(
-									"Trust and paths will be straightened.")
-												.equals(selenium.getText(
-										"//body"))) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForText("//body",
+					"Trust and paths will be straightened.");
 				selenium.selectFrame("relative=top");
 				selenium.clickAt("//input[@value='Select']",
 					RuntimeVariables.replace("Select"));

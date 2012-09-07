@@ -22,27 +22,13 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class AddOrganizationWebsiteInvalidTest extends BaseTestCase {
 	public void testAddOrganizationWebsiteInvalid() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Control Panel")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
@@ -58,47 +44,15 @@ public class AddOrganizationWebsiteInvalidTest extends BaseTestCase {
 			selenium.getText("//a[2]/strong"));
 		selenium.clickAt("//a[2]/strong", RuntimeVariables.replace("Selenium"));
 		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li/a");
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText(
 				"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li/a"));
 		selenium.click(RuntimeVariables.replace(
 				"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li/a"));
 		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//a[@id='_125_websitesLink']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//a[@id='_125_websitesLink']");
 		selenium.clickAt("//a[@id='_125_websitesLink']",
 			RuntimeVariables.replace("Websites"));
 		selenium.type("//input[@id='_125_websiteUrl0']",
@@ -109,25 +63,7 @@ public class AddOrganizationWebsiteInvalidTest extends BaseTestCase {
 			RuntimeVariables.replace("Primary Button"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("Please enter a valid URL.")
-										.equals(selenium.getText(
-								"//div[@role='alert']"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//div[@role='alert']", "Please enter a valid URL.");
 		assertEquals(RuntimeVariables.replace("Please enter a valid URL."),
 			selenium.getText("//div[@role='alert']"));
 		assertEquals(RuntimeVariables.replace("Websites (Modified)"),

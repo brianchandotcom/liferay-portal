@@ -23,6 +23,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ExpireThisVersionWCWebContentWCDDetailsTest extends BaseTestCase {
 	public void testExpireThisVersionWCWebContentWCDDetails()
 		throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("link=Web Content Display Test Page",
 			RuntimeVariables.replace("Web Content Display Test Page"));
@@ -43,24 +45,8 @@ public class ExpireThisVersionWCWebContentWCDDetailsTest extends BaseTestCase {
 				"xPath=(//span[@title='Actions']/ul/li/strong/a/span)[2]"));
 		selenium.clickAt("xPath=(//span[@title='Actions']/ul/li/strong/a/span)[2]",
 			RuntimeVariables.replace("Actions"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Expire')]/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Expire')]/a");
 		assertEquals(RuntimeVariables.replace("Expire"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Expire')]/a"));

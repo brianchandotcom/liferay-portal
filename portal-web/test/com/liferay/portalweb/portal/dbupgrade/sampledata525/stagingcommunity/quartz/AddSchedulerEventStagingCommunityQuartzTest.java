@@ -23,24 +23,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AddSchedulerEventStagingCommunityQuartzTest extends BaseTestCase {
 	public void testAddSchedulerEventStagingCommunityQuartz()
 		throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
@@ -57,24 +43,8 @@ public class AddSchedulerEventStagingCommunityQuartzTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText("//strong/span"));
 		selenium.clickAt("//strong/span", RuntimeVariables.replace("Actions"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
 		assertEquals(RuntimeVariables.replace("Manage Pages"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
@@ -83,46 +53,14 @@ public class AddSchedulerEventStagingCommunityQuartzTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("//input[@value='Publish to Live']",
 			RuntimeVariables.replace("Publish to Live"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//li[@id='_134_exportPagesTabsschedulerTabsId']/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//li[@id='_134_exportPagesTabsschedulerTabsId']/a");
 		assertEquals(RuntimeVariables.replace("Scheduler"),
 			selenium.getText(
 				"//li[@id='_134_exportPagesTabsschedulerTabsId']/a"));
 		selenium.clickAt("//li[@id='_134_exportPagesTabsschedulerTabsId']/a",
 			RuntimeVariables.replace("Scheduler"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//input[@name='_134_description']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//input[@name='_134_description']");
 		selenium.type("//input[@name='_134_description']",
 			RuntimeVariables.replace("Quartz Scheduler Event"));
 		selenium.select("//select[@id='_134_schedulerStartDateMonth']",
@@ -134,25 +72,8 @@ public class AddSchedulerEventStagingCommunityQuartzTest extends BaseTestCase {
 		Thread.sleep(5000);
 		selenium.clickAt("//input[@value='Add Event']",
 			RuntimeVariables.replace("Add Event"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("Quartz Scheduler Event")
-										.equals(selenium.getText(
-								"//div[@id='_134_scheduledPublishEventsDiv']/div/table/tbody/tr[3]/td[1]"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//div[@id='_134_scheduledPublishEventsDiv']/div/table/tbody/tr[3]/td[1]",
+			"Quartz Scheduler Event");
 		assertEquals(RuntimeVariables.replace("Quartz Scheduler Event"),
 			selenium.getText(
 				"//div[@id='_134_scheduledPublishEventsDiv']/div/table/tbody/tr[3]/td[1]"));

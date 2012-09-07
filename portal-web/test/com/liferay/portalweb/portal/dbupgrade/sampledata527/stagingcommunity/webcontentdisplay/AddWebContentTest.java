@@ -22,24 +22,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class AddWebContentTest extends BaseTestCase {
 	public void testAddWebContent() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent("link=Control Panel");
 		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Communities", RuntimeVariables.replace(""));
@@ -54,24 +40,8 @@ public class AddWebContentTest extends BaseTestCase {
 			selenium.getText("//td[1]/a[2]"));
 		selenium.clickAt("//td[1]/a[2]", RuntimeVariables.replace("Staging"));
 		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"link=Page Staging Community Web Content Display")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"link=Page Staging Community Web Content Display");
 		selenium.clickAt("link=Page Staging Community Web Content Display",
 			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
@@ -90,55 +60,9 @@ public class AddWebContentTest extends BaseTestCase {
 		selenium.type("_15_title",
 			RuntimeVariables.replace("WC Web Content Name"));
 		Thread.sleep(5000);
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("_15_editor")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("FCKeditor1___Frame")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("xEditingArea")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent("_15_editor");
+		selenium.waitForElementPresent("FCKeditor1___Frame");
+		selenium.waitForElementPresent("xEditingArea");
 		selenium.selectFrame("//iframe[@id='_15_editor']");
 		selenium.selectFrame("//iframe[@id='FCKeditor1___Frame']");
 		selenium.selectFrame("//iframe");

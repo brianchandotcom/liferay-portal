@@ -22,25 +22,11 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class SOUs_UnfollowCCUserTest extends BaseTestCase {
 	public void testSOUs_UnfollowCCUser() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/user/socialoffice01/so/dashboard/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//nav/ul/li[contains(.,'Contacts Center')]/a/span")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//nav/ul/li[contains(.,'Contacts Center')]/a/span");
 		selenium.clickAt("//nav/ul/li[contains(.,'Contacts Center')]/a/span",
 			RuntimeVariables.replace("Contacts Center"));
 		selenium.waitForPageToLoad("30000");
@@ -50,49 +36,15 @@ public class SOUs_UnfollowCCUserTest extends BaseTestCase {
 				"//div[contains(@class, 'contacts-center-home-content')]"));
 		selenium.type("//input[@id='_1_WAR_contactsportlet_name']",
 			RuntimeVariables.replace("test@liferay.com"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("Bloggs, Joe")
-										.equals(selenium.getText(
-								"//div[contains(@class, 'lfr-contact-name')]/a"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//div[contains(@class, 'lfr-contact-name')]/a",
+			"Bloggs, Joe");
 		assertEquals(RuntimeVariables.replace("Bloggs, Joe"),
 			selenium.getText("//div[contains(@class, 'lfr-contact-name')]/a"));
 		assertEquals(RuntimeVariables.replace("test@liferay.com"),
 			selenium.getText("//div[contains(@class, 'lfr-contact-extra')]"));
 		selenium.clickAt("//div[contains(@class, 'lfr-contact-name')]/a",
 			RuntimeVariables.replace("Bloggs, Joe"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//div[contains(@class, 'contacts-profile')]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//div[contains(@class, 'contacts-profile')]");
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
 			selenium.getText(
 				"//div[contains(@class, 'contacts-profile')]/div/div[2]/div/a"));
@@ -106,24 +58,8 @@ public class SOUs_UnfollowCCUserTest extends BaseTestCase {
 				"//button[@id='_1_WAR_contactsportlet_unfollowButton']"));
 		selenium.clickAt("//button[@id='_1_WAR_contactsportlet_unfollowButton']",
 			RuntimeVariables.replace("Unfollow"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//button[@id='_1_WAR_contactsportlet_followButton']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//button[@id='_1_WAR_contactsportlet_followButton']");
 		assertEquals(RuntimeVariables.replace("Follow"),
 			selenium.getText(
 				"//button[@id='_1_WAR_contactsportlet_followButton']"));

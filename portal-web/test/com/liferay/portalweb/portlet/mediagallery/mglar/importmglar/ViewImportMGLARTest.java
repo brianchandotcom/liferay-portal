@@ -22,6 +22,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ViewImportMGLARTest extends BaseTestCase {
 	public void testViewImportMGLAR() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("link=Media Gallery Test Page",
 			RuntimeVariables.replace("Media Gallery Test Page"));
@@ -31,24 +33,8 @@ public class ViewImportMGLARTest extends BaseTestCase {
 			selenium.getText("//span[@title='Options']/ul/li/strong/a"));
 		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
 			RuntimeVariables.replace("Options"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]");
 		assertEquals(RuntimeVariables.replace("Configuration"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]"));
@@ -92,24 +78,8 @@ public class ViewImportMGLARTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("MG Folder2 Subfolder Name"),
 			selenium.getText("//h1[@class='header-title']/span"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//img[@alt='MG Folder2 Subfolder Image Title - MG Folder2 Subfolder Image Description']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//img[@alt='MG Folder2 Subfolder Image Title - MG Folder2 Subfolder Image Description']");
 		assertTrue(selenium.isVisible(
 				"//img[@alt='MG Folder2 Subfolder Image Title - MG Folder2 Subfolder Image Description']"));
 		assertEquals(RuntimeVariables.replace(

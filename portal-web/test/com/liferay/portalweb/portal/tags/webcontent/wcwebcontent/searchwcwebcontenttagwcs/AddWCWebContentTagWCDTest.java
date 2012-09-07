@@ -22,6 +22,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class AddWCWebContentTagWCDTest extends BaseTestCase {
 	public void testAddWCWebContentTagWCD() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("link=Web Content Display Test Page",
 			RuntimeVariables.replace("Web Content Display Test Page"));
@@ -42,24 +44,8 @@ public class AddWCWebContentTagWCDTest extends BaseTestCase {
 				"Categorization"));
 		selenium.clickAt("//a[@id='_15_categorizationLink']",
 			RuntimeVariables.replace("Categorization"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//input[@class='lfr-tag-selector-input aui-field-input-text']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//input[@class='lfr-tag-selector-input aui-field-input-text']");
 		selenium.type("//input[@class='lfr-tag-selector-input aui-field-input-text']",
 			RuntimeVariables.replace("tag"));
 		selenium.clickAt("//button[@id='add']", RuntimeVariables.replace("Add"));
@@ -86,24 +72,8 @@ public class AddWCWebContentTagWCDTest extends BaseTestCase {
 				"Categorization"));
 		selenium.clickAt("//a[@id='_15_categorizationLink']",
 			RuntimeVariables.replace("Categorization"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//div[contains(@id,'assetTagsSelector')]/ul/li/span/span[contains(.,'tag')]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//div[contains(@id,'assetTagsSelector')]/ul/li/span/span[contains(.,'tag')]");
 		assertEquals(RuntimeVariables.replace("tag"),
 			selenium.getText(
 				"//div[contains(@id,'assetTagsSelector')]/ul/li/span/span[contains(.,'tag')]"));

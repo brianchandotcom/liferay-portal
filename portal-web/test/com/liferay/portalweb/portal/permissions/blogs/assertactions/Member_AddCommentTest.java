@@ -22,91 +22,28 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class Member_AddCommentTest extends BaseTestCase {
 	public void testMember_AddComment() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("link=Blogs Permissions Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent("link=Blogs Permissions Page");
 		selenium.clickAt("link=Blogs Permissions Page",
 			RuntimeVariables.replace("Blogs Permissions Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Permissions Blogs Test Entry",
 			RuntimeVariables.replace("Permissions Blogs Test Entry"));
 		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//fieldset[contains(@class,'add-comment')]/div/span/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//fieldset[contains(@class,'add-comment')]/div/span/a");
 		assertEquals(RuntimeVariables.replace("Add Comment"),
 			selenium.getText(
 				"//fieldset[contains(@class,'add-comment')]/div/span/a"));
 		selenium.click("//fieldset[contains(@class,'add-comment')]/div/span/a");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//textarea[@name='_33_postReplyBody0']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//textarea[@name='_33_postReplyBody0']");
 		selenium.type("//textarea[@name='_33_postReplyBody0']",
 			RuntimeVariables.replace("Member Permissions Blogs Test Comment"));
 		selenium.clickAt("//input[@value='Reply']",
 			RuntimeVariables.replace("Reply"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//div[@id='_33_discussion-status-messages']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//div[@id='_33_discussion-status-messages']");
 		assertEquals(RuntimeVariables.replace(
 				"Your request processed successfully."),
 			selenium.getText("//div[@id='_33_discussion-status-messages']"));

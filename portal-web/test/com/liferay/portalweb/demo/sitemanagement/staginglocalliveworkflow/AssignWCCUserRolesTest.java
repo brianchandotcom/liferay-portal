@@ -22,24 +22,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class AssignWCCUserRolesTest extends BaseTestCase {
 	public void testAssignWCCUserRoles() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
@@ -59,46 +45,14 @@ public class AssignWCCUserRolesTest extends BaseTestCase {
 		assertTrue(selenium.isPartialText("//a[@id='_125_rolesLink']", "Roles"));
 		selenium.clickAt("//a[@id='_125_rolesLink']",
 			RuntimeVariables.replace("Roles"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div[@id='_125_roles']/span[2]/a/span")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//div[@id='_125_roles']/span[2]/a/span");
 		assertEquals(RuntimeVariables.replace("Select"),
 			selenium.getText("//div[@id='_125_roles']/span[2]/a/span"));
 		selenium.clickAt("//div[@id='_125_roles']/span[2]/a/span",
 			RuntimeVariables.replace("Select"));
 		Thread.sleep(5000);
 		selenium.selectWindow("title=Users and Organizations");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Staging Admin")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Staging Admin");
 		selenium.type("//input[@id='_125_keywords']",
 			RuntimeVariables.replace("Staging"));
 		selenium.clickAt("//input[@value='Search']",
@@ -109,68 +63,19 @@ public class AssignWCCUserRolesTest extends BaseTestCase {
 		selenium.clickAt("//tr[3]/td/a",
 			RuntimeVariables.replace("Staging Admin"));
 		selenium.selectWindow("null");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("Staging Admin")
-										.equals(selenium.getText(
-								"//div[@id='_125_roles']/div[3]/div/div/table/tr[1]/td"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//div[@id='_125_roles']/div[3]/div/div/table/tr[1]/td",
+			"Staging Admin");
 		assertEquals(RuntimeVariables.replace("Staging Admin"),
 			selenium.getText(
 				"//div[@id='_125_roles']/div[3]/div/div/table/tr[1]/td"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div[@id='_125_roles']/span[2]/a/span")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//div[@id='_125_roles']/span[2]/a/span");
 		assertEquals(RuntimeVariables.replace("Select"),
 			selenium.getText("//div[@id='_125_roles']/span[2]/a/span"));
 		selenium.clickAt("//div[@id='_125_roles']/span[2]/a/span",
 			RuntimeVariables.replace("Select"));
 		Thread.sleep(5000);
 		selenium.selectWindow("title=Users and Organizations");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Web Content Creator")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Web Content Creator");
 		selenium.type("//input[@id='_125_keywords']",
 			RuntimeVariables.replace("Creator"));
 		selenium.clickAt("//input[@value='Search']",
@@ -181,25 +86,8 @@ public class AssignWCCUserRolesTest extends BaseTestCase {
 		selenium.clickAt("//tr[3]/td/a",
 			RuntimeVariables.replace("Web Content Creator"));
 		selenium.selectWindow("null");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("Web Content Creator")
-										.equals(selenium.getText(
-								"//div[@id='_125_roles']/div[3]/div/div/table/tr[2]/td"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//div[@id='_125_roles']/div[3]/div/div/table/tr[2]/td",
+			"Web Content Creator");
 		assertEquals(RuntimeVariables.replace("Web Content Creator"),
 			selenium.getText(
 				"//div[@id='_125_roles']/div[3]/div/div/table/tr[2]/td"));

@@ -23,24 +23,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class SOUs_EditInstantMessengerProfileTest extends BaseTestCase {
 	public void testSOUs_EditInstantMessengerProfile()
 		throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/socialoffice01/so/profile");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div[@class='lfr-contact-name']/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//div[@class='lfr-contact-name']/a");
 		assertEquals(RuntimeVariables.replace("Social01 Office01 User01"),
 			selenium.getText("//div[@class='lfr-contact-name']/a"));
 		assertEquals(RuntimeVariables.replace("Instant Messenger:"),
@@ -82,23 +68,7 @@ public class SOUs_EditInstantMessengerProfileTest extends BaseTestCase {
 			selenium.getText(
 				"//div[@data-title='Instant Messenger']/ul/li[contains(.,'ym')]/span[2]"));
 		selenium.click("//div[@data-title='Instant Messenger']");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//input[contains(@id,'aimSn')]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//input[contains(@id,'aimSn')]");
 		selenium.type("//input[contains(@id,'aimSn')]",
 			RuntimeVariables.replace("socialofficesnedit"));
 		selenium.type("//input[contains(@id,'icqSn')]",
@@ -114,25 +84,8 @@ public class SOUs_EditInstantMessengerProfileTest extends BaseTestCase {
 		Thread.sleep(5000);
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("socialofficesnedit")
-										.equals(selenium.getText(
-								"//div[@data-title='Instant Messenger']/ul/li[contains(.,'AIM')]/span[2]"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//div[@data-title='Instant Messenger']/ul/li[contains(.,'AIM')]/span[2]",
+			"socialofficesnedit");
 		assertEquals(RuntimeVariables.replace("Instant Messenger:"),
 			selenium.getText("//div[@data-title='Instant Messenger']/h3"));
 		assertEquals(RuntimeVariables.replace("AIM"),

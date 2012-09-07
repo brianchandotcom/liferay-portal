@@ -29,24 +29,10 @@ public class User_DeletePageWhiteElephantSPVariationSeasonTest
 		while (label >= 1) {
 			switch (label) {
 			case 1:
+				selenium.selectWindow("null");
+				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isElementPresent("link=Site Name")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForElementPresent("link=Site Name");
 				selenium.clickAt("link=Site Name",
 					RuntimeVariables.replace("Site Name"));
 				selenium.waitForPageToLoad("30000");
@@ -84,44 +70,11 @@ public class User_DeletePageWhiteElephantSPVariationSeasonTest
 						"//span[@class='layout-set-branch-description']"));
 				selenium.clickAt("//div[@id='dockbar']",
 					RuntimeVariables.replace("Dockbar"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isElementPresent(
-									"//li[contains(@class,'manage-page')]/a")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForElementPresent(
+					"//li[contains(@class,'manage-page')]/a");
 				selenium.clickAt("//li[contains(@class,'manage-page')]/a",
 					RuntimeVariables.replace("Manage Pages"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (RuntimeVariables.replace("Public Pages")
-												.equals(selenium.getText(
-										"//a[@class='layout-tree']"))) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
+				selenium.waitForText("//a[@class='layout-tree']", "Public Pages");
 
 				boolean welcomePresent = selenium.isElementPresent(
 						"//li/ul/li[1]/div/div[3]/a");
@@ -136,24 +89,7 @@ public class User_DeletePageWhiteElephantSPVariationSeasonTest
 					RuntimeVariables.replace("Drop Down Arrow"));
 
 			case 3:
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (RuntimeVariables.replace("Home")
-												.equals(selenium.getText(
-										"//li/ul/li[1]/div/div[3]/a"))) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
+				selenium.waitForText("//li/ul/li[1]/div/div[3]/a", "Home");
 
 				boolean page4Present = selenium.isElementPresent(
 						"//li[4]/div/div[3]/a");
@@ -168,45 +104,12 @@ public class User_DeletePageWhiteElephantSPVariationSeasonTest
 					selenium.getText("//li[4]/div/div[3]/a"));
 				selenium.clickAt("//li[4]/div/div[3]/a",
 					RuntimeVariables.replace("White Elephant"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (!RuntimeVariables.replace("/home")
-												 .equals(selenium.getValue(
-										"//input[@id='_88_friendlyURL']"))) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForNotValue("//input[@id='_88_friendlyURL']",
+					"/home");
 				selenium.selectFrame(
 					"//div[@class='yui3-widget-bd aui-panel-bd aui-dialog-bd aui-dialog-iframe-bd']/iframe");
 				Thread.sleep(5000);
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("//button[3]")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("//button[3]");
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText("//button[3]"));
 				selenium.click(RuntimeVariables.replace("//button[3]"));

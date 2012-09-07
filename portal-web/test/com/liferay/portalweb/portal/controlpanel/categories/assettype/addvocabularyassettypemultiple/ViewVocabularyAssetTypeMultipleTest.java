@@ -27,27 +27,13 @@ public class ViewVocabularyAssetTypeMultipleTest extends BaseTestCase {
 		while (label >= 1) {
 			switch (label) {
 			case 1:
+				selenium.selectWindow("null");
+				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
 				assertEquals(RuntimeVariables.replace("Go to"),
 					selenium.getText("//li[@id='_145_mySites']/a/span"));
 				selenium.mouseOver("//li[@id='_145_mySites']/a/span");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("link=Control Panel")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("link=Control Panel");
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
@@ -58,24 +44,8 @@ public class ViewVocabularyAssetTypeMultipleTest extends BaseTestCase {
 					selenium.getText("//span[@class='vocabulary-item']/a"));
 				selenium.clickAt("//a[@class='vocabulary-item-actions-trigger']",
 					RuntimeVariables.replace("Edit"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//div[@id='vocabularyExtraFieldsPanelContainer']/div/div/span")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible(
+					"//div[@id='vocabularyExtraFieldsPanelContainer']/div/div/span");
 				assertEquals(RuntimeVariables.replace("Associated Asset Types"),
 					selenium.getText(
 						"//div[@id='vocabularyExtraFieldsPanelContainer']/div/div/span"));
@@ -91,23 +61,7 @@ public class ViewVocabularyAssetTypeMultipleTest extends BaseTestCase {
 
 				selenium.clickAt("//div[@id='vocabularyExtraFieldsPanelContainer']/div/div/span",
 					RuntimeVariables.replace("Associated Asset Types"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//select[@id='_147_classNameId0']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
+				selenium.waitForVisible("//select[@id='_147_classNameId0']");
 
 			case 2:
 				assertEquals("Blogs Entry",

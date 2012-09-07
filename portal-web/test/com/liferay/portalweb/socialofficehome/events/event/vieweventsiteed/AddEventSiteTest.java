@@ -22,46 +22,15 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class AddEventSiteTest extends BaseTestCase {
 	public void testAddEventSite() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/user/joebloggs/so/dashboard/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//li[contains(@class, 'selected')]/a/span")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//li[contains(@class, 'selected')]/a/span");
 		assertEquals(RuntimeVariables.replace("Dashboard"),
 			selenium.getText("//li[contains(@class, 'selected')]/a/span"));
 		assertEquals(RuntimeVariables.replace("Sites"),
 			selenium.getText("//div[@id='so-sidebar']/h3"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//select[@id='_5_WAR_soportlet_tabs1']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//select[@id='_5_WAR_soportlet_tabs1']");
 		assertTrue(selenium.isPartialText(
 				"//select[@id='_5_WAR_soportlet_tabs1']", "All Sites"));
 		selenium.select("//select[@id='_5_WAR_soportlet_tabs1']",
@@ -69,25 +38,8 @@ public class AddEventSiteTest extends BaseTestCase {
 		assertTrue(selenium.isVisible("//input[@class='search-input']"));
 		selenium.type("//input[@class='search-input']",
 			RuntimeVariables.replace("Open"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("Open Site Name")
-										.equals(selenium.getText(
-								"//li[contains(@class, 'social-office-enabled')]/span[2]/a"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//li[contains(@class, 'social-office-enabled')]/span[2]/a",
+			"Open Site Name");
 		assertEquals(RuntimeVariables.replace("Open Site Name"),
 			selenium.getText(
 				"//li[contains(@class, 'social-office-enabled')]/span[2]/a"));
@@ -96,23 +48,7 @@ public class AddEventSiteTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Open Site Name"),
 			selenium.getText("//div[@class='community-title']"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Calendar")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Calendar");
 		selenium.clickAt("link=Calendar", RuntimeVariables.replace("Calendar"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("//input[@value='Add Event']",
@@ -125,67 +61,16 @@ public class AddEventSiteTest extends BaseTestCase {
 			selenium.getText("//span[@id='cke_48_label' and .='Source']"));
 		selenium.clickAt("//span[@id='cke_48_label' and .='Source']",
 			RuntimeVariables.replace("Source"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//td[@id='cke_contents__8_editor']/textarea")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//td[@id='cke_contents__8_editor']/textarea");
 		selenium.type("//td[@id='cke_contents__8_editor']/textarea",
 			RuntimeVariables.replace("Calendar Event Description"));
 		assertEquals(RuntimeVariables.replace("Source"),
 			selenium.getText("//span[@id='cke_48_label' and .='Source']"));
 		selenium.clickAt("//span[@id='cke_48_label' and .='Source']",
 			RuntimeVariables.replace("Source"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//td[@id='cke_contents__8_editor']/iframe")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//td[@id='cke_contents__8_editor']/iframe");
 		selenium.selectFrame("//td[@id='cke_contents__8_editor']/iframe");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("Calendar Event Description")
-										.equals(selenium.getText("//body"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//body", "Calendar Event Description");
 		selenium.selectFrame("relative=top");
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));

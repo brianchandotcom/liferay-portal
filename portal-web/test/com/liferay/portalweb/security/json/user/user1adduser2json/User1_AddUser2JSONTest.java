@@ -22,44 +22,14 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class User1_AddUser2JSONTest extends BaseTestCase {
 	public void testUser1_AddUser2JSON() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/api/jsonws");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//input[@id='serviceSearch']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//input[@id='serviceSearch']");
 		selenium.type("//input[@id='serviceSearch']",
 			RuntimeVariables.replace("add-user"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//div[@class='lfr-panel-content']/ul/li/a[contains(@href,'add-user-26')]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//div[@class='lfr-panel-content']/ul/li/a[contains(@href,'add-user-26')]");
 		assertEquals(RuntimeVariables.replace("add-user"),
 			selenium.getText(
 				"//div[@class='lfr-panel-content']/ul/li/a[contains(@href,'add-user-26')]"));
@@ -95,44 +65,12 @@ public class User1_AddUser2JSONTest extends BaseTestCase {
 			RuntimeVariables.replace("Send Email False"));
 		selenium.clickAt("//input[@value='Invoke']",
 			RuntimeVariables.replace("Invoke"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//li[contains(@class,'tab-active')]/span/a[contains(.,'Result')]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//li[contains(@class,'tab-active')]/span/a[contains(.,'Result')]");
 		assertEquals(RuntimeVariables.replace("Result"),
 			selenium.getText(
 				"//li[contains(@class,'tab-active')]/span/a[contains(.,'Result')]"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//pre[@class='lfr-code-block']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//pre[@class='lfr-code-block']");
 		assertTrue(selenium.isPartialText("//pre[@class='lfr-code-block']", "{"));
 		assertTrue(selenium.isPartialText("//pre[@class='lfr-code-block']",
 				"\"exception\":\"com.liferay.portal.security.auth.PrincipalException\""));

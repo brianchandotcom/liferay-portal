@@ -22,27 +22,13 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class AddWCTemplateTest extends BaseTestCase {
 	public void testAddWCTemplate() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Control Panel")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
@@ -60,81 +46,15 @@ public class AddWCTemplateTest extends BaseTestCase {
 			RuntimeVariables.replace("WC Template Description"));
 		selenium.clickAt("//input[@id='_15_editorButton']",
 			RuntimeVariables.replace("Launch Editor"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//iframe[@id='_15_xslContentIFrame']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//iframe[@id='_15_xslContentIFrame']");
 		selenium.selectFrame("//iframe[@id='_15_xslContentIFrame']");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (!RuntimeVariables.replace("")
-										 .equals(selenium.getValue(
-								"//textarea[@id='_15_plainEditorField']"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForNotValue("//textarea[@id='_15_plainEditorField']", "");
 		selenium.type("//textarea[@id='_15_plainEditorField']",
 			RuntimeVariables.replace("<h3>$text.getData()</h3>"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//input[@value='Update']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//input[@value='Update']");
 		selenium.click("//input[@value='Update']");
 		selenium.selectFrame("relative=top");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (!selenium.isVisible("//iframe[@id='_15_xslContentIFrame']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForNotVisible("//iframe[@id='_15_xslContentIFrame']");
 		assertFalse(selenium.isVisible("//iframe[@id='_15_xslContentIFrame']"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));

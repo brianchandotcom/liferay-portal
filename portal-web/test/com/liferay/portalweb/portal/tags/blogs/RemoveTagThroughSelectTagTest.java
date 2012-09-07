@@ -27,24 +27,10 @@ public class RemoveTagThroughSelectTagTest extends BaseTestCase {
 		while (label >= 1) {
 			switch (label) {
 			case 1:
+				selenium.selectWindow("null");
+				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("link=Blogs Tags Test Page")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("link=Blogs Tags Test Page");
 				selenium.clickAt("link=Blogs Tags Test Page",
 					RuntimeVariables.replace("Blogs Tags Test Page"));
 				selenium.waitForPageToLoad("30000");
@@ -58,23 +44,8 @@ public class RemoveTagThroughSelectTagTest extends BaseTestCase {
 					selenium.getText("//span/a/span"));
 				selenium.click(RuntimeVariables.replace("//span/a/span"));
 				selenium.waitForPageToLoad("30000");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//td[@id='cke_contents__33_editor']/iframe")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
+				selenium.waitForVisible(
+					"//td[@id='cke_contents__33_editor']/iframe");
 
 				boolean tagsVisible = selenium.isVisible(
 						"//input[@class='lfr-tag-selector-input aui-field-input-text']");
@@ -90,24 +61,8 @@ public class RemoveTagThroughSelectTagTest extends BaseTestCase {
 						"xPath=(//div[@class='lfr-panel-title'])[2]/span"));
 				selenium.clickAt("xPath=(//div[@class='lfr-panel-title'])[2]/span",
 					RuntimeVariables.replace("Categorization"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//input[@class='lfr-tag-selector-input aui-field-input-text']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible(
+					"//input[@class='lfr-tag-selector-input aui-field-input-text']");
 				assertTrue(selenium.isVisible(
 						"//input[@class='lfr-tag-selector-input aui-field-input-text']"));
 
@@ -118,46 +73,13 @@ public class RemoveTagThroughSelectTagTest extends BaseTestCase {
 				selenium.clickAt("//button[@id='select']",
 					RuntimeVariables.replace("Select"));
 				Thread.sleep(5000);
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("//label[1]/input")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("//label[1]/input");
 				selenium.clickAt("//label[1]",
 					RuntimeVariables.replace("selenium1 liferay1"));
 				selenium.clickAt("//button[@id='closethick']",
 					RuntimeVariables.replace("Close"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (!RuntimeVariables.replace("selenium1 liferay1")
-												 .equals(selenium.getText(
-										"xPath=(//span[@class='aui-textboxlistentry-text'])[1]"))) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForNotText("xPath=(//span[@class='aui-textboxlistentry-text'])[1]",
+					"selenium1 liferay1");
 				assertNotEquals(RuntimeVariables.replace("selenium1 liferay1"),
 					selenium.getText(
 						"xPath=(//span[@class='aui-textboxlistentry-text'])[1]"));

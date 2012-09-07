@@ -23,25 +23,11 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ViewMBCategoryThreadMessageEmailTest extends BaseTestCase {
 	public void testViewMBCategoryThreadMessageEmail()
 		throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/site-name");
 		Thread.sleep(60000);
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Message Boards Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Message Boards Test Page");
 		selenium.clickAt("link=Message Boards Test Page",
 			RuntimeVariables.replace("Message Boards Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -56,24 +42,7 @@ public class ViewMBCategoryThreadMessageEmailTest extends BaseTestCase {
 		selenium.clickAt("//td[1]/a",
 			RuntimeVariables.replace("MB Category Name"));
 		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("MB Message Subject")
-										.equals(selenium.getText("//td[1]/a"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//td[1]/a", "MB Message Subject");
 		assertEquals(RuntimeVariables.replace("MB Message Subject"),
 			selenium.getText("//td[1]/a"));
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),

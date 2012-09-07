@@ -23,67 +23,20 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class SOUs_DeleteRepostMicroblogsContentTest extends BaseTestCase {
 	public void testSOUs_DeleteRepostMicroblogsContent()
 		throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/user/socialoffice01/so/dashboard");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Me")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Me");
 		selenium.clickAt("link=Me", RuntimeVariables.replace("Me"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"Reposted From Joe Bloggs: Microblogs Post"),
 			selenium.getText("//div[@class='activity-title']"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//nav/ul/li[contains(.,'Microblogs')]/a/span")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//nav/ul/li[contains(.,'Microblogs')]/a/span");
 		selenium.clickAt("//nav/ul/li[contains(.,'Microblogs')]/a/span",
 			RuntimeVariables.replace("Microblogs"));
 		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div[@class='user-name']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//div[@class='user-name']");
 		assertEquals(RuntimeVariables.replace(
 				"Social01 Office01 User01 Reposted From Joe Bloggs"),
 			selenium.getText("//div[@class='user-name']"));
@@ -95,21 +48,6 @@ public class SOUs_DeleteRepostMicroblogsContentTest extends BaseTestCase {
 			RuntimeVariables.replace("Delete"));
 		assertTrue(selenium.getConfirmation()
 						   .matches("^Are you sure you want to delete this post[\\s\\S]$"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (!selenium.isTextPresent("Microblogs Post")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
+		selenium.waitForTextNotPresent("Microblogs Post");
 	}
 }

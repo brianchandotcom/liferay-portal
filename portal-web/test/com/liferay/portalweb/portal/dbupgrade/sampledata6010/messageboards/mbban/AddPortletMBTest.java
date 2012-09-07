@@ -22,22 +22,9 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class AddPortletMBTest extends BaseTestCase {
 	public void testAddPortletMB() throws Exception {
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
+		selenium.waitForElementPresent("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
@@ -61,43 +48,10 @@ public class AddPortletMBTest extends BaseTestCase {
 			selenium.getText("//a[@id='_145_addApplication']"));
 		selenium.clickAt("//a[@id='_145_addApplication']",
 			RuntimeVariables.replace("More\u2026"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent(
-							"//div[@title='Message Boards']/p/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent("//div[@title='Message Boards']/p/a");
 		selenium.clickAt("//div[@title='Message Boards']/p/a",
 			RuntimeVariables.replace("Add"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//section")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//section");
 		assertTrue(selenium.isVisible("//section"));
 	}
 }

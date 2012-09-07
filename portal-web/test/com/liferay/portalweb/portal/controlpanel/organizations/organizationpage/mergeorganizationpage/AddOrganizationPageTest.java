@@ -27,27 +27,13 @@ public class AddOrganizationPageTest extends BaseTestCase {
 		while (label >= 1) {
 			switch (label) {
 			case 1:
+				selenium.selectWindow("null");
+				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
 				assertEquals(RuntimeVariables.replace("Go to"),
 					selenium.getText("//li[@id='_145_mySites']/a/span"));
 				selenium.mouseOver("//li[@id='_145_mySites']/a/span");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("link=Control Panel")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("link=Control Panel");
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
@@ -64,247 +50,62 @@ public class AddOrganizationPageTest extends BaseTestCase {
 						"//span[@title='Actions']/ul/li/strong/a/span"));
 				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible(
+					"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a");
 				assertEquals(RuntimeVariables.replace("Edit"),
 					selenium.getText(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a"));
 				selenium.click(RuntimeVariables.replace(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a"));
 				selenium.waitForPageToLoad("30000");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//a[@id='_125_organizationSiteLink']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("//a[@id='_125_organizationSiteLink']");
 				selenium.clickAt("//a[@id='_125_organizationSiteLink']",
 					RuntimeVariables.replace("Organization site"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//input[@id='_125_siteCheckbox']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("//input[@id='_125_siteCheckbox']");
 				selenium.clickAt("//input[@id='_125_siteCheckbox']",
 					RuntimeVariables.replace("Create Site Checkbox"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//select[@id='_125_publicLayoutSetPrototypeId']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible(
+					"//select[@id='_125_publicLayoutSetPrototypeId']");
 				selenium.select("//select[@id='_125_publicLayoutSetPrototypeId']",
 					RuntimeVariables.replace("label=Community Site"));
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//div[@class='portlet-msg-success']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("//div[@class='portlet-msg-success']");
 				assertEquals(RuntimeVariables.replace(
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
 				selenium.open("/web/selenium/home");
 				selenium.clickAt("//div[@id='dockbar']",
 					RuntimeVariables.replace("Dockbar"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isElementPresent(
-									"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForElementPresent(
+					"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
 				assertEquals(RuntimeVariables.replace("Manage"),
 					selenium.getText("//li[@id='_145_manageContent']/a/span"));
 				selenium.mouseOver("//li[@id='_145_manageContent']/a/span");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//li[contains(@class,'manage-page')]/a")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible(
+					"//li[contains(@class,'manage-page')]/a");
 				assertEquals(RuntimeVariables.replace("Page"),
 					selenium.getText("//li[contains(@class,'manage-page')]/a"));
 				selenium.clickAt("//li[contains(@class,'manage-page')]/a",
 					RuntimeVariables.replace("Page"));
 				Thread.sleep(10000);
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (RuntimeVariables.replace("Public Pages")
-												.equals(selenium.getText(
-										"//div[3]/a"))) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForText("//div[3]/a", "Public Pages");
 				assertEquals(RuntimeVariables.replace("Public Pages"),
 					selenium.getText("//div[3]/a"));
 				selenium.clickAt("//div[3]/a",
 					RuntimeVariables.replace("Public Pages"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (RuntimeVariables.replace("Add Page")
-												.equals(selenium.getText(
-										"//div[2]/span/button"))) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForText("//div[2]/span/button", "Add Page");
 				assertEquals(RuntimeVariables.replace("Add Page"),
 					selenium.getText("//div[2]/span/button"));
 				selenium.click("//div[2]/span/button");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//input[@name='_88_name_en_US']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("//input[@name='_88_name_en_US']");
 				selenium.type("//input[@name='_88_name_en_US']",
 					RuntimeVariables.replace("Selenium Test Home Page"));
 				selenium.clickAt("//input[@value='Add Page']",
 					RuntimeVariables.replace("Add Page"));
 				selenium.waitForPageToLoad("30000");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//div[@class='portlet-msg-success']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("//div[@class='portlet-msg-success']");
 				assertEquals(RuntimeVariables.replace(
 						"Your request completed successfully. The page will be refreshed when you close this dialog. Alternatively you can hide this dialog."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
@@ -322,25 +123,8 @@ public class AddOrganizationPageTest extends BaseTestCase {
 					RuntimeVariables.replace("Drop Down Arrow"));
 
 			case 2:
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (RuntimeVariables.replace("Selenium Test Home Page")
-												.equals(selenium.getText(
-										"link=Selenium Test Home Page"))) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForText("link=Selenium Test Home Page",
+					"Selenium Test Home Page");
 				assertEquals(RuntimeVariables.replace("Selenium Test Home Page"),
 					selenium.getText("link=Selenium Test Home Page"));
 

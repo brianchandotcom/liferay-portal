@@ -23,24 +23,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ViewUserStatisticsAddMessageBoardThreadTest extends BaseTestCase {
 	public void testViewUserStatisticsAddMessageBoardThread()
 		throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/site-name/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=User Statistics Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=User Statistics Test Page");
 		selenium.clickAt("link=User Statistics Test Page",
 			RuntimeVariables.replace("User Statistics Test Page"));
 		selenium.waitForPageToLoad("30000");

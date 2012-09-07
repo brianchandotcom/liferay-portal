@@ -22,6 +22,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ViewDMFolderImageMyMediaMGTest extends BaseTestCase {
 	public void testViewDMFolderImageMyMediaMG() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("link=Media Gallery Test Page",
 			RuntimeVariables.replace("Media Gallery Test Page"));
@@ -30,24 +32,8 @@ public class ViewDMFolderImageMyMediaMGTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Mine"),
 			selenium.getText("//h1[@class='header-title']/span"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//img[@alt='DM Folder Image Title - DM Folder Image Description']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//img[@alt='DM Folder Image Title - DM Folder Image Description']");
 		assertTrue(selenium.isVisible(
 				"//img[@alt='DM Folder Image Title - DM Folder Image Description']"));
 		assertEquals(RuntimeVariables.replace("DM Folder Image Title"),

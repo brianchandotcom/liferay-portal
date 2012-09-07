@@ -23,25 +23,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AddMicroblogsContent1ViewableByEveryoneTest extends BaseTestCase {
 	public void testAddMicroblogsContent1ViewableByEveryone()
 		throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/user/joebloggs/so/dashboard");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//nav/ul/li[contains(.,'Microblogs')]/a/span")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//nav/ul/li[contains(.,'Microblogs')]/a/span");
 		selenium.clickAt("//nav/ul/li[contains(.,'Microblogs')]/a/span",
 			RuntimeVariables.replace("Microblogs"));
 		selenium.waitForPageToLoad("30000");
@@ -51,45 +36,11 @@ public class AddMicroblogsContent1ViewableByEveryoneTest extends BaseTestCase {
 				"//div[contains(@id,'_1_WAR_microblogsportlet_autocompleteContent')]"));
 		selenium.clickAt("//div[contains(@id,'_1_WAR_microblogsportlet_autocompleteContent')]",
 			RuntimeVariables.replace("Update your status..."));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("//textarea")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent("//textarea");
 		selenium.clickAt("//textarea", RuntimeVariables.replace("Text area"));
 		selenium.typeKeys("//textarea",
 			RuntimeVariables.replace("Microblogs Post"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("135")
-										.equals(selenium.getText(
-								"//span[@class='microblogs-countdown']"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//span[@class='microblogs-countdown']", "135");
 		assertEquals(RuntimeVariables.replace("135"),
 			selenium.getText("//span[@class='microblogs-countdown']"));
 		selenium.select("//select[@id='_1_WAR_microblogsportlet_socialRelationType']",
@@ -97,23 +48,7 @@ public class AddMicroblogsContent1ViewableByEveryoneTest extends BaseTestCase {
 		Thread.sleep(5000);
 		selenium.clickAt("//input[@value='Post']",
 			RuntimeVariables.replace("Post"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div[@class='content']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//div[@class='content']");
 		assertEquals(RuntimeVariables.replace("Microblogs Post"),
 			selenium.getText("//div[@class='content']"));
 		assertEquals(RuntimeVariables.replace("Comment"),

@@ -23,46 +23,15 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class User_ViewUserStatisticsSubscribeWikiPageTest extends BaseTestCase {
 	public void testUser_ViewUserStatisticsSubscribeWikiPage()
 		throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/site-name/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=User Statistics Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=User Statistics Test Page");
 		selenium.clickAt("link=User Statistics Test Page",
 			RuntimeVariables.replace("User Statistics Test Page"));
 		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("Joe Bloggs")
-										.equals(selenium.getText(
-								"xPath=(//span[@class='user-name'])[1]"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("xPath=(//span[@class='user-name'])[1]",
+			"Joe Bloggs");
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
 			selenium.getText("xPath=(//span[@class='user-name'])[1]"));
 		assertEquals(RuntimeVariables.replace("Rank: 1"),

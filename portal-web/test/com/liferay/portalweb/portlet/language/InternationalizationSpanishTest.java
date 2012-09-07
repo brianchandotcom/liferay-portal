@@ -22,24 +22,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class InternationalizationSpanishTest extends BaseTestCase {
 	public void testInternationalizationSpanish() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Language Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Language Test Page");
 		selenium.clickAt("link=Language Test Page",
 			RuntimeVariables.replace("Language Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -48,45 +34,12 @@ public class InternationalizationSpanishTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("//nav/ul/li[2]/a/span",
 			RuntimeVariables.replace("Edit Page Name"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//input[@type='text']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//input[@type='text']");
 		selenium.type("//input[@type='text']",
 			RuntimeVariables.replace("P\u00e1gina de la prueba de lengua"));
 		selenium.clickAt("//button[@id='save']",
 			RuntimeVariables.replace("Save"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"link=P\u00e1gina de la prueba de lengua")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=P\u00e1gina de la prueba de lengua");
 		assertTrue(selenium.isVisible("link=P\u00e1gina de la prueba de lengua"));
 		selenium.clickAt("//img[@alt='English (United States)']",
 			RuntimeVariables.replace("English (United States)"));

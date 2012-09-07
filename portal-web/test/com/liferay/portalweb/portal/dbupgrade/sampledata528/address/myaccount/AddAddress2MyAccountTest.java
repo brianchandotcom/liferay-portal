@@ -22,64 +22,18 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class AddAddress2MyAccountTest extends BaseTestCase {
 	public void testAddAddress2MyAccount() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent("link=Control Panel");
 		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=My Account", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("addressesLink", RuntimeVariables.replace(""));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div[2]/div/span/a[1]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//div[2]/div/span/a[1]");
 		selenium.clickAt("//div[2]/div/span/a[1]", RuntimeVariables.replace(""));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("_2_addressStreet1_2")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("_2_addressStreet1_2");
 		selenium.type("_2_addressStreet1_2",
 			RuntimeVariables.replace("123 Lets"));
 		selenium.select("_2_addressTypeId2",
@@ -92,62 +46,13 @@ public class AddAddress2MyAccountTest extends BaseTestCase {
 		selenium.type("_2_addressCity2", RuntimeVariables.replace("Works"));
 		selenium.select("_2_addressCountryId2",
 			RuntimeVariables.replace("label=Canada"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isPartialText("_2_addressRegionId2", "Ontario")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForPartialText("_2_addressRegionId2", "Ontario");
 		selenium.select("_2_addressRegionId2",
 			RuntimeVariables.replace("label=Ontario"));
 		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if ("Canada".equals(selenium.getSelectedLabel(
-								"_2_addressCountryId1"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if ("Ontario".equals(selenium.getSelectedLabel(
-								"_2_addressRegionId1"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForSelectedLabel("_2_addressCountryId1", "Canada");
+		selenium.waitForSelectedLabel("_2_addressRegionId1", "Ontario");
 		assertEquals(RuntimeVariables.replace(
 				"Your request processed successfully."),
 			selenium.getText("//div[2]/div/div/div"));

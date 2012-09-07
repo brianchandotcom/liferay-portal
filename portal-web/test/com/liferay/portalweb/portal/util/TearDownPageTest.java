@@ -27,26 +27,13 @@ public class TearDownPageTest extends BaseTestCase {
 		while (label >= 1) {
 			switch (label) {
 			case 1:
+				selenium.selectWindow("null");
+				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
 				selenium.clickAt("//nav[@id='navigation']",
 					RuntimeVariables.replace("Navigation"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"xPath=(//li[contains(@class,'lfr-nav-deletable')])[1]/a/span")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
+				selenium.waitForVisible(
+					"xPath=(//li[contains(@class,'lfr-nav-deletable')])[1]/a/span");
 
 				boolean page1Present = selenium.isElementPresent(
 						"xPath=(//li[contains(@class,'lfr-nav-deletable')])[2]/a/span");
@@ -59,63 +46,17 @@ public class TearDownPageTest extends BaseTestCase {
 
 				selenium.mouseOver(
 					"xPath=(//li[contains(@class,'lfr-nav-deletable')])[2]/a/span");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"xPath=(//li[contains(@class,'lfr-nav-deletable')])[2]/span[@class='delete-tab']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible(
+					"xPath=(//li[contains(@class,'lfr-nav-deletable')])[2]/span[@class='delete-tab']");
 				assertEquals(RuntimeVariables.replace("X"),
 					selenium.getText(
 						"xPath=(//li[contains(@class,'lfr-nav-deletable')])[2]/span[@class='delete-tab']"));
 				selenium.click(
 					"xPath=(//li[contains(@class,'lfr-nav-deletable')])[2]/span[@class='delete-tab']");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if ("Are you sure you want to delete this page?".equals(
-									selenium.getConfirmation())) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isElementNotPresent(
-									"xPath=(//li[contains(@class,'lfr-nav-deletable')])[2]/span[@class='delete-tab']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
+				selenium.waitForConfirmation(
+					"Are you sure you want to delete this page?");
+				selenium.waitForElementNotPresent(
+					"xPath=(//li[contains(@class,'lfr-nav-deletable')])[2]/span[@class='delete-tab']");
 
 				boolean page2Present = selenium.isElementPresent(
 						"xPath=(//li[contains(@class,'lfr-nav-deletable')])[2]/a/span");
@@ -128,63 +69,17 @@ public class TearDownPageTest extends BaseTestCase {
 
 				selenium.mouseOver(
 					"xPath=(//li[contains(@class,'lfr-nav-deletable')])[2]/a/span");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"xPath=(//li[contains(@class,'lfr-nav-deletable')])[2]/span[@class='delete-tab']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible(
+					"xPath=(//li[contains(@class,'lfr-nav-deletable')])[2]/span[@class='delete-tab']");
 				assertEquals(RuntimeVariables.replace("X"),
 					selenium.getText(
 						"xPath=(//li[contains(@class,'lfr-nav-deletable')])[2]/span[@class='delete-tab']"));
 				selenium.click(
 					"xPath=(//li[contains(@class,'lfr-nav-deletable')])[2]/span[@class='delete-tab']");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if ("Are you sure you want to delete this page?".equals(
-									selenium.getConfirmation())) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isElementNotPresent(
-									"xPath=(//li[contains(@class,'lfr-nav-deletable')])[2]/span[@class='delete-tab']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
+				selenium.waitForConfirmation(
+					"Are you sure you want to delete this page?");
+				selenium.waitForElementNotPresent(
+					"xPath=(//li[contains(@class,'lfr-nav-deletable')])[2]/span[@class='delete-tab']");
 
 				boolean page3Present = selenium.isElementPresent(
 						"xPath=(//li[contains(@class,'lfr-nav-deletable')])[2]/a/span");
@@ -197,63 +92,17 @@ public class TearDownPageTest extends BaseTestCase {
 
 				selenium.mouseOver(
 					"xPath=(//li[contains(@class,'lfr-nav-deletable')])[2]/a/span");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"xPath=(//li[contains(@class,'lfr-nav-deletable')])[2]/span[@class='delete-tab']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible(
+					"xPath=(//li[contains(@class,'lfr-nav-deletable')])[2]/span[@class='delete-tab']");
 				assertEquals(RuntimeVariables.replace("X"),
 					selenium.getText(
 						"xPath=(//li[contains(@class,'lfr-nav-deletable')])[2]/span[@class='delete-tab']"));
 				selenium.click(
 					"xPath=(//li[contains(@class,'lfr-nav-deletable')])[2]/span[@class='delete-tab']");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if ("Are you sure you want to delete this page?".equals(
-									selenium.getConfirmation())) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isElementNotPresent(
-									"xPath=(//li[contains(@class,'lfr-nav-deletable')])[2]/span[@class='delete-tab']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
+				selenium.waitForConfirmation(
+					"Are you sure you want to delete this page?");
+				selenium.waitForElementNotPresent(
+					"xPath=(//li[contains(@class,'lfr-nav-deletable')])[2]/span[@class='delete-tab']");
 
 				boolean page4Present = selenium.isElementPresent(
 						"xPath=(//li[contains(@class,'lfr-nav-deletable')])[2]/a/span");
@@ -266,63 +115,17 @@ public class TearDownPageTest extends BaseTestCase {
 
 				selenium.mouseOver(
 					"xPath=(//li[contains(@class,'lfr-nav-deletable')])[2]/a/span");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"xPath=(//li[contains(@class,'lfr-nav-deletable')])[2]/span[@class='delete-tab']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible(
+					"xPath=(//li[contains(@class,'lfr-nav-deletable')])[2]/span[@class='delete-tab']");
 				assertEquals(RuntimeVariables.replace("X"),
 					selenium.getText(
 						"xPath=(//li[contains(@class,'lfr-nav-deletable')])[2]/span[@class='delete-tab']"));
 				selenium.click(
 					"xPath=(//li[contains(@class,'lfr-nav-deletable')])[2]/span[@class='delete-tab']");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if ("Are you sure you want to delete this page?".equals(
-									selenium.getConfirmation())) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isElementNotPresent(
-									"xPath=(//li[contains(@class,'lfr-nav-deletable')])[2]/span[@class='delete-tab']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
+				selenium.waitForConfirmation(
+					"Are you sure you want to delete this page?");
+				selenium.waitForElementNotPresent(
+					"xPath=(//li[contains(@class,'lfr-nav-deletable')])[2]/span[@class='delete-tab']");
 
 				boolean page5Present = selenium.isElementPresent(
 						"xPath=(//li[contains(@class,'lfr-nav-deletable')])[2]/a/span");
@@ -335,63 +138,17 @@ public class TearDownPageTest extends BaseTestCase {
 
 				selenium.mouseOver(
 					"xPath=(//li[contains(@class,'lfr-nav-deletable')])[2]/a/span");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"xPath=(//li[contains(@class,'lfr-nav-deletable')])[2]/span[@class='delete-tab']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible(
+					"xPath=(//li[contains(@class,'lfr-nav-deletable')])[2]/span[@class='delete-tab']");
 				assertEquals(RuntimeVariables.replace("X"),
 					selenium.getText(
 						"xPath=(//li[contains(@class,'lfr-nav-deletable')])[2]/span[@class='delete-tab']"));
 				selenium.click(
 					"xPath=(//li[contains(@class,'lfr-nav-deletable')])[2]/span[@class='delete-tab']");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if ("Are you sure you want to delete this page?".equals(
-									selenium.getConfirmation())) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isElementNotPresent(
-									"xPath=(//li[contains(@class,'lfr-nav-deletable')])[2]/span[@class='delete-tab']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
+				selenium.waitForConfirmation(
+					"Are you sure you want to delete this page?");
+				selenium.waitForElementNotPresent(
+					"xPath=(//li[contains(@class,'lfr-nav-deletable')])[2]/span[@class='delete-tab']");
 
 			case 2:
 			case 3:

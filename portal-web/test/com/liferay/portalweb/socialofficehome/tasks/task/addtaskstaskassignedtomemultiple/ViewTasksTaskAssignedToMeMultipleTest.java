@@ -23,25 +23,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ViewTasksTaskAssignedToMeMultipleTest extends BaseTestCase {
 	public void testViewTasksTaskAssignedToMeMultiple()
 		throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/user/joebloggs/so/dashboard/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//nav/ul/li[contains(.,'Tasks')]/a/span")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//nav/ul/li[contains(.,'Tasks')]/a/span");
 		selenium.clickAt("//nav/ul/li[contains(.,'Tasks')]/a/span",
 			RuntimeVariables.replace("Tasks"));
 		selenium.waitForPageToLoad("30000");
@@ -56,25 +41,7 @@ public class ViewTasksTaskAssignedToMeMultipleTest extends BaseTestCase {
 			selenium.getText("link=Task1 Description"));
 		selenium.clickAt("link=Task1 Description",
 			RuntimeVariables.replace("Task1 Description"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("Task1 Description")
-										.equals(selenium.getText(
-								"//h1[@class='header-title']"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//h1[@class='header-title']", "Task1 Description");
 		assertEquals(RuntimeVariables.replace("Task1 Description"),
 			selenium.getText("//h1[@class='header-title']"));
 		assertEquals(RuntimeVariables.replace("Assigned to Joe Bloggs"),
@@ -84,24 +51,7 @@ public class ViewTasksTaskAssignedToMeMultipleTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Normal"),
 			selenium.getText("//div[@class='task-data normal']"));
 		selenium.open("/user/joebloggs/so/dashboard/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//nav/ul/li[contains(.,'Tasks')]/a/span")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//nav/ul/li[contains(.,'Tasks')]/a/span");
 		selenium.clickAt("//nav/ul/li[contains(.,'Tasks')]/a/span",
 			RuntimeVariables.replace("Tasks"));
 		selenium.waitForPageToLoad("30000");
@@ -116,25 +66,7 @@ public class ViewTasksTaskAssignedToMeMultipleTest extends BaseTestCase {
 			selenium.getText("link=Task2 Description"));
 		selenium.clickAt("link=Task2 Description",
 			RuntimeVariables.replace("Task2 Description"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("Task2 Description")
-										.equals(selenium.getText(
-								"//h1[@class='header-title']"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//h1[@class='header-title']", "Task2 Description");
 		assertEquals(RuntimeVariables.replace("Task2 Description"),
 			selenium.getText("//h1[@class='header-title']"));
 		assertEquals(RuntimeVariables.replace("Assigned to Joe Bloggs"),
@@ -144,24 +76,7 @@ public class ViewTasksTaskAssignedToMeMultipleTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Normal"),
 			selenium.getText("//div[@class='task-data normal']"));
 		selenium.open("/user/joebloggs/so/dashboard/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//nav/ul/li[contains(.,'Tasks')]/a/span")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//nav/ul/li[contains(.,'Tasks')]/a/span");
 		selenium.clickAt("//nav/ul/li[contains(.,'Tasks')]/a/span",
 			RuntimeVariables.replace("Tasks"));
 		selenium.waitForPageToLoad("30000");
@@ -176,25 +91,7 @@ public class ViewTasksTaskAssignedToMeMultipleTest extends BaseTestCase {
 			selenium.getText("link=Task3 Description"));
 		selenium.clickAt("link=Task3 Description",
 			RuntimeVariables.replace("Task3 Description"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("Task3 Description")
-										.equals(selenium.getText(
-								"//h1[@class='header-title']"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//h1[@class='header-title']", "Task3 Description");
 		assertEquals(RuntimeVariables.replace("Task3 Description"),
 			selenium.getText("//h1[@class='header-title']"));
 		assertEquals(RuntimeVariables.replace("Assigned to Joe Bloggs"),

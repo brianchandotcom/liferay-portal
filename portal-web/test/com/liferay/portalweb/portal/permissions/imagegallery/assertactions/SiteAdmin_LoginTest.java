@@ -22,43 +22,13 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class SiteAdmin_LoginTest extends BaseTestCase {
 	public void testSiteAdmin_Login() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("link=Welcome")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent("link=Welcome");
 		selenium.clickAt("link=Welcome", RuntimeVariables.replace("Welcome"));
 		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("//input[@id='_58_login']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent("//input[@id='_58_login']");
 		selenium.type("//input[@id='_58_login']",
 			RuntimeVariables.replace("siteadmin@liferay.com"));
 		selenium.type("//input[@id='_58_password']",
@@ -68,24 +38,7 @@ public class SiteAdmin_LoginTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Sign In']",
 			RuntimeVariables.replace("Sign In"));
 		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isTextPresent(
-							"You are signed in as SiteAdmin Liferay. ")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForTextPresent("You are signed in as SiteAdmin Liferay. ");
 		assertTrue(selenium.isTextPresent(
 				"You are signed in as SiteAdmin Liferay. "));
 	}

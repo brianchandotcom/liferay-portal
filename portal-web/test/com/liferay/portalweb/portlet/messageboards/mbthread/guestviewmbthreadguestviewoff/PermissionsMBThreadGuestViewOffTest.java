@@ -22,24 +22,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class PermissionsMBThreadGuestViewOffTest extends BaseTestCase {
 	public void testPermissionsMBThreadGuestViewOff() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Message Boards Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Message Boards Test Page");
 		selenium.clickAt("link=Message Boards Test Page",
 			RuntimeVariables.replace("Message Boards Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -53,23 +39,7 @@ public class PermissionsMBThreadGuestViewOffTest extends BaseTestCase {
 		selenium.clickAt("//td/ul/li[3]/span/a/span",
 			RuntimeVariables.replace("Permissions"));
 		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//input[@name='16_ACTION_VIEW']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//input[@name='16_ACTION_VIEW']");
 		assertTrue(selenium.isChecked("//input[@name='16_ACTION_VIEW']"));
 		selenium.uncheck("//input[@name='16_ACTION_VIEW']");
 		assertFalse(selenium.isChecked("//input[@name='16_ACTION_VIEW']"));

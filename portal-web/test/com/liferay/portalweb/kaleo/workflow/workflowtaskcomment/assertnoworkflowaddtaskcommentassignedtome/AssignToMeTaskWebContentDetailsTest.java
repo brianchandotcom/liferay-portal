@@ -22,24 +22,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class AssignToMeTaskWebContentDetailsTest extends BaseTestCase {
 	public void testAssignToMeTaskWebContentDetails() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
@@ -76,23 +62,7 @@ public class AssignToMeTaskWebContentDetailsTest extends BaseTestCase {
 			selenium.getText("//tr[3]/td[4]/span/a/span"));
 		selenium.clickAt("//tr[3]/td[4]/span/a/span",
 			RuntimeVariables.replace("Assign to Me"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div[3]/span/span/button")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//div[3]/span/span/button");
 		assertEquals(RuntimeVariables.replace("OK"),
 			selenium.getText("//div[3]/span/span/button"));
 		selenium.clickAt("//div[3]/span/span/button",

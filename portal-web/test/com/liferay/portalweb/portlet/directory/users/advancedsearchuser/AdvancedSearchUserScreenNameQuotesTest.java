@@ -28,24 +28,10 @@ public class AdvancedSearchUserScreenNameQuotesTest extends BaseTestCase {
 		while (label >= 1) {
 			switch (label) {
 			case 1:
+				selenium.selectWindow("null");
+				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("link=Directory Test Page")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("link=Directory Test Page");
 				selenium.clickAt("link=Directory Test Page",
 					RuntimeVariables.replace("Directory Test Page"));
 				selenium.waitForPageToLoad("30000");
@@ -65,24 +51,7 @@ public class AdvancedSearchUserScreenNameQuotesTest extends BaseTestCase {
 					RuntimeVariables.replace("Advanced \u00bb"));
 
 			case 2:
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//select[@id='_11_andOperator']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("//select[@id='_11_andOperator']");
 				selenium.select("//select[@id='_11_andOperator']",
 					RuntimeVariables.replace("Any"));
 				selenium.type("//input[@id='_11_screenName']",

@@ -23,47 +23,17 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class SA_RegInlineBlogsEntryNotCheckedTest extends BaseTestCase {
 	public void testSA_RegInlineBlogsEntryNotChecked()
 		throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("link=Blogs Permissions Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent("link=Blogs Permissions Page");
 		selenium.clickAt("link=Blogs Permissions Page",
 			RuntimeVariables.replace("Blogs Permissions Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("//input[@value='Permissions']",
 			RuntimeVariables.replace("Permissions"));
 		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//input[@id='guest_ACTION_ADD_ENTRY']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//input[@id='guest_ACTION_ADD_ENTRY']");
 		assertFalse(selenium.isChecked("//input[@id='guest_ACTION_ADD_ENTRY']"));
 		assertFalse(selenium.isChecked(
 				"//input[@id='portlet_ACTION_ADD_ENTRY']"));

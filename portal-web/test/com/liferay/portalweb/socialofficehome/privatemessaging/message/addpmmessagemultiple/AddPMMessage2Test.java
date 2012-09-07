@@ -22,25 +22,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class AddPMMessage2Test extends BaseTestCase {
 	public void testAddPMMessage2() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/user/joebloggs/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//nav/ul/li[contains(.,'Messages')]/a/span")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//nav/ul/li[contains(.,'Messages')]/a/span");
 		selenium.clickAt("//nav/ul/li[contains(.,'Messages')]/a/span",
 			RuntimeVariables.replace("Messages"));
 		selenium.waitForPageToLoad("30000");
@@ -53,46 +38,13 @@ public class AddPMMessage2Test extends BaseTestCase {
 			selenium.getValue("//input[@value='New Message']"));
 		selenium.clickAt("//input[@value='New Message']",
 			RuntimeVariables.replace("New Message"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//span[2]/span/button")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//span[2]/span/button");
 		selenium.clickAt("//span[2]/span/button",
 			RuntimeVariables.replace("Dropdown"));
 		selenium.typeKeys("//input[@id='_1_WAR_privatemessagingportlet_to']",
 			RuntimeVariables.replace("Social01"));
 		Thread.sleep(5000);
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("Social01 Office01 User01")
-										.equals(selenium.getText("//li"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//li", "Social01 Office01 User01");
 		assertEquals(RuntimeVariables.replace("Social01 Office01 User01"),
 			selenium.getText("//li"));
 		selenium.clickAt("//li",
@@ -110,23 +62,7 @@ public class AddPMMessage2Test extends BaseTestCase {
 			RuntimeVariables.replace("Message2 Body"));
 		selenium.clickAt("//input[@value='Send']",
 			RuntimeVariables.replace("Send"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div[@class='portlet-msg-success']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//div[@class='portlet-msg-success']");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

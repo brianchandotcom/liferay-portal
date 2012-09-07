@@ -22,24 +22,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class AddPortletNW3Test extends BaseTestCase {
 	public void testAddPortletNW3() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Netvibes Widget Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Netvibes Widget Test Page");
 		selenium.click(RuntimeVariables.replace(
 				"link=Netvibes Widget Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -47,43 +33,10 @@ public class AddPortletNW3Test extends BaseTestCase {
 				"More"));
 		selenium.clickAt("//a[@id='_145_addApplication']",
 			RuntimeVariables.replace("More"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent(
-							"//div[@title='Netvibes Widget']/p/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent("//div[@title='Netvibes Widget']/p/a");
 		selenium.clickAt("//div[@title='Netvibes Widget']/p/a",
 			RuntimeVariables.replace("Add"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//section")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//section");
 		assertTrue(selenium.isVisible("//section"));
 		assertTrue(selenium.isVisible("//div[2]/div/section"));
 		assertTrue(selenium.isVisible("//div[3]/div/section"));

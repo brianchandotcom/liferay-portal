@@ -22,65 +22,19 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class SRq_AddPortletSummaryTest extends BaseTestCase {
 	public void testSRq_AddPortletSummary() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/socialrequestsn1/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Summary Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Summary Test Page");
 		selenium.clickAt("link=Summary Test Page",
 			RuntimeVariables.replace("Summary Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Add Application",
 			RuntimeVariables.replace("Add Application"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("//div[@title='Summary']/p/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent("//div[@title='Summary']/p/a");
 		selenium.clickAt("//div[@title='Summary']/p/a",
 			RuntimeVariables.replace("Add"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//td[1]/div/div[1]/div")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//td[1]/div/div[1]/div");
 		assertTrue(selenium.isVisible("//td[1]/div/div[1]/div"));
 	}
 }

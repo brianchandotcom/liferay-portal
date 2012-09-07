@@ -23,131 +23,36 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ConfigurePage3PortletDLScopeLayoutPage2Test extends BaseTestCase {
 	public void testConfigurePage3PortletDLScopeLayoutPage2()
 		throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/document-library-page-scope-community/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=DL Page3 Name")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=DL Page3 Name");
 		selenium.clickAt("link=DL Page3 Name",
 			RuntimeVariables.replace("DL Page3 Name"));
 		selenium.waitForPageToLoad("30000");
 		Thread.sleep(5000);
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("Documents and Media")
-										.equals(selenium.getText(
-								"//span[@class='portlet-title-text']"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//span[@class='portlet-title-text']",
+			"Documents and Media");
 		assertEquals(RuntimeVariables.replace("Documents and Media"),
 			selenium.getText("//span[@class='portlet-title-text']"));
 		assertEquals(RuntimeVariables.replace("Options"),
 			selenium.getText("//strong/a"));
 		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
 		assertEquals(RuntimeVariables.replace("Configuration"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
 		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Scope")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Scope");
 		selenium.clickAt("link=Scope", RuntimeVariables.replace("Scope"));
 		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//label[@for='scopeType']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//label[@for='scopeType']");
 		assertEquals(RuntimeVariables.replace("Scope"),
 			selenium.getText("//label[@for='scopeType']"));
 		selenium.select("//select[@id='_86_scopeType']",
 			RuntimeVariables.replace("Select Page"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//label[@for='scopeLayoutUuid']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//label[@for='scopeLayoutUuid']");
 		assertEquals(RuntimeVariables.replace("Scope Page"),
 			selenium.getText("//label[@for='scopeLayoutUuid']"));
 		selenium.select("//select[@id='_86_scopeLayoutUuid']",
@@ -163,46 +68,12 @@ public class ConfigurePage3PortletDLScopeLayoutPage2Test extends BaseTestCase {
 		assertEquals("DL Page2 Name",
 			selenium.getSelectedLabel("//select[@id='_86_scopeLayoutUuid']"));
 		selenium.open("/web/document-library-page-scope-community/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=DL Page3 Name")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=DL Page3 Name");
 		selenium.clickAt("link=DL Page3 Name",
 			RuntimeVariables.replace("DL Page3 Name"));
 		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace(
-							"Documents and Media (DL Page2 Name)")
-										.equals(selenium.getText(
-								"//span[@class='portlet-title-text']"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//span[@class='portlet-title-text']",
+			"Documents and Media (DL Page2 Name)");
 		assertEquals(RuntimeVariables.replace(
 				"Documents and Media (DL Page2 Name)"),
 			selenium.getText("//span[@class='portlet-title-text']"));

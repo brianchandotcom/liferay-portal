@@ -23,24 +23,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AddAnnouncementsEntryPriorityNormalTest extends BaseTestCase {
 	public void testAddAnnouncementsEntryPriorityNormal()
 		throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Announcements Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Announcements Test Page");
 		selenium.clickAt("link=Announcements Test Page",
 			RuntimeVariables.replace("Announcements Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -58,46 +44,13 @@ public class AddAnnouncementsEntryPriorityNormalTest extends BaseTestCase {
 				"Announcements Entry Title Priority Normal"));
 		selenium.type("//input[@id='_84_url']",
 			RuntimeVariables.replace("http://www.liferay.com"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent(
-							"//textarea[@id='_84_editor' and @style='display: none;']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent(
+			"//textarea[@id='_84_editor' and @style='display: none;']");
 		assertEquals(RuntimeVariables.replace("Source"),
 			selenium.getText("//span[.='Source']"));
 		selenium.clickAt("//span[.='Source']",
 			RuntimeVariables.replace("Source"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//td[@id='cke_contents__84_editor']/textarea")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//td[@id='cke_contents__84_editor']/textarea");
 		selenium.type("//td[@id='cke_contents__84_editor']/textarea",
 			RuntimeVariables.replace(
 				"Announcements Entry Content Priority Normal"));
@@ -105,61 +58,12 @@ public class AddAnnouncementsEntryPriorityNormalTest extends BaseTestCase {
 			selenium.getText("//span[.='Source']"));
 		selenium.clickAt("//span[.='Source']",
 			RuntimeVariables.replace("Source"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent(
-							"//textarea[@id='_84_editor' and @style='display: none;']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//td[@id='cke_contents__84_editor']/iframe")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent(
+			"//textarea[@id='_84_editor' and @style='display: none;']");
+		selenium.waitForVisible("//td[@id='cke_contents__84_editor']/iframe");
 		selenium.selectFrame("//td[@id='cke_contents__84_editor']/iframe");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace(
-							"Announcements Entry Content Priority Normal")
-										.equals(selenium.getText("//body"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//body",
+			"Announcements Entry Content Priority Normal");
 		selenium.selectFrame("relative=top");
 		selenium.select("//select[@id='_84_priority']",
 			RuntimeVariables.replace("Normal"));
@@ -179,82 +83,17 @@ public class AddAnnouncementsEntryPriorityNormalTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals("Announcements Entry Title Priority Normal",
 			selenium.getValue("//input[@id='_84_title']"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent(
-							"//textarea[@id='_84_editor' and @style='display: none;']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//td[@id='cke_contents__84_editor']/iframe")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent(
+			"//textarea[@id='_84_editor' and @style='display: none;']");
+		selenium.waitForVisible("//td[@id='cke_contents__84_editor']/iframe");
 		selenium.selectFrame("//td[@id='cke_contents__84_editor']/iframe");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace(
-							"Announcements Entry Content Priority Normal")
-										.equals(selenium.getText("//body"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//body",
+			"Announcements Entry Content Priority Normal");
 		selenium.selectFrame("relative=top");
 		assertEquals("Normal",
 			selenium.getSelectedLabel("//select[@id='_84_priority']"));
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Announcements Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Announcements Test Page");
 		selenium.clickAt("link=Announcements Test Page",
 			RuntimeVariables.replace("Announcements Test Page"));
 		selenium.waitForPageToLoad("30000");

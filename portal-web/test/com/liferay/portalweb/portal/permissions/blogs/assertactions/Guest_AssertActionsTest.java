@@ -22,24 +22,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class Guest_AssertActionsTest extends BaseTestCase {
 	public void testGuest_AssertActions() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("link=Blogs Permissions Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent("link=Blogs Permissions Page");
 		selenium.clickAt("link=Blogs Permissions Page",
 			RuntimeVariables.replace("Blogs Permissions Page"));
 		selenium.waitForPageToLoad("30000");
@@ -58,23 +44,7 @@ public class Guest_AssertActionsTest extends BaseTestCase {
 			selenium.getText(
 				"//fieldset[contains(@class,'add-comment')]/div/span/a"));
 		selenium.click("//fieldset[contains(@class,'add-comment')]/div/span/a");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//textarea[@name='_33_postReplyBody0']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//textarea[@name='_33_postReplyBody0']");
 		assertTrue(selenium.isElementNotPresent("//input[@value='Reply']"));
 		assertTrue(selenium.isElementNotPresent("link=Edit"));
 		assertTrue(selenium.isElementNotPresent("link=Permissions"));
@@ -82,41 +52,9 @@ public class Guest_AssertActionsTest extends BaseTestCase {
 		assertTrue(selenium.isElementPresent("link=Sign in to vote."));
 		selenium.clickAt("//input[@value='Reply as...']",
 			RuntimeVariables.replace("Reply as..."));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//iframe[@id='_33_']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//iframe[@id='_33_']");
 		selenium.selectFrame("//iframe[@id='_33_']");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//label[@for='_164_login']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//label[@for='_164_login']");
 		assertEquals(RuntimeVariables.replace("Email Address"),
 			selenium.getText("//label[@for='_164_login']"));
 		assertTrue(selenium.isVisible("//input[@id='_164_login']"));

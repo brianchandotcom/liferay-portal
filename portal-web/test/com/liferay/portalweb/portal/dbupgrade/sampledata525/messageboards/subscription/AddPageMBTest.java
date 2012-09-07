@@ -22,24 +22,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class AddPageMBTest extends BaseTestCase {
 	public void testAddPageMB() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
@@ -58,25 +44,8 @@ public class AddPageMBTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText("//strong/span"));
 		selenium.clickAt("//strong/span", RuntimeVariables.replace("Actions"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("Manage Pages")
-										.equals(selenium.getText(
-								"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a",
+			"Manage Pages");
 		assertEquals(RuntimeVariables.replace("Manage Pages"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));

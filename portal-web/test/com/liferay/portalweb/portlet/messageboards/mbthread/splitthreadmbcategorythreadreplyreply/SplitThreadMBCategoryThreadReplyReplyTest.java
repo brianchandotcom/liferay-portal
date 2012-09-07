@@ -23,6 +23,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class SplitThreadMBCategoryThreadReplyReplyTest extends BaseTestCase {
 	public void testSplitThreadMBCategoryThreadReplyReply()
 		throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("link=Message Boards Test Page",
 			RuntimeVariables.replace("Message Boards Test Page"));

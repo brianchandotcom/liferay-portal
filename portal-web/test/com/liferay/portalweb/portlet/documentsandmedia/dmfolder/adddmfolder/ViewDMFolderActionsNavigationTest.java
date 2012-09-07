@@ -22,91 +22,27 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ViewDMFolderActionsNavigationTest extends BaseTestCase {
 	public void testViewDMFolderActionsNavigation() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Documents and Media Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Documents and Media Test Page");
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//span[@class='document-thumbnail']/img")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//span[@class='document-thumbnail']/img");
 		assertTrue(selenium.isVisible("//span[@class='document-thumbnail']/img"));
 		assertEquals(RuntimeVariables.replace("DM Folder Name"),
 			selenium.getText("//div[@class='document-container']/div/a/span[2]"));
 		selenium.clickAt("//div[@class='document-container']/div/a/span[2]",
 			RuntimeVariables.replace("DM Folder Name"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("DM Folder Name")
-										.equals(selenium.getText(
-								"//li[@class='folder selected']/a/span[2]"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//li[@class='folder selected']/a/span[2]",
+			"DM Folder Name");
 		assertEquals(RuntimeVariables.replace("DM Folder Name"),
 			selenium.getText("//li[@class='folder selected']/a/span[2]"));
 		selenium.clickAt("//span[@class='overlay document-action']/span/ul/li/strong/a",
 			RuntimeVariables.replace("Actions Arrow Drop Down"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a");
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));

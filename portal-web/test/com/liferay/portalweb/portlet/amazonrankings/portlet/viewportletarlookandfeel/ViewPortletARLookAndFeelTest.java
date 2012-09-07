@@ -22,85 +22,23 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ViewPortletARLookAndFeelTest extends BaseTestCase {
 	public void testViewPortletARLookAndFeel() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Amazon Rankings Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Amazon Rankings Test Page");
 		selenium.clickAt("link=Amazon Rankings Test Page",
 			RuntimeVariables.replace("Amazon Rankings Test Page"));
 		selenium.waitForPageToLoad("30000");
 		Thread.sleep(5000);
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//strong/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//strong/a");
 		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
 		assertEquals(RuntimeVariables.replace("Look and Feel"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
 		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//input[@id='_113_custom-title']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//input[@id='_113_custom-title']");
 		Thread.sleep(5000);
 		assertEquals("Amazon Rankings",
 			selenium.getValue("//input[@id='_113_custom-title']"));
@@ -118,23 +56,7 @@ public class ViewPortletARLookAndFeelTest extends BaseTestCase {
 			selenium.getText("//select[@id='_113_lfr-font-space']"));
 		selenium.clickAt("link=Text Styles",
 			RuntimeVariables.replace("Text Styles"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//select[@id='_113_lfr-font-family']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//select[@id='_113_lfr-font-family']");
 		assertEquals(RuntimeVariables.replace(
 				"Arial Georgia Times New Roman Tahoma Trebuchet MS Verdana"),
 			selenium.getText("//select[@id='_113_lfr-font-family']"));
@@ -159,43 +81,11 @@ public class ViewPortletARLookAndFeelTest extends BaseTestCase {
 			selenium.getText("//select[@id='_113_lfr-font-decoration']"));
 		selenium.clickAt("link=Background Styles",
 			RuntimeVariables.replace("Background Styles"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//input[@id='_113_lfr-bg-color']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//input[@id='_113_lfr-bg-color']");
 		assertEquals("", selenium.getValue("//input[@id='_113_lfr-bg-color']"));
 		selenium.clickAt("link=Border Styles",
 			RuntimeVariables.replace("Border Styles"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//legend/span")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//legend/span");
 		assertEquals(RuntimeVariables.replace("Border Width"),
 			selenium.getText("//legend/span"));
 		assertEquals(RuntimeVariables.replace("Border Style"),
@@ -219,24 +109,8 @@ public class ViewPortletARLookAndFeelTest extends BaseTestCase {
 			selenium.getValue("//input[@id='_113_lfr-border-color-top']"));
 		selenium.clickAt("link=Margin and Padding",
 			RuntimeVariables.replace("Margin and Padding"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//fieldset[5]/div/div/div/div[1]/div/fieldset/legend/span")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//fieldset[5]/div/div/div/div[1]/div/fieldset/legend/span");
 		assertEquals(RuntimeVariables.replace("Padding"),
 			selenium.getText(
 				"//fieldset[5]/div/div/div/div[1]/div/fieldset/legend/span"));
@@ -256,40 +130,8 @@ public class ViewPortletARLookAndFeelTest extends BaseTestCase {
 			selenium.getText("//select[@id='_113_lfr-margin-top-unit']"));
 		selenium.clickAt("link=Advanced Styling",
 			RuntimeVariables.replace("Advanced Styling"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//p[@id='lfr-portlet-info']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//input[@id='_113_lfr-custom-css-class-name']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//p[@id='lfr-portlet-info']");
+		selenium.waitForVisible("//input[@id='_113_lfr-custom-css-class-name']");
 		assertEquals(RuntimeVariables.replace(
 				"Your current portlet information is as follows::\nPortlet ID: #portlet_67\nPortlet Classes: .portlet"),
 			selenium.getText("//p[@id='lfr-portlet-info']"));
@@ -306,23 +148,7 @@ public class ViewPortletARLookAndFeelTest extends BaseTestCase {
 		assertFalse(selenium.isChecked("//input[@id='lfr-update-on-type']"));
 		selenium.clickAt("link=WAP Styling",
 			RuntimeVariables.replace("WAP Styling"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//input[@id='_113_lfr-wap-title']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//input[@id='_113_lfr-wap-title']");
 		assertEquals("", selenium.getValue("//input[@id='_113_lfr-wap-title']"));
 		assertEquals(RuntimeVariables.replace("Minimized Normal"),
 			selenium.getText(

@@ -23,6 +23,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ViewGmailBlogsEntryComment1NotificationTest extends BaseTestCase {
 	public void testViewGmailBlogsEntryComment1Notification()
 		throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.openWindow("http://www.gmail.com/",
 			RuntimeVariables.replace("gmail"));
 		selenium.waitForPopUp("gmail", RuntimeVariables.replace(""));
@@ -41,24 +43,8 @@ public class ViewGmailBlogsEntryComment1NotificationTest extends BaseTestCase {
 			selenium.getText("//tbody/tr[1]/td[6]/div/div/div/span"));
 		selenium.clickAt("//tbody/tr[1]/td[6]/div/div/div/span",
 			RuntimeVariables.replace("New Comments by Joe Bloggs"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//table/tr/td/div/div/div/div/div/div/div/div/div/div/div/div/div")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//table/tr/td/div/div/div/div/div/div/div/div/div/div/div/div/div");
 		assertTrue(selenium.isPartialText(
 				"//table/tr/td/div/div/div/div/div/div/div/div/div/div/div/div/div",
 				"Dear Joe Bloggs"));
@@ -71,23 +57,7 @@ public class ViewGmailBlogsEntryComment1NotificationTest extends BaseTestCase {
 		selenium.clickAt("link=liferay.qa.testing.trunk@gmail.com",
 			RuntimeVariables.replace("liferay.qa.testing.trunk@gmail.com"));
 		Thread.sleep(5000);
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//td[2]/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//td[2]/a");
 		assertEquals(RuntimeVariables.replace("Sign out"),
 			selenium.getText("//td[2]/a"));
 		selenium.clickAt("//td[2]/a", RuntimeVariables.replace("Sign out"));

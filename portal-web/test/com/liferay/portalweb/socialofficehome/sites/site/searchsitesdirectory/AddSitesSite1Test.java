@@ -22,69 +22,20 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class AddSitesSite1Test extends BaseTestCase {
 	public void testAddSitesSite1() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/user/joebloggs/so/dashboard/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//li[contains(@class, 'selected')]/a/span")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//li[contains(@class, 'selected')]/a/span");
 		assertEquals(RuntimeVariables.replace("Dashboard"),
 			selenium.getText("//li[contains(@class, 'selected')]/a/span"));
 		assertEquals(RuntimeVariables.replace("Sites"),
 			selenium.getText("//div[@id='so-sidebar']/h3"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//button[contains(.,'Add Site')]/span[2]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//button[contains(.,'Add Site')]/span[2]");
 		assertEquals(RuntimeVariables.replace("Add Site"),
 			selenium.getText("//button[contains(.,'Add Site')]/span[2]"));
 		selenium.clickAt("//button[contains(.,'Add Site')]/span[2]",
 			RuntimeVariables.replace("Add Site"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//label[contains(@for,'_5_WAR_soportlet')]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//label[contains(@for,'_5_WAR_soportlet')]");
 		assertTrue(selenium.isVisible(
 				"//label[contains(@for,'_5_WAR_soportlet')]"));
 		assertTrue(selenium.isVisible("//input[@id='_5_WAR_soportlet_name']"));
@@ -97,24 +48,8 @@ public class AddSitesSite1Test extends BaseTestCase {
 		assertEquals("Next", selenium.getValue("//input[@value='Next']"));
 		selenium.clickAt("//input[@value='Next']",
 			RuntimeVariables.replace("Next"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//select[@id='_5_WAR_soportlet_layoutSetPrototypeSelect']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//select[@id='_5_WAR_soportlet_layoutSetPrototypeSelect']");
 		assertTrue(selenium.isVisible(
 				"//select[@id='_5_WAR_soportlet_layoutSetPrototypeSelect']"));
 		selenium.select("//select[@id='_5_WAR_soportlet_layoutSetPrototypeSelect']",
@@ -143,23 +78,7 @@ public class AddSitesSite1Test extends BaseTestCase {
 		assertEquals("Save", selenium.getValue("//input[@value='Save']"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//span[@class='portlet-msg-success']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//span[@class='portlet-msg-success']");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//span[@class='portlet-msg-success']"));

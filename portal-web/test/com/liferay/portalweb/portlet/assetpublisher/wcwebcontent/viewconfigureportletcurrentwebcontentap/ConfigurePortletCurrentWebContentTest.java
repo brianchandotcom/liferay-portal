@@ -23,24 +23,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ConfigurePortletCurrentWebContentTest extends BaseTestCase {
 	public void testConfigurePortletCurrentWebContent()
 		throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Asset Publisher Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Asset Publisher Test Page");
 		selenium.clickAt("link=Asset Publisher Test Page",
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -48,109 +34,27 @@ public class ConfigurePortletCurrentWebContentTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Options"),
 			selenium.getText("//strong/a"));
 		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
 		assertEquals(RuntimeVariables.replace("Configuration"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
 		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a",
 			RuntimeVariables.replace("Configuration"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//select[@id='_86_anyAssetType']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//select[@id='_86_anyAssetType']");
 		selenium.select("//select[@id='_86_anyAssetType']",
 			RuntimeVariables.replace("Select More Than One..."));
 		assertEquals("Select More Than One...",
 			selenium.getSelectedLabel("//select[@id='_86_anyAssetType']"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//select[@id='_86_availableClassNameIds']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//select[@id='_86_availableClassNameIds']");
 		selenium.addSelection("//select[@id='_86_availableClassNameIds']",
 			RuntimeVariables.replace("Web Content"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"xPath=(//button[@title='Move selected items from Available to Selected.'])[2]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"xPath=(//button[@title='Move selected items from Available to Selected.'])[2]");
 		selenium.clickAt("xPath=(//button[@title='Move selected items from Available to Selected.'])[2]",
 			RuntimeVariables.replace("Left Arrow"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isPartialText(
-							"//select[@id='_86_currentClassNameIds']",
-							"Web Content")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForPartialText("//select[@id='_86_currentClassNameIds']",
+			"Web Content");
 		assertTrue(selenium.isPartialText(
 				"//select[@id='_86_currentClassNameIds']", "Web Content"));
 		selenium.clickAt("//input[@value='Save']",

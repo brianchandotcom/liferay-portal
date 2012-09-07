@@ -22,6 +22,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ViewWikiPageTest extends BaseTestCase {
 	public void testViewWikiPage() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/wiki-wiki-page-community/");
 		selenium.clickAt("link=Wiki Page Test",
 			RuntimeVariables.replace("Wiki Page Test"));

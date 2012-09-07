@@ -27,6 +27,8 @@ public class Portlet_ControlPanelTest extends BaseTestCase {
 		while (label >= 1) {
 			switch (label) {
 			case 1:
+				selenium.selectWindow("null");
+				selenium.selectFrame("relative=top");
 
 				boolean NotInControlPanel = selenium.isElementPresent(
 						"link=Welcome - Liferay");

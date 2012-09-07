@@ -23,24 +23,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ViewWCTemplateStructureAddWebContentTest extends BaseTestCase {
 	public void testViewWCTemplateStructureAddWebContent()
 		throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
@@ -48,101 +34,22 @@ public class ViewWCTemplateStructureAddWebContentTest extends BaseTestCase {
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Add", RuntimeVariables.replace("Add"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a");
 		assertEquals(RuntimeVariables.replace("Basic Web Content"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
 		selenium.click(RuntimeVariables.replace(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
 		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent(
-							"//textarea[@id='_15__15_structure_el_TextAreaField_content' and @style='display: none;']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//a[@id='_15_changeStructureButton']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent(
+			"//textarea[@id='_15__15_structure_el_TextAreaField_content' and @style='display: none;']");
+		selenium.waitForVisible("//a[@id='_15_changeStructureButton']");
 		selenium.clickAt("//a[@id='_15_changeStructureButton']",
 			RuntimeVariables.replace("Change"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//iframe[@name='_15_changeStruture']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//iframe[@name='_15_changeStruture']");
 		selenium.selectFrame("//iframe[@name='_15_changeStruture']");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//td[1]/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//td[1]/a");
 		assertTrue(selenium.isVisible("//td[1]/a"));
 		assertEquals(RuntimeVariables.replace("WC Structure Name"),
 			selenium.getText("//td[2]/a"));
@@ -153,48 +60,15 @@ public class ViewWCTemplateStructureAddWebContentTest extends BaseTestCase {
 		assertTrue(selenium.getConfirmation()
 						   .matches("^Selecting a new structure will change the available input fields and available templates[\\s\\S] Do you want to proceed[\\s\\S]$"));
 		selenium.selectFrame("relative=top");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("WC Structure Name")
-										.equals(selenium.getText(
-								"//span[@id='_15_structureNameLabel']"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//span[@id='_15_structureNameLabel']",
+			"WC Structure Name");
 		assertEquals(RuntimeVariables.replace("WC Structure Name"),
 			selenium.getText("//span[@id='_15_structureNameLabel']"));
 		assertEquals(RuntimeVariables.replace("WC Template Name"),
 			selenium.getText("//span[@class='template-name-label']"));
 		assertTrue(selenium.isVisible("//input[@id='_15_title_en_US']"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//label[@class='journal-article-field-label']/span")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//label[@class='journal-article-field-label']/span");
 		assertEquals(RuntimeVariables.replace("text"),
 			selenium.getText(
 				"//label[@class='journal-article-field-label']/span"));

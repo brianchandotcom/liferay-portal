@@ -22,6 +22,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class MoveDMSubfolderToFolderMGTest extends BaseTestCase {
 	public void testMoveDMSubfolderToFolderMG() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("link=Media Gallery Test Page",
 			RuntimeVariables.replace("Media Gallery Test Page"));
@@ -50,49 +52,15 @@ public class MoveDMSubfolderToFolderMGTest extends BaseTestCase {
 			RuntimeVariables.replace("Select"));
 		selenium.waitForPopUp("folder", RuntimeVariables.replace("30000"));
 		selenium.selectWindow("title=Media Gallery");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("Home")
-										.equals(selenium.getText("link=Home"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("link=Home", "Home");
 		selenium.clickAt("link=Home", RuntimeVariables.replace("Home"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("DM Folder2 Name"),
 			selenium.getText("//td[contains(@id,'col-folder_row-2')]/a"));
 		selenium.click("xPath=(//input[@value='Choose'])[2]");
 		selenium.selectWindow("null");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("DM Folder2 Name")
-										.equals(selenium.getText(
-								"//a[@id='_31_parentFolderName']"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//a[@id='_31_parentFolderName']",
+			"DM Folder2 Name");
 		assertEquals(RuntimeVariables.replace("DM Folder2 Name"),
 			selenium.getText("//a[@id='_31_parentFolderName']"));
 		selenium.clickAt("//input[@value='Move']",

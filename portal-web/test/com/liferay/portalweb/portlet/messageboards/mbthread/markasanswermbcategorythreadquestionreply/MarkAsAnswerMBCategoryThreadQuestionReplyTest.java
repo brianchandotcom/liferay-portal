@@ -23,6 +23,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class MarkAsAnswerMBCategoryThreadQuestionReplyTest extends BaseTestCase {
 	public void testMarkAsAnswerMBCategoryThreadQuestionReply()
 		throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("link=Message Boards Test Page",
 			RuntimeVariables.replace("Message Boards Test Page"));
@@ -45,24 +47,8 @@ public class MarkAsAnswerMBCategoryThreadQuestionReplyTest extends BaseTestCase 
 				"//div[5]/table/tbody/tr[1]/td[2]/div[1]/ul/li[1]/span/a/span"));
 		selenium.clickAt("//div[5]/table/tbody/tr[1]/td[2]/div[1]/ul/li[1]/span/a/span",
 			RuntimeVariables.replace("Mark as an Answer"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (!selenium.isVisible(
-							"//div[5]/table/tbody/tr[1]/td[2]/div[1]/ul/li[1]/span/a/span")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForNotVisible(
+			"//div[5]/table/tbody/tr[1]/td[2]/div[1]/ul/li[1]/span/a/span");
 		assertFalse(selenium.isVisible(
 				"//div[5]/table/tbody/tr[1]/td[2]/div[1]/ul/li[1]/span/a/span"));
 		assertEquals(RuntimeVariables.replace("Answer"),
@@ -72,23 +58,7 @@ public class MarkAsAnswerMBCategoryThreadQuestionReplyTest extends BaseTestCase 
 			selenium.getText(
 				"//div[5]/table/tbody/tr[1]/td[2]/div[1]/div/div[2]/a"));
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Message Boards Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Message Boards Test Page");
 		selenium.clickAt("link=Message Boards Test Page",
 			RuntimeVariables.replace("Message Boards Test Page"));
 		selenium.waitForPageToLoad("30000");

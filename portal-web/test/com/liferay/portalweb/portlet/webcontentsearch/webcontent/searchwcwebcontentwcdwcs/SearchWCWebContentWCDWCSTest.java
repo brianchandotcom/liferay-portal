@@ -22,24 +22,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class SearchWCWebContentWCDWCSTest extends BaseTestCase {
 	public void testSearchWCWebContentWCDWCS() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Web Content Search Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Web Content Search Test Page");
 		selenium.clickAt("link=Web Content Search Test Page",
 			RuntimeVariables.replace("Web Content Search Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -53,23 +39,7 @@ public class SearchWCWebContentWCDWCSTest extends BaseTestCase {
 		assertTrue(selenium.isPartialText("//tr[3]/td[3]",
 				"WC WebContent Content"));
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Web Content Search Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Web Content Search Test Page");
 		selenium.clickAt("link=Web Content Search Test Page",
 			RuntimeVariables.replace("Web Content Search Test Page"));
 		selenium.waitForPageToLoad("30000");

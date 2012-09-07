@@ -22,24 +22,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class SOUs_AddTagProfileTest extends BaseTestCase {
 	public void testSOUs_AddTagProfile() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/socialoffice01/so/profile");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div[@class='lfr-contact-name']/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//div[@class='lfr-contact-name']/a");
 		assertEquals(RuntimeVariables.replace("Social01 Office01 User01"),
 			selenium.getText("//div[@class='lfr-contact-name']/a"));
 		assertEquals(RuntimeVariables.replace(
@@ -49,46 +35,14 @@ public class SOUs_AddTagProfileTest extends BaseTestCase {
 			selenium.getText("//li[@data-title='Tags']"));
 		selenium.clickAt("//li[@data-title='Tags']",
 			RuntimeVariables.replace("Tags"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//input[contains(@id,'TagNames')]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//input[contains(@id,'TagNames')]");
 		selenium.type("//input[contains(@id,'TagNames')]",
 			RuntimeVariables.replace("tag1"));
 		selenium.clickAt("//button[@id='add']", RuntimeVariables.replace("Add"));
 		Thread.sleep(5000);
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//ul[@class='user-tags']/li/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//ul[@class='user-tags']/li/a");
 		assertEquals(RuntimeVariables.replace("Tags"),
 			selenium.getText("//div[@class='user-tags-title']"));
 		assertEquals(RuntimeVariables.replace("tag1"),

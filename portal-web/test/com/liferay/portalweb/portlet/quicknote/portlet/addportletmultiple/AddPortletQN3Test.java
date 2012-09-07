@@ -22,172 +22,45 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class AddPortletQN3Test extends BaseTestCase {
 	public void testAddPortletQN3() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("link=Quick Note Test Page",
 			RuntimeVariables.replace("Quick Note Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("//div[@id='dockbar']",
 			RuntimeVariables.replace("Dockbar"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent(
-							"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
 		assertEquals(RuntimeVariables.replace("Add"),
 			selenium.getText("//li[@id='_145_addContent']/a/span"));
 		selenium.mouseOver("//li[@id='_145_addContent']/a/span");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//a[@id='_145_addApplication']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//a[@id='_145_addApplication']");
 		assertTrue(selenium.isPartialText("//a[@id='_145_addApplication']",
 				"More"));
 		selenium.clickAt("//a[@id='_145_addApplication']",
 			RuntimeVariables.replace("More"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent(
-							"//script[contains(@src,'/aui/aui-live-search/aui-live-search-min.js')]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//input[@id='layout_configuration_content']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-live-search/aui-live-search-min.js')]");
+		selenium.waitForVisible("//input[@id='layout_configuration_content']");
 		selenium.type("//input[@id='layout_configuration_content']",
 			RuntimeVariables.replace("q"));
 		selenium.keyDown("//input[@id='layout_configuration_content']",
 			RuntimeVariables.replace("\\13"));
 		selenium.keyUp("//input[@id='layout_configuration_content']",
 			RuntimeVariables.replace("\\13"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div[@title='Quick Note']/p/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//div[@title='Quick Note']/p/a");
 		selenium.clickAt("//div[@title='Quick Note']/p/a",
 			RuntimeVariables.replace("Add"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//div/div/div/div/div[@class='portlet-body']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//div/div/div/div/div[@class='portlet-body']");
 		assertTrue(selenium.isVisible(
 				"//div/div/div/div/div[@class='portlet-body']"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//div/div/div/div[2]/div[@class='portlet-body']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//div/div/div/div[2]/div[@class='portlet-body']");
 		assertTrue(selenium.isVisible(
 				"//div/div/div/div[2]/div[@class='portlet-body']"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//div/div/div/div[3]/div[@class='portlet-body']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//div/div/div/div[3]/div[@class='portlet-body']");
 		assertTrue(selenium.isVisible(
 				"//div/div/div/div[3]/div[@class='portlet-body']"));
 	}

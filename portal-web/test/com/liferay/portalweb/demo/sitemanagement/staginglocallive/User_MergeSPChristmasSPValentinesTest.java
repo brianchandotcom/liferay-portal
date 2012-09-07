@@ -28,24 +28,10 @@ public class User_MergeSPChristmasSPValentinesTest extends BaseTestCase {
 		while (label >= 1) {
 			switch (label) {
 			case 1:
+				selenium.selectWindow("null");
+				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isElementPresent("link=Site Name")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForElementPresent("link=Site Name");
 				selenium.clickAt("link=Site Name",
 					RuntimeVariables.replace("Site Name"));
 				selenium.waitForPageToLoad("30000");
@@ -95,48 +81,15 @@ public class User_MergeSPChristmasSPValentinesTest extends BaseTestCase {
 						"xPath=(//span[@title='Actions']/ul/li/strong/a/span)[1]"));
 				selenium.clickAt("xPath=(//span[@title='Actions']/ul/li/strong/a/span)[1]",
 					RuntimeVariables.replace("Actions"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (RuntimeVariables.replace("Merge")
-												.equals(selenium.getText(
-										"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a[contains(.,'Merge')]"))) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForText("//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a[contains(.,'Merge')]",
+					"Merge");
 				assertEquals(RuntimeVariables.replace("Merge"),
 					selenium.getText(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a[contains(.,'Merge')]"));
 				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a[contains(.,'Merge')]",
 					RuntimeVariables.replace("Merge"));
 				Thread.sleep(5000);
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("//tr[5]/td[1]")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("//tr[5]/td[1]");
 				assertEquals(RuntimeVariables.replace("Valentines"),
 					selenium.getText("//tr[5]/td[1]"));
 				Thread.sleep(5000);
@@ -144,41 +97,9 @@ public class User_MergeSPChristmasSPValentinesTest extends BaseTestCase {
 						"//a[contains(@data-layoutsetbranchname,'Valentines')]"));
 				selenium.clickAt("//a[contains(@data-layoutsetbranchname,'Valentines')]",
 					RuntimeVariables.replace("Select"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if ("Are you sure you want to merge changes from Valentines?".equals(
-									selenium.getConfirmation())) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//div[@class='portlet-msg-success']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForConfirmation(
+					"Are you sure you want to merge changes from Valentines?");
+				selenium.waitForVisible("//div[@class='portlet-msg-success']");
 				assertEquals(RuntimeVariables.replace(
 						"Site page variation was merged."),
 					selenium.getText("//div[@class='portlet-msg-success']"));

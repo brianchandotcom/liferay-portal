@@ -22,6 +22,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ViewDMFolderImageMultipleMGTest extends BaseTestCase {
 	public void testViewDMFolderImageMultipleMG() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("link=Media Gallery Test Page",
 			RuntimeVariables.replace("Media Gallery Test Page"));
@@ -44,23 +46,7 @@ public class ViewDMFolderImageMultipleMGTest extends BaseTestCase {
 		selenium.clickAt("//span[@class='image-title']",
 			RuntimeVariables.replace("DM Folder Image1 Title"));
 		Thread.sleep(5000);
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//img[@class='aui-image-viewer-image']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//img[@class='aui-image-viewer-image']");
 		assertEquals(RuntimeVariables.replace(
 				"DM Folder Image1 Title - DM Folder Image1 Description"),
 			selenium.getText("//div[@class='aui-image-viewer-caption']"));
@@ -98,23 +84,7 @@ public class ViewDMFolderImageMultipleMGTest extends BaseTestCase {
 		selenium.clickAt("xPath=(//span[@class='image-title'])[2]",
 			RuntimeVariables.replace("DM Folder Image2 Title"));
 		Thread.sleep(5000);
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//img[@class='aui-image-viewer-image']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//img[@class='aui-image-viewer-image']");
 		assertEquals(RuntimeVariables.replace(
 				"DM Folder Image2 Title - DM Folder Image2 Description"),
 			selenium.getText("//div[@class='aui-image-viewer-caption']"));
@@ -152,23 +122,7 @@ public class ViewDMFolderImageMultipleMGTest extends BaseTestCase {
 		selenium.clickAt("xPath=(//span[@class='image-title'])[3]",
 			RuntimeVariables.replace("DM Folder Image3 Title"));
 		Thread.sleep(5000);
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//img[@class='aui-image-viewer-image']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//img[@class='aui-image-viewer-image']");
 		assertEquals(RuntimeVariables.replace(
 				"DM Folder Image3 Title - DM Folder Image3 Description"),
 			selenium.getText("//div[@class='aui-image-viewer-caption']"));

@@ -22,24 +22,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class AddCommentReplyTest extends BaseTestCase {
 	public void testAddCommentReply() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Page Comments Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Page Comments Test Page");
 		selenium.clickAt("link=Page Comments Test Page",
 			RuntimeVariables.replace("Page Comments Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -47,49 +33,14 @@ public class AddCommentReplyTest extends BaseTestCase {
 			selenium.getText("//li[1]/span/a/span"));
 		selenium.clickAt("//li[1]/span/a/span",
 			RuntimeVariables.replace("Post Reply"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//textarea[@name='_107_postReplyBody1']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//textarea[@name='_107_postReplyBody1']");
 		assertTrue(selenium.isVisible("//textarea[@name='_107_postReplyBody1']"));
 		selenium.type("//textarea[@name='_107_postReplyBody1']",
 			RuntimeVariables.replace("PC Comment Reply"));
 		selenium.clickAt("xPath=(//input[@value='Reply'])[2]",
 			RuntimeVariables.replace("Reply"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace(
-							"Your request processed successfully.")
-										.equals(selenium.getText(
-								"//div[@class='lfr-message-response portlet-msg-success']"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//div[@class='lfr-message-response portlet-msg-success']",
+			"Your request processed successfully.");
 		assertEquals(RuntimeVariables.replace(
 				"Your request processed successfully."),
 			selenium.getText(

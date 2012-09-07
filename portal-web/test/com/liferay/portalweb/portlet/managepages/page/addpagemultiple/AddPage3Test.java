@@ -27,48 +27,16 @@ public class AddPage3Test extends BaseTestCase {
 		while (label >= 1) {
 			switch (label) {
 			case 1:
+				selenium.selectWindow("null");
+				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
 				selenium.clickAt("//div[@id='dockbar']",
 					RuntimeVariables.replace("Dockbar"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isElementPresent(
-									"//li[contains(@class,'manage-page')]/a")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForElementPresent(
+					"//li[contains(@class,'manage-page')]/a");
 				selenium.clickAt("//li[contains(@class,'manage-page')]/a",
 					RuntimeVariables.replace("Manage Pages"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (RuntimeVariables.replace("Public Pages")
-												.equals(selenium.getText(
-										"//a[@class='layout-tree']"))) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForText("//a[@class='layout-tree']", "Public Pages");
 				assertEquals(RuntimeVariables.replace("Public Pages"),
 					selenium.getText("//a[@class='layout-tree']"));
 
@@ -85,70 +53,18 @@ public class AddPage3Test extends BaseTestCase {
 					RuntimeVariables.replace("Drop Down Arrow"));
 
 			case 2:
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (RuntimeVariables.replace("Welcome")
-												.equals(selenium.getText(
-										"//li/ul/li[1]/div/div[3]/a"))) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForText("//li/ul/li[1]/div/div[3]/a", "Welcome");
 				assertEquals(RuntimeVariables.replace("Welcome"),
 					selenium.getText("//li/ul/li[1]/div/div[3]/a"));
 				selenium.clickAt("//a[@class='layout-tree']",
 					RuntimeVariables.replace("Public Pages"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (RuntimeVariables.replace("Add Page")
-												.equals(selenium.getText(
-										"//div/span/button[1]"))) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForText("//div/span/button[1]", "Add Page");
 				assertEquals(RuntimeVariables.replace("Add Page"),
 					selenium.getText("//div/span/button[1]"));
 				selenium.clickAt("//div/span/button[1]",
 					RuntimeVariables.replace("Add Page"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//input[@id='_88_addLayoutName_en_US']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible(
+					"//input[@id='_88_addLayoutName_en_US']");
 				selenium.type("//input[@id='_88_addLayoutName_en_US']",
 					RuntimeVariables.replace("Manage Pages Test Page3"));
 				selenium.clickAt("//input[@value='Add Page']",
@@ -171,25 +87,8 @@ public class AddPage3Test extends BaseTestCase {
 					RuntimeVariables.replace("Drop Down Arrow"));
 
 			case 3:
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (RuntimeVariables.replace("Manage Pages Test Page1")
-												.equals(selenium.getText(
-										"//li/ul/li[2]/div/div[3]/a"))) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForText("//li/ul/li[2]/div/div[3]/a",
+					"Manage Pages Test Page1");
 				assertEquals(RuntimeVariables.replace("Manage Pages Test Page1"),
 					selenium.getText("//li/ul/li[2]/div/div[3]/a"));
 				assertEquals(RuntimeVariables.replace("Manage Pages Test Page2"),
@@ -197,23 +96,7 @@ public class AddPage3Test extends BaseTestCase {
 				assertEquals(RuntimeVariables.replace("Manage Pages Test Page3"),
 					selenium.getText("//li/ul/li[4]/div/div[3]/a"));
 				selenium.open("/web/guest/home/");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("link=Manage Pages Test Page3")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("link=Manage Pages Test Page3");
 				selenium.clickAt("link=Manage Pages Test Page3",
 					RuntimeVariables.replace("Manage Pages Test Page3"));
 				selenium.waitForPageToLoad("30000");

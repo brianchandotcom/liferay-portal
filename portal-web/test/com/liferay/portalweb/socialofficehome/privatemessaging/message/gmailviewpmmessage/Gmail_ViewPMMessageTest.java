@@ -29,6 +29,8 @@ public class Gmail_ViewPMMessageTest extends BaseTestCase {
 			case 1:
 				selenium.selectWindow("null");
 				selenium.selectFrame("relative=top");
+				selenium.selectWindow("null");
+				selenium.selectFrame("relative=top");
 				selenium.openWindow("http://www.gmail.com/",
 					RuntimeVariables.replace("gmail"));
 				selenium.waitForPopUp("gmail", RuntimeVariables.replace(""));
@@ -67,23 +69,7 @@ public class Gmail_ViewPMMessageTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 
 			case 3:
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("//input[@id='Email']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("//input[@id='Email']");
 				selenium.type("//input[@id='Email']",
 					RuntimeVariables.replace("liferay.qa.testing.trunk"));
 				selenium.type("//input[@id='Passwd']",

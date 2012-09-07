@@ -22,24 +22,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class RateFrontPageCommentTest extends BaseTestCase {
 	public void testRateFrontPageComment() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Wiki Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Wiki Test Page");
 		selenium.clickAt("link=Wiki Test Page",
 			RuntimeVariables.replace("Wiki Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -47,94 +33,26 @@ public class RateFrontPageCommentTest extends BaseTestCase {
 			selenium.getText("//div[3]/div/div[2]/div/div/div/div"));
 		selenium.clickAt("//div[@class='taglib-ratings thumbs']/div/div/a[1]",
 			RuntimeVariables.replace(""));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("+1 (1 Vote)")
-										.equals(selenium.getText(
-								"//div[3]/div/div[2]/div/div/div/div"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//div[3]/div/div[2]/div/div/div/div",
+			"+1 (1 Vote)");
 		assertEquals(RuntimeVariables.replace("+1 (1 Vote)"),
 			selenium.getText("//div[3]/div/div[2]/div/div/div/div"));
 		selenium.clickAt("//div[@class='taglib-ratings thumbs']/div/div/a[1]",
 			RuntimeVariables.replace(""));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("0 (0 Votes)")
-										.equals(selenium.getText(
-								"//div[3]/div/div[2]/div/div/div/div"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//div[3]/div/div[2]/div/div/div/div",
+			"0 (0 Votes)");
 		assertEquals(RuntimeVariables.replace("0 (0 Votes)"),
 			selenium.getText("//div[3]/div/div[2]/div/div/div/div"));
 		selenium.clickAt("//div[@class='taglib-ratings thumbs']/div/div/a[2]",
 			RuntimeVariables.replace(""));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("-1 (1 Vote)")
-										.equals(selenium.getText(
-								"//div[3]/div/div[2]/div/div/div/div"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//div[3]/div/div[2]/div/div/div/div",
+			"-1 (1 Vote)");
 		assertEquals(RuntimeVariables.replace("-1 (1 Vote)"),
 			selenium.getText("//div[3]/div/div[2]/div/div/div/div"));
 		selenium.clickAt("//div[@class='taglib-ratings thumbs']/div/div/a[2]",
 			RuntimeVariables.replace(""));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("0 (0 Votes)")
-										.equals(selenium.getText(
-								"//div[3]/div/div[2]/div/div/div/div"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//div[3]/div/div[2]/div/div/div/div",
+			"0 (0 Votes)");
 		assertEquals(RuntimeVariables.replace("0 (0 Votes)"),
 			selenium.getText("//div[3]/div/div[2]/div/div/div/div"));
 	}

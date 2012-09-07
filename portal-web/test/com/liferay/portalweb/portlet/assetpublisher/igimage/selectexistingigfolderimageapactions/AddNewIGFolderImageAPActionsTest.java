@@ -22,24 +22,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class AddNewIGFolderImageAPActionsTest extends BaseTestCase {
 	public void testAddNewIGFolderImageAPActions() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Asset Publisher Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Asset Publisher Test Page");
 		selenium.clickAt("link=Asset Publisher Test Page",
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -47,94 +33,27 @@ public class AddNewIGFolderImageAPActionsTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Add New"),
 			selenium.getText("//span[@title='Add New']/ul/li/strong/a"));
 		selenium.click("//span[@title='Add New']/ul/li/strong/a");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a");
 		assertEquals(RuntimeVariables.replace("Basic Document"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
 		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a",
 			RuntimeVariables.replace("Basic Document"));
 		Thread.sleep(5000);
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//input[@value='Select']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//input[@value='Select']");
 		selenium.clickAt("//input[@value='Select']",
 			RuntimeVariables.replace("Select"));
 		selenium.waitForPopUp("folder", RuntimeVariables.replace("30000"));
 		selenium.selectWindow("name=folder");
 		selenium.selectWindow("name=folder");
 		Thread.sleep(5000);
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("IG Folder Name")
-										.equals(selenium.getText("//a"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//a", "IG Folder Name");
 		assertEquals(RuntimeVariables.replace("IG Folder Name"),
 			selenium.getText("//a"));
 		selenium.click("//input[@value='Choose']");
 		selenium.selectWindow("null");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("IG Folder Name")
-										.equals(selenium.getText(
-								"//a[@id='_20_folderName']"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//a[@id='_20_folderName']", "IG Folder Name");
 		assertEquals(RuntimeVariables.replace("IG Folder Name"),
 			selenium.getText("//a[@id='_20_folderName']"));
 		selenium.type("//input[@id='_20_file']",
@@ -146,45 +65,12 @@ public class AddNewIGFolderImageAPActionsTest extends BaseTestCase {
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Asset Publisher Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Asset Publisher Test Page");
 		selenium.clickAt("link=Asset Publisher Test Page",
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("IG Folder Image Name")
-										.equals(selenium.getText(
-								"//h3[@class='asset-title']/a"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//h3[@class='asset-title']/a",
+			"IG Folder Image Name");
 		assertEquals(RuntimeVariables.replace("IG Folder Image Name"),
 			selenium.getText("//h3[@class='asset-title']/a"));
 		assertTrue(selenium.isVisible(

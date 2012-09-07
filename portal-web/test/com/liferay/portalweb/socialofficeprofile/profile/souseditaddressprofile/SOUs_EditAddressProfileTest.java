@@ -22,43 +22,13 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class SOUs_EditAddressProfileTest extends BaseTestCase {
 	public void testSOUs_EditAddressProfile() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/socialoffice01/so/profile");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div[@class='lfr-contact-name']/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//div[@class='lfr-contact-name']/a");
 		assertEquals(RuntimeVariables.replace("Social01 Office01 User01"),
 			selenium.getText("//div[@class='lfr-contact-name']/a"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div[@data-title='Addresses']/h3")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//div[@data-title='Addresses']/h3");
 		assertEquals(RuntimeVariables.replace("Addresses:"),
 			selenium.getText("//div[@data-title='Addresses']/h3"));
 		assertEquals(RuntimeVariables.replace(
@@ -66,47 +36,14 @@ public class SOUs_EditAddressProfileTest extends BaseTestCase {
 			selenium.getText("//div[@data-title='Addresses']/ul/li"));
 		selenium.clickAt("//div[@data-title='Addresses']",
 			RuntimeVariables.replace("Addresses:"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//input[contains(@id,'addressStreet1')]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//input[contains(@id,'addressStreet1')]");
 		Thread.sleep(5000);
 		selenium.type("//input[contains(@id,'addressStreet1')]",
 			RuntimeVariables.replace("456 Liferay Ln."));
 		selenium.select("//select[contains(@id,'addressCountry')]",
 			RuntimeVariables.replace("label=Canada"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isPartialText(
-							"//select[contains(@id,'addressRegion')]", "Ontario")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForPartialText("//select[contains(@id,'addressRegion')]",
+			"Ontario");
 		selenium.select("//select[contains(@id,'addressRegion')]",
 			RuntimeVariables.replace("label=Ontario"));
 		selenium.type("//input[contains(@id,'addressZip')]",
@@ -119,26 +56,8 @@ public class SOUs_EditAddressProfileTest extends BaseTestCase {
 			RuntimeVariables.replace("Mailing Checkbox"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace(
-							"Business 456 Liferay Ln., New Ray of Light, 95678, Ontario, Canada")
-										.equals(selenium.getText(
-								"//div[@data-title='Addresses']/ul/li"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//div[@data-title='Addresses']/ul/li",
+			"Business 456 Liferay Ln., New Ray of Light, 95678, Ontario, Canada");
 		assertEquals(RuntimeVariables.replace("Addresses:"),
 			selenium.getText("//div[@data-title='Addresses']/h3"));
 		assertEquals(RuntimeVariables.replace(

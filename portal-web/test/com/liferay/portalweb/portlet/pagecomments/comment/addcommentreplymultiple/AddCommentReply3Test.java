@@ -22,24 +22,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class AddCommentReply3Test extends BaseTestCase {
 	public void testAddCommentReply3() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Page Comments Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Page Comments Test Page");
 		selenium.clickAt("link=Page Comments Test Page",
 			RuntimeVariables.replace("Page Comments Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -47,49 +33,14 @@ public class AddCommentReply3Test extends BaseTestCase {
 			selenium.getText("//div[3]/div[3]/div/div[2]/ul/li[1]/span/a/span"));
 		selenium.clickAt("//div[3]/div[3]/div/div[2]/ul/li[1]/span/a/span",
 			RuntimeVariables.replace("Post Reply"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//textarea[@name='_107_postReplyBody3']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//textarea[@name='_107_postReplyBody3']");
 		assertTrue(selenium.isVisible("//textarea[@name='_107_postReplyBody3']"));
 		selenium.type("//textarea[@name='_107_postReplyBody3']",
 			RuntimeVariables.replace("PC Comment Reply3"));
 		selenium.clickAt("xPath=(//input[@value='Reply'])[4]",
 			RuntimeVariables.replace("Reply"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace(
-							"Your request processed successfully.")
-										.equals(selenium.getText(
-								"//div[@class='lfr-message-response portlet-msg-success']"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//div[@class='lfr-message-response portlet-msg-success']",
+			"Your request processed successfully.");
 		assertEquals(RuntimeVariables.replace(
 				"Your request processed successfully."),
 			selenium.getText(

@@ -23,24 +23,10 @@ public class WCA_ViewApproveTaskMainVariationActionsSiteStagingTest
 	extends BaseTestCase {
 	public void testWCA_ViewApproveTaskMainVariationActionsSiteStaging()
 		throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/community-site-test/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//section")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//section");
 		assertTrue(selenium.isVisible("//section"));
 		assertFalse(selenium.isTextPresent("This is a Web Content article"));
 	}

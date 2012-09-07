@@ -23,24 +23,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class DefinePermissionsRoleViewPortletSiteOnTest extends BaseTestCase {
 	public void testDefinePermissionsRoleViewPortletSiteOn()
 		throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
@@ -60,24 +46,8 @@ public class DefinePermissionsRoleViewPortletSiteOnTest extends BaseTestCase {
 			selenium.getText("//td[4]/span/ul/li/strong/a/span"));
 		selenium.clickAt("//td[4]/span/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a");
 		assertEquals(RuntimeVariables.replace("Define Permissions"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
@@ -91,25 +61,7 @@ public class DefinePermissionsRoleViewPortletSiteOnTest extends BaseTestCase {
 			selenium.getText("//h3"));
 		selenium.clickAt("//span[@class='lfr-token']/a",
 			RuntimeVariables.replace("x"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("Portal")
-										.equals(selenium.getText(
-								"//tr[11]/td[3]"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//tr[11]/td[3]", "Portal");
 		assertEquals(RuntimeVariables.replace("Portal"),
 			selenium.getText("//tr[11]/td[3]"));
 		assertEquals(RuntimeVariables.replace("Limit Scope"),
@@ -119,47 +71,13 @@ public class DefinePermissionsRoleViewPortletSiteOnTest extends BaseTestCase {
 		selenium.waitForPopUp("site", RuntimeVariables.replace("30000"));
 		selenium.selectWindow("title=Roles");
 		Thread.sleep(5000);
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//tr[5]/td[1]/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//tr[5]/td[1]/a");
 		assertEquals(RuntimeVariables.replace("Liferay"),
 			selenium.getText("//tr[5]/td[1]/a"));
 		selenium.click("//tr[5]/td[1]/a");
 		selenium.selectWindow("null");
 		Thread.sleep(5000);
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("Liferay")
-										.equals(selenium.getText(
-								"//tr[11]/td[3]/div/span/span/span"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//tr[11]/td[3]/div/span/span/span", "Liferay");
 		assertEquals(RuntimeVariables.replace("Liferay"),
 			selenium.getText("//tr[11]/td[3]/div/span/span/span"));
 		assertTrue(selenium.isChecked(

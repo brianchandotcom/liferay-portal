@@ -22,24 +22,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class LoginJaneLDAPTest extends BaseTestCase {
 	public void testLoginJaneLDAP() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Sign In")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Sign In");
 		selenium.clickAt("link=Sign In", RuntimeVariables.replace("Sign In"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_58_login']",
@@ -73,44 +59,12 @@ public class LoginJaneLDAPTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Jane Smith"),
 			selenium.getText("//a[2]"));
 		selenium.clickAt("//a[2]", RuntimeVariables.replace("Jane Smith"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//a[@id='_2_userGroupsLink']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//a[@id='_2_userGroupsLink']");
 		assertTrue(selenium.isPartialText("//a[@id='_2_userGroupsLink']",
 				"User Groups"));
 		selenium.clickAt("//a[@id='_2_userGroupsLink']",
 			RuntimeVariables.replace("User Groups"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//tr[3]/td")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//tr[3]/td");
 		assertEquals(RuntimeVariables.replace("usergroup"),
 			selenium.getText("//tr[3]/td"));
 	}

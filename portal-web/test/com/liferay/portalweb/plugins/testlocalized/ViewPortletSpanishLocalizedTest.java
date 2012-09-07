@@ -22,24 +22,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ViewPortletSpanishLocalizedTest extends BaseTestCase {
 	public void testViewPortletSpanishLocalized() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Test Localized Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Test Localized Page");
 		selenium.clickAt("link=Test Localized Page",
 			RuntimeVariables.replace("Test Localized Page"));
 		selenium.waitForPageToLoad("30000");

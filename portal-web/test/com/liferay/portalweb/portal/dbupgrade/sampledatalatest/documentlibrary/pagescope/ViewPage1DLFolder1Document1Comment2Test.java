@@ -23,46 +23,15 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ViewPage1DLFolder1Document1Comment2Test extends BaseTestCase {
 	public void testViewPage1DLFolder1Document1Comment2()
 		throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/document-library-page-scope-community/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=DL Page1 Name")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=DL Page1 Name");
 		selenium.clickAt("link=DL Page1 Name",
 			RuntimeVariables.replace("DL Page1 Name"));
 		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("Documents and Media")
-										.equals(selenium.getText(
-								"//span[@class='portlet-title-text']"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//span[@class='portlet-title-text']",
+			"Documents and Media");
 		assertEquals(RuntimeVariables.replace("Documents and Media"),
 			selenium.getText("//span[@class='portlet-title-text']"));
 		assertEquals(RuntimeVariables.replace("DL Folder1 Name"),
@@ -70,47 +39,14 @@ public class ViewPage1DLFolder1Document1Comment2Test extends BaseTestCase {
 				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
 		selenium.clickAt("//a[contains(@class,'document-link')]/span[@class='entry-title']",
 			RuntimeVariables.replace("DL Folder1 Name"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("DL Folder1 Document1 Title.doc")
-										.equals(selenium.getText(
-								"//a[contains(@class,'document-link')]/span[@class='entry-title']"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//a[contains(@class,'document-link')]/span[@class='entry-title']",
+			"DL Folder1 Document1 Title.doc");
 		assertEquals(RuntimeVariables.replace("DL Folder1 Document1 Title.doc"),
 			selenium.getText(
 				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
 		selenium.clickAt("//a[contains(@class,'document-link')]/span[@class='entry-title']",
 			RuntimeVariables.replace("DL Folder1 Document1 Title.doc"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//h1[@class='header-title']/span")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//h1[@class='header-title']/span");
 		assertEquals(RuntimeVariables.replace("DL Folder1 Document1 Title.doc"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace(

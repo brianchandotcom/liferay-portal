@@ -29,24 +29,10 @@ public class User_EditSiteSettingsPublicPageVersioningEnabledTest
 		while (label >= 1) {
 			switch (label) {
 			case 1:
+				selenium.selectWindow("null");
+				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isElementPresent("link=Site Name")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForElementPresent("link=Site Name");
 				selenium.clickAt("link=Site Name",
 					RuntimeVariables.replace("Site Name"));
 				selenium.waitForPageToLoad("30000");
@@ -66,64 +52,17 @@ public class User_EditSiteSettingsPublicPageVersioningEnabledTest
 						"//body[contains(@class,'live-view')]"));
 				selenium.clickAt("//div[@id='dockbar']",
 					RuntimeVariables.replace("Dockbar"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isElementPresent(
-									"//li[contains(@class,'settings')]/a")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForElementPresent(
+					"//li[contains(@class,'settings')]/a");
 				selenium.clickAt("//li[contains(@class,'settings')]/a",
 					RuntimeVariables.replace("Site Settings"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("//a[@id='_165_stagingLink']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("//a[@id='_165_stagingLink']");
 				assertTrue(selenium.isPartialText(
 						"//a[@id='_165_stagingLink']", "Staging"));
 				selenium.clickAt("//a[@id='_165_stagingLink']",
 					RuntimeVariables.replace("Staging"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//input[@id='_165_branchingPublicCheckbox']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
+				selenium.waitForVisible(
+					"//input[@id='_165_branchingPublicCheckbox']");
 
 				boolean enabledOnPublicPagesChecked = selenium.isChecked(
 						"_165_branchingPublicCheckbox");

@@ -27,47 +27,17 @@ public class TearDownMyCommunityPrivatePageTest extends BaseTestCase {
 		while (label >= 1) {
 			switch (label) {
 			case 1:
+				selenium.selectWindow("null");
+				selenium.selectFrame("relative=top");
 				selenium.open("/group/joebloggs/home/");
 				selenium.clickAt("//div[@id='dockbar']",
 					RuntimeVariables.replace("Dockbar"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isElementPresent(
-									"//li[contains(@class,'manage-page')]/a")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForElementPresent(
+					"//li[contains(@class,'manage-page')]/a");
 				selenium.clickAt("//li[contains(@class,'manage-page')]/a",
 					RuntimeVariables.replace("Manage Pages"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (RuntimeVariables.replace("Private Pages")
-												.equals(selenium.getText(
-										"//a[@class='layout-tree']"))) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
+				selenium.waitForText("//a[@class='layout-tree']",
+					"Private Pages");
 
 				boolean homePresent = selenium.isElementPresent(
 						"//li/ul/li[1]/div/div[3]/a");
@@ -82,24 +52,7 @@ public class TearDownMyCommunityPrivatePageTest extends BaseTestCase {
 					RuntimeVariables.replace("Drop Down Arrow"));
 
 			case 2:
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (RuntimeVariables.replace("Home")
-												.equals(selenium.getText(
-										"//li/ul/li[1]/div/div[3]/a"))) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
+				selenium.waitForText("//li/ul/li[1]/div/div[3]/a", "Home");
 
 				boolean page1Present = selenium.isElementPresent(
 						"//li[2]/div/div[3]/a");
@@ -112,43 +65,10 @@ public class TearDownMyCommunityPrivatePageTest extends BaseTestCase {
 
 				selenium.clickAt("//li[2]/div/div[3]/a",
 					RuntimeVariables.replace("Page Name"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (!RuntimeVariables.replace("/home")
-												 .equals(selenium.getValue(
-										"//input[@id='_88_friendlyURL']"))) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForNotValue("//input[@id='_88_friendlyURL']",
+					"/home");
 				Thread.sleep(5000);
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("//button[3]")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("//button[3]");
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText("//button[3]"));
 				selenium.click(RuntimeVariables.replace("//button[3]"));
@@ -157,24 +77,7 @@ public class TearDownMyCommunityPrivatePageTest extends BaseTestCase {
 								   .matches("^Are you sure you want to delete the selected page[\\s\\S]$"));
 				selenium.clickAt("//div[@id='_88_layoutsTreeOutput']/ul/li/div/div[1]",
 					RuntimeVariables.replace("Drop Down Arrow"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (RuntimeVariables.replace("Home")
-												.equals(selenium.getText(
-										"//li/ul/li[1]/div/div[3]/a"))) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
+				selenium.waitForText("//li/ul/li[1]/div/div[3]/a", "Home");
 
 				boolean page2Present = selenium.isElementPresent(
 						"//li[2]/div/div[3]/a");
@@ -187,43 +90,10 @@ public class TearDownMyCommunityPrivatePageTest extends BaseTestCase {
 
 				selenium.clickAt("//li[2]/div/div[3]/a",
 					RuntimeVariables.replace("Page Name"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (!RuntimeVariables.replace("/home")
-												 .equals(selenium.getValue(
-										"//input[@id='_88_friendlyURL']"))) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForNotValue("//input[@id='_88_friendlyURL']",
+					"/home");
 				Thread.sleep(5000);
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("//button[3]")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("//button[3]");
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText("//button[3]"));
 				selenium.click(RuntimeVariables.replace("//button[3]"));
@@ -232,24 +102,7 @@ public class TearDownMyCommunityPrivatePageTest extends BaseTestCase {
 								   .matches("^Are you sure you want to delete the selected page[\\s\\S]$"));
 				selenium.clickAt("//div[@id='_88_layoutsTreeOutput']/ul/li/div/div[1]",
 					RuntimeVariables.replace("Drop Down Arrow"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (RuntimeVariables.replace("Home")
-												.equals(selenium.getText(
-										"//li/ul/li[1]/div/div[3]/a"))) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
+				selenium.waitForText("//li/ul/li[1]/div/div[3]/a", "Home");
 
 				boolean page3Present = selenium.isElementPresent(
 						"//li[2]/div/div[3]/a");
@@ -262,43 +115,10 @@ public class TearDownMyCommunityPrivatePageTest extends BaseTestCase {
 
 				selenium.clickAt("//li[2]/div/div[3]/a",
 					RuntimeVariables.replace("Page Name"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (!RuntimeVariables.replace("/home")
-												 .equals(selenium.getValue(
-										"//input[@id='_88_friendlyURL']"))) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForNotValue("//input[@id='_88_friendlyURL']",
+					"/home");
 				Thread.sleep(5000);
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("//button[3]")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("//button[3]");
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText("//button[3]"));
 				selenium.click(RuntimeVariables.replace("//button[3]"));
@@ -307,24 +127,7 @@ public class TearDownMyCommunityPrivatePageTest extends BaseTestCase {
 								   .matches("^Are you sure you want to delete the selected page[\\s\\S]$"));
 				selenium.clickAt("//div[@id='_88_layoutsTreeOutput']/ul/li/div/div[1]",
 					RuntimeVariables.replace("Drop Down Arrow"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (RuntimeVariables.replace("Home")
-												.equals(selenium.getText(
-										"//li/ul/li[1]/div/div[3]/a"))) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
+				selenium.waitForText("//li/ul/li[1]/div/div[3]/a", "Home");
 
 				boolean page4Present = selenium.isElementPresent(
 						"//li[2]/div/div[3]/a");
@@ -337,43 +140,10 @@ public class TearDownMyCommunityPrivatePageTest extends BaseTestCase {
 
 				selenium.clickAt("//li[2]/div/div[3]/a",
 					RuntimeVariables.replace("Page Name"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (!RuntimeVariables.replace("/home")
-												 .equals(selenium.getValue(
-										"//input[@id='_88_friendlyURL']"))) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForNotValue("//input[@id='_88_friendlyURL']",
+					"/home");
 				Thread.sleep(5000);
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("//button[3]")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("//button[3]");
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText("//button[3]"));
 				selenium.click(RuntimeVariables.replace("//button[3]"));
@@ -382,24 +152,7 @@ public class TearDownMyCommunityPrivatePageTest extends BaseTestCase {
 								   .matches("^Are you sure you want to delete the selected page[\\s\\S]$"));
 				selenium.clickAt("//div[@id='_88_layoutsTreeOutput']/ul/li/div/div[1]",
 					RuntimeVariables.replace("Drop Down Arrow"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (RuntimeVariables.replace("Home")
-												.equals(selenium.getText(
-										"//li/ul/li[1]/div/div[3]/a"))) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
+				selenium.waitForText("//li/ul/li[1]/div/div[3]/a", "Home");
 
 				boolean page5Present = selenium.isElementPresent(
 						"//li[2]/div/div[3]/a");
@@ -412,43 +165,10 @@ public class TearDownMyCommunityPrivatePageTest extends BaseTestCase {
 
 				selenium.clickAt("//li[2]/div/div[3]/a",
 					RuntimeVariables.replace("Page Name"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (!RuntimeVariables.replace("/home")
-												 .equals(selenium.getValue(
-										"//input[@id='_88_friendlyURL']"))) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForNotValue("//input[@id='_88_friendlyURL']",
+					"/home");
 				Thread.sleep(5000);
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("//button[3]")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("//button[3]");
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText("//button[3]"));
 				selenium.click(RuntimeVariables.replace("//button[3]"));

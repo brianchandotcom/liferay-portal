@@ -22,6 +22,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class SearchKBAArticleKBDTest extends BaseTestCase {
 	public void testSearchKBAArticleKBD() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("link=Knowledge Base Display Test Page",
 			RuntimeVariables.replace("Knowledge Base Display Test Page"));

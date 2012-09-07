@@ -22,24 +22,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class AddPortletDDLForm3Test extends BaseTestCase {
 	public void testAddPortletDDLForm3() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Dynamic Data List Form Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Dynamic Data List Form Test Page");
 		selenium.click(RuntimeVariables.replace(
 				"link=Dynamic Data List Form Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -47,79 +33,15 @@ public class AddPortletDDLForm3Test extends BaseTestCase {
 				"More"));
 		selenium.clickAt("//a[@id='_145_addApplication']",
 			RuntimeVariables.replace("More"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent(
-							"//div[@title='Dynamic Data List Form']/p/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent(
+			"//div[@title='Dynamic Data List Form']/p/a");
 		selenium.clickAt("//div[@title='Dynamic Data List Form']/p/a",
 			RuntimeVariables.replace("Dynamic Data List Form"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div[1]/div/section")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//div[1]/div/section");
 		assertTrue(selenium.isVisible("//div[1]/div/section"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div[2]/div/section")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//div[2]/div/section");
 		assertTrue(selenium.isVisible("//div[2]/div/section"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div[3]/div/section")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//div[3]/div/section");
 		assertTrue(selenium.isVisible("//div[3]/div/section"));
 	}
 }

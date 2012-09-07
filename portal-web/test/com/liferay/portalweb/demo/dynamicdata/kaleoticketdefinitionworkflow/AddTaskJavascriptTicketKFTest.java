@@ -22,47 +22,17 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class AddTaskJavascriptTicketKFTest extends BaseTestCase {
 	public void testAddTaskJavascriptTicketKF() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Kaleo Forms Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Kaleo Forms Test Page");
 		selenium.clickAt("link=Kaleo Forms Test Page",
 			RuntimeVariables.replace("Kaleo Forms Test Page"));
 		selenium.waitForPageToLoad("30000");
 		Thread.sleep(5000);
 		selenium.click("//span[@title='Submit New']/ul/li/strong/a");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a");
 		assertEquals(RuntimeVariables.replace("Ticket Process"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));

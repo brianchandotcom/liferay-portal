@@ -22,6 +22,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class SelectWebContentTest extends BaseTestCase {
 	public void testSelectWebContent() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/staging-organization-wcd/");
 		selenium.clickAt("link=Page Staging Organization Web Content Display",
 			RuntimeVariables.replace(
@@ -31,23 +33,7 @@ public class SelectWebContentTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("//img[@alt='Select Web Content']",
 			RuntimeVariables.replace("Select Web Content"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//td[1]/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//td[1]/a");
 		assertTrue(selenium.isVisible("//td[1]/a"));
 		assertEquals(RuntimeVariables.replace("WC Web Content Name"),
 			selenium.getText("//td[2]/a"));
@@ -57,24 +43,8 @@ public class SelectWebContentTest extends BaseTestCase {
 			selenium.getText("//td[5]/a"));
 		selenium.clickAt("//td[2]/a",
 			RuntimeVariables.replace("WC Web Content Name"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isPartialText("//form[@id='_86_fm1']/div",
-							"Displaying Content:")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForPartialText("//form[@id='_86_fm1']/div",
+			"Displaying Content:");
 		assertTrue(selenium.isPartialText("//form[@id='_86_fm1']/div",
 				"Displaying Content:"));
 		selenium.clickAt("//input[@value='Save']",

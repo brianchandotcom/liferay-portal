@@ -23,25 +23,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class SOUs_RepostMicroblogsContentProfileTest extends BaseTestCase {
 	public void testSOUs_RepostMicroblogsContentProfile()
 		throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/joebloggs/so/profile");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//nav/ul/li[contains(.,'Microblogs')]/a/span")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//nav/ul/li[contains(.,'Microblogs')]/a/span");
 		selenium.clickAt("//nav/ul/li[contains(.,'Microblogs')]/a/span",
 			RuntimeVariables.replace("Microblogs"));
 		selenium.waitForPageToLoad("30000");
@@ -53,23 +38,7 @@ public class SOUs_RepostMicroblogsContentProfileTest extends BaseTestCase {
 			selenium.getText("//span[@class='action repost']/a"));
 		selenium.clickAt("//span[@class='action repost']/a",
 			RuntimeVariables.replace("Repost"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div[@class='repost-header']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//div[@class='repost-header']");
 		assertEquals(RuntimeVariables.replace(
 				"Do you want to repost this entry?"),
 			selenium.getText("//div[@class='repost-header']"));
@@ -79,21 +48,6 @@ public class SOUs_RepostMicroblogsContentProfileTest extends BaseTestCase {
 			selenium.getText("//div[@class='content']"));
 		selenium.clickAt("//input[@value='Post']",
 			RuntimeVariables.replace("Post"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div[@class='lfr-contact-name']/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
+		selenium.waitForVisible("//div[@class='lfr-contact-name']/a");
 	}
 }

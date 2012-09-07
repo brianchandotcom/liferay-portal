@@ -22,24 +22,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class AddPortletShoppingItemTest extends BaseTestCase {
 	public void testAddPortletShoppingItem() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/user/joebloggs/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("link=Communities I Own")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent("link=Communities I Own");
 		selenium.clickAt("link=Communities I Own", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("_29_name",
@@ -52,42 +38,10 @@ public class AddPortletShoppingItemTest extends BaseTestCase {
 		selenium.clickAt("link=Shopping Item Page", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Add Application", RuntimeVariables.replace(""));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("//div[@title='Shopping']/p/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent("//div[@title='Shopping']/p/a");
 		selenium.clickAt("//div[@title='Shopping']/p/a",
 			RuntimeVariables.replace(""));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("//td[1]/div/div[1]/div")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent("//td[1]/div/div[1]/div");
 		assertTrue(selenium.isElementPresent("//td[1]/div/div[1]/div"));
 	}
 }

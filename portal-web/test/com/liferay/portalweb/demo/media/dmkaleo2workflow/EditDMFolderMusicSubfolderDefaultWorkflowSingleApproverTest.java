@@ -24,24 +24,10 @@ public class EditDMFolderMusicSubfolderDefaultWorkflowSingleApproverTest
 	extends BaseTestCase {
 	public void testEditDMFolderMusicSubfolderDefaultWorkflowSingleApprover()
 		throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Documents and Media Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Documents and Media Test Page");
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -50,24 +36,8 @@ public class EditDMFolderMusicSubfolderDefaultWorkflowSingleApproverTest
 				"//div[@data-title='DM Music Folder']/a/span[@class='entry-title']"));
 		selenium.clickAt("//div[@data-title='DM Music Folder']/a/span[@class='entry-title']",
 			RuntimeVariables.replace("DM Music Folder"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//div[@data-title='DM Music Workflow Subfolder']/a/span[@class='entry-title']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//div[@data-title='DM Music Workflow Subfolder']/a/span[@class='entry-title']");
 		assertEquals(RuntimeVariables.replace("DM Music Workflow Subfolder"),
 			selenium.getText(
 				"//div[@data-title='DM Music Workflow Subfolder']/a/span[@class='entry-title']"));
@@ -76,24 +46,8 @@ public class EditDMFolderMusicSubfolderDefaultWorkflowSingleApproverTest
 		Thread.sleep(5000);
 		selenium.clickAt("//span[@class='overlay document-action']/span/ul/li/strong/a",
 			RuntimeVariables.replace("Actions"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a");
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a"));
@@ -104,115 +58,32 @@ public class EditDMFolderMusicSubfolderDefaultWorkflowSingleApproverTest
 				"//select[@id='_20_workflowDefinition-1']"));
 		selenium.clickAt("//input[@id='_20_overrideFileEntryTypes']",
 			RuntimeVariables.replace("Workflow"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//select[@id='_20_workflowDefinition-1']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//select[@id='_20_workflowDefinition-1']");
 		assertEquals(RuntimeVariables.replace(
 				"No workflow Single Approver (Version 1)"),
 			selenium.getText("//select[@id='_20_workflowDefinition-1']"));
 		selenium.select("//select[@id='_20_workflowDefinition-1']",
 			RuntimeVariables.replace("Single Approver (Version 1)"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//span[@class='modify-link select-file-entry-type']/a/span")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//span[@class='modify-link select-file-entry-type']/a/span");
 		assertEquals(RuntimeVariables.replace("Select Document Type"),
 			selenium.getText(
 				"//span[@class='modify-link select-file-entry-type']/a/span"));
 		selenium.click(
 			"//span[@class='modify-link select-file-entry-type']/a/span");
 		Thread.sleep(5000);
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//iframe[@id='_20_fileEntryTypeSeclector']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//iframe[@id='_20_fileEntryTypeSeclector']");
 		selenium.selectFrame("//iframe[@id='_20_fileEntryTypeSeclector']");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("Music")
-										.equals(selenium.getText(
-								"//td[@id='_20_dlFileEntryTypesSearchContainer_col-name_row-4']/a"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//td[@id='_20_dlFileEntryTypesSearchContainer_col-name_row-4']/a",
+			"Music");
 		assertEquals(RuntimeVariables.replace("Music"),
 			selenium.getText(
 				"//td[@id='_20_dlFileEntryTypesSearchContainer_col-name_row-4']/a"));
 		selenium.clickAt("//td[@id='_20_dlFileEntryTypesSearchContainer_col-name_row-4']/a",
 			RuntimeVariables.replace("Music"));
 		selenium.selectFrame("relative=top");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//div[@id='_20_dlFileEntryTypesSearchContainerSearchContainer']/table/tr/td")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//div[@id='_20_dlFileEntryTypesSearchContainerSearchContainer']/table/tr/td");
 		assertEquals(RuntimeVariables.replace("Music"),
 			selenium.getText(
 				"//div[@id='_20_dlFileEntryTypesSearchContainerSearchContainer']/table/tr/td"));
@@ -235,24 +106,8 @@ public class EditDMFolderMusicSubfolderDefaultWorkflowSingleApproverTest
 		Thread.sleep(5000);
 		selenium.clickAt("//span[@class='overlay document-action']/span/ul/li/strong/a",
 			RuntimeVariables.replace("Actions"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a");
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a"));

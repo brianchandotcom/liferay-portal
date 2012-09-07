@@ -23,24 +23,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class DefinePermissionsWCDStagingAdminTest extends BaseTestCase {
 	public void testDefinePermissionsWCDStagingAdmin()
 		throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
@@ -60,23 +46,7 @@ public class DefinePermissionsWCDStagingAdminTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.select("//select[@id='_128_add-permissions']",
 			RuntimeVariables.replace("Web Content Display"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//input[@name='_128_allRowIds']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//input[@name='_128_allRowIds']");
 		assertFalse(selenium.isChecked("//input[@name='_128_allRowIds']"));
 		selenium.clickAt("//input[@name='_128_allRowIds']",
 			RuntimeVariables.replace("Web Content Display"));

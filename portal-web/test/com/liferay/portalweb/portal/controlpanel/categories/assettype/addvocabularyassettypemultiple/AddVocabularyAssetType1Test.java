@@ -27,27 +27,13 @@ public class AddVocabularyAssetType1Test extends BaseTestCase {
 		while (label >= 1) {
 			switch (label) {
 			case 1:
+				selenium.selectWindow("null");
+				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
 				assertEquals(RuntimeVariables.replace("Go to"),
 					selenium.getText("//li[@id='_145_mySites']/a/span"));
 				selenium.mouseOver("//li[@id='_145_mySites']/a/span");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("link=Control Panel")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("link=Control Panel");
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
@@ -56,24 +42,7 @@ public class AddVocabularyAssetType1Test extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				selenium.clickAt("//input[@value='Add Vocabulary']",
 					RuntimeVariables.replace("Add Vocabulary"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//input[@id='_147_title_en_US']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("//input[@id='_147_title_en_US']");
 				selenium.type("//input[@id='_147_title_en_US']",
 					RuntimeVariables.replace("Vocabulary Name"));
 				selenium.type("//textarea[@id='_147_description_en_US']",
@@ -93,70 +62,21 @@ public class AddVocabularyAssetType1Test extends BaseTestCase {
 
 				selenium.clickAt("//div[@id='vocabularyExtraFieldsPanelContainer']/div/div/span",
 					RuntimeVariables.replace("Associated Asset Types"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//select[@id='_147_classNameId0']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
+				selenium.waitForVisible("//select[@id='_147_classNameId0']");
 
 			case 2:
 				selenium.select("//select[@id='_147_classNameId0']",
 					RuntimeVariables.replace("Blogs Entry"));
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//div[@class='lfr-message-response portlet-msg-success']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible(
+					"//div[@class='lfr-message-response portlet-msg-success']");
 				assertEquals(RuntimeVariables.replace(
 						"Your request processed successfully."),
 					selenium.getText(
 						"//div[@class='lfr-message-response portlet-msg-success']"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (RuntimeVariables.replace("Vocabulary Name")
-												.equals(selenium.getText(
-										"//span[@class='vocabulary-item']/a"))) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForText("//span[@class='vocabulary-item']/a",
+					"Vocabulary Name");
 				assertEquals(RuntimeVariables.replace("Vocabulary Name"),
 					selenium.getText("//span[@class='vocabulary-item']/a"));
 

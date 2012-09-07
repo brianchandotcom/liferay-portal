@@ -27,6 +27,8 @@ public class ViewReplyMicroblogsContentTest extends BaseTestCase {
 		while (label >= 1) {
 			switch (label) {
 			case 1:
+				selenium.selectWindow("null");
+				selenium.selectFrame("relative=top");
 				selenium.open("/user/joebloggs/so/dashboard/");
 				assertEquals(RuntimeVariables.replace(
 						"Microblogs Status Update"),
@@ -35,24 +37,8 @@ public class ViewReplyMicroblogsContentTest extends BaseTestCase {
 						"//div[contains(@id,'_2_WAR_microblogsportlet_autocompleteContent')]"));
 				assertEquals(RuntimeVariables.replace("Microblogs Post"),
 					selenium.getText("//div[@class='content']"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//nav/ul/li[contains(.,'Microblogs')]/a/span")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible(
+					"//nav/ul/li[contains(.,'Microblogs')]/a/span");
 				selenium.clickAt("//nav/ul/li[contains(.,'Microblogs')]/a/span",
 					RuntimeVariables.replace("Microblogs"));
 				selenium.waitForPageToLoad("30000");
@@ -75,23 +61,8 @@ public class ViewReplyMicroblogsContentTest extends BaseTestCase {
 
 				selenium.clickAt("//span[@class='action comment']/a",
 					RuntimeVariables.replace("1 Comment"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//div[@class='comments-container reply']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
+				selenium.waitForVisible(
+					"//div[@class='comments-container reply']");
 
 			case 2:
 				assertEquals(RuntimeVariables.replace(

@@ -22,6 +22,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class SelectWebContentTest extends BaseTestCase {
 	public void testSelectWebContent() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/community-staging-community-web-content-display/");
 		selenium.clickAt("link=Page Staging Community Web Content Display",
 			RuntimeVariables.replace(
@@ -31,23 +33,7 @@ public class SelectWebContentTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("//img[@alt='Select Web Content']",
 			RuntimeVariables.replace("Select Web Content"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//td[1]/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//td[1]/a");
 		assertTrue(selenium.isElementPresent("//td[1]/a"));
 		assertEquals(RuntimeVariables.replace("WC Web Content Name"),
 			selenium.getText("//td[2]/a"));
@@ -57,26 +43,8 @@ public class SelectWebContentTest extends BaseTestCase {
 			selenium.getText("//td[5]/a"));
 		selenium.clickAt("//td[2]/a",
 			RuntimeVariables.replace("WC Web Content Name"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace(
-							"Displaying Content: WC Web Content Name (Modified)")
-										.equals(selenium.getText(
-								"//span[@class='displaying-article-id-holder']"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//span[@class='displaying-article-id-holder']",
+			"Displaying Content: WC Web Content Name (Modified)");
 		assertEquals(RuntimeVariables.replace(
 				"Displaying Content: WC Web Content Name (Modified)"),
 			selenium.getText("//span[@class='displaying-article-id-holder']"));
@@ -86,25 +54,8 @@ public class SelectWebContentTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"You have successfully updated the setup."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("WC Web Content Content")
-										.equals(selenium.getText(
-								"//div[@class='journal-content-article']/p"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//div[@class='journal-content-article']/p",
+			"WC Web Content Content");
 		assertEquals(RuntimeVariables.replace("WC Web Content Content"),
 			selenium.getText("//div[@class='journal-content-article']/p"));
 	}

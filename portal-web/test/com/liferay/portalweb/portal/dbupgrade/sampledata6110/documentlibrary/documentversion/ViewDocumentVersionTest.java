@@ -22,24 +22,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ViewDocumentVersionTest extends BaseTestCase {
 	public void testViewDocumentVersion() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/document-library-document-version-community/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Document Library Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Document Library Page");
 		selenium.clickAt("link=Document Library Page",
 			RuntimeVariables.replace("Document Library Page"));
 		selenium.waitForPageToLoad("30000");
@@ -47,25 +33,7 @@ public class ViewDocumentVersionTest extends BaseTestCase {
 			selenium.getText("//div/a/span[2]"));
 		selenium.clickAt("//div/a/span[2]",
 			RuntimeVariables.replace("Test1 Folder1"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("Test2 Document2.txt")
-										.equals(selenium.getText(
-								"//div/a/span[2]"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//div/a/span[2]", "Test2 Document2.txt");
 		assertEquals(RuntimeVariables.replace("Test2 Document2.txt"),
 			selenium.getText("//div/a/span[2]"));
 		selenium.clickAt("//div/a/span[2]",

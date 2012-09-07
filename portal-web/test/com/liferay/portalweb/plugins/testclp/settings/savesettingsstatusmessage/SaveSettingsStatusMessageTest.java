@@ -22,24 +22,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class SaveSettingsStatusMessageTest extends BaseTestCase {
 	public void testSaveSettingsStatusMessage() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("link=Test CLP Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent("link=Test CLP Test Page");
 		selenium.clickAt("link=Test CLP Test Page",
 			RuntimeVariables.replace("Test CLP Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -49,65 +35,16 @@ public class SaveSettingsStatusMessageTest extends BaseTestCase {
 		selenium.clickAt("//ul[@class='chat-tabs']/li[2]/div[1]/span",
 			RuntimeVariables.replace("Settings"));
 		Thread.sleep(5000);
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//input[@id='statusMessage']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//input[@id='statusMessage']");
 		selenium.type("statusMessage",
 			RuntimeVariables.replace("status message."));
 		selenium.clickAt("//input[@id='saveSettings']",
 			RuntimeVariables.replace("Save Settings"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementNotPresent(
-							"//li[@class='chat-settings saved']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementNotPresent("//li[@class='chat-settings saved']");
 		assertTrue(selenium.isElementNotPresent(
 				"//li[@class='chat-settings saved']"));
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("link=Test CLP Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent("link=Test CLP Test Page");
 		selenium.clickAt("link=Test CLP Test Page",
 			RuntimeVariables.replace("Test CLP Test Page"));
 		selenium.waitForPageToLoad("30000");

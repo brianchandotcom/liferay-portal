@@ -22,64 +22,18 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ViewSOURepostMBContentProfileTest extends BaseTestCase {
 	public void testViewSOURepostMBContentProfile() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/socialoffice01/so/profile");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div[@class='lfr-contact-name']/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//div[@class='lfr-contact-name']/a");
 		assertEquals(RuntimeVariables.replace("Social01 Office01 User01"),
 			selenium.getText("//div[@class='lfr-contact-name']/a"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div[@class='activity-title']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//div[@class='activity-title']");
 		assertEquals(RuntimeVariables.replace(
 				"Reposted From Joe: Microblogs Post"),
 			selenium.getText("//div[@class='activity-title']"));
 		selenium.open("/web/socialoffice01/so/microblogs");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div[@class='user-name']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//div[@class='user-name']");
 		assertEquals(RuntimeVariables.replace(
 				"Social01 Office01 User01 Reposted From Joe Bloggs"),
 			selenium.getText("//div[@class='user-name']"));

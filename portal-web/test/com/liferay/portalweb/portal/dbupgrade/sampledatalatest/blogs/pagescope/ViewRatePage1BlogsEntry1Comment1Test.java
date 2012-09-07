@@ -23,24 +23,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ViewRatePage1BlogsEntry1Comment1Test extends BaseTestCase {
 	public void testViewRatePage1BlogsEntry1Comment1()
 		throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/blogs-page-scope-community/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Blogs Test Page1")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Blogs Test Page1");
 		selenium.clickAt("link=Blogs Test Page1",
 			RuntimeVariables.replace("Blogs Test Page1"));
 		selenium.waitForPageToLoad("30000");
@@ -51,25 +37,8 @@ public class ViewRatePage1BlogsEntry1Comment1Test extends BaseTestCase {
 		selenium.clickAt("//div[@class='entry-title']/h2/a",
 			RuntimeVariables.replace("Blogs Entry1 Title"));
 		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("Blogs Entry1 Comment1 Body")
-										.equals(selenium.getText(
-								"xPath=(//div[@class='lfr-discussion-message'])[1]"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("xPath=(//div[@class='lfr-discussion-message'])[1]",
+			"Blogs Entry1 Comment1 Body");
 		assertEquals(RuntimeVariables.replace("Blogs Entry1 Comment1 Body"),
 			selenium.getText(
 				"xPath=(//div[@class='lfr-discussion-message'])[1]"));
@@ -77,43 +46,11 @@ public class ViewRatePage1BlogsEntry1Comment1Test extends BaseTestCase {
 			selenium.getText(
 				"xPath=(//div[@class='aui-rating-label-element'])[3]"));
 		selenium.open("/web/blogs-page-scope-community/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Blogs")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Blogs");
 		selenium.clickAt("link=Blogs", RuntimeVariables.replace("Blogs"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Scope: Default"),
@@ -124,43 +61,11 @@ public class ViewRatePage1BlogsEntry1Comment1Test extends BaseTestCase {
 			RuntimeVariables.replace("Blogs Entry1 Title"));
 		selenium.waitForPageToLoad("30000");
 		selenium.open("/web/blogs-page-scope-community/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Blogs")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Blogs");
 		selenium.clickAt("link=Blogs", RuntimeVariables.replace("Blogs"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Scope: Default"),

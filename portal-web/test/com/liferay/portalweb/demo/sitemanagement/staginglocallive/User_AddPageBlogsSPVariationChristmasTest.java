@@ -28,24 +28,10 @@ public class User_AddPageBlogsSPVariationChristmasTest extends BaseTestCase {
 		while (label >= 1) {
 			switch (label) {
 			case 1:
+				selenium.selectWindow("null");
+				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isElementPresent("link=Site Name")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForElementPresent("link=Site Name");
 				selenium.clickAt("link=Site Name",
 					RuntimeVariables.replace("Site Name"));
 				selenium.waitForPageToLoad("30000");
@@ -86,83 +72,19 @@ public class User_AddPageBlogsSPVariationChristmasTest extends BaseTestCase {
 					selenium.getText("//li[1]/span/span/span[1]"));
 				selenium.clickAt("//nav[@id='navigation']",
 					RuntimeVariables.replace("Navigation"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//a[@class='menu-button']/span[contains(.,'Add')]")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible(
+					"//a[@class='menu-button']/span[contains(.,'Add')]");
 				selenium.clickAt("//a[@class='menu-button']/span[contains(.,'Add')]",
 					RuntimeVariables.replace("Add"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isElementPresent("//a[@id='addPage']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForElementPresent("//a[@id='addPage']");
 				selenium.clickAt("//a[@id='addPage']",
 					RuntimeVariables.replace("Add Page"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("//input[@type='text']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("//input[@type='text']");
 				selenium.type("//input[@type='text']",
 					RuntimeVariables.replace("Blogs Test Page"));
 				selenium.clickAt("//button[@id='save']",
 					RuntimeVariables.replace("Save"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("link=Blogs Test Page")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("link=Blogs Test Page");
 				selenium.clickAt("link=Blogs Test Page",
 					RuntimeVariables.replace("Blogs Test Page"));
 				selenium.waitForPageToLoad("30000");

@@ -22,166 +22,38 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ConfigurePreferencesTest extends BaseTestCase {
 	public void testConfigurePreferences() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent(
-							"link=Currency Converter Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent("link=Currency Converter Test Page");
 		selenium.clickAt("link=Currency Converter Test Page",
 			RuntimeVariables.replace("Currency Converter Test Page"));
 		selenium.waitForPageToLoad("30000");
 		Thread.sleep(5000);
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("//strong/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent("//strong/a");
 		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a");
 		assertEquals(RuntimeVariables.replace("Preferences"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
 		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a",
 			RuntimeVariables.replace("Preferences"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//select[@id='_16_available_actions']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//select[@id='_16_available_actions']");
 		selenium.addSelection("//select[@id='_16_available_actions']",
 			RuntimeVariables.replace("Korean Won"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//button[@title='Move selected items from Available to Current.']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//button[@title='Move selected items from Available to Current.']");
 		selenium.clickAt("//button[@title='Move selected items from Available to Current.']",
 			RuntimeVariables.replace("Left Arrow"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isPartialText(
-							"//select[@id='_16_current_actions']", "Korean Won")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("//input[@value='Save']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForPartialText("//select[@id='_16_current_actions']",
+			"Korean Won");
+		selenium.waitForElementPresent("//input[@value='Save']");
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace(
-							"You have successfully updated your preferences.")
-										.equals(selenium.getText(
-								"//div[@class='portlet-msg-success']"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//div[@class='portlet-msg-success']",
+			"You have successfully updated your preferences.");
 		assertEquals(RuntimeVariables.replace(
 				"You have successfully updated your preferences."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

@@ -22,24 +22,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class TearDownPermissionsTest extends BaseTestCase {
 	public void testTearDownPermissions() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
@@ -60,25 +46,7 @@ public class TearDownPermissionsTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.select("//select[@id='_128_add-permissions']",
 			RuntimeVariables.replace("Blogs"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("Add Entry")
-										.equals(selenium.getText(
-								"//tr[3]/td[2]"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//tr[3]/td[2]", "Add Entry");
 		assertEquals(RuntimeVariables.replace("Add Entry"),
 			selenium.getText("//tr[3]/td[2]"));
 		assertTrue(selenium.isChecked(
@@ -97,25 +65,7 @@ public class TearDownPermissionsTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.select("//select[@id='_128_add-permissions']",
 			RuntimeVariables.replace("Organization Administration"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("Manage Pages")
-										.equals(selenium.getText(
-								"//tr[14]/td[2]"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//tr[14]/td[2]", "Manage Pages");
 		assertEquals(RuntimeVariables.replace("Manage Pages"),
 			selenium.getText("//tr[14]/td[2]"));
 		assertTrue(selenium.isChecked(

@@ -22,24 +22,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class SelectKBAArticleSectionsCMKBArTest extends BaseTestCase {
 	public void testSelectKBAArticleSectionsCMKBAr() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Knowledge Base Article Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Knowledge Base Article Test Page");
 		selenium.clickAt("link=Knowledge Base Article Test Page",
 			RuntimeVariables.replace("Knowledge Base Article Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -50,23 +36,7 @@ public class SelectKBAArticleSectionsCMKBArTest extends BaseTestCase {
 		selenium.clickAt("//div[@class='portlet-configuration portlet-msg-info']/a",
 			RuntimeVariables.replace(
 				"Please configure this portlet to make it visible to all users."));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div[@class='kb-edit-link']/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//div[@class='kb-edit-link']/a");
 		assertEquals(RuntimeVariables.replace("Select Article \u00bb"),
 			selenium.getText("//div[@class='kb-edit-link']/a"));
 		selenium.clickAt("//div[@class='kb-edit-link']/a",
@@ -74,46 +44,13 @@ public class SelectKBAArticleSectionsCMKBArTest extends BaseTestCase {
 		selenium.waitForPopUp("selectConfigurationKBArticle",
 			RuntimeVariables.replace("30000"));
 		selenium.selectWindow("name=selectConfigurationKBArticle");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//tr[5]/td[1]/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//tr[5]/td[1]/a");
 		assertEquals(RuntimeVariables.replace("Knowledge Base Article 1"),
 			selenium.getText("//tr[5]/td[1]/a"));
 		selenium.click("//tr[5]/td[7]/span/span/input[@value='Choose']");
 		selenium.selectWindow("null");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("Knowledge Base Article 1")
-										.equals(selenium.getText(
-								"//div[@id='_86_configurationKBArticle']"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//div[@id='_86_configurationKBArticle']",
+			"Knowledge Base Article 1");
 		assertEquals(RuntimeVariables.replace("Knowledge Base Article 1"),
 			selenium.getText("//div[@id='_86_configurationKBArticle']"));
 		selenium.clickAt("//input[@value='Save']",
@@ -122,39 +59,8 @@ public class SelectKBAArticleSectionsCMKBArTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"You have successfully updated the setup."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div[@class='kb-title']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div[@class='kb-entity-body']/p")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//div[@class='kb-title']");
+		selenium.waitForVisible("//div[@class='kb-entity-body']/p");
 		assertEquals(RuntimeVariables.replace("Knowledge Base Article 1"),
 			selenium.getText("//div[@class='kb-title']"));
 		assertEquals(RuntimeVariables.replace(

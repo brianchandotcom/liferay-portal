@@ -22,51 +22,18 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ViewTasksTaskAssignedToMeUTTest extends BaseTestCase {
 	public void testViewTasksTaskAssignedToMeUT() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/user/joebloggs/so/dashboard/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("Upcoming Tasks")
-										.equals(selenium.getText(
-								"//h1/span[contains(.,'Upcoming Tasks')]"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//h1/span[contains(.,'Upcoming Tasks')]",
+			"Upcoming Tasks");
 		assertEquals(RuntimeVariables.replace("Upcoming Tasks"),
 			selenium.getText("//h1/span[contains(.,'Upcoming Tasks')]"));
 		assertEquals(RuntimeVariables.replace("Task Description"),
 			selenium.getText("//li[@class='tasks-title normal']/a"));
 		selenium.clickAt("//li[@class='tasks-title normal']/a",
 			RuntimeVariables.replace("Task Description"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("Task Description")
-										.equals(selenium.getText(
-								"//h1[@class='header-title']"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//h1[@class='header-title']", "Task Description");
 		assertEquals(RuntimeVariables.replace("Task Description"),
 			selenium.getText("//h1[@class='header-title']"));
 		assertEquals(RuntimeVariables.replace("Assigned to Joe Bloggs"),
@@ -76,25 +43,8 @@ public class ViewTasksTaskAssignedToMeUTTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Normal"),
 			selenium.getText("//div[@class='task-data normal']"));
 		selenium.open("/user/joebloggs/so/dashboard/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("Upcoming Tasks")
-										.equals(selenium.getText(
-								"//h1/span[contains(.,'Upcoming Tasks')]"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//h1/span[contains(.,'Upcoming Tasks')]",
+			"Upcoming Tasks");
 		assertEquals(RuntimeVariables.replace("Upcoming Tasks"),
 			selenium.getText("//h1/span[contains(.,'Upcoming Tasks')]"));
 		assertEquals(RuntimeVariables.replace("View All Tasks"),

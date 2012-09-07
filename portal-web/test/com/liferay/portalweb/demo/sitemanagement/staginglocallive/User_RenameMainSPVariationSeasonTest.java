@@ -23,24 +23,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class User_RenameMainSPVariationSeasonTest extends BaseTestCase {
 	public void testUser_RenameMainSPVariationSeason()
 		throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("link=Site Name")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent("link=Site Name");
 		selenium.clickAt("link=Site Name", RuntimeVariables.replace("Site Name"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isElementPresent(
@@ -62,47 +48,14 @@ public class User_RenameMainSPVariationSeasonTest extends BaseTestCase {
 		Thread.sleep(5000);
 		selenium.clickAt("//strong/a",
 			RuntimeVariables.replace("Staging dropdown"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a");
 		assertEquals(RuntimeVariables.replace("Manage Site Pages Variations"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
 		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a",
 			RuntimeVariables.replace("Manage Site Pages Variations"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//span[@title='Actions']/ul/li/strong/a/span")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//span[@title='Actions']/ul/li/strong/a/span");
 		Thread.sleep(5000);
 		selenium.selectFrame(
 			"//div[@class='yui3-widget-bd aui-panel-bd aui-dialog-bd aui-dialog-iframe-bd']/iframe");
@@ -110,97 +63,29 @@ public class User_RenameMainSPVariationSeasonTest extends BaseTestCase {
 			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("Edit")
-										.equals(selenium.getText(
-								"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a[contains(.,'Edit')]"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a[contains(.,'Edit')]",
+			"Edit");
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a[contains(.,'Edit')]"));
 		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a[contains(.,'Edit')]",
 			RuntimeVariables.replace("Edit"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//input[@id='_170_name']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//input[@id='_170_name']");
 		selenium.type("//input[@id='_170_name']",
 			RuntimeVariables.replace("Season"));
 		selenium.type("//textarea[@id='_170_description']",
 			RuntimeVariables.replace("Season Site Pages Variation of Site Name"));
 		selenium.clickAt("//input[@value='Update']",
 			RuntimeVariables.replace("Update"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("Site page variation was updated.")
-										.equals(selenium.getText(
-								"//div[@class='portlet-msg-success']"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//div[@class='portlet-msg-success']",
+			"Site page variation was updated.");
 		assertEquals(RuntimeVariables.replace(
 				"Site page variation was updated."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertTrue(selenium.isPartialText("//td/strong", "Season"));
 		selenium.selectFrame("relative=top");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace(
-							"Season Site Pages Variation of Site Name")
-										.equals(selenium.getText(
-								"//span[@class='layout-set-branch-description']"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//span[@class='layout-set-branch-description']",
+			"Season Site Pages Variation of Site Name");
 		assertEquals(RuntimeVariables.replace(
 				"Season Site Pages Variation of Site Name"),
 			selenium.getText("//span[@class='layout-set-branch-description']"));

@@ -22,24 +22,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class AddUserGroup2Test extends BaseTestCase {
 	public void testAddUserGroup2() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
@@ -50,23 +36,7 @@ public class AddUserGroup2Test extends BaseTestCase {
 			selenium.getText("link=Add"));
 		selenium.clickAt("link=Add", RuntimeVariables.replace("Add"));
 		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//input[@id='_127_name']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//input[@id='_127_name']");
 		selenium.type("//input[@id='_127_name']",
 			RuntimeVariables.replace("User Group 2"));
 		selenium.type("//textarea[@id='_127_description']",
@@ -76,24 +46,8 @@ public class AddUserGroup2Test extends BaseTestCase {
 				"Community Site"));
 		selenium.select("//select[@id='_127_publicLayoutSetPrototypeId']",
 			RuntimeVariables.replace("Community Site"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//input[@id='_127_publicLayoutSetPrototypeLinkEnabledCheckbox']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//input[@id='_127_publicLayoutSetPrototypeLinkEnabledCheckbox']");
 		assertTrue(selenium.isChecked(
 				"//input[@id='_127_publicLayoutSetPrototypeLinkEnabledCheckbox']"));
 		selenium.clickAt("//input[@id='_127_publicLayoutSetPrototypeLinkEnabledCheckbox']",

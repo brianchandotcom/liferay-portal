@@ -27,24 +27,10 @@ public class TearDownDocumentTypeTest extends BaseTestCase {
 		while (label >= 1) {
 			switch (label) {
 			case 1:
+				selenium.selectWindow("null");
+				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isElementPresent("link=Control Panel")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForElementPresent("link=Control Panel");
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
@@ -55,64 +41,16 @@ public class TearDownDocumentTypeTest extends BaseTestCase {
 					selenium.getText("//span[5]/span/ul/li/strong/a/span"));
 				selenium.clickAt("//span[5]/span/ul/li/strong/a/span",
 					RuntimeVariables.replace("Manage"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible(
+					"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a");
 				assertEquals(RuntimeVariables.replace("Document Types"),
 					selenium.getText(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
 				selenium.click(
 					"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("//iframe")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("//iframe");
 				selenium.selectFrame("//iframe");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("//input[@id='_20_keywords']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("//input[@id='_20_keywords']");
 				selenium.type("//input[@id='_20_keywords']",
 					RuntimeVariables.replace("Name"));
 				selenium.clickAt("//input[@value='Search']",
@@ -131,24 +69,8 @@ public class TearDownDocumentTypeTest extends BaseTestCase {
 				assertEquals(RuntimeVariables.replace("Actions"),
 					selenium.getText("//a/span"));
 				selenium.clickAt("//a/span", RuntimeVariables.replace("Actions"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible(
+					"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a");
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
@@ -172,24 +94,8 @@ public class TearDownDocumentTypeTest extends BaseTestCase {
 				assertEquals(RuntimeVariables.replace("Actions"),
 					selenium.getText("//a/span"));
 				selenium.clickAt("//a/span", RuntimeVariables.replace("Actions"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible(
+					"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a");
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
@@ -213,24 +119,8 @@ public class TearDownDocumentTypeTest extends BaseTestCase {
 				assertEquals(RuntimeVariables.replace("Actions"),
 					selenium.getText("//a/span"));
 				selenium.clickAt("//a/span", RuntimeVariables.replace("Actions"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible(
+					"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a");
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
@@ -254,24 +144,8 @@ public class TearDownDocumentTypeTest extends BaseTestCase {
 				assertEquals(RuntimeVariables.replace("Actions"),
 					selenium.getText("//a/span"));
 				selenium.clickAt("//a/span", RuntimeVariables.replace("Actions"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible(
+					"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a");
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
@@ -295,24 +169,8 @@ public class TearDownDocumentTypeTest extends BaseTestCase {
 				assertEquals(RuntimeVariables.replace("Actions"),
 					selenium.getText("//a/span"));
 				selenium.clickAt("//a/span", RuntimeVariables.replace("Actions"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible(
+					"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a");
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));

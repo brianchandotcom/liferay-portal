@@ -22,24 +22,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class Member_AssertCannotViewTest extends BaseTestCase {
 	public void testMember_AssertCannotView() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Document Library Permissions Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Document Library Permissions Page");
 		selenium.clickAt("link=Document Library Permissions Page",
 			RuntimeVariables.replace("Document Library Permissions Page"));
 		selenium.waitForPageToLoad("30000");

@@ -22,6 +22,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class Guest_ViewDMFolderImageURLNoMGTest extends BaseTestCase {
 	public void testGuest_ViewDMFolderImageURLNoMG() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("link=Media Gallery Test Page",
 			RuntimeVariables.replace("Media Gallery Test Page"));
@@ -37,106 +39,26 @@ public class Guest_ViewDMFolderImageURLNoMGTest extends BaseTestCase {
 			selenium.getText("//span[@class='image-title']"));
 		selenium.clickAt("//span[@class='image-title']",
 			RuntimeVariables.replace("DM Folder Image Title"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//img[@title='View']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//img[@title='View']");
 		selenium.clickAt("//img[@title='View']",
 			RuntimeVariables.replace("View"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("//a[@class='show-url-file']",
 			RuntimeVariables.replace("Image URL"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//input[@type='text']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//input[@type='text']");
 		selenium.clickAt("//input[@type='text']",
 			RuntimeVariables.replace("Image URL"));
 
 		String ImageURL = selenium.getValue("//input[@type='text']");
 		RuntimeVariables.setValue("ImageURL", ImageURL);
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Sign Out")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Sign Out");
 		selenium.clickAt("link=Sign Out", RuntimeVariables.replace("Sign Out"));
 		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//input[@value='Sign In']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//input[@value='Sign In']");
 		assertTrue(selenium.isVisible("//input[@value='Sign In']"));
 		selenium.open("/web/guest/home/");
 		selenium.open(RuntimeVariables.getValue("ImageURL"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//input[@id='_58_login']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//input[@id='_58_login']");
 		assertTrue(selenium.isVisible("//input[@id='_58_login']"));
 		assertTrue(selenium.isVisible("//input[@id='_58_password']"));
 		assertTrue(selenium.isVisible("//input[@value='Sign In']"));

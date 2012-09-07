@@ -22,47 +22,15 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ViewPage2DLFolder2Document2Test extends BaseTestCase {
 	public void testViewPage2DLFolder2Document2() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/document-library-page-scope-community/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=DL Page2 Name")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=DL Page2 Name");
 		selenium.clickAt("link=DL Page2 Name",
 			RuntimeVariables.replace("DL Page2 Name"));
 		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace(
-							"Documents and Media (DL Page2 Name)")
-										.equals(selenium.getText(
-								"//span[@class='portlet-title-text']"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//span[@class='portlet-title-text']",
+			"Documents and Media (DL Page2 Name)");
 		assertEquals(RuntimeVariables.replace(
 				"Documents and Media (DL Page2 Name)"),
 			selenium.getText("//span[@class='portlet-title-text']"));
@@ -71,48 +39,15 @@ public class ViewPage2DLFolder2Document2Test extends BaseTestCase {
 				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
 		selenium.clickAt("//a[contains(@class,'document-link')]/span[@class='entry-title']",
 			RuntimeVariables.replace("DL Folder2 Name"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("DL Folder2 Document2 Title.xls")
-										.equals(selenium.getText(
-								"//a[contains(@class,'document-link')]/span[@class='entry-title']"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//a[contains(@class,'document-link')]/span[@class='entry-title']",
+			"DL Folder2 Document2 Title.xls");
 		assertTrue(selenium.isVisible("//span[@class='document-thumbnail']/img"));
 		assertEquals(RuntimeVariables.replace("DL Folder2 Document2 Title.xls"),
 			selenium.getText(
 				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
 		selenium.clickAt("//a[contains(@class,'document-link')]/span[@class='entry-title']",
 			RuntimeVariables.replace("DL Folder2 Document2 Title.xls"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//h1[@class='header-title']/span")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//h1[@class='header-title']/span");
 		assertEquals(RuntimeVariables.replace("DL Folder2 Document2 Title.xls"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace("DL Folder2 Document2 Title.xls"),
@@ -140,46 +75,12 @@ public class ViewPage2DLFolder2Document2Test extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Approved"),
 			selenium.getText("//tr[3]/td[4]"));
 		selenium.open("/web/document-library-page-scope-community/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=DL Page3 Name")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=DL Page3 Name");
 		selenium.clickAt("link=DL Page3 Name",
 			RuntimeVariables.replace("DL Page3 Name"));
 		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace(
-							"Documents and Media (DL Page2 Name)")
-										.equals(selenium.getText(
-								"//span[@class='portlet-title-text']"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//span[@class='portlet-title-text']",
+			"Documents and Media (DL Page2 Name)");
 		assertEquals(RuntimeVariables.replace(
 				"Documents and Media (DL Page2 Name)"),
 			selenium.getText("//span[@class='portlet-title-text']"));
@@ -188,48 +89,15 @@ public class ViewPage2DLFolder2Document2Test extends BaseTestCase {
 				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
 		selenium.clickAt("//a[contains(@class,'document-link')]/span[@class='entry-title']",
 			RuntimeVariables.replace("DL Folder2 Name"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("DL Folder2 Document2 Title.xls")
-										.equals(selenium.getText(
-								"//a[contains(@class,'document-link')]/span[@class='entry-title']"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//a[contains(@class,'document-link')]/span[@class='entry-title']",
+			"DL Folder2 Document2 Title.xls");
 		assertTrue(selenium.isVisible("//span[@class='document-thumbnail']/img"));
 		assertEquals(RuntimeVariables.replace("DL Folder2 Document2 Title.xls"),
 			selenium.getText(
 				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
 		selenium.clickAt("//a[contains(@class,'document-link')]/span[@class='entry-title']",
 			RuntimeVariables.replace("DL Folder2 Document2 Title.xls"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//h1[@class='header-title']/span")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//h1[@class='header-title']/span");
 		assertEquals(RuntimeVariables.replace("DL Folder2 Document2 Title.xls"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace("DL Folder2 Document2 Title.xls"),

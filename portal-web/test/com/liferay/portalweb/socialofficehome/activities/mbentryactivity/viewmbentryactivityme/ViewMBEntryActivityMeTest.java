@@ -22,6 +22,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ViewMBEntryActivityMeTest extends BaseTestCase {
 	public void testViewMBEntryActivityMe() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/user/joebloggs/so/dashboard");
 		assertEquals(RuntimeVariables.replace("Activities"),
 			selenium.getText("xPath=(//h1[@class='portlet-title']/span)[2]"));

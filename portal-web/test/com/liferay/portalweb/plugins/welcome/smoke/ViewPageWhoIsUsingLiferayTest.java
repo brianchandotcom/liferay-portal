@@ -22,30 +22,16 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ViewPageWhoIsUsingLiferayTest extends BaseTestCase {
 	public void testViewPageWhoIsUsingLiferay() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/what-we-do/");
 		selenium.clickAt("link=Who Is Using Liferay",
 			RuntimeVariables.replace("Who Is Using Liferay"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("//nav[@id='navigation']",
 			RuntimeVariables.replace("Navigation"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent(
-							"//script[contains(@src,'/aui/sortable/sortable-min.js')]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/sortable/sortable-min.js')]");
 		assertTrue(selenium.isVisible("//a[@title='Go to Liferay']"));
 		assertEquals(RuntimeVariables.replace("Welcome to Liferay Portal"),
 			selenium.getText("//h2[@class='page-title']/span"));

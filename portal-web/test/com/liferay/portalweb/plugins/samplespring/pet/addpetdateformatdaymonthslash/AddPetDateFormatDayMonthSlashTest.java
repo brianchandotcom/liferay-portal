@@ -22,6 +22,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class AddPetDateFormatDayMonthSlashTest extends BaseTestCase {
 	public void testAddPetDateFormatDayMonthSlash() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("link=Pets Test Page",
 			RuntimeVariables.replace("Pets Test Page"));
@@ -34,113 +36,29 @@ public class AddPetDateFormatDayMonthSlashTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Add a Pet"),
 			selenium.getText("//tr[6]/td/a"));
 		selenium.clickAt("//tr[6]/td/a", RuntimeVariables.replace("Add a Pet"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("Add New Pet")
-										.equals(selenium.getText(
-								"//div[@class='portlet-body']/h1"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//div[@class='portlet-body']/h1", "Add New Pet");
 		assertEquals(RuntimeVariables.replace("Add New Pet"),
 			selenium.getText("//div[@class='portlet-body']/h1"));
 		selenium.type("//input[@id='species']", RuntimeVariables.replace("Fish"));
 		selenium.clickAt("//input[@value='Next']",
 			RuntimeVariables.replace("Next"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//input[@id='breed']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//input[@id='breed']");
 		selenium.type("//input[@id='breed']",
 			RuntimeVariables.replace("Goldfish"));
 		selenium.clickAt("//input[@value='Next']",
 			RuntimeVariables.replace("Next"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//input[@id='name']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//input[@id='name']");
 		selenium.type("//input[@id='name']", RuntimeVariables.replace("Bubbles"));
 		selenium.clickAt("//input[@value='Next']",
 			RuntimeVariables.replace("Next"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//input[@id='birthdate']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//input[@id='birthdate']");
 		assertEquals(RuntimeVariables.replace("Birthdate (dd/MM/yyyy)"),
 			selenium.getText("//form[@id='pet']/table/tbody/tr/th"));
 		selenium.type("//input[@id='birthdate']",
 			RuntimeVariables.replace("14/08/2011"));
 		selenium.clickAt("//input[@value='Finish']",
 			RuntimeVariables.replace("Finish"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("Pets")
-										.equals(selenium.getText(
-								"//div[@class='portlet-body']/h1"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//div[@class='portlet-body']/h1", "Pets");
 		assertEquals(RuntimeVariables.replace("Pets"),
 			selenium.getText("//div[@class='portlet-body']/h1"));
 		assertEquals(RuntimeVariables.replace(

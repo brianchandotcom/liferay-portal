@@ -29,24 +29,10 @@ public class User_EnableInChristmas2PagePricesSiteStagingTest
 		while (label >= 1) {
 			switch (label) {
 			case 1:
+				selenium.selectWindow("null");
+				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isElementPresent("link=Site Name")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForElementPresent("link=Site Name");
 				selenium.clickAt("link=Site Name",
 					RuntimeVariables.replace("Site Name"));
 				selenium.waitForPageToLoad("30000");
@@ -87,25 +73,8 @@ public class User_EnableInChristmas2PagePricesSiteStagingTest
 					selenium.getText("//button/span[.='Enable in Christmas 2']"));
 				selenium.clickAt("//button/span[.='Enable in Christmas 2']",
 					RuntimeVariables.replace("Enable in Christmas 2"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (RuntimeVariables.replace("Draft")
-												.equals(selenium.getText(
-										"//span[@class='workflow-status']/strong"))) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForText("//span[@class='workflow-status']/strong",
+					"Draft");
 				assertEquals(RuntimeVariables.replace("Draft"),
 					selenium.getText("//span[@class='workflow-status']/strong"));
 

@@ -22,6 +22,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ViewDMFolderImageSlideShowMGTest extends BaseTestCase {
 	public void testViewDMFolderImageSlideShowMG() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("link=Media Gallery Test Page",
 			RuntimeVariables.replace("Media Gallery Test Page"));
@@ -41,44 +43,12 @@ public class ViewDMFolderImageSlideShowMGTest extends BaseTestCase {
 		selenium.waitForPopUp("slideShow", RuntimeVariables.replace("30000"));
 		selenium.selectWindow("name=slideShow");
 		Thread.sleep(5000);
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//img[@name='_31_slideShow']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//img[@name='_31_slideShow']");
 		assertTrue(selenium.isVisible("//img[@name='_31_slideShow']"));
 		selenium.close();
 		selenium.selectWindow("null");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//img[@alt='DM Folder Image Title - DM Folder Image Description']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//img[@alt='DM Folder Image Title - DM Folder Image Description']");
 		assertTrue(selenium.isVisible(
 				"//img[@alt='DM Folder Image Title - DM Folder Image Description']"));
 	}

@@ -22,22 +22,9 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class EditWCWebContentCommentWCDTest extends BaseTestCase {
 	public void testEditWCWebContentCommentWCD() throws Exception {
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Web Content Display Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
+		selenium.waitForVisible("link=Web Content Display Test Page");
 		selenium.clickAt("link=Web Content Display Test Page",
 			RuntimeVariables.replace("Web Content Display Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -48,46 +35,13 @@ public class EditWCWebContentCommentWCDTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText("//li[3]/span/a/span"));
 		selenium.clickAt("//li[3]/span/a/span", RuntimeVariables.replace("Edit"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//div[4]/div/div[2]/span/span/span/textarea")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//div[4]/div/div[2]/span/span/span/textarea");
 		selenium.type("//div[4]/div/div[2]/span/span/span/textarea",
 			RuntimeVariables.replace("WC WebContent Comment Edit"));
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//div[@class='lfr-message-response portlet-msg-success']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//div[@class='lfr-message-response portlet-msg-success']");
 		assertEquals(RuntimeVariables.replace(
 				"Your request processed successfully."),
 			selenium.getText(

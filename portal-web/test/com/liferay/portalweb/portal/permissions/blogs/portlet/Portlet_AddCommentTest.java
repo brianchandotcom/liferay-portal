@@ -27,25 +27,10 @@ public class Portlet_AddCommentTest extends BaseTestCase {
 		while (label >= 1) {
 			switch (label) {
 			case 1:
+				selenium.selectWindow("null");
+				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isElementPresent(
-									"link=Blogs Permissions Page")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForElementPresent("link=Blogs Permissions Page");
 				selenium.clickAt("link=Blogs Permissions Page",
 					RuntimeVariables.replace("Blogs Permissions Page"));
 				selenium.waitForPageToLoad("30000");
@@ -66,81 +51,18 @@ public class Portlet_AddCommentTest extends BaseTestCase {
 					RuntimeVariables.replace(""));
 
 			case 2:
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("link=Be the first.")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("link=Be the first.");
 				selenium.clickAt("link=Be the first.",
 					RuntimeVariables.replace("Be the first."));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//textarea[@name='_33_postReplyBody0']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("//input[@value='Reply']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible(
+					"//textarea[@name='_33_postReplyBody0']");
+				selenium.waitForVisible("//input[@value='Reply']");
 				selenium.type("//textarea[@name='_33_postReplyBody0']",
 					RuntimeVariables.replace("Portlet Comment"));
 				selenium.clickAt("//input[@value='Reply']",
 					RuntimeVariables.replace("Reply"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//div[@class='lfr-message-response portlet-msg-success']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible(
+					"//div[@class='lfr-message-response portlet-msg-success']");
 				assertEquals(RuntimeVariables.replace(
 						"Your request processed successfully."),
 					selenium.getText(

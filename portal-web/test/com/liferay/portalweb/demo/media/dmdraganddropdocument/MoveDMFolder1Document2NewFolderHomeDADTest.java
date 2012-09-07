@@ -23,24 +23,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class MoveDMFolder1Document2NewFolderHomeDADTest extends BaseTestCase {
 	public void testMoveDMFolder1Document2NewFolderHomeDAD()
 		throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Documents and Media Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Documents and Media Test Page");
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -48,25 +34,8 @@ public class MoveDMFolder1Document2NewFolderHomeDADTest extends BaseTestCase {
 			selenium.getText("//div[@id='_20_folderContainer']/ul/li[3]/a"));
 		selenium.clickAt("//div[@id='_20_folderContainer']/ul/li[3]/a",
 			RuntimeVariables.replace("Mine"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("Mine")
-										.equals(selenium.getText(
-								"//div[@id='_20_folderContainer']/ul/li[contains(@class,'selected')]/a"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//div[@id='_20_folderContainer']/ul/li[contains(@class,'selected')]/a",
+			"Mine");
 		assertEquals(RuntimeVariables.replace("Mine"),
 			selenium.getText(
 				"//div[@id='_20_folderContainer']/ul/li[contains(@class,'selected')]/a"));
@@ -75,72 +44,20 @@ public class MoveDMFolder1Document2NewFolderHomeDADTest extends BaseTestCase {
 			selenium.getText(
 				"//div[@data-title='DM Document2 Title']/a/span[2]"));
 		selenium.mouseDown("//div[@data-title='DM Document2 Title']/a/span[2]");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//div[@class='yui3-dd-proxy active-area-proxy']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//div[@class='yui3-dd-proxy active-area-proxy']");
 		assertEquals(RuntimeVariables.replace("1 item is ready to be moved."),
 			selenium.getText("//div[@class='yui3-dd-proxy active-area-proxy']"));
 		Thread.sleep(5000);
 		selenium.mouseMoveAt("//div[@id='_20_folderContainer']/ul/li[1]/a[2]",
 			RuntimeVariables.replace("5,15"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace(
-							"1 item is ready to be moved to \"Home\".")
-										.equals(selenium.getText(
-								"//div[@class='yui3-dd-proxy active-area-proxy']"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//div[@class='yui3-dd-proxy active-area-proxy']",
+			"1 item is ready to be moved to \"Home\".");
 		assertEquals(RuntimeVariables.replace(
 				"1 item is ready to be moved to \"Home\"."),
 			selenium.getText("//div[@class='yui3-dd-proxy active-area-proxy']"));
 		selenium.mouseUp("//div[@id='_20_folderContainer']/ul/li[1]/a[2]");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("DM Document2 Title")
-										.equals(selenium.getText(
-								"//li[@class='move-file']"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//li[@class='move-file']", "DM Document2 Title");
 		assertEquals(RuntimeVariables.replace("DM Document2 Title"),
 			selenium.getText("//li[@class='move-file']"));
 		assertEquals(RuntimeVariables.replace("Home"),

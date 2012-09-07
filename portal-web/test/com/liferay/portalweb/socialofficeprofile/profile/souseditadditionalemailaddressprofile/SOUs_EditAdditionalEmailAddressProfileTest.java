@@ -23,24 +23,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class SOUs_EditAdditionalEmailAddressProfileTest extends BaseTestCase {
 	public void testSOUs_EditAdditionalEmailAddressProfile()
 		throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/socialoffice01/so/profile");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div[@class='lfr-contact-name']/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//div[@class='lfr-contact-name']/a");
 		assertEquals(RuntimeVariables.replace("Social01 Office01 User01"),
 			selenium.getText("//div[@class='lfr-contact-name']/a"));
 		assertEquals(RuntimeVariables.replace("Additional Email Addresses:"),
@@ -54,41 +40,10 @@ public class SOUs_EditAdditionalEmailAddressProfileTest extends BaseTestCase {
 				"//div[@data-title='Additional Email Addresses']/ul/li/span[2]/a"));
 		selenium.clickAt("//div[@data-title='Additional Email Addresses']",
 			RuntimeVariables.replace("Edit"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//span[contains(.,'Email Address')]/span/input")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent(
-							"//script[contains(@src,'/liferay/auto_fields.js')]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//span[contains(.,'Email Address')]/span/input");
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/liferay/auto_fields.js')]");
 		selenium.type("//span[contains(.,'Email Address')]/span/input",
 			RuntimeVariables.replace("socialoffice02edit@liferay.com"));
 		selenium.clickAt("//input[contains(@id,'emailAddressPrimary')]",
@@ -96,25 +51,8 @@ public class SOUs_EditAdditionalEmailAddressProfileTest extends BaseTestCase {
 		Thread.sleep(5000);
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("socialoffice02edit@liferay.com")
-										.equals(selenium.getText(
-								"//div[@data-title='Additional Email Addresses']/ul/li/span[2]/a"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//div[@data-title='Additional Email Addresses']/ul/li/span[2]/a",
+			"socialoffice02edit@liferay.com");
 		assertEquals(RuntimeVariables.replace("Additional Email Addresses:"),
 			selenium.getText(
 				"//div[@data-title='Additional Email Addresses']/h3"));

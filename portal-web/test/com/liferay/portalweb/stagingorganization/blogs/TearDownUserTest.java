@@ -27,47 +27,17 @@ public class TearDownUserTest extends BaseTestCase {
 		while (label >= 1) {
 			switch (label) {
 			case 1:
+				selenium.selectWindow("null");
+				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isElementPresent("link=Control Panel")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForElementPresent("link=Control Panel");
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
 				selenium.clickAt("link=Users and Organizations",
 					RuntimeVariables.replace("Users and Organizations"));
 				selenium.waitForPageToLoad("30000");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("//input[@id='_125_keywords']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("//input[@id='_125_keywords']");
 				selenium.type("//input[@id='_125_keywords']",
 					RuntimeVariables.replace("organization"));
 				selenium.clickAt("//input[@value='Search']",
@@ -91,45 +61,14 @@ public class TearDownUserTest extends BaseTestCase {
 						"xPath=(//input[@name='_125_allRowIds'])[2]"));
 				selenium.clickAt("//input[@value='Deactivate']",
 					RuntimeVariables.replace("Deactivate"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if ("Are you sure you want to deactivate the selected users?".equals(
-									selenium.getConfirmation())) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
+				selenium.waitForConfirmation(
+					"Are you sure you want to deactivate the selected users?");
 
 			case 2:
 				selenium.clickAt("link=Users and Organizations",
 					RuntimeVariables.replace("Users and Organizations"));
 				selenium.waitForPageToLoad("30000");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("//input[@id='_125_keywords']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("//input[@id='_125_keywords']");
 				selenium.type("//input[@id='_125_keywords']",
 					RuntimeVariables.replace("Selenium"));
 				selenium.clickAt("//input[@value='Search']",
@@ -157,41 +96,9 @@ public class TearDownUserTest extends BaseTestCase {
 				assertTrue(selenium.isChecked("//input[@name='_125_allRowIds']"));
 				selenium.clickAt("//input[@value='Deactivate']",
 					RuntimeVariables.replace("Deactivate"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if ("Are you sure you want to deactivate the selected users?".equals(
-									selenium.getConfirmation())) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//div[@class='portlet-msg-success']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForConfirmation(
+					"Are you sure you want to deactivate the selected users?");
+				selenium.waitForVisible("//div[@class='portlet-msg-success']");
 				assertEquals(RuntimeVariables.replace(
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
@@ -217,23 +124,7 @@ public class TearDownUserTest extends BaseTestCase {
 					RuntimeVariables.replace("Advanced"));
 
 			case 4:
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("//select[@id='_125_status']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("//select[@id='_125_status']");
 				selenium.select("//select[@id='_125_status']",
 					RuntimeVariables.replace("Inactive"));
 				selenium.clickAt("//input[@value='Search']",

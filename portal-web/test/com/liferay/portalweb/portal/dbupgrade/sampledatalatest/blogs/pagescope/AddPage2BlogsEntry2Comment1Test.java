@@ -22,95 +22,29 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class AddPage2BlogsEntry2Comment1Test extends BaseTestCase {
 	public void testAddPage2BlogsEntry2Comment1() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/blogs-page-scope-community/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Blogs Test Page2")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Blogs Test Page2");
 		selenium.clickAt("link=Blogs Test Page2",
 			RuntimeVariables.replace("Blogs Test Page2"));
 		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("Blogs (Blogs Test Page2)")
-										.equals(selenium.getText(
-								"//span[@class='portlet-title-text']"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//span[@class='portlet-title-text']",
+			"Blogs (Blogs Test Page2)");
 		assertEquals(RuntimeVariables.replace("Blogs (Blogs Test Page2)"),
 			selenium.getText("//span[@class='portlet-title-text']"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry2 Title"),
 			selenium.getText("//div[@class='entry-title']/h2/a"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry2 Content"),
 			selenium.getText("//div[@class='entry-body']/p"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("0 Comments")
-										.equals(selenium.getText(
-								"//span[@class='comments']/a"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//span[@class='comments']/a", "0 Comments");
 		assertEquals(RuntimeVariables.replace("0 Comments"),
 			selenium.getText("//span[@class='comments']/a"));
 		selenium.clickAt("//span[@class='comments']/a",
 			RuntimeVariables.replace("0 Comments"));
 		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("Blogs Entry2 Title")
-										.equals(selenium.getText(
-								"//h1[@class='header-title']/span"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//h1[@class='header-title']/span",
+			"Blogs Entry2 Title");
 		assertEquals(RuntimeVariables.replace("Blogs Entry2 Title"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry2 Content"),
@@ -119,23 +53,7 @@ public class AddPage2BlogsEntry2Comment1Test extends BaseTestCase {
 			selenium.getText("//fieldset/div/a"));
 		selenium.clickAt("//fieldset/div/a",
 			RuntimeVariables.replace("Be the first."));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//textarea[@name='_33_postReplyBody0']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//textarea[@name='_33_postReplyBody0']");
 		selenium.type("//textarea[@name='_33_postReplyBody0']",
 			RuntimeVariables.replace("Blogs Entry2 Comment1 Body"));
 		selenium.keyPress("//textarea[@name='_33_postReplyBody0']",
@@ -144,26 +62,8 @@ public class AddPage2BlogsEntry2Comment1Test extends BaseTestCase {
 			RuntimeVariables.replace("\\8"));
 		selenium.clickAt("//input[@value='Reply']",
 			RuntimeVariables.replace("Reply"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace(
-							"Your request processed successfully.")
-										.equals(selenium.getText(
-								"//div[@class='lfr-message-response portlet-msg-success']"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//div[@class='lfr-message-response portlet-msg-success']",
+			"Your request processed successfully.");
 		assertEquals(RuntimeVariables.replace(
 				"Your request processed successfully."),
 			selenium.getText(

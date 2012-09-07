@@ -22,116 +22,36 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ViewDLFolderDocumentAPTest extends BaseTestCase {
 	public void testViewDLFolderDocumentAP() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Asset Publisher Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Asset Publisher Test Page");
 		selenium.clickAt("link=Asset Publisher Test Page",
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("DM Folder Document Title")
-										.equals(selenium.getText(
-								"//h3[@class='asset-title']/a"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//h3[@class='asset-title']/a",
+			"DM Folder Document Title");
 		assertEquals(RuntimeVariables.replace("DM Folder Document Title"),
 			selenium.getText("//h3[@class='asset-title']/a"));
 		assertEquals(RuntimeVariables.replace("DM Folder Document Title"),
 			selenium.getText("//div[@class='asset-resource-info']/span/a/span"));
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Documents and Media Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Documents and Media Test Page");
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("//button[@title='Icon View']",
 			RuntimeVariables.replace("Icon View"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//button[@title='Icon View' and contains(@class,'aui-state-active')]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//button[@title='Icon View' and contains(@class,'aui-state-active')]");
 		assertTrue(selenium.isVisible(
 				"//button[@title='Icon View' and contains(@class,'aui-state-active')]"));
 		assertEquals(RuntimeVariables.replace("DM Folder Name"),
 			selenium.getText("//div/a/span[2]"));
 		selenium.clickAt("//div/a/span[2]",
 			RuntimeVariables.replace("DM Folder Name"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("DM Folder Name")
-										.equals(selenium.getText(
-								"//li[@class='folder selected']/a/span[2]"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//li[@class='folder selected']/a/span[2]",
+			"DM Folder Name");
 		assertTrue(selenium.isPartialText(
 				"//li[@class='folder selected']/a/span[2]", "DM Folder Name"));
 		assertEquals(RuntimeVariables.replace("DM Folder Document Title"),

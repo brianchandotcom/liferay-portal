@@ -22,27 +22,13 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ViewWCWebContentDisabledDeleteTest extends BaseTestCase {
 	public void testViewWCWebContentDisabledDelete() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Control Panel")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
@@ -60,24 +46,8 @@ public class ViewWCWebContentDisabledDeleteTest extends BaseTestCase {
 		selenium.clickAt("//input[@name='_15_allRowIds']",
 			RuntimeVariables.replace("Select All"));
 		assertTrue(selenium.isChecked("//input[@name='_15_allRowIds']"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementNotPresent(
-							"//span[contains(@class,'aui-button-disabled')]/span/input[@value='Delete']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementNotPresent(
+			"//span[contains(@class,'aui-button-disabled')]/span/input[@value='Delete']");
 		assertTrue(selenium.isElementNotPresent(
 				"//span[contains(@class,'aui-button-disabled')]/span/input[@value='Delete']"));
 		assertTrue(selenium.isElementNotPresent(
@@ -86,24 +56,8 @@ public class ViewWCWebContentDisabledDeleteTest extends BaseTestCase {
 		selenium.clickAt("//input[@name='_15_allRowIds']",
 			RuntimeVariables.replace("Select All"));
 		assertFalse(selenium.isChecked("//input[@name='_15_allRowIds']"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//span[contains(@class,'aui-button-disabled')]/span/input[@value='Delete']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//span[contains(@class,'aui-button-disabled')]/span/input[@value='Delete']");
 		assertTrue(selenium.isVisible(
 				"//span[contains(@class,'aui-button-disabled')]/span/input[@value='Delete']"));
 		assertTrue(selenium.isVisible(
@@ -111,24 +65,8 @@ public class ViewWCWebContentDisabledDeleteTest extends BaseTestCase {
 		selenium.clickAt("//input[@name='_15_rowIds']",
 			RuntimeVariables.replace("Row Entry Check Box"));
 		assertTrue(selenium.isChecked("//input[@name='_15_rowIds']"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementNotPresent(
-							"//span[contains(@class,'aui-button-disabled')]/span/input[@value='Delete']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementNotPresent(
+			"//span[contains(@class,'aui-button-disabled')]/span/input[@value='Delete']");
 		assertTrue(selenium.isElementNotPresent(
 				"//span[contains(@class,'aui-button-disabled')]/span/input[@value='Delete']"));
 		assertTrue(selenium.isElementNotPresent(
@@ -137,24 +75,8 @@ public class ViewWCWebContentDisabledDeleteTest extends BaseTestCase {
 		selenium.clickAt("//input[@name='_15_rowIds']",
 			RuntimeVariables.replace("Row Entry Check Box"));
 		assertFalse(selenium.isChecked("//input[@name='_15_rowIds']"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//span[contains(@class,'aui-button-disabled')]/span/input[@value='Delete']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//span[contains(@class,'aui-button-disabled')]/span/input[@value='Delete']");
 		assertTrue(selenium.isVisible(
 				"//span[contains(@class,'aui-button-disabled')]/span/input[@value='Delete']"));
 		assertTrue(selenium.isVisible(

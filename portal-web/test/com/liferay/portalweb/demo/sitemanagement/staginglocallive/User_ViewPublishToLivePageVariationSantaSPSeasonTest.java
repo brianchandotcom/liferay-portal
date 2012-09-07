@@ -29,24 +29,10 @@ public class User_ViewPublishToLivePageVariationSantaSPSeasonTest
 		while (label >= 1) {
 			switch (label) {
 			case 1:
+				selenium.selectWindow("null");
+				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isElementPresent("link=Site Name")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForElementPresent("link=Site Name");
 				selenium.clickAt("link=Site Name",
 					RuntimeVariables.replace("Site Name"));
 				selenium.waitForPageToLoad("30000");
@@ -146,25 +132,8 @@ public class User_ViewPublishToLivePageVariationSantaSPSeasonTest
 				selenium.clickAt("//a[contains(@class,'document-link')]/span[@class='entry-title']",
 					RuntimeVariables.replace("DL Image Title"));
 				selenium.waitForPageToLoad("30000");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (RuntimeVariables.replace("DL Image Title")
-												.equals(selenium.getText(
-										"//h2[@class='document-title']"))) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForText("//h2[@class='document-title']",
+					"DL Image Title");
 				assertEquals(RuntimeVariables.replace("DL Image Title"),
 					selenium.getText("//h2[@class='document-title']"));
 				assertTrue(selenium.isVisible(

@@ -22,27 +22,13 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class EditWCWebContentSummaryTest extends BaseTestCase {
 	public void testEditWCWebContentSummary() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Control Panel")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
@@ -54,46 +40,13 @@ public class EditWCWebContentSummaryTest extends BaseTestCase {
 		selenium.clickAt("//td[3]/a",
 			RuntimeVariables.replace("WC WebContent Title"));
 		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent(
-							"//textarea[@id='_15__15_structure_el_TextAreaField_content' and @style='display: none;']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent(
+			"//textarea[@id='_15__15_structure_el_TextAreaField_content' and @style='display: none;']");
 		assertEquals(RuntimeVariables.replace("Abstract (Modified)"),
 			selenium.getText("//a[@id='_15_abstractLink']"));
 		selenium.clickAt("//a[@id='_15_abstractLink']",
 			RuntimeVariables.replace("Abstract (Modified)"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//textarea[@id='_15_description_en_US']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//textarea[@id='_15_description_en_US']");
 		selenium.type("//textarea[@id='_15_description_en_US']",
 			RuntimeVariables.replace("WC WebContent Summary"));
 		selenium.clickAt("//input[@value='Publish']",

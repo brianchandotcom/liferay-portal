@@ -22,24 +22,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class User_LeaveSitesTest extends BaseTestCase {
 	public void testUser_LeaveSites() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/user/selenium01/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=My Sites")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=My Sites");
 		selenium.clickAt("link=My Sites", RuntimeVariables.replace("My Sites"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_29_name']",
@@ -59,23 +45,7 @@ public class User_LeaveSitesTest extends BaseTestCase {
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		selenium.open("/user/selenium01/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=My Sites")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=My Sites");
 		selenium.clickAt("link=My Sites", RuntimeVariables.replace("My Sites"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("No sites were found."),

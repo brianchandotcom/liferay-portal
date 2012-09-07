@@ -22,108 +22,30 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class LoginUsersTest extends BaseTestCase {
 	public void testLoginUsers() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("link=Welcome")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent("link=Welcome");
 		selenium.clickAt("link=Welcome", RuntimeVariables.replace("Welcome"));
 		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("//input[@id='_58_login']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent("//input[@id='_58_login']");
 		selenium.type("//input[@id='_58_login']",
 			RuntimeVariables.replace("portlet@liferay.com"));
 		selenium.type("//input[@id='_58_password']",
 			RuntimeVariables.replace("password"));
 		selenium.clickAt("//input[@value='Sign In']",
 			RuntimeVariables.replace("Sign In"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//input[@value='I Agree']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//input[@value='I Agree']");
 		selenium.clickAt("//input[@value='I Agree']",
 			RuntimeVariables.replace("I Agree"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//input[@id='password1']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//input[@id='password1']");
 		selenium.type("//input[@id='password1']",
 			RuntimeVariables.replace("test"));
 		selenium.type("//input[@id='password2']",
 			RuntimeVariables.replace("test"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//input[@id='reminderQueryAnswer']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//input[@id='reminderQueryAnswer']");
 		selenium.type("//input[@id='reminderQueryAnswer']",
 			RuntimeVariables.replace("Test"));
 		selenium.clickAt("//input[@value='Save']",
@@ -132,23 +54,7 @@ public class LoginUsersTest extends BaseTestCase {
 		Thread.sleep(5000);
 		assertTrue(selenium.isTextPresent(
 				"You are signed in as Portlet Liferay."));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Sign Out")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Sign Out");
 		selenium.clickAt("link=Sign Out", RuntimeVariables.replace("Sign Out"));
 		selenium.waitForPageToLoad("30000");
 	}

@@ -23,6 +23,8 @@ public class WCC_ViewPublishToLiveNowWebContentNullSiteStagingTest
 	extends BaseTestCase {
 	public void testWCC_ViewPublishToLiveNowWebContentNullSiteStaging()
 		throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/community-site-test/home");
 		assertFalse(selenium.isTextPresent("Web Content Display"));
 		assertFalse(selenium.isTextPresent("This is a Web Content article"));

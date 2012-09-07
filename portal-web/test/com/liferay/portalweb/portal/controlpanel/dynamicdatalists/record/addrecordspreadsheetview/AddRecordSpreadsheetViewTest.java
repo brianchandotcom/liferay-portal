@@ -22,28 +22,14 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class AddRecordSpreadsheetViewTest extends BaseTestCase {
 	public void testAddRecordSpreadsheetView() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Control Panel")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
@@ -61,24 +47,8 @@ public class AddRecordSpreadsheetViewTest extends BaseTestCase {
 			selenium.getText("//span[@title='Actions']/ul/li/strong/a"));
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
 			RuntimeVariables.replace("Actions"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Spreadsheet View')]/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Spreadsheet View')]/a");
 		assertEquals(RuntimeVariables.replace("Spreadsheet View"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Spreadsheet View')]/a"));
@@ -90,24 +60,8 @@ public class AddRecordSpreadsheetViewTest extends BaseTestCase {
 				"//thead[@class='yui3-datatable-columns']/tr/th[1]/div/a"));
 		selenium.doubleClickAt("//tbody[@class='yui3-datatable-data']/tr[1]/td[1]",
 			RuntimeVariables.replace("column 1 row 1"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//div[contains(@class,'aui-checkboxcelleditor')]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//div[contains(@class,'aui-checkboxcelleditor')]");
 		selenium.clickAt("//div[contains(@class,'aui-checkboxcelleditor')]",
 			RuntimeVariables.replace("Checkbox Cell Editor"));
 		assertEquals(RuntimeVariables.replace("True"),
@@ -125,24 +79,7 @@ public class AddRecordSpreadsheetViewTest extends BaseTestCase {
 				"//thead[@class='yui3-datatable-columns']/tr/th[2]/div/a"));
 		selenium.doubleClickAt("//tbody[@class='yui3-datatable-data']/tr[1]/td[2]",
 			RuntimeVariables.replace("column 2 row 1"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//div[contains(@class,'aui-datecelleditor')]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//div[contains(@class,'aui-datecelleditor')]");
 		selenium.clickAt("//div[contains(@class,'aui-datecelleditor')]",
 			RuntimeVariables.replace("Date Cell Editor"));
 		assertEquals(RuntimeVariables.replace("10"),
@@ -160,24 +97,7 @@ public class AddRecordSpreadsheetViewTest extends BaseTestCase {
 				"//thead[@class='yui3-datatable-columns']/tr/th[3]/div/a"));
 		selenium.doubleClickAt("//tbody[@class='yui3-datatable-data']/tr[1]/td[3]",
 			RuntimeVariables.replace("column 3 row 1"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//div[contains(@class,'aui-textcelleditor')]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//div[contains(@class,'aui-textcelleditor')]");
 		selenium.clickAt("//div[contains(@class,'aui-textcelleditor')]",
 			RuntimeVariables.replace("Decimal"));
 		selenium.type("//div[contains(@class,'aui-textcelleditor-focused')]/form/div/input",
@@ -192,24 +112,8 @@ public class AddRecordSpreadsheetViewTest extends BaseTestCase {
 				"//thead[@class='yui3-datatable-columns']/tr/th[4]/div/a"));
 		selenium.doubleClickAt("//tbody[@class='yui3-datatable-data']/tr[1]/td[4]",
 			RuntimeVariables.replace("column 4 row 1"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//div[contains(@class,'aui-document-library-file-entry-cell-editor')]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//div[contains(@class,'aui-document-library-file-entry-cell-editor')]");
 		selenium.clickAt("//div[contains(@class,'aui-document-library-file-entry-cell-editor')]",
 			RuntimeVariables.replace("Document Library File Entry Cell Editor"));
 		assertEquals(RuntimeVariables.replace("Choose"),
@@ -217,41 +121,9 @@ public class AddRecordSpreadsheetViewTest extends BaseTestCase {
 				"//div[contains(@class,'aui-document-library-file-entry-cell-editor-focused')]/form/div[2]/span/span/button[2]"));
 		selenium.clickAt("//div[contains(@class,'aui-document-library-file-entry-cell-editor-focused')]/form/div[2]/span/span/button[2]",
 			RuntimeVariables.replace("Choose"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//iframe")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//iframe");
 		selenium.selectFrame("//iframe");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//tr[3]/td[1]/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//tr[3]/td[1]/a");
 		assertEquals(RuntimeVariables.replace("Document_1.txt"),
 			selenium.getText("//tr[3]/td[1]/a"));
 		selenium.clickAt("//input[@value='Choose']",
@@ -267,24 +139,8 @@ public class AddRecordSpreadsheetViewTest extends BaseTestCase {
 				"//thead[@class='yui3-datatable-columns']/tr/th[5]/div/a"));
 		selenium.doubleClickAt("//tbody[@class='yui3-datatable-data']/tr[1]/td[5]",
 			RuntimeVariables.replace("column 5 row 1"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//div[contains(@class,'aui-fileupload-cell-editor')]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//div[contains(@class,'aui-fileupload-cell-editor')]");
 		selenium.clickAt("//div[contains(@class,'aui-fileupload-cell-editor')]",
 			RuntimeVariables.replace("File Upload Cell Editor"));
 		selenium.uploadCommonFile("//div[contains(@class,'aui-fileupload-cell-editor-focused')]/form/div[1]/input",
@@ -300,24 +156,7 @@ public class AddRecordSpreadsheetViewTest extends BaseTestCase {
 				"//thead[@class='yui3-datatable-columns']/tr/th[6]/div/a"));
 		selenium.doubleClickAt("//tbody[@class='yui3-datatable-data']/tr[1]/td[6]",
 			RuntimeVariables.replace("column 6 row 1"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//div[contains(@class,'aui-textcelleditor')]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//div[contains(@class,'aui-textcelleditor')]");
 		selenium.clickAt("//div[contains(@class,'aui-textcelleditor')]",
 			RuntimeVariables.replace("Text Cell Editor"));
 		selenium.type("//div[contains(@class,'aui-textcelleditor-focused')]/form/div[1]/input",
@@ -332,24 +171,7 @@ public class AddRecordSpreadsheetViewTest extends BaseTestCase {
 				"//thead[@class='yui3-datatable-columns']/tr/th[7]/div/a"));
 		selenium.doubleClickAt("//tbody[@class='yui3-datatable-data']/tr[1]/td[7]",
 			RuntimeVariables.replace("column 7 row 1"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//div[contains(@class,'aui-textcelleditor')]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//div[contains(@class,'aui-textcelleditor')]");
 		selenium.clickAt("//div[contains(@class,'aui-textcelleditor')]",
 			RuntimeVariables.replace("Text Cell Editor"));
 		selenium.type("//div[contains(@class,'aui-textcelleditor-focused')]/form/div[1]/input",
@@ -364,24 +186,7 @@ public class AddRecordSpreadsheetViewTest extends BaseTestCase {
 				"//thead[@class='yui3-datatable-columns']/tr/th[8]/div/a"));
 		selenium.doubleClickAt("//tbody[@class='yui3-datatable-data']/tr[1]/td[8]",
 			RuntimeVariables.replace("column 9 row 1"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//div[contains(@class,'aui-radiocelleditor')]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//div[contains(@class,'aui-radiocelleditor')]");
 		selenium.clickAt("//div[contains(@class,'aui-radiocelleditor')]",
 			RuntimeVariables.replace("Radio Cell Editor"));
 		assertEquals(RuntimeVariables.replace("option 1"),
@@ -405,24 +210,8 @@ public class AddRecordSpreadsheetViewTest extends BaseTestCase {
 				"//thead[@class='yui3-datatable-columns']/tr/th[9]/div/a"));
 		selenium.doubleClickAt("//tbody[@class='yui3-datatable-data']/tr[1]/td[9]",
 			RuntimeVariables.replace("column 10 row 1"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//div[contains(@class,'aui-dropdowncelleditor')]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//div[contains(@class,'aui-dropdowncelleditor')]");
 		selenium.clickAt("//div[contains(@class,'aui-dropdowncelleditor')]",
 			RuntimeVariables.replace("Radio Cell Editor"));
 		assertEquals(RuntimeVariables.replace("option 1"),
@@ -446,24 +235,7 @@ public class AddRecordSpreadsheetViewTest extends BaseTestCase {
 				"//thead[@class='yui3-datatable-columns']/tr/th[10]/div/a"));
 		selenium.doubleClickAt("//tbody[@class='yui3-datatable-data']/tr[1]/td[10]",
 			RuntimeVariables.replace("column 11 row 1"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//div[contains(@class,'aui-textcelleditor')]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//div[contains(@class,'aui-textcelleditor')]");
 		selenium.clickAt("//div[contains(@class,'aui-textcelleditor')]",
 			RuntimeVariables.replace("Text Cell Editor"));
 		selenium.type("//div[contains(@class,'aui-textcelleditor-focused')]/form/div[1]/input",
@@ -478,24 +250,8 @@ public class AddRecordSpreadsheetViewTest extends BaseTestCase {
 				"//thead[@class='yui3-datatable-columns']/tr/th[11]/div/a"));
 		selenium.doubleClickAt("//tbody[@class='yui3-datatable-data']/tr[1]/td[11]",
 			RuntimeVariables.replace("column 12 row 1"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//div[contains(@class,'aui-textareacelleditor')]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//div[contains(@class,'aui-textareacelleditor')]");
 		selenium.clickAt("//div[contains(@class,'aui-textareacelleditor')]",
 			RuntimeVariables.replace("Text Cell Editor"));
 		selenium.type("//div[contains(@class,'aui-textareacelleditor-focused')]/form/div[1]/textarea",

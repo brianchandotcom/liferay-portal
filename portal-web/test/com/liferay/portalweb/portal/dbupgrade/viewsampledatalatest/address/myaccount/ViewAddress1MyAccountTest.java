@@ -22,105 +22,29 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ViewAddress1MyAccountTest extends BaseTestCase {
 	public void testViewAddress1MyAccount() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Control Panel")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=My Account",
 			RuntimeVariables.replace("My Account"));
 		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//a[@id='_2_addressesLink']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//a[@id='_2_addressesLink']");
 		assertTrue(selenium.isPartialText("//a[@id='_2_addressesLink']",
 				"Addresses"));
 		selenium.clickAt("//a[@id='_2_addressesLink']",
 			RuntimeVariables.replace("Addresses"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//input[@id='_2_addressStreet1_0']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if ("United States".equals(selenium.getSelectedLabel(
-								"//select[@id='_2_addressCountryId0']"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if ("California".equals(selenium.getSelectedLabel(
-								"//select[@id='_2_addressRegionId0']"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//input[@id='_2_addressStreet1_0']");
+		selenium.waitForSelectedLabel("//select[@id='_2_addressCountryId0']",
+			"United States");
+		selenium.waitForSelectedLabel("//select[@id='_2_addressRegionId0']",
+			"California");
 		assertEquals("1220 Brea Canyon Rd",
 			selenium.getValue("//input[@id='_2_addressStreet1_0']"));
 		assertEquals("Ste 12",

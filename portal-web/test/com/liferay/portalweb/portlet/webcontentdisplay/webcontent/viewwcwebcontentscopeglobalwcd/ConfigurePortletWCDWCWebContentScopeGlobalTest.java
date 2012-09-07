@@ -28,6 +28,8 @@ public class ConfigurePortletWCDWCWebContentScopeGlobalTest extends BaseTestCase
 		while (label >= 1) {
 			switch (label) {
 			case 1:
+				selenium.selectWindow("null");
+				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
 				selenium.clickAt("link=Web Content Display Test Page",
 					RuntimeVariables.replace("Web Content Display Test Page"));
@@ -40,64 +42,17 @@ public class ConfigurePortletWCDWCWebContentScopeGlobalTest extends BaseTestCase
 					selenium.getText("//span[@title='Options']/ul/li/strong/a"));
 				selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
 					RuntimeVariables.replace("Options"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Configuration')]/a")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible(
+					"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Configuration')]/a");
 				assertEquals(RuntimeVariables.replace("Configuration"),
 					selenium.getText(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Configuration')]/a"));
 				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Configuration')]/a",
 					RuntimeVariables.replace("Configuration"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("//iframe")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("//iframe");
 				selenium.selectFrame("//iframe");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isElementPresent(
-									"//script[contains(@src,'/liferay/navigation_interaction.js')]")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
+				selenium.waitForElementPresent(
+					"//script[contains(@src,'/liferay/navigation_interaction.js')]");
 
 				boolean advancedVisible = selenium.isVisible(
 						"link=Advanced \u00bb");
@@ -112,23 +67,7 @@ public class ConfigurePortletWCDWCWebContentScopeGlobalTest extends BaseTestCase
 					RuntimeVariables.replace("Advanced"));
 
 			case 2:
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("//select[@id='_86_groupId']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("//select[@id='_86_groupId']");
 				selenium.select("//select[@id='_86_groupId']",
 					RuntimeVariables.replace("Global"));
 				selenium.clickAt("//input[@value='Search']",
@@ -139,26 +78,8 @@ public class ConfigurePortletWCDWCWebContentScopeGlobalTest extends BaseTestCase
 						"//td[@id='_86_ocerSearchContainer_col-title_row-1']/a"));
 				selenium.clickAt("//td[@id='_86_ocerSearchContainer_col-title_row-1']/a",
 					RuntimeVariables.replace("Web Content Name"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (RuntimeVariables.replace(
-									"Web Content Name (Modified)")
-												.equals(selenium.getText(
-										"//div[@class='portlet-msg-info']/span/span"))) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForText("//div[@class='portlet-msg-info']/span/span",
+					"Web Content Name (Modified)");
 				assertEquals(RuntimeVariables.replace(
 						"Web Content Name (Modified)"),
 					selenium.getText(

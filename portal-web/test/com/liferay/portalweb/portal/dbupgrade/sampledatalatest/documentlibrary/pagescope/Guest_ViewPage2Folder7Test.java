@@ -22,47 +22,15 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class Guest_ViewPage2Folder7Test extends BaseTestCase {
 	public void testGuest_ViewPage2Folder7() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/document-library-page-scope-community/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=DL Page2 Name")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=DL Page2 Name");
 		selenium.clickAt("link=DL Page2 Name",
 			RuntimeVariables.replace("DL Page2 Name"));
 		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace(
-							"Documents and Media (DL Page2 Name)")
-										.equals(selenium.getText(
-								"//span[@class='portlet-title-text']"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//span[@class='portlet-title-text']",
+			"Documents and Media (DL Page2 Name)");
 		assertEquals(RuntimeVariables.replace(
 				"Documents and Media (DL Page2 Name)"),
 			selenium.getText("//span[@class='portlet-title-text']"));
@@ -71,50 +39,15 @@ public class Guest_ViewPage2Folder7Test extends BaseTestCase {
 				"xPath=(//a[contains(@class,'aui-paginator-next-link')])[2]"));
 		selenium.clickAt("xPath=(//a[contains(@class,'aui-paginator-next-link')])[2]",
 			RuntimeVariables.replace("Next"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("DL Folder7 Name")
-										.equals(selenium.getText(
-								"//a[contains(@class,'document-link')]/span[@class='entry-title']"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//a[contains(@class,'document-link')]/span[@class='entry-title']",
+			"DL Folder7 Name");
 		assertTrue(selenium.isVisible("//span[@class='document-thumbnail']/img"));
 		assertEquals(RuntimeVariables.replace("DL Folder7 Name"),
 			selenium.getText(
 				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
 		selenium.clickAt("//a[contains(@class,'document-link')]/span[@class='entry-title']",
 			RuntimeVariables.replace("DL Folder7 Name"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("Up")
-										.equals(selenium.getText(
-								"//a[@class='browse-folder']"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//a[@class='browse-folder']", "Up");
 		assertEquals(RuntimeVariables.replace("Up"),
 			selenium.getText("//a[@class='browse-folder']"));
 		assertEquals(RuntimeVariables.replace("DL Folder7 Name"),
@@ -129,46 +62,12 @@ public class Guest_ViewPage2Folder7Test extends BaseTestCase {
 			selenium.getText(
 				"//div[@id='_20_breadcrumbContainer']/ul/li[3]/span/a"));
 		selenium.open("/web/document-library-page-scope-community/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=DL Page3 Name")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=DL Page3 Name");
 		selenium.clickAt("link=DL Page3 Name",
 			RuntimeVariables.replace("DL Page3 Name"));
 		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace(
-							"Documents and Media (DL Page2 Name)")
-										.equals(selenium.getText(
-								"//span[@class='portlet-title-text']"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//span[@class='portlet-title-text']",
+			"Documents and Media (DL Page2 Name)");
 		assertEquals(RuntimeVariables.replace(
 				"Documents and Media (DL Page2 Name)"),
 			selenium.getText("//span[@class='portlet-title-text']"));
@@ -179,25 +78,7 @@ public class Guest_ViewPage2Folder7Test extends BaseTestCase {
 				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[6]"));
 		selenium.clickAt("xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[6]",
 			RuntimeVariables.replace("DL Folder7 Name"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("Up")
-										.equals(selenium.getText(
-								"//a[@class='browse-folder']"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//a[@class='browse-folder']", "Up");
 		assertEquals(RuntimeVariables.replace("Up"),
 			selenium.getText("//a[@class='browse-folder']"));
 		assertEquals(RuntimeVariables.replace("DL Folder7 Name"),

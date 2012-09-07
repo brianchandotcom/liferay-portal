@@ -27,6 +27,8 @@ public class TearDownPortletDisplayStyleTest extends BaseTestCase {
 		while (label >= 1) {
 			switch (label) {
 			case 1:
+				selenium.selectWindow("null");
+				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
 				selenium.clickAt("link=Blogs Test Page",
 					RuntimeVariables.replace("Blogs Test Page"));
@@ -36,65 +38,17 @@ public class TearDownPortletDisplayStyleTest extends BaseTestCase {
 					selenium.getText("//strong/a"));
 				selenium.clickAt("//strong/a",
 					RuntimeVariables.replace("Options"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible(
+					"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
 				assertEquals(RuntimeVariables.replace("Configuration"),
 					selenium.getText(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
 				selenium.click(
 					"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("link=Display Settings")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("link=Display Settings");
 				selenium.clickAt("link=Display Settings",
 					RuntimeVariables.replace("Display Settings"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("//select[@id='_86_pageDelta']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("//select[@id='_86_pageDelta']");
 				selenium.select("//select[@id='_86_pageDelta']",
 					RuntimeVariables.replace("5"));
 				selenium.select("//select[@id='_86_pageDisplayStyle']",

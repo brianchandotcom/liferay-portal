@@ -22,66 +22,20 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class SetupTest extends BaseTestCase {
 	public void testSetup() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("//nav[@id='navigation']",
 			RuntimeVariables.replace("Navigation"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("//a[@id='addPage']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent("//a[@id='addPage']");
 		selenium.clickAt("//a[@id='addPage']",
 			RuntimeVariables.replace("Add Page"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//input[@type='text']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//input[@type='text']");
 		selenium.type("//input[@type='text']",
 			RuntimeVariables.replace("Blogs Tags Test Page"));
 		selenium.clickAt("//button[@id='save']",
 			RuntimeVariables.replace("Save"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Blogs Tags Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Blogs Tags Test Page");
 		selenium.clickAt("link=Blogs Tags Test Page",
 			RuntimeVariables.replace("Blogs Tags Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -89,66 +43,17 @@ public class SetupTest extends BaseTestCase {
 				"More"));
 		selenium.clickAt("//a[@id='_145_addApplication']",
 			RuntimeVariables.replace("More"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("//div[@title='Blogs']/p/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent("//div[@title='Blogs']/p/a");
 		selenium.clickAt("//div[@title='Blogs']/p/a",
 			RuntimeVariables.replace("Add"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//section")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//section");
 		assertTrue(selenium.isVisible("//section"));
 		selenium.clickAt("//input[@value='Add Blog Entry']",
 			RuntimeVariables.replace("Add Blog Entry"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_33_title']",
 			RuntimeVariables.replace("Tags Blog Entry1 Title"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//td[@id='cke_contents__33_editor']/iframe")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//td[@id='cke_contents__33_editor']/iframe");
 		selenium.selectFrame("//td[@id='cke_contents__33_editor']/iframe");
 		selenium.type("//body",
 			RuntimeVariables.replace("Tags Blog Entry1 Content"));
@@ -164,24 +69,7 @@ public class SetupTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_33_title']",
 			RuntimeVariables.replace("Tags Blog Entry2 Title"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//td[@id='cke_contents__33_editor']/iframe")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//td[@id='cke_contents__33_editor']/iframe");
 		selenium.selectFrame("//td[@id='cke_contents__33_editor']/iframe");
 		selenium.type("//body",
 			RuntimeVariables.replace("Tags Blog Entry2 Content"));
@@ -197,24 +85,7 @@ public class SetupTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_33_title']",
 			RuntimeVariables.replace("Tags Blog Entry3 Title"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//td[@id='cke_contents__33_editor']/iframe")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//td[@id='cke_contents__33_editor']/iframe");
 		selenium.selectFrame("//td[@id='cke_contents__33_editor']/iframe");
 		selenium.type("//body",
 			RuntimeVariables.replace("Tags Blog Entry3 Content"));

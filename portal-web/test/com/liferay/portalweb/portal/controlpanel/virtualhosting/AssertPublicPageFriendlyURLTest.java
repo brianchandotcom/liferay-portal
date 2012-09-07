@@ -22,6 +22,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class AssertPublicPageFriendlyURLTest extends BaseTestCase {
 	public void testAssertPublicPageFriendlyURL() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/alpha/");
 		assertEquals(RuntimeVariables.replace(
 				"http://localhost:8080/web/alpha/"), selenium.getLocation());

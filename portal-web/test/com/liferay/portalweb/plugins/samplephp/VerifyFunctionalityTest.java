@@ -22,43 +22,13 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class VerifyFunctionalityTest extends BaseTestCase {
 	public void testVerifyFunctionality() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Sample PHP Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Sample PHP Test Page");
 		selenium.click(RuntimeVariables.replace("link=Sample PHP Test Page"));
 		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("//input[@value='']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent("//input[@value='']");
 		selenium.click(RuntimeVariables.replace("link=Quercus"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isElementPresent(

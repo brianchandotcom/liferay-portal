@@ -22,24 +22,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ConvertUnitTest extends BaseTestCase {
 	public void testConvertUnit() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Unit Converter Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Unit Converter Test Page");
 		selenium.clickAt("link=Unit Converter Test Page",
 			RuntimeVariables.replace("Unit Converter Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -53,25 +39,8 @@ public class ConvertUnitTest extends BaseTestCase {
 			RuntimeVariables.replace("Length"));
 		selenium.clickAt("//input[@value='Convert']",
 			RuntimeVariables.replace("Convert"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("2.5399999187200026")
-										.equals(selenium.getValue(
-								"//input[@name='_27_to_value']"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForValue("//input[@name='_27_to_value']",
+			"2.5399999187200026");
 		assertEquals("2.5399999187200026",
 			selenium.getValue("//input[@name='_27_to_value']"));
 	}

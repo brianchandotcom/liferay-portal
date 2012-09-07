@@ -22,45 +22,14 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ViewGraphsTest extends BaseTestCase {
 	public void testViewGraphs() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent(
-							"link=Currency Converter Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent("link=Currency Converter Test Page");
 		selenium.clickAt("link=Currency Converter Test Page",
 			RuntimeVariables.replace("Currency Converter Test Page"));
 		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("//input[@value='Convert']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent("//input[@value='Convert']");
 		selenium.clickAt("//input[@value='Convert']",
 			RuntimeVariables.replace("Convert"));
 		selenium.waitForPageToLoad("30000");

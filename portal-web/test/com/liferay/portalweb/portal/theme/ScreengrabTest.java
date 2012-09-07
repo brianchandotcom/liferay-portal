@@ -24,49 +24,19 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ScreengrabTest extends BaseTestCase {
 	public void testScreengrab() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.click(RuntimeVariables.replace("link=Theme Test Page"));
 		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("link=23")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent("link=23");
 		FileUtil.mkdirs(RuntimeVariables.replace(
 				"L:\\portal\\build\\portal-web\\test-output\\brochure\\"));
 		selenium.captureEntirePageScreenshot(RuntimeVariables.replace(
 				"L:\\portal\\build\\portal-web\\test-output\\brochure\\ScreengrabTest.jpg"),
 			"");
 		selenium.open("/user/joebloggs/home");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent(
-							"//div[@id='portlet-small-icon-bar_9']/nobr[2]/a/img")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent(
+			"//div[@id='portlet-small-icon-bar_9']/nobr[2]/a/img");
 		FileUtil.mkdirs(RuntimeVariables.replace(
 				"L:\\portal\\build\\portal-web\\test-output\\brochure\\"));
 		selenium.captureEntirePageScreenshot(RuntimeVariables.replace(

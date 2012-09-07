@@ -27,24 +27,10 @@ public class AddAnnouncementDeliveryTest extends BaseTestCase {
 		while (label >= 1) {
 			switch (label) {
 			case 1:
+				selenium.selectWindow("null");
+				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isElementPresent("link=Control Panel")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForElementPresent("link=Control Panel");
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace(""));
 				selenium.waitForPageToLoad("30000");
@@ -52,23 +38,8 @@ public class AddAnnouncementDeliveryTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				selenium.clickAt("announcementsLink",
 					RuntimeVariables.replace(""));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"_2_announcementsTypegeneralEmailCheckbox")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
+				selenium.waitForVisible(
+					"_2_announcementsTypegeneralEmailCheckbox");
 
 				boolean generalEmailChecked = selenium.isChecked(
 						"_2_announcementsTypegeneralEmailCheckbox");

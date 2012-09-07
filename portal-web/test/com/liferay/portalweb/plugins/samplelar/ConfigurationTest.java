@@ -22,47 +22,17 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ConfigurationTest extends BaseTestCase {
 	public void testConfiguration() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("link=Sample LAR Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent("link=Sample LAR Test Page");
 		selenium.clickAt("link=Sample LAR Test Page",
 			RuntimeVariables.replace("Sample LAR Test Page"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isTextPresent(
 				"This is the Sample LAR Portlet. This was made to demonstrate the portlet LAR plugin feature."));
 		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Export / Import")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Export / Import");
 		selenium.click(RuntimeVariables.replace("link=Export / Import"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isElementPresent(

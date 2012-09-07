@@ -22,49 +22,19 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class DragAndDropPortletTest extends BaseTestCase {
 	public void testDragAndDropPortlet() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/group-page-layout-community/");
 		selenium.clickAt("link=Page Layout Page",
 			RuntimeVariables.replace("Page Layout Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("//div[@id='main-content']",
 			RuntimeVariables.replace("Main Content"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent(
-							"//script[contains(@src,'/liferay/layout_column.js')]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/liferay/layout_column.js')]");
 		selenium.clickAt("//nav[@id='navigation']",
 			RuntimeVariables.replace("Navigation"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("//div[@id='navigation_shim']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent("//div[@id='navigation_shim']");
 		selenium.dragAndDropToObject("xPath=(//h1/span[2])[2]",
 			"//div[@id='column-2']");
 		assertEquals(RuntimeVariables.replace("Breadcrumb"),

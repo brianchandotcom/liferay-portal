@@ -23,6 +23,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ViewPublishToLiveNowWebContentSiteStagingTest extends BaseTestCase {
 	public void testViewPublishToLiveNowWebContentSiteStaging()
 		throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/community-site-test/home");
 		assertEquals(RuntimeVariables.replace("This is a Web Content article"),
 			selenium.getText("//div[@class='journal-content-article']/p"));

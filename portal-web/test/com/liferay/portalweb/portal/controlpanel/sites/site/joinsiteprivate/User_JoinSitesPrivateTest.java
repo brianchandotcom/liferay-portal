@@ -22,46 +22,16 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class User_JoinSitesPrivateTest extends BaseTestCase {
 	public void testUser_JoinSitesPrivate() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/user/selenium01/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=My Sites")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=My Sites");
 		selenium.clickAt("link=My Sites", RuntimeVariables.replace("My Sites"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("No sites were found."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
 		selenium.open("/user/selenium01/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Available Sites")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Available Sites");
 		selenium.clickAt("link=Available Sites",
 			RuntimeVariables.replace("Available Sites"));
 		selenium.waitForPageToLoad("30000");

@@ -22,46 +22,16 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class AssertTagOrderTest extends BaseTestCase {
 	public void testAssertTagOrder() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Tags", RuntimeVariables.replace("Tags"));
 		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("//div[2]/ul/li[1]/div/span/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent("//div[2]/ul/li[1]/div/span/a");
 		assertEquals(RuntimeVariables.replace("blue"),
 			selenium.getText("//div[2]/ul/li[1]/div/span/a"));
 		assertEquals(RuntimeVariables.replace("blue car"),

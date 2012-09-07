@@ -27,24 +27,10 @@ public class MB_SignInTest extends BaseTestCase {
 		while (label >= 1) {
 			switch (label) {
 			case 1:
+				selenium.selectWindow("null");
+				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("//input[@name='_58_login']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("//input[@name='_58_login']");
 				selenium.type("//input[@name='_58_login']",
 					RuntimeVariables.replace("mbban@liferay.com"));
 				selenium.type("//input[@id='_58_password']",

@@ -27,24 +27,10 @@ public class SA_AddScopeSitePageTest extends BaseTestCase {
 		while (label >= 1) {
 			switch (label) {
 			case 1:
+				selenium.selectWindow("null");
+				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isElementPresent("link=Control Panel")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForElementPresent("link=Control Panel");
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
@@ -60,24 +46,8 @@ public class SA_AddScopeSitePageTest extends BaseTestCase {
 						"//span[@title='Actions']/ul/li/strong/a/span"));
 				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible(
+					"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
 				assertEquals(RuntimeVariables.replace("Manage Pages"),
 					selenium.getText(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
@@ -86,24 +56,7 @@ public class SA_AddScopeSitePageTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				selenium.clickAt("//div[@id='_156_layoutSetToolbar']/span/button[1]",
 					RuntimeVariables.replace("Add Page"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//input[@name='_156_name_en_US']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("//input[@name='_156_name_en_US']");
 				selenium.type("//input[@name='_156_name_en_US']",
 					RuntimeVariables.replace("Scope Site Test Page"));
 				selenium.clickAt("//input[@value='Add Page']",
@@ -126,24 +79,8 @@ public class SA_AddScopeSitePageTest extends BaseTestCase {
 					RuntimeVariables.replace("Page Tree"));
 
 			case 2:
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//ul[@class='aui-tree-container']/li/div/div[3]/a")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible(
+					"//ul[@class='aui-tree-container']/li/div/div[3]/a");
 				assertEquals(RuntimeVariables.replace("Scope Site Test Page"),
 					selenium.getText(
 						"//ul[@class='aui-tree-container']/li/div/div[3]/a"));

@@ -24,49 +24,18 @@ public class WCC_SubmitForPublicationMainVariationHomeSiteStagingTest
 	extends BaseTestCase {
 	public void testWCC_SubmitForPublicationMainVariationHomeSiteStaging()
 		throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/community-site-test/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Staging")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Staging");
 		selenium.clickAt("link=Staging", RuntimeVariables.replace("Staging"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Submit for Publication"),
 			selenium.getText("//button[3]"));
 		selenium.clickAt("//button[3]",
 			RuntimeVariables.replace("Submit for Publication"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("Pending (Review)")
-										.equals(selenium.getText(
-								"//span[@class='workflow-status']/strong"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//span[@class='workflow-status']/strong",
+			"Pending (Review)");
 		assertEquals(RuntimeVariables.replace("Pending (Review)"),
 			selenium.getText("//span[@class='workflow-status']/strong"));
 		selenium.open("/web/community-site-test/home");

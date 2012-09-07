@@ -22,43 +22,13 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class SOUs_EditAddressNullProfileTest extends BaseTestCase {
 	public void testSOUs_EditAddressNullProfile() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/socialoffice01/so/profile");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div[@class='lfr-contact-name']/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//div[@class='lfr-contact-name']/a");
 		assertEquals(RuntimeVariables.replace("Social01 Office01 User01"),
 			selenium.getText("//div[@class='lfr-contact-name']/a"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div[@data-title='Addresses']/h3")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//div[@data-title='Addresses']/h3");
 		assertEquals(RuntimeVariables.replace("Addresses:"),
 			selenium.getText("//div[@data-title='Addresses']/h3"));
 		assertEquals(RuntimeVariables.replace(
@@ -66,24 +36,7 @@ public class SOUs_EditAddressNullProfileTest extends BaseTestCase {
 			selenium.getText("//div[@data-title='Addresses']/ul/li"));
 		selenium.clickAt("//div[@data-title='Addresses']",
 			RuntimeVariables.replace("Addresses:"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//input[contains(@id,'addressStreet1')]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//input[contains(@id,'addressStreet1')]");
 		Thread.sleep(5000);
 		selenium.type("//input[contains(@id,'addressStreet1')]",
 			RuntimeVariables.replace(""));
@@ -93,39 +46,8 @@ public class SOUs_EditAddressNullProfileTest extends BaseTestCase {
 			RuntimeVariables.replace(""));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div[@data-title='Addresses']/ul/li")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//li[@data-title='Addresses']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//div[@data-title='Addresses']/ul/li");
+		selenium.waitForVisible("//li[@data-title='Addresses']");
 		assertEquals(RuntimeVariables.replace("Addresses"),
 			selenium.getText("//li[@data-title='Addresses']"));
 		assertFalse(selenium.isTextPresent("Addresses:"));

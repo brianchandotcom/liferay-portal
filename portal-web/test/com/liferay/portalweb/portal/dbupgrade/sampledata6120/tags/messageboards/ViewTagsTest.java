@@ -22,51 +22,19 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ViewTagsTest extends BaseTestCase {
 	public void testViewTags() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/tags-message-board-community/");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Control Panel")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Tags", RuntimeVariables.replace("Tags"));
 		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("selenium")
-										.equals(selenium.getText(
-								"//li[1]/div/span/a"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//li[1]/div/span/a", "selenium");
 		assertEquals(RuntimeVariables.replace("selenium"),
 			selenium.getText("//li[1]/div/span/a"));
 		assertEquals(RuntimeVariables.replace("selenium1"),

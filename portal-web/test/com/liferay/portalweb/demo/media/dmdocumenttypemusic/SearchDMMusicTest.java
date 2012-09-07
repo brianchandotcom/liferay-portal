@@ -22,24 +22,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class SearchDMMusicTest extends BaseTestCase {
 	public void testSearchDMMusic() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Documents and Media Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Documents and Media Test Page");
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -47,25 +33,8 @@ public class SearchDMMusicTest extends BaseTestCase {
 			RuntimeVariables.replace("mp3"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("Searched for mp3 everywhere.")
-										.equals(selenium.getText(
-								"//div[@class='search-info']/span[@class='keywords']"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//div[@class='search-info']/span[@class='keywords']",
+			"Searched for mp3 everywhere.");
 		assertEquals(RuntimeVariables.replace("Searched for mp3 everywhere."),
 			selenium.getText(
 				"//div[@class='search-info']/span[@class='keywords']"));
@@ -76,25 +45,8 @@ public class SearchDMMusicTest extends BaseTestCase {
 			RuntimeVariables.replace("music"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("Searched for music everywhere.")
-										.equals(selenium.getText(
-								"//div[@class='search-info']/span[@class='keywords']"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//div[@class='search-info']/span[@class='keywords']",
+			"Searched for music everywhere.");
 		assertEquals(RuntimeVariables.replace("Searched for music everywhere."),
 			selenium.getText(
 				"//div[@class='search-info']/span[@class='keywords']"));
@@ -105,26 +57,8 @@ public class SearchDMMusicTest extends BaseTestCase {
 			RuntimeVariables.replace("\"DM Music Title\""));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace(
-							"Searched for \"DM Music Title\" everywhere.")
-										.equals(selenium.getText(
-								"//div[@class='search-info']/span[@class='keywords']"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//div[@class='search-info']/span[@class='keywords']",
+			"Searched for \"DM Music Title\" everywhere.");
 		assertEquals(RuntimeVariables.replace(
 				"Searched for \"DM Music Title\" everywhere."),
 			selenium.getText(

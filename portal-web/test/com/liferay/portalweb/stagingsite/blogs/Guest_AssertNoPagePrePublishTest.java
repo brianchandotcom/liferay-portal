@@ -21,6 +21,8 @@ import com.liferay.portalweb.portal.BaseTestCase;
  */
 public class Guest_AssertNoPagePrePublishTest extends BaseTestCase {
 	public void testGuest_AssertNoPagePrePublish() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
 		assertTrue(selenium.isElementNotPresent("link=Blogs Test Page"));
 	}

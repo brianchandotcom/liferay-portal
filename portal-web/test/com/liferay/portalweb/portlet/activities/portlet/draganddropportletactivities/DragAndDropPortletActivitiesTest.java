@@ -22,24 +22,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class DragAndDropPortletActivitiesTest extends BaseTestCase {
 	public void testDragAndDropPortletActivities() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/group/joebloggs/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Activities Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Activities Test Page");
 		selenium.clickAt("link=Activities Test Page",
 			RuntimeVariables.replace("Activities Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -54,24 +40,8 @@ public class DragAndDropPortletActivitiesTest extends BaseTestCase {
 		Thread.sleep(5000);
 		selenium.dragAndDropToObject("//span[@class='portlet-title-text']",
 			"//div[@id='column-2']");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//div[@id='column-2']/div/div[contains(@class,'portlet-activities')]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//div[@id='column-2']/div/div[contains(@class,'portlet-activities')]");
 		assertTrue(selenium.isVisible(
 				"//div[@id='column-2']/div/div[contains(@class,'portlet-activities')]"));
 		assertTrue(selenium.isElementNotPresent(

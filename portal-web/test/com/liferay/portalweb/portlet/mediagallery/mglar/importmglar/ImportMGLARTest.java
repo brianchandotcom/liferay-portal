@@ -22,29 +22,15 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ImportMGLARTest extends BaseTestCase {
 	public void testImportMGLAR() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("link=Media Gallery Test Page",
 			RuntimeVariables.replace("Media Gallery Test Page"));
 		selenium.waitForPageToLoad("30000");
 		Thread.sleep(5000);
 		selenium.click("//strong/a");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("link=Export / Import")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent("link=Export / Import");
 		selenium.clickAt("link=Export / Import",
 			RuntimeVariables.replace("Export / Import"));
 		selenium.waitForPageToLoad("30000");

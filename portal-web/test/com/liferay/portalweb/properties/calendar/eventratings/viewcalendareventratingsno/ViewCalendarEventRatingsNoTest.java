@@ -22,6 +22,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ViewCalendarEventRatingsNoTest extends BaseTestCase {
 	public void testViewCalendarEventRatingsNo() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("link=Calendar Test Page",
 			RuntimeVariables.replace("Calendar Test Page"));

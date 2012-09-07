@@ -21,58 +21,13 @@ import com.liferay.portalweb.portal.BaseTestCase;
  */
 public class ExtendSessionTest extends BaseTestCase {
 	public void testExtendSession() throws Exception {
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent(
-							"link=Session Expiration Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
+		selenium.waitForElementPresent("link=Session Expiration Test Page");
 		Thread.sleep(30000);
 		Thread.sleep(15000);
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//input[@value='Extend']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//input[@value='Extend']");
 		selenium.click("//input[@value='Extend']");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (!selenium.isVisible("//input[@value='Extend']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
+		selenium.waitForNotVisible("//input[@value='Extend']");
 	}
 }

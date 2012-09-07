@@ -22,6 +22,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class AssertPublicPageHostURLTest extends BaseTestCase {
 	public void testAssertPublicPageHostURL() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("http://www.able.com:8080/");
 		assertEquals(RuntimeVariables.replace("http://www.able.com:8080/"),
 			selenium.getLocation());

@@ -22,27 +22,13 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class EditUserSiteRoleTest extends BaseTestCase {
 	public void testEditUserSiteRole() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Control Panel")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
@@ -71,24 +57,8 @@ public class EditUserSiteRoleTest extends BaseTestCase {
 				"//span[@title='Actions']/ul[@id='_125_usersSearchContainer_usersn_menu']/li/strong/a"));
 		selenium.clickAt("//span[@title='Actions']/ul[@id='_125_usersSearchContainer_usersn_menu']/li/strong/a",
 			RuntimeVariables.replace("Actions"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]");
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]"));
@@ -98,24 +68,8 @@ public class EditUserSiteRoleTest extends BaseTestCase {
 		assertTrue(selenium.isPartialText("//a[@id='_125_rolesLink']", "Roles"));
 		selenium.clickAt("//a[@id='_125_rolesLink']",
 			RuntimeVariables.replace("Roles"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//span[contains(.,'Select')]/a[contains(@href,'openCommunityRoleSelector')]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//span[contains(.,'Select')]/a[contains(@href,'openCommunityRoleSelector')]");
 		assertEquals(RuntimeVariables.replace("Select"),
 			selenium.getText(
 				"//span[contains(.,'Select')]/a[contains(@href,'openCommunityRoleSelector')]"));
@@ -124,49 +78,16 @@ public class EditUserSiteRoleTest extends BaseTestCase {
 		Thread.sleep(5000);
 		selenium.waitForPopUp("role", RuntimeVariables.replace("30000"));
 		selenium.selectWindow("title=Users and Organizations");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//tr[contains(.,'Roles Siterole Name')]/td[@headers='_125_rolesSearchContainer_col-title']/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//tr[contains(.,'Roles Siterole Name')]/td[@headers='_125_rolesSearchContainer_col-title']/a");
 		assertEquals(RuntimeVariables.replace("Roles Siterole Name"),
 			selenium.getText(
 				"//tr[contains(.,'Roles Siterole Name')]/td[@headers='_125_rolesSearchContainer_col-title']/a"));
 		selenium.clickAt("//tr[contains(.,'Roles Siterole Name')]/td[@headers='_125_rolesSearchContainer_col-title']/a",
 			RuntimeVariables.replace("Roles Siterole Name"));
 		selenium.selectWindow("null");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isPartialText(
-							"//div[@id='_125_communityRolesSearchContainerSearchContainer']",
-							"Roles Siterole Name")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForPartialText("//div[@id='_125_communityRolesSearchContainerSearchContainer']",
+			"Roles Siterole Name");
 		assertTrue(selenium.isPartialText(
 				"//div[@id='_125_communityRolesSearchContainerSearchContainer']",
 				"Roles Siterole Name"));

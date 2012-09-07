@@ -22,47 +22,15 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class RatePage2DLFolder2Document2Test extends BaseTestCase {
 	public void testRatePage2DLFolder2Document2() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/document-library-page-scope-community/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=DL Page2 Name")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=DL Page2 Name");
 		selenium.clickAt("link=DL Page2 Name",
 			RuntimeVariables.replace("DL Page2 Name"));
 		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace(
-							"Documents and Media (DL Page2 Name)")
-										.equals(selenium.getText(
-								"//span[@class='portlet-title-text']"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//span[@class='portlet-title-text']",
+			"Documents and Media (DL Page2 Name)");
 		assertEquals(RuntimeVariables.replace(
 				"Documents and Media (DL Page2 Name)"),
 			selenium.getText("//span[@class='portlet-title-text']"));
@@ -71,24 +39,8 @@ public class RatePage2DLFolder2Document2Test extends BaseTestCase {
 				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
 		selenium.clickAt("//a[contains(@class,'document-link')]/span[@class='entry-title']",
 			RuntimeVariables.replace("DL Folder2 Name"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//div[@id='_20_breadcrumbContainer']/ul/li[3]/span/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//div[@id='_20_breadcrumbContainer']/ul/li[3]/span/a");
 		assertEquals(RuntimeVariables.replace("DL Folder2 Name"),
 			selenium.getText(
 				"//div[@id='_20_breadcrumbContainer']/ul/li[3]/span/a"));
@@ -97,49 +49,16 @@ public class RatePage2DLFolder2Document2Test extends BaseTestCase {
 				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[1]"));
 		selenium.clickAt("xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[1]",
 			RuntimeVariables.replace("DL Folder2 Document2 Title.xls"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"xPath=(//div[@class='aui-rating-label-element'])[2]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"xPath=(//div[@class='aui-rating-label-element'])[2]");
 		assertEquals(RuntimeVariables.replace("Average (0 Votes)"),
 			selenium.getText(
 				"xPath=(//div[@class='aui-rating-label-element'])[2]"));
 		Thread.sleep(5000);
 		selenium.clickAt("//div[contains(@class,'liferay-rating-vote')]/div/a[4]",
 			RuntimeVariables.replace(""));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("Average (1 Vote)")
-										.equals(selenium.getText(
-								"xPath=(//div[@class='aui-rating-label-element'])[2]"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("xPath=(//div[@class='aui-rating-label-element'])[2]",
+			"Average (1 Vote)");
 		assertEquals(RuntimeVariables.replace("Average (1 Vote)"),
 			selenium.getText(
 				"xPath=(//div[@class='aui-rating-label-element'])[2]"));

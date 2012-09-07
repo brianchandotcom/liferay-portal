@@ -22,24 +22,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class DeleteMessageNullAllMailTest extends BaseTestCase {
 	public void testDeleteMessageNullAllMail() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Mail Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Mail Test Page");
 		selenium.click(RuntimeVariables.replace("link=Mail Test Page"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
@@ -47,66 +33,17 @@ public class DeleteMessageNullAllMailTest extends BaseTestCase {
 			selenium.getText("//div/div/div[1]/div/ul/li/span/span/a"));
 		selenium.clickAt("//div/div/div[1]/div/ul/li/span/span/a",
 			RuntimeVariables.replace("liferay.qa.testing.trunk@gmail.com"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//a[contains(.,'All Mail')]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//a[contains(.,'All Mail')]");
 		assertTrue(selenium.isPartialText("//a[contains(.,'All Mail')]",
 				"All Mail"));
 		selenium.clickAt("//a[contains(.,'All Mail')]",
 			RuntimeVariables.replace("All Mail"));
 		Thread.sleep(5000);
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//input[@value='Delete']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//input[@value='Delete']");
 		selenium.clickAt("//input[@value='Delete']",
 			RuntimeVariables.replace("Delete"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("No messages selected.")
-										.equals(selenium.getText(
-								"//span[@class='message portlet-msg-error']"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//span[@class='message portlet-msg-error']",
+			"No messages selected.");
 		assertEquals(RuntimeVariables.replace("No messages selected."),
 			selenium.getText("//span[@class='message portlet-msg-error']"));
 	}

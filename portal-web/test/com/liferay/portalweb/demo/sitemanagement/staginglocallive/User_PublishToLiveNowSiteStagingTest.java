@@ -28,24 +28,10 @@ public class User_PublishToLiveNowSiteStagingTest extends BaseTestCase {
 		while (label >= 1) {
 			switch (label) {
 			case 1:
+				selenium.selectWindow("null");
+				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isElementPresent("link=Site Name")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForElementPresent("link=Site Name");
 				selenium.clickAt("link=Site Name",
 					RuntimeVariables.replace("Site Name"));
 				selenium.waitForPageToLoad("30000");
@@ -66,46 +52,14 @@ public class User_PublishToLiveNowSiteStagingTest extends BaseTestCase {
 				Thread.sleep(5000);
 				selenium.clickAt("//strong/a",
 					RuntimeVariables.replace("Staging"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible(
+					"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a");
 				assertEquals(RuntimeVariables.replace("Publish to Live Now"),
 					selenium.getText(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
 				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a",
 					RuntimeVariables.replace("Publish to Live Now"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("//div[2]/div[1]/a")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("//div[2]/div[1]/a");
 				Thread.sleep(5000);
 
 				boolean allVisible = selenium.isVisible("_88_rangeAll");
@@ -120,65 +74,15 @@ public class User_PublishToLiveNowSiteStagingTest extends BaseTestCase {
 					RuntimeVariables.replace("Plus"));
 
 			case 2:
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isElementPresent(
-									"//input[@id='_88_rangeAll']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForElementPresent("//input[@id='_88_rangeAll']");
 				selenium.clickAt("//input[@id='_88_rangeAll']",
 					RuntimeVariables.replace("All"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("//input[@value='Publish']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("//input[@value='Publish']");
 				selenium.clickAt("//input[@value='Publish']",
 					RuntimeVariables.replace("Publish"));
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to publish these pages[\\s\\S]$"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//div[@class='portlet-msg-success']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("//div[@class='portlet-msg-success']");
 				assertEquals(RuntimeVariables.replace(
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));

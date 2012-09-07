@@ -23,44 +23,14 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ViewPortletApplicationAdapterNoneTest extends BaseTestCase {
 	public void testViewPortletApplicationAdapterNone()
 		throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/community-name/public-page");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Public Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Public Page");
 		selenium.clickAt("link=Public Page",
 			RuntimeVariables.replace("Public Page"));
 		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//section")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//section");
 		assertTrue(selenium.isVisible("//section"));
 		assertEquals(RuntimeVariables.replace("Liferay"),
 			selenium.getText(

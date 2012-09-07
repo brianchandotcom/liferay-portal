@@ -23,6 +23,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ViewUSStatisticSAAddBlogsEntryComment2Test extends BaseTestCase {
 	public void testViewUSStatisticSAAddBlogsEntryComment2()
 		throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("link=User Statistics Test Page",
 			RuntimeVariables.replace("User Statistics Test Page"));

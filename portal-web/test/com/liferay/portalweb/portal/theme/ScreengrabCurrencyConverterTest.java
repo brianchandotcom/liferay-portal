@@ -24,41 +24,12 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ScreengrabCurrencyConverterTest extends BaseTestCase {
 	public void testScreengrabCurrencyConverter() throws Exception {
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("link=Test Page 5")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
+		selenium.waitForElementPresent("link=Test Page 5");
 		selenium.click(RuntimeVariables.replace("link=Test Page 5"));
 		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("//input[@value='Convert']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent("//input[@value='Convert']");
 		FileUtil.mkdirs(RuntimeVariables.replace(
 				"L:\\portal\\build\\portal-web\\test-output\\brochure\\"));
 		selenium.captureEntirePageScreenshot(RuntimeVariables.replace(

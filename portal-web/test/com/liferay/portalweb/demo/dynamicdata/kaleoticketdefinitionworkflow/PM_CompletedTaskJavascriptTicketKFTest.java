@@ -23,25 +23,11 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class PM_CompletedTaskJavascriptTicketKFTest extends BaseTestCase {
 	public void testPM_CompletedTaskJavascriptTicketKF()
 		throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Kaleo Forms Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Kaleo Forms Test Page");
 		selenium.clickAt("link=Kaleo Forms Test Page",
 			RuntimeVariables.replace("Kaleo Forms Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -76,24 +62,8 @@ public class PM_CompletedTaskJavascriptTicketKFTest extends BaseTestCase {
 				"//a[@id='_1_WAR_kaleoformsportlet_CompletedtaskChangeStatusLink']"));
 		selenium.clickAt("//a[@id='_1_WAR_kaleoformsportlet_CompletedtaskChangeStatusLink']",
 			RuntimeVariables.replace("Completed"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//div[@class='aui-panel-content aui-dialog-content yui3-widget-stdmod']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//div[@class='aui-panel-content aui-dialog-content yui3-widget-stdmod']");
 		assertEquals(RuntimeVariables.replace("OK"),
 			selenium.getText(
 				"//div[@class='aui-panel-content aui-dialog-content yui3-widget-stdmod']/div[3]/span/span/button[1]"));

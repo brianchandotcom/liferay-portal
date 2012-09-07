@@ -27,47 +27,17 @@ public class AddSitePublicPage2ChildPageCPTest extends BaseTestCase {
 		while (label >= 1) {
 			switch (label) {
 			case 1:
+				selenium.selectWindow("null");
+				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
 				selenium.clickAt("//div[@id='dockbar']",
 					RuntimeVariables.replace("Dockbar"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isElementPresent(
-									"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForElementPresent(
+					"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
 				assertEquals(RuntimeVariables.replace("Go to"),
 					selenium.getText("//li[@id='_145_mySites']/a/span"));
 				selenium.mouseOver("//li[@id='_145_mySites']/a/span");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("link=Control Panel")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("link=Control Panel");
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
@@ -83,113 +53,31 @@ public class AddSitePublicPage2ChildPageCPTest extends BaseTestCase {
 						"//span[@title='Actions']/ul/li/strong/a/span"));
 				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (RuntimeVariables.replace("Manage Pages")
-												.equals(selenium.getText(
-										"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Manage Pages')]/a"))) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForText("//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Manage Pages')]/a",
+					"Manage Pages");
 				assertEquals(RuntimeVariables.replace("Manage Pages"),
 					selenium.getText(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Manage Pages')]/a"));
 				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Manage Pages')]/a",
 					RuntimeVariables.replace("Manage Pages"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("//li[2]/div/div[3]/a")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("//li[2]/div/div[3]/a");
 				assertEquals(RuntimeVariables.replace("Public Page2"),
 					selenium.getText("//li[2]/div/div[3]/a"));
 				selenium.clickAt("//li[2]/div/div[3]/a",
 					RuntimeVariables.replace("Public Page2"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (RuntimeVariables.replace("Public Page2")
-												.equals(selenium.getValue(
-										"//input[@id='_156_name_en_US']"))) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForValue("//input[@id='_156_name_en_US']",
+					"Public Page2");
 				assertEquals("Public Page2",
 					selenium.getValue("//input[@id='_156_name_en_US']"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//div[@id='_156_layoutToolbar']/span/button/span[contains(.,'Add Child Page')]")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible(
+					"//div[@id='_156_layoutToolbar']/span/button/span[contains(.,'Add Child Page')]");
 				assertEquals(RuntimeVariables.replace("Add Child Page"),
 					selenium.getText(
 						"//div[@id='_156_layoutToolbar']/span/button/span[contains(.,'Add Child Page')]"));
 				selenium.clickAt("//div[@id='_156_layoutToolbar']/span/button/span[contains(.,'Add Child Page')]",
 					RuntimeVariables.replace("Add Child Page"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//input[@id='_156_addLayoutName_en_US']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible(
+					"//input[@id='_156_addLayoutName_en_US']");
 				selenium.type("//input[@id='_156_addLayoutName_en_US']",
 					RuntimeVariables.replace("Public Page2 Child Page"));
 				selenium.click(RuntimeVariables.replace(
@@ -200,23 +88,8 @@ public class AddSitePublicPage2ChildPageCPTest extends BaseTestCase {
 					selenium.getText("//div[@class='portlet-msg-success']"));
 				selenium.clickAt("//div[@class='aui-tree-hitarea']",
 					RuntimeVariables.replace("Drop Down Arrow"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isElementPresent(
-									"xPath=(//a[@class='layout-tree'])[2]")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
+				selenium.waitForElementPresent(
+					"xPath=(//a[@class='layout-tree'])[2]");
 
 				boolean pageVisible = selenium.isVisible(
 						"xPath=(//a[@class='layout-tree'])[2]");
@@ -231,23 +104,7 @@ public class AddSitePublicPage2ChildPageCPTest extends BaseTestCase {
 					RuntimeVariables.replace("Drop Down Arrow"));
 
 			case 2:
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("//li/ul/li/ul/li/div/div[3]/a")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("//li/ul/li/ul/li/div/div[3]/a");
 				assertEquals(RuntimeVariables.replace("Public Page2 Child Page"),
 					selenium.getText("//li/ul/li/ul/li/div/div[3]/a"));
 

@@ -23,26 +23,12 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ViewCommunityStagingCommunityWCDTest extends BaseTestCase {
 	public void testViewCommunityStagingCommunityWCD()
 		throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open(
 			"/web/community-staging-community-web-content-display-staging/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"link=Page Staging Community Web Content Display")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"link=Page Staging Community Web Content Display");
 		selenium.clickAt("link=Page Staging Community Web Content Display",
 			RuntimeVariables.replace(
 				"Page Staging Community Web Content Display"));
@@ -52,23 +38,7 @@ public class ViewCommunityStagingCommunityWCDTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Control Panel")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
@@ -85,24 +55,8 @@ public class ViewCommunityStagingCommunityWCDTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
 			selenium.getText("//td[7]/a"));
 		selenium.open("/web/community-staging-community-web-content-display/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"link=Page Staging Community Web Content Display")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"link=Page Staging Community Web Content Display");
 		selenium.clickAt("link=Page Staging Community Web Content Display",
 			RuntimeVariables.replace(
 				"Page Staging Community Web Content Display"));
@@ -111,23 +65,7 @@ public class ViewCommunityStagingCommunityWCDTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Control Panel")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");

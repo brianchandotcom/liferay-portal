@@ -22,25 +22,11 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class AddAsConnectionCCUserMultipleTest extends BaseTestCase {
 	public void testAddAsConnectionCCUserMultiple() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/user/joebloggs/so/dashboard/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//nav/ul/li[contains(.,'Contacts Center')]/a/span")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//nav/ul/li[contains(.,'Contacts Center')]/a/span");
 		selenium.clickAt("//nav/ul/li[contains(.,'Contacts Center')]/a/span",
 			RuntimeVariables.replace("Contacts Center"));
 		selenium.waitForPageToLoad("30000");
@@ -50,69 +36,18 @@ public class AddAsConnectionCCUserMultipleTest extends BaseTestCase {
 				"//div[contains(@class, 'contacts-center-home-content')]"));
 		selenium.type("//input[@id='_1_WAR_contactsportlet_name']",
 			RuntimeVariables.replace("socialoffice"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("User01, Social01")
-										.equals(selenium.getText(
-								"xPath=(//div[contains(@class, 'lfr-contact-name')]/a)[contains(.,'User01, Social01')]"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("xPath=(//div[contains(@class, 'lfr-contact-name')]/a)[contains(.,'User01, Social01')]",
+			"User01, Social01");
 		assertEquals(RuntimeVariables.replace("User01, Social01"),
 			selenium.getText(
 				"xPath=(//div[contains(@class, 'lfr-contact-name')]/a)[contains(.,'User01, Social01')]"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("User02, Social02")
-										.equals(selenium.getText(
-								"xPath=(//div[contains(@class, 'lfr-contact-name')]/a)[contains(.,'User02, Social02')]"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("xPath=(//div[contains(@class, 'lfr-contact-name')]/a)[contains(.,'User02, Social02')]",
+			"User02, Social02");
 		assertEquals(RuntimeVariables.replace("User02, Social02"),
 			selenium.getText(
 				"xPath=(//div[contains(@class, 'lfr-contact-name')]/a)[contains(.,'User02, Social02')]"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("User03, Social03")
-										.equals(selenium.getText(
-								"xPath=(//div[contains(@class, 'lfr-contact-name')]/a)[contains(.,'User03, Social03')]"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("xPath=(//div[contains(@class, 'lfr-contact-name')]/a)[contains(.,'User03, Social03')]",
+			"User03, Social03");
 		assertEquals(RuntimeVariables.replace("User03, Social03"),
 			selenium.getText(
 				"xPath=(//div[contains(@class, 'lfr-contact-name')]/a)[contains(.,'User03, Social03')]"));
@@ -122,24 +57,7 @@ public class AddAsConnectionCCUserMultipleTest extends BaseTestCase {
 			RuntimeVariables.replace("Checkbox"));
 		assertTrue(selenium.isChecked(
 				"xPath=(//div[@class='lfr-contact-checkbox']/input)[1]"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"xPath=(//div[@class='lfr-contact-thumb'])[4]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("xPath=(//div[@class='lfr-contact-thumb'])[4]");
 		assertTrue(selenium.isVisible(
 				"xPath=(//div[@class='lfr-contact-thumb'])[4]"));
 		assertFalse(selenium.isChecked(
@@ -148,24 +66,7 @@ public class AddAsConnectionCCUserMultipleTest extends BaseTestCase {
 			RuntimeVariables.replace("Checkbox"));
 		assertTrue(selenium.isChecked(
 				"xPath=(//div[@class='lfr-contact-checkbox']/input)[2]"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"xPath=(//div[@class='lfr-contact-thumb'])[5]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("xPath=(//div[@class='lfr-contact-thumb'])[5]");
 		assertTrue(selenium.isVisible(
 				"xPath=(//div[@class='lfr-contact-thumb'])[5]"));
 		assertFalse(selenium.isChecked(
@@ -174,24 +75,7 @@ public class AddAsConnectionCCUserMultipleTest extends BaseTestCase {
 			RuntimeVariables.replace("Checkbox"));
 		assertTrue(selenium.isChecked(
 				"xPath=(//div[@class='lfr-contact-checkbox']/input)[3]"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"xPath=(//div[@class='lfr-contact-thumb'])[6]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("xPath=(//div[@class='lfr-contact-thumb'])[6]");
 		assertTrue(selenium.isVisible(
 				"xPath=(//div[@class='lfr-contact-thumb'])[6]"));
 		assertEquals(RuntimeVariables.replace("Add Connection"),
@@ -199,23 +83,7 @@ public class AddAsConnectionCCUserMultipleTest extends BaseTestCase {
 				"//button[@id='_1_WAR_contactsportlet_addConnectionButton']"));
 		selenium.clickAt("//button[@id='_1_WAR_contactsportlet_addConnectionButton']",
 			RuntimeVariables.replace("Add Connection"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//span[@class='portlet-msg-success']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//span[@class='portlet-msg-success']");
 		assertEquals(RuntimeVariables.replace(
 				"This user has received a connection request from you."),
 			selenium.getText("//span[@class='portlet-msg-success']"));

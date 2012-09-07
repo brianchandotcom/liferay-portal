@@ -27,25 +27,10 @@ public class TearDownDMDocumentTypeTest extends BaseTestCase {
 		while (label >= 1) {
 			switch (label) {
 			case 1:
+				selenium.selectWindow("null");
+				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"link=Documents and Media Test Page")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("link=Documents and Media Test Page");
 				selenium.clickAt("link=Documents and Media Test Page",
 					RuntimeVariables.replace("Documents and Media Test Page"));
 				selenium.waitForPageToLoad("30000");
@@ -55,64 +40,16 @@ public class TearDownDMDocumentTypeTest extends BaseTestCase {
 						"//span[@title='Manage']/ul/li/strong/a/span"));
 				selenium.clickAt("//span[@title='Manage']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Manage"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible(
+					"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a");
 				assertEquals(RuntimeVariables.replace("Document Types"),
 					selenium.getText(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
 				selenium.click(
 					"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("//iframe")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("//iframe");
 				selenium.selectFrame("//iframe");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("//input[@id='_20_keywords']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("//input[@id='_20_keywords']");
 				selenium.type("//input[@id='_20_keywords']",
 					RuntimeVariables.replace("music"));
 				selenium.clickAt("//input[@value='Search']",
@@ -134,24 +71,8 @@ public class TearDownDMDocumentTypeTest extends BaseTestCase {
 						"//span[@title='Actions']/ul/li/strong/a/span"));
 				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible(
+					"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a");
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));

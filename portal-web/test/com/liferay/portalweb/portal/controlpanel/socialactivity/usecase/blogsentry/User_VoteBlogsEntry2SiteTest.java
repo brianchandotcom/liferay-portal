@@ -22,24 +22,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class User_VoteBlogsEntry2SiteTest extends BaseTestCase {
 	public void testUser_VoteBlogsEntry2Site() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/site-name/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Blogs Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Blogs Test Page");
 		selenium.clickAt("link=Blogs Test Page",
 			RuntimeVariables.replace("Blogs Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -49,47 +35,14 @@ public class User_VoteBlogsEntry2SiteTest extends BaseTestCase {
 			RuntimeVariables.replace("Blogs Entry2 Title"));
 		selenium.waitForPageToLoad("30000");
 		Thread.sleep(5000);
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"xPath=(//div[@class='aui-rating-label-element'])[2]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"xPath=(//div[@class='aui-rating-label-element'])[2]");
 		assertEquals(RuntimeVariables.replace("Average (0 Votes)"),
 			selenium.getText(
 				"xPath=(//div[@class='aui-rating-label-element'])[2]"));
 		selenium.clickAt("//a[4]", RuntimeVariables.replace("4 Stars"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("Average (1 Vote)")
-										.equals(selenium.getText(
-								"xPath=(//div[@class='aui-rating-label-element'])[2]"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("xPath=(//div[@class='aui-rating-label-element'])[2]",
+			"Average (1 Vote)");
 		assertEquals(RuntimeVariables.replace("Average (1 Vote)"),
 			selenium.getText(
 				"xPath=(//div[@class='aui-rating-label-element'])[2]"));

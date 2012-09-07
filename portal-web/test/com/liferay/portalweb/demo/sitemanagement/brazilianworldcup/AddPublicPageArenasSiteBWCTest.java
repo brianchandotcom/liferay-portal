@@ -27,24 +27,10 @@ public class AddPublicPageArenasSiteBWCTest extends BaseTestCase {
 		while (label >= 1) {
 			switch (label) {
 			case 1:
+				selenium.selectWindow("null");
+				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isElementPresent("link=Control Panel")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForElementPresent("link=Control Panel");
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
@@ -68,24 +54,8 @@ public class AddPublicPageArenasSiteBWCTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				selenium.clickAt("//div/span/button[1]",
 					RuntimeVariables.replace("Add Page"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//input[@id='_156_addLayoutName_en_US']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible(
+					"//input[@id='_156_addLayoutName_en_US']");
 				selenium.type("//input[@id='_156_addLayoutName_en_US']",
 					RuntimeVariables.replace("Arenas"));
 				selenium.clickAt("//input[@value='Add Page']",
@@ -96,23 +66,8 @@ public class AddPublicPageArenasSiteBWCTest extends BaseTestCase {
 					selenium.getText("//div[@class='portlet-msg-success']"));
 				selenium.clickAt("//div[@class='aui-tree-hitarea']",
 					RuntimeVariables.replace("Drop Down Arrow"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isElementPresent(
-									"xPath=(//a[@class='layout-tree'])[2]")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
+				selenium.waitForElementPresent(
+					"xPath=(//a[@class='layout-tree'])[2]");
 
 				boolean pageVisible = selenium.isVisible(
 						"xPath=(//a[@class='layout-tree'])[2]");
@@ -127,23 +82,7 @@ public class AddPublicPageArenasSiteBWCTest extends BaseTestCase {
 					RuntimeVariables.replace("Drop Down Arrow"));
 
 			case 2:
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("//li/ul/li[1]/div/div[3]/a")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("//li/ul/li[1]/div/div[3]/a");
 				assertEquals(RuntimeVariables.replace("Home"),
 					selenium.getText("//li/ul/li[1]/div/div[3]/a"));
 				assertEquals(RuntimeVariables.replace("Arenas"),

@@ -22,24 +22,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class AddWikiFrontPageAttachmentTest extends BaseTestCase {
 	public void testAddWikiFrontPageAttachment() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/wiki-use-case-community/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Wiki Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Wiki Test Page");
 		selenium.clickAt("link=Wiki Test Page",
 			RuntimeVariables.replace("Wiki Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -54,25 +40,8 @@ public class AddWikiFrontPageAttachmentTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Add Attachments']",
 			RuntimeVariables.replace("Add Attachments"));
 		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("Use the classic uploader.")
-										.equals(selenium.getText(
-								"//a[contains(@class,'use-fallback')]"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//a[contains(@class,'use-fallback')]",
+			"Use the classic uploader.");
 		assertEquals(RuntimeVariables.replace("Use the classic uploader."),
 			selenium.getText("//a[contains(@class,'use-fallback')]"));
 		selenium.clickAt("//a[contains(@class,'use-fallback')]",
@@ -91,23 +60,7 @@ public class AddWikiFrontPageAttachmentTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("3.1k"),
 			selenium.getText("//td[2]/a"));
 		selenium.open("/web/wiki-use-case-community/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("link=Wiki Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent("link=Wiki Test Page");
 		selenium.clickAt("link=Wiki Test Page",
 			RuntimeVariables.replace("Wiki Test Page"));
 		selenium.waitForPageToLoad("30000");

@@ -27,24 +27,10 @@ public class ConfigurePortletStateTaxTest extends BaseTestCase {
 		while (label >= 1) {
 			switch (label) {
 			case 1:
+				selenium.selectWindow("null");
+				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("link=Shopping Test Page")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("link=Shopping Test Page");
 				selenium.clickAt("link=Shopping Test Page",
 					RuntimeVariables.replace("Shopping Test Page"));
 				selenium.waitForPageToLoad("30000");
@@ -53,47 +39,15 @@ public class ConfigurePortletStateTaxTest extends BaseTestCase {
 					selenium.getText("//strong/a"));
 				selenium.clickAt("//strong/a",
 					RuntimeVariables.replace("Options"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible(
+					"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
 				assertEquals(RuntimeVariables.replace("Configuration"),
 					selenium.getText(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
 				selenium.click(
 					"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
 				Thread.sleep(5000);
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("//input[@id='_86_taxRate']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("//input[@id='_86_taxRate']");
 				selenium.type("//input[@id='_86_taxRate']",
 					RuntimeVariables.replace("7.250%"));
 				selenium.clickAt("//input[@value='Save']",
@@ -103,23 +57,7 @@ public class ConfigurePortletStateTaxTest extends BaseTestCase {
 						"You have successfully updated the setup."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
 				selenium.open("/web/guest/home/");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("link=Shopping Test Page")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("link=Shopping Test Page");
 				selenium.clickAt("link=Shopping Test Page",
 					RuntimeVariables.replace("Shopping Test Page"));
 				selenium.waitForPageToLoad("30000");

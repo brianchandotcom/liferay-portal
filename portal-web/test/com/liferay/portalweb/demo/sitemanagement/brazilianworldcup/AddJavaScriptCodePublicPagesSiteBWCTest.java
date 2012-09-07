@@ -23,24 +23,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AddJavaScriptCodePublicPagesSiteBWCTest extends BaseTestCase {
 	public void testAddJavaScriptCodePublicPagesSiteBWC()
 		throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
@@ -66,23 +52,7 @@ public class AddJavaScriptCodePublicPagesSiteBWCTest extends BaseTestCase {
 				"JavaScript"));
 		selenium.clickAt("//a[@id='_156_javascriptLink']",
 			RuntimeVariables.replace("JavaScript"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//textarea[@id='_156_javascript']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//textarea[@id='_156_javascript']");
 		selenium.type("//textarea[@id='_156_javascript']",
 			RuntimeVariables.replace(
 				"var test = document.getElementById('footer');test.innerHTML = \"Welcome to Brazil\";"));

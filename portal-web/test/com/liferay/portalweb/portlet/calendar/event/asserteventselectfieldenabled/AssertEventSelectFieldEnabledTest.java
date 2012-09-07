@@ -22,24 +22,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class AssertEventSelectFieldEnabledTest extends BaseTestCase {
 	public void testAssertEventSelectFieldEnabled() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("link=Calendar Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent("link=Calendar Test Page");
 		selenium.clickAt("link=Calendar Test Page", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("//input[@value='Add Event']",
@@ -64,45 +50,13 @@ public class AssertEventSelectFieldEnabledTest extends BaseTestCase {
 		assertTrue(selenium.isElementPresent("//select[@name='_8_type']"));
 		selenium.clickAt("//input[@name='_8_recurrenceType' and @value='5']",
 			RuntimeVariables.replace(""));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("_8_monthlyType")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("_8_monthlyType");
 		assertTrue(selenium.isElementPresent("//select[@name='_8_monthlyPos']"));
 		assertTrue(selenium.isElementPresent("//select[@name='_8_monthlyDay1']"));
 		assertTrue(selenium.isElementPresent("//select[@name='_8_monthlyDay1']"));
 		selenium.clickAt("//input[@name='_8_recurrenceType' and @value='6']",
 			RuntimeVariables.replace(""));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("_8_yearlyType")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("_8_yearlyType");
 		assertTrue(selenium.isElementPresent(
 				"//select[@name='_8_yearlyMonth0']"));
 		assertTrue(selenium.isElementPresent("//select[@name='_8_yearlyPos']"));
@@ -137,23 +91,7 @@ public class AssertEventSelectFieldEnabledTest extends BaseTestCase {
 				"//select[@name='_8_type' and @disabled='']"));
 		selenium.clickAt("//input[@name='_8_recurrenceType' and @value='5']",
 			RuntimeVariables.replace(""));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("_8_monthlyType")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("_8_monthlyType");
 		assertTrue(selenium.isElementNotPresent(
 				"//select[@name='_8_monthlyPos' and @disabled='']"));
 		assertTrue(selenium.isElementNotPresent(
@@ -162,23 +100,7 @@ public class AssertEventSelectFieldEnabledTest extends BaseTestCase {
 				"//select[@name='_8_monthlyDay1' and @disabled='']"));
 		selenium.clickAt("//input[@name='_8_recurrenceType' and @value='6']",
 			RuntimeVariables.replace(""));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("_8_yearlyType")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("_8_yearlyType");
 		assertTrue(selenium.isElementNotPresent(
 				"//select[@name='_8_yearlyMonth0' and @disabled='']"));
 		assertTrue(selenium.isElementNotPresent(

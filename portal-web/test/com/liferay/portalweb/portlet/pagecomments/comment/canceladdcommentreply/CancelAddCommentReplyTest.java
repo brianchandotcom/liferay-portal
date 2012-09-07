@@ -22,24 +22,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class CancelAddCommentReplyTest extends BaseTestCase {
 	public void testCancelAddCommentReply() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Page Comments Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Page Comments Test Page");
 		selenium.clickAt("link=Page Comments Test Page",
 			RuntimeVariables.replace("Page Comments Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -47,47 +33,13 @@ public class CancelAddCommentReplyTest extends BaseTestCase {
 			selenium.getText("//li[1]/span/a/span"));
 		selenium.clickAt("//li[1]/span/a/span",
 			RuntimeVariables.replace("Post Reply"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//textarea[@name='_107_postReplyBody1']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//textarea[@name='_107_postReplyBody1']");
 		assertTrue(selenium.isVisible("//textarea[@name='_107_postReplyBody1']"));
 		selenium.type("//textarea[@name='_107_postReplyBody1']",
 			RuntimeVariables.replace("PC Comment Reply"));
 		selenium.clickAt("xPath=(//input[@value='Cancel'])[2]",
 			RuntimeVariables.replace("Cancel"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (!selenium.isVisible(
-							"//textarea[@name='_107_postReplyBody1']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForNotVisible("//textarea[@name='_107_postReplyBody1']");
 		assertFalse(selenium.isTextPresent("PC Comment Reply"));
 		assertFalse(selenium.isVisible(
 				"//textarea[@name='_107_postReplyBody1']"));

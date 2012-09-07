@@ -27,24 +27,10 @@ public class CheckOutOrderTest extends BaseTestCase {
 		while (label >= 1) {
 			switch (label) {
 			case 1:
+				selenium.selectWindow("null");
+				selenium.selectFrame("relative=top");
 				selenium.open("/user/joebloggs/home/");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isElementPresent("link=Communities I Own")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForElementPresent("link=Communities I Own");
 				selenium.clickAt("link=Communities I Own",
 					RuntimeVariables.replace(""));
 				selenium.waitForPageToLoad("30000");
@@ -108,23 +94,7 @@ public class CheckOutOrderTest extends BaseTestCase {
 				assertTrue(selenium.isTextPresent(
 						"Thank you for your purchase."));
 				selenium.open("/user/joebloggs/home/");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isElementPresent("link=Communities I Own")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForElementPresent("link=Communities I Own");
 				selenium.clickAt("link=Communities I Own",
 					RuntimeVariables.replace(""));
 				selenium.waitForPageToLoad("30000");

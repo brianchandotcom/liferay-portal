@@ -22,24 +22,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ViewIGFolderImageAPTest extends BaseTestCase {
 	public void testViewIGFolderImageAP() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Asset Publisher Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Asset Publisher Test Page");
 		selenium.clickAt("link=Asset Publisher Test Page",
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -48,23 +34,7 @@ public class ViewIGFolderImageAPTest extends BaseTestCase {
 		assertTrue(selenium.isElementPresent(
 				"//div[@class='asset-resource-info']/div"));
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Documents and Media Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Documents and Media Test Page");
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -72,25 +42,8 @@ public class ViewIGFolderImageAPTest extends BaseTestCase {
 			selenium.getText("//div[@class='document-container']/div/a/span[2]"));
 		selenium.clickAt("//div[@class='document-container']/div/a/span[2]",
 			RuntimeVariables.replace("IG Folder Name"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("IG Folder Name")
-										.equals(selenium.getText(
-								"//li[@class='folder selected']/a/span[2]"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//li[@class='folder selected']/a/span[2]",
+			"IG Folder Name");
 		assertEquals(RuntimeVariables.replace("IG Folder Name"),
 			selenium.getText("//li[@class='folder selected']/a/span[2]"));
 		assertTrue(selenium.isVisible("//span[@class='document-thumbnail']/img"));

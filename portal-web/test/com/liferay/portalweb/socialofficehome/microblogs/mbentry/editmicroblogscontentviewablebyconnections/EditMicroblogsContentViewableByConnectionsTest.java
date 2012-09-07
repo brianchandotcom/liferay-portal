@@ -23,25 +23,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class EditMicroblogsContentViewableByConnectionsTest extends BaseTestCase {
 	public void testEditMicroblogsContentViewableByConnections()
 		throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/user/joebloggs/so/dashboard/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//nav/ul/li[contains(.,'Microblogs')]/a/span")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//nav/ul/li[contains(.,'Microblogs')]/a/span");
 		selenium.clickAt("//nav/ul/li[contains(.,'Microblogs')]/a/span",
 			RuntimeVariables.replace("Microblogs"));
 		selenium.waitForPageToLoad("30000");
@@ -55,44 +40,11 @@ public class EditMicroblogsContentViewableByConnectionsTest extends BaseTestCase
 			selenium.getText("//span[@class='action edit']/a"));
 		selenium.clickAt("//span[@class='action edit']/a",
 			RuntimeVariables.replace("Edit"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("//textarea")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent("//textarea");
 		selenium.clickAt("//textarea", RuntimeVariables.replace("Text area"));
 		selenium.typeKeys("//textarea", RuntimeVariables.replace("Edit"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("131")
-										.equals(selenium.getText(
-								"xPath=(//span[@class='microblogs-countdown'])[2]"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("xPath=(//span[@class='microblogs-countdown'])[2]",
+			"131");
 		assertEquals(RuntimeVariables.replace("131"),
 			selenium.getText("xPath=(//span[@class='microblogs-countdown'])[2]"));
 		assertEquals("Connections",
@@ -101,23 +53,7 @@ public class EditMicroblogsContentViewableByConnectionsTest extends BaseTestCase
 		Thread.sleep(5000);
 		selenium.clickAt("xPath=(//input[@value='Post'])[2]",
 			RuntimeVariables.replace("Post"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div[@class='content']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//div[@class='content']");
 		assertEquals(RuntimeVariables.replace("Microblogs PostEdit"),
 			selenium.getText("//div[@class='content']"));
 		assertEquals(RuntimeVariables.replace("Comment"),

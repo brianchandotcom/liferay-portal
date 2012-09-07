@@ -23,62 +23,16 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class User_SelectTimeZonePacificStandardTimeCPMATest extends BaseTestCase {
 	public void testUser_SelectTimeZonePacificStandardTimeCPMA()
 		throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=selen01 lenn nium01")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=selen01 lenn nium01");
 		selenium.clickAt("link=selen01 lenn nium01",
 			RuntimeVariables.replace("selen01 lenn nium01"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//a[@id='_2_displaySettingsLink']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//a[@id='_2_displaySettingsLink']");
 		selenium.clickAt("//a[@id='_2_displaySettingsLink']",
 			RuntimeVariables.replace("Display Settings"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//select[@name='_2_timeZoneId']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//select[@name='_2_timeZoneId']");
 		selenium.select("//select[@name='_2_timeZoneId']",
 			RuntimeVariables.replace("(UTC -08:00) Pacific Standard Time"));
 		assertEquals("(UTC -08:00) Pacific Standard Time",

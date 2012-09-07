@@ -28,24 +28,10 @@ public class User_ViewEnableInSeasonPageWhiteElephantTest extends BaseTestCase {
 		while (label >= 1) {
 			switch (label) {
 			case 1:
+				selenium.selectWindow("null");
+				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isElementPresent("link=Site Name")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForElementPresent("link=Site Name");
 				selenium.clickAt("link=Site Name",
 					RuntimeVariables.replace("Site Name"));
 				selenium.waitForPageToLoad("30000");
@@ -81,23 +67,7 @@ public class User_ViewEnableInSeasonPageWhiteElephantTest extends BaseTestCase {
 						"Season Site Pages Variation of Site Name"),
 					selenium.getText(
 						"//span[@class='layout-set-branch-description']"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("link=White Elephant")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("link=White Elephant");
 				selenium.clickAt("link=White Elephant",
 					RuntimeVariables.replace("White Elephant"));
 				selenium.waitForPageToLoad("30000");

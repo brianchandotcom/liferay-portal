@@ -22,24 +22,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class AddPortletEDDuplicateTest extends BaseTestCase {
 	public void testAddPortletEDDuplicate() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Events Display Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Events Display Test Page");
 		selenium.clickAt("link=Events Display Test Page",
 			RuntimeVariables.replace("Events Display Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -47,24 +33,7 @@ public class AddPortletEDDuplicateTest extends BaseTestCase {
 				"More"));
 		selenium.clickAt("//a[@id='_145_addApplication']",
 			RuntimeVariables.replace("More"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent(
-							"//div[@title=\"Events Display\"]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent("//div[@title=\"Events Display\"]");
 		assertFalse(selenium.isVisible("//div[@title=\"Events Display\"]/p/a"));
 	}
 }

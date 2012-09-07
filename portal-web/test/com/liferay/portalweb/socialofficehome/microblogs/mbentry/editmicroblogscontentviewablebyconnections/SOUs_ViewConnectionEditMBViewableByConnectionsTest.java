@@ -24,6 +24,8 @@ public class SOUs_ViewConnectionEditMBViewableByConnectionsTest
 	extends BaseTestCase {
 	public void testSOUs_ViewConnectionEditMBViewableByConnections()
 		throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/user/socialoffice01/so/dashboard");
 		assertEquals(RuntimeVariables.replace("Microblogs Status Update"),
 			selenium.getText("//span[@class='portlet-title-default']"));
@@ -38,24 +40,7 @@ public class SOUs_ViewConnectionEditMBViewableByConnectionsTest
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Microblogs PostEdit"),
 			selenium.getText("//div[@class='activity-title']"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//nav/ul/li[contains(.,'Microblogs')]/a/span")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//nav/ul/li[contains(.,'Microblogs')]/a/span");
 		selenium.clickAt("//nav/ul/li[contains(.,'Microblogs')]/a/span",
 			RuntimeVariables.replace("Microblogs"));
 		selenium.waitForPageToLoad("30000");

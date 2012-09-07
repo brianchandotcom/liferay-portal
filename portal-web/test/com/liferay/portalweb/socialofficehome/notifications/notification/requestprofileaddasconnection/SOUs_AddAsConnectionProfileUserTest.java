@@ -22,25 +22,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class SOUs_AddAsConnectionProfileUserTest extends BaseTestCase {
 	public void testSOUs_AddAsConnectionProfileUser() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/joebloggs/so/profile/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//nav/ul/li[contains(.,'Profile')]/a/span")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//nav/ul/li[contains(.,'Profile')]/a/span");
 		selenium.clickAt("//nav/ul/li[contains(.,'Profile')]/a/span",
 			RuntimeVariables.replace("Profile"));
 		selenium.waitForPageToLoad("30000");
@@ -52,23 +37,7 @@ public class SOUs_AddAsConnectionProfileUserTest extends BaseTestCase {
 			selenium.getText("//span[@class='action add-connection']/a"));
 		selenium.clickAt("//span[@class='action add-connection']/a",
 			RuntimeVariables.replace("Add Connection"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//span[@class='disabled']/span")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//span[@class='disabled']/span");
 		assertEquals(RuntimeVariables.replace("Connection Requested"),
 			selenium.getText("//span[@class='disabled']/span"));
 		assertTrue(selenium.isElementNotPresent(

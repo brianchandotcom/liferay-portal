@@ -22,27 +22,13 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ViewPublishExpireWCWebContentTest extends BaseTestCase {
 	public void testViewPublishExpireWCWebContent() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Control Panel")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
@@ -66,24 +52,8 @@ public class ViewPublishExpireWCWebContentTest extends BaseTestCase {
 			selenium.getText("//td[8]/span/ul/li/strong/a/span"));
 		selenium.clickAt("//td[8]/span/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//a[contains(@id,'SearchContainer_1_menu_edit')]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//a[contains(@id,'SearchContainer_1_menu_edit')]");
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText("//a[contains(@id,'SearchContainer_1_menu_edit')]"));
 		assertEquals(RuntimeVariables.replace("Permissions"),
@@ -127,61 +97,13 @@ public class ViewPublishExpireWCWebContentTest extends BaseTestCase {
 			selenium.getText("//span[@id='_15_textLanguageId']"));
 		assertEquals("WC WebContent Title",
 			selenium.getValue("//input[@id='_15_title_en_US']"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent(
-							"//textarea[@id='_15__15_structure_el_TextAreaField_content' and @style='display: none;']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/iframe")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent(
+			"//textarea[@id='_15__15_structure_el_TextAreaField_content' and @style='display: none;']");
+		selenium.waitForVisible(
+			"//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/iframe");
 		selenium.selectFrame(
 			"//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/iframe");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("WC WebContent Content")
-										.equals(selenium.getText("//body"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//body", "WC WebContent Content");
 		assertEquals(RuntimeVariables.replace("WC WebContent Content"),
 			selenium.getText("//body"));
 		selenium.selectFrame("relative=top");

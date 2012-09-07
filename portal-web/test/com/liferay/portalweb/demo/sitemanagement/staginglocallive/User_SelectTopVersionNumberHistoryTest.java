@@ -23,24 +23,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class User_SelectTopVersionNumberHistoryTest extends BaseTestCase {
 	public void testUser_SelectTopVersionNumberHistory()
 		throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("link=Site Name")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent("link=Site Name");
 		selenium.clickAt("link=Site Name", RuntimeVariables.replace("Site Name"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isElementPresent(
@@ -62,23 +48,7 @@ public class User_SelectTopVersionNumberHistoryTest extends BaseTestCase {
 			selenium.getText("//button/span[.='History']"));
 		selenium.clickAt("//button/span[.='History']",
 			RuntimeVariables.replace("History"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//tr[3]/td[2]/span/span/span")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//tr[3]/td[2]/span/span/span");
 		assertEquals(RuntimeVariables.replace("Draft"),
 			selenium.getText("//tr[3]/td[2]/span/span/span"));
 		assertEquals(RuntimeVariables.replace("Draft"),
@@ -86,24 +56,8 @@ public class User_SelectTopVersionNumberHistoryTest extends BaseTestCase {
 		assertTrue(selenium.isVisible("//tr[3]/td[3]/a"));
 		selenium.clickAt("//tr[3]/td[3]/a",
 			RuntimeVariables.replace("Top Version Number"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent(
-							"//div[@id='column-1']/div/div[contains(@class,'portlet-search')]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent(
+			"//div[@id='column-1']/div/div[contains(@class,'portlet-search')]");
 		assertTrue(selenium.isVisible(
 				"//div[@id='column-1']/div/div[contains(@class,'portlet-search')]"));
 	}

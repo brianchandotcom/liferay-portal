@@ -22,27 +22,13 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class AddTemplateImageAssociationTest extends BaseTestCase {
 	public void testAddTemplateImageAssociation() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/web-content-image-association-community/");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Control Panel")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
@@ -59,67 +45,18 @@ public class AddTemplateImageAssociationTest extends BaseTestCase {
 		selenium.type("//textarea[@id='_15_description_en_US']",
 			RuntimeVariables.replace("This is an image template test."));
 		selenium.click("//input[@value='Select']");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//td[2]/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//td[2]/a");
 		assertEquals(RuntimeVariables.replace("Image Structure Test"),
 			selenium.getText("//td[2]/a"));
 		selenium.clickAt("//td[2]/a",
 			RuntimeVariables.replace("Image Structure Test"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("Image Structure Test")
-										.equals(selenium.getText(
-								"//a[@id='_15_structureName']"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//a[@id='_15_structureName']",
+			"Image Structure Test");
 		assertEquals(RuntimeVariables.replace("Image Structure Test"),
 			selenium.getText("//a[@id='_15_structureName']"));
 		selenium.clickAt("//input[@id='_15_editorButton']",
 			RuntimeVariables.replace("Launch Editor"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//textarea[@id='_15_plainEditorField']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//textarea[@id='_15_plainEditorField']");
 		Thread.sleep(5000);
 		selenium.type("//textarea[@id='_15_plainEditorField']",
 			RuntimeVariables.replace(

@@ -72,12 +72,11 @@ public class DBLoader {
 						ps.close();
 					}
 					catch (Exception e) {
+						unsyncBufferedReader.close();
+
 						System.out.println(sql);
 
 						throw e;
-					}
-					finally {
-						unsyncBufferedReader.close();
 					}
 				}
 			}

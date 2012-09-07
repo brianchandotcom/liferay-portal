@@ -404,6 +404,8 @@ public abstract class BaseDB implements DB {
 						}
 						catch (IOException ioe) {
 							if (failOnError) {
+								unsyncBufferedReader.close();
+
 								throw ioe;
 							}
 							else if (_log.isWarnEnabled()) {
@@ -412,6 +414,8 @@ public abstract class BaseDB implements DB {
 						}
 						catch (SecurityException se) {
 							if (failOnError) {
+								unsyncBufferedReader.close();
+
 								throw se;
 							}
 							else if (_log.isWarnEnabled()) {
@@ -420,6 +424,8 @@ public abstract class BaseDB implements DB {
 						}
 						catch (SQLException sqle) {
 							if (failOnError) {
+								unsyncBufferedReader.close();
+
 								throw sqle;
 							}
 							else if (_log.isWarnEnabled()) {
@@ -437,9 +443,6 @@ public abstract class BaseDB implements DB {
 									_log.error(line);
 								}
 							}
-						}
-						finally {
-							unsyncBufferedReader.close();
 						}
 					}
 				}

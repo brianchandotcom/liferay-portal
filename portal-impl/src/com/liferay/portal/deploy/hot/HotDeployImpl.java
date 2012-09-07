@@ -35,9 +35,7 @@ import com.liferay.portal.security.pacl.PACLPolicy;
 import com.liferay.portal.security.pacl.PACLPolicyManager;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Properties;
@@ -177,30 +175,6 @@ public class HotDeployImpl implements HotDeploy {
 			if (_log.isInfoEnabled()) {
 				_log.info("Deploying " + servletContextName + " from queue");
 			}
-
-			// LPS-29665
-
-			HotDeployListener[] hotDeployListeners =
-				new HotDeployListener[_hotDeployListeners.size()];
-
-			_hotDeployListeners.toArray(hotDeployListeners);
-
-			Arrays.sort(hotDeployListeners,
-				new Comparator<HotDeployListener>() {
-					public int compare(HotDeployListener thisListener,
-									   HotDeployListener thatListener) {
-						if (thisListener instanceof
-							ServletContextListenerHotDeployListener) {
-
-							return 1;
-						}
-						return -1;
-					}
-				}
-			);
-
-			_hotDeployListeners.clear();
-			_hotDeployListeners.addAll(Arrays.asList(hotDeployListeners));
 
 			for (HotDeployListener hotDeployListener : _hotDeployListeners) {
 				try {

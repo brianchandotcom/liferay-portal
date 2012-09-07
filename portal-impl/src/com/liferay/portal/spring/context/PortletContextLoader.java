@@ -14,38 +14,13 @@
 
 package com.liferay.portal.spring.context;
 
-import javax.servlet.ServletContext;
-
-import org.springframework.web.context.ConfigurableWebApplicationContext;
-import org.springframework.web.context.ContextLoader;
-
 /**
  * @author Brian Wing Shun Chan
- * @see    PortletApplicationContext
- * @see    PortletContextLoaderListener
+ * @deprecated
  */
-public class PortletContextLoader extends ContextLoader {
+public class PortletContextLoader {
 
 	public static final String PORTAL_CONFIG_LOCATION_PARAM =
 		"portalContextConfigLocation";
-
-	@Override
-	protected void customizeContext(
-		ServletContext servletContext,
-		ConfigurableWebApplicationContext configurableWebApplicationContext) {
-
-		String configLocation = servletContext.getInitParameter(
-			PORTAL_CONFIG_LOCATION_PARAM);
-
-		configurableWebApplicationContext.setConfigLocation(configLocation);
-
-		configurableWebApplicationContext.addBeanFactoryPostProcessor(
-			new PortletBeanFactoryPostProcessor());
-	}
-
-	@Override
-	protected Class<?> determineContextClass(ServletContext servletContext) {
-		return PortletApplicationContext.class;
-	}
 
 }

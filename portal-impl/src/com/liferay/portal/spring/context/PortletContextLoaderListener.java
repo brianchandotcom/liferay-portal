@@ -31,7 +31,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 
 import org.springframework.context.ApplicationContext;
-import org.springframework.web.context.ContextLoader;
+import org.springframework.web.context.ConfigurableWebApplicationContext;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
@@ -39,7 +39,6 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 /**
  * @author Brian Wing Shun Chan
  * @see    PortletApplicationContext
- * @see    PortletContextLoader
  */
 public class PortletContextLoaderListener extends ContextLoaderListener {
 
@@ -142,9 +141,26 @@ public class PortletContextLoaderListener extends ContextLoaderListener {
 	}
 
 	@Override
-	protected ContextLoader createContextLoader() {
-		return new PortletContextLoader();
+	protected void customizeContext(
+		ServletContext servletContext,
+		ConfigurableWebApplicationContext configurableWebApplicationContext) {
+
+		String configLocation = servletContext.getInitParameter(
+			PORTAL_CONFIG_LOCATION_PARAM);
+
+		configurableWebApplicationContext.setConfigLocation(configLocation);
+
+		configurableWebApplicationContext.addBeanFactoryPostProcessor(
+			new PortletBeanFactoryPostProcessor());
 	}
+
+	@Override
+	protected Class<?> determineContextClass(ServletContext servletContext) {
+		return PortletApplicationContext.class;
+	}
+
+	protected static final String PORTAL_CONFIG_LOCATION_PARAM =
+		"portalContextConfigLocation";
 
 	private static Log _log = LogFactoryUtil.getLog(
 		PortletContextLoaderListener.class);

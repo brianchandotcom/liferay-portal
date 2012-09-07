@@ -236,7 +236,7 @@ if (Validator.isNull(redirect)) {
 
 							String taglibJavascript = "javascript:;";
 
-							if (!TrashUtil.isTrashEnabled(themeDisplay.getScopeGroupId())) {
+							if (!TrashUtil.isTrashEnabled(scopeGroupId)) {
 								taglibJavascript = "javascript:" + renderResponse.getNamespace() + "deleteAttachment(" + (i + 1) + ");";
 							}
 						%>
@@ -259,11 +259,11 @@ if (Validator.isNull(redirect)) {
 									label="<%= true %>"
 									message="delete"
 									method="get"
-									trash="<%= TrashUtil.isTrashEnabled(themeDisplay.getScopeGroupId()) %>"
+									trash="<%= TrashUtil.isTrashEnabled(scopeGroupId) %>"
 									url="<%= taglibJavascript %>"
 								/>
 
-								<c:if test="<%= TrashUtil.isTrashEnabled(themeDisplay.getScopeGroupId()) %>">
+								<c:if test="<%= TrashUtil.isTrashEnabled(scopeGroupId) %>">
 
 									<%
 									StringBundler sb = new StringBundler(7);
@@ -559,7 +559,7 @@ if (Validator.isNull(redirect)) {
 		);
 	</c:if>
 
-	<c:if test="<%= TrashUtil.isTrashEnabled(themeDisplay.getScopeGroupId()) %>">
+	<c:if test="<%= TrashUtil.isTrashEnabled(scopeGroupId) %>">
 		Liferay.provide(
 			window,
 			'<portlet:namespace />trashAttachment',
@@ -591,7 +591,7 @@ if (Validator.isNull(redirect)) {
 	</c:if>
 </aui:script>
 
-<c:if test="<%= TrashUtil.isTrashEnabled(themeDisplay.getScopeGroupId()) %>">
+<c:if test="<%= TrashUtil.isTrashEnabled(scopeGroupId) %>">
 	<aui:script use="aui-base">
 
 		<%

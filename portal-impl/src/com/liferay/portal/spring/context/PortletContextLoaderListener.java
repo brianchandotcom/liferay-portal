@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
 import com.liferay.portal.kernel.util.MethodCache;
 import com.liferay.portal.security.lang.PortalSecurityManagerThreadLocal;
+import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 import com.liferay.portal.security.pacl.PACLPolicy;
 import com.liferay.portal.security.pacl.PACLPolicyManager;
 
@@ -89,15 +90,23 @@ public class PortletContextLoaderListener extends ContextLoaderListener {
 		PACLPolicy previousPACLPolicy =
 			PortalSecurityManagerThreadLocal.getPACLPolicy();
 
+		ClassLoader contextClassLoader =
+			PACLClassLoaderUtil.getContextClassLoader();
+
 		try {
 			PACLPolicy paclPolicy = PACLPolicyManager.getPACLPolicy(
 				classLoader);
 
 			PortalSecurityManagerThreadLocal.setPACLPolicy(paclPolicy);
 
+			PACLClassLoaderUtil.setContextClassLoader(
+				PortletApplicationContext.getBeanClassLoader());
+
 			super.contextInitialized(servletContextEvent);
 		}
 		finally {
+			PACLClassLoaderUtil.setContextClassLoader(contextClassLoader);
+
 			PortalSecurityManagerThreadLocal.setPACLPolicy(previousPACLPolicy);
 		}
 

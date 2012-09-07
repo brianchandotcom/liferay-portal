@@ -178,9 +178,7 @@ int usersCount = 0;
 		}
 		%>
 
-		var url = '<%= showUsersURL.toString() %>' + '&<portlet:namespace />status=' + field.value;
-
-		location.href = url;
+		location.href = Liferay.Util.addParams('<portlet:namespace />status=' + field.value, '<%= showUsersURL.toString() %>');
 	}
 
 	Liferay.provide(
@@ -225,6 +223,7 @@ int usersCount = 0;
 				document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = cmd;
 				document.<portlet:namespace />fm.<portlet:namespace />redirect.value = document.<portlet:namespace />fm.<portlet:namespace />usersRedirect.value;
 				document.<portlet:namespace />fm.<portlet:namespace />deleteUserIds.value = deleteUserIds;
+
 				submitForm(document.<portlet:namespace />fm, "<portlet:actionURL><portlet:param name="struts_action" value="/users_admin/edit_user" /></portlet:actionURL>");
 			}
 		},

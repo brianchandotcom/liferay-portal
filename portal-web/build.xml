@@ -352,6 +352,13 @@
 							</replacevalue>
 						</replace>
 
+						<replace file="docroot/html/js/editor/ckeditor/_source/plugins/indent/plugin.js">
+							<replacetoken><![CDATA[return node.type = CKEDITOR.NODE_ELEMENT && node.is( 'li' );]]></replacetoken>
+							<replacevalue>
+								<![CDATA[return node.type = CKEDITOR.NODE_ELEMENT && node.is && node.is( 'li' );]]>
+							</replacevalue>
+						</replace>
+
 						<replace file="docroot/html/js/editor/ckeditor/_source/themes/default/theme.js">
 							<replacetoken><![CDATA[container.clearCustomData();]]></replacetoken>
 							<replacevalue><![CDATA[]]></replacevalue>

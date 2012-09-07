@@ -22,25 +22,11 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class AddContactCCTest extends BaseTestCase {
 	public void testAddContactCC() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/user/joebloggs/so/dashboard/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//nav/ul/li[contains(.,'Contacts Center')]/a/span")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//nav/ul/li[contains(.,'Contacts Center')]/a/span");
 		selenium.clickAt("//nav/ul/li[contains(.,'Contacts Center')]/a/span",
 			RuntimeVariables.replace("Contacts Center"));
 		selenium.waitForPageToLoad("30000");
@@ -48,24 +34,8 @@ public class AddContactCCTest extends BaseTestCase {
 			selenium.getText("//span[@class='add-contact']/a"));
 		selenium.clickAt("//span[@class='add-contact']/a",
 			RuntimeVariables.replace("Add"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//input[@id='_1_WAR_contactsportlet_fullName']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//input[@id='_1_WAR_contactsportlet_fullName']");
 		selenium.type("//input[@id='_1_WAR_contactsportlet_fullName']",
 			RuntimeVariables.replace("Social01 Office01 Contact01"));
 		selenium.type("//input[@id='_1_WAR_contactsportlet_emailAddress']",
@@ -75,23 +45,7 @@ public class AddContactCCTest extends BaseTestCase {
 		Thread.sleep(5000);
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//span[@class='portlet-msg-success']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//span[@class='portlet-msg-success']");
 		assertEquals(RuntimeVariables.replace(
 				"You have successfully added a new contact."),
 			selenium.getText("//span[@class='portlet-msg-success']"));

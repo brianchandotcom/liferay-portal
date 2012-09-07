@@ -27,24 +27,10 @@ public class AddTemplateExpandoTest extends BaseTestCase {
 		while (label >= 1) {
 			switch (label) {
 			case 1:
+				selenium.selectWindow("null");
+				selenium.selectFrame("relative=top");
 				selenium.open("/web/expando-web-content-community/");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("link=Web Content Display Page")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("link=Web Content Display Page");
 				selenium.clickAt("link=Web Content Display Page",
 					RuntimeVariables.replace("Web Content Display Page"));
 				selenium.waitForPageToLoad("30000");
@@ -82,45 +68,12 @@ public class AddTemplateExpandoTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Select']",
 					RuntimeVariables.replace("Select"));
 				Thread.sleep(5000);
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("//td[2]/a")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("//td[2]/a");
 				selenium.clickAt("//td[2]/a",
 					RuntimeVariables.replace(
 						"Expando Structure Test\nThis is an expando structure test."));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (RuntimeVariables.replace("Expando Structure Test")
-												.equals(selenium.getText(
-										"//a[@id='_15_structureName']"))) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForText("//a[@id='_15_structureName']",
+					"Expando Structure Test");
 				assertEquals(RuntimeVariables.replace("Expando Structure Test"),
 					selenium.getText("//a[@id='_15_structureName']"));
 				selenium.type("//input[@id='_15_xsl']",
@@ -129,24 +82,7 @@ public class AddTemplateExpandoTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//div[@class='portlet-msg-success']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("//div[@class='portlet-msg-success']");
 				assertEquals(RuntimeVariables.replace(
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));

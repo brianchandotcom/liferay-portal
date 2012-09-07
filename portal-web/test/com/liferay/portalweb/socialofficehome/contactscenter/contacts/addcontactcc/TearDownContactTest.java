@@ -27,25 +27,11 @@ public class TearDownContactTest extends BaseTestCase {
 		while (label >= 1) {
 			switch (label) {
 			case 1:
+				selenium.selectWindow("null");
+				selenium.selectFrame("relative=top");
 				selenium.open("/user/joebloggs/so/dashboard/");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//nav/ul/li[contains(.,'Contacts Center')]/a/span")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible(
+					"//nav/ul/li[contains(.,'Contacts Center')]/a/span");
 				selenium.clickAt("//nav/ul/li[contains(.,'Contacts Center')]/a/span",
 					RuntimeVariables.replace("Contacts Center"));
 				selenium.waitForPageToLoad("30000");
@@ -70,23 +56,7 @@ public class TearDownContactTest extends BaseTestCase {
 				String contact1Name = selenium.getText(
 						"//div[@class='lfr-contact-name']/a");
 				RuntimeVariables.setValue("contact1Name", contact1Name);
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("//button[contains(.,'Delete')]")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("//button[contains(.,'Delete')]");
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText("//button[contains(.,'Delete')]"));
 				selenium.click(RuntimeVariables.replace(
@@ -115,23 +85,7 @@ public class TearDownContactTest extends BaseTestCase {
 				String contact2Name = selenium.getText(
 						"//div[@class='lfr-contact-name']/a");
 				RuntimeVariables.setValue("contact2Name", contact2Name);
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("//button[contains(.,'Delete')]")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("//button[contains(.,'Delete')]");
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText("//button[contains(.,'Delete')]"));
 				selenium.click(RuntimeVariables.replace(
@@ -160,23 +114,7 @@ public class TearDownContactTest extends BaseTestCase {
 				String contact3Name = selenium.getText(
 						"//div[@class='lfr-contact-name']/a");
 				RuntimeVariables.setValue("contact3Name", contact3Name);
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("//button[contains(.,'Delete')]")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("//button[contains(.,'Delete')]");
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText("//button[contains(.,'Delete')]"));
 				selenium.click(RuntimeVariables.replace(
@@ -205,23 +143,7 @@ public class TearDownContactTest extends BaseTestCase {
 				String contact4Name = selenium.getText(
 						"//div[@class='lfr-contact-name']/a");
 				RuntimeVariables.setValue("contact4Name", contact4Name);
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("//button[contains(.,'Delete')]")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("//button[contains(.,'Delete')]");
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText("//button[contains(.,'Delete')]"));
 				selenium.click(RuntimeVariables.replace(
@@ -250,23 +172,7 @@ public class TearDownContactTest extends BaseTestCase {
 				String contact5Name = selenium.getText(
 						"//div[@class='lfr-contact-name']/a");
 				RuntimeVariables.setValue("contact5Name", contact5Name);
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("//button[contains(.,'Delete')]")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("//button[contains(.,'Delete')]");
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText("//button[contains(.,'Delete')]"));
 				selenium.click(RuntimeVariables.replace(

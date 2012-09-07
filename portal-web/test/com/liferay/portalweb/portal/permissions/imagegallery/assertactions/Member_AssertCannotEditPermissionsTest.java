@@ -23,25 +23,11 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class Member_AssertCannotEditPermissionsTest extends BaseTestCase {
 	public void testMember_AssertCannotEditPermissions()
 		throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent(
-							"link=Media Gallery Permissions Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent(
+			"link=Media Gallery Permissions Test Page");
 		selenium.clickAt("link=Media Gallery Permissions Test Page",
 			RuntimeVariables.replace("Media Gallery Permissions Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -49,23 +35,7 @@ public class Member_AssertCannotEditPermissionsTest extends BaseTestCase {
 			selenium.getText("//a[@title='Permissions Image 2 Test - ']"));
 		selenium.clickAt("//a[@title='Permissions Image 2 Test - ']",
 			RuntimeVariables.replace("Permissions Image 2 Test"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div/div[2]/div[1]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//div/div[2]/div[1]");
 		assertTrue(selenium.isElementNotPresent("//img[@alt='Permissions']"));
 	}
 }

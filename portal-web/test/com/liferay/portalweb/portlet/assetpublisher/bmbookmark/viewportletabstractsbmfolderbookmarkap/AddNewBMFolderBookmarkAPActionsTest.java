@@ -27,24 +27,10 @@ public class AddNewBMFolderBookmarkAPActionsTest extends BaseTestCase {
 		while (label >= 1) {
 			switch (label) {
 			case 1:
+				selenium.selectWindow("null");
+				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("link=Asset Publisher Test Page")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("link=Asset Publisher Test Page");
 				selenium.clickAt("link=Asset Publisher Test Page",
 					RuntimeVariables.replace("Asset Publisher Test Page"));
 				selenium.waitForPageToLoad("30000");
@@ -53,46 +39,14 @@ public class AddNewBMFolderBookmarkAPActionsTest extends BaseTestCase {
 					selenium.getText("//span[@title='Add New']/ul/li/strong/a"));
 				selenium.clickAt("//span[@title='Add New']/ul/li/strong/a",
 					RuntimeVariables.replace("Add New"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible(
+					"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
 				assertEquals(RuntimeVariables.replace("Bookmarks Entry"),
 					selenium.getText(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
 				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a",
 					RuntimeVariables.replace("Bookmarks Entry"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("//input[@value='Select']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("//input[@value='Select']");
 				selenium.clickAt("//input[@value='Select']",
 					RuntimeVariables.replace("Select"));
 				selenium.waitForPopUp("folder",
@@ -123,46 +77,13 @@ public class AddNewBMFolderBookmarkAPActionsTest extends BaseTestCase {
 					continue;
 				}
 
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isElementPresent(
-									"//input[@value='Choose']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForElementPresent("//input[@value='Choose']");
 				selenium.click("//input[@value='Choose']");
 
 			case 3:
 				selenium.selectWindow("null");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (RuntimeVariables.replace("BM Folder Name")
-												.equals(selenium.getText(
-										"//a[@id='_28_folderName']"))) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForText("//a[@id='_28_folderName']",
+					"BM Folder Name");
 				assertEquals(RuntimeVariables.replace("BM Folder Name"),
 					selenium.getText("//a[@id='_28_folderName']"));
 				selenium.type("//input[@id='_28_name']",
@@ -172,23 +93,7 @@ public class AddNewBMFolderBookmarkAPActionsTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("//h3[@class='asset-title']/a")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("//h3[@class='asset-title']/a");
 				assertEquals(RuntimeVariables.replace("BM Folder Bookmark Name"),
 					selenium.getText("//h3[@class='asset-title']/a"));
 

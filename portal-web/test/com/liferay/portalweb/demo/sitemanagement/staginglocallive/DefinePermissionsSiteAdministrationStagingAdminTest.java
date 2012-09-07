@@ -24,24 +24,10 @@ public class DefinePermissionsSiteAdministrationStagingAdminTest
 	extends BaseTestCase {
 	public void testDefinePermissionsSiteAdministrationStagingAdmin()
 		throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
@@ -61,24 +47,7 @@ public class DefinePermissionsSiteAdministrationStagingAdminTest
 		selenium.waitForPageToLoad("30000");
 		selenium.select("//select[@id='_128_add-permissions']",
 			RuntimeVariables.replace("Site administration"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"xPath=(//input[@name='_128_allRowIds'])[1]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("xPath=(//input[@name='_128_allRowIds'])[1]");
 		assertFalse(selenium.isChecked(
 				"xPath=(//input[@name='_128_allRowIds'])[1]"));
 		selenium.clickAt("xPath=(//input[@name='_128_allRowIds'])[1]",

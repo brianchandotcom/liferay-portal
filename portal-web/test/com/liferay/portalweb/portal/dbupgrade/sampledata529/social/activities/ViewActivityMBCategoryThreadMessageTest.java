@@ -23,6 +23,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ViewActivityMBCategoryThreadMessageTest extends BaseTestCase {
 	public void testViewActivityMBCategoryThreadMessage()
 		throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/joebloggs/home/");
 		selenium.clickAt("link=Activities Page",
 			RuntimeVariables.replace("Activities Page"));

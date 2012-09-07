@@ -22,6 +22,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ViewPortletPMTest extends BaseTestCase {
 	public void testViewPortletPM() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("link=Portlet Modes Test Page",
 			RuntimeVariables.replace("Portlet Modes Test Page"));
@@ -39,25 +41,7 @@ public class ViewPortletPMTest extends BaseTestCase {
 				"xPath=(//div[@class='portlet-body']/ul/li/a)[contains(.,'Edit Mode')]"));
 		selenium.clickAt("xPath=(//div[@class='portlet-body']/ul/li/a)[contains(.,'Edit Mode')]",
 			RuntimeVariables.replace("Edit Mode"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("Edit Mode")
-										.equals(selenium.getText(
-								"//div[@class='portlet-body']/h1"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//div[@class='portlet-body']/h1", "Edit Mode");
 		assertEquals(RuntimeVariables.replace("Edit Mode"),
 			selenium.getText("//div[@class='portlet-body']/h1"));
 		assertEquals(RuntimeVariables.replace("Return to Full Page"),
@@ -67,25 +51,7 @@ public class ViewPortletPMTest extends BaseTestCase {
 				"xPath=(//div[@class='portlet-body']/ul/li/a)[contains(.,'Help Mode')]"));
 		selenium.clickAt("xPath=(//div[@class='portlet-body']/ul/li/a)[contains(.,'Help Mode')]",
 			RuntimeVariables.replace("Help Mode"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("Help Mode")
-										.equals(selenium.getText(
-								"//div[@class='portlet-body']/h1"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//div[@class='portlet-body']/h1", "Help Mode");
 		assertEquals(RuntimeVariables.replace("Help Mode"),
 			selenium.getText("//div[@class='portlet-body']/h1"));
 		assertEquals(RuntimeVariables.replace("Return to Full Page"),
@@ -95,25 +61,7 @@ public class ViewPortletPMTest extends BaseTestCase {
 				"xPath=(//div[@class='portlet-body']/ul/li/a)[contains(.,'View Mode')]"));
 		selenium.clickAt("xPath=(//div[@class='portlet-body']/ul/li/a)[contains(.,'View Mode')]",
 			RuntimeVariables.replace("View Mode"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("View Mode")
-										.equals(selenium.getText(
-								"//div[@class='portlet-body']/h1"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//div[@class='portlet-body']/h1", "View Mode");
 		assertEquals(RuntimeVariables.replace("View Mode"),
 			selenium.getText("//div[@class='portlet-body']/h1"));
 		assertFalse(selenium.isTextPresent("Return to Full Page"));
@@ -122,24 +70,8 @@ public class ViewPortletPMTest extends BaseTestCase {
 				"xPath=(//div[@class='portlet-body']/ul/li/a)[contains(.,'Maximized State')]"));
 		selenium.clickAt("xPath=(//div[@class='portlet-body']/ul/li/a)[contains(.,'Maximized State')]",
 			RuntimeVariables.replace("Maximized State"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//body[@class='blue yui3-skin-sam controls-visible page-maximized guest-site signed-in public-page site dockbar-ready']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//body[@class='blue yui3-skin-sam controls-visible page-maximized guest-site signed-in public-page site dockbar-ready']");
 		assertTrue(selenium.isVisible(
 				"//body[@class='blue yui3-skin-sam controls-visible page-maximized guest-site signed-in public-page site dockbar-ready']"));
 		assertEquals(RuntimeVariables.replace("Normal State"),
@@ -147,24 +79,8 @@ public class ViewPortletPMTest extends BaseTestCase {
 				"xPath=(//div[@class='portlet-body']/ul/li/a)[contains(.,'Normal State')]"));
 		selenium.clickAt("xPath=(//div[@class='portlet-body']/ul/li/a)[contains(.,'Normal State')]",
 			RuntimeVariables.replace("Normal State"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//body[@class='blue yui3-skin-sam controls-visible guest-site signed-in public-page site dockbar-ready']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//body[@class='blue yui3-skin-sam controls-visible guest-site signed-in public-page site dockbar-ready']");
 		assertTrue(selenium.isVisible(
 				"//body[@class='blue yui3-skin-sam controls-visible guest-site signed-in public-page site dockbar-ready']"));
 		assertEquals(RuntimeVariables.replace("Minimized State"),
@@ -172,23 +88,7 @@ public class ViewPortletPMTest extends BaseTestCase {
 				"xPath=(//div[@class='portlet-body']/ul/li/a)[contains(.,'Minimized State')]"));
 		selenium.clickAt("xPath=(//div[@class='portlet-body']/ul/li/a)[contains(.,'Minimized State')]",
 			RuntimeVariables.replace("Minimized State"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (!selenium.isVisible("//div[@class='portlet-body']/h1")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForNotVisible("//div[@class='portlet-body']/h1");
 		assertFalse(selenium.isVisible("//div[@class='portlet-body']/h1"));
 		assertFalse(selenium.isVisible(
 				"xPath=(//div[@class='portlet-body']/p)[1]"));
@@ -209,23 +109,7 @@ public class ViewPortletPMTest extends BaseTestCase {
 		assertTrue(selenium.isVisible("//img[@title='Restore']"));
 		selenium.clickAt("//img[@title='Restore']",
 			RuntimeVariables.replace("Restore"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div[@class='portlet-body']/h1")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//div[@class='portlet-body']/h1");
 		assertTrue(selenium.isVisible("//div[@class='portlet-body']/h1"));
 		assertTrue(selenium.isVisible(
 				"xPath=(//div[@class='portlet-body']/p)[1]"));

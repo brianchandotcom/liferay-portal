@@ -23,24 +23,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class SA_LimitScopePermissionsScopeSiteTest extends BaseTestCase {
 	public void testSA_LimitScopePermissionsScopeSite()
 		throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
@@ -66,23 +52,7 @@ public class SA_LimitScopePermissionsScopeSiteTest extends BaseTestCase {
 		Thread.sleep(5000);
 		selenium.waitForPopUp("null", RuntimeVariables.replace("30000"));
 		selenium.selectWindow("title=Roles");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//input[@id='_128_name']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//input[@id='_128_name']");
 		selenium.type("//input[@id='_128_name']",
 			RuntimeVariables.replace("Scope Site"));
 		selenium.clickAt("//input[@value='Search']",
@@ -92,25 +62,8 @@ public class SA_LimitScopePermissionsScopeSiteTest extends BaseTestCase {
 			RuntimeVariables.replace("Scope Site"));
 		Thread.sleep(5000);
 		selenium.selectWindow("null");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("Scope Site")
-										.equals(selenium.getText(
-								"//span[@id='_128_groupHTMLcom.liferay.portlet.blogsADD_ENTRY']/span"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//span[@id='_128_groupHTMLcom.liferay.portlet.blogsADD_ENTRY']/span",
+			"Scope Site");
 		assertEquals(RuntimeVariables.replace("Scope Site"),
 			selenium.getText(
 				"//span[@id='_128_groupHTMLcom.liferay.portlet.blogsADD_ENTRY']/span"));

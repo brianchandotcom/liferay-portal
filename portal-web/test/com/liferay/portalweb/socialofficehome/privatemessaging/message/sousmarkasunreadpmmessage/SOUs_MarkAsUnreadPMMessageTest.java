@@ -27,25 +27,11 @@ public class SOUs_MarkAsUnreadPMMessageTest extends BaseTestCase {
 		while (label >= 1) {
 			switch (label) {
 			case 1:
+				selenium.selectWindow("null");
+				selenium.selectFrame("relative=top");
 				selenium.open("/user/socialoffice01/home");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//nav/ul/li[contains(.,'Messages')]/a/span")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible(
+					"//nav/ul/li[contains(.,'Messages')]/a/span");
 				selenium.clickAt("//nav/ul/li[contains(.,'Messages')]/a/span",
 					RuntimeVariables.replace("Messages"));
 				selenium.waitForPageToLoad("30000");

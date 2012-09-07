@@ -23,195 +23,50 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class EditDataDefinitionFieldAttachmentsTest extends BaseTestCase {
 	public void testEditDataDefinitionFieldAttachments()
 		throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Dynamic Data Lists",
 			RuntimeVariables.replace("Dynamic Data Lists"));
 		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//a[@id='_167_manageDDMStructuresLink']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//a[@id='_167_manageDDMStructuresLink']");
 		assertEquals(RuntimeVariables.replace("Manage Data Definitions"),
 			selenium.getText("//a[@id='_167_manageDDMStructuresLink']"));
 		selenium.clickAt("//a[@id='_167_manageDDMStructuresLink']",
 			RuntimeVariables.replace("Manage Data Definitions"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//iframe")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//iframe");
 		selenium.selectFrame("//iframe");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//input[@id='_166_toggle_id_ddm_structure_searchkeywords']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//input[@id='_166_toggle_id_ddm_structure_searchkeywords']");
 		selenium.type("//input[@id='_166_toggle_id_ddm_structure_searchkeywords']",
 			RuntimeVariables.replace("Ticket Definition"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//span[@title='Actions']/ul/li/strong/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//span[@title='Actions']/ul/li/strong/a");
 		Thread.sleep(5000);
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
 			RuntimeVariables.replace("Actions"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a");
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
 		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//div[@class='aui-diagram-builder-canvas']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//div[@class='aui-diagram-builder-canvas']");
 		selenium.clickAt("xPath=(//button[@id='editEvent'])[6]",
 			RuntimeVariables.replace("Edit"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//tbody[@class='yui3-datatable-data']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//tbody[@class='yui3-datatable-data']");
 		assertEquals(RuntimeVariables.replace("Field Label"),
 			selenium.getText(
 				"//tbody[@class='yui3-datatable-data']/tr[2]/td[1]"));
 		selenium.doubleClickAt("//tbody[@class='yui3-datatable-data']/tr[2]/td[1]",
 			RuntimeVariables.replace("Field Label"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div[@class='yui3-widget-bd']/input")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//div[@class='yui3-widget-bd']/input");
 		selenium.type("//div[@class='yui3-widget-bd']/input",
 			RuntimeVariables.replace("Attachments"));
 		selenium.clickAt("//div[@class='yui3-widget-ft']/span/span/button",
@@ -221,23 +76,7 @@ public class EditDataDefinitionFieldAttachmentsTest extends BaseTestCase {
 				"//tbody[@class='yui3-datatable-data']/tr[5]/td[1]"));
 		selenium.doubleClickAt("//tbody[@class='yui3-datatable-data']/tr[5]/td[1]",
 			RuntimeVariables.replace("Name"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div[@class='yui3-widget-bd']/input")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//div[@class='yui3-widget-bd']/input");
 		selenium.type("//div[@class='yui3-widget-bd']/input",
 			RuntimeVariables.replace("attachments"));
 		selenium.clickAt("//div[@class='yui3-widget-ft']/span/span/button",

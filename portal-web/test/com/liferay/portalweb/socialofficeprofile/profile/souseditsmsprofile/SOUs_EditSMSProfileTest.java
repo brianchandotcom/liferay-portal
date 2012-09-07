@@ -22,24 +22,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class SOUs_EditSMSProfileTest extends BaseTestCase {
 	public void testSOUs_EditSMSProfile() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/socialoffice01/so/profile");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div[@class='lfr-contact-name']/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//div[@class='lfr-contact-name']/a");
 		assertEquals(RuntimeVariables.replace("Social01 Office01 User01"),
 			selenium.getText("//div[@class='lfr-contact-name']/a"));
 		assertEquals(RuntimeVariables.replace("SMS:"),
@@ -48,47 +34,14 @@ public class SOUs_EditSMSProfileTest extends BaseTestCase {
 			selenium.getText("//div[@data-title='SMS']/ul/li"));
 		selenium.clickAt("//div[@data-title='SMS']",
 			RuntimeVariables.replace("SMS:"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//input[contains(@id,'smsSn')]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//input[contains(@id,'smsSn')]");
 		selenium.type("//input[contains(@id,'smsSn')]",
 			RuntimeVariables.replace("socialoffice01edit@liferay.com"));
 		Thread.sleep(5000);
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("socialoffice01edit@liferay.com")
-										.equals(selenium.getText(
-								"//div[@data-title='SMS']/ul/li"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//div[@data-title='SMS']/ul/li",
+			"socialoffice01edit@liferay.com");
 		assertEquals(RuntimeVariables.replace("SMS:"),
 			selenium.getText("//div[@data-title='SMS']/h3"));
 		assertEquals(RuntimeVariables.replace("socialoffice01edit@liferay.com"),

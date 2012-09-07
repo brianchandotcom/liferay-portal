@@ -28,24 +28,10 @@ public class User_PublishToLiveSPChristmasPagePricesTest extends BaseTestCase {
 		while (label >= 1) {
 			switch (label) {
 			case 1:
+				selenium.selectWindow("null");
+				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isElementPresent("link=Site Name")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForElementPresent("link=Site Name");
 				selenium.clickAt("link=Site Name",
 					RuntimeVariables.replace("Site Name"));
 				selenium.waitForPageToLoad("30000");
@@ -78,23 +64,7 @@ public class User_PublishToLiveSPChristmasPagePricesTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 
 			case 2:
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("link=Prices")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("link=Prices");
 				selenium.clickAt("link=Prices",
 					RuntimeVariables.replace("Prices"));
 				selenium.waitForPageToLoad("30000");
@@ -102,112 +72,28 @@ public class User_PublishToLiveSPChristmasPagePricesTest extends BaseTestCase {
 						"Christmas Site Pages Variation of Site Name"),
 					selenium.getText(
 						"//span[@class='layout-set-branch-description']"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (RuntimeVariables.replace("Ready for Publication")
-												.equals(selenium.getText(
-										"//span[@class='workflow-status']/strong"))) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForText("//span[@class='workflow-status']/strong",
+					"Ready for Publication");
 				assertEquals(RuntimeVariables.replace("Ready for Publication"),
 					selenium.getText("//span[@class='workflow-status']/strong"));
 				Thread.sleep(5000);
 				selenium.clickAt("//span[2]/span/ul/li/strong/a",
 					RuntimeVariables.replace(""));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible(
+					"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a");
 				assertEquals(RuntimeVariables.replace(
 						"Publish Christmas to Live now."),
 					selenium.getText(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
 				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a",
 					RuntimeVariables.replace("Publish Christmas to Live now."));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("//div[2]/div[1]/a")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("//div[2]/div[1]/a");
 				Thread.sleep(5000);
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//input[@value='Change Selection']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("//input[@value='Change Selection']");
 				selenium.clickAt("//input[@value='Change Selection']",
 					RuntimeVariables.replace("Change Selection"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (RuntimeVariables.replace(
-									"Note that selecting no pages from the tree reverts to implicit selection of all pages.")
-												.equals(selenium.getText(
-										"//div[@class='portlet-msg-info']"))) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForText("//div[@class='portlet-msg-info']",
+					"Note that selecting no pages from the tree reverts to implicit selection of all pages.");
 				assertEquals(RuntimeVariables.replace(
 						"Note that selecting no pages from the tree reverts to implicit selection of all pages."),
 					selenium.getText("//div[@class='portlet-msg-info']"));
@@ -225,24 +111,8 @@ public class User_PublishToLiveSPChristmasPagePricesTest extends BaseTestCase {
 					RuntimeVariables.replace("Drop Down Arrow"));
 				selenium.clickAt("//li/div/div[1]",
 					RuntimeVariables.replace("Drop Down Arrow"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//div[contains(@class,'aui-tree-expanded')]")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible(
+					"//div[contains(@class,'aui-tree-expanded')]");
 				assertTrue(selenium.isVisible(
 						"//div[contains(@class,'aui-tree-expanded')]"));
 				assertTrue(selenium.isVisible(
@@ -250,23 +120,7 @@ public class User_PublishToLiveSPChristmasPagePricesTest extends BaseTestCase {
 
 			case 3:
 				Thread.sleep(5000);
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("//div[4]")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("//div[4]");
 				assertEquals(RuntimeVariables.replace("Public Pages"),
 					selenium.getText("//div[4]"));
 				selenium.clickAt("//div[4]",
@@ -274,23 +128,7 @@ public class User_PublishToLiveSPChristmasPagePricesTest extends BaseTestCase {
 				selenium.clickAt("//div[4]",
 					RuntimeVariables.replace("Public Pages"));
 				Thread.sleep(5000);
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("//li/ul/li[1]/div/div[4]")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("//li/ul/li[1]/div/div[4]");
 				assertEquals(RuntimeVariables.replace("Home"),
 					selenium.getText("//li/ul/li[1]/div/div[4]"));
 				selenium.clickAt("//li/ul/li[1]/div/div[4]",
@@ -328,65 +166,15 @@ public class User_PublishToLiveSPChristmasPagePricesTest extends BaseTestCase {
 					RuntimeVariables.replace("Plus"));
 
 			case 4:
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isElementPresent(
-									"//input[@id='_88_rangeAll']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForElementPresent("//input[@id='_88_rangeAll']");
 				selenium.clickAt("//input[@id='_88_rangeAll']",
 					RuntimeVariables.replace("All"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("//input[@value='Publish']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("//input[@value='Publish']");
 				selenium.clickAt("//input[@value='Publish']",
 					RuntimeVariables.replace("Publish"));
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to publish these pages[\\s\\S]$"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//div[@class='portlet-msg-success']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("//div[@class='portlet-msg-success']");
 				assertEquals(RuntimeVariables.replace(
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));

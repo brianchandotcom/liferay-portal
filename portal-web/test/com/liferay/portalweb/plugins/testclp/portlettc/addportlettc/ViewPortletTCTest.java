@@ -22,6 +22,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ViewPortletTCTest extends BaseTestCase {
 	public void testViewPortletTC() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("link=Test CLP Test Page",
 			RuntimeVariables.replace("Test CLP Test Page"));

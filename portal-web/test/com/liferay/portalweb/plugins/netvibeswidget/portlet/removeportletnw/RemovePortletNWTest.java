@@ -22,46 +22,16 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class RemovePortletNWTest extends BaseTestCase {
 	public void testRemovePortletNW() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Netvibes Widget Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Netvibes Widget Test Page");
 		selenium.clickAt("link=Netvibes Widget Test Page",
 			RuntimeVariables.replace("Netvibes Widget Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.click("//img[@alt='Remove']");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if ("Are you sure you want to remove this component?".equals(
-							selenium.getConfirmation())) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForConfirmation(
+			"Are you sure you want to remove this component?");
 		assertTrue(selenium.isElementNotPresent("//section"));
 	}
 }

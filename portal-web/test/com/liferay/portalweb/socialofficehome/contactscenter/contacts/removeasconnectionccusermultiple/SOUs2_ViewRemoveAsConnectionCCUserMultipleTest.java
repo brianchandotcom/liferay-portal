@@ -23,25 +23,11 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class SOUs2_ViewRemoveAsConnectionCCUserMultipleTest extends BaseTestCase {
 	public void testSOUs2_ViewRemoveAsConnectionCCUserMultiple()
 		throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/user/socialoffice02/so/dashboard/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//nav/ul/li[contains(.,'Contacts Center')]/a/span")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//nav/ul/li[contains(.,'Contacts Center')]/a/span");
 		selenium.clickAt("//nav/ul/li[contains(.,'Contacts Center')]/a/span",
 			RuntimeVariables.replace("Contacts Center"));
 		selenium.waitForPageToLoad("30000");
@@ -49,49 +35,15 @@ public class SOUs2_ViewRemoveAsConnectionCCUserMultipleTest extends BaseTestCase
 			selenium.getText("link=You have 0 connections."));
 		selenium.type("//input[@id='_1_WAR_contactsportlet_name']",
 			RuntimeVariables.replace("test@liferay.com"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("Bloggs, Joe")
-										.equals(selenium.getText(
-								"//div[contains(@class, 'lfr-contact-name')]/a"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//div[contains(@class, 'lfr-contact-name')]/a",
+			"Bloggs, Joe");
 		assertEquals(RuntimeVariables.replace("Bloggs, Joe"),
 			selenium.getText("//div[contains(@class, 'lfr-contact-name')]/a"));
 		assertEquals(RuntimeVariables.replace("test@liferay.com"),
 			selenium.getText("//div[contains(@class, 'lfr-contact-extra')]"));
 		selenium.clickAt("//div[contains(@class, 'lfr-contact-name')]/a",
 			RuntimeVariables.replace("Bloggs, Joe"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//div[contains(@class, 'contacts-profile')]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//div[contains(@class, 'contacts-profile')]");
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
 			selenium.getText(
 				"//div[contains(@class, 'contacts-profile')]/div/div[2]/div/a"));

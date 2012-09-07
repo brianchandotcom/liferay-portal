@@ -22,24 +22,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class User_ViewHistoryVersionNumbersTest extends BaseTestCase {
 	public void testUser_ViewHistoryVersionNumbers() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("link=Site Name")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent("link=Site Name");
 		selenium.clickAt("link=Site Name", RuntimeVariables.replace("Site Name"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isElementPresent(
@@ -61,23 +47,7 @@ public class User_ViewHistoryVersionNumbersTest extends BaseTestCase {
 			selenium.getText("//button/span[.='History']"));
 		selenium.clickAt("//button/span[.='History']",
 			RuntimeVariables.replace("History"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//tr[3]/td[2]/span/span/span")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//tr[3]/td[2]/span/span/span");
 		assertEquals(RuntimeVariables.replace("Draft"),
 			selenium.getText("//tr[3]/td[2]/span/span/span"));
 		assertEquals(RuntimeVariables.replace("Current Version"),
@@ -103,23 +73,7 @@ public class User_ViewHistoryVersionNumbersTest extends BaseTestCase {
 		RuntimeVariables.setValue("versionNumberPublication3",
 			versionNumberPublication3);
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("link=Site Name")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent("link=Site Name");
 		selenium.clickAt("link=Site Name", RuntimeVariables.replace("Site Name"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isElementPresent(
@@ -141,61 +95,14 @@ public class User_ViewHistoryVersionNumbersTest extends BaseTestCase {
 			selenium.getText("//button/span[.='Undo']"));
 		selenium.clickAt("//button/span[.='Undo']",
 			RuntimeVariables.replace("Undo"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if ("Are you sure you want to undo your last changes?".equals(
-							selenium.getConfirmation())) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent(
-							"//div[@id='column-2']/div/div[contains(@class,'portlet-message-boards')]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForConfirmation(
+			"Are you sure you want to undo your last changes?");
+		selenium.waitForElementPresent(
+			"//div[@id='column-2']/div/div[contains(@class,'portlet-message-boards')]");
 		assertTrue(selenium.isVisible(
 				"//div[@id='column-2']/div/div[contains(@class,'portlet-message-boards')]"));
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("link=Site Name")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent("link=Site Name");
 		selenium.clickAt("link=Site Name", RuntimeVariables.replace("Site Name"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isElementPresent(
@@ -217,23 +124,7 @@ public class User_ViewHistoryVersionNumbersTest extends BaseTestCase {
 			selenium.getText("//button/span[.='History']"));
 		selenium.clickAt("//button/span[.='History']",
 			RuntimeVariables.replace("History"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//tr[3]/td[2]/span/span/span")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//tr[3]/td[2]/span/span/span");
 		assertEquals(RuntimeVariables.replace("Draft"),
 			selenium.getText("//tr[3]/td[2]/span/span/span"));
 		assertEquals(RuntimeVariables.replace("Current Version"),
@@ -249,23 +140,7 @@ public class User_ViewHistoryVersionNumbersTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("${versionNumberPublication3}"),
 			selenium.getText("//tr[4]/td[3]/a"));
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("link=Site Name")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent("link=Site Name");
 		selenium.clickAt("link=Site Name", RuntimeVariables.replace("Site Name"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isElementPresent(
@@ -287,61 +162,14 @@ public class User_ViewHistoryVersionNumbersTest extends BaseTestCase {
 			selenium.getText("//button/span[.='Redo']"));
 		selenium.clickAt("//button/span[.='Redo']",
 			RuntimeVariables.replace("Redo"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if ("Are you sure you want to redo your last changes?".equals(
-							selenium.getConfirmation())) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent(
-							"//div[@id='column-1']/div/div[contains(@class,'portlet-message-boards')]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForConfirmation(
+			"Are you sure you want to redo your last changes?");
+		selenium.waitForElementPresent(
+			"//div[@id='column-1']/div/div[contains(@class,'portlet-message-boards')]");
 		assertTrue(selenium.isVisible(
 				"//div[@id='column-1']/div/div[contains(@class,'portlet-message-boards')]"));
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("link=Site Name")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent("link=Site Name");
 		selenium.clickAt("link=Site Name", RuntimeVariables.replace("Site Name"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isElementPresent(
@@ -363,23 +191,7 @@ public class User_ViewHistoryVersionNumbersTest extends BaseTestCase {
 			selenium.getText("//button/span[.='History']"));
 		selenium.clickAt("//button/span[.='History']",
 			RuntimeVariables.replace("History"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//tr[3]/td[2]/span/span/span")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//tr[3]/td[2]/span/span/span");
 		assertEquals(RuntimeVariables.replace("Draft"),
 			selenium.getText("//tr[3]/td[2]/span/span/span"));
 		assertEquals(RuntimeVariables.replace("Current Version"),
@@ -401,23 +213,7 @@ public class User_ViewHistoryVersionNumbersTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("${versionNumberPublication3}"),
 			selenium.getText("//tr[5]/td[3]/a"));
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("link=Site Name")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent("link=Site Name");
 		selenium.clickAt("link=Site Name", RuntimeVariables.replace("Site Name"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isElementPresent(
@@ -437,64 +233,15 @@ public class User_ViewHistoryVersionNumbersTest extends BaseTestCase {
 			selenium.getText("//span[@class='workflow-status']/strong"));
 		selenium.clickAt("//div[@id='dockbar']",
 			RuntimeVariables.replace("Dockbar"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent(
-							"//li[contains(@class,'manage-page')]/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent("//li[contains(@class,'manage-page')]/a");
 		selenium.clickAt("//li[contains(@class,'manage-page')]/a",
 			RuntimeVariables.replace("Manage Pages"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//a[@id='_88_layoutLink']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//a[@id='_88_layoutLink']");
 		assertTrue(selenium.isPartialText("//a[@id='_88_layoutLink']", "Page"));
 		selenium.clickAt("//a[@id='_88_layoutLink']",
 			RuntimeVariables.replace("Page"));
 		Thread.sleep(5000);
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//input[@value='1_column']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//input[@value='1_column']");
 		selenium.clickAt("//input[@value='1_column']",
 			RuntimeVariables.replace("1 Column"));
 		selenium.clickAt("//input[@value='Save']",
@@ -504,23 +251,7 @@ public class User_ViewHistoryVersionNumbersTest extends BaseTestCase {
 				"Your request completed successfully. The page will be refreshed when you close this dialog. Alternatively you can hide this dialog."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("link=Site Name")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent("link=Site Name");
 		selenium.clickAt("link=Site Name", RuntimeVariables.replace("Site Name"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isElementPresent(
@@ -559,23 +290,7 @@ public class User_ViewHistoryVersionNumbersTest extends BaseTestCase {
 		assertTrue(selenium.isElementNotPresent(
 				"//div[@id='column-2']/div/div[contains(@class,'portlet-document-library')]"));
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("link=Site Name")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent("link=Site Name");
 		selenium.clickAt("link=Site Name", RuntimeVariables.replace("Site Name"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isElementPresent(
@@ -597,23 +312,7 @@ public class User_ViewHistoryVersionNumbersTest extends BaseTestCase {
 			selenium.getText("//button/span[.='History']"));
 		selenium.clickAt("//button/span[.='History']",
 			RuntimeVariables.replace("History"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//tr[3]/td[2]/span/span/span")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//tr[3]/td[2]/span/span/span");
 		assertEquals(RuntimeVariables.replace("Draft"),
 			selenium.getText("//tr[3]/td[2]/span/span/span"));
 		assertEquals(RuntimeVariables.replace("Current Version"),

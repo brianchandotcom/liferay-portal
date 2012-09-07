@@ -22,29 +22,15 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class SA_SignOutPrivatePagesSiteBWCTest extends BaseTestCase {
 	public void testSA_SignOutPrivatePagesSiteBWC() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.openWindow("http://www.baker.com:8080",
 			RuntimeVariables.replace("home"));
 		selenium.waitForPopUp("home", RuntimeVariables.replace(""));
 		selenium.selectWindow("home");
 		Thread.sleep(5000);
 		Thread.sleep(5000);
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("link=Sign Out")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent("link=Sign Out");
 		selenium.click(RuntimeVariables.replace("link=Sign Out"));
 		selenium.waitForPageToLoad("30000");
 		Thread.sleep(5000);

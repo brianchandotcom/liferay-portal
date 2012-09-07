@@ -24,22 +24,9 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ScreengrabQuickNoteTest extends BaseTestCase {
 	public void testScreengrabQuickNote() throws Exception {
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("link=Test Page 4")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
+		selenium.waitForElementPresent("link=Test Page 4");
 		selenium.click(RuntimeVariables.replace("link=Test Page 4"));
 		selenium.waitForPageToLoad("30000");
 		Thread.sleep(5000);

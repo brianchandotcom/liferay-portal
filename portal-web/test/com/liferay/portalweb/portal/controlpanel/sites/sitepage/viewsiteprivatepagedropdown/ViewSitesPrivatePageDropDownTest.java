@@ -22,26 +22,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ViewSitesPrivatePageDropDownTest extends BaseTestCase {
 	public void testViewSitesPrivatePageDropDown() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("Community Name")
-										.equals(selenium.getText(
-								"//li[6]/a/span"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//li[6]/a/span", "Community Name");
 		assertEquals(RuntimeVariables.replace("Community Name"),
 			selenium.getText("//li[6]/a/span"));
 		selenium.clickAt("//li[6]/a/span",

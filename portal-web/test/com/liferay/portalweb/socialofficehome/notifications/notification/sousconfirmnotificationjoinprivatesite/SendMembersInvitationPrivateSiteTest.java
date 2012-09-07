@@ -23,47 +23,16 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class SendMembersInvitationPrivateSiteTest extends BaseTestCase {
 	public void testSendMembersInvitationPrivateSite()
 		throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/user/joebloggs/so/dashboard/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//li[contains(@class, 'selected')]/a/span")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//li[contains(@class, 'selected')]/a/span");
 		assertEquals(RuntimeVariables.replace("Dashboard"),
 			selenium.getText("//li[contains(@class, 'selected')]/a/span"));
 		assertEquals(RuntimeVariables.replace("Sites"),
 			selenium.getText("//div[@id='so-sidebar']/h3"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//li[contains(@class, 'social-office-enabled')]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//li[contains(@class, 'social-office-enabled')]");
 		assertEquals(RuntimeVariables.replace("Private Site Name"),
 			selenium.getText(
 				"//li[contains(@class, 'social-office-enabled')]/span[2]/a"));
@@ -82,44 +51,12 @@ public class SendMembersInvitationPrivateSiteTest extends BaseTestCase {
 				"//a[contains(text(),'Invite members to this site.')]"));
 		selenium.clickAt("//a[contains(text(),'Invite members to this site.')]",
 			RuntimeVariables.replace("Invite members to this site."));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div[@class='search']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//div[@class='search']");
 		assertEquals(RuntimeVariables.replace("Social01 Office01 User01"),
 			selenium.getText("//div[contains(@class, 'user')]/span"));
 		selenium.clickAt("//div[contains(@class, 'user')]/span",
 			RuntimeVariables.replace("Social01 Office01 User01"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div[@class='user-invited']/div/div")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//div[@class='user-invited']/div/div");
 		assertEquals(RuntimeVariables.replace(
 				"Social01 Office01 User01 socialoffice01@liferay.com"),
 			selenium.getText("//div[@class='user-invited']/div/div"));
@@ -127,23 +64,7 @@ public class SendMembersInvitationPrivateSiteTest extends BaseTestCase {
 			selenium.getValue("//input[@value='Send Invitations']"));
 		selenium.clickAt("//input[@value='Send Invitations']",
 			RuntimeVariables.replace("Send Invitations"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div[@class='portlet-msg-success']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//div[@class='portlet-msg-success']");
 		assertEquals(RuntimeVariables.replace(
 				"Your request processed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

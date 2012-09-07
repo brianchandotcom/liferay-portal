@@ -22,80 +22,19 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ViewMicroblogsTimelineTest extends BaseTestCase {
 	public void testViewMicroblogsTimeline() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/user/joebloggs/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//nav/ul/li[contains(.,'Microblogs')]/a/span")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//nav/ul/li[contains(.,'Microblogs')]/a/span");
 		selenium.clickAt("//nav/ul/li[contains(.,'Microblogs')]/a/span",
 			RuntimeVariables.replace("Microblogs"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Timeline"),
 			selenium.getText("link=Timeline"));
 		selenium.clickAt("link=Timeline", RuntimeVariables.replace("Timeline"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("xPath=(//div[@class='content'])[1]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("xPath=(//div[@class='content'])[2]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("xPath=(//div[@class='content'])[3]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("xPath=(//div[@class='content'])[1]");
+		selenium.waitForVisible("xPath=(//div[@class='content'])[2]");
+		selenium.waitForVisible("xPath=(//div[@class='content'])[3]");
 		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Joe Bloggs says"),
 			selenium.getText("xPath=(//div[@class='user-name'])[1]"));

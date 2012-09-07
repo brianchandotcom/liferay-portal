@@ -22,24 +22,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ViewCategoryItemTest extends BaseTestCase {
 	public void testViewCategoryItem() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/shopping-item-community/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Shopping Item Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Shopping Item Page");
 		selenium.clickAt("link=Shopping Item Page",
 			RuntimeVariables.replace("Shopping Item Page"));
 		selenium.waitForPageToLoad("30000");

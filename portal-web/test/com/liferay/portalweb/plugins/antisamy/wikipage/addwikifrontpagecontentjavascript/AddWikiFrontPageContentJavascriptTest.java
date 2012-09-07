@@ -23,24 +23,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AddWikiFrontPageContentJavascriptTest extends BaseTestCase {
 	public void testAddWikiFrontPageContentJavascript()
 		throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Wiki Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Wiki Test Page");
 		selenium.clickAt("link=Wiki Test Page",
 			RuntimeVariables.replace("Wiki Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -62,24 +48,8 @@ public class AddWikiFrontPageContentJavascriptTest extends BaseTestCase {
 			selenium.getText("//span[@id='cke_48_label']"));
 		selenium.clickAt("//span[@id='cke_48_label']",
 			RuntimeVariables.replace("Source"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//textarea[@class='cke_source cke_enable_context_menu']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//textarea[@class='cke_source cke_enable_context_menu']");
 		selenium.type("//textarea[@class='cke_source cke_enable_context_menu']",
 			RuntimeVariables.replace(
 				"<p id=\"demo\">PASS</p><script type=\"text/javascript\">document.getElementById('demo').innerHTML=\"FAIL\";</script>"));

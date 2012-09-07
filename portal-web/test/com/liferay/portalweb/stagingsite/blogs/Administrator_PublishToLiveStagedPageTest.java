@@ -28,6 +28,8 @@ public class Administrator_PublishToLiveStagedPageTest extends BaseTestCase {
 		while (label >= 1) {
 			switch (label) {
 			case 1:
+				selenium.selectWindow("null");
+				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
 				assertTrue(selenium.isElementPresent(
 						"//div[@class='staging-bar']"));
@@ -44,23 +46,7 @@ public class Administrator_PublishToLiveStagedPageTest extends BaseTestCase {
 				assertEquals(RuntimeVariables.replace(
 						"You are viewing the staged version of Liferay. You can make changes here and publish them to Live afterwards to make them public."),
 					selenium.getText("//span[@class='staging-live-help']"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("link=Blogs Test Page")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("link=Blogs Test Page");
 				selenium.clickAt("link=Blogs Test Page",
 					RuntimeVariables.replace("Blogs Test Page"));
 				selenium.waitForPageToLoad("30000");
@@ -69,22 +55,7 @@ public class Administrator_PublishToLiveStagedPageTest extends BaseTestCase {
 						"//a[@id='_170_0publishNowLink']"));
 				selenium.clickAt("//a[@id='_170_0publishNowLink']",
 					RuntimeVariables.replace("Publish to Live Now"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("//div[2]/div[1]/a")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
+				selenium.waitForVisible("//div[2]/div[1]/a");
 
 				boolean blogsVisible = selenium.isVisible(
 						"_88_PORTLET_DATA_33Checkbox");
@@ -99,24 +70,7 @@ public class Administrator_PublishToLiveStagedPageTest extends BaseTestCase {
 					RuntimeVariables.replace("Plus"));
 
 			case 2:
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isElementPresent(
-									"//input[@id='_88_rangeAll']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForElementPresent("//input[@id='_88_rangeAll']");
 				selenium.clickAt("//input[@id='_88_rangeAll']",
 					RuntimeVariables.replace("All"));
 
@@ -138,45 +92,12 @@ public class Administrator_PublishToLiveStagedPageTest extends BaseTestCase {
 
 			case 3:
 				Thread.sleep(5000);
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("//input[@value='Publish']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("//input[@value='Publish']");
 				selenium.clickAt("//input[@value='Publish']",
 					RuntimeVariables.replace("Publish"));
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to publish these pages[\\s\\S]$"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//div[@class='portlet-msg-success']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("//div[@class='portlet-msg-success']");
 				assertEquals(RuntimeVariables.replace(
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));

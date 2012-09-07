@@ -22,60 +22,15 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class CreateRolesTest extends BaseTestCase {
 	public void testCreateRoles() throws Exception {
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("link=Roles")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
+		selenium.waitForElementPresent("link=Roles");
 		selenium.clickAt("link=Roles", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Add")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Add");
 		selenium.clickAt("link=Add", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("_128_name")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("_128_name");
 		selenium.type("_128_name", RuntimeVariables.replace("Community Admin"));
 		selenium.type("_128_description",
 			RuntimeVariables.replace("This is the CommunityAdmin Role."));
@@ -84,23 +39,7 @@ public class CreateRolesTest extends BaseTestCase {
 		assertTrue(selenium.isElementPresent("link=Community Admin"));
 		selenium.clickAt("link=Add", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("_128_name")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("_128_name");
 		selenium.type("_128_name", RuntimeVariables.replace("Member"));
 		selenium.type("_128_description",
 			RuntimeVariables.replace("This is the Member Role."));
@@ -109,23 +48,7 @@ public class CreateRolesTest extends BaseTestCase {
 		assertTrue(selenium.isElementPresent("link=Member"));
 		selenium.clickAt("link=Add", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("_128_name")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("_128_name");
 		selenium.type("_128_name", RuntimeVariables.replace("Portlet"));
 		selenium.type("_128_description",
 			RuntimeVariables.replace("This is the Portlet Role."));
@@ -134,23 +57,7 @@ public class CreateRolesTest extends BaseTestCase {
 		assertTrue(selenium.isElementPresent("link=Portlet"));
 		selenium.clickAt("link=Add", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("_128_name")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("_128_name");
 		selenium.type("_128_name", RuntimeVariables.replace("Publisher"));
 		selenium.type("_128_description",
 			RuntimeVariables.replace("This is the Publisher Role."));
@@ -159,23 +66,7 @@ public class CreateRolesTest extends BaseTestCase {
 		assertTrue(selenium.isElementPresent("link=Publisher"));
 		selenium.clickAt("link=Add", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("_128_name")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("_128_name");
 		selenium.type("_128_name", RuntimeVariables.replace("Scope"));
 		selenium.type("_128_description",
 			RuntimeVariables.replace("This is the Scope Role."));
@@ -184,23 +75,7 @@ public class CreateRolesTest extends BaseTestCase {
 		assertTrue(selenium.isElementPresent("link=Scope"));
 		selenium.clickAt("link=Add", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("_128_name")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("_128_name");
 		selenium.type("_128_name", RuntimeVariables.replace("Writer"));
 		selenium.type("_128_description",
 			RuntimeVariables.replace("This is the Writer Role."));

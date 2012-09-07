@@ -22,24 +22,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class MR_RequestCommunityTest extends BaseTestCase {
 	public void testMR_RequestCommunity() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/user/requestmembersn/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Available Communities")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Available Communities");
 		selenium.clickAt("link=Available Communities",
 			RuntimeVariables.replace("Available Communities"));
 		selenium.waitForPageToLoad("30000");

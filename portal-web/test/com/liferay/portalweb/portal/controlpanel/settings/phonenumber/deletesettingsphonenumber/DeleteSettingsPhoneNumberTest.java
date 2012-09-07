@@ -22,24 +22,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class DeleteSettingsPhoneNumberTest extends BaseTestCase {
 	public void testDeleteSettingsPhoneNumber() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
@@ -52,23 +38,7 @@ public class DeleteSettingsPhoneNumberTest extends BaseTestCase {
 			RuntimeVariables.replace("Phone Numbers"));
 		assertEquals("123-123-1234",
 			selenium.getValue("//input[@id='_130_phoneNumber0']"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//button[2]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//button[2]");
 		selenium.clickAt("//button[2]", RuntimeVariables.replace("Delete"));
 		assertFalse(selenium.isTextPresent("1231231234"));
 	}

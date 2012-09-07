@@ -22,202 +22,40 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class SelectBirthdayTest extends BaseTestCase {
 	public void testSelectBirthday() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Joe Bloggs")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Joe Bloggs");
 		selenium.clickAt("link=Joe Bloggs",
 			RuntimeVariables.replace("Joe Bloggs"));
 		Thread.sleep(5000);
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//select[@id='_2_birthdayMonth']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//select[@id='_2_birthdayMonth']");
 		Thread.sleep(5000);
 		selenium.click("//select[@id='_2_birthdayMonth']");
 		selenium.select("//select[@id='_2_birthdayMonth']",
 			RuntimeVariables.replace("March"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if ("March".equals(selenium.getSelectedLabel(
-								"//select[@id='_2_birthdayMonth']"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForSelectedLabel("//select[@id='_2_birthdayMonth']",
+			"March");
 		selenium.select("//select[@id='_2_birthdayYear']",
 			RuntimeVariables.replace("1986"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if ("1986".equals(selenium.getSelectedLabel(
-								"//select[@id='_2_birthdayYear']"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//button[@id='buttonTest']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForSelectedLabel("//select[@id='_2_birthdayYear']", "1986");
+		selenium.waitForVisible("//button[@id='buttonTest']");
 		selenium.clickAt("//button[@id='buttonTest']",
 			RuntimeVariables.replace("Date Picker"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div[@class='aui-calendar-title']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//div[@class='aui-calendar-title']");
 		assertEquals(RuntimeVariables.replace("March 1986"),
 			selenium.getText("//div[@class='aui-calendar-title']"));
 		selenium.clickAt("link=Prev", RuntimeVariables.replace("Prev"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("April 1986")
-										.equals(selenium.getText(
-								"//div[@class='aui-calendar-title']"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//div[@class='aui-calendar-title']", "April 1986");
 		assertEquals(RuntimeVariables.replace("April 1986"),
 			selenium.getText("//div[@class='aui-calendar-title']"));
 		selenium.clickAt("link=Prev", RuntimeVariables.replace("Prev"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("May 1986")
-										.equals(selenium.getText(
-								"//div[@class='aui-calendar-title']"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//div[@class='aui-calendar-title']", "May 1986");
 		assertEquals(RuntimeVariables.replace("May 1986"),
 			selenium.getText("//div[@class='aui-calendar-title']"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=31")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=31");
 		selenium.clickAt("link=31", RuntimeVariables.replace("31"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (!selenium.isVisible("//div[@class='aui-calendar-title']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForNotVisible("//div[@class='aui-calendar-title']");
 		assertEquals("May",
 			selenium.getSelectedLabel("//select[@id='_2_birthdayMonth']"));
 		assertEquals("31",

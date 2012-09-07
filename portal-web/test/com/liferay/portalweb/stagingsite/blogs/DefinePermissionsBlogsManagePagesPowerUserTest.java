@@ -23,47 +23,17 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class DefinePermissionsBlogsManagePagesPowerUserTest extends BaseTestCase {
 	public void testDefinePermissionsBlogsManagePagesPowerUser()
 		throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("//div[@id='dockbar']",
 			RuntimeVariables.replace("Dockbar"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent(
-							"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Control Panel")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
@@ -83,25 +53,7 @@ public class DefinePermissionsBlogsManagePagesPowerUserTest extends BaseTestCase
 		selenium.waitForPageToLoad("30000");
 		selenium.select("//select[@id='_128_add-permissions']",
 			RuntimeVariables.replace("Blogs"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("Add Entry")
-										.equals(selenium.getText(
-								"//tr[3]/td[2]"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//tr[3]/td[2]", "Add Entry");
 		assertEquals(RuntimeVariables.replace("Add Entry"),
 			selenium.getText("//tr[3]/td[2]"));
 		assertTrue(selenium.isPartialText(
@@ -109,25 +61,8 @@ public class DefinePermissionsBlogsManagePagesPowerUserTest extends BaseTestCase
 				"User Personal Site"));
 		selenium.clickAt("//span[@id='_128_groupHTMLcom.liferay.portlet.blogsADD_ENTRY']/span/a",
 			RuntimeVariables.replace("x"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("Portal")
-										.equals(selenium.getText(
-								"//span[@id='_128_groupHTMLcom.liferay.portlet.blogsADD_ENTRY']"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//span[@id='_128_groupHTMLcom.liferay.portlet.blogsADD_ENTRY']",
+			"Portal");
 		assertEquals(RuntimeVariables.replace("Portal"),
 			selenium.getText(
 				"//span[@id='_128_groupHTMLcom.liferay.portlet.blogsADD_ENTRY']"));
@@ -142,25 +77,7 @@ public class DefinePermissionsBlogsManagePagesPowerUserTest extends BaseTestCase
 		selenium.waitForPageToLoad("30000");
 		selenium.select("//select[@id='_128_add-permissions']",
 			RuntimeVariables.replace("Sites"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("Manage Pages")
-										.equals(selenium.getText(
-								"//tr[14]/td[2]"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//tr[14]/td[2]", "Manage Pages");
 		assertEquals(RuntimeVariables.replace("Manage Pages"),
 			selenium.getText("//tr[14]/td[2]"));
 		assertTrue(selenium.isPartialText(
@@ -168,25 +85,8 @@ public class DefinePermissionsBlogsManagePagesPowerUserTest extends BaseTestCase
 				"User Personal Site"));
 		selenium.clickAt("//span[@id='_128_groupHTMLcom.liferay.portal.model.GroupMANAGE_LAYOUTS']/span/a",
 			RuntimeVariables.replace("x"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("Portal")
-										.equals(selenium.getText(
-								"//span[@id='_128_groupHTMLcom.liferay.portal.model.GroupMANAGE_LAYOUTS']"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//span[@id='_128_groupHTMLcom.liferay.portal.model.GroupMANAGE_LAYOUTS']",
+			"Portal");
 		assertEquals(RuntimeVariables.replace("Portal"),
 			selenium.getText(
 				"//span[@id='_128_groupHTMLcom.liferay.portal.model.GroupMANAGE_LAYOUTS']"));

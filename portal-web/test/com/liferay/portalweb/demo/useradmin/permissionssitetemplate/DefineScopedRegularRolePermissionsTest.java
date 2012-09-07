@@ -23,24 +23,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class DefineScopedRegularRolePermissionsTest extends BaseTestCase {
 	public void testDefineScopedRegularRolePermissions()
 		throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
@@ -78,23 +64,7 @@ public class DefineScopedRegularRolePermissionsTest extends BaseTestCase {
 			RuntimeVariables.replace("Limit Scope"));
 		Thread.sleep(5000);
 		selenium.selectWindow("title=Roles");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//input[@id='_128_name']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//input[@id='_128_name']");
 		selenium.type("//input[@id='_128_name']",
 			RuntimeVariables.replace("Site"));
 		selenium.clickAt("//input[@value='Search']",
@@ -105,24 +75,7 @@ public class DefineScopedRegularRolePermissionsTest extends BaseTestCase {
 		selenium.clickAt("//tr[contains(.,'Site Name')]/td/a",
 			RuntimeVariables.replace("Site Name"));
 		selenium.selectWindow("null");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//span[@class='permission-scopes']/span/span")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//span[@class='permission-scopes']/span/span");
 		assertEquals(RuntimeVariables.replace("Site Name"),
 			selenium.getText("//span[@class='permission-scopes']/span/span"));
 		selenium.clickAt("//input[@value='Save']",

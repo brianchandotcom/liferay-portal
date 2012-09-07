@@ -28,25 +28,11 @@ public class SOUs_DeleteReplyMicroblogsContentProfileTest extends BaseTestCase {
 		while (label >= 1) {
 			switch (label) {
 			case 1:
+				selenium.selectWindow("null");
+				selenium.selectFrame("relative=top");
 				selenium.open("/web/joebloggs/so/profile");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//nav/ul/li[contains(.,'Microblogs')]/a/span")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible(
+					"//nav/ul/li[contains(.,'Microblogs')]/a/span");
 				selenium.clickAt("//nav/ul/li[contains(.,'Microblogs')]/a/span",
 					RuntimeVariables.replace("Microblogs"));
 				selenium.waitForPageToLoad("30000");
@@ -64,24 +50,7 @@ public class SOUs_DeleteReplyMicroblogsContentProfileTest extends BaseTestCase {
 					RuntimeVariables.replace("1 Comment"));
 
 			case 2:
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"xPath=(//div[@class='user-name'])[2]")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("xPath=(//div[@class='user-name'])[2]");
 				assertEquals(RuntimeVariables.replace("Joe Bloggs says"),
 					selenium.getText("xPath=(//div[@class='user-name'])[1]"));
 				assertEquals(RuntimeVariables.replace("Microblogs Post"),
@@ -97,22 +66,7 @@ public class SOUs_DeleteReplyMicroblogsContentProfileTest extends BaseTestCase {
 					RuntimeVariables.replace("Delete"));
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this post[\\s\\S]$"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (!selenium.isTextPresent("Microblogs Post Comment")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
+				selenium.waitForTextNotPresent("Microblogs Post Comment");
 
 			case 100:
 				label = -1;

@@ -22,6 +22,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class RemovePetSiteTest extends BaseTestCase {
 	public void testRemovePetSite() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("link=Pet Sites Test Page",
 			RuntimeVariables.replace("Pet Sites Test Page"));
@@ -31,88 +33,21 @@ public class RemovePetSiteTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Edit Mode"),
 			selenium.getText("//div/div/a"));
 		selenium.clickAt("//div/div/a", RuntimeVariables.replace("Edit Mode"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("Add Site")
-										.equals(selenium.getText("//div/div/a"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//div/div/a", "Add Site");
 		assertEquals(RuntimeVariables.replace("Add Site"),
 			selenium.getText("//div/div/a"));
 		assertEquals(RuntimeVariables.replace("Remove"),
 			selenium.getText("//div[@class='portlet-body']/form/a"));
 		selenium.clickAt("//div[@class='portlet-body']/form/a",
 			RuntimeVariables.replace("Remove"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (!selenium.isTextPresent("Remove")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForTextNotPresent("Remove");
 		assertFalse(selenium.isTextPresent("Remove"));
 		assertFalse(selenium.isTextPresent("Liferay [http://www.liferay.com]"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("View Mode")
-										.equals(selenium.getText("//div/a[2]"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//div/a[2]", "View Mode");
 		assertEquals(RuntimeVariables.replace("View Mode"),
 			selenium.getText("//div/a[2]"));
 		selenium.clickAt("//div/a[2]", RuntimeVariables.replace("View Mode"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("Edit Mode")
-										.equals(selenium.getText("//div/div/a"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//div/div/a", "Edit Mode");
 		assertEquals(RuntimeVariables.replace("Edit Mode"),
 			selenium.getText("//div/div/a"));
 	}

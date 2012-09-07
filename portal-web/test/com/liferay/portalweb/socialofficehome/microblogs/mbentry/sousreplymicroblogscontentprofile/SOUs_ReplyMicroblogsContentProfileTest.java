@@ -23,25 +23,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class SOUs_ReplyMicroblogsContentProfileTest extends BaseTestCase {
 	public void testSOUs_ReplyMicroblogsContentProfile()
 		throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/joebloggs/so/profile");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//nav/ul/li[contains(.,'Microblogs')]/a/span")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//nav/ul/li[contains(.,'Microblogs')]/a/span");
 		selenium.clickAt("//nav/ul/li[contains(.,'Microblogs')]/a/span",
 			RuntimeVariables.replace("Microblogs"));
 		selenium.waitForPageToLoad("30000");
@@ -53,106 +38,24 @@ public class SOUs_ReplyMicroblogsContentProfileTest extends BaseTestCase {
 			selenium.getText("//span[@class='action comment']/a"));
 		selenium.clickAt("//span[@class='action comment']/a",
 			RuntimeVariables.replace("Comment"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div[@class='autocomplete textarea']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//div[@class='autocomplete textarea']");
 		Thread.sleep(5000);
 		selenium.clickAt("//div[@class='autocomplete textarea']",
 			RuntimeVariables.replace("Leave a comment..."));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//textarea")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//textarea");
 		selenium.clickAt("//textarea",
 			RuntimeVariables.replace("Leave a comment..."));
 		selenium.typeKeys("//textarea",
 			RuntimeVariables.replace("Microblogs Post Comment"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("127")
-										.equals(selenium.getText(
-								"//span[@class='microblogs-countdown']"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//span[@class='microblogs-countdown']", "127");
 		assertEquals(RuntimeVariables.replace("127"),
 			selenium.getText("//span[@class='microblogs-countdown']"));
 		selenium.clickAt("//input[@value='Post']",
 			RuntimeVariables.replace("Post"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div[@class='content']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//div[@class='content']");
 		assertEquals(RuntimeVariables.replace("Microblogs Post"),
 			selenium.getText("//div[@class='content']"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("xPath=(//div[@class='content'])[2]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("xPath=(//div[@class='content'])[2]");
 		assertEquals(RuntimeVariables.replace("Joe Bloggs says"),
 			selenium.getText("xPath=(//div[@class='user-name'])[1]"));
 		assertEquals(RuntimeVariables.replace("Microblogs Post"),

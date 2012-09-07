@@ -22,24 +22,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class AssertDeletedTagDoesNotPersistTest extends BaseTestCase {
 	public void testAssertDeletedTagDoesNotPersist() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Blogs Tags Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Blogs Tags Test Page");
 		selenium.clickAt("link=Blogs Tags Test Page",
 			RuntimeVariables.replace("Blogs Tags Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -49,90 +35,24 @@ public class AssertDeletedTagDoesNotPersistTest extends BaseTestCase {
 			RuntimeVariables.replace("Tags Blog Entry1 Title"));
 		selenium.waitForPageToLoad("30000");
 		assertFalse(selenium.isTextPresent("selenium2 liferay2"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Blogs Tags Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Blogs Tags Test Page");
 		selenium.clickAt("link=Blogs Tags Test Page",
 			RuntimeVariables.replace("Blogs Tags Test Page"));
 		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("Tags Blog Entry2 Title")
-										.equals(selenium.getText(
-								"xPath=(//div[@class='entry-title']/h2/a)[2]"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("xPath=(//div[@class='entry-title']/h2/a)[2]",
+			"Tags Blog Entry2 Title");
 		assertEquals(RuntimeVariables.replace("Tags Blog Entry2 Title"),
 			selenium.getText("xPath=(//div[@class='entry-title']/h2/a)[2]"));
 		selenium.clickAt("xPath=(//div[@class='entry-title']/h2/a)[2]",
 			RuntimeVariables.replace("Tags Blog Entry2 Title"));
 		selenium.waitForPageToLoad("30000");
 		assertFalse(selenium.isTextPresent("selenium2 liferay2"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Blogs Tags Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Blogs Tags Test Page");
 		selenium.clickAt("link=Blogs Tags Test Page",
 			RuntimeVariables.replace("Blogs Tags Test Page"));
 		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("Tags Blog Entry3 Title")
-										.equals(selenium.getText(
-								"xPath=(//div[@class='entry-title']/h2/a)[1]"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("xPath=(//div[@class='entry-title']/h2/a)[1]",
+			"Tags Blog Entry3 Title");
 		assertEquals(RuntimeVariables.replace("Tags Blog Entry3 Title"),
 			selenium.getText("xPath=(//div[@class='entry-title']/h2/a)[1]"));
 		selenium.clickAt("xPath=(//div[@class='entry-title']/h2/a)[1]",
@@ -140,23 +60,7 @@ public class AssertDeletedTagDoesNotPersistTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertFalse(selenium.isTextPresent("selenium2 liferay2"));
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Blogs Tags Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Blogs Tags Test Page");
 		selenium.clickAt("link=Blogs Tags Test Page",
 			RuntimeVariables.replace("Blogs Tags Test Page"));
 		selenium.waitForPageToLoad("30000");

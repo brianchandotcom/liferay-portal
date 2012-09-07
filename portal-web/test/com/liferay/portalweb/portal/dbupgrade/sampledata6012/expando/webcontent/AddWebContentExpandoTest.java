@@ -22,24 +22,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class AddWebContentExpandoTest extends BaseTestCase {
 	public void testAddWebContentExpando() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent("link=Control Panel");
 		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Communities", RuntimeVariables.replace(""));
@@ -68,46 +54,12 @@ public class AddWebContentExpandoTest extends BaseTestCase {
 		selenium.waitForPopUp("ChangeStructure",
 			RuntimeVariables.replace("30000"));
 		selenium.selectWindow("name=ChangeStructure");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//td[2]/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//td[2]/a");
 		assertTrue(selenium.isPartialText("//td[2]/a", "Expando Structure Test"));
 		selenium.click("//td[2]/a");
 		selenium.selectWindow("null");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace(
-							"Expando Structure Test (Use Default)")
-										.equals(selenium.getText(
-								"_15_structureNameLabel"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("_15_structureNameLabel",
+			"Expando Structure Test (Use Default)");
 		assertEquals(RuntimeVariables.replace(
 				"Expando Structure Test (Use Default)"),
 			selenium.getText("_15_structureNameLabel"));

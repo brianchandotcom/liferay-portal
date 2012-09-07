@@ -22,24 +22,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class EnableSocialActivityBlogsEntryTest extends BaseTestCase {
 	public void testEnableSocialActivityBlogsEntry() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
@@ -55,24 +41,8 @@ public class EnableSocialActivityBlogsEntryTest extends BaseTestCase {
 				"//input[@id='_179_com.liferay.portlet.blogs.model.BlogsEntry.enabledCheckbox']"));
 		selenium.clickAt("link=Blogs Entry",
 			RuntimeVariables.replace("Blogs Entry"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//div[@class='aui-settings-display-content']/ul/li[2]/div/span")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//div[@class='aui-settings-display-content']/ul/li[2]/div/span");
 		assertEquals(RuntimeVariables.replace("Adds a Comment"),
 			selenium.getText(
 				"//div[@class='aui-settings-display-content']/ul/li[2]/div/span"));
@@ -85,24 +55,8 @@ public class EnableSocialActivityBlogsEntryTest extends BaseTestCase {
 				"//div[@class='aui-settings-display-content']/ul/li[2]/div/div/div[2]/a[1]/span"));
 		selenium.clickAt("//div[@class='aui-settings-display-content']/ul/li[2]/div/div/div[2]/a[1]/span",
 			RuntimeVariables.replace("Limit"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//select[@id='ADD_COMMENT_contributionLimitValue']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//select[@id='ADD_COMMENT_contributionLimitValue']");
 		selenium.select("//select[@id='ADD_COMMENT_contributionLimitValue']",
 			RuntimeVariables.replace("2"));
 		assertEquals(RuntimeVariables.replace("Reads a Blog"),
@@ -110,24 +64,8 @@ public class EnableSocialActivityBlogsEntryTest extends BaseTestCase {
 				"//div[@class='aui-settings-display-content']/ul/li[3]/div/span"));
 		selenium.clickAt("//div[@class='aui-settings-display-content']/ul/li[3]/div/div/div[2]/a[2]/span",
 			RuntimeVariables.replace("Close"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//ul[@class='settings-actions']/li[2]/div/span")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//ul[@class='settings-actions']/li[2]/div/span");
 		assertEquals(RuntimeVariables.replace("Reads a Blog"),
 			selenium.getText("//ul[@class='settings-actions']/li[2]/div/span"));
 		assertEquals(RuntimeVariables.replace("Subscribes to a Blog"),
@@ -135,25 +73,8 @@ public class EnableSocialActivityBlogsEntryTest extends BaseTestCase {
 				"//div[@class='aui-settings-display-content']/ul/li[3]/div/span"));
 		selenium.clickAt("//div[@class='aui-settings-display-content']/ul/li[3]/div/div/div[2]/a[2]/span",
 			RuntimeVariables.replace("Close"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("Subscribes to a Blog")
-										.equals(selenium.getText(
-								"//ul[@class='settings-actions']/li[3]/div/span"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//ul[@class='settings-actions']/li[3]/div/span",
+			"Subscribes to a Blog");
 		assertEquals(RuntimeVariables.replace("Subscribes to a Blog"),
 			selenium.getText("//ul[@class='settings-actions']/li[3]/div/span"));
 		selenium.clickAt("//input[@value='Save']",

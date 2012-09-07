@@ -27,47 +27,18 @@ public class ViewBlogsTagSuggestionsNoTest extends BaseTestCase {
 		while (label >= 1) {
 			switch (label) {
 			case 1:
+				selenium.selectWindow("null");
+				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("link=Blogs Test Page")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("link=Blogs Test Page");
 				selenium.clickAt("link=Blogs Test Page",
 					RuntimeVariables.replace("Blogs Test Page"));
 				selenium.waitForPageToLoad("30000");
 				selenium.clickAt("//input[@value='Add Blog Entry']",
 					RuntimeVariables.replace("Add Blog Entry"));
 				selenium.waitForPageToLoad("30000");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isElementPresent(
-									"//textarea[@id='_33_editor' and @style='display: none;']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
+				selenium.waitForElementPresent(
+					"//textarea[@id='_33_editor' and @style='display: none;']");
 
 				boolean categorizationCollapsed = selenium.isElementPresent(
 						"//div[@id='blogsEntryCategorizationPanel' and contains(@class,'lfr-collapsed')]");
@@ -80,23 +51,8 @@ public class ViewBlogsTagSuggestionsNoTest extends BaseTestCase {
 
 				selenium.clickAt("//div[@id='blogsEntryCategorizationPanel']/div/div/span",
 					RuntimeVariables.replace("Categorization"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isElementNotPresent(
-									"//div[@id='blogsEntryCategorizationPanel' and contains(@class,'lfr-collapsed')]")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
+				selenium.waitForElementNotPresent(
+					"//div[@id='blogsEntryCategorizationPanel' and contains(@class,'lfr-collapsed')]");
 
 			case 2:
 				assertEquals(RuntimeVariables.replace("Tags"),

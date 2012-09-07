@@ -27,6 +27,8 @@ public class Gmail_TearDownEmailTest extends BaseTestCase {
 		while (label >= 1) {
 			switch (label) {
 			case 1:
+				selenium.selectWindow("null");
+				selenium.selectFrame("relative=top");
 				selenium.openWindow("http://www.gmail.com/",
 					RuntimeVariables.replace("gmail"));
 				selenium.waitForPopUp("gmail", RuntimeVariables.replace(""));
@@ -94,23 +96,7 @@ public class Gmail_TearDownEmailTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 
 			case 5:
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("//input[@id='Email']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("//input[@id='Email']");
 				selenium.type("//input[@id='Email']",
 					RuntimeVariables.replace("liferay.qa.testing.trunk"));
 				selenium.type("//input[@id='Passwd']",
@@ -136,23 +122,7 @@ public class Gmail_TearDownEmailTest extends BaseTestCase {
 					RuntimeVariables.replace("Sign In"));
 				selenium.waitForPageToLoad("30000");
 				Thread.sleep(5000);
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("//span[@role='checkbox']/div")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("//span[@role='checkbox']/div");
 				selenium.clickAt("//span[@role='checkbox']/div",
 					RuntimeVariables.replace("All"));
 				Thread.sleep(5000);
@@ -166,23 +136,8 @@ public class Gmail_TearDownEmailTest extends BaseTestCase {
 					continue;
 				}
 
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//div/div/div/div[1]/div[1]/div[1]/div/div/div[2]/div[3]")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible(
+					"//div/div/div/div[1]/div[1]/div[1]/div/div/div[2]/div[3]");
 				selenium.clickAt("//div/div/div/div[1]/div[1]/div[1]/div/div/div[2]/div[3]",
 					RuntimeVariables.replace("Delete"));
 

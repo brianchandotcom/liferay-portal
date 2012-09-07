@@ -23,29 +23,15 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ViewNotificationsAddAsConnectionTest extends BaseTestCase {
 	public void testViewNotificationsAddAsConnection()
 		throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/user/joebloggs/so/dashboard/");
 		assertTrue(selenium.isElementPresent(
 				"//li[@id='_145_notificationsMenu']"));
 		assertEquals(RuntimeVariables.replace("1"),
 			selenium.getText("//span[@class='notification-count']"));
 		selenium.mouseOver("//li[@id='_145_notificationsMenu']");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div[@class='title']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//div[@class='title']");
 		assertEquals(RuntimeVariables.replace(
 				"Social01 Office01 User01 would like to add you as a connection."),
 			selenium.getText("//div[@class='title']"));
@@ -55,23 +41,7 @@ public class ViewNotificationsAddAsConnectionTest extends BaseTestCase {
 		selenium.clickAt("//span[@class='lfr-user-action-item lfr-user-action-confirm']/a",
 			RuntimeVariables.replace("Confirm"));
 		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//span[@class='notification-count']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//span[@class='notification-count']");
 		selenium.clickAt("//span[@class='notification-count']",
 			RuntimeVariables.replace("Notification Count"));
 		assertFalse(selenium.isTextPresent(

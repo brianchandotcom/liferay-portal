@@ -23,6 +23,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class PermissionsBlogsEntry1GuestViewOffTest extends BaseTestCase {
 	public void testPermissionsBlogsEntry1GuestViewOff()
 		throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("link=Blogs Test Page",
 			RuntimeVariables.replace("Blogs Test Page"));
@@ -39,23 +41,7 @@ public class PermissionsBlogsEntry1GuestViewOffTest extends BaseTestCase {
 		selenium.clickAt("//td[2]/span/a/span",
 			RuntimeVariables.replace("Permissions"));
 		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//input[@id='guest_ACTION_VIEW']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//input[@id='guest_ACTION_VIEW']");
 		assertTrue(selenium.isChecked("//input[@id='guest_ACTION_VIEW']"));
 		selenium.uncheck("//input[@id='guest_ACTION_VIEW']");
 		assertFalse(selenium.isChecked("//input[@id='guest_ACTION_VIEW']"));

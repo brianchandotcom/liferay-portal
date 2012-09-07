@@ -27,24 +27,10 @@ public class AddTemplateExpandoTest extends BaseTestCase {
 		while (label >= 1) {
 			switch (label) {
 			case 1:
+				selenium.selectWindow("null");
+				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isElementPresent("link=Control Panel")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForElementPresent("link=Control Panel");
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace(""));
 				selenium.waitForPageToLoad("30000");
@@ -98,25 +84,8 @@ public class AddTemplateExpandoTest extends BaseTestCase {
 				selenium.selectWindow("name=structure");
 				selenium.clickAt("//td[1]/a", RuntimeVariables.replace(""));
 				selenium.selectWindow("null");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (RuntimeVariables.replace("Expando Structure Test")
-												.equals(selenium.getText(
-										"_15_structureName"))) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForText("_15_structureName",
+					"Expando Structure Test");
 				assertEquals(RuntimeVariables.replace("Expando Structure Test"),
 					selenium.getText("_15_structureName"));
 				selenium.type("_15_xsl",

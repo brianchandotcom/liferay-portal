@@ -23,25 +23,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class EditTasksTaskAssignedToMeDescriptionTest extends BaseTestCase {
 	public void testEditTasksTaskAssignedToMeDescription()
 		throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/user/joebloggs/so/dashboard/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//nav/ul/li[contains(.,'Tasks')]/a/span")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//nav/ul/li[contains(.,'Tasks')]/a/span");
 		selenium.clickAt("//nav/ul/li[contains(.,'Tasks')]/a/span",
 			RuntimeVariables.replace("Tasks"));
 		selenium.waitForPageToLoad("30000");
@@ -56,25 +41,7 @@ public class EditTasksTaskAssignedToMeDescriptionTest extends BaseTestCase {
 			selenium.getText("link=Task Description"));
 		selenium.clickAt("link=Task Description",
 			RuntimeVariables.replace("Task Description"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("Task Description")
-										.equals(selenium.getText(
-								"//h1[@class='header-title']"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//h1[@class='header-title']", "Task Description");
 		assertEquals(RuntimeVariables.replace("Task Description"),
 			selenium.getText("//h1[@class='header-title']"));
 		assertEquals(RuntimeVariables.replace("Assigned to Joe Bloggs"),
@@ -85,47 +52,13 @@ public class EditTasksTaskAssignedToMeDescriptionTest extends BaseTestCase {
 			selenium.getText("//div[@class='task-data normal']"));
 		selenium.clickAt("//input[@value='Edit']",
 			RuntimeVariables.replace("Edit"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//input[@id='_1_WAR_tasksportlet_title']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//input[@id='_1_WAR_tasksportlet_title']");
 		selenium.type("//input[@id='_1_WAR_tasksportlet_title']",
 			RuntimeVariables.replace("Task Description Edit"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("Task Description Edit")
-										.equals(selenium.getText(
-								"//h1[@class='header-title']"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//h1[@class='header-title']",
+			"Task Description Edit");
 		assertEquals(RuntimeVariables.replace("Task Description Edit"),
 			selenium.getText("//h1[@class='header-title']"));
 		assertEquals(RuntimeVariables.replace("Assigned to Joe Bloggs"),

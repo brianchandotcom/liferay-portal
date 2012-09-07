@@ -22,47 +22,16 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ImportDMLARTest extends BaseTestCase {
 	public void testImportDMLAR() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("//div[@id='dockbar']",
 			RuntimeVariables.replace("Dockbar"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("//li[7]/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent("//li[7]/a");
 		assertEquals(RuntimeVariables.replace("Site Content"),
 			selenium.getText("//li[7]/a"));
 		selenium.clickAt("//li[7]/a", RuntimeVariables.replace("Site Content"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//ul[@class='category-portlets']/li[3]/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//ul[@class='category-portlets']/li[3]/a");
 		assertEquals(RuntimeVariables.replace("Documents and Media"),
 			selenium.getText("//ul[@class='category-portlets']/li[3]/a"));
 		selenium.clickAt("//ul[@class='category-portlets']/li[3]/a",
@@ -74,24 +43,8 @@ public class ImportDMLARTest extends BaseTestCase {
 		selenium.clickAt("//a[@id='_20_bbln_menuButton']",
 			RuntimeVariables.replace("Options"));
 		Thread.sleep(5000);
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a");
 		assertEquals(RuntimeVariables.replace("Export / Import"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));

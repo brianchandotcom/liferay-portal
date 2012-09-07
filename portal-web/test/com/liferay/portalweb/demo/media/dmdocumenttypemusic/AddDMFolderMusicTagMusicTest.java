@@ -27,25 +27,10 @@ public class AddDMFolderMusicTagMusicTest extends BaseTestCase {
 		while (label >= 1) {
 			switch (label) {
 			case 1:
+				selenium.selectWindow("null");
+				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"link=Documents and Media Test Page")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("link=Documents and Media Test Page");
 				selenium.clickAt("link=Documents and Media Test Page",
 					RuntimeVariables.replace("Documents and Media Test Page"));
 				selenium.waitForPageToLoad("30000");
@@ -54,25 +39,8 @@ public class AddDMFolderMusicTagMusicTest extends BaseTestCase {
 						"//div[@data-title='DM Folder Name']/a/span[@class='entry-title']"));
 				selenium.clickAt("//div[@data-title='DM Folder Name']/a/span[@class='entry-title']",
 					RuntimeVariables.replace("DM Folder Name"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (RuntimeVariables.replace("DM Folder Name")
-												.equals(selenium.getText(
-										"//li[@class='folder selected']/a/span[@class='entry-title']"))) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForText("//li[@class='folder selected']/a/span[@class='entry-title']",
+					"DM Folder Name");
 				assertEquals(RuntimeVariables.replace("DM Folder Name"),
 					selenium.getText(
 						"//li[@class='folder selected']/a/span[@class='entry-title']"));
@@ -104,48 +72,14 @@ public class AddDMFolderMusicTagMusicTest extends BaseTestCase {
 					RuntimeVariables.replace("Categorization"));
 
 			case 2:
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("//input[@title='Add Tags']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("//input[@title='Add Tags']");
 				selenium.type("//input[@title='Add Tags']",
 					RuntimeVariables.replace("Music"));
 				selenium.clickAt("//input[@value='Publish']",
 					RuntimeVariables.replace("Publish"));
 				selenium.waitForPageToLoad("30000");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (RuntimeVariables.replace(
-									"Your request completed successfully.")
-												.equals(selenium.getText(
-										"//div[@class='portlet-msg-success']"))) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForText("//div[@class='portlet-msg-success']",
+					"Your request completed successfully.");
 				assertEquals(RuntimeVariables.replace(
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));

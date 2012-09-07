@@ -23,25 +23,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class SOUs_SearchSitesSiteTypePrivateRestrictedTest extends BaseTestCase {
 	public void testSOUs_SearchSitesSiteTypePrivateRestricted()
 		throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/user/socialoffice01/so/dashboard");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//li[contains(@class, 'selected')]/a/span")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//li[contains(@class, 'selected')]/a/span");
 		assertEquals(RuntimeVariables.replace("Dashboard"),
 			selenium.getText("//li[contains(@class, 'selected')]/a/span"));
 		assertEquals(RuntimeVariables.replace("Sites"),
@@ -53,46 +38,13 @@ public class SOUs_SearchSitesSiteTypePrivateRestrictedTest extends BaseTestCase 
 		assertEquals(RuntimeVariables.replace("Private Restricted Site Name"),
 			selenium.getText(
 				"//li[contains(@class, 'social-office-enabled')]/span[2]/a"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//button[contains(.,'Sites Directory')]/span[2]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//button[contains(.,'Sites Directory')]/span[2]");
 		assertEquals(RuntimeVariables.replace("Sites Directory"),
 			selenium.getText("//button[contains(.,'Sites Directory')]/span[2]"));
 		selenium.clickAt("//button[contains(.,'Sites Directory')]/span[2]",
 			RuntimeVariables.replace("Sites Directory"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"xPath=(//h1[@class='header-title']/span)[1]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("xPath=(//h1[@class='header-title']/span)[1]");
 		assertEquals(RuntimeVariables.replace("Directory"),
 			selenium.getText("xPath=(//h1[@class='header-title']/span)[1]"));
 		selenium.select("//span[@class='sites-tabs']/span/span/span/select",

@@ -22,69 +22,22 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ViewBlogsEntryScopeTest extends BaseTestCase {
 	public void testViewBlogsEntryScope() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/group-page-scope-community/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Blogs Page Scope Current Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Blogs Page Scope Current Page");
 		selenium.clickAt("link=Blogs Page Scope Current Page",
 			RuntimeVariables.replace("Blogs Page Scope Current Page"));
 		selenium.waitForPageToLoad("30000");
 		Thread.sleep(5000);
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("Blogs Entry Scope Current Page")
-										.equals(selenium.getText(
-								"//div[@class='entry-title']/h2/a"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//div[@class='entry-title']/h2/a",
+			"Blogs Entry Scope Current Page");
 		assertEquals(RuntimeVariables.replace("Blogs Entry Scope Current Page"),
 			selenium.getText("//div[@class='entry-title']/h2/a"));
 		assertEquals(RuntimeVariables.replace(
 				"This is a blogs entry scope current page test."),
 			selenium.getText("//div[@class='entry-body']/p"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Blogs Page Scope Default")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Blogs Page Scope Default");
 		selenium.clickAt("link=Blogs Page Scope Default",
 			RuntimeVariables.replace("Blogs Page Scope Default"));
 		selenium.waitForPageToLoad("30000");

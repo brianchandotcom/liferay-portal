@@ -22,24 +22,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class EditLogoPublicPagesSiteBWCTest extends BaseTestCase {
 	public void testEditLogoPublicPagesSiteBWC() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
@@ -64,23 +50,7 @@ public class EditLogoPublicPagesSiteBWCTest extends BaseTestCase {
 		assertTrue(selenium.isPartialText("//a[@id='_156_logoLink']", "Logo"));
 		selenium.clickAt("//a[@id='_156_logoLink']",
 			RuntimeVariables.replace("Logo"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//input[@id='_156_logoFileName']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//input[@id='_156_logoFileName']");
 		selenium.type("//input[@id='_156_logoFileName']",
 			RuntimeVariables.replace(
 				"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\demo\\sitemanagement\\brazilianworldcup\\dependencies\\Site_Logo.jpg"));

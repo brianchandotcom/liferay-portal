@@ -23,45 +23,15 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ConfirmNotificationsAddConnnectionTest extends BaseTestCase {
 	public void testConfirmNotificationsAddConnnection()
 		throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/user/joebloggs/home1/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//span[@class='notification-count']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//span[@class='notification-count']");
 		assertEquals(RuntimeVariables.replace("1"),
 			selenium.getText("//span[@class='notification-count']"));
 		selenium.mouseOver("//span[@class='notification-count']");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent(
-							"//div[contains(@class, 'user-notification-events-container')]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent(
+			"//div[contains(@class, 'user-notification-events-container')]");
 		assertTrue(selenium.isVisible(
 				"//div[contains(@class, 'user-notification-events-container')]"));
 		assertEquals(RuntimeVariables.replace(
@@ -72,25 +42,7 @@ public class ConfirmNotificationsAddConnnectionTest extends BaseTestCase {
 			selenium.getText("//div[@class='notification-entry']/div[2]/span/a"));
 		selenium.clickAt("//div[@class='notification-entry']/div[2]/span/a",
 			RuntimeVariables.replace("Confirm"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (!RuntimeVariables.replace("1")
-										 .equals(selenium.getText(
-								"//span[@class='notification-count']"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForNotText("//span[@class='notification-count']", "1");
 		assertEquals(RuntimeVariables.replace("0"),
 			selenium.getText("//span[@class='notification-count']"));
 	}

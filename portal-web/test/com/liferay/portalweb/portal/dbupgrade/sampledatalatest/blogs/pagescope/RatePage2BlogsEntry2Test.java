@@ -22,47 +22,16 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class RatePage2BlogsEntry2Test extends BaseTestCase {
 	public void testRatePage2BlogsEntry2() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/blogs-page-scope-community/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Blogs Test Page2")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Blogs Test Page2");
 		selenium.clickAt("link=Blogs Test Page2",
 			RuntimeVariables.replace("Blogs Test Page2"));
 		selenium.waitForPageToLoad("30000");
 		Thread.sleep(5000);
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("Blogs (Blogs Test Page2)")
-										.equals(selenium.getText(
-								"//span[@class='portlet-title-text']"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//span[@class='portlet-title-text']",
+			"Blogs (Blogs Test Page2)");
 		assertEquals(RuntimeVariables.replace("Blogs (Blogs Test Page2)"),
 			selenium.getText("//span[@class='portlet-title-text']"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry2 Title"),
@@ -72,25 +41,8 @@ public class RatePage2BlogsEntry2Test extends BaseTestCase {
 		assertTrue(selenium.isPartialText(
 				"//div[@class='taglib-ratings stars']/div[2]/div/div", "0 Votes"));
 		selenium.clickAt("//a[4]", RuntimeVariables.replace("4 Star"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isPartialText(
-							"//div[@class='taglib-ratings stars']/div[2]/div/div",
-							"1 Vote")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForPartialText("//div[@class='taglib-ratings stars']/div[2]/div/div",
+			"1 Vote");
 		assertTrue(selenium.isPartialText(
 				"//div[@class='taglib-ratings stars']/div[2]/div/div", "1 Vote"));
 		assertTrue(selenium.isVisible(

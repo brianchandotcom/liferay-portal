@@ -23,24 +23,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ViewMoveDMDocument1NewFolderFolder1Test extends BaseTestCase {
 	public void testViewMoveDMDocument1NewFolderFolder1()
 		throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Documents and Media Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Documents and Media Test Page");
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -50,25 +36,8 @@ public class ViewMoveDMDocument1NewFolderFolder1Test extends BaseTestCase {
 			selenium.getText("//div[@data-title='DM Folder1 Name']/a/span[2]"));
 		selenium.clickAt("//div[@data-title='DM Folder1 Name']/a/span[2]",
 			RuntimeVariables.replace("DM Folder1 Name"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("DM Folder1 Name")
-										.equals(selenium.getText(
-								"//li[contains(@class,'selected')]/a/span[2]"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//li[contains(@class,'selected')]/a/span[2]",
+			"DM Folder1 Name");
 		assertEquals(RuntimeVariables.replace("DM Document1 Title"),
 			selenium.getText(
 				"//div[@data-title='DM Document1 Title']/a/span[2]"));

@@ -28,25 +28,11 @@ public class SOUs_ViewReplyMicroblogsContentTagTest extends BaseTestCase {
 		while (label >= 1) {
 			switch (label) {
 			case 1:
+				selenium.selectWindow("null");
+				selenium.selectFrame("relative=top");
 				selenium.open("/user/socialoffice01/so/dashboard/");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//nav/ul/li[contains(.,'Microblogs')]/a/span")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible(
+					"//nav/ul/li[contains(.,'Microblogs')]/a/span");
 				selenium.clickAt("//nav/ul/li[contains(.,'Microblogs')]/a/span",
 					RuntimeVariables.replace("Microblogs"));
 				selenium.waitForPageToLoad("30000");
@@ -64,23 +50,7 @@ public class SOUs_ViewReplyMicroblogsContentTagTest extends BaseTestCase {
 					selenium.getText("//span[@class='action comment']/a"));
 				selenium.clickAt("//span[@class='action comment']/a",
 					RuntimeVariables.replace("1 Comment"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"xPath=(//div[@class='content'])[2]")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
+				selenium.waitForVisible("xPath=(//div[@class='content'])[2]");
 
 			case 2:
 				assertTrue(selenium.isPartialText(

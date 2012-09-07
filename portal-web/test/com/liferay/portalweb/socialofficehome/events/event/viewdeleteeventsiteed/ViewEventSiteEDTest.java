@@ -22,26 +22,11 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ViewEventSiteEDTest extends BaseTestCase {
 	public void testViewEventSiteED() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/user/joebloggs/so/dashboard/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("Events")
-										.equals(selenium.getText(
-								"xPath=(//span[@class='portlet-title-text'])[4]"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("xPath=(//span[@class='portlet-title-text'])[4]",
+			"Events");
 		assertEquals(RuntimeVariables.replace("Events"),
 			selenium.getText("xPath=(//span[@class='portlet-title-text'])[4]"));
 		assertTrue(selenium.isPartialText("//h2[contains(.,'Events')]", "Events"));

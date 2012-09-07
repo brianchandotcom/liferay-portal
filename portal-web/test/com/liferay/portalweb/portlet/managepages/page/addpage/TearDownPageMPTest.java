@@ -27,89 +27,25 @@ public class TearDownPageMPTest extends BaseTestCase {
 		while (label >= 1) {
 			switch (label) {
 			case 1:
+				selenium.selectWindow("null");
+				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
 				selenium.clickAt("//div[@id='dockbar']",
 					RuntimeVariables.replace("Dockbar"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isElementPresent(
-									"//div[@id='_145_manageContentContainer']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForElementPresent(
+					"//div[@id='_145_manageContentContainer']");
 				assertEquals(RuntimeVariables.replace("Manage"),
 					selenium.getText("//li[@id='_145_manageContent']/a/span"));
 				selenium.mouseOver("//li[@id='_145_manageContent']/a/span");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//li[contains(@class,'manage-page')]/a")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible(
+					"//li[contains(@class,'manage-page')]/a");
 				assertEquals(RuntimeVariables.replace("Page"),
 					selenium.getText("//li[contains(@class,'manage-page')]/a"));
 				selenium.clickAt("//li[contains(@class,'manage-page')]/a",
 					RuntimeVariables.replace("Page"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//iframe[@id='manageContentDialog']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("//iframe[@id='manageContentDialog']");
 				selenium.selectFrame("//iframe[@id='manageContentDialog']");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (RuntimeVariables.replace("Public Pages")
-												.equals(selenium.getText(
-										"//a[@class='layout-tree']"))) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
+				selenium.waitForText("//a[@class='layout-tree']", "Public Pages");
 
 				boolean tree1Collapsed = selenium.isElementPresent(
 						"//li[@id='layoutsTree_layoutId_0_plid_0']/div[contains(@class,'aui-tree-collapsed')]");
@@ -124,24 +60,8 @@ public class TearDownPageMPTest extends BaseTestCase {
 					RuntimeVariables.replace("Drop Down Arrow"));
 
 			case 2:
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (RuntimeVariables.replace("Welcome")
-												.equals(selenium.getText(
-										"//a[@id='layoutsTree_layout_home']"))) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
+				selenium.waitForText("//a[@id='layoutsTree_layout_home']",
+					"Welcome");
 
 				boolean page1Present = selenium.isElementPresent(
 						"xPath=(//a[contains(@id,'layoutsTree_layout')])[2]");
@@ -154,115 +74,22 @@ public class TearDownPageMPTest extends BaseTestCase {
 
 				selenium.clickAt("xPath=(//a[contains(@id,'layoutsTree_layout')])[2]",
 					RuntimeVariables.replace("Page Name"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isElementPresent(
-									"//div[@id='_88_layoutsContainer']/div[contains(@class,'aui-loadingmask')]")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isElementNotPresent(
-									"//div[@id='_88_layoutsContainer']/div[contains(@class,'aui-loadingmask')]")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isElementPresent(
-									"//script[contains(@src,'/aui/aui-dialog-iframe/aui-dialog-iframe-min.js')]")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//span[.='Copy Portlets from Page']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("//span[.='Delete']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForElementPresent(
+					"//div[@id='_88_layoutsContainer']/div[contains(@class,'aui-loadingmask')]");
+				selenium.waitForElementNotPresent(
+					"//div[@id='_88_layoutsContainer']/div[contains(@class,'aui-loadingmask')]");
+				selenium.waitForElementPresent(
+					"//script[contains(@src,'/aui/aui-dialog-iframe/aui-dialog-iframe-min.js')]");
+				selenium.waitForVisible("//span[.='Copy Portlets from Page']");
+				selenium.waitForVisible("//span[.='Delete']");
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText("//span[.='Delete']"));
 				selenium.click(RuntimeVariables.replace("//span[.='Delete']"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete the selected page[\\s\\S]$"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (RuntimeVariables.replace("Welcome")
-												.equals(selenium.getText(
-										"//a[@id='layoutsTree_layout_home']"))) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
+				selenium.waitForText("//a[@id='layoutsTree_layout_home']",
+					"Welcome");
 
 				boolean page2Present = selenium.isElementPresent(
 						"xPath=(//a[contains(@id,'layoutsTree_layout')])[2]");
@@ -275,117 +102,23 @@ public class TearDownPageMPTest extends BaseTestCase {
 
 				selenium.clickAt("xPath=(//a[contains(@id,'layoutsTree_layout')])[2]",
 					RuntimeVariables.replace("Page Name"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isElementPresent(
-									"//div[@id='_88_layoutsContainer']/div[contains(@class,'aui-loadingmask')]")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isElementNotPresent(
-									"//div[@id='_88_layoutsContainer']/div[contains(@class,'aui-loadingmask')]")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isElementPresent(
-									"//script[contains(@src,'/aui/aui-dialog-iframe/aui-dialog-iframe-min.js')]")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//span[.='Copy Portlets from Page']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForElementPresent(
+					"//div[@id='_88_layoutsContainer']/div[contains(@class,'aui-loadingmask')]");
+				selenium.waitForElementNotPresent(
+					"//div[@id='_88_layoutsContainer']/div[contains(@class,'aui-loadingmask')]");
+				selenium.waitForElementPresent(
+					"//script[contains(@src,'/aui/aui-dialog-iframe/aui-dialog-iframe-min.js')]");
+				selenium.waitForVisible("//span[.='Copy Portlets from Page']");
 				Thread.sleep(5000);
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("//span[.='Delete']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("//span[.='Delete']");
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText("//span[.='Delete']"));
 				selenium.click(RuntimeVariables.replace("//span[.='Delete']"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete the selected page[\\s\\S]$"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (RuntimeVariables.replace("Welcome")
-												.equals(selenium.getText(
-										"//a[@id='layoutsTree_layout_home']"))) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
+				selenium.waitForText("//a[@id='layoutsTree_layout_home']",
+					"Welcome");
 
 				boolean page3Present = selenium.isElementPresent(
 						"xPath=(//a[contains(@id,'layoutsTree_layout')])[2]");
@@ -398,117 +131,23 @@ public class TearDownPageMPTest extends BaseTestCase {
 
 				selenium.clickAt("xPath=(//a[contains(@id,'layoutsTree_layout')])[2]",
 					RuntimeVariables.replace("Page Name"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isElementPresent(
-									"//div[@id='_88_layoutsContainer']/div[contains(@class,'aui-loadingmask')]")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isElementNotPresent(
-									"//div[@id='_88_layoutsContainer']/div[contains(@class,'aui-loadingmask')]")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isElementPresent(
-									"//script[contains(@src,'/aui/aui-dialog-iframe/aui-dialog-iframe-min.js')]")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//span[.='Copy Portlets from Page']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForElementPresent(
+					"//div[@id='_88_layoutsContainer']/div[contains(@class,'aui-loadingmask')]");
+				selenium.waitForElementNotPresent(
+					"//div[@id='_88_layoutsContainer']/div[contains(@class,'aui-loadingmask')]");
+				selenium.waitForElementPresent(
+					"//script[contains(@src,'/aui/aui-dialog-iframe/aui-dialog-iframe-min.js')]");
+				selenium.waitForVisible("//span[.='Copy Portlets from Page']");
 				Thread.sleep(5000);
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("//span[.='Delete']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("//span[.='Delete']");
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText("//span[.='Delete']"));
 				selenium.click(RuntimeVariables.replace("//span[.='Delete']"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete the selected page[\\s\\S]$"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (RuntimeVariables.replace("Welcome")
-												.equals(selenium.getText(
-										"//a[@id='layoutsTree_layout_home']"))) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
+				selenium.waitForText("//a[@id='layoutsTree_layout_home']",
+					"Welcome");
 
 				boolean page4Present = selenium.isElementPresent(
 						"xPath=(//a[contains(@id,'layoutsTree_layout')])[2]");
@@ -521,117 +160,23 @@ public class TearDownPageMPTest extends BaseTestCase {
 
 				selenium.clickAt("xPath=(//a[contains(@id,'layoutsTree_layout')])[2]",
 					RuntimeVariables.replace("Page Name"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isElementPresent(
-									"//div[@id='_88_layoutsContainer']/div[contains(@class,'aui-loadingmask')]")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isElementNotPresent(
-									"//div[@id='_88_layoutsContainer']/div[contains(@class,'aui-loadingmask')]")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isElementPresent(
-									"//script[contains(@src,'/aui/aui-dialog-iframe/aui-dialog-iframe-min.js')]")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//span[.='Copy Portlets from Page']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForElementPresent(
+					"//div[@id='_88_layoutsContainer']/div[contains(@class,'aui-loadingmask')]");
+				selenium.waitForElementNotPresent(
+					"//div[@id='_88_layoutsContainer']/div[contains(@class,'aui-loadingmask')]");
+				selenium.waitForElementPresent(
+					"//script[contains(@src,'/aui/aui-dialog-iframe/aui-dialog-iframe-min.js')]");
+				selenium.waitForVisible("//span[.='Copy Portlets from Page']");
 				Thread.sleep(5000);
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("//span[.='Delete']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("//span[.='Delete']");
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText("//span[.='Delete']"));
 				selenium.click(RuntimeVariables.replace("//span[.='Delete']"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete the selected page[\\s\\S]$"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (RuntimeVariables.replace("Welcome")
-												.equals(selenium.getText(
-										"//a[@id='layoutsTree_layout_home']"))) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
+				selenium.waitForText("//a[@id='layoutsTree_layout_home']",
+					"Welcome");
 
 				boolean page5Present = selenium.isElementPresent(
 						"xPath=(//a[contains(@id,'layoutsTree_layout')])[2]");
@@ -644,93 +189,15 @@ public class TearDownPageMPTest extends BaseTestCase {
 
 				selenium.clickAt("xPath=(//a[contains(@id,'layoutsTree_layout')])[2]",
 					RuntimeVariables.replace("Page Name"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isElementPresent(
-									"//script[contains(@src,'/aui/aui-dialog-iframe/aui-dialog-iframe-min.js')]")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isElementPresent(
-									"//div[@id='_88_layoutsContainer']/div[contains(@class,'aui-loadingmask')]")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isElementNotPresent(
-									"//div[@id='_88_layoutsContainer']/div[contains(@class,'aui-loadingmask')]")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//span[.='Copy Portlets from Page']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForElementPresent(
+					"//script[contains(@src,'/aui/aui-dialog-iframe/aui-dialog-iframe-min.js')]");
+				selenium.waitForElementPresent(
+					"//div[@id='_88_layoutsContainer']/div[contains(@class,'aui-loadingmask')]");
+				selenium.waitForElementNotPresent(
+					"//div[@id='_88_layoutsContainer']/div[contains(@class,'aui-loadingmask')]");
+				selenium.waitForVisible("//span[.='Copy Portlets from Page']");
 				Thread.sleep(5000);
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("//span[.='Delete']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("//span[.='Delete']");
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText("//span[.='Delete']"));
 				selenium.click(RuntimeVariables.replace("//span[.='Delete']"));

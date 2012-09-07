@@ -22,24 +22,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class DeleteSettingsAddressTest extends BaseTestCase {
 	public void testDeleteSettingsAddress() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
@@ -52,23 +38,7 @@ public class DeleteSettingsAddressTest extends BaseTestCase {
 			RuntimeVariables.replace("Addresses"));
 		assertEquals("123. Liferay Ln.",
 			selenium.getValue("//input[@id='_130_addressStreet1_0']"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("//button[2]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent("//button[2]");
 		selenium.clickAt("//button[2]", RuntimeVariables.replace("Delete Row"));
 		assertFalse(selenium.isTextPresent("123. Liferay Ln."));
 	}

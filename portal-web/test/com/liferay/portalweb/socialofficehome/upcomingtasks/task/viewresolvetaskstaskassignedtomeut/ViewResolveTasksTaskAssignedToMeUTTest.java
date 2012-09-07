@@ -28,26 +28,11 @@ public class ViewResolveTasksTaskAssignedToMeUTTest extends BaseTestCase {
 		while (label >= 1) {
 			switch (label) {
 			case 1:
+				selenium.selectWindow("null");
+				selenium.selectFrame("relative=top");
 				selenium.open("/user/joebloggs/so/dashboard/");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (RuntimeVariables.replace("Upcoming Tasks")
-												.equals(selenium.getText(
-										"//h1/span[contains(.,'Upcoming Tasks')]"))) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForText("//h1/span[contains(.,'Upcoming Tasks')]",
+					"Upcoming Tasks");
 				assertEquals(RuntimeVariables.replace("Upcoming Tasks"),
 					selenium.getText("//h1/span[contains(.,'Upcoming Tasks')]"));
 				assertTrue(selenium.isElementNotPresent(
@@ -58,24 +43,7 @@ public class ViewResolveTasksTaskAssignedToMeUTTest extends BaseTestCase {
 				selenium.clickAt("//div[@class='view-all-tasks']/a",
 					RuntimeVariables.replace("View All Tasks"));
 				selenium.waitForPageToLoad("30000");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//div[@class='portlet-msg-info']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("//div[@class='portlet-msg-info']");
 				assertEquals(RuntimeVariables.replace("No tasks were found."),
 					selenium.getText("//div[@class='portlet-msg-info']"));
 
@@ -92,23 +60,7 @@ public class ViewResolveTasksTaskAssignedToMeUTTest extends BaseTestCase {
 					RuntimeVariables.replace("Check Show Completed Tasks"));
 
 			case 2:
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("link=Task Description")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("link=Task Description");
 				assertEquals(RuntimeVariables.replace("Task Description"),
 					selenium.getText("link=Task Description"));
 

@@ -22,24 +22,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ViewBlogsEntryScopeTest extends BaseTestCase {
 	public void testViewBlogsEntryScope() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
@@ -62,23 +48,7 @@ public class ViewBlogsEntryScopeTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"This is a blogs entry scope current page test."),
 			selenium.getText("//p"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("link=Blogs Page Scope Default")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent("link=Blogs Page Scope Default");
 		selenium.clickAt("link=Blogs Page Scope Default",
 			RuntimeVariables.replace("Blogs Page Scope Default"));
 		selenium.waitForPageToLoad("30000");

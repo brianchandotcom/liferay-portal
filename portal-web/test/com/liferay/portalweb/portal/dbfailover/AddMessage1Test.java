@@ -22,25 +22,11 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class AddMessage1Test extends BaseTestCase {
 	public void testAddMessage1() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/user/joebloggs/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"link=M\u00e9ssag\u00e9 Boards T\u00e9st Pag\u00e9")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"link=M\u00e9ssag\u00e9 Boards T\u00e9st Pag\u00e9");
 		selenium.click(RuntimeVariables.replace(
 				"link=M\u00e9ssag\u00e9 Boards T\u00e9st Pag\u00e9"));
 		selenium.waitForPageToLoad("30000");
@@ -55,24 +41,7 @@ public class AddMessage1Test extends BaseTestCase {
 			RuntimeVariables.replace("Test Message 1 Subject"));
 		Thread.sleep(5000);
 		selenium.clickAt("link=Source", RuntimeVariables.replace("Source"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//td[@id='cke_contents__19_editor']/textarea")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//td[@id='cke_contents__19_editor']/textarea");
 		selenium.type("//td[@id='cke_contents__19_editor']/textarea",
 			RuntimeVariables.replace("Test Message 1 Content"));
 		selenium.clickAt("//input[@value='Publish']",

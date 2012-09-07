@@ -22,27 +22,13 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class AddInvalidRepeatEventTest extends BaseTestCase {
 	public void testAddInvalidRepeatEvent() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Control Panel")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
@@ -53,23 +39,7 @@ public class AddInvalidRepeatEventTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("//input[@id='_8_allDayCheckbox']",
 			RuntimeVariables.replace("All Day Event Checkbox"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//input[@id='_8_title']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//input[@id='_8_title']");
 		selenium.type("//input[@id='_8_title']",
 			RuntimeVariables.replace("Invalid Repeat Test Event"));
 		selenium.select("//select[@id='_8_startDateMonth']",
@@ -80,23 +50,7 @@ public class AddInvalidRepeatEventTest extends BaseTestCase {
 			RuntimeVariables.replace("label=2009"));
 		selenium.clickAt("//input[@name='_8_recurrenceType' and @value='3']",
 			RuntimeVariables.replace("Repeat Daily"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//input[@id='_8_dailyInterval']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//input[@id='_8_dailyInterval']");
 		selenium.type("//input[@id='_8_dailyInterval']",
 			RuntimeVariables.replace("1"));
 		selenium.clickAt("//input[@name='_8_endDateType' and @value='2']",

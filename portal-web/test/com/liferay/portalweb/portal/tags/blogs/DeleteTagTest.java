@@ -22,92 +22,28 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class DeleteTagTest extends BaseTestCase {
 	public void testDeleteTag() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Tags", RuntimeVariables.replace("Tags"));
 		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("xPath=(//span[@class='tag-item']/a)[2]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("xPath=(//span[@class='tag-item']/a)[2]");
 		assertEquals(RuntimeVariables.replace("selenium2 liferay2"),
 			selenium.getText("xPath=(//span[@class='tag-item']/a)[2]"));
 		selenium.clickAt("xPath=(//span[@class='tag-item']/a)[2]",
 			RuntimeVariables.replace("selenium2 liferay2"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("selenium2 liferay2")
-										.equals(selenium.getText(
-								"//div/h1/span"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//div/h1/span", "selenium2 liferay2");
 		assertEquals(RuntimeVariables.replace("selenium2 liferay2"),
 			selenium.getText("//div/h1/span"));
 		selenium.clickAt("//input[@value='Delete']",
 			RuntimeVariables.replace("Delete"));
 		assertTrue(selenium.getConfirmation()
 						   .matches("^Are you sure you want to delete this tag[\\s\\S]$"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (!selenium.isTextPresent("selenium2 liferay2")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForTextNotPresent("selenium2 liferay2");
 		assertFalse(selenium.isTextPresent("selenium2 liferay2"));
 	}
 }

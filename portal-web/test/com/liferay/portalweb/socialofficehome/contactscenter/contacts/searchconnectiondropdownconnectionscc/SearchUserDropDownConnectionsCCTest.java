@@ -22,25 +22,11 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class SearchUserDropDownConnectionsCCTest extends BaseTestCase {
 	public void testSearchUserDropDownConnectionsCC() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/user/joebloggs/so/dashboard/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//nav/ul/li[contains(.,'Contacts Center')]/a/span")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//nav/ul/li[contains(.,'Contacts Center')]/a/span");
 		selenium.clickAt("//nav/ul/li[contains(.,'Contacts Center')]/a/span",
 			RuntimeVariables.replace("Contacts Center"));
 		selenium.waitForPageToLoad("30000");
@@ -52,25 +38,7 @@ public class SearchUserDropDownConnectionsCCTest extends BaseTestCase {
 			RuntimeVariables.replace("Connections"));
 		selenium.type("//input[@id='_1_WAR_contactsportlet_name']",
 			RuntimeVariables.replace("Social01"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("There are no results.")
-										.equals(selenium.getText(
-								"//div[@class='empty']"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//div[@class='empty']", "There are no results.");
 		assertEquals(RuntimeVariables.replace("There are no results."),
 			selenium.getText("//div[@class='empty']"));
 	}

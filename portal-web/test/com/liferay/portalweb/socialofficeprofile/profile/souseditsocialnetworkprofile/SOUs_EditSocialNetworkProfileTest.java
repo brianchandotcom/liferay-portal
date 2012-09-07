@@ -22,24 +22,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class SOUs_EditSocialNetworkProfileTest extends BaseTestCase {
 	public void testSOUs_EditSocialNetworkProfile() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/socialoffice01/so/profile");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div[@class='lfr-contact-name']/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//div[@class='lfr-contact-name']/a");
 		assertEquals(RuntimeVariables.replace("Social01 Office01 User01"),
 			selenium.getText("//div[@class='lfr-contact-name']/a"));
 		assertEquals(RuntimeVariables.replace("Social Network:"),
@@ -64,23 +50,7 @@ public class SOUs_EditSocialNetworkProfileTest extends BaseTestCase {
 				"//div[@data-title='Social Network']/ul/li[contains(.,'Twitter')]/span[2]"));
 		selenium.clickAt("//div[@data-title='Social Network']",
 			RuntimeVariables.replace("Social Network"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//input[contains(@id,'facebookSn')]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//input[contains(@id,'facebookSn')]");
 		selenium.type("//input[contains(@id,'facebookSn')]",
 			RuntimeVariables.replace("socialoffice01edit"));
 		selenium.type("//input[contains(@id,'mySpaceSn')]",
@@ -90,25 +60,8 @@ public class SOUs_EditSocialNetworkProfileTest extends BaseTestCase {
 		Thread.sleep(5000);
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("socialoffice01edit")
-										.equals(selenium.getText(
-								"//div[@data-title='Social Network']/ul/li[contains(.,'Twitter')]/span[2]"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//div[@data-title='Social Network']/ul/li[contains(.,'Twitter')]/span[2]",
+			"socialoffice01edit");
 		assertEquals(RuntimeVariables.replace("Social Network:"),
 			selenium.getText("//div[@data-title='Social Network']/h3"));
 		assertEquals(RuntimeVariables.replace("Facebook"),

@@ -22,296 +22,95 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class RateWCWebContentCommentAPTest extends BaseTestCase {
 	public void testRateWCWebContentCommentAP() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Asset Publisher Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Asset Publisher Test Page");
 		selenium.clickAt("link=Asset Publisher Test Page",
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("0 (0 Votes)")
-										.equals(selenium.getText(
-								"//div[@class='aui-rating-label-element']"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//div[@class='aui-rating-label-element']",
+			"0 (0 Votes)");
 		assertEquals(RuntimeVariables.replace("0 (0 Votes)"),
 			selenium.getText("//div[@class='aui-rating-label-element']"));
 		assertTrue(selenium.isVisible(
 				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-up']"));
 		selenium.click(
 			"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-up']");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("+1 (1 Vote)")
-										.equals(selenium.getText(
-								"//div[@class='aui-rating-label-element']"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//div[@class='aui-rating-label-element']",
+			"+1 (1 Vote)");
 		assertEquals(RuntimeVariables.replace("+1 (1 Vote)"),
 			selenium.getText("//div[@class='aui-rating-label-element']"));
 		assertTrue(selenium.isVisible(
 				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-up aui-rating-element-on']"));
 		selenium.click(
 			"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-up aui-rating-element-on']");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("0 (0 Votes)")
-										.equals(selenium.getText(
-								"//div[@class='aui-rating-label-element']"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//div[@class='aui-rating-label-element']",
+			"0 (0 Votes)");
 		assertEquals(RuntimeVariables.replace("0 (0 Votes)"),
 			selenium.getText("//div[@class='aui-rating-label-element']"));
 		assertTrue(selenium.isVisible(
 				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-down']"));
 		selenium.click(
 			"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-down']");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("-1 (1 Vote)")
-										.equals(selenium.getText(
-								"//div[@class='aui-rating-label-element']"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//div[@class='aui-rating-label-element']",
+			"-1 (1 Vote)");
 		assertEquals(RuntimeVariables.replace("-1 (1 Vote)"),
 			selenium.getText("//div[@class='aui-rating-label-element']"));
 		assertTrue(selenium.isVisible(
 				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-down aui-rating-element-on']"));
 		selenium.click(
 			"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-down aui-rating-element-on']");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("0 (0 Votes)")
-										.equals(selenium.getText(
-								"//div[@class='aui-rating-label-element']"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//div[@class='aui-rating-label-element']",
+			"0 (0 Votes)");
 		assertEquals(RuntimeVariables.replace("0 (0 Votes)"),
 			selenium.getText("//div[@class='aui-rating-label-element']"));
 		assertTrue(selenium.isVisible(
 				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-up']"));
 		selenium.click(
 			"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-up']");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("+1 (1 Vote)")
-										.equals(selenium.getText(
-								"//div[@class='aui-rating-label-element']"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//div[@class='aui-rating-label-element']",
+			"+1 (1 Vote)");
 		assertEquals(RuntimeVariables.replace("+1 (1 Vote)"),
 			selenium.getText("//div[@class='aui-rating-label-element']"));
 		assertTrue(selenium.isVisible(
 				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-down']"));
 		selenium.click(
 			"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-down']");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("-1 (1 Vote)")
-										.equals(selenium.getText(
-								"//div[@class='aui-rating-label-element']"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//div[@class='aui-rating-label-element']",
+			"-1 (1 Vote)");
 		assertEquals(RuntimeVariables.replace("-1 (1 Vote)"),
 			selenium.getText("//div[@class='aui-rating-label-element']"));
 		assertTrue(selenium.isVisible(
 				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-down aui-rating-element-on']"));
 		selenium.click(
 			"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-down aui-rating-element-on']");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("0 (0 Votes)")
-										.equals(selenium.getText(
-								"//div[@class='aui-rating-label-element']"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//div[@class='aui-rating-label-element']",
+			"0 (0 Votes)");
 		assertEquals(RuntimeVariables.replace("0 (0 Votes)"),
 			selenium.getText("//div[@class='aui-rating-label-element']"));
 		assertTrue(selenium.isVisible(
 				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-down']"));
 		selenium.click(
 			"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-down']");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("-1 (1 Vote)")
-										.equals(selenium.getText(
-								"//div[@class='aui-rating-label-element']"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//div[@class='aui-rating-label-element']",
+			"-1 (1 Vote)");
 		assertEquals(RuntimeVariables.replace("-1 (1 Vote)"),
 			selenium.getText("//div[@class='aui-rating-label-element']"));
 		assertTrue(selenium.isVisible(
 				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-up']"));
 		selenium.click(
 			"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-up']");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("+1 (1 Vote)")
-										.equals(selenium.getText(
-								"//div[@class='aui-rating-label-element']"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//div[@class='aui-rating-label-element']",
+			"+1 (1 Vote)");
 		assertEquals(RuntimeVariables.replace("+1 (1 Vote)"),
 			selenium.getText("//div[@class='aui-rating-label-element']"));
 		assertTrue(selenium.isVisible(
 				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-up aui-rating-element-on']"));
 		selenium.click(
 			"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-up aui-rating-element-on']");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("0 (0 Votes)")
-										.equals(selenium.getText(
-								"//div[@class='aui-rating-label-element']"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//div[@class='aui-rating-label-element']",
+			"0 (0 Votes)");
 		assertEquals(RuntimeVariables.replace("0 (0 Votes)"),
 			selenium.getText("//div[@class='aui-rating-label-element']"));
 		assertTrue(selenium.isVisible(

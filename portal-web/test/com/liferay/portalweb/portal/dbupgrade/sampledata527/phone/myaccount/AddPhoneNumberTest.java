@@ -22,29 +22,15 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class AddPhoneNumberTest extends BaseTestCase {
 	public void testAddPhoneNumber() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home");
 		assertTrue(selenium.isPartialText("//h2[@class='user-greeting']/span",
 				"Welcome"));
 		selenium.mouseOver("//h2[@class='user-greeting']/span");
 		selenium.clickAt("//h2[@class='user-greeting']/span",
 			RuntimeVariables.replace("Welcome"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Control Panel")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
@@ -53,23 +39,7 @@ public class AddPhoneNumberTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("//a[@id='phoneNumbersLink']",
 			RuntimeVariables.replace("Phone Numbers"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//input[@id='_2_phoneNumber0']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//input[@id='_2_phoneNumber0']");
 		selenium.type("//input[@id='_2_phoneNumber0']",
 			RuntimeVariables.replace("1234567890"));
 		selenium.clickAt("//input[@value='Save']",

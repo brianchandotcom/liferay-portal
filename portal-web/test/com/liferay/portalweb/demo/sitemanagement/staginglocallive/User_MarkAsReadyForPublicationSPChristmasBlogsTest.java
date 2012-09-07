@@ -29,24 +29,10 @@ public class User_MarkAsReadyForPublicationSPChristmasBlogsTest
 		while (label >= 1) {
 			switch (label) {
 			case 1:
+				selenium.selectWindow("null");
+				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isElementPresent("link=Site Name")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForElementPresent("link=Site Name");
 				selenium.clickAt("link=Site Name",
 					RuntimeVariables.replace("Site Name"));
 				selenium.waitForPageToLoad("30000");
@@ -83,23 +69,7 @@ public class User_MarkAsReadyForPublicationSPChristmasBlogsTest
 						"Christmas Site Pages Variation of Site Name"),
 					selenium.getText(
 						"//span[@class='layout-set-branch-description']"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("link=Blogs Test Page")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("link=Blogs Test Page");
 				selenium.clickAt("link=Blogs Test Page",
 					RuntimeVariables.replace("Blogs Test Page"));
 				selenium.waitForPageToLoad("30000");
@@ -111,25 +81,8 @@ public class User_MarkAsReadyForPublicationSPChristmasBlogsTest
 						"//button/span[.='Mark as Ready for Publication']"));
 				selenium.clickAt("//button/span[.='Mark as Ready for Publication']",
 					RuntimeVariables.replace("Mark as Ready for Publication"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (RuntimeVariables.replace("Ready for Publication")
-												.equals(selenium.getText(
-										"//span[@class='workflow-status']/strong"))) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForText("//span[@class='workflow-status']/strong",
+					"Ready for Publication");
 				assertEquals(RuntimeVariables.replace("Ready for Publication"),
 					selenium.getText("//span[@class='workflow-status']/strong"));
 

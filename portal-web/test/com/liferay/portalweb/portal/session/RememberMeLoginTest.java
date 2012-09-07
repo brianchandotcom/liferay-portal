@@ -27,6 +27,8 @@ public class RememberMeLoginTest extends BaseTestCase {
 		while (label >= 1) {
 			switch (label) {
 			case 1:
+				selenium.selectWindow("null");
+				selenium.selectFrame("relative=top");
 				selenium.setTimeout("180000");
 				selenium.open("/web/guest/home/");
 
@@ -47,45 +49,11 @@ public class RememberMeLoginTest extends BaseTestCase {
 					RuntimeVariables.replace("test@liferay.com"));
 				selenium.type("_58_password", RuntimeVariables.replace("test"));
 				selenium.click("_58_rememberMeCheckbox");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isElementPresent(
-									"//input[@value='Sign In']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForElementPresent("//input[@value='Sign In']");
 				selenium.click(RuntimeVariables.replace(
 						"//input[@value='Sign In']"));
 				selenium.waitForPageToLoad("30000");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"link=Session Expiration Test Page")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("link=Session Expiration Test Page");
 				selenium.click(RuntimeVariables.replace(
 						"link=Session Expiration Test Page"));
 				selenium.waitForPageToLoad("30000");

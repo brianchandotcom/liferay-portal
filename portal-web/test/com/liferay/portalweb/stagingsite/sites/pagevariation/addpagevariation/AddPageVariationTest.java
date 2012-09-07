@@ -22,6 +22,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class AddPageVariationTest extends BaseTestCase {
 	public void testAddPageVariation() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("link=Site Name", RuntimeVariables.replace("Site Name"));
 		selenium.waitForPageToLoad("30000");
@@ -39,79 +41,14 @@ public class AddPageVariationTest extends BaseTestCase {
 			selenium.getText("//a[@id='_170_manageLayoutRevisions']/span"));
 		selenium.clickAt("//a[@id='_170_manageLayoutRevisions']/span",
 			RuntimeVariables.replace("Manage Page Variations"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//iframe[contains(@id,'layoutRevisions')]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//iframe[contains(@id,'layoutRevisions')]");
 		selenium.selectFrame("//iframe[contains(@id,'layoutRevisions')]");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent(
-							"//script[contains(@src,'/liferay/navigation_interaction.js')]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//input[@id='_170_addRootLayoutBranch']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/liferay/navigation_interaction.js')]");
+		selenium.waitForVisible("//input[@id='_170_addRootLayoutBranch']");
 		selenium.clickAt("//input[@id='_170_addRootLayoutBranch']",
 			RuntimeVariables.replace("Add Page Variation"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//input[@id='_170_name']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//input[@id='_170_name']");
 		selenium.type("//input[@id='_170_name']",
 			RuntimeVariables.replace("Page Variation Name"));
 		selenium.type("//textarea[@id='_170_description']",

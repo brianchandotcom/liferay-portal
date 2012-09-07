@@ -27,25 +27,10 @@ public class AddFolder1Image1Test extends BaseTestCase {
 		while (label >= 1) {
 			switch (label) {
 			case 1:
+				selenium.selectWindow("null");
+				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"link=Documents and Media Test Page")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("link=Documents and Media Test Page");
 				selenium.clickAt("link=Documents and Media Test Page",
 					RuntimeVariables.replace("Documents and Media Test Page"));
 				selenium.waitForPageToLoad("30000");
@@ -54,25 +39,8 @@ public class AddFolder1Image1Test extends BaseTestCase {
 						"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
 				selenium.clickAt("//a[contains(@class,'document-link')]/span[@class='entry-title']",
 					RuntimeVariables.replace("DL Folder 1 Name"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (RuntimeVariables.replace("DL Folder 1 Name")
-												.equals(selenium.getText(
-										"//li[@class='folder selected']/a/span[2]"))) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForText("//li[@class='folder selected']/a/span[2]",
+					"DL Folder 1 Name");
 				assertEquals(RuntimeVariables.replace("DL Folder 1 Name"),
 					selenium.getText("//li[@class='folder selected']/a/span[2]"));
 				Thread.sleep(5000);
@@ -80,24 +48,8 @@ public class AddFolder1Image1Test extends BaseTestCase {
 					selenium.getText("//span[@title='Add']/ul/li/strong/a"));
 				selenium.clickAt("//span[@title='Add']/ul/li/strong/a",
 					RuntimeVariables.replace("Add"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible(
+					"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a");
 				assertEquals(RuntimeVariables.replace("Basic Document"),
 					selenium.getText(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
@@ -124,23 +76,7 @@ public class AddFolder1Image1Test extends BaseTestCase {
 					RuntimeVariables.replace("Categorization"));
 
 			case 2:
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("//input[@title='Add Tags']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("//input[@title='Add Tags']");
 				selenium.type("//input[@title='Add Tags']",
 					RuntimeVariables.replace("dog"));
 				assertEquals(RuntimeVariables.replace("Add"),
@@ -149,26 +85,8 @@ public class AddFolder1Image1Test extends BaseTestCase {
 					RuntimeVariables.replace("Add"));
 				selenium.clickAt("//input[@value='Publish']",
 					RuntimeVariables.replace("Publish"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (RuntimeVariables.replace(
-									"Your request completed successfully.")
-												.equals(selenium.getText(
-										"//div[@class='portlet-msg-success']"))) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForText("//div[@class='portlet-msg-success']",
+					"Your request completed successfully.");
 				assertEquals(RuntimeVariables.replace(
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
@@ -179,26 +97,8 @@ public class AddFolder1Image1Test extends BaseTestCase {
 				selenium.clickAt("//a[contains(@class,'document-link')]/span[@class='entry-title']",
 					RuntimeVariables.replace("DL Folder 1 Image 1 Title"));
 				selenium.waitForPageToLoad("30000");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (RuntimeVariables.replace(
-									"DL Folder 1 Image 1 Title")
-												.equals(selenium.getText(
-										"//h2[@class='document-title']"))) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForText("//h2[@class='document-title']",
+					"DL Folder 1 Image 1 Title");
 				assertEquals(RuntimeVariables.replace(
 						"DL Folder 1 Image 1 Title"),
 					selenium.getText("//h2[@class='document-title']"));

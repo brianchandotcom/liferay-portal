@@ -27,24 +27,10 @@ public class SaveSettingsPlaySoundTest extends BaseTestCase {
 		while (label >= 1) {
 			switch (label) {
 			case 1:
+				selenium.selectWindow("null");
+				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isElementPresent("link=Test CLP Test Page")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForElementPresent("link=Test CLP Test Page");
 				selenium.clickAt("link=Test CLP Test Page",
 					RuntimeVariables.replace("Test CLP Test Page"));
 				selenium.waitForPageToLoad("30000");
@@ -54,22 +40,7 @@ public class SaveSettingsPlaySoundTest extends BaseTestCase {
 				selenium.clickAt("//ul[@class='chat-tabs']/li[2]/div[1]/span",
 					RuntimeVariables.replace("Settings"));
 				Thread.sleep(5000);
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("//input[@id='playSound']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
+				selenium.waitForVisible("//input[@id='playSound']");
 
 				boolean playSoundChecked = selenium.isChecked("playSound");
 
@@ -87,44 +58,12 @@ public class SaveSettingsPlaySoundTest extends BaseTestCase {
 			case 2:
 				selenium.clickAt("//input[@id='saveSettings']",
 					RuntimeVariables.replace("Save Settings"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isElementNotPresent(
-									"//li[@class='chat-settings saved']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForElementNotPresent(
+					"//li[@class='chat-settings saved']");
 				assertTrue(selenium.isElementNotPresent(
 						"//li[@class='chat-settings saved']"));
 				selenium.open("/web/guest/home/");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isElementPresent("link=Test CLP Test Page")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForElementPresent("link=Test CLP Test Page");
 				selenium.clickAt("link=Test CLP Test Page",
 					RuntimeVariables.replace("Test CLP Test Page"));
 				selenium.waitForPageToLoad("30000");

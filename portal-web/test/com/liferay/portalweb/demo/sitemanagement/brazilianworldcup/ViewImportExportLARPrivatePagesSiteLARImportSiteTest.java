@@ -24,53 +24,23 @@ public class ViewImportExportLARPrivatePagesSiteLARImportSiteTest
 	extends BaseTestCase {
 	public void testViewImportExportLARPrivatePagesSiteLARImportSite()
 		throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//ul[contains(.,'Go to')]/li/a"));
 		Thread.sleep(5000);
 		selenium.clickAt("//ul[contains(.,'Go to')]/li/a",
 			RuntimeVariables.replace("Go to"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//li[contains(.,'LAR Import Site')]/a/span[contains(.,'Private')]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//li[contains(.,'LAR Import Site')]/a/span[contains(.,'Private')]");
 		assertEquals(RuntimeVariables.replace("Private"),
 			selenium.getText(
 				"//li[contains(.,'LAR Import Site')]/a/span[contains(.,'Private')]"));
 		selenium.clickAt("//li[contains(.,'LAR Import Site')]/a/span[contains(.,'Private')]",
 			RuntimeVariables.replace("Private"));
 		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//a[@class='logo default-logo']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//a[@class='logo default-logo']");
 		assertTrue(selenium.isVisible("//a[@class='logo default-logo']"));
 		assertTrue(selenium.isElementPresent("//img[@height='156']"));
 		assertTrue(selenium.isElementPresent("//img[@width='320']"));

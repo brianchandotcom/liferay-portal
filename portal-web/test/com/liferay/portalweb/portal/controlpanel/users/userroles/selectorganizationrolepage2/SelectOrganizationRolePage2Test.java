@@ -22,27 +22,13 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class SelectOrganizationRolePage2Test extends BaseTestCase {
 	public void testSelectOrganizationRolePage2() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Control Panel")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
@@ -63,47 +49,15 @@ public class SelectOrganizationRolePage2Test extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("//a[@id='_125_rolesLink']",
 			RuntimeVariables.replace("Roles"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"xPath=(//div[@id='_125_roles']/span/a/span)[2]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"xPath=(//div[@id='_125_roles']/span/a/span)[2]");
 		assertEquals(RuntimeVariables.replace("Select"),
 			selenium.getText("xPath=(//div[@id='_125_roles']/span/a/span)[2]"));
 		selenium.clickAt("xPath=(//div[@id='_125_roles']/span/a/span)[2]",
 			RuntimeVariables.replace("Select"));
 		Thread.sleep(5000);
 		selenium.selectWindow("title=Users and Organizations");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//a[@class='next']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//a[@class='next']");
 		assertEquals(RuntimeVariables.replace("Next"),
 			selenium.getText("//a[@class='next']"));
 		selenium.clickAt("//a[@class='next']", RuntimeVariables.replace("Next"));
@@ -119,25 +73,8 @@ public class SelectOrganizationRolePage2Test extends BaseTestCase {
 		assertFalse(selenium.isTextPresent("No roles were found."));
 		selenium.click("link=Organization Owner");
 		selenium.selectWindow("null");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("Organization Owner")
-										.equals(selenium.getText(
-								"//table[@data-searchcontainerid='_125_organizationRolesSearchContainer']/tr/td[1]"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//table[@data-searchcontainerid='_125_organizationRolesSearchContainer']/tr/td[1]",
+			"Organization Owner");
 		assertEquals(RuntimeVariables.replace("Organization Owner"),
 			selenium.getText(
 				"//table[@data-searchcontainerid='_125_organizationRolesSearchContainer']/tr/td[1]"));

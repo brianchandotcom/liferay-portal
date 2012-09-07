@@ -22,25 +22,11 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class Member_AssertCannotEditImageTest extends BaseTestCase {
 	public void testMember_AssertCannotEditImage() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent(
-							"link=Media Gallery Permissions Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent(
+			"link=Media Gallery Permissions Test Page");
 		selenium.clickAt("link=Media Gallery Permissions Test Page",
 			RuntimeVariables.replace("Media Gallery Permissions Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -48,23 +34,7 @@ public class Member_AssertCannotEditImageTest extends BaseTestCase {
 			selenium.getText("//a[@title='Permissions Image 2 Test - ']"));
 		selenium.clickAt("//a[@title='Permissions Image 2 Test - ']",
 			RuntimeVariables.replace("Permissions Image 2 Test"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div/div[2]/div[1]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//div/div[2]/div[1]");
 		assertTrue(selenium.isElementPresent("//img[@alt='Download (29.9k)']"));
 		assertTrue(selenium.isElementPresent("//img[@alt='View']"));
 		assertTrue(selenium.isElementNotPresent("//img[@alt='Edit']"));

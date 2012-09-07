@@ -24,27 +24,13 @@ public class ViewEditVocabulary1CategoryToVocabulary2DADTest
 	extends BaseTestCase {
 	public void testViewEditVocabulary1CategoryToVocabulary2DAD()
 		throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Control Panel")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
@@ -55,46 +41,13 @@ public class ViewEditVocabulary1CategoryToVocabulary2DADTest
 			selenium.getText("xPath=(//span[@class='vocabulary-item']/a)[1]"));
 		selenium.clickAt("xPath=(//span[@class='vocabulary-item']/a)[1]",
 			RuntimeVariables.replace("Vocabulary1 Name"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("Vocabulary1 Name")
-										.equals(selenium.getText(
-								"//li[contains(@class,'selected')]/div/span[@class='vocabulary-item']/a"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//li[contains(@class,'selected')]/div/span[@class='vocabulary-item']/a",
+			"Vocabulary1 Name");
 		assertEquals(RuntimeVariables.replace("Vocabulary1 Name"),
 			selenium.getText(
 				"//li[contains(@class,'selected')]/div/span[@class='vocabulary-item']/a"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//div[@class='lfr-message-response portlet-msg-info']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//div[@class='lfr-message-response portlet-msg-info']");
 		assertEquals(RuntimeVariables.replace("There are no categories."),
 			selenium.getText(
 				"//div[@class='lfr-message-response portlet-msg-info']"));
@@ -103,69 +56,17 @@ public class ViewEditVocabulary1CategoryToVocabulary2DADTest
 			selenium.getText("xPath=(//span[@class='vocabulary-item']/a)[2]"));
 		selenium.clickAt("xPath=(//span[@class='vocabulary-item']/a)[2]",
 			RuntimeVariables.replace("Vocabulary2 Name"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("Vocabulary2 Name")
-										.equals(selenium.getText(
-								"//li[contains(@class,'selected')]/div/span[@class='vocabulary-item']/a"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//li[contains(@class,'selected')]/div/span[@class='vocabulary-item']/a",
+			"Vocabulary2 Name");
 		assertEquals(RuntimeVariables.replace("Vocabulary2 Name"),
 			selenium.getText(
 				"//li[contains(@class,'selected')]/div/span[@class='vocabulary-item']/a"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("Vocabulary1 Category Name")
-										.equals(selenium.getText(
-								"//li/div/div[4]"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//li/div/div[4]", "Vocabulary1 Category Name");
 		assertEquals(RuntimeVariables.replace("Vocabulary1 Category Name"),
 			selenium.getText("//li/div/div[4]"));
 		selenium.clickAt("//li/div/div[4]",
 			RuntimeVariables.replace("Vocabulary1 Category Name"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//div[@class='view-category']/div/h1/span")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//div[@class='view-category']/div/h1/span");
 		assertEquals(RuntimeVariables.replace("Vocabulary1 Category Name"),
 			selenium.getText("//div[@class='view-category']/div/h1/span"));
 		assertEquals(RuntimeVariables.replace(

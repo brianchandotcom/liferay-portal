@@ -22,25 +22,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class FilterTasksFilterByPlaceTest extends BaseTestCase {
 	public void testFilterTasksFilterByPlace() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/user/joebloggs/so/dashboard/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//nav/ul/li[contains(.,'Tasks')]/a/span")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//nav/ul/li[contains(.,'Tasks')]/a/span");
 		selenium.clickAt("//nav/ul/li[contains(.,'Tasks')]/a/span",
 			RuntimeVariables.replace("Tasks"));
 		selenium.waitForPageToLoad("30000");
@@ -60,62 +45,14 @@ public class FilterTasksFilterByPlaceTest extends BaseTestCase {
 		assertTrue(selenium.isVisible("//a[@class='filter-tasks']"));
 		selenium.clickAt("//a[@class='filter-tasks']",
 			RuntimeVariables.replace("Filter"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//h3[contains(.,'Filter by Place')]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//h3[contains(.,'Filter by Place')]");
 		assertEquals(RuntimeVariables.replace("Filter by Place"),
 			selenium.getText("//h3[contains(.,'Filter by Place')]"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//div[@class='filter-container group-filter']/select")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//div[@class='filter-container group-filter']/select");
 		selenium.select("//div[@class='filter-container group-filter']/select",
 			RuntimeVariables.replace("label=Liferay"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementNotPresent("//tr[4]/td[1]/div[1]/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementNotPresent("//tr[4]/td[1]/div[1]/a");
 		assertTrue(selenium.isElementNotPresent("//tr[4]/td[1]/div[1]/a"));
 		assertEquals(RuntimeVariables.replace("Portal Task Description"),
 			selenium.getText("//td[1]/div[1]/a"));

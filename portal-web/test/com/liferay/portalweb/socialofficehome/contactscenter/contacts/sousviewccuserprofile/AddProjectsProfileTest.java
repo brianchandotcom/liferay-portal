@@ -27,25 +27,11 @@ public class AddProjectsProfileTest extends BaseTestCase {
 		while (label >= 1) {
 			switch (label) {
 			case 1:
+				selenium.selectWindow("null");
+				selenium.selectFrame("relative=top");
 				selenium.open("/web/joebloggs/so/profile");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"xPath=(//div[@class='lfr-contact-name']/a)[contains(.,'Joe Bloggs')]")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible(
+					"xPath=(//div[@class='lfr-contact-name']/a)[contains(.,'Joe Bloggs')]");
 				assertEquals(RuntimeVariables.replace("Joe Bloggs"),
 					selenium.getText(
 						"xPath=(//div[@class='lfr-contact-name']/a)[contains(.,'Joe Bloggs')]"));
@@ -57,24 +43,8 @@ public class AddProjectsProfileTest extends BaseTestCase {
 					selenium.getText("//li[@data-title='Projects']"));
 				selenium.clickAt("//li[@data-title='Projects']",
 					RuntimeVariables.replace("Add"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//input[contains(@id,'_2_projectsEntryTitle0')]")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible(
+					"//input[contains(@id,'_2_projectsEntryTitle0')]");
 				selenium.type("//input[contains(@id,'_2_projectsEntryTitle0')]",
 					RuntimeVariables.replace("Project Title"));
 				selenium.select("//select[contains(@id,'_2_projectsEntryStartDateMonth0')]",
@@ -93,47 +63,14 @@ public class AddProjectsProfileTest extends BaseTestCase {
 					RuntimeVariables.replace("Enabled"));
 
 			case 2:
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//textarea[@id='_2_projectsEntryDescription0']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible(
+					"//textarea[@id='_2_projectsEntryDescription0']");
 				selenium.type("//textarea[@id='_2_projectsEntryDescription0']",
 					RuntimeVariables.replace("Project Description"));
 				Thread.sleep(5000);
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//div[@data-title='Projects']/div/h3")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("//div[@data-title='Projects']/div/h3");
 				assertEquals(RuntimeVariables.replace("Project Title:"),
 					selenium.getText("//div[@data-title='Projects']/div/h3"));
 				assertEquals(RuntimeVariables.replace("01 Jan 2012 - Current"),

@@ -22,24 +22,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class AddWikiPageAttachment2SiteTest extends BaseTestCase {
 	public void testAddWikiPageAttachment2Site() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/site-name/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Wiki Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Wiki Test Page");
 		selenium.clickAt("link=Wiki Test Page",
 			RuntimeVariables.replace("Wiki Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -62,42 +48,9 @@ public class AddWikiPageAttachment2SiteTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.selectWindow("null");
 		selenium.windowFocus();
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//a[@class='use-fallback using-new-uploader']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//a[@class='use-fallback using-new-uploader']");
 		selenium.click("//a[@class='use-fallback using-new-uploader']");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//input[@id='_36_file1']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//input[@id='_36_file1']");
 		selenium.uploadCommonFile("//input[@id='_36_file1']",
 			RuntimeVariables.replace("Document_2.jpg"));
 		selenium.clickAt("//input[@value='Save']",

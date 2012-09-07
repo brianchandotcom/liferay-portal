@@ -22,6 +22,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class Guest_ViewDMFolderImageURLMGTest extends BaseTestCase {
 	public void testGuest_ViewDMFolderImageURLMG() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("link=Media Gallery Test Page",
 			RuntimeVariables.replace("Media Gallery Test Page"));
@@ -37,23 +39,7 @@ public class Guest_ViewDMFolderImageURLMGTest extends BaseTestCase {
 			selenium.getText("//span[@class='image-title']"));
 		selenium.clickAt("//span[@class='image-title']",
 			RuntimeVariables.replace("DM Folder Image Title"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//img[@title='View']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//img[@title='View']");
 		selenium.clickAt("//img[@title='View']",
 			RuntimeVariables.replace("View"));
 		selenium.waitForPageToLoad("30000");
@@ -61,23 +47,7 @@ public class Guest_ViewDMFolderImageURLMGTest extends BaseTestCase {
 			selenium.getText("//a[@class='show-url-file']"));
 		selenium.clickAt("//a[@class='show-url-file']",
 			RuntimeVariables.replace("Image URL"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//input[@type='text']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//input[@type='text']");
 		selenium.clickAt("//input[@type='text']",
 			RuntimeVariables.replace("Image URL"));
 
@@ -88,24 +58,7 @@ public class Guest_ViewDMFolderImageURLMGTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("DM Folder Image Title"),
 			selenium.getText("//h2[@class='document-title']"));
 		selenium.open(RuntimeVariables.getValue("ImageURL"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//img[contains(@src,'DM+Folder+Image+Title')]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//img[contains(@src,'DM+Folder+Image+Title')]");
 		assertTrue(selenium.isVisible(
 				"//img[contains(@src,'DM+Folder+Image+Title')]"));
 		assertTrue(selenium.isElementNotPresent("//input[@id='_58_login']"));

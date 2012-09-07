@@ -22,44 +22,14 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class SearchUserTest extends BaseTestCase {
 	public void testSearchUser() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Search Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Search Test Page");
 		selenium.clickAt("link=Search Test Page",
 			RuntimeVariables.replace("Search Test Page"));
 		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//input[@name='_3_keywords']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//input[@name='_3_keywords']");
 		selenium.type("//input[@name='_3_keywords']",
 			RuntimeVariables.replace("selenium*"));
 		selenium.clickAt("//input[@type='image']",

@@ -27,6 +27,8 @@ public class LoginTest extends BaseTestCase {
 		while (label >= 1) {
 			switch (label) {
 			case 1:
+				selenium.selectWindow("null");
+				selenium.selectFrame("relative=top");
 				selenium.setTimeout("180000");
 				selenium.open("/web/guest/home/");
 				selenium.type("//input[@id='_58_login']",

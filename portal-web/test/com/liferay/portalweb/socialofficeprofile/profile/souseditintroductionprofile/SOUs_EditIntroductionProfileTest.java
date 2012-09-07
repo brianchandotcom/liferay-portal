@@ -22,24 +22,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class SOUs_EditIntroductionProfileTest extends BaseTestCase {
 	public void testSOUs_EditIntroductionProfile() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/socialoffice01/so/profile");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div[@class='lfr-contact-name']/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//div[@class='lfr-contact-name']/a");
 		assertEquals(RuntimeVariables.replace("Social01 Office01 User01"),
 			selenium.getText("//div[@class='lfr-contact-name']/a"));
 		assertEquals(RuntimeVariables.replace("Introduction:"),
@@ -47,47 +33,14 @@ public class SOUs_EditIntroductionProfileTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Introduction Content"),
 			selenium.getText("//div[@data-title='Introduction']/ul/li/span"));
 		selenium.click("//div[@data-title='Introduction']");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//textarea[contains(@id,'comments')]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//textarea[contains(@id,'comments')]");
 		selenium.type("//textarea[contains(@id,'comments')]",
 			RuntimeVariables.replace("Introduction Content Edit"));
 		Thread.sleep(5000);
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("Introduction Content Edit")
-										.equals(selenium.getText(
-								"//div[@data-title='Introduction']/ul/li/span"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//div[@data-title='Introduction']/ul/li/span",
+			"Introduction Content Edit");
 		assertEquals(RuntimeVariables.replace("Introduction:"),
 			selenium.getText("//div[@data-title='Introduction']/h3"));
 		assertEquals(RuntimeVariables.replace("Introduction Content Edit"),

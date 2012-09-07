@@ -22,47 +22,17 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class EditUserRolesOrgOwnerOrg3Test extends BaseTestCase {
 	public void testEditUserRolesOrgOwnerOrg3() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("//div[@id='dockbar']",
 			RuntimeVariables.replace("Dockbar"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent(
-							"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Control Panel")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
@@ -95,24 +65,8 @@ public class EditUserRolesOrgOwnerOrg3Test extends BaseTestCase {
 				"//span[@title='Actions']/ul[@id='_125_usersSearchContainer_usersn_menu']/li/strong/a"));
 		selenium.clickAt("//span[@title='Actions']/ul[@id='_125_usersSearchContainer_usersn_menu']/li/strong/a",
 			RuntimeVariables.replace("Actions"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]");
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]"));
@@ -122,24 +76,8 @@ public class EditUserRolesOrgOwnerOrg3Test extends BaseTestCase {
 		assertTrue(selenium.isPartialText("//a[@id='_125_rolesLink']", "Roles"));
 		selenium.clickAt("//a[@id='_125_rolesLink']",
 			RuntimeVariables.replace("Roles"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//span[contains(.,'Select')]/a[contains(@href,'openOrganizationRoleSelector')]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//span[contains(.,'Select')]/a[contains(@href,'openOrganizationRoleSelector')]");
 		assertEquals(RuntimeVariables.replace("Select"),
 			selenium.getText(
 				"//span[contains(.,'Select')]/a[contains(@href,'openOrganizationRoleSelector')]"));
@@ -147,72 +85,23 @@ public class EditUserRolesOrgOwnerOrg3Test extends BaseTestCase {
 			RuntimeVariables.replace("Select"));
 		Thread.sleep(5000);
 		selenium.selectWindow("title=Users and Organizations");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//td[@id='_125_organizationsSearchContainer_col-name_row-3']/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//td[@id='_125_organizationsSearchContainer_col-name_row-3']/a");
 		assertEquals(RuntimeVariables.replace("Organization3 Name"),
 			selenium.getText(
 				"//td[@id='_125_organizationsSearchContainer_col-name_row-3']/a"));
 		selenium.clickAt("//td[@id='_125_organizationsSearchContainer_col-name_row-3']/a",
 			RuntimeVariables.replace("Organization3 Name"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//tr[contains(.,'Organization Owner')]/td[@headers='_125_rolesSearchContainer_col-title']/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//tr[contains(.,'Organization Owner')]/td[@headers='_125_rolesSearchContainer_col-title']/a");
 		assertEquals(RuntimeVariables.replace("Organization Owner"),
 			selenium.getText(
 				"//tr[contains(.,'Organization Owner')]/td[@headers='_125_rolesSearchContainer_col-title']/a"));
 		selenium.clickAt("//tr[contains(.,'Organization Owner')]/td[@headers='_125_rolesSearchContainer_col-title']/a",
 			RuntimeVariables.replace("Organization Owner"));
 		selenium.selectWindow("null");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isPartialText(
-							"//div[@id='_125_organizationRolesSearchContainer']",
-							"Organization Owner")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForPartialText("//div[@id='_125_organizationRolesSearchContainer']",
+			"Organization Owner");
 		assertTrue(selenium.isPartialText(
 				"//div[@id='_125_organizationRolesSearchContainer']",
 				"Organization Owner"));

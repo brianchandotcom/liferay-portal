@@ -22,24 +22,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ViewBookmarksFolderTest extends BaseTestCase {
 	public void testViewBookmarksFolder() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/bookmarks-folder-community/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Bookmarks Folder Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Bookmarks Folder Page");
 		selenium.clickAt("link=Bookmarks Folder Page",
 			RuntimeVariables.replace("Bookmarks Folder Page"));
 		selenium.waitForPageToLoad("30000");

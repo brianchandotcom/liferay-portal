@@ -22,25 +22,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class SOUs_ViewSitesSiteTest extends BaseTestCase {
 	public void testSOUs_ViewSitesSite() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/user/socialoffice01/so/dashboard/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//li[contains(@class, 'selected')]/a/span")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//li[contains(@class, 'selected')]/a/span");
 		assertEquals(RuntimeVariables.replace("Dashboard"),
 			selenium.getText("//li[contains(@class, 'selected')]/a/span"));
 		assertEquals(RuntimeVariables.replace("Sites"),
@@ -49,25 +34,8 @@ public class SOUs_ViewSitesSiteTest extends BaseTestCase {
 				"//select[@id='_5_WAR_soportlet_tabs1']", "My Sites"));
 		selenium.select("//select[@id='_5_WAR_soportlet_tabs1']",
 			RuntimeVariables.replace("My Sites"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (!selenium.isPartialText(
-							"//ul[contains(@class, 'site-list')]/",
-							"liferay.com")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForNotPartialText("//ul[contains(@class, 'site-list')]/",
+			"liferay.com");
 		assertFalse(selenium.isPartialText(
 				"//ul[contains(@class, 'site-list')]/", "liferay.com"));
 		assertEquals(RuntimeVariables.replace("Open Site Name"),

@@ -27,24 +27,10 @@ public class TearDownConfigurationTest extends BaseTestCase {
 		while (label >= 1) {
 			switch (label) {
 			case 1:
+				selenium.selectWindow("null");
+				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("link=Shopping Test Page")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("link=Shopping Test Page");
 				selenium.clickAt("link=Shopping Test Page",
 					RuntimeVariables.replace("Shopping Test Page"));
 				selenium.waitForPageToLoad("30000");
@@ -53,66 +39,18 @@ public class TearDownConfigurationTest extends BaseTestCase {
 					selenium.getText("//strong/a"));
 				selenium.clickAt("//strong/a",
 					RuntimeVariables.replace("Options"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible(
+					"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
 				assertEquals(RuntimeVariables.replace("Configuration"),
 					selenium.getText(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
 				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a",
 					RuntimeVariables.replace("Configuration"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("link=Payment Settings")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("link=Payment Settings");
 				selenium.clickAt("link=Payment Settings",
 					RuntimeVariables.replace("Payment Settings"));
 				selenium.waitForPageToLoad("30000");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//select[@id='_86_current_cc_types']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
+				selenium.waitForVisible("//select[@id='_86_current_cc_types']");
 
 				boolean amexAvailable = selenium.isPartialText("_86_available_cc_types",
 						"American Express");
@@ -125,63 +63,14 @@ public class TearDownConfigurationTest extends BaseTestCase {
 
 				selenium.addSelection("//select[@id='_86_available_cc_types']",
 					RuntimeVariables.replace("label=American Express"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//div[2]/div/span/span/button[2]")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("//div[2]/div/span/span/button[2]");
 				selenium.clickAt("//div[2]/div/span/span/button[2]",
 					RuntimeVariables.replace("Left Arrow"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isPartialText(
-									"//select[@id='_86_current_cc_types']",
-									"American Express")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
+				selenium.waitForPartialText("//select[@id='_86_current_cc_types']",
+					"American Express");
 
 			case 2:
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//select[@id='_86_current_cc_types']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
+				selenium.waitForVisible("//select[@id='_86_current_cc_types']");
 
 				boolean discoverAvailable = selenium.isPartialText("_86_available_cc_types",
 						"Discover");
@@ -194,63 +83,14 @@ public class TearDownConfigurationTest extends BaseTestCase {
 
 				selenium.addSelection("//select[@id='_86_available_cc_types']",
 					RuntimeVariables.replace("label=Discover"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//div[2]/div/span/span/button[2]")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("//div[2]/div/span/span/button[2]");
 				selenium.clickAt("//div[2]/div/span/span/button[2]",
 					RuntimeVariables.replace("Left Arrow"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isPartialText(
-									"//select[@id='_86_current_cc_types']",
-									"Discover")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
+				selenium.waitForPartialText("//select[@id='_86_current_cc_types']",
+					"Discover");
 
 			case 3:
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//select[@id='_86_current_cc_types']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
+				selenium.waitForVisible("//select[@id='_86_current_cc_types']");
 
 				boolean masterCardAvailable = selenium.isPartialText("_86_available_cc_types",
 						"MasterCard");
@@ -263,63 +103,14 @@ public class TearDownConfigurationTest extends BaseTestCase {
 
 				selenium.addSelection("//select[@id='_86_available_cc_types']",
 					RuntimeVariables.replace("label=MasterCard"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//div[2]/div/span/span/button[2]")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("//div[2]/div/span/span/button[2]");
 				selenium.clickAt("//div[2]/div/span/span/button[2]",
 					RuntimeVariables.replace("Left Arrow"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isPartialText(
-									"//select[@id='_86_current_cc_types']",
-									"MasterCard")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
+				selenium.waitForPartialText("//select[@id='_86_current_cc_types']",
+					"MasterCard");
 
 			case 4:
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//select[@id='_86_current_cc_types']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
+				selenium.waitForVisible("//select[@id='_86_current_cc_types']");
 
 				boolean visaAvailable = selenium.isPartialText("_86_available_cc_types",
 						"Visa");
@@ -332,44 +123,11 @@ public class TearDownConfigurationTest extends BaseTestCase {
 
 				selenium.addSelection("//select[@id='_86_available_cc_types']",
 					RuntimeVariables.replace("label=Visa"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//div[2]/div/span/span/button[2]")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("//div[2]/div/span/span/button[2]");
 				selenium.clickAt("//div[2]/div/span/span/button[2]",
 					RuntimeVariables.replace("Left Arrow"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isPartialText(
-									"//select[@id='_86_current_cc_types']",
-									"Visa")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
+				selenium.waitForPartialText("//select[@id='_86_current_cc_types']",
+					"Visa");
 
 			case 5:
 				selenium.select("//select[@id='_86_currencyId']",

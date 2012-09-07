@@ -22,27 +22,13 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ViewWCTemplateVMScriptTest extends BaseTestCase {
 	public void testViewWCTemplateVMScript() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Control Panel")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
@@ -58,127 +44,29 @@ public class ViewWCTemplateVMScriptTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("//input[@value='Launch Editor']",
 			RuntimeVariables.replace("Launch Editor"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//iframe[@id='_15_xslContentIFrame']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//iframe[@id='_15_xslContentIFrame']");
 		selenium.selectFrame("//iframe[@id='_15_xslContentIFrame']");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("<h3>$text.getData()</h3>")
-										.equals(selenium.getValue(
-								"//textarea[@id='_15_plainEditorField']"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForValue("//textarea[@id='_15_plainEditorField']",
+			"<h3>$text.getData()</h3>");
 		assertEquals("<h3>$text.getData()</h3>",
 			selenium.getValue("//textarea[@id='_15_plainEditorField']"));
 		selenium.clickAt("//input[@value='Cancel']",
 			RuntimeVariables.replace("Cancel"));
 		selenium.selectFrame("relative=top");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (!selenium.isVisible("//iframe[@id='_15_xslContentIFrame']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForNotVisible("//iframe[@id='_15_xslContentIFrame']");
 		assertFalse(selenium.isVisible("//iframe[@id='_15_xslContentIFrame']"));
 		selenium.clickAt("//input[@value='Launch Editor']",
 			RuntimeVariables.replace("Launch Editor"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//iframe[@id='_15_xslContentIFrame']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//iframe[@id='_15_xslContentIFrame']");
 		selenium.selectFrame("//iframe[@id='_15_xslContentIFrame']");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("<h3>$text.getData()</h3>")
-										.equals(selenium.getValue(
-								"//textarea[@id='_15_plainEditorField']"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForValue("//textarea[@id='_15_plainEditorField']",
+			"<h3>$text.getData()</h3>");
 		assertEquals("<h3>$text.getData()</h3>",
 			selenium.getValue("//textarea[@id='_15_plainEditorField']"));
 		selenium.selectFrame("relative=top");
 		selenium.clickAt("//button[@id='closethick']",
 			RuntimeVariables.replace("X"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (!selenium.isVisible("//iframe[@id='_15_xslContentIFrame']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForNotVisible("//iframe[@id='_15_xslContentIFrame']");
 		assertFalse(selenium.isVisible("//iframe[@id='_15_xslContentIFrame']"));
 	}
 }

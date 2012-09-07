@@ -28,6 +28,8 @@ public class Gmail_ReplyMBCategoryThreadMessageEmailTest extends BaseTestCase {
 		while (label >= 1) {
 			switch (label) {
 			case 1:
+				selenium.selectWindow("null");
+				selenium.selectFrame("relative=top");
 				selenium.openWindow("http://www.gmail.com/",
 					RuntimeVariables.replace("gmail"));
 				selenium.waitForPopUp("gmail", RuntimeVariables.replace(""));
@@ -66,22 +68,7 @@ public class Gmail_ReplyMBCategoryThreadMessageEmailTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 
 			case 3:
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isElementPresent("//input[@id='Email']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
+				selenium.waitForElementPresent("//input[@id='Email']");
 
 				boolean usernamePopulated = selenium.isElementPresent(
 						"//input[@value='liferay.qa.testing.trunk@gmail.com']");
@@ -119,70 +106,20 @@ public class Gmail_ReplyMBCategoryThreadMessageEmailTest extends BaseTestCase {
 					RuntimeVariables.replace("Sign In"));
 				selenium.waitForPageToLoad("30000");
 				Thread.sleep(5000);
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isPartialText(
-									"//span[@email='liferay.qa.server.trunk@gmail.com']",
-									"Admin")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForPartialText("//span[@email='liferay.qa.server.trunk@gmail.com']",
+					"Admin");
 				assertTrue(selenium.isPartialText(
 						"//span[@email='liferay.qa.server.trunk@gmail.com']",
 						"Admin"));
 				selenium.clickAt("//span[@email='liferay.qa.server.trunk@gmail.com']",
 					RuntimeVariables.replace("Admin"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isPartialText("//h1/span[1]",
-									"MB Message Subject")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForPartialText("//h1/span[1]", "MB Message Subject");
 				assertTrue(selenium.isPartialText("//h1/span[1]",
 						"MB Message Subject"));
 				assertTrue(selenium.isPartialText(
 						"//div[contains(child::text(),'MB Message Body')]",
 						"MB Message Body"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("//td[4]/div/img")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
+				selenium.waitForVisible("//td[4]/div/img");
 				selenium.clickAt("//td[4]/div/img",
 					RuntimeVariables.replace("Reply"));
 				Thread.sleep(5000);

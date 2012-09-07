@@ -23,6 +23,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class User_ViewResubmitDMFolderDocumentDocMSTest extends BaseTestCase {
 	public void testUser_ViewResubmitDMFolderDocumentDocMS()
 		throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("//div[@id='dockbar']",
 			RuntimeVariables.replace("Dockbar"));
@@ -30,23 +32,7 @@ public class User_ViewResubmitDMFolderDocumentDocMSTest extends BaseTestCase {
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.clickAt("//li[@id='_145_mySites']/a/span",
 			RuntimeVariables.replace("Go to"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Control Panel")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");

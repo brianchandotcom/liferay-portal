@@ -22,6 +22,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ViewDMSubfolderImageMGTest extends BaseTestCase {
 	public void testViewDMSubfolderImageMG() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("link=Media Gallery Test Page",
 			RuntimeVariables.replace("Media Gallery Test Page"));
@@ -49,23 +51,7 @@ public class ViewDMSubfolderImageMGTest extends BaseTestCase {
 		selenium.clickAt("//span[@class='image-title']",
 			RuntimeVariables.replace("DM Subfolder Image Title"));
 		Thread.sleep(5000);
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//img[@class='aui-image-viewer-image']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//img[@class='aui-image-viewer-image']");
 		assertEquals(RuntimeVariables.replace(
 				"DM Subfolder Image Title - DM Subfolder Image Description"),
 			selenium.getText("//div[@class='aui-image-viewer-caption']"));

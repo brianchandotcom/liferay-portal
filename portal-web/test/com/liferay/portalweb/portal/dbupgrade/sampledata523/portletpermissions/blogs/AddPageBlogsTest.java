@@ -22,47 +22,16 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class AddPageBlogsTest extends BaseTestCase {
 	public void testAddPageBlogs() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("//div[@id='add-page']/a/span")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent("//div[@id='add-page']/a/span");
 		selenium.clickAt("//div[@id='add-page']/a/span",
 			RuntimeVariables.replace("Add"));
 		selenium.type("new_page",
 			RuntimeVariables.replace("Blogs Portlet Permissions Page"));
 		selenium.clickAt("link=Save", RuntimeVariables.replace("Save"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent(
-							"link=Blogs Portlet Permissions Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent("link=Blogs Portlet Permissions Page");
 		selenium.clickAt("link=Blogs Portlet Permissions Page",
 			RuntimeVariables.replace("Blogs Portlet Permissions Page"));
 		selenium.waitForPageToLoad("30000");

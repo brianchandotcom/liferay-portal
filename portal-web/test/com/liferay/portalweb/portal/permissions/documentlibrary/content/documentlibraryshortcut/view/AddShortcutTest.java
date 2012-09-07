@@ -22,24 +22,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class AddShortcutTest extends BaseTestCase {
 	public void testAddShortcut() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
@@ -48,24 +34,8 @@ public class AddShortcutTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isVisible("link=Add"));
 		selenium.clickAt("link=Add", RuntimeVariables.replace("Add"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
 		assertEquals(RuntimeVariables.replace("Shortcut"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
@@ -76,89 +46,22 @@ public class AddShortcutTest extends BaseTestCase {
 			RuntimeVariables.replace("Select Site"));
 		Thread.sleep(5000);
 		selenium.selectWindow("title=Documents and Media");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Liferay")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Liferay");
 		selenium.clickAt("link=Liferay", RuntimeVariables.replace("Liferay"));
 		selenium.selectWindow("null");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("Liferay")
-										.equals(selenium.getText(
-								"//span[@id='_20_toGroupName']"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//span[@id='_20_toGroupName']", "Liferay");
 		assertEquals(RuntimeVariables.replace("Liferay"),
 			selenium.getText("//span[@id='_20_toGroupName']"));
 		selenium.clickAt("xPath=(//input[@value='Select'])[2]",
 			RuntimeVariables.replace("Select Site"));
 		Thread.sleep(5000);
 		selenium.selectWindow("title=Documents and Media");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//tr[3]/td/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//tr[3]/td/a");
 		selenium.clickAt("//tr[3]/td/a",
 			RuntimeVariables.replace("TestDocument.txt"));
 		selenium.selectWindow("null");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("TestDocument.txt")
-										.equals(selenium.getText(
-								"//span[@id='_20_toFileEntryTitle']"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//span[@id='_20_toFileEntryTitle']",
+			"TestDocument.txt");
 		assertEquals(RuntimeVariables.replace("Liferay"),
 			selenium.getText("//span[@id='_20_toGroupName']"));
 		assertEquals(RuntimeVariables.replace("TestDocument.txt"),
@@ -167,24 +70,8 @@ public class AddShortcutTest extends BaseTestCase {
 			RuntimeVariables.replace("Owner"));
 		selenium.clickAt("link=More Options \u00bb",
 			RuntimeVariables.replace("More Options \u00bb"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//input[@id='_20_guestPermissions_ADD_DISCUSSION']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible(
+			"//input[@id='_20_guestPermissions_ADD_DISCUSSION']");
 		assertTrue(selenium.isChecked(
 				"//input[@id='_20_groupPermissions_ADD_DISCUSSION']"));
 		selenium.clickAt("//input[@id='_20_groupPermissions_ADD_DISCUSSION']",

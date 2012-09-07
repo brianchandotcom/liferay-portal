@@ -22,47 +22,17 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class AddSettingsAddressStreetNullTest extends BaseTestCase {
 	public void testAddSettingsAddressStreetNull() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Portal Settings",
 			RuntimeVariables.replace("Portal Settings"));
 		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//a[@id='_130_addressesLink']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//a[@id='_130_addressesLink']");
 		selenium.clickAt("//a[@id='_130_addressesLink']",
 			RuntimeVariables.replace("Addresses"));
 		selenium.type("//input[@id='_130_addressStreet1_0']",
@@ -73,25 +43,8 @@ public class AddSettingsAddressStreetNullTest extends BaseTestCase {
 			RuntimeVariables.replace("12345"));
 		selenium.select("//select[@id='_130_addressCountryId0']",
 			RuntimeVariables.replace("label=United States"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isPartialText(
-							"//select[@id='_130_addressRegionId0']",
-							"California")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForPartialText("//select[@id='_130_addressRegionId0']",
+			"California");
 		selenium.select("//select[@id='_130_addressRegionId0']",
 			RuntimeVariables.replace("label=California"));
 		selenium.select("//select[@id='_130_addressTypeId0']",

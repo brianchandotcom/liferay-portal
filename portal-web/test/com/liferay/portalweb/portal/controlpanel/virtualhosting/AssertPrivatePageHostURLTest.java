@@ -27,6 +27,8 @@ public class AssertPrivatePageHostURLTest extends BaseTestCase {
 		while (label >= 1) {
 			switch (label) {
 			case 1:
+				selenium.selectWindow("null");
+				selenium.selectFrame("relative=top");
 				selenium.open("http://www.baker.com:8080/");
 
 				boolean LoggedOut = selenium.isElementPresent("_58_login");

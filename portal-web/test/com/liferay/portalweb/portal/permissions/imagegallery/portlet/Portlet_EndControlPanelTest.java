@@ -27,6 +27,8 @@ public class Portlet_EndControlPanelTest extends BaseTestCase {
 		while (label >= 1) {
 			switch (label) {
 			case 1:
+				selenium.selectWindow("null");
+				selenium.selectFrame("relative=top");
 
 				boolean InControlPanel = selenium.isElementPresent(
 						"link=Back to Guest");

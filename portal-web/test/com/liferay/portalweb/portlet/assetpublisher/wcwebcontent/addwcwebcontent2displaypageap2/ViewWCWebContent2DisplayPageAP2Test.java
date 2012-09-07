@@ -22,6 +22,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ViewWCWebContent2DisplayPageAP2Test extends BaseTestCase {
 	public void testViewWCWebContent2DisplayPageAP2() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("link=Asset Publisher Test Page2",
 			RuntimeVariables.replace("Asset Publisher Test Page2"));

@@ -22,64 +22,17 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ConfirmSessionExpireTest extends BaseTestCase {
 	public void testConfirmSessionExpire() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		Thread.sleep(30000);
 		Thread.sleep(15000);
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("//input[@value='Extend']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent("//input[@value='Extend']");
 		Thread.sleep(30000);
 		Thread.sleep(30000);
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isTextPresent(
-							"Warning! Due to inactivity, your session has expired.")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForTextPresent(
+			"Warning! Due to inactivity, your session has expired.");
 		Thread.sleep(5000);
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent(
-							"link=Session Expiration Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent("link=Session Expiration Test Page");
 		selenium.click(RuntimeVariables.replace(
 				"link=Session Expiration Test Page"));
 		selenium.waitForPageToLoad("30000");

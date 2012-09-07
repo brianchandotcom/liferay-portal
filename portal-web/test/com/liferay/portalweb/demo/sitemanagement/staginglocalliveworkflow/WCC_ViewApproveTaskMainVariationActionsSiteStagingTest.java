@@ -24,25 +24,11 @@ public class WCC_ViewApproveTaskMainVariationActionsSiteStagingTest
 	extends BaseTestCase {
 	public void testWCC_ViewApproveTaskMainVariationActionsSiteStaging()
 		throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/community-site-test/home/");
 		assertFalse(selenium.isTextPresent("This is a Web Content article"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Staging")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Staging");
 		selenium.clickAt("link=Staging", RuntimeVariables.replace("Staging"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Ready for Publication"),

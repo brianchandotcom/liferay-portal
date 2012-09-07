@@ -24,6 +24,8 @@ public class SplitThreadMBCategoryThreadReplyExplanationTest
 	extends BaseTestCase {
 	public void testSplitThreadMBCategoryThreadReplyExplanation()
 		throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("link=Message Boards Test Page",
 			RuntimeVariables.replace("Message Boards Test Page"));
@@ -68,81 +70,16 @@ public class SplitThreadMBCategoryThreadReplyExplanationTest
 				"Add explanation post to the source thread."));
 		assertTrue(selenium.isChecked(
 				"//input[@id='_19_addExplanationPostCheckbox']"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//input[@id='_19_subject']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//input[@id='_19_subject']");
 		selenium.type("//input[@id='_19_subject']",
 			RuntimeVariables.replace(
 				"MB Category Thread Message Explanation Subject"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent(
-							"//textarea[@id='_19_editor' and contains(@style,'display: none;')]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//td[@id='cke_contents__19_editor']/iframe")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent(
+			"//textarea[@id='_19_editor' and contains(@style,'display: none;')]");
+		selenium.waitForVisible("//td[@id='cke_contents__19_editor']/iframe");
 		selenium.selectFrame("//td[@id='cke_contents__19_editor']/iframe");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace(
-							"The new thread can be found at ${newThreadURL}.")
-										.equals(selenium.getText("//body"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//body",
+			"The new thread can be found at ${newThreadURL}.");
 		selenium.selectFrame("relative=top");
 		selenium.clickAt("//input[@value='OK']", RuntimeVariables.replace("OK"));
 		selenium.waitForPageToLoad("30000");

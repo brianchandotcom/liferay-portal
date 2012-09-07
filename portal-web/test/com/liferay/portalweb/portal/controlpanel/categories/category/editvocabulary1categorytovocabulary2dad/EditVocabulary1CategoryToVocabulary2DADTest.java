@@ -23,72 +23,25 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class EditVocabulary1CategoryToVocabulary2DADTest extends BaseTestCase {
 	public void testEditVocabulary1CategoryToVocabulary2DAD()
 		throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Control Panel")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Categories",
 			RuntimeVariables.replace("Categories"));
 		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//li/div/div[4]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//li/div/div[4]");
 		assertEquals(RuntimeVariables.replace("Vocabulary1 Category Name"),
 			selenium.getText("//li/div/div[4]"));
 		selenium.clickAt("//li/div/div[4]",
 			RuntimeVariables.replace("Vocabulary1 Category Name"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//div[@class='view-category']/div/h1/span")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//div[@class='view-category']/div/h1/span");
 		assertEquals(RuntimeVariables.replace("Vocabulary1 Category Name"),
 			selenium.getText("//div[@class='view-category']/div/h1/span"));
 		Thread.sleep(5000);
@@ -98,25 +51,8 @@ public class EditVocabulary1CategoryToVocabulary2DADTest extends BaseTestCase {
 			selenium.getText("xPath=(//span[@class='vocabulary-item']/a)[2]"));
 		selenium.dragAndDropToObject("//li/div/div[4]",
 			"xPath=(//span[@class='vocabulary-item']/a)[2]");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("Vocabulary2 Name")
-										.equals(selenium.getText(
-								"//li[contains(@class,'selected')]/div/span[@class='vocabulary-item']/a"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//li[contains(@class,'selected')]/div/span[@class='vocabulary-item']/a",
+			"Vocabulary2 Name");
 		assertEquals(RuntimeVariables.replace("Vocabulary2 Name"),
 			selenium.getText(
 				"//li[contains(@class,'selected')]/div/span[@class='vocabulary-item']/a"));

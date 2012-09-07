@@ -22,24 +22,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class SOUs_EditWebsiteProfileTest extends BaseTestCase {
 	public void testSOUs_EditWebsiteProfile() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/socialoffice01/so/profile");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div[@class='lfr-contact-name']/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//div[@class='lfr-contact-name']/a");
 		assertEquals(RuntimeVariables.replace("Social01 Office01 User01"),
 			selenium.getText("//div[@class='lfr-contact-name']/a"));
 		assertEquals(RuntimeVariables.replace("Websites:"),
@@ -50,23 +36,7 @@ public class SOUs_EditWebsiteProfileTest extends BaseTestCase {
 			selenium.getText("//div[@data-title='Websites']/ul/li/span[2]"));
 		selenium.clickAt("//div[@data-title='Websites']",
 			RuntimeVariables.replace("Websites:"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//input[contains(@id,'websiteUrl')]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//input[contains(@id,'websiteUrl')]");
 		selenium.type("//input[contains(@id,'websiteUrl')]",
 			RuntimeVariables.replace("http://www.socialoffice01edit.com"));
 		selenium.select("//select[contains(@id,'websiteType')]",
@@ -76,26 +46,8 @@ public class SOUs_EditWebsiteProfileTest extends BaseTestCase {
 		Thread.sleep(5000);
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace(
-							"http://www.socialoffice01edit.com")
-										.equals(selenium.getText(
-								"//div[@data-title='Websites']/ul/li/span[2]"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForText("//div[@data-title='Websites']/ul/li/span[2]",
+			"http://www.socialoffice01edit.com");
 		assertEquals(RuntimeVariables.replace("Websites:"),
 			selenium.getText("//div[@data-title='Websites']/h3"));
 		assertEquals(RuntimeVariables.replace("Personal"),

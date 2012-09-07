@@ -438,9 +438,6 @@ public abstract class BaseDB implements DB {
 								}
 							}
 						}
-						finally {
-							unsyncBufferedReader.close();
-						}
 					}
 				}
 			}

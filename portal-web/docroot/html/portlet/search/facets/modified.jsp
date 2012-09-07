@@ -204,17 +204,20 @@ if (fieldParamSelection.equals("0")) {
 		{
 			calendar: {
 				dateFormat: '%Y-%m-%d',
-				dates: [
-					<c:if test='<%= fieldParamSelection.equals("6") && Validator.isNotNull(fieldParamFrom) %>'>
+
+				<c:if test='<%= fieldParamSelection.equals("6") && Validator.isNotNull(fieldParamFrom) %>'>
+					selectedDates: [
 
 						<%
 						String[] fieldParamFromParts = StringUtil.split(fieldParamFrom, "-");
 						%>
 
 						new Date(<%= fieldParamFromParts[0] %>,<%= GetterUtil.getInteger(fieldParamFromParts[1]) - 1 %>,<%= fieldParamFromParts[2] %>)
-					</c:if>
-				],
-				selectMultipleDates: false,
+					],
+				</c:if>
+
+				selectionMode: 'single',
+
 				strings: {
 					next: '<liferay-ui:message key="next" />',
 					none: '<liferay-ui:message key="none" />',
@@ -230,17 +233,20 @@ if (fieldParamSelection.equals("0")) {
 		{
 			calendar: {
 				dateFormat: '%Y-%m-%d',
-				dates: [
-					<c:if test='<%= fieldParamSelection.equals("6") && Validator.isNotNull(fieldParamTo) %>'>
+
+				<c:if test='<%= fieldParamSelection.equals("6") && Validator.isNotNull(fieldParamTo) %>'>
+					selectedDates: [
 
 						<%
 						String[] fieldParamToParts = StringUtil.split(fieldParamTo, "-");
 						%>
 
 						new Date(<%= fieldParamToParts[0] %>,<%= GetterUtil.getInteger(fieldParamToParts[1]) - 1 %>,<%= fieldParamToParts[2] %>)
-					</c:if>
-				],
-				selectMultipleDates: false,
+					],
+				</c:if>
+
+				selectionMode: 'single',
+
 				strings: {
 					next: '<liferay-ui:message key="next" />',
 					none: '<liferay-ui:message key="none" />',

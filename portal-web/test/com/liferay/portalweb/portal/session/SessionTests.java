@@ -15,6 +15,7 @@
 package com.liferay.portalweb.portal.session;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignInTest;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
 
 import junit.framework.Test;
@@ -30,7 +31,7 @@ public class SessionTests extends BaseTestSuite {
 		testSuite.addTestSuite(SignInWithOutRememberMeTest.class);
 		testSuite.addTestSuite(ExtendSessionTest.class);
 		testSuite.addTestSuite(ConfirmSessionExpireTest.class);
-		testSuite.addTestSuite(RememberMeLoginTest.class);
+		testSuite.addTestSuite(SignInTest.class);
 		testSuite.addTestSuite(ConfirmNoSessionExpireTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 

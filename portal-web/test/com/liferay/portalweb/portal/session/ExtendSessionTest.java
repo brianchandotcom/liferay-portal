@@ -15,6 +15,7 @@
 package com.liferay.portalweb.portal.session;
 
 import com.liferay.portalweb.portal.BaseTestCase;
+import com.liferay.portalweb.portal.util.RuntimeVariables;
 
 /**
  * @author Brian Wing Shun Chan
@@ -23,11 +24,14 @@ public class ExtendSessionTest extends BaseTestCase {
 	public void testExtendSession() throws Exception {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
-		selenium.waitForElementPresent("link=Session Expiration Test Page");
-		Thread.sleep(30000);
-		Thread.sleep(15000);
+		selenium.open("/web/guest/home/");
+		selenium.clickAt("link=Session Expiration Test Page",
+			RuntimeVariables.replace("Session Expiration Test Page"));
+		selenium.waitForPageToLoad("30000");
+		Thread.sleep(60000);
 		selenium.waitForVisible("//input[@value='Extend']");
-		selenium.click("//input[@value='Extend']");
+		selenium.clickAt("//input[@value='Extend']",
+			RuntimeVariables.replace("Extend"));
 		selenium.waitForNotVisible("//input[@value='Extend']");
 	}
 }

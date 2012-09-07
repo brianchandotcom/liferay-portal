@@ -24,15 +24,15 @@ public class ConfirmNoSessionExpireTest extends BaseTestCase {
 	public void testConfirmNoSessionExpire() throws Exception {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
-		Thread.sleep(30000);
-		Thread.sleep(30000);
-		selenium.waitForElementNotPresent("//input[@value='Extend']");
-		Thread.sleep(30000);
-		Thread.sleep(30000);
-		assertTrue(selenium.isElementNotPresent("//input[@value='Extend']"));
-		selenium.waitForElementPresent("link=Session Expiration Test Page");
-		selenium.click(RuntimeVariables.replace(
-				"link=Session Expiration Test Page"));
+		selenium.open("/web/guest/home/");
+		selenium.clickAt("link=Session Expiration Test Page",
+			RuntimeVariables.replace("Session Expiration Test Page"));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(75000);
+		assertTrue(selenium.isElementNotPresent("//input[@value='Extend']"));
+		selenium.clickAt("link=Session Expiration Test Page",
+			RuntimeVariables.replace("Session Expiration Test Page"));
+		selenium.waitForPageToLoad("30000");
+		assertTrue(selenium.isVisible("link=Sign Out"));
 	}
 }

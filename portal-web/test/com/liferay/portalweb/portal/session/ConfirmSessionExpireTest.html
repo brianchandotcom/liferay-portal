@@ -9,34 +9,39 @@
 <tr><td rowspan="1" colspan="3">ConfirmSessionExpireTest</td></tr>
 </thead><tbody>
 <tr>
-	<td>pause</td>
-	<td>30000</td>
+	<td>open</td>
+	<td>/web/guest/home/</td>
 	<td></td>
 </tr>
 <tr>
+	<td>clickAtAndWait</td>
+	<td>link=Session Expiration Test Page</td>
+	<td>Session Expiration Test Page</td>
+</tr>
+<tr>
 	<td>pause</td>
-	<td>15000</td>
+	<td>60000</td>
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>//input[@value='Extend']</td>
-	<td></td>
+	<td>Extend</td>
 </tr>
 <tr>
 	<td>pause</td>
-	<td>30000</td>
+	<td>60000</td>
 	<td></td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>30000</td>
-	<td></td>
+	<td>waitForVisible</td>
+	<td>//div[@class='popup-alert-warning']</td>
+	<td>Warning! Due to inactivity, your session has expired. Please save any data you may have entered before refreshing the page.</td>
 </tr>
 <tr>
-	<td>waitForTextPresent</td>
-	<td>Warning! Due to inactivity, your session has expired.</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//div[@class='popup-alert-warning']</td>
+	<td>Warning! Due to inactivity, your session has expired. Please save any data you may have entered before refreshing the page.</td>
 </tr>
 <tr>
 	<td>pause</td>
@@ -44,21 +49,15 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>clickAtAndWait</td>
 	<td>link=Session Expiration Test Page</td>
-	<td></td>
+	<td>Session Expiration Test Page</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>link=Session Expiration Test Page</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>sign-in</td>
+	<td>assertVisible</td>
+	<td>link=Sign In</td>
 	<td>Sign In</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

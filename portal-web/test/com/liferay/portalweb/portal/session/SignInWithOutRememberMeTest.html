@@ -9,51 +9,30 @@
 <tr><td rowspan="1" colspan="3">SignInWithOutRememberMeTest</td></tr>
 </thead><tbody>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>open</td>
+	<td>/web/guest/home/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
 	<td>link=Sign Out</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>link=Sign Out</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>link=Sign In</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>link=Sign In</td>
-	<td></td>
+	<td>Sign Out</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_58_login</td>
+	<td>//input[@id='_58_login']</td>
 	<td>test@liferay.com</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_58_password</td>
+	<td>//input[@id='_58_password']</td>
 	<td>test</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
+	<td>clickAtAndWait</td>
 	<td>//input[@value='Sign In']</td>
-	<td></td>
+	<td>Sign In</td>
 </tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>link=Session Expiration Test Page</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>link=Session Expiration Test Page</td>
-	<td></td>
-</tr>
-
 </tbody></table>
 </body>
 </html>

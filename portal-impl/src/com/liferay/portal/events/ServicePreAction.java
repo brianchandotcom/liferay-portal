@@ -841,6 +841,14 @@ public class ServicePreAction extends Action {
 		themeDisplay.setPathMain(mainPath);
 		themeDisplay.setPathSound(contextPath.concat("/html/sound"));
 
+		// Focused Portlet
+
+		HttpServletRequest originalRequest =
+			PortalUtil.getOriginalServletRequest(request);
+
+		themeDisplay.setFocusedPortletId(
+			originalRequest.getParameter("p_p_id"));
+
 		// Icons
 
 		themeDisplay.setShowAddContentIcon(false);

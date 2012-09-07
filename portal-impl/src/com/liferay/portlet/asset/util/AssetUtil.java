@@ -24,6 +24,8 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.theme.PortletDisplay;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.asset.NoSuchCategoryException;
@@ -107,9 +109,23 @@ public class AssetUtil {
 			HttpServletRequest request, String title, String url)
 		throws Exception {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		String portletBreadcrumbKey = WebKeys.PORTLET_BREADCRUMBS;
+
+		if (Validator.isNotNull(portletDisplay.getId()) &&
+			!themeDisplay.isPortletDisplayFocused()) {
+
+			portletBreadcrumbKey =
+				WebKeys.PORTLET_BREADCRUMBS + StringPool.UNDERLINE +
+					portletDisplay.getId();
+		}
+
 		List<BreadcrumbEntry> breadcrumbEntries =
-			(List<BreadcrumbEntry>)request.getAttribute(
-				WebKeys.PORTLET_BREADCRUMBS);
+			(List<BreadcrumbEntry>)request.getAttribute(portletBreadcrumbKey);
 
 		if (breadcrumbEntries != null) {
 			for (BreadcrumbEntry breadcrumbEntry : breadcrumbEntries) {

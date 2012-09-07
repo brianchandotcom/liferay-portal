@@ -86,7 +86,7 @@
 					%>
 
 					<p class="lfr-install-more">
-						<aui:a href="<%= marketplaceURL.toString() %>" label="install-more-applications" />
+						<aui:a href='<%= HttpUtil.removeParameter(marketplaceURL.toString(), "controlPanelCategory") %>' label="install-more-applications" />
 					</p>
 				</c:if>
 			</aui:form>

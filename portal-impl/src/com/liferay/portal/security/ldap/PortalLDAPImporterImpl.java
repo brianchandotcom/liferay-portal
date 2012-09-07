@@ -20,6 +20,7 @@ import com.liferay.portal.NoSuchUserGroupException;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.ldap.LDAPUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -1180,6 +1181,8 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 			}
 		}
 
+		updateUserProfile(ldapUser.getUser(), ldapUser.getContact(), user);
+
 		user = UserLocalServiceUtil.updateUser(
 			user.getUserId(), password, StringPool.BLANK, StringPool.BLANK,
 			passwordReset, ldapUser.getReminderQueryQuestion(),
@@ -1217,6 +1220,48 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 		}
 
 		return user;
+	}
+
+	protected void updateUserProfile(
+			User importedUser, Contact contact, User portalUser)
+		throws PortalException, SystemException {
+
+		Contact portalUserContact = portalUser.getContact();
+
+		contact.setAimSn(GetterUtil.getString(portalUserContact.getAimSn()));
+		contact.setFacebookSn(
+			GetterUtil.getString(portalUserContact.getFacebookSn()));
+		contact.setIcqSn(GetterUtil.getString(portalUserContact.getIcqSn()));
+		contact.setJabberSn(
+			GetterUtil.getString(portalUserContact.getJabberSn()));
+		contact.setMale(GetterUtil.getBoolean(portalUserContact.getMale()));
+		contact.setMsnSn(GetterUtil.getString(portalUserContact.getMsnSn()));
+		contact.setMySpaceSn(
+			GetterUtil.getString(portalUserContact.getMySpaceSn()));
+		contact.setPrefixId(
+			GetterUtil.getInteger(portalUserContact.getPrefixId()));
+		contact.setSkypeSn(
+			GetterUtil.getString(portalUserContact.getSkypeSn()));
+		contact.setSmsSn(GetterUtil.getString(portalUserContact.getSmsSn()));
+		contact.setSuffixId(
+			GetterUtil.getInteger(portalUserContact.getSuffixId()));
+		contact.setTwitterSn(
+			GetterUtil.getString(portalUserContact.getTwitterSn()));
+		contact.setYmSn(GetterUtil.getString(portalUserContact.getYmSn()));
+
+		importedUser.setComments(
+			GetterUtil.getString(portalUser.getComments()));
+		importedUser.setGreeting(
+			GetterUtil.getString(portalUser.getGreeting()));
+		importedUser.setJobTitle(
+			GetterUtil.getString(portalUser.getJobTitle()));
+		importedUser.setLanguageId(
+			GetterUtil.getString(portalUser.getLanguageId()));
+		importedUser.setMiddleName(
+			GetterUtil.getString(portalUser.getMiddleName()));
+		importedUser.setOpenId(GetterUtil.getString(portalUser.getOpenId()));
+		importedUser.setTimeZoneId(
+			GetterUtil.getString(portalUser.getTimeZoneId()));
 	}
 
 	private static final String _IMPORT_BY_GROUP = "group";

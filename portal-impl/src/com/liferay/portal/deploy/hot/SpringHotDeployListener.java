@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.deploy.hot.HotDeployException;
 import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 import com.liferay.portal.spring.context.PortletContextLoaderListener;
 
+import java.net.URL;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -36,7 +38,15 @@ public class SpringHotDeployListener extends BaseHotDeployListener {
 	public void invokeDeploy(HotDeployEvent hotDeployEvent)
 		throws HotDeployException {
 
+		ServletContext servletContext = hotDeployEvent.getServletContext();
+
 		try {
+			URL url = servletContext.getResource("WEB-INF/service.xml");
+
+			if (url == null) {
+				return;
+			}
+
 			doInvokeDeploy(hotDeployEvent);
 		}
 		catch (Throwable t) {

@@ -51,4 +51,9 @@ public class BlogsPortletDisplayTemplateHandler
 		return "com.liferay.portlet.blogs";
 	}
 
+	@Override
+	protected String getDefaultTemplatesConfigPath() {
+		return PropsValues.BLOGS_DISPLAY_STYLES_TEMPLATE_DEFAULT_CONFIG;
+	}
+
 }

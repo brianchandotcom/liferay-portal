@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+
+<root>
+	<template>
+		<template-key><![CDATA[asset-categories-navigation-column-based-layout-vm]]></template-key>
+		<name><![CDATA[Column-based Layout]]></name>
+		<description><![CDATA[Column-based Layout displays one column per vocabulary with the first level of categories shown in a list under the vocabulary title.]]></description>
+		<language><![CDATA[vm]]></language>
+		<script-file>com/liferay/portlet/assetcategoriesnavigation/dependencies/column_based_layout.vm</script-file>
+	</template>
+</root>

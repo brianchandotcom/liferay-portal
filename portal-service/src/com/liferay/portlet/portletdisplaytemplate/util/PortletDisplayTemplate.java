@@ -20,8 +20,7 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import java.util.List;
 import java.util.Map;
 
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
+import javax.servlet.jsp.PageContext;
 
 /**
  * @author Eduardo Garcia
@@ -36,13 +35,11 @@ public interface PortletDisplayTemplate {
 		ThemeDisplay themeDisplay, String displayStyle);
 
 	public String renderDDMTemplate(
-			RenderRequest renderRequest, RenderResponse renderResponse,
-			long ddmTemplateId, List<?> entries)
+			PageContext pageContext, long ddmTemplateId, List<?> entries)
 		throws Exception;
 
 	public String renderDDMTemplate(
-			RenderRequest renderRequest, RenderResponse renderResponse,
-			long ddmTemplateId, List<?> entries,
+			PageContext pageContext, long ddmTemplateId, List<?> entries,
 			Map<String, Object> contextObjects)
 		throws Exception;
 

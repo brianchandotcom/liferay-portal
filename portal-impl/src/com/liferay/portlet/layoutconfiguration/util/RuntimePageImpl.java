@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.template.TemplateContextType;
 import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.template.TemplateResource;
+import com.liferay.portal.kernel.templateparser.TemplateContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ObjectValuePair;
@@ -222,7 +223,7 @@ public class RuntimePageImpl implements RuntimePage {
 
 	protected Object buildVelocityTaglib(
 			HttpServletRequest request, HttpServletResponse response,
-			PageContext pageContext)
+			PageContext pageContext, TemplateContext templateContext)
 		throws Exception {
 
 		// We have to load this class from the plugin class loader (context
@@ -232,10 +233,12 @@ public class RuntimePageImpl implements RuntimePage {
 
 		Constructor<?> constructor = clazz.getConstructor(
 			ServletContext.class, HttpServletRequest.class,
-			HttpServletResponse.class, PageContext.class);
+			HttpServletResponse.class, PageContext.class,
+			TemplateContext.class);
 
 		return constructor.newInstance(
-			pageContext.getServletContext(), request, response, pageContext);
+			pageContext.getServletContext(), request, response, pageContext,
+			templateContext);
 
 	}
 
@@ -321,7 +324,7 @@ public class RuntimePageImpl implements RuntimePage {
 		// liferay:include tag library
 
 		Object velocityTaglib = buildVelocityTaglib(
-			request, response, pageContext);
+			request, response, pageContext, template);
 
 		template.put("taglibLiferay", velocityTaglib);
 		template.put("theme", velocityTaglib);
@@ -365,7 +368,7 @@ public class RuntimePageImpl implements RuntimePage {
 
 		Object velocityTaglib = buildVelocityTaglib(
 			request, new PipingServletResponse(response, unsyncStringWriter),
-			pageContext);
+			pageContext, template);
 
 		template.put("taglibLiferay", velocityTaglib);
 		template.put("theme", velocityTaglib);

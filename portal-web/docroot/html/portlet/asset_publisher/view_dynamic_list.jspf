@@ -67,7 +67,7 @@ if (!portletName.equals(PortletKeys.RELATED_ASSETS) || (assetEntryQuery.getLinke
 
 				<c:choose>
 					<c:when test="<%= portletDisplayDDMTemplateId > 0 %>">
-						<%= PortletDisplayTemplateUtil.renderDDMTemplate(renderRequest, renderResponse, portletDisplayDDMTemplateId, results, contextObjects) %>
+						<%= PortletDisplayTemplateUtil.renderDDMTemplate(pageContext, portletDisplayDDMTemplateId, results, contextObjects) %>
 					</c:when>
 					<c:otherwise>
 						<%@ include file="/html/portlet/asset_publisher/view_dynamic_list_asset.jspf" %>
@@ -119,7 +119,7 @@ if (!portletName.equals(PortletKeys.RELATED_ASSETS) || (assetEntryQuery.getLinke
 
 		<c:choose>
 			<c:when test="<%= portletDisplayDDMTemplateId > 0 %>">
-				<%= PortletDisplayTemplateUtil.renderDDMTemplate(renderRequest, renderResponse, portletDisplayDDMTemplateId, results, contextObjects) %>
+				<%= PortletDisplayTemplateUtil.renderDDMTemplate(pageContext, portletDisplayDDMTemplateId, results, contextObjects) %>
 			</c:when>
 			<c:otherwise>
 				<%@ include file="/html/portlet/asset_publisher/view_dynamic_list_asset.jspf" %>
@@ -160,7 +160,7 @@ if (!portletName.equals(PortletKeys.RELATED_ASSETS) || (assetEntryQuery.getLinke
 
 				<c:choose>
 					<c:when test="<%= portletDisplayDDMTemplateId > 0 %>">
-						<%= PortletDisplayTemplateUtil.renderDDMTemplate(renderRequest, renderResponse, portletDisplayDDMTemplateId, results, contextObjects) %>
+						<%= PortletDisplayTemplateUtil.renderDDMTemplate(pageContext, portletDisplayDDMTemplateId, results, contextObjects) %>
 					</c:when>
 					<c:otherwise>
 						<%@ include file="/html/portlet/asset_publisher/view_dynamic_list_asset.jspf" %>

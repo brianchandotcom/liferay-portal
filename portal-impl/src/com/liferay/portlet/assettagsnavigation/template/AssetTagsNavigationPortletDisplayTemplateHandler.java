@@ -52,4 +52,10 @@ public class AssetTagsNavigationPortletDisplayTemplateHandler
 		return "com.liferay.portlet.assettagsnavigation";
 	}
 
+	@Override
+	protected String getDefaultTemplatesConfigPath() {
+		return PropsValues.
+			ASSET_TAGS_NAVIGATION_DISPLAY_STYLES_TEMPLATE_DEFAULT_CONFIG;
+	}
+
 }

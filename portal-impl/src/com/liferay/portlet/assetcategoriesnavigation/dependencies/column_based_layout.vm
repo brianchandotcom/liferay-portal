@@ -1,0 +1,34 @@
+#set ($assetCategoryService = $serviceLocator.findService("com.liferay.portlet.asset.service.AssetCategoryService"))
+
+#if (!$entries.isEmpty())
+	#set ($layoutTag = $taglibLiferay.getLayoutTag())
+	#silently($layoutTag.doStartTag())
+
+	#foreach ($entry in $entries)
+		#set ($columnTag = $taglibLiferay.getColumnTag())
+		$columnTag.setColumnWidth(25)
+		#silently($columnTag.doStartTag())
+
+		<h3 class="vocabulary">
+			$entry.getTitle($locale)
+		</h3>
+
+		#set ($categories = $entry.getCategories())
+
+		#if (!$categories.isEmpty())
+			#set ($categoryURL = $renderResponse.createRenderURL())
+			<ul class="categories">
+				#foreach ($category in $categories)
+					<li>
+						#set ($categoryChildren = $assetCategoryService.getChildCategories($category.getCategoryId(), -1, -1, null))
+						$categoryURL.setParameter("resetCur", "true")
+						$categoryURL.setParameter("categoryId", "$category.getCategoryId()")
+						<a href="$categoryURL">$category.getName() ($categoryChildren.size())</a>
+					</li>
+				#end
+			</ul>
+		#end
+		#silently($columnTag.doEndTag())
+	#end
+	#silently($layoutTag.doEndTag())
+#end

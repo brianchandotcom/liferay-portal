@@ -14,15 +14,19 @@
 
 package com.liferay.taglib.util;
 
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.DirectRequestDispatcherFactoryUtil;
 import com.liferay.portal.kernel.servlet.PipingPageContext;
 import com.liferay.portal.kernel.servlet.taglib.TagSupport;
+import com.liferay.portal.kernel.templateparser.TemplateContext;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.taglib.aui.ColumnTag;
+import com.liferay.taglib.aui.LayoutTag;
 import com.liferay.taglib.portlet.ActionURLTag;
 import com.liferay.taglib.portletext.IconBackTag;
 import com.liferay.taglib.portletext.IconCloseTag;
@@ -44,20 +48,32 @@ import com.liferay.taglib.security.PermissionsURLTag;
 import com.liferay.taglib.theme.LayoutIconTag;
 import com.liferay.taglib.theme.MetaTagsTag;
 import com.liferay.taglib.theme.WrapPortletTag;
+import com.liferay.taglib.ui.AssetCategoriesSummaryTag;
+import com.liferay.taglib.ui.AssetLinksTag;
+import com.liferay.taglib.ui.AssetTagsSummaryTag;
 import com.liferay.taglib.ui.BreadcrumbTag;
+import com.liferay.taglib.ui.DiscussionTag;
+import com.liferay.taglib.ui.FlagsTag;
+import com.liferay.taglib.ui.IconTag;
+import com.liferay.taglib.ui.JournalArticleTag;
 import com.liferay.taglib.ui.JournalContentSearchTag;
 import com.liferay.taglib.ui.LanguageTag;
 import com.liferay.taglib.ui.MySitesTag;
 import com.liferay.taglib.ui.PngImageTag;
+import com.liferay.taglib.ui.RatingsTag;
 import com.liferay.taglib.ui.SearchTag;
+import com.liferay.taglib.ui.SocialBookmarksTag;
 import com.liferay.taglib.ui.StagingTag;
 import com.liferay.taglib.ui.ToggleTag;
+
+import java.io.Writer;
 
 import java.util.Map;
 import java.util.Set;
 
 import javax.portlet.PortletMode;
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
 
 import javax.servlet.RequestDispatcher;
@@ -77,9 +93,10 @@ public class VelocityTaglib {
 
 	public VelocityTaglib(
 		ServletContext servletContext, HttpServletRequest request,
-		HttpServletResponse response, PageContext pageContext) {
+		HttpServletResponse response, PageContext pageContext,
+		TemplateContext templateContext) {
 
-		init(servletContext, request, response, pageContext);
+		init(servletContext, request, response, pageContext, templateContext);
 	}
 
 	public void actionURL(long plid, String portletName, String queryString)
@@ -172,6 +189,56 @@ public class VelocityTaglib {
 			queryString);
 	}
 
+	public void assetCategoriesSummary(
+			String className, long classPK, String message,
+			PortletURL portletURL)
+		throws Exception {
+
+		AssetCategoriesSummaryTag assetCategorySummaryTag =
+			new AssetCategoriesSummaryTag();
+
+		setUp(assetCategorySummaryTag);
+
+		assetCategorySummaryTag.setClassName(className);
+		assetCategorySummaryTag.setClassPK(classPK);
+		assetCategorySummaryTag.setMessage(message);
+		assetCategorySummaryTag.setPortletURL(portletURL);
+
+		assetCategorySummaryTag.runTag();
+	}
+
+	public void assetLinks(long assetEntryId, String className, long classPK)
+		throws Exception {
+
+		AssetLinksTag assetLinksTag = new AssetLinksTag();
+
+		setUp(assetLinksTag);
+
+		assetLinksTag.setAssetEntryId(assetEntryId);
+		assetLinksTag.setClassName(className);
+		assetLinksTag.setClassPK(classPK);
+
+		assetLinksTag.runTag();
+	}
+
+	public void assetTagsSummary(
+			String className, long classPK, String message,
+			String assetTagNames, PortletURL portletURL)
+		throws Exception {
+
+		AssetTagsSummaryTag assetTagsSummaryTag = new AssetTagsSummaryTag();
+
+		setUp(assetTagsSummaryTag);
+
+		assetTagsSummaryTag.setClassName(className);
+		assetTagsSummaryTag.setClassPK(classPK);
+		assetTagsSummaryTag.setMessage(message);
+		assetTagsSummaryTag.setPortletURL(portletURL);
+		assetTagsSummaryTag.setAssetTagNames(assetTagNames);
+
+		assetTagsSummaryTag.runTag();
+	}
+
 	public void breadcrumb() throws Exception {
 		BreadcrumbTag breadcrumbTag = new BreadcrumbTag();
 
@@ -199,8 +266,77 @@ public class VelocityTaglib {
 		breadcrumbTag.runTag();
 	}
 
+	public void discussion(
+			String className, long classPK, String formAction, String formName,
+			boolean hideControls, boolean ratingsEnabled, String redirect,
+			String subject, long userId)
+		throws Exception {
+
+		DiscussionTag discussionTag = new DiscussionTag();
+
+		setUp(discussionTag);
+
+		discussionTag.setClassName(className);
+		discussionTag.setClassPK(classPK);
+		discussionTag.setFormAction(formAction);
+		discussionTag.setFormName(formName);
+		discussionTag.setHideControls(hideControls);
+		discussionTag.setRatingsEnabled(ratingsEnabled);
+		discussionTag.setRedirect(redirect);
+		discussionTag.setSubject(subject);
+		discussionTag.setUserId(userId);
+
+		discussionTag.runTag();
+	}
+
 	public void doAsURL(long doAsUserId) throws Exception {
 		DoAsURLTag.doTag(doAsUserId, null, _pageContext);
+	}
+
+	public void flags(
+			String className, long classPK, String contentTitle, boolean label,
+			String message, long reportedUserId)
+		throws Exception {
+
+		FlagsTag flagsTag = new FlagsTag();
+
+		setUp(flagsTag);
+
+		flagsTag.setClassName(className);
+		flagsTag.setClassPK(classPK);
+		flagsTag.setContentTitle(contentTitle);
+		flagsTag.setLabel(label);
+		flagsTag.setMessage(message);
+		flagsTag.setReportedUserId(reportedUserId);
+
+		flagsTag.runTag();
+	}
+
+	public AssetCategoriesSummaryTag getAssetCategoriesSummaryTag()
+		throws Exception {
+
+		AssetCategoriesSummaryTag assetCategoriesSummaryTag =
+				new AssetCategoriesSummaryTag();
+
+		setUp(assetCategoriesSummaryTag);
+
+		return assetCategoriesSummaryTag;
+	}
+
+	public AssetLinksTag getAssetLinksTag() throws Exception {
+		AssetLinksTag assetLinksTag = new AssetLinksTag();
+
+		setUp(assetLinksTag);
+
+		return assetLinksTag;
+	}
+
+	public AssetTagsSummaryTag getAssetTagsSummaryTag() throws Exception {
+		AssetTagsSummaryTag assetTagsSummaryTag = new AssetTagsSummaryTag();
+
+		setUp(assetTagsSummaryTag);
+
+		return assetTagsSummaryTag;
 	}
 
 	public BreadcrumbTag getBreadcrumbTag() throws Exception {
@@ -209,6 +345,54 @@ public class VelocityTaglib {
 		setUp(breadcrumbTag);
 
 		return breadcrumbTag;
+	}
+
+	public ColumnTag getColumnTag() throws Exception {
+		ColumnTag columnTag = new ColumnTag();
+
+		setUp(columnTag);
+
+		return columnTag;
+	}
+
+	public DiscussionTag getDiscussionTag() throws Exception {
+		DiscussionTag discussionTag = new DiscussionTag();
+
+		setUp(discussionTag);
+
+		return discussionTag;
+	}
+
+	public FlagsTag getFlagsTag() throws Exception {
+		FlagsTag flagsTag = new FlagsTag();
+
+		setUp(flagsTag);
+
+		return flagsTag;
+	}
+
+	public IconTag getIconTag() throws Exception {
+		IconTag iconTag = new IconTag();
+
+		setUp(iconTag);
+
+		return iconTag;
+	}
+
+	public JournalArticleTag getJournalArticleTag() throws Exception {
+		JournalArticleTag journalArticleTag = new JournalArticleTag();
+
+		setUp(journalArticleTag);
+
+		return journalArticleTag;
+	}
+
+	public LayoutTag getLayoutTag() throws Exception {
+		LayoutTag layoutTag = new LayoutTag();
+
+		setUp(layoutTag);
+
+		return layoutTag;
 	}
 
 	public MySitesTag getMySitesTag() throws Exception {
@@ -227,11 +411,38 @@ public class VelocityTaglib {
 		return pngImageTag;
 	}
 
+	public RatingsTag getRatingsTag() throws Exception {
+		RatingsTag ratingsTag = new RatingsTag();
+
+		setUp(ratingsTag);
+
+		return ratingsTag;
+	}
+
 	public String getSetting(String name) {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		return themeDisplay.getThemeSetting(name);
+	}
+
+	public WindowState getWindowState(String windowState) {
+		return new WindowState(windowState);
+	}
+
+	public void icon(String image, boolean label, String message, String url)
+		throws Exception {
+
+		IconTag iconTag = new IconTag();
+
+		setUp(iconTag);
+
+		iconTag.setImage(image);
+		iconTag.setLabel(label);
+		iconTag.setMessage(message);
+		iconTag.setUrl(url);
+
+		iconTag.runTag();
 	}
 
 	public void iconBack() throws Exception {
@@ -375,14 +586,32 @@ public class VelocityTaglib {
 
 	public VelocityTaglib init(
 		ServletContext servletContext, HttpServletRequest request,
-		HttpServletResponse response, PageContext pageContext) {
+		HttpServletResponse response, PageContext pageContext,
+		TemplateContext templateContext) {
 
 		_servletContext = servletContext;
 		_request = request;
 		_response = response;
 		_pageContext = pageContext;
+		_templateContext = templateContext;
 
 		return this;
+	}
+
+	public void journalArticle(
+			String articleId, long groupId, String templateId)
+		throws Exception {
+
+		JournalArticleTag journalArticleTag = new JournalArticleTag();
+
+		setUp(journalArticleTag);
+
+		journalArticleTag.setArticleId(articleId);
+		journalArticleTag.setGroupId(groupId);
+		journalArticleTag.setLanguageId(LanguageUtil.getLanguageId(_request));
+		journalArticleTag.setTemplateId(templateId);
+
+		journalArticleTag.runTag();
 	}
 
 	public void journalContentSearch() throws Exception {
@@ -513,6 +742,24 @@ public class VelocityTaglib {
 			resourcePrimKey, windowState, roleTypes);
 	}
 
+	public void ratings(
+			String className, long classPK, int numberOfStars, String type,
+			String url)
+		throws Exception {
+
+		RatingsTag ratingsTag = new RatingsTag();
+
+		setUp(ratingsTag);
+
+		ratingsTag.setClassName(className);
+		ratingsTag.setClassPK(classPK);
+		ratingsTag.setNumberOfStars(numberOfStars);
+		ratingsTag.setType(type);
+		ratingsTag.setUrl(url);
+
+		ratingsTag.runTag();
+	}
+
 	public void renderURL(long plid, String portletName, String queryString)
 		throws Exception {
 
@@ -631,6 +878,28 @@ public class VelocityTaglib {
 		searchTag.runTag();
 	}
 
+	public void setTemplateContext(TemplateContext templateContext) {
+		_templateContext = templateContext;
+	}
+
+	public void socialBookmarks(
+			String displayStyle, String target, String types, String title,
+			String url)
+		throws Exception {
+
+		SocialBookmarksTag socialBookmarksTag = new SocialBookmarksTag();
+
+		setUp(socialBookmarksTag);
+
+		socialBookmarksTag.setDisplayStyle(displayStyle);
+		socialBookmarksTag.setTarget(target);
+		socialBookmarksTag.setTypes(types);
+		socialBookmarksTag.setTitle(title);
+		socialBookmarksTag.setUrl(url);
+
+		socialBookmarksTag.runTag();
+	}
+
 	public void staging() throws Exception {
 		StagingTag stagingTag = new StagingTag();
 
@@ -658,13 +927,23 @@ public class VelocityTaglib {
 	}
 
 	protected void setUp(TagSupport tagSupport) throws Exception {
-		tagSupport.setPageContext(
-			new PipingPageContext(_pageContext, _response.getWriter()));
+		Writer writer = null;
+
+		if (_templateContext != null) {
+			writer = (Writer)_templateContext.get(TemplateContext.WRITER);
+		}
+
+		if (writer == null) {
+			writer = _response.getWriter();
+		}
+
+		tagSupport.setPageContext(new PipingPageContext(_pageContext, writer));
 	}
 
 	private PageContext _pageContext;
 	private HttpServletRequest _request;
 	private HttpServletResponse _response;
 	private ServletContext _servletContext;
+	private TemplateContext _templateContext;
 
 }

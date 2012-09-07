@@ -20,6 +20,8 @@ package com.liferay.portal.kernel.templateparser;
  */
 public interface TemplateContext {
 
+	public static final String WRITER = "writer";
+
 	public Object get(String key);
 
 	public void put(String key, Object value);

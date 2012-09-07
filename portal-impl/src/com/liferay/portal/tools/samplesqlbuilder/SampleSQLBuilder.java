@@ -641,8 +641,6 @@ public class SampleSQLBuilder {
 				FileChannel insertSQLFileChannel =
 					insertSQLFileInputStream.getChannel();
 
-				insertSQLFileInputStream.close();
-
 				insertSQLFileChannel.transferTo(
 					0, insertSQLFileChannel.size(), fileChannel);
 

@@ -513,11 +513,11 @@ public class ProcessExecutor {
 			UnsyncBufferedInputStream unsyncBufferedInputStream =
 				new UnsyncBufferedInputStream(_process.getInputStream());
 
-			ObjectInputStream objectInputStream = null;
-			UnsyncByteArrayOutputStream unsyncByteArrayOutputStream = null;
-
 			try {
-				unsyncByteArrayOutputStream = new UnsyncByteArrayOutputStream();
+				ObjectInputStream objectInputStream = null;
+
+				UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
+					new UnsyncByteArrayOutputStream();
 
 				while (true) {
 					try {
@@ -540,8 +540,6 @@ public class ProcessExecutor {
 										unsyncByteArrayOutputStream.toString());
 							}
 						}
-
-						unsyncByteArrayOutputStream.close();
 
 						unsyncByteArrayOutputStream = null;
 
@@ -625,14 +623,6 @@ public class ProcessExecutor {
 					// Override previous process exception if there was one
 
 					return resultProcessCallable;
-				}
-
-				if (objectInputStream != null) {
-					objectInputStream.close();
-				}
-
-				if (unsyncByteArrayOutputStream != null) {
-					unsyncByteArrayOutputStream.close();
 				}
 			}
 		}

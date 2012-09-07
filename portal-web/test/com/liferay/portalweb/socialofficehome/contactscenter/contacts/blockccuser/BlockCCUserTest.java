@@ -59,8 +59,9 @@ public class BlockCCUserTest extends BaseTestCase {
 				"//button[@id='_1_WAR_contactsportlet_blockButton']"));
 		selenium.clickAt("//button[@id='_1_WAR_contactsportlet_blockButton']",
 			RuntimeVariables.replace("Block"));
-		selenium.waitForVisible(
-			"//button[@id='_1_WAR_contactsportlet_unblockButton']");
+		selenium.waitForVisible("//span[@class='portlet-msg-success']");
+		assertEquals(RuntimeVariables.replace("You have blocked this user."),
+			selenium.getText("//span[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("Unblock"),
 			selenium.getText(
 				"//button[@id='_1_WAR_contactsportlet_unblockButton']"));

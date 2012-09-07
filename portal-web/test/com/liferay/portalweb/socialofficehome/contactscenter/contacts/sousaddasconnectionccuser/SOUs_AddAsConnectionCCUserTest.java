@@ -58,7 +58,10 @@ public class SOUs_AddAsConnectionCCUserTest extends BaseTestCase {
 				"//button[@id='_1_WAR_contactsportlet_addConnectionButton']"));
 		selenium.clickAt("//button[@id='_1_WAR_contactsportlet_addConnectionButton']",
 			RuntimeVariables.replace("Add Connection"));
-		selenium.waitForVisible("//span[@class='disabled']/span");
+		selenium.waitForVisible("//span[@class='portlet-msg-success']");
+		assertEquals(RuntimeVariables.replace(
+				"This user has received a connection request from you."),
+			selenium.getText("//span[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("Connection Requested"),
 			selenium.getText("//span[@class='disabled']/span"));
 		assertFalse(selenium.isVisible(

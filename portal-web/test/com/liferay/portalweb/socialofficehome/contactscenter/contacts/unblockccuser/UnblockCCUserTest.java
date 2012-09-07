@@ -56,8 +56,9 @@ public class UnblockCCUserTest extends BaseTestCase {
 				"//button[@id='_1_WAR_contactsportlet_unblockButton']"));
 		selenium.clickAt("//button[@id='_1_WAR_contactsportlet_unblockButton']",
 			RuntimeVariables.replace("Unblock"));
-		selenium.waitForVisible(
-			"//button[@id='_1_WAR_contactsportlet_addConnectionButton']");
+		selenium.waitForVisible("//span[@class='portlet-msg-success']");
+		assertEquals(RuntimeVariables.replace("You have unblocked this user."),
+			selenium.getText("//span[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("Add Connection"),
 			selenium.getText(
 				"//button[@id='_1_WAR_contactsportlet_addConnectionButton']"));

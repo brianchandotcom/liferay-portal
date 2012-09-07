@@ -258,6 +258,8 @@ public class AuthVerifierPipeline {
 				Map<String, Object> settings = _mergeSettings(
 					properties, authVerifierResult.getSettings());
 
+				settings.put(AUTH_TYPE, authVerifier.getAuthType());
+
 				authVerifierResult.setSettings(settings);
 
 				return authVerifierResult;
@@ -266,6 +268,8 @@ public class AuthVerifierPipeline {
 
 		return _createGuestVerificationResult(accessControlContext);
 	}
+
+	public static final String AUTH_TYPE = "auth.type";
 
 	private static Log _log = LogFactoryUtil.getLog(AuthVerifierPipeline.class);
 

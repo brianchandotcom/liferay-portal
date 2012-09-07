@@ -62,6 +62,10 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class BasicAuthHeaderAutoLogin implements AuthVerifier, AutoLogin {
 
+	public String getAuthType() {
+		return AUTH_TYPE;
+	}
+
 	public String[] login(
 			HttpServletRequest request, HttpServletResponse response)
 		throws AutoLoginException {
@@ -160,6 +164,8 @@ public class BasicAuthHeaderAutoLogin implements AuthVerifier, AutoLogin {
 			throw new AuthException(e);
 		}
 	}
+
+	public static final String AUTH_TYPE = HttpServletRequest.BASIC_AUTH;
 
 	private static Log _log = LogFactoryUtil.getLog(
 		BasicAuthHeaderAutoLogin.class);

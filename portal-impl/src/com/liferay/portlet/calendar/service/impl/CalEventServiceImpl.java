@@ -35,14 +35,14 @@ import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Mate Thurzo
  */
 public class CalEventServiceImpl extends CalEventServiceBaseImpl {
 
 	public CalEvent addEvent(
 			String title, String description, String location,
 			int startDateMonth, int startDateDay, int startDateYear,
-			int startDateHour, int startDateMinute, int endDateMonth,
-			int endDateDay, int endDateYear, int durationHour,
+			int startDateHour, int startDateMinute, int durationHour,
 			int durationMinute, boolean allDay, boolean timeZoneSensitive,
 			String type, boolean repeating, TZSRecurrence recurrence,
 			int remindBy, int firstReminder, int secondReminder,
@@ -56,9 +56,9 @@ public class CalEventServiceImpl extends CalEventServiceBaseImpl {
 		return calEventLocalService.addEvent(
 			getUserId(), title, description, location, startDateMonth,
 			startDateDay, startDateYear, startDateHour, startDateMinute,
-			endDateMonth, endDateDay, endDateYear, durationHour, durationMinute,
-			allDay, timeZoneSensitive, type, repeating, recurrence, remindBy,
-			firstReminder, secondReminder, serviceContext);
+			durationHour, durationMinute, allDay, timeZoneSensitive, type,
+			repeating, recurrence, remindBy, firstReminder, secondReminder,
+			serviceContext);
 	}
 
 	public void deleteEvent(long eventId)
@@ -217,8 +217,7 @@ public class CalEventServiceImpl extends CalEventServiceBaseImpl {
 	public CalEvent updateEvent(
 			long eventId, String title, String description, String location,
 			int startDateMonth, int startDateDay, int startDateYear,
-			int startDateHour, int startDateMinute, int endDateMonth,
-			int endDateDay, int endDateYear, int durationHour,
+			int startDateHour, int startDateMinute, int durationHour,
 			int durationMinute, boolean allDay, boolean timeZoneSensitive,
 			String type, boolean repeating, TZSRecurrence recurrence,
 			int remindBy, int firstReminder, int secondReminder,
@@ -231,9 +230,9 @@ public class CalEventServiceImpl extends CalEventServiceBaseImpl {
 		return calEventLocalService.updateEvent(
 			getUserId(), eventId, title, description, location, startDateMonth,
 			startDateDay, startDateYear, startDateHour, startDateMinute,
-			endDateMonth, endDateDay, endDateYear, durationHour, durationMinute,
-			allDay, timeZoneSensitive, type, repeating, recurrence, remindBy,
-			firstReminder, secondReminder, serviceContext);
+			durationHour, durationMinute, allDay, timeZoneSensitive, type,
+			repeating, recurrence, remindBy, firstReminder, secondReminder,
+			serviceContext);
 	}
 
 }

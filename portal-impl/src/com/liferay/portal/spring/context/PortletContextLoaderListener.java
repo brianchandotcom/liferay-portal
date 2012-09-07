@@ -159,6 +159,13 @@ public class PortletContextLoaderListener extends ContextLoaderListener {
 		return PortletApplicationContext.class;
 	}
 
+	@Override
+	protected ApplicationContext loadParentContext(
+		ServletContext servletContext) {
+
+		return null;
+	}
+
 	protected static final String PORTAL_CONFIG_LOCATION_PARAM =
 		"portalContextConfigLocation";
 

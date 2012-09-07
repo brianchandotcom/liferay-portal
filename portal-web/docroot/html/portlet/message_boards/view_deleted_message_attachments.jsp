@@ -93,7 +93,12 @@ iteratorURL.setParameter("messageId", String.valueOf(messageId));
 		<liferay-ui:search-container-column-text
 			name="file-name"
 		>
-			<img align="left" border="0" src="<%= themeDisplay.getPathThemeImages() %>/file_system/small/<%= DLUtil.getFileIcon(FileUtil.getExtension(displayName)) %>.png"> <%= displayName %>
+
+			<liferay-ui:icon
+				image='<%= "../file_system/small/" + DLUtil.getFileIcon(FileUtil.getExtension(displayName)) %>'
+				label="<%= true %>"
+				message="<%= displayName %>"
+			/>
 		</liferay-ui:search-container-column-text>
 
 		<liferay-ui:search-container-column-text

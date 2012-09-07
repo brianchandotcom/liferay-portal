@@ -225,29 +225,6 @@ if (Validator.isNull(redirect)) {
 
 		<c:if test="<%= attachments %>">
 			<aui:fieldset cssClass="message-attachments" label="attachments">
-				<c:if test="<%= TrashUtil.isTrashEnabled(themeDisplay.getScopeGroupId()) && message != null %>">
-
-					<%
-					String[] deletedAttachments = message.getDeletedAttachmentsFiles();
-					%>
-
-					<c:if test="<%= deletedAttachments.length > 0 %>">
-						<portlet:renderURL var="viewTrashAttachmentsURL">
-							<portlet:param name="struts_action" value="/message_boards/view_deleted_message_attachments" />
-							<portlet:param name="redirect" value="<%= currentURL %>" />
-							<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
-						</portlet:renderURL>
-
-						<liferay-ui:icon
-							cssClass="trash-attachments"
-							image="delete"
-							label="<%= true %>"
-							message='<%= LanguageUtil.format(pageContext, "x-attachments-in-the-recycle-bin", deletedAttachments.length) %>'
-							url="<%= viewTrashAttachmentsURL %>"
-						/>
-					</c:if>
-				</c:if>
-
 				<c:if test="<%= existingAttachments.length > 0 %>">
 					<ul>
 
@@ -259,16 +236,20 @@ if (Validator.isNull(redirect)) {
 
 							String taglibJavascript = "javascript:;";
 
-							if (!TrashUtil.isTrashEnabled(themeDisplay.getScopeGroupId())) {
+							if (!TrashUtil.isTrashEnabled(scopeGroupId)) {
 								taglibJavascript = "javascript:" + renderResponse.getNamespace() + "deleteAttachment(" + (i + 1) + ");";
 							}
 						%>
 
 							<li class="message-attachment">
 								<span id="<portlet:namespace />existingFile<%= i + 1 %>">
-									<aui:input name='<%= "existingPath" + (i + 1) %>' type="hidden" value="<%= existingPath %>" />
+									<aui:input id='<%= "existingPath" + (i + 1) %>' name='<%= "existingPath" + (i + 1) %>' type="hidden" value="<%= existingPath %>" />
 
-									<img align="left" border="0" src="<%= themeDisplay.getPathThemeImages() %>/file_system/small/<%= DLUtil.getFileIcon(FileUtil.getExtension(existingName)) %>.png"> <%= existingName %>
+									<liferay-ui:icon
+										image='<%= "../file_system/small/" + DLUtil.getFileIcon(FileUtil.getExtension(existingName)) %>'
+										label="<%= true %>"
+										message="<%= existingName %>"
+									/>
 								</span>
 
 								<aui:input cssClass="aui-helper-hidden" label="" name='<%= "msgFile" + (i + 1) %>' size="70" type="file" />
@@ -276,10 +257,32 @@ if (Validator.isNull(redirect)) {
 								<liferay-ui:icon-delete
 									id='<%= "removeExisting" + (i + 1) %>'
 									label="<%= true %>"
+									message="delete"
 									method="get"
-									trash="<%= TrashUtil.isTrashEnabled(themeDisplay.getScopeGroupId()) %>"
+									trash="<%= TrashUtil.isTrashEnabled(scopeGroupId) %>"
 									url="<%= taglibJavascript %>"
 								/>
+
+								<c:if test="<%= TrashUtil.isTrashEnabled(scopeGroupId) %>">
+
+									<%
+									StringBundler sb = new StringBundler(7);
+
+									sb.append("javascript:");
+									sb.append(renderResponse.getNamespace());
+									sb.append("trashAttachment(");
+									sb.append(i + 1);
+									sb.append(",'");
+									sb.append(Constants.RESTORE);
+									sb.append("');");
+									%>
+
+									<span class="aui-helper-hidden" id="<portlet:namespace />undoFile<%= i + 1 %>">
+										<aui:input id='<%= "undoPath" + (i + 1) %>' name='<%= "undoPath" + (i + 1) %>' type="hidden" value="<%= existingPath %>" />
+
+										<span class="undo">(<liferay-ui:message key="marked-as-deleted" />)</span> <a class="trash-undo-link" href="<%= sb.toString() %>" id="<portlet:namespace />undo"><liferay-ui:message key="undo" /></a>
+									</span>
+								</c:if>
 							</li>
 
 						<%
@@ -527,52 +530,81 @@ if (Validator.isNull(redirect)) {
 		nameEl.innerHTML = categoryName + "&nbsp;";
 	}
 
-	Liferay.provide(
-		window,
-		'<portlet:namespace />deleteAttachment',
-		function(index) {
-			var A = AUI();
+	<c:if test="<%= !TrashUtil.isTrashEnabled(themeDisplay.getScopeGroupId()) %>">
+		Liferay.provide(
+			window,
+			'<portlet:namespace />deleteAttachment',
+			function(index) {
+				var A = AUI();
 
-			var button = A.one("#<portlet:namespace />removeExisting" + index);
-			var span = A.one("#<portlet:namespace />existingFile" + index);
-			var file = A.one("#<portlet:namespace />msgFile" + index);
+				var button = A.one('#<portlet:namespace />removeExisting' + index);
+				var span = A.one('#<portlet:namespace />existingFile' + index);
+				var file = A.one('#<portlet:namespace />msgFile' + index);
 
-			if (button) {
-				button.remove();
-			}
+				if (button) {
+					button.remove();
+				}
 
-			if (span) {
-				span.remove();
-			}
+				if (span) {
+					span.remove();
+				}
 
-			if (file) {
-				file.ancestor('.aui-field').show();
+				if (file) {
+					file.ancestor('.aui-field').show();
 
-				file.ancestor('li').addClass('deleted-input');
-			}
-		},
-		['aui-base']
-	);
+					file.ancestor('li').addClass('deleted-input');
+				}
+			},
+			['aui-base']
+		);
+	</c:if>
+
+	<c:if test="<%= TrashUtil.isTrashEnabled(scopeGroupId) %>">
+		Liferay.provide(
+			window,
+			'<portlet:namespace />trashAttachment',
+			function(index, action) {
+				var A = AUI();
+
+				var existingPath = A.one('#<portlet:namespace />existingPath' + index);
+				var removeExisting = A.one('#<portlet:namespace />removeExisting' + index);
+				var undoFile = A.one('#<portlet:namespace />undoFile' + index);
+				var undoPath = A.one('#<portlet:namespace />undoPath' + index);
+
+				if (action == '<%= Constants.MOVE_TO_TRASH %>') {
+					removeExisting.hide();
+					undoFile.show();
+					existingPath.set('value', '');
+				}
+				else {
+					removeExisting.show();
+					undoFile.hide();
+					existingPath.set('value', undoPath.get('value'));
+				}
+			},
+			['aui-base']
+		);
+	</c:if>
 
 	<c:if test="<%= windowState.equals(WindowState.MAXIMIZED) && !themeDisplay.isFacebook() %>">
 		Liferay.Util.focusFormField(document.<portlet:namespace />fm.<portlet:namespace />subject);
 	</c:if>
 </aui:script>
 
-<c:if test="<%= TrashUtil.isTrashEnabled(themeDisplay.getScopeGroupId()) %>">
+<c:if test="<%= TrashUtil.isTrashEnabled(scopeGroupId) %>">
 	<aui:script use="aui-base">
 
 		<%
 		for (int i = 1; i <= existingAttachments.length; i++) {
 		%>
 
-			var removeExisting = A.one("#<portlet:namespace />removeExisting" + <%= i %>);
+			var removeExisting = A.one('#<portlet:namespace />removeExisting' + <%= i %>);
 
 			if (removeExisting) {
 				removeExisting.on(
 					'click',
 					function(event) {
-						<portlet:namespace />deleteAttachment(<%= i %>);
+						<portlet:namespace />trashAttachment(<%= i %>, '<%= Constants.MOVE_TO_TRASH %>');
 					}
 				);
 			}

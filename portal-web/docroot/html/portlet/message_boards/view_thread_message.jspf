@@ -326,8 +326,6 @@
 									<li class="message-attachment">
 
 										<%
-										String fileIcon = "../file_system/small/" + DLUtil.getFileIcon(FileUtil.getExtension(fileName));
-
 										StringBundler sb = new StringBundler(4);
 
 										sb.append(fileName);
@@ -337,8 +335,8 @@
 										%>
 
 										<liferay-ui:icon
-											image="<%= fileIcon %>"
-											label="true"
+											image='<%= "../file_system/small/" + DLUtil.getFileIcon(FileUtil.getExtension(fileName)) %>'
+											label="<%= true %>"
 											message="<%= sb.toString() %>"
 											url="<%= attachmentURL %>"
 										/>

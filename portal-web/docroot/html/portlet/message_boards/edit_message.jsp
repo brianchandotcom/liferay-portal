@@ -245,13 +245,9 @@ if (Validator.isNull(redirect)) {
 								<span id="<portlet:namespace />existingFile<%= i + 1 %>">
 									<aui:input id='<%= "existingPath" + (i + 1) %>' name='<%= "existingPath" + (i + 1) %>' type="hidden" value="<%= existingPath %>" />
 
-									<%
-									String fileIcon = "../file_system/small/" + DLUtil.getFileIcon(FileUtil.getExtension(existingName));
-									%>
-
 									<liferay-ui:icon
-										image="<%= fileIcon %>"
-										label="true"
+										image='<%= "../file_system/small/" + DLUtil.getFileIcon(FileUtil.getExtension(existingName)) %>'
+										label="<%= true %>"
 										message="<%= existingName %>"
 									/>
 								</span>
@@ -534,32 +530,34 @@ if (Validator.isNull(redirect)) {
 		nameEl.innerHTML = categoryName + "&nbsp;";
 	}
 
-	Liferay.provide(
-		window,
-		'<portlet:namespace />deleteAttachment',
-		function(index) {
-			var A = AUI();
+	<c:if test="<%= !TrashUtil.isTrashEnabled(themeDisplay.getScopeGroupId()) %>">
+		Liferay.provide(
+			window,
+			'<portlet:namespace />deleteAttachment',
+			function(index) {
+				var A = AUI();
 
-			var button = A.one('#<portlet:namespace />removeExisting' + index);
-			var span = A.one('#<portlet:namespace />existingFile' + index);
-			var file = A.one('#<portlet:namespace />msgFile' + index);
+				var button = A.one('#<portlet:namespace />removeExisting' + index);
+				var span = A.one('#<portlet:namespace />existingFile' + index);
+				var file = A.one('#<portlet:namespace />msgFile' + index);
 
-			if (button) {
-				button.remove();
-			}
+				if (button) {
+					button.remove();
+				}
 
-			if (span) {
-				span.remove();
-			}
+				if (span) {
+					span.remove();
+				}
 
-			if (file) {
-				file.ancestor('.aui-field').show();
+				if (file) {
+					file.ancestor('.aui-field').show();
 
-				file.ancestor('li').addClass('deleted-input');
-			}
-		},
-		['aui-base']
-	);
+					file.ancestor('li').addClass('deleted-input');
+				}
+			},
+			['aui-base']
+		);
+	</c:if>
 
 	<c:if test="<%= TrashUtil.isTrashEnabled(themeDisplay.getScopeGroupId()) %>">
 		Liferay.provide(

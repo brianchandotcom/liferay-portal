@@ -34,11 +34,10 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroupRole;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
-import com.liferay.portal.service.ResourceLocalServiceUtil;
-import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.MembershipRequestLocalServiceBaseImpl;
 import com.liferay.portal.util.PrefsPropsUtil;
+import com.liferay.portal.util.ResourcePermissionUtil;
 import com.liferay.portal.util.SubscriptionSender;
 
 import java.util.ArrayList;
@@ -207,14 +206,14 @@ public class MembershipRequestLocalServiceImpl
 
 		if (teams != null) {
 			for (Team team : teams) {
-				Role role = RoleLocalServiceUtil.getTeamRole(
+				Role role = roleLocalService.getTeamRole(
 					team.getCompanyId(), team.getTeamId());
 
 				roles.add(role);
 			}
 		}
 
-		Resource resource = ResourceLocalServiceUtil.getResource(
+		Resource resource = resourceLocalService.getResource(
 			company.getCompanyId(), modelResource,
 			ResourceConstants.SCOPE_INDIVIDUAL, resourcePrimKey);
 
@@ -222,14 +221,34 @@ public class MembershipRequestLocalServiceImpl
 			Group.class.getName());
 
 		for (Role role : roles) {
-			if (role.getName().equals(RoleConstants.OWNER) ||
-				role.getName().equals(RoleConstants.SITE_ADMINISTRATOR) ||
-				role.getName().equals(RoleConstants.SITE_OWNER) ||
-				role.getName().equals(
-					RoleConstants.ORGANIZATION_ADMINISTRATOR) ||
-				role.getName().equals(RoleConstants.ORGANIZATION_OWNER)) {
+			String roleName = role.getName();
+
+			if (roleName.equals(RoleConstants.OWNER)) {
+				continue;
+			}
+
+			if ((roleName.equals(RoleConstants.ORGANIZATION_ADMINISTRATOR) ||
+				roleName.equals(RoleConstants.ORGANIZATION_OWNER)) &&
+					!group.isOrganization()) {
 
 				continue;
+			}
+
+			if (roleName.equals(RoleConstants.SITE_ADMINISTRATOR) ||
+				roleName.equals(RoleConstants.SITE_OWNER) ||
+				roleName.equals(RoleConstants.ORGANIZATION_ADMINISTRATOR) ||
+				roleName.equals(RoleConstants.ORGANIZATION_OWNER)) {
+
+				Role curRole = roleLocalService.getRole(
+					group.getCompanyId(), roleName);
+
+				List<UserGroupRole> userGroupRoles =
+					userGroupRoleLocalService.getUserGroupRolesByGroupAndRole(
+						groupId, curRole.getRoleId());
+
+				for (UserGroupRole userGroupRole : userGroupRoles) {
+					userIds.add(userGroupRole.getUserId());
+				}
 			}
 
 			List<String> currentIndividualActions = new ArrayList<String>();
@@ -237,7 +256,7 @@ public class MembershipRequestLocalServiceImpl
 			List<String> currentGroupTemplateActions = new ArrayList<String>();
 			List<String> currentCompanyActions = new ArrayList<String>();
 
-			resourcePermissionLocalService.populateResourcePermissionActionIds(
+			ResourcePermissionUtil.populateResourcePermissionActionIds(
 				groupId, role, resource, actions, currentIndividualActions,
 				currentGroupActions, currentGroupTemplateActions,
 				currentCompanyActions);
@@ -258,58 +277,6 @@ public class MembershipRequestLocalServiceImpl
 					userIds.add(userGroupRole.getUserId());
 				}
 			}
-		}
-
-		Role siteAdministratorRole = roleLocalService.getRole(
-			group.getCompanyId(), RoleConstants.SITE_ADMINISTRATOR);
-
-		List<UserGroupRole> siteAdministratorUserGroupRoles =
-			userGroupRoleLocalService.getUserGroupRolesByGroupAndRole(
-				groupId, siteAdministratorRole.getRoleId());
-
-		for (UserGroupRole userGroupRole : siteAdministratorUserGroupRoles) {
-			userIds.add(userGroupRole.getUserId());
-		}
-
-		Role siteOwnerRole = rolePersistence.findByC_N(
-			group.getCompanyId(), RoleConstants.SITE_OWNER);
-
-		List<UserGroupRole> siteOwnerUserGroupRoles =
-			userGroupRoleLocalService.getUserGroupRolesByGroupAndRole(
-				groupId, siteOwnerRole.getRoleId());
-
-		for (UserGroupRole userGroupRole : siteOwnerUserGroupRoles) {
-			userIds.add(userGroupRole.getUserId());
-		}
-
-		if (!group.isOrganization()) {
-			return userIds;
-		}
-
-		Role organizationAdministratorRole = roleLocalService.getRole(
-			group.getCompanyId(), RoleConstants.ORGANIZATION_ADMINISTRATOR);
-
-		List<UserGroupRole> organizationAdminstratorUserGroupRoles =
-			userGroupRoleLocalService.getUserGroupRolesByGroupAndRole(
-				groupId, organizationAdministratorRole.getRoleId());
-
-		for (UserGroupRole orgAdministratorUserGroupRole :
-				organizationAdminstratorUserGroupRoles) {
-
-			userIds.add(orgAdministratorUserGroupRole.getUserId());
-		}
-
-		Role orgOwnerRole = roleLocalService.getRole(
-			group.getCompanyId(), RoleConstants.ORGANIZATION_OWNER);
-
-		List<UserGroupRole> organizationOwnerUserGroupRoles =
-			userGroupRoleLocalService.getUserGroupRolesByGroupAndRole(
-				groupId, orgOwnerRole.getRoleId());
-
-		for (UserGroupRole organizationOwnerUserGroupRole :
-				organizationOwnerUserGroupRoles) {
-
-			userIds.add(organizationOwnerUserGroupRole.getUserId());
 		}
 
 		return userIds;

@@ -325,7 +325,7 @@ definePermissionsURL.setParameter(Constants.CMD, Constants.VIEW);
 				List<String> currentGroupTemplateActions = new ArrayList<String>();
 				List<String> currentCompanyActions = new ArrayList<String>();
 
-				ResourcePermissionLocalServiceUtil.populateResourcePermissionActionIds(groupId, role, resource, actions, currentIndividualActions, currentGroupActions, currentGroupTemplateActions, currentCompanyActions);
+				ResourcePermissionUtil.populateResourcePermissionActionIds(groupId, role, resource, actions, currentIndividualActions, currentGroupActions, currentGroupTemplateActions, currentCompanyActions);
 
 				List<String> currentActions = new ArrayList<String>();
 

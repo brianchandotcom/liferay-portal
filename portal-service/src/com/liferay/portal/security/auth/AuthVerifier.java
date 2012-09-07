@@ -21,6 +21,8 @@ import java.util.Properties;
  */
 public interface AuthVerifier {
 
+	public String getAuthType();
+
 	public AuthVerifierResult verify(
 			AccessControlContext accessControlContext, Properties properties)
 		throws AuthException;

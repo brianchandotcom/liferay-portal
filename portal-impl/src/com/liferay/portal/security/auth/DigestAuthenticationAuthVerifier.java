@@ -26,6 +26,9 @@ import javax.servlet.http.HttpServletRequest;
  * @author Tomas Polesovsky
  */
 public class DigestAuthenticationAuthVerifier implements AuthVerifier {
+	public String getAuthType() {
+		return AUTH_TYPE;
+	}
 
 	public AuthVerifierResult verify(
 			AccessControlContext accessControlContext, Properties configuration)
@@ -55,4 +58,5 @@ public class DigestAuthenticationAuthVerifier implements AuthVerifier {
 		}
 	}
 
+	public static final String AUTH_TYPE = HttpServletRequest.DIGEST_AUTH;
 }

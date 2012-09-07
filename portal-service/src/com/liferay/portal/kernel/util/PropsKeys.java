@@ -2123,6 +2123,8 @@ public interface PropsKeys {
 
 	public static final String STRIP_JS_LANGUAGE_ATTRIBUTE_SUPPORT_ENABLED = "strip.js.language.attribute.support.enabled";
 
+	public static final String STRIP_MIME_TYPES = "strip.mime.types";
+
 	public static final String STRUTS_PORTLET_REQUEST_PROCESSOR = "struts.portlet.request.processor";
 
 	public static final String SYSTEM_GROUPS = "system.groups";

@@ -108,13 +108,12 @@ public abstract class BaseWebDriverImpl
 
 		Timeouts timeouts = options.timeouts();
 
-		timeouts.implicitlyWait(
-			TestPropsValues.TIMEOUT_IMPLICIT_WAIT, TimeUnit.MILLISECONDS);
+		timeouts.implicitlyWait(1, TimeUnit.SECONDS);
 
 		List<WebElement> webElements = getWebElements(locator);
 
 		timeouts.implicitlyWait(
-			TestPropsValues.TIMEOUT_EXPLICIT_WAIT, TimeUnit.MILLISECONDS);
+			TestPropsValues.TIMEOUT_IMPLICIT_WAIT, TimeUnit.SECONDS);
 
 		return webElements.isEmpty();
 	}

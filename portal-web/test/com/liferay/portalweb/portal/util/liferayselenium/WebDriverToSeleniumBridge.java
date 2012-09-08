@@ -1054,7 +1054,8 @@ public class WebDriverToSeleniumBridge
 
 		Timeouts timeouts = options.timeouts();
 
-		timeouts.implicitlyWait(1, TimeUnit.MILLISECONDS);
+		timeouts.implicitlyWait(
+			TestPropsValues.TIMEOUT_IMPLICIT_WAIT, TimeUnit.SECONDS);
 	}
 
 	public void shiftKeyDown() {

@@ -22,47 +22,17 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ViewWCSubstructure2Test extends BaseTestCase {
 	public void testViewWCSubstructure2() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("//div[@id='dockbar']",
 			RuntimeVariables.replace("Dockbar"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent(
-							"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Control Panel")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
@@ -72,23 +42,7 @@ public class ViewWCSubstructure2Test extends BaseTestCase {
 		selenium.clickAt("link=Structures",
 			RuntimeVariables.replace("Structures"));
 		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//input[@name='_15_keywords']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//input[@name='_15_keywords']");
 		selenium.type("//input[@name='_15_keywords']",
 			RuntimeVariables.replace("SubStructure2"));
 		selenium.clickAt("//input[@value='Search']",
@@ -114,7 +68,8 @@ public class ViewWCSubstructure2Test extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("WC SubStructure2 Name"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace("Other Languages (0)"),
-			selenium.getText("//span[@class='flag-selector nobr']/a"));
+			selenium.getText(
+				"xPath=(//span[contains(@class,'flag-selector')]/a)[1]"));
 		assertTrue(selenium.isPartialText(
 				"//fieldset/div/div/div[contains(.,'ID')]",
 				RuntimeVariables.getValue("structureID")));
@@ -123,7 +78,8 @@ public class ViewWCSubstructure2Test extends BaseTestCase {
 		assertEquals("WC SubStructure2 Description",
 			selenium.getValue("//textarea[@id='_15_description_en_US']"));
 		assertEquals(RuntimeVariables.replace("Other Languages (0)"),
-			selenium.getText("xpath=(//span[@class='flag-selector nobr']/a)[2]"));
+			selenium.getText(
+				"xPath=(//span[contains(@class,'flag-selector')]/a)[2]"));
 		assertEquals(RuntimeVariables.replace("WC Structure1 Name"),
 			selenium.getText("//a[@id='_15_parentStructureName']"));
 		assertEquals("Select", selenium.getValue("//input[@value='Select']"));

@@ -223,6 +223,12 @@
 		margin: 10px 0 0 10px;
 	}
 
+	.user-table {
+		.user-status-selector {
+			float: right;
+		}
+	}
+
 	.view-all-link {
 		color: #666;
 		font-weight: normal;

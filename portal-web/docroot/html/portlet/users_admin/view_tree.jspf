@@ -288,19 +288,21 @@ if (filterManageableOrganizations) {
 					<%= organizationInfo %>
 
 					<%
-					int usersCount = 0;
-
 					boolean showOrganizations = false;
-					boolean showUsers = false;
+					boolean showUsers = true;
+
+					if ((organization == null) && !PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_USER) && !PortalPermissionUtil.contains(permissionChecker, ActionKeys.IMPERSONATE)) {
+						showOrganizations = true;
+						showUsers = false;
+					}
+
+					if (organizationsCount > 0) {
+						showOrganizations = true;
+					}
 
 					if (organization != null) {
+						inactiveUsersCount = UserLocalServiceUtil.getOrganizationUsersCount(organizationId, WorkflowConstants.STATUS_INACTIVE);
 						usersCount = UserLocalServiceUtil.getOrganizationUsersCount(organizationId, WorkflowConstants.STATUS_APPROVED);
-
-						if (organizationsCount > 0) {
-							showOrganizations = true;
-						}
-
-						showUsers = true;
 					}
 					else {
 						LinkedHashMap userParams = new LinkedHashMap();
@@ -308,18 +310,21 @@ if (filterManageableOrganizations) {
 						userParams.put("noOrganizations", Boolean.TRUE);
 						userParams.put("usersOrgsCount", 0);
 
+						inactiveUsersCount = UserLocalServiceUtil.searchCount(company.getCompanyId(), null, WorkflowConstants.STATUS_INACTIVE, userParams);
 						usersCount = UserLocalServiceUtil.searchCount(company.getCompanyId(), null, WorkflowConstants.STATUS_APPROVED, userParams);
+					}
 
-						if (!PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_USER) && !PortalPermissionUtil.contains(permissionChecker, ActionKeys.IMPERSONATE)) {
-							showOrganizations = true;
-						}
-						else if (organizationsCount > 0) {
-							showOrganizations = true;
-							showUsers = true;
-						}
-						else {
-							showUsers = true;
-						}
+					if ((status == WorkflowConstants.STATUS_APPROVED) && (usersCount == 0) && (inactiveUsersCount > 0)) {
+						status = WorkflowConstants.STATUS_INACTIVE;
+					}
+					else if ((status == WorkflowConstants.STATUS_INACTIVE) && (usersCount > 0) && (inactiveUsersCount == 0)) {
+						status = WorkflowConstants.STATUS_APPROVED;
+					}
+
+					if ((organization != null) && !OrganizationPermissionUtil.contains(permissionChecker, organization, ActionKeys.MANAGE_USERS)) {
+						inactiveUsersCount = 0;
+
+						status = WorkflowConstants.STATUS_APPROVED;
 					}
 					%>
 
@@ -369,6 +374,7 @@ if (filterManageableOrganizations) {
 						<portlet:renderURL var="viewUsersURL">
 							<portlet:param name="struts_action" value="/users_admin/view" />
 							<portlet:param name="tabs1" value="users" />
+							<portlet:param name="status" value="<%= String.valueOf(status) %>" />
 							<portlet:param name="usersListView" value="<%= UserConstants.LIST_VIEW_FLAT_USERS %>" />
 							<portlet:param name="saveUsersListView" value="<%= Boolean.TRUE.toString() %>" />
 						</portlet:renderURL>
@@ -376,22 +382,30 @@ if (filterManageableOrganizations) {
 						<liferay-util:buffer var="usersPanelTitle">
 
 							<%
+							boolean active = false;
+
+							if (status == WorkflowConstants.STATUS_APPROVED) {
+								active = true;
+							}
+
 							String usersTitle = null;
 
 							if (Validator.isNotNull(keywords) || ((organization == null) && (organizationsCount == 0))) {
-								usersTitle = LanguageUtil.get(pageContext, "users");
+								usersTitle = LanguageUtil.get(pageContext, (active ? "users" : "inactive-users"));
 							}
 							else if (organization == null) {
-								usersTitle = LanguageUtil.get(pageContext, "users-without-an-organization");
+								usersTitle = LanguageUtil.get(pageContext, (active ? "users-without-an-organization" : "inactive-users-without-an-organization"));
 							}
-							else if (usersCount == 0) {
+							else if ((usersCount == 0) && (inactiveUsersCount == 0)) {
 								usersTitle = StringPool.BLANK;
 							}
-							else if (usersCount == 1) {
-								usersTitle = LanguageUtil.format(pageContext, "x-user", String.valueOf(usersCount));
-							}
 							else {
-								usersTitle = LanguageUtil.format(pageContext, "x-users", String.valueOf(usersCount));
+								if ((active && (usersCount == 1)) || (!active && (inactiveUsersCount == 1))) {
+									usersTitle = LanguageUtil.format(pageContext, (active ? "x-user" : "x-inactive-user"), String.valueOf((active ? usersCount : inactiveUsersCount)));
+								}
+								else {
+									usersTitle = LanguageUtil.format(pageContext, (active ? "x-users" : "x-inactive-users"), String.valueOf((active ? usersCount : inactiveUsersCount)));
+								}
 							}
 							%>
 
@@ -403,7 +417,7 @@ if (filterManageableOrganizations) {
 						</liferay-util:buffer>
 
 						<c:choose>
-							<c:when test="<%= (organization == null) && (usersCount == 0) %>">
+							<c:when test="<%= (organization == null) && (usersCount == 0) && (inactiveUsersCount == 0) %>">
 								<liferay-ui:icon
 									image="group"
 									label="<%= true %>"
@@ -412,12 +426,12 @@ if (filterManageableOrganizations) {
 								/>
 							</c:when>
 							<c:otherwise>
+
+								<%
+								boolean organizationContextView = true;
+								%>
+
 								<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="usersAdminUsersPanel" persistState="<%= true %>" title="<%= usersPanelTitle %>">
-
-									<%
-									boolean organizationContextView = true;
-									%>
-
 									<%@ include file="/html/portlet/users_admin/view_flat_users.jspf" %>
 								</liferay-ui:panel>
 							</c:otherwise>

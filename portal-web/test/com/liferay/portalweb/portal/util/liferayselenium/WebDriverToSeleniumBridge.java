@@ -912,18 +912,6 @@ public class WebDriverToSeleniumBridge
 	}
 
 	public void select(String selectLocator, String optionLocator) {
-		if (optionLocator.startsWith("index=") ||
-			optionLocator.startsWith("value=")) {
-
-			throw new UnsupportedOperationException();
-		}
-
-		String label = optionLocator;
-
-		if (optionLocator.startsWith("label=")) {
-			label = optionLocator.substring(6);
-		}
-
 		WebElement webElement = getWebElement(selectLocator);
 
 		webElement.click();
@@ -932,12 +920,37 @@ public class WebDriverToSeleniumBridge
 
 		List<WebElement> options = select.getOptions();
 
-		for (WebElement option : options) {
-			String optionText = option.getText();
+		if (optionLocator.startsWith("label=")) {
+			String label = optionLocator.substring(6);
 
-			if (!optionText.equals(label)) {
-				continue;
+			for (WebElement option : options) {
+				String optionText = option.getText();
+
+				if (!optionText.equals(label)) {
+					continue;
+				}
+
+				WrapsDriver wrapsDriver = (WrapsDriver)option;
+
+				WebDriver webDriver = wrapsDriver.getWrappedDriver();
+
+				Actions actions = new Actions(webDriver);
+
+				actions.doubleClick(option);
+
+				Action action = actions.build();
+
+				action.perform();
+
+				break;
 			}
+		}
+		else if (optionLocator.startsWith("index=")) {
+			String index = optionLocator.substring(6);
+
+			int optionIndex = GetterUtil.getInteger(index);
+
+			WebElement option = options.get(optionIndex - 1);
 
 			WrapsDriver wrapsDriver = (WrapsDriver)option;
 
@@ -950,8 +963,57 @@ public class WebDriverToSeleniumBridge
 			Action action = actions.build();
 
 			action.perform();
+		}
+		else if (optionLocator.startsWith("value=")) {
+			String value = optionLocator.substring(6);
 
-			break;
+			for (WebElement option : options) {
+				String optionValue = option.getAttribute("value");
+
+				if (!optionValue.equals(value)) {
+					continue;
+				}
+
+				WrapsDriver wrapsDriver = (WrapsDriver)option;
+
+				WebDriver webDriver = wrapsDriver.getWrappedDriver();
+
+				Actions actions = new Actions(webDriver);
+
+				actions.doubleClick(option);
+
+				Action action = actions.build();
+
+				action.perform();
+
+				break;
+			}
+
+		}
+		else {
+			String label = optionLocator;
+
+			for (WebElement option : options) {
+				String optionText = option.getText();
+
+				if (!optionText.equals(label)) {
+					continue;
+				}
+
+				WrapsDriver wrapsDriver = (WrapsDriver)option;
+
+				WebDriver webDriver = wrapsDriver.getWrappedDriver();
+
+				Actions actions = new Actions(webDriver);
+
+				actions.doubleClick(option);
+
+				Action action = actions.build();
+
+				action.perform();
+
+				break;
+			}
 		}
 	}
 

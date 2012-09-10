@@ -190,33 +190,39 @@ int total = 0;
 	<c:when test='<%= displayTerms.getNavigation().equals("mine") %>'>
 
 		<%
-		results = JournalArticleServiceUtil.getArticlesByUserId(scopeGroupId, themeDisplay.getUserId(), entryStart, entryEnd, searchContainer.getOrderByComparator());
 		total = JournalArticleServiceUtil.getArticlesCountByUserId(scopeGroupId, themeDisplay.getUserId());
 
-		searchContainer.setResults(results);
 		searchContainer.setTotal(total);
+
+		results = JournalArticleServiceUtil.getArticlesByUserId(scopeGroupId, themeDisplay.getUserId(), entryStart, entryEnd, searchContainer.getOrderByComparator());
+
+		searchContainer.setResults(results);
 		%>
 
 	</c:when>
 	<c:when test='<%= Validator.isNotNull(displayTerms.getStructureId()) || Validator.isNotNull(displayTerms.getTemplateId()) || displayTerms.getNavigation().equals("recent") %>'>
 
 		<%
-		results = JournalArticleServiceUtil.search(company.getCompanyId(), searchTerms.getGroupId(), searchTerms.getFolderIds(), 0, searchTerms.getKeywords(), searchTerms.getVersionObj(), null, searchTerms.getStructureId(), searchTerms.getTemplateId(), searchTerms.getDisplayDateGT(), searchTerms.getDisplayDateLT(), searchTerms.getStatusCode(), searchTerms.getReviewDate(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
 		total = JournalArticleServiceUtil.searchCount(company.getCompanyId(), searchTerms.getGroupId(), searchTerms.getFolderIds(), 0, searchTerms.getKeywords(), searchTerms.getVersionObj(), null, searchTerms.getStructureId(), searchTerms.getTemplateId(), searchTerms.getDisplayDateGT(), searchTerms.getDisplayDateLT(), searchTerms.getStatusCode(), searchTerms.getReviewDate());
 
-		searchContainer.setResults(results);
 		searchContainer.setTotal(total);
+
+		results = JournalArticleServiceUtil.search(company.getCompanyId(), searchTerms.getGroupId(), searchTerms.getFolderIds(), 0, searchTerms.getKeywords(), searchTerms.getVersionObj(), null, searchTerms.getStructureId(), searchTerms.getTemplateId(), searchTerms.getDisplayDateGT(), searchTerms.getDisplayDateLT(), searchTerms.getStatusCode(), searchTerms.getReviewDate(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+
+		searchContainer.setResults(results);
 		%>
 
 	</c:when>
 	<c:otherwise>
 
 		<%
-		results = JournalFolderServiceUtil.getFoldersAndArticles(scopeGroupId, folderId, entryStart, entryEnd, searchContainer.getOrderByComparator());
 		total = JournalFolderServiceUtil.getFoldersAndArticlesCount(scopeGroupId, folderId);
 
-		searchContainer.setResults(results);
 		searchContainer.setTotal(total);
+
+		results = JournalFolderServiceUtil.getFoldersAndArticles(scopeGroupId, folderId, entryStart, entryEnd, searchContainer.getOrderByComparator());
+
+		searchContainer.setResults(results);
 		%>
 
 	</c:otherwise>

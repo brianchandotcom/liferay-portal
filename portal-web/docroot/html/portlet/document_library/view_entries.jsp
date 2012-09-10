@@ -177,12 +177,22 @@ else {
 			assetEntryQuery.setExcludeZeroViewCount(false);
 			assetEntryQuery.setStart(entryStart);
 
-			results = AssetEntryServiceUtil.getEntries(assetEntryQuery);
 			total = AssetEntryServiceUtil.getEntriesCount(assetEntryQuery);
+
+			searchContainer.setTotal(total);
+
+			results = AssetEntryServiceUtil.getEntries(assetEntryQuery);
+
+			searchContainer.setResults(results);
 		}
 		else {
-			results = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcuts(repositoryId, folderId, status, false, entryStart, entryEnd, searchContainer.getOrderByComparator());
 			total = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId, folderId, status, false);
+
+			searchContainer.setTotal(total);
+
+			results = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcuts(repositoryId, folderId, status, false, entryStart, entryEnd, searchContainer.getOrderByComparator());
+
+			searchContainer.setResults(results);
 		}
 	}
 	else if (navigation.equals("mine") || navigation.equals("recent")) {
@@ -192,13 +202,15 @@ else {
 			groupFileEntriesUserId = user.getUserId();
 		}
 
-		results = DLAppServiceUtil.getGroupFileEntries(repositoryId, groupFileEntriesUserId, folderId, null, status, entryStart, entryEnd, null);
 		total = DLAppServiceUtil.getGroupFileEntriesCount(repositoryId, groupFileEntriesUserId, folderId, null, status);
+
+		searchContainer.setTotal(total);
+
+		results = DLAppServiceUtil.getGroupFileEntries(repositoryId, groupFileEntriesUserId, folderId, null, status, entryStart, entryEnd, null);
+
+		searchContainer.setResults(results);
 	}
 }
-
-searchContainer.setResults(results);
-searchContainer.setTotal(total);
 
 request.setAttribute("view.jsp-total", String.valueOf(total));
 %>

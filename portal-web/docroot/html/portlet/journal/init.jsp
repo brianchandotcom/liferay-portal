@@ -119,6 +119,8 @@ page import="com.liferay.util.RSSUtil" %>
 
 <%@ page import="java.net.URLDecoder" %>
 
+<%@ page import="java.util.regex.Pattern" %>
+
 <%
 PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(liferayPortletRequest);
 

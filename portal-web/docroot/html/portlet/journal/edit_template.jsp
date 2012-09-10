@@ -61,10 +61,7 @@ String xslContent = request.getParameter("xslContent");
 
 String xsl = xslContent;
 
-if (xslContent != null) {
-	xsl = JS.decodeURIComponent(xsl);
-}
-else {
+if (xslContent == null) {
 	xsl = BeanParamUtil.getString(template, request, "xsl");
 }
 
@@ -99,8 +96,8 @@ if (template == null) {
 	<aui:input name="originalRedirect" type="hidden" value="<%= originalRedirect %>" />
 	<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
 	<aui:input name="templateId" type="hidden" value="<%= templateId %>" />
-	<aui:input name="xslContent" type="hidden" value="<%= JS.encodeURIComponent(xsl) %>" />
-	<aui:input disabled="<%= true %>" name="editorContentInput" type="hidden" value="<%= JS.encodeURIComponent(editorContent) %>" />
+	<aui:input name="xslContent" type="hidden" value="<%= xsl %>" />
+	<aui:input disabled="<%= true %>" name="editorContentInput" type="hidden" value="<%= editorContent %>" />
 	<aui:input name="saveAndContinue" type="hidden" />
 
 	<liferay-ui:header

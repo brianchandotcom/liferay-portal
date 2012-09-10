@@ -106,7 +106,7 @@ if (Validator.isNull(elContent) && Validator.isNotNull(elPredefinedValue)) {
 Element contentEl = (Element)request.getAttribute(WebKeys.JOURNAL_ARTICLE_CONTENT_EL);
 %>
 
-<li class="structure-field <%= css.trim() %>" <%= parentStructureData %> dataInstanceId='<%= elInstanceId %>' dataName='<%= elName %>' dataRepeatable='<%= elRepeatable %>' dataType='<%= elType %>' dataIndexType='<%= elIndexType %>' <%= metaData %>>
+<li class="structure-field <%= css.trim() %>" <%= parentStructureData %> dataInstanceId='<%= elInstanceId %>' dataName='<%= HtmlUtil.escapeAttribute(elName) %>' dataRepeatable='<%= elRepeatable %>' dataType='<%= HtmlUtil.escapeAttribute(elType) %>' dataIndexType='<%= HtmlUtil.escapeAttribute(elIndexType) %>' <%= metaData %>>
 	<span class="journal-article-close"></span>
 
 	<span class="folder">
@@ -116,7 +116,7 @@ Element contentEl = (Element)request.getAttribute(WebKeys.JOURNAL_ARTICLE_CONTEN
 			<div class="journal-article-move-handler"></div>
 
 			<label class="journal-article-field-label">
-				<span><%= elLabel %></span>
+				<span><%= HtmlUtil.escape(elLabel) %></span>
 
 				<c:if test="<%= (Validator.isNotNull(elInstructions) && displayAsTooltip) %>">
 					<img align="top" class="journal-article-instructions-container" src="/html/themes/classic/images/portlet/help.png" />
@@ -134,7 +134,7 @@ Element contentEl = (Element)request.getAttribute(WebKeys.JOURNAL_ARTICLE_CONTEN
 					}
 					%>
 
-					<aui:input cssClass="lfr-input-text-container" ignoreRequestValue="<%= true %>" label="" name="<%= textInputName %>" size="55" type="text" value="<%= elContent %>" />
+					<aui:input cssClass="lfr-input-text-container" ignoreRequestValue="<%= true %>" label="" name="<%= HtmlUtil.escapeAttribute(textInputName) %>" size="55" type="text" value="<%= elContent %>" />
 				</c:if>
 
 				<c:if test='<%= elType.equals("text_box") %>'>
@@ -147,7 +147,7 @@ Element contentEl = (Element)request.getAttribute(WebKeys.JOURNAL_ARTICLE_CONTEN
 					}
 					%>
 
-					<aui:input cols="60" cssClass="lfr-textarea-container" ignoreRequestValue="<%= true %>" label="" name="<%= textBoxInputName %>" rows="10" type="textarea" value="<%= elContent %>" />
+					<aui:input cols="60" cssClass="lfr-textarea-container" ignoreRequestValue="<%= true %>" label="" name="<%= HtmlUtil.escapeAttribute(textBoxInputName) %>" rows="10" type="textarea" value="<%= elContent %>" />
 				</c:if>
 
 				<c:if test='<%= elType.equals("text_area") %>'>
@@ -164,7 +164,7 @@ Element contentEl = (Element)request.getAttribute(WebKeys.JOURNAL_ARTICLE_CONTEN
 						editorImpl="<%= EDITOR_WYSIWYG_IMPL_KEY %>"
 						height="460"
 						initMethod='<%= "initEditor" + elInstanceId %>'
-						name="<%= textAreaInputName %>"
+						name="<%= HtmlUtil.escapeAttribute(textAreaInputName) %>"
 						toolbarSet="liferay-article"
 						width="500"
 					/>
@@ -192,7 +192,7 @@ Element contentEl = (Element)request.getAttribute(WebKeys.JOURNAL_ARTICLE_CONTEN
 							String journalImageContentInputName = "journalImageContent_" + elName + elRepeatCount;
 							%>
 
-							<aui:input name="<%= journalImageContentInputName %>" type="hidden" value="<%= elContent %>" />
+							<aui:input name="<%= HtmlUtil.escapeAttribute(journalImageContentInputName) %>" type="hidden" value="<%= elContent %>" />
 
 							<aui:input name="journalImageDelete" type="hidden" value="" />
 
@@ -201,7 +201,7 @@ Element contentEl = (Element)request.getAttribute(WebKeys.JOURNAL_ARTICLE_CONTEN
 							<br /><br />
 
 							<div class="journal-image-wrapper results-grid">
-								<img class="journal-image" hspace="0" src="<%= elContent %>" vspace="0" />
+								<img class="journal-image" hspace="0" src="<%= HtmlUtil.escapeAttribute(elContent) %>" vspace="0" />
 							</div>
 						</div>
 					</c:if>
@@ -217,7 +217,7 @@ Element contentEl = (Element)request.getAttribute(WebKeys.JOURNAL_ARTICLE_CONTEN
 					}
 					%>
 
-					<aui:input cssClass="lfr-input-text-container" inlineField="<%= true %>" label="" name="<%= journalDocumentLibraryInputName %>" size="55" type="text" value="<%= elContent %>" />
+					<aui:input cssClass="lfr-input-text-container" inlineField="<%= true %>" label="" name="<%= HtmlUtil.escapeAttribute(journalDocumentLibraryInputName) %>" size="55" type="text" value="<%= elContent %>" />
 
 					<%
 					long dlScopeGroupId = groupId;
@@ -250,7 +250,7 @@ Element contentEl = (Element)request.getAttribute(WebKeys.JOURNAL_ARTICLE_CONTEN
 					%>
 
 					<div class="journal-subfield">
-						<aui:input cssClass="journal-article-field-label" label="<%= elLabel %>" name="<%= elName %>" type="checkbox" value='<%= elContent.equals("true") %>' />
+						<aui:input cssClass="journal-article-field-label" label="<%= HtmlUtil.escapeAttribute(elLabel) %>" name="<%= HtmlUtil.escapeAttribute(elName) %>" type="checkbox" value='<%= elContent.equals("true") %>' />
 					</div>
 				</c:if>
 
@@ -269,21 +269,21 @@ Element contentEl = (Element)request.getAttribute(WebKeys.JOURNAL_ARTICLE_CONTEN
 						}
 						%>
 
-						<aui:select label="" name="<%= listInputName %>">
+						<aui:select label="" name="<%= HtmlUtil.escapeAttribute(listInputName) %>">
 
 							<%
 							List<Element> children = el.elements();
 
 							for (Element child : children) {
-								String listElName = HtmlUtil.escape(JS.decodeURIComponent(child.attributeValue("name", StringPool.BLANK)));
-								String listElValue = HtmlUtil.escape(JS.decodeURIComponent(child.attributeValue("type", StringPool.BLANK)));
+								String listElName = child.attributeValue("name", StringPool.BLANK);
+								String listElValue = child.attributeValue("type", StringPool.BLANK);
 
 								if (Validator.isNull(listElName) && Validator.isNull(listElValue)) {
 									continue;
 								}
 							%>
 
-								<aui:option label="<%= listElName %>" selected="<%= elContent.equals(listElValue) %>" value="<%= listElValue %>" />
+								<aui:option label="<%= HtmlUtil.escape(listElName) %>" selected="<%= elContent.equals(listElValue) %>" value="<%= HtmlUtil.escape(listElValue) %>" />
 
 							<%
 							}
@@ -326,14 +326,14 @@ Element contentEl = (Element)request.getAttribute(WebKeys.JOURNAL_ARTICLE_CONTEN
 						}
 						%>
 
-						<aui:select ignoreRequestValue="<%= true %>" label="" multiple="<%= true %>" name="<%= multiListInputName %>">
+						<aui:select ignoreRequestValue="<%= true %>" label="" multiple="<%= true %>" name="<%= HtmlUtil.escapeAttribute(multiListInputName) %>">
 
 							<%
 							List<Element> children = el.elements();
 
 							for (Element child : children) {
-								String listElName = JS.decodeURIComponent(child.attributeValue("name", StringPool.BLANK));
-								String listElValue = JS.decodeURIComponent(child.attributeValue("type", StringPool.BLANK));
+								String listElName = child.attributeValue("name", StringPool.BLANK);
+								String listElValue = child.attributeValue("type", StringPool.BLANK);
 
 								boolean contains = false;
 
@@ -362,7 +362,7 @@ Element contentEl = (Element)request.getAttribute(WebKeys.JOURNAL_ARTICLE_CONTEN
 								}
 							%>
 
-								<aui:option label="<%= listElName %>" selected="<%= contains %>" value="<%= listElValue %>" />
+								<aui:option label="<%= HtmlUtil.escape(listElName) %>" selected="<%= contains %>" value="<%= HtmlUtil.escapeAttribute(listElValue) %>" />
 
 							<%
 							}
@@ -403,7 +403,7 @@ Element contentEl = (Element)request.getAttribute(WebKeys.JOURNAL_ARTICLE_CONTEN
 					}
 					%>
 
-					<aui:select label="" name="<%= linkSelectName %>" showEmptyOption="<%= true %>">
+					<aui:select label="" name="<%= HtmlUtil.escapeAttribute(linkSelectName) %>" showEmptyOption="<%= true %>">
 
 						<%
 						boolean privateLayout = false;
@@ -436,7 +436,7 @@ Element contentEl = (Element)request.getAttribute(WebKeys.JOURNAL_ARTICLE_CONTEN
 
 			<c:if test="<%= (Validator.isNotNull(elInstructions) && !displayAsTooltip) %>">
 				<div class="journal-article-instructions-container journal-article-instructions-message portlet-msg-info">
-					<%= elInstructions %>
+					<%= HtmlUtil.escape(elInstructions) %>
 				</div>
 			</c:if>
 
@@ -460,6 +460,8 @@ Element contentEl = (Element)request.getAttribute(WebKeys.JOURNAL_ARTICLE_CONTEN
 <%!
 public static final String EDITOR_WYSIWYG_IMPL_KEY = "editor.wysiwyg.portal-web.docroot.html.portlet.journal.edit_article_content_xsd_el.jsp";
 
+private static final Pattern SAFE_METADATA_NAME = Pattern.compile("^[a-zA-Z0-9_-]+$");
+
 private String _buildMetaDataHTMLAttributes(Map<String, String> elMetaData, String elName) {
 	if (elMetaData.isEmpty()) {
 		return StringPool.BLANK;
@@ -468,6 +470,9 @@ private String _buildMetaDataHTMLAttributes(Map<String, String> elMetaData, Stri
 	StringBundler sb = new StringBundler(elMetaData.size() * 5);
 
 	for (String name : elMetaData.keySet()) {
+		if(!SAFE_METADATA_NAME.matcher(name).matches()){
+			continue;
+		}
 		String content = elMetaData.get(name);
 
 		sb.append("data");

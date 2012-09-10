@@ -920,49 +920,14 @@ public class WebDriverToSeleniumBridge
 
 		List<WebElement> options = select.getOptions();
 
-		if (optionLocator.startsWith("label=")) {
-			String label = optionLocator.substring(6);
+		WebElement optionWebElement = null;
 
-			for (WebElement option : options) {
-				String optionText = option.getText();
-
-				if (!optionText.equals(label)) {
-					continue;
-				}
-
-				WrapsDriver wrapsDriver = (WrapsDriver)option;
-
-				WebDriver webDriver = wrapsDriver.getWrappedDriver();
-
-				Actions actions = new Actions(webDriver);
-
-				actions.doubleClick(option);
-
-				Action action = actions.build();
-
-				action.perform();
-
-				break;
-			}
-		}
-		else if (optionLocator.startsWith("index=")) {
+		if (optionLocator.startsWith("index=")) {
 			String index = optionLocator.substring(6);
 
 			int optionIndex = GetterUtil.getInteger(index);
 
-			WebElement option = options.get(optionIndex - 1);
-
-			WrapsDriver wrapsDriver = (WrapsDriver)option;
-
-			WebDriver webDriver = wrapsDriver.getWrappedDriver();
-
-			Actions actions = new Actions(webDriver);
-
-			actions.doubleClick(option);
-
-			Action action = actions.build();
-
-			action.perform();
+			optionWebElement = options.get(optionIndex);
 		}
 		else if (optionLocator.startsWith("value=")) {
 			String value = optionLocator.substring(6);
@@ -970,51 +935,45 @@ public class WebDriverToSeleniumBridge
 			for (WebElement option : options) {
 				String optionValue = option.getAttribute("value");
 
-				if (!optionValue.equals(value)) {
-					continue;
+				if (optionValue.equals(value)) {
+					optionWebElement = option;
+
+					break;
 				}
-
-				WrapsDriver wrapsDriver = (WrapsDriver)option;
-
-				WebDriver webDriver = wrapsDriver.getWrappedDriver();
-
-				Actions actions = new Actions(webDriver);
-
-				actions.doubleClick(option);
-
-				Action action = actions.build();
-
-				action.perform();
-
-				break;
 			}
-
 		}
 		else {
-			String label = optionLocator;
+			String label;
+
+			if (optionLocator.startsWith("label=")) {
+				label = optionLocator.substring(6);
+			}
+			else {
+				label = optionLocator;
+			}
 
 			for (WebElement option : options) {
 				String optionText = option.getText();
 
-				if (!optionText.equals(label)) {
-					continue;
+				if (optionText.equals(label)) {
+					optionWebElement = option;
+
+					break;
 				}
-
-				WrapsDriver wrapsDriver = (WrapsDriver)option;
-
-				WebDriver webDriver = wrapsDriver.getWrappedDriver();
-
-				Actions actions = new Actions(webDriver);
-
-				actions.doubleClick(option);
-
-				Action action = actions.build();
-
-				action.perform();
-
-				break;
 			}
 		}
+
+		WrapsDriver wrapsDriver = (WrapsDriver)optionWebElement;
+
+		WebDriver webDriver = wrapsDriver.getWrappedDriver();
+
+		Actions actions = new Actions(webDriver);
+
+		actions.doubleClick(optionWebElement);
+
+		Action action = actions.build();
+
+		action.perform();
 	}
 
 	public void selectFrame(String locator) {

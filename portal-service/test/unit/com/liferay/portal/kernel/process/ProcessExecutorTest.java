@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.test.BaseTestCase;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.ReflectionUtil;
+import com.liferay.portal.kernel.util.SocketUtil.ServerSocketConfigurator;
+import com.liferay.portal.kernel.util.SocketUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 
@@ -44,9 +46,12 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
-import java.net.InetSocketAddress;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
+
+import java.nio.channels.ServerSocketChannel;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -89,7 +94,11 @@ public class ProcessExecutorTest extends BaseTestCase {
 
 		// No attach
 
-		ServerSocket serverSocket = _createServerSocket(12342);
+		ServerSocketChannel serverSocketChannel =
+			SocketUtil.createServerSocketChannel(
+				InetAddress.getLocalHost(), 12342, _serverSocketConfigurator);
+
+		ServerSocket serverSocket = serverSocketChannel.socket();
 
 		try {
 			int port = serverSocket.getLocalPort();
@@ -132,7 +141,11 @@ public class ProcessExecutorTest extends BaseTestCase {
 
 		// Attach
 
-		ServerSocket serverSocket = _createServerSocket(12342);
+		ServerSocketChannel serverSocketChannel =
+			SocketUtil.createServerSocketChannel(
+				InetAddress.getLocalHost(), 12342, _serverSocketConfigurator);
+
+		ServerSocket serverSocket = serverSocketChannel.socket();
 
 		try {
 			int port = serverSocket.getLocalPort();
@@ -184,7 +197,11 @@ public class ProcessExecutorTest extends BaseTestCase {
 
 		// Detach
 
-		ServerSocket serverSocket = _createServerSocket(12342);
+		ServerSocketChannel serverSocketChannel =
+			SocketUtil.createServerSocketChannel(
+				InetAddress.getLocalHost(), 12342, _serverSocketConfigurator);
+
+		ServerSocket serverSocket = serverSocketChannel.socket();
 
 		try {
 			int port = serverSocket.getLocalPort();
@@ -231,7 +248,11 @@ public class ProcessExecutorTest extends BaseTestCase {
 
 		// Shutdown by interruption
 
-		ServerSocket serverSocket = _createServerSocket(12342);
+		ServerSocketChannel serverSocketChannel =
+			SocketUtil.createServerSocketChannel(
+				InetAddress.getLocalHost(), 12342, _serverSocketConfigurator);
+
+		ServerSocket serverSocket = serverSocketChannel.socket();
 
 		try {
 			int port = serverSocket.getLocalPort();
@@ -266,7 +287,11 @@ public class ProcessExecutorTest extends BaseTestCase {
 
 		// Bad shutdown hook
 
-		ServerSocket serverSocket = _createServerSocket(12342);
+		ServerSocketChannel serverSocketChannel =
+			SocketUtil.createServerSocketChannel(
+				InetAddress.getLocalHost(), 12342, _serverSocketConfigurator);
+
+		ServerSocket serverSocket = serverSocketChannel.socket();
 
 		try {
 			int port = serverSocket.getLocalPort();
@@ -301,7 +326,11 @@ public class ProcessExecutorTest extends BaseTestCase {
 
 		// NPE on heartbeat piping back
 
-		ServerSocket serverSocket = _createServerSocket(12342);
+		ServerSocketChannel serverSocketChannel =
+			SocketUtil.createServerSocketChannel(
+				InetAddress.getLocalHost(), 12342, _serverSocketConfigurator);
+
+		ServerSocket serverSocket = serverSocketChannel.socket();
 
 		try {
 			int port = serverSocket.getLocalPort();
@@ -1073,28 +1102,19 @@ public class ProcessExecutorTest extends BaseTestCase {
 		}
 	}
 
-	private ServerSocket _createServerSocket(int startPort) {
-		int port = startPort;
-
-		while (true) {
-			try {
-				ServerSocket serverSocket = new ServerSocket();
-
-				serverSocket.setReuseAddress(true);
-
-				serverSocket.bind(new InetSocketAddress("localhost", port));
-
-				return serverSocket;
-			}
-			catch (IOException ioe) {
-				port++;
-			}
-		}
-	}
-
 	private static Log _log = LogFactoryUtil.getLog(ProcessExecutorTest.class);
 
 	private static String _classPath = System.getProperty("java.class.path");
+
+	private static ServerSocketConfigurator _serverSocketConfigurator =
+		new ServerSocketConfigurator() {
+
+		public void configure(ServerSocket serverSocket)
+			throws SocketException {
+
+			serverSocket.setReuseAddress(true);
+		}
+	};
 
 	private static class AttachChildProcessCallable1
 		implements ProcessCallable<Serializable> {
@@ -1789,7 +1809,7 @@ public class ProcessExecutorTest extends BaseTestCase {
 			throws Exception {
 
 			_mainThread = mainThread;
-			_socket = new Socket("localhost", serverPort);
+			_socket = new Socket(InetAddress.getLocalHost(), serverPort);
 
 			setName(name);
 		}

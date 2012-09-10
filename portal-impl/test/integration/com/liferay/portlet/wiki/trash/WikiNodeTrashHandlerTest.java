@@ -42,11 +42,11 @@ import org.junit.runner.RunWith;
 public class WikiNodeTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 	public void testTrashAndDelete() throws Exception {
-		Assert.assertTrue("This test not apply here", true);
+		Assert.assertTrue("This test does not apply", true);
 	}
 
 	public void testTrashAndRestoreDraft() throws Exception {
-		Assert.assertTrue("This test not apply here", true);
+		Assert.assertTrue("This test does not apply", true);
 	}
 
 	@Override

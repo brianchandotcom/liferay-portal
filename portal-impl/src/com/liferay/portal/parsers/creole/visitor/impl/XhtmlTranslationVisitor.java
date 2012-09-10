@@ -27,6 +27,7 @@ import com.liferay.portal.parsers.creole.ast.HorizontalNode;
 import com.liferay.portal.parsers.creole.ast.ImageNode;
 import com.liferay.portal.parsers.creole.ast.ItalicTextNode;
 import com.liferay.portal.parsers.creole.ast.LineNode;
+import com.liferay.portal.parsers.creole.ast.ListNode;
 import com.liferay.portal.parsers.creole.ast.NoWikiSectionNode;
 import com.liferay.portal.parsers.creole.ast.OrderedListItemNode;
 import com.liferay.portal.parsers.creole.ast.OrderedListNode;
@@ -44,6 +45,7 @@ import com.liferay.portal.parsers.creole.ast.table.TableNode;
 import com.liferay.portal.parsers.creole.visitor.ASTVisitor;
 
 import java.util.List;
+import java.util.Stack;
 
 /**
  * @author Miguel Pastor
@@ -154,6 +156,10 @@ public class XhtmlTranslationVisitor implements ASTVisitor {
 		append("</a>");
 	}
 
+	public void visit(ListNode listNode) {
+		traverse(listNode.getChildASTNodes());
+	}
+
 	public void visit(NoWikiSectionNode noWikiSectionNode) {
 		append("<pre>");
 		append(HtmlUtil.escape(noWikiSectionNode.getContent()));
@@ -161,17 +167,15 @@ public class XhtmlTranslationVisitor implements ASTVisitor {
 	}
 
 	public void visit(OrderedListItemNode orderedListItemNode) {
-		appendLevelTags(orderedListItemNode.getLevel(), true);
-
 		traverse(orderedListItemNode.getChildASTNodes(), "<li>", "</li>");
 	}
 
 	public void visit(OrderedListNode orderedListNode) {
-		_currentNodeLevel = 0;
+		append("<ol>");
 
 		traverse(orderedListNode.getChildASTNodes());
 
-		appendLevelTags(0, true);
+		append("</ol>");
 	}
 
 	public void visit(ParagraphNode paragraphNode) {
@@ -211,17 +215,15 @@ public class XhtmlTranslationVisitor implements ASTVisitor {
 	}
 
 	public void visit(UnorderedListItemNode unorderedListItemNode) {
-		appendLevelTags(unorderedListItemNode.getLevel(), false);
-
 		traverse(unorderedListItemNode.getChildASTNodes(), "<li>", "</li>");
 	}
 
 	public void visit(UnorderedListNode unorderedListNode) {
-		_currentNodeLevel = 0;
+		append("<ul>");
 
 		traverse(unorderedListNode.getChildASTNodes());
 
-		appendLevelTags(0, false);
+		append("</ul>");
 	}
 
 	public void visit(WikiPageNode wikiPageNode) {
@@ -235,7 +237,7 @@ public class XhtmlTranslationVisitor implements ASTVisitor {
 	}
 
 	protected void appendLevelTags(int nodeLevel, boolean ordered) {
-		int diff = nodeLevel - _currentNodeLevel;
+		int diff = nodeLevel - _currentNodeLevel.pop();
 
 		if (diff > 0) {
 			for (int i = 0; i < diff; i++) {
@@ -258,7 +260,7 @@ public class XhtmlTranslationVisitor implements ASTVisitor {
 			}
 		}
 
-		_currentNodeLevel = nodeLevel;
+		_currentNodeLevel.push(nodeLevel);
 	}
 
 	protected void traverse(List<ASTNode> astNodes) {
@@ -289,7 +291,7 @@ public class XhtmlTranslationVisitor implements ASTVisitor {
 		}
 	}
 
-	private int _currentNodeLevel;
+	private Stack<Integer> _currentNodeLevel = new Stack<Integer>();
 	private StringBundler _sb = new StringBundler();
 
 }

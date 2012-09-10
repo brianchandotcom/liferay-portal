@@ -24,8 +24,14 @@ public class OrderedListNode extends BaseListNode {
 	public OrderedListNode() {
 	}
 
-	public OrderedListNode(CollectionNode collectionNode) {
-		super(collectionNode);
+	public OrderedListNode(BaseParentableNode parent) {
+		super(parent, null);
+	}
+
+	public OrderedListNode(
+		BaseParentableNode parent, CollectionNode collectionNode) {
+
+		super(parent, collectionNode);
 	}
 
 	public OrderedListNode(int tokenType) {

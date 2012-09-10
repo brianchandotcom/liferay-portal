@@ -33,6 +33,7 @@ import com.liferay.portlet.documentlibrary.NoSuchFileException;
 import java.io.InputStream;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
@@ -486,7 +487,9 @@ public class JCRStore extends BaseStore {
 
 				String primaryNodeTypeName = primaryNodeType.getName();
 
-				if (primaryNodeTypeName.equals(JCRConstants.NT_FILE)) {
+				if (primaryNodeTypeName.equals(JCRConstants.NT_FILE) ||
+					primaryNodeTypeName.equals(JCRConstants.NT_FOLDER)) {
+
 					fileNames.add(node.getName());
 				}
 			}
@@ -528,7 +531,9 @@ public class JCRStore extends BaseStore {
 
 				String primaryNodeTypeName = primaryNodeType.getName();
 
-				if (primaryNodeTypeName.equals(JCRConstants.NT_FILE)) {
+				if (primaryNodeTypeName.equals(JCRConstants.NT_FILE) ||
+					primaryNodeTypeName.equals(JCRConstants.NT_FOLDER)) {
+
 					fileNames.add(dirName + "/" + node.getName());
 				}
 			}
@@ -570,6 +575,85 @@ public class JCRStore extends BaseStore {
 		}
 
 		return size;
+	}
+
+	@Override
+	public String[] getFileVersions(
+			long companyId, long repositoryId, String fileName)
+		throws PortalException, SystemException {
+
+		Session session = null;
+
+		try {
+			session = JCRFactoryUtil.createSession();
+
+			Workspace workspace = session.getWorkspace();
+
+			VersionManager versionManager = workspace.getVersionManager();
+
+			Node rootNode = getRootNode(session, companyId);
+
+			Node repositoryNode = getFolderNode(rootNode, repositoryId);
+
+			Node fileNode = repositoryNode.getNode(fileName);
+
+			Node contentNode = fileNode.getNode(JCRConstants.JCR_CONTENT);
+
+			VersionHistory versionHistory = versionManager.getVersionHistory(
+				contentNode.getPath());
+
+			String[] fileVersions = versionHistory.getVersionLabels();
+
+			Arrays.sort(fileVersions);
+
+			return fileVersions;
+		}
+		catch (PathNotFoundException pnfe) {
+			throw new NoSuchFileException("{fileName=" + fileName + "}");
+		}
+		catch (RepositoryException re) {
+			throw new SystemException(re);
+		}
+		finally {
+			JCRFactoryUtil.closeSession(session);
+		}
+	}
+
+	@Override
+	public List<Long> getRepositoryIds(long companyId)
+		throws PortalException, SystemException {
+
+		List<Long> repositoryIds = new ArrayList();
+
+		Session session = null;
+
+		try {
+			session = JCRFactoryUtil.createSession();
+
+			Node companyNode = getRootNode(session, companyId);
+
+			NodeIterator itr = companyNode.getNodes();
+
+			while (itr.hasNext()) {
+				Node node = (Node)itr.next();
+
+				NodeType primaryNodeType = node.getPrimaryNodeType();
+
+				String primaryNodeTypeName = primaryNodeType.getName();
+
+				if (primaryNodeTypeName.equals(JCRConstants.NT_FOLDER)) {
+					repositoryIds.add(Long.valueOf(node.getName()));
+				}
+			}
+		}
+		catch (RepositoryException re) {
+			throw new SystemException(re);
+		}
+		finally {
+			JCRFactoryUtil.closeSession(session);
+		}
+
+		return repositoryIds;
 	}
 
 	@Override

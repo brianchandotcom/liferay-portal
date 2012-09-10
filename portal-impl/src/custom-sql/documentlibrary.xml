@@ -1,6 +1,52 @@
 <?xml version="1.0"?>
 
 <custom-sql>
+	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLContentFinder.findP_ByC_R_LikeP">
+		<![CDATA[
+			SELECT
+				DISTINCT path_
+			FROM
+				DLContent
+			WHERE
+				(DLContent.companyId = ?) AND
+				(DLContent.repositoryId = ?) AND
+				(DLContent.path_ LIKE ?)
+		]]>
+	</sql>
+	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLContentFinder.findR_ByCompanyId">
+		<![CDATA[
+			SELECT
+				DISTINCT repositoryId
+			FROM
+				DLContent
+			WHERE
+				(DLContent.companyId = ?)
+		]]>
+	</sql>
+	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLContentFinder.findS_ByC_R_P">
+		<![CDATA[
+			SELECT
+				size_
+			FROM
+				DLContent
+			WHERE
+				(DLContent.companyId = ?) AND
+				(DLContent.repositoryId = ?) AND
+				(DLContent.path_ = ?)
+		]]>
+	</sql>
+	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLContentFinder.findV_ByC_R_P">
+		<![CDATA[
+			SELECT
+				version
+			FROM
+				DLContent
+			WHERE
+				(DLContent.companyId = ?) AND
+				(DLContent.repositoryId = ?) AND
+				(DLContent.path_ = ?)
+		]]>
+	</sql>
 	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryFinder.countByExtraSettings">
 		<![CDATA[
 			SELECT

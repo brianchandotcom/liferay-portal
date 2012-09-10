@@ -20,14 +20,16 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.SortedArrayList;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.SystemProperties;
+import com.liferay.portal.kernel.util.UniqueList;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.util.PropsUtil;
-import com.liferay.portlet.documentlibrary.NoSuchFileException;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -35,12 +37,12 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.jets3t.service.S3Service;
 import org.jets3t.service.S3ServiceException;
 import org.jets3t.service.ServiceException;
+import org.jets3t.service.StorageObjectsChunk;
 import org.jets3t.service.impl.rest.httpclient.RestS3Service;
 import org.jets3t.service.model.S3Bucket;
 import org.jets3t.service.model.S3Object;
@@ -180,22 +182,14 @@ public class S3Store extends BaseStore {
 	public String[] getFileNames(long companyId, long repositoryId)
 		throws SystemException {
 
-		List<String> fileNames = new ArrayList<String>();
+		List<String> fileNames = new UniqueList<String>();
 
-		try {
-			S3Object[] searchObjects = _s3Service.listObjects(
-				_s3Bucket.getName(), getKey(companyId, repositoryId), null);
+		String key = getKey(companyId, repositoryId);
 
-			for (int i = 0; i < searchObjects.length; i++) {
-				S3Object currentObject = searchObjects[i];
+		for (String folderKey : getFolderKeys(key)) {
+			String fileName = getFileName(folderKey);
 
-				String fileName = getFileName(currentObject.getKey());
-
-				fileNames.add(fileName);
-			}
-		}
-		catch (S3ServiceException s3se) {
-			throw new SystemException(s3se);
+			fileNames.add(fileName);
 		}
 
 		return fileNames.toArray(new String[fileNames.size()]);
@@ -206,35 +200,29 @@ public class S3Store extends BaseStore {
 			long companyId, long repositoryId, String dirName)
 		throws SystemException {
 
-		try {
-			List<String> list = new ArrayList<String>();
+		List<String> fileNames = new UniqueList<String>();
 
-			S3Object[] s3Objects = _s3Service.listObjects(
-				_s3Bucket.getName(), getKey(companyId, repositoryId, dirName),
-				null);
+		String key = getKey(companyId, repositoryId, dirName);
 
-			for (int i = 0; i < s3Objects.length; i++) {
-				S3Object s3Object = s3Objects[i];
+		for (String folderKey : getFolderKeys(key)) {
 
-				// Convert /${companyId}/${repositoryId}/${dirName}/${fileName}
-				// /${versionLabel} to /${dirName}/${fileName}
+			// Convert /${companyId}/${repositoryId}/${dirName}/${fileName}
+			// /${versionLabel} to /${dirName}/${fileName}
 
-				String key = s3Object.getKey();
+			int x = folderKey.indexOf(CharPool.SLASH);
 
-				int x = key.indexOf(CharPool.SLASH);
+			x = folderKey.indexOf(CharPool.SLASH, x + 1);
 
-				x = key.indexOf(CharPool.SLASH, x + 1);
+			int y = folderKey.indexOf(CharPool.SLASH, x + dirName.length() + 1);
 
-				int y = key.lastIndexOf(CharPool.SLASH);
+			y = folderKey.indexOf(CharPool.SLASH, y + 1);
 
-				list.add(key.substring(x, y));
-			}
+			String fileName = folderKey.substring(x + 1, y);
 
-			return list.toArray(new String[list.size()]);
+			fileNames.add(fileName);
 		}
-		catch (S3ServiceException s3se) {
-			throw new SystemException(s3se);
-		}
+
+		return fileNames.toArray(new String[fileNames.size()]);
 	}
 
 	@Override
@@ -254,6 +242,61 @@ public class S3Store extends BaseStore {
 		catch (ServiceException se) {
 			throw new SystemException(se);
 		}
+	}
+
+	@Override
+	public String[] getFileVersions(
+			long companyId, long repositoryId, String fileName)
+		throws SystemException {
+
+		try {
+			List<String> fileVersions = new SortedArrayList<String>();
+
+			String key = getKey(companyId, repositoryId, fileName);
+
+			S3Object[] s3Objects = _s3Service.listObjects(
+				_s3Bucket.getName(), key, null);
+
+			for (S3Object s3Object : s3Objects) {
+
+				// Convert /${companyId}/${repositoryId}/${dirName}/${fileName}
+				// /${versionLabel} to /${versionLabel}
+
+				String versionKey = s3Object.getKey();
+
+				int x = versionKey.lastIndexOf(CharPool.SLASH);
+
+				fileVersions.add(versionKey.substring(x + 1));
+			}
+
+			return fileVersions.toArray(new String[fileVersions.size()]);
+		}
+		catch (S3ServiceException s3se) {
+			throw new SystemException(s3se);
+		}
+	}
+
+	@Override
+	public List<Long> getRepositoryIds(long companyId) throws SystemException {
+		List<String> repositoryKeys = getFolderKeys(
+			companyId + StringPool.SLASH);
+
+		List<Long> repositoryIds = new ArrayList();
+
+		for (String repositoryKey : repositoryKeys) {
+
+			// Convert /${companyId}/${repositoryId}/ to /${repositoryId}/
+
+			int x = repositoryKey.indexOf(CharPool.SLASH);
+
+			int y = repositoryKey.indexOf(CharPool.SLASH, x + 1);
+
+			long repositoryId = Long.valueOf(repositoryKey.substring(x + 1, y));
+
+			repositoryIds.add(repositoryId);
+		}
+
+		return repositoryIds;
 	}
 
 	@Override
@@ -373,7 +416,7 @@ public class S3Store extends BaseStore {
 
 				String newPrefix = getKey(companyId, repositoryId, newFileName);
 
-				int x = oldKey.indexOf(StringPool.SLASH);
+				int x = oldKey.indexOf(CharPool.SLASH);
 
 				x = oldKey.indexOf(CharPool.SLASH, x + 1);
 				x = oldKey.indexOf(CharPool.SLASH, x + 1);
@@ -442,38 +485,39 @@ public class S3Store extends BaseStore {
 
 		x = key.indexOf(CharPool.SLASH, x + 1);
 
-		int y = key.lastIndexOf(CharPool.SLASH);
+		int y = key.indexOf(CharPool.SLASH, x + 1);
 
 		return key.substring(x + 1, y);
 	}
 
-	protected String getHeadVersionLabel(
-			long companyId, long repositoryId, String fileName)
-		throws PortalException, S3ServiceException {
+	protected List<String> getFolderKeys(String key) throws SystemException {
+		List<String> folderKeys = new ArrayList();
 
-		S3Object[] s3Objects = _s3Service.listObjects(
-			_s3Bucket.getName(), getKey(companyId, repositoryId, fileName),
-			null);
+		String[] chunkKeys = null;
+		String lastKey = null;
 
-		String[] keys = new String[s3Objects.length];
+		try {
+			do {
+				StorageObjectsChunk chunk = _s3Service.listObjectsChunked(
+					_s3Bucket.getName(), key, StringPool.SLASH,
+					_CHUNK_LISTING_LENGTH, lastKey);
 
-		for (int i = 0; i < s3Objects.length; i++) {
-			S3Object s3Object = s3Objects[i];
+				chunkKeys = chunk.getCommonPrefixes();
 
-			keys[i] = s3Object.getKey();
+				if (chunkKeys.length == 0) {
+					break;
+				}
+
+				lastKey = chunkKeys[chunkKeys.length - 1];
+
+				folderKeys.addAll(ListUtil.fromArray(chunkKeys));
+			}
+			while (chunkKeys.length == _CHUNK_LISTING_LENGTH);
+
+			return folderKeys;
 		}
-
-		if (keys.length > 0) {
-			Arrays.sort(keys);
-
-			String headKey = keys[keys.length - 1];
-
-			int x = headKey.lastIndexOf(CharPool.SLASH);
-
-			return headKey.substring(x + 1);
-		}
-		else {
-			throw new NoSuchFileException(fileName);
+		catch (ServiceException se) {
+			throw new SystemException(se);
 		}
 	}
 
@@ -540,6 +584,8 @@ public class S3Store extends BaseStore {
 
 	private static final String _BUCKET_NAME = PropsUtil.get(
 		PropsKeys.DL_STORE_S3_BUCKET_NAME);
+
+	private static final int _CHUNK_LISTING_LENGTH = 10000;
 
 	private static final String _SECRET_KEY = PropsUtil.get(
 		PropsKeys.DL_STORE_S3_SECRET_KEY);

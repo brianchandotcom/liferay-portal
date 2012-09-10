@@ -1,0 +1,218 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>EditWCSubstructure1DefaultValuesTest</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">EditWCSubstructure1DefaultValuesTest</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/web/guest/home/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
+	<td>AUI Editable Min</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>mouseOver</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>link=Control Panel</td>
+	<td>Control Panel</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>link=Control Panel</td>
+	<td>Control Panel</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>link=Web Content</td>
+	<td>Web Content</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>link=Structures</td>
+	<td>Structures</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//input[@name='_15_keywords']</td>
+	<td>Search</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//input[@name='_15_keywords']</td>
+	<td>Substructure1</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//input[@value='Search']</td>
+	<td>Search</td>
+</tr>
+<tr>
+	<td>storeText</td>
+	<td>//td[2]/a</td>
+	<td>structureID</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[2]/a</td>
+	<td>${structureID}</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[3]/a</td>
+	<td>WC Substructure1 Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[4]/a</td>
+	<td>WC Substructure1 Description</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>Actions</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>Actions</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>Actions</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit Default Values')]/a</td>
+	<td>Edit Default Values</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit Default Values')]/a</td>
+	<td>Edit Default Values</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit Default Values')]/a</td>
+	<td>Edit Default Values</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//h1[@class='header-title']</td>
+	<td>Structure Default Values</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@id='_15_structureNameLabel']</td>
+	<td>WC Substructure1 Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//label[@for='_15_null_en_US']</td>
+	<td>Title</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//input[@id='_15_title_en_US']</td>
+	<td>Give the Web Content a Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//label[@for='Head']</td>
+	<td>Head</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//input[@id='Head']</td>
+	<td>Article's Title Here</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//label[@for='Subtitle']</td>
+	<td>Subtitle</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//input[@id='Subtitle']</td>
+	<td>Article's Subtitle Here</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//label[@for='Content']</td>
+	<td>Content</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//textarea[@id='Content']</td>
+	<td>Enter Article Content</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//label[@for='ImageBox']</td>
+	<td>ImageBox</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//label[@for='Image']</td>
+	<td>Image</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//label[@for='Summary']</td>
+	<td>Summary</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//label[@for='Photographer']</td>
+	<td>Photographer</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//label[@for='Documents and Media']</td>
+	<td>Documents and Media</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//label[@for='Extra']</td>
+	<td>Extra</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@id='_15_publishButton']</td>
+	<td>Save</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
+</tr>
+</tbody></table>
+</body>
+</html>

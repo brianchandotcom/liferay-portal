@@ -24,8 +24,14 @@ public class UnorderedListNode extends BaseListNode {
 	public UnorderedListNode() {
 	}
 
-	public UnorderedListNode(CollectionNode collectionNode) {
-		super(collectionNode);
+	public UnorderedListNode(BaseParentableNode parent) {
+		super(parent, null);
+	}
+
+	public UnorderedListNode(
+		BaseParentableNode parent, CollectionNode collectionNode) {
+
+		super(parent, collectionNode);
 	}
 
 	public UnorderedListNode(int tokenType) {

@@ -1222,8 +1222,7 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 		return user;
 	}
 
-	protected void updateLDAPUser(
-			User ldapUser, Contact ldapContact, User user)
+	protected void updateLDAPUser(User ldapUser, Contact ldapContact, User user)
 		throws PortalException, SystemException {
 
 		Contact contact = user.getContact();

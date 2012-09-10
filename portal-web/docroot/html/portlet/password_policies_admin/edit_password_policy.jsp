@@ -163,7 +163,6 @@ boolean defaultPolicy = BeanParamUtil.getBoolean(passwordPolicy, request, "defau
 					</aui:select>
 
 					<aui:select helpMessage="warning-time-help" name="warningTime">
-						<aui:option label="none" value="0" />
 
 						<%
 						for (int i = 7; i < 16; i++) {
@@ -175,6 +174,7 @@ boolean defaultPolicy = BeanParamUtil.getBoolean(passwordPolicy, request, "defau
 						}
 						%>
 
+						<aui:option label="do-not-warn" value="<%= PasswordPolicyConstants.DO_NOT_WARN %>" />
 					</aui:select>
 
 					<aui:input helpMessage="grace-limit-help" name="graceLimit" />

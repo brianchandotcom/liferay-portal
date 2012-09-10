@@ -84,6 +84,7 @@ import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.PasswordPolicy;
+import com.liferay.portal.model.PasswordPolicyConstants;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
@@ -2894,7 +2895,9 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Returns <code>true</code> if the user's password is expiring soon.
+	 * Returns <code>true</code> if the password policy is configured to warn
+	 * the user that her password is expiring and the remaining time until
+	 * expiration is equal or less than the configured warning time.
 	 *
 	 * @param  user the user
 	 * @return <code>true</code> if the user's password is expiring soon;
@@ -2909,7 +2912,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		PasswordPolicy passwordPolicy = user.getPasswordPolicy();
 
 		if (passwordPolicy.isExpireable() &&
-			(passwordPolicy.getWarningTime() != 0)) {
+			(passwordPolicy.getWarningTime() !=
+			    PasswordPolicyConstants.DO_NOT_WARN)) {
 
 			Date now = new Date();
 

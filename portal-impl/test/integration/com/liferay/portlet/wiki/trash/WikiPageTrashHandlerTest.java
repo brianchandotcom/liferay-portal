@@ -16,6 +16,7 @@ package com.liferay.portlet.wiki.trash;
 
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.BaseModel;
+import com.liferay.portal.model.ClassedModel;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
@@ -25,10 +26,12 @@ import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.trash.BaseTrashHandlerTestCase;
+import com.liferay.portlet.wiki.asset.WikiPageAssetRenderer;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.service.WikiNodeLocalServiceUtil;
 import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
 
+import org.junit.Assert;
 import org.junit.runner.RunWith;
 
 /**
@@ -41,6 +44,14 @@ import org.junit.runner.RunWith;
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class WikiPageTrashHandlerTest extends BaseTrashHandlerTestCase {
+
+	public void testTrashAndDelete() throws Exception {
+		Assert.assertTrue("This test does not apply", true);
+	}
+
+	public void testTrashAndRestoreDraft() throws Exception {
+		Assert.assertTrue("This test does not apply", true);
+	}
 
 	@Override
 	protected BaseModel<?> addBaseModel(
@@ -66,8 +77,13 @@ public class WikiPageTrashHandlerTest extends BaseTrashHandlerTestCase {
 	}
 
 	@Override
+	protected Long getAssetClassPK(ClassedModel classedModel) {
+		return WikiPageAssetRenderer.getClassPK((WikiPage)classedModel);
+	}
+
+	@Override
 	protected BaseModel<?> getBaseModel(long primaryKey) throws Exception {
-		return WikiPageLocalServiceUtil.getPage(primaryKey);
+		return WikiPageLocalServiceUtil.getPageByPageId(primaryKey);
 	}
 
 	@Override
@@ -91,7 +107,7 @@ public class WikiPageTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 		serviceContext = (ServiceContext)serviceContext.clone();
 
-		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
+		serviceContext.setWorkflowAction(WorkflowConstants.STATUS_APPROVED);
 
 		return WikiNodeLocalServiceUtil.addNode(
 			TestPropsValues.getUserId(), ServiceTestUtil.randomString(),
@@ -104,8 +120,14 @@ public class WikiPageTrashHandlerTest extends BaseTrashHandlerTestCase {
 	}
 
 	@Override
+	protected Long getTrashClassPK(ClassedModel classedModel) {
+		return ((WikiPage)classedModel).getResourcePrimKey();
+	}
+
+	@Override
 	protected void moveBaseModelToTrash(long primaryKey) throws Exception {
-		WikiPage wikiPage = WikiPageLocalServiceUtil.getPage(primaryKey);
+		WikiPage wikiPage = WikiPageLocalServiceUtil.getPageByPageId(
+			primaryKey);
 
 		WikiPageLocalServiceUtil.movePageToTrash(
 			TestPropsValues.getUserId(), wikiPage.getNodeId(),

@@ -27,6 +27,7 @@ import com.liferay.portlet.trash.BaseTrashHandlerTestCase;
 import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.service.WikiNodeLocalServiceUtil;
 
+import org.junit.Assert;
 import org.junit.runner.RunWith;
 
 /**
@@ -40,6 +41,14 @@ import org.junit.runner.RunWith;
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class WikiNodeTrashHandlerTest extends BaseTrashHandlerTestCase {
 
+	public void testTrashAndDelete() throws Exception {
+		Assert.assertTrue("This test does not apply", true);
+	}
+
+	public void testTrashAndRestoreDraft() throws Exception {
+		Assert.assertTrue("This test does not apply", true);
+	}
+
 	@Override
 	protected BaseModel<?> addBaseModel(
 			BaseModel<?> parentBaseModel, boolean approved,
@@ -48,7 +57,7 @@ public class WikiNodeTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 		serviceContext = (ServiceContext)serviceContext.clone();
 
-		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
 		return WikiNodeLocalServiceUtil.addNode(
 			TestPropsValues.getUserId(), getSearchKeywords(),
@@ -77,6 +86,16 @@ public class WikiNodeTrashHandlerTest extends BaseTrashHandlerTestCase {
 	@Override
 	protected String getSearchKeywords() {
 		return "Title";
+	}
+
+	@Override
+	protected boolean isAssetableModel() {
+		return false;
+	}
+
+	@Override
+	protected boolean isIndexableModel() {
+		return false;
 	}
 
 	@Override

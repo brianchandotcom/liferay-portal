@@ -171,6 +171,8 @@ if (step == 1) {
 				RoleSearchTerms searchTerms = (RoleSearchTerms)searchContainer.getSearchTerms();
 				%>
 
+				<div class="separator"><!-- --></div>
+
 				<liferay-ui:search-container-results>
 
 					<%

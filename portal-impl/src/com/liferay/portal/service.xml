@@ -1897,7 +1897,7 @@
 
 		<!-- PK fields -->
 
-		<column name="teamId" type="long" primary="true" />
+		<column name="teamId" type="long" primary="true" accessor="true" />
 
 		<!-- Audit fields -->
 

@@ -76,20 +76,6 @@ public class LayoutSetServiceImpl extends LayoutSetServiceBaseImpl {
 	}
 
 	public void updateLogo(
-			long groupId, boolean privateLayout, boolean logo, byte[] bytes)
-		throws PortalException, SystemException {
-
-		updateLogo(groupId, privateLayout, logo, bytes);
-	}
-
-	public void updateLogo(
-			long groupId, boolean privateLayout, boolean logo, File file)
-		throws PortalException, SystemException {
-
-		updateLogo(groupId, privateLayout, logo, file);
-	}
-
-	public void updateLogo(
 			long groupId, boolean privateLayout, boolean logo,
 			InputStream inputStream)
 		throws PortalException, SystemException {

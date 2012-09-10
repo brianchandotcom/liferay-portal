@@ -70,6 +70,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
@@ -405,6 +406,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		indexer.reindex(userIds);
 
 		PermissionCacheUtil.clearCache();
+
+		addDefaultRolesAndTeams(groupId, userIds);
 	}
 
 	/**
@@ -4965,6 +4968,72 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		userPersistence.update(user, false);
 
 		ticketLocalService.deleteTicket(ticket);
+	}
+
+	protected void addDefaultRolesAndTeams(long groupId, long[] userIds)
+		throws PortalException, SystemException {
+
+		Group group = groupLocalService.getGroup(groupId);
+
+		UnicodeProperties groupTypeSettings = group.getTypeSettingsProperties();
+
+		List<Role> defaultGroupRoles = new ArrayList();
+		List<Team> defaultGroupTeams = new ArrayList();
+
+		String[] rolesIds = StringUtil.split(
+			groupTypeSettings.getProperty("defaultGroupRoles"),
+				StringPool.COMMA);
+		String[] teamIds = StringUtil.split(
+			groupTypeSettings.getProperty("defaultGroupTeams"),
+				StringPool.COMMA);
+
+		for (int i = 0; i < rolesIds.length; i++) {
+			try {
+				defaultGroupRoles.add(
+					roleLocalService.getRole(Long.valueOf(rolesIds[i])));
+			}
+			catch (Exception e) {
+				_log.warn("The role " + rolesIds[i] + " was not found.");
+			}
+		}
+
+		for (int i = 0; i < teamIds.length; i++) {
+			try {
+				defaultGroupTeams.add(
+					teamLocalService.getTeam(Long.valueOf(teamIds[i])));
+			}
+			catch (Exception e) {
+				_log.warn("The team " + teamIds[i] + " was not found.");
+			}
+		}
+
+		for (long userId : userIds) {
+			Set<Long> roleIdSet = new HashSet<Long>();
+			Set<Long> teamIdSet = new HashSet<Long>();
+
+			for (Role role : defaultGroupRoles) {
+				if (!userPersistence.containsRole(userId, role.getRoleId())) {
+					roleIdSet.add(role.getRoleId());
+				}
+			}
+
+			long[] userRoleIds = ArrayUtil.toArray(
+				roleIdSet.toArray(new Long[roleIdSet.size()]));
+
+			userGroupRoleLocalService.addUserGroupRoles(
+				userId, groupId, userRoleIds);
+
+			for (Team team : defaultGroupTeams) {
+				if (!userPersistence.containsTeam(userId, team.getTeamId())) {
+					teamIdSet.add(team.getTeamId());
+				}
+			}
+
+			long[] userTeamIds = ArrayUtil.toArray(
+				teamIdSet.toArray(new Long[teamIdSet.size()]));
+
+			userPersistence.addTeams(userId, userTeamIds);
+		}
 	}
 
 	/**

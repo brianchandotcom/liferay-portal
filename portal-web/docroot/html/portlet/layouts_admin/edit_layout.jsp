@@ -80,7 +80,28 @@ if (layoutRevision != null) {
 String[] mainSections = PropsValues.LAYOUT_FORM_UPDATE;
 
 if (selLayout.isTypeArticle() || selLayout.isTypeEmbedded() || selLayout.isTypePortlet() || selLayout.isTypePanel()) {
-	mainSections = ArrayUtil.append(mainSections, "embedded-portlets");
+	LayoutTypePortlet selLayoutTypePortlet = (LayoutTypePortlet)selLayout.getLayoutType();
+
+	List<Portlet> embeddedPortlets = selLayoutTypePortlet.getAllPortlets();
+	List<String> portletIds = selLayoutTypePortlet.getPortletIds();
+
+	Iterator<Portlet> portletsItr = embeddedPortlets.iterator();
+
+	while (portletsItr.hasNext()) {
+		Portlet portlet = portletsItr.next();
+
+		String portletId = portlet.getPortletId();
+
+		if (portlet.isSystem() || portletIds.contains(portlet.getPortletId())) {
+			portletsItr.remove();
+		}
+	}
+
+	if (embeddedPortlets.size() > 0) {
+		request.setAttribute("edit_pages.jsp-embeddedPortlets", embeddedPortlets);
+
+		mainSections = ArrayUtil.append(mainSections, "embedded-portlets");
+	}
 }
 
 if (!group.isUser() && selLayout.isTypePortlet()) {

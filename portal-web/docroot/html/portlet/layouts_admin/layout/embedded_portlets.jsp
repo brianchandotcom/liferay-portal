@@ -20,25 +20,7 @@
 
 <%
 Layout selLayout = (Layout)request.getAttribute("edit_pages.jsp-selLayout");
-LayoutTypePortlet selLayoutTypePortlet = (LayoutTypePortlet)selLayout.getLayoutType();
-
-boolean isCustomizable = selLayoutTypePortlet.isCustomizable();
-
-// fetch portlets registered in the layout
-List<Portlet> portlets = selLayoutTypePortlet.getAllPortlets();
-List<String> portletIds = selLayoutTypePortlet.getPortletIds();
-
-Iterator<Portlet> portletsItr = portlets.iterator();
-
-while (portletsItr.hasNext()) {
-	Portlet portlet = portletsItr.next();
-
-	String portletId = portlet.getPortletId();
-
-	if (portlet.isSystem() || portletIds.contains(portlet.getPortletId())) {
-		portletsItr.remove();
-	}
-}
+List<Portlet> embeddedPortlets = (List<Portlet>)request.getAttribute("edit_pages.jsp-embeddedPortlets");
 
 PortletResponse portletResponse = renderResponse;
 
@@ -53,7 +35,7 @@ rowChecker.setRowIds("removeEmbeddedPortletIds");
 
 <h3><liferay-ui:message key="embedded-portlets" /></h3>
 
-<c:if test="<%= (portlets.size() > 0) && selLayout.isLayoutPrototypeLinkActive() %>">
+<c:if test="<%= selLayout.isLayoutPrototypeLinkActive() %>">
 
 	<%
 	rowChecker = null;
@@ -64,7 +46,7 @@ rowChecker.setRowIds("removeEmbeddedPortletIds");
 	</div>
 </c:if>
 
-<c:if test="<%= (portlets.size() > 0) && (rowChecker != null) %>">
+<c:if test="<%= (rowChecker != null) %>">
 	<div class="portlet-msg-alert">
 		<liferay-ui:message key="warning-selected-portlets-will-be-removed" />
 	</div>
@@ -72,11 +54,10 @@ rowChecker.setRowIds("removeEmbeddedPortletIds");
 
 <liferay-ui:search-container
 	deltaConfigurable="<%= false %>"
-	emptyResultsMessage="there-are-no-embedded-portlets-on-the-page"
 	rowChecker="<%= rowChecker %>"
 >
 
-	<liferay-ui:search-container-results results="<%= portlets %>" />
+	<liferay-ui:search-container-results results="<%= embeddedPortlets %>" />
 
 	<liferay-ui:search-container-row
 		className="com.liferay.portal.model.Portlet"

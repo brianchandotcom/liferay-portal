@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.util.PropsUtil;
-import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -41,7 +40,7 @@ public class ClusterLinkImpl extends ClusterBase implements ClusterLink {
 
 	@Override
 	public void destroy() {
-		if (!PropsValues.CLUSTER_LINK_ENABLED) {
+		if (!isEnabled()) {
 			return;
 		}
 
@@ -51,7 +50,7 @@ public class ClusterLinkImpl extends ClusterBase implements ClusterLink {
 	}
 
 	public List<Address> getLocalTransportAddresses() {
-		if (!PropsValues.CLUSTER_LINK_ENABLED) {
+		if (!isEnabled()) {
 			return Collections.emptyList();
 		}
 
@@ -66,7 +65,7 @@ public class ClusterLinkImpl extends ClusterBase implements ClusterLink {
 	}
 
 	public List<Address> getTransportAddresses(Priority priority) {
-		if (!PropsValues.CLUSTER_LINK_ENABLED) {
+		if (!isEnabled()) {
 			return Collections.emptyList();
 		}
 
@@ -76,7 +75,7 @@ public class ClusterLinkImpl extends ClusterBase implements ClusterLink {
 	}
 
 	public void sendMulticastMessage(Message message, Priority priority) {
-		if (!PropsValues.CLUSTER_LINK_ENABLED) {
+		if (!isEnabled()) {
 			return;
 		}
 
@@ -93,7 +92,7 @@ public class ClusterLinkImpl extends ClusterBase implements ClusterLink {
 	public void sendUnicastMessage(
 		Address address, Message message, Priority priority) {
 
-		if (!PropsValues.CLUSTER_LINK_ENABLED) {
+		if (!isEnabled()) {
 			return;
 		}
 

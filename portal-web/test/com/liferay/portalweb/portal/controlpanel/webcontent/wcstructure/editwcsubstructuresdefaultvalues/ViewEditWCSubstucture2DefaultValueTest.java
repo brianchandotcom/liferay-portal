@@ -45,17 +45,17 @@ public class ViewEditWCSubstucture2DefaultValueTest extends BaseTestCase {
 			selenium.getText("//span[@title='Add']/ul/li/strong/a/span"));
 		selenium.clickAt("//span[@title='Add']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Add"));
-		selenium.waitForText("//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'WC SubStructure2 Name')]/a",
-			"WC SubStructure2 Name");
-		assertEquals(RuntimeVariables.replace("WC SubStructure2 Name"),
+		selenium.waitForText("//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'WC Substructure2 Name')]/a",
+			"WC Substructure2 Name");
+		assertEquals(RuntimeVariables.replace("WC Substructure2 Name"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'WC SubStructure2 Name')]/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'WC SubStructure2 Name')]/a",
-			RuntimeVariables.replace("WC SubStructure2 Name"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'WC Substructure2 Name')]/a"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'WC Substructure2 Name')]/a",
+			RuntimeVariables.replace("WC Substructure2 Name"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Give the Web Content a Name"),
 			selenium.getText("//h1[@class='header-title']"));
-		assertEquals(RuntimeVariables.replace("WC SubStructure2 Name"),
+		assertEquals(RuntimeVariables.replace("WC Substructure2 Name"),
 			selenium.getText("//span[@id='_15_structureNameLabel']"));
 		assertEquals(RuntimeVariables.replace("Title (Required)"),
 			selenium.getText("//label[@for='_15_null_en_US']"));

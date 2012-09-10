@@ -46,14 +46,16 @@ public class AddWCSubstructure1Test extends BaseTestCase {
 			RuntimeVariables.replace("Add Structure"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_15_name_en_US']",
-			RuntimeVariables.replace("WC SubStructure1 Name"));
+			RuntimeVariables.replace("WC Substructure1 Name"));
 		selenium.type("//textarea[@id='_15_description_en_US']",
-			RuntimeVariables.replace("WC SubStructure1 Description"));
+			RuntimeVariables.replace("WC Substructure1 Description"));
 		selenium.waitForVisible("//input[@value='Select']");
 		selenium.clickAt("//input[@value='Select']",
 			RuntimeVariables.replace("Select"));
-		selenium.waitForVisible("//iframe");
-		selenium.selectFrame("//iframe");
+		selenium.waitForVisible("//iframe[@id='_15_parentStructureSelector']");
+		selenium.selectFrame("//iframe[@id='_15_parentStructureSelector']");
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/liferay/search_container.js')]");
 		selenium.waitForVisible("//input[@name='_15_keywords']");
 		selenium.type("//input[@name='_15_keywords']",
 			RuntimeVariables.replace("WC Structure1 Name"));
@@ -64,8 +66,7 @@ public class AddWCSubstructure1Test extends BaseTestCase {
 			selenium.getText("//td[2]/a"));
 		assertEquals(RuntimeVariables.replace("WC Structure1 Description"),
 			selenium.getText("//td[3]/a"));
-		selenium.clickAt("//td[2]/a",
-			RuntimeVariables.replace("WC Structure1 Name"));
+		selenium.click("//td[2]/a");
 		selenium.selectFrame("relative=top");
 		assertEquals(RuntimeVariables.replace("WC Structure1 Name"),
 			selenium.getText("//a[@id='_15_parentStructureName']"));

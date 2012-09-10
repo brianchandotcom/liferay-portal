@@ -61,12 +61,12 @@
 <tr>
 	<td>type</td>
 	<td>//input[@id='_15_name_en_US']</td>
-	<td>WC SubStructure1 Name</td>
+	<td>WC Substructure1 Name</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>//textarea[@id='_15_description_en_US']</td>
-	<td>WC SubStructure1 Description</td>
+	<td>WC Substructure1 Description</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -80,18 +80,23 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//iframe</td>
+	<td>//iframe[@id='_15_parentStructureSelector']</td>
 	<td>Structure</td>
 </tr>
 <tr>
 	<td>selectFrame</td>
-	<td>//iframe</td>
+	<td>//iframe[@id='_15_parentStructureSelector']</td>
 	<td>Structure</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/liferay/search_container.js')]</td>
+	<td>Search Container</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
 	<td>//input[@name='_15_keywords']</td>
-	<td></td>
+	<td>Search Field</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -114,14 +119,14 @@
 	<td>WC Structure1 Description</td>
 </tr>
 <tr>
-	<td>clickAt</td>
+	<td>click</td>
 	<td>//td[2]/a</td>
 	<td>WC Structure1 Name</td>
 </tr>
 <tr>
 	<td>selectFrame</td>
 	<td>relative=top</td>
-	<td></td>
+	<td>top</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -136,7 +141,7 @@
 <tr>
 	<td>waitForVisible</td>
 	<td>//input[@id='_15_structure_el0_name']</td>
-	<td></td>
+	<td>Row Field</td>
 </tr>
 <tr>
 	<td>type</td>

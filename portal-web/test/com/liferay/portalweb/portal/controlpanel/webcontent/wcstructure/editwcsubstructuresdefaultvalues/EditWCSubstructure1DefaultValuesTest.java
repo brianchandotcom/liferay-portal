@@ -45,7 +45,7 @@ public class EditWCSubstructure1DefaultValuesTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.waitForVisible("//input[@name='_15_keywords']");
 		selenium.type("//input[@name='_15_keywords']",
-			RuntimeVariables.replace("SubStructure1"));
+			RuntimeVariables.replace("Substructure1"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
@@ -54,9 +54,9 @@ public class EditWCSubstructure1DefaultValuesTest extends BaseTestCase {
 		RuntimeVariables.setValue("structureID", structureID);
 		assertEquals(RuntimeVariables.replace("${structureID}"),
 			selenium.getText("//td[2]/a"));
-		assertEquals(RuntimeVariables.replace("WC SubStructure1 Name"),
+		assertEquals(RuntimeVariables.replace("WC Substructure1 Name"),
 			selenium.getText("//td[3]/a"));
-		assertEquals(RuntimeVariables.replace("WC SubStructure1 Description"),
+		assertEquals(RuntimeVariables.replace("WC Substructure1 Description"),
 			selenium.getText("//td[4]/a"));
 		selenium.waitForVisible("//span[@title='Actions']/ul/li/strong/a/span");
 		assertEquals(RuntimeVariables.replace("Actions"),
@@ -73,7 +73,7 @@ public class EditWCSubstructure1DefaultValuesTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Structure Default Values"),
 			selenium.getText("//h1[@class='header-title']"));
-		assertEquals(RuntimeVariables.replace("WC SubStructure1 Name"),
+		assertEquals(RuntimeVariables.replace("WC Substructure1 Name"),
 			selenium.getText("//span[@id='_15_structureNameLabel']"));
 		assertEquals(RuntimeVariables.replace("Title"),
 			selenium.getText("//label[@for='_15_null_en_US']"));

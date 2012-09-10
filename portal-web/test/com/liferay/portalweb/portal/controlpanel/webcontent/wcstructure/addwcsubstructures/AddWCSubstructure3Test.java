@@ -46,14 +46,16 @@ public class AddWCSubstructure3Test extends BaseTestCase {
 			RuntimeVariables.replace("Add Structure"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_15_name_en_US']",
-			RuntimeVariables.replace("WC SubStructure3 Name"));
+			RuntimeVariables.replace("WC Substructure3 Name"));
 		selenium.type("//textarea[@id='_15_description_en_US']",
-			RuntimeVariables.replace("WC SubStructure3 Description"));
+			RuntimeVariables.replace("WC Substructure3 Description"));
 		selenium.waitForVisible("//input[@value='Select']");
 		selenium.clickAt("//input[@value='Select']",
 			RuntimeVariables.replace("Select"));
-		selenium.waitForVisible("//iframe");
-		selenium.selectFrame("//iframe");
+		selenium.waitForVisible("//iframe[@id='_15_parentStructureSelector']");
+		selenium.selectFrame("//iframe[@id='_15_parentStructureSelector']");
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/liferay/search_container.js')]");
 		selenium.waitForVisible("//input[@name='_15_keywords']");
 		selenium.type("//input[@name='_15_keywords']",
 			RuntimeVariables.replace("WC Structure1 Name"));

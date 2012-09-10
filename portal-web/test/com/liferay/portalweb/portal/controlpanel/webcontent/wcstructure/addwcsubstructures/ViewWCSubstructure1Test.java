@@ -44,7 +44,7 @@ public class ViewWCSubstructure1Test extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.waitForVisible("//input[@name='_15_keywords']");
 		selenium.type("//input[@name='_15_keywords']",
-			RuntimeVariables.replace("SubStructure1"));
+			RuntimeVariables.replace("Substructure1"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
@@ -53,19 +53,19 @@ public class ViewWCSubstructure1Test extends BaseTestCase {
 		RuntimeVariables.setValue("structureID", structureID);
 		assertEquals(RuntimeVariables.replace("${structureID}"),
 			selenium.getText("//td[2]/a"));
-		assertEquals(RuntimeVariables.replace("WC SubStructure1 Name"),
+		assertEquals(RuntimeVariables.replace("WC Substructure1 Name"),
 			selenium.getText("//td[3]/a"));
-		assertEquals(RuntimeVariables.replace("WC SubStructure1 Description"),
+		assertEquals(RuntimeVariables.replace("WC Substructure1 Description"),
 			selenium.getText("//td[4]/a"));
 		selenium.clickAt("//td[3]/a",
-			RuntimeVariables.replace("WC SubStructure1Name"));
+			RuntimeVariables.replace("WC Substructure1 Name"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Web Content"),
 			selenium.getText("//span[@class='portlet-title-text']"));
 		assertTrue(selenium.isPartialText(
 				"//div[@id='cpContextPanelTemplate']",
 				"Web Content can be any content you would like to add to a site, such as articles, a FAQ, or a news item. Administrators can manage content, as well as assign user roles and permissions. Users may add, edit, approve, or view content depending on their role."));
-		assertEquals(RuntimeVariables.replace("WC SubStructure1 Name"),
+		assertEquals(RuntimeVariables.replace("WC Substructure1 Name"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace("Other Languages (0)"),
 			selenium.getText(
@@ -73,9 +73,9 @@ public class ViewWCSubstructure1Test extends BaseTestCase {
 		assertTrue(selenium.isPartialText(
 				"//fieldset/div/div/div[contains(.,'ID')]",
 				RuntimeVariables.getValue("structureID")));
-		assertEquals("WC SubStructure1 Name",
+		assertEquals("WC Substructure1 Name",
 			selenium.getValue("//input[@id='_15_name_en_US']"));
-		assertEquals("WC SubStructure1 Description",
+		assertEquals("WC Substructure1 Description",
 			selenium.getValue("//textarea[@id='_15_description_en_US']"));
 		assertEquals(RuntimeVariables.replace("Other Languages (0)"),
 			selenium.getText(

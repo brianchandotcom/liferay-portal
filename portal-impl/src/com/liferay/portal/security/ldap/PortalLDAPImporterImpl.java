@@ -1181,7 +1181,7 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 			}
 		}
 
-		updateUserProfile(ldapUser.getUser(), ldapUser.getContact(), user);
+		updateLDAPUser(ldapUser.getUser(), ldapUser.getContact(), user);
 
 		user = UserLocalServiceUtil.updateUser(
 			user.getUserId(), password, StringPool.BLANK, StringPool.BLANK,
@@ -1222,46 +1222,34 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 		return user;
 	}
 
-	protected void updateUserProfile(
-			User importedUser, Contact contact, User portalUser)
+	protected void updateLDAPUser(
+			User ldapUser, Contact ldapContact, User user)
 		throws PortalException, SystemException {
 
-		Contact portalUserContact = portalUser.getContact();
+		Contact contact = user.getContact();
 
-		contact.setAimSn(GetterUtil.getString(portalUserContact.getAimSn()));
-		contact.setFacebookSn(
-			GetterUtil.getString(portalUserContact.getFacebookSn()));
-		contact.setIcqSn(GetterUtil.getString(portalUserContact.getIcqSn()));
-		contact.setJabberSn(
-			GetterUtil.getString(portalUserContact.getJabberSn()));
-		contact.setMale(GetterUtil.getBoolean(portalUserContact.getMale()));
-		contact.setMsnSn(GetterUtil.getString(portalUserContact.getMsnSn()));
-		contact.setMySpaceSn(
-			GetterUtil.getString(portalUserContact.getMySpaceSn()));
-		contact.setPrefixId(
-			GetterUtil.getInteger(portalUserContact.getPrefixId()));
-		contact.setSkypeSn(
-			GetterUtil.getString(portalUserContact.getSkypeSn()));
-		contact.setSmsSn(GetterUtil.getString(portalUserContact.getSmsSn()));
-		contact.setSuffixId(
-			GetterUtil.getInteger(portalUserContact.getSuffixId()));
-		contact.setTwitterSn(
-			GetterUtil.getString(portalUserContact.getTwitterSn()));
-		contact.setYmSn(GetterUtil.getString(portalUserContact.getYmSn()));
+		ldapContact.setAimSn(GetterUtil.getString(contact.getAimSn()));
+		ldapContact.setFacebookSn(
+			GetterUtil.getString(contact.getFacebookSn()));
+		ldapContact.setIcqSn(GetterUtil.getString(contact.getIcqSn()));
+		ldapContact.setJabberSn(GetterUtil.getString(contact.getJabberSn()));
+		ldapContact.setMale(GetterUtil.getBoolean(contact.getMale()));
+		ldapContact.setMsnSn(GetterUtil.getString(contact.getMsnSn()));
+		ldapContact.setMySpaceSn(GetterUtil.getString(contact.getMySpaceSn()));
+		ldapContact.setPrefixId(GetterUtil.getInteger(contact.getPrefixId()));
+		ldapContact.setSkypeSn(GetterUtil.getString(contact.getSkypeSn()));
+		ldapContact.setSmsSn(GetterUtil.getString(contact.getSmsSn()));
+		ldapContact.setSuffixId(GetterUtil.getInteger(contact.getSuffixId()));
+		ldapContact.setTwitterSn(GetterUtil.getString(contact.getTwitterSn()));
+		ldapContact.setYmSn(GetterUtil.getString(contact.getYmSn()));
 
-		importedUser.setComments(
-			GetterUtil.getString(portalUser.getComments()));
-		importedUser.setGreeting(
-			GetterUtil.getString(portalUser.getGreeting()));
-		importedUser.setJobTitle(
-			GetterUtil.getString(portalUser.getJobTitle()));
-		importedUser.setLanguageId(
-			GetterUtil.getString(portalUser.getLanguageId()));
-		importedUser.setMiddleName(
-			GetterUtil.getString(portalUser.getMiddleName()));
-		importedUser.setOpenId(GetterUtil.getString(portalUser.getOpenId()));
-		importedUser.setTimeZoneId(
-			GetterUtil.getString(portalUser.getTimeZoneId()));
+		ldapUser.setComments(GetterUtil.getString(user.getComments()));
+		ldapUser.setGreeting(GetterUtil.getString(user.getGreeting()));
+		ldapUser.setJobTitle(GetterUtil.getString(user.getJobTitle()));
+		ldapUser.setLanguageId(GetterUtil.getString(user.getLanguageId()));
+		ldapUser.setMiddleName(GetterUtil.getString(user.getMiddleName()));
+		ldapUser.setOpenId(GetterUtil.getString(user.getOpenId()));
+		ldapUser.setTimeZoneId(GetterUtil.getString(user.getTimeZoneId()));
 	}
 
 	private static final String _IMPORT_BY_GROUP = "group";

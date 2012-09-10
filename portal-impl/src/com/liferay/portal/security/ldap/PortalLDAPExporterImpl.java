@@ -49,40 +49,6 @@ import javax.naming.ldap.LdapContext;
  */
 public class PortalLDAPExporterImpl implements PortalLDAPExporter {
 
-	public void deleteFromLDAP(long ldapServerId, long companyId, long userId)
-		throws Exception {
-
-		User user = UserLocalServiceUtil.getUser(userId);
-
-		LdapContext ldapContext = PortalLDAPUtil.getContext(
-			ldapServerId, companyId);
-
-		try {
-			if (ldapContext == null) {
-				return;
-			}
-
-			Binding binding = PortalLDAPUtil.getUser(
-				ldapServerId, user.getCompanyId(), user.getScreenName(),
-				user.getEmailAddress());
-
-			if (binding != null) {
-				Name name = new CompositeName();
-
-				name.add(
-					PortalLDAPUtil.getNameInNamespace(
-						ldapServerId, companyId, binding));
-
-				ldapContext.unbind(name);
-			}
-		}
-		finally {
-			if (ldapContext != null) {
-				ldapContext.close();
-			}
-		}
-	}
-
 	public void exportToLDAP(
 			Contact contact, Map<String, Serializable> contactExpandoAttributes)
 		throws Exception {

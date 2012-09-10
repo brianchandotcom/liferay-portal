@@ -31,11 +31,6 @@ import java.util.Map;
  */
 public class PortalLDAPExporterUtil {
 
-	public static void deleteFromLDAP(
-			long ldapServerId, long companyId, long userId) throws Exception {
-		getPortalLDAPExporter().deleteFromLDAP(ldapServerId, companyId, userId);
-	}
-
 	public static void exportToLDAP(
 			Contact contact, Map<String, Serializable> contactExpandoAttributes)
 		throws Exception {

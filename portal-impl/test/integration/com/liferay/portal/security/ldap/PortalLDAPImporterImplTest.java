@@ -285,8 +285,33 @@ public class PortalLDAPImporterImplTest {
 		User user = UserLocalServiceUtil.fetchUser(_userId);
 
 		if (user != null) {
-			PortalLDAPExporterUtil.deleteFromLDAP(
-				_ldapServerId, _companyId, user.getUserId());
+			LdapContext ldapContext = PortalLDAPUtil.getContext(
+				_ldapServerId, _companyId);
+
+			try {
+				if (ldapContext == null) {
+					return;
+				}
+
+				Binding binding = PortalLDAPUtil.getUser(
+					ldapServerId, user.getCompanyId(), user.getScreenName(),
+					user.getEmailAddress());
+
+				if (binding != null) {
+					Name name = new CompositeName();
+
+					name.add(
+						PortalLDAPUtil.getNameInNamespace(
+							ldapServerId, companyId, binding));
+
+					ldapContext.unbind(name);
+				}
+			}
+			finally {
+				if (ldapContext != null) {
+					ldapContext.close();
+				}
+			}
 		}
 	}
 

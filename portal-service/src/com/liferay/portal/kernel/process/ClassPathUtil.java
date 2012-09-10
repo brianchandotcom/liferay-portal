@@ -35,6 +35,7 @@ import java.net.URL;
 import java.net.URLConnection;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -233,6 +234,8 @@ public class ClassPathUtil {
 		}
 
 		File[] files = dir.listFiles();
+
+		Arrays.sort(files);
 
 		StringBundler sb = new StringBundler(files.length * 2);
 

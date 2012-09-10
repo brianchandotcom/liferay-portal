@@ -42,6 +42,9 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import javax.naming.Binding;
+import javax.naming.CompositeName;
+import javax.naming.Name;
 import javax.naming.ldap.LdapContext;
 
 import javax.portlet.PortletPreferences;
@@ -294,7 +297,7 @@ public class PortalLDAPImporterImplTest {
 				}
 
 				Binding binding = PortalLDAPUtil.getUser(
-					ldapServerId, user.getCompanyId(), user.getScreenName(),
+					_ldapServerId, user.getCompanyId(), user.getScreenName(),
 					user.getEmailAddress());
 
 				if (binding != null) {
@@ -302,7 +305,7 @@ public class PortalLDAPImporterImplTest {
 
 					name.add(
 						PortalLDAPUtil.getNameInNamespace(
-							ldapServerId, companyId, binding));
+							_ldapServerId, _companyId, binding));
 
 					ldapContext.unbind(name);
 				}

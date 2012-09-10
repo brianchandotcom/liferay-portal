@@ -912,18 +912,6 @@ public class WebDriverToSeleniumBridge
 	}
 
 	public void select(String selectLocator, String optionLocator) {
-		if (optionLocator.startsWith("index=") ||
-			optionLocator.startsWith("value=")) {
-
-			throw new UnsupportedOperationException();
-		}
-
-		String label = optionLocator;
-
-		if (optionLocator.startsWith("label=")) {
-			label = optionLocator.substring(6);
-		}
-
 		WebElement webElement = getWebElement(selectLocator);
 
 		webElement.click();
@@ -932,27 +920,60 @@ public class WebDriverToSeleniumBridge
 
 		List<WebElement> options = select.getOptions();
 
-		for (WebElement option : options) {
-			String optionText = option.getText();
+		WebElement optionWebElement = null;
 
-			if (!optionText.equals(label)) {
-				continue;
+		if (optionLocator.startsWith("index=")) {
+			String index = optionLocator.substring(6);
+
+			int optionIndex = GetterUtil.getInteger(index);
+
+			optionWebElement = options.get(optionIndex);
+		}
+		else if (optionLocator.startsWith("value=")) {
+			String value = optionLocator.substring(6);
+
+			for (WebElement option : options) {
+				String optionValue = option.getAttribute("value");
+
+				if (optionValue.equals(value)) {
+					optionWebElement = option;
+
+					break;
+				}
+			}
+		}
+		else {
+			String label;
+
+			if (optionLocator.startsWith("label=")) {
+				label = optionLocator.substring(6);
+			}
+			else {
+				label = optionLocator;
 			}
 
-			WrapsDriver wrapsDriver = (WrapsDriver)option;
+			for (WebElement option : options) {
+				String optionText = option.getText();
 
-			WebDriver webDriver = wrapsDriver.getWrappedDriver();
+				if (optionText.equals(label)) {
+					optionWebElement = option;
 
-			Actions actions = new Actions(webDriver);
-
-			actions.doubleClick(option);
-
-			Action action = actions.build();
-
-			action.perform();
-
-			break;
+					break;
+				}
+			}
 		}
+
+		WrapsDriver wrapsDriver = (WrapsDriver)optionWebElement;
+
+		WebDriver webDriver = wrapsDriver.getWrappedDriver();
+
+		Actions actions = new Actions(webDriver);
+
+		actions.doubleClick(optionWebElement);
+
+		Action action = actions.build();
+
+		action.perform();
 	}
 
 	public void selectFrame(String locator) {

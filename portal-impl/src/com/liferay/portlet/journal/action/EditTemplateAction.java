@@ -261,7 +261,6 @@ public class EditTemplateAction extends PortletAction {
 		String xsl = getXsl(uploadPortletRequest);
 		String xslContent = ParamUtil.getString(
 			uploadPortletRequest, "xslContent");
-
 		boolean formatXsl = ParamUtil.getBoolean(
 			uploadPortletRequest, "formatXsl");
 

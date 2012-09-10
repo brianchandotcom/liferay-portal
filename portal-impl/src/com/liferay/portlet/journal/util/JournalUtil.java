@@ -991,9 +991,7 @@ public class JournalUtil {
 		return curContent;
 	}
 
-	public static String validateXSD(String xsd)
-		throws PortalException {
-
+	public static String validateXSD(String xsd) throws PortalException {
 		try {
 			Document document = SAXReaderUtil.read(xsd);
 

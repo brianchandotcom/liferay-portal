@@ -2747,6 +2747,7 @@ AUI.add(
 				var instance = this;
 
 				var form = instance.getPrincipalForm();
+
 				var currentXSD = instance.getStructureXSD();
 
 				var structureXSDInput = instance.getByName(form, 'structureXSD');

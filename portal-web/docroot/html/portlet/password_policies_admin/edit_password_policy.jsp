@@ -174,6 +174,7 @@ boolean defaultPolicy = BeanParamUtil.getBoolean(passwordPolicy, request, "defau
 						}
 						%>
 
+						<aui:option label="do-not-warn" value="<%= PasswordPolicyConstants.DO_NOT_WARN %>" />
 					</aui:select>
 
 					<aui:input helpMessage="grace-limit-help" name="graceLimit" />

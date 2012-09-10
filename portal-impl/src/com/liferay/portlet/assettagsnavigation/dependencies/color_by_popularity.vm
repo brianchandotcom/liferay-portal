@@ -41,10 +41,10 @@
 
 			#set ($popularity = (1 + (($maxCount - ($maxCount - ($count - $minCount))) * $multiplier)))
 
-			#if ($popularity <= 1)
+			#if ($popularity < 1)
 				#set ($color = "green")
-			#elseif ($popularity > 1 && $popularity <= 2)
-				#set ($color = "yellow")
+			#elseif ($popularity >= 1 && $popularity < 2)
+				#set ($color = "orange")
 			#else
 				#set ($color = "red")
 			#end
@@ -59,4 +59,6 @@
 			</li>
 		#end
 	</ul>
+
+	<br style="clear: both;">
 #end

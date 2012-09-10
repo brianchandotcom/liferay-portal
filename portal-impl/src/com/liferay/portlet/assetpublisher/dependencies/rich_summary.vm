@@ -18,7 +18,8 @@
 		</h3>
 
 		#metadata_field("tags")
-		#metadata_field("create-date") | #metadata_field("view-count")
+		#metadata_field("create-date")
+		#metadata_field("view-count")
 
 		<div class="asset-content">
 			#social_bookmarks()
@@ -106,6 +107,7 @@
 				$taglibLiferay.assetTagsSummary($entry.getClassName(), $entry.getClassPK(), "", "", $portletURL)
 
 			#elseif ($metadataFieldName.equals("view-count"))
+				$taglibLiferay.icon("history", false, "", $taglibPrintURL)
 				$entry.getViewCount() #language("views")
 			#end
 		</span>

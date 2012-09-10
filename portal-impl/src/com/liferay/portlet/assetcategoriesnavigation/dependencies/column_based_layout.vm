@@ -23,7 +23,7 @@
 						#set ($categoryChildren = $assetCategoryService.getChildCategories($category.getCategoryId(), -1, -1, null))
 						$categoryURL.setParameter("resetCur", "true")
 						$categoryURL.setParameter("categoryId", "$category.getCategoryId()")
-						<a href="$categoryURL">$category.getName() ($categoryChildren.size())</a>
+						<a href="$categoryURL">$category.getName() ($categoryChildren.size() #language("children"))</a>
 					</li>
 				#end
 			</ul>

@@ -2,17 +2,10 @@
 
 <root>
 	<template>
-		<template-key><![CDATA[asset-publisher-custom-abstracts-vm]]></template-key>
-		<name><![CDATA[Asset Publisher Custom Abstracts]]></name>
-		<description><![CDATA[Asset Publisher Custom Abstracts]]></description>
+		<template-key><![CDATA[asset-publisher-rich-summary-vm]]></template-key>
+		<name><![CDATA[Rich Summary]]></name>
+		<description><![CDATA[Rich Summary displays a short text of the asset, its related assets and icons for flagging, print and edit. It can also show for each asset its social bookmarks and ratings.]]></description>
 		<language><![CDATA[vm]]></language>
-		<script-file>com/liferay/portlet/assetpublisher/dependencies/custom_abstracts.vm</script-file>
-	</template>
-	<template>
-		<template-key><![CDATA[asset-publisher-custom-custom-title-list-vm]]></template-key>
-		<name><![CDATA[Asset Publisher Custom Title List]]></name>
-		<description><![CDATA[Asset Publisher Custom Title List]]></description>
-		<language><![CDATA[vm]]></language>
-		<script-file>com/liferay/portlet/assetpublisher/dependencies/custom_title_list.vm</script-file>
+		<script-file>com/liferay/portlet/assetpublisher/dependencies/rich_summary.vm</script-file>
 	</template>
 </root>

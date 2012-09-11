@@ -51,4 +51,9 @@ public class SiteMapPortletDisplayTemplateHandler
 		return "com.liferay.portlet.sitemap";
 	}
 
+	@Override
+	protected String getDefaultTemplatesConfigPath() {
+		return PropsValues.SITES_SITEMAP_DISPLAY_STYLES_TEMPLATE_DEFAULT_CONFIG;
+	}
+
 }

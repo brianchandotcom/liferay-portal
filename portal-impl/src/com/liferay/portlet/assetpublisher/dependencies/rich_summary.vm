@@ -1,0 +1,158 @@
+#foreach ($entry in $entries)
+	#set ($assetRenderer = $entry.getAssetRenderer())
+	#set ($viewURL = $assetPublisherHelper.getAssetViewURL($renderRequest, $renderResponse, $entry))
+
+	#if (!$assetLinkBehavior.equals("showFullContent"))
+		#set ($viewURL = $assetRenderer.getURLViewInContext($renderRequest, $renderResponse, $viewURL))
+	#end
+
+	<div class="asset-abstract">
+		<div class="lfr-meta-actions asset-actions">
+			#print_icon()
+			#flags()
+			#edit_icon()
+		</div>
+
+		<h3 class="asset-title">
+			<a href="$viewURL"><img alt="" src="$assetRenderer.getIconPath($renderRequest)" /> $entry.getTitle($locale)</a>
+		</h3>
+
+		#metadata_field("tags")
+		#metadata_field("create-date")
+		#metadata_field("view-count")
+
+		<div class="asset-content">
+			#social_bookmarks()
+
+			<div class="asset-summary">
+				#metadata_field("author")
+				$assetRenderer.getSummary($locale)
+				<a href="$viewURL">#language("read-more") <span class="aui-helper-hidden-accessible">#language("about") $entry.getTitle($locale)</span> &raquo; </a>
+			</div>
+
+			#ratings()
+			#related_assets()
+			#discussion()
+
+		</div>
+	</div>
+#end
+
+## Asset Publisher Macros
+
+#macro (discussion)
+	#if ($validator.isNotNull($assetRenderer.getDiscussionPath()) && $enableComments.equals("true"))
+		<br />
+		#set ($discussionURL = $renderResponse.createActionURL())
+		$discussionURL.setParameter("struts_action", "/asset_publisher/$assetRenderer.getDiscussionPath()")
+		$taglibLiferay.discussion($entry.getClassName(), $entry.getClassPK(), $discussionURL.toString(), "fm$entry.getClassPK()", false, $enableCommentRatings.equals("true"), $portalUtil.getCurrentURL($request), $assetRenderer.getTitle($locale), $assetRenderer.getUserId())
+	#end
+#end
+
+#macro (edit_icon)
+	#set ($redirectURL = $renderResponse.createRenderURL())
+	$redirectURL.setWindowState($taglibLiferay.getWindowState("pop_up"))
+	$redirectURL.setParameter("struts_action", "/asset_publisher/add_asset_redirect")
+	#set ($editPortletURL = $assetUtil.getURLEdit($assetRenderer, $renderRequest, $renderResponse, true, $redirectURL, $taglibLiferay.getWindowState("pop_up")))
+
+	#if ($editPortletURL)
+		#set ($title = $languageUtil.format($locale, "edit-x", $htmlUtil.escape($assetRenderer.getTitle($locale))))
+		#set ($taglibEditURL = "javascript:Liferay.Util.openWindow({dialog: {width: 960}, id:'" + $renderResponse.getNamespace() + "editAsset', title: '" + $title + "', uri:'" + $htmlUtil.escapeURL($editPortletURL.toString()) + "'});")
+		$taglibLiferay.icon("edit", false, $title, $taglibEditURL)
+	#end
+#end
+
+#macro (flags)
+	#if ($enableFlags.equals("true"))
+		$taglibLiferay.flags($entry.getClassName(), $entry.getClassPK(), $assetRenderer.getTitle($locale), true, "", $assetRenderer.getUserId())
+	#end
+#end
+
+#macro (journal_article $templateId)
+	#if ($entry.getClassName().equals("com.liferay.portlet.journal.model.JournalArticle"))
+		#set ($article = $assetRenderer.getArticle())
+		$taglibLiferay.journalArticle($article.getArticleId(), $article.getGroupId(), $templateId)
+	#end
+#end
+
+#macro (metadata_field $metadataFieldName)
+	#set ($dateFormat = "dd MMM yyyy - HH:mm:ss")
+	#set ($metadataFieldArray = $stringUtil.split($metadataFields))
+	#set ($portletURL = $renderResponse.createRenderURL())
+
+	#if ($arrayUtil.contains($metadataFieldArray, $metadataFieldName))
+		<span class="metadata-entry metadata-$metadataFieldName">
+			#if ($metadataFieldName.equals("author"))
+				#language("by") $portalUtil.getUserName($assetRenderer.getUserId(), $assetRenderer.getUserName())
+
+			#elseif ($metadataFieldName.equals("categories"))
+				$taglibLiferay.assetCategoriesSummary($entry.getClassName(), $entry.getClassPK(), "", $portletURL)
+
+			#elseif ($metadataFieldName.equals("create-date"))
+				$dateTool.format($dateFormat, $entry.getCreateDate())
+
+			#elseif ($metadataFieldName.equals("expiration-date"))
+				$dateTool.format($dateFormat, $entry.getExpirationDate())
+
+			#elseif ($metadataFieldName.equals("modified-date"))
+				$dateTool.format($dateFormat, $entry.getModifiedDate())
+
+			#elseif ($metadataFieldName.equals("priority"))
+				$entry.getPriority()
+
+			#elseif ($metadataFieldName.equals("publish-date"))
+				$dateTool.format($dateFormat, $entry.getPublishDate())
+
+			#elseif ($metadataFieldName.equals("tags"))
+				$taglibLiferay.assetTagsSummary($entry.getClassName(), $entry.getClassPK(), "", "", $portletURL)
+
+			#elseif ($metadataFieldName.equals("view-count"))
+				$taglibLiferay.icon("history", false, "", $taglibPrintURL)
+				$entry.getViewCount() #language("views")
+			#end
+		</span>
+	#end
+#end
+
+#macro (print_icon)
+	#if ($enablePrint.equals("true"))
+		#set ($printPortletURL = $renderResponse.createRenderURL())
+		$printPortletURL.setWindowState($taglibLiferay.getWindowState("pop_up"))
+		$printPortletURL.setParameter("struts_action", "/asset_publisher/view_content")
+		$printPortletURL.setParameter("assetEntryId", "$entry.getEntryId()")
+		$printPortletURL.setParameter("viewMode", "print")
+		$printPortletURL.setParameter("type", $entry.getAssetRendererFactory().getType())
+
+		#if ($validator.isNotNull($assetRenderer.getUrlTitle()))
+			#if ($assetRenderer.getGroupId() != $scopeGroupId)
+				$printPortletURL.setParameter("groupId", "$assetRenderer.getGroupId())")
+			#end
+			$printPortletURL.setParameter("urlTitle", $assetRenderer.getUrlTitle())
+		#end
+
+		#set ($formatParams = ["aui-helper-hidden-accessible", $htmlUtil.escape($assetRenderer.getTitle($locale))])
+		#set ($title = $languageUtil.format($locale, "print-x-x", $formatParams.toArray()))
+		#set ($taglibPrintURL = "javascript:Liferay.Util.openWindow({dialog: {width: 960}, id:'" + $renderResponse.getNamespace() + "printAsset', title: '" + $title + "', uri:'" + $htmlUtil.escapeURL($printPortletURL.toString()) + "'});")
+		$taglibLiferay.icon("print", false, "print", $taglibPrintURL)
+	#end
+#end
+
+#macro (ratings)
+	#if ($enableRatings.equals("true"))
+		<div class="asset-ratings">
+			$taglibLiferay.ratings($entry.getClassName(), $entry.getClassPK(), 5, "stars", "")
+		</div>
+	#end
+#end
+
+#macro (related_assets)
+	#if ($enableRelatedAssets.equals("true"))
+		$taglibLiferay.assetLinks($entry.getEntryId(), $entry.getClassName(), $entry.getClassPK())
+	#end
+#end
+
+#macro (social_bookmarks)
+	#if ($enableSocialBookmarks.equals("true"))
+		$taglibLiferay.socialBookmarks($socialBookmarksDisplayStyle, "_blank", "", $entry.getTitle($locale), $viewURL)
+	#end
+#end

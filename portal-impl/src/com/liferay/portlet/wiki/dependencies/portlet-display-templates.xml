@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+
+<root>
+	<template>
+		<template-key><![CDATA[wiki-social-vm]]></template-key>
+		<name><![CDATA[Social]]></name>
+		<description><![CDATA[Social displays social bookmarks and ratings for the wiki page and its child pages.]]></description>
+		<language><![CDATA[vm]]></language>
+		<script-file>com/liferay/portlet/wiki/dependencies/social.vm</script-file>
+	</template>
+</root>

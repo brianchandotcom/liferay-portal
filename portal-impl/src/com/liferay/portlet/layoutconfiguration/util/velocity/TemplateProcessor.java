@@ -173,7 +173,7 @@ public class TemplateProcessor implements ColumnProcessor {
 				WebKeys.RENDER_PORTLET_RESOURCE, Boolean.TRUE);
 
 			return RuntimePortletUtil.processPortlet(
-				_servletContext, _request, _response, null, null, _portletId,
+				_servletContext, _request, _response, null, null, portletId,
 				null, false);
 		}
 		finally {

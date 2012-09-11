@@ -18,6 +18,8 @@
 
 <%
 String actionJsp = (String)request.getAttribute("liferay-ui:app-view-entry:actionJsp");
+String categoryClassName = GetterUtil.getString(request.getAttribute("liferay-ui:app-view-entry:categoryClassName"));
+long categoryClassPK = GetterUtil.getLong(request.getAttribute("liferay-ui:app-view-entry:categoryClassPK"));
 Map<String, Object> data = (Map<String, Object>)request.getAttribute("liferay-ui:app-view-entry:data");
 String description = (String)request.getAttribute("liferay-ui:app-view-entry:description");
 String displayStyle = (String)request.getAttribute("liferay-ui:app-view-entry:displayStyle");
@@ -28,6 +30,8 @@ String rowCheckerName = (String)request.getAttribute("liferay-ui:app-view-entry:
 boolean shortcut = GetterUtil.getBoolean(request.getAttribute("liferay-ui:app-view-entry:shortcut"));
 boolean showCheckbox = GetterUtil.getBoolean(request.getAttribute("liferay-ui:app-view-entry:showCheckbox"));
 int status = GetterUtil.getInteger(request.getAttribute("liferay-ui:app-view-entry:status"));
+String tagClassName = GetterUtil.getString(request.getAttribute("liferay-ui:app-view-entry:tagClassName"));
+long tagClassPK = GetterUtil.getLong(request.getAttribute("liferay-ui:app-view-entry:tagClassPK"));
 String thumbnailDivStyle = (String)request.getAttribute("liferay-ui:app-view-entry:thumbnailDivStyle");
 String thumbnailSrc = (String)request.getAttribute("liferay-ui:app-view-entry:thumbnailSrc");
 String thumbnailStyle = (String)request.getAttribute("liferay-ui:app-view-entry:thumbnailStyle");
@@ -111,7 +115,27 @@ String url = (String)request.getAttribute("liferay-ui:app-view-entry:url");
 					</c:if>
 				</span>
 
-				<span class="entry-description"><%= HtmlUtil.escape(description) %></span>
+				<span class="entry-description">
+					<%= HtmlUtil.escape(description) %>
+
+					<c:if test="<%= Validator.isNotNull(categoryClassName) && (categoryClassPK > 0) %>">
+						<div class="categories">
+							<liferay-ui:asset-categories-summary
+								className="<%= categoryClassName %>"
+								classPK="<%= categoryClassPK %>"
+							/>
+						</div>
+					</c:if>
+
+					<c:if test="<%= Validator.isNotNull(tagClassName) && (tagClassPK > 0) %>">
+						<div class="tags">
+							<liferay-ui:asset-tags-summary
+								className="<%= tagClassName %>"
+								classPK="<%= tagClassPK %>"
+							/>
+						</div>
+					</c:if>
+				</span>
 			</a>
 
 			<%

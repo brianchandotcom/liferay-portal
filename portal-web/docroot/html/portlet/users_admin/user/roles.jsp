@@ -22,13 +22,13 @@ List<Group> groups = (List<Group>)request.getAttribute("user.groups");
 List<Organization> organizations = (List<Organization>)request.getAttribute("user.organizations");
 Long[] organizationIds = UsersAdminUtil.getOrganizationIds(organizations);
 List<Role> roles = (List<Role>)request.getAttribute("user.roles");
-List<UserGroupRole> communityRoles = (List<UserGroupRole>)request.getAttribute("user.communityRoles");
+List<UserGroupRole> siteRoles = (List<UserGroupRole>)request.getAttribute("user.siteRoles");
 List<UserGroupRole> organizationRoles = (List<UserGroupRole>)request.getAttribute("user.organizationRoles");
 List<Group> allGroups = (List<Group>)request.getAttribute("user.allGroups");
 
 List<UserGroupRole> userGroupRoles = new ArrayList<UserGroupRole>();
 
-userGroupRoles.addAll(communityRoles);
+userGroupRoles.addAll(siteRoles);
 userGroupRoles.addAll(organizationRoles);
 %>
 
@@ -223,11 +223,11 @@ userGroupRoles.addAll(organizationRoles);
 	<c:otherwise>
 		<liferay-ui:search-container
 			headerNames="title,site,null"
-			id="communityRolesSearchContainer"
+			id="siteRolesSearchContainer"
 		>
 			<liferay-ui:search-container-results
-				results="<%= communityRoles %>"
-				total="<%= communityRoles.size() %>"
+				results="<%= siteRoles %>"
+				total="<%= siteRoles.size() %>"
 			/>
 
 			<liferay-ui:search-container-row
@@ -264,12 +264,12 @@ userGroupRoles.addAll(organizationRoles);
 				image="add"
 				label="<%= true %>"
 				message="select"
-				url='<%= "javascript:" + renderResponse.getNamespace() + "openCommunityRoleSelector();" %>'
+				url='<%= "javascript:" + renderResponse.getNamespace() + "openSiteRoleSelector();" %>'
 			/>
 		</c:if>
 
 		<aui:script use="liferay-search-container">
-			var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />communityRolesSearchContainer');
+			var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />siteRolesSearchContainer');
 
 			searchContainer.get('contentBox').delegate(
 				'click',
@@ -308,7 +308,7 @@ userGroupRoles.addAll(organizationRoles);
 		document.<portlet:namespace />fm.<portlet:namespace />groupRolesRoleIds.value = <portlet:namespace />groupRolesRoleIds.join(',');
 	}
 
-	function <portlet:namespace />openCommunityRoleSelector() {
+	function <portlet:namespace />openSiteRoleSelector() {
 		<portlet:namespace />openRoleSelector('<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/users_admin/select_site_role" /><portlet:param name="step" value="1" /><portlet:param name="userId" value='<%= (selUser == null) ? "0" : String.valueOf(selUser.getUserId()) %>' /></portlet:renderURL>');
 	}
 

@@ -116,6 +116,12 @@ portletURL.setParameter("typeSelection", typeSelection);
 
 			row.addText(dateFormatDate.format(entry.getModifiedDate()), rowHREF);
 
+			// Scope
+
+			Group group = GroupLocalServiceUtil.getGroup(entry.getGroupId());
+
+			row.addText(group.getDescriptiveName(locale), rowHREF);
+
 			// Add result row
 
 			resultRows.add(row);

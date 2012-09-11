@@ -36,6 +36,7 @@ public class AssetSearch extends SearchContainer<AssetEntry> {
 		headerNames.add("description");
 		headerNames.add("user-name");
 		headerNames.add("modified-date");
+		headerNames.add("scope");
 	}
 
 	public static final String EMPTY_RESULTS_MESSAGE = "there-are-no-results";

@@ -103,7 +103,7 @@ assetBrowserURL.setParameter("groupId", scopeGroupId.toString());
 </liferay-util:buffer>
 
 <liferay-ui:search-container
-	headerNames="type,title,null"
+	headerNames="type,title,scope,null"
 >
 	<liferay-ui:search-container-results
 		results="<%= assetLinks %>"
@@ -128,10 +128,12 @@ assetBrowserURL.setParameter("groupId", scopeGroupId.toString());
 
 		assetLinkEntry = assetLinkEntry.toEscapedModel();
 
-		long assetLinkEntryId = assetLinkEntry.getEntryId();
-
 		String assetLinkEntryTitle = assetLinkEntry.getTitle(locale);
 		String assetLinkEntryType = ResourceActionsUtil.getModelResource(locale, assetLinkEntry.getClassName());
+
+		Group group = GroupLocalServiceUtil.getGroup(assetLinkEntry.getGroupId());
+
+		String assetLinkEntryScope = group.getDescriptiveName(locale);
 		%>
 
 		<liferay-ui:search-container-column-text
@@ -144,8 +146,13 @@ assetBrowserURL.setParameter("groupId", scopeGroupId.toString());
 			value="<%= assetLinkEntryTitle %>"
 		/>
 
+		<liferay-ui:search-container-column-text
+			name="scope"
+			value="<%= assetLinkEntryScope %>"
+		/>
+
 		<liferay-ui:search-container-column-text>
-			<a class="modify-link" data-rowId="<%= assetLinkEntryId %>" href="javascript:;"><%= removeLinkIcon %></a>
+			<a class="modify-link" data-rowId="<%= assetLinkEntry.getEntryId() %>" href="javascript:;"><%= removeLinkIcon %></a>
 		</liferay-ui:search-container-column-text>
 	</liferay-ui:search-container-row>
 

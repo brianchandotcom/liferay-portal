@@ -122,6 +122,12 @@ portletURL.setParameter("callback", callback);
 
 			row.addText(dateFormatDate.format(assetEntry.getModifiedDate()), rowHREF);
 
+			// Scope
+
+			Group group = GroupLocalServiceUtil.getGroup(assetEntry.getGroupId());
+
+			row.addText(group.getDescriptiveName(locale), rowHREF);
+
 			// Add result row
 
 			resultRows.add(row);

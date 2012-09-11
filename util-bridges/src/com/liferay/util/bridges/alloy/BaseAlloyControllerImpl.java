@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchContextFactory;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -466,6 +467,11 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 	}
 
 	protected AlloySearchResult search(String keywords) throws Exception {
+		return search(keywords, null);
+	}
+
+	protected AlloySearchResult search(String keywords, Sort[] sorts)
+		throws Exception {
 		if (indexer == null) {
 			throw new Exception("No indexer found for " + controllerPath);
 		}
@@ -484,6 +490,10 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 
 		if (Validator.isNotNull(keywords)) {
 			searchContext.setKeywords(keywords);
+		}
+
+		if ((sorts != null) && (sorts.length > 0)) {
+			searchContext.setSorts(sorts);
 		}
 
 		searchContext.setStart(searchContainer.getStart());

@@ -285,18 +285,3 @@ for (int i = 0; i < teamIds.length; i++) {
 		['liferay-search-container']
 	);
 </aui:script>
-
-<aui:script use="liferay-search-container">
-	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />rolesSearchContainer');
-
-	searchContainer.get('contentBox').delegate(
-	'click',
-	function(event) {
-		var link = event.currentTarget;
-		var tr = link.ancestor('tr');
-
-		searchContainer.deleteRow(tr, link.getAttribute('data-rowId'));
-	},
-	'.modify-link'
-	);
-</aui:script>

@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
 
 import java.sql.Connection;
@@ -76,6 +77,23 @@ public class LiferayDataHandler extends DummyDataHandler {
 		}
 		catch (SystemException se) {
 			_log.error(se, se);
+		}
+
+		return null;
+	}
+
+	@Override
+	public String lookupTopicName(String virtualWiki, String topicName) {
+		long nodeId = getNodeId(virtualWiki);
+
+		try {
+			WikiPage wikiPage = WikiPageLocalServiceUtil.getPage(
+				nodeId, topicName, true);
+
+			return wikiPage.getTitle();
+		}
+		catch (Exception e) {
+			_log.error(e, e);
 		}
 
 		return null;

@@ -1982,7 +1982,7 @@
 	</library>
 	<library>
 		<file-name>portal/jamwiki-core.jar</file-name>
-		<version>1.0.6</version>
+		<version>1.0.7</version>
 		<project-name>JAMWiki</project-name>
 		<project-url>http://jamwiki.org</project-url>
 		<licenses>

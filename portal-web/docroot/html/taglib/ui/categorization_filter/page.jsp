@@ -83,7 +83,7 @@ if (assetCategoryId != 0) {
 		<%
 		AssetUtil.addPortletBreadcrumbEntries(assetCategoryId, request, portletURL);
 
-		AssetUtil.addPortletBreadcrumbEntry(request, assetTagName, currentURL);
+		PortalUtil.addPortletBreadcrumbEntry(request, assetTagName, currentURL);
 
 		PortalUtil.addPageKeywords(assetCategoryTitle, request);
 		PortalUtil.addPageKeywords(assetTagName, request);
@@ -108,7 +108,7 @@ if (assetCategoryId != 0) {
 	<c:when test="<%= Validator.isNotNull(assetTagName) %>">
 
 		<%
-		AssetUtil.addPortletBreadcrumbEntry(request, assetTagName, currentURL);
+		PortalUtil.addPortletBreadcrumbEntry(request, assetTagName, currentURL);
 
 		PortalUtil.addPageKeywords(assetTagName, request);
 		%>

@@ -78,6 +78,10 @@ if (hidePortletWhenEmpty) {
 
 <%
 }
+
+if (categoryId > 0) {
+	AssetUtil.addPortletBreadcrumbEntries(categoryId, request, portletURL);
+}
 %>
 
 <aui:script use="aui-tree-view">

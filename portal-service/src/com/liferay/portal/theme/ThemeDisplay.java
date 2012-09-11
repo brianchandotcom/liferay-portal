@@ -194,6 +194,10 @@ public class ThemeDisplay
 		return _facebookCanvasPageURL;
 	}
 
+	public String getFocusedPortletId() {
+		return _focusedPortletId;
+	}
+
 	public String getI18nLanguageId() {
 		return _i18nLanguageId;
 	}
@@ -619,6 +623,20 @@ public class ThemeDisplay
 		return _lifecycleResource;
 	}
 
+	public boolean isPortletDisplayFocused() {
+		PortletDisplay portletDisplay = getPortletDisplay();
+
+		if ((portletDisplay != null) &&
+			portletDisplay.getId().equals(getFocusedPortletId()) &&
+			Validator.isNotNull(getFocusedPortletId())) {
+
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
 	public boolean isSecure() {
 		return _secure;
 	}
@@ -816,6 +834,10 @@ public class ThemeDisplay
 		if (Validator.isNotNull(facebookCanvasPageURL)) {
 			_facebook = true;
 		}
+	}
+
+	public void setFocusedPortletId(String focusedPortletId) {
+		_focusedPortletId = focusedPortletId;
 	}
 
 	public void setFreeformLayout(boolean freeformLayout) {
@@ -1338,6 +1360,7 @@ public class ThemeDisplay
 	private String _doAsUserLanguageId = StringPool.BLANK;
 	private boolean _facebook;
 	private String _facebookCanvasPageURL;
+	private String _focusedPortletId = StringPool.BLANK;
 	private boolean _freeformLayout;
 	private boolean _i18n;
 	private String _i18nLanguageId;

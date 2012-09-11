@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -91,35 +90,16 @@ public class AssetUtil {
 			portletURL.setParameter(
 				"categoryId", String.valueOf(ancestorCategory.getCategoryId()));
 
-			addPortletBreadcrumbEntry(
+			PortalUtil.addPortletBreadcrumbEntry(
 				request, ancestorCategory.getTitleCurrentValue(),
 				portletURL.toString());
 		}
 
 		portletURL.setParameter("categoryId", String.valueOf(assetCategoryId));
 
-		addPortletBreadcrumbEntry(
+		PortalUtil.addPortletBreadcrumbEntry(
 			request, assetCategory.getTitleCurrentValue(),
 			portletURL.toString());
-	}
-
-	public static void addPortletBreadcrumbEntry(
-			HttpServletRequest request, String title, String url)
-		throws Exception {
-
-		List<BreadcrumbEntry> breadcrumbEntries =
-			(List<BreadcrumbEntry>)request.getAttribute(
-				WebKeys.PORTLET_BREADCRUMBS);
-
-		if (breadcrumbEntries != null) {
-			for (BreadcrumbEntry breadcrumbEntry : breadcrumbEntries) {
-				if (title.equals(breadcrumbEntry.getTitle())) {
-					return;
-				}
-			}
-		}
-
-		PortalUtil.addPortletBreadcrumbEntry(request, title, url);
 	}
 
 	public static String getAssetKeywords(String className, long classPK)

@@ -14,7 +14,27 @@
 	<td></td>
 </tr>
 <tr>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
 	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/liferay/dockbar_underlay.js')]</td>
+	<td>Dockbar Underlay</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>mouseOver</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
 	<td>link=Control Panel</td>
 	<td>Control Panel</td>
 </tr>
@@ -30,17 +50,27 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[3]/td[3]/a</td>
+	<td>//a[@class='entry-link']/span</td>
 	<td>Web Content Name</td>
 </tr>
 <tr>
+	<td>clickAt</td>
+	<td>//span[@class='entry-action overlay']/span/ul/li/strong/a</td>
+	<td>Actions</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'View')]/a</td>
+	<td>View</td>
+</tr>
+<tr>
 	<td>assertElementNotPresent</td>
-	<td>link=Permissions</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Permissions')]/a</td>
 	<td>Permissions</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//tr[3]/td[3]/a</td>
+	<td>//a[@class='entry-link']/span</td>
 	<td>Web Content Name</td>
 </tr>
 <tr>
@@ -48,7 +78,6 @@
 	<td>Permissions</td>
 	<td>Permissions</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

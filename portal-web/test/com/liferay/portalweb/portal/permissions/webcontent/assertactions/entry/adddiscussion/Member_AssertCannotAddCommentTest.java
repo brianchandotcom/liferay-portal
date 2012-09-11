@@ -25,10 +25,12 @@ public class Member_AssertCannotAddCommentTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Web Content Display Permissions Page");
 		selenium.clickAt("link=Web Content Display Permissions Page",
 			RuntimeVariables.replace("Web Content Display Permissions Page"));
 		selenium.waitForPageToLoad("30000");
+		assertFalse(selenium.isTextPresent("No comments yet"));
+		assertTrue(selenium.isElementNotPresent(
+				"//a[contains(@href,'postReplyBody')]"));
 		assertTrue(selenium.isElementNotPresent("link=Be the first."));
 	}
 }

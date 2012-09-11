@@ -26,7 +26,14 @@ public class Member_AssertCannotAccessConfigurationTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent("link=Control Panel");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/liferay/dockbar_underlay.js')]");
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
+		selenium.waitForVisible("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
@@ -39,15 +46,19 @@ public class Member_AssertCannotAccessConfigurationTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
 			RuntimeVariables.replace("Options"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Configuration')]/a");
 		assertEquals(RuntimeVariables.replace("Configuration"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a",
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Configuration')]/a"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Configuration')]/a",
 			RuntimeVariables.replace("Configuration"));
-		Thread.sleep(5000);
-		selenium.waitForVisible("//iframe");
-		selenium.selectFrame("//iframe");
+		selenium.waitForVisible(
+			"//iframe[contains(@id,'configurationIframeDialog')]");
+		selenium.selectFrame(
+			"//iframe[contains(@id,'configurationIframeDialog')]");
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'portlet/journal/js/main.js')]");
+		selenium.waitForVisible("//div[@class='portlet-msg-error']");
 		assertEquals(RuntimeVariables.replace(
 				"You do not have the required permissions."),
 			selenium.getText("//div[@class='portlet-msg-error']"));

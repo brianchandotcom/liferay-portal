@@ -25,7 +25,14 @@ public class RemoveRolePowerUserTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent("link=Control Panel");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
+		selenium.waitForVisible("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
@@ -33,7 +40,7 @@ public class RemoveRolePowerUserTest extends BaseTestCase {
 			RuntimeVariables.replace("Users and Organizations"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_125_keywords']",
-			RuntimeVariables.replace("member@liferay.com"));
+			RuntimeVariables.replace("member"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
@@ -45,8 +52,9 @@ public class RemoveRolePowerUserTest extends BaseTestCase {
 		assertTrue(selenium.isPartialText("//a[@id='_125_rolesLink']", "Roles"));
 		selenium.clickAt("//a[@id='_125_rolesLink']",
 			RuntimeVariables.replace("Roles"));
-		selenium.click("link=Remove");
-		assertFalse(selenium.isTextPresent("Power User"));
+		selenium.waitForVisible("//tr[contains(.,'Remove')]//td[2]/a/span");
+		selenium.click("//tr[contains(.,'Remove')]//td[2]/a/span");
+		Thread.sleep(5000);
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");

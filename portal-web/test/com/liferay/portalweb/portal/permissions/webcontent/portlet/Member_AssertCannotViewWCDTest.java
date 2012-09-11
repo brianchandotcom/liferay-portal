@@ -25,11 +25,11 @@ public class Member_AssertCannotViewWCDTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent(
-			"link=Web Content Display Permissions Page");
 		selenium.clickAt("link=Web Content Display Permissions Page",
 			RuntimeVariables.replace("Web Content Display Permissions Page"));
 		selenium.waitForPageToLoad("30000");
+		assertTrue(selenium.isVisible("//section"));
+		assertFalse(selenium.isTextPresent("WC WebContent Content"));
 		assertEquals(RuntimeVariables.replace(
 				"You do not have the roles required to access this portlet."),
 			selenium.getText("//div[@class='portlet-msg-error']"));

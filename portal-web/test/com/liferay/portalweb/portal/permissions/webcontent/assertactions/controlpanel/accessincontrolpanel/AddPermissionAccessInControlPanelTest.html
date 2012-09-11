@@ -14,7 +14,27 @@
 	<td></td>
 </tr>
 <tr>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
 	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
+	<td>AUI Editable Min</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>mouseOver</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
 	<td>link=Control Panel</td>
 	<td>Control Panel</td>
 </tr>
@@ -54,14 +74,9 @@
 	<td>Define Permissions</td>
 </tr>
 <tr>
-	<td>typeKeys</td>
+	<td>selectAndWait</td>
 	<td>//select[@id='_128_add-permissions']</td>
-	<td>wwwwwwwww</td>
-</tr>
-<tr>
-	<td>keyPressAndWait</td>
-	<td>//select[@id='_128_add-permissions']</td>
-	<td>\13</td>
+	<td>index=111</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -69,21 +84,160 @@
 	<td>Web Content</td>
 </tr>
 <tr>
+	<td>assertNotChecked</td>
+	<td>//input[@value='15ACCESS_IN_CONTROL_PANEL']</td>
+	<td>Access In Control Panel</td>
+</tr>
+<tr>
 	<td>check</td>
 	<td>//input[@value='15ACCESS_IN_CONTROL_PANEL']</td>
-	<td>Access in Control Panel</td>
+	<td>Access In Control Panel</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@value='15ACCESS_IN_CONTROL_PANEL']</td>
+	<td>Access In Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//div[@class='portlet-msg-success']</td>
 	<td>The role permissions were updated.</td>
 </tr>
-
+<tr>
+	<td>assertText</td>
+	<td>//h3</td>
+	<td>Summary</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Access in Control Panel')]/td[1]/a</td>
+	<td>Web Content</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Access in Control Panel')]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Access in Control Panel')]/td[3]</td>
+	<td>Access in Control Panel</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Access in Control Panel')]/td[4]</td>
+	<td>Portal</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Access in Control Panel')]/td[5]/span/a</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'View')]/td[1]/a</td>
+	<td>Web Content</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'View')]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'View')]/td[3]</td>
+	<td>View</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'View')]/td[4]</td>
+	<td>Portal</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[3]/td[1]/a</td>
+	<td>Web Content</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[3]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[3]/td[3]</td>
+	<td>Access in Control Panel</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[3]/td[4]</td>
+	<td>Portal</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[3]/td[5]/span/a</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[4]/td[1]/a</td>
+	<td>Web Content</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[4]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[4]/td[3]</td>
+	<td>View</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[4]/td[4]</td>
+	<td>Portal</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[4]/td[5]/span/a</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[5]/td[1]/a</td>
+	<td>Web Content</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[5]/td[2]</td>
+	<td>Web Content Management</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[5]/td[3]</td>
+	<td>View</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[5]/td[4]</td>
+	<td>Portal</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[5]/td[5]/span/a</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'View')]/td[5]/span/a</td>
+	<td>Delete</td>
+</tr>
 </tbody></table>
 </body>
 </html>

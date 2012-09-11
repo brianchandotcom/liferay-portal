@@ -15,6 +15,8 @@
 package com.liferay.portalweb.portal.permissions.webcontent.assertactions.controlpanel.permissions;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignInTest;
+import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignOutTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -30,18 +32,18 @@ public class PermissionsTests extends BaseTestSuite {
 		testSuite.addTestSuite(DefineMemberRoleTest.class);
 		testSuite.addTestSuite(AssignUserRolesTest.class);
 		testSuite.addTestSuite(AddPermissionViewPortletTest.class);
-		testSuite.addTestSuite(LogoutTest.class);
+		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(LoginUsersTest.class);
 		testSuite.addTestSuite(Member_LoginTest.class);
 		testSuite.addTestSuite(Member_AssertCannotAccessPermissionsTest.class);
-		testSuite.addTestSuite(LogoutTest.class);
-		testSuite.addTestSuite(SA_LoginTest.class);
+		testSuite.addTestSuite(SignOutTest.class);
+		testSuite.addTestSuite(SignInTest.class);
 		testSuite.addTestSuite(AddPermissionPermissionsTest.class);
-		testSuite.addTestSuite(LogoutTest.class);
+		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(Member_LoginTest.class);
 		testSuite.addTestSuite(Member_AssertAccessPermissionsTest.class);
-		testSuite.addTestSuite(LogoutTest.class);
-		testSuite.addTestSuite(SA_LoginTest.class);
+		testSuite.addTestSuite(SignOutTest.class);
+		testSuite.addTestSuite(SignInTest.class);
 		testSuite.addTestSuite(TearDownWCRolesTest.class);
 		testSuite.addTestSuite(TearDownUserTest.class);
 

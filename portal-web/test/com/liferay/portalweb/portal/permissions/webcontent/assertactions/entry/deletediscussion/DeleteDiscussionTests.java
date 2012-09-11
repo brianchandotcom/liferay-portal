@@ -15,6 +15,9 @@
 package com.liferay.portalweb.portal.permissions.webcontent.assertactions.entry.deletediscussion;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignInTest;
+import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignOutTest;
+import com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.addwcwebcontent.TearDownWCWebContentTest;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
 
 import junit.framework.Test;
@@ -37,19 +40,19 @@ public class DeleteDiscussionTests extends BaseTestSuite {
 		testSuite.addTestSuite(SelectWebContentWCDTest.class);
 		testSuite.addTestSuite(RemoveInlinePermissionsTest.class);
 		testSuite.addTestSuite(AddCommentTest.class);
-		testSuite.addTestSuite(LogoutTest.class);
+		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(LoginUsersTest.class);
 		testSuite.addTestSuite(Member_LoginTest.class);
 		testSuite.addTestSuite(Member_AssertCannotDeleteCommentTest.class);
-		testSuite.addTestSuite(LogoutTest.class);
-		testSuite.addTestSuite(SA_LoginTest.class);
+		testSuite.addTestSuite(SignOutTest.class);
+		testSuite.addTestSuite(SignInTest.class);
 		testSuite.addTestSuite(AddRolePermissionDeleteDiscussionTest.class);
-		testSuite.addTestSuite(LogoutTest.class);
+		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(Member_LoginTest.class);
 		testSuite.addTestSuite(Member_DeleteCommentTest.class);
-		testSuite.addTestSuite(LogoutTest.class);
-		testSuite.addTestSuite(SA_LoginTest.class);
-		testSuite.addTestSuite(TeardownWCTest.class);
+		testSuite.addTestSuite(SignOutTest.class);
+		testSuite.addTestSuite(SignInTest.class);
+		testSuite.addTestSuite(TearDownWCWebContentTest.class);
 		testSuite.addTestSuite(TearDownWCRolesTest.class);
 		testSuite.addTestSuite(TearDownUserTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);

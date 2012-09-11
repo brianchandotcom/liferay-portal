@@ -25,7 +25,14 @@ public class RemoveRolePermissionViewTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent("link=Control Panel");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
+		selenium.waitForVisible("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
@@ -43,19 +50,47 @@ public class RemoveRolePermissionViewTest extends BaseTestCase {
 		selenium.clickAt("link=Define Permissions",
 			RuntimeVariables.replace("Define Permissions"));
 		selenium.waitForPageToLoad("30000");
-		selenium.typeKeys("//select[@id='_128_add-permissions']",
-			RuntimeVariables.replace("wwwwwwwww"));
-		selenium.keyPress("//select[@id='_128_add-permissions']",
-			RuntimeVariables.replace("\\13"));
+		selenium.select("//select[@id='_128_add-permissions']",
+			RuntimeVariables.replace("index=111"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Web Content"),
 			selenium.getText("//h3"));
+		assertTrue(selenium.isChecked("//input[@value='15VIEW']"));
 		selenium.uncheck("//input[@value='15VIEW']");
+		assertFalse(selenium.isChecked("//input[@value='15VIEW']"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"The role permissions were updated."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
+		selenium.select("//select[@id='_128_add-permissions']",
+			RuntimeVariables.replace("index=29"));
+		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("Web Content Management"),
+			selenium.getText("//h3[4]"));
+		assertTrue(selenium.isChecked(
+				"//input[@value='com.liferay.portlet.journalVIEW']"));
+		selenium.uncheck("//input[@value='com.liferay.portlet.journalVIEW']");
+		assertFalse(selenium.isChecked(
+				"//input[@value='com.liferay.portlet.journalVIEW']"));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
+		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace(
+				"The role permissions were updated."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertEquals(RuntimeVariables.replace("Web Content"),
+			selenium.getText("//tr[3]/td[1]/a"));
+		assertEquals(RuntimeVariables.replace(""),
+			selenium.getText("//tr[3]/td[2]"));
+		assertEquals(RuntimeVariables.replace("Access in Control Panel"),
+			selenium.getText("//tr[3]/td[3]"));
+		assertEquals(RuntimeVariables.replace("Portal"),
+			selenium.getText("//tr[3]/td[4]"));
+		assertEquals(RuntimeVariables.replace("Delete"),
+			selenium.getText("//tr[3]/td[5]/span/a"));
+		assertTrue(selenium.isElementNotPresent("//tr[4]/td[3]"));
+		assertTrue(selenium.isElementNotPresent("//tr[5]/td[3]"));
 	}
 }

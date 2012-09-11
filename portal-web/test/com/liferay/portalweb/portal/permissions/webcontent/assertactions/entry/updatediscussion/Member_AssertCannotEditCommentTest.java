@@ -25,7 +25,6 @@ public class Member_AssertCannotEditCommentTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Web Content Display Permissions Page");
 		selenium.clickAt("link=Web Content Display Permissions Page",
 			RuntimeVariables.replace("Web Content Display Permissions Page"));
 		selenium.waitForPageToLoad("30000");

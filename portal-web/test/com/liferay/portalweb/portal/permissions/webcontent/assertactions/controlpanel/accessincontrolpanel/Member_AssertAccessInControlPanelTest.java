@@ -26,15 +26,23 @@ public class Member_AssertAccessInControlPanelTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent("link=Control Panel");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/liferay/dockbar_underlay.js')]");
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
+		selenium.waitForVisible("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isVisible("link=Web Content"));
 		selenium.clickAt("link=Web Content",
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("Web Content"),
+			selenium.getText("//h1[@class='portlet-title']/span"));
 		assertEquals(RuntimeVariables.replace("No Web Content was found."),
-			selenium.getText("//div[@class='portlet-msg-info']"));
+			selenium.getText("//div[@class='entries-empty portlet-msg-info']"));
 	}
 }

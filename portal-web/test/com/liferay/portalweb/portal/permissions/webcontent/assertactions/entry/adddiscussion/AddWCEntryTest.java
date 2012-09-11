@@ -25,20 +25,37 @@ public class AddWCEntryTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent("link=Control Panel");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
+		selenium.waitForVisible("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Web Content",
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//input[@value='Add']",
-			RuntimeVariables.replace("Add Web Content"));
-		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("Add"),
+			selenium.getText("//span[@title='Add']/ul/li/strong/a"));
+		selenium.clickAt("//span[@title='Add']/ul/li/strong/a",
+			RuntimeVariables.replace("Add"));
+		selenium.waitForVisible(
+			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Basic Web Content')]/a");
+		assertEquals(RuntimeVariables.replace("Basic Web Content"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Basic Web Content')]/a"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Basic Web Content')]/a",
+			RuntimeVariables.replace("Basic Web Content"));
+		Thread.sleep(5000);
+		selenium.waitForVisible("//input[@id='_15_title_en_US']");
 		selenium.type("//input[@id='_15_title_en_US']",
 			RuntimeVariables.replace("Web Content Name"));
-		selenium.waitForElementPresent(
-			"//textarea[@id='_15__15_structure_el_TextAreaField_content' and @style='display: none;']");
+		selenium.waitForVisible(
+			"//td[@id='cke_top__15__15_structure_el_TextAreaField_content']");
 		assertEquals(RuntimeVariables.replace("Source"),
 			selenium.getText("//span[.='Source']"));
 		selenium.clickAt("//span[.='Source']",
@@ -66,5 +83,8 @@ public class AddWCEntryTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertTrue(selenium.isVisible("//div[@class='entry-thumbnail']"));
+		assertEquals(RuntimeVariables.replace("Web Content Name"),
+			selenium.getText("//a[@class='entry-link']/span"));
 	}
 }

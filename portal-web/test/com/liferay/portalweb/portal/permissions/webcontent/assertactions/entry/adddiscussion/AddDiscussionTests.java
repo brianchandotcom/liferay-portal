@@ -15,6 +15,9 @@
 package com.liferay.portalweb.portal.permissions.webcontent.assertactions.entry.adddiscussion;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignInTest;
+import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignOutTest;
+import com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.addwcwebcontent.TearDownWCWebContentTest;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
 
 import junit.framework.Test;
@@ -36,19 +39,19 @@ public class AddDiscussionTests extends BaseTestSuite {
 		testSuite.addTestSuite(EnableCommentsWCDTest.class);
 		testSuite.addTestSuite(SelectWebContentWCDTest.class);
 		testSuite.addTestSuite(RemoveInlinePermissionsTest.class);
-		testSuite.addTestSuite(LogoutTest.class);
+		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(LoginUsersTest.class);
 		testSuite.addTestSuite(Member_LoginTest.class);
 		testSuite.addTestSuite(Member_AssertCannotAddCommentTest.class);
-		testSuite.addTestSuite(LogoutTest.class);
-		testSuite.addTestSuite(SA_LoginTest.class);
+		testSuite.addTestSuite(SignOutTest.class);
+		testSuite.addTestSuite(SignInTest.class);
 		testSuite.addTestSuite(AddRolePermissionAddDiscussionTest.class);
-		testSuite.addTestSuite(LogoutTest.class);
+		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(Member_LoginTest.class);
 		testSuite.addTestSuite(Member_AddCommentTest.class);
-		testSuite.addTestSuite(LogoutTest.class);
-		testSuite.addTestSuite(SA_LoginTest.class);
-		testSuite.addTestSuite(TeardownWCTest.class);
+		testSuite.addTestSuite(SignOutTest.class);
+		testSuite.addTestSuite(SignInTest.class);
+		testSuite.addTestSuite(TearDownWCWebContentTest.class);
 		testSuite.addTestSuite(TearDownWCRolesTest.class);
 		testSuite.addTestSuite(TearDownUserTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);

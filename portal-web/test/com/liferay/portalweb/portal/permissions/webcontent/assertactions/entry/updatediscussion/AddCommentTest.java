@@ -25,12 +25,9 @@ public class AddCommentTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent(
-			"link=Web Content Display Permissions Page");
 		selenium.clickAt("link=Web Content Display Permissions Page",
 			RuntimeVariables.replace("Web Content Display Permissions Page"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isVisible("link=Be the first."));
 		selenium.clickAt("link=Be the first.",
 			RuntimeVariables.replace("Add Comment"));
 		selenium.waitForVisible("//textarea");

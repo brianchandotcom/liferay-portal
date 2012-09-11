@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>link=Web Content Display Permissions Page</td>
-	<td>Web Content Display Permissions Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Web Content Display Permissions Page</td>
 	<td>Web Content Display Permissions Page</td>
@@ -29,19 +24,44 @@
 	<td></td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//span[@title='Options']/ul/li/strong/a</td>
+	<td>Options</td>
+</tr>
+<tr>
 	<td>clickAt</td>
-	<td>//strong/a</td>
+	<td>//span[@title='Options']/ul/li/strong/a</td>
 	<td>Options</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Configuration')]/a</td>
+	<td>Configuration</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Configuration')]/a</td>
 	<td>Configuration</td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Configuration')]/a</td>
 	<td>Configuration</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//iframe[contains(@id,'configurationIframeDialog')]</td>
+	<td>Web Content Display - Configuration</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//iframe[contains(@id,'configurationIframeDialog')]</td>
+	<td>Web Content Display - Configuration</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/liferay/navigation_interaction.js')]</td>
+	<td>Navigation Interaction</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -54,29 +74,24 @@
 	<td>Permissions</td>
 </tr>
 <tr>
-	<td>assertVisible</td>
-	<td>//tr[4]/td[4]/input</td>
+	<td>assertNotChecked</td>
+	<td>//input[@id='member_ACTION_VIEW']</td>
 	<td>View</td>
 </tr>
 <tr>
 	<td>check</td>
-	<td>//tr[4]/td[4]/input</td>
+	<td>//input[@id='member_ACTION_VIEW']</td>
+	<td>Configuration</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@id='member_ACTION_VIEW']</td>
 	<td>View</td>
 </tr>
 <tr>
-	<td>clickAt</td>
+	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
 	<td>Save</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//div[@class='portlet-msg-success']</td>
-	<td>Your request completed successfully.</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='portlet-msg-success']</td>
-	<td>Your request completed successfully.</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -85,10 +100,14 @@
 </tr>
 <tr>
 	<td>assertChecked</td>
-	<td>//tr[4]/td[4]/input</td>
+	<td>//input[@id='member_ACTION_VIEW']</td>
 	<td>View</td>
 </tr>
-
+<tr>
+	<td>selectFrame</td>
+	<td>relative=top</td>
+	<td>top</td>
+</tr>
 </tbody></table>
 </body>
 </html>

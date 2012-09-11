@@ -103,7 +103,7 @@ assetBrowserURL.setParameter("groupId", scopeGroupId.toString());
 </liferay-util:buffer>
 
 <liferay-ui:search-container
-	headerNames="type,title,null"
+	headerNames="type,title,scope,null"
 >
 	<liferay-ui:search-container-results
 		results="<%= assetLinks %>"
@@ -130,8 +130,11 @@ assetBrowserURL.setParameter("groupId", scopeGroupId.toString());
 
 		long assetLinkEntryId = assetLinkEntry.getEntryId();
 
+		Group assetLinkGroup = GroupLocalServiceUtil.getGroup(assetLinkEntry.getGroupId());
+
 		String assetLinkEntryTitle = assetLinkEntry.getTitle(locale);
 		String assetLinkEntryType = ResourceActionsUtil.getModelResource(locale, assetLinkEntry.getClassName());
+		String assetLinkEntryScope = assetLinkGroup.getDescriptiveName(locale);
 		%>
 
 		<liferay-ui:search-container-column-text
@@ -142,6 +145,11 @@ assetBrowserURL.setParameter("groupId", scopeGroupId.toString());
 		<liferay-ui:search-container-column-text
 			name="title"
 			value="<%= assetLinkEntryTitle %>"
+		/>
+
+		<liferay-ui:search-container-column-text
+			name="scope"
+			value="<%= assetLinkEntryScope %>"
 		/>
 
 		<liferay-ui:search-container-column-text>

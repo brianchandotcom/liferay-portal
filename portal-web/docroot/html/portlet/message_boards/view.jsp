@@ -351,12 +351,20 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 				keyProperty="banId"
 				modelVar="ban"
 			>
+
+				<%
+				User bannedUser = UserLocalServiceUtil.getUser(ban.getBanUserId());
+				User bannedByUser = UserLocalServiceUtil.getUser(ban.getUserId());
+				%>
+
 				<liferay-ui:search-container-column-text
+					href="<%= bannedUser.getDisplayURL(themeDisplay) %>"
 					name="banned-user"
 					value="<%= HtmlUtil.escape(PortalUtil.getUserName(ban.getBanUserId(), StringPool.BLANK)) %>"
 				/>
 
 				<liferay-ui:search-container-column-text
+					href="<%= bannedByUser.getDisplayURL(themeDisplay) %>"
 					name="banned-by"
 					value="<%= HtmlUtil.escape(PortalUtil.getUserName(ban.getUserId(), StringPool.BLANK)) %>"
 				/>

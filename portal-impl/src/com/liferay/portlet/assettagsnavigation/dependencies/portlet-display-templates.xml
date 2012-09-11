@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+
+<root>
+	<template>
+		<template-key><![CDATA[asset-tags-navigation-color-by-popularity-vm]]></template-key>
+		<name><![CDATA[Color by Popularity]]></name>
+		<description><![CDATA[Color by Popularity displays asset tags coloured by popularity: green for low, yellow for medium and red for high.]]></description>
+		<language><![CDATA[vm]]></language>
+		<script-file>com/liferay/portlet/assettagsnavigation/dependencies/color_by_popularity.vm</script-file>
+	</template>
+</root>

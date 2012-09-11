@@ -165,6 +165,8 @@ if (fileEntryTypeId >= 0) {
 	}
 
 	total = hits.getLength();
+
+	searchContainer.setTotal(total);
 }
 else {
 	if (navigation.equals("home")) {
@@ -182,8 +184,6 @@ else {
 			searchContainer.setTotal(total);
 
 			results = AssetEntryServiceUtil.getEntries(assetEntryQuery);
-
-			searchContainer.setResults(results);
 		}
 		else {
 			total = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId, folderId, status, false);
@@ -191,8 +191,6 @@ else {
 			searchContainer.setTotal(total);
 
 			results = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcuts(repositoryId, folderId, status, false, entryStart, entryEnd, searchContainer.getOrderByComparator());
-
-			searchContainer.setResults(results);
 		}
 	}
 	else if (navigation.equals("mine") || navigation.equals("recent")) {
@@ -207,10 +205,10 @@ else {
 		searchContainer.setTotal(total);
 
 		results = DLAppServiceUtil.getGroupFileEntries(repositoryId, groupFileEntriesUserId, folderId, null, status, entryStart, entryEnd, null);
-
-		searchContainer.setResults(results);
 	}
 }
+
+searchContainer.setResults(results);
 
 request.setAttribute("view.jsp-total", String.valueOf(total));
 %>

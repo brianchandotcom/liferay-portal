@@ -163,6 +163,7 @@ if (type.equals("all_pages")) {
 	orderableHeaders.put("date", "modifiedDate");
 
 	total = WikiPageLocalServiceUtil.getPagesCount(node.getNodeId(), true);
+
 	searchContainer.setTotal(total);
 
 	results = WikiPageLocalServiceUtil.getPages(node.getNodeId(), true, searchContainer.getStart(), searchContainer.getEnd(), orderByComparator);
@@ -174,6 +175,7 @@ else if (type.equals("categorized_pages") || type.equals("tagged_pages")) {
 	AssetEntryQuery assetEntryQuery = new AssetEntryQuery(WikiPage.class.getName(), searchContainer);
 
 	total = AssetEntryServiceUtil.getEntriesCount(assetEntryQuery);
+
 	searchContainer.setTotal(total);
 
 	List<AssetEntry> assetEntries = AssetEntryServiceUtil.getEntries(assetEntryQuery);
@@ -202,6 +204,7 @@ else if (type.equals("draft_pages") || type.equals("pending_pages")) {
 	}
 
 	total = WikiPageLocalServiceUtil.getPagesCount(draftUserId, node.getNodeId(), status);
+
 	searchContainer.setTotal(total);
 
 	results = WikiPageLocalServiceUtil.getPages(draftUserId, node.getNodeId(), status, searchContainer.getStart(), searchContainer.getEnd());
@@ -210,12 +213,14 @@ else if (type.equals("orphan_pages")) {
 	List<WikiPage> orphans = WikiPageLocalServiceUtil.getOrphans(node.getNodeId());
 
 	total = orphans.size();
+
 	searchContainer.setTotal(total);
 
 	results = ListUtil.subList(orphans, searchContainer.getStart(), searchContainer.getEnd());
 }
 else if (type.equals("history")) {
 	total = WikiPageLocalServiceUtil.getPagesCount(wikiPage.getNodeId(), wikiPage.getTitle());
+
 	searchContainer.setTotal(total);
 
 	results = WikiPageLocalServiceUtil.getPages(wikiPage.getNodeId(), wikiPage.getTitle(), QueryUtil.ALL_POS, QueryUtil.ALL_POS, new PageVersionComparator());
@@ -224,6 +229,7 @@ else if (type.equals("incoming_links")) {
 	List<WikiPage> links = WikiPageLocalServiceUtil.getIncomingLinks(wikiPage.getNodeId(), wikiPage.getTitle());
 
 	total = links.size();
+
 	searchContainer.setTotal(total);
 
 	results = ListUtil.subList(links, searchContainer.getStart(), searchContainer.getEnd());
@@ -232,12 +238,14 @@ else if (type.equals("outgoing_links")) {
 	List<WikiPage> links = WikiPageLocalServiceUtil.getOutgoingLinks(wikiPage.getNodeId(), wikiPage.getTitle());
 
 	total = links.size();
+
 	searchContainer.setTotal(total);
 
 	results = ListUtil.subList(links, searchContainer.getStart(), searchContainer.getEnd());
 }
 else if (type.equals("recent_changes")) {
 	total = WikiPageLocalServiceUtil.getRecentChangesCount(node.getNodeId());
+
 	searchContainer.setTotal(total);
 
 	results = WikiPageLocalServiceUtil.getRecentChanges(node.getNodeId(), searchContainer.getStart(), searchContainer.getEnd());

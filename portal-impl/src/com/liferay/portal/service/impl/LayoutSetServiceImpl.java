@@ -23,7 +23,6 @@ import com.liferay.portal.service.base.LayoutSetServiceBaseImpl;
 import com.liferay.portal.service.permission.GroupPermissionUtil;
 import com.liferay.portal.service.permission.PortalPermissionUtil;
 
-import java.io.File;
 import java.io.InputStream;
 
 /**

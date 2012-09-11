@@ -79,7 +79,11 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		updateFileVersions();
-		updateThumbnails();
+
+		if (PropsValues.DL_FILE_ENTRY_PREVIEW_AUTO_CREATE_ON_UPGRADE) {
+			updateThumbnails();
+		}
+
 		//updateSyncs();
 	}
 

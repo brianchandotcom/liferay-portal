@@ -34,10 +34,14 @@ import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.UniqueList;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.liveusers.LiveUsers;
 import com.liferay.portal.model.Group;
@@ -47,6 +51,8 @@ import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.MembershipRequest;
 import com.liferay.portal.model.MembershipRequestConstants;
+import com.liferay.portal.model.Role;
+import com.liferay.portal.model.Team;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.GroupServiceUtil;
@@ -54,8 +60,10 @@ import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetServiceUtil;
 import com.liferay.portal.service.MembershipRequestLocalServiceUtil;
 import com.liferay.portal.service.MembershipRequestServiceUtil;
+import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
+import com.liferay.portal.service.TeamLocalServiceUtil;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
@@ -64,11 +72,13 @@ import com.liferay.portlet.asset.AssetCategoryException;
 import com.liferay.portlet.asset.AssetTagException;
 import com.liferay.portlet.sites.util.SitesUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
+import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -459,6 +469,19 @@ public class EditGroupAction extends PortletAction {
 			typeSettingsProperties.remove("trashEntriesMaxAge");
 		}
 
+		// Default Group Roles and Teams
+
+		List<Role> defaultSiteRoles = getRoles(actionRequest);
+		List<Team> defaultTeams = getTeams(actionRequest);
+
+		typeSettingsProperties.setProperty(
+			"defaultSiteRoles", ListUtil.toString(
+				defaultSiteRoles, Role.ROLE_ID_ACCESSOR, StringPool.COMMA));
+
+		typeSettingsProperties.setProperty(
+			"defaultTeams", ListUtil.toString(
+				defaultTeams, Team.TEAM_ID_ACCESSOR, StringPool.COMMA));
+
 		// Virtual hosts
 
 		LayoutSet publicLayoutSet = liveGroup.getPublicLayoutSet();
@@ -602,6 +625,48 @@ public class EditGroupAction extends PortletAction {
 
 		return new Object[] {
 			liveGroup, oldFriendlyURL, oldStagingFriendlyURL, refererPlid};
+	}
+
+	protected List<Role> getRoles(PortletRequest portletRequest)
+		throws PortalException, SystemException {
+
+		List<Role> roles = new ArrayList<Role>();
+
+		long[] siteRolesRoleIds = StringUtil.split(ParamUtil.getString(
+			portletRequest, "siteRolesRoleIds"), 0L);
+
+		for (int i = 0; i < siteRolesRoleIds.length; i++) {
+			if (siteRolesRoleIds[i] == 0) {
+				continue;
+			}
+
+			Role role = RoleLocalServiceUtil.getRole(siteRolesRoleIds[i]);
+
+			roles.add(role);
+		}
+
+		return roles;
+	}
+
+	protected List<Team> getTeams(PortletRequest portletRequest)
+		throws PortalException, SystemException {
+
+		List<Team> teams = new UniqueList<Team>();
+
+		long[] teamsTeamIds= StringUtil.split(ParamUtil.getString(
+			portletRequest, "teamsTeamIds"), 0L);
+
+		for (int i = 0; i < teamsTeamIds.length; i++) {
+			if (teamsTeamIds[i] == 0) {
+				continue;
+			}
+
+			Team team = TeamLocalServiceUtil.getTeam(teamsTeamIds[i]);
+
+			teams.add(team);
+		}
+
+		return teams;
 	}
 
 	private static final int _LAYOUT_SET_VISIBILITY_PRIVATE = 1;

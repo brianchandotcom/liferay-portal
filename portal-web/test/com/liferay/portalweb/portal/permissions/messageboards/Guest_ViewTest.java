@@ -25,12 +25,10 @@ public class Guest_ViewTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("//input[@id='_58_login']");
 		assertTrue(selenium.isVisible("//input[@id='_58_login']"));
 		assertTrue(selenium.isVisible("//input[@value='Sign In']"));
 		assertTrue(selenium.isVisible("//a[@id='sign-in']"));
 		selenium.open("/web/site-name/");
-		selenium.waitForVisible("link=Message Boards Permissions Page");
 		selenium.clickAt("link=Message Boards Permissions Page",
 			RuntimeVariables.replace("Message Boards Permissions Page"));
 		selenium.waitForPageToLoad("30000");

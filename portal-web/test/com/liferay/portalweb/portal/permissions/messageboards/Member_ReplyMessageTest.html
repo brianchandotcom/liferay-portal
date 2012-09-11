@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Message Boards Permissions Page</td>
-	<td>Message Boards Permissions Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Message Boards Permissions Page</td>
 	<td>Message Boards Permissions Page</td>
@@ -45,12 +40,12 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//ul[@class='edit-controls lfr-component']/li[2]/span/a</td>
+	<td>//ul[@class='edit-controls lfr-component']/li[contains(.,'Reply')]/span/a</td>
 	<td>Reply</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//ul[@class='edit-controls lfr-component']/li[2]/span/a</td>
+	<td>//ul[@class='edit-controls lfr-component']/li[contains(.,'Reply')]/span/a</td>
 	<td>Reply</td>
 </tr>
 <tr>

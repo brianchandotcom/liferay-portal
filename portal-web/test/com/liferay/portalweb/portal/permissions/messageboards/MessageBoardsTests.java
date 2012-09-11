@@ -16,6 +16,8 @@ package com.liferay.portalweb.portal.permissions.messageboards;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.controlpanel.sites.site.addsite.TearDownSiteTest;
+import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignInTest;
+import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignOutTest;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
 
 import junit.framework.Test;
@@ -38,7 +40,7 @@ public class MessageBoardsTests extends BaseTestSuite {
 		testSuite.addTestSuite(SA_AddSiteMembersTest.class);
 		testSuite.addTestSuite(SA_AddPageTest.class);
 		testSuite.addTestSuite(SA_AddPortletTest.class);
-		testSuite.addTestSuite(LogoutTest.class);
+		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(LoginUsersTest.class);
 		testSuite.addTestSuite(MA_LoginTest.class);
 		testSuite.addTestSuite(MA_AddCategoryTest.class);
@@ -48,7 +50,7 @@ public class MessageBoardsTests extends BaseTestSuite {
 		testSuite.addTestSuite(MA_DeleteCategoryTest.class);
 		testSuite.addTestSuite(MA_AddCategoryTest.class);
 		testSuite.addTestSuite(MA_AddThreadTest.class);
-		testSuite.addTestSuite(LogoutTest.class);
+		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(Member_LoginTest.class);
 		testSuite.addTestSuite(Member_AssertActionsTest.class);
 		testSuite.addTestSuite(Member_ViewMessageTest.class);
@@ -56,15 +58,15 @@ public class MessageBoardsTests extends BaseTestSuite {
 		testSuite.addTestSuite(Member_AddThreadTest.class);
 		testSuite.addTestSuite(Member_EditThreadTest.class);
 		testSuite.addTestSuite(Member_DeleteMessageTest.class);
-		testSuite.addTestSuite(LogoutTest.class);
+		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(Guest_ViewTest.class);
 		testSuite.addTestSuite(Guest_AssertActionsTest.class);
-		testSuite.addTestSuite(SA_LoginTest.class);
+		testSuite.addTestSuite(SignInTest.class);
 		testSuite.addTestSuite(TearDownMBCategoryTest.class);
-		testSuite.addTestSuite(TearDownPageTest.class);
 		testSuite.addTestSuite(TearDownUserTest.class);
 		testSuite.addTestSuite(TearDownRoleTest.class);
 		testSuite.addTestSuite(TearDownSiteTest.class);
+		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;
 	}

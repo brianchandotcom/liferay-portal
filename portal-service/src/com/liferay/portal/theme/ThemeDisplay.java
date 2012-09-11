@@ -624,9 +624,11 @@ public class ThemeDisplay
 	}
 
 	public boolean isPortletDisplayFocused() {
-		if (Validator.isNotNull(getPortletDisplay()) &&
-			Validator.isNotNull(getFocusedPortletId()) &&
-			getPortletDisplay().getId().equals(getFocusedPortletId())) {
+		PortletDisplay portletDisplay = getPortletDisplay();
+
+		if ((portletDisplay != null) &&
+			portletDisplay.getId().equals(getFocusedPortletId()) &&
+			Validator.isNotNull(getFocusedPortletId())) {
 
 			return true;
 		}

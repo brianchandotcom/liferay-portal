@@ -92,7 +92,7 @@ else if (selUser != null) {
 
 List<UserGroupRole> userGroupRoles = UsersAdminUtil.getUserGroupRoles(renderRequest);
 
-List<UserGroupRole> communityRoles = new ArrayList<UserGroupRole>();
+List<UserGroupRole> siteRoles = new ArrayList<UserGroupRole>();
 List<UserGroupRole> organizationRoles = new ArrayList<UserGroupRole>();
 
 if (userGroupRoles.isEmpty() && (selUser != null)) {
@@ -110,7 +110,7 @@ for (UserGroupRole userGroupRole : userGroupRoles) {
 		organizationRoles.add(userGroupRole);
 	}
 	else if (roleType == RoleConstants.TYPE_SITE) {
-		communityRoles.add(userGroupRole);
+		siteRoles.add(userGroupRole);
 	}
 }
 
@@ -190,7 +190,7 @@ String taglibOnSubmit = "event.preventDefault(); " + renderResponse.getNamespace
 	request.setAttribute("user.groups", groups);
 	request.setAttribute("user.organizations", organizations);
 	request.setAttribute("user.roles", roles);
-	request.setAttribute("user.communityRoles", communityRoles);
+	request.setAttribute("user.siteRoles", siteRoles);
 	request.setAttribute("user.organizationRoles", organizationRoles);
 	request.setAttribute("user.userGroups", userGroups);
 	request.setAttribute("user.allGroups", allGroups);

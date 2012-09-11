@@ -175,11 +175,15 @@ public class InputTag extends BaseInputTag {
 
 		String id = getId();
 		String type = getType();
+		String fieldParam = getFieldParam();
 
-		if (Validator.isNull(id) &&
-			((model == null) || Validator.isNotNull(type))) {
+		if (Validator.isNull(id)) {
+			if ((model != null) && Validator.isNull(type) &&
+				Validator.isNotNull(fieldParam)) {
 
-			if (!Validator.equals(type, "assetTags") &&
+				id = fieldParam;
+			}
+			else if (!Validator.equals(type, "assetTags") &&
 				!Validator.equals(type, "radio")) {
 
 				id = name;
@@ -203,10 +207,7 @@ public class InputTag extends BaseInputTag {
 		if ((model != null) && Validator.isNull(type)) {
 			baseType = ModelHintsUtil.getType(model.getName(), field);
 
-			String fieldParam = getFieldParam();
-
 			if (Validator.isNotNull(fieldParam)) {
-				_forLabel = fieldParam;
 				_inputName = fieldParam;
 			}
 

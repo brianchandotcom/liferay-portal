@@ -59,6 +59,7 @@ import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.PortalPreferences;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portlet.sites.util.SitesUtil;
 import com.liferay.util.JS;
 import com.liferay.util.PwdGenerator;
@@ -813,6 +814,13 @@ public class LayoutTypePortletImpl
 				!isCustomizable()) {
 
 				return;
+			}
+
+			if (portlet.getPortletName().equals(PortletKeys.ASSET_PUBLISHER)) {
+				Layout layout = getLayout();
+
+				JournalArticleLocalServiceUtil.deleteLayoutArticleReferences(
+					layout.getGroupId(), layout.getUuid());
 			}
 		}
 		catch (Exception e) {

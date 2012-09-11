@@ -54,7 +54,7 @@ public class TemplateProcessor implements ColumnProcessor {
 
 		if (Validator.isNotNull(portletId)) {
 			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-				com.liferay.portal.util.WebKeys.THEME_DISPLAY);
+				WebKeys.THEME_DISPLAY);
 
 			_portlet = PortletLocalServiceUtil.getPortletById(
 				themeDisplay.getCompanyId(), portletId);
@@ -182,9 +182,15 @@ public class TemplateProcessor implements ColumnProcessor {
 		BufferCacheServletResponse bufferCacheServletResponse =
 			new BufferCacheServletResponse(_response);
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+			themeDisplay.getCompanyId(), portletId);
+
 		try {
 			PortletContainerUtil.render(
-				_request, bufferCacheServletResponse, _portlet);
+				_request, bufferCacheServletResponse, portlet);
 
 			return bufferCacheServletResponse.getString();
 		}

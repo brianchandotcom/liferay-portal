@@ -26,8 +26,6 @@ public class SA_AllowPermissionsImagePermissionsTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent(
-			"link=Media Gallery Permissions Test Page");
 		selenium.clickAt("link=Media Gallery Permissions Test Page",
 			RuntimeVariables.replace("Media Gallery Permissions Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -42,20 +40,23 @@ public class SA_AllowPermissionsImagePermissionsTest extends BaseTestCase {
 				"//a[@title='Portlet Permissions Image 2 Test Title - ']"));
 		selenium.clickAt("//a[@title='Portlet Permissions Image 2 Test Title - ']",
 			RuntimeVariables.replace("Portlet Permissions Image 2 Test Title"));
-		selenium.waitForVisible("//img[@alt='Permissions']");
-		selenium.clickAt("//img[@alt='Permissions']",
+		selenium.waitForVisible("//img[@title='Permissions']");
+		selenium.clickAt("//img[@title='Permissions']",
 			RuntimeVariables.replace("Permissions"));
 		selenium.waitForPageToLoad("30000");
-		assertFalse(selenium.isChecked("//tr[5]/td[5]/input"));
-		selenium.clickAt("//tr[5]/td[5]/input",
-			RuntimeVariables.replace("Media Gallery Permissions"));
-		assertTrue(selenium.isChecked("//tr[5]/td[5]/input"));
+		assertFalse(selenium.isChecked(
+				"//input[@id='portlet_ACTION_PERMISSIONS']"));
+		selenium.clickAt("//input[@id='portlet_ACTION_PERMISSIONS']",
+			RuntimeVariables.replace("Portlet Permissions"));
+		assertTrue(selenium.isChecked(
+				"//input[@id='portlet_ACTION_PERMISSIONS']"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertTrue(selenium.isChecked("//tr[5]/td[5]/input"));
+		assertTrue(selenium.isChecked(
+				"//input[@id='portlet_ACTION_PERMISSIONS']"));
 	}
 }

@@ -25,20 +25,25 @@ public class Member_AssertActionTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent(
-			"link=Media Gallery Permissions Test Page");
 		selenium.clickAt("link=Media Gallery Permissions Test Page",
 			RuntimeVariables.replace("Media Gallery Permissions Test Page"));
 		selenium.waitForPageToLoad("30000");
+		assertTrue(selenium.isElementNotPresent(
+				"//span[@title='Options']/ul/li/strong/a"));
 		assertTrue(selenium.isElementNotPresent("link=Look and Feel"));
 		assertTrue(selenium.isElementNotPresent("link=Configuration"));
 		assertTrue(selenium.isElementNotPresent("link=Export / Import"));
-		assertTrue(selenium.isElementNotPresent("//img[@alt='Remove']"));
-		assertTrue(selenium.isElementNotPresent("link=Add Subfolder"));
-		assertTrue(selenium.isElementNotPresent("link=Permissions"));
-		assertTrue(selenium.isElementNotPresent("link=Add Folder"));
-		assertTrue(selenium.isElementNotPresent("link=Add Repository"));
-		assertTrue(selenium.isElementNotPresent("link=Add Shortcut"));
+		assertTrue(selenium.isElementNotPresent("//img[@title='Remove']"));
+		assertTrue(selenium.isElementNotPresent(
+				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[contains(.,'Add Subfolder')]/a"));
+		assertTrue(selenium.isElementNotPresent(
+				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[contains(.,'Permissions')]/a"));
+		assertTrue(selenium.isElementNotPresent(
+				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[contains(.,'Add Folder')]/a"));
+		assertTrue(selenium.isElementNotPresent(
+				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[contains(.,'Add Repository')]/a"));
+		assertTrue(selenium.isElementNotPresent(
+				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[contains(.,'Add Shortcut')]/a"));
 		assertEquals(RuntimeVariables.replace(
 				"Media Gallery Permissions Test Folder"),
 			selenium.getText(
@@ -53,11 +58,15 @@ public class Member_AssertActionTest extends BaseTestCase {
 		selenium.clickAt("//a[@title='Media Gallery Permissions Test Subfolder - ']",
 			RuntimeVariables.replace("Media Gallery Permissions Test Subfolder"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isElementNotPresent("link=Add Subfolder"));
-		assertTrue(selenium.isElementPresent("link=Add Media"));
+		assertTrue(selenium.isElementNotPresent(
+				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[contains(.,'Add Subfolder')]/a"));
+		assertEquals(RuntimeVariables.replace("Multiple Media"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[contains(.,'Multiple Media')]/a"));
+		assertEquals(RuntimeVariables.replace("Add Media"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[contains(.,'Add Media')]/a"));
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent(
-			"link=Media Gallery Permissions Test Page");
 		selenium.clickAt("link=Media Gallery Permissions Test Page",
 			RuntimeVariables.replace("Media Gallery Permissions Test Page"));
 		selenium.waitForPageToLoad("30000");

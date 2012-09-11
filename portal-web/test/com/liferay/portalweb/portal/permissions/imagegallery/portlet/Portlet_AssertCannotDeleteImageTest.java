@@ -25,8 +25,6 @@ public class Portlet_AssertCannotDeleteImageTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent(
-			"link=Media Gallery Permissions Test Page");
 		selenium.clickAt("link=Media Gallery Permissions Test Page",
 			RuntimeVariables.replace("Media Gallery Permissions Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -42,6 +40,7 @@ public class Portlet_AssertCannotDeleteImageTest extends BaseTestCase {
 		selenium.clickAt("//a[@title='Portlet Permissions Image 2 Test Title Edited - ']",
 			RuntimeVariables.replace("Portlet Permissions Image 2 Test Title"));
 		selenium.waitForVisible("//div/div[2]/div[1]");
-		assertTrue(selenium.isElementNotPresent("//img[@alt='Delete']"));
+		assertTrue(selenium.isElementNotPresent(
+				"//img[@title='Move to the Recycle Bin']"));
 	}
 }

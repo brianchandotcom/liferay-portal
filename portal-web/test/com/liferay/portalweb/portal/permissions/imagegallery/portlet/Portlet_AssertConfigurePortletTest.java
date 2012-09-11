@@ -25,22 +25,27 @@ public class Portlet_AssertConfigurePortletTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent(
-			"link=Media Gallery Permissions Test Page");
 		selenium.clickAt("link=Media Gallery Permissions Test Page",
 			RuntimeVariables.replace("Media Gallery Permissions Test Page"));
 		selenium.waitForPageToLoad("30000");
 		Thread.sleep(5000);
+		assertEquals(RuntimeVariables.replace("Options"),
+			selenium.getText("//span[@title='Options']/ul/li/strong/a"));
 		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
 			RuntimeVariables.replace("Options"));
-		Thread.sleep(5000);
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Configuration')]/a");
 		assertEquals(RuntimeVariables.replace("Configuration"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a",
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Configuration')]/a"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Configuration')]/a",
 			RuntimeVariables.replace("Configuration"));
+		selenium.waitForVisible(
+			"//iframe[contains(@id,'configurationIframeDialog')]");
+		selenium.selectFrame(
+			"//iframe[contains(@id,'configurationIframeDialog')]");
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/liferay/navigation_interaction.js')]");
 		selenium.waitForVisible("link=Setup");
 		assertTrue(selenium.isElementPresent("link=Setup"));
 		assertTrue(selenium.isElementPresent("link=Communication"));
@@ -69,5 +74,6 @@ public class Portlet_AssertConfigurePortletTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"You have successfully updated the setup."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
+		selenium.selectFrame("relative=top");
 	}
 }

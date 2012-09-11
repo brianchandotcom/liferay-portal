@@ -25,8 +25,6 @@ public class Member_MoveImageTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent(
-			"link=Media Gallery Permissions Test Page");
 		selenium.clickAt("link=Media Gallery Permissions Test Page",
 			RuntimeVariables.replace("Media Gallery Permissions Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -48,8 +46,8 @@ public class Member_MoveImageTest extends BaseTestCase {
 			selenium.getText("//a[@title='Permissions Image 3 Test - ']"));
 		selenium.clickAt("//a[@title='Permissions Image 3 Test - ']",
 			RuntimeVariables.replace("Permissions Image 3 Test"));
-		selenium.waitForVisible("//img[@alt='View']");
-		selenium.click("//img[@alt='View']");
+		selenium.waitForVisible("//img[@title='View']");
+		selenium.click("//img[@title='View']");
 		selenium.waitForVisible("//button[3]");
 		assertEquals(RuntimeVariables.replace("Move"),
 			selenium.getText("//button[3]"));
@@ -60,8 +58,6 @@ public class Member_MoveImageTest extends BaseTestCase {
 		Thread.sleep(5000);
 		selenium.selectWindow("title=Media Gallery");
 		selenium.waitForVisible("link=Home");
-		assertEquals(RuntimeVariables.replace("Home"),
-			selenium.getText("link=Home"));
 		selenium.clickAt("link=Home", RuntimeVariables.replace("Home"));
 		selenium.waitForPageToLoad("30000");
 		selenium.waitForVisible("//td[1]/a");
@@ -83,13 +79,10 @@ public class Member_MoveImageTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Move']",
 			RuntimeVariables.replace("Move"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForVisible("//div[@class='portlet-msg-success']");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent(
-			"link=Media Gallery Permissions Test Page");
 		selenium.clickAt("link=Media Gallery Permissions Test Page",
 			RuntimeVariables.replace("Media Gallery Permissions Test Page"));
 		selenium.waitForPageToLoad("30000");

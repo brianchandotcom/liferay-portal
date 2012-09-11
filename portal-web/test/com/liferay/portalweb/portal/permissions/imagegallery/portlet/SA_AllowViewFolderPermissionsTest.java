@@ -25,8 +25,6 @@ public class SA_AllowViewFolderPermissionsTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent(
-			"link=Media Gallery Permissions Test Page");
 		selenium.clickAt("link=Media Gallery Permissions Test Page",
 			RuntimeVariables.replace("Media Gallery Permissions Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -37,21 +35,20 @@ public class SA_AllowViewFolderPermissionsTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Permissions"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[3]/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[3]/a",
+				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[contains(.,'Permissions')]/a"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[contains(.,'Permissions')]/a",
 			RuntimeVariables.replace("Permissions"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForVisible("//tr[5]/td[9]/input");
-		assertFalse(selenium.isChecked("//tr[5]/td[9]/input"));
-		selenium.clickAt("//tr[5]/td[9]/input",
-			RuntimeVariables.replace("Media Gallery Configuration"));
-		assertTrue(selenium.isChecked("//tr[5]/td[9]/input"));
+		assertFalse(selenium.isChecked("//input[@name='16_ACTION_VIEW']"));
+		selenium.clickAt("//input[@name='16_ACTION_VIEW']",
+			RuntimeVariables.replace("Guest View"));
+		assertTrue(selenium.isChecked("//input[@name='16_ACTION_VIEW']"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertTrue(selenium.isChecked("//tr[5]/td[9]/input"));
+		assertTrue(selenium.isChecked("//input[@name='16_ACTION_VIEW']"));
 	}
 }

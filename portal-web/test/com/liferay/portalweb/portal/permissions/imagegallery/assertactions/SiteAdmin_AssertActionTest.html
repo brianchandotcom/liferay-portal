@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>link=Media Gallery Permissions Test Page</td>
-	<td>Media Gallery Permissions Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Media Gallery Permissions Test Page</td>
 	<td>Media Gallery Permissions Test Page</td>
@@ -29,78 +24,68 @@
 	<td></td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//span[@title='Options']/ul/li/strong/a</td>
+	<td>Options</td>
+</tr>
+<tr>
 	<td>clickAt</td>
 	<td>//span[@title='Options']/ul/li/strong/a</td>
 	<td>Options</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Look and Feel')]/a</td>
 	<td>Look and Feel</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Look and Feel')]/a</td>
 	<td>Look and Feel</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Configuration')]/a</td>
 	<td>Configuration</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
-	<td>Export / Import</td>
-</tr>
-<tr>
-	<td>assertElementPresent</td>
-	<td>link=Look and Feel</td>
-	<td>Look and Feel</td>
-</tr>
-<tr>
-	<td>assertElementPresent</td>
-	<td>link=Configuration</td>
-	<td>Configuration</td>
-</tr>
-<tr>
-	<td>assertElementPresent</td>
-	<td>link=Export / Import</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Export / Import')]/a</td>
 	<td>Export / Import</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[contains(.,'Permissions')]/a</td>
 	<td>Permissions</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[2]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[contains(.,'Add Folder')]/a</td>
 	<td>Add Folder</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[3]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[contains(.,'Add Repository')]/a</td>
 	<td>Add Repository</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[4]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[contains(.,'Multiple Media')]/a</td>
 	<td>Multiple Media</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[5]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[contains(.,'Add Media')]/a</td>
 	<td>Add Media</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[6]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[contains(.,'Add Shortcut')]/a</td>
 	<td>Add Shortcut</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[7]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[contains(.,'Access from Desktop')]/a</td>
 	<td>Access from Desktop</td>
 </tr>
 <tr>
@@ -115,47 +100,47 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[contains(.,'Edit')]/a</td>
 	<td>Edit</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[2]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[contains(.,'Move')]/a</td>
 	<td>Move</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[3]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[contains(.,'Permissions')]/a</td>
 	<td>Permissions</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[4]/a</td>
-	<td>Delete</td>
+	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[contains(.,'Move to the Recycle Bin')]/a</td>
+	<td>Move to the Recycle Bin</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[5]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[contains(.,'Add Subfolder')]/a</td>
 	<td>Add Subfolder</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[6]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[contains(.,'Multiple Media')]/a</td>
 	<td>Multiple Media</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[7]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[contains(.,'Add Media')]/a</td>
 	<td>Add Media</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[8]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[contains(.,'Add Shortcut')]/a</td>
 	<td>Add Shortcut</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[9]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[contains(.,'Access from Desktop')]/a</td>
 	<td>Access from Desktop</td>
 </tr>
 <tr>
@@ -170,52 +155,52 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[contains(.,'Edit')]/a</td>
 	<td>Edit</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[2]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[contains(.,'Move')]/a</td>
 	<td>Move</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[3]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[contains(.,'Permissions')]/a</td>
 	<td>Permissions</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[4]/a</td>
-	<td>Delete</td>
+	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[contains(.,'Move to the Recycle Bin')]/a</td>
+	<td>Move to the Recycle Bin</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[5]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[contains(.,'Add Subfolder')]/a</td>
 	<td>Add Subfolder</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[6]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[contains(.,'Multiple Media')]/a</td>
 	<td>Multiple Media</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[7]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[contains(.,'Add Media')]/a</td>
 	<td>Add Media</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[8]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[contains(.,'View Slide Show')]/a</td>
 	<td>View Slide Show</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[9]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[contains(.,'Add Shortcut')]/a</td>
 	<td>Add Shortcut</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[10]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[contains(.,'Access from Desktop')]/a</td>
 	<td>Access from Desktop</td>
 </tr>
 <tr>
@@ -224,19 +209,24 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>link=Media Gallery Permissions Test Page</td>
-	<td>Media Gallery Permissions Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Media Gallery Permissions Test Page</td>
 	<td>Media Gallery Permissions Test Page</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>link=Mine</td>
+	<td>assertText</td>
+	<td>//ul[@class='top-links-navigation']/li/span[contains(.,'Mine')]/a</td>
 	<td>Mine</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//ul[@class='top-links-navigation']/li/span[contains(.,'Mine')]/a</td>
+	<td>Mine</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//a[@title='Permissions Image Test Edited - ']</td>
+	<td>Permissions Image Test Edited</td>
 </tr>
 <tr>
 	<td>pause</td>
@@ -245,8 +235,8 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//a[@title='Permissions Image Test Edited - ']</td>
-	<td>Permissions Image Test Edited</td>
+	<td>//span[@title='Options']/ul/li/strong/a</td>
+	<td>Options</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -255,17 +245,17 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Export / Import')]/a</td>
 	<td>Export / Import</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Export / Import')]/a</td>
 	<td>Export / Import</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Export / Import')]/a</td>
 	<td>Export / Import</td>
 </tr>
 <tr>
@@ -274,7 +264,7 @@
 	<td>Export</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
+	<td>assertVisible</td>
 	<td>//input[@value='Export']</td>
 	<td>Export</td>
 </tr>
@@ -289,7 +279,7 @@
 	<td>Import</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
+	<td>assertVisible</td>
 	<td>//input[@value='Import']</td>
 	<td>Import</td>
 </tr>

@@ -25,8 +25,6 @@ public class SA_RemoveAddImagePermissionsTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent(
-			"link=Media Gallery Permissions Test Page");
 		selenium.clickAt("link=Media Gallery Permissions Test Page",
 			RuntimeVariables.replace("Media Gallery Permissions Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -41,16 +39,19 @@ public class SA_RemoveAddImagePermissionsTest extends BaseTestCase {
 		selenium.clickAt("//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[3]/a",
 			RuntimeVariables.replace("Permissions"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isChecked("//tr[5]/td[3]/input"));
-		selenium.clickAt("//tr[5]/td[3]/input",
-			RuntimeVariables.replace("Media Gallery Add Document"));
-		assertFalse(selenium.isChecked("//tr[5]/td[3]/input"));
+		assertTrue(selenium.isChecked(
+				"//input[@id='portlet_ACTION_ADD_DOCUMENT']"));
+		selenium.clickAt("//input[@id='portlet_ACTION_ADD_DOCUMENT']",
+			RuntimeVariables.replace("Portlet Add Document"));
+		assertFalse(selenium.isChecked(
+				"//input[@id='portlet_ACTION_ADD_DOCUMENT']"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertFalse(selenium.isChecked("//tr[5]/td[3]/input"));
+		assertFalse(selenium.isChecked(
+				"//input[@id='portlet_ACTION_ADD_DOCUMENT']"));
 	}
 }

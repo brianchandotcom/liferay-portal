@@ -25,8 +25,6 @@ public class SiteAdmin_DeleteFolderTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent(
-			"link=Media Gallery Permissions Test Page");
 		selenium.clickAt("link=Media Gallery Permissions Test Page",
 			RuntimeVariables.replace("Media Gallery Permissions Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -38,17 +36,16 @@ public class SiteAdmin_DeleteFolderTest extends BaseTestCase {
 			RuntimeVariables.replace(
 				"Media Gallery Permissions Test Folder 2 Edited"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Delete"),
+		assertEquals(RuntimeVariables.replace("Move to the Recycle Bin"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[4]/a"));
+				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[contains(.,'Move to the Recycle Bin')]/a"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[4]/a"));
+				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[contains(.,'Move to the Recycle Bin')]/a"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.getConfirmation()
-						   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 		assertEquals(RuntimeVariables.replace(
-				"Your request completed successfully."),
-			selenium.getText("//div[@class='portlet-msg-success']"));
+				"The selected item was moved to the Recycle Bin. Undo"),
+			selenium.getText(
+				"//div[@class='portlet-msg-success taglib-trash-undo']"));
 		assertTrue(selenium.isElementNotPresent(
 				"//div[@class='portlet-msg-info']"));
 	}

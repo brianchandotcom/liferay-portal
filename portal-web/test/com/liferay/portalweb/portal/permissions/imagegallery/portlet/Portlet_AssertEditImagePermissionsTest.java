@@ -42,10 +42,13 @@ public class Portlet_AssertEditImagePermissionsTest extends BaseTestCase {
 				"//a[@title='Portlet Permissions Image 2 Test Title - ']"));
 		selenium.clickAt("//a[@title='Portlet Permissions Image 2 Test Title - ']",
 			RuntimeVariables.replace("Portlet Permissions Image 2 Test Title"));
-		selenium.waitForVisible("//img[@alt='Permissions']");
-		selenium.clickAt("//img[@alt='Permissions']",
+		selenium.waitForVisible("//img[@title='Permissions']");
+		selenium.clickAt("//img[@title='Permissions']",
 			RuntimeVariables.replace("Permissions"));
 		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace(
+				"Portlet Permissions Image 2 Test Title"),
+			selenium.getText("//h1[@class='header-title']/span"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");

@@ -25,8 +25,6 @@ public class Portlet_AssertCannotEditImageTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent(
-			"link=Media Gallery Permissions Test Page");
 		selenium.clickAt("link=Media Gallery Permissions Test Page",
 			RuntimeVariables.replace("Media Gallery Permissions Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -42,6 +40,6 @@ public class Portlet_AssertCannotEditImageTest extends BaseTestCase {
 		selenium.clickAt("//a[@title='Portlet Permissions Image 2 Test Title - ']",
 			RuntimeVariables.replace("Portlet Permissions Image 2 Test Title"));
 		selenium.waitForVisible("//div/div[2]/div[1]");
-		assertTrue(selenium.isElementNotPresent("//img[@alt='Edit']"));
+		assertTrue(selenium.isElementNotPresent("//img[@title='Edit']"));
 	}
 }

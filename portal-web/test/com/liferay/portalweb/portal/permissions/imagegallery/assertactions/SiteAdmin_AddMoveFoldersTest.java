@@ -25,15 +25,13 @@ public class SiteAdmin_AddMoveFoldersTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent(
-			"link=Media Gallery Permissions Test Page");
 		selenium.clickAt("link=Media Gallery Permissions Test Page",
 			RuntimeVariables.replace("Media Gallery Permissions Test Page"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Add Folder"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[2]/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[2]/a",
+				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[contains(.,'Add Folder')]/a"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[contains(.,'Add Folder')]/a",
 			RuntimeVariables.replace("Add Folder"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_31_name']",
@@ -53,8 +51,8 @@ public class SiteAdmin_AddMoveFoldersTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Add Subfolder"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[5]/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[5]/a",
+				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[contains(.,'Add Subfolder')]/a"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[contains(.,'Add Subfolder')]/a",
 			RuntimeVariables.replace("Add Subfolder"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_31_name']",

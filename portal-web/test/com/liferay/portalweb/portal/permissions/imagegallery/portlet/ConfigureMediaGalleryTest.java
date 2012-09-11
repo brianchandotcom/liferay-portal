@@ -25,8 +25,6 @@ public class ConfigureMediaGalleryTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent(
-			"link=Media Gallery Permissions Test Page");
 		selenium.clickAt("link=Media Gallery Permissions Test Page",
 			RuntimeVariables.replace("Media Gallery Permissions Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -36,12 +34,18 @@ public class ConfigureMediaGalleryTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
 			RuntimeVariables.replace("Options"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Configuration')]/a");
 		assertEquals(RuntimeVariables.replace("Configuration"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a",
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Configuration')]/a"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Configuration')]/a",
 			RuntimeVariables.replace("Configuration"));
+		selenium.waitForVisible(
+			"//iframe[contains(@id,'configurationIframeDialog')]");
+		selenium.selectFrame(
+			"//iframe[contains(@id,'configurationIframeDialog')]");
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/liferay/navigation_interaction.js')]");
 		selenium.waitForVisible("//input[@id='_86_showActionsCheckbox']");
 		assertFalse(selenium.isChecked("//input[@id='_86_showActionsCheckbox']"));
 		selenium.clickAt("//input[@id='_86_showActionsCheckbox']",
@@ -67,5 +71,6 @@ public class ConfigureMediaGalleryTest extends BaseTestCase {
 		assertTrue(selenium.isChecked(
 				"//input[@id='_86_showFolderMenuCheckbox']"));
 		assertTrue(selenium.isChecked("//input[@id='_86_showTabsCheckbox']"));
+		selenium.selectFrame("relative=top");
 	}
 }

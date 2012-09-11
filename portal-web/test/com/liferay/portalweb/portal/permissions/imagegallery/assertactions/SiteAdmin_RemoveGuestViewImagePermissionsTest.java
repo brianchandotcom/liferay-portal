@@ -26,8 +26,6 @@ public class SiteAdmin_RemoveGuestViewImagePermissionsTest extends BaseTestCase 
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent(
-			"link=Media Gallery Permissions Test Page");
 		selenium.clickAt("link=Media Gallery Permissions Test Page",
 			RuntimeVariables.replace("Media Gallery Permissions Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -51,7 +49,7 @@ public class SiteAdmin_RemoveGuestViewImagePermissionsTest extends BaseTestCase 
 			selenium.getText("//a[@title='Permissions Image Test Edited - ']"));
 		selenium.clickAt("//a[@title='Permissions Image Test Edited - ']",
 			RuntimeVariables.replace("Permissions Image Test Edited"));
-		selenium.clickAt("//img[@alt='Permissions']",
+		selenium.clickAt("//img[@title='Permissions']",
 			RuntimeVariables.replace("Permissions"));
 		selenium.waitForVisible("//input[@name='16_ACTION_VIEW']");
 		assertTrue(selenium.isChecked("//input[@name='16_ACTION_VIEW']"));

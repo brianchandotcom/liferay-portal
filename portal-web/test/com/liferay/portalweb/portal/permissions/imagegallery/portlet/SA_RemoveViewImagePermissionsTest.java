@@ -25,8 +25,6 @@ public class SA_RemoveViewImagePermissionsTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent(
-			"link=Media Gallery Permissions Test Page");
 		selenium.clickAt("link=Media Gallery Permissions Test Page",
 			RuntimeVariables.replace("Media Gallery Permissions Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -41,13 +39,13 @@ public class SA_RemoveViewImagePermissionsTest extends BaseTestCase {
 				"//a[@title='Portlet Permissions Image 2 Test Title - ']"));
 		selenium.clickAt("//a[@title='Portlet Permissions Image 2 Test Title - ']",
 			RuntimeVariables.replace("Portlet Permissions Image 2 Test Title"));
-		selenium.waitForVisible("//img[@alt='Permissions']");
-		selenium.clickAt("//img[@alt='Permissions']",
+		selenium.waitForVisible("//img[@title='Permissions']");
+		selenium.clickAt("//img[@title='Permissions']",
 			RuntimeVariables.replace("Permissions"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isChecked("//input[@name='16_ACTION_VIEW']"));
 		selenium.clickAt("//input[@name='16_ACTION_VIEW']",
-			RuntimeVariables.replace("Media Gallery View"));
+			RuntimeVariables.replace("Guest View"));
 		assertFalse(selenium.isChecked("//input[@name='16_ACTION_VIEW']"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));

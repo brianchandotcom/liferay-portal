@@ -25,8 +25,6 @@ public class Member_AddImageTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent(
-			"link=Media Gallery Permissions Test Page");
 		selenium.clickAt("link=Media Gallery Permissions Test Page",
 			RuntimeVariables.replace("Media Gallery Permissions Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -46,19 +44,19 @@ public class Member_AddImageTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Add Media"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[2]/a"));
-		selenium.click(
-			"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[2]/a");
-		selenium.waitForVisible("//input[@id='_31_file']");
-		selenium.type("//input[@id='_31_file']",
-			RuntimeVariables.replace(
-				"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\portal\\permissions\\imagegallery\\assertactions\\dependencies\\DLP_test_image_3.jpg"));
+				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[contains(.,'Add Media')]/a"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[contains(.,'Add Media')]/a",
+			RuntimeVariables.replace("Add Media"));
+		selenium.waitForPageToLoad("30000");
+		selenium.uploadCommonFile("//input[@id='_31_file']",
+			RuntimeVariables.replace("Document_3.jpg"));
 		selenium.type("//input[@id='_31_title']",
 			RuntimeVariables.replace("Permissions Image 3 Test"));
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForVisible("//div[@class='portlet-msg-success']");
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/liferay/navigation_interaction.js')]");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

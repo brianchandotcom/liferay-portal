@@ -43,6 +43,6 @@ public class Portlet_AssertCannotEditImagePermissionsTest extends BaseTestCase {
 		selenium.clickAt("//a[@title='Portlet Permissions Image 2 Test Title - ']",
 			RuntimeVariables.replace("Portlet Permissions Image 2 Test Title"));
 		selenium.waitForVisible("//div/div[2]/div[1]");
-		assertTrue(selenium.isElementNotPresent("//img[@alt='Permissions']"));
+		assertTrue(selenium.isElementNotPresent("//img[@title='Permissions']"));
 	}
 }

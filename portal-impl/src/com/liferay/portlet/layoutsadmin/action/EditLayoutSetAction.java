@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
@@ -162,22 +161,25 @@ public class EditLayoutSetAction extends EditLayoutsAction {
 	@Override
 	protected void setThemeSettingProperties(
 		ActionRequest actionRequest, UnicodeProperties typeSettingsProperties,
-		String device,
+		String device, String oldThemeId, String themeId,
 		Map<String, ThemeSetting> themeSettings) {
+
+		boolean themeChanged = !oldThemeId.equals(themeId);
 
 		for (String key : themeSettings.keySet()) {
 			ThemeSetting themeSetting = themeSettings.get(key);
 
-			String type = GetterUtil.getString(themeSetting.getType(), "text");
+			String value = null;
 
-			String property =
-				device + "ThemeSettingsProperties--" + key +
-					StringPool.DOUBLE_DASH;
+			if (themeChanged) {
+				value = themeSetting.getValue();
+			}
+			else {
+				String property =
+					device + "ThemeSettingsProperties--" + key +
+						StringPool.DOUBLE_DASH;
 
-			String value = ParamUtil.getString(actionRequest, property);
-
-			if (type.equals("checkbox")) {
-				value = String.valueOf(GetterUtil.getBoolean(value));
+				value = ParamUtil.getString(actionRequest, property);
 			}
 
 			if (!value.equals(themeSetting.getValue())) {
@@ -285,7 +287,7 @@ public class EditLayoutSetAction extends EditLayoutsAction {
 
 				updateThemeSettingsProperties(
 					actionRequest, companyId, typeSettingsProperties, device,
-					themeId, wapTheme);
+					oldThemeId, themeId, wapTheme);
 			}
 
 			long groupId = liveGroupId;

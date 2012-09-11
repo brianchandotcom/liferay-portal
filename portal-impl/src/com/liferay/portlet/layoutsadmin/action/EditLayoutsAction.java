@@ -41,7 +41,6 @@ import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -694,6 +693,7 @@ public class EditLayoutsAction extends PortletAction {
 	protected void setThemeSettingProperties(
 			ActionRequest actionRequest,
 			UnicodeProperties typeSettingsProperties, String device,
+			String oldThemeId, String themeId,
 			Map<String, ThemeSetting> themeSettings)
 		throws PortalException, SystemException {
 
@@ -707,19 +707,22 @@ public class EditLayoutsAction extends PortletAction {
 
 		LayoutSet layoutSet = layout.getLayoutSet();
 
+		boolean themeChanged = !oldThemeId.equals(themeId);
+
 		for (String key : themeSettings.keySet()) {
 			ThemeSetting themeSetting = themeSettings.get(key);
 
-			String type = GetterUtil.getString(themeSetting.getType(), "text");
+			String value = null;
 
-			String property =
-				device + "ThemeSettingsProperties--" + key +
-					StringPool.DOUBLE_DASH;
+			if (themeChanged) {
+				value = themeSetting.getValue();
+			}
+			else {
+				String property =
+					device + "ThemeSettingsProperties--" + key +
+						StringPool.DOUBLE_DASH;
 
-			String value = ParamUtil.getString(actionRequest, property);
-
-			if (type.equals("checkbox")) {
-				value = String.valueOf(GetterUtil.getBoolean(value));
+				value = ParamUtil.getString(actionRequest, property);
 			}
 
 			if (!value.equals(layoutSet.getThemeSetting(key, device))) {
@@ -973,7 +976,7 @@ public class EditLayoutsAction extends PortletAction {
 		updateLookAndFeel(
 			actionRequest, themeDisplay.getCompanyId(), liveGroupId,
 			stagingGroupId, privateLayout, layout.getLayoutId(),
-			layoutTypeSettingsProperties);
+			layout.getThemeId(), layoutTypeSettingsProperties);
 
 		return new Object[] {layout, oldFriendlyURL};
 	}
@@ -1044,7 +1047,7 @@ public class EditLayoutsAction extends PortletAction {
 	protected void updateLookAndFeel(
 			ActionRequest actionRequest, long companyId, long liveGroupId,
 			long stagingGroupId, boolean privateLayout, long layoutId,
-			UnicodeProperties typeSettingsProperties)
+			String oldThemeId, UnicodeProperties typeSettingsProperties)
 		throws Exception {
 
 		String[] devices = StringUtil.split(
@@ -1073,7 +1076,7 @@ public class EditLayoutsAction extends PortletAction {
 
 				updateThemeSettingsProperties(
 					actionRequest, companyId, typeSettingsProperties, device,
-					themeId, wapTheme);
+					oldThemeId, themeId, wapTheme);
 			}
 
 			long groupId = liveGroupId;
@@ -1095,7 +1098,7 @@ public class EditLayoutsAction extends PortletAction {
 	protected UnicodeProperties updateThemeSettingsProperties(
 			ActionRequest actionRequest, long companyId,
 			UnicodeProperties typeSettingsProperties, String device,
-			String themeId, boolean wapTheme)
+			String oldThemeId, String themeId, boolean wapTheme)
 		throws Exception {
 
 		Theme theme = ThemeLocalServiceUtil.getTheme(
@@ -1111,7 +1114,8 @@ public class EditLayoutsAction extends PortletAction {
 		}
 
 		setThemeSettingProperties(
-			actionRequest, typeSettingsProperties, device, themeSettings);
+			actionRequest, typeSettingsProperties, device, oldThemeId, themeId,
+			themeSettings);
 
 		return typeSettingsProperties;
 	}

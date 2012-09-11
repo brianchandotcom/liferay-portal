@@ -41,7 +41,6 @@ import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -708,24 +707,22 @@ public class EditLayoutsAction extends PortletAction {
 
 		LayoutSet layoutSet = layout.getLayoutSet();
 
+		boolean themeChanged = !oldThemeId.equals(themeId);
+
 		for (String key : themeSettings.keySet()) {
 			ThemeSetting themeSetting = themeSettings.get(key);
 
-			String type = GetterUtil.getString(themeSetting.getType(), "text");
+			String value = null;
 
-			String property =
-				device + "ThemeSettingsProperties--" + key +
-					StringPool.DOUBLE_DASH;
+			if (themeChanged) {
+				value = themeSetting.getValue();
+			}
+			else {
+				String property =
+					device + "ThemeSettingsProperties--" + key +
+						StringPool.DOUBLE_DASH;
 
-			String value = ParamUtil.getString(actionRequest, property);
-
-			if (type.equals("checkbox")) {
-				if (oldThemeId.equals(themeId)) {
-					value = String.valueOf(GetterUtil.getBoolean(value));
-				}
-				else {
-					value = themeSetting.getValue();
-				}
+				value = ParamUtil.getString(actionRequest, property);
 			}
 
 			if (!value.equals(layoutSet.getThemeSetting(key, device))) {

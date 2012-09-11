@@ -18,6 +18,10 @@
 
 <%
 String actionJsp = (String)request.getAttribute("liferay-ui:app-view-entry:actionJsp");
+String assetCategoryClassName = GetterUtil.getString(request.getAttribute("liferay-ui:app-view-entry:assetCategoryClassName"));
+long assetCategoryClassPK = GetterUtil.getLong(request.getAttribute("liferay-ui:app-view-entry:assetCategoryClassPK"));
+String assetTagClassName = GetterUtil.getString(request.getAttribute("liferay-ui:app-view-entry:assetTagClassName"));
+long assetTagClassPK = GetterUtil.getLong(request.getAttribute("liferay-ui:app-view-entry:assetTagClassPK"));
 Map<String, Object> data = (Map<String, Object>)request.getAttribute("liferay-ui:app-view-entry:data");
 String description = (String)request.getAttribute("liferay-ui:app-view-entry:description");
 String displayStyle = (String)request.getAttribute("liferay-ui:app-view-entry:displayStyle");
@@ -111,7 +115,27 @@ String url = (String)request.getAttribute("liferay-ui:app-view-entry:url");
 					</c:if>
 				</span>
 
-				<span class="entry-description"><%= HtmlUtil.escape(description) %></span>
+				<span class="entry-description">
+					<%= HtmlUtil.escape(description) %>
+
+					<c:if test="<%= Validator.isNotNull(assetCategoryClassName) && (assetCategoryClassPK > 0) %>">
+						<div class="categories">
+							<liferay-ui:asset-categories-summary
+								className="<%= assetCategoryClassName %>"
+								classPK="<%= assetCategoryClassPK %>"
+							/>
+						</div>
+					</c:if>
+
+					<c:if test="<%= Validator.isNotNull(assetTagClassName) && (assetTagClassPK > 0) %>">
+						<div class="tags">
+							<liferay-ui:asset-tags-summary
+								className="<%= assetTagClassName %>"
+								classPK="<%= assetTagClassPK %>"
+							/>
+						</div>
+					</c:if>
+				</span>
 			</a>
 
 			<%

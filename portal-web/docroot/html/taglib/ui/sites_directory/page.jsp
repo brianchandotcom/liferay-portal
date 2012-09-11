@@ -86,7 +86,7 @@
 					<c:choose>
 						<c:when test="<%= Validator.isNull(portletDisplay.getId()) %>">
 							<div class="portlet-msg-info">
-								<liferay-ui:message key="sites-directory-taglib-does-not-support-x-display-style-you-can-use-this-display-style-by-using-the-sites-directory-portlet" arguments="<%= displayStyle %>"/>
+								<liferay-ui:message arguments="<%= displayStyle %>" key="sites-directory-taglib-does-not-support-x-display-style-you-can-use-this-display-style-by-using-the-sites-directory-portlet" />
 							</div>
 						</c:when>
 						<c:otherwise>
@@ -152,6 +152,10 @@
 									%>
 
 									<liferay-ui:app-view-entry
+										assetCategoryClassName="<%= Group.class.getName() %>"
+										assetCategoryClassPK="<%= groupChild.getGroupId() %>"
+										assetTagClassName="<%= Group.class.getName() %>"
+										assetTagClassPK="<%= groupChild.getGroupId() %>"
 										description="<%= groupChild.getDescription() %>"
 										displayStyle="<%= displayStyle%>"
 										showCheckbox="<%= false %>"

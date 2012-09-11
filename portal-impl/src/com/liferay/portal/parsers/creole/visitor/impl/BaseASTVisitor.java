@@ -24,6 +24,7 @@ import com.liferay.portal.parsers.creole.ast.HorizontalNode;
 import com.liferay.portal.parsers.creole.ast.ImageNode;
 import com.liferay.portal.parsers.creole.ast.ItalicTextNode;
 import com.liferay.portal.parsers.creole.ast.LineNode;
+import com.liferay.portal.parsers.creole.ast.ListNode;
 import com.liferay.portal.parsers.creole.ast.NoWikiSectionNode;
 import com.liferay.portal.parsers.creole.ast.OrderedListItemNode;
 import com.liferay.portal.parsers.creole.ast.OrderedListNode;
@@ -95,6 +96,10 @@ public abstract class BaseASTVisitor implements ASTVisitor {
 		if (linkNode.hasAltCollectionNode()) {
 			traverse(linkNode.getAltCollectionNode().getASTNodes());
 		}
+	}
+
+	public void visit(ListNode listNode) {
+		traverse(listNode.getChildASTNodes());
 	}
 
 	public void visit(NoWikiSectionNode noWikiSectionNode) {

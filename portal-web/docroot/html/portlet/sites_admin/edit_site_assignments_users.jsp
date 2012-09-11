@@ -110,7 +110,7 @@ userSearch.setEmptyResultsMessage(emptyResultsMessage);
 		<c:if test='<%= tabs1.equals("summary") || tabs2.equals("current") %>'>
 			<liferay-ui:search-container-column-text
 				buffer="buffer"
-				name="site-roles"
+				name="site-roles-and-teams"
 			>
 
 				<%
@@ -124,6 +124,22 @@ userSearch.setEmptyResultsMessage(emptyResultsMessage);
 					buffer.append(HtmlUtil.escape(role.getTitle(locale)));
 
 					if ((i + 1) < userGroupRoles.size()) {
+						buffer.append(StringPool.COMMA_AND_SPACE);
+					}
+				}
+
+				List<Team> teams = TeamLocalServiceUtil.getUserTeams(user2.getUserId(), group.getGroupId());
+
+				if (userGroupRoles.size() > 0) {
+					buffer.append(StringPool.COMMA_AND_SPACE);
+				}
+
+				for (int i = 0; i < teams.size(); i++) {
+					Team team = teams.get(i);
+
+					buffer.append(HtmlUtil.escape(team.getName()));
+
+					if ((i + 1) < teams.size()) {
 						buffer.append(StringPool.COMMA_AND_SPACE);
 					}
 				}

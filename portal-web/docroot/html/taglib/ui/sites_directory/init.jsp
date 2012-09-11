@@ -51,6 +51,6 @@ Group group = GroupLocalServiceUtil.getGroup(scopeGroupId);
 
 <%!
 private String[] _getDisplayStyleDefinition(String displayStyle) {
-	return PropsUtil.getArray("sites.navigation.display.style", new Filter(displayStyle));
+	return PropsUtil.getArray("sites.directory.display.style", new Filter(displayStyle));
 }
 %>

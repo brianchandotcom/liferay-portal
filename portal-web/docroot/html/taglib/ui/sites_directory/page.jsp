@@ -86,7 +86,7 @@
 					<c:choose>
 						<c:when test="<%= Validator.isNull(portletDisplay.getId()) %>">
 							<div class="portlet-msg-info">
-								<liferay-ui:message arguments="<%= displayStyle %>" key="sites-directory-taglib-does-not-support-x-display-style-you-can-use-this-display-style-by-using-the-sites-directory-portlet" />
+								<liferay-ui:message arguments="<%= displayStyle %>" key="the-display-style-x-cannot-be-used-in-this-context" />
 							</div>
 						</c:when>
 						<c:otherwise>
@@ -112,12 +112,8 @@
 									if ((publicLayoutSet != null) && (publicLayoutSet.getPageCount() > 0)) {
 										visibleGroups.add(groupChild);
 									}
-									else {
-										List<Group> mySites = user.getMySites(true, QueryUtil.ALL_POS);
-
-										if (mySites.contains(groupChild)) {
-											visibleGroups.add(groupChild);
-										}
+									else if (GroupLocalServiceUtil.hasUserGroup(user.getUserId(), groupChild.getGroupId())) {
+										visibleGroups.add(groupChild);
 									}
 								}
 								%>

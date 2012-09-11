@@ -879,12 +879,16 @@ public class VelocityTaglib {
 		searchTag.runTag();
 	}
 
+	public void setTemplateContext(TemplateContext templateContext) {
+		_templateContext = templateContext;
+	}
+
 	public void sitesDirectory() throws Exception {
 		SitesDirectoryTag sitesDirectoryTag = new SitesDirectoryTag();
 
 		setUp(sitesDirectoryTag);
 
-		sitesDirectoryTag.setDisplayStyle("[custom]");
+		sitesDirectoryTag.setDisplayStyle("from-level-1");
 
 		sitesDirectoryTag.runTag();
 	}
@@ -925,10 +929,6 @@ public class VelocityTaglib {
 		sitesDirectoryTag.setNestedChildren(nestedChildren);
 
 		sitesDirectoryTag.runTag();
-	}
-
-	public void setTemplateContext(TemplateContext templateContext) {
-		_templateContext = templateContext;
 	}
 
 	public void socialBookmarks(

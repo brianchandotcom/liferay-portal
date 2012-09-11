@@ -15,17 +15,6 @@
 --%>
 
 <%
-List results = null;
-
-if (searchTerms.isAdvancedSearch()) {
-	results = JournalFeedLocalServiceUtil.search(company.getCompanyId(), searchTerms.getGroupId(), searchTerms.getFeedId(), searchTerms.getName(), searchTerms.getDescription(), searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), null);
-}
-else {
-	results = JournalFeedLocalServiceUtil.search(company.getCompanyId(), searchTerms.getGroupId(), searchTerms.getKeywords(), searchContainer.getStart(), searchContainer.getEnd(), null);
-}
-
-searchContainer.setResults(results);
-
 int total = 0;
 
 if (searchTerms.isAdvancedSearch()) {
@@ -36,4 +25,15 @@ else {
 }
 
 searchContainer.setTotal(total);
+
+List results = null;
+
+if (searchTerms.isAdvancedSearch()) {
+	results = JournalFeedLocalServiceUtil.search(company.getCompanyId(), searchTerms.getGroupId(), searchTerms.getFeedId(), searchTerms.getName(), searchTerms.getDescription(), searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), null);
+}
+else {
+	results = JournalFeedLocalServiceUtil.search(company.getCompanyId(), searchTerms.getGroupId(), searchTerms.getKeywords(), searchContainer.getStart(), searchContainer.getEnd(), null);
+}
+
+searchContainer.setResults(results);
 %>

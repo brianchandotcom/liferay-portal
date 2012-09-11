@@ -18,14 +18,11 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.theme.PortletDisplay;
-import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.asset.NoSuchCategoryException;
@@ -93,49 +90,16 @@ public class AssetUtil {
 			portletURL.setParameter(
 				"categoryId", String.valueOf(ancestorCategory.getCategoryId()));
 
-			addPortletBreadcrumbEntry(
+			PortalUtil.addPortletBreadcrumbEntry(
 				request, ancestorCategory.getTitleCurrentValue(),
 				portletURL.toString());
 		}
 
 		portletURL.setParameter("categoryId", String.valueOf(assetCategoryId));
 
-		addPortletBreadcrumbEntry(
+		PortalUtil.addPortletBreadcrumbEntry(
 			request, assetCategory.getTitleCurrentValue(),
 			portletURL.toString());
-	}
-
-	public static void addPortletBreadcrumbEntry(
-			HttpServletRequest request, String title, String url)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-		String portletBreadcrumbKey = WebKeys.PORTLET_BREADCRUMBS;
-
-		if (Validator.isNotNull(portletDisplay.getId()) &&
-			!themeDisplay.isPortletDisplayFocused()) {
-
-			portletBreadcrumbKey =
-				WebKeys.PORTLET_BREADCRUMBS + StringPool.UNDERLINE +
-					portletDisplay.getId();
-		}
-
-		List<BreadcrumbEntry> breadcrumbEntries =
-			(List<BreadcrumbEntry>)request.getAttribute(portletBreadcrumbKey);
-
-		if (breadcrumbEntries != null) {
-			for (BreadcrumbEntry breadcrumbEntry : breadcrumbEntries) {
-				if (title.equals(breadcrumbEntry.getTitle())) {
-					return;
-				}
-			}
-		}
-
-		PortalUtil.addPortletBreadcrumbEntry(request, title, url);
 	}
 
 	public static String getAssetKeywords(String className, long classPK)

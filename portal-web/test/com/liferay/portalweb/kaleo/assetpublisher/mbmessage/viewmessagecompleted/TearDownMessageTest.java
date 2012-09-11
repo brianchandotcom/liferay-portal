@@ -30,7 +30,6 @@ public class TearDownMessageTest extends BaseTestCase {
 				selenium.selectWindow("null");
 				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
-				selenium.waitForVisible("link=Message Boards Test Page");
 				selenium.click(RuntimeVariables.replace(
 						"link=Message Boards Test Page"));
 				selenium.waitForPageToLoad("30000");

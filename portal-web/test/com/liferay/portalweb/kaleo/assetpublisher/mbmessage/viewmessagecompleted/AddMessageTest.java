@@ -25,6 +25,10 @@ public class AddMessageTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
@@ -42,15 +46,15 @@ public class AddMessageTest extends BaseTestCase {
 		selenium.waitForElementPresent(
 			"//textarea[@id='_162_editor' and @style='display: none;']");
 		assertEquals(RuntimeVariables.replace("Source"),
-			selenium.getText("//span[@id='cke_34_label' and .='Source']"));
-		selenium.clickAt("//span[@id='cke_34_label' and .='Source']",
+			selenium.getText("//span[@id='cke_33_label' and .='Source']"));
+		selenium.clickAt("//span[@id='cke_33_label' and .='Source']",
 			RuntimeVariables.replace("Source"));
 		selenium.waitForVisible("//td[@id='cke_contents__162_editor']/textarea");
 		selenium.type("//td[@id='cke_contents__162_editor']/textarea",
 			RuntimeVariables.replace("Message Boards Message Body"));
 		assertEquals(RuntimeVariables.replace("Source"),
-			selenium.getText("//span[@id='cke_34_label' and .='Source']"));
-		selenium.clickAt("//span[@id='cke_34_label' and .='Source']",
+			selenium.getText("//span[@id='cke_33_label' and .='Source']"));
+		selenium.clickAt("//span[@id='cke_33_label' and .='Source']",
 			RuntimeVariables.replace("Source"));
 		selenium.waitForElementPresent(
 			"//textarea[@id='_162_editor' and @style='display: none;']");
@@ -73,9 +77,8 @@ public class AddMessageTest extends BaseTestCase {
 				"There are no threads in this category."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Asset Publisher Page");
-		selenium.clickAt("link=Asset Publisher Page",
-			RuntimeVariables.replace("Asset Publisher Page"));
+		selenium.clickAt("link=Asset Publisher Test Page",
+			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("There are no results."),
 			selenium.getText("//div[@class='portlet-msg-info']"));

@@ -144,14 +144,14 @@ public class ViewCompletedTaskJavascriptTicketKFTest extends BaseTestCase {
 				assertEquals(RuntimeVariables.replace(
 						"Task initially assigned to the QA Engineer role."),
 					selenium.getText(
-						" xPath=(//div[@class='task-activity-message'])[contains(.,'QA Engineer')]"));
+						"xPath=(//div[@class='task-activity-message'])[contains(.,'QA Engineer')]"));
 				assertEquals(RuntimeVariables.replace("Assigned initial task."),
 					selenium.getText(
 						"xPath=(//div[@class='task-activity-comment'])[13]"));
 				assertEquals(RuntimeVariables.replace(
 						"Task initially assigned to the QA Manager role."),
 					selenium.getText(
-						" xPath=(//div[@class='task-activity-message'])[contains(.,'QA Manager')]"));
+						"xPath=(//div[@class='task-activity-message'])[contains(.,'QA Manager')]"));
 				assertEquals(RuntimeVariables.replace("Assigned initial task."),
 					selenium.getText(
 						"xPath=(//div[@class='task-activity-comment'])[14]"));
@@ -163,89 +163,72 @@ public class ViewCompletedTaskJavascriptTicketKFTest extends BaseTestCase {
 						"QA Engineer completed the task QA."),
 					selenium.getText(
 						"xPath=(//div[@class='task-activity-message'])[16]"));
-				assertEquals(RuntimeVariables.replace(
-						"QA Manager assigned the task to himself."),
+				assertEquals(RuntimeVariables.replace("Developer"),
 					selenium.getText(
-						"xPath=(//div[@class='task-activity-message'])[17]"));
-				assertEquals(RuntimeVariables.replace(
-						"QA Manager completed the task QA Management."),
+						"//div[@class='results-grid aui-searchcontainer-content']/table/tbody/tr[3]/td[1]"));
+				assertEquals(RuntimeVariables.replace("Yes"),
 					selenium.getText(
-						"xPath=(//div[@class='task-activity-message'])[18]"));
-				assertEquals(RuntimeVariables.replace(
-						"Task initially assigned to the Javascript Developer role."),
+						"//div[@class='results-grid aui-searchcontainer-content']/table/tbody/tr[3]/td[3]"));
+				assertEquals(RuntimeVariables.replace("Code Review"),
 					selenium.getText(
-						"xPath=(//div[@class='task-activity-message'])[19]"));
-				assertEquals(RuntimeVariables.replace("Assigned initial task."),
+						"//div[@class='results-grid aui-searchcontainer-content']/table/tbody/tr[4]/td[1]"));
+				assertEquals(RuntimeVariables.replace("Yes"),
 					selenium.getText(
-						"xPath=(//div[@class='task-activity-comment'])[19]"));
-				assertEquals(RuntimeVariables.replace(
-						"Javascript Developer assigned the task to himself."),
+						"//div[@class='results-grid aui-searchcontainer-content']/table/tbody/tr[4]/td[3]"));
+				assertEquals(RuntimeVariables.replace("Developer"),
 					selenium.getText(
-						"xPath=(//div[@class='task-activity-message'])[20]"));
-				assertEquals(RuntimeVariables.replace(
-						"Javascript Developer completed the task Developer."),
+						"//div[@class='results-grid aui-searchcontainer-content']/table/tbody/tr[5]/td[1]"));
+				assertEquals(RuntimeVariables.replace("Yes"),
 					selenium.getText(
-						"xPath=(//div[@class='task-activity-message'])[21]"));
-				assertEquals(RuntimeVariables.replace(
-						"Task initially assigned to the Code Reviewer role."),
+						"//div[@class='results-grid aui-searchcontainer-content']/table/tbody/tr[5]/td[3]"));
+				assertEquals(RuntimeVariables.replace("Code Review"),
 					selenium.getText(
-						"xPath=(//div[@class='task-activity-message'])[22]"));
-				assertEquals(RuntimeVariables.replace("Assigned initial task."),
+						"//div[@class='results-grid aui-searchcontainer-content']/table/tbody/tr[6]/td[1]"));
+				assertEquals(RuntimeVariables.replace("Yes"),
 					selenium.getText(
-						"xPath=(//div[@class='task-activity-comment'])[22]"));
-				assertEquals(RuntimeVariables.replace(
-						"Code Reviewer assigned the task to himself."),
+						"//div[@class='results-grid aui-searchcontainer-content']/table/tbody/tr[6]/td[3]"));
+				assertEquals(RuntimeVariables.replace("QA"),
 					selenium.getText(
-						"xPath=(//div[@class='task-activity-message'])[23]"));
-				assertEquals(RuntimeVariables.replace(
-						"Code Reviewer completed the task Code Review."),
+						"//div[@class='results-grid aui-searchcontainer-content']/table/tbody/tr[7]/td[1]"));
+				assertEquals(RuntimeVariables.replace("Yes"),
 					selenium.getText(
-						"xPath=(//div[@class='task-activity-message'])[24]"));
-				assertEquals(RuntimeVariables.replace(
-						"Task initially assigned to the QA Engineer role."),
+						"//div[@class='results-grid aui-searchcontainer-content']/table/tbody/tr[7]/td[3]"));
+				assertEquals(RuntimeVariables.replace("QA Management"),
 					selenium.getText(
-						"xPath=(//div[@class='task-activity-message'])[25]"));
-				assertEquals(RuntimeVariables.replace("Assigned initial task."),
+						"//div[@class='results-grid aui-searchcontainer-content']/table/tbody/tr[8]/td[1]"));
+				assertEquals(RuntimeVariables.replace("Yes"),
 					selenium.getText(
-						"xPath=(//div[@class='task-activity-comment'])[25]"));
-				assertEquals(RuntimeVariables.replace(
-						"Task initially assigned to the QA Manager role."),
+						"//div[@class='results-grid aui-searchcontainer-content']/table/tbody/tr[8]/td[3]"));
+				assertEquals(RuntimeVariables.replace("Developer"),
 					selenium.getText(
-						"xPath=(//div[@class='task-activity-message'])[26]"));
-				assertEquals(RuntimeVariables.replace("Assigned initial task."),
+						"//div[@class='results-grid aui-searchcontainer-content']/table/tbody/tr[9]/td[1]"));
+				assertEquals(RuntimeVariables.replace("Yes"),
 					selenium.getText(
-						"xPath=(//div[@class='task-activity-comment'])[26]"));
-				assertEquals(RuntimeVariables.replace(
-						"QA Engineer assigned the task to himself."),
+						"//div[@class='results-grid aui-searchcontainer-content']/table/tbody/tr[9]/td[3]"));
+				assertEquals(RuntimeVariables.replace("Code Review"),
 					selenium.getText(
-						"xPath=(//div[@class='task-activity-message'])[27]"));
-				assertEquals(RuntimeVariables.replace(
-						"QA Engineer completed the task QA."),
+						"//div[@class='results-grid aui-searchcontainer-content']/table/tbody/tr[10]/td[1]"));
+				assertEquals(RuntimeVariables.replace("Yes"),
 					selenium.getText(
-						"xPath=(//div[@class='task-activity-message'])[28]"));
-				assertEquals(RuntimeVariables.replace(
-						"QA Manager assigned the task to himself."),
+						"//div[@class='results-grid aui-searchcontainer-content']/table/tbody/tr[10]/td[3]"));
+				assertEquals(RuntimeVariables.replace("QA"),
 					selenium.getText(
-						"xPath=(//div[@class='task-activity-message'])[29]"));
-				assertEquals(RuntimeVariables.replace(
-						"QA Manager completed the task QA Management."),
+						"//div[@class='results-grid aui-searchcontainer-content']/table/tbody/tr[11]/td[1]"));
+				assertEquals(RuntimeVariables.replace("Yes"),
 					selenium.getText(
-						"xPath=(//div[@class='task-activity-message'])[30]"));
-				assertEquals(RuntimeVariables.replace(
-						"Task initially assigned to the Project Manager role."),
+						"//div[@class='results-grid aui-searchcontainer-content']/table/tbody/tr[11]/td[3]"));
+				assertEquals(RuntimeVariables.replace("QA Management"),
 					selenium.getText(
-						"xPath=(//div[@class='task-activity-message'])[31]"));
-				assertEquals(RuntimeVariables.replace("Assigned initial task."),
+						"//div[@class='results-grid aui-searchcontainer-content']/table/tbody/tr[12]/td[1]"));
+				assertEquals(RuntimeVariables.replace("Yes"),
 					selenium.getText(
-						"xPath=(//div[@class='task-activity-comment'])[31]"));
-				assertEquals(RuntimeVariables.replace(
-						"Project Manager assigned the task to himself."),
+						"//div[@class='results-grid aui-searchcontainer-content']/table/tbody/tr[12]/td[3]"));
+				assertEquals(RuntimeVariables.replace("Project Manager Review"),
 					selenium.getText(
-						"xPath=(//div[@class='task-activity-message'])[32]"));
-				assertEquals(RuntimeVariables.replace(
-						"Project Manager completed the task Project Manager Review."),
+						"//div[@class='results-grid aui-searchcontainer-content']/table/tbody/tr[13]/td[1]"));
+				assertEquals(RuntimeVariables.replace("Yes"),
 					selenium.getText(
-						"xPath=(//div[@class='task-activity-message'])[33]"));
+						"//div[@class='results-grid aui-searchcontainer-content']/table/tbody/tr[13]/td[3]"));
 
 			case 100:
 				label = -1;

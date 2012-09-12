@@ -25,7 +25,6 @@ public class EditDataDefinitionFieldTestedStatusTest extends BaseTestCase {
 		throws Exception {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
-		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("//div[@id='dockbar']",
 			RuntimeVariables.replace("Dockbar"));
@@ -48,6 +47,8 @@ public class EditDataDefinitionFieldTestedStatusTest extends BaseTestCase {
 			RuntimeVariables.replace("Manage Data Definitions"));
 		selenium.waitForVisible("//iframe");
 		selenium.selectFrame("//iframe");
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/liferay/search_container.js')]");
 		selenium.waitForVisible(
 			"//input[@id='_166_toggle_id_ddm_structure_searchkeywords']");
 		selenium.type("//input[@id='_166_toggle_id_ddm_structure_searchkeywords']",
@@ -55,17 +56,26 @@ public class EditDataDefinitionFieldTestedStatusTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForVisible("//span[@title='Actions']/ul/li/strong/a");
 		Thread.sleep(5000);
-		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
+		selenium.waitForVisible("//span[@title='Actions']/ul/li/strong/a/span");
+		assertEquals(RuntimeVariables.replace("Actions"),
+			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
+		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a");
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
-		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a");
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a",
+			RuntimeVariables.replace("Edit"));
 		selenium.waitForVisible("//div[@class='aui-diagram-builder-canvas']");
+		assertEquals(RuntimeVariables.replace("Select"),
+			selenium.getText(
+				"//div[@class='aui-diagram-builder-canvas']/div/div[8]/div/label"));
+		selenium.clickAt("//div[@class='aui-diagram-builder-canvas']/div/div[8]",
+			RuntimeVariables.replace("Select"));
+		selenium.waitForVisible("xPath=(//button[@id='editEvent'])[8]");
 		selenium.clickAt("xPath=(//button[@id='editEvent'])[8]",
 			RuntimeVariables.replace("Edit"));
 		selenium.waitForVisible("//tbody[@class='yui3-datatable-data']");
@@ -140,5 +150,6 @@ public class EditDataDefinitionFieldTestedStatusTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
+		selenium.selectFrame("relative=top");
 	}
 }

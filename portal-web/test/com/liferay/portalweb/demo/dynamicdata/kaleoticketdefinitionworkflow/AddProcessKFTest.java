@@ -25,7 +25,6 @@ public class AddProcessKFTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Kaleo Forms Test Page");
 		selenium.clickAt("link=Kaleo Forms Test Page",
 			RuntimeVariables.replace("Kaleo Forms Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -48,6 +47,8 @@ public class AddProcessKFTest extends BaseTestCase {
 			RuntimeVariables.replace("Select"));
 		selenium.waitForVisible("//iframe");
 		selenium.selectFrame("//iframe");
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/liferay/navigation_interaction.js')]");
 		selenium.waitForVisible("//tr[3]/td[2]/a");
 		assertEquals(RuntimeVariables.replace("Ticket Definition"),
 			selenium.getText("//tr[3]/td[2]/a"));
@@ -67,6 +68,8 @@ public class AddProcessKFTest extends BaseTestCase {
 			RuntimeVariables.replace("Select"));
 		selenium.waitForVisible("//iframe");
 		selenium.selectFrame("//iframe");
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/liferay/navigation_interaction.js')]");
 		selenium.waitForVisible("//tr[3]/td[2]/a");
 		assertEquals(RuntimeVariables.replace("Ticket Creation"),
 			selenium.getText("//tr[3]/td[2]/a"));
@@ -86,7 +89,8 @@ public class AddProcessKFTest extends BaseTestCase {
 			RuntimeVariables.replace("Select"));
 		selenium.waitForVisible("//iframe");
 		selenium.selectFrame("//iframe");
-		Thread.sleep(5000);
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/liferay/navigation_interaction.js')]");
 		selenium.waitForVisible("link=Ticket Process");
 		selenium.clickAt("link=Ticket Process",
 			RuntimeVariables.replace("Ticket Process"));
@@ -104,6 +108,8 @@ public class AddProcessKFTest extends BaseTestCase {
 			RuntimeVariables.replace("Assign"));
 		selenium.waitForVisible("//iframe");
 		selenium.selectFrame("//iframe");
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/liferay/navigation_interaction.js')]");
 		selenium.waitForVisible(
 			"//div[@id='diagramNode_field_Developer']/div/div/div");
 		selenium.clickAt("//div[@id='diagramNode_field_Developer']/div/div/div",

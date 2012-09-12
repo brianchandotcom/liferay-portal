@@ -18,17 +18,26 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.Group;
+import com.liferay.portal.model.Layout;
+import com.liferay.portal.theme.PortletDisplay;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.asset.NoSuchCategoryException;
 import com.liferay.portlet.asset.NoSuchTagException;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetCategoryProperty;
+import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.AssetTag;
 import com.liferay.portlet.asset.model.AssetTagProperty;
 import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
@@ -41,28 +50,20 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.portlet.PortletMode;
 import javax.portlet.PortletURL;
+import javax.portlet.WindowState;
 
 import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Eduardo Garcia
  * @author Jorge Ferrer
  */
-public class AssetUtil {
+public class AssetImpl implements Asset {
 
-	public static final char[] INVALID_CHARACTERS = new char[] {
-		CharPool.AMPERSAND, CharPool.APOSTROPHE, CharPool.AT,
-		CharPool.BACK_SLASH, CharPool.CLOSE_BRACKET, CharPool.CLOSE_CURLY_BRACE,
-		CharPool.COLON, CharPool.COMMA, CharPool.EQUAL, CharPool.GREATER_THAN,
-		CharPool.FORWARD_SLASH, CharPool.LESS_THAN, CharPool.NEW_LINE,
-		CharPool.OPEN_BRACKET, CharPool.OPEN_CURLY_BRACE, CharPool.PERCENT,
-		CharPool.PIPE, CharPool.PLUS, CharPool.POUND, CharPool.QUESTION,
-		CharPool.QUOTE, CharPool.RETURN, CharPool.SEMICOLON, CharPool.SLASH,
-		CharPool.STAR, CharPool.TILDE
-	};
-
-	public static Set<String> addLayoutTags(
+	public Set<String> addLayoutTags(
 		HttpServletRequest request, List<AssetTag> tags) {
 
 		Set<String> layoutTags = getLayoutTagNames(request);
@@ -74,7 +75,7 @@ public class AssetUtil {
 		return layoutTags;
 	}
 
-	public static void addPortletBreadcrumbEntries(
+	public void addPortletBreadcrumbEntries(
 			long assetCategoryId, HttpServletRequest request,
 			PortletURL portletURL)
 		throws Exception {
@@ -102,7 +103,7 @@ public class AssetUtil {
 			portletURL.toString());
 	}
 
-	public static String getAssetKeywords(String className, long classPK)
+	public String getAssetKeywords(String className, long classPK)
 		throws SystemException {
 
 		List<AssetTag> tags = AssetTagLocalServiceUtil.getTags(
@@ -123,7 +124,7 @@ public class AssetUtil {
 		return sb.toString();
 	}
 
-	public static Set<String> getLayoutTagNames(HttpServletRequest request) {
+	public Set<String> getLayoutTagNames(HttpServletRequest request) {
 		Set<String> tagNames = (Set<String>)request.getAttribute(
 			WebKeys.ASSET_LAYOUT_TAG_NAMES);
 
@@ -136,7 +137,64 @@ public class AssetUtil {
 		return tagNames;
 	}
 
-	public static boolean isValidWord(String word) {
+	public PortletURL getURLEdit(
+			AssetRenderer assetRenderer,
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse,
+			boolean checkPermissions, PortletURL redirectURL,
+			WindowState windowState)
+		throws Exception {
+
+		LiferayPortletURL editPortletURL =
+			(LiferayPortletURL)assetRenderer.getURLEdit(
+				liferayPortletRequest, liferayPortletResponse);
+
+		if (editPortletURL == null) {
+			return null;
+		}
+
+		if (checkPermissions) {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)liferayPortletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			Group stageableGroup = themeDisplay.getScopeGroup();
+
+			if (stageableGroup.isLayout()) {
+				Layout layout = themeDisplay.getLayout();
+
+				stageableGroup = layout.getGroup();
+			}
+
+			if (!assetRenderer.hasEditPermission(
+					themeDisplay.getPermissionChecker()) ||
+				stageableGroup.hasStagingGroup()) {
+
+				return null;
+			}
+
+			editPortletURL.setWindowState(windowState);
+			editPortletURL.setPortletMode(PortletMode.VIEW);
+
+			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+			String portletResource = ParamUtil.getString(
+				liferayPortletRequest, "portletResource",
+				portletDisplay.getId());
+
+			editPortletURL.setParameter(
+				"referringPortletResource", portletResource);
+			editPortletURL.setParameter("redirect", redirectURL.toString());
+			editPortletURL.setParameter(
+				"originalRedirect", redirectURL.toString());
+			editPortletURL.setDoAsGroupId(assetRenderer.getGroupId());
+			editPortletURL.setRefererPlid(themeDisplay.getPlid());
+		}
+
+		return editPortletURL;
+	}
+
+	public boolean isValidWord(String word) {
 		if (Validator.isNull(word)) {
 			return false;
 		}
@@ -144,7 +202,7 @@ public class AssetUtil {
 			char[] wordCharArray = word.toCharArray();
 
 			for (char c : wordCharArray) {
-				for (char invalidChar : INVALID_CHARACTERS) {
+				for (char invalidChar : AssetUtil.INVALID_CHARACTERS) {
 					if (c == invalidChar) {
 						if (_log.isDebugEnabled()) {
 							_log.debug(
@@ -161,7 +219,7 @@ public class AssetUtil {
 		return true;
 	}
 
-	public static String substituteCategoryPropertyVariables(
+	public String substituteCategoryPropertyVariables(
 			long groupId, long categoryId, String s)
 		throws PortalException, SystemException {
 
@@ -193,7 +251,7 @@ public class AssetUtil {
 		return StringUtil.stripBetween(result, "[$", "$]");
 	}
 
-	public static String substituteTagPropertyVariables(
+	public String substituteTagPropertyVariables(
 			long groupId, String tagName, String s)
 		throws PortalException, SystemException {
 
@@ -224,7 +282,7 @@ public class AssetUtil {
 		return StringUtil.stripBetween(result, "[$", "$]");
 	}
 
-	public static String toWord(String text) {
+	public String toWord(String text) {
 		if (Validator.isNull(text)) {
 			return text;
 		}
@@ -234,7 +292,7 @@ public class AssetUtil {
 			for (int i = 0; i < textCharArray.length; i++) {
 				char c = textCharArray[i];
 
-				for (char invalidChar : INVALID_CHARACTERS) {
+				for (char invalidChar : AssetUtil.INVALID_CHARACTERS) {
 					if (c == invalidChar) {
 						textCharArray[i] = CharPool.SPACE;
 
@@ -247,6 +305,6 @@ public class AssetUtil {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(AssetUtil.class);
+	private static Log _log = LogFactoryUtil.getLog(AssetImpl.class);
 
 }

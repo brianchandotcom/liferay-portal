@@ -51,4 +51,9 @@ public class WikiPortletDisplayTemplateHandler
 		return "com.liferay.portlet.wiki";
 	}
 
+	@Override
+	protected String getDefaultTemplatesConfigPath() {
+		return PropsValues.WIKI_DISPLAY_STYLES_TEMPLATE_DEFAULT_CONFIG;
+	}
+
 }

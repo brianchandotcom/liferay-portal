@@ -25,8 +25,6 @@ public class Portlet_DeleteImageTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent(
-			"link=Media Gallery Permissions Test Page");
 		selenium.clickAt("link=Media Gallery Permissions Test Page",
 			RuntimeVariables.replace("Media Gallery Permissions Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -41,21 +39,18 @@ public class Portlet_DeleteImageTest extends BaseTestCase {
 				"//a[@title='Portlet Permissions Image 2 Test Title Edited - ']"));
 		selenium.clickAt("//a[@title='Portlet Permissions Image 2 Test Title Edited - ']",
 			RuntimeVariables.replace("Portlet Permissions Image 2 Test Title"));
-		selenium.waitForVisible("//img[@alt='Delete']");
-		selenium.clickAt("//img[@alt='Delete']",
-			RuntimeVariables.replace("Delete"));
+		selenium.waitForVisible("//img[@title='Move to the Recycle Bin']");
+		selenium.click(RuntimeVariables.replace(
+				"//img[@title='Move to the Recycle Bin']"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.getConfirmation()
-						   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 		assertEquals(RuntimeVariables.replace(
-				"Your request completed successfully."),
-			selenium.getText("//div[@class='portlet-msg-success']"));
+				"The selected item was moved to the Recycle Bin. Undo"),
+			selenium.getText(
+				"//div[@class='portlet-msg-success taglib-trash-undo']"));
 		assertEquals(RuntimeVariables.replace(
 				"There are no media files in this folder."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent(
-			"link=Media Gallery Permissions Test Page");
 		selenium.clickAt("link=Media Gallery Permissions Test Page",
 			RuntimeVariables.replace("Media Gallery Permissions Test Page"));
 		selenium.waitForPageToLoad("30000");

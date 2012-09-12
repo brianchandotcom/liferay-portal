@@ -25,8 +25,6 @@ public class Portlet_AssertCannotAddImageTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent(
-			"link=Media Gallery Permissions Test Page");
 		selenium.clickAt("link=Media Gallery Permissions Test Page",
 			RuntimeVariables.replace("Media Gallery Permissions Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -35,6 +33,11 @@ public class Portlet_AssertCannotAddImageTest extends BaseTestCase {
 		selenium.clickAt("//a[@title='Media Gallery Temporary Folder - ']",
 			RuntimeVariables.replace("Media Gallery Temporary Folder"));
 		selenium.waitForPageToLoad("30000");
+		assertTrue(selenium.isElementNotPresent(
+				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[contains(.,'Multiple Media')]/a"));
+		assertTrue(selenium.isElementNotPresent(
+				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[contains(.,'Add Media')]/a"));
 		assertFalse(selenium.isTextPresent("Add Media"));
+		assertFalse(selenium.isTextPresent("Mulitple Media"));
 	}
 }

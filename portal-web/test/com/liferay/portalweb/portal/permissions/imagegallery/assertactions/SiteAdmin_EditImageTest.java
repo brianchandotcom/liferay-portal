@@ -25,8 +25,6 @@ public class SiteAdmin_EditImageTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent(
-			"link=Media Gallery Permissions Test Page");
 		selenium.clickAt("link=Media Gallery Permissions Test Page",
 			RuntimeVariables.replace("Media Gallery Permissions Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -49,21 +47,20 @@ public class SiteAdmin_EditImageTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Permissions Image Test"),
 			selenium.getText("//a[@title='Permissions Image Test - ']"));
 		selenium.click("//a[@title='Permissions Image Test - ']");
-		selenium.waitForVisible("//img[@alt='Edit']");
-		selenium.click("//img[@alt='Edit']");
+		selenium.waitForVisible("//img[@title='Edit']");
+		selenium.click("//img[@title='Edit']");
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/liferay/search_container.js')]");
 		selenium.waitForVisible("//input[@id='_31_title']");
 		selenium.type("//input[@id='_31_title']",
 			RuntimeVariables.replace("Permissions Image Test Edited"));
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForVisible("//div[@class='portlet-msg-success']");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent(
-			"link=Media Gallery Permissions Test Page");
 		selenium.clickAt("link=Media Gallery Permissions Test Page",
 			RuntimeVariables.replace("Media Gallery Permissions Test Page"));
 		selenium.waitForPageToLoad("30000");

@@ -25,7 +25,14 @@ public class DefineMemberRoleTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent("link=Control Panel");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
+		selenium.waitForVisible("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
@@ -71,10 +78,8 @@ public class DefineMemberRoleTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isChecked("//tr[3]/td/input"));
 		assertTrue(selenium.isChecked("//tr[11]/td/input"));
-		selenium.typeKeys("//select[@id='_128_add-permissions']",
-			RuntimeVariables.replace("mmm"));
-		selenium.keyPress("//select[@id='_128_add-permissions']",
-			RuntimeVariables.replace("\\13"));
+		selenium.select("//select[@id='_128_add-permissions']",
+			RuntimeVariables.replace("index=55"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Media Gallery"),
 			selenium.getText("//h3"));
@@ -88,10 +93,8 @@ public class DefineMemberRoleTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"The role permissions were updated."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		selenium.typeKeys("//select[@id='_128_add-permissions']",
-			RuntimeVariables.replace("mmmm"));
-		selenium.keyPress("//select[@id='_128_add-permissions']",
-			RuntimeVariables.replace("\\13"));
+		selenium.select("//select[@id='_128_add-permissions']",
+			RuntimeVariables.replace("index=55"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Media Gallery"),
 			selenium.getText("//h3"));

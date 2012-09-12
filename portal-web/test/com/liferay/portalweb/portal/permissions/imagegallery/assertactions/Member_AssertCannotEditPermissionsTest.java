@@ -36,6 +36,6 @@ public class Member_AssertCannotEditPermissionsTest extends BaseTestCase {
 		selenium.clickAt("//a[@title='Permissions Image 2 Test - ']",
 			RuntimeVariables.replace("Permissions Image 2 Test"));
 		selenium.waitForVisible("//div/div[2]/div[1]");
-		assertTrue(selenium.isElementNotPresent("//img[@alt='Permissions']"));
+		assertTrue(selenium.isElementNotPresent("//img[@title='Permissions']"));
 	}
 }

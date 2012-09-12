@@ -25,18 +25,22 @@ public class Member_AssertActionsTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/site-name/");
-		selenium.waitForVisible("link=Message Boards Permissions Page");
 		selenium.clickAt("link=Message Boards Permissions Page",
 			RuntimeVariables.replace("Message Boards Permissions Page"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isElementPresent("//input[@value='Search']"));
 		assertEquals(RuntimeVariables.replace("RSS"),
 			selenium.getText("//div[2]/div/span/a/span[1]"));
+		Thread.sleep(5000);
+		assertEquals(RuntimeVariables.replace("Actions"),
+			selenium.getText("//span[@title='Actions']/ul/li/strong/a"));
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
 			RuntimeVariables.replace("Actions"));
+		selenium.waitForVisible(
+			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Subscribe')]/a");
 		assertEquals(RuntimeVariables.replace("Subscribe"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Subscribe')]/a"));
 		assertTrue(selenium.isElementNotPresent("link=Edit"));
 		assertTrue(selenium.isElementNotPresent("link=Permissions"));
 		assertTrue(selenium.isElementNotPresent("link=Move Thread"));
@@ -49,8 +53,18 @@ public class Member_AssertActionsTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Thread Subject"),
 			selenium.getText("//tr[3]/td/a"));
+		assertEquals(RuntimeVariables.replace("Actions"),
+			selenium.getText("//span[@title='Actions']/ul/li/strong/a"));
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
 			RuntimeVariables.replace("Actions"));
+		selenium.waitForVisible(
+			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Subscribe')]/a");
+		assertTrue(selenium.isPartialText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'RSS')]/a",
+				"RSS"));
+		assertEquals(RuntimeVariables.replace("Subscribe"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Subscribe')]/a"));
 		assertTrue(selenium.isElementNotPresent("link=Edit"));
 		assertTrue(selenium.isElementNotPresent("link=Move"));
 		assertTrue(selenium.isElementNotPresent("link=Delete"));
@@ -58,12 +72,12 @@ public class Member_AssertActionsTest extends BaseTestCase {
 		selenium.clickAt("//tr[3]/td/a",
 			RuntimeVariables.replace("Thread Subject"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Reply"),
-			selenium.getText(
-				"//ul[@class='edit-controls lfr-component']/li[2]/span/a"));
+		assertTrue(selenium.isPartialText(
+				"//ul[@class='edit-controls lfr-component']/li[contains(.,'Reply')]/span/a",
+				"Reply"));
 		assertEquals(RuntimeVariables.replace("Reply with Quote"),
 			selenium.getText(
-				"//ul[@class='edit-controls lfr-component']/li[3]/span/a"));
+				"//ul[@class='edit-controls lfr-component']/li[contains(.,'Reply with Quote')]/span/a"));
 		assertTrue(selenium.isElementNotPresent("link=Delete"));
 		assertTrue(selenium.isElementNotPresent("link=Edit"));
 		assertTrue(selenium.isElementNotPresent("link=Permissions"));

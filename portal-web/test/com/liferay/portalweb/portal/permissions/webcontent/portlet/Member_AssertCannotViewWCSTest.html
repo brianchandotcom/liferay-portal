@@ -14,21 +14,30 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>clickAtAndWait</td>
 	<td>link=Web Content Search Permissions Page</td>
 	<td>Web Content Search Permissions Page</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>link=Web Content Search Permissions Page</td>
-	<td>Web Content Search Permissions Page</td>
+	<td>assertVisible</td>
+	<td>//section</td>
+	<td>Portlet</td>
+</tr>
+<tr>
+	<td>assertElementNotPresent</td>
+	<td>//input[@value='Search...']</td>
+	<td>Search Field</td>
+</tr>
+<tr>
+	<td>assertElementNotPresent</td>
+	<td>//input[contains(@name,'search')]</td>
+	<td>Search Button</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//div[@class='portlet-msg-error']</td>
 	<td>You do not have the roles required to access this portlet.</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

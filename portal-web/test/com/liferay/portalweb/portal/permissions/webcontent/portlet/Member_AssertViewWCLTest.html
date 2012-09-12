@@ -14,21 +14,35 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>clickAtAndWait</td>
 	<td>link=Web Content List Permissions Page</td>
 	<td>Web Content List Permissions Page</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>link=Web Content List Permissions Page</td>
-	<td>Web Content List Permissions Page</td>
+	<td>assertVisible</td>
+	<td>//section</td>
+	<td>Portlet</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'WC WebContent Title')]/td[1]/a</td>
+	<td>WC WebContent Title</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//tr[contains(.,'WC WebContent Title')]/td[2]/a</td>
+	<td>Display Date</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//tr[contains(.,'WC WebContent Title')]/td[3]/a</td>
+	<td>Author</td>
 </tr>
 <tr>
 	<td>assertTextNotPresent</td>
 	<td>You do not have the roles required to access this portlet.</td>
 	<td></td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

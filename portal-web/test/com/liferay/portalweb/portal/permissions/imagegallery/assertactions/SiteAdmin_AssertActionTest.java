@@ -25,49 +25,46 @@ public class SiteAdmin_AssertActionTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent(
-			"link=Media Gallery Permissions Test Page");
 		selenium.clickAt("link=Media Gallery Permissions Test Page",
 			RuntimeVariables.replace("Media Gallery Permissions Test Page"));
 		selenium.waitForPageToLoad("30000");
 		Thread.sleep(5000);
+		assertEquals(RuntimeVariables.replace("Options"),
+			selenium.getText("//span[@title='Options']/ul/li/strong/a"));
 		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
 			RuntimeVariables.replace("Options"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Look and Feel')]/a");
 		assertEquals(RuntimeVariables.replace("Look and Feel"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Look and Feel')]/a"));
 		assertEquals(RuntimeVariables.replace("Configuration"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Configuration')]/a"));
 		assertEquals(RuntimeVariables.replace("Export / Import"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
-		assertTrue(selenium.isElementPresent("link=Look and Feel"));
-		assertTrue(selenium.isElementPresent("link=Configuration"));
-		assertTrue(selenium.isElementPresent("link=Export / Import"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Export / Import')]/a"));
 		assertEquals(RuntimeVariables.replace("Permissions"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a"));
+				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[contains(.,'Permissions')]/a"));
 		assertEquals(RuntimeVariables.replace("Add Folder"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[2]/a"));
+				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[contains(.,'Add Folder')]/a"));
 		assertEquals(RuntimeVariables.replace("Add Repository"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[3]/a"));
+				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[contains(.,'Add Repository')]/a"));
 		assertEquals(RuntimeVariables.replace("Multiple Media"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[4]/a"));
+				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[contains(.,'Multiple Media')]/a"));
 		assertEquals(RuntimeVariables.replace("Add Media"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[5]/a"));
+				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[contains(.,'Add Media')]/a"));
 		assertEquals(RuntimeVariables.replace("Add Shortcut"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[6]/a"));
+				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[contains(.,'Add Shortcut')]/a"));
 		assertEquals(RuntimeVariables.replace("Access from Desktop"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[7]/a"));
+				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[contains(.,'Access from Desktop')]/a"));
 		assertEquals(RuntimeVariables.replace(
 				"Media Gallery Permissions Test Folder 2 Edited"),
 			selenium.getText(
@@ -78,31 +75,31 @@ public class SiteAdmin_AssertActionTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a"));
+				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[contains(.,'Edit')]/a"));
 		assertEquals(RuntimeVariables.replace("Move"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[2]/a"));
+				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[contains(.,'Move')]/a"));
 		assertEquals(RuntimeVariables.replace("Permissions"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[3]/a"));
-		assertEquals(RuntimeVariables.replace("Delete"),
+				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[contains(.,'Permissions')]/a"));
+		assertEquals(RuntimeVariables.replace("Move to the Recycle Bin"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[4]/a"));
+				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[contains(.,'Move to the Recycle Bin')]/a"));
 		assertEquals(RuntimeVariables.replace("Add Subfolder"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[5]/a"));
+				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[contains(.,'Add Subfolder')]/a"));
 		assertEquals(RuntimeVariables.replace("Multiple Media"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[6]/a"));
+				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[contains(.,'Multiple Media')]/a"));
 		assertEquals(RuntimeVariables.replace("Add Media"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[7]/a"));
+				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[contains(.,'Add Media')]/a"));
 		assertEquals(RuntimeVariables.replace("Add Shortcut"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[8]/a"));
+				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[contains(.,'Add Shortcut')]/a"));
 		assertEquals(RuntimeVariables.replace("Access from Desktop"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[9]/a"));
+				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[contains(.,'Access from Desktop')]/a"));
 		assertEquals(RuntimeVariables.replace(
 				"Media Gallery Permissions Test Subfolder 2"),
 			selenium.getText(
@@ -113,58 +110,62 @@ public class SiteAdmin_AssertActionTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a"));
+				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[contains(.,'Edit')]/a"));
 		assertEquals(RuntimeVariables.replace("Move"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[2]/a"));
+				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[contains(.,'Move')]/a"));
 		assertEquals(RuntimeVariables.replace("Permissions"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[3]/a"));
-		assertEquals(RuntimeVariables.replace("Delete"),
+				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[contains(.,'Permissions')]/a"));
+		assertEquals(RuntimeVariables.replace("Move to the Recycle Bin"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[4]/a"));
+				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[contains(.,'Move to the Recycle Bin')]/a"));
 		assertEquals(RuntimeVariables.replace("Add Subfolder"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[5]/a"));
+				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[contains(.,'Add Subfolder')]/a"));
 		assertEquals(RuntimeVariables.replace("Multiple Media"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[6]/a"));
+				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[contains(.,'Multiple Media')]/a"));
 		assertEquals(RuntimeVariables.replace("Add Media"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[7]/a"));
+				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[contains(.,'Add Media')]/a"));
 		assertEquals(RuntimeVariables.replace("View Slide Show"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[8]/a"));
+				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[contains(.,'View Slide Show')]/a"));
 		assertEquals(RuntimeVariables.replace("Add Shortcut"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[9]/a"));
+				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[contains(.,'Add Shortcut')]/a"));
 		assertEquals(RuntimeVariables.replace("Access from Desktop"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[10]/a"));
+				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[contains(.,'Access from Desktop')]/a"));
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent(
-			"link=Media Gallery Permissions Test Page");
 		selenium.clickAt("link=Media Gallery Permissions Test Page",
 			RuntimeVariables.replace("Media Gallery Permissions Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Mine", RuntimeVariables.replace("Mine"));
+		assertEquals(RuntimeVariables.replace("Mine"),
+			selenium.getText(
+				"//ul[@class='top-links-navigation']/li/span[contains(.,'Mine')]/a"));
+		selenium.clickAt("//ul[@class='top-links-navigation']/li/span[contains(.,'Mine')]/a",
+			RuntimeVariables.replace("Mine"));
 		selenium.waitForPageToLoad("30000");
-		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Permissions Image Test Edited"),
 			selenium.getText("//a[@title='Permissions Image Test Edited - ']"));
+		Thread.sleep(5000);
+		assertEquals(RuntimeVariables.replace("Options"),
+			selenium.getText("//span[@title='Options']/ul/li/strong/a"));
 		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
 			RuntimeVariables.replace("Options"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Export / Import')]/a");
 		assertEquals(RuntimeVariables.replace("Export / Import"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a",
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Export / Import')]/a"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Export / Import')]/a",
 			RuntimeVariables.replace("Export / Import"));
 		selenium.waitForVisible("//input[@value='Export']");
-		assertTrue(selenium.isElementPresent("//input[@value='Export']"));
+		assertTrue(selenium.isVisible("//input[@value='Export']"));
 		selenium.clickAt("link=Import", RuntimeVariables.replace("Import"));
 		selenium.waitForVisible("//input[@value='Import']");
-		assertTrue(selenium.isElementPresent("//input[@value='Import']"));
+		assertTrue(selenium.isVisible("//input[@value='Import']"));
 	}
 }

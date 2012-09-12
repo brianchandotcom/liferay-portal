@@ -25,14 +25,13 @@ public class Guest_AssertActionsTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/site-name/");
-		selenium.waitForVisible("link=Message Boards Permissions Page");
 		selenium.clickAt("link=Message Boards Permissions Page",
 			RuntimeVariables.replace("Message Boards Permissions Page"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isElementNotPresent(
 				"//input[@value='Add Category']"));
-		assertTrue(selenium.isElementNotPresent("//img[@alt='Edit']"));
-		assertTrue(selenium.isElementNotPresent("//img[@alt='Permissions']"));
+		assertTrue(selenium.isElementNotPresent("//img[@title='Edit']"));
+		assertTrue(selenium.isElementNotPresent("//img[@title='Permissions']"));
 		assertTrue(selenium.isElementNotPresent("link=Subscribe"));
 		assertTrue(selenium.isElementNotPresent("link=Banned Users"));
 		assertTrue(selenium.isElementNotPresent("link=Delete"));

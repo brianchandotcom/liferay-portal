@@ -25,17 +25,14 @@ public class Member_DeleteCommentTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent(
-			"link=Web Content Display Permissions Page");
 		selenium.clickAt("link=Web Content Display Permissions Page",
 			RuntimeVariables.replace("Web Content Display Permissions Page"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("WC Comment"),
 			selenium.getText("//div[@class='lfr-discussion-message']"));
 		selenium.clickAt("link=Delete", RuntimeVariables.replace("Delete"));
-		Thread.sleep(5000);
-		assertTrue(selenium.getConfirmation()
-						   .matches("^Are you sure you want to delete this[\\s\\S]$"));
+		selenium.waitForConfirmation(
+			"Are you sure you want to delete this? It will be deleted immediately.");
 		selenium.waitForVisible(
 			"//div[@class='lfr-message-response portlet-msg-success']");
 		assertEquals(RuntimeVariables.replace(

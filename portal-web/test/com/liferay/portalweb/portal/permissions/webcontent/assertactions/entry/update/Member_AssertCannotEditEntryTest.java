@@ -25,7 +25,14 @@ public class Member_AssertCannotEditEntryTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent("link=Control Panel");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/liferay/dockbar_underlay.js')]");
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
+		selenium.waitForVisible("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
@@ -33,10 +40,12 @@ public class Member_AssertCannotEditEntryTest extends BaseTestCase {
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Web Content Name"),
-			selenium.getText("//tr[3]/td[3]/a"));
-		selenium.clickAt("//tr[3]/td[3]/a",
-			RuntimeVariables.replace("Web Content Name"));
-		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isElementNotPresent("//input[@value='Publish']"));
+			selenium.getText("//a[@class='entry-link']/span"));
+		selenium.clickAt("//span[@class='entry-action overlay']/span/ul/li/strong/a",
+			RuntimeVariables.replace("Actions"));
+		selenium.waitForVisible(
+			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'View')]/a");
+		assertTrue(selenium.isElementNotPresent(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a"));
 	}
 }

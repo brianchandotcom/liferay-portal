@@ -37,18 +37,25 @@ public class SA_AddTemporaryImageTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Add Media"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[7]/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[7]/a",
+				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[contains(.,'Add Media')]/a"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[contains(.,'Add Media')]/a",
 			RuntimeVariables.replace("Add Media"));
-		Thread.sleep(5000);
+		selenium.waitForVisible("//iframe[contains(@id,'selectFileEntryType')]");
+		selenium.selectFrame("//iframe[contains(@id,'selectFileEntryType')]");
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/liferay/navigation_interaction.js')]");
 		selenium.waitForVisible("//tr[3]/td/a");
 		assertEquals(RuntimeVariables.replace("Basic Document"),
 			selenium.getText("//tr[3]/td/a"));
-		selenium.click("//tr[3]/td/a");
+		selenium.clickAt("//tr[3]/td/a",
+			RuntimeVariables.replace("Basic Document"));
+		selenium.selectFrame("relative=top");
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/liferay/search_container.js')]");
+		Thread.sleep(5000);
 		selenium.waitForVisible("//input[@id='_31_file']");
-		selenium.type("//input[@id='_31_file']",
-			RuntimeVariables.replace(
-				"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\portal\\permissions\\imagegallery\\portlet\\dependencies\\SA_TestImage.jpg"));
+		selenium.uploadCommonFile("//input[@id='_31_file']",
+			RuntimeVariables.replace("Document_1.jpg"));
 		selenium.type("//input[@id='_31_title']",
 			RuntimeVariables.replace("Portlet Permissions Image 2 Test Title"));
 		selenium.clickAt("//input[@value='Publish']",
@@ -58,8 +65,6 @@ public class SA_AddTemporaryImageTest extends BaseTestCase {
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent(
-			"link=Media Gallery Permissions Test Page");
 		selenium.clickAt("link=Media Gallery Permissions Test Page",
 			RuntimeVariables.replace("Media Gallery Permissions Test Page"));
 		selenium.waitForPageToLoad("30000");

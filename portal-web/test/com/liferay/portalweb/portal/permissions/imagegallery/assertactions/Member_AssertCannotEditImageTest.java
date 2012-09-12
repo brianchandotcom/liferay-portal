@@ -25,8 +25,6 @@ public class Member_AssertCannotEditImageTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent(
-			"link=Media Gallery Permissions Test Page");
 		selenium.clickAt("link=Media Gallery Permissions Test Page",
 			RuntimeVariables.replace("Media Gallery Permissions Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -35,10 +33,11 @@ public class Member_AssertCannotEditImageTest extends BaseTestCase {
 		selenium.clickAt("//a[@title='Permissions Image 2 Test - ']",
 			RuntimeVariables.replace("Permissions Image 2 Test"));
 		selenium.waitForVisible("//div/div[2]/div[1]");
-		assertTrue(selenium.isElementPresent("//img[@alt='Download (29.9k)']"));
-		assertTrue(selenium.isElementPresent("//img[@alt='View']"));
-		assertTrue(selenium.isElementNotPresent("//img[@alt='Edit']"));
-		assertTrue(selenium.isElementNotPresent("//img[@alt='Permissions']"));
-		assertTrue(selenium.isElementNotPresent("//img[@alt='Delete']"));
+		assertTrue(selenium.isElementPresent("//img[@title='Download (30k)']"));
+		assertTrue(selenium.isElementPresent("//img[@title='View']"));
+		assertTrue(selenium.isElementNotPresent("//img[@title='Edit']"));
+		assertTrue(selenium.isElementNotPresent("//img[@title='Permissions']"));
+		assertTrue(selenium.isElementNotPresent(
+				"//img[@title='Move to the Recycle Bin']"));
 	}
 }

@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>link=Media Gallery Permissions Test Page</td>
-	<td>Media Gallery Permissions Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Media Gallery Permissions Test Page</td>
 	<td>Media Gallery Permissions Test Page</td>
@@ -45,18 +40,18 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[7]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[contains(.,'Add Media')]/a</td>
 	<td>Add Media</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[7]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[contains(.,'Add Media')]/a</td>
 	<td>Add Media</td>
 </tr>
 <tr>
-	<td>type</td>
+	<td>uploadCommonFile</td>
 	<td>//input[@id='_31_file']</td>
-	<td>L:\portal\build\portal-web\test\com\liferay\portalweb\portal\permissions\imagegallery\assertactions\dependencies\DLP_test_image.jpg</td>
+	<td>Document_1.jpg</td>
 </tr>
 <tr>
 	<td>type</td>

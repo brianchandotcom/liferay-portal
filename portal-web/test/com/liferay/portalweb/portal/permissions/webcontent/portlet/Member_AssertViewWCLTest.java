@@ -25,10 +25,16 @@ public class Member_AssertViewWCLTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent("link=Web Content List Permissions Page");
 		selenium.clickAt("link=Web Content List Permissions Page",
 			RuntimeVariables.replace("Web Content List Permissions Page"));
 		selenium.waitForPageToLoad("30000");
+		assertTrue(selenium.isVisible("//section"));
+		assertEquals(RuntimeVariables.replace("WC WebContent Title"),
+			selenium.getText("//tr[contains(.,'WC WebContent Title')]/td[1]/a"));
+		assertTrue(selenium.isVisible(
+				"//tr[contains(.,'WC WebContent Title')]/td[2]/a"));
+		assertTrue(selenium.isVisible(
+				"//tr[contains(.,'WC WebContent Title')]/td[3]/a"));
 		assertFalse(selenium.isTextPresent(
 				"You do not have the roles required to access this portlet."));
 	}

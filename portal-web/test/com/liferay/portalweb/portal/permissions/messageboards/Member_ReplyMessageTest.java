@@ -25,7 +25,6 @@ public class Member_ReplyMessageTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/site-name/");
-		selenium.waitForVisible("link=Message Boards Permissions Page");
 		selenium.clickAt("link=Message Boards Permissions Page",
 			RuntimeVariables.replace("Message Boards Permissions Page"));
 		selenium.waitForPageToLoad("30000");
@@ -40,8 +39,8 @@ public class Member_ReplyMessageTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Reply"),
 			selenium.getText(
-				"//ul[@class='edit-controls lfr-component']/li[2]/span/a"));
-		selenium.clickAt("//ul[@class='edit-controls lfr-component']/li[2]/span/a",
+				"//ul[@class='edit-controls lfr-component']/li[contains(.,'Reply')]/span/a"));
+		selenium.clickAt("//ul[@class='edit-controls lfr-component']/li[contains(.,'Reply')]/span/a",
 			RuntimeVariables.replace("Reply"));
 		selenium.waitForPageToLoad("30000");
 		selenium.waitForElementPresent(

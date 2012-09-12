@@ -15,6 +15,8 @@
 package com.liferay.portalweb.portal.permissions.imagegallery.assertactions;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignInTest;
+import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignOutTest;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
 
 import junit.framework.Test;
@@ -39,7 +41,7 @@ public class AssertActionsTests extends BaseTestSuite {
 		testSuite.addTestSuite(DefineMemberRoleTest.class);
 		testSuite.addTestSuite(RemoveMemberRolePowerUserTest.class);
 		testSuite.addTestSuite(AssignUserMemberRolesTest.class);
-		testSuite.addTestSuite(LogoutTest.class);
+		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(SiteAdmin_LoginTest.class);
 		testSuite.addTestSuite(SiteAdmin_AddFolderTest.class);
 		testSuite.addTestSuite(SiteAdmin_AddSubfolderTest.class);
@@ -50,12 +52,12 @@ public class AssertActionsTests extends BaseTestSuite {
 		testSuite.addTestSuite(SiteAdmin_EditImageTest.class);
 		testSuite.addTestSuite(SiteAdmin_RemoveGuestViewFolderPermissionsTest.class);
 		testSuite.addTestSuite(SiteAdmin_RemoveGuestViewImagePermissionsTest.class);
-		testSuite.addTestSuite(LogoutTest.class);
+		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(Guest_AssertCannotViewFolderTest.class);
 		testSuite.addTestSuite(Guest_AssertCannotViewImageTest.class);
 		testSuite.addTestSuite(SiteAdmin_LoginTest.class);
 		testSuite.addTestSuite(SiteAdmin_RemoveGuestViewPortletPermissionsTest.class);
-		testSuite.addTestSuite(LogoutTest.class);
+		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(Guest_AssertCannotViewPortletTest.class);
 		testSuite.addTestSuite(SiteAdmin_LoginTest.class);
 		testSuite.addTestSuite(SiteAdmin_RestoreGuestViewFolderTest.class);
@@ -65,10 +67,10 @@ public class AssertActionsTests extends BaseTestSuite {
 		testSuite.addTestSuite(SiteAdmin_DeleteImageTest.class);
 		testSuite.addTestSuite(SiteAdmin_DeleteFolderTest.class);
 		testSuite.addTestSuite(SiteAdmin_AddSecondImageTest.class);
-		testSuite.addTestSuite(LogoutTest.class);
-		testSuite.addTestSuite(SA_LoginTest.class);
+		testSuite.addTestSuite(SignOutTest.class);
+		testSuite.addTestSuite(SignInTest.class);
 		testSuite.addTestSuite(SA_GrantMemberAddImageTest.class);
-		testSuite.addTestSuite(LogoutTest.class);
+		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(Member_LoginTest.class);
 		testSuite.addTestSuite(Member_AddImageTest.class);
 		testSuite.addTestSuite(Member_MoveImageTest.class);
@@ -80,7 +82,7 @@ public class AssertActionsTests extends BaseTestSuite {
 		testSuite.addTestSuite(Member_AssertCannotEditPermissionsTest.class);
 		testSuite.addTestSuite(Member_AssertActionTest.class);
 		testSuite.addTestSuite(Member_DeleteImageTest.class);
-		testSuite.addTestSuite(LogoutTest.class);
+		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(Guest_AssertNotSignedInTest.class);
 		testSuite.addTestSuite(Guest_AssertCannotAddFolderTest.class);
 		testSuite.addTestSuite(Guest_AssertCannotAddSubfolderTest.class);
@@ -88,7 +90,7 @@ public class AssertActionsTests extends BaseTestSuite {
 		testSuite.addTestSuite(Guest_AssertCannotEditFolderTest.class);
 		testSuite.addTestSuite(Guest_AssertCannotEditImageTest.class);
 		testSuite.addTestSuite(Guest_AssertActionTest.class);
-		testSuite.addTestSuite(SA_LoginTest.class);
+		testSuite.addTestSuite(SignInTest.class);
 		testSuite.addTestSuite(TearDownMediaGalleryTest.class);
 		testSuite.addTestSuite(TearDownRolesTest.class);
 		testSuite.addTestSuite(TearDownUserTest.class);

@@ -25,7 +25,6 @@ public class Member_ViewMessageTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/site-name/");
-		selenium.waitForVisible("link=Message Boards Permissions Page");
 		selenium.clickAt("link=Message Boards Permissions Page",
 			RuntimeVariables.replace("Message Boards Permissions Page"));
 		selenium.waitForPageToLoad("30000");

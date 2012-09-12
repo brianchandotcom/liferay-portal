@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>link=Media Gallery Permissions Test Page</td>
-	<td>Media Gallery Permissions Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Media Gallery Permissions Test Page</td>
 	<td>Media Gallery Permissions Test Page</td>
@@ -41,32 +36,32 @@
 <tr>
 	<td>clickAt</td>
 	<td>//a[@title='Portlet Permissions Image 2 Test Title Edited - ']</td>
-	<td>Portlet Permissions Image 2 Test Title</td>
+	<td>Portlet Permissions Image 2 Test Title Edited</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//img[@alt='Permissions']</td>
+	<td>//img[@title='Permissions']</td>
 	<td>Permissions</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//img[@alt='Permissions']</td>
+	<td>//img[@title='Permissions']</td>
 	<td>Permissions</td>
 </tr>
 <tr>
 	<td>assertChecked</td>
-	<td>//tr[5]/td[6]/input</td>
-	<td>Media Gallery Update</td>
+	<td>//input[@id='portlet_ACTION_UPDATE']</td>
+	<td>Portlet Update</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//tr[5]/td[6]/input</td>
-	<td>Media Gallery Update</td>
+	<td>//input[@id='portlet_ACTION_UPDATE']</td>
+	<td>Portlet Update</td>
 </tr>
 <tr>
 	<td>assertNotChecked</td>
-	<td>//tr[5]/td[6]/input</td>
-	<td>Media Gallery Update</td>
+	<td>//input[@id='portlet_ACTION_UPDATE']</td>
+	<td>Portlet Update</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -80,10 +75,9 @@
 </tr>
 <tr>
 	<td>assertNotChecked</td>
-	<td>//tr[5]/td[6]/input</td>
-	<td>Media Gallery Update</td>
+	<td>//input[@id='portlet_ACTION_UPDATE']</td>
+	<td>Portlet Update</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

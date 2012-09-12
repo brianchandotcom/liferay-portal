@@ -43,12 +43,12 @@ public class DefineMemberRoleTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Permissions')]/a");
 		assertEquals(RuntimeVariables.replace("Permissions"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Permissions')]/a"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Permissions')]/a"));
 		selenium.waitForPageToLoad("30000");
 		assertFalse(selenium.isChecked("//tr[7]/td[8]/input"));
 		selenium.check("//tr[7]/td[8]/input");

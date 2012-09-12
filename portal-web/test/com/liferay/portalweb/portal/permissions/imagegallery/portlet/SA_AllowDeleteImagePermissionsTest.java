@@ -25,8 +25,6 @@ public class SA_AllowDeleteImagePermissionsTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent(
-			"link=Media Gallery Permissions Test Page");
 		selenium.clickAt("link=Media Gallery Permissions Test Page",
 			RuntimeVariables.replace("Media Gallery Permissions Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -41,20 +39,20 @@ public class SA_AllowDeleteImagePermissionsTest extends BaseTestCase {
 				"//a[@title='Portlet Permissions Image 2 Test Title Edited - ']"));
 		selenium.clickAt("//a[@title='Portlet Permissions Image 2 Test Title Edited - ']",
 			RuntimeVariables.replace("Portlet Permissions Image 2 Test Title"));
-		selenium.waitForVisible("//img[@alt='Permissions']");
-		selenium.clickAt("//img[@alt='Permissions']",
+		selenium.waitForVisible("//img[@title='Permissions']");
+		selenium.clickAt("//img[@title='Permissions']",
 			RuntimeVariables.replace("Permissions"));
 		selenium.waitForPageToLoad("30000");
-		assertFalse(selenium.isChecked("//tr[5]/td[3]/input"));
-		selenium.clickAt("//tr[5]/td[3]/input",
-			RuntimeVariables.replace("Media Gallery Delete"));
-		assertTrue(selenium.isChecked("//tr[5]/td[3]/input"));
+		assertFalse(selenium.isChecked("//input[@id='portlet_ACTION_DELETE']"));
+		selenium.clickAt("//input[@id='portlet_ACTION_DELETE']",
+			RuntimeVariables.replace("Portlet Delete"));
+		assertTrue(selenium.isChecked("//input[@id='portlet_ACTION_DELETE']"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertTrue(selenium.isChecked("//tr[5]/td[3]/input"));
+		assertTrue(selenium.isChecked("//input[@id='portlet_ACTION_DELETE']"));
 	}
 }

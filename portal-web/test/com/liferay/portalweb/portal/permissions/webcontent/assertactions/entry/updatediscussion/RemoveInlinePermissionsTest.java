@@ -25,7 +25,14 @@ public class RemoveInlinePermissionsTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent("link=Control Panel");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
+		selenium.waitForVisible("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
@@ -33,27 +40,47 @@ public class RemoveInlinePermissionsTest extends BaseTestCase {
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Web Content Name"),
-			selenium.getText("//tr[3]/td[3]/a"));
-		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
-			RuntimeVariables.replace("Actions"));
-		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
+			selenium.getText("//a[@class='entry-link']/span"));
+		selenium.clickAt("//a[@class='entry-link']/span",
+			RuntimeVariables.replace("Web Content Name"));
+		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Permissions"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a",
+				"//div[contains(@id,'articleToolbar')]/span/button[contains(.,'Permissions')]"));
+		selenium.clickAt("//div[contains(@id,'articleToolbar')]/span/button[contains(.,'Permissions')]",
 			RuntimeVariables.replace("Permissions"));
-		selenium.waitForPageToLoad("30000");
-		selenium.uncheck("//tr[3]/td[2]/input");
-		selenium.uncheck("//tr[3]/td[3]/input");
-		selenium.uncheck("//tr[3]/td[4]/input");
-		selenium.uncheck("//tr[3]/td[5]/input");
-		selenium.uncheck("//tr[3]/td[6]/input");
-		selenium.uncheck("//tr[3]/td[7]/input");
-		selenium.uncheck("//tr[3]/td[8]/input");
-		selenium.uncheck("//tr[3]/td[9]/input");
+		selenium.waitForVisible("//iframe[contains(@id,'articlePermissions')]");
+		selenium.selectFrame("//iframe[contains(@id,'articlePermissions')]");
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/liferay/search_container.js')]");
+		selenium.uncheck("//input[@id='guest_ACTION_ADD_DISCUSSION']");
+		selenium.uncheck("//input[@id='guest_ACTION_DELETE']");
+		assertFalse(selenium.isChecked(
+				"//input[@id='guest_ACTION_DELETE_DISCUSSION']"));
+		assertFalse(selenium.isChecked("//input[@id='guest_ACTION_EXPIRE']"));
+		selenium.uncheck("//input[@id='guest_ACTION_PERMISSIONS']");
+		assertFalse(selenium.isChecked("//input[@id='guest_ACTION_UPDATE']"));
+		assertFalse(selenium.isChecked(
+				"//input[@id='guest_ACTION_UPDATE_DISCUSSION']"));
+		selenium.uncheck("//input[@id='guest_ACTION_VIEW']");
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace(
+				"Your request completed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertFalse(selenium.isChecked(
+				"//input[@id='guest_ACTION_ADD_DISCUSSION']"));
+		assertFalse(selenium.isChecked("//input[@id='guest_ACTION_DELETE']"));
+		assertFalse(selenium.isChecked(
+				"//input[@id='guest_ACTION_DELETE_DISCUSSION']"));
+		assertFalse(selenium.isChecked("//input[@id='guest_ACTION_EXPIRE']"));
+		assertFalse(selenium.isChecked(
+				"//input[@id='guest_ACTION_PERMISSIONS']"));
+		assertFalse(selenium.isChecked("//input[@id='guest_ACTION_UPDATE']"));
+		assertFalse(selenium.isChecked(
+				"//input[@id='guest_ACTION_UPDATE_DISCUSSION']"));
+		assertFalse(selenium.isChecked("//input[@id='guest_ACTION_VIEW']"));
+		selenium.selectFrame("relative=top");
 	}
 }

@@ -25,7 +25,6 @@ public class Member_DeleteMessageTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/site-name/");
-		selenium.waitForVisible("link=Message Boards Permissions Page");
 		selenium.clickAt("link=Message Boards Permissions Page",
 			RuntimeVariables.replace("Message Boards Permissions Page"));
 		selenium.waitForPageToLoad("30000");
@@ -35,19 +34,21 @@ public class Member_DeleteMessageTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Thread Subject 2 Edited"),
 			selenium.getText("//tr[3]/td/a"));
+		Thread.sleep(5000);
+		assertEquals(RuntimeVariables.replace("Actions"),
+			selenium.getText("//span[@title='Actions']/ul/li/strong/a"));
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a");
 		assertEquals(RuntimeVariables.replace("Delete"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.getConfirmation()
-						   .matches("^Are you sure you want to delete this[\\s\\S]$"));
-		selenium.waitForElementPresent("//div[@class='portlet-msg-success']");
+						   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

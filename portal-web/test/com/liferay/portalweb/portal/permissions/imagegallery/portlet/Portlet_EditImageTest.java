@@ -25,8 +25,6 @@ public class Portlet_EditImageTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent(
-			"link=Media Gallery Permissions Test Page");
 		selenium.clickAt("link=Media Gallery Permissions Test Page",
 			RuntimeVariables.replace("Media Gallery Permissions Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -41,8 +39,9 @@ public class Portlet_EditImageTest extends BaseTestCase {
 				"//a[@title='Portlet Permissions Image 2 Test Title - ']"));
 		selenium.clickAt("//a[@title='Portlet Permissions Image 2 Test Title - ']",
 			RuntimeVariables.replace("Portlet Permissions Image 2 Test Title"));
-		selenium.waitForVisible("//img[@alt='Edit']");
-		selenium.clickAt("//img[@alt='Edit']", RuntimeVariables.replace("Edit"));
+		selenium.waitForVisible("//img[@title='Edit']");
+		selenium.clickAt("//img[@title='Edit']",
+			RuntimeVariables.replace("Edit"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_31_title']",
 			RuntimeVariables.replace(

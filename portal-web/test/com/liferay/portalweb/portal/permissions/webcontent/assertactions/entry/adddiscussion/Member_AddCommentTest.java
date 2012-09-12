@@ -25,8 +25,6 @@ public class Member_AddCommentTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent(
-			"link=Web Content Display Permissions Page");
 		selenium.clickAt("link=Web Content Display Permissions Page",
 			RuntimeVariables.replace("Web Content Display Permissions Page"));
 		selenium.waitForPageToLoad("30000");
@@ -44,5 +42,6 @@ public class Member_AddCommentTest extends BaseTestCase {
 				"//div[@class='lfr-message-response portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("WC Comment"),
 			selenium.getText("//div[@class='lfr-discussion-message']"));
+		assertFalse(selenium.isTextPresent("No comments yet"));
 	}
 }

@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>link=Media Gallery Permissions Test Page</td>
-	<td>Media Gallery Permissions Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Media Gallery Permissions Test Page</td>
 	<td>Media Gallery Permissions Test Page</td>
@@ -35,33 +30,28 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[3]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[contains(.,'Permissions')]/a</td>
 	<td>Permissions</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[3]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[contains(.,'Permissions')]/a</td>
 	<td>Permissions</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>//tr[5]/td[9]/input</td>
-	<td>Media Gallery Configuration</td>
-</tr>
-<tr>
 	<td>assertNotChecked</td>
-	<td>//tr[5]/td[9]/input</td>
-	<td>Media Gallery Configuration</td>
+	<td>//input[@name='16_ACTION_VIEW']</td>
+	<td>Guest View</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//tr[5]/td[9]/input</td>
-	<td>Media Gallery Configuration</td>
+	<td>//input[@name='16_ACTION_VIEW']</td>
+	<td>Guest View</td>
 </tr>
 <tr>
 	<td>assertChecked</td>
-	<td>//tr[5]/td[9]/input</td>
-	<td>Media Gallery Configuration</td>
+	<td>//input[@name='16_ACTION_VIEW']</td>
+	<td>Guest View</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -75,10 +65,9 @@
 </tr>
 <tr>
 	<td>assertChecked</td>
-	<td>//tr[5]/td[9]/input</td>
-	<td>Media Gallery Configuration</td>
+	<td>//input[@name='16_ACTION_VIEW']</td>
+	<td>Guest View</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

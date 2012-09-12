@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>link=Media Gallery Permissions Test Page</td>
-	<td>Media Gallery Permissions Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Media Gallery Permissions Test Page</td>
 	<td>Media Gallery Permissions Test Page</td>
@@ -29,59 +24,79 @@
 	<td></td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//span[@title='Options']/ul/li/strong/a</td>
+	<td>Options</td>
+</tr>
+<tr>
 	<td>clickAt</td>
 	<td>//span[@title='Options']/ul/li/strong/a</td>
 	<td>Options</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Configuration')]/a</td>
 	<td>Configuration</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Configuration')]/a</td>
 	<td>Configuration</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Configuration')]/a</td>
 	<td>Configuration</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//li[@id='_86_tabs1112101114109105115115105111110115TabsId']/span/a</td>
+	<td>//iframe[contains(@id,'configurationIframeDialog')]</td>
+	<td>Media Gallery - Configuration</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//iframe[contains(@id,'configurationIframeDialog')]</td>
+	<td>Media Gallery - Configuration</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/liferay/navigation_interaction.js')]</td>
+	<td>Navigation Interaction</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//ul[contains(@class,'tabview-list')]/li[contains(.,'Permissions')]/span/a</td>
 	<td>Permissions</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//li[@id='_86_tabs1112101114109105115115105111110115TabsId']/span/a</td>
+	<td>//ul[contains(@class,'tabview-list')]/li[contains(.,'Permissions')]/span/a</td>
 	<td>Permissions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//li[@id='_86_tabs1112101114109105115115105111110115TabsId']/span/a</td>
+	<td>//ul[contains(@class,'tabview-list')]/li[contains(.,'Permissions')]/span/a</td>
 	<td>Permissions</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
 	<td>//input[@name='16_ACTION_VIEW']</td>
-	<td>Media Gallery View</td>
+	<td>Guest View</td>
 </tr>
 <tr>
 	<td>assertChecked</td>
 	<td>//input[@name='16_ACTION_VIEW']</td>
-	<td>Media Gallery View</td>
+	<td>Guest View</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>//input[@name='16_ACTION_VIEW']</td>
-	<td>Media Gallery View</td>
+	<td>Guest View</td>
 </tr>
 <tr>
 	<td>assertNotChecked</td>
 	<td>//input[@name='16_ACTION_VIEW']</td>
-	<td>Media Gallery View</td>
+	<td>Guest View</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -96,7 +111,12 @@
 <tr>
 	<td>assertNotChecked</td>
 	<td>//input[@name='16_ACTION_VIEW']</td>
-	<td>Media Gallery View</td>
+	<td>Guest View</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>relative=top</td>
+	<td>top</td>
 </tr>
 </tbody></table>
 </body>

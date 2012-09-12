@@ -25,7 +25,6 @@ public class Guest_AssertNotSignedInTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent("link=Welcome");
 		selenium.clickAt("link=Welcome", RuntimeVariables.replace("Welcome"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isElementPresent("//input[@id='_58_login']"));

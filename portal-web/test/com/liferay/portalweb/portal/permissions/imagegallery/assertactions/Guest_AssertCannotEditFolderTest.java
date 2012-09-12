@@ -37,9 +37,13 @@ public class Guest_AssertCannotEditFolderTest extends BaseTestCase {
 		selenium.clickAt("//a[@title='Media Gallery Permissions Test Folder - ']",
 			RuntimeVariables.replace("Media Gallery Permissions Test Folder"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isElementNotPresent("link=Edit"));
-		assertTrue(selenium.isElementNotPresent("link=Move"));
-		assertTrue(selenium.isElementNotPresent("link=Permissions"));
-		assertTrue(selenium.isElementNotPresent("link=Delete"));
+		assertTrue(selenium.isElementNotPresent(
+				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[contains(.,'Edit')]/a"));
+		assertTrue(selenium.isElementNotPresent(
+				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[contains(.,'Move')]/a"));
+		assertTrue(selenium.isElementNotPresent(
+				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[contains(.,'Permissions')]/a"));
+		assertTrue(selenium.isElementNotPresent(
+				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[contains(.,'Move to the Recycle Bin')]/a"));
 	}
 }

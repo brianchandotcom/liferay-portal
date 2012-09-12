@@ -25,8 +25,6 @@ public class SA_GrantMemberAddImageTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent(
-			"link=Media Gallery Permissions Test Page");
 		selenium.clickAt("link=Media Gallery Permissions Test Page",
 			RuntimeVariables.replace("Media Gallery Permissions Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -46,20 +44,23 @@ public class SA_GrantMemberAddImageTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Permissions"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[3]/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[3]/a",
+				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[contains(.,'Permissions')]/a"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[contains(.,'Permissions')]/a",
 			RuntimeVariables.replace("Permissions"));
 		selenium.waitForPageToLoad("30000");
-		assertFalse(selenium.isChecked("//tr[4]/td[3]/input"));
-		selenium.clickAt("//tr[4]/td[3]/input",
+		assertFalse(selenium.isChecked(
+				"//input[@id='member_ACTION_ADD_DOCUMENT']"));
+		selenium.clickAt("//input[@id='member_ACTION_ADD_DOCUMENT']",
 			RuntimeVariables.replace("Member Subfolder Add Document"));
-		assertTrue(selenium.isChecked("//tr[4]/td[3]/input"));
+		assertTrue(selenium.isChecked(
+				"//input[@id='member_ACTION_ADD_DOCUMENT']"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertTrue(selenium.isChecked("//tr[4]/td[3]/input"));
+		assertTrue(selenium.isChecked(
+				"//input[@id='member_ACTION_ADD_DOCUMENT']"));
 	}
 }

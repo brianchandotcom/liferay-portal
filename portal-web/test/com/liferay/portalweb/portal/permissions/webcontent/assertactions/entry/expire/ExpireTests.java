@@ -15,6 +15,9 @@
 package com.liferay.portalweb.portal.permissions.webcontent.assertactions.entry.expire;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignInTest;
+import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignOutTest;
+import com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.addwcwebcontent.TearDownWCWebContentTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -31,19 +34,19 @@ public class ExpireTests extends BaseTestSuite {
 		testSuite.addTestSuite(DefineMemberRoleTest.class);
 		testSuite.addTestSuite(AssignUserRolesTest.class);
 		testSuite.addTestSuite(AddPermissionViewPortletTest.class);
-		testSuite.addTestSuite(LogoutTest.class);
+		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(LoginUsersTest.class);
 		testSuite.addTestSuite(Member_LoginTest.class);
 		testSuite.addTestSuite(Member_AssertCannotExpireEntryTest.class);
-		testSuite.addTestSuite(LogoutTest.class);
-		testSuite.addTestSuite(SA_LoginTest.class);
+		testSuite.addTestSuite(SignOutTest.class);
+		testSuite.addTestSuite(SignInTest.class);
 		testSuite.addTestSuite(AddRolePermissionExpireTest.class);
-		testSuite.addTestSuite(LogoutTest.class);
+		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(Member_LoginTest.class);
 		testSuite.addTestSuite(Member_ExpireWCEntryTest.class);
-		testSuite.addTestSuite(LogoutTest.class);
-		testSuite.addTestSuite(SA_LoginTest.class);
-		testSuite.addTestSuite(TeardownWCTest.class);
+		testSuite.addTestSuite(SignOutTest.class);
+		testSuite.addTestSuite(SignInTest.class);
+		testSuite.addTestSuite(TearDownWCWebContentTest.class);
 		testSuite.addTestSuite(TearDownWCRolesTest.class);
 		testSuite.addTestSuite(TearDownUserTest.class);
 

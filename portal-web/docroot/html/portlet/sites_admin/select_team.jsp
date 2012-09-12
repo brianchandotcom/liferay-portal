@@ -78,7 +78,7 @@ long groupId = ParamUtil.getLong(request, "groupId");
 		sb.append("', '");
 		sb.append(UnicodeFormatter.toString(team.getName()));
 		sb.append("', '");
-		sb.append("groupTeams");
+		sb.append("teams");
 		sb.append("', '");
 		sb.append(UnicodeFormatter.toString(team.getDescription()));
 		sb.append("', '");

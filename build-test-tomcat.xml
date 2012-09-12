@@ -245,6 +245,7 @@ web.server.display.node=true</echo>
 			<param name="simple.server.start.executable" value="catalina${file.suffix.bat}" />
 			<param name="simple.server.start.executable.arg.line" value="run" />
 			<param name="simple.server.stop.executable" value="shutdown${file.suffix.bat}" />
+			<param name="simple.server.stop.executable.arg.line" value="" />
 		</antcall>
 
 		<record action="stop" name="log" />

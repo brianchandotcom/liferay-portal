@@ -38,9 +38,9 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 
 	public DDMStructure addStructure(
 			long groupId, long classNameId, String structureKey,
-			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
-			String xsd, String storageType, int type,
-			ServiceContext serviceContext)
+			long parentStructureId, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, String xsd, String storageType,
+			int type, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		String ddmResource = ParamUtil.getString(serviceContext, "ddmResource");
@@ -50,8 +50,8 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 			ddmResource, ActionKeys.ADD_STRUCTURE);
 
 		return ddmStructureLocalService.addStructure(
-			getUserId(), groupId, classNameId, structureKey, nameMap,
-			descriptionMap, xsd, storageType, type, serviceContext);
+			getUserId(), groupId, classNameId, structureKey, parentStructureId,
+			nameMap, descriptionMap, xsd, storageType, type, serviceContext);
 	}
 
 	public DDMStructure copyStructure(
@@ -145,30 +145,31 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	}
 
 	public DDMStructure updateStructure(
-			long structureId, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap, String xsd,
-			ServiceContext serviceContext)
+			long structureId, long parentStructureId,
+			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+			String xsd, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		DDMStructurePermission.check(
 			getPermissionChecker(), structureId, ActionKeys.UPDATE);
 
 		return ddmStructureLocalService.updateStructure(
-			structureId, nameMap, descriptionMap, xsd, serviceContext);
+			structureId, parentStructureId, nameMap, descriptionMap, xsd,
+			serviceContext);
 	}
 
 	public DDMStructure updateStructure(
-			long groupId, String structureKey, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap, String xsd,
-			ServiceContext serviceContext)
+			long groupId, String structureKey, long parentStructureId,
+			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+			String xsd, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		DDMStructurePermission.check(
 			getPermissionChecker(), groupId, structureKey, ActionKeys.UPDATE);
 
 		return ddmStructureLocalService.updateStructure(
-			groupId, structureKey, nameMap, descriptionMap, xsd,
-			serviceContext);
+			groupId, structureKey, parentStructureId, nameMap, descriptionMap,
+			xsd, serviceContext);
 	}
 
 }

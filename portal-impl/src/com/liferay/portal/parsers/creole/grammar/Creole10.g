@@ -43,6 +43,8 @@ package com.liferay.portal.parsers.creole.parser;
 
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.parsers.creole.ast.ASTNode;
+import com.liferay.portal.parsers.creole.ast.BaseListNode;
+import com.liferay.portal.parsers.creole.ast.BaseParentableNode;
 import com.liferay.portal.parsers.creole.ast.BoldTextNode;
 import com.liferay.portal.parsers.creole.ast.CollectionNode;
 import com.liferay.portal.parsers.creole.ast.extension.TableOfContentsNode;
@@ -52,7 +54,9 @@ import com.liferay.portal.parsers.creole.ast.HeadingNode;
 import com.liferay.portal.parsers.creole.ast.HorizontalNode;
 import com.liferay.portal.parsers.creole.ast.ImageNode;
 import com.liferay.portal.parsers.creole.ast.ItalicTextNode;
+import com.liferay.portal.parsers.creole.ast.ItemNode;
 import com.liferay.portal.parsers.creole.ast.LineNode;
+import com.liferay.portal.parsers.creole.ast.ListNode;
 import com.liferay.portal.parsers.creole.ast.link.InterwikiLinkNode;
 import com.liferay.portal.parsers.creole.ast.link.LinkNode;
 import com.liferay.portal.parsers.creole.ast.NoWikiSectionNode;
@@ -68,6 +72,8 @@ import com.liferay.portal.parsers.creole.ast.UnorderedListItemNode;
 import com.liferay.portal.parsers.creole.ast.UnorderedListNode;
 import com.liferay.portal.parsers.creole.ast.UnformattedTextNode;
 import com.liferay.portal.parsers.creole.ast.WikiPageNode;
+
+import java.util.Stack;
 
 /**
 * This is a generated file from Creole10.g. DO NOT MODIFY THIS FILE MANUALLY!!
@@ -95,25 +101,43 @@ import com.liferay.portal.parsers.creole.ast.WikiPageNode;
 }
 
 @members{
-	protected static final String GROUPING_SEPARATOR = "-";
-
-	private WikiPageNode _wikipage = null;
-
 	public WikiPageNode getWikiPageNode() {
-		if(_wikipage == null)
+		if (_wikipage == null)
 			throw new IllegalStateException("No succesful parsing process");
 
 		return _wikipage;
 	}
-}
 
+	protected static final String GROUPING_SEPARATOR = "-";
+
+	protected BaseParentableNode buildAndComposeListNode(BaseParentableNode baseParentableNode, ItemNode itemNode, boolean ordered) {
+		BaseParentableNode listNode = null;
+		
+		if (ordered) {
+			listNode = new OrderedListNode(baseParentableNode);
+		} 
+		else {
+		 	listNode = new UnorderedListNode(baseParentableNode);
+		}
+
+		itemNode.setBaseParentableNode(listNode);
+		listNode.addChildASTNode(itemNode);
+
+		baseParentableNode.addChildASTNode(listNode);
+
+		return listNode;
+	}
+
+	private WikiPageNode _wikipage = null;
+
+}
 
 wikipage
 	:	( whitespaces )?  p=paragraphs  { _wikipage = new WikiPageNode($p.sections); } EOF
 	;
 paragraphs returns [CollectionNode sections = new CollectionNode()]
 	:	(p= paragraph {
-			if($p.node != null){ // at this moment we ignore paragraps with blanks
+			if ($p.node != null){ // at this moment we ignore paragraps with blanks
 				$sections.add($p.node);
 			}
 			} )*
@@ -127,8 +151,7 @@ paragraph returns [ASTNode node = null]
 			|	{ input.LA(1) == DASH && input.LA(2) == DASH &&
 				input.LA(3) == DASH && input.LA(4) == DASH }?
 				hn = horizontalrule {$node = $hn.horizontal;}
-			|	lu =list_unord {$node = $lu.unorderedList;}
-			|	lo = list_ord {$node = $lo.orderedList;}
+			|	l = list {$node = $l.listNode;}
 			|	t = table { $node = $t.table; }
 			|	tp = text_paragraph  {$node = $tp.paragraph; }
 			)  ( paragraph_separator )?
@@ -151,7 +174,7 @@ text_line returns [LineNode line = new LineNode()]
 										}
 									}
 								( element = text_element  {
-								if($element.item != null) // recovering from errors
+								if ($element.item != null) // recovering from errors
 									$line.addChildASTNode($element.item);
 							}
 					)*  text_lineseparator
@@ -287,7 +310,7 @@ heading_text returns [CollectionNode items = null]
 heading_cellcontent returns [CollectionNode items = new CollectionNode()]
 	:	onestar  ( tcp = heading_cellcontentpart  {
 
-							if($tcp.node != null) { // some AST Node could be NULL if bad CREOLE syntax is wrotten
+							if ($tcp.node != null) { // some AST Node could be NULL if bad CREOLE syntax is wrotten
 								$items.add($tcp.node);
 							}
 
@@ -342,33 +365,221 @@ heading_unformatted_text returns [StringBundler text = new StringBundler()]
 
 /////////////////////////////////   L I S T   /////////////////////////////////
 
-list_ord returns [OrderedListNode orderedList = new OrderedListNode()]
-	:	( elem = list_ordelem { $orderedList.addChildASTNode($elem.item);  } )+  ( end_of_list )?
-	;
-list_ordelem returns [ASTNode item = null]
-	scope  CountLevel;
-	@init{
-		$CountLevel::level = 0;
-		$CountLevel::groups = new String();
+list returns [ListNode listNode = null]
+	scope {
+		BaseListNode currentParent;
+		ListNode root;
+		Stack<ItemNode> parents;
+		int lastLevel = 1;
 	}
-	:	om = list_ordelem_markup  {++$CountLevel::level; $CountLevel::currentMarkup = $om.text; $CountLevel::groups += $om.text;}  elem=list_elem { $item = new OrderedListItemNode($CountLevel::level, $elem.items);}
+	@init{
+		$list::root = new ListNode();
+
+		if (input.LA(1) == POUND) {
+			$list::currentParent = new OrderedListNode($list::root);
+		}
+		else {
+			$list::currentParent = new UnorderedListNode($list::root);
+		}
+
+		$list::root.addChildASTNode($list::currentParent);
+
+		$list::parents = new Stack<ItemNode>();
+	}
+	@after {
+		$listNode = $list::root;
+	}
+	:	( elem = list_elems )+  ( end_of_list )?
 	;
 
-list_unord returns [UnorderedListNode unorderedList = new UnorderedListNode()]
-	:	( elem = list_unordelem { $unorderedList.addChildASTNode($elem.item); } )+  ( end_of_list )?
-	;
-list_unordelem returns [UnorderedListItemNode  item = null]
+list_elems
 	scope  CountLevel;
 	@init{
 		$CountLevel::level = 0;
 	}
-	:	um = list_unordelem_markup {++$CountLevel::level; $CountLevel::currentMarkup = $um.text;$CountLevel::groups += $um.text;}  elem=list_elem { $item = new UnorderedListItemNode($CountLevel::level, $elem.items);}
+	:	om = list_ordelem_markup {++$CountLevel::level;$CountLevel::currentMarkup = $om.text;$CountLevel::groups += $om.text;}  
+				elem=list_elem {  
+
+					Stack<ItemNode> parents = $list::parents;
+
+					ItemNode top = parents.isEmpty()?null:parents.peek();
+
+					BaseParentableNode baseParentableNode = $list::currentParent;
+
+					if (top == null) {
+						OrderedListItemNode node = new OrderedListItemNode($CountLevel::level, baseParentableNode, $elem.items);
+						baseParentableNode.addChildASTNode(node);
+
+						parents.push(node);
+
+					}
+					else if ($CountLevel::level > $list::lastLevel) {		
+						OrderedListNode orderedListNode = new OrderedListNode(top);
+
+						OrderedListItemNode node = new OrderedListItemNode($CountLevel::level, orderedListNode, $elem.items);
+						orderedListNode.addChildASTNode(node);
+
+						top.addChildASTNode(orderedListNode);
+
+						parents.push(node);
+					} 
+					else if ($CountLevel::level < $list::lastLevel) {
+						ItemNode in = parents.peek();
+
+						while (in.getLevel() > $CountLevel::level) {
+							in = parents.pop();
+							--$list::lastLevel;
+						}
+
+						top = in;
+
+						baseParentableNode = top.getBaseParentableNode();
+
+						OrderedListItemNode node = new OrderedListItemNode($CountLevel::level, baseParentableNode, $elem.items);
+
+						if (baseParentableNode instanceof UnorderedListItemNode) {
+							buildAndComposeListNode(baseParentableNode, node, true);
+						}
+						else if (baseParentableNode instanceof UnorderedListNode) {
+							baseParentableNode = ((UnorderedListNode)baseParentableNode).getBaseParentableNode();
+
+							buildAndComposeListNode(baseParentableNode, node, true);
+						}
+						else if (baseParentableNode instanceof OrderedListNode && top instanceof UnorderedListItemNode) {
+							baseParentableNode = ((OrderedListNode)baseParentableNode).getBaseParentableNode();
+
+							buildAndComposeListNode(baseParentableNode, node, true);
+						}
+						else {
+							baseParentableNode.addChildASTNode(node);
+						}
+
+						parents.push(node);
+
+					}
+					else {
+						baseParentableNode = top.getBaseParentableNode();
+
+						OrderedListItemNode node = new OrderedListItemNode($CountLevel::level, baseParentableNode, $elem.items);
+
+						if (baseParentableNode instanceof UnorderedListItemNode) {
+							buildAndComposeListNode(baseParentableNode, node, true);
+						} 
+						else if (baseParentableNode instanceof UnorderedListNode) {
+							baseParentableNode = ((UnorderedListNode)baseParentableNode).getBaseParentableNode();
+
+							buildAndComposeListNode(baseParentableNode, node, true);
+						} 
+						else if (baseParentableNode instanceof OrderedListNode && top instanceof UnorderedListItemNode) {
+							baseParentableNode = ((OrderedListNode)baseParentableNode).getBaseParentableNode();
+
+							buildAndComposeListNode(baseParentableNode, node, true);
+						} 
+						else {
+							baseParentableNode.addChildASTNode(node);
+						}
+
+						parents.pop();
+						parents.push(node);
+					}
+
+					$list::lastLevel = $CountLevel::level;
+				}
+	|	um = list_unordelem_markup {++$CountLevel::level; $CountLevel::currentMarkup = $um.text;$CountLevel::groups += $um.text;}  
+				elem=list_elem {
+
+					Stack<ItemNode> parents = $list::parents;
+
+					ItemNode top = parents.isEmpty()?null:parents.peek();
+
+					BaseParentableNode baseParentableNode = $list::currentParent;
+
+					if (top == null) {
+						UnorderedListItemNode node = new UnorderedListItemNode($CountLevel::level, baseParentableNode, $elem.items);
+						baseParentableNode.addChildASTNode(node);
+
+						parents.push(node);
+
+					} 
+					else if ($CountLevel::level > $list::lastLevel) {
+						UnorderedListNode unorderedListNode = new UnorderedListNode(top);
+
+						UnorderedListItemNode node = new UnorderedListItemNode($CountLevel::level, unorderedListNode, $elem.items);
+						unorderedListNode.addChildASTNode(node);
+
+						top.addChildASTNode(unorderedListNode);
+
+						parents.push(node);
+
+					} 
+					else if ($CountLevel::level < $list::lastLevel) {
+						ItemNode in = parents.peek();
+
+						while (in.getLevel() > $CountLevel::level) {
+							in = parents.pop();
+							--$list::lastLevel;
+						}
+
+						top = in;
+
+						baseParentableNode = top.getBaseParentableNode();
+
+						UnorderedListItemNode node = new UnorderedListItemNode($CountLevel::level, baseParentableNode, $elem.items);
+
+						if (baseParentableNode instanceof OrderedListItemNode) {
+							buildAndComposeListNode(baseParentableNode, node, false);
+						} 
+						else if (baseParentableNode instanceof OrderedListNode) {
+							baseParentableNode = ((OrderedListNode)baseParentableNode).getBaseParentableNode();
+
+							buildAndComposeListNode(baseParentableNode, node, false);
+						}
+						else if (baseParentableNode instanceof UnorderedListNode && top instanceof OrderedListItemNode) {
+							baseParentableNode = ((UnorderedListNode)baseParentableNode).getBaseParentableNode();
+
+							buildAndComposeListNode(baseParentableNode, node, false);
+						} 
+						else {
+							baseParentableNode.addChildASTNode(node);
+						}
+
+						parents.push(node);
+
+					} 
+					else {
+						baseParentableNode = top.getBaseParentableNode();
+
+						UnorderedListItemNode node = new UnorderedListItemNode($CountLevel::level, baseParentableNode, $elem.items);
+
+						if (baseParentableNode instanceof OrderedListItemNode) {
+							buildAndComposeListNode(baseParentableNode, node, false);
+						} 
+						else if (baseParentableNode instanceof OrderedListNode ) {
+							baseParentableNode = ((OrderedListNode)baseParentableNode).getBaseParentableNode();
+
+							buildAndComposeListNode(baseParentableNode, node, false);
+						} 
+						else if (baseParentableNode instanceof UnorderedListNode && top instanceof OrderedListItemNode) {
+						 	baseParentableNode = ((UnorderedListNode)baseParentableNode).getBaseParentableNode();
+
+							buildAndComposeListNode(baseParentableNode, node, false);
+						} 
+						else {
+							baseParentableNode.addChildASTNode(node);
+						}
+
+						parents.pop();
+						parents.push(node);
+					}
+
+					$list::lastLevel = $CountLevel::level;
+				}
 	;
 list_elem  returns [CollectionNode  items = null]
 	:	( m = list_elem_markup {
 			             ++$CountLevel::level;
-			             if(!$m.text.equals($CountLevel::currentMarkup)) {
-				$CountLevel::groups+= GROUPING_SEPARATOR;
+			             if (!$m.text.equals($CountLevel::currentMarkup)) {
+							$CountLevel::groups+= GROUPING_SEPARATOR;
 			             }
 			             $CountLevel::groups+= $m.text;
 			             $CountLevel::currentMarkup = $m.text;
@@ -383,7 +594,7 @@ list_elemcontent returns [CollectionNode items = new CollectionNode()]
 	;
 list_elemcontentpart returns [ASTNode node = null]
 	:	tuf = text_unformattedelement {
-				if($tuf.contents instanceof CollectionNode)
+				if ($tuf.contents instanceof CollectionNode)
 					$node = new UnformattedTextNode($tuf.contents);
 				else
 					$node = $tuf.contents;
@@ -393,9 +604,10 @@ list_elemcontentpart returns [ASTNode node = null]
 list_formatted_elem returns [CollectionNode contents = new CollectionNode()]
 	:	bold_markup  onestar  ( boldContents = list_boldcontentpart  {
 						BoldTextNode add = null;
-						if($boldContents.contents instanceof CollectionNode){
+						if ($boldContents.contents instanceof CollectionNode){
 						     add = new BoldTextNode($boldContents.contents);
-						}else{
+						}
+						else {
 						    CollectionNode c = new CollectionNode();
 						    c.add($boldContents.contents);
 						    add = new BoldTextNode(c);
@@ -406,9 +618,10 @@ list_formatted_elem returns [CollectionNode contents = new CollectionNode()]
 		( bold_markup )?
 	|	ital_markup    onestar  ( italContents = list_italcontentpart      {
 						ItalicTextNode add = null;
-						if($italContents.contents instanceof CollectionNode){
+						if ($italContents.contents instanceof CollectionNode){
 						    add = new ItalicTextNode($italContents.contents);
-						}else{
+						}
+						else {
 						      CollectionNode c = new CollectionNode();
 						      c.add($italContents.contents);
 						      add = new ItalicTextNode(c);
@@ -464,7 +677,7 @@ table_normalcell returns [TableDataNode cell = null]
 	;
 table_cellcontent returns [CollectionNode items = new CollectionNode()]
 	:	onestar  ( tcp = table_cellcontentpart  {
-			if($tcp.node != null) {
+			if ($tcp.node != null) {
 				$items.add($tcp.node);
 			}
 		}
@@ -572,7 +785,7 @@ horizontalrule returns [ASTNode horizontal = null]
 link returns [LinkNode link = null]
 	:	link_open_markup  a =link_address  {$link = $a.link; } (link_description_markup
 		d = link_description {
-			if($link == null) { // recover from possible errors
+			if ($link == null) { // recover from possible errors
 			    $link = new LinkNode();
 			}
 			$link.setAltCollectionNode($d.node);
@@ -615,7 +828,7 @@ link_interwiki_pagename returns [StringBundler text = new StringBundler()]
 link_description returns [CollectionNode node = new CollectionNode()]
 	:	( l = link_descriptionpart {
 					// Recover code: some bad syntax could include null elements in the collection
-					if($l.text != null) {
+					if ($l.text != null) {
 						$node.add($l.text);
 					}
 				}
@@ -914,5 +1127,3 @@ TABLE_OF_CONTENTS_TEXT
 	:	'<<TableOfContents>>'
 	;
 INSIGNIFICANT_CHAR		: .;
-
-

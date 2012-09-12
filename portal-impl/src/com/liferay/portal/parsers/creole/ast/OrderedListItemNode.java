@@ -25,8 +25,11 @@ public class OrderedListItemNode extends ItemNode {
 		super(tokenType);
 	}
 
-	public OrderedListItemNode(int level, CollectionNode collectionNode) {
-		super(level, collectionNode);
+	public OrderedListItemNode(
+		int level, BaseParentableNode baseParentableNode,
+		CollectionNode collectionNode) {
+
+		super(level, baseParentableNode, collectionNode);
 	}
 
 	@Override

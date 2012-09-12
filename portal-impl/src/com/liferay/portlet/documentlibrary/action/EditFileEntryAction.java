@@ -95,6 +95,7 @@ import javax.portlet.WindowState;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.fileupload.FileUploadBase.IOFileUploadException;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -438,7 +439,11 @@ public class EditFileEntryAction extends PortletAction {
 				(UploadException)actionRequest.getAttribute(
 					WebKeys.UPLOAD_EXCEPTION);
 
-			if (uploadException != null && uploadException.isExceededSizeLimit()) {
+			if (uploadException != null && uploadException.getCause() instanceof IOFileUploadException) {
+
+				// Cancelled a temporary upload. Just consume this exception
+			}
+			else if (uploadException != null && uploadException.isExceededSizeLimit()) {
 				throw new FileSizeException(uploadException.getCause());
 			}
 			else {

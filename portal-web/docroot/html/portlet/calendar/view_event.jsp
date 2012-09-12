@@ -133,7 +133,7 @@ request.setAttribute("view_event.jsp-event", event);
 							</c:when>
 							<c:otherwise>
 								<span class="dtstart" title="<%= dateFormatISO8601.format(event.getStartDate()) %>">
-									<%= dateFormatTime.format(event.getStartDate()) %>
+									<%= dateFormatTime.format(Time.getDate(event.getStartDate(), TimeZoneUtil.getDefault())) %>
 								</span>
 							</c:otherwise>
 						</c:choose>

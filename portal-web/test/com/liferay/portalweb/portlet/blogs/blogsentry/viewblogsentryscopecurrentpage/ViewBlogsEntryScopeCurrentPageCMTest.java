@@ -23,84 +23,22 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ViewBlogsEntryScopeCurrentPageCMTest extends BaseTestCase {
 	public void testViewBlogsEntryScopeCurrentPageCM()
 		throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("//div[@id='dockbar']",
 			RuntimeVariables.replace("Dockbar"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent(
-							"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
 		assertEquals(RuntimeVariables.replace("Manage"),
 			selenium.getText("//li[@id='_145_manageContent']/a/span"));
 		selenium.mouseOver("//li[@id='_145_manageContent']/a/span");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Site Content")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Site Content");
 		selenium.clickAt("link=Site Content",
 			RuntimeVariables.replace("Site Content"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//iframe[@id='manageContentDialog']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//iframe[@id='manageContentDialog']");
 		selenium.selectFrame("//iframe[@id='manageContentDialog']");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Blogs")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Blogs");
 		selenium.clickAt("link=Blogs", RuntimeVariables.replace("Blogs"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("No entries were found."),
@@ -108,47 +46,13 @@ public class ViewBlogsEntryScopeCurrentPageCMTest extends BaseTestCase {
 		selenium.mouseOver("//span[@title='Scope: Default']/ul/li/strong/a");
 		selenium.clickAt("//span[@title='Scope: Default']/ul/li/strong/a",
 			RuntimeVariables.replace("Scope: Default"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//ul[contains(@class,'aui-state-active')]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("//ul[contains(@class,'aui-state-active')]");
 		assertEquals(RuntimeVariables.replace("Blogs Test Page"),
 			selenium.getText("//a[contains(@id,'menu_blogs-test-page')]"));
 		selenium.clickAt("//a[contains(@id,'menu_blogs-test-page')]",
 			RuntimeVariables.replace("Blogs Test Page"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isPartialText(
-							"//span[@title='Scope: Blogs Test Page']/ul/li/strong/a",
-							"Scope: Blogs Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForPartialText("//span[@title='Scope: Blogs Test Page']/ul/li/strong/a",
+			"Scope: Blogs Test Page");
 		selenium.clickAt("link=Blogs", RuntimeVariables.replace("Blogs"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isVisible(

@@ -20,14 +20,14 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ConfigurePortletBlogsScopeCurrentPageTest extends BaseTestCase {
-	public void testConfigurePortletBlogsScopeCurrentPage()
+public class ConfigurePortletBlogs1ScopeCurrentPageTest extends BaseTestCase {
+	public void testConfigurePortletBlogs1ScopeCurrentPage()
 		throws Exception {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.clickAt("link=Blogs Test Page",
-			RuntimeVariables.replace("Blogs Test Page"));
+		selenium.clickAt("link=Blogs Test Page1",
+			RuntimeVariables.replace("Blogs Test Page1"));
 		selenium.waitForPageToLoad("30000");
 		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Options"),
@@ -35,11 +35,11 @@ public class ConfigurePortletBlogsScopeCurrentPageTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
 			RuntimeVariables.replace("Options"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Configuration')]/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]");
 		assertEquals(RuntimeVariables.replace("Configuration"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Configuration')]/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Configuration')]/a",
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]",
 			RuntimeVariables.replace("Configuration"));
 		selenium.waitForVisible("//iframe[@id='_33_configurationIframeDialog']");
 		selenium.selectFrame("//iframe[@id='_33_configurationIframeDialog']");
@@ -47,8 +47,13 @@ public class ConfigurePortletBlogsScopeCurrentPageTest extends BaseTestCase {
 			"//script[contains(@src,'/liferay/navigation_interaction.js')]");
 		selenium.clickAt("link=Scope", RuntimeVariables.replace("Scope"));
 		selenium.waitForVisible("//select[@id='_86_scopeType']");
+		assertEquals("Default",
+			selenium.getSelectedLabel("//select[@id='_86_scopeType']"));
 		selenium.select("//select[@id='_86_scopeType']",
 			RuntimeVariables.replace("Select Page"));
+		selenium.waitForVisible("//select[@id='_86_scopeLayoutUuid']");
+		selenium.select("//select[@id='_86_scopeLayoutUuid']",
+			RuntimeVariables.replace("Current Page (Blogs Test Page1)"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
@@ -57,7 +62,7 @@ public class ConfigurePortletBlogsScopeCurrentPageTest extends BaseTestCase {
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals("Select Page",
 			selenium.getSelectedLabel("//select[@id='_86_scopeType']"));
-		assertEquals("Current Page (Blogs Test Page)",
+		assertEquals("Current Page (Blogs Test Page1)",
 			selenium.getSelectedLabel("//select[@id='_86_scopeLayoutUuid']"));
 		selenium.selectFrame("relative=top");
 	}

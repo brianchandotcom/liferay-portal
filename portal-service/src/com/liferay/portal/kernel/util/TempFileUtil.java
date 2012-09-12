@@ -198,13 +198,13 @@ public class TempFileUtil {
 		return sb.toString();
 	}
 
+	public static final String _SUFFIX_TEMP_FILENAME = "_temp.tmp";
+
 	private static final String _BASE_TEMP_PATHNAME = "liferay_temp/";
 
 	private static final long _COMPANY_ID = 0;
 
 	private static final long _REPOSITORY_ID = 0;
-
-	private static final String _SUFFIX_TEMP_FILENAME = "_temp.tmp";
 
 	private static final long _USER_ID = 0;
 

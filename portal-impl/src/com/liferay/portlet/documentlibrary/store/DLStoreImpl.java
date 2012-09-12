@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.TempFileUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.security.permission.ActionKeys;
@@ -533,6 +534,13 @@ public class DLStoreImpl implements DLStore {
 
 		if (!isValidName(fileName)) {
 			throw new FileNameException(fileName);
+		}
+
+		if (StringUtil.endsWith(fileName, ".tmp")) {
+			fileName = StringUtil.extractLast(fileName, StringPool.SLASH);
+
+			fileName = StringUtil.replace(
+				fileName, TempFileUtil._SUFFIX_TEMP_FILENAME, StringPool.BLANK);
 		}
 
 		if (validateFileExtension) {

@@ -171,10 +171,14 @@ if (!selectableTree) {
 										var plid = TreeUtil.extractPlid(event.target);
 
 										TreeUtil.updateSessionTreeCheckedState('<%= HtmlUtil.escape(treeId) %>SelectedNode', plid, event.newVal);
+
+										TreeUtil.updateSelectedNodes(event.target, event.newVal);
 									}
 								},
 
 								childrenChange: function(event) {
+									TreeUtil.updateSelectedNodes(event.target, event.target.get('checked'));
+
 									TreeUtil.restoreNodeState(event.target);
 								},
 
@@ -386,6 +390,28 @@ if (!selectableTree) {
 				);
 			},
 
+			updateSelectedNodes: function(node, state) {
+				var plid = TreeUtil.extractPlid(node);
+
+				if (state) {
+					if (A.Array.indexOf(TreeUtil.SELECTED_NODES, plid) == -1) {
+						TreeUtil.SELECTED_NODES.push(plid);
+					}
+				}
+				else {
+					if (A.Array.indexOf(TreeUtil.SELECTED_NODES, plid) > -1) {
+						TreeUtil.SELECTED_NODES.splice(A.Array.indexOf(TreeUtil.SELECTED_NODES, plid), 1);
+					}
+				}
+
+				A.Array.each(
+					node.get('children'),
+					function(item) {
+						TreeUtil.updateSelectedNodes(item, state);
+					}
+				);
+			},
+
 			updateSessionTreeCheckedState: function(treeId, nodeId, state) {
 				var data = {
 					cmd: state ? 'layoutCheck' : 'layoutUncheck',
@@ -454,6 +480,8 @@ if (!selectableTree) {
 				after: {
 					checkedChange: function(event) {
 						TreeUtil.updateSessionTreeCheckedState('<%= HtmlUtil.escape(treeId) %>SelectedNode', <%= LayoutConstants.DEFAULT_PLID %>, event.newVal);
+
+						TreeUtil.updateSelectedNodes(event.target, event.newVal);
 					},
 					expandedChange: function(event) {
 						Liferay.Store('<%= HtmlUtil.escape(treeId) %>RootNode', event.newVal);

@@ -89,6 +89,136 @@
 	<td>Status Closed</td>
 </tr>
 <tr>
+	<td>storeVisible</td>
+	<td>xPath=(//div[@class='task-activity-message'])[1]</td>
+	<td>activityVisible</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${activityVisible}</td>
+	<td>ActivityVisible</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//div[2]/div/a</td>
+	<td>Plus</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>ActivityVisible</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//div[@class='task-activity-message'])[1]</td>
+	<td>Task initially assigned to the Javascript Developer role.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//div[@class='task-activity-comment'])[1]</td>
+	<td>Assigned initial task.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//div[@class='task-activity-message'])[2]</td>
+	<td>Javascript Developer assigned the task to himself.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//div[@class='task-activity-message'])[3]</td>
+	<td>Javascript Developer completed the task Developer.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//div[@class='task-activity-message'])[4]</td>
+	<td>Task initially assigned to the Code Reviewer role.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//div[@class='task-activity-comment'])[4]</td>
+	<td>Assigned initial task.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//div[@class='task-activity-message'])[5]</td>
+	<td>Code Reviewer assigned the task to himself.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//div[@class='task-activity-message'])[6]</td>
+	<td>Code Reviewer completed the task Code Review.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//div[@class='task-activity-message'])[7]</td>
+	<td>Task initially assigned to the Javascript Developer role.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//div[@class='task-activity-comment'])[7]</td>
+	<td>Assigned initial task.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//div[@class='task-activity-message'])[8]</td>
+	<td>Javascript Developer assigned the task to himself.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//div[@class='task-activity-message'])[9]</td>
+	<td>Javascript Developer completed the task Developer.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//div[@class='task-activity-message'])[10]</td>
+	<td>Task initially assigned to the Code Reviewer role.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//div[@class='task-activity-comment'])[10]</td>
+	<td>Assigned initial task.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//div[@class='task-activity-message'])[11]</td>
+	<td>Code Reviewer assigned the task to himself.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//div[@class='task-activity-message'])[12]</td>
+	<td>Code Reviewer completed the task Code Review.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//div[@class='task-activity-message'])[contains(.,'QA Engineer')]</td>
+	<td>Task initially assigned to the QA Engineer role.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//div[@class='task-activity-comment'])[13]</td>
+	<td>Assigned initial task.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//div[@class='task-activity-message'])[contains(.,'QA Manager')]</td>
+	<td>Task initially assigned to the QA Manager role.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//div[@class='task-activity-comment'])[14]</td>
+	<td>Assigned initial task.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//div[@class='task-activity-message'])[15]</td>
+	<td>QA Engineer assigned the task to himself.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//div[@class='task-activity-message'])[16]</td>
+	<td>QA Engineer completed the task QA.</td>
+</tr>
+<tr>
 	<td>assertText</td>
 	<td>//div[@class='results-grid aui-searchcontainer-content']/table/tbody/tr[3]/td[1]</td>
 	<td>Developer</td>

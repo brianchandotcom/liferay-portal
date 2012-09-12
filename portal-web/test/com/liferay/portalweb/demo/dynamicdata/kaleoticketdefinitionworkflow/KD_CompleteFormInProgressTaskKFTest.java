@@ -42,7 +42,7 @@ public class KD_CompleteFormInProgressTaskKFTest extends BaseTestCase {
 		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a");
 		selenium.waitForVisible(
 			"//div[@class='aui-panel-content aui-dialog-content yui3-widget-stdmod']");
-		selenium.type("//input[@id='_1_WAR_kaleoformsportlet_PullRequestURL']",
+		selenium.type("//input[@id='_1_WAR_kaleoformsportlet_pullrequesturl']",
 			RuntimeVariables.replace("https://github.com"));
 		selenium.select("//select[@id='_1_WAR_kaleoformsportlet_status']",
 			RuntimeVariables.replace("label=In Progress"));

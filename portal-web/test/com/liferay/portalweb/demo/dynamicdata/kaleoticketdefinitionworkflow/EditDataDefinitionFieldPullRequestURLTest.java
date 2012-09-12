@@ -25,9 +25,15 @@ public class EditDataDefinitionFieldPullRequestURLTest extends BaseTestCase {
 		throws Exception {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
-		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent("link=Control Panel");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
+		selenium.waitForVisible("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
@@ -41,23 +47,34 @@ public class EditDataDefinitionFieldPullRequestURLTest extends BaseTestCase {
 			RuntimeVariables.replace("Manage Data Definitions"));
 		selenium.waitForVisible("//iframe");
 		selenium.selectFrame("//iframe");
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/liferay/search_container.js')]");
 		selenium.waitForVisible(
 			"//input[@id='_166_toggle_id_ddm_structure_searchkeywords']");
 		selenium.type("//input[@id='_166_toggle_id_ddm_structure_searchkeywords']",
 			RuntimeVariables.replace("Ticket Definition"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
-		selenium.waitForVisible("//span[@title='Actions']/ul/li/strong/a");
 		Thread.sleep(5000);
-		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
+		selenium.waitForVisible("//span[@title='Actions']/ul/li/strong/a/span");
+		assertEquals(RuntimeVariables.replace("Actions"),
+			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
+		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a");
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
-		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a");
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a",
+			RuntimeVariables.replace("Edit"));
 		selenium.waitForVisible("//div[@class='aui-diagram-builder-canvas']");
+		assertEquals(RuntimeVariables.replace("Text"),
+			selenium.getText(
+				"//div[@class='aui-diagram-builder-canvas']/div/div[9]/div/label"));
+		selenium.clickAt("//div[@class='aui-diagram-builder-canvas']/div/div[9]",
+			RuntimeVariables.replace("Text"));
+		selenium.waitForVisible("xPath=(//button[@id='editEvent'])[9]");
 		selenium.clickAt("xPath=(//button[@id='editEvent'])[9]",
 			RuntimeVariables.replace("Edit"));
 		selenium.waitForVisible("//tbody[@class='yui3-datatable-data']");
@@ -97,11 +114,6 @@ public class EditDataDefinitionFieldPullRequestURLTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("text"),
 			selenium.getText(
 				"//tbody[@class='yui3-datatable-data']/tr[1]/td[2]"));
-		assertEquals(RuntimeVariables.replace("Select"),
-			selenium.getText(
-				"//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[9]/div"));
-		selenium.dragAndDropToObject("//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[9]/div",
-			"//div[@class='aui-tabview-content aui-widget-bd']");
 		assertEquals(RuntimeVariables.replace("Pull Request URL"),
 			selenium.getText(
 				"//tbody[@class='yui3-datatable-data']/tr[2]/td[2]"));
@@ -129,5 +141,6 @@ public class EditDataDefinitionFieldPullRequestURLTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
+		selenium.selectFrame("relative=top");
 	}
 }

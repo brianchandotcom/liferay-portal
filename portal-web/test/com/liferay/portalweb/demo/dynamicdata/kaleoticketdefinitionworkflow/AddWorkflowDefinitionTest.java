@@ -24,9 +24,15 @@ public class AddWorkflowDefinitionTest extends BaseTestCase {
 	public void testAddWorkflowDefinition() throws Exception {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
-		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent("link=Control Panel");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
+		selenium.waitForVisible("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
@@ -36,7 +42,7 @@ public class AddWorkflowDefinitionTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_151_title_en_US']",
 			RuntimeVariables.replace("Ticket Process"));
-		selenium.type("//input[@id='_151_file']",
+		selenium.uploadFile("//input[@id='_151_file']",
 			RuntimeVariables.replace(
 				"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\demo\\dynamicdata\\kaleoticketdefinitionworkflow\\dependencies\\workflow.xml"));
 		selenium.clickAt("//input[@value='Save']",

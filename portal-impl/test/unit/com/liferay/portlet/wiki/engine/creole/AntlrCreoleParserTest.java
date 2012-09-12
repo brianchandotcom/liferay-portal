@@ -26,9 +26,8 @@ import com.liferay.portal.parsers.creole.ast.ImageNode;
 import com.liferay.portal.parsers.creole.ast.ItalicTextNode;
 import com.liferay.portal.parsers.creole.ast.ItemNode;
 import com.liferay.portal.parsers.creole.ast.LineNode;
+import com.liferay.portal.parsers.creole.ast.ListNode;
 import com.liferay.portal.parsers.creole.ast.NoWikiSectionNode;
-import com.liferay.portal.parsers.creole.ast.OrderedListItemNode;
-import com.liferay.portal.parsers.creole.ast.OrderedListNode;
 import com.liferay.portal.parsers.creole.ast.ParagraphNode;
 import com.liferay.portal.parsers.creole.ast.ScapedNode;
 import com.liferay.portal.parsers.creole.ast.UnformattedTextNode;
@@ -52,8 +51,7 @@ public class AntlrCreoleParserTest extends AbstractWikiParserTests {
 
 	@Test
 	public void testParseCorrectlyBoldContentInListItems() {
-		UnorderedListNode unorderedListNode =
-			(UnorderedListNode)parseBaseListNode("list-6.creole");
+		BaseListNode unorderedListNode = parseBaseListNode("list-6.creole");
 
 		Assert.assertEquals(1, unorderedListNode.getChildASTNodesCount());
 
@@ -106,37 +104,6 @@ public class AntlrCreoleParserTest extends AbstractWikiParserTests {
 	}
 
 	@Test
-	public void testParseCorrectlyNestedLevels() {
-		UnorderedListNode unorderedListNode =
-			(UnorderedListNode)parseBaseListNode("list-4.creole");
-
-		Assert.assertEquals(7, unorderedListNode.getChildASTNodesCount());
-
-		int level1Count = 0;
-		int level2Count = 0;
-
-		for (ASTNode astNode : unorderedListNode.getChildASTNodes()) {
-			UnorderedListItemNode unorderedListItemNode =
-				(UnorderedListItemNode)astNode;
-
-			int currentLevel = unorderedListItemNode.getLevel();
-
-			if (currentLevel == 1) {
-				level1Count += currentLevel;
-			}
-			else if (currentLevel == 2) {
-				level2Count += currentLevel;
-			}
-			else {
-				Assert.fail("Parsed has not been achieved correctly");
-			}
-		}
-
-		Assert.assertEquals(level1Count, 3 * 1);
-		Assert.assertEquals(level2Count, 4 * 2);
-	}
-
-	@Test
 	public void testParseCorrectlyOneItemFirstLevel() {
 		executeFirstLevelItemListTests("list-1.creole", 1);
 	}
@@ -144,37 +111,6 @@ public class AntlrCreoleParserTest extends AbstractWikiParserTests {
 	@Test
 	public void testParseCorrectlyOneOrderedItemFirstLevel() {
 		executeFirstLevelItemListTests("list-7.creole", 1);
-	}
-
-	@Test
-	public void testParseCorrectlyOrderedNestedLevels() {
-		OrderedListNode orderedListNode = (OrderedListNode)parseBaseListNode(
-			"list-10.creole");
-
-		Assert.assertEquals(7, orderedListNode.getChildASTNodesCount());
-
-		int level1Count = 0;
-		int level2Count = 0;
-
-		for (ASTNode astNode : orderedListNode.getChildASTNodes()) {
-			OrderedListItemNode orderedListItemNode =
-				(OrderedListItemNode)astNode;
-
-			int currentLevel = orderedListItemNode.getLevel();
-
-			if (currentLevel == 1) {
-				level1Count += currentLevel;
-			}
-			else if (currentLevel == 2) {
-				level2Count += currentLevel;
-			}
-			else {
-				Assert.fail("Parsed has not been achieved correctly");
-			}
-		}
-
-		Assert.assertEquals(level1Count, 3 * 1);
-		Assert.assertEquals(level2Count, 4 * 2);
 	}
 
 	@Test
@@ -920,12 +856,11 @@ public class AntlrCreoleParserTest extends AbstractWikiParserTests {
 	protected BaseListNode parseBaseListNode(String fileName) {
 		WikiPageNode wikiPageNode = getWikiPageNode(fileName);
 
-		BaseListNode baseListNode = (BaseListNode)wikiPageNode.getChildASTNode(
-			0);
+		ListNode listNode = (ListNode)wikiPageNode.getChildASTNode(0);
 
-		Assert.assertNotNull(baseListNode);
+		Assert.assertNotNull(listNode);
 
-		return baseListNode;
+		return (BaseListNode) listNode.getChildASTNode(0);
 	}
 
 }

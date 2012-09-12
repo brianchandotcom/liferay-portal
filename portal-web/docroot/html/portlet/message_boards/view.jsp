@@ -374,7 +374,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 				String bannedByUserDisplayURL = StringPool.BLANK;
 
 				try {
-					User bannedByUser = UserLocalServiceUtil.getUser(ban.getBanUserId());
+					User bannedByUser = UserLocalServiceUtil.getUser(ban.getUserId());
 
 					bannedByUserDisplayURL = bannedByUser.getDisplayURL(themeDisplay);
 				}

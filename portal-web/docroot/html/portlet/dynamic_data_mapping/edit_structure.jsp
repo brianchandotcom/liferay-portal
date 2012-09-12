@@ -31,7 +31,7 @@ long parentStructureId = BeanParamUtil.getLong(structure, request, "parentStruct
 String parentStructureName = StringPool.BLANK;
 
 try {
-	DDMStructure parentStructure = DDMStructureLocalServiceUtil.getStructure(parentStructureId);
+	DDMStructure parentStructure = DDMStructureServiceUtil.getStructure(parentStructureId);
 
 	parentStructureName = parentStructure.getName(locale);
 }

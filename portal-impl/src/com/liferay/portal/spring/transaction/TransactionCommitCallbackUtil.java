@@ -24,7 +24,7 @@ import java.util.concurrent.Callable;
 /**
  * @author Shuyang Zhou
  */
-public class TransactionCommitCallbackUtil {
+class TransactionCommitCallbackUtil {
 
 	public static void registerCallback(Callable<?> callable) {
 		List<List<Callable<?>>> callbackListList =

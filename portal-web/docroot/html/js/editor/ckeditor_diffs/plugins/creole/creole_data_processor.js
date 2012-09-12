@@ -228,13 +228,13 @@
 			else if (tagName == TAG_UNORDERED_LIST || tagName == TAG_ORDERED_LIST) {
 				instance._listsStack.pop();
 
-				var neededNewLines = 1;
+				var newLinesCount = 1;
 
 				if (!instance._hasParentNode(element, TAG_LIST_ITEM)) {
-					neededNewLines = 2;
+					newLinesCount = 2;
 				}
-				
-				instance._appendNewLines(neededNewLines);
+
+				instance._appendNewLines(newLinesCount);
 			}
 			else if (tagName == TAG_PRE) {
 				if (!instance._isLastItemNewLine()) {
@@ -584,16 +584,7 @@
 		},
 
 		_tagNameMatch: function(tagSrc, tagDest) {
-			var result;
-
-			if (tagDest instanceof RegExp) {
-				result = tagDest.test(tagSrc);
-			}
-			else {
-				result = tagSrc === tagDest;
-			}
-
-			return result;
+			return (tagDest instanceof RegExp && tagDest.test(tagSrc)) || (tagSrc === tagDest);
 		},
 
 		_endResult: null,

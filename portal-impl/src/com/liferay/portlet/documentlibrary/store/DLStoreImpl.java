@@ -536,11 +536,9 @@ public class DLStoreImpl implements DLStore {
 			throw new FileNameException(fileName);
 		}
 
-		if (StringUtil.endsWith(fileName, ".tmp")) {
-			fileName = StringUtil.extractLast(fileName, StringPool.SLASH);
-
-			fileName = StringUtil.replace(
-				fileName, TempFileUtil._SUFFIX_TEMP_FILENAME, StringPool.BLANK);
+		if (fileName.endsWith(TempFileUtil.SUFFIX_TEMP_FILENAME)) {
+			fileName = StringUtil.replaceLast(
+				fileName, TempFileUtil.SUFFIX_TEMP_FILENAME, StringPool.BLANK);
 		}
 
 		if (validateFileExtension) {
@@ -551,7 +549,7 @@ public class DLStoreImpl implements DLStore {
 
 			for (String fileExtension : fileExtensions) {
 				if (StringPool.STAR.equals(fileExtension) ||
-					StringUtil.endsWith(fileName, fileExtension)) {
+					fileName.endsWith(fileExtension)) {
 
 					validFileExtension = true;
 

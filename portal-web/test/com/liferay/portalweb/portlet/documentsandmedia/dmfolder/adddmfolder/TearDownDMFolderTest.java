@@ -33,21 +33,15 @@ public class TearDownDMFolderTest extends BaseTestCase {
 				selenium.clickAt("link=Documents and Media Test Page",
 					RuntimeVariables.replace("Documents and Media Test Page"));
 				selenium.waitForPageToLoad("30000");
-				Thread.sleep(5000);
-				selenium.waitForVisible("//button[@title='Icon View']");
 				selenium.clickAt("//button[@title='Icon View']",
 					RuntimeVariables.replace("Icon View"));
-				selenium.waitForVisible(
-					"//div[@class='aui-loadingmask-message']");
-				selenium.waitForNotVisible(
-					"//div[@class='aui-loadingmask-message']");
 				selenium.waitForVisible(
 					"//button[contains(@class,'aui-state-active') and @title='Icon View']");
 				assertTrue(selenium.isVisible(
 						"//button[contains(@class,'aui-state-active') and @title='Icon View']"));
 
 				boolean dmFolderNotRecycled = selenium.isElementPresent(
-						"//a[contains(@class,'document-link')]/span[@class='entry-title']");
+						"//a[contains(@class,'entry-link')]/span[@class='entry-title']");
 
 				if (!dmFolderNotRecycled) {
 					label = 2;
@@ -62,7 +56,7 @@ public class TearDownDMFolderTest extends BaseTestCase {
 				assertTrue(selenium.isChecked(
 						"//input[@id='_20_allRowIdsCheckbox']"));
 				selenium.waitForVisible(
-					"//div[@class='document-display-style display-icon selectable selected']");
+					"//div[contains(@class,'display-icon selectable selected')]");
 				assertEquals(RuntimeVariables.replace("Actions"),
 					selenium.getText(
 						"//span[@title='Actions']/ul/li/strong/a/span"));
@@ -76,11 +70,9 @@ public class TearDownDMFolderTest extends BaseTestCase {
 				selenium.click(RuntimeVariables.replace(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move to the Recycle Bin')]/a"));
 				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to move the selected entries to the Recycle Bin[\\s\\S]$"));
-				assertEquals(RuntimeVariables.replace(
-						"Your request completed successfully."),
-					selenium.getText("//div[@class='portlet-msg-success']"));
+				assertTrue(selenium.isPartialText(
+						"//div[@class='portlet-msg-success taglib-trash-undo']",
+						"moved to the Recycle Bin. Undo"));
 
 			case 2:
 				assertEquals(RuntimeVariables.replace(
@@ -104,7 +96,7 @@ public class TearDownDMFolderTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 
 				boolean dmFolderNotDeleted = selenium.isElementPresent(
-						"//input[@name='_182_rowIds']");
+						"//span[@title='Actions']/ul/li/strong/a");
 
 				if (!dmFolderNotDeleted) {
 					label = 3;
@@ -112,18 +104,13 @@ public class TearDownDMFolderTest extends BaseTestCase {
 					continue;
 				}
 
-				assertFalse(selenium.isChecked(
-						"//input[@name='_182_allRowIds']"));
-				selenium.clickAt("//input[@name='_182_allRowIds']",
-					RuntimeVariables.replace("All Entries Check Box"));
-				assertTrue(selenium.isChecked("//input[@name='_182_allRowIds']"));
-				selenium.waitForVisible(
-					"//tr[contains(@class,'last selected')]");
-				selenium.clickAt("//input[@value='Delete']",
-					RuntimeVariables.replace("Delete"));
+				assertEquals(RuntimeVariables.replace("Empty the Recycle Bin"),
+					selenium.getText("//a[@class='trash-empty-link']"));
+				selenium.clickAt("//a[@class='trash-empty-link']",
+					RuntimeVariables.replace("Empty the Recycle Bin"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete the selected entries[\\s\\S] They will be deleted immediately.$"));
+								   .matches("^Are you sure you want to empty the Recycle Bin[\\s\\S]$"));
 				assertEquals(RuntimeVariables.replace(
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));

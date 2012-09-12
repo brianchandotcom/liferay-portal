@@ -27,24 +27,19 @@
 	<td>DM Folder Name</td>
 </tr>
 <tr>
-	<td>clickAt</td>
+	<td>clickAtAndWait</td>
 	<td>//div[@data-title='DM Folder Name']/a/span[@class='entry-title']</td>
-	<td>DM Folder Name</td>
-</tr>
-<tr>
-	<td>waitForText</td>
-	<td>//li[contains(@class,'folder selected')]/a</td>
-	<td>DM Folder Name</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//li[contains(@class,'folder selected')]/a</td>
 	<td>DM Folder Name</td>
 </tr>
 <tr>
 	<td>pause</td>
 	<td>5000</td>
 	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[contains(@class,'folder selected')]/a</td>
+	<td>DM Folder Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -62,6 +57,21 @@
 	<td>Manage</td>
 </tr>
 <tr>
+	<td>assertVisible</td>
+	<td>//input[contains(@id,'keywords')]</td>
+	<td>Search Field</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//input[@value='Search']</td>
+	<td>Search</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[contains(@id,'syncNotificationContent')]/a</td>
+	<td>Access these files offline using Liferay Sync.</td>
+</tr>
+<tr>
 	<td>assertText</td>
 	<td>//div[@data-title='DM Folder Document Title']/a/span[@class='entry-title']</td>
 	<td>DM Folder Document Title</td>
@@ -73,8 +83,63 @@
 </tr>
 <tr>
 	<td>assertText</td>
+	<td>//h1[@class='header-title']</td>
+	<td>DM Folder Document Title</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@class='header-back-to']/a</td>
+	<td>« Back</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@class='aui-toolbar-content']/button[1]</td>
+	<td>Download</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@class='aui-toolbar-content']/button[2]</td>
+	<td>Edit</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@class='aui-toolbar-content']/button[3]</td>
+	<td>Move</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@class='aui-toolbar-content']/button[4]</td>
+	<td>Checkout</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@class='aui-toolbar-content']/button[5]</td>
+	<td>Permissions</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@class='aui-toolbar-content']/button[6]</td>
+	<td>Move to the Recycle Bin</td>
+</tr>
+<tr>
+	<td>assertText</td>
 	<td>//h2[@class='document-title']</td>
 	<td>DM Folder Document Title</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//span[@class='user-date']/span/span</td>
+	<td>Uploaded by Joe Bloggs</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xpath=(//div[@class='lfr-panel-title']/span)[1]</td>
+	<td>Comments</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//fieldset[contains(@class,'add-comment')]</td>
+	<td>No comments yet. Be the first. Subscribe to Comments</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -88,18 +153,43 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//span[1]/span/a/span</td>
-	<td>Download (0.3k)</td>
+	<td>//span[@class='download-document']/span/a/span</td>
+	<td>Download (0k)</td>
 </tr>
 <tr>
-	<td>assertPartialText</td>
-	<td>//div[2]/div[2]/div/div[1]/div[2]/div[1]</td>
-	<td>ISO-8859-1</td>
+	<td>assertText</td>
+	<td>//a[@class='show-url-file']</td>
+	<td>URL</td>
 </tr>
 <tr>
-	<td>assertPartialText</td>
-	<td>//div[2]/div/div[1]/div[2]/div[2]</td>
-	<td>text/plain</td>
+	<td>assertText</td>
+	<td>//a[@class='show-webdav-url-file']</td>
+	<td>WebDAV URL</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='documentLibraryAssetMetadataPanel']/div/div</td>
+	<td>Automatically Extracted Metadata</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='documentLibraryAssetMetadataPanel']/div/div[contains(.,'Content Encoding')]</td>
+	<td>Content Encoding ISO-8859-1</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='documentLibraryAssetMetadataPanel']/div/div[contains(.,'Content Type')]</td>
+	<td>Content Type text/plain</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xpath=(//div[@class='lfr-panel-title']/span)[3]</td>
+	<td>Version History</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//input[@value='Compare Versions']</td>
+	<td>Compare Versions</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -114,12 +204,12 @@
 <tr>
 	<td>assertText</td>
 	<td>//tr[3]/td[4]</td>
-	<td>0.3k</td>
+	<td>0k</td>
 </tr>
 <tr>
-	<td>assertTextNotPresent</td>
-	<td>There are no documents or media files in this folder.</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//tr[3]/td[5]</td>
+	<td>Approved</td>
 </tr>
 </tbody></table>
 </body>

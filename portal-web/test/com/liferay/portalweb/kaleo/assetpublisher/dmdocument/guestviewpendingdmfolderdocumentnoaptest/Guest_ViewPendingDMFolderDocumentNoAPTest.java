@@ -23,45 +23,20 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class Guest_ViewPendingDMFolderDocumentNoAPTest extends BaseTestCase {
 	public void testGuest_ViewPendingDMFolderDocumentNoAP()
 		throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.clickAt("link=Documents and Media Test Page",
-			RuntimeVariables.replace("Documents and Media Test Page"));
+		selenium.clickAt("link=Asset Publisher Test Page",
+			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("DM Folder Name"),
-			selenium.getText(
-				"//div[@data-title='DM Folder Name']/a/span[@class='entry-title']"));
-		selenium.clickAt("//div[@data-title='DM Folder Name']/a/span[@class='entry-title']",
-			RuntimeVariables.replace("DM Folder Name"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("DM Folder Name")
-										.equals(selenium.getText(
-								"//li[contains(@class,'folder selected')]/a"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		assertEquals(RuntimeVariables.replace("DM Folder Name"),
-			selenium.getText("//li[contains(@class,'folder selected')]/a"));
-		Thread.sleep(5000);
-		assertFalse(selenium.isTextPresent("Add"));
-		assertEquals(RuntimeVariables.replace("Sort By"),
-			selenium.getText("//span[@title='Sort By']/ul/li/strong/a/span"));
-		assertFalse(selenium.isTextPresent("Manage"));
+		assertTrue(selenium.isElementNotPresent("//section"));
 		assertTrue(selenium.isElementNotPresent(
-				"//div[@data-title='DM Document Title']/a/span[@class='entry-title']"));
-		assertEquals(RuntimeVariables.replace(
-				"There are no documents or media files in this folder."),
-			selenium.getText("//div[@class='portlet-msg-info']"));
+				"//span[@title='Add New']/ul/li/strong/a"));
+		assertTrue(selenium.isElementNotPresent(
+				"//div[@class='portlet-msg-info']"));
+		assertTrue(selenium.isElementNotPresent("//h3[@class='asset-title']/a"));
+		assertTrue(selenium.isElementNotPresent(
+				"//div[@class='asset-resource-info']/span/a/span"));
+		assertFalse(selenium.isTextPresent("DM Folder Document Title"));
 	}
 }

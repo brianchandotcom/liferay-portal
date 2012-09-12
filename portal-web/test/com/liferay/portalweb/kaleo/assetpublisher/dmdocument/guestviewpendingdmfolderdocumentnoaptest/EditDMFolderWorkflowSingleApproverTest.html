@@ -22,13 +22,8 @@
 	<td>Documents and Media Test Page</td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
-</tr>
-<tr>
 	<td>clickAt</td>
-	<td>//span[@class='overlay document-action']/span/ul/li/strong/a</td>
+	<td>//span[@class='entry-action overlay']/span/ul/li/strong/a</td>
 	<td>Actions</td>
 </tr>
 <tr>
@@ -48,11 +43,21 @@
 </tr>
 <tr>
 	<td>assertText</td>
+	<td>//h1[@class='header-title']/span</td>
+	<td>Home</td>
+</tr>
+<tr>
+	<td>assertText</td>
 	<td>//label[@for='workflowDefinition-1']</td>
 	<td>Default Workflow for all Document Types</td>
 </tr>
 <tr>
 	<td>select</td>
+	<td>//select[@id='_20_workflowDefinition-1']</td>
+	<td>Single Approver (Version 1)</td>
+</tr>
+<tr>
+	<td>assertSelectedLabel</td>
 	<td>//select[@id='_20_workflowDefinition-1']</td>
 	<td>Single Approver (Version 1)</td>
 </tr>
@@ -66,7 +71,6 @@
 	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

@@ -22,11 +22,6 @@
 	<td>Asset Publisher Test Page</td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>//nav[@class='site-breadcrumbs aui-helper-hidden lfr-hudcrumbs']</td>
-	<td>AUI Help Hidden LFR Hudcrumbs</td>
-</tr>
-<tr>
 	<td>assertText</td>
 	<td>//span[@title='Add New']/ul/li/strong/a</td>
 	<td>Add New</td>
@@ -37,121 +32,25 @@
 	<td>There are no results.</td>
 </tr>
 <tr>
-	<td>waitForText</td>
+	<td>assertText</td>
 	<td>//h3[@class='asset-title']/a</td>
 	<td>DM Folder Document Title</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//h3[@class='asset-title']/a</td>
-	<td>DM Folder Document Title</td>
+	<td>assertPartialText</td>
+	<td>//div[@class='lfr-meta-actions asset-actions']/span/a/span</td>
+	<td>Edit</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//div[@class='asset-resource-info']/span/a/span</td>
-	<td>DM Folder Document Title</td>
-</tr>
-<tr>
-	<td>open</td>
-	<td>/web/guest/home/</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>link=Documents and Media Test Page</td>
-	<td>Documents and Media Test Page</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//button[@title='Icon View']</td>
-	<td>Icon View</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//button[@title='Icon View' and contains(@class,'aui-state-active')]</td>
-	<td>Icon View Selected</td>
-</tr>
-<tr>
-	<td>assertVisible</td>
-	<td>//button[@title='Icon View' and contains(@class,'aui-state-active')]</td>
-	<td>Icon View Selected</td>
+	<td>Download DM Folder Document Title (0k)</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div/a/span[2]</td>
-	<td>DM Folder Name</td>
+	<td>//div[@class='asset-more']/a</td>
+	<td>Read More About DM Folder Document Title »</td>
 </tr>
-<tr>
-	<td>clickAt</td>
-	<td>//div/a/span[2]</td>
-	<td>DM Folder Name</td>
-</tr>
-<tr>
-	<td>waitForText</td>
-	<td>//li[@class='folder selected']/a/span[2]</td>
-	<td>DM Folder Name</td>
-</tr>
-<tr>
-	<td>assertPartialText</td>
-	<td>//li[@class='folder selected']/a/span[2]</td>
-	<td>DM Folder Name</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@id='_20_entries']/div/a/span[2]</td>
-	<td>DM Folder Document Title</td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>//div[@id='_20_entries']/div/a/span[2]</td>
-	<td>DM Folder Document Title</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//h2[@class='document-title']</td>
-	<td>DM Folder Document Title</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//h3[@class='version ']</td>
-	<td>Version 1.0</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//span[@class='workflow-status']</td>
-	<td>Status: Approved</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//span[1]/span/a/span</td>
-	<td>Download (0.3k)</td>
-</tr>
-<tr>
-	<td>assertPartialText</td>
-	<td>//div[2]/div[2]/div/div[1]/div[2]/div[1]</td>
-	<td>ISO-8859-1</td>
-</tr>
-<tr>
-	<td>assertPartialText</td>
-	<td>//div[2]/div/div[1]/div[2]/div[2]</td>
-	<td>text/plain</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//tr[3]/td[2]</td>
-	<td>1.0</td>
-</tr>
-<tr>
-	<td>assertElementPresent</td>
-	<td>//tr[3]/td[3]</td>
-	<td>Date</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//tr[3]/td[4]</td>
-	<td>0.3k</td>
-</tr>
-
 </tbody></table>
 </body>
 </html>

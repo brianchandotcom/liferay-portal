@@ -22,106 +22,19 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ViewPendingDMFolderDocumentNoAPTest extends BaseTestCase {
 	public void testViewPendingDMFolderDocumentNoAP() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("link=Asset Publisher Test Page",
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent(
-							"//nav[@class='site-breadcrumbs aui-helper-hidden lfr-hudcrumbs']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		assertEquals(RuntimeVariables.replace("There are no results."),
-			selenium.getText("//div[@class='portlet-msg-info']"));
 		assertEquals(RuntimeVariables.replace("Add New"),
 			selenium.getText("//span[@title='Add New']/ul/li/strong/a"));
+		assertEquals(RuntimeVariables.replace("There are no results."),
+			selenium.getText("//div[@class='portlet-msg-info']"));
+		assertTrue(selenium.isElementNotPresent("//h3[@class='asset-title']/a"));
+		assertTrue(selenium.isElementNotPresent(
+				"//div[@class='asset-resource-info']/span/a/span"));
 		assertFalse(selenium.isTextPresent("DM Folder Document Title"));
-		selenium.open("/web/guest/home/");
-		selenium.clickAt("link=Documents and Media Test Page",
-			RuntimeVariables.replace("Documents and Media Test Page"));
-		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//button[@title='Icon View']",
-			RuntimeVariables.replace("Icon View"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//button[@title='Icon View' and contains(@class,'aui-state-active')]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		assertTrue(selenium.isVisible(
-				"//button[@title='Icon View' and contains(@class,'aui-state-active')]"));
-		assertEquals(RuntimeVariables.replace("DM Folder Name"),
-			selenium.getText("//div/a/span[2]"));
-		selenium.clickAt("//div/a/span[2]",
-			RuntimeVariables.replace("DM Folder Name"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("DM Folder Name")
-										.equals(selenium.getText(
-								"//li[@class='folder selected']/a/span[2]"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		assertTrue(selenium.isPartialText(
-				"//li[@class='folder selected']/a/span[2]", "DM Folder Name"));
-		assertEquals(RuntimeVariables.replace(
-				"DM Folder Document Title (Pending)"),
-			selenium.getText("//div[@id='_20_entries']/div/a/span[2]"));
-		selenium.clickAt("//div[@id='_20_entries']/div/a/span[2]",
-			RuntimeVariables.replace("DM Folder Document Title (Pending)"));
-		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("DM Folder Document Title"),
-			selenium.getText("//h2[@class='document-title']"));
-		assertEquals(RuntimeVariables.replace("Version 1.0"),
-			selenium.getText("//h3[@class='version ']"));
-		assertEquals(RuntimeVariables.replace("Status: Pending (Review)"),
-			selenium.getText("//span[@class='workflow-status']"));
-		assertEquals(RuntimeVariables.replace("Download (0.3k)"),
-			selenium.getText("//span[1]/span/a/span"));
-		assertTrue(selenium.isPartialText(
-				"//div[2]/div[2]/div/div[1]/div[2]/div[1]", "ISO-8859-1"));
-		assertTrue(selenium.isPartialText("//div[2]/div/div[1]/div[2]/div[2]",
-				"text/plain"));
-		assertEquals(RuntimeVariables.replace("1.0"),
-			selenium.getText("//tr[3]/td[2]"));
-		assertTrue(selenium.isElementPresent("//tr[3]/td[3]"));
-		assertEquals(RuntimeVariables.replace("0.3k"),
-			selenium.getText("//tr[3]/td[4]"));
 	}
 }

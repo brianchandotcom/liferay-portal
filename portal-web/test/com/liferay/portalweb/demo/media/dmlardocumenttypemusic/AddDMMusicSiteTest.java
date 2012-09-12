@@ -29,16 +29,17 @@ public class AddDMMusicSiteTest extends BaseTestCase {
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Add"),
 			selenium.getText("//span[@title='Add']/ul/li/strong/a/span"));
 		selenium.clickAt("//span[@title='Add']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Music')]/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Music')]");
 		assertEquals(RuntimeVariables.replace("Music"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Music')]/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Music')]/a",
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Music')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Music')]",
 			RuntimeVariables.replace("Music"));
 		selenium.waitForPageToLoad("30000");
 		selenium.uploadCommonFile("//input[@id='_20_file']",
@@ -56,8 +57,6 @@ public class AddDMMusicSiteTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForText("//div[@class='portlet-msg-success']",
-			"Your request completed successfully.");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

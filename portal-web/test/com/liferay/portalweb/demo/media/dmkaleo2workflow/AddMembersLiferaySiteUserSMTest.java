@@ -43,18 +43,19 @@ public class AddMembersLiferaySiteUserSMTest extends BaseTestCase {
 				selenium.clickAt("link=Sites", RuntimeVariables.replace("Sites"));
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace("Liferay"),
-					selenium.getText("//td[1]/a"));
+					selenium.getText("//tr[4]/td/a"));
 				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText("//span[@title='Actions']/ul/li/strong/a"));
-				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
+					selenium.getText(
+						"xPath=(//span[@title='Actions']/ul/li/strong/a)[2]"));
+				selenium.clickAt("xPath=(//span[@title='Actions']/ul/li/strong/a)[2]",
 					RuntimeVariables.replace("Actions"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Manage Memberships')]/a");
+					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Memberships')]");
 				assertEquals(RuntimeVariables.replace("Manage Memberships"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Manage Memberships')]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Memberships')]"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Manage Memberships')]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Memberships')]"));
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace("Add Members"),
 					selenium.getText(
@@ -62,12 +63,12 @@ public class AddMembersLiferaySiteUserSMTest extends BaseTestCase {
 				selenium.clickAt("//span[@title='Add Members']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Add Members"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'User')]/a");
+					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'User')]");
 				assertEquals(RuntimeVariables.replace("User"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'User')]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'User')]"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'User')]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'User')]"));
 				selenium.waitForPageToLoad("30000");
 
 				boolean basicVisible = selenium.isVisible("link=\u00ab Basic");

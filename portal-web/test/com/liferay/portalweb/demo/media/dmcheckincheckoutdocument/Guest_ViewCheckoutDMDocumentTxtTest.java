@@ -42,8 +42,10 @@ public class Guest_ViewCheckoutDMDocumentTxtTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Status: Approved"),
 			selenium.getText("//span[@class='workflow-status']"));
 		assertEquals(RuntimeVariables.replace("1.0"),
-			selenium.getText("//tr[3]/td[2]"));
+			selenium.getText(
+				"//tr[@class='portlet-section-body results-row last']/td[2]"));
 		assertEquals(RuntimeVariables.replace("0.3k"),
-			selenium.getText("//tr[3]/td[4]"));
+			selenium.getText(
+				"//tr[@class='portlet-section-body results-row last']/td[4]"));
 	}
 }

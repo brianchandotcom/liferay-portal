@@ -39,11 +39,9 @@ public class ViewDMFolderMusicTest extends BaseTestCase {
 						"//div[@data-title='DM Folder Name']/a/span[@class='entry-title']"));
 				selenium.clickAt("//div[@data-title='DM Folder Name']/a/span[@class='entry-title']",
 					RuntimeVariables.replace("DM Folder Name"));
-				selenium.waitForText("//li[@class='folder selected']/a/span[@class='entry-title']",
-					"DM Folder Name");
-				assertEquals(RuntimeVariables.replace("DM Folder Name"),
-					selenium.getText(
-						"//li[@class='folder selected']/a/span[@class='entry-title']"));
+				selenium.waitForVisible(
+					"//li[@class='folder selected']/a/span[@class='entry-title']");
+				Thread.sleep(5000);
 				assertEquals(RuntimeVariables.replace("DM Music Title"),
 					selenium.getText(
 						"//div[@data-title='DM Music Title']/a/span[@class='entry-title']"));
@@ -83,7 +81,7 @@ public class ViewDMFolderMusicTest extends BaseTestCase {
 				assertEquals(RuntimeVariables.replace("DM Music Description"),
 					selenium.getText(
 						"//blockquote[@class='lfr-asset-description']"));
-				assertEquals(RuntimeVariables.replace("Download (8,527.7k)"),
+				assertEquals(RuntimeVariables.replace("Download (4,429.6k)"),
 					selenium.getText(
 						"//span[@class='download-document']/span/a/span"));
 				assertEquals(RuntimeVariables.replace("Song Information"),

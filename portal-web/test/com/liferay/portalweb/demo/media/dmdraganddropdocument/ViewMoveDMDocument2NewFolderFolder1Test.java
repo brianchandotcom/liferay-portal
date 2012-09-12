@@ -38,6 +38,8 @@ public class ViewMoveDMDocument2NewFolderFolder1Test extends BaseTestCase {
 			RuntimeVariables.replace("DM Folder1 Name"));
 		selenium.waitForText("//li[contains(@class,'selected')]/a/span[2]",
 			"DM Folder1 Name");
+		assertEquals(RuntimeVariables.replace("DM Folder1 Name"),
+			selenium.getText("//li[contains(@class,'selected')]/a/span[2]"));
 		assertEquals(RuntimeVariables.replace("DM Document2 Title"),
 			selenium.getText(
 				"//div[@data-title='DM Document2 Title']/a/span[2]"));

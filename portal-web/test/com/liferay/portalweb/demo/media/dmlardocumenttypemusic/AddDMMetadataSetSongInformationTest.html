@@ -40,17 +40,17 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Metadata Sets')]</td>
 	<td>Metadata Sets</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Metadata Sets')]</td>
 	<td>Metadata Sets</td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>clickAt</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Metadata Sets')]</td>
 	<td>Metadata Sets</td>
 </tr>
 <tr>
@@ -62,6 +62,11 @@
 	<td>selectFrame</td>
 	<td>//iframe</td>
 	<td>Metadata Sets</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/liferay/navigation_interaction.js')]</td>
+	<td>Navigation Interaction</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -139,7 +144,7 @@
 	<td>Save</td>
 </tr>
 <tr>
-	<td>waitForText</td>
+	<td>waitForVisible</td>
 	<td>//tr[2]/td[2]/div</td>
 	<td>Artist</td>
 </tr>
@@ -189,7 +194,7 @@
 	<td>Save</td>
 </tr>
 <tr>
-	<td>waitForText</td>
+	<td>waitForVisible</td>
 	<td>//tr[4]/td[2]/div</td>
 	<td>Yes</td>
 </tr>
@@ -239,7 +244,7 @@
 	<td>Save</td>
 </tr>
 <tr>
-	<td>waitForText</td>
+	<td>waitForVisible</td>
 	<td>//tr[5]/td[2]/div</td>
 	<td>artist</td>
 </tr>
@@ -319,7 +324,7 @@
 	<td>Save</td>
 </tr>
 <tr>
-	<td>waitForText</td>
+	<td>waitForVisible</td>
 	<td>//tr[2]/td[2]/div</td>
 	<td>Track Number</td>
 </tr>
@@ -341,7 +346,7 @@
 <tr>
 	<td>assertPartialText</td>
 	<td>//tr[5]/td[2]/div</td>
-	<td>ddm-number</td>
+	<td>number</td>
 </tr>
 <tr>
 	<td>doubleClickAt</td>
@@ -369,7 +374,7 @@
 	<td>Save</td>
 </tr>
 <tr>
-	<td>waitForText</td>
+	<td>waitForVisible</td>
 	<td>//tr[5]/td[2]/div</td>
 	<td>track</td>
 </tr>

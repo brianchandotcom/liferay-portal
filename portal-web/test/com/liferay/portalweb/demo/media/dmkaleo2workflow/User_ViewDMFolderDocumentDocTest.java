@@ -36,8 +36,6 @@ public class User_ViewDMFolderDocumentDocTest extends BaseTestCase {
 			RuntimeVariables.replace("DM Folder Name"));
 		selenium.waitForText("//li[contains(@class,'folder selected')]/a",
 			"DM Folder Name");
-		assertEquals(RuntimeVariables.replace("DM Folder Name"),
-			selenium.getText("//li[contains(@class,'folder selected')]/a"));
 		assertEquals(RuntimeVariables.replace(
 				"There are no documents or media files in this folder."),
 			selenium.getText("//div[@class='portlet-msg-info']"));

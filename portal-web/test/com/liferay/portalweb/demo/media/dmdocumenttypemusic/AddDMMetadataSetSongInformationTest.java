@@ -35,13 +35,16 @@ public class AddDMMetadataSetSongInformationTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Manage']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Manage"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Metadata Sets')]");
 		assertEquals(RuntimeVariables.replace("Metadata Sets"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Metadata Sets')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Metadata Sets')]",
+			RuntimeVariables.replace("Metadata Sets"));
 		selenium.waitForVisible("//iframe");
 		selenium.selectFrame("//iframe");
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/liferay/navigation_interaction.js')]");
 		selenium.waitForVisible("link=Add");
 		selenium.clickAt("link=Add", RuntimeVariables.replace("Add"));
 		selenium.waitForPageToLoad("30000");
@@ -69,7 +72,7 @@ public class AddDMMetadataSetSongInformationTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Save"),
 			selenium.getText("//button"));
 		selenium.clickAt("//button", RuntimeVariables.replace("Save"));
-		selenium.waitForText("//tr[2]/td[2]/div", "Artist");
+		selenium.waitForVisible("//tr[2]/td[2]/div");
 		assertEquals(RuntimeVariables.replace("Artist"),
 			selenium.getText("//tr[2]/td[2]/div"));
 		assertEquals(RuntimeVariables.replace("Artist"),
@@ -87,7 +90,7 @@ public class AddDMMetadataSetSongInformationTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Save"),
 			selenium.getText("//button"));
 		selenium.clickAt("//button", RuntimeVariables.replace("Save"));
-		selenium.waitForText("//tr[4]/td[2]/div", "Yes");
+		selenium.waitForVisible("//tr[4]/td[2]/div");
 		assertEquals(RuntimeVariables.replace("Yes"),
 			selenium.getText("//tr[4]/td[2]/div"));
 		assertEquals(RuntimeVariables.replace("*"),
@@ -103,7 +106,7 @@ public class AddDMMetadataSetSongInformationTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Save"),
 			selenium.getText("//button"));
 		selenium.clickAt("//button", RuntimeVariables.replace("Save"));
-		selenium.waitForText("//tr[5]/td[2]/div", "artist");
+		selenium.waitForVisible("//tr[5]/td[2]/div");
 		assertEquals(RuntimeVariables.replace("artist"),
 			selenium.getText("//tr[5]/td[2]/div"));
 		selenium.clickAt("link=Fields", RuntimeVariables.replace("Fields"));
@@ -131,7 +134,7 @@ public class AddDMMetadataSetSongInformationTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Save"),
 			selenium.getText("//button"));
 		selenium.clickAt("//button", RuntimeVariables.replace("Save"));
-		selenium.waitForText("//tr[2]/td[2]/div", "Track Number");
+		selenium.waitForVisible("//tr[2]/td[2]/div");
 		assertEquals(RuntimeVariables.replace("Track Number"),
 			selenium.getText("//tr[2]/td[2]/div"));
 		assertEquals(RuntimeVariables.replace("Track Number"),
@@ -139,7 +142,7 @@ public class AddDMMetadataSetSongInformationTest extends BaseTestCase {
 				"xPath=(//div[contains(@id,'fields_field_aui')]/div/label)[2]"));
 		assertEquals(RuntimeVariables.replace("Name"),
 			selenium.getText("//tr[5]/td[1]/div"));
-		assertTrue(selenium.isPartialText("//tr[5]/td[2]/div", "ddm-number"));
+		assertTrue(selenium.isPartialText("//tr[5]/td[2]/div", "number"));
 		selenium.doubleClickAt("//tr[5]/td[1]/div",
 			RuntimeVariables.replace("Field Label"));
 		selenium.waitForVisible("//input[@name='value']");
@@ -148,7 +151,7 @@ public class AddDMMetadataSetSongInformationTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Save"),
 			selenium.getText("//button"));
 		selenium.clickAt("//button", RuntimeVariables.replace("Save"));
-		selenium.waitForText("//tr[5]/td[2]/div", "track");
+		selenium.waitForVisible("//tr[5]/td[2]/div");
 		assertEquals(RuntimeVariables.replace("track"),
 			selenium.getText("//tr[5]/td[2]/div"));
 		selenium.clickAt("//input[@value='Save']",

@@ -40,17 +40,17 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Document Types')]</td>
 	<td>Document Types</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Document Types')]</td>
 	<td>Document Types</td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
+	<td>clickAt</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Document Types')]</td>
 	<td>Document Types</td>
 </tr>
 <tr>
@@ -62,6 +62,11 @@
 	<td>selectFrame</td>
 	<td>//iframe</td>
 	<td>Document Types</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/liferay/navigation_interaction.js')]</td>
+	<td>Navigation Interaction</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -139,7 +144,7 @@
 	<td>Save</td>
 </tr>
 <tr>
-	<td>waitForText</td>
+	<td>waitForVisible</td>
 	<td>//tr[2]/td[2]/div</td>
 	<td>Album</td>
 </tr>
@@ -189,7 +194,7 @@
 	<td>Save</td>
 </tr>
 <tr>
-	<td>waitForText</td>
+	<td>waitForVisible</td>
 	<td>//tr[5]/td[2]/div</td>
 	<td>album</td>
 </tr>
@@ -229,6 +234,11 @@
 	<td>Metadata Sets</td>
 </tr>
 <tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/liferay/navigation_interaction.js')]</td>
+	<td>Navigation Interaction</td>
+</tr>
+<tr>
 	<td>waitForVisible</td>
 	<td>//a[contains(.,'Song Information')]</td>
 	<td>Song Information</td>
@@ -239,7 +249,7 @@
 	<td>Song Information</td>
 </tr>
 <tr>
-	<td>click</td>
+	<td>clickAt</td>
 	<td>//a[contains(.,'Song Information')]</td>
 	<td>Song Information</td>
 </tr>
@@ -257,6 +267,11 @@
 	<td>selectFrame</td>
 	<td>xPath=(//div[contains(@class,'aui-dialog-iframe-bd')])[2]/iframe</td>
 	<td>Document Types</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/liferay/navigation_interaction.js')]</td>
+	<td>Navigation Interaction</td>
 </tr>
 <tr>
 	<td>assertText</td>

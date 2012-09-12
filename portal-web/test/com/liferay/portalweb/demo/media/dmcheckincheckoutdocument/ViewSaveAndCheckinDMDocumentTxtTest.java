@@ -39,17 +39,35 @@ public class ViewSaveAndCheckinDMDocumentTxtTest extends BaseTestCase {
 			selenium.getText("//h3[contains(@class,'version')]"));
 		assertEquals(RuntimeVariables.replace("Status: Approved"),
 			selenium.getText("//span[@class='workflow-status']"));
+		assertEquals(RuntimeVariables.replace("Version"),
+			selenium.getText(
+				"//tr[@class='portlet-section-header results-header']/th[2]"));
+		assertEquals(RuntimeVariables.replace("Date"),
+			selenium.getText(
+				"//tr[@class='portlet-section-header results-header']/th[3]"));
+		assertEquals(RuntimeVariables.replace("Size"),
+			selenium.getText(
+				"//tr[@class='portlet-section-header results-header']/th[4]"));
+		assertEquals(RuntimeVariables.replace("Status"),
+			selenium.getText(
+				"//tr[@class='portlet-section-header results-header']/th[5]"));
 		assertEquals(RuntimeVariables.replace("1.1"),
-			selenium.getText("//tr[3]/td[2]"));
+			selenium.getText(
+				"//tr[@class='portlet-section-body results-row']/td[2]"));
 		assertEquals(RuntimeVariables.replace("0.5k"),
-			selenium.getText("//tr[3]/td[4]"));
+			selenium.getText(
+				"//tr[@class='portlet-section-body results-row']/td[4]"));
 		assertEquals(RuntimeVariables.replace("Approved"),
-			selenium.getText("//tr[3]/td[5]"));
+			selenium.getText(
+				"//tr[@class='portlet-section-body results-row']/td[5]"));
 		assertEquals(RuntimeVariables.replace("1.0"),
-			selenium.getText("//tr[4]/td[2]"));
+			selenium.getText(
+				"//tr[@class='portlet-section-alternate results-row alt last']/td[2]"));
 		assertEquals(RuntimeVariables.replace("0.3k"),
-			selenium.getText("//tr[4]/td[4]"));
+			selenium.getText(
+				"//tr[@class='portlet-section-alternate results-row alt last']/td[4]"));
 		assertEquals(RuntimeVariables.replace("Approved"),
-			selenium.getText("//tr[4]/td[5]"));
+			selenium.getText(
+				"//tr[@class='portlet-section-alternate results-row alt last']/td[5]"));
 	}
 }

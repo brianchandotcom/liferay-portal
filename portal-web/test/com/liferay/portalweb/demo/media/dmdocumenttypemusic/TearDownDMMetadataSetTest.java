@@ -41,14 +41,16 @@ public class TearDownDMMetadataSetTest extends BaseTestCase {
 				selenium.clickAt("//span[@title='Manage']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Manage"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
+					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Metadata Sets')]");
 				assertEquals(RuntimeVariables.replace("Metadata Sets"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-				selenium.click(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Metadata Sets')]"));
+				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Metadata Sets')]",
+					RuntimeVariables.replace("Metadata Sets"));
 				selenium.waitForVisible("//iframe");
 				selenium.selectFrame("//iframe");
+				selenium.waitForElementPresent(
+					"//script[contains(@src,'/liferay/navigation_interaction.js')]");
 				selenium.waitForVisible(
 					"//input[@id='_166_toggle_id_ddm_structure_searchkeywords']");
 				selenium.type("//input[@id='_166_toggle_id_ddm_structure_searchkeywords']",
@@ -73,12 +75,12 @@ public class TearDownDMMetadataSetTest extends BaseTestCase {
 				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a");
+					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]");
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));

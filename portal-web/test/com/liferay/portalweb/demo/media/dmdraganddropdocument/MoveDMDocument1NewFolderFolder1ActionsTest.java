@@ -37,21 +37,22 @@ public class MoveDMDocument1NewFolderFolder1ActionsTest extends BaseTestCase {
 		selenium.clickAt("//div[@data-title='DM Document1 Title']/span[2]/span/ul/li/strong/a",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move')]/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move')]");
 		assertEquals(RuntimeVariables.replace("Move"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move')]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move')]"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move')]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move')]"));
 		selenium.waitForPageToLoad("30000");
-		selenium.click("//input[@value='Select']");
+		selenium.clickAt("//input[@value='Select']",
+			RuntimeVariables.replace("Select"));
 		Thread.sleep(5000);
 		selenium.selectWindow("title=Documents and Media");
 		assertEquals(RuntimeVariables.replace("DM Folder1 Name"),
 			selenium.getText("//td[1]/a"));
 		selenium.click("//td[4]/input[@value='Choose']");
 		selenium.selectWindow("null");
-		selenium.waitForText("//a[@id='_20_folderName']", "DM Folder1 Name");
+		selenium.waitForVisible("//a[@id='_20_folderName']");
 		assertEquals(RuntimeVariables.replace("DM Folder1 Name"),
 			selenium.getText("//a[@id='_20_folderName']"));
 		selenium.clickAt("//input[@value='Move']",
@@ -68,6 +69,8 @@ public class MoveDMDocument1NewFolderFolder1ActionsTest extends BaseTestCase {
 			RuntimeVariables.replace("DM Folder1 Name"));
 		selenium.waitForText("//li[contains(@class,'selected')]/a/span[2]",
 			"DM Folder1 Name");
+		assertEquals(RuntimeVariables.replace("DM Folder1 Name"),
+			selenium.getText("//li[contains(@class,'selected')]/a/span[2]"));
 		assertEquals(RuntimeVariables.replace("DM Document1 Title"),
 			selenium.getText(
 				"//div[@data-title='DM Document1 Title']/a/span[2]"));

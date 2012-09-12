@@ -35,12 +35,18 @@ public class CompareVersionsDMDocumentTxtTest extends BaseTestCase {
 		selenium.clickAt("//div[@data-title='DM Document Title Edit']/a/span[2]",
 			RuntimeVariables.replace("DM Document Title Edit"));
 		selenium.waitForPageToLoad("30000");
-		assertFalse(selenium.isChecked("//tr[3]/td[1]/input"));
-		selenium.clickAt("//tr[3]/td[1]/input", RuntimeVariables.replace("1.1"));
-		assertTrue(selenium.isChecked("//tr[3]/td[1]/input"));
-		assertFalse(selenium.isChecked("//tr[4]/td[1]/input"));
-		selenium.clickAt("//tr[4]/td[1]/input", RuntimeVariables.replace("1.0"));
-		assertTrue(selenium.isChecked("//tr[4]/td[1]/input"));
+		assertFalse(selenium.isChecked(
+				"//tr[@class='portlet-section-body results-row']/td[1]/input"));
+		selenium.clickAt("//tr[@class='portlet-section-body results-row']/td[1]/input",
+			RuntimeVariables.replace("1.1"));
+		assertTrue(selenium.isChecked(
+				"//tr[@class='portlet-section-body results-row']/td[1]/input"));
+		assertFalse(selenium.isChecked(
+				"//tr[@class='portlet-section-alternate results-row alt last']/td[1]/input"));
+		selenium.clickAt("//tr[@class='portlet-section-alternate results-row alt last']/td[1]/input",
+			RuntimeVariables.replace("1.0"));
+		assertTrue(selenium.isChecked(
+				"//tr[@class='portlet-section-alternate results-row alt last']/td[1]/input"));
 		selenium.clickAt("//input[@value='Compare Versions']",
 			RuntimeVariables.replace("Compare Versions"));
 		selenium.waitForPageToLoad("30000");
@@ -52,8 +58,9 @@ public class CompareVersionsDMDocumentTxtTest extends BaseTestCase {
 			selenium.getText("//th"));
 		assertEquals(RuntimeVariables.replace("Line 11"),
 			selenium.getText("//th[2]"));
-		assertEquals(RuntimeVariables.replace("This is a *.txt document."),
+		assertEquals(RuntimeVariables.replace(
+				"This ;is ;a&nbsp;*.txt&nbsp;document."),
 			selenium.getText(
-				"xPath=(//table[@class='taglib-diff-table'])[2]//ins"));
+				"xPath=(//table[@class='taglib-diff-table'])[2]/tbody/tr[1]/td[1]"));
 	}
 }

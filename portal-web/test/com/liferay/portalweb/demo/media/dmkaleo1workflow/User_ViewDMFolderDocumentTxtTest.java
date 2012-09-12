@@ -34,13 +34,8 @@ public class User_ViewDMFolderDocumentTxtTest extends BaseTestCase {
 				"//div[@data-title='DM Folder Name']/a/span[@class='entry-title']"));
 		selenium.clickAt("//div[@data-title='DM Folder Name']/a/span[@class='entry-title']",
 			RuntimeVariables.replace("DM Folder Name"));
-		selenium.waitForText("//li[contains(@class,'folder selected')]/a",
-			"DM Folder Name");
-		assertEquals(RuntimeVariables.replace("DM Folder Name"),
-			selenium.getText("//li[contains(@class,'folder selected')]/a"));
+		selenium.waitForVisible("//li[contains(@class,'folder selected')]/a");
 		Thread.sleep(5000);
-		assertEquals(RuntimeVariables.replace("Add"),
-			selenium.getText("//span[@title='Add']/ul/li/strong/a/span"));
 		assertEquals(RuntimeVariables.replace("Sort By"),
 			selenium.getText("//span[@title='Sort By']/ul/li/strong/a/span"));
 		assertEquals(RuntimeVariables.replace("Manage"),

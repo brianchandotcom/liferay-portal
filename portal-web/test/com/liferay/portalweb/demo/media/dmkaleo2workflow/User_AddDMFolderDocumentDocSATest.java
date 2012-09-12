@@ -34,22 +34,19 @@ public class User_AddDMFolderDocumentDocSATest extends BaseTestCase {
 				"//div[@data-title='DM Folder Name']/a/span[@class='entry-title']"));
 		selenium.clickAt("//div[@data-title='DM Folder Name']/a/span[@class='entry-title']",
 			RuntimeVariables.replace("DM Folder Name"));
-		selenium.waitForText("//li[contains(@class,'folder selected')]/a",
-			"DM Folder Name");
-		assertEquals(RuntimeVariables.replace("DM Folder Name"),
-			selenium.getText("//li[contains(@class,'folder selected')]/a"));
+		selenium.waitForVisible("//li[contains(@class,'folder selected')]/a");
 		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Add"),
 			selenium.getText("//span[@title='Add']/ul/li/strong/a/span"));
 		selenium.clickAt("//span[@title='Add']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Basic Document')]/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Basic Document')]");
 		assertEquals(RuntimeVariables.replace("Basic Document"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Basic Document')]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Basic Document')]"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Basic Document')]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Basic Document')]"));
 		selenium.waitForPageToLoad("30000");
 		selenium.uploadCommonFile("//input[@id='_20_file']",
 			RuntimeVariables.replace("Document_1.doc"));
@@ -60,8 +57,6 @@ public class User_AddDMFolderDocumentDocSATest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForText("//div[@class='portlet-msg-success']",
-			"Your request completed successfully.");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

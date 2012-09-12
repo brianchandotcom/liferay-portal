@@ -34,22 +34,19 @@ public class AddDMFolderMusicArtistNullTest extends BaseTestCase {
 				"//div[@data-title='DM Folder Name']/a/span[@class='entry-title']"));
 		selenium.clickAt("//div[@data-title='DM Folder Name']/a/span[@class='entry-title']",
 			RuntimeVariables.replace("DM Folder Name"));
-		selenium.waitForText("//li[@class='folder selected']/a/span[@class='entry-title']",
-			"DM Folder Name");
-		assertEquals(RuntimeVariables.replace("DM Folder Name"),
-			selenium.getText(
-				"//li[@class='folder selected']/a/span[@class='entry-title']"));
+		selenium.waitForVisible(
+			"//li[@class='folder selected']/a/span[@class='entry-title']");
 		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Add"),
 			selenium.getText("//span[@title='Add']/ul/li/strong/a/span"));
 		selenium.clickAt("//span[@title='Add']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Music')]/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Music')]");
 		assertEquals(RuntimeVariables.replace("Music"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Music')]/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Music')]/a",
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Music')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Music')]",
 			RuntimeVariables.replace("Music"));
 		selenium.waitForPageToLoad("30000");
 		selenium.uploadCommonFile("//input[@id='_20_file']",

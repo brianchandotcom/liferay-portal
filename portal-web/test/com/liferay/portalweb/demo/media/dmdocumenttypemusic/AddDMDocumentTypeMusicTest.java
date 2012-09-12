@@ -35,13 +35,16 @@ public class AddDMDocumentTypeMusicTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Manage']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Manage"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Document Types')]");
 		assertEquals(RuntimeVariables.replace("Document Types"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
-		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a");
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Document Types')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Document Types')]",
+			RuntimeVariables.replace("Document Types"));
 		selenium.waitForVisible("//iframe");
 		selenium.selectFrame("//iframe");
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/liferay/navigation_interaction.js')]");
 		selenium.waitForVisible("link=Add");
 		selenium.clickAt("link=Add", RuntimeVariables.replace("Add"));
 		selenium.waitForPageToLoad("30000");
@@ -69,7 +72,7 @@ public class AddDMDocumentTypeMusicTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Save"),
 			selenium.getText("//button"));
 		selenium.clickAt("//button", RuntimeVariables.replace("Save"));
-		selenium.waitForText("//tr[2]/td[2]/div", "Album");
+		selenium.waitForVisible("//tr[2]/td[2]/div");
 		assertEquals(RuntimeVariables.replace("Album"),
 			selenium.getText("//tr[2]/td[2]/div"));
 		assertEquals(RuntimeVariables.replace("Album"),
@@ -86,7 +89,7 @@ public class AddDMDocumentTypeMusicTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Save"),
 			selenium.getText("//button"));
 		selenium.clickAt("//button", RuntimeVariables.replace("Save"));
-		selenium.waitForText("//tr[5]/td[2]/div", "album");
+		selenium.waitForVisible("//tr[5]/td[2]/div");
 		assertEquals(RuntimeVariables.replace("album"),
 			selenium.getText("//tr[5]/td[2]/div"));
 		assertEquals(RuntimeVariables.replace("Select Metadata Set"),
@@ -100,15 +103,20 @@ public class AddDMDocumentTypeMusicTest extends BaseTestCase {
 			"//div[contains(@class,'aui-dialog-iframe-bd')]/iframe");
 		selenium.selectFrame(
 			"//div[contains(@class,'aui-dialog-iframe-bd')]/iframe");
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/liferay/navigation_interaction.js')]");
 		selenium.waitForVisible("//a[contains(.,'Song Information')]");
 		assertEquals(RuntimeVariables.replace("Song Information"),
 			selenium.getText("//a[contains(.,'Song Information')]"));
-		selenium.click("//a[contains(.,'Song Information')]");
+		selenium.clickAt("//a[contains(.,'Song Information')]",
+			RuntimeVariables.replace("Song Information"));
 		selenium.selectFrame("relative=top");
 		selenium.waitForVisible(
 			"xPath=(//div[contains(@class,'aui-dialog-iframe-bd')])[2]/iframe");
 		selenium.selectFrame(
 			"xPath=(//div[contains(@class,'aui-dialog-iframe-bd')])[2]/iframe");
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/liferay/navigation_interaction.js')]");
 		assertEquals(RuntimeVariables.replace("Song Information"),
 			selenium.getText("//table/tr/td"));
 		selenium.clickAt("//input[@value='Save']",

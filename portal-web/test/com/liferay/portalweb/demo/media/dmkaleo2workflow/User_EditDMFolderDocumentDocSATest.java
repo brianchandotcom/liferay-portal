@@ -57,9 +57,7 @@ public class User_EditDMFolderDocumentDocSATest extends BaseTestCase {
 			RuntimeVariables.replace("DM Document Title Edit"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
-		selenium.waitForPageToLoad("30000");
-		selenium.waitForText("//div[@class='portlet-msg-success']",
-			"Your request completed successfully.");
+		selenium.waitForVisible("//div[@class='portlet-msg-success']");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

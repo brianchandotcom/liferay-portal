@@ -34,8 +34,8 @@ public class MoveDMFolder1Document2NewFolderHomeDADTest extends BaseTestCase {
 			selenium.getText("//div[@id='_20_folderContainer']/ul/li[3]/a"));
 		selenium.clickAt("//div[@id='_20_folderContainer']/ul/li[3]/a",
 			RuntimeVariables.replace("Mine"));
-		selenium.waitForText("//div[@id='_20_folderContainer']/ul/li[contains(@class,'selected')]/a",
-			"Mine");
+		selenium.waitForVisible(
+			"//div[@id='_20_folderContainer']/ul/li[contains(@class,'selected')]/a");
 		assertEquals(RuntimeVariables.replace("Mine"),
 			selenium.getText(
 				"//div[@id='_20_folderContainer']/ul/li[contains(@class,'selected')]/a"));
@@ -51,13 +51,13 @@ public class MoveDMFolder1Document2NewFolderHomeDADTest extends BaseTestCase {
 		Thread.sleep(5000);
 		selenium.mouseMoveAt("//div[@id='_20_folderContainer']/ul/li[1]/a[2]",
 			RuntimeVariables.replace("5,15"));
-		selenium.waitForText("//div[@class='yui3-dd-proxy active-area-proxy']",
-			"1 item is ready to be moved to \"Home\".");
+		selenium.waitForVisible(
+			"//div[@class='yui3-dd-proxy active-area-proxy']");
 		assertEquals(RuntimeVariables.replace(
 				"1 item is ready to be moved to \"Home\"."),
 			selenium.getText("//div[@class='yui3-dd-proxy active-area-proxy']"));
 		selenium.mouseUp("//div[@id='_20_folderContainer']/ul/li[1]/a[2]");
-		selenium.waitForText("//li[@class='move-file']", "DM Document2 Title");
+		selenium.waitForVisible("//li[@class='move-file']");
 		assertEquals(RuntimeVariables.replace("DM Document2 Title"),
 			selenium.getText("//li[@class='move-file']"));
 		assertEquals(RuntimeVariables.replace("Home"),

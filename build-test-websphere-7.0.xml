@@ -4,224 +4,20 @@
 	<import file="build-test.xml" />
 
 	<target name="run-selenium-websphere-7.0">
-		<antcall target="prepare-vm-server">
-			<param name="vm.vmdk.suffix" value="websphere-7.0.0.7" />
-		</antcall>
-
-		<exec executable="${plink.executable}">
-			<arg line="-pw ${vm.password} ${vm.username}@${vm.host} cmd.exe /c C:\Progra~1\IBM\WebSphere\AppServer\profiles\AppSrv01\bin\stopServer.bat server1" />
-		</exec>
-
-		<tstamp>
-			<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
-		</tstamp>
-
-		<unzip src="dist/liferay-portal-dependencies-${lp.version}.zip" dest="${tstamp.value}">
-			<mapper type="flatten" />
-		</unzip>
-
-		<copy todir="${tstamp.value}">
-			<fileset
-				dir="lib/development"
-				includes="hsql.jar,jtds.jar,mysql.jar,persistence.jar,postgresql.jar,servlet-api.jar"
-			/>
-		</copy>
+		<echo file="app.server.${user.name}.properties">app.server.type=websphere</echo>
 
 		<if>
-			<isset property="jdbc.drivers.optional.dir" />
+			<not>
+				<isset property="build.app.server" />
+			</not>
 			<then>
-				<copy todir="${tstamp.value}">
-					<fileset
-						dir="${jdbc.drivers.optional.dir}"
-						includes="*.jar"
-					/>
-				</copy>
-			</then>
-		</if>
+				<ant antfile="build-dist.xml" target="unzip-websphere" />
 
-		<exec executable="${pscp.executable}">
-			<arg line="-pw ${vm.password} ${tstamp.value}\*.jar ${vm.username}@${vm.host}:/Progra~1/IBM/WebSphere/AppServer/lib/ext" />
-		</exec>
-
-		<delete dir="${tstamp.value}" />
-
-		<exec executable="${plink.executable}">
-			<arg line="-pw ${vm.password} ${vm.username}@${vm.host} cmd.exe /c move C:\Progra~1\IBM\WebSphere\AppServer\lib\ext\portlet.jar C:\Progra~1\IBM\WebSphere\AppServer\java\jre\lib\ext" />
-		</exec>
-
-		<exec executable="${plink.executable}">
-			<arg line="-pw ${vm.password} ${vm.username}@${vm.host} cmd.exe /c move C:\Progra~1\IBM\WebSphere\AppServer\lib\ext\servlet-api.jar C:\Progra~1\IBM\WebSphere\AppServer\java\jre\lib\ext" />
-		</exec>
-
-		<exec executable="${pscp.executable}">
-			<arg line="-pw ${vm.password} ${vm.username}@${vm.host}:/Progra~1/IBM/WebSphere/AppServer/profiles/AppSrv01/config/cells/liferay-ead7385Node01Cell/nodes/liferay-ead7385Node01/servers/server1/server.xml server.xml" />
-		</exec>
-
-		<replace file="server.xml">
-			<replacefilter token="genericJvmArguments=&quot;&quot;" value="genericJvmArguments=&quot;-Dfile.encoding=UTF8 -Xk22000 -Xp64k,16k&quot;" />
-			<replacefilter token="verboseModeGarbageCollection=&quot;false&quot;" value="verboseModeGarbageCollection=&quot;true&quot;" />
-			<replacefilter token="verboseModeJNI=&quot;false&quot;" value="verboseModeJNI=&quot;false&quot; initialHeapSize=&quot;256&quot; maximumHeapSize=&quot;1024&quot;" />
-			<replacefilter token="xmi:id=&quot;DynamicCache_" value="defaultPriority=&quot;3&quot; hashSize=&quot;0&quot; cacheSize=&quot;3000&quot; xmi:id=&quot;DynamicCache_" />
-		</replace>
-
-		<exec executable="${pscp.executable}">
-			<arg line="-pw ${vm.password} server.xml ${vm.username}@${vm.host}:/Progra~1/IBM/WebSphere/AppServer/profiles/AppSrv01/config/cells/liferay-ead7385Node01Cell/nodes/liferay-ead7385Node01/servers/server1/server.xml" />
-		</exec>
-
-		<delete file="server.xml" />
-
-		<exec executable="${plink.executable}">
-			<arg line="-pw ${vm.password} ${vm.username}@${vm.host} cmd.exe /c C:\Progra~1\IBM\WebSphere\AppServer\profiles\AppSrv01\bin\startServer.bat server1" />
-		</exec>
-
-		<echo file="wsadmin.py">print AdminApp.list()
-
-print AdminApp.uninstall('DefaultApplication')
-
-print AdminConfig.save()
-
-print AdminApp.install('C:/liferay-portal-${lp.version}.war', '[-appname liferay-portal -contextroot /]')
-
-print AdminConfig.save()
-
-print AdminApp.list()
-
-appManager = AdminControl.queryNames('type=ApplicationManager,process=server1,*')
-
-print appManager
-
-print AdminControl.invoke(appManager, 'startApplication', 'liferay-portal')</echo>
-
-		<exec executable="${pscp.executable}">
-			<arg line="-pw ${vm.password} wsadmin.py ${vm.username}@${vm.host}:/" />
-		</exec>
-
-		<delete file="wsadmin.py" />
-
-		<exec executable="${plink.executable}">
-			<arg line="-pw ${vm.password} ${vm.username}@${vm.host} cmd.exe /c C:\Progra~1\IBM\WebSphere\AppServer\bin\wsadmin.bat -f C:\wsadmin.py" />
-		</exec>
-
-		<exec executable="${plink.executable}">
-			<arg line="-pw ${vm.password} ${vm.username}@${vm.host} cmd.exe /c C:\Progra~1\IBM\WebSphere\AppServer\profiles\AppSrv01\bin\stopServer.bat server1" />
-		</exec>
-
-		<if>
-			<or>
-				<isset property="hook.plugins.includes" />
-				<isset property="plugins.version.includes" />
-				<isset property="portlet.plugins.includes" />
-				<isset property="portlet.plugins.upgrade.includes" />
-				<isset property="theme.plugins.includes" />
-				<isset property="web.plugins.includes" />
-			</or>
-			<then>
-				<exec executable="${plink.executable}">
-					<arg line="-pw ${vm.password} ${vm.username}@${vm.host} cmd.exe /c C:\Progra~1\IBM\WebSphere\AppServer\profiles\AppSrv01\bin\startServer.bat server1" />
-				</exec>
-			</then>
-		</if>
-
-		<if>
-			<isset property="hook.plugins.includes" />
-			<then>
-				<ant antfile="build-test-plugins.xml" target="deploy-websphere-7.0-plugins">
-					<property name="plugin.types" value="hooks" />
-					<property name="plugins.deployed" value="${plugins.deployed}" />
-					<property name="plugins.includes" value="${hook.plugins.includes}" />
-				</ant>
-
-				<property name="plugins.deployed" value="true" />
-			</then>
-		</if>
-
-		<if>
-			<isset property="plugins.version.includes" />
-			<then>
-				<ant antfile="build-test-plugins.xml" target="deploy-versioned-websphere-7.0-plugins">
-					<property name="plugins.includes" value="${plugins.version.includes}" />
-				</ant>
-			</then>
-		</if>
-
-		<if>
-			<isset property="portlet.plugins.includes" />
-			<then>
-				<ant antfile="build-test-plugins.xml" target="deploy-websphere-7.0-plugins">
-					<property name="plugin.types" value="portlets" />
-					<property name="plugins.deployed" value="${plugins.deployed}" />
-					<property name="plugins.includes" value="${portlet.plugins.includes}" />
-				</ant>
-
-				<property name="plugins.deployed" value="true" />
-			</then>
-		</if>
-
-		<if>
-			<isset property="portlet.plugins.upgrade.includes" />
-			<then>
-				<ant antfile="build-test-plugins.xml" target="deploy-upgrade-websphere-7.0-plugins">
-					<property name="plugin.types" value="portlets" />
-					<property name="plugins.includes" value="${portlet.plugins.upgrade.includes}" />
-				</ant>
-			</then>
-		</if>
-
-		<if>
-			<isset property="theme.plugins.includes" />
-			<then>
-				<ant antfile="build-test-plugins.xml" target="deploy-websphere-7.0-plugins">
-					<property name="plugin.types" value="themes" />
-					<property name="plugins.deployed" value="${plugins.deployed}" />
-					<property name="plugins.includes" value="${theme.plugins.includes}" />
-				</ant>
-
-				<property name="plugins.deployed" value="true" />
-			</then>
-		</if>
-
-		<if>
-			<isset property="web.plugins.includes" />
-			<then>
-				<ant antfile="build-test-plugins.xml" target="deploy-websphere-7.0-plugins">
-					<property name="plugin.types" value="webs" />
-					<property name="plugins.deployed" value="${plugins.deployed}" />
-					<property name="plugins.includes" value="${web.plugins.includes}" />
-				</ant>
-
-				<property name="plugins.deployed" value="true" />
-			</then>
-		</if>
-
-		<if>
-			<or>
-				<isset property="hook.plugins.includes" />
-				<isset property="plugins.version.includes" />
-				<isset property="portlet.plugins.includes" />
-				<isset property="portlet.plugins.upgrade.includes" />
-				<isset property="theme.plugins.includes" />
-				<isset property="web.plugins.includes" />
-			</or>
-			<then>
-				<exec executable="${plink.executable}">
-					<arg line="-pw ${vm.password} ${vm.username}@${vm.host} cmd.exe /c C:\Progra~1\IBM\WebSphere\AppServer\profiles\AppSrv01\bin\stopServer.bat server1" />
-				</exec>
+				<ant target="all" />
 			</then>
 		</if>
 
 		<antcall target="revert-test-properties" />
-
-		<replace
-			file="portal-impl/test/test-portal-impl.properties"
-			token="localhost:8080"
-			value="${vm.host}:9080"
-		/>
-
-		<replace
-			file="portal-web/test/test-portal-web.properties"
-			token="localhost:8080"
-			value="${vm.host}:9080"
-		/>
 
 		<antcall target="prepare-selenium" />
 
@@ -232,38 +28,27 @@ print AdminControl.invoke(appManager, 'startApplication', 'liferay-portal')</ech
 		</antcall>
 
 		<antcall target="stop-selenium" />
-
-		<exec dir="${vm.drive}/${vm.host}" executable="${vmware-cmd.executable}">
-			<arg line="${vm.drive}\${vm.host}\${vm.host}.vmx stop hard" />
-		</exec>
 	</target>
 
 	<target name="run-websphere-7.0">
-		<antcall target="rebuild-database" inheritAll="false" />
-
-		<exec executable="${plink.executable}">
-			<arg line="-pw ${vm.password} ${vm.username}@${vm.host} cmd.exe /c C:\Progra~1\IBM\WebSphere\AppServer\profiles\AppSrv01\bin\startServer.bat server1" />
-		</exec>
-
-		<antcall target="run-selenium-test" />
-
-		<exec executable="${plink.executable}">
-			<arg line="-pw ${vm.password} ${vm.username}@${vm.host} cmd.exe /c C:\Progra~1\IBM\WebSphere\AppServer\profiles\AppSrv01\bin\stopServer.bat server1" />
-		</exec>
-
 		<antcall target="clean-up-logs" />
 
-		<tstamp>
-			<format property="log.tstamp.value" pattern="yyyy-MM-dd" />
-		</tstamp>
+		<record action="start" name="log" />
 
-		<exec executable="${pscp.executable}">
-			<arg line="-pw ${vm.password} ${vm.username}@${vm.host}:/WINDOWS/system32/config/systemprofile/liferay/logs/liferay.${log.tstamp.value}.log log" />
-		</exec>
-
-		<antcall target="evaluate-logs">
-			<param name="print.logs" value="true" />
-			<param name="test.evaluate.logs" value="true" />
+		<antcall target="run-simple-server">
+			<param name="simple.server.dir" value="${app.server.websphere.dir}" />
+			<param name="simple.server.bin.dir" value="${app.server.websphere.bin.dir}" />
+			<param name="simple.server.deploy.dir" value="${app.server.websphere.deploy.dir}" />
+			<param name="simple.server.lib.global.dir" value="${app.server.websphere.lib.global.dir}" />
+			<param name="simple.server.portal.dir" value="${app.server.websphere.portal.dir}" />
+			<param name="simple.server.start.executable" value="startServer.bat" />
+			<param name="simple.server.start.executable.arg.line" value="server1" />
+			<param name="simple.server.stop.executable" value="stopServer.bat" />
+			<param name="simple.server.stop.executable.arg.line" value="server1" />
 		</antcall>
+
+		<record action="stop" name="log" />
+
+		<antcall target="evaluate-logs" />
 	</target>
 </project>

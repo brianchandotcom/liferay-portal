@@ -18,14 +18,30 @@
 			<arg line="/c svn --username ${svn.username} --password ${svn.password} update" />
 		</exec>
 
-		<echo file="${lp.plugins.dir}/build.${user.name}.properties">app.server.dir=${simple.server.dir}
+		<if>
+			<equals arg1="${app.server.type}" arg2="websphere" />
+			<then>
+				<echo file="${lp.plugins.dir}/build.${user.name}.properties">app.server.type=websphere
+app.server.dir=${simple.server.dir}
+app.server.deploy.dir=${app.server.dir}/profiles/liferay/wsadmin-deploy
+app.server.lib.global.dir=${app.server.dir}/lib/ext
+app.server.portal.dir=${app.server.dir}/profiles/liferay/installedApps/liferay-cell/liferay-portal.ear/liferay-portal.war
+
+auto.deploy.dir=$${user.home}/liferay/deploy
+
+plugins.includes=${plugins.includes}</echo>
+			</then>
+			<else>
+				<echo file="${lp.plugins.dir}/build.${user.name}.properties">app.server.dir=${simple.server.dir}
 app.server.lib.global.dir=${simple.server.lib.global.dir}
 app.server.portal.dir=${simple.server.portal.dir}
 
 auto.deploy.dir=$${user.home}/liferay/deploy
 
 plugins.includes=${plugins.includes}</echo>
-
+			</else>
+		</if>
+			
 		<if>
 			<isset property="plugin.portlets.properties" />
 			<then>
@@ -116,58 +132,6 @@ $AdminConfig save</echo>
 
 		<exec executable="${plink.executable}">
 			<arg line="-pw ${vm.password} ${vm.username}@${vm.host} cmd.exe /c C:\Progra~1\IBM\WebSphere\AppServer\bin\wsadmin.bat -f C:\wsadmin-plugins.jacl" />
-		</exec>
-	</target>
-
-	<target name="deploy-websphere-7.0-plugins">
-		<exec dir="${lp.plugins.dir}" executable="cmd.exe">
-			<arg line="/c svn --username ${svn.username} --password ${svn.password} update" />
-		</exec>
-
-		<echo file="${lp.plugins.dir}/build.${user.name}.properties">app.server.dir=${app.server.tomcat.dir}
-app.server.lib.global.dir=${app.server.tomcat.lib.global.dir}
-app.server.portal.dir=${app.server.tomcat.portal.dir}
-
-plugins.includes=${plugins.includes}</echo>
-
-		<ant dir="${lp.plugins.dir}/${plugin.types}" inheritAll="false">
-			<target name="clean" />
-			<target name="war" />
-		</ant>
-
-		<exec executable="${plink.executable}">
-			<arg line="-pw ${vm.password} ${vm.username}@${vm.host} cmd.exe /c mkdir C:\WINDOWS\system32\config\systemprofile\liferay\websphere-deploy" />
-		</exec>
-
-		<exec executable="${pscp.executable}">
-			<arg line="-pw ${vm.password} ${lp.plugins.dir}\dist\*.war ${vm.username}@${vm.host}:/WINDOWS/system32/config/systemprofile/liferay/deploy" />
-		</exec>
-
-		<sleep seconds="30" />
-
-		<delete dir="${lp.plugins.dir}/dist" />
-		<mkdir dir="${lp.plugins.dir}/dist" />
-
-		<echo file="wsadmin-plugins.py">print AdminApp.list()</echo>
-
-		<for list="${plugins.includes}" param="plugin.deploy">
-			<sequential>
-				<echo file="wsadmin-plugins.py" append="true">
-
-print AdminApp.update('liferay-portal','modulefile','[-operation addupdate -contents C:/WINDOWS/system32/config/systemprofile/liferay/websphere-deploy/@{plugin.deploy}.war -contextroot /@{plugin.deploy} -contenturi @{plugin.deploy} -usedefaultbindings]')
-
-print AdminConfig.save()</echo>
-			</sequential>
-		</for>
-
-		<exec executable="${pscp.executable}">
-			<arg line="-pw ${vm.password} wsadmin-plugins.py ${vm.username}@${vm.host}:/" />
-		</exec>
-
-		<delete file="wsadmin-plugins.py" />
-
-		<exec executable="${plink.executable}">
-			<arg line="-pw ${vm.password} ${vm.username}@${vm.host} cmd.exe /c C:\Progra~1\IBM\WebSphere\AppServer\bin\wsadmin.bat -f C:\wsadmin-plugins.py" />
 		</exec>
 	</target>
 

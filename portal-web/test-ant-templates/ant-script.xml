@@ -975,7 +975,6 @@
 	<target name="test-${test.ant.script.command}-websphere-7.0-mysql-firefox">
 		<antcall target="prepare-mysql">
 			${test.ant.script.file.properties}
-			<param name="vm.vmdk.suffix" value="websphere-7.0.0.7" />
 		</antcall>
 
 		<ant antfile="build-test-websphere-7.0.xml" target="run-selenium-websphere-7.0">
@@ -1017,7 +1016,6 @@
 	<target name="test-${test.ant.script.command}-websphere-7.0-mysql-minimal-firefox">
 		<antcall target="prepare-mysql">
 			${test.ant.script.file.properties}
-			<param name="vm.vmdk.suffix" value="websphere-7.0.0.7" />
 		</antcall>
 
 		<ant antfile="build-test-websphere-7.0.xml" target="run-selenium-websphere-7.0">

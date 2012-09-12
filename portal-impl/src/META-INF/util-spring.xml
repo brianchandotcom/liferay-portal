@@ -361,6 +361,11 @@
 			</list>
 		</property>
 	</bean>
+	<bean id="com.liferay.portal.kernel.transaction.TransactionCommitCallbackRegistryUtil" class="com.liferay.portal.kernel.transaction.TransactionCommitCallbackRegistryUtil">
+		<property name="transactionCallbackRegistry">
+			<bean class="com.liferay.portal.spring.transaction.TransactionCommitCallbackRegistryImpl" />
+		</property>
+	</bean>
 	<bean id="com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil" class="com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil">
 		<property name="trashHandlerRegistry">
 			<bean class="com.liferay.portal.trash.TrashHandlerRegistryImpl" />

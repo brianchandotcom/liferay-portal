@@ -128,7 +128,6 @@
 
 		.entry-description {
 			display: block;
-			height: 100px;
 			overflow: hidden;
 			word-wrap: break-word;
 		}
@@ -170,6 +169,14 @@
 		&.selected, .selected:hover {
 			background-color: #00A2EA;
 		}
+	}
+
+	.categories {
+		margin-top: 10px;
+	}
+
+	.tags {
+		margin-top: 5px;
 	}
 }
 

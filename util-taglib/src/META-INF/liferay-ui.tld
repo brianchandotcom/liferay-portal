@@ -39,6 +39,26 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>assetCategoryClassName</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>assetCategoryClassPK</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>assetTagClassName</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>assetTagClassPK</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>data</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -2935,6 +2955,46 @@
 		<tag-class>com.liferay.taglib.ui.SectionTag</tag-class>
 		<tei-class>com.liferay.taglib.ui.SectionTei</tei-class>
 		<body-content>JSP</body-content>
+	</tag>
+	<tag>
+		<name>sites-directory</name>
+		<tag-class>com.liferay.taglib.ui.SitesDirectoryTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>bulletStyle</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>displayStyle</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>headerType</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>includedGroups</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>nestedChildren</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>rootGroupLevel</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>rootGroupType</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
 	</tag>
 	<tag>
 		<name>social-activities</name>

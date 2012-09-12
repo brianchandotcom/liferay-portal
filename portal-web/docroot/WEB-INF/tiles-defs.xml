@@ -1497,6 +1497,14 @@
 		<put name="portlet_content" value="/portlet/sites_admin/view_teams.jsp" />
 	</definition>
 
+	<!-- Sites Directory -->
+
+	<definition name="portlet.sites_directory" extends="portlet" />
+
+	<definition name="portlet.sites_directory.view" extends="portlet.sites_directory">
+		<put name="portlet_content" value="/portlet/sites_directory/view.jsp" />
+	</definition>
+
 	<!-- Social Activity -->
 
 	<definition name="portlet.social_activity" extends="portlet" />

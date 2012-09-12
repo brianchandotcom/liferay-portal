@@ -34,6 +34,22 @@ public class AppViewEntryTag extends IncludeTag {
 		_actionJsp = actionJsp;
 	}
 
+	public void setAssetCategoryClassName(String assetCategoryClassName) {
+		_assetCategoryClassName = assetCategoryClassName;
+	}
+
+	public void setAssetCategoryClassPK(long assetCategoryClassPK) {
+		_assetCategoryClassPK = assetCategoryClassPK;
+	}
+
+	public void setAssetTagClassName(String assetTagClassName) {
+		_assetTagClassName = assetTagClassName;
+	}
+
+	public void setAssetTagClassPK(long assetTagClassPK) {
+		_assetTagClassPK = assetTagClassPK;
+	}
+
 	public void setData(Map<String, Object> data) {
 		_data = data;
 	}
@@ -99,6 +115,10 @@ public class AppViewEntryTag extends IncludeTag {
 		super.cleanUp();
 
 		_actionJsp = null;
+		_assetCategoryClassName = null;
+		_assetCategoryClassPK = 0;
+		_assetTagClassName = null;
+		_assetTagClassPK = 0;
 		_data = null;
 		_description = null;
 		_displayStyle = null;
@@ -129,6 +149,16 @@ public class AppViewEntryTag extends IncludeTag {
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute("liferay-ui:app-view-entry:actionJsp", _actionJsp);
+		request.setAttribute(
+			"liferay-ui:app-view-entry:assetCategoryClassName",
+			_assetCategoryClassName);
+		request.setAttribute(
+			"liferay-ui:app-view-entry:assetCategoryClassPK",
+			_assetCategoryClassPK);
+		request.setAttribute(
+			"liferay-ui:app-view-entry:assetTagClassName", _assetTagClassName);
+		request.setAttribute(
+			"liferay-ui:app-view-entry:assetTagClassPK", _assetTagClassPK);
 		request.setAttribute("liferay-ui:app-view-entry:data", _data);
 		request.setAttribute(
 			"liferay-ui:app-view-entry:description", _description);
@@ -160,6 +190,10 @@ public class AppViewEntryTag extends IncludeTag {
 		"/html/taglib/ui/app_view_entry/page.jsp";
 
 	private String _actionJsp;
+	private String _assetCategoryClassName;
+	private long _assetCategoryClassPK;
+	private String _assetTagClassName;
+	private long _assetTagClassPK;
 	private Map<String, Object> _data;
 	private String _description;
 	private String _displayStyle;

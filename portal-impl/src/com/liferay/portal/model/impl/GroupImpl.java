@@ -54,6 +54,8 @@ import com.liferay.portal.util.PropsValues;
 
 import java.io.IOException;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -87,6 +89,44 @@ import java.util.Map;
 public class GroupImpl extends GroupBaseImpl {
 
 	public GroupImpl() {
+	}
+
+	public List<Group> getAncestors() throws PortalException, SystemException {
+		List<Group> groups = new ArrayList<Group>();
+
+		Group group = this;
+
+		while (true) {
+			if (!group.isRoot()) {
+				group = group.getParentGroup();
+
+				groups.add(group);
+			}
+			else {
+				break;
+			}
+		}
+
+		return groups;
+	}
+
+	public List<Group> getChildren(boolean site) throws SystemException {
+		return GroupLocalServiceUtil.getGroups(
+			getCompanyId(), getGroupId(), site);
+	}
+
+	public List<Group> getChildrenWithLayouts(boolean site, int start, int end)
+		throws SystemException {
+
+		return GroupLocalServiceUtil.getLayoutsGroups(
+			getCompanyId(), getGroupId(), site, start, end);
+	}
+
+	public int getChildrenWithLayoutsCount(boolean site)
+		throws SystemException {
+
+		return GroupLocalServiceUtil.getLayoutsGroupsCount(
+			getCompanyId(), getGroupId(), site);
 	}
 
 	public long getDefaultPrivatePlid() {

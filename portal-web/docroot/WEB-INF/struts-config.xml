@@ -1850,6 +1850,10 @@
 
 		<action path="/sites_admin/view_teams" forward="portlet.sites_admin.view_teams" />
 
+		<!-- Sites Directory -->
+
+		<action path="/sites_directory/view" forward="portlet.sites_directory.view" />
+
 		<!-- Social Activity -->
 
 		<action path="/social_activity/view" type="com.liferay.portlet.socialactivity.action.ViewAction">

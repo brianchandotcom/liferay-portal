@@ -62,6 +62,7 @@ import com.liferay.taglib.ui.MySitesTag;
 import com.liferay.taglib.ui.PngImageTag;
 import com.liferay.taglib.ui.RatingsTag;
 import com.liferay.taglib.ui.SearchTag;
+import com.liferay.taglib.ui.SitesDirectoryTag;
 import com.liferay.taglib.ui.SocialBookmarksTag;
 import com.liferay.taglib.ui.StagingTag;
 import com.liferay.taglib.ui.ToggleTag;
@@ -880,6 +881,54 @@ public class VelocityTaglib {
 
 	public void setTemplateContext(TemplateContext templateContext) {
 		_templateContext = templateContext;
+	}
+
+	public void sitesDirectory() throws Exception {
+		SitesDirectoryTag sitesDirectoryTag = new SitesDirectoryTag();
+
+		setUp(sitesDirectoryTag);
+
+		sitesDirectoryTag.setDisplayStyle("from-level-1");
+
+		sitesDirectoryTag.runTag();
+	}
+
+	public void sitesDirectory(
+			String displayStyle, String headerType, int rootGroupLevel,
+			String rootGroupType)
+		throws Exception {
+
+		SitesDirectoryTag sitesDirectoryTag = new SitesDirectoryTag();
+
+		setUp(sitesDirectoryTag);
+
+		sitesDirectoryTag.setDisplayStyle(displayStyle);
+		sitesDirectoryTag.setHeaderType(headerType);
+		sitesDirectoryTag.setRootGroupLevel(rootGroupLevel);
+		sitesDirectoryTag.setRootGroupType(rootGroupType);
+
+		sitesDirectoryTag.runTag();
+	}
+
+	public void sitesDirectory(
+			String displayStyle, String headerType, int rootGroupLevel,
+			String rootGroupType, String bulletStyle, String includedGroups,
+			boolean nestedChildren)
+		throws Exception {
+
+		SitesDirectoryTag sitesDirectoryTag = new SitesDirectoryTag();
+
+		setUp(sitesDirectoryTag);
+
+		sitesDirectoryTag.setDisplayStyle(displayStyle);
+		sitesDirectoryTag.setHeaderType(headerType);
+		sitesDirectoryTag.setRootGroupLevel(rootGroupLevel);
+		sitesDirectoryTag.setRootGroupType(rootGroupType);
+		sitesDirectoryTag.setBulletStyle(bulletStyle);
+		sitesDirectoryTag.setIncludedGroups(includedGroups);
+		sitesDirectoryTag.setNestedChildren(nestedChildren);
+
+		sitesDirectoryTag.runTag();
 	}
 
 	public void socialBookmarks(

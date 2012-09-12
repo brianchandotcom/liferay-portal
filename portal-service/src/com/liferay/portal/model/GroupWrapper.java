@@ -540,6 +540,29 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 		_group.persist();
 	}
 
+	public java.util.List<com.liferay.portal.model.Group> getAncestors()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _group.getAncestors();
+	}
+
+	public java.util.List<com.liferay.portal.model.Group> getChildren(
+		boolean site)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _group.getChildren(site);
+	}
+
+	public java.util.List<com.liferay.portal.model.Group> getChildrenWithLayouts(
+		boolean site, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _group.getChildrenWithLayouts(site, start, end);
+	}
+
+	public int getChildrenWithLayoutsCount(boolean site)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _group.getChildrenWithLayoutsCount(site);
+	}
+
 	public long getDefaultPrivatePlid() {
 		return _group.getDefaultPrivatePlid();
 	}

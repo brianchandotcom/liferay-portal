@@ -2218,6 +2218,7 @@
 			</basic>
 			<basic name="classNameId" />
 			<basic name="structureKey" />
+			<basic name="parentStructureId" />
 			<basic name="name" />
 			<basic name="description" />
 			<basic name="xsd" />

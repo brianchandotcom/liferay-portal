@@ -1,0 +1,38 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>ViewPortletsSitePublicPage1Test</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">ViewPortletsSitePublicPage1Test</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/web/site-name/public-page1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>xPath=(//span[@class='portlet-title-text'])[1]</td>
+	<td>Asset Publisher</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//span[@class='portlet-title-text'])[1]</td>
+	<td>Asset Publisher</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>xPath=(//span[@class='portlet-title-text'])[2]</td>
+	<td>Language</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>xPath=(//span[@class='portlet-title-text'])[3]</td>
+	<td>Web Content Display</td>
+</tr>
+</tbody></table>
+</body>
+</html>

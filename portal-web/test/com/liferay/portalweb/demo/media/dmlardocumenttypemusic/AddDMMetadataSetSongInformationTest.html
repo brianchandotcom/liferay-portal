@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Documents and Media Test Page</td>
-	<td>Documents and Media Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Documents and Media Test Page</td>
 	<td>Documents and Media Test Page</td>
@@ -55,12 +50,12 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//iframe</td>
+	<td>//iframe[contains(@src,'DLFileEntryMetadata')]</td>
 	<td>Metadata Sets</td>
 </tr>
 <tr>
 	<td>selectFrame</td>
-	<td>//iframe</td>
+	<td>//iframe[contains(@src,'DLFileEntryMetadata')]</td>
 	<td>Metadata Sets</td>
 </tr>
 <tr>
@@ -144,7 +139,7 @@
 	<td>Save</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
+	<td>waitForText</td>
 	<td>//tr[2]/td[2]/div</td>
 	<td>Artist</td>
 </tr>
@@ -194,7 +189,7 @@
 	<td>Save</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
+	<td>waitForText</td>
 	<td>//tr[4]/td[2]/div</td>
 	<td>Yes</td>
 </tr>
@@ -244,7 +239,7 @@
 	<td>Save</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
+	<td>waitForText</td>
 	<td>//tr[5]/td[2]/div</td>
 	<td>artist</td>
 </tr>
@@ -324,7 +319,7 @@
 	<td>Save</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
+	<td>waitForText</td>
 	<td>//tr[2]/td[2]/div</td>
 	<td>Track Number</td>
 </tr>
@@ -374,7 +369,7 @@
 	<td>Save</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
+	<td>waitForText</td>
 	<td>//tr[5]/td[2]/div</td>
 	<td>track</td>
 </tr>

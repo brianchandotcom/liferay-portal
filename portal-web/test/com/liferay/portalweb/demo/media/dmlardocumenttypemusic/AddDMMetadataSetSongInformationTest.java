@@ -25,7 +25,6 @@ public class AddDMMetadataSetSongInformationTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/site-name/");
-		selenium.waitForVisible("link=Documents and Media Test Page");
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -41,8 +40,9 @@ public class AddDMMetadataSetSongInformationTest extends BaseTestCase {
 				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Metadata Sets')]"));
 		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Metadata Sets')]",
 			RuntimeVariables.replace("Metadata Sets"));
-		selenium.waitForVisible("//iframe");
-		selenium.selectFrame("//iframe");
+		selenium.waitForVisible(
+			"//iframe[contains(@src,'DLFileEntryMetadata')]");
+		selenium.selectFrame("//iframe[contains(@src,'DLFileEntryMetadata')]");
 		selenium.waitForElementPresent(
 			"//script[contains(@src,'/liferay/navigation_interaction.js')]");
 		selenium.waitForVisible("link=Add");
@@ -72,7 +72,7 @@ public class AddDMMetadataSetSongInformationTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Save"),
 			selenium.getText("//button"));
 		selenium.clickAt("//button", RuntimeVariables.replace("Save"));
-		selenium.waitForVisible("//tr[2]/td[2]/div");
+		selenium.waitForText("//tr[2]/td[2]/div", "Artist");
 		assertEquals(RuntimeVariables.replace("Artist"),
 			selenium.getText("//tr[2]/td[2]/div"));
 		assertEquals(RuntimeVariables.replace("Artist"),
@@ -90,7 +90,7 @@ public class AddDMMetadataSetSongInformationTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Save"),
 			selenium.getText("//button"));
 		selenium.clickAt("//button", RuntimeVariables.replace("Save"));
-		selenium.waitForVisible("//tr[4]/td[2]/div");
+		selenium.waitForText("//tr[4]/td[2]/div", "Yes");
 		assertEquals(RuntimeVariables.replace("Yes"),
 			selenium.getText("//tr[4]/td[2]/div"));
 		assertEquals(RuntimeVariables.replace("*"),
@@ -106,7 +106,7 @@ public class AddDMMetadataSetSongInformationTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Save"),
 			selenium.getText("//button"));
 		selenium.clickAt("//button", RuntimeVariables.replace("Save"));
-		selenium.waitForVisible("//tr[5]/td[2]/div");
+		selenium.waitForText("//tr[5]/td[2]/div", "artist");
 		assertEquals(RuntimeVariables.replace("artist"),
 			selenium.getText("//tr[5]/td[2]/div"));
 		selenium.clickAt("link=Fields", RuntimeVariables.replace("Fields"));
@@ -134,7 +134,7 @@ public class AddDMMetadataSetSongInformationTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Save"),
 			selenium.getText("//button"));
 		selenium.clickAt("//button", RuntimeVariables.replace("Save"));
-		selenium.waitForVisible("//tr[2]/td[2]/div");
+		selenium.waitForText("//tr[2]/td[2]/div", "Track Number");
 		assertEquals(RuntimeVariables.replace("Track Number"),
 			selenium.getText("//tr[2]/td[2]/div"));
 		assertEquals(RuntimeVariables.replace("Track Number"),
@@ -151,7 +151,7 @@ public class AddDMMetadataSetSongInformationTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Save"),
 			selenium.getText("//button"));
 		selenium.clickAt("//button", RuntimeVariables.replace("Save"));
-		selenium.waitForVisible("//tr[5]/td[2]/div");
+		selenium.waitForText("//tr[5]/td[2]/div", "track");
 		assertEquals(RuntimeVariables.replace("track"),
 			selenium.getText("//tr[5]/td[2]/div"));
 		selenium.clickAt("//input[@value='Save']",

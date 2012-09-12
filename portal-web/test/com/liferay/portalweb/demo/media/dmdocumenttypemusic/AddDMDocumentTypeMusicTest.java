@@ -25,7 +25,6 @@ public class AddDMDocumentTypeMusicTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Documents and Media Test Page");
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -41,8 +40,8 @@ public class AddDMDocumentTypeMusicTest extends BaseTestCase {
 				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Document Types')]"));
 		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Document Types')]",
 			RuntimeVariables.replace("Document Types"));
-		selenium.waitForVisible("//iframe");
-		selenium.selectFrame("//iframe");
+		selenium.waitForVisible("//iframe[@id='_20_openFileEntryTypeView']");
+		selenium.selectFrame("//iframe[@id='_20_openFileEntryTypeView']");
 		selenium.waitForElementPresent(
 			"//script[contains(@src,'/liferay/navigation_interaction.js')]");
 		selenium.waitForVisible("link=Add");
@@ -72,7 +71,7 @@ public class AddDMDocumentTypeMusicTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Save"),
 			selenium.getText("//button"));
 		selenium.clickAt("//button", RuntimeVariables.replace("Save"));
-		selenium.waitForVisible("//tr[2]/td[2]/div");
+		selenium.waitForText("//tr[2]/td[2]/div", "Album");
 		assertEquals(RuntimeVariables.replace("Album"),
 			selenium.getText("//tr[2]/td[2]/div"));
 		assertEquals(RuntimeVariables.replace("Album"),
@@ -89,7 +88,7 @@ public class AddDMDocumentTypeMusicTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Save"),
 			selenium.getText("//button"));
 		selenium.clickAt("//button", RuntimeVariables.replace("Save"));
-		selenium.waitForVisible("//tr[5]/td[2]/div");
+		selenium.waitForText("//tr[5]/td[2]/div", "album");
 		assertEquals(RuntimeVariables.replace("album"),
 			selenium.getText("//tr[5]/td[2]/div"));
 		assertEquals(RuntimeVariables.replace("Select Metadata Set"),

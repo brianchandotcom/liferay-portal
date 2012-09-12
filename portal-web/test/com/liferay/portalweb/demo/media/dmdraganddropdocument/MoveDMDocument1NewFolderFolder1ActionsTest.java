@@ -26,7 +26,6 @@ public class MoveDMDocument1NewFolderFolder1ActionsTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Documents and Media Test Page");
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -52,7 +51,7 @@ public class MoveDMDocument1NewFolderFolder1ActionsTest extends BaseTestCase {
 			selenium.getText("//td[1]/a"));
 		selenium.click("//td[4]/input[@value='Choose']");
 		selenium.selectWindow("null");
-		selenium.waitForVisible("//a[@id='_20_folderName']");
+		selenium.waitForText("//a[@id='_20_folderName']", "DM Folder1 Name");
 		assertEquals(RuntimeVariables.replace("DM Folder1 Name"),
 			selenium.getText("//a[@id='_20_folderName']"));
 		selenium.clickAt("//input[@value='Move']",

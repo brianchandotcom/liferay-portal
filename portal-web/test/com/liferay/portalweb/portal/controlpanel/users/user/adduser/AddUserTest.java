@@ -61,17 +61,12 @@ public class AddUserTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		selenium.clickAt("link=\u00ab Back",
-			RuntimeVariables.replace("\u00ab Back"));
-		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("userfn"),
-			selenium.getText(
-				"//td[@id='_125_usersSearchContainer_col-first-name_row-usersn']"));
-		assertEquals(RuntimeVariables.replace("userln"),
-			selenium.getText(
-				"//td[@id='_125_usersSearchContainer_col-last-name_row-usersn']"));
-		assertEquals(RuntimeVariables.replace("usersn"),
-			selenium.getText(
-				"//td[@id='_125_usersSearchContainer_col-screen-name_row-usersn']"));
+		assertEquals("usersn",
+			selenium.getValue("//input[@id='_125_screenName']"));
+		assertEquals("userea@liferay.com",
+			selenium.getValue("//input[@id='_125_emailAddress']"));
+		assertEquals("userfn",
+			selenium.getValue("//input[@id='_125_firstName']"));
+		assertEquals("userln", selenium.getValue("//input[@id='_125_lastName']"));
 	}
 }

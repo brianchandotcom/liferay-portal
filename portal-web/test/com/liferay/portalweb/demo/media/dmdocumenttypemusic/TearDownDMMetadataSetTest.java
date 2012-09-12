@@ -30,7 +30,6 @@ public class TearDownDMMetadataSetTest extends BaseTestCase {
 				selenium.selectWindow("null");
 				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
-				selenium.waitForVisible("link=Documents and Media Test Page");
 				selenium.clickAt("link=Documents and Media Test Page",
 					RuntimeVariables.replace("Documents and Media Test Page"));
 				selenium.waitForPageToLoad("30000");
@@ -47,8 +46,10 @@ public class TearDownDMMetadataSetTest extends BaseTestCase {
 						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Metadata Sets')]"));
 				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Metadata Sets')]",
 					RuntimeVariables.replace("Metadata Sets"));
-				selenium.waitForVisible("//iframe");
-				selenium.selectFrame("//iframe");
+				selenium.waitForVisible(
+					"//iframe[contains(@src,'DLFileEntryMetadata')]");
+				selenium.selectFrame(
+					"//iframe[contains(@src,'DLFileEntryMetadata')]");
 				selenium.waitForElementPresent(
 					"//script[contains(@src,'/liferay/navigation_interaction.js')]");
 				selenium.waitForVisible(

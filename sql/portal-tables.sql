@@ -480,6 +480,7 @@ create table DDMStructure (
 	modifiedDate DATE null,
 	classNameId LONG,
 	structureKey VARCHAR(75) null,
+	parentStructureId LONG,
 	name STRING null,
 	description STRING null,
 	xsd TEXT null,

@@ -56,6 +56,7 @@ public class DDMStructureWrapper implements DDMStructure,
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("structureKey", getStructureKey());
+		attributes.put("parentStructureId", getParentStructureId());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
 		attributes.put("xsd", getXsd());
@@ -124,6 +125,12 @@ public class DDMStructureWrapper implements DDMStructure,
 
 		if (structureKey != null) {
 			setStructureKey(structureKey);
+		}
+
+		Long parentStructureId = (Long)attributes.get("parentStructureId");
+
+		if (parentStructureId != null) {
+			setParentStructureId(parentStructureId);
 		}
 
 		String name = (String)attributes.get("name");
@@ -386,6 +393,24 @@ public class DDMStructureWrapper implements DDMStructure,
 	*/
 	public void setStructureKey(java.lang.String structureKey) {
 		_ddmStructure.setStructureKey(structureKey);
+	}
+
+	/**
+	* Returns the parent structure ID of this d d m structure.
+	*
+	* @return the parent structure ID of this d d m structure
+	*/
+	public long getParentStructureId() {
+		return _ddmStructure.getParentStructureId();
+	}
+
+	/**
+	* Sets the parent structure ID of this d d m structure.
+	*
+	* @param parentStructureId the parent structure ID of this d d m structure
+	*/
+	public void setParentStructureId(long parentStructureId) {
+		_ddmStructure.setParentStructureId(parentStructureId);
 	}
 
 	/**

@@ -20,8 +20,6 @@
 	<property name="plink.executable" location="${project.dir}/tools/putty/plink.exe" />
 	<property name="pscp.executable" location="${project.dir}/tools/putty/pscp.exe" />
 
-	<property name="selenium.nanny.executable" location="${project.dir}/tools/selenium/selenium_nanny.exe" />
-
 	<trycatch>
 		<try>
 			<taskdef
@@ -2906,47 +2904,6 @@ svn --username ${svn.username} --password ${svn.password} update -r ${svn.info.r
 
 	<target name="prepare-selenium">
 		<if>
-			<not>
-				<isset property="selenium.executable.zip" />
-			</not>
-			<then>
-				<fail>
-.
-
-Please set "selenium.executable.zip" in test.properties to point to the Selenium
-executable ZIP file.
-				</fail>
-			</then>
-		</if>
-
-		<if>
-			<or>
-				<not>
-					<available file="${selenium.nanny.executable}" />
-				</not>
-				<uptodate
-					srcfile="${selenium.nanny.executable}"
-					targetfile="${selenium.executable.zip}"
-				/>
-			</or>
-			<then>
-				<delete>
-					<fileset
-						dir="${project.dir}/tools/selenium"
-						includes="*.exe"
-					/>
-				</delete>
-
-				<unzip
-					dest="${project.dir}/tools/selenium"
-					src="${selenium.executable.zip}"
-				/>
-
-				<touch file="${selenium.nanny.executable}" />
-			</then>
-		</if>
-
-		<if>
 			<isset property="selenium.output.dir" />
 			<then>
 				<replace
@@ -3849,15 +3806,6 @@ file.
 			<then>
 				<antcall target="start-chrome-driver" />
 			</then>
-			<elseif>
-				<or>
-					<equals arg1="${test.browser}" arg2="iehta" />
-					<equals arg1="${test.browser}" arg2="iexplore" />
-				</or>
-				<then>
-					<antcall target="start-selenium-nanny" />
-				</then>
-			</elseif>
 		</if>
 
 		<parallel>
@@ -3910,15 +3858,6 @@ file.
 			<then>
 				<antcall target="stop-chrome-driver" />
 			</then>
-			<elseif>
-				<or>
-					<equals arg1="${test.browser}" arg2="iehta" />
-					<equals arg1="${test.browser}" arg2="iexplore" />
-				</or>
-				<then>
-					<antcall target="stop-selenium-nanny" />
-				</then>
-			</elseif>
 		</if>
 	</target>
 
@@ -3961,12 +3900,6 @@ which can be downloaded from this website: http://code.google.com/p/chromedriver
 		</java>
 	</target>
 
-	<target name="start-selenium-nanny">
-		<forget>
-			<exec executable="${selenium.nanny.executable}" />
-		</forget>
-	</target>
-
 	<target name="stop-chrome-driver">
 		<exec executable="taskkill.exe">
 			<arg line="/F /IM chromedriver.exe" />
@@ -3975,12 +3908,6 @@ which can be downloaded from this website: http://code.google.com/p/chromedriver
 
 	<target name="stop-selenium">
 		<antelope:post to="http://localhost:14444/selenium-server/driver/?cmd=shutDownSeleniumServer" wantresponse="true" />
-	</target>
-
-	<target name="stop-selenium-nanny">
-		<exec executable="taskkill.exe">
-			<arg line="/F /IM selenium_nanny.exe" />
-		</exec>
 	</target>
 
 	<target name="stop-vm">

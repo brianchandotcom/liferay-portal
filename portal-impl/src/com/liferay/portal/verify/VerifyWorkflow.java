@@ -29,10 +29,11 @@ public class VerifyWorkflow extends VerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
-		ClassName className = ClassNameLocalServiceUtil.fetchClassName(
-			"com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess");
+		ClassName kaleoProcessClassName =
+			ClassNameLocalServiceUtil.fetchClassName(
+				"com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess");
 
-		if (className.getClassNameId() == 0) {
+		if (kaleoProcessClassName.getClassNameId() == 0) {
 			return;
 		}
 
@@ -42,11 +43,13 @@ public class VerifyWorkflow extends VerifyProcess {
 		try {
 			con = DataAccess.getUpgradeOptimizedConnection();
 
-			StringBundler sb = new StringBundler(3);
+			StringBundler sb = new StringBundler(5);
 
 			sb.append("delete from WorkflowDefinitionLink where classNameId ");
-			sb.append("= " + className.getClassNameId() + " and classPk not ");
-			sb.append("in(select kaleoProcessId from KaleoProcess)");
+			sb.append("= ");
+			sb.append(kaleoProcessClassName.getClassNameId());
+			sb.append(" and classPk not in (select kaleoProcessId from ");
+			sb.append("KaleoProcess)");
 
 			ps = con.prepareStatement(sb.toString());
 

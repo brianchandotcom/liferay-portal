@@ -27,6 +27,17 @@ DDMStructure structure = (DDMStructure)request.getAttribute(WebKeys.DYNAMIC_DATA
 long classNameId = PortalUtil.getClassNameId(DDMStructure.class);
 long classPK = BeanParamUtil.getLong(structure, request, "structureId");
 
+long parentStructureId = BeanParamUtil.getLong(structure, request, "parentStructureId");
+String parentStructureName = StringPool.BLANK;
+
+try {
+	DDMStructure parentStructure = DDMStructureLocalServiceUtil.getStructure(parentStructureId);
+
+	parentStructureName = parentStructure.getName(locale);
+}
+catch (NoSuchStructureException nsee) {
+}
+
 String script = BeanParamUtil.getString(structure, request, "xsd");
 
 JSONArray scriptJSONArray = null;
@@ -137,6 +148,31 @@ if (scriptJSONArray != null) {
 
 				<aui:input name="description" />
 
+				<aui:field-wrapper label="parent-data-definition">
+					<aui:input name="parentStructureId" type="hidden" value="<%= parentStructureId %>" />
+
+					<c:choose>
+						<c:when test="<%= (structure == null) || (Validator.isNotNull(parentStructureId)) %>">
+							<portlet:renderURL var="parentStructureURL">
+								<portlet:param name="struts_action" value="/dynamic_data_mapping/edit_structure" />
+								<portlet:param name="redirect" value="<%= currentURL %>" />
+								<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
+								<portlet:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
+								<portlet:param name="classPK" value="<%= String.valueOf(parentStructureId) %>" />
+							</portlet:renderURL>
+
+							<aui:a href="<%= parentStructureURL %>" id="parentStructureName" label="<%= HtmlUtil.escape(parentStructureName) %>" />
+						</c:when>
+						<c:otherwise>
+							<aui:a href="" id="parentStructureName" />
+						</c:otherwise>
+					</c:choose>
+
+					<aui:button onClick='<%= renderResponse.getNamespace() + "openParentStructureSelector();" %>' value="select" />
+
+					<aui:button name="removeParentStructureButton" onClick='<%= renderResponse.getNamespace() + "removeParentStructure();" %>' value="remove" />
+				</aui:field-wrapper>
+
 				<c:if test="<%= structure != null %>">
 					<aui:field-wrapper label="url">
 						<liferay-ui:input-resource url='<%= themeDisplay.getPortalURL() + themeDisplay.getPathMain() + "/dynamic_data_mapping/get_structure?structureId=" + classPK %>' />
@@ -181,6 +217,57 @@ if (scriptJSONArray != null) {
 	<c:if test="<%= Validator.isNotNull(saveCallback) && (classPK != 0) %>">
 		window.parent['<%= HtmlUtil.escapeJS(saveCallback) %>']('<%= classPK %>', '<%= HtmlUtil.escape(structure.getName(locale)) %>');
 	</c:if>
+</aui:script>
+
+<aui:script>
+	function <portlet:namespace />openParentStructureSelector() {
+		Liferay.Util.openDDMPortlet(
+		{
+			ddmResource: '<%= ddmResource %>',
+			dialog: {
+				width: 820
+			},
+			saveCallback: '<%= renderResponse.getNamespace() + "selectParentStructure" %>',
+			showGlobalScope: true,
+			showManageTemplates: false,
+			storageType: '<%= PropsValues.DYNAMIC_DATA_LISTS_STORAGE_TYPE %>',
+			structureName: 'data-definition',
+			structureType: 'com.liferay.portlet.dynamicdatalists.model.DDLRecordSet',
+			struts_action: '/dynamic_data_mapping/select_structure',
+			title: '<%= UnicodeLanguageUtil.get(pageContext, "data-definitions") %>'
+		}
+		);
+	}
+
+	function <portlet:namespace />removeParentStructure() {
+		document.<portlet:namespace />fm.<portlet:namespace />parentStructureId.value = "";
+
+		var nameEl = document.getElementById("<portlet:namespace />parentStructureName");
+
+		nameEl.href = "#";
+		nameEl.innerHTML = "";
+
+		document.getElementById("<portlet:namespace />removeParentStructureButton").disabled = true;
+	}
+
+	Liferay.provide(
+		window,
+		'<portlet:namespace />selectParentStructure',
+		function(ddmStructureId, ddmStructureName, dialog) {
+			document.<portlet:namespace />fm.<portlet:namespace />parentStructureId.value = ddmStructureId;
+
+			var nameEl = document.getElementById("<portlet:namespace />parentStructureName");
+
+			nameEl.href = "<portlet:renderURL><portlet:param name="struts_action" value="/dynamic_data_mapping/edit_structure" /><portlet:param name="redirect" value="<%= currentURL %>" /><portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" /><portlet:param name="classNameId" value="<%= String.valueOf(classNameId) %>" /></portlet:renderURL>&<portlet:namespace />classPK=" + ddmStructureId;
+			nameEl.innerHTML = ddmStructureName + "&nbsp;";
+
+			document.getElementById("<portlet:namespace />removeParentStructureButton").disabled = false;
+
+			if (dialog) {
+				dialog.close();
+			}
+		}
+	);
 </aui:script>
 
 <%!

@@ -201,8 +201,8 @@ public class AddDefaultDocumentLibraryStructuresAction
 
 				DDMStructureLocalServiceUtil.addStructure(
 					userId, groupId,
-					PortalUtil.getClassNameId(DLFileEntry.class), name, nameMap,
-					descriptionMap, structureElementRootXML, "xml",
+					PortalUtil.getClassNameId(DLFileEntry.class), name, 0,
+					nameMap, descriptionMap, structureElementRootXML, "xml",
 					DDMStructureConstants.TYPE_DEFAULT, serviceContext);
 			}
 		}

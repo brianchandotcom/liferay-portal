@@ -536,7 +536,7 @@ public class DLFileEntryTypeLocalServiceImpl
 				ddmStructure = ddmStructureLocalService.addStructure(
 					userId, groupId,
 					PortalUtil.getClassNameId(DLFileEntryMetadata.class),
-					ddmStructureKey, nameMap, descriptionMap, xsd, "xml",
+					ddmStructureKey, 0, nameMap, descriptionMap, xsd, "xml",
 					DDMStructureConstants.TYPE_AUTO, serviceContext);
 			}
 			else {
@@ -545,8 +545,9 @@ public class DLFileEntryTypeLocalServiceImpl
 				}
 
 				ddmStructure = ddmStructureLocalService.updateStructure(
-					ddmStructure.getStructureId(), nameMap, descriptionMap, xsd,
-					serviceContext);
+					ddmStructure.getStructureId(),
+					ddmStructure.getParentStructureId(), nameMap,
+					descriptionMap, xsd, serviceContext);
 			}
 
 			return ddmStructure.getStructureId();

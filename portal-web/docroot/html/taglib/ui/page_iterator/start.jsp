@@ -125,7 +125,7 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 	</div>
 </c:if>
 
-<c:if test="<%= (total > delta) || (total > PropsValues.SEARCH_CONTAINER_PAGE_DELTA_VALUES[0]) %>">
+<c:if test="<%= (total >= delta) || (total >= PropsValues.SEARCH_CONTAINER_PAGE_DELTA_VALUES[0]) %>">
 	<div class="search-pages">
 		<c:if test='<%= type.equals("regular") %>'>
 			<c:if test="<%= PropsValues.SEARCH_CONTAINER_PAGE_DELTA_VALUES.length > 0 %>">
@@ -181,6 +181,10 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 							int pagesIteratorMax = maxPages;
 							int pagesIteratorBegin = 1;
 							int pagesIteratorEnd = pages;
+
+							if (cur > pages) {
+								 pagesIteratorEnd = cur;
+							}
 
 							if (pages > pagesIteratorMax) {
 								pagesIteratorBegin = cur - pagesIteratorMax;
@@ -256,7 +260,7 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 			</c:choose>
 
 			<c:choose>
-				<c:when test="<%= cur != pages %>">
+				<c:when test="<%= cur < pages %>">
 					<a class="next" href="<%= _getHREF(formName, curParam, cur + 1, jsCall, url, urlAnchor) %>" target="<%= target %>">
 				</c:when>
 				<c:when test='<%= type.equals("approximate") || type.equals("more") || type.equals("regular") %>'>
@@ -276,7 +280,7 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 			</c:if>
 
 			<c:choose>
-				<c:when test="<%= cur != pages %>">
+				<c:when test="<%= cur < pages %>">
 					</a>
 				</c:when>
 				<c:when test='<%= type.equals("approximate") || type.equals("more") || type.equals("regular") %>'>
@@ -286,7 +290,7 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 
 			<c:if test='<%= type.equals("regular") %>'>
 				<c:choose>
-					<c:when test="<%= cur != pages %>">
+					<c:when test="<%= cur < pages %>">
 						<a class="last" href="<%= _getHREF(formName, curParam, pages, jsCall, url, urlAnchor) %>" target="<%= target %>">
 					</c:when>
 					<c:otherwise>
@@ -297,7 +301,7 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 				<liferay-ui:message key="last" />
 
 				<c:choose>
-					<c:when test="<%= cur != pages %>">
+					<c:when test="<%= cur < pages %>">
 						</a>
 					</c:when>
 					<c:otherwise>

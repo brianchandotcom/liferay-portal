@@ -79,9 +79,7 @@ public class ReleaseLocalServiceImpl extends ReleaseLocalServiceBaseImpl {
 	}
 
 	public void createTablesAndPopulate() throws SystemException {
-
 		if (!isDBCreated()) {
-
 			try {
 				if (_log.isInfoEnabled()) {
 					_log.info("Create tables and populate with default data");
@@ -112,8 +110,6 @@ public class ReleaseLocalServiceImpl extends ReleaseLocalServiceBaseImpl {
 	public int getBuildNumberOrCreate()
 		throws PortalException, SystemException {
 
-		int buildNumber = -1;
-
 		// Create tables and populate with default data
 
 		if (GetterUtil.getBoolean(
@@ -127,17 +123,18 @@ public class ReleaseLocalServiceImpl extends ReleaseLocalServiceBaseImpl {
 				ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME,
 				ReleaseInfo.getParentBuildNumber());
 
-			buildNumber = release.getBuildNumber();
-		} else {
-			buildNumber = getBuildNumber();
+			return release.getBuildNumber();
 		}
+		else {
+			int buildNumber = getBuildNumber();
 
-		if (buildNumber == -1) {
-			throw new NoSuchReleaseException(
-				"The database needs to be populated");
+			if (buildNumber == 0) {
+				throw new NoSuchReleaseException(
+					"The database needs to be populated");
+			}
+
+			return buildNumber;
 		}
-
-		return buildNumber;
 	}
 
 	public Release getRelease(String servletContextName, int buildNumber)
@@ -181,7 +178,6 @@ public class ReleaseLocalServiceImpl extends ReleaseLocalServiceBaseImpl {
 	}
 
 	protected int getBuildNumber() throws PortalException, SystemException {
-
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -213,6 +209,8 @@ public class ReleaseLocalServiceImpl extends ReleaseLocalServiceBaseImpl {
 					}
 				}
 
+				testSupportsStringCaseSensitiveQuery();
+
 				return buildNumber;
 			}
 		}
@@ -225,11 +223,10 @@ public class ReleaseLocalServiceImpl extends ReleaseLocalServiceBaseImpl {
 			DataAccess.cleanUp(con, ps, rs);
 		}
 
-		return -1;
+		return 0;
 	}
 
 	protected boolean isDBCreated() {
-
 		DB db = DBFactoryUtil.getDB();
 
 		try {

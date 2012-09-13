@@ -16,7 +16,6 @@ package com.liferay.portlet.documentlibrary.store;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.io.S3TempDirectoryFilter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
@@ -28,6 +27,7 @@ import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.SystemProperties;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.util.PropsUtil;
@@ -42,6 +42,7 @@ import java.io.InputStream;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import org.jets3t.service.S3Service;
@@ -58,6 +59,7 @@ import org.jets3t.service.security.AWSCredentials;
  * @author Sten Martinez
  * @author Edward Han
  * @author Vilmos Papp
+ * @author Mate Thurzo
  */
 public class S3Store extends BaseStore {
 
@@ -168,7 +170,6 @@ public class S3Store extends BaseStore {
 			String versionLabel)
 		throws PortalException, SystemException {
 
-		File tempFile;
 		try {
 			if (Validator.isNull(versionLabel)) {
 				versionLabel = getHeadVersionLabel(
@@ -179,11 +180,18 @@ public class S3Store extends BaseStore {
 				_s3Bucket.getName(),
 				getKey(companyId, repositoryId, fileName, versionLabel));
 
-			tempFile = saveTempFile(
-				fileName, s3Object.getLastModifiedDate().getTime(),
+			Date lastModifiedDate = s3Object.getLastModifiedDate();
+
+			String tempFilePath = getTempFilePath(
+				fileName, lastModifiedDate.getTime());
+
+			File tempFile = saveTempFile(
+				tempFilePath, lastModifiedDate.getTime(),
 				s3Object.getDataInputStream());
 
 			cleanTempFolder();
+
+			return tempFile;
 		}
 		catch (IOException ioe) {
 			throw new SystemException(ioe);
@@ -191,8 +199,6 @@ public class S3Store extends BaseStore {
 		catch (ServiceException se) {
 			throw new SystemException(se);
 		}
-
-		return tempFile;
 	}
 
 	@Override
@@ -468,48 +474,50 @@ public class S3Store extends BaseStore {
 		}
 	}
 
-	protected void cleanTempFolder() throws SystemException {
+	protected void cleanTempFolder() {
 		_accessCounter++;
 
-		if (_accessCounter >=
-			PropsValues.DL_STORE_S3_TEMPDIR_CLEAN_ACCESS_COUNT_LIMIT) {
+		if (_accessCounter <
+				PropsValues.DL_STORE_S3_TEMPDIR_CLEAN_ACCESS_COUNT_LIMIT) {
 
-			_accessCounter = 0;
+			return;
+		}
 
-			String tmpDirPath = SystemProperties.get(
-				SystemProperties.TMP_DIR) + "/liferay/s3";
+		_accessCounter = 0;
 
-			File tmpDir = new File(tmpDirPath);
+		String tmpDirPath =
+			SystemProperties.get(SystemProperties.TMP_DIR) + _PATH_S3_TEMP_DIR;
 
-			long daysToKeep = (
-				_DAY_IN_MILLIS *
-				PropsValues.DL_STORE_S3_TEMPDIR_CLEAN_KEEP_LAST_DAYS_COUNT);
+		File tmpDir = new File(tmpDirPath);
 
-			long lastDateToKeep = (System.currentTimeMillis() - daysToKeep);
+		long lastDateToKeep =
+			System.currentTimeMillis() -
+				(PropsValues.DL_STORE_S3_TEMPDIR_CLEAN_KEEP_LAST_DAYS_COUNT *
+					Time.DAY);
 
-			File[] yearDirs = tmpDir.listFiles();
+		deleteTempFiles(tmpDir, lastDateToKeep);
+	}
 
-			for (File yearDir : yearDirs) {
-				File[] monthDirs = yearDir.listFiles();
+	protected void deleteTempFiles(File file, long lastDateToKeep) {
+		if (file.isDirectory()) {
+			String[] subDirs = FileUtil.listDirs(file);
 
-				if (monthDirs.length == 0) {
-					yearDir.delete();
+			if (subDirs.length == 0) {
+				if (file.lastModified() < lastDateToKeep) {
+					FileUtil.deltree(file);
+
+					return;
+				}
+			}
+			else {
+				for (String subDir : subDirs) {
+					deleteTempFiles(new File(file, subDir), lastDateToKeep);
 				}
 
-				for (File monthDir : monthDirs) {
-					File[] dayDirs = monthDir.listFiles();
-					File[] dirsToDelete = monthDir.listFiles(
-							new S3TempDirectoryFilter(lastDateToKeep));
+				if (file.list().length == 0) {
+					FileUtil.deltree(file);
 
-					if ((dayDirs.length == 0) ||
-						(dayDirs.length == dirsToDelete.length)) {
-						FileUtil.deltree(monthDir);
-					}
-					else {
-						for (File directory : dirsToDelete) {
-							FileUtil.deltree(directory);
-						}
-					}
+					return;
 				}
 			}
 		}
@@ -533,20 +541,6 @@ public class S3Store extends BaseStore {
 		int y = key.lastIndexOf(CharPool.SLASH);
 
 		return key.substring(x + 1, y);
-	}
-
-	protected String getFilePath(String fileName) {
-		StringBundler sb = new StringBundler(4);
-
-		String datePart = DateUtil.getCurrentDate(
-			_PATH_DATE_PATTERN, LocaleUtil.getDefault());
-
-		sb.append(SystemProperties.get(SystemProperties.TMP_DIR));
-		sb.append("/liferay/s3");
-		sb.append(datePart);
-		sb.append(fileName);
-
-		return sb.toString();
 	}
 
 	protected String getHeadVersionLabel(
@@ -637,27 +631,42 @@ public class S3Store extends BaseStore {
 		return new RestS3Service(credentials);
 	}
 
+	protected String getTempFilePath(String fileName, long lastModified) {
+		String datePart = DateUtil.getCurrentDate(
+			_DATE_PATTERN_PATH, LocaleUtil.getDefault());
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append(SystemProperties.get(SystemProperties.TMP_DIR));
+		sb.append(_PATH_S3_TEMP_DIR);
+		sb.append(datePart);
+		sb.append(fileName);
+		sb.append(lastModified);
+
+		return sb.toString();
+	}
+
 	protected File saveTempFile(
-			String fileName, long lastModifiedDate, InputStream inputStream)
+			String tempFileName, long lastModified, InputStream inputStream)
 		throws IOException {
 
 		if (inputStream == null) {
-			throw new IOException("InputStream is null");
+			throw new IOException("S3 object input stream is null");
 		}
 
-		File tempFile = new File(getFilePath(fileName));
+		File tempFile = new File(tempFileName);
+
+		if (tempFile.exists() && (tempFile.lastModified() >= lastModified)) {
+			return tempFile;
+		}
+
 		try {
-			if (!tempFile.exists() ||
-				(tempFile.exists() &&
-					(tempFile.lastModified() < lastModifiedDate))) {
+			File parentFile = tempFile.getParentFile();
 
-				File parentFile = tempFile.getParentFile();
+			parentFile.mkdirs();
 
-				parentFile.mkdirs();
-
-				FileOutputStream outputStream = new FileOutputStream(tempFile);
-				StreamUtil.transfer(inputStream, outputStream);
-			}
+			FileOutputStream outputStream = new FileOutputStream(tempFile);
+			StreamUtil.transfer(inputStream, outputStream);
 		}
 		finally {
 			StreamUtil.cleanUp(inputStream);
@@ -672,9 +681,9 @@ public class S3Store extends BaseStore {
 	private static final String _BUCKET_NAME = PropsUtil.get(
 		PropsKeys.DL_STORE_S3_BUCKET_NAME);
 
-	private static final long _DAY_IN_MILLIS = 24 * 60 *60 * 1000;
+	private static final String _DATE_PATTERN_PATH = "/yyyy/MM/dd/HH/";
 
-	private static final String _PATH_DATE_PATTERN = "/yyyy/MM/dd/HH/";
+	private static final String _PATH_S3_TEMP_DIR = "/liferay/s3";
 
 	private static final String _SECRET_KEY = PropsUtil.get(
 		PropsKeys.DL_STORE_S3_SECRET_KEY);

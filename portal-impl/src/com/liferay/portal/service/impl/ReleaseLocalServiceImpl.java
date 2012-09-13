@@ -79,37 +79,105 @@ public class ReleaseLocalServiceImpl extends ReleaseLocalServiceBaseImpl {
 	}
 
 	public void createTablesAndPopulate() throws SystemException {
-		try {
-			if (_log.isInfoEnabled()) {
-				_log.info("Create tables and populate with default data");
+		if (!isDBCreated()) {
+			try {
+				if (_log.isInfoEnabled()) {
+					_log.info("Create tables and populate with default data");
+				}
+
+				DB db = DBFactoryUtil.getDB();
+
+				db.runSQLTemplate("portal-tables.sql", false);
+				db.runSQLTemplate("portal-data-common.sql", false);
+				db.runSQLTemplate("portal-data-counter.sql", false);
+
+				if (!PropsValues.SCHEMA_RUN_MINIMAL && !ShardUtil.isEnabled()) {
+					db.runSQLTemplate("portal-data-sample.vm", false);
+				}
+
+				db.runSQLTemplate("portal-data-release.sql", false);
+				db.runSQLTemplate("indexes.sql", false);
+				db.runSQLTemplate("sequences.sql", false);
 			}
+			catch (Exception ex) {
+				_log.error(ex, ex);
 
-			DB db = DBFactoryUtil.getDB();
-
-			db.runSQLTemplate("portal-tables.sql", false);
-			db.runSQLTemplate("portal-data-common.sql", false);
-			db.runSQLTemplate("portal-data-counter.sql", false);
-
-			if (!PropsValues.SCHEMA_RUN_MINIMAL && !ShardUtil.isEnabled()) {
-				db.runSQLTemplate("portal-data-sample.vm", false);
+				throw new SystemException(ex);
 			}
-
-			db.runSQLTemplate("portal-data-release.sql", false);
-			db.runSQLTemplate("indexes.sql", false);
-			db.runSQLTemplate("sequences.sql", false);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new SystemException(e);
 		}
 	}
 
 	public int getBuildNumberOrCreate()
 		throws PortalException, SystemException {
 
-		// Get release build number
+		// Create tables and populate with default data
 
+		if (GetterUtil.getBoolean(
+				PropsUtil.get(PropsKeys.SCHEMA_RUN_ENABLED))) {
+
+			releaseLocalService.createTablesAndPopulate();
+
+			testSupportsStringCaseSensitiveQuery();
+
+			Release release = getRelease(
+				ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME,
+				ReleaseInfo.getParentBuildNumber());
+
+			return release.getBuildNumber();
+		}
+		else {
+			int buildNumber = getBuildNumber();
+
+			if (buildNumber == 0) {
+				throw new NoSuchReleaseException(
+					"The database needs to be populated");
+			}
+
+			return buildNumber;
+		}
+	}
+
+	public Release getRelease(String servletContextName, int buildNumber)
+		throws PortalException, SystemException {
+
+		if (Validator.isNull(servletContextName)) {
+			throw new IllegalArgumentException(
+				"Servlet context name cannot be null");
+		}
+
+		Release release = null;
+
+		if (servletContextName.equals(
+				ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME)) {
+
+			release = releasePersistence.findByPrimaryKey(
+				ReleaseConstants.DEFAULT_ID);
+		}
+		else {
+			release = releasePersistence.findByServletContextName(
+				servletContextName);
+		}
+
+		return release;
+	}
+
+	public Release updateRelease(
+			long releaseId, int buildNumber, Date buildDate, boolean verified)
+		throws PortalException, SystemException {
+
+		Release release = releasePersistence.findByPrimaryKey(releaseId);
+
+		release.setModifiedDate(new Date());
+		release.setBuildNumber(buildNumber);
+		release.setBuildDate(buildDate);
+		release.setVerified(verified);
+
+		releasePersistence.update(release, false);
+
+		return release;
+	}
+
+	protected int getBuildNumber() throws PortalException, SystemException {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -155,65 +223,22 @@ public class ReleaseLocalServiceImpl extends ReleaseLocalServiceBaseImpl {
 			DataAccess.cleanUp(con, ps, rs);
 		}
 
-		// Create tables and populate with default data
-
-		if (GetterUtil.getBoolean(
-				PropsUtil.get(PropsKeys.SCHEMA_RUN_ENABLED))) {
-
-			releaseLocalService.createTablesAndPopulate();
-
-			testSupportsStringCaseSensitiveQuery();
-
-			Release release = getRelease(
-				ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME,
-				ReleaseInfo.getParentBuildNumber());
-
-			return release.getBuildNumber();
-		}
-		else {
-			throw new NoSuchReleaseException(
-				"The database needs to be populated");
-		}
+		return 0;
 	}
 
-	public Release getRelease(String servletContextName, int buildNumber)
-		throws PortalException, SystemException {
+	protected boolean isDBCreated() {
+		DB db = DBFactoryUtil.getDB();
 
-		if (Validator.isNull(servletContextName)) {
-			throw new IllegalArgumentException(
-				"Servlet context name cannot be null");
+		try {
+			db.runSQL(
+				"update Release_ set testString = '" +
+					ReleaseConstants.TEST_STRING + "'");
+
+			return true;
 		}
-
-		Release release = null;
-
-		if (servletContextName.equals(
-				ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME)) {
-
-			release = releasePersistence.findByPrimaryKey(
-				ReleaseConstants.DEFAULT_ID);
+		catch (Exception e) {
+			return false;
 		}
-		else {
-			release = releasePersistence.findByServletContextName(
-				servletContextName);
-		}
-
-		return release;
-	}
-
-	public Release updateRelease(
-			long releaseId, int buildNumber, Date buildDate, boolean verified)
-		throws PortalException, SystemException {
-
-		Release release = releasePersistence.findByPrimaryKey(releaseId);
-
-		release.setModifiedDate(new Date());
-		release.setBuildNumber(buildNumber);
-		release.setBuildDate(buildDate);
-		release.setVerified(verified);
-
-		releasePersistence.update(release, false);
-
-		return release;
 	}
 
 	protected void testSupportsStringCaseSensitiveQuery()

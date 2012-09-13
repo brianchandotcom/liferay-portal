@@ -12,12 +12,9 @@
  * details.
  */
 
-package com.liferay.portalweb.kaleo.assetpublisher;
+package com.liferay.portalweb.kaleo.assetpublisher.dmdocument;
 
-import com.liferay.portalweb.kaleo.assetpublisher.blogsentry.BlogsEntryTestPlan;
-import com.liferay.portalweb.kaleo.assetpublisher.dmdocument.DMDocumentTestPlan;
-import com.liferay.portalweb.kaleo.assetpublisher.mbmessage.MBMessageTestPlan;
-import com.liferay.portalweb.kaleo.assetpublisher.wcwebcontent.WCWebContentTestPlan;
+import com.liferay.portalweb.kaleo.assetpublisher.dmdocument.guestviewpendingdmfolderdocumentnoaptest.Guest_ViewPendingDMFolderDocumentNoAPTests;
 import com.liferay.portalweb.portal.BaseTestSuite;
 
 import junit.framework.Test;
@@ -26,15 +23,12 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AssetPublisherTestPlan extends BaseTestSuite {
+public class DMDocumentTestPlan extends BaseTestSuite {
 
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(BlogsEntryTestPlan.suite());
-		testSuite.addTest(DMDocumentTestPlan.suite());
-		testSuite.addTest(MBMessageTestPlan.suite());
-		testSuite.addTest(WCWebContentTestPlan.suite());
+		testSuite.addTest(Guest_ViewPendingDMFolderDocumentNoAPTests.suite());
 
 		return testSuite;
 	}

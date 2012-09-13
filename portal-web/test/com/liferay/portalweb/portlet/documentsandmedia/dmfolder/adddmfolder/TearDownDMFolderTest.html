@@ -34,14 +34,9 @@
 	<td>Icon View</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>//div[@class='aui-loadingmask-message']</td>
-	<td>Loading Message</td>
-</tr>
-<tr>
-	<td>waitForNotVisible</td>
-	<td>//div[@class='aui-loadingmask-message']</td>
-	<td>Loading Message</td>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -55,7 +50,7 @@
 </tr>
 <tr>
 	<td>storeElementPresent</td>
-	<td>//a[contains(@class,'document-link')]/span[@class='entry-title']</td>
+	<td>//a[contains(@class,'entry-link')]/span[@class='entry-title']</td>
 	<td>dmFolderNotRecycled</td>
 </tr>
 <tr>
@@ -80,7 +75,7 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='document-display-style display-icon selectable selected']</td>
+	<td>//div[contains(@class,'display-icon selectable selected')]</td>
 	<td>Folders Selected</td>
 </tr>
 <tr>
@@ -109,14 +104,9 @@
 	<td>Move to the Recycle Bin</td>
 </tr>
 <tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to move the selected entries to the Recycle Bin?</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='portlet-msg-success']</td>
-	<td>Your request completed successfully.</td>
+	<td>assertPartialText</td>
+	<td>//div[@class='portlet-msg-success taglib-trash-undo']</td>
+	<td>moved to the Recycle Bin. Undo</td>
 </tr>
 <tr>
 	<td>label</td>
@@ -170,7 +160,7 @@
 </tr>
 <tr>
 	<td>storeElementPresent</td>
-	<td>//input[@name='_182_rowIds']</td>
+	<td>//span[@title='Actions']/ul/li/strong/a</td>
 	<td>dmFolderNotDeleted</td>
 </tr>
 <tr>
@@ -179,33 +169,18 @@
 	<td>DMFolderDeleted</td>
 </tr>
 <tr>
-	<td>assertNotChecked</td>
-	<td>//input[@name='_182_allRowIds']</td>
-	<td>All Entries Check Box</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//input[@name='_182_allRowIds']</td>
-	<td>All Entries Check Box</td>
-</tr>
-<tr>
-	<td>assertChecked</td>
-	<td>//input[@name='_182_allRowIds']</td>
-	<td>All Entries Check Box</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//tr[contains(@class,'last selected')]</td>
-	<td>Entries Selected</td>
+	<td>assertText</td>
+	<td>//a[@class='trash-empty-link']</td>
+	<td>Empty the Recycle Bin</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//input[@value='Delete']</td>
-	<td>Delete</td>
+	<td>//a[@class='trash-empty-link']</td>
+	<td>Empty the Recycle Bin</td>
 </tr>
 <tr>
 	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete the selected entries? They will be deleted immediately.</td>
+	<td>Are you sure you want to empty the Recycle Bin?</td>
 	<td></td>
 </tr>
 <tr>

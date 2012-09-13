@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.documentsandmedia.dmfolder.adddmfolder;
+package com.liferay.portalweb.kaleo.assetpublisher.dmdocument.guestviewpendingdmfolderdocumentnoaptest;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,37 +20,40 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AddDMFolderTest extends BaseTestCase {
-	public void testAddDMFolder() throws Exception {
+public class EditDMFolderWorkflowSingleApproverTest extends BaseTestCase {
+	public void testEditDMFolderWorkflowSingleApprover()
+		throws Exception {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
-		Thread.sleep(5000);
-		assertEquals(RuntimeVariables.replace("Add"),
-			selenium.getText("//span[@title='Add']/ul/li/strong/a/span"));
-		selenium.clickAt("//span[@title='Add']/ul/li/strong/a/span",
-			RuntimeVariables.replace("Add"));
+		selenium.clickAt("//span[@class='entry-action overlay']/span/ul/li/strong/a",
+			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Folder')]/a");
-		assertEquals(RuntimeVariables.replace("Folder"),
+			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a");
+		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Folder')]/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Folder')]/a",
-			RuntimeVariables.replace("Folder"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a"));
+		selenium.click(RuntimeVariables.replace(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a"));
 		selenium.waitForPageToLoad("30000");
-		selenium.type("//input[@id='_20_name']",
-			RuntimeVariables.replace("DM Folder Name"));
+		assertEquals(RuntimeVariables.replace("Home"),
+			selenium.getText("//h1[@class='header-title']/span"));
+		assertEquals(RuntimeVariables.replace(
+				"Default Workflow for all Document Types"),
+			selenium.getText("//label[@for='workflowDefinition-1']"));
+		selenium.select("//select[@id='_20_workflowDefinition-1']",
+			RuntimeVariables.replace("Single Approver (Version 1)"));
+		assertEquals("Single Approver (Version 1)",
+			selenium.getSelectedLabel(
+				"//select[@id='_20_workflowDefinition-1']"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals(RuntimeVariables.replace("DM Folder Name"),
-			selenium.getText(
-				"//a[contains(@class,'entry-link')]/span[@class='entry-title']"));
 	}
 }

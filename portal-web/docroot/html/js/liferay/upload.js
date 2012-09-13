@@ -280,25 +280,29 @@ AUI.add(
 
 						var fileList = queue.get('fileList');
 
-						queue.cancelUpload();
-
-						uploader.queue = null;
-
-						instance._filesQueued = 0;
-						instance._filesTotal = 0;
+						queue.pauseUpload();
 
 						A.each(
-							fileList,
+							queuedFiles,
 							function(item, index, collection) {
 								var li = A.one('#' + item.id);
 
-								if (li) {
+								if (li && !li.hasClass('upload-complete')) {
 									li.remove(true);
 								}
 							}
 						);
 
+						A.all('.file-uploading').remove(true);
+
+						queue.cancelUpload();
+
+						uploader.queue = null;
+
 						instance._cancelButton.hide();
+
+						instance._filesQueued = 0;
+						instance._filesTotal = 0;
 
 						instance._updateList(0, instance._cancelUploadsText);
 					},

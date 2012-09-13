@@ -45,7 +45,7 @@
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//ul[contains(@id,'groupSelector')]</td>
+	<td>//a[contains(@id,'groupSelectorButton')]/span</td>
 	<td>Site Selector</td>
 </tr>
 <tr>
@@ -149,24 +149,34 @@
 	<td>Search</td>
 </tr>
 <tr>
+	<td>assertVisible</td>
+	<td>//tr[contains(.,'userfn userln')]/td[1]/input</td>
+	<td>Checkbox</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'userfn userln')]/td[2]</td>
+	<td>userfn userln</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'userfn userln')]/td[3]</td>
+	<td>usersn</td>
+</tr>
+<tr>
 	<td>assertNotChecked</td>
-	<td>//input[@name='_174_allRowIds']</td>
-	<td>Assign usersn</td>
+	<td>//tr[contains(.,'userfn userln')]/td[1]/input</td>
+	<td>Checkbox usersn</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//input[@name='_174_allRowIds']</td>
-	<td>Assign usersn</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//tr[contains(@class,'results-row last selected')]</td>
-	<td>Assign usersn</td>
+	<td>//tr[contains(.,'userfn userln')]/td[1]/input</td>
+	<td>Checkbox usersn</td>
 </tr>
 <tr>
 	<td>assertChecked</td>
-	<td>//input[@name='_174_allRowIds']</td>
-	<td>Assign usersn</td>
+	<td>//tr[contains(.,'userfn userln')]/td[1]/input</td>
+	<td>Checkbox usersn</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -185,8 +195,18 @@
 </tr>
 <tr>
 	<td>assertChecked</td>
-	<td>//input[@name='_174_allRowIds']</td>
-	<td>Assign usersn</td>
+	<td>//tr[contains(.,'userfn userln')]/td[1]/input</td>
+	<td>userfn userln</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'userfn userln')]/td[2]</td>
+	<td>userfn userln</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'userfn userln')]/td[3]</td>
+	<td>usersn</td>
 </tr>
 </tbody></table>
 </body>

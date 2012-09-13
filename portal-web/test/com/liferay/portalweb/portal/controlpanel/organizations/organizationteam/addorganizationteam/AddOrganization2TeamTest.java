@@ -22,69 +22,23 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class AddOrganization2TeamTest extends BaseTestCase {
 	public void testAddOrganization2Team() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("//div[@id='dockbar']",
 			RuntimeVariables.replace("Dockbar"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent(
-							"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Control Panel")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//ul[contains(@id,'groupSelector')]",
+		selenium.clickAt("//a[contains(@id,'groupSelectorButton')]/span",
 			RuntimeVariables.replace("Site Selector"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Organization2 Name")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Organization2 Name");
 		selenium.clickAt("link=Organization2 Name",
 			RuntimeVariables.replace("Organization2 Name"));
 		selenium.waitForPageToLoad("30000");
@@ -121,9 +75,9 @@ public class AddOrganization2TeamTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Organization2 Team Name"),
 			selenium.getText(
-				"//div[contains(@id,'SearchContainer')]/table/tbody/tr[3]/td[1]/a"));
+				"//tr[contains(.,'Organization2 Team Name')]/td[1]/a"));
 		assertEquals(RuntimeVariables.replace("Organization2 Team Description"),
 			selenium.getText(
-				"//div[contains(@id,'SearchContainer')]/table/tbody/tr[3]/td[2]/a"));
+				"//tr[contains(.,'Organization2 Team Name')]/td[2]/a"));
 	}
 }

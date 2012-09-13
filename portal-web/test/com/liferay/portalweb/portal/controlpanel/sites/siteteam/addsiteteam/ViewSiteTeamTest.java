@@ -22,69 +22,23 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ViewSiteTeamTest extends BaseTestCase {
 	public void testViewSiteTeam() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("//div[@id='dockbar']",
 			RuntimeVariables.replace("Dockbar"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent(
-							"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Control Panel")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//ul[contains(@id,'groupSelector')]",
+		selenium.clickAt("//a[contains(@id,'groupSelectorButton')]/span",
 			RuntimeVariables.replace("Site Selector"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Site Name")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Site Name");
 		selenium.clickAt("link=Site Name", RuntimeVariables.replace("Site Name"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Site Memberships",
@@ -97,24 +51,33 @@ public class ViewSiteTeamTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Site Name: Manage Memberships"),
 			selenium.getText("//h1[@class='header-title']/span"));
+		assertEquals(RuntimeVariables.replace("\u00ab Back"),
+			selenium.getText("//span[@class='header-back-to']/a"));
+		assertEquals(RuntimeVariables.replace("View Members"),
+			selenium.getText("//div[@class='lfr-portlet-toolbar']/span[1]"));
+		assertTrue(selenium.isPartialText(
+				"//div[@class='lfr-portlet-toolbar']/span[2]", "Add Members"));
+		assertTrue(selenium.isPartialText(
+				"//div[@class='lfr-portlet-toolbar']/span[3]",
+				"Add Site Roles to"));
+		assertEquals(RuntimeVariables.replace("View Teams"),
+			selenium.getText("//div[@class='lfr-portlet-toolbar']/span[4]"));
 		assertTrue(selenium.isVisible("//input[@id='_174_name']"));
 		assertTrue(selenium.isVisible("//input[@value='Search']"));
 		assertTrue(selenium.isVisible("//input[@value='Add Team']"));
 		assertEquals(RuntimeVariables.replace("Name"),
 			selenium.getText(
-				"//div[contains(@id,'SearchContainer')]/table/tbody/tr[1]/th[contains(@id,'SearchContainer_col-name')]"));
+				"//tr[@class='portlet-section-header results-header']/th[1]"));
 		assertEquals(RuntimeVariables.replace("Description"),
 			selenium.getText(
-				"//div[contains(@id,'SearchContainer')]/table/tbody/tr[1]/th[contains(@id,'SearchContainer_col-description')]"));
+				"//tr[@class='portlet-section-header results-header']/th[2]"));
 		assertEquals(RuntimeVariables.replace("Site Team Name"),
-			selenium.getText(
-				"//div[contains(@id,'SearchContainer')]/table/tbody/tr[3]/td[1]/a"));
+			selenium.getText("//tr[contains(.,'Site Team Name')]/td[1]/a"));
 		assertEquals(RuntimeVariables.replace("Site Team Description"),
+			selenium.getText("//tr[contains(.,'Site Team Name')]/td[2]/a"));
+		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText(
-				"//div[contains(@id,'SearchContainer')]/table/tbody/tr[3]/td[2]/a"));
-		assertTrue(selenium.isPartialText(
-				"//div[contains(@id,'SearchContainer')]/table/tbody/tr[3]/td[3]/span[@title='Actions']",
-				"Actions"));
+				"//tr[contains(.,'Site Team Name')]/td[3]/span[@title='Actions']/ul/li/strong/a/span"));
 		assertEquals(RuntimeVariables.replace("Showing 1 result."),
 			selenium.getText("//div[@class='search-results']"));
 	}

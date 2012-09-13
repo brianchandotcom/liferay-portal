@@ -45,7 +45,7 @@
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//ul[contains(@id,'groupSelector')]</td>
+	<td>//a[contains(@id,'groupSelectorButton')]/span</td>
 	<td>Site Selector</td>
 </tr>
 <tr>
@@ -95,27 +95,27 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[contains(@id,'SearchContainer')]/table/tbody/tr[1]/th[contains(@id,'SearchContainer_col-name')]</td>
+	<td>//tr[@class='portlet-section-header results-header']/th[1]</td>
 	<td>Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[contains(@id,'SearchContainer')]/table/tbody/tr[1]/th[contains(@id,'SearchContainer_col-description')]</td>
+	<td>//tr[@class='portlet-section-header results-header']/th[2]</td>
 	<td>Description</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[contains(@id,'SearchContainer')]/table/tbody/tr[3]/td[1]/a</td>
+	<td>//tr[contains(.,'Organization Team Name Edit')]/td[1]</td>
 	<td>Organization Team Name Edit</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[contains(@id,'SearchContainer')]/table/tbody/tr[3]/td[2]/a</td>
+	<td>//tr[contains(.,'Organization Team Name Edit')]/td[2]</td>
 	<td>Organization Team Description Edit</td>
 </tr>
 <tr>
 	<td>assertPartialText</td>
-	<td>//div[contains(@id,'SearchContainer')]/table/tbody/tr[3]/td[3]/span[@title='Actions']</td>
+	<td>//tr[contains(.,'Organization Team Name Edit')]/td[3]/span[@title='Actions']/ul/li/strong/a</td>
 	<td>Actions</td>
 </tr>
 <tr>

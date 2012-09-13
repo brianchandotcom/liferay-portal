@@ -23,69 +23,23 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AssignMembersOrganizationTeamUserTest extends BaseTestCase {
 	public void testAssignMembersOrganizationTeamUser()
 		throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("//div[@id='dockbar']",
 			RuntimeVariables.replace("Dockbar"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent(
-							"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Control Panel")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//ul[contains(@id,'groupSelector')]",
+		selenium.clickAt("//a[contains(@id,'groupSelectorButton')]/span",
 			RuntimeVariables.replace("Site Selector"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Organization Name")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Organization Name");
 		selenium.clickAt("link=Organization Name",
 			RuntimeVariables.replace("Organization Name"));
 		selenium.waitForPageToLoad("30000");
@@ -105,29 +59,23 @@ public class AssignMembersOrganizationTeamUserTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("Organization Team Name"),
+			selenium.getText(
+				"//tr[contains(.,'Organization Team Name')]/td[1]/a"));
+		assertEquals(RuntimeVariables.replace("Organization Team Description"),
+			selenium.getText(
+				"//tr[contains(.,'Organization Team Name')]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Actions"),
-			selenium.getText("//span[@title='Actions']/ul/li/strong/a"));
-		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
+			selenium.getText(
+				"//tr[contains(.,'Organization Team Name')]/td[3]/span[@title='Actions']/ul/li/strong/a/span"));
+		selenium.clickAt("//tr[contains(.,'Organization Team Name')]/td[3]/span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//ul[@role='menu']/li/a[contains(.,'Assign Members')]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.clickAt("//ul[@role='menu']/li/a[contains(.,'Assign Members')]",
+		selenium.waitForVisible(
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Assign Members')]");
+		assertEquals(RuntimeVariables.replace("Assign Members"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Assign Members')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Assign Members')]",
 			RuntimeVariables.replace("Assign Members"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Organization Team Name"),
@@ -141,28 +89,18 @@ public class AssignMembersOrganizationTeamUserTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		assertFalse(selenium.isChecked("//input[@name='_174_allRowIds']"));
-		selenium.clickAt("//input[@name='_174_allRowIds']",
-			RuntimeVariables.replace("Assign usersn"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//tr[contains(@class,'results-row last selected')]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		assertTrue(selenium.isChecked("//input[@name='_174_allRowIds']"));
+		assertTrue(selenium.isVisible(
+				"//tr[contains(.,'userfn userln')]/td[1]/input"));
+		assertEquals(RuntimeVariables.replace("userfn userln"),
+			selenium.getText("//tr[contains(.,'userfn userln')]/td[2]"));
+		assertEquals(RuntimeVariables.replace("usersn"),
+			selenium.getText("//tr[contains(.,'userfn userln')]/td[3]"));
+		assertFalse(selenium.isChecked(
+				"//tr[contains(.,'userfn userln')]/td[1]/input"));
+		selenium.clickAt("//tr[contains(.,'userfn userln')]/td[1]/input",
+			RuntimeVariables.replace("Checkbox usersn"));
+		assertTrue(selenium.isChecked(
+				"//tr[contains(.,'userfn userln')]/td[1]/input"));
 		selenium.clickAt("//input[@value='Update Associations']",
 			RuntimeVariables.replace("Update Associations"));
 		selenium.waitForPageToLoad("30000");
@@ -171,6 +109,11 @@ public class AssignMembersOrganizationTeamUserTest extends BaseTestCase {
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		selenium.clickAt("link=Current", RuntimeVariables.replace("Current"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isChecked("//input[@name='_174_allRowIds']"));
+		assertTrue(selenium.isChecked(
+				"//tr[contains(.,'userfn userln')]/td[1]/input"));
+		assertEquals(RuntimeVariables.replace("userfn userln"),
+			selenium.getText("//tr[contains(.,'userfn userln')]/td[2]"));
+		assertEquals(RuntimeVariables.replace("usersn"),
+			selenium.getText("//tr[contains(.,'userfn userln')]/td[3]"));
 	}
 }

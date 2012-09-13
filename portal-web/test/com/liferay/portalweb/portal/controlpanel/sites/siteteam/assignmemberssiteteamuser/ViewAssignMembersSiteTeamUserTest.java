@@ -22,69 +22,23 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ViewAssignMembersSiteTeamUserTest extends BaseTestCase {
 	public void testViewAssignMembersSiteTeamUser() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("//div[@id='dockbar']",
 			RuntimeVariables.replace("Dockbar"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent(
-							"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Control Panel")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//ul[contains(@id,'groupSelector')]",
+		selenium.clickAt("//a[contains(@id,'groupSelectorButton')]/span",
 			RuntimeVariables.replace("Site Selector"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Site Name")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		selenium.waitForVisible("link=Site Name");
 		selenium.clickAt("link=Site Name", RuntimeVariables.replace("Site Name"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Site Memberships",
@@ -97,29 +51,21 @@ public class ViewAssignMembersSiteTeamUserTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Site Name: Manage Memberships"),
 			selenium.getText("//h1[@class='header-title']/span"));
+		assertEquals(RuntimeVariables.replace("Site Team Name"),
+			selenium.getText("//tr[contains(.,'Site Team Name')]/td[1]/a"));
+		assertEquals(RuntimeVariables.replace("Site Team Description"),
+			selenium.getText("//tr[contains(.,'Site Team Name')]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Actions"),
-			selenium.getText("//span[@title='Actions']/ul/li/strong/a"));
-		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
+			selenium.getText(
+				"//tr[contains(.,'Site Team Name')]/td[3]/span[@title='Actions']/ul/li/strong/a/span"));
+		selenium.clickAt("//tr[contains(.,'Site Team Name')]/td[3]/span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//ul[@role='menu']/li/a[contains(.,'Assign Members')]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.clickAt("//ul[@role='menu']/li/a[contains(.,'Assign Members')]",
+		selenium.waitForVisible(
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Assign Members')]");
+		assertEquals(RuntimeVariables.replace("Assign Members"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Assign Members')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Assign Members')]",
 			RuntimeVariables.replace("Assign Members"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Site Team Name"),
@@ -130,20 +76,18 @@ public class ViewAssignMembersSiteTeamUserTest extends BaseTestCase {
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isChecked(
-				"//div[@id='_174_usersSearchContainer']/div/table/tbody/tr[1]/th[1]/input"));
+				"//tr[@class='portlet-section-header results-header']/th[1]/input"));
 		assertEquals(RuntimeVariables.replace("Name"),
 			selenium.getText(
-				"//div[@id='_174_usersSearchContainer']/div/table/tbody/tr[1]/th[2]"));
+				"//tr[@class='portlet-section-header results-header']/th[2]"));
 		assertEquals(RuntimeVariables.replace("Screen Name"),
 			selenium.getText(
-				"//div[@id='_174_usersSearchContainer']/div/table/tbody/tr[1]/th[3]"));
+				"//tr[@class='portlet-section-header results-header']/th[3]"));
 		assertTrue(selenium.isChecked(
-				"//div[@id='_174_usersSearchContainer']/div/table/tbody/tr[3]/td[1]/input"));
+				"//tr[contains(.,'userfn userln')]/td[1]/input"));
 		assertEquals(RuntimeVariables.replace("userfn userln"),
-			selenium.getText(
-				"//div[@id='_174_usersSearchContainer']/div/table/tbody/tr[3]/td[2]"));
+			selenium.getText("//tr[contains(.,'userfn userln')]/td[2]"));
 		assertEquals(RuntimeVariables.replace("usersn"),
-			selenium.getText(
-				"//div[@id='_174_usersSearchContainer']/div/table/tbody/tr[3]/td[3]"));
+			selenium.getText("//tr[contains(.,'userfn userln')]/td[3]"));
 	}
 }

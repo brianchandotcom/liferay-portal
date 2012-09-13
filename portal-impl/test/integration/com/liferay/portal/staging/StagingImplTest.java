@@ -242,7 +242,7 @@ public class StagingImplTest {
 		// Retrieve content from live after publishing
 
 		journalArticle = JournalArticleLocalServiceUtil.getArticle(
-			journalArticle.getId());
+			group.getGroupId(), journalArticle.getArticleId());
 		pollsQuestion = PollsQuestionLocalServiceUtil.getQuestion(
 			pollsQuestion.getQuestionId());
 

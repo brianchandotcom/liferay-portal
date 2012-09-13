@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.TransactionCommitCallbackRegistryUtil;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.model.AuditedModel;
@@ -43,7 +44,6 @@ import com.liferay.portal.security.permission.ResourceBlockIdsBag;
 import com.liferay.portal.service.PersistedModelLocalService;
 import com.liferay.portal.service.PersistedModelLocalServiceRegistryUtil;
 import com.liferay.portal.service.base.ResourceBlockLocalServiceBaseImpl;
-import com.liferay.portal.spring.transaction.TransactionCommitCallbackUtil;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.util.ArrayList;
@@ -867,7 +867,7 @@ public class ResourceBlockLocalServiceImpl
 
 		};
 
-		TransactionCommitCallbackUtil.registerCallback(callable);
+		TransactionCommitCallbackRegistryUtil.registerCallback(callable);
 
 		return resourceBlock;
 	}

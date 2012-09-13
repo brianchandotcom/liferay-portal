@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.dao.search;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.DeterminateKeyGenerator;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -196,6 +198,14 @@ public class SearchContainer<R> {
 	}
 
 	public int getEnd() {
+		if (_total == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"searchContainer must call setTotal before calling" +
+						"getEnd()");
+			}
+		}
+
 		return _end;
 	}
 
@@ -316,6 +326,14 @@ public class SearchContainer<R> {
 	}
 
 	public int getStart() {
+		if (_total == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"searchContainer must call setTotal before calling" +
+						"getStart()");
+			}
+		}
+
 		return _start;
 	}
 
@@ -455,10 +473,15 @@ public class SearchContainer<R> {
 
 		_resultEnd = _end;
 
-		if (_resultEnd > _total) {
+		if (_total == null) {
+			_resultEnd = 0;
+		}
+		else if (_resultEnd > _total) {
 			_resultEnd = _total;
 		}
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(SearchContainer.class);
 
 	private String _className;
 	private int _cur;
@@ -494,7 +517,7 @@ public class SearchContainer<R> {
 	private RowChecker _rowChecker;
 	private DisplayTerms _searchTerms;
 	private int _start;
-	private int _total;
+	private Integer _total;
 	private boolean _uniqueId;
 
 }

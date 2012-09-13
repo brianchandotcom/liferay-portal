@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.DeterminateKeyGenerator;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -199,17 +198,8 @@ public class SearchContainer<R> {
 	}
 
 	public int getEnd() {
-		if (_total == null) {
-			if (_log.isWarnEnabled()) {
-				PortletURL iteratorURL = _iteratorURL;
-
-				String strutsAction = MapUtil.getString(
-					iteratorURL.getParameterMap(), "struts_action");
-
-				_log.warn(
-					"strutsAction=" + strutsAction + " has a searchContainer " +
-						"where you must call setTotal before calling getEnd");
-			}
+		if ((_total == -1) && _log.isWarnEnabled()) {
+			_log.warn("total must be set first");
 		}
 
 		return _end;
@@ -332,17 +322,8 @@ public class SearchContainer<R> {
 	}
 
 	public int getStart() {
-		if (_total == null) {
-			if (_log.isWarnEnabled()) {
-				PortletURL iteratorURL = _iteratorURL;
-
-				String strutsAction = MapUtil.getString(
-					iteratorURL.getParameterMap(), "struts_action");
-
-				_log.warn(
-					"strutsAction=" + strutsAction + " has a searchContainer " +
-						"where you must call setTotal before calling getStart");
-			}
+		if ((_total == -1) && _log.isWarnEnabled()) {
+			_log.warn("total must be set first");
 		}
 
 		return _start;
@@ -484,10 +465,7 @@ public class SearchContainer<R> {
 
 		_resultEnd = _end;
 
-		if (_total == null) {
-			_resultEnd = 0;
-		}
-		else if (_resultEnd > _total) {
+		if ((_total != -1) && (_resultEnd > _total)) {
 			_resultEnd = _total;
 		}
 	}
@@ -528,7 +506,7 @@ public class SearchContainer<R> {
 	private RowChecker _rowChecker;
 	private DisplayTerms _searchTerms;
 	private int _start;
-	private Integer _total;
+	private int _total = -1;
 	private boolean _uniqueId;
 
 }

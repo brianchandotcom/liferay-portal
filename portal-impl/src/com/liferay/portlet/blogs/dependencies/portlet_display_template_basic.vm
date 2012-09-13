@@ -1,0 +1,58 @@
+#set ($assetEntryLocalService = $serviceLocator.findService("com.liferay.portlet.asset.service.AssetEntryLocalService"))
+#set ($blogsEntryClassName = "com.liferay.portlet.blogs.model.BlogsEntry")
+#set ($assetEntry = $assetEntryLocalService.getEntry($blogsEntryClassName, $entry.getEntryId()))
+
+#foreach ($entry in $entries)
+	#set($assetEntry = $assetEntryLocalService.getEntry($blogsEntryClassName, $entry.getEntryId()))
+
+	#set ($viewURL = $renderResponse.createRenderURL())
+	$viewURL.setParameter("struts_action", "/blogs/view_entry")
+	$viewURL.setParameter("redirect", $portalUtil.getCurrentURL($request))
+	$viewURL.setParameter("urlTitle", $entry.getUrlTitle())
+
+	#set ($portletURL = $renderResponse.createRenderURL())
+
+	<div class="entry">
+		<div class="entry-content">
+			<div class="entry-title">
+				<h2><a href="$viewURL">$htmlUtil.escape($entry.getTitle())</a></h2>
+			</div>
+		</div>
+
+		<div class="entry-body">
+			<div class="entry-author">
+				#language("written-by") $htmlUtil.escape($portalUtil.getUserName($entry.getUserId(), $entry.getUserName()))
+			</div>
+
+			#set ($summary = $entry.getDescription())
+
+			#if ($validator.isNull($summary))
+				#set ($summary = $entry.getContent())
+			#end
+
+			$stringUtil.shorten($htmlUtil.stripHtml($summary), 100)
+
+			<a href="$viewURL">#language("read-more") <span class="aui-helper-hidden-accessible">#language("about") $entry.getTitle()</span> &raquo; </a>
+		</div>
+
+		<div class="entry-footer">
+			<span class="entry-date">
+				$dateTool.format("dd MMM yyyy - HH:mm:ss", $entry.getCreateDate())
+			</span>
+
+			#if ($enableFlags.equals("true"))
+				$taglibLiferay.flags($blogsEntryClassName, $entry.getEntryId(), $entry.getTitle(), true, "", $entry.getUserId())
+			#end
+
+			<span class="entry-categories">
+				$taglibLiferay.assetCategoriesSummary($blogsEntryClassName, $entry.getEntryId(), "", $portletURL)
+			</span>
+
+			<span class="entry-tags">
+				$taglibLiferay.assetTagsSummary($blogsEntryClassName, $entry.getEntryId(), "", "", $portletURL)
+			</span>
+		</div>
+	</div>
+
+	<div class="separator"><!-- --></div>
+#end

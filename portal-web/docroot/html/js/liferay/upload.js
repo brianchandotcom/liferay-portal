@@ -721,6 +721,8 @@ AUI.add(
 							fileIdSelector
 						);
 
+						instance._listInfo.toggle(true);
+
 						instance._updateList(0, currentListText);
 					},
 

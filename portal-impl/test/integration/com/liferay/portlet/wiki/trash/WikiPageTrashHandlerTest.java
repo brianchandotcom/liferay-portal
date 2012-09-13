@@ -27,6 +27,7 @@ import com.liferay.portal.test.TransactionalExecutionTestListener;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.trash.BaseTrashHandlerTestCase;
 import com.liferay.portlet.wiki.asset.WikiPageAssetRenderer;
+import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.service.WikiNodeLocalServiceUtil;
 import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
@@ -46,7 +47,7 @@ import org.junit.runner.RunWith;
 public class WikiPageTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 	@Override
-	public void testTrashAndDelete() throws Exception {
+	public void testTrashAndDeleteDraft() throws Exception {
 		Assert.assertTrue("This test does not apply", true);
 	}
 
@@ -94,6 +95,13 @@ public class WikiPageTrashHandlerTest extends BaseTrashHandlerTestCase {
 	}
 
 	@Override
+	protected String getBaseModelName(ClassedModel classedModel) {
+		WikiPage page = (WikiPage)classedModel;
+
+		return page.getTitle();
+	}
+
+	@Override
 	protected int getBaseModelsNotInTrashCount(BaseModel<?> parentBaseModel)
 		throws Exception {
 
@@ -117,6 +125,11 @@ public class WikiPageTrashHandlerTest extends BaseTrashHandlerTestCase {
 	}
 
 	@Override
+	protected Class<?> getParentBaseModelClass() {
+		return WikiNode.class;
+	}
+
+	@Override
 	protected String getSearchKeywords() {
 		return "Title";
 	}
@@ -127,6 +140,20 @@ public class WikiPageTrashHandlerTest extends BaseTrashHandlerTestCase {
 	}
 
 	@Override
+	protected boolean isInTrashFolder(ClassedModel classedModel)
+		throws Exception {
+
+		WikiPage wikiPage = (WikiPage)classedModel;
+
+		return wikiPage.isInTrashFolder();
+	}
+
+	@Override
+	protected boolean isMoveableModel() {
+		return false;
+	}
+
+	@Override
 	protected void moveBaseModelToTrash(long primaryKey) throws Exception {
 		WikiPage wikiPage = WikiPageLocalServiceUtil.getPageByPageId(
 			primaryKey);
@@ -134,6 +161,14 @@ public class WikiPageTrashHandlerTest extends BaseTrashHandlerTestCase {
 		WikiPageLocalServiceUtil.movePageToTrash(
 			TestPropsValues.getUserId(), wikiPage.getNodeId(),
 			wikiPage.getTitle());
+	}
+
+	@Override
+	protected void moveParentBaseModelToTrash(long primaryKey)
+		throws Exception {
+
+		WikiNodeLocalServiceUtil.moveNodeToTrash(
+			TestPropsValues.getUserId(), primaryKey);
 	}
 
 }

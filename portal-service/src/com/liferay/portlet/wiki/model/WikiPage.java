@@ -55,6 +55,8 @@ public interface WikiPage extends WikiPageModel, PersistedModel {
 
 	public boolean isResourceMain();
 
+	public boolean isInTrashFolder();
+
 	public void setAttachmentsDir(java.lang.String attachmentsDir);
 
 	public void setDeletedAttachmentsDir(java.lang.String deletedAttachmentsDir);

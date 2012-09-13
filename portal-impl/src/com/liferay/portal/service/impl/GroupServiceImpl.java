@@ -259,8 +259,8 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 			params.put("site", Boolean.TRUE);
 
 			return groupLocalService.search(
-				permissionChecker.getCompanyId(), null, null, null, params, 0,
-				max);
+				permissionChecker.getCompanyId(), null, null, null, params,
+				true, 0, max);
 		}
 
 		List<Group> groups = new UniqueList<Group>();
@@ -633,7 +633,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 			params);
 
 		List<Group> groups = groupLocalService.search(
-			companyId, name, description, paramsObj, start, end);
+			companyId, name, description, paramsObj, true, start, end);
 
 		return filterGroups(groups);
 	}
@@ -668,7 +668,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 			params);
 
 		return groupLocalService.searchCount(
-			companyId, name, description, paramsObj);
+			companyId, name, description, paramsObj, true);
 	}
 
 	/**

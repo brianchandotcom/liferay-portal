@@ -113,8 +113,8 @@
 				(Group_.classNameId = ?) AND
 				(Group_.liveGroupId = 0) AND
 				(Group_.name != 'Control Panel') AND
-				(lower(Group_.name) LIKE ? OR lower(Group_.name) LIKE ? OR ? IS NULL) AND
-				(lower(Group_.description) LIKE ? OR ? IS NULL) AND
+				(lower(Group_.name) LIKE ? OR lower(Group_.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+				(lower(Group_.description) LIKE ? [$AND_OR_NULL_CHECK$]) AND
 				(Group_.type_ != 4)
 		]]>
 	</sql>
@@ -220,8 +220,8 @@
 				(Group_.classNameId = ?) AND
 				(Group_.liveGroupId = 0) AND
 				(Group_.name != 'Control Panel') AND
-				(lower(Group_.name) LIKE ? OR lower(Group_.name) LIKE ? OR ? IS NULL) AND
-				(lower(Group_.description) LIKE ? OR ? IS NULL) AND
+				(lower(Group_.name) LIKE ? OR lower(Group_.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+				(lower(Group_.description) LIKE ? [$AND_OR_NULL_CHECK$]) AND
 				(Group_.type_ != 4)
 		]]>
 	</sql>

@@ -32,7 +32,7 @@ public class SearchBlogsEntryTest extends BaseTestCase {
 			RuntimeVariables.replace("Blogs Entry Title"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
-		selenium.waitForVisible("//table[@class='taglib-search-iterator']");
+		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("#"),
 			selenium.getText(
 				"//tr[@class='portlet-section-header results-header']/th[1]"));

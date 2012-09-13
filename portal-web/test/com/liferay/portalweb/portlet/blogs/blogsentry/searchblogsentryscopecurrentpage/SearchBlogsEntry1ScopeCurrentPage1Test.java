@@ -33,7 +33,7 @@ public class SearchBlogsEntry1ScopeCurrentPage1Test extends BaseTestCase {
 			RuntimeVariables.replace("Blogs Entry1 Title"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
-		selenium.waitForVisible("//table[@class='taglib-search-iterator']");
+		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("#"),
 			selenium.getText(
 				"//tr[@class='portlet-section-header results-header']/th[1]"));

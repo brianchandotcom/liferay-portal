@@ -22,6 +22,8 @@ import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.trash.model.TrashEntry;
 
+import java.util.Date;
+
 import javax.portlet.PortletRequest;
 
 /**
@@ -48,6 +50,12 @@ public abstract class BaseTrashHandler implements TrashHandler {
 	@SuppressWarnings("unused")
 	public void checkDuplicateTrashEntry(TrashEntry trashEntry, String newName)
 		throws PortalException, SystemException {
+	}
+
+	public void deleteTrashAttachments(long groupId, Date date)
+		throws PortalException, SystemException {
+
+		return;
 	}
 
 	public void deleteTrashEntries(long[] classPKs)

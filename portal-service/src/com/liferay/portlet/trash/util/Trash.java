@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.Group;
 import com.liferay.portlet.trash.model.TrashEntry;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -31,6 +32,11 @@ public interface Trash {
 	public String appendTrashNamespace(String title);
 
 	public String appendTrashNamespace(String title, String separator);
+
+	public void deleteEntriesAttachments(
+			long companyId, long repositoryId, Date date,
+			String[] attachmentFileNames)
+		throws PortalException, SystemException;
 
 	public List<TrashEntry> getEntries(Hits hits)
 		throws PortalException, SystemException;

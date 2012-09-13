@@ -262,6 +262,14 @@ public interface MBStatsUserLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.Date getLasPostDateByUserId(long groupId, long userId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long getMessageCountByGroupId(long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long getMessageCountByUserId(long userId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
@@ -291,5 +299,9 @@ public interface MBStatsUserLocalService extends BaseLocalService,
 
 	public com.liferay.portlet.messageboards.model.MBStatsUser updateStatsUser(
 		long groupId, long userId, java.util.Date lastPostDate)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public com.liferay.portlet.messageboards.model.MBStatsUser updateStatsUser(
+		long groupId, long userId, int messageCount, java.util.Date lastPostDate)
 		throws com.liferay.portal.kernel.exception.SystemException;
 }

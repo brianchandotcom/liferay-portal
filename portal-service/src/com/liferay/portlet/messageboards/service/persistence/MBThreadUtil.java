@@ -802,10 +802,10 @@ public class MBThreadUtil {
 	* @return the matching message boards threads
 	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.portlet.messageboards.model.MBThread> findByG_NotC(
+	public static java.util.List<com.liferay.portlet.messageboards.model.MBThread> findByG_NeC(
 		long groupId, long categoryId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findByG_NotC(groupId, categoryId);
+		return getPersistence().findByG_NeC(groupId, categoryId);
 	}
 
 	/**
@@ -822,10 +822,10 @@ public class MBThreadUtil {
 	* @return the range of matching message boards threads
 	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.portlet.messageboards.model.MBThread> findByG_NotC(
+	public static java.util.List<com.liferay.portlet.messageboards.model.MBThread> findByG_NeC(
 		long groupId, long categoryId, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findByG_NotC(groupId, categoryId, start, end);
+		return getPersistence().findByG_NeC(groupId, categoryId, start, end);
 	}
 
 	/**
@@ -843,12 +843,12 @@ public class MBThreadUtil {
 	* @return the ordered range of matching message boards threads
 	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.portlet.messageboards.model.MBThread> findByG_NotC(
+	public static java.util.List<com.liferay.portlet.messageboards.model.MBThread> findByG_NeC(
 		long groupId, long categoryId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence()
-				   .findByG_NotC(groupId, categoryId, start, end,
+				   .findByG_NeC(groupId, categoryId, start, end,
 			orderByComparator);
 	}
 
@@ -862,13 +862,13 @@ public class MBThreadUtil {
 	* @throws com.liferay.portlet.messageboards.NoSuchThreadException if a matching message boards thread could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portlet.messageboards.model.MBThread findByG_NotC_First(
+	public static com.liferay.portlet.messageboards.model.MBThread findByG_NeC_First(
 		long groupId, long categoryId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.messageboards.NoSuchThreadException {
 		return getPersistence()
-				   .findByG_NotC_First(groupId, categoryId, orderByComparator);
+				   .findByG_NeC_First(groupId, categoryId, orderByComparator);
 	}
 
 	/**
@@ -880,12 +880,12 @@ public class MBThreadUtil {
 	* @return the first matching message boards thread, or <code>null</code> if a matching message boards thread could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portlet.messageboards.model.MBThread fetchByG_NotC_First(
+	public static com.liferay.portlet.messageboards.model.MBThread fetchByG_NeC_First(
 		long groupId, long categoryId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence()
-				   .fetchByG_NotC_First(groupId, categoryId, orderByComparator);
+				   .fetchByG_NeC_First(groupId, categoryId, orderByComparator);
 	}
 
 	/**
@@ -898,13 +898,13 @@ public class MBThreadUtil {
 	* @throws com.liferay.portlet.messageboards.NoSuchThreadException if a matching message boards thread could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portlet.messageboards.model.MBThread findByG_NotC_Last(
+	public static com.liferay.portlet.messageboards.model.MBThread findByG_NeC_Last(
 		long groupId, long categoryId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.messageboards.NoSuchThreadException {
 		return getPersistence()
-				   .findByG_NotC_Last(groupId, categoryId, orderByComparator);
+				   .findByG_NeC_Last(groupId, categoryId, orderByComparator);
 	}
 
 	/**
@@ -916,12 +916,12 @@ public class MBThreadUtil {
 	* @return the last matching message boards thread, or <code>null</code> if a matching message boards thread could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portlet.messageboards.model.MBThread fetchByG_NotC_Last(
+	public static com.liferay.portlet.messageboards.model.MBThread fetchByG_NeC_Last(
 		long groupId, long categoryId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence()
-				   .fetchByG_NotC_Last(groupId, categoryId, orderByComparator);
+				   .fetchByG_NeC_Last(groupId, categoryId, orderByComparator);
 	}
 
 	/**
@@ -935,13 +935,13 @@ public class MBThreadUtil {
 	* @throws com.liferay.portlet.messageboards.NoSuchThreadException if a message boards thread with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portlet.messageboards.model.MBThread[] findByG_NotC_PrevAndNext(
+	public static com.liferay.portlet.messageboards.model.MBThread[] findByG_NeC_PrevAndNext(
 		long threadId, long groupId, long categoryId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.messageboards.NoSuchThreadException {
 		return getPersistence()
-				   .findByG_NotC_PrevAndNext(threadId, groupId, categoryId,
+				   .findByG_NeC_PrevAndNext(threadId, groupId, categoryId,
 			orderByComparator);
 	}
 
@@ -953,10 +953,10 @@ public class MBThreadUtil {
 	* @return the matching message boards threads that the user has permission to view
 	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.portlet.messageboards.model.MBThread> filterFindByG_NotC(
+	public static java.util.List<com.liferay.portlet.messageboards.model.MBThread> filterFindByG_NeC(
 		long groupId, long categoryId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().filterFindByG_NotC(groupId, categoryId);
+		return getPersistence().filterFindByG_NeC(groupId, categoryId);
 	}
 
 	/**
@@ -973,11 +973,11 @@ public class MBThreadUtil {
 	* @return the range of matching message boards threads that the user has permission to view
 	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.portlet.messageboards.model.MBThread> filterFindByG_NotC(
+	public static java.util.List<com.liferay.portlet.messageboards.model.MBThread> filterFindByG_NeC(
 		long groupId, long categoryId, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence()
-				   .filterFindByG_NotC(groupId, categoryId, start, end);
+				   .filterFindByG_NeC(groupId, categoryId, start, end);
 	}
 
 	/**
@@ -995,12 +995,12 @@ public class MBThreadUtil {
 	* @return the ordered range of matching message boards threads that the user has permission to view
 	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.portlet.messageboards.model.MBThread> filterFindByG_NotC(
+	public static java.util.List<com.liferay.portlet.messageboards.model.MBThread> filterFindByG_NeC(
 		long groupId, long categoryId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence()
-				   .filterFindByG_NotC(groupId, categoryId, start, end,
+				   .filterFindByG_NeC(groupId, categoryId, start, end,
 			orderByComparator);
 	}
 
@@ -1015,13 +1015,13 @@ public class MBThreadUtil {
 	* @throws com.liferay.portlet.messageboards.NoSuchThreadException if a message boards thread with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portlet.messageboards.model.MBThread[] filterFindByG_NotC_PrevAndNext(
+	public static com.liferay.portlet.messageboards.model.MBThread[] filterFindByG_NeC_PrevAndNext(
 		long threadId, long groupId, long categoryId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.messageboards.NoSuchThreadException {
 		return getPersistence()
-				   .filterFindByG_NotC_PrevAndNext(threadId, groupId,
+				   .filterFindByG_NeC_PrevAndNext(threadId, groupId,
 			categoryId, orderByComparator);
 	}
 
@@ -1811,6 +1811,382 @@ public class MBThreadUtil {
 	}
 
 	/**
+	* Returns all the message boards threads where groupId = &#63; and categoryId = &#63; and status &ne; &#63;.
+	*
+	* @param groupId the group ID
+	* @param categoryId the category ID
+	* @param status the status
+	* @return the matching message boards threads
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.messageboards.model.MBThread> findByG_C_NeS(
+		long groupId, long categoryId, int status)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByG_C_NeS(groupId, categoryId, status);
+	}
+
+	/**
+	* Returns a range of all the message boards threads where groupId = &#63; and categoryId = &#63; and status &ne; &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param categoryId the category ID
+	* @param status the status
+	* @param start the lower bound of the range of message boards threads
+	* @param end the upper bound of the range of message boards threads (not inclusive)
+	* @return the range of matching message boards threads
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.messageboards.model.MBThread> findByG_C_NeS(
+		long groupId, long categoryId, int status, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByG_C_NeS(groupId, categoryId, status, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the message boards threads where groupId = &#63; and categoryId = &#63; and status &ne; &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param categoryId the category ID
+	* @param status the status
+	* @param start the lower bound of the range of message boards threads
+	* @param end the upper bound of the range of message boards threads (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching message boards threads
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.messageboards.model.MBThread> findByG_C_NeS(
+		long groupId, long categoryId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByG_C_NeS(groupId, categoryId, status, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the first message boards thread in the ordered set where groupId = &#63; and categoryId = &#63; and status &ne; &#63;.
+	*
+	* @param groupId the group ID
+	* @param categoryId the category ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching message boards thread
+	* @throws com.liferay.portlet.messageboards.NoSuchThreadException if a matching message boards thread could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.messageboards.model.MBThread findByG_C_NeS_First(
+		long groupId, long categoryId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.messageboards.NoSuchThreadException {
+		return getPersistence()
+				   .findByG_C_NeS_First(groupId, categoryId, status,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the first message boards thread in the ordered set where groupId = &#63; and categoryId = &#63; and status &ne; &#63;.
+	*
+	* @param groupId the group ID
+	* @param categoryId the category ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching message boards thread, or <code>null</code> if a matching message boards thread could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.messageboards.model.MBThread fetchByG_C_NeS_First(
+		long groupId, long categoryId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByG_C_NeS_First(groupId, categoryId, status,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last message boards thread in the ordered set where groupId = &#63; and categoryId = &#63; and status &ne; &#63;.
+	*
+	* @param groupId the group ID
+	* @param categoryId the category ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching message boards thread
+	* @throws com.liferay.portlet.messageboards.NoSuchThreadException if a matching message boards thread could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.messageboards.model.MBThread findByG_C_NeS_Last(
+		long groupId, long categoryId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.messageboards.NoSuchThreadException {
+		return getPersistence()
+				   .findByG_C_NeS_Last(groupId, categoryId, status,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last message boards thread in the ordered set where groupId = &#63; and categoryId = &#63; and status &ne; &#63;.
+	*
+	* @param groupId the group ID
+	* @param categoryId the category ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching message boards thread, or <code>null</code> if a matching message boards thread could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.messageboards.model.MBThread fetchByG_C_NeS_Last(
+		long groupId, long categoryId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByG_C_NeS_Last(groupId, categoryId, status,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the message boards threads before and after the current message boards thread in the ordered set where groupId = &#63; and categoryId = &#63; and status &ne; &#63;.
+	*
+	* @param threadId the primary key of the current message boards thread
+	* @param groupId the group ID
+	* @param categoryId the category ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next message boards thread
+	* @throws com.liferay.portlet.messageboards.NoSuchThreadException if a message boards thread with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.messageboards.model.MBThread[] findByG_C_NeS_PrevAndNext(
+		long threadId, long groupId, long categoryId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.messageboards.NoSuchThreadException {
+		return getPersistence()
+				   .findByG_C_NeS_PrevAndNext(threadId, groupId, categoryId,
+			status, orderByComparator);
+	}
+
+	/**
+	* Returns all the message boards threads where groupId = &#63; and categoryId = any &#63; and status &ne; &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param categoryIds the category IDs
+	* @param status the status
+	* @return the matching message boards threads
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.messageboards.model.MBThread> findByG_C_NeS(
+		long groupId, long[] categoryIds, int status)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByG_C_NeS(groupId, categoryIds, status);
+	}
+
+	/**
+	* Returns a range of all the message boards threads where groupId = &#63; and categoryId = any &#63; and status &ne; &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param categoryIds the category IDs
+	* @param status the status
+	* @param start the lower bound of the range of message boards threads
+	* @param end the upper bound of the range of message boards threads (not inclusive)
+	* @return the range of matching message boards threads
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.messageboards.model.MBThread> findByG_C_NeS(
+		long groupId, long[] categoryIds, int status, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByG_C_NeS(groupId, categoryIds, status, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the message boards threads where groupId = &#63; and categoryId = any &#63; and status &ne; &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param categoryIds the category IDs
+	* @param status the status
+	* @param start the lower bound of the range of message boards threads
+	* @param end the upper bound of the range of message boards threads (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching message boards threads
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.messageboards.model.MBThread> findByG_C_NeS(
+		long groupId, long[] categoryIds, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByG_C_NeS(groupId, categoryIds, status, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns all the message boards threads that the user has permission to view where groupId = &#63; and categoryId = &#63; and status &ne; &#63;.
+	*
+	* @param groupId the group ID
+	* @param categoryId the category ID
+	* @param status the status
+	* @return the matching message boards threads that the user has permission to view
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.messageboards.model.MBThread> filterFindByG_C_NeS(
+		long groupId, long categoryId, int status)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().filterFindByG_C_NeS(groupId, categoryId, status);
+	}
+
+	/**
+	* Returns a range of all the message boards threads that the user has permission to view where groupId = &#63; and categoryId = &#63; and status &ne; &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param categoryId the category ID
+	* @param status the status
+	* @param start the lower bound of the range of message boards threads
+	* @param end the upper bound of the range of message boards threads (not inclusive)
+	* @return the range of matching message boards threads that the user has permission to view
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.messageboards.model.MBThread> filterFindByG_C_NeS(
+		long groupId, long categoryId, int status, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .filterFindByG_C_NeS(groupId, categoryId, status, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the message boards threads that the user has permissions to view where groupId = &#63; and categoryId = &#63; and status &ne; &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param categoryId the category ID
+	* @param status the status
+	* @param start the lower bound of the range of message boards threads
+	* @param end the upper bound of the range of message boards threads (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching message boards threads that the user has permission to view
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.messageboards.model.MBThread> filterFindByG_C_NeS(
+		long groupId, long categoryId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .filterFindByG_C_NeS(groupId, categoryId, status, start,
+			end, orderByComparator);
+	}
+
+	/**
+	* Returns the message boards threads before and after the current message boards thread in the ordered set of message boards threads that the user has permission to view where groupId = &#63; and categoryId = &#63; and status &ne; &#63;.
+	*
+	* @param threadId the primary key of the current message boards thread
+	* @param groupId the group ID
+	* @param categoryId the category ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next message boards thread
+	* @throws com.liferay.portlet.messageboards.NoSuchThreadException if a message boards thread with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.messageboards.model.MBThread[] filterFindByG_C_NeS_PrevAndNext(
+		long threadId, long groupId, long categoryId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.messageboards.NoSuchThreadException {
+		return getPersistence()
+				   .filterFindByG_C_NeS_PrevAndNext(threadId, groupId,
+			categoryId, status, orderByComparator);
+	}
+
+	/**
+	* Returns all the message boards threads that the user has permission to view where groupId = &#63; and categoryId = any &#63; and status &ne; &#63;.
+	*
+	* @param groupId the group ID
+	* @param categoryIds the category IDs
+	* @param status the status
+	* @return the matching message boards threads that the user has permission to view
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.messageboards.model.MBThread> filterFindByG_C_NeS(
+		long groupId, long[] categoryIds, int status)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().filterFindByG_C_NeS(groupId, categoryIds, status);
+	}
+
+	/**
+	* Returns a range of all the message boards threads that the user has permission to view where groupId = &#63; and categoryId = any &#63; and status &ne; &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param categoryIds the category IDs
+	* @param status the status
+	* @param start the lower bound of the range of message boards threads
+	* @param end the upper bound of the range of message boards threads (not inclusive)
+	* @return the range of matching message boards threads that the user has permission to view
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.messageboards.model.MBThread> filterFindByG_C_NeS(
+		long groupId, long[] categoryIds, int status, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .filterFindByG_C_NeS(groupId, categoryIds, status, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the message boards threads that the user has permission to view where groupId = &#63; and categoryId = any &#63; and status &ne; &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param categoryIds the category IDs
+	* @param status the status
+	* @param start the lower bound of the range of message boards threads
+	* @param end the upper bound of the range of message boards threads (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching message boards threads that the user has permission to view
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.messageboards.model.MBThread> filterFindByG_C_NeS(
+		long groupId, long[] categoryIds, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .filterFindByG_C_NeS(groupId, categoryIds, status, start,
+			end, orderByComparator);
+	}
+
+	/**
 	* Returns all the message boards threads where groupId = &#63; and categoryId = &#63; and status = &#63;.
 	*
 	* @param groupId the group ID
@@ -2187,6 +2563,256 @@ public class MBThreadUtil {
 	}
 
 	/**
+	* Returns all the message boards threads where groupId = &#63; and categoryId &ne; &#63; and status &ne; &#63;.
+	*
+	* @param groupId the group ID
+	* @param categoryId the category ID
+	* @param status the status
+	* @return the matching message boards threads
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.messageboards.model.MBThread> findByG_NeC_NeS(
+		long groupId, long categoryId, int status)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByG_NeC_NeS(groupId, categoryId, status);
+	}
+
+	/**
+	* Returns a range of all the message boards threads where groupId = &#63; and categoryId &ne; &#63; and status &ne; &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param categoryId the category ID
+	* @param status the status
+	* @param start the lower bound of the range of message boards threads
+	* @param end the upper bound of the range of message boards threads (not inclusive)
+	* @return the range of matching message boards threads
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.messageboards.model.MBThread> findByG_NeC_NeS(
+		long groupId, long categoryId, int status, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByG_NeC_NeS(groupId, categoryId, status, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the message boards threads where groupId = &#63; and categoryId &ne; &#63; and status &ne; &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param categoryId the category ID
+	* @param status the status
+	* @param start the lower bound of the range of message boards threads
+	* @param end the upper bound of the range of message boards threads (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching message boards threads
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.messageboards.model.MBThread> findByG_NeC_NeS(
+		long groupId, long categoryId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByG_NeC_NeS(groupId, categoryId, status, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the first message boards thread in the ordered set where groupId = &#63; and categoryId &ne; &#63; and status &ne; &#63;.
+	*
+	* @param groupId the group ID
+	* @param categoryId the category ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching message boards thread
+	* @throws com.liferay.portlet.messageboards.NoSuchThreadException if a matching message boards thread could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.messageboards.model.MBThread findByG_NeC_NeS_First(
+		long groupId, long categoryId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.messageboards.NoSuchThreadException {
+		return getPersistence()
+				   .findByG_NeC_NeS_First(groupId, categoryId, status,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the first message boards thread in the ordered set where groupId = &#63; and categoryId &ne; &#63; and status &ne; &#63;.
+	*
+	* @param groupId the group ID
+	* @param categoryId the category ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching message boards thread, or <code>null</code> if a matching message boards thread could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.messageboards.model.MBThread fetchByG_NeC_NeS_First(
+		long groupId, long categoryId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByG_NeC_NeS_First(groupId, categoryId, status,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last message boards thread in the ordered set where groupId = &#63; and categoryId &ne; &#63; and status &ne; &#63;.
+	*
+	* @param groupId the group ID
+	* @param categoryId the category ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching message boards thread
+	* @throws com.liferay.portlet.messageboards.NoSuchThreadException if a matching message boards thread could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.messageboards.model.MBThread findByG_NeC_NeS_Last(
+		long groupId, long categoryId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.messageboards.NoSuchThreadException {
+		return getPersistence()
+				   .findByG_NeC_NeS_Last(groupId, categoryId, status,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last message boards thread in the ordered set where groupId = &#63; and categoryId &ne; &#63; and status &ne; &#63;.
+	*
+	* @param groupId the group ID
+	* @param categoryId the category ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching message boards thread, or <code>null</code> if a matching message boards thread could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.messageboards.model.MBThread fetchByG_NeC_NeS_Last(
+		long groupId, long categoryId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByG_NeC_NeS_Last(groupId, categoryId, status,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the message boards threads before and after the current message boards thread in the ordered set where groupId = &#63; and categoryId &ne; &#63; and status &ne; &#63;.
+	*
+	* @param threadId the primary key of the current message boards thread
+	* @param groupId the group ID
+	* @param categoryId the category ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next message boards thread
+	* @throws com.liferay.portlet.messageboards.NoSuchThreadException if a message boards thread with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.messageboards.model.MBThread[] findByG_NeC_NeS_PrevAndNext(
+		long threadId, long groupId, long categoryId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.messageboards.NoSuchThreadException {
+		return getPersistence()
+				   .findByG_NeC_NeS_PrevAndNext(threadId, groupId, categoryId,
+			status, orderByComparator);
+	}
+
+	/**
+	* Returns all the message boards threads that the user has permission to view where groupId = &#63; and categoryId &ne; &#63; and status &ne; &#63;.
+	*
+	* @param groupId the group ID
+	* @param categoryId the category ID
+	* @param status the status
+	* @return the matching message boards threads that the user has permission to view
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.messageboards.model.MBThread> filterFindByG_NeC_NeS(
+		long groupId, long categoryId, int status)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .filterFindByG_NeC_NeS(groupId, categoryId, status);
+	}
+
+	/**
+	* Returns a range of all the message boards threads that the user has permission to view where groupId = &#63; and categoryId &ne; &#63; and status &ne; &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param categoryId the category ID
+	* @param status the status
+	* @param start the lower bound of the range of message boards threads
+	* @param end the upper bound of the range of message boards threads (not inclusive)
+	* @return the range of matching message boards threads that the user has permission to view
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.messageboards.model.MBThread> filterFindByG_NeC_NeS(
+		long groupId, long categoryId, int status, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .filterFindByG_NeC_NeS(groupId, categoryId, status, start,
+			end);
+	}
+
+	/**
+	* Returns an ordered range of all the message boards threads that the user has permissions to view where groupId = &#63; and categoryId &ne; &#63; and status &ne; &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param categoryId the category ID
+	* @param status the status
+	* @param start the lower bound of the range of message boards threads
+	* @param end the upper bound of the range of message boards threads (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching message boards threads that the user has permission to view
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.messageboards.model.MBThread> filterFindByG_NeC_NeS(
+		long groupId, long categoryId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .filterFindByG_NeC_NeS(groupId, categoryId, status, start,
+			end, orderByComparator);
+	}
+
+	/**
+	* Returns the message boards threads before and after the current message boards thread in the ordered set of message boards threads that the user has permission to view where groupId = &#63; and categoryId &ne; &#63; and status &ne; &#63;.
+	*
+	* @param threadId the primary key of the current message boards thread
+	* @param groupId the group ID
+	* @param categoryId the category ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next message boards thread
+	* @throws com.liferay.portlet.messageboards.NoSuchThreadException if a message boards thread with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.messageboards.model.MBThread[] filterFindByG_NeC_NeS_PrevAndNext(
+		long threadId, long groupId, long categoryId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.messageboards.NoSuchThreadException {
+		return getPersistence()
+				   .filterFindByG_NeC_NeS_PrevAndNext(threadId, groupId,
+			categoryId, status, orderByComparator);
+	}
+
+	/**
 	* Returns all the message boards threads where groupId = &#63; and categoryId &ne; &#63; and status = &#63;.
 	*
 	* @param groupId the group ID
@@ -2195,10 +2821,10 @@ public class MBThreadUtil {
 	* @return the matching message boards threads
 	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.portlet.messageboards.model.MBThread> findByG_NotC_S(
+	public static java.util.List<com.liferay.portlet.messageboards.model.MBThread> findByG_NeC_S(
 		long groupId, long categoryId, int status)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findByG_NotC_S(groupId, categoryId, status);
+		return getPersistence().findByG_NeC_S(groupId, categoryId, status);
 	}
 
 	/**
@@ -2216,11 +2842,11 @@ public class MBThreadUtil {
 	* @return the range of matching message boards threads
 	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.portlet.messageboards.model.MBThread> findByG_NotC_S(
+	public static java.util.List<com.liferay.portlet.messageboards.model.MBThread> findByG_NeC_S(
 		long groupId, long categoryId, int status, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence()
-				   .findByG_NotC_S(groupId, categoryId, status, start, end);
+				   .findByG_NeC_S(groupId, categoryId, status, start, end);
 	}
 
 	/**
@@ -2239,12 +2865,12 @@ public class MBThreadUtil {
 	* @return the ordered range of matching message boards threads
 	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.portlet.messageboards.model.MBThread> findByG_NotC_S(
+	public static java.util.List<com.liferay.portlet.messageboards.model.MBThread> findByG_NeC_S(
 		long groupId, long categoryId, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence()
-				   .findByG_NotC_S(groupId, categoryId, status, start, end,
+				   .findByG_NeC_S(groupId, categoryId, status, start, end,
 			orderByComparator);
 	}
 
@@ -2259,13 +2885,13 @@ public class MBThreadUtil {
 	* @throws com.liferay.portlet.messageboards.NoSuchThreadException if a matching message boards thread could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portlet.messageboards.model.MBThread findByG_NotC_S_First(
+	public static com.liferay.portlet.messageboards.model.MBThread findByG_NeC_S_First(
 		long groupId, long categoryId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.messageboards.NoSuchThreadException {
 		return getPersistence()
-				   .findByG_NotC_S_First(groupId, categoryId, status,
+				   .findByG_NeC_S_First(groupId, categoryId, status,
 			orderByComparator);
 	}
 
@@ -2279,12 +2905,12 @@ public class MBThreadUtil {
 	* @return the first matching message boards thread, or <code>null</code> if a matching message boards thread could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portlet.messageboards.model.MBThread fetchByG_NotC_S_First(
+	public static com.liferay.portlet.messageboards.model.MBThread fetchByG_NeC_S_First(
 		long groupId, long categoryId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence()
-				   .fetchByG_NotC_S_First(groupId, categoryId, status,
+				   .fetchByG_NeC_S_First(groupId, categoryId, status,
 			orderByComparator);
 	}
 
@@ -2299,13 +2925,13 @@ public class MBThreadUtil {
 	* @throws com.liferay.portlet.messageboards.NoSuchThreadException if a matching message boards thread could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portlet.messageboards.model.MBThread findByG_NotC_S_Last(
+	public static com.liferay.portlet.messageboards.model.MBThread findByG_NeC_S_Last(
 		long groupId, long categoryId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.messageboards.NoSuchThreadException {
 		return getPersistence()
-				   .findByG_NotC_S_Last(groupId, categoryId, status,
+				   .findByG_NeC_S_Last(groupId, categoryId, status,
 			orderByComparator);
 	}
 
@@ -2319,12 +2945,12 @@ public class MBThreadUtil {
 	* @return the last matching message boards thread, or <code>null</code> if a matching message boards thread could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portlet.messageboards.model.MBThread fetchByG_NotC_S_Last(
+	public static com.liferay.portlet.messageboards.model.MBThread fetchByG_NeC_S_Last(
 		long groupId, long categoryId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence()
-				   .fetchByG_NotC_S_Last(groupId, categoryId, status,
+				   .fetchByG_NeC_S_Last(groupId, categoryId, status,
 			orderByComparator);
 	}
 
@@ -2340,13 +2966,13 @@ public class MBThreadUtil {
 	* @throws com.liferay.portlet.messageboards.NoSuchThreadException if a message boards thread with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portlet.messageboards.model.MBThread[] findByG_NotC_S_PrevAndNext(
+	public static com.liferay.portlet.messageboards.model.MBThread[] findByG_NeC_S_PrevAndNext(
 		long threadId, long groupId, long categoryId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.messageboards.NoSuchThreadException {
 		return getPersistence()
-				   .findByG_NotC_S_PrevAndNext(threadId, groupId, categoryId,
+				   .findByG_NeC_S_PrevAndNext(threadId, groupId, categoryId,
 			status, orderByComparator);
 	}
 
@@ -2359,10 +2985,10 @@ public class MBThreadUtil {
 	* @return the matching message boards threads that the user has permission to view
 	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.portlet.messageboards.model.MBThread> filterFindByG_NotC_S(
+	public static java.util.List<com.liferay.portlet.messageboards.model.MBThread> filterFindByG_NeC_S(
 		long groupId, long categoryId, int status)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().filterFindByG_NotC_S(groupId, categoryId, status);
+		return getPersistence().filterFindByG_NeC_S(groupId, categoryId, status);
 	}
 
 	/**
@@ -2380,11 +3006,11 @@ public class MBThreadUtil {
 	* @return the range of matching message boards threads that the user has permission to view
 	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.portlet.messageboards.model.MBThread> filterFindByG_NotC_S(
+	public static java.util.List<com.liferay.portlet.messageboards.model.MBThread> filterFindByG_NeC_S(
 		long groupId, long categoryId, int status, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence()
-				   .filterFindByG_NotC_S(groupId, categoryId, status, start, end);
+				   .filterFindByG_NeC_S(groupId, categoryId, status, start, end);
 	}
 
 	/**
@@ -2403,12 +3029,12 @@ public class MBThreadUtil {
 	* @return the ordered range of matching message boards threads that the user has permission to view
 	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.portlet.messageboards.model.MBThread> filterFindByG_NotC_S(
+	public static java.util.List<com.liferay.portlet.messageboards.model.MBThread> filterFindByG_NeC_S(
 		long groupId, long categoryId, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence()
-				   .filterFindByG_NotC_S(groupId, categoryId, status, start,
+				   .filterFindByG_NeC_S(groupId, categoryId, status, start,
 			end, orderByComparator);
 	}
 
@@ -2424,13 +3050,13 @@ public class MBThreadUtil {
 	* @throws com.liferay.portlet.messageboards.NoSuchThreadException if a message boards thread with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portlet.messageboards.model.MBThread[] filterFindByG_NotC_S_PrevAndNext(
+	public static com.liferay.portlet.messageboards.model.MBThread[] filterFindByG_NeC_S_PrevAndNext(
 		long threadId, long groupId, long categoryId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.messageboards.NoSuchThreadException {
 		return getPersistence()
-				   .filterFindByG_NotC_S_PrevAndNext(threadId, groupId,
+				   .filterFindByG_NeC_S_PrevAndNext(threadId, groupId,
 			categoryId, status, orderByComparator);
 	}
 
@@ -2527,9 +3153,9 @@ public class MBThreadUtil {
 	* @param categoryId the category ID
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByG_NotC(long groupId, long categoryId)
+	public static void removeByG_NeC(long groupId, long categoryId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByG_NotC(groupId, categoryId);
+		getPersistence().removeByG_NeC(groupId, categoryId);
 	}
 
 	/**
@@ -2583,6 +3209,19 @@ public class MBThreadUtil {
 	}
 
 	/**
+	* Removes all the message boards threads where groupId = &#63; and categoryId = &#63; and status &ne; &#63; from the database.
+	*
+	* @param groupId the group ID
+	* @param categoryId the category ID
+	* @param status the status
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByG_C_NeS(long groupId, long categoryId, int status)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByG_C_NeS(groupId, categoryId, status);
+	}
+
+	/**
 	* Removes all the message boards threads where groupId = &#63; and categoryId = &#63; and status = &#63; from the database.
 	*
 	* @param groupId the group ID
@@ -2596,6 +3235,19 @@ public class MBThreadUtil {
 	}
 
 	/**
+	* Removes all the message boards threads where groupId = &#63; and categoryId &ne; &#63; and status &ne; &#63; from the database.
+	*
+	* @param groupId the group ID
+	* @param categoryId the category ID
+	* @param status the status
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByG_NeC_NeS(long groupId, long categoryId,
+		int status) throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByG_NeC_NeS(groupId, categoryId, status);
+	}
+
+	/**
 	* Removes all the message boards threads where groupId = &#63; and categoryId &ne; &#63; and status = &#63; from the database.
 	*
 	* @param groupId the group ID
@@ -2603,9 +3255,9 @@ public class MBThreadUtil {
 	* @param status the status
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByG_NotC_S(long groupId, long categoryId,
-		int status) throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByG_NotC_S(groupId, categoryId, status);
+	public static void removeByG_NeC_S(long groupId, long categoryId, int status)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByG_NeC_S(groupId, categoryId, status);
 	}
 
 	/**
@@ -2714,9 +3366,9 @@ public class MBThreadUtil {
 	* @return the number of matching message boards threads
 	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByG_NotC(long groupId, long categoryId)
+	public static int countByG_NeC(long groupId, long categoryId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByG_NotC(groupId, categoryId);
+		return getPersistence().countByG_NeC(groupId, categoryId);
 	}
 
 	/**
@@ -2727,9 +3379,9 @@ public class MBThreadUtil {
 	* @return the number of matching message boards threads that the user has permission to view
 	* @throws SystemException if a system exception occurred
 	*/
-	public static int filterCountByG_NotC(long groupId, long categoryId)
+	public static int filterCountByG_NeC(long groupId, long categoryId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().filterCountByG_NotC(groupId, categoryId);
+		return getPersistence().filterCountByG_NeC(groupId, categoryId);
 	}
 
 	/**
@@ -2816,6 +3468,63 @@ public class MBThreadUtil {
 	}
 
 	/**
+	* Returns the number of message boards threads where groupId = &#63; and categoryId = &#63; and status &ne; &#63;.
+	*
+	* @param groupId the group ID
+	* @param categoryId the category ID
+	* @param status the status
+	* @return the number of matching message boards threads
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByG_C_NeS(long groupId, long categoryId, int status)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByG_C_NeS(groupId, categoryId, status);
+	}
+
+	/**
+	* Returns the number of message boards threads where groupId = &#63; and categoryId = any &#63; and status &ne; &#63;.
+	*
+	* @param groupId the group ID
+	* @param categoryIds the category IDs
+	* @param status the status
+	* @return the number of matching message boards threads
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByG_C_NeS(long groupId, long[] categoryIds,
+		int status) throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByG_C_NeS(groupId, categoryIds, status);
+	}
+
+	/**
+	* Returns the number of message boards threads that the user has permission to view where groupId = &#63; and categoryId = &#63; and status &ne; &#63;.
+	*
+	* @param groupId the group ID
+	* @param categoryId the category ID
+	* @param status the status
+	* @return the number of matching message boards threads that the user has permission to view
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int filterCountByG_C_NeS(long groupId, long categoryId,
+		int status) throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().filterCountByG_C_NeS(groupId, categoryId, status);
+	}
+
+	/**
+	* Returns the number of message boards threads that the user has permission to view where groupId = &#63; and categoryId = any &#63; and status &ne; &#63;.
+	*
+	* @param groupId the group ID
+	* @param categoryIds the category IDs
+	* @param status the status
+	* @return the number of matching message boards threads that the user has permission to view
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int filterCountByG_C_NeS(long groupId, long[] categoryIds,
+		int status) throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .filterCountByG_C_NeS(groupId, categoryIds, status);
+	}
+
+	/**
 	* Returns the number of message boards threads where groupId = &#63; and categoryId = &#63; and status = &#63;.
 	*
 	* @param groupId the group ID
@@ -2872,6 +3581,35 @@ public class MBThreadUtil {
 	}
 
 	/**
+	* Returns the number of message boards threads where groupId = &#63; and categoryId &ne; &#63; and status &ne; &#63;.
+	*
+	* @param groupId the group ID
+	* @param categoryId the category ID
+	* @param status the status
+	* @return the number of matching message boards threads
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByG_NeC_NeS(long groupId, long categoryId, int status)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByG_NeC_NeS(groupId, categoryId, status);
+	}
+
+	/**
+	* Returns the number of message boards threads that the user has permission to view where groupId = &#63; and categoryId &ne; &#63; and status &ne; &#63;.
+	*
+	* @param groupId the group ID
+	* @param categoryId the category ID
+	* @param status the status
+	* @return the number of matching message boards threads that the user has permission to view
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int filterCountByG_NeC_NeS(long groupId, long categoryId,
+		int status) throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .filterCountByG_NeC_NeS(groupId, categoryId, status);
+	}
+
+	/**
 	* Returns the number of message boards threads where groupId = &#63; and categoryId &ne; &#63; and status = &#63;.
 	*
 	* @param groupId the group ID
@@ -2880,9 +3618,9 @@ public class MBThreadUtil {
 	* @return the number of matching message boards threads
 	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByG_NotC_S(long groupId, long categoryId, int status)
+	public static int countByG_NeC_S(long groupId, long categoryId, int status)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByG_NotC_S(groupId, categoryId, status);
+		return getPersistence().countByG_NeC_S(groupId, categoryId, status);
 	}
 
 	/**
@@ -2894,10 +3632,9 @@ public class MBThreadUtil {
 	* @return the number of matching message boards threads that the user has permission to view
 	* @throws SystemException if a system exception occurred
 	*/
-	public static int filterCountByG_NotC_S(long groupId, long categoryId,
+	public static int filterCountByG_NeC_S(long groupId, long categoryId,
 		int status) throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .filterCountByG_NotC_S(groupId, categoryId, status);
+		return getPersistence().filterCountByG_NeC_S(groupId, categoryId, status);
 	}
 
 	/**

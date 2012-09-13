@@ -550,6 +550,12 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 		return _mbCategory.getAncestors();
 	}
 
+	public java.lang.String getAbsolutePath()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _mbCategory.getAbsolutePath();
+	}
+
 	public boolean isRoot() {
 		return _mbCategory.isRoot();
 	}

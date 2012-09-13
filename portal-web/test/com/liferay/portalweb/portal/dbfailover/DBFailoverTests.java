@@ -16,6 +16,14 @@ package com.liferay.portalweb.portal.dbfailover;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.StopSeleniumTest;
+import com.liferay.portalweb.portlet.messageboards.mbcategory.addmbcategory.AddMBCategoryTest;
+import com.liferay.portalweb.portlet.messageboards.mbthread.postnewmbcategorythread.PostNewMBCategoryThread1Test;
+import com.liferay.portalweb.portlet.messageboards.mbthread.postnewmbcategorythread.PostNewMBCategoryThread2Test;
+import com.liferay.portalweb.portlet.messageboards.mbthread.postnewmbcategorythread.PostNewMBCategoryThread3Test;
+import com.liferay.portalweb.portlet.messageboards.mbthread.postnewmbcategorythread.PostNewMBCategoryThread4Test;
+import com.liferay.portalweb.portlet.messageboards.mbthread.postnewmbcategorythread.PostNewMBCategoryThread5Test;
+import com.liferay.portalweb.portlet.messageboards.portlet.addportletmb.AddPageMBTest;
+import com.liferay.portalweb.portlet.messageboards.portlet.addportletmb.AddPortletMBTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -26,14 +34,15 @@ import junit.framework.TestSuite;
 public class DBFailoverTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
-		testSuite.addTestSuite(AddPageTest.class);
-		testSuite.addTestSuite(AddPortletTest.class);
-		testSuite.addTestSuite(AddCategoryTest.class);
-		testSuite.addTestSuite(AddMessage1Test.class);
-		testSuite.addTestSuite(AddMessage2Test.class);
-		testSuite.addTestSuite(AddMessage3Test.class);
-		testSuite.addTestSuite(AddMessage4Test.class);
-		testSuite.addTestSuite(AddMessage5Test.class);
+		testSuite.addTestSuite(AddPageMBTest.class);
+		testSuite.addTestSuite(AddPortletMBTest.class);
+		testSuite.addTestSuite(AddMBCategoryTest.class);
+		testSuite.addTestSuite(PostNewMBCategoryThread1Test.class);
+		testSuite.addTestSuite(PostNewMBCategoryThread2Test.class);
+		testSuite.addTestSuite(PostNewMBCategoryThread3Test.class);
+		testSuite.addTestSuite(PostNewMBCategoryThread4Test.class);
+		testSuite.addTestSuite(PostNewMBCategoryThread5Test.class);
+		testSuite.addTestSuite(ViewMBCategoryThreadsTest.class);
 		testSuite.addTestSuite(StopSeleniumTest.class);
 
 		return testSuite;

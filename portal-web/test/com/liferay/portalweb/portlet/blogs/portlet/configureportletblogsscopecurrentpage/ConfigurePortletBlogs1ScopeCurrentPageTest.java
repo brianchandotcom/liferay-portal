@@ -51,9 +51,13 @@ public class ConfigurePortletBlogs1ScopeCurrentPageTest extends BaseTestCase {
 			selenium.getSelectedLabel("//select[@id='_86_scopeType']"));
 		selenium.select("//select[@id='_86_scopeType']",
 			RuntimeVariables.replace("Select Page"));
+		assertEquals("Select Page",
+			selenium.getSelectedLabel("//select[@id='_86_scopeType']"));
 		selenium.waitForVisible("//select[@id='_86_scopeLayoutUuid']");
 		selenium.select("//select[@id='_86_scopeLayoutUuid']",
 			RuntimeVariables.replace("Current Page (Blogs Test Page1)"));
+		assertEquals("Current Page (Blogs Test Page1)",
+			selenium.getSelectedLabel("//select[@id='_86_scopeLayoutUuid']"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");

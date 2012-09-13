@@ -1,12 +1,12 @@
-<html>
+e<html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>ViewPortletAPScopeBlogsTestPageTest</title>
+<title>ConfigurePortletAPScopeBlogsPageTest</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">ViewPortletAPScopeBlogsTestPageTest</td></tr>
+<tr><td rowspan="1" colspan="3">ConfigurePortletAPScopeBlogsPageTest</td></tr>
 </thead><tbody>
 <tr>
 	<td>open</td>
@@ -62,6 +62,31 @@
 	<td>waitForElementPresent</td>
 	<td>//script[contains(@src,'/liferay/navigation_interaction.js')]</td>
 	<td>Navigation Interaction</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//select[@id='_86_defaultScope']</td>
+	<td>Scope</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>//select[@id='_86_defaultScope']</td>
+	<td>Blogs Test Page</td>
+</tr>
+<tr>
+	<td>assertSelectedLabel</td>
+	<td>//select[@id='_86_defaultScope']</td>
+	<td>Blogs Test Page</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//input[@value='Save']</td>
+	<td>Save</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>You have successfully updated the setup.</td>
 </tr>
 <tr>
 	<td>assertSelectedLabel</td>

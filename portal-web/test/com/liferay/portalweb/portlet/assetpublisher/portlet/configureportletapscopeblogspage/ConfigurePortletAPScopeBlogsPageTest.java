@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.assetpublisher.portlet.configureportletapscopeblogstestpage;
+package com.liferay.portalweb.portlet.assetpublisher.portlet.configureportletapscopeblogspage;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ConfigurePortletAPScopeBlogsTestPageTest extends BaseTestCase {
-	public void testConfigurePortletAPScopeBlogsTestPage()
+public class ConfigurePortletAPScopeBlogsPageTest extends BaseTestCase {
+	public void testConfigurePortletAPScopeBlogsPage()
 		throws Exception {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
@@ -47,8 +47,11 @@ public class ConfigurePortletAPScopeBlogsTestPageTest extends BaseTestCase {
 			"//iframe[contains(@id,'configurationIframeDialog')]");
 		selenium.waitForElementPresent(
 			"//script[contains(@src,'/liferay/navigation_interaction.js')]");
+		selenium.waitForVisible("//select[@id='_86_defaultScope']");
 		selenium.select("//select[@id='_86_defaultScope']",
 			RuntimeVariables.replace("Blogs Test Page"));
+		assertEquals("Blogs Test Page",
+			selenium.getSelectedLabel("//select[@id='_86_defaultScope']"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");

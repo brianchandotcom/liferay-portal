@@ -28,6 +28,8 @@ public class ViewBlogsEntryScopeCurrentPageTest extends BaseTestCase {
 		selenium.clickAt("link=Blogs Test Page",
 			RuntimeVariables.replace("Blogs Test Page"));
 		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("Blogs (Blogs Test Page)"),
+			selenium.getText("//span[@class='portlet-title-text']"));
 		assertTrue(selenium.isVisible("//input[@title='Search Entries']"));
 		assertTrue(selenium.isVisible("//input[@value='Search']"));
 		assertTrue(selenium.isVisible("//input[@value='Add Blog Entry']"));
@@ -41,7 +43,7 @@ public class ViewBlogsEntryScopeCurrentPageTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Permissions"),
 			selenium.getText(
 				"//div[@class='lfr-meta-actions edit-actions entry']/table/tbody/tr/td[2]"));
-		assertEquals(RuntimeVariables.replace("Delete"),
+		assertEquals(RuntimeVariables.replace("Move to the Recycle Bin"),
 			selenium.getText(
 				"//div[@class='lfr-meta-actions edit-actions entry']/table/tbody/tr/td[3]"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry Content"),

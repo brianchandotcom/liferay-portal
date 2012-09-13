@@ -47,8 +47,17 @@ public class ConfigurePortletBlogsScopeCurrentPageTest extends BaseTestCase {
 			"//script[contains(@src,'/liferay/navigation_interaction.js')]");
 		selenium.clickAt("link=Scope", RuntimeVariables.replace("Scope"));
 		selenium.waitForVisible("//select[@id='_86_scopeType']");
+		assertEquals("Default",
+			selenium.getSelectedLabel("//select[@id='_86_scopeType']"));
 		selenium.select("//select[@id='_86_scopeType']",
 			RuntimeVariables.replace("Select Page"));
+		assertEquals("Select Page",
+			selenium.getSelectedLabel("//select[@id='_86_scopeType']"));
+		selenium.waitForVisible("//select[@id='_86_scopeLayoutUuid']");
+		selenium.select("//select[@id='_86_scopeLayoutUuid']",
+			RuntimeVariables.replace("Current Page (Blogs Test Page)"));
+		assertEquals("Current Page (Blogs Test Page)",
+			selenium.getSelectedLabel("//select[@id='_86_scopeLayoutUuid']"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");

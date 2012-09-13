@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.assetpublisher.portlet.configureportletapscopeblogstestpage;
+package com.liferay.portalweb.portlet.assetpublisher.portlet.configureportletapscopeblogspage;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
@@ -28,7 +28,7 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ConfigurePortletAPScopeBlogsTestPageTests extends BaseTestSuite {
+public class ConfigurePortletAPScopeBlogsPageTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddPageAPTest.class);
@@ -36,8 +36,8 @@ public class ConfigurePortletAPScopeBlogsTestPageTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddPageBlogsTest.class);
 		testSuite.addTestSuite(AddPortletBlogsTest.class);
 		testSuite.addTestSuite(ConfigurePortletBlogsScopeCurrentPageTest.class);
-		testSuite.addTestSuite(ConfigurePortletAPScopeBlogsTestPageTest.class);
-		testSuite.addTestSuite(ViewPortletAPScopeBlogsTestPageTest.class);
+		testSuite.addTestSuite(ConfigurePortletAPScopeBlogsPageTest.class);
+		testSuite.addTestSuite(ViewPortletAPScopeBlogsPageTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;

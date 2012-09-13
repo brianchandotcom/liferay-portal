@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.assetpublisher.portlet.configureportletapscopeblogstestpage;
+package com.liferay.portalweb.portlet.assetpublisher.portlet.configureportletapscopeblogspage;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ViewPortletAPScopeBlogsTestPageTest extends BaseTestCase {
-	public void testViewPortletAPScopeBlogsTestPage() throws Exception {
+public class ViewPortletAPScopeBlogsPageTest extends BaseTestCase {
+	public void testViewPortletAPScopeBlogsPage() throws Exception {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");

@@ -20,7 +20,7 @@ import com.liferay.portalweb.portlet.assetpublisher.portlet.addportletmultipleap
 import com.liferay.portalweb.portlet.assetpublisher.portlet.configureportletapdisplaypage.ConfigurePortletAPDisplayPageTests;
 import com.liferay.portalweb.portlet.assetpublisher.portlet.configureportletapenableratings.ConfigurePortletAPEnableRatingsTests;
 import com.liferay.portalweb.portlet.assetpublisher.portlet.configureportletaporderbycolumnratings.ConfigurePortletAPOrderByColumnRatingsTests;
-import com.liferay.portalweb.portlet.assetpublisher.portlet.configureportletapscopeblogstestpage.ConfigurePortletAPScopeBlogsTestPageTests;
+import com.liferay.portalweb.portlet.assetpublisher.portlet.configureportletapscopeblogspage.ConfigurePortletAPScopeBlogsPageTests;
 import com.liferay.portalweb.portlet.assetpublisher.portlet.configureportletapsetasdefault.ConfigurePortletAPSetAsDefaultTests;
 import com.liferay.portalweb.portlet.assetpublisher.portlet.configureportletassetselectiondynamic.ConfigurePortletAssetSelectionDynamicTests;
 import com.liferay.portalweb.portlet.assetpublisher.portlet.configureportletassetselectionmanual.ConfigurePortletAssetSelectionManualTests;
@@ -61,7 +61,7 @@ public class PortletTestPlan extends BaseTestSuite {
 		testSuite.addTest(ConfigurePortletAPDisplayPageTests.suite());
 		testSuite.addTest(ConfigurePortletAPEnableRatingsTests.suite());
 		testSuite.addTest(ConfigurePortletAPOrderByColumnRatingsTests.suite());
-		testSuite.addTest(ConfigurePortletAPScopeBlogsTestPageTests.suite());
+		testSuite.addTest(ConfigurePortletAPScopeBlogsPageTests.suite());
 		testSuite.addTest(ConfigurePortletAPSetAsDefaultTests.suite());
 		testSuite.addTest(ConfigurePortletAssetSelectionDynamicTests.suite());
 		testSuite.addTest(ConfigurePortletAssetSelectionManualTests.suite());

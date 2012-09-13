@@ -85,11 +85,11 @@ portletURL.setParameter("includeUserPersonalSite", String.valueOf(includeUserPer
 				start = searchContainer.getStart() - additionalSites;
 			}
 
-			List<Group> sites = GroupLocalServiceUtil.search(company.getCompanyId(), null, searchTerms.getName(), searchTerms.getDescription(), groupParams, start, end, searchContainer.getOrderByComparator());
+			List<Group> sites = GroupLocalServiceUtil.search(company.getCompanyId(), null, searchTerms.getName(), searchTerms.getDescription(), groupParams, searchTerms.isAndOperator(), start, end, searchContainer.getOrderByComparator());
 
 			results.addAll(sites);
 
-			total = GroupLocalServiceUtil.searchCount(company.getCompanyId(), null, searchTerms.getName(), searchTerms.getDescription(), groupParams) + additionalSites;
+			total = GroupLocalServiceUtil.searchCount(company.getCompanyId(), null, searchTerms.getName(), searchTerms.getDescription(), groupParams, searchTerms.isAndOperator()) + additionalSites;
 
 			pageContext.setAttribute("results", results);
 			pageContext.setAttribute("total", total);

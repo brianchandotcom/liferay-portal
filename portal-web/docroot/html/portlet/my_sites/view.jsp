@@ -65,10 +65,23 @@ request.setAttribute("view.jsp-tabs1", tabs1);
 		}
 		%>
 
-		<liferay-ui:search-container-results
-			results="<%= GroupLocalServiceUtil.search(company.getCompanyId(), classNameIds, searchTerms.getName(), searchTerms.getDescription(), groupParams, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>"
-			total="<%= GroupLocalServiceUtil.searchCount(company.getCompanyId(), classNameIds, searchTerms.getName(), searchTerms.getDescription(), groupParams) %>"
-		/>
+		<liferay-ui:search-container-results>
+
+			<%
+				if (searchTerms.isAdvancedSearch()) {
+					results = GroupLocalServiceUtil.search(company.getCompanyId(), searchTerms.getName(), searchTerms.getDescription(), groupParams, searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+					total = GroupLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getName(), searchTerms.getDescription(), groupParams, searchTerms.isAndOperator());
+				}
+				else {
+					results = GroupLocalServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), groupParams, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+					total = GroupLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getKeywords(), groupParams);
+				}
+
+				pageContext.setAttribute("results", results);
+				pageContext.setAttribute("total", total);
+			%>
+
+		</liferay-ui:search-container-results>
 
 		<liferay-ui:search-form
 			page="/html/portlet/users_admin/group_search.jsp"

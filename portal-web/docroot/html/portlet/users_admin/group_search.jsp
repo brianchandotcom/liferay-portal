@@ -23,11 +23,17 @@ boolean showAddButton = GetterUtil.getBoolean((String)request.getAttribute("life
 GroupDisplayTerms displayTerms = (GroupDisplayTerms)searchContainer.getDisplayTerms();
 %>
 
-<span class="aui-search-bar lfr-display-terms-search">
-	<aui:input inlineField="<%= true %>" label="" name="<%= displayTerms.NAME %>" size="30" type="text" value="<%= displayTerms.getName() %>" />
+<liferay-ui:search-toggle
+	buttonLabel="search"
+	displayTerms="<%= displayTerms %>"
+	id="toggle_id_users_admin_group_search"
+	>
+	<aui:fieldset>
+		<aui:input name="<%= displayTerms.NAME %>" size="30" value="<%= displayTerms.getName() %>" />
 
-	<aui:button type="submit" value="search" />
-</span>
+		<aui:input name="<%= displayTerms.DESCRIPTION %>" size="30" value="<%= displayTerms.getDescription() %>" />
+	</aui:fieldset>
+</liferay-ui:search-toggle>
 
 <br />
 

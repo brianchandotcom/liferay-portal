@@ -61,28 +61,6 @@ public class VirtualHostFilter extends BasePortalFilter {
 		super.init(filterConfig);
 
 		_servletContext = filterConfig.getServletContext();
-
-		_slashedKeywords =
-			new String[PropsValues.LAYOUT_FRIENDLY_URL_KEYWORDS.length];
-
-		for (int i = 0; i < PropsValues.LAYOUT_FRIENDLY_URL_KEYWORDS.length;
-				i++) {
-
-			String keyword = PropsValues.LAYOUT_FRIENDLY_URL_KEYWORDS[i];
-
-			keyword = StringPool.SLASH + keyword;
-
-			if (!keyword.contains(StringPool.PERIOD)) {
-				if (keyword.endsWith(StringPool.STAR)) {
-					keyword = keyword.substring(0, keyword.length() - 1);
-				}
-				else {
-					keyword = keyword + StringPool.SLASH;
-				}
-			}
-
-			_slashedKeywords[i] = keyword.toLowerCase();
-		}
 	}
 
 	@Override
@@ -110,10 +88,8 @@ public class VirtualHostFilter extends BasePortalFilter {
 			return false;
 		}
 
-		for (String keyword : _slashedKeywords) {
-			if (friendlyURL.startsWith(keyword)) {
-				return false;
-			}
+		if (LayoutImpl.hasFriendlyURLKeyword(friendlyURL)) {
+			return false;
 		}
 
 		int code = LayoutImpl.validateFriendlyURL(friendlyURL);
@@ -335,6 +311,5 @@ public class VirtualHostFilter extends BasePortalFilter {
 	private static Log _log = LogFactoryUtil.getLog(VirtualHostFilter.class);
 
 	private ServletContext _servletContext;
-	private String[] _slashedKeywords;
 
 }

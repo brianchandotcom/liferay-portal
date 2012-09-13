@@ -1185,6 +1185,8 @@ public interface PropsKeys {
 
 	public static final String LAYOUT_VIEW_PAGE = "layout.view.page";
 
+	public static final String LDAP_APACHE_DIRECTORY_PORT = "ldap.apache.directory.port";
+
 	public static final String LDAP_ATTRS_TRANSFORMER_IMPL = "ldap.attrs.transformer.impl";
 
 	public static final String LDAP_AUTH_ENABLED = "ldap.auth.enabled";

@@ -27,7 +27,6 @@ public class EditDMFolderMusicSubfolderDefaultWorkflowSingleApproverTest
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Documents and Media Test Page");
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -47,12 +46,12 @@ public class EditDMFolderMusicSubfolderDefaultWorkflowSingleApproverTest
 		selenium.clickAt("//span[@class='overlay document-action']/span/ul/li/strong/a",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]");
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]"));
 		selenium.waitForPageToLoad("30000");
 		assertFalse(selenium.isVisible(
 				"//select[@id='_20_workflowDefinition-1']"));
@@ -69,13 +68,15 @@ public class EditDMFolderMusicSubfolderDefaultWorkflowSingleApproverTest
 		assertEquals(RuntimeVariables.replace("Select Document Type"),
 			selenium.getText(
 				"//span[@class='modify-link select-file-entry-type']/a/span"));
-		selenium.click(
-			"//span[@class='modify-link select-file-entry-type']/a/span");
+		selenium.clickAt("//span[@class='modify-link select-file-entry-type']/a/span",
+			RuntimeVariables.replace("Select Document Type"));
 		Thread.sleep(5000);
 		selenium.waitForVisible("//iframe[@id='_20_fileEntryTypeSeclector']");
 		selenium.selectFrame("//iframe[@id='_20_fileEntryTypeSeclector']");
-		selenium.waitForText("//td[@id='_20_dlFileEntryTypesSearchContainer_col-name_row-4']/a",
-			"Music");
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/liferay/navigation_interaction.js')]");
+		selenium.waitForVisible(
+			"//td[@id='_20_dlFileEntryTypesSearchContainer_col-name_row-4']/a");
 		assertEquals(RuntimeVariables.replace("Music"),
 			selenium.getText(
 				"//td[@id='_20_dlFileEntryTypesSearchContainer_col-name_row-4']/a"));
@@ -107,12 +108,12 @@ public class EditDMFolderMusicSubfolderDefaultWorkflowSingleApproverTest
 		selenium.clickAt("//span[@class='overlay document-action']/span/ul/li/strong/a",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]");
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Music"),
 			selenium.getText("//select[@id='_20_defaultFileEntryTypeId']"));

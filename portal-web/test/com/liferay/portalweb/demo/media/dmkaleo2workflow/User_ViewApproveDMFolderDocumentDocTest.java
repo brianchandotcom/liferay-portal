@@ -26,7 +26,6 @@ public class User_ViewApproveDMFolderDocumentDocTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Documents and Media Test Page");
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -35,10 +34,7 @@ public class User_ViewApproveDMFolderDocumentDocTest extends BaseTestCase {
 				"//div[@data-title='DM Folder Name']/a/span[@class='entry-title']"));
 		selenium.clickAt("//div[@data-title='DM Folder Name']/a/span[@class='entry-title']",
 			RuntimeVariables.replace("DM Folder Name"));
-		selenium.waitForText("//li[contains(@class,'folder selected')]/a",
-			"DM Folder Name");
-		assertEquals(RuntimeVariables.replace("DM Folder Name"),
-			selenium.getText("//li[contains(@class,'folder selected')]/a"));
+		selenium.waitForVisible("//li[contains(@class,'folder selected')]/a");
 		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("DM Document Title Edit"),
 			selenium.getText(

@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Documents and Media Test Page</td>
-	<td>Documents and Media Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Documents and Media Test Page</td>
 	<td>Documents and Media Test Page</td>
@@ -34,14 +29,14 @@
 	<td>DM Folder Name</td>
 </tr>
 <tr>
-	<td>waitForText</td>
+	<td>waitForVisible</td>
 	<td>//li[@class='folder selected']/a/span[@class='entry-title']</td>
 	<td>DM Folder Name</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//li[@class='folder selected']/a/span[@class='entry-title']</td>
-	<td>DM Folder Name</td>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -99,12 +94,12 @@
 	<td>MP3</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
+	<td>clickAt</td>
 	<td>//input[@value='Publish']</td>
 	<td>Publish</td>
 </tr>
 <tr>
-	<td>waitForText</td>
+	<td>waitForVisible</td>
 	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
 </tr>

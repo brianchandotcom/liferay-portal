@@ -25,7 +25,6 @@ public class AddDMMetadataSetSongInformationTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/site-name/");
-		selenium.waitForVisible("link=Documents and Media Test Page");
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -35,13 +34,17 @@ public class AddDMMetadataSetSongInformationTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Manage']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Manage"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Metadata Sets')]");
 		assertEquals(RuntimeVariables.replace("Metadata Sets"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
-		selenium.waitForVisible("//iframe");
-		selenium.selectFrame("//iframe");
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Metadata Sets')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Metadata Sets')]",
+			RuntimeVariables.replace("Metadata Sets"));
+		selenium.waitForVisible(
+			"//iframe[contains(@src,'DLFileEntryMetadata')]");
+		selenium.selectFrame("//iframe[contains(@src,'DLFileEntryMetadata')]");
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/liferay/navigation_interaction.js')]");
 		selenium.waitForVisible("link=Add");
 		selenium.clickAt("link=Add", RuntimeVariables.replace("Add"));
 		selenium.waitForPageToLoad("30000");
@@ -139,7 +142,7 @@ public class AddDMMetadataSetSongInformationTest extends BaseTestCase {
 				"xPath=(//div[contains(@id,'fields_field_aui')]/div/label)[2]"));
 		assertEquals(RuntimeVariables.replace("Name"),
 			selenium.getText("//tr[5]/td[1]/div"));
-		assertTrue(selenium.isPartialText("//tr[5]/td[2]/div", "ddm-number"));
+		assertTrue(selenium.isPartialText("//tr[5]/td[2]/div", "number"));
 		selenium.doubleClickAt("//tr[5]/td[1]/div",
 			RuntimeVariables.replace("Field Label"));
 		selenium.waitForVisible("//input[@name='value']");

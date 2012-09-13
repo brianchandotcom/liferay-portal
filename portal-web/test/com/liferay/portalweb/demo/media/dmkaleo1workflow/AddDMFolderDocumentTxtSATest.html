@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Documents and Media Test Page</td>
-	<td>Documents and Media Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Documents and Media Test Page</td>
 	<td>Documents and Media Test Page</td>
@@ -34,12 +29,7 @@
 	<td>DM Folder Name</td>
 </tr>
 <tr>
-	<td>waitForText</td>
-	<td>//li[contains(@class,'folder selected')]/a</td>
-	<td>DM Folder Name</td>
-</tr>
-<tr>
-	<td>assertText</td>
+	<td>waitForVisible</td>
 	<td>//li[contains(@class,'folder selected')]/a</td>
 	<td>DM Folder Name</td>
 </tr>
@@ -60,17 +50,17 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Basic Document')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Basic Document')]</td>
 	<td>Basic Document</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Basic Document')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Basic Document')]</td>
 	<td>Basic Document</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Basic Document')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Basic Document')]</td>
 	<td>Basic Document</td>
 </tr>
 <tr>
@@ -92,11 +82,6 @@
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Publish']</td>
 	<td>Publish</td>
-</tr>
-<tr>
-	<td>waitForText</td>
-	<td>//div[@class='portlet-msg-success']</td>
-	<td>Your request completed successfully.</td>
 </tr>
 <tr>
 	<td>assertText</td>

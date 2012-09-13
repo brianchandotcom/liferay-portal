@@ -30,7 +30,6 @@ public class TearDownDMDocumentTypeTest extends BaseTestCase {
 				selenium.selectWindow("null");
 				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
-				selenium.waitForVisible("link=Documents and Media Test Page");
 				selenium.clickAt("link=Documents and Media Test Page",
 					RuntimeVariables.replace("Documents and Media Test Page"));
 				selenium.waitForPageToLoad("30000");
@@ -41,14 +40,18 @@ public class TearDownDMDocumentTypeTest extends BaseTestCase {
 				selenium.clickAt("//span[@title='Manage']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Manage"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a");
+					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Document Types')]");
 				assertEquals(RuntimeVariables.replace("Document Types"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
-				selenium.click(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a");
-				selenium.waitForVisible("//iframe");
-				selenium.selectFrame("//iframe");
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Document Types')]"));
+				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Document Types')]",
+					RuntimeVariables.replace("Document Types"));
+				selenium.waitForVisible(
+					"//iframe[@id='_20_openFileEntryTypeView']");
+				selenium.selectFrame(
+					"//iframe[@id='_20_openFileEntryTypeView']");
+				selenium.waitForElementPresent(
+					"//script[contains(@src,'/liferay/navigation_interaction.js')]");
 				selenium.waitForVisible("//input[@id='_20_keywords']");
 				selenium.type("//input[@id='_20_keywords']",
 					RuntimeVariables.replace("music"));
@@ -72,12 +75,12 @@ public class TearDownDMDocumentTypeTest extends BaseTestCase {
 				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a");
+					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]");
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));

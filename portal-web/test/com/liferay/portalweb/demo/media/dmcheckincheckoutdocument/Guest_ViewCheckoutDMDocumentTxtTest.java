@@ -25,7 +25,6 @@ public class Guest_ViewCheckoutDMDocumentTxtTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Documents and Media Test Page");
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -42,8 +41,10 @@ public class Guest_ViewCheckoutDMDocumentTxtTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Status: Approved"),
 			selenium.getText("//span[@class='workflow-status']"));
 		assertEquals(RuntimeVariables.replace("1.0"),
-			selenium.getText("//tr[3]/td[2]"));
+			selenium.getText(
+				"//tr[@class='portlet-section-body results-row last']/td[2]"));
 		assertEquals(RuntimeVariables.replace("0.3k"),
-			selenium.getText("//tr[3]/td[4]"));
+			selenium.getText(
+				"//tr[@class='portlet-section-body results-row last']/td[4]"));
 	}
 }

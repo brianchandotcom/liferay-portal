@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Documents and Media Test Page</td>
-	<td>Documents and Media Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Documents and Media Test Page</td>
 	<td>Documents and Media Test Page</td>
@@ -40,21 +35,21 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move')]</td>
 	<td>Move</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move')]</td>
 	<td>Move</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move')]</td>
 	<td>Move</td>
 </tr>
 <tr>
-	<td>click</td>
+	<td>clickAt</td>
 	<td>//input[@value='Select']</td>
 	<td>Select</td>
 </tr>
@@ -66,7 +61,7 @@
 <tr>
 	<td>selectWindow</td>
 	<td>title=Documents and Media</td>
-	<td>title=Documents and Media</td>
+	<td>Documents and Media</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -125,11 +120,14 @@
 </tr>
 <tr>
 	<td>assertText</td>
+	<td>//li[contains(@class,'selected')]/a/span[2]</td>
+	<td>DM Folder1 Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
 	<td>//div[@data-title='DM Document1 Title']/a/span[2]</td>
 	<td>DM Document1 Title</td>
 </tr>
-
-
 </tbody></table>
 </body>
 </html>

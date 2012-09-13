@@ -25,7 +25,6 @@ public class PublishToLiveNowPageDMMusicTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/site-name/");
-		selenium.waitForVisible("link=Documents and Media Test Page");
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -38,12 +37,12 @@ public class PublishToLiveNowPageDMMusicTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("//strong/a", RuntimeVariables.replace("Staging Arrow"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Publish to Live Now')]/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Publish to Live Now')]");
 		assertEquals(RuntimeVariables.replace("Publish to Live Now"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Publish to Live Now')]/a"));
-		selenium.click(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Publish to Live Now')]/a");
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Publish to Live Now')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Publish to Live Now')]",
+			RuntimeVariables.replace("Publish to Live Now"));
 		Thread.sleep(5000);
 		selenium.waitForVisible("//input[@value='Publish']");
 		selenium.clickAt("//input[@value='Publish']",

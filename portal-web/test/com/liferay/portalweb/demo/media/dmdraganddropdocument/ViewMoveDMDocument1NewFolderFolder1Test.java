@@ -26,7 +26,6 @@ public class ViewMoveDMDocument1NewFolderFolder1Test extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Documents and Media Test Page");
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -38,6 +37,8 @@ public class ViewMoveDMDocument1NewFolderFolder1Test extends BaseTestCase {
 			RuntimeVariables.replace("DM Folder1 Name"));
 		selenium.waitForText("//li[contains(@class,'selected')]/a/span[2]",
 			"DM Folder1 Name");
+		assertEquals(RuntimeVariables.replace("DM Folder1 Name"),
+			selenium.getText("//li[contains(@class,'selected')]/a/span[2]"));
 		assertEquals(RuntimeVariables.replace("DM Document1 Title"),
 			selenium.getText(
 				"//div[@data-title='DM Document1 Title']/a/span[2]"));

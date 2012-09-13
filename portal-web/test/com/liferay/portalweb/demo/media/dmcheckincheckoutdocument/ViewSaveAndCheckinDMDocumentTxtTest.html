@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Documents and Media Test Page</td>
-	<td>Documents and Media Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Documents and Media Test Page</td>
 	<td>Documents and Media Test Page</td>
@@ -45,32 +40,52 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[3]/td[2]</td>
+	<td>//tr[@class='portlet-section-header results-header']/th[2]</td>
+	<td>Version</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[@class='portlet-section-header results-header']/th[3]</td>
+	<td>Date</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[@class='portlet-section-header results-header']/th[4]</td>
+	<td>Size</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[@class='portlet-section-header results-header']/th[5]</td>
+	<td>Status</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[@class='portlet-section-body results-row']/td[2]</td>
 	<td>1.1</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[3]/td[4]</td>
+	<td>//tr[@class='portlet-section-body results-row']/td[4]</td>
 	<td>0.5k</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[3]/td[5]</td>
+	<td>//tr[@class='portlet-section-body results-row']/td[5]</td>
 	<td>Approved</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[4]/td[2]</td>
+	<td>//tr[@class='portlet-section-alternate results-row alt last']/td[2]</td>
 	<td>1.0</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[4]/td[4]</td>
+	<td>//tr[@class='portlet-section-alternate results-row alt last']/td[4]</td>
 	<td>0.3k</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[4]/td[5]</td>
+	<td>//tr[@class='portlet-section-alternate results-row alt last']/td[5]</td>
 	<td>Approved</td>
 </tr>
 </tbody></table>

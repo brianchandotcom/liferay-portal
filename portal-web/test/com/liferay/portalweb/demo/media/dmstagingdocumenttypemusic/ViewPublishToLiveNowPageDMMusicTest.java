@@ -25,7 +25,6 @@ public class ViewPublishToLiveNowPageDMMusicTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/site-name/");
-		selenium.waitForVisible("link=Documents and Media Test Page");
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -49,7 +48,7 @@ public class ViewPublishToLiveNowPageDMMusicTest extends BaseTestCase {
 			selenium.getText("//span[@class='workflow-status']"));
 		assertEquals(RuntimeVariables.replace("DM Music Description"),
 			selenium.getText("//blockquote[@class='lfr-asset-description']"));
-		assertEquals(RuntimeVariables.replace("Download (8,527.7k)"),
+		assertEquals(RuntimeVariables.replace("Download (4,429.6k)"),
 			selenium.getText("//span[@class='download-document']/span/a/span"));
 		selenium.clickAt("link=Staging", RuntimeVariables.replace("Staging"));
 		selenium.waitForPageToLoad("30000");
@@ -73,7 +72,7 @@ public class ViewPublishToLiveNowPageDMMusicTest extends BaseTestCase {
 			selenium.getText("//span[@class='workflow-status']"));
 		assertEquals(RuntimeVariables.replace("DM Music Description"),
 			selenium.getText("//blockquote[@class='lfr-asset-description']"));
-		assertEquals(RuntimeVariables.replace("Download (8,527.7k)"),
+		assertEquals(RuntimeVariables.replace("Download (4,429.6k)"),
 			selenium.getText("//span[@class='download-document']/span/a/span"));
 	}
 }

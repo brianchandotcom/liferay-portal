@@ -26,7 +26,6 @@ public class MoveDMDocument2NewFolderFolder1DADTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Documents and Media Test Page");
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -48,7 +47,7 @@ public class MoveDMDocument2NewFolderFolder1DADTest extends BaseTestCase {
 				"1 item is ready to be moved to \"DM Folder1 Name\"."),
 			selenium.getText("//div[@class='yui3-dd-proxy active-area-proxy']"));
 		selenium.mouseUp("//div[@data-title='DM Folder1 Name']/a/span/img");
-		selenium.waitForText("//li[@class='move-file']", "DM Document2 Title");
+		selenium.waitForVisible("//li[@class='move-file']");
 		assertEquals(RuntimeVariables.replace("DM Document2 Title"),
 			selenium.getText("//li[@class='move-file']"));
 		assertEquals(RuntimeVariables.replace("DM Folder1 Name"),

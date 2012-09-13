@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Documents and Media Test Page</td>
-	<td>Documents and Media Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Documents and Media Test Page</td>
 	<td>Documents and Media Test Page</td>
@@ -34,12 +29,7 @@
 	<td>DM Folder Name</td>
 </tr>
 <tr>
-	<td>waitForText</td>
-	<td>//li[@class='folder selected']/a/span[@class='entry-title']</td>
-	<td>DM Folder Name</td>
-</tr>
-<tr>
-	<td>assertText</td>
+	<td>waitForVisible</td>
 	<td>//li[@class='folder selected']/a/span[@class='entry-title']</td>
 	<td>DM Folder Name</td>
 </tr>
@@ -60,17 +50,17 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Music')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Music')]</td>
 	<td>Music</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Music')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Music')]</td>
 	<td>Music</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Music')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Music')]</td>
 	<td>Music</td>
 </tr>
 <tr>
@@ -118,8 +108,6 @@
 	<td>//div[@role='alert']</td>
 	<td>This field is required.</td>
 </tr>
-
-
 </tbody></table>
 </body>
 </html>

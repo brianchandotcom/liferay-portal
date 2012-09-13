@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Documents and Media Test Page</td>
-	<td>Documents and Media Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Documents and Media Test Page</td>
 	<td>Documents and Media Test Page</td>
@@ -35,32 +30,32 @@
 </tr>
 <tr>
 	<td>assertNotChecked</td>
-	<td>//tr[3]/td[1]/input</td>
+	<td>//tr[@class='portlet-section-body results-row']/td[1]/input</td>
 	<td>1.1</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//tr[3]/td[1]/input</td>
+	<td>//tr[@class='portlet-section-body results-row']/td[1]/input</td>
 	<td>1.1</td>
 </tr>
 <tr>
 	<td>assertChecked</td>
-	<td>//tr[3]/td[1]/input</td>
+	<td>//tr[@class='portlet-section-body results-row']/td[1]/input</td>
 	<td>1.1</td>
 </tr>
 <tr>
 	<td>assertNotChecked</td>
-	<td>//tr[4]/td[1]/input</td>
+	<td>//tr[@class='portlet-section-alternate results-row alt last']/td[1]/input</td>
 	<td>1.0</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//tr[4]/td[1]/input</td>
+	<td>//tr[@class='portlet-section-alternate results-row alt last']/td[1]/input</td>
 	<td>1.0</td>
 </tr>
 <tr>
 	<td>assertChecked</td>
-	<td>//tr[4]/td[1]/input</td>
+	<td>//tr[@class='portlet-section-alternate results-row alt last']/td[1]/input</td>
 	<td>1.0</td>
 </tr>
 <tr>
@@ -90,7 +85,7 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>xPath=(//table[@class='taglib-diff-table'])[2]//ins</td>
+	<td>xPath=(//table[@class='taglib-diff-table'])[2]/tbody/tr[1]/td[1]</td>
 	<td>This is a *.txt document.</td>
 </tr>
 </tbody></table>

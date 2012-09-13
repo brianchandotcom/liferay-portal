@@ -1125,6 +1125,19 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 		_assetEntry.setExpandoBridgeAttributes(serviceContext);
 	}
 
+	public java.lang.String[] getAvailableLocales() {
+		return _assetEntry.getAvailableLocales();
+	}
+
+	public java.lang.String getDefaultLocale() {
+		return _assetEntry.getDefaultLocale();
+	}
+
+	public void prepareLocalizedFieldsForImport()
+		throws com.liferay.portal.LocaleException {
+		_assetEntry.prepareLocalizedFieldsForImport();
+	}
+
 	public void prepareLocalizedFieldsForImport(
 		java.util.Locale defaultImportLocale)
 		throws com.liferay.portal.LocaleException {

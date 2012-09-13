@@ -595,6 +595,19 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup,
 		_mdrRuleGroup.setExpandoBridgeAttributes(serviceContext);
 	}
 
+	public java.lang.String[] getAvailableLocales() {
+		return _mdrRuleGroup.getAvailableLocales();
+	}
+
+	public java.lang.String getDefaultLocale() {
+		return _mdrRuleGroup.getDefaultLocale();
+	}
+
+	public void prepareLocalizedFieldsForImport()
+		throws com.liferay.portal.LocaleException {
+		_mdrRuleGroup.prepareLocalizedFieldsForImport();
+	}
+
 	public void prepareLocalizedFieldsForImport(
 		java.util.Locale defaultImportLocale)
 		throws com.liferay.portal.LocaleException {

@@ -189,6 +189,8 @@ public class PollsPortletDataHandlerImpl extends BasePortletDataHandler {
 			PortletDataContext portletDataContext, PollsChoice choice)
 		throws Exception {
 
+		choice.prepareLocalizedFieldsForImport();
+
 		Map<Long, Long> questionIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				PollsQuestion.class);
@@ -231,6 +233,8 @@ public class PollsPortletDataHandlerImpl extends BasePortletDataHandler {
 			PortletDataContext portletDataContext, Element questionElement,
 			PollsQuestion question)
 		throws Exception {
+
+		question.prepareLocalizedFieldsForImport();
 
 		long userId = portletDataContext.getUserId(question.getUserUuid());
 

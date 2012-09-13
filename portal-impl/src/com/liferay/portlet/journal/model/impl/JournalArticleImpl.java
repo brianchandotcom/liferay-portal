@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Image;
@@ -30,6 +31,7 @@ import com.liferay.portlet.journal.model.JournalArticleResource;
 import com.liferay.portlet.journal.model.JournalFolder;
 import com.liferay.portlet.journal.service.JournalArticleResourceLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalFolderLocalServiceUtil;
+import com.liferay.portlet.journal.util.JournalUtil;
 import com.liferay.portlet.journal.util.LocaleTransformerListener;
 
 import java.util.Locale;
@@ -75,31 +77,7 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 	public String[] getAvailableLocales() {
 		Set<String> availableLocales = new TreeSet<String>();
 
-		// Title
-
-		Map<Locale, String> titleMap = getTitleMap();
-
-		for (Map.Entry<Locale, String> entry : titleMap.entrySet()) {
-			Locale locale = entry.getKey();
-			String value = entry.getValue();
-
-			if (Validator.isNotNull(value)) {
-				availableLocales.add(locale.toString());
-			}
-		}
-
-		// Description
-
-		Map<Locale, String> descriptionMap = getDescriptionMap();
-
-		for (Map.Entry<Locale, String> entry : descriptionMap.entrySet()) {
-			Locale locale = entry.getKey();
-			String value = entry.getValue();
-
-			if (Validator.isNotNull(value)) {
-				availableLocales.add(locale.toString());
-			}
-		}
+		availableLocales.addAll(SetUtil.fromArray(super.getAvailableLocales()));
 
 		// Content
 
@@ -192,9 +170,35 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 	}
 
 	@Override
-	@SuppressWarnings("unused")
 	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
 		throws LocaleException {
+
+		super.prepareLocalizedFieldsForImport(defaultImportLocale);
+
+		String content = getContent();
+
+		String defaultImportLanguageId = LocaleUtil.toLanguageId(
+			defaultImportLocale);
+
+		try {
+			if (Validator.isNull(getStructureId())) {
+				content = LocalizationUtil.updateLocalization(
+					getContent(), "static-content",
+					LocalizationUtil.getLocalization(
+						getContent(), defaultImportLanguageId),
+					defaultImportLanguageId, defaultImportLanguageId, true,
+					true);
+			}
+			else {
+				content = JournalUtil.prepareLanguageContentForImport(
+					content, defaultImportLocale);
+			}
+		}
+		catch (Exception e) {
+			throw new LocaleException(e);
+		}
+
+		setContent(content);
 	}
 
 	public void setSmallImageType(String smallImageType) {

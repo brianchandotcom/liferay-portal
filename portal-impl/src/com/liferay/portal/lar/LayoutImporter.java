@@ -985,6 +985,8 @@ public class LayoutImporter {
 
 		Layout layout = (Layout)portletDataContext.getZipEntryAsObject(path);
 
+		layout.prepareLocalizedFieldsForImport();
+
 		Layout existingLayout = null;
 		Layout importedLayout = null;
 
@@ -1349,6 +1351,8 @@ public class LayoutImporter {
 			layoutSetPrototype =
 				(LayoutSetPrototype)portletDataContext.getZipEntryAsObject(
 					path.concat(".xml"));
+
+			layoutSetPrototype.prepareLocalizedFieldsForImport();
 
 			serviceContext.setUuid(layoutSetPrototypeUuid);
 

@@ -670,6 +670,19 @@ public class JournalStructureWrapper implements JournalStructure,
 		_journalStructure.setExpandoBridgeAttributes(serviceContext);
 	}
 
+	public java.lang.String[] getAvailableLocales() {
+		return _journalStructure.getAvailableLocales();
+	}
+
+	public java.lang.String getDefaultLocale() {
+		return _journalStructure.getDefaultLocale();
+	}
+
+	public void prepareLocalizedFieldsForImport()
+		throws com.liferay.portal.LocaleException {
+		_journalStructure.prepareLocalizedFieldsForImport();
+	}
+
 	public void prepareLocalizedFieldsForImport(
 		java.util.Locale defaultImportLocale)
 		throws com.liferay.portal.LocaleException {

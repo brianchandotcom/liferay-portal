@@ -403,6 +403,8 @@ public class MDRPortletDataHandlerImpl extends BasePortletDataHandler {
 			MDRRuleGroupInstance ruleGroupInstance, MDRAction action)
 		throws Exception {
 
+		action.prepareLocalizedFieldsForImport();
+
 		long userId = portletDataContext.getUserId(action.getUserUuid());
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
@@ -450,6 +452,8 @@ public class MDRPortletDataHandlerImpl extends BasePortletDataHandler {
 			MDRRuleGroup ruleGroup, MDRRule rule)
 		throws Exception {
 
+		rule.prepareLocalizedFieldsForImport();
+
 		long userId = portletDataContext.getUserId(rule.getUserUuid());
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
@@ -492,6 +496,8 @@ public class MDRPortletDataHandlerImpl extends BasePortletDataHandler {
 			PortletDataContext portletDataContext, Element ruleGroupElement,
 			MDRRuleGroup ruleGroup)
 		throws Exception {
+
+		ruleGroup.prepareLocalizedFieldsForImport();
 
 		long userId = portletDataContext.getUserId(ruleGroup.getUserUuid());
 

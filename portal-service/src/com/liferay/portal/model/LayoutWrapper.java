@@ -1416,6 +1416,19 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 		_layout.setExpandoBridgeAttributes(serviceContext);
 	}
 
+	public java.lang.String[] getAvailableLocales() {
+		return _layout.getAvailableLocales();
+	}
+
+	public java.lang.String getDefaultLocale() {
+		return _layout.getDefaultLocale();
+	}
+
+	public void prepareLocalizedFieldsForImport()
+		throws com.liferay.portal.LocaleException {
+		_layout.prepareLocalizedFieldsForImport();
+	}
+
 	public void prepareLocalizedFieldsForImport(
 		java.util.Locale defaultImportLocale)
 		throws com.liferay.portal.LocaleException {

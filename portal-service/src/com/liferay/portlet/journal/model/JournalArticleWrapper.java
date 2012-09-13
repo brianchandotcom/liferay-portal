@@ -1313,6 +1313,19 @@ public class JournalArticleWrapper implements JournalArticle,
 		_journalArticle.setExpandoBridgeAttributes(serviceContext);
 	}
 
+	public java.lang.String[] getAvailableLocales() {
+		return _journalArticle.getAvailableLocales();
+	}
+
+	public java.lang.String getDefaultLocale() {
+		return _journalArticle.getDefaultLocale();
+	}
+
+	public void prepareLocalizedFieldsForImport()
+		throws com.liferay.portal.LocaleException {
+		_journalArticle.prepareLocalizedFieldsForImport();
+	}
+
 	public void prepareLocalizedFieldsForImport(
 		java.util.Locale defaultImportLocale)
 		throws com.liferay.portal.LocaleException {
@@ -1368,16 +1381,8 @@ public class JournalArticleWrapper implements JournalArticle,
 		return _journalArticle.getArticleResourceUuid();
 	}
 
-	public java.lang.String[] getAvailableLocales() {
-		return _journalArticle.getAvailableLocales();
-	}
-
 	public java.lang.String getContentByLocale(java.lang.String languageId) {
 		return _journalArticle.getContentByLocale(languageId);
-	}
-
-	public java.lang.String getDefaultLocale() {
-		return _journalArticle.getDefaultLocale();
 	}
 
 	public com.liferay.portlet.journal.model.JournalFolder getFolder() {

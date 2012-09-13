@@ -467,6 +467,12 @@ public interface DDLRecordSetModel extends BaseModel<DDLRecordSet>, GroupedModel
 
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext);
 
+	public String[] getAvailableLocales();
+
+	public String getDefaultLocale();
+
+	public void prepareLocalizedFieldsForImport() throws LocaleException;
+
 	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
 		throws LocaleException;
 

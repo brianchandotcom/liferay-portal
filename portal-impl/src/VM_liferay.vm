@@ -1,21 +1,21 @@
 #macro (css $file_name)
-	#set ($file_id = "")
 
 	#if ($file_name == $css_main_file)
-		#set ($file_id = "mainLiferayThemeCSS")
+		<link class="lfr-css-file" href="$file_name" id="mainLiferayThemeCSS" rel="stylesheet" type="text/css" />
+	#else
+		<link class="lfr-css-file" href="$file_name" rel="stylesheet" type="text/css" />
 	#end
 
-	<link class="lfr-css-file" href="$file_name" id="$file_id" rel="stylesheet" type="text/css" />
 #end
 
 #macro (js $file_name)
-	#set ($file_id = "")
 
 	#if ($file_name == $js_main_file)
-		#set ($file_id = "mainLiferayThemeJavaScript")
+		<script id="mainLiferayThemeJavaScript" src="$file_name" type="text/javascript"></script>
+	#else
+		<script src="$file_name" type="text/javascript"></script>
 	#end
 
-	<script id="$file_id" src="$file_name" type="text/javascript"></script>
 #end
 
 #macro (language $lang_key)

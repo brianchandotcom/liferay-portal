@@ -301,7 +301,6 @@ AUI.add(
 
 						instance._cancelButton.hide();
 
-						instance._filesQueued = 0;
 						instance._filesTotal = 0;
 
 						instance._updateList(0, instance._cancelUploadsText);
@@ -498,7 +497,6 @@ AUI.add(
 
 						var uploader = instance._uploader;
 
-						instance._filesQueued = 0;
 						instance._filesTotal = 0;
 
 						uploader.set('enabled', true);
@@ -548,6 +546,8 @@ AUI.add(
 							}
 
 							li.remove(true);
+
+							instance._filesTotal -= 1;
 						}
 					},
 
@@ -605,7 +605,6 @@ AUI.add(
 							uploader.set('fileList', validFiles);
 
 							instance._filesTotal += validFilesLength;
-							instance._filesQueued += validFilesLength;
 
 							instance._cancelButton.show();
 
@@ -703,7 +702,11 @@ AUI.add(
 					_onUploadStart: function(event) {
 						var instance = this;
 
-						var filesQueued = (instance._filesQueued -= 1);
+						var uploader = instance._uploader;
+
+						var queue = uploader.queue;
+
+						var filesQueued = queue ? queue.queuedFiles.length : 0;
 
 						var filesTotal = instance._filesTotal;
 
@@ -945,7 +948,6 @@ AUI.add(
 						}
 					},
 
-					_filesQueued: 0,
 					_filesTotal: 0
 				}
 			}

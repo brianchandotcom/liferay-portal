@@ -907,6 +907,10 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 		return _wikiPage.getRedirectPage();
 	}
 
+	public boolean isInTrashFolder() {
+		return _wikiPage.isInTrashFolder();
+	}
+
 	public void setAttachmentsDir(java.lang.String attachmentsDir) {
 		_wikiPage.setAttachmentsDir(attachmentsDir);
 	}

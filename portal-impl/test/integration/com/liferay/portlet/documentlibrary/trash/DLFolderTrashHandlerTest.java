@@ -14,21 +14,25 @@
 
 package com.liferay.portlet.documentlibrary.trash;
 
-import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.repository.model.Folder;
-import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.model.BaseModel;
+import com.liferay.portal.model.ClassedModel;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.ExecutionTestListeners;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
-import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
+import com.liferay.portal.util.TestPropsValues;
+import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
-import com.liferay.portlet.trash.service.TrashEntryServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFolderServiceUtil;
+import com.liferay.portlet.trash.BaseTrashHandlerTestCase;
 
 import org.junit.Assert;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -36,242 +40,127 @@ import org.junit.runner.RunWith;
  */
 @ExecutionTestListeners(listeners = {EnvironmentExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
-public class DLFolderTrashHandlerTest extends BaseDLTrashHandlerTestCase {
+public class DLFolderTrashHandlerTest extends BaseTrashHandlerTestCase {
 
-	@Test
-	public void testFileIsInTrashFolder() throws Exception {
-		Folder folder = addFolder(false, "Test Folder");
-
-		Folder subfolder = addFolder(folder.getFolderId(), "Test Subfolder");
-
-		FileEntry fileEntry = addFileEntry(
-			subfolder.getFolderId(), "Test File.txt");
-
-		LiferayFileVersion liferayFileVersion =
-			(LiferayFileVersion)fileEntry.getFileVersion();
-
-		Assert.assertFalse(liferayFileVersion.isInTrashFolder());
-
-		DLAppServiceUtil.moveFolderToTrash(folder.getFolderId());
-
-		Assert.assertTrue(liferayFileVersion.isInTrashFolder());
-	}
-
-	@Test
-	public void testTrashAndDelete() throws Exception {
-		trashDLFolder(true, false, false, false);
-	}
-
-	@Test
-	public void testTrashAndDeleteAndAddFile() throws Exception {
-		trashDLFolder(true, true, false, false);
-	}
-
-	@Test
-	public void testTrashAndDeleteAndTrashFile() throws Exception {
-		trashDLFolder(true, true, true, false);
-	}
-
-	@Test
-	public void testTrashAndMoveFile() throws Exception {
-		trashDLFolder(false, true, false, true);
-	}
-
-	@Test
-	public void testTrashAndRestore() throws Exception {
-		trashDLFolder(false, false, false, false);
-	}
-
-	@Test
-	public void testTrashAndRestoreAndAddFile() throws Exception {
-		trashDLFolder(false, true, false, false);
-	}
-
-	@Test
-	public void testTrashAndRestoreAndTrashFile() throws Exception {
-		trashDLFolder(false, true, true, false);
+	@Override
+	public void testTrashAndDeleteDraft() throws Exception {
+		Assert.assertTrue("This test does not apply", true);
 	}
 
 	@Override
-	protected long addSubentry(long folderId1, long folderId2)
+	public void testTrashAndRestoreDraft() throws Exception {
+		Assert.assertTrue("This test does not apply", true);
+	}
+
+	@Override
+	protected BaseModel<?> addBaseModel(
+			BaseModel<?> parentBaseModel, boolean approved,
+			ServiceContext serviceContext)
 		throws Exception {
 
-		Folder folder = addFolder(folderId1, "Sub Folder");
+		serviceContext = (ServiceContext)serviceContext.clone();
 
-		return folder.getFolderId();
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
+
+		DLFolder dlParentFolder = (DLFolder)parentBaseModel;
+
+		DLFolder dlFolder = DLFolderLocalServiceUtil.addFolder(
+			TestPropsValues.getUserId(), dlParentFolder.getGroupId(),
+			dlParentFolder.getGroupId(), false, dlParentFolder.getFolderId(),
+			getSearchKeywords(), StringPool.BLANK, serviceContext);
+
+		return dlFolder;
 	}
 
 	@Override
-	protected void moveSubentryFromTrash(long subentryId) throws Exception {
+	protected BaseModel<?> getBaseModel(long primaryKey) throws Exception {
+		return DLFolderLocalServiceUtil.getFolder(primaryKey);
+	}
+
+	@Override
+	protected Class<?> getBaseModelClass() {
+		return DLFolder.class;
+	}
+
+	@Override
+	protected String getBaseModelName(ClassedModel classedModel) {
+		DLFolder dlFolder = (DLFolder)classedModel;
+
+		return dlFolder.getName();
+	}
+
+	@Override
+	protected int getBaseModelsNotInTrashCount(BaseModel<?> parentBaseModel)
+		throws Exception {
+
+		DLFolder dlParentFolder = (DLFolder)parentBaseModel;
+
+		return DLFolderServiceUtil.getFoldersCount(
+			dlParentFolder.getGroupId(), dlParentFolder.getFolderId(),
+			WorkflowConstants.STATUS_APPROVED, false);
+	}
+
+	@Override
+	protected BaseModel<?> getParentBaseModel(
+			Group group, ServiceContext serviceContext)
+		throws Exception {
+
+		return DLFolderLocalServiceUtil.addFolder(
+			TestPropsValues.getUserId(), group.getGroupId(), group.getGroupId(),
+			false, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			ServiceTestUtil.randomString(), StringPool.BLANK, serviceContext);
+	}
+
+	@Override
+	protected String getSearchKeywords() {
+		return "Title";
+	}
+
+	@Override
+	protected boolean isAssetableModel() {
+		return false;
+	}
+
+	@Override
+	protected boolean isIndexableModel() {
+		return false;
+	}
+
+	@Override
+	protected boolean isInTrashFolder(ClassedModel classedModel)
+		throws Exception {
+
+		DLFolder dLFolder = (DLFolder)classedModel;
+
+		return dLFolder.isInTrashFolder();
+	}
+
+	@Override
+	protected BaseModel<?> moveBaseModelFromTrash(
+			ClassedModel classedModel, Group group,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		BaseModel<?> parentBaseModel = getParentBaseModel(
+			group, serviceContext);
+
 		DLAppServiceUtil.moveFolderFromTrash(
-			subentryId, parentFolder.getFolderId(), new ServiceContext());
+			(Long)classedModel.getPrimaryKeyObj(),
+			(Long)parentBaseModel.getPrimaryKeyObj(), serviceContext);
+
+		return parentBaseModel;
 	}
 
 	@Override
-	protected void moveSubentryToTrash(long subentryId) throws Exception {
-		DLAppServiceUtil.moveFolderToTrash(subentryId);
+	protected void moveBaseModelToTrash(long primaryKey) throws Exception {
+		DLAppServiceUtil.moveFolderToTrash(primaryKey);
 	}
 
-	protected void trashDLFolder(
-			boolean delete, boolean file, boolean trashFile,
-			boolean moveFileFromTrash)
+	@Override
+	protected void moveParentBaseModelToTrash(long primaryKey)
 		throws Exception {
 
-		int initialNotInTrashCount = getNotInTrashCount();
-		int initialTrashEntriesCount = getTrashEntriesCount();
-		int initialSearchFileEntriesCount = searchFileEntriesCount();
-		int initialSearchTrashEntriesCount = searchTrashEntriesCount("File");
-
-		Folder folder = addFolder(false, "Test Folder");
-
-		Folder subfolder = addFolder(folder.getFolderId(), "Test Subfolder");
-
-		long fileEntryId = 0;
-
-		if (file) {
-			FileEntry fileEntry = addFileEntry(
-				subfolder.getFolderId(), "Test File.txt");
-
-			fileEntryId = fileEntry.getFileEntryId();
-
-			addDLFileRank(fileEntryId);
-
-			Assert.assertEquals(
-				initialSearchFileEntriesCount + 1, searchFileEntriesCount());
-			Assert.assertTrue(
-				isAssetEntryVisible(
-					DLFileEntryConstants.getClassName(), fileEntryId));
-			Assert.assertEquals(
-				initialSearchTrashEntriesCount,
-				searchTrashEntriesCount("File"));
-
-			if (trashFile) {
-				DLAppServiceUtil.moveFileEntryToTrash(fileEntryId);
-			}
-		}
-
-		Assert.assertEquals(initialNotInTrashCount + 1, getNotInTrashCount());
-
-		if (trashFile) {
-			Assert.assertEquals(
-				initialTrashEntriesCount + 1, getTrashEntriesCount());
-		}
-		else {
-			Assert.assertEquals(
-				initialTrashEntriesCount, getTrashEntriesCount());
-		}
-
-		DLAppServiceUtil.moveFolderToTrash(folder.getFolderId());
-
-		Assert.assertEquals(initialNotInTrashCount, getNotInTrashCount());
-
-		if (trashFile) {
-			Assert.assertEquals(
-				initialTrashEntriesCount + 2, getTrashEntriesCount());
-		}
-		else {
-			Assert.assertEquals(
-				initialTrashEntriesCount + 1, getTrashEntriesCount());
-		}
-
-		Assert.assertEquals(
-			initialSearchFileEntriesCount, searchFileEntriesCount());
-
-		if (file) {
-			Assert.assertFalse(
-				isAssetEntryVisible(
-					DLFileEntryConstants.getClassName(), fileEntryId));
-			Assert.assertEquals(0, getActiveDLFileRanksCount(fileEntryId));
-			Assert.assertEquals(
-				initialSearchTrashEntriesCount + 1,
-				searchTrashEntriesCount("File"));
-		}
-
-		if (delete) {
-			TrashEntryServiceUtil.deleteEntries(folder.getGroupId());
-
-			Assert.assertEquals(initialNotInTrashCount, getNotInTrashCount());
-			Assert.assertEquals(
-				initialSearchFileEntriesCount, searchFileEntriesCount());
-
-			if (file) {
-				Assert.assertNull(
-					fetchAssetEntry(
-						DLFileEntryConstants.getClassName(), fileEntryId));
-			}
-		}
-		else if (moveFileFromTrash) {
-			DLAppServiceUtil.moveFileEntryFromTrash(
-				fileEntryId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-				ServiceTestUtil.getServiceContext());
-
-			Assert.assertTrue(
-				isAssetEntryVisible(
-					DLFileEntryConstants.getClassName(), fileEntryId));
-			Assert.assertEquals(1, getActiveDLFileRanksCount(fileEntryId));
-			Assert.assertEquals(
-				initialSearchFileEntriesCount + 1, searchFileEntriesCount());
-		}
-		else {
-			DLAppServiceUtil.restoreFolderFromTrash(folder.getFolderId());
-
-			Assert.assertEquals(
-				initialNotInTrashCount + 1, getNotInTrashCount());
-
-			if (file) {
-				if (trashFile) {
-					Assert.assertEquals(
-						initialTrashEntriesCount + 1, getTrashEntriesCount());
-					Assert.assertEquals(
-						initialSearchFileEntriesCount,
-						searchFileEntriesCount());
-					Assert.assertFalse(
-						isAssetEntryVisible(
-							DLFileEntryConstants.getClassName(), fileEntryId));
-					Assert.assertEquals(
-						initialSearchTrashEntriesCount + 1,
-						searchTrashEntriesCount("File"));
-
-					return;
-				}
-				else {
-					Assert.assertEquals(
-						initialSearchFileEntriesCount + 1,
-						searchFileEntriesCount());
-					Assert.assertTrue(
-						isAssetEntryVisible(
-							DLFileEntryConstants.getClassName(), fileEntryId));
-					Assert.assertEquals(
-						1, getActiveDLFileRanksCount(fileEntryId));
-					Assert.assertEquals(
-						initialSearchTrashEntriesCount,
-						searchTrashEntriesCount("File"));
-				}
-			}
-		}
-
-		if (delete) {
-			Assert.assertEquals(0, searchTrashEntriesCount("File"));
-		}
-		else {
-			Assert.assertEquals(
-				initialSearchTrashEntriesCount,
-				searchTrashEntriesCount("File"));
-		}
-
-		if (delete) {
-			Assert.assertEquals(0, getTrashEntriesCount());
-		}
-		else if (moveFileFromTrash) {
-			Assert.assertEquals(
-				initialTrashEntriesCount + 1, getTrashEntriesCount());
-
-			DLAppServiceUtil.deleteFileEntry(fileEntryId);
-		}
-		else {
-			Assert.assertEquals(
-				initialTrashEntriesCount, getTrashEntriesCount());
-		}
+		DLAppServiceUtil.moveFolderToTrash(primaryKey);
 	}
 
 }

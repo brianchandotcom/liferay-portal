@@ -30,6 +30,7 @@ import com.liferay.portlet.trash.BaseTrashHandlerTestCase;
 
 import java.io.InputStream;
 
+import org.junit.Assert;
 import org.junit.runner.RunWith;
 
 /**
@@ -43,6 +44,21 @@ import org.junit.runner.RunWith;
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class BlogsEntryTrashHandlerTest extends BaseTrashHandlerTestCase {
+
+	@Override
+	public void testTrashModelDuplicate() throws Exception {
+		Assert.assertTrue("This test does not apply", true);
+	}
+
+	@Override
+	public void testTrashParentAndDeleteParent() throws Exception {
+		Assert.assertTrue("This test does not apply", true);
+	}
+
+	@Override
+	public void testTrashParentAndRestoreModel() throws Exception {
+		Assert.assertTrue("This test does not apply", true);
+	}
 
 	@Override
 	protected BaseModel<?> addBaseModel(

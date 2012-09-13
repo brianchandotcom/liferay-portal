@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>link=Activities Test Page</td>
-	<td>Activities Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Activities Test Page</td>
 	<td>Activities Test Page</td>
@@ -289,9 +284,19 @@
 	<td>Portlet Info</td>
 </tr>
 <tr>
-	<td>assertText</td>
+	<td>assertPartialText</td>
 	<td>//p[@id='lfr-portlet-info']</td>
 	<td>Your current portlet information is as follows::<br />Portlet ID: #portlet_116<br />Portlet Classes: .portlet</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//p[@id='lfr-portlet-info']</td>
+	<td>Portlet ID: #portlet_116</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//p[@id='lfr-portlet-info']</td>
+	<td>Portlet Classes: .portlet</td>
 </tr>
 <tr>
 	<td>assertValue</td>

@@ -25,7 +25,6 @@ public class ViewPortletLookAndFeelTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/group/joebloggs/home/");
-		selenium.waitForElementPresent("link=Activities Test Page");
 		selenium.clickAt("link=Activities Test Page",
 			RuntimeVariables.replace("Activities Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -134,9 +133,12 @@ public class ViewPortletLookAndFeelTest extends BaseTestCase {
 		selenium.clickAt("link=Advanced Styling",
 			RuntimeVariables.replace("Advanced Styling"));
 		selenium.waitForVisible("//p[@id='lfr-portlet-info']");
-		assertEquals(RuntimeVariables.replace(
-				"Your current portlet information is as follows::\nPortlet ID: #portlet_116\nPortlet Classes: .portlet"),
-			selenium.getText("//p[@id='lfr-portlet-info']"));
+		assertTrue(selenium.isPartialText("//p[@id='lfr-portlet-info']",
+				"Your current portlet information is as follows::\nPortlet ID: #portlet_116\nPortlet Classes: .portlet"));
+		assertTrue(selenium.isPartialText("//p[@id='lfr-portlet-info']",
+				"Portlet ID: #portlet_116"));
+		assertTrue(selenium.isPartialText("//p[@id='lfr-portlet-info']",
+				"Portlet Classes: .portlet"));
 		assertEquals("",
 			selenium.getValue("//textarea[@id='_113_lfr-custom-css']"));
 		assertEquals(RuntimeVariables.replace(

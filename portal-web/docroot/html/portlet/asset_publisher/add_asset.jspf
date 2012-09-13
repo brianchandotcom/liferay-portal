@@ -138,7 +138,9 @@ public PortletURL getAddPortletURL(LiferayPortletRequest liferayPortletRequest, 
 
 	addPortletURL.setPortletMode(PortletMode.VIEW);
 
-	PortletURL redirectURL = liferayPortletResponse.createRenderURL();
+	PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+	PortletURL redirectURL = liferayPortletResponse.createLiferayPortletURL(themeDisplay.getPlid(), portletDisplay.getId(), PortletRequest.RENDER_PHASE, false);
 
 	redirectURL.setWindowState(LiferayWindowState.POP_UP);
 
@@ -152,8 +154,6 @@ public PortletURL getAddPortletURL(LiferayPortletRequest liferayPortletRequest, 
 		addPortletURL.setParameter("referringPortletResource", referringPortletResource);
 	}
 	else {
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
 		addPortletURL.setParameter("referringPortletResource", portletDisplay.getId());
 
 		Map<Long, String> assetVocabularyAssetCategoryIds = new HashMap<Long, String>();

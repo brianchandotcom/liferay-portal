@@ -38,7 +38,7 @@ if (showEditURL && (editPortletURL != null)) {
 		editPortletURL.setParameter("referringPortletResource", portletDisplay.getId());
 	}
 
-	PortletURL redirectURL = renderResponse.createRenderURL();
+	PortletURL redirectURL = liferayPortletResponse.createLiferayPortletURL(plid, portletDisplay.getId(), PortletRequest.RENDER_PHASE, false);
 
 	redirectURL.setWindowState(LiferayWindowState.POP_UP);
 

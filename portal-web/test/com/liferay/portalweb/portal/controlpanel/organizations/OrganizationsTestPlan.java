@@ -22,6 +22,7 @@ import com.liferay.portalweb.portal.controlpanel.organizations.organizationemail
 import com.liferay.portalweb.portal.controlpanel.organizations.organizationpage.OrganizationPageTestPlan;
 import com.liferay.portalweb.portal.controlpanel.organizations.organizationphonenumber.OrganizationPhoneNumberTestPlan;
 import com.liferay.portalweb.portal.controlpanel.organizations.organizationservice.OrganizationServiceTestPlan;
+import com.liferay.portalweb.portal.controlpanel.organizations.organizationteam.OrganizationTeamTestPlan;
 import com.liferay.portalweb.portal.controlpanel.organizations.organizationwebsite.OrganizationWebsiteTestPlan;
 
 import junit.framework.Test;
@@ -42,6 +43,7 @@ public class OrganizationsTestPlan extends BaseTestSuite {
 		testSuite.addTest(OrganizationPageTestPlan.suite());
 		testSuite.addTest(OrganizationPhoneNumberTestPlan.suite());
 		testSuite.addTest(OrganizationServiceTestPlan.suite());
+		testSuite.addTest(OrganizationTeamTestPlan.suite());
 		testSuite.addTest(OrganizationWebsiteTestPlan.suite());
 
 		return testSuite;

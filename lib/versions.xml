@@ -82,6 +82,20 @@
 		</licenses>
 	</library>
 	<library>
+		<file-name>development/apacheds-service.jar</file-name>
+		<version>2.0.0-M7</version>
+		<project-name>Apache Directory Service</project-name>
+		<project-url>http://directory.apache.org/apacheds/2.0/downloads.html</project-url>
+		<licenses>
+			<license>
+				<license-name>Apache License 2.0</license-name>
+			</license>
+		</licenses>
+		<comments>
+			Removed javax.servlet.* package to be portal compatible
+		</comments>
+	</library>
+	<library>
 		<file-name>development/catalina.jar</file-name>
 		<version>7.0.27</version>
 		<project-name>Tomcat</project-name>

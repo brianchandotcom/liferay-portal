@@ -31,7 +31,7 @@ public class ReflectionUtil {
 			return null;
 		}
 
-		if (isAnnotationDeclaredInClass(annotationClass, clazz)) {
+		if (isAnnotationDeclared(annotationClass, clazz)) {
 			return clazz;
 		}
 		else {
@@ -108,7 +108,7 @@ public class ReflectionUtil {
 		return parameterTypes;
 	}
 
-	public static boolean isAnnotationDeclaredInClass(
+	public static boolean isAnnotationDeclared(
 		Class<? extends Annotation> annotationClass, Class<?> clazz) {
 
 		if ((annotationClass == null) || (clazz == null)) {
@@ -116,6 +116,24 @@ public class ReflectionUtil {
 		}
 
 		Annotation[] annotations = clazz.getAnnotations();
+
+		for (Annotation annotation : annotations) {
+			if (annotationClass.equals(annotation.annotationType())) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	public static boolean isAnnotationDeclared(
+		Class<? extends Annotation> annotationClass, Method method) {
+
+		if ((annotationClass == null) || (method == null)) {
+			throw new IllegalArgumentException();
+		}
+
+		Annotation[] annotations = method.getAnnotations();
 
 		for (Annotation annotation : annotations) {
 			if (annotationClass.equals(annotation.annotationType())) {

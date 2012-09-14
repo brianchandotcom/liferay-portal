@@ -183,7 +183,7 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 							int pagesIteratorEnd = pages;
 
 							if (cur > pages) {
-								 pagesIteratorEnd = cur;
+								pagesIteratorEnd = cur;
 							}
 
 							if (pages > pagesIteratorMax) {

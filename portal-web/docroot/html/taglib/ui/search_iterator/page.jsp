@@ -61,15 +61,16 @@ List<String> primaryKeys = new ArrayList<String>();
 int sortColumnIndex = -1;
 %>
 
-<c:if test="<%= (total == 0) && (emptyResultsMessage != null) %>">
+<c:if test="<%= resultRows.isEmpty() && (emptyResultsMessage != null) %>">
+
+	<%
+	if (total > 0) {
+		emptyResultsMessage = "there-are-no-results-on-this-page";
+	}
+	%>
+
 	<div class="portlet-msg-info">
 		<%= LanguageUtil.get(pageContext, emptyResultsMessage) %>
-	</div>
-</c:if>
-
-<c:if test="<%= (total != 0) && resultRows.isEmpty() %>">
-	<div class="portlet-msg-info">
-		<%= LanguageUtil.get(pageContext, "there-are-no-results-in-this-page") %>
 	</div>
 </c:if>
 
@@ -220,18 +221,10 @@ int sortColumnIndex = -1;
 			</tr>
 		</c:if>
 
-		<c:if test="<%= (total == 0) && (emptyResultsMessage != null) %>">
+		<c:if test="<%= resultRows.isEmpty() && (emptyResultsMessage != null) %>">
 			<tr class="portlet-section-body results-row last">
 				<td class="align-center only" colspan="<%= (headerNames == null) ? 1 : headerNames.size() %>">
 					<%= LanguageUtil.get(pageContext, emptyResultsMessage) %>
-				</td>
-			</tr>
-		</c:if>
-
-		<c:if test="<%= (total != 0) && resultRows.isEmpty() %>">
-			<tr class="portlet-section-body results-row last">
-				<td class="align-center only" colspan="<%= (headerNames == null) ? 1 : headerNames.size() %>">
-					<%= LanguageUtil.get(pageContext, "there-are-no-results-in-this-page") %>
 				</td>
 			</tr>
 		</c:if>

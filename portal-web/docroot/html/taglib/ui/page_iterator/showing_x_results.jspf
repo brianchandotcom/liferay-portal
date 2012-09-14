@@ -22,8 +22,8 @@
 		<c:when test='<%= type.equals("more") %>'>
 			<%= LanguageUtil.format(pageContext, "showing-x-x", new Object[] {numberFormat.format(start + 1), numberFormat.format(end)}) %>
 		</c:when>
-		<c:when test="<%= total > resultRowsSize && (resultRowsSize > 0) %>">
-				<%= LanguageUtil.format(pageContext, "showing-x-x-of-x-results", new Object[] {numberFormat.format(start + 1), numberFormat.format(end), numberFormat.format(total)}) %>
+		<c:when test="<%= (total > resultRowsSize) && (resultRowsSize > 0) %>">
+			<%= LanguageUtil.format(pageContext, "showing-x-x-of-x-results", new Object[] {numberFormat.format(start + 1), numberFormat.format(end), numberFormat.format(total)}) %>
 		</c:when>
 		<c:otherwise>
 			<c:choose>

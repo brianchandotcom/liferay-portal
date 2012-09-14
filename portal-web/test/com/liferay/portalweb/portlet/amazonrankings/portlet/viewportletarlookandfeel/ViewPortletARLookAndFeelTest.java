@@ -51,9 +51,6 @@ public class ViewPortletARLookAndFeelTest extends BaseTestCase {
 			selenium.getSelectedLabel("//select[@id='_113_lfr-point-links']"));
 		assertTrue(selenium.isChecked(
 				"//input[@id='_113_show-bordersCheckbox']"));
-		assertEquals(RuntimeVariables.replace(
-				"-1em -0.95em -0.9em -0.85em -0.8em -0.75em -0.7em -0.65em -0.6em -0.55em -0.5em -0.45em -0.4em -0.35em -0.3em -0.25em -0.2em -0.15em -0.1em -0.05em Normal 0.05em 0.1em 0.15em 0.2em 0.25em 0.3em 0.35em 0.4em 0.45em 0.5em 0.55em 0.6em 0.65em 0.7em 0.75em 0.8em 0.85em 0.9em 0.95em"),
-			selenium.getText("//select[@id='_113_lfr-font-space']"));
 		selenium.clickAt("link=Text Styles",
 			RuntimeVariables.replace("Text Styles"));
 		selenium.waitForVisible("//select[@id='_113_lfr-font-family']");
@@ -67,6 +64,9 @@ public class ViewPortletARLookAndFeelTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"0.1em 0.2em 0.3em 0.4em 0.5em 0.6em 0.7em 0.8em 0.9em 1em 1.1em 1.2em 1.3em 1.4em 1.5em 1.6em 1.7em 1.8em 1.9em 2em 2.1em 2.2em 2.3em 2.4em 2.5em 2.6em 2.7em 2.8em 2.9em 3em 3.1em 3.2em 3.3em 3.4em 3.5em 3.6em 3.7em 3.8em 3.9em 4em 4.1em 4.2em 4.3em 4.4em 4.5em 4.6em 4.7em 4.8em 4.9em 5em 5.1em 5.2em 5.3em 5.4em 5.5em 5.6em 5.7em 5.8em 5.9em 6em 6.1em 6.2em 6.3em 6.4em 6.5em 6.6em 6.7em 6.8em 6.9em 7em 7.1em 7.2em 7.3em 7.4em 7.5em 7.6em 7.7em 7.8em 7.9em 8em 8.1em 8.2em 8.3em 8.4em 8.5em 8.6em 8.7em 8.8em 8.9em 9em 9.1em 9.2em 9.3em 9.4em 9.5em 9.6em 9.7em 9.8em 9.9em 10em 10.1em 10.2em 10.3em 10.4em 10.5em 10.6em 10.7em 10.8em 10.9em 11em 11.1em 11.2em 11.3em 11.4em 11.5em 11.6em 11.7em 11.8em 11.9em 12em"),
 			selenium.getText("//select[@id='_113_lfr-font-leading']"));
+		assertEquals(RuntimeVariables.replace(
+				"-1em -0.95em -0.9em -0.85em -0.8em -0.75em -0.7em -0.65em -0.6em -0.55em -0.5em -0.45em -0.4em -0.35em -0.3em -0.25em -0.2em -0.15em -0.1em -0.05em Normal 0.05em 0.1em 0.15em 0.2em 0.25em 0.3em 0.35em 0.4em 0.45em 0.5em 0.55em 0.6em 0.65em 0.7em 0.75em 0.8em 0.85em 0.9em 0.95em"),
+			selenium.getText("//select[@id='_113_lfr-font-space']"));
 		assertEquals(RuntimeVariables.replace(
 				"0.1em 0.2em 0.3em 0.4em 0.5em 0.6em 0.7em 0.8em 0.9em 1em 1.1em 1.2em 1.3em 1.4em 1.5em 1.6em 1.7em 1.8em 1.9em 2em 2.1em 2.2em 2.3em 2.4em 2.5em 2.6em 2.7em 2.8em 2.9em 3em 3.1em 3.2em 3.3em 3.4em 3.5em 3.6em 3.7em 3.8em 3.9em 4em 4.1em 4.2em 4.3em 4.4em 4.5em 4.6em 4.7em 4.8em 4.9em 5em 5.1em 5.2em 5.3em 5.4em 5.5em 5.6em 5.7em 5.8em 5.9em 6em 6.1em 6.2em 6.3em 6.4em 6.5em 6.6em 6.7em 6.8em 6.9em 7em 7.1em 7.2em 7.3em 7.4em 7.5em 7.6em 7.7em 7.8em 7.9em 8em 8.1em 8.2em 8.3em 8.4em 8.5em 8.6em 8.7em 8.8em 8.9em 9em 9.1em 9.2em 9.3em 9.4em 9.5em 9.6em 9.7em 9.8em 9.9em 10em 10.1em 10.2em 10.3em 10.4em 10.5em 10.6em 10.7em 10.8em 10.9em 11em 11.1em 11.2em 11.3em 11.4em 11.5em 11.6em 11.7em 11.8em 11.9em 12em"),
 			selenium.getText("//select[@id='_113_lfr-font-size']"));
@@ -132,9 +132,12 @@ public class ViewPortletARLookAndFeelTest extends BaseTestCase {
 			RuntimeVariables.replace("Advanced Styling"));
 		selenium.waitForVisible("//p[@id='lfr-portlet-info']");
 		selenium.waitForVisible("//input[@id='_113_lfr-custom-css-class-name']");
-		assertEquals(RuntimeVariables.replace(
-				"Your current portlet information is as follows::\nPortlet ID: #portlet_67\nPortlet Classes: .portlet"),
-			selenium.getText("//p[@id='lfr-portlet-info']"));
+		assertTrue(selenium.isPartialText("//p[@id='lfr-portlet-info']",
+				"Your current portlet information is as follows::\nPortlet ID: #portlet_67\nPortlet Classes: .portlet"));
+		assertTrue(selenium.isPartialText("//p[@id='lfr-portlet-info']",
+				"Portlet ID: #portlet_67"));
+		assertTrue(selenium.isPartialText("//p[@id='lfr-portlet-info']",
+				"Portlet Classes: .portlet"));
 		assertEquals("",
 			selenium.getValue("//input[@id='_113_lfr-custom-css-class-name']"));
 		assertEquals("",

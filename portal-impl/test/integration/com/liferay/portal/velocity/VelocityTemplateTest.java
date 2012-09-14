@@ -62,7 +62,7 @@ public class VelocityTemplateTest {
 
 		extendedProperties.setProperty(
 			VelocityEngine.RESOURCE_MANAGER_CLASS,
-			PropsUtil.get(PropsKeys.VELOCITY_ENGINE_RESOURCE_MANAGER));
+			LiferayResourceManager.class.getName());
 		extendedProperties.setProperty(
 			VelocityEngine.RUNTIME_LOG_LOGSYSTEM_CLASS,
 			PropsUtil.get(PropsKeys.VELOCITY_ENGINE_LOGGER));

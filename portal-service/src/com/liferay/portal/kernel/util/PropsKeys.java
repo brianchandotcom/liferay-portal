@@ -2293,10 +2293,6 @@ public interface PropsKeys {
 
 	public static final String VELOCITY_ENGINE_LOGGER_CATEGORY = "velocity.engine.logger.category";
 
-	public static final String VELOCITY_ENGINE_RESOURCE_MANAGER = "velocity.engine.resource.manager";
-
-	public static final String VELOCITY_ENGINE_RESOURCE_MANAGER_CACHE_ENABLED = "velocity.engine.resource.manager.cache.enabled";
-
 	public static final String VELOCITY_ENGINE_RESOURCE_MODIFICATION_CHECK_INTERVAL = "velocity.engine.resource.modification.check.interval";
 
 	public static final String VELOCITY_ENGINE_RESOURCE_PARSERS = "velocity.engine.resource.parsers";

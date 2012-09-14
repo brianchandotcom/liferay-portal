@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.template.TemplateResourceLoaderUtil;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.template.TemplateResourceThreadLocal;
+import com.liferay.portal.util.PropsValues;
 
 import freemarker.cache.TemplateCache;
 
@@ -118,7 +119,12 @@ public class LiferayTemplateCache extends TemplateCache {
 			templateResource.getTemplateId(), templateResource.getReader(),
 			_configuration, TemplateResource.DEFAUT_ENCODING);
 
-		_portalCache.put(templateResource, template);
+		if (
+			PropsValues.FREEMARKER_ENGINE_RESOURCE_MODIFICATION_CHECK_INTERVAL
+			!= 0) {
+
+			_portalCache.put(templateResource, template);
+		}
 
 		return template;
 	}

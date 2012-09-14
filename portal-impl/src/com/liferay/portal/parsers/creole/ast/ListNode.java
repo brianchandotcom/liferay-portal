@@ -14,39 +14,33 @@
 
 package com.liferay.portal.parsers.creole.ast;
 
+import com.liferay.portal.parsers.creole.visitor.ASTVisitor;
+
 /**
  * @author Miguel Pastor
  */
-public abstract class ItemNode extends BaseParentableNode {
+public class ListNode extends BaseListNode {
 
-	public ItemNode(int tokenType) {
+	public ListNode() {
+	}
+
+	public ListNode(BaseParentableNode baseParentableNode) {
+		super(baseParentableNode, null);
+	}
+
+	public ListNode(
+		BaseParentableNode baseParentableNode, CollectionNode collectionNode) {
+
+		super(baseParentableNode, collectionNode);
+	}
+
+	public ListNode(int tokenType) {
 		super(tokenType);
 	}
 
-	public ItemNode(
-		int level, BaseParentableNode baseParentableNode,
-		CollectionNode collectionNode) {
-
-		super(collectionNode);
-
-		_level = level;
-		_baseParentableNode = baseParentableNode;
+	@Override
+	public void accept(ASTVisitor astVisitor) {
+		astVisitor.visit(this);
 	}
-
-	public BaseParentableNode getBaseParentableNode() {
-		return _baseParentableNode;
-	}
-
-	public int getLevel() {
-		return _level;
-	}
-
-	public void setBaseParentableNode(BaseParentableNode baseParentableNode) {
-		_baseParentableNode = baseParentableNode;
-	}
-
-	private BaseParentableNode _baseParentableNode = null;
-
-	private int _level;
 
 }

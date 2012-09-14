@@ -23,6 +23,7 @@ import com.liferay.portal.parsers.creole.ast.HorizontalNode;
 import com.liferay.portal.parsers.creole.ast.ImageNode;
 import com.liferay.portal.parsers.creole.ast.ItalicTextNode;
 import com.liferay.portal.parsers.creole.ast.LineNode;
+import com.liferay.portal.parsers.creole.ast.ListNode;
 import com.liferay.portal.parsers.creole.ast.NoWikiSectionNode;
 import com.liferay.portal.parsers.creole.ast.OrderedListItemNode;
 import com.liferay.portal.parsers.creole.ast.OrderedListNode;
@@ -62,6 +63,8 @@ public interface ASTVisitor {
 	public void visit(LineNode lineNode);
 
 	public void visit(LinkNode linkNode);
+
+	public void visit(ListNode linkNode);
 
 	public void visit(NoWikiSectionNode noWikiSectionNode);
 

@@ -14,6 +14,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
+	<td>AUI Editable Min</td>
+</tr>
+<tr>
 	<td>assertText</td>
 	<td>//li[@id='_145_mySites']/a/span</td>
 	<td>Go to</td>
@@ -41,7 +51,7 @@
 <tr>
 	<td>type</td>
 	<td>//input[@id='_134_name']</td>
-	<td>Community Name</td>
+	<td>Site Name</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -60,47 +70,52 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Manage Memberships')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Memberships')]</td>
 	<td>Manage Memberships</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Manage Memberships')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Memberships')]</td>
 	<td>Manage Memberships</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Manage Memberships')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Memberships')]</td>
 	<td>Manage Memberships</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//span[2]/ul/li/strong/a/span</td>
+	<td>//span[@title='Add Members']/ul/li/strong/a/span</td>
 	<td>Add Members</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//span[2]/ul/li/strong/a/span</td>
+	<td>//span[@title='Add Members']/ul/li/strong/a/span</td>
 	<td>Add Members</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'User')]</td>
 	<td>User</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'User')]</td>
 	<td>User</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'User')]</td>
 	<td>User</td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isVisible('link=« Basic'))</td>
+	<td>waitForElementPresent</td>
+	<td>//a[.='« Basic']</td>
+	<td>« Basic</td>
+</tr>
+<tr>
+	<td>storeVisible</td>
+	<td>//a[.='« Basic']</td>
 	<td>basicVisible</td>
 </tr>
 <tr>
@@ -110,8 +125,13 @@
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>link=« Basic</td>
-	<td></td>
+	<td>//a[.='« Basic']</td>
+	<td>« Basic</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//input[@name='_174_keywords']</td>
+	<td>Search Field</td>
 </tr>
 <tr>
 	<td>label</td>
@@ -121,7 +141,7 @@
 <tr>
 	<td>type</td>
 	<td>//input[@name='_174_keywords']</td>
-	<td>selenium</td>
+	<td>userfn</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -131,17 +151,17 @@
 <tr>
 	<td>assertNotChecked</td>
 	<td>//input[@name='_174_rowIds']</td>
-	<td></td>
+	<td>Checkbox</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>//input[@name='_174_rowIds']</td>
-	<td></td>
+	<td>Checkbox</td>
 </tr>
 <tr>
 	<td>assertChecked</td>
 	<td>//input[@name='_174_rowIds']</td>
-	<td></td>
+	<td>Checkbox</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -152,6 +172,16 @@
 	<td>assertText</td>
 	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'userfn userln')]/td[1]</td>
+	<td>userfn userln</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'userfn userln')]/td[2]</td>
+	<td>usersn</td>
 </tr>
 </tbody></table>
 </body>

@@ -62,12 +62,19 @@ int sortColumnIndex = -1;
 %>
 
 <c:if test="<%= resultRows.isEmpty() && (emptyResultsMessage != null) %>">
+
+	<%
+	if (total > 0) {
+		emptyResultsMessage = "there-are-no-results-on-this-page";
+	}
+	%>
+
 	<div class="portlet-msg-info">
 		<%= LanguageUtil.get(pageContext, emptyResultsMessage) %>
 	</div>
 </c:if>
 
-<div class="lfr-search-container <%= resultRows.isEmpty() ? "aui-helper-hidden" : StringPool.BLANK %>">
+<div class="lfr-search-container <%= (total == 0) ? "aui-helper-hidden" : StringPool.BLANK %>">
 	<c:if test="<%= PropsValues.SEARCH_CONTAINER_SHOW_PAGINATION_TOP && (resultRows.size() > 10) && paginate %>">
 		<div class="taglib-search-iterator-page-iterator-top">
 			<liferay-ui:search-paginator id='<%= id + "PageIteratorTop" %>' searchContainer="<%= searchContainer %>" type="<%= type %>" />

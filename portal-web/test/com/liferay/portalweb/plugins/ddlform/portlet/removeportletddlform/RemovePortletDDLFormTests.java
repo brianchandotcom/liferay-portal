@@ -14,6 +14,8 @@
 
 package com.liferay.portalweb.plugins.ddlform.portlet.removeportletddlform;
 
+import com.liferay.portalweb.plugins.ddlform.portlet.addportletddlform.AddPageDDLFormTest;
+import com.liferay.portalweb.plugins.ddlform.portlet.addportletddlform.AddPortletDDLFormTest;
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
 
@@ -23,7 +25,7 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class RemotePortletDDLFormTests extends BaseTestSuite {
+public class RemovePortletDDLFormTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddPageDDLFormTest.class);

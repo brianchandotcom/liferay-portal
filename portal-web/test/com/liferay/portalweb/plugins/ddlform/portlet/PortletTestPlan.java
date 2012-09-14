@@ -16,7 +16,7 @@ package com.liferay.portalweb.plugins.ddlform.portlet;
 
 import com.liferay.portalweb.plugins.ddlform.portlet.addportletddlform.AddPortletDDLFormTests;
 import com.liferay.portalweb.plugins.ddlform.portlet.addportletddlformmultiple.AddPortletDDLFormMultipleTests;
-import com.liferay.portalweb.plugins.ddlform.portlet.removeportletddlform.RemotePortletDDLFormTests;
+import com.liferay.portalweb.plugins.ddlform.portlet.removeportletddlform.RemovePortletDDLFormTests;
 import com.liferay.portalweb.portal.BaseTestSuite;
 
 import junit.framework.Test;
@@ -32,7 +32,7 @@ public class PortletTestPlan extends BaseTestSuite {
 
 		testSuite.addTest(AddPortletDDLFormTests.suite());
 		testSuite.addTest(AddPortletDDLFormMultipleTests.suite());
-		testSuite.addTest(RemotePortletDDLFormTests.suite());
+		testSuite.addTest(RemovePortletDDLFormTests.suite());
 
 		return testSuite;
 	}

@@ -14,6 +14,8 @@
 
 package com.liferay.portalweb.plugins.ddlform.portlet.addportletddlformmultiple;
 
+import com.liferay.portalweb.plugins.ddlform.portlet.addportletddlform.AddPageDDLFormTest;
+import com.liferay.portalweb.plugins.ddlform.portlet.addportletddlform.AddPortletDDLFormTest;
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
 
@@ -27,7 +29,7 @@ public class AddPortletDDLFormMultipleTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddPageDDLFormTest.class);
-		testSuite.addTestSuite(AddPortletDDLForm1Test.class);
+		testSuite.addTestSuite(AddPortletDDLFormTest.class);
 		testSuite.addTestSuite(AddPortletDDLForm2Test.class);
 		testSuite.addTestSuite(AddPortletDDLForm3Test.class);
 		testSuite.addTestSuite(TearDownPageTest.class);

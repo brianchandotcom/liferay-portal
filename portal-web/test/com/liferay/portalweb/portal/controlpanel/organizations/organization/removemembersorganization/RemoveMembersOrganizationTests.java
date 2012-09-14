@@ -15,6 +15,11 @@
 package com.liferay.portalweb.portal.controlpanel.organizations.organization.removemembersorganization;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.controlpanel.organizations.organization.addorganization.AddOrganizationTest;
+import com.liferay.portalweb.portal.controlpanel.organizations.organization.addorganization.TearDownOrganizationTest;
+import com.liferay.portalweb.portal.controlpanel.organizations.organization.assignmembersorganizationuser.AssignMembersOrganizationUserTest;
+import com.liferay.portalweb.portal.controlpanel.users.user.adduser.AddUserTest;
+import com.liferay.portalweb.portal.controlpanel.users.user.adduser.TearDownUserTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -25,13 +30,13 @@ import junit.framework.TestSuite;
 public class RemoveMembersOrganizationTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
-		testSuite.addTestSuite(AddOrganizationTest.class);
 		testSuite.addTestSuite(AddUserTest.class);
-		testSuite.addTestSuite(AssignMembersOrganizationTest.class);
-		testSuite.addTestSuite(AssertAssignMembersOrganizationTest.class);
+		testSuite.addTestSuite(AddOrganizationTest.class);
+		testSuite.addTestSuite(AssignMembersOrganizationUserTest.class);
+		testSuite.addTestSuite(ViewAssignMembersOrganizationUserTest.class);
 		testSuite.addTestSuite(RemoveMembersOrganizationTest.class);
-		testSuite.addTestSuite(AssertRemoveMembersOrganizationTest.class);
-		testSuite.addTestSuite(TearDownTest.class);
+		testSuite.addTestSuite(ViewRemoveMembersOrganizationTest.class);
+		testSuite.addTestSuite(TearDownOrganizationTest.class);
 		testSuite.addTestSuite(TearDownUserTest.class);
 
 		return testSuite;

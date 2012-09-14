@@ -25,6 +25,10 @@ public class DeleteOrganizationAssignMembersTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
@@ -36,12 +40,14 @@ public class DeleteOrganizationAssignMembersTest extends BaseTestCase {
 			RuntimeVariables.replace("Users and Organizations"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@name='_125_keywords']",
-			RuntimeVariables.replace("Selenium"));
+			RuntimeVariables.replace("Organization Name"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
+		assertFalse(selenium.isChecked("//input[@name='_125_rowIds']"));
 		selenium.clickAt("//input[@name='_125_rowIds']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Checkbox"));
+		assertTrue(selenium.isChecked("//input[@name='_125_rowIds']"));
 		selenium.click(RuntimeVariables.replace("//input[@value='Delete']"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.getConfirmation()

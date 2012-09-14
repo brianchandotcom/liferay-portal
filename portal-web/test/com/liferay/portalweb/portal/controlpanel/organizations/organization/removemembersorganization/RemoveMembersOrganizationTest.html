@@ -14,6 +14,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
+	<td>AUI Editable Min</td>
+</tr>
+<tr>
 	<td>assertText</td>
 	<td>//li[@id='_145_mySites']/a/span</td>
 	<td>Go to</td>
@@ -41,7 +51,7 @@
 <tr>
 	<td>type</td>
 	<td>//input[@name='_125_keywords']</td>
-	<td>Selenium</td>
+	<td>Organization Name</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -60,33 +70,33 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Assign Users')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Assign Users')]</td>
 	<td>Assign Users</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Assign Users')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Assign Users')]</td>
 	<td>Assign Users</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Assign Users')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Assign Users')]</td>
 	<td>Assign Users</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>link=Available</td>
+	<td>//ul[@class='aui-tabview-list']/li/span/a[contains(.,'Available')]</td>
 	<td>Available</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Available</td>
+	<td>//ul[@class='aui-tabview-list']/li/span/a[contains(.,'Available')]</td>
 	<td>Available</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>//input[@name='_125_keywords']</td>
-	<td>Selenium</td>
+	<td>userfn</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -114,14 +124,14 @@
 	<td>Update Associations</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
+	<td>assertText</td>
 	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@class='portlet-msg-success']</td>
-	<td>Your request completed successfully.</td>
+	<td>assertNotChecked</td>
+	<td>//input[@name='_125_rowIds']</td>
+	<td>Select User</td>
 </tr>
 </tbody></table>
 </body>

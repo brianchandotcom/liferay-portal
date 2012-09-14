@@ -30,6 +30,10 @@ public class AssignMembersOrganizationUserTest extends BaseTestCase {
 				selenium.selectWindow("null");
 				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
+				selenium.clickAt("//div[@id='dockbar']",
+					RuntimeVariables.replace("Dockbar"));
+				selenium.waitForElementPresent(
+					"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
 				assertEquals(RuntimeVariables.replace("Go to"),
 					selenium.getText("//li[@id='_145_mySites']/a/span"));
 				selenium.mouseOver("//li[@id='_145_mySites']/a/span");
@@ -61,8 +65,10 @@ public class AssignMembersOrganizationUserTest extends BaseTestCase {
 				selenium.clickAt("link=Available",
 					RuntimeVariables.replace("Available"));
 				selenium.waitForPageToLoad("30000");
+				selenium.waitForElementPresent("//a[.='\u00ab Basic']");
 
-				boolean basicVisible = selenium.isVisible("link=\u00ab Basic");
+				boolean basicVisible = selenium.isVisible(
+						"//a[.='\u00ab Basic']");
 
 				if (!basicVisible) {
 					label = 2;
@@ -70,11 +76,11 @@ public class AssignMembersOrganizationUserTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("link=\u00ab Basic",
+				selenium.clickAt("//a[.='\u00ab Basic']",
 					RuntimeVariables.replace("\u00ab Basic"));
+				selenium.waitForVisible("//input[@name='_125_keywords']");
 
 			case 2:
-				selenium.waitForVisible("//input[@name='_125_keywords']");
 				selenium.type("//input[@name='_125_keywords']",
 					RuntimeVariables.replace("userfn"));
 				selenium.clickAt("//input[@value='Search']",

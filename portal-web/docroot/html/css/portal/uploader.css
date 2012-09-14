@@ -1,16 +1,30 @@
+.lfr-dynamic-uploader {
+	display: table;
+	table-layout: fixed;
+	width: 100%;
+}
+
 .lfr-upload-container {
+	padding-right: 1em;
 	margin-bottom: 1em;
 
 	.upload-target {
-		border: 1px solid transparent;
-		margin-right: 1.5em;
+		border: 2px solid transparent;
+		margin-bottom: 1em;
 		min-height: 30px;
+		padding: 30px 0;
+		position: relative;
 		text-align: center;
+
+		h4 span {
+			display: block;
+			margin: 5px 0;
+		}
 	}
 
 	.manage-upload-target {
-		margin: 0 1.5em 0 0;
 		padding: 5px 0 0 0;
+		position: relative;
 	}
 
 	.browse-button-container {
@@ -18,41 +32,60 @@
 	}
 
 	a {
-		&.clear-uploads {
-			float: right;
-		}
-
 		&.cancel-uploads {
 			float: right;
 			margin-right: 0;
+		}
+
+		&.clear-uploads {
+			float: right;
+			padding-left: 16px;
 		}
 	}
 
 	.upload-file {
 		border: 1px solid transparent;
 		display: block;
-		margin: 0.3em 1.5em 0.3em 0;
+		margin: 0.3em 0;
 		overflow: hidden;
 		padding: 5px;
 		padding-left: 25px;
 		position: relative;
 
+		&.upload-complete.file-saved {
+			padding-left: 25px;
+		}
+
 		.file-title {
+			display: inline-block;
+			max-width: 95%;
+			overflow: hidden;
 			padding-right: 16px;
+			text-overflow: ellipsis;
+			vertical-align: middle;
+			white-space: nowrap;
 		}
 	}
 
-	.pending-files-info {
-		margin-right: 1.5em;
-	}
-
 	.upload-list-info {
-		margin: 1em 1.5em 0.5em 0;
+		margin: 1em 0 0.5em;
 	}
 
 	.cancel-button {
 		position: absolute;
 		right: 5px;
+		margin-top: -0.85em;
+		overflow: hidden;
+		position: absolute;
+		top: 50%;
+		white-space: nowrap;
+		width: 0;
+
+		&:hover {
+			padding-right: 5px;
+			white-space: normal;
+			width: auto;
+		}
 	}
 
 	.delete-button {
@@ -64,11 +97,6 @@
 		text-indent: -9999em;
 		top: 50%;
 		width: 16px;
-	}
-
-	.upload-file.upload-complete.file-saved {
-		opacity: 0.6;
-		padding-left: 25px;
 	}
 
 	.file-added .success-message {
@@ -88,7 +116,10 @@
 		padding-left: 5px;
 
 		.select-file {
-			margin-right: 25px;
+			left: 5px;
+			margin-top: -7px;
+			position: absolute;
+			top: 50%;
 		}
 
 		.error-message, .success-message {
@@ -107,13 +138,14 @@
 	}
 
 	.progress {
-		display: block;
+		display: inline-block;
 		height: 15px;
-		width: 0;
+		min-width: 20px;
 	}
 
 	.file-uploading {
 		.cancel-button {
+			margin-top: 1px;
 			top: 0;
 		}
 
@@ -163,13 +195,22 @@
 	}
 }
 
+.upload-drop-intent .lfr-upload-container .upload-target {
+	z-index: 100;
+}
+
 /* Skin */
 
 .lfr-upload-container {
 	.upload-target {
-		background-color: #8FBE31;
-		border-color: #729A22;
-		text-shadow: 1px 1px #656565;
+		background-color: #EBEBEB;
+		border-color: #DDD;
+		font-weight: bold;
+		text-shadow: 1px 1px #FFF;
+
+		h4 span {
+			text-transform: lowercase;
+		}
 	}
 
 	a {
@@ -183,7 +224,7 @@
 		}
 
 		&.clear-uploads {
-			background-image: url(@theme_image_path@/portlet/refresh.png);
+			background-image: url(@theme_image_path@/common/remove.png);
 			background-repeat: no-repeat;
 		}
 
@@ -199,8 +240,13 @@
 		font-weight: bold;
 		text-shadow: 1px 1px #FFF;
 
+		.file-title {
+			font-weight: bold;
+		}
+
 		&.upload-complete {
 			background-position: 22px 50%;
+			padding-left: 45px;
 
 			&.file-saved, &.upload-error {
 				background-position: 5px 50%;
@@ -210,6 +256,7 @@
 				background-color: #B4DDAD;
 				background-image: url(@theme_image_path@/common/check.png);
 				font-weight: bold;
+				opacity: 0.6;
 			}
 		}
 	}
@@ -228,6 +275,9 @@
 	.cancel-button {
 		background-image: url(@theme_image_path@/common/delete.png);
 		background-repeat: no-repeat;
+		background-color: #800;
+		color: #FFF;
+		text-shadow: 1px 1px #500;
 	}
 
 	.delete-button {
@@ -249,7 +299,13 @@
 	.upload-error {
 		background-color: #FDD;
 		background-image: url(@theme_image_path@/messages/error.png);
+		border-color: #900;
+		color: #900;
 		font-weight: normal;
+
+		.error-message {
+			display: block;
+		}
 	}
 
 	.upload-complete {
@@ -270,6 +326,12 @@
 	.progress {
 		background: #8db2e3;
 	}
+}
+
+.upload-drop-active .lfr-upload-container .upload-target {
+	background-color: #DDEDDE;
+	border-color: #7D7;
+	border-style: dashed;
 }
 
 .select-files {

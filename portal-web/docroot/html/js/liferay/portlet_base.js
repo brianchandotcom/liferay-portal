@@ -8,7 +8,14 @@ AUI.add(
 		var PortletBase = function(config) {
 			var instance = this;
 
-			var namespace = config.namespace;
+			var namespace;
+
+			if ('namespace' in config) {
+				namespace = config.namespace;
+			}
+			else {
+				namespace = A.guid();
+			}
 
 			instance.NS = namespace;
 			instance.ID = namespace.replace(/^_(.*)_$/, '$1');

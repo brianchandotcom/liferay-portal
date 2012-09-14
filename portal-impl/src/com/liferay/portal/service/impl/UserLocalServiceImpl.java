@@ -4392,7 +4392,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 				String passwordHistory = PrefsPropsUtil.getString(
 					user.getCompanyId(), PropsKeys.LDAP_ERROR_PASSWORD_HISTORY);
 
-				if (msg.indexOf(passwordHistory) != -1) {
+				if (msg.contains(passwordHistory)) {
 					throw new UserPasswordException(
 						UserPasswordException.PASSWORD_ALREADY_USED);
 				}

@@ -89,7 +89,7 @@ public class LayoutImpl extends LayoutBaseImpl {
 			return LayoutFriendlyURLException.ENDS_WITH_SLASH;
 		}
 
-		if (friendlyURL.indexOf(StringPool.DOUBLE_SLASH) != -1) {
+		if (friendlyURL.contains(StringPool.DOUBLE_SLASH)) {
 			return LayoutFriendlyURLException.ADJACENT_SLASHES;
 		}
 

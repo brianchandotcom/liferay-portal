@@ -1630,7 +1630,7 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 
 			recurrence.setUntil(until);
 		}
-		else if (rRule.getValue().indexOf("COUNT") >= 0) {
+		else if (rRule.getValue().contains("COUNT")) {
 			until.setTimeInMillis(startDate.getTimeInMillis());
 
 			int addField = 0;

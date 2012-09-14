@@ -560,7 +560,7 @@ public class LocalizationImpl implements Localization {
 			}
 
 			if ((availableLocales != null) &&
-				(availableLocales.indexOf(requestedLanguageId) != -1)) {
+				availableLocales.contains(requestedLanguageId)) {
 
 				availableLocales = StringUtil.remove(
 					availableLocales, requestedLanguageId, StringPool.COMMA);
@@ -755,7 +755,7 @@ public class LocalizationImpl implements Localization {
 					availableLocales = defaultLanguageId;
 				}
 
-				if (availableLocales.indexOf(requestedLanguageId) == -1) {
+				if (!availableLocales.contains(requestedLanguageId)) {
 					availableLocales = StringUtil.add(
 						availableLocales, requestedLanguageId,
 						StringPool.COMMA);
@@ -990,7 +990,7 @@ public class LocalizationImpl implements Localization {
 	}
 
 	private String _sanitizeXML(String xml) {
-		if (Validator.isNull(xml) || (xml.indexOf("<root") == -1)) {
+		if (Validator.isNull(xml) || !xml.contains("<root")) {
 			xml = _EMPTY_ROOT_NODE;
 		}
 

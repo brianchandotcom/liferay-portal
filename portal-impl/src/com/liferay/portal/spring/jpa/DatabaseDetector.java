@@ -114,7 +114,7 @@ public class DatabaseDetector {
 		catch (Exception e) {
 			String msg = GetterUtil.getString(e.getMessage());
 
-			if (msg.indexOf("explicitly set for database: DB2") != -1) {
+			if (msg.contains("explicitly set for database: DB2")) {
 				database = Database.DB2;
 
 				type = DB.TYPE_DB2;

@@ -139,7 +139,7 @@ public class CASFilter extends BasePortalFilter {
 			return;
 		}
 
-		if (pathInfo.indexOf("/portal/logout") != -1) {
+		if (pathInfo.contains("/portal/logout")) {
 			session.invalidate();
 
 			String logoutUrl = PrefsPropsUtil.getString(

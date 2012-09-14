@@ -401,7 +401,7 @@ public abstract class PortletResponseImpl implements LiferayPortletResponse {
 	public String encodeURL(String path) {
 		if ((path == null) ||
 			(!path.startsWith("#") && !path.startsWith("/") &&
-				(path.indexOf("://") == -1))) {
+			 !path.contains("://"))) {
 
 			// Allow '#' as well to workaround a bug in Oracle ADF 10.1.3
 

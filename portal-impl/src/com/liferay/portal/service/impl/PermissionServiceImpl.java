@@ -250,7 +250,7 @@ public class PermissionServiceImpl extends PermissionServiceBaseImpl {
 				ActionKeys.PERMISSIONS);
 		}
 		else if ((primKey != null) &&
-				 (primKey.indexOf(PortletConstants.LAYOUT_SEPARATOR) != -1)) {
+				 primKey.contains(PortletConstants.LAYOUT_SEPARATOR)) {
 
 			int pos = primKey.indexOf(PortletConstants.LAYOUT_SEPARATOR);
 

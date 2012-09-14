@@ -1112,8 +1112,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 			}
 			else if ((servletContextName == null) &&
 					 !portletApp.isWARFile() &&
-					 (portletId.indexOf(
-						PortletConstants.WAR_SEPARATOR) == -1) &&
+					 !portletId.contains(PortletConstants.WAR_SEPARATOR) &&
 					 !portletIds.contains(portletId)) {
 
 				undefinedPortletIds.add(portletId);

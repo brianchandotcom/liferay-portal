@@ -42,12 +42,7 @@ public class WebXML24Descriptor extends SimpleXMLDescriptor {
 
 	@Override
 	public boolean canHandleType(String doctype, Document root) {
-		if (doctype.indexOf("web-app") != -1) {
-			return true;
-		}
-		else {
-			return false;
-		}
+		return doctype.contains("web-app");
 	}
 
 	@Override

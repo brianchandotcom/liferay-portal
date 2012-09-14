@@ -75,7 +75,7 @@ if (hints != null) {
 
 			boolean timeFormatAmPm = true;
 
-			if (timeFormatPattern.indexOf("a") == -1) {
+			if (!timeFormatPattern.contains("a")) {
 				timeFormatAmPm = false;
 			}
 

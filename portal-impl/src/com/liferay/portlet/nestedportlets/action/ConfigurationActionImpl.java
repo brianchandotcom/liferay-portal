@@ -91,7 +91,7 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 		List<String> columnNames = new UniqueList<String>();
 
 		for (String columnId : columnIds) {
-			if (columnId.indexOf(portletId) == -1) {
+			if (!columnId.contains(portletId)) {
 				columnNames.add(portletId + StringPool.UNDERLINE + columnId);
 			}
 		}

@@ -261,7 +261,7 @@ public class VerifyJournal extends VerifyProcess {
 		for (JournalArticle article : articles) {
 			String content = article.getContent();
 
-			if ((content != null) && (content.indexOf("\\n") != -1)) {
+			if ((content != null) && content.contains("\\n")) {
 				articles = JournalArticleLocalServiceUtil.getArticles(
 					DEFAULT_GROUP_ID);
 
@@ -303,7 +303,7 @@ public class VerifyJournal extends VerifyProcess {
 
 			String xsd = structure.getXsd();
 
-			if ((xsd != null) && (xsd.indexOf("\\n") != -1)) {
+			if ((xsd != null) && xsd.contains("\\n")) {
 				structures = JournalStructureLocalServiceUtil.getStructures(
 					DEFAULT_GROUP_ID);
 
@@ -325,7 +325,7 @@ public class VerifyJournal extends VerifyProcess {
 
 			String xsl = template.getXsl();
 
-			if ((xsl != null) && (xsl.indexOf("\\n") != -1)) {
+			if ((xsl != null) && xsl.contains("\\n")) {
 				templates = JournalTemplateLocalServiceUtil.getTemplates(
 					DEFAULT_GROUP_ID);
 

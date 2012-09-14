@@ -476,25 +476,25 @@ public class SeleneseToJavaBuilder {
 
 		String content = readFile(fileName);
 
-		if ((content.indexOf("<title>" + testName + "</title>") == -1) ||
-			(content.indexOf("colspan=\"3\">" + testName + "</td>") == -1)) {
+		if (!content.contains("<title>" + testName + "</title>") ||
+			!content.contains("colspan=\"3\">" + testName + "</td>")) {
 
 			System.out.println(testName + " has an invalid test name");
 		}
 
-		if (content.indexOf("&gt;") != -1) {
+		if (content.contains("&gt;")) {
 			content = StringUtil.replace(content, "&gt;", ">");
 
 			writeFile(fileName, content, false);
 		}
 
-		if (content.indexOf("&lt;") != -1) {
+		if (content.contains("&lt;")) {
 			content = StringUtil.replace(content, "&lt;", "<");
 
 			writeFile(fileName, content, false);
 		}
 
-		if (content.indexOf("&quot;") != -1) {
+		if (content.contains("&quot;")) {
 			content = StringUtil.replace(content, "&quot;", "\"");
 
 			writeFile(fileName, content, false);

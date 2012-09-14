@@ -123,47 +123,47 @@ public class InformixDB extends BaseDB {
 					"alter table @table@ modify (@old-column@ @type@);",
 					REWORD_TEMPLATE, template);
 			}
-			else if (line.indexOf(DROP_INDEX) != -1) {
+			else if (line.contains(DROP_INDEX)) {
 				String[] tokens = StringUtil.split(line, ' ');
 
 				line = StringUtil.replace(
 					"drop index @index@;", "@index@", tokens[2]);
 			}
-			else if (line.indexOf("typeSettings text") > 0) {
+			else if (line.contains("typeSettings text")) {
 				line = StringUtil.replace(
 					line, "typeSettings text", "typeSettings lvarchar(4096)");
 			}
-			else if (line.indexOf("varchar(300)") > 0) {
+			else if (line.contains("varchar(300)")) {
 				line = StringUtil.replace(
 					line, "varchar(300)", "lvarchar(300)");
 			}
-			else if (line.indexOf("varchar(500)") > 0) {
+			else if (line.contains("varchar(500)")) {
 				line = StringUtil.replace(
 					line, "varchar(500)", "lvarchar(500)");
 			}
-			else if (line.indexOf("varchar(1000)") > 0) {
+			else if (line.contains("varchar(1000)")) {
 				line = StringUtil.replace(
 					line, "varchar(1000)", "lvarchar(1000)");
 			}
-			else if (line.indexOf("varchar(1024)") > 0) {
+			else if (line.contains("varchar(1024)")) {
 				line = StringUtil.replace(
 					line, "varchar(1024)", "lvarchar(1024)");
 			}
-			else if (line.indexOf("1970-01-01") > 0) {
+			else if (line.contains("1970-01-01")) {
 				line = StringUtil.replace(
 					line, "1970-01-01", "1970-01-01 00:00:00.0");
 			}
-			else if (line.indexOf("create table") >= 0) {
+			else if (line.contains("create table")) {
 				createTable = true;
 			}
-			else if ((line.indexOf(");") >= 0) && createTable) {
+			else if (line.contains(");") && createTable) {
 				line = StringUtil.replace(
 					line, ");",
 					")\nextent size 16 next size 16\nlock mode row;");
 
 				createTable = false;
 			}
-			else if (line.indexOf("commit;") >= 0) {
+			else if (line.contains("commit;")) {
 				line = StringPool.BLANK;
 			}
 

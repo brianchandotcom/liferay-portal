@@ -28,21 +28,11 @@ import java.util.TreeSet;
 public class ComparableRoute implements Comparable<ComparableRoute> {
 
 	public static boolean hasRegex(String fragment) {
-		if (fragment.indexOf(":") != -1) {
-			return true;
-		}
-		else {
-			return false;
-		}
+		return fragment.contains(":");
 	}
 
 	public static boolean isCaptureFragment(String fragment) {
-		if (fragment.indexOf("{") != -1) {
-			return true;
-		}
-		else {
-			return false;
-		}
+		return fragment.contains("{");
 	}
 
 	public static boolean isMatchAny(String fragment) {

@@ -635,8 +635,8 @@ public class Validator {
 			return false;
 		}
 
-		if (((s.indexOf("<html>") != -1) || (s.indexOf("<HTML>") != -1)) &&
-			((s.indexOf("</html>") != -1) || (s.indexOf("</HTML>") != -1))) {
+		if ((s.contains("<html>") || s.contains("<HTML>")) &&
+			(s.contains("</html>") || s.contains("</HTML>"))) {
 
 			return true;
 		}

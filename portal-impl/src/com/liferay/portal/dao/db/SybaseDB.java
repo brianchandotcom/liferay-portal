@@ -116,7 +116,7 @@ public class SybaseDB extends BaseDB {
 		String line = null;
 
 		while ((line = unsyncBufferedReader.readLine()) != null) {
-			if (line.indexOf(DROP_COLUMN) != -1) {
+			if (line.contains(DROP_COLUMN)) {
 				line = StringUtil.replace(line, " drop column ", " drop ");
 			}
 
@@ -135,7 +135,7 @@ public class SybaseDB extends BaseDB {
 					"alter table @table@ modify @old-column@ @type@;",
 					REWORD_TEMPLATE, template);
 			}
-			else if (line.indexOf(DROP_INDEX) != -1) {
+			else if (line.contains(DROP_INDEX)) {
 				String[] tokens = StringUtil.split(line, ' ');
 
 				String tableName = tokens[4];

@@ -1255,7 +1255,7 @@ public class PortletURLImpl
 		for (Map.Entry<String, String[]> entry : renderParameters.entrySet()) {
 			String name = entry.getKey();
 
-			if (name.indexOf(namespace) != -1) {
+			if (name.contains(namespace)) {
 				name = name.substring(namespace.length());
 			}
 

@@ -25,12 +25,7 @@ public class TilesDefsDescriptor extends SimpleXMLDescriptor {
 
 	@Override
 	public boolean canHandleType(String doctype, Document root) {
-		if (doctype.indexOf("tiles-config") != -1) {
-			return true;
-		}
-		else {
-			return false;
-		}
+		return doctype.contains("tiles-config");
 	}
 
 	@Override

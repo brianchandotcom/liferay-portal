@@ -592,7 +592,7 @@ public class MediaWikiImporter implements WikiImporter {
 			assetTagNames.add(assetTag.getName());
 		}
 
-		if (content.indexOf(_WORK_IN_PROGRESS) != -1) {
+		if (content.contains(_WORK_IN_PROGRESS)) {
 			assetTagNames.add(_WORK_IN_PROGRESS_TAG);
 		}
 

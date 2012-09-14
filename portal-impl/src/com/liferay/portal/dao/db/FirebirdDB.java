@@ -113,7 +113,7 @@ public class FirebirdDB extends BaseDB {
 						"type @type@;",
 					REWORD_TEMPLATE, template);
 			}
-			else if (line.indexOf(DROP_INDEX) != -1) {
+			else if (line.contains(DROP_INDEX)) {
 				String[] tokens = StringUtil.split(line, ' ');
 
 				line = StringUtil.replace(

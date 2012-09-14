@@ -1477,7 +1477,7 @@ public class PortalImpl implements Portal {
 			currentURL = HttpUtil.getCompleteURL(request);
 
 			if (Validator.isNotNull(currentURL) &&
-				(currentURL.indexOf(_J_SECURITY_CHECK) == -1)) {
+				!currentURL.contains(_J_SECURITY_CHECK)) {
 
 				currentURL = currentURL.substring(
 					currentURL.indexOf(Http.PROTOCOL_DELIMITER) +
@@ -1704,7 +1704,7 @@ public class PortalImpl implements Portal {
 		while (enu.hasMoreElements()) {
 			String param = enu.nextElement();
 
-			if (param.indexOf("ExpandoAttributeName--") != -1) {
+			if (param.contains("ExpandoAttributeName--")) {
 				String name = ParamUtil.getString(portletRequest, param);
 
 				names.add(name);
@@ -1747,7 +1747,7 @@ public class PortalImpl implements Portal {
 		while (enu.hasMoreElements()) {
 			String param = enu.nextElement();
 
-			if (param.indexOf("ExpandoAttributeName--") != -1) {
+			if (param.contains("ExpandoAttributeName--")) {
 				String name = ParamUtil.getString(uploadPortletRequest, param);
 
 				names.add(name);

@@ -37,6 +37,7 @@ import org.junit.runner.RunWith;
 
 /**
  * @author Alexander Chow
+ * @author Eudaldo Alonso
  */
 @ExecutionTestListeners(listeners = {EnvironmentExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)

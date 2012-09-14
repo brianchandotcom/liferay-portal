@@ -646,21 +646,6 @@ public class EditUserAction extends PortletAction {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			User.class.getName(), actionRequest);
 
-		if (actionRequest.getParameter("assetCategoryNames") == null ) {
-			long[] assetCategoryIds =
-				AssetCategoryLocalServiceUtil.getCategoryIds(
-					User.class.getName(), user.getUserId());
-
-			serviceContext.setAssetCategoryIds(assetCategoryIds);
-		}
-
-		if (actionRequest.getParameter("assetTagNames") == null ) {
-			String[] assetTagNames = AssetTagLocalServiceUtil.getTagNames(
-				User.class.getName(), user.getUserId());
-
-			serviceContext.setAssetTagNames(assetTagNames);
-		}
-
 		user = UserServiceUtil.updateUser(
 			user.getUserId(), oldPassword, newPassword1, newPassword2,
 			passwordReset, reminderQueryQuestion, reminderQueryAnswer,

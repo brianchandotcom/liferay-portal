@@ -37,6 +37,8 @@ public class ShardGloballyAdvice implements MethodInterceptor {
 	 * @see ShardIterativelyAdvice
 	 */
 	public Object invoke(MethodInvocation methodInvocation) throws Throwable {
+		Object returnValue = null;
+
 		_shardAdvice.setGlobalCall(new Object());
 
 		try {
@@ -57,14 +59,18 @@ public class ShardGloballyAdvice implements MethodInterceptor {
 
 				shardSessionFactoryTargetSource.setSessionFactory(shardName);
 
-				methodInvocation.proceed();
+				Object value = methodInvocation.proceed();
+
+				if (shardName.equals(ShardUtil.getDefaultShardName())){
+					returnValue = value;
+				}
 			}
 		}
 		finally {
 			_shardAdvice.setGlobalCall(null);
 		}
 
-		return null;
+		return returnValue;
 	}
 
 	public void setShardAdvice(ShardAdvice shardAdvice) {

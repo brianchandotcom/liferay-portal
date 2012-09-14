@@ -14,6 +14,8 @@
 
 package com.liferay.portalweb.plugins.digg.portlet.removeportletdigg;
 
+import com.liferay.portalweb.plugins.digg.portlet.addportletdigg.AddPageDiggTest;
+import com.liferay.portalweb.plugins.digg.portlet.addportletdigg.AddPortletDiggTest;
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
 

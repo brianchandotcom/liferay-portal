@@ -23,11 +23,17 @@ import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Kenneth Chang
  */
 public class VerifyLayout extends VerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
+		verifyFriendlyURL();
+		verifyUuid();
+	}
+
+	protected void verifyFriendlyURL() throws Exception {
 		List<Layout> layouts =
 			LayoutLocalServiceUtil.getNullFriendlyURLLayouts();
 
@@ -37,41 +43,36 @@ public class VerifyLayout extends VerifyProcess {
 			LayoutLocalServiceUtil.updateFriendlyURL(
 				layout.getPlid(), friendlyURL);
 		}
-
-		verifyLayoutUuid();
 	}
 
-	protected void verifyLayoutUuid() throws Exception {
-			StringBundler sb = new StringBundler(6);
+	protected void verifyUuid() throws Exception {
+		verifyUuid("AssetEntry");
+		verifyUuid("JournalArticle");
 
-			sb.append("update assetentry, layout set layoutUuid = ");
-			sb.append("sourcePrototypeLayoutUuid where layoutUuid in (select ");
-			sb.append("uuid_ from layout where sourcePrototypeLayoutUuid is ");
-			sb.append("not null and sourcePrototypeLayoutUuid not like '' ");
-			sb.append("and uuid_ not like sourcePrototypeLayoutUuid) and ");
-			sb.append("layout.uuid_ = layoutUuid");
+		StringBundler sb = new StringBundler(4);
 
-			runSQL(sb.toString());
+		sb.append("update Layout set uuid_ = sourcePrototypeLayoutUuid where ");
+		sb.append("sourcePrototypeLayoutUuid is not null and ");
+		sb.append("sourcePrototypeLayoutUuid not like '' and ");
+		sb.append("uuid_ != sourcePrototypeLayoutUuid");
 
-			sb = new StringBundler(6);
+		runSQL(sb.toString());
+	}
 
-			sb.append("update journalarticle, layout set layoutUuid = ");
-			sb.append("sourcePrototypeLayoutUuid where layoutUuid in (select ");
-			sb.append("uuid_ from layout where sourcePrototypeLayoutUuid is ");
-			sb.append("not null and sourcePrototypeLayoutUuid not like '' ");
-			sb.append("and uuid_ not like sourcePrototypeLayoutUuid) and ");
-			sb.append("layout.uuid_ = layoutUuid");
+	protected void verifyUuid(String tableName) throws Exception {
+		StringBundler sb = new StringBundler(9);
 
-			runSQL(sb.toString());
+		sb.append("update ");
+		sb.append(tableName);
+		sb.append(" set layoutUuid = (select sourcePrototypeLayoutUuid from ");
+		sb.append("Layout where ");
+		sb.append(tableName);
+		sb.append(".layoutUuid = Layout.uuid_ and ");
+		sb.append("Layout.sourcePrototypeLayoutUuid is not null and ");
+		sb.append("Layout.sourcePrototypeLayoutUuid not like '' and ");
+		sb.append("Layout.uuid_ != Layout.sourcePrototypeLayoutUuid");
 
-			sb = new StringBundler(4);
-
-			sb.append("update layout set uuid_ = sourcePrototypeLayoutUuid ");
-			sb.append("where sourcePrototypeLayoutUuid is not null and ");
-			sb.append("sourcePrototypeLayoutUuid not like '' and uuid_ not ");
-			sb.append("like sourcePrototypeLayoutUuid");
-
-			runSQL(sb.toString());
+		runSQL(sb.toString());
 	}
 
 }

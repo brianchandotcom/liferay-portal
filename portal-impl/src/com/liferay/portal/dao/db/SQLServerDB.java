@@ -213,8 +213,8 @@ public class SQLServerDB extends BaseDB {
 
 	private static final String[] _SQL_SERVER = {
 		"--", "1", "0", "'19700101'", "GetDate()", " image", " image", " bit",
-		" datetime", " float", " int", " bigint", " nvarchar(2000)", " ntext",
-		" nvarchar", "  identity(1,1)", "go"
+		" datetime", " float", " int", " bigint", " nvarchar(2000)",
+		" nvarchar(max)", " nvarchar", "  identity(1,1)", "go"
 	};
 
 	private static final int _SQL_SERVER_2000 = 8;

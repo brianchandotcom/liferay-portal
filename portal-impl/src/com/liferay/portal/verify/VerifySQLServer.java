@@ -81,7 +81,7 @@ public class VerifySQLServer extends VerifyProcess {
 					convertVarcharColumn(
 						tableName, columnName, length, nullable);
 				}
-				else if (dataType.equals("text")) {
+				else if (dataType.equals("text") || dataType.equals("ntext")) {
 					convertTextColumn(tableName, columnName, nullable);
 				}
 			}
@@ -104,14 +104,14 @@ public class VerifySQLServer extends VerifyProcess {
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
-				"Updating " + tableName + "." + columnName + " to use ntext");
+				"Updating " + tableName + "." + columnName + " to use nvarchar(max)");
 		}
 
 		StringBundler sb = new StringBundler(4);
 
 		sb.append("alter table ");
 		sb.append(tableName);
-		sb.append(" add temp ntext");
+		sb.append(" add temp nvarchar(max)");
 
 		if (!nullable) {
 			sb.append(" not null");

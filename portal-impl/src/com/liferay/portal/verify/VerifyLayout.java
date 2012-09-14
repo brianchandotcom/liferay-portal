@@ -14,6 +14,7 @@
 
 package com.liferay.portal.verify;
 
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
@@ -22,11 +23,17 @@ import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Kenneth Chang
  */
 public class VerifyLayout extends VerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
+		verifyFriendlyURL();
+		verifyUuid();
+	}
+
+	protected void verifyFriendlyURL() throws Exception {
 		List<Layout> layouts =
 			LayoutLocalServiceUtil.getNullFriendlyURLLayouts();
 
@@ -36,6 +43,36 @@ public class VerifyLayout extends VerifyProcess {
 			LayoutLocalServiceUtil.updateFriendlyURL(
 				layout.getPlid(), friendlyURL);
 		}
+	}
+
+	protected void verifyUuid() throws Exception {
+		verifyUuid("AssetEntry");
+		verifyUuid("JournalArticle");
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append("update Layout set uuid_ = sourcePrototypeLayoutUuid where ");
+		sb.append("sourcePrototypeLayoutUuid is not null and ");
+		sb.append("sourcePrototypeLayoutUuid not like '' and ");
+		sb.append("uuid_ != sourcePrototypeLayoutUuid");
+
+		runSQL(sb.toString());
+	}
+
+	protected void verifyUuid(String tableName) throws Exception {
+		StringBundler sb = new StringBundler(9);
+
+		sb.append("update ");
+		sb.append(tableName);
+		sb.append(" set layoutUuid = (select sourcePrototypeLayoutUuid from ");
+		sb.append("Layout where ");
+		sb.append(tableName);
+		sb.append(".layoutUuid = Layout.uuid_ and ");
+		sb.append("Layout.sourcePrototypeLayoutUuid is not null and ");
+		sb.append("Layout.sourcePrototypeLayoutUuid not like '' and ");
+		sb.append("Layout.uuid_ != Layout.sourcePrototypeLayoutUuid");
+
+		runSQL(sb.toString());
 	}
 
 }

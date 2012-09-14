@@ -70,7 +70,7 @@ public class VerifyLayout extends VerifyProcess {
 		sb.append(".layoutUuid = Layout.uuid_ and ");
 		sb.append("Layout.sourcePrototypeLayoutUuid is not null and ");
 		sb.append("Layout.sourcePrototypeLayoutUuid not like '' and ");
-		sb.append("Layout.uuid_ != Layout.sourcePrototypeLayoutUuid");
+		sb.append("Layout.uuid_ != Layout.sourcePrototypeLayoutUuid)");
 
 		runSQL(sb.toString());
 	}

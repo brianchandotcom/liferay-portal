@@ -43,6 +43,7 @@ import org.junit.Test;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Eudaldo Alonso
  */
 public abstract class BaseTrashHandlerTestCase {
 

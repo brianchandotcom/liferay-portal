@@ -81,7 +81,7 @@ public class VerifySQLServer extends VerifyProcess {
 					convertVarcharColumn(
 						tableName, columnName, length, nullable);
 				}
-				else if (dataType.equals("text") || dataType.equals("ntext")) {
+				else if (dataType.equals("ntext") || dataType.equals("text")) {
 					convertTextColumn(tableName, columnName, nullable);
 				}
 			}
@@ -104,7 +104,8 @@ public class VerifySQLServer extends VerifyProcess {
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
-				"Updating " + tableName + "." + columnName + " to use nvarchar(max)");
+				"Updating " + tableName + "." + columnName +" to use " +
+					"nvarchar(max)");
 		}
 
 		StringBundler sb = new StringBundler(4);

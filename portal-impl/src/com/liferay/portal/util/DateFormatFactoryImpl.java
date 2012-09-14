@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.util.DateFormatFactory;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 
 import java.util.Locale;
 import java.util.TimeZone;

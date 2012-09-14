@@ -14,6 +14,8 @@
 
 package com.liferay.portalweb.plugins.eventsdisplay.portlet.addportletduplicate;
 
+import com.liferay.portalweb.plugins.eventsdisplay.portlet.addportlet.AddPageEDTest;
+import com.liferay.portalweb.plugins.eventsdisplay.portlet.addportlet.AddPortletEDTest;
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
 

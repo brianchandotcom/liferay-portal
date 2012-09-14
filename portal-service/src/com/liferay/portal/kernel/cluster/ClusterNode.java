@@ -26,8 +26,18 @@ import java.net.InetAddress;
  */
 public class ClusterNode implements Comparable<ClusterNode>, Serializable {
 
-	public ClusterNode(String clusterNodeId) {
+	public ClusterNode(String clusterNodeId, InetAddress inetAddress) {
+
+		if (clusterNodeId == null) {
+			throw new IllegalArgumentException("ClusterNode ID is null");
+		}
+
+		if (inetAddress == null) {
+			throw new IllegalArgumentException("InetAddress is null");
+		}
+
 		_clusterNodeId = clusterNodeId;
+		_inetAddress = inetAddress;
 	}
 
 	public int compareTo(ClusterNode clusterNode) {
@@ -74,10 +84,6 @@ public class ClusterNode implements Comparable<ClusterNode>, Serializable {
 		return _clusterNodeId;
 	}
 
-	public String getHostName() {
-		return _hostName;
-	}
-
 	public InetAddress getInetAddress() {
 		return _inetAddress;
 	}
@@ -91,26 +97,16 @@ public class ClusterNode implements Comparable<ClusterNode>, Serializable {
 		return _clusterNodeId.hashCode();
 	}
 
-	public void setHostName(String hostName) {
-		_hostName = hostName;
-	}
-
-	public void setInetAddress(InetAddress inetAddress) {
-		_inetAddress = inetAddress;
-	}
-
 	public void setPort(int port) {
 		_port = port;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(7);
 
 		sb.append("{clusterNodeId=");
 		sb.append(_clusterNodeId);
-		sb.append(", hostName=");
-		sb.append(_hostName);
 		sb.append(", inetAddress=");
 		sb.append(_inetAddress);
 		sb.append(", port=");
@@ -121,7 +117,6 @@ public class ClusterNode implements Comparable<ClusterNode>, Serializable {
 	}
 
 	private String _clusterNodeId;
-	private String _hostName;
 	private InetAddress _inetAddress;
 	private int _port;
 

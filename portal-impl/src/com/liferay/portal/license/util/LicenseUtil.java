@@ -311,7 +311,8 @@ public class LicenseUtil {
 					_log.error(e, e);
 
 					String message =
-						"Error contacting " + clusterNode.getHostName();
+						"Error contacting " +
+							clusterNode.getInetAddress().getHostName();
 
 					if (clusterNode.getPort() != -1) {
 						message += StringPool.COLON + clusterNode.getPort();

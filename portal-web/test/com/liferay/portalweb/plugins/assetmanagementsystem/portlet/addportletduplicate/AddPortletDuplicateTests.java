@@ -14,6 +14,8 @@
 
 package com.liferay.portalweb.plugins.assetmanagementsystem.portlet.addportletduplicate;
 
+import com.liferay.portalweb.plugins.assetmanagementsystem.portlet.addportlet.AddPageAMSTest;
+import com.liferay.portalweb.plugins.assetmanagementsystem.portlet.addportlet.AddPortletAMSTest;
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
 

@@ -53,7 +53,7 @@ public class VerifyLayout extends VerifyProcess {
 
 		sb.append("update Layout set uuid_ = sourcePrototypeLayoutUuid where ");
 		sb.append("sourcePrototypeLayoutUuid is not null and ");
-		sb.append("sourcePrototypeLayoutUuid not like '' and ");
+		sb.append("sourcePrototypeLayoutUuid != '' and ");
 		sb.append("uuid_ != sourcePrototypeLayoutUuid");
 
 		runSQL(sb.toString());
@@ -69,7 +69,7 @@ public class VerifyLayout extends VerifyProcess {
 		sb.append(tableName);
 		sb.append(".layoutUuid = Layout.uuid_ and ");
 		sb.append("Layout.sourcePrototypeLayoutUuid is not null and ");
-		sb.append("Layout.sourcePrototypeLayoutUuid not like '' and ");
+		sb.append("Layout.sourcePrototypeLayoutUuid != '' and ");
 		sb.append("Layout.uuid_ != Layout.sourcePrototypeLayoutUuid)");
 
 		runSQL(sb.toString());

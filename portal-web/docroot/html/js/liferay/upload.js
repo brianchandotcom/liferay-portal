@@ -724,7 +724,7 @@ AUI.add(
 							fileIdSelector
 						);
 
-						instance._listInfo.toggle(true);
+						instance._listInfo.show();
 
 						instance._updateList(0, currentListText);
 					},
@@ -957,6 +957,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-io-request', 'aui-template', 'collection', 'liferay-portlet-base', 'swfupload', 'uploader', 'uploader-flash', 'uploader-html5']
+		requires: ['aui-io-request', 'aui-template', 'collection', 'liferay-portlet-base', 'uploader']
 	}
 );

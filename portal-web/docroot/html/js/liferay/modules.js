@@ -93,7 +93,7 @@
 			'token-list': ['aui-base', 'aui-template'],
 			'translation-manager': ['aui-base'],
 			'undo-manager': ['aui-data-set', 'base'],
-			'upload': ['aui-io-request', 'aui-template', 'collection', 'liferay-portlet-base', 'swfupload', 'uploader', 'uploader-flash', 'uploader-html5'],
+			'upload': ['aui-io-request', 'aui-template', 'collection', 'liferay-portlet-base', 'uploader'],
 			'util-list-fields': ['aui-base'],
 			'util-window': ['aui-dialog', 'aui-dialog-iframe']
 		};

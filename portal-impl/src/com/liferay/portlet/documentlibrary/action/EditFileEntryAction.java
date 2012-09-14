@@ -197,77 +197,7 @@ public class EditFileEntryAction extends PortletAction {
 			}
 		}
 		catch (Exception e) {
-			if (e instanceof DuplicateLockException ||
-				e instanceof InvalidFileVersionException ||
-				e instanceof NoSuchFileEntryException ||
-				e instanceof PrincipalException) {
-
-				if (e instanceof DuplicateLockException) {
-					DuplicateLockException dle = (DuplicateLockException)e;
-
-					SessionErrors.add(
-						actionRequest, dle.getClass(), dle.getLock());
-				}
-				else {
-					SessionErrors.add(actionRequest, e.getClass());
-				}
-
-				setForward(actionRequest, "portlet.document_library.error");
-			}
-			else if (e instanceof DuplicateFileException ||
-					 e instanceof DuplicateFolderNameException ||
-					 e instanceof FileExtensionException ||
-					 e instanceof FileMimeTypeException ||
-					 e instanceof FileNameException ||
-					 e instanceof FileSizeException ||
-					 e instanceof NoSuchFolderException ||
-					 e instanceof SourceFileNameException ||
-					 e instanceof StorageFieldRequiredException) {
-
-				if (!cmd.equals(Constants.ADD_MULTIPLE) &&
-					!cmd.equals(Constants.ADD_TEMP)) {
-
-					SessionErrors.add(actionRequest, e.getClass());
-
-					return;
-				}
-
-				if (e instanceof DuplicateFileException ||
-					e instanceof FileExtensionException ||
-					e instanceof FileNameException ||
-					e instanceof FileSizeException) {
-
-					HttpServletResponse response =
-						PortalUtil.getHttpServletResponse(actionResponse);
-
-					response.setStatus(200);
-
-					response.setContentType("text/html");
-
-					if (e instanceof DuplicateFileException) {
-						new ServletResponseUtil().write(response, Integer.toString(ServletResponseConstants.SC_DUPLICATE_FILE_EXCEPTION));
-					}
-					else if (e instanceof FileExtensionException) {
-						new ServletResponseUtil().write(response, Integer.toString(ServletResponseConstants.SC_FILE_EXTENSION_EXCEPTION));
-					}
-					else if (e instanceof FileNameException) {
-						new ServletResponseUtil().write(response, Integer.toString(ServletResponseConstants.SC_FILE_NAME_EXCEPTION));
-					}
-					else if (e instanceof FileSizeException) {
-						new ServletResponseUtil().write(response, Integer.toString(ServletResponseConstants.SC_FILE_SIZE_EXCEPTION));
-					}
-				}
-
-				SessionErrors.add(actionRequest, e.getClass());
-			}
-			else if (e instanceof AssetCategoryException ||
-					 e instanceof AssetTagException) {
-
-				SessionErrors.add(actionRequest, e.getClass(), e);
-			}
-			else {
-				throw e;
-			}
+			handleUploadException(actionRequest, actionResponse, cmd, e);
 		}
 	}
 
@@ -439,11 +369,14 @@ public class EditFileEntryAction extends PortletAction {
 				(UploadException)actionRequest.getAttribute(
 					WebKeys.UPLOAD_EXCEPTION);
 
-			if (uploadException != null && uploadException.getCause() instanceof IOFileUploadException) {
+			if ((uploadException != null) &&
+				(uploadException.getCause() instanceof IOFileUploadException)) {
 
 				// Cancelled a temporary upload. Just consume this exception
 			}
-			else if (uploadException != null && uploadException.isExceededSizeLimit()) {
+			else if ((uploadException != null) &&
+				uploadException.isExceededSizeLimit()) {
+
 				throw new FileSizeException(uploadException.getCause());
 			}
 			else {
@@ -665,6 +598,89 @@ public class EditFileEntryAction extends PortletAction {
 		}
 
 		return errorMessage;
+	}
+
+	protected void handleUploadException(
+			ActionRequest actionRequest, ActionResponse actionResponse,
+			String cmd, Exception e)
+		throws Exception {
+
+		if (e instanceof DuplicateLockException ||
+			e instanceof InvalidFileVersionException ||
+			e instanceof NoSuchFileEntryException ||
+			e instanceof PrincipalException) {
+
+			if (e instanceof DuplicateLockException) {
+				DuplicateLockException dle = (DuplicateLockException)e;
+
+				SessionErrors.add(actionRequest, dle.getClass(), dle.getLock());
+			}
+			else {
+				SessionErrors.add(actionRequest, e.getClass());
+			}
+
+			setForward(actionRequest, "portlet.document_library.error");
+		}
+		else if (e instanceof DuplicateFileException ||
+				 e instanceof DuplicateFolderNameException ||
+				 e instanceof FileExtensionException ||
+				 e instanceof FileMimeTypeException ||
+				 e instanceof FileNameException ||
+				 e instanceof FileSizeException ||
+				 e instanceof NoSuchFolderException ||
+				 e instanceof SourceFileNameException ||
+				 e instanceof StorageFieldRequiredException) {
+
+			if (!cmd.equals(Constants.ADD_MULTIPLE) &&
+				!cmd.equals(Constants.ADD_TEMP)) {
+
+				SessionErrors.add(actionRequest, e.getClass());
+
+				return;
+			}
+
+			if (e instanceof DuplicateFileException ||
+				e instanceof FileExtensionException ||
+				e instanceof FileNameException ||
+				e instanceof FileSizeException) {
+
+				HttpServletResponse response =
+					PortalUtil.getHttpServletResponse(actionResponse);
+
+				response.setStatus(200);
+
+				response.setContentType("text/html");
+
+				int errorType = 0;
+
+				if (e instanceof DuplicateFileException) {
+					errorType =
+						ServletResponseConstants.SC_DUPLICATE_FILE_EXCEPTION;
+				}
+				else if (e instanceof FileExtensionException) {
+					errorType =
+						ServletResponseConstants.SC_FILE_EXTENSION_EXCEPTION;
+				}
+				else if (e instanceof FileNameException) {
+					errorType = ServletResponseConstants.SC_FILE_NAME_EXCEPTION;
+				}
+				else if (e instanceof FileSizeException) {
+					errorType = ServletResponseConstants.SC_FILE_SIZE_EXCEPTION;
+				}
+
+				ServletResponseUtil.write(response, String.valueOf(errorType));
+			}
+
+			SessionErrors.add(actionRequest, e.getClass());
+		}
+		else if (e instanceof AssetCategoryException ||
+				 e instanceof AssetTagException) {
+
+			SessionErrors.add(actionRequest, e.getClass(), e);
+		}
+		else {
+			throw e;
+		}
 	}
 
 	protected void moveFileEntries(

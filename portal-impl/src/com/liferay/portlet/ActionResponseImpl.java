@@ -30,7 +30,7 @@ public class ActionResponseImpl
 
 	public void sendRedirect(String location) {
 		if ((location == null) ||
-			(!location.startsWith("/") && (!location.contains("://")) &&
+			(!location.startsWith("/") && !location.contains("://") &&
 			(!location.startsWith("wsrp_rewrite?")))) {
 
 			throw new IllegalArgumentException(

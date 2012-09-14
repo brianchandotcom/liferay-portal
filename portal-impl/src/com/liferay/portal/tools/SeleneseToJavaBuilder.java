@@ -476,8 +476,8 @@ public class SeleneseToJavaBuilder {
 
 		String content = readFile(fileName);
 
-		if ((!content.contains("<title>" + testName + "</title>")) ||
-			(!content.contains("colspan=\"3\">" + testName + "</td>"))) {
+		if (!content.contains("<title>" + testName + "</title>") ||
+			!content.contains("colspan=\"3\">" + testName + "</td>")) {
 
 			System.out.println(testName + " has an invalid test name");
 		}

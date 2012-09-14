@@ -388,8 +388,8 @@ public class ShoppingCategoryLocalServiceImpl
 	}
 
 	protected void validate(String name) throws PortalException {
-		if ((Validator.isNull(name)) || (name.contains("\\\\")) ||
-			(name.contains("//"))) {
+		if (Validator.isNull(name) || name.contains("\\\\") ||
+			name.contains("//")) {
 
 			throw new CategoryNameException();
 		}

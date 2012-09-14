@@ -58,10 +58,9 @@ public class CalEventServiceHttp {
 		HttpPrincipal httpPrincipal, java.lang.String title,
 		java.lang.String description, java.lang.String location,
 		int startDateMonth, int startDateDay, int startDateYear,
-		int startDateHour, int startDateMinute, int endDateMonth,
-		int endDateDay, int endDateYear, int durationHour, int durationMinute,
-		boolean allDay, boolean timeZoneSensitive, java.lang.String type,
-		boolean repeating,
+		int startDateHour, int startDateMinute, int durationHour,
+		int durationMinute, boolean allDay, boolean timeZoneSensitive,
+		java.lang.String type, boolean repeating,
 		com.liferay.portal.kernel.cal.TZSRecurrence recurrence, int remindBy,
 		int firstReminder, int secondReminder,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -74,10 +73,9 @@ public class CalEventServiceHttp {
 			MethodHandler methodHandler = new MethodHandler(methodKey, title,
 					description, location, startDateMonth, startDateDay,
 					startDateYear, startDateHour, startDateMinute,
-					endDateMonth, endDateDay, endDateYear, durationHour,
-					durationMinute, allDay, timeZoneSensitive, type, repeating,
-					recurrence, remindBy, firstReminder, secondReminder,
-					serviceContext);
+					durationHour, durationMinute, allDay, timeZoneSensitive,
+					type, repeating, recurrence, remindBy, firstReminder,
+					secondReminder, serviceContext);
 
 			Object returnObj = null;
 
@@ -637,10 +635,9 @@ public class CalEventServiceHttp {
 		HttpPrincipal httpPrincipal, long eventId, java.lang.String title,
 		java.lang.String description, java.lang.String location,
 		int startDateMonth, int startDateDay, int startDateYear,
-		int startDateHour, int startDateMinute, int endDateMonth,
-		int endDateDay, int endDateYear, int durationHour, int durationMinute,
-		boolean allDay, boolean timeZoneSensitive, java.lang.String type,
-		boolean repeating,
+		int startDateHour, int startDateMinute, int durationHour,
+		int durationMinute, boolean allDay, boolean timeZoneSensitive,
+		java.lang.String type, boolean repeating,
 		com.liferay.portal.kernel.cal.TZSRecurrence recurrence, int remindBy,
 		int firstReminder, int secondReminder,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -653,10 +650,9 @@ public class CalEventServiceHttp {
 			MethodHandler methodHandler = new MethodHandler(methodKey, eventId,
 					title, description, location, startDateMonth, startDateDay,
 					startDateYear, startDateHour, startDateMinute,
-					endDateMonth, endDateDay, endDateYear, durationHour,
-					durationMinute, allDay, timeZoneSensitive, type, repeating,
-					recurrence, remindBy, firstReminder, secondReminder,
-					serviceContext);
+					durationHour, durationMinute, allDay, timeZoneSensitive,
+					type, repeating, recurrence, remindBy, firstReminder,
+					secondReminder, serviceContext);
 
 			Object returnObj = null;
 
@@ -688,8 +684,8 @@ public class CalEventServiceHttp {
 	private static final Class<?>[] _addEventParameterTypes0 = new Class[] {
 			java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, int.class, int.class, int.class, int.class,
-			int.class, int.class, int.class, int.class, int.class, int.class,
-			boolean.class, boolean.class, java.lang.String.class, boolean.class,
+			int.class, int.class, int.class, boolean.class, boolean.class,
+			java.lang.String.class, boolean.class,
 			com.liferay.portal.kernel.cal.TZSRecurrence.class, int.class,
 			int.class, int.class,
 			com.liferay.portal.service.ServiceContext.class
@@ -742,8 +738,8 @@ public class CalEventServiceHttp {
 	private static final Class<?>[] _updateEventParameterTypes16 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, int.class, int.class, int.class, int.class,
-			int.class, int.class, int.class, int.class, int.class, int.class,
-			boolean.class, boolean.class, java.lang.String.class, boolean.class,
+			int.class, int.class, int.class, boolean.class, boolean.class,
+			java.lang.String.class, boolean.class,
 			com.liferay.portal.kernel.cal.TZSRecurrence.class, int.class,
 			int.class, int.class,
 			com.liferay.portal.service.ServiceContext.class

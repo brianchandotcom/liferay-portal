@@ -1621,7 +1621,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			clearPageCache(page);
 		}
 
-		if (oldStatus == WorkflowConstants.STATUS_IN_TRASH) {
+		if ((oldStatus == WorkflowConstants.STATUS_IN_TRASH) &&
+			(status != WorkflowConstants.STATUS_IN_TRASH)) {
 
 			// Trash
 

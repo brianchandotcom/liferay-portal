@@ -252,6 +252,14 @@ public class DLFileShortcutLocalServiceImpl
 		return dlFileShortcutPersistence.findByPrimaryKey(fileShortcutId);
 	}
 
+	public int getFileShortcutsCount(
+			long groupId, long folderId, boolean active, int status)
+		throws PortalException, SystemException {
+
+		return dlFileShortcutPersistence.countByG_F_A_S(
+			groupId, folderId, active, status);
+	}
+
 	public void updateAsset(
 			long userId, DLFileShortcut fileShortcut, long[] assetCategoryIds,
 			String[] assetTagNames)

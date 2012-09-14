@@ -374,6 +374,14 @@ public class DLFileShortcutLocalServiceWrapper
 		return _dlFileShortcutLocalService.getFileShortcut(fileShortcutId);
 	}
 
+	public int getFileShortcutsCount(long groupId, long folderId,
+		boolean active, int status)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _dlFileShortcutLocalService.getFileShortcutsCount(groupId,
+			folderId, active, status);
+	}
+
 	public void updateAsset(long userId,
 		com.liferay.portlet.documentlibrary.model.DLFileShortcut fileShortcut,
 		long[] assetCategoryIds, java.lang.String[] assetTagNames)

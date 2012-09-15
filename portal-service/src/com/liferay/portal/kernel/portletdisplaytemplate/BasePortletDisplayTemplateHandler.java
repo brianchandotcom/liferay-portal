@@ -50,7 +50,7 @@ public abstract class BasePortletDisplayTemplateHandler
 
 	public String getHelpTemplatePath() {
 		return "com/liferay/portlet/portletdisplaytemplate/dependencies/" +
-			"portlet_display_template.vm";
+			"portlet_display_template_help.vm";
 	}
 
 	protected String getDefaultTemplatesConfigPath() {

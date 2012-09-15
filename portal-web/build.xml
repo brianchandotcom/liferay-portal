@@ -320,6 +320,13 @@
 							<replacevalue><![CDATA[while ( pendingBRs.length - ( brsToIgnore || 0 ) > 0 )]]></replacevalue>
 						</replace>
 
+						<replace file="docroot/html/js/editor/ckeditor/_source/plugins/indent/plugin.js">
+							<replacetoken><![CDATA[return node.type = CKEDITOR.NODE_ELEMENT && node.is( 'li' );]]></replacetoken>
+							<replacevalue>
+								<![CDATA[return node.type = CKEDITOR.NODE_ELEMENT && node.is && node.is( 'li' );]]>
+							</replacevalue>
+						</replace>
+
 						<replace file="docroot/html/js/editor/ckeditor/_source/plugins/popup/plugin.js">
 							<replacetoken><![CDATA[popupWindow.moveTo( left, top );]]></replacetoken>
 							<replacevalue><![CDATA[// Chrome is problematic, but it's not really needed here (#8855)]]></replacevalue>
@@ -349,13 +356,6 @@
 
 									var data = fullPage
 								]]>
-							</replacevalue>
-						</replace>
-
-						<replace file="docroot/html/js/editor/ckeditor/_source/plugins/indent/plugin.js">
-							<replacetoken><![CDATA[return node.type = CKEDITOR.NODE_ELEMENT && node.is( 'li' );]]></replacetoken>
-							<replacevalue>
-								<![CDATA[return node.type = CKEDITOR.NODE_ELEMENT && node.is && node.is( 'li' );]]>
 							</replacevalue>
 						</replace>
 
@@ -969,15 +969,15 @@
 
 						StringTokenizer st = new StringTokenizer("languages=[ar,ar,133];[nb,nb,207];[bg,bg,136];[es_CA,ca,140];[hr,hr,158];[cs,cs,142];[nl,nl,176];[en_GB,en,132];[et,et,149];[fi,fi,152];[fr,fr,153];[es_GL,gl,154];[de,de,145];[el,el,147];[iw,he,156];[hi_IN,hi,157];[hu,hu,159];[in,id,162];[it,it,164];[ja,ja,165];[ko,ko,205];[fa,fa,151];[pt,pl,179];[pt_PT,pt,181];[ro,ro,182];[ru,ru,183];[sr,sr,190];[sk,sk,187];[sl,sl,188];[es_ES,es,148];[sv,sv,191];[tr,tr,196];[uk,uk,199];[vi,vi,201];[zh_TW,zh-tw,221];[zh_CN,zh-cn,216]",";");
 
-						while (st.hasMoreElements()) { 
-							String lang = st.nextToken(); 
+						while (st.hasMoreElements()) {
+							String lang = st.nextToken();
 
-							int x = lang.indexOf(","); 
+							int x = lang.indexOf(",");
 							int y = lang.lastIndexOf(",");
 
-							//String liferayLanguageCode = lang.substring(1, x); 
-							String tinyMceLanguageCode = lang.substring(x + 1, y); 
-							int tinyMceLanguageId = GetterUtil.getInteger(lang.substring(y + 1)); 
+							//String liferayLanguageCode = lang.substring(1, x);
+							String tinyMceLanguageCode = lang.substring(x + 1, y);
+							int tinyMceLanguageId = GetterUtil.getInteger(lang.substring(y + 1));
 
 							Get get = new Get();
 

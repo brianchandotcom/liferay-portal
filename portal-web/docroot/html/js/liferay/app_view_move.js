@@ -222,9 +222,17 @@ AUI.add(
 									groups: dd.get('groups')
 								}
 							).drop.on(
-								'drop:hit',
+								{
+									'drop:hit': function(event) {
+										instance._moveEntriesToTrash();
+									}
+								}
+							);
+
+							ddHandler.on(
+								['drag:start', 'drag:end'],
 								function(event) {
-									instance._moveEntriesToTrash();
+									trashLink.toggleClass('app-view-drop-active', (event.type == 'drag:start'));
 								}
 							);
 						}
@@ -285,8 +293,6 @@ AUI.add(
 
 					_moveEntriesToTrash: function() {
 						var instance = this;
-
-						var form = instance.get(STR_FORM).node;
 
 						instance._processEntryAction(STR_MOVE_TO_TRASH, instance.get('editEntryUrl'));
 					},

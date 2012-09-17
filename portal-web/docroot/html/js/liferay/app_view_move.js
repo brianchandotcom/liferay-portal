@@ -30,6 +30,8 @@ AUI.add(
 
 		var STR_MOVE = 'move';
 
+		var STR_MOVE_TO_TRASH = 'move_to_trash';
+
 		var STR_MOVE_ENTRY_URL = 'moveEntryRenderUrl';
 
 		var STR_NODE = 'node';
@@ -92,6 +94,10 @@ AUI.add(
 
 					processEntryIds: {
 						validator: Lang.isObject
+					},
+
+					trashLinkId: {
+						validator: Lang.isString
 					},
 
 					updateable: {
@@ -201,15 +207,35 @@ AUI.add(
 										moveOnEnd: false
 									},
 									fn: A.Plugin.DDProxy
-								},
-								{
-									cfg: {
-										constrain2node: instance._portletContainer
-									},
-									fn: A.Plugin.DDConstrained
 								}
 							]
 						);
+
+						var trashLink = A.one('#' + instance.get('trashLinkId'));
+
+						if (trashLink) {
+							trashLink.attr('data-title', Liferay.Language.get('recycle-bin'));
+
+							trashLink.plug(
+								A.Plugin.Drop,
+								{
+									groups: dd.get('groups')
+								}
+							).drop.on(
+								{
+									'drop:hit': function(event) {
+										instance._moveEntriesToTrash();
+									}
+								}
+							);
+
+							ddHandler.on(
+								['drag:start', 'drag:end'],
+								function(event) {
+									trashLink.toggleClass('app-view-drop-active', (event.type == 'drag:start'));
+								}
+							);
+						}
 
 						if (TOUCH) {
 							instance._dragTask = A.debounce(
@@ -265,6 +291,12 @@ AUI.add(
 						instance._processEntryAction(STR_MOVE, this.get(STR_MOVE_ENTRY_URL));
 					},
 
+					_moveEntriesToTrash: function() {
+						var instance = this;
+
+						instance._processEntryAction(STR_MOVE_TO_TRASH, instance.get('editEntryUrl'));
+					},
+
 					_onDragDropHit: function(event) {
 						var instance = this;
 
@@ -276,14 +308,18 @@ AUI.add(
 
 						var dropTarget = event.drop.get(STR_NODE);
 
+						dropTarget.removeClass(CSS_ACTIVE_AREA);
+
 						var folderId = dropTarget.attr(DATA_FOLDER_ID);
 
-						var folderContainer = dropTarget.ancestor(STR_DOT + instance.get(STR_DISPLAY_STYLE));
+						if (folderId) {
+							var folderContainer = dropTarget.ancestor(STR_DOT + instance.get(STR_DISPLAY_STYLE));
 
-						var selectedItems = instance._ddHandler.dd.get(STR_DATA).selectedItems;
+							var selectedItems = instance._ddHandler.dd.get(STR_DATA).selectedItems;
 
-						if (selectedItems.indexOf(folderContainer) == -1) {
-							instance._moveEntries(folderId);
+							if (selectedItems.indexOf(folderContainer) == -1) {
+								instance._moveEntries(folderId);
+							}
 						}
 					},
 
@@ -385,7 +421,7 @@ AUI.add(
 
 						var redirectUrl = location.href;
 
-						if (action === STR_DELETE && !History.HTML5 && location.hash) {
+						if ((action === STR_DELETE || action == STR_MOVE_TO_TRASH) && !History.HTML5 && location.hash) {
 							redirectUrl = instance._updateFolderIdRedirectUrl(redirectUrl);
 						}
 

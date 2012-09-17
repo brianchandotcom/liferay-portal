@@ -17,6 +17,8 @@ package com.liferay.portal.cache.memory;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
 
+import java.io.Serializable;
+
 import java.net.URL;
 
 import java.util.Map;
@@ -25,10 +27,11 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * @author Brian Wing Shun Chan
  */
-public class MemoryPortalCacheManager implements PortalCacheManager {
+public class MemoryPortalCacheManager<K extends Serializable, V>
+	implements PortalCacheManager<K, V> {
 
 	public void afterPropertiesSet() {
-		_portalCaches = new ConcurrentHashMap<String, PortalCache>(
+		_portalCaches = new ConcurrentHashMap<String, PortalCache<K, V>>(
 			_cacheManagerInitialCapacity);
 	}
 
@@ -36,15 +39,16 @@ public class MemoryPortalCacheManager implements PortalCacheManager {
 		_portalCaches.clear();
 	}
 
-	public PortalCache getCache(String name) {
+	public PortalCache<K, V> getCache(String name) {
 		return getCache(name, false);
 	}
 
-	public PortalCache getCache(String name, boolean blocking) {
-		PortalCache portalCache = _portalCaches.get(name);
+	public PortalCache<K, V> getCache(String name, boolean blocking) {
+		PortalCache<K, V> portalCache = _portalCaches.get(name);
 
 		if (portalCache == null) {
-			portalCache = new MemoryPortalCache(name, _cacheInitialCapacity);
+			portalCache = new MemoryPortalCache<K, V>(
+				name, _cacheInitialCapacity);
 
 			_portalCaches.put(name, portalCache);
 		}
@@ -71,6 +75,6 @@ public class MemoryPortalCacheManager implements PortalCacheManager {
 
 	private int _cacheInitialCapacity = 10000;
 	private int _cacheManagerInitialCapacity = 10000;
-	private Map<String, PortalCache> _portalCaches;
+	private Map<String, PortalCache<K, V>> _portalCaches;
 
 }

@@ -27,6 +27,8 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 
+import java.io.Serializable;
+
 import java.lang.reflect.Field;
 
 import java.net.URL;
@@ -51,7 +53,8 @@ import net.sf.ehcache.util.FailSafeTimer;
  * @author Shuyang Zhou
  * @author Edward Han
  */
-public class EhcachePortalCacheManager implements PortalCacheManager {
+public class EhcachePortalCacheManager<K extends Serializable, V>
+	implements PortalCacheManager<K, V> {
 
 	public void afterPropertiesSet() {
 		String configurationPath = PropsUtil.get(_configPropertyKey);
@@ -107,12 +110,13 @@ public class EhcachePortalCacheManager implements PortalCacheManager {
 		}
 	}
 
-	public PortalCache getCache(String name) {
+	public PortalCache<K, V> getCache(String name) {
 		return getCache(name, false);
 	}
 
-	public PortalCache getCache(String name, boolean blocking) {
-		PortalCache portalCache = _ehcachePortalCaches.get(name);
+	@SuppressWarnings({"unchecked"})
+	public PortalCache<K, V> getCache(String name, boolean blocking) {
+		PortalCache<K, V> portalCache = _ehcachePortalCaches.get(name);
 
 		if (portalCache == null) {
 			synchronized (_cacheManager) {
@@ -128,11 +132,11 @@ public class EhcachePortalCacheManager implements PortalCacheManager {
 			(name.startsWith(EntityCacheImpl.CACHE_NAME) ||
 			 name.startsWith(FinderCacheImpl.CACHE_NAME))) {
 
-			portalCache = new TransactionalPortalCache(portalCache);
+			portalCache = new TransactionalPortalCache<K, V>(portalCache);
 		}
 
 		if (PropsValues.EHCACHE_BLOCKING_CACHE_ALLOWED && blocking) {
-			portalCache = new BlockingPortalCache(portalCache);
+			portalCache = new BlockingPortalCache<K, V>(portalCache);
 		}
 
 		return portalCache;
@@ -154,7 +158,7 @@ public class EhcachePortalCacheManager implements PortalCacheManager {
 
 			Cache cache = new Cache(cacheConfiguration);
 
-			PortalCache portalCache = addCache(cache.getName(), cache);
+			PortalCache<K, V> portalCache = addCache(cache.getName(), cache);
 
 			if (portalCache == null) {
 				_log.error(
@@ -199,8 +203,9 @@ public class EhcachePortalCacheManager implements PortalCacheManager {
 		_registerCacheStatistics = registerCacheStatistics;
 	}
 
-	protected PortalCache addCache(String name, Cache cache) {
-		EhcachePortalCache ehcachePortalCache = null;
+	@SuppressWarnings("unchecked")
+	protected PortalCache<K, V> addCache(String name, Cache cache) {
+		EhcachePortalCache<K, V> ehcachePortalCache = null;
 
 		synchronized (_cacheManager) {
 			if ((cache != null) && _cacheManager.cacheExists(name)) {
@@ -232,7 +237,7 @@ public class EhcachePortalCacheManager implements PortalCacheManager {
 			ehcachePortalCache = _ehcachePortalCaches.get(name);
 
 			if (ehcachePortalCache == null) {
-				ehcachePortalCache = new EhcachePortalCache(ehcache);
+				ehcachePortalCache = new EhcachePortalCache<K, V>(ehcache);
 
 				_ehcachePortalCaches.put(name, ehcachePortalCache);
 			}
@@ -254,8 +259,8 @@ public class EhcachePortalCacheManager implements PortalCacheManager {
 	private CacheManager _cacheManager;
 	private boolean _clusterAware;
 	private String _configPropertyKey;
-	private Map<String, EhcachePortalCache> _ehcachePortalCaches =
-		new HashMap<String, EhcachePortalCache>();
+	private Map<String, EhcachePortalCache<K, V>> _ehcachePortalCaches =
+		new HashMap<String, EhcachePortalCache<K, V>>();
 	private ManagementService _managementService;
 	private MBeanServer _mBeanServer;
 	private boolean _registerCacheConfigurations = true;

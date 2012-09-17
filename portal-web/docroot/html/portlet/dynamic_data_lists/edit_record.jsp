@@ -80,7 +80,7 @@ if (record != null) {
 		}
 		%>
 
-		<%= DDMXSDUtil.getHTML(pageContext, ddmStructure.getXsd(), fields, locale) %>
+		<%= DDMXSDUtil.getHTML(pageContext, ddmStructure.getCompleteXsd(), fields, locale) %>
 
 		<%
 		boolean pending = false;

@@ -43,11 +43,12 @@ public class JBossServerCapabilities implements ServerCapabilities  {
 
 		deepNamedValueScanner.setVisitMaps(true);
 
-		deepNamedValueScanner.setIncludedClassNames("org.apache.",
-			"org.jboss.");
+		deepNamedValueScanner.setIncludedClassNames(
+			"org.apache.", "org.jboss.");
 
-		deepNamedValueScanner.setExcludedClassNames("ChainedInterceptorFactory",
-			"TagAttributeInfo", ".jandex.", ".vfs.");
+		deepNamedValueScanner.setExcludedClassNames(
+			"ChainedInterceptorFactory", "TagAttributeInfo", ".jandex.",
+			".vfs.");
 
 		deepNamedValueScanner.setExcludedNames("serialversion");
 

@@ -24,39 +24,11 @@ public interface MultiVMPool {
 
 	public void clear();
 
-	public void clear(String name);
+	public PortalCache<? extends Serializable, ? extends Serializable> getCache(
+		String name);
 
-	/**
-	 * @deprecated
-	 */
-	public Object get(PortalCache portalCache, String key);
-
-	public Object get(String name, String key);
-
-	public PortalCache getCache(String name);
-
-	public PortalCache getCache(String name, boolean blocking);
-
-	/**
-	 * @deprecated
-	 */
-	public void put(PortalCache portalCache, String key, Object value);
-
-	/**
-	 * @deprecated
-	 */
-	public void put(PortalCache portalCache, String key, Serializable value);
-
-	public void put(String name, String key, Object value);
-
-	public void put(String name, String key, Serializable value);
-
-	/**
-	 * @deprecated
-	 */
-	public void remove(PortalCache portalCache, String key);
-
-	public void remove(String name, String key);
+	public PortalCache<? extends Serializable, ? extends Serializable> getCache(
+		String name, boolean blocking);
 
 	public void removeCache(String name);
 

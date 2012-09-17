@@ -103,6 +103,8 @@ boolean useAssetEntryQuery = false;
 				for (String mimeType : mediaGalleryMimeTypes) {
 					if (mimeType.equals(fileEntry.getMimeType())) {
 						results.add(fileEntry);
+
+						break;
 					}
 				}
 			}

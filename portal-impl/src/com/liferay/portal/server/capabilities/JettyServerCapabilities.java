@@ -14,9 +14,9 @@
 
 package com.liferay.portal.server.capabilities;
 
-import java.lang.reflect.Field;
-
-import java.util.List;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.server.DeepNamedValueScanner;
 
 import javax.servlet.ServletContext;
 
@@ -37,123 +37,39 @@ public class JettyServerCapabilities implements ServerCapabilities {
 	protected void determineSupportsHotDeploy(ServletContext servletContext)
 		throws Exception {
 
-		// org.eclipse.jetty.webapp.WebAppContext
+		DeepNamedValueScanner deepNamedValueScanner =
+			new DeepNamedValueScanner("_scanInterval");
 
-		Class<?> servletContextClass = servletContext.getClass();
+		deepNamedValueScanner.setVisitLists(true);
 
-		Field outerClassField = servletContextClass.getDeclaredField("this$0");
+		deepNamedValueScanner.setExcludedClassNames("WebAppProvider");
 
-		outerClassField.setAccessible(true);
+		deepNamedValueScanner.setIncludedClassNames("org.eclipse.jetty");
 
-		Object webAppContext = outerClassField.get(servletContext);
+		deepNamedValueScanner.scan(servletContext);
 
-		// org.eclipse.jetty.server.handler.AbstractHandler
-
-		Class<?> abstractHandlerClass = webAppContext.getClass();
-
-		for (int i = 0; i < 6; i++) {
-			abstractHandlerClass = abstractHandlerClass.getSuperclass();
+		if (_log.isDebugEnabled()) {
+			_log.debug("HotDeploy founded: " +
+				deepNamedValueScanner.isFounded() + " in " +
+				deepNamedValueScanner.getElapsed() + "ms by " +
+				deepNamedValueScanner.getMatchingCount() + " matches");
 		}
 
-		// org.eclipse.jetty.server.Server
+		Integer scanInterval = (Integer)deepNamedValueScanner.getMatchedValue();
 
-		Field serverField = abstractHandlerClass.getDeclaredField("_server");
+		System.out.println("---------> " + scanInterval);
 
-		serverField.setAccessible(true);
 
-		Object server = serverField.get(webAppContext);
-
-		// org.eclipse.jetty.util.component.AggregateLifeCycle
-
-		Class<?> aggregateLifeCycleClass = server.getClass();
-
-		for (int i = 0; i < 4; i++) {
-			aggregateLifeCycleClass = aggregateLifeCycleClass.getSuperclass();
+		if ((scanInterval != null) && (scanInterval.intValue() > 0)) {
+			_supportsHotDeploy = true;
 		}
-
-		// org.eclipse.jetty.deploy.DeploymentManager
-
-		Field beansField = aggregateLifeCycleClass.getDeclaredField("_beans");
-
-		beansField.setAccessible(true);
-
-		Object deploymentManager = null;
-
-		List<?> aggregateLifeCycleBeans = (List<?>)beansField.get(server);
-
-		for (Object aggregateLifeCycleBean : aggregateLifeCycleBeans) {
-
-			// org.eclipse.jetty.util.component.AggregateLifeCycle$Bean
-
-			Class<?> aggregateLifeCycleBeanClass =
-				aggregateLifeCycleBean.getClass();
-
-			Field beanField = aggregateLifeCycleBeanClass.getDeclaredField(
-				"_bean");
-
-			beanField.setAccessible(true);
-
-			Object bean = beanField.get(aggregateLifeCycleBean);
-
-			Class<?> beanClass = bean.getClass();
-
-			String beanClassName = beanClass.getName();
-
-			if (beanClassName.equals(
-					"org.eclipse.jetty.deploy.DeploymentManager")) {
-
-				deploymentManager = bean;
-
-				break;
-			}
+		else {
+			_supportsHotDeploy = false;
 		}
-
-		if (deploymentManager == null) {
-			throw new Exception("DeploymentManager not found");
-		}
-
-		// org.eclipse.jetty.deploy.providers.ScanningAppProvider
-
-		Class<?> deploymentManagerClass = deploymentManager.getClass();
-
-		Field providersField = deploymentManagerClass.getDeclaredField(
-			"_providers");
-
-		providersField.setAccessible(true);
-
-		List<?> providers = (List<?>)providersField.get(deploymentManager);
-
-		boolean hotDeploySupported = false;
-
-		for (Object provider : providers) {
-			Class<?> providerClass = provider.getClass();
-
-			String providerClassName = providerClass.getName();
-
-			if (!providerClassName.equals(
-					"org.eclipse.jetty.deploy.providers.ContextProvider")) {
-
-				continue;
-			}
-
-			Class<?> scanningAppProviderClass = providerClass.getSuperclass();
-
-			Field scanIntervalField = scanningAppProviderClass.getDeclaredField(
-				"_scanInterval");
-
-			scanIntervalField.setAccessible(true);
-
-			Integer scanInterval = (Integer)scanIntervalField.get(provider);
-
-			if ((scanInterval != null) && (scanInterval.intValue() > 0)) {
-				hotDeploySupported = true;
-
-				break;
-			}
-		}
-
-		_supportsHotDeploy = hotDeploySupported;
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		JettyServerCapabilities.class);
 
 	private boolean _supportsHotDeploy;
 

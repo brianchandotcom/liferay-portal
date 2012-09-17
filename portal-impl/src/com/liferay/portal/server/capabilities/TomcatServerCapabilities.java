@@ -14,9 +14,9 @@
 
 package com.liferay.portal.server.capabilities;
 
-import com.liferay.portal.kernel.util.ReflectionUtil;
-
-import java.lang.reflect.Field;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.server.DeepNamedValueScanner;
 
 import javax.servlet.ServletContext;
 
@@ -37,44 +37,26 @@ public class TomcatServerCapabilities implements ServerCapabilities {
 	protected void determineSupportsHotDeploy(ServletContext servletContext)
 		throws Exception {
 
-		// org.apache.catalina.core.ApplicationContextFacade
+		DeepNamedValueScanner deepNamedValueScanner =
+			new DeepNamedValueScanner("autoDeploy");
 
-		Class<?> applicationContextFacadeClass = servletContext.getClass();
+		deepNamedValueScanner.scan(servletContext);
 
-		Field contextField1 = ReflectionUtil.getDeclaredField(
-			applicationContextFacadeClass, "context");
+		if (_log.isDebugEnabled()) {
+			_log.debug("HotDeploy founded: " +
+				deepNamedValueScanner.isFounded() + " in " +
+				deepNamedValueScanner.getElapsed() + "ms by " +
+				deepNamedValueScanner.getMatchingCount() + " matches");
+		}
 
-		Object contextValue1 = contextField1.get(servletContext);
+		Boolean autoDeployValue =
+			(Boolean)deepNamedValueScanner.getMatchedValue();
 
-		// org.apache.catalina.core.ApplicationContext
-
-		Class<?> applicationContextClass = contextField1.getType();
-
-		Field contextField2 = ReflectionUtil.getDeclaredField(
-			applicationContextClass, "context");
-
-		Object contextValue2 = contextField2.get(contextValue1);
-
-		// org.apache.catalina.core.StandardContext
-
-		Class<?> standardContextClass = contextField2.getType();
-
-		// org.apache.catalina.core.ContainerBase
-
-		Class<?> containerBaseClass = standardContextClass.getSuperclass();
-
-		Field parentField = ReflectionUtil.getDeclaredField(
-			containerBaseClass, "parent");
-
-		Object parentValue = parentField.get(contextValue2);
-
-		Field autoDeployField = ReflectionUtil.getDeclaredField(
-			parentValue.getClass(), "autoDeploy");
-
-		Boolean autoDeployValue = (Boolean)autoDeployField.get(parentValue);
-
-		_supportsHotDeploy = autoDeployValue;
+		_supportsHotDeploy = autoDeployValue.booleanValue();
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		TomcatServerCapabilities.class);
 
 	private boolean _supportsHotDeploy;
 

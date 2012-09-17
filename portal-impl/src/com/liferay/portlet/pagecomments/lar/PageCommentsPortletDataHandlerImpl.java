@@ -19,6 +19,10 @@ import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.portal.kernel.lar.PortletDataHandlerControl;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.xml.Document;
+import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.model.Layout;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 
@@ -26,6 +30,7 @@ import javax.portlet.PortletPreferences;
 
 /**
  * @author Bruno Farache
+ * @author Hugo Huijser
  */
 public class PageCommentsPortletDataHandlerImpl extends BasePortletDataHandler {
 
@@ -57,12 +62,25 @@ public class PageCommentsPortletDataHandlerImpl extends BasePortletDataHandler {
 			PortletPreferences portletPreferences)
 		throws Exception {
 
+		portletDataContext.addPermissions(
+			"com.liferay.portlet.pagecomments",
+			portletDataContext.getScopeGroupId());
+
+		Document document = SAXReaderUtil.createDocument();
+
+		Element rootElement = document.addElement("page-comments-data");
+
+		rootElement.addAttribute(
+			"group-id", String.valueOf(portletDataContext.getScopeGroupId()));
+		rootElement.addAttribute(
+			"plid", String.valueOf(portletDataContext.getPlid()));
+
 		if (portletDataContext.getBooleanParameter(_NAMESPACE, "comments")) {
 			portletDataContext.addComments(
 				Layout.class, portletDataContext.getPlid());
 		}
 
-		return String.valueOf(portletDataContext.getPlid());
+		return document.formattedString();
 	}
 
 	@Override
@@ -71,9 +89,24 @@ public class PageCommentsPortletDataHandlerImpl extends BasePortletDataHandler {
 			PortletPreferences portletPreferences, String data)
 		throws Exception {
 
+		portletDataContext.importPermissions(
+			"com.liferay.portlet.pagecomments",
+			portletDataContext.getSourceGroupId(),
+			portletDataContext.getScopeGroupId());
+
+		if (Validator.isNull(data)) {
+			return null;
+		}
+
+		Document document = SAXReaderUtil.read(data);
+
+		Element rootElement = document.getRootElement();
+
+		long plid = GetterUtil.getLong(rootElement.attributeValue("plid"));
+
 		portletDataContext.importComments(
-			Layout.class, GetterUtil.getLong(data),
-			portletDataContext.getPlid(), portletDataContext.getScopeGroupId());
+			Layout.class, plid, portletDataContext.getPlid(),
+			portletDataContext.getScopeGroupId());
 
 		return null;
 	}

@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.model.AuditedModel;
 import com.liferay.portal.model.ClassedModel;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Lock;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.ResourcedModel;
@@ -945,14 +946,28 @@ public class PortletDataContextImpl implements PortletDataContext {
 			long threadId = MapUtil.getLong(
 				threadPKs, message.getThreadId(), message.getThreadId());
 
-			if (message.isRoot() && (discussion != null)) {
-				MBThread thread = MBThreadLocalServiceUtil.getThread(
-					discussion.getThreadId());
+			if (message.isRoot()) {
+				if (discussion != null) {
+					MBThread thread = MBThreadLocalServiceUtil.getThread(
+						discussion.getThreadId());
 
-				long rootMessageId = thread.getRootMessageId();
+					long rootMessageId = thread.getRootMessageId();
 
-				messagePKs.put(message.getMessageId(), rootMessageId);
-				threadPKs.put(message.getThreadId(), thread.getThreadId());
+					messagePKs.put(message.getMessageId(), rootMessageId);
+					threadPKs.put(message.getThreadId(), thread.getThreadId());
+				}
+				else if (clazz == Layout.class) {
+					MBMessage importedMessage =
+						MBMessageLocalServiceUtil.addDiscussionMessage(
+							userId, message.getUserName(), groupId,
+							clazz.getName(), newClassPK,
+							WorkflowConstants.ACTION_PUBLISH);
+
+					messagePKs.put(
+						message.getMessageId(), importedMessage.getMessageId());
+					threadPKs.put(
+						message.getThreadId(), importedMessage.getThreadId());
+				}
 			}
 			else {
 				ServiceContext serviceContext = new ServiceContext();

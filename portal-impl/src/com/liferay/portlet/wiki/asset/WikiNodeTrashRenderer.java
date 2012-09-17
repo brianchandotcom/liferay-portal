@@ -35,7 +35,7 @@ import javax.portlet.RenderResponse;
  */
 public class WikiNodeTrashRenderer extends BaseTrashRenderer {
 
-	public static final String TYPE = "wiki_node";
+	public static final String TYPE = "wiki-node";
 
 	public WikiNodeTrashRenderer(WikiNode node) {
 		_node = node;

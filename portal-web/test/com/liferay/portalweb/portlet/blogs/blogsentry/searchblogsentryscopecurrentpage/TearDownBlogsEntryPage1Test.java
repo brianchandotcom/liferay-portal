@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.blogs.blogsentry.addblogsentry;
+package com.liferay.portalweb.portlet.blogs.blogsentry.searchblogsentryscopecurrentpage;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class TearDownBlogsEntryTest extends BaseTestCase {
-	public void testTearDownBlogsEntry() throws Exception {
+public class TearDownBlogsEntryPage1Test extends BaseTestCase {
+	public void testTearDownBlogsEntryPage1() throws Exception {
 		int label = 1;
 
 		while (label >= 1) {
@@ -30,8 +30,8 @@ public class TearDownBlogsEntryTest extends BaseTestCase {
 				selenium.selectWindow("null");
 				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
-				selenium.clickAt("link=Blogs Test Page",
-					RuntimeVariables.replace("Blogs Test Page"));
+				selenium.clickAt("link=Blogs Test Page1",
+					RuntimeVariables.replace("Blogs Test Page1"));
 				selenium.waitForPageToLoad("30000");
 
 				boolean blogsEntry1Present = selenium.isElementPresent(

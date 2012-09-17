@@ -23,34 +23,31 @@ import java.util.Collection;
  * @author Edward Han
  * @author Shuyang Zhou
  */
-public interface PortalCache {
+public interface PortalCache<K extends Serializable, V> {
 
 	public void destroy();
 
-	public Collection<Object> get(Collection<Serializable> keys);
+	public Collection<V> get(Collection<K> keys);
 
-	public Object get(Serializable key);
+	public V get(K key);
 
 	public String getName();
 
-	public void put(Serializable key, Object value);
+	public void put(K key, V value);
 
-	public void put(Serializable key, Object value, int timeToLive);
+	public void put(K key, V value, int timeToLive);
 
-	public void put(Serializable key, Serializable value);
-
-	public void put(Serializable key, Serializable value, int timeToLive);
-
-	public void registerCacheListener(CacheListener cacheListener);
+	public void registerCacheListener(CacheListener<K, V> cacheListener);
 
 	public void registerCacheListener(
-		CacheListener cacheListener, CacheListenerScope cacheListenerScope);
+		CacheListener<K, V> cacheListener,
+		CacheListenerScope cacheListenerScope);
 
-	public void remove(Serializable key);
+	public void remove(K key);
 
 	public void removeAll();
 
-	public void unregisterCacheListener(CacheListener cacheListener);
+	public void unregisterCacheListener(CacheListener<K, V> cacheListener);
 
 	public void unregisterCacheListeners();
 

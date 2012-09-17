@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portlet.calendar.model.CalEvent;
 
+import java.io.Serializable;
+
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -39,13 +41,14 @@ public class CalEventLocalUtil {
 	protected static Map<String, List<CalEvent>> getEventsPool(long groupId) {
 		String key = _encodeKey(groupId);
 
-		Map <String, List<CalEvent>> eventsPool =
-			(Map<String, List<CalEvent>>)_portalCache.get(key);
+		@SuppressWarnings("unchecked")
+		Map<String, List<CalEvent>> eventsPool =
+			(ConcurrentHashMap<String, List<CalEvent>>)_portalCache.get(key);
 
 		if (eventsPool == null) {
 			eventsPool = new ConcurrentHashMap<String, List<CalEvent>>();
 
-			_portalCache.put(key, eventsPool);
+			_portalCache.put(key, (Serializable)eventsPool);
 		}
 
 		return eventsPool;
@@ -58,7 +61,7 @@ public class CalEventLocalUtil {
 
 	private static final String _CACHE_NAME = CalEventLocalUtil.class.getName();
 
-	private static PortalCache _portalCache = MultiVMPoolUtil.getCache(
-		_CACHE_NAME);
+	private static PortalCache<String, Serializable> _portalCache =
+		MultiVMPoolUtil.getCache(_CACHE_NAME);
 
 }

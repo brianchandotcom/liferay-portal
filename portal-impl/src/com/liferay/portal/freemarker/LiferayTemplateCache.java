@@ -130,6 +130,6 @@ public class LiferayTemplateCache extends TemplateCache {
 
 	private Configuration _configuration;
 	private Method _normalizeNameMethod;
-	private PortalCache _portalCache;
+	private PortalCache<TemplateResource, Object> _portalCache;
 
 }

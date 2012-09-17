@@ -143,8 +143,7 @@ public class JournalContentImpl implements JournalContent {
 			groupId, articleId, version, templateId, layoutSetId, viewMode,
 			languageId, page, secure);
 
-		JournalArticleDisplay articleDisplay =
-			(JournalArticleDisplay)portalCache.get(key);
+		JournalArticleDisplay articleDisplay = portalCache.get(key);
 
 		boolean lifecycleRender = isLifecycleRender(themeDisplay, xmlRequest);
 
@@ -325,8 +324,8 @@ public class JournalContentImpl implements JournalContent {
 
 	protected static Pattern lifecycleRenderPhasePattern = Pattern.compile(
 		"<lifecycle>\\s*RENDER_PHASE\\s*</lifecycle>");
-	protected static PortalCache portalCache = MultiVMPoolUtil.getCache(
-		CACHE_NAME);
+	protected static PortalCache<String, JournalArticleDisplay> portalCache =
+		MultiVMPoolUtil.getCache(CACHE_NAME);
 
 	private static Log _log = LogFactoryUtil.getLog(JournalContentImpl.class);
 

@@ -28,11 +28,13 @@ import net.sf.ehcache.event.CacheEventListener;
 
 /**
  * @author Edward C. Han
+ * @author Shuyang Zhou
  */
-public class PortalCacheCacheEventListener implements CacheEventListener {
+public class PortalCacheCacheEventListener<K extends Serializable, V>
+	implements CacheEventListener {
 
 	public PortalCacheCacheEventListener(
-		CacheListener cacheListener, PortalCache portalCache) {
+		CacheListener<K, V> cacheListener, PortalCache<K, V> portalCache) {
 
 		_cacheListener = cacheListener;
 		_portalCache = portalCache;
@@ -40,17 +42,20 @@ public class PortalCacheCacheEventListener implements CacheEventListener {
 
 	@Override
 	public Object clone() {
-		return new PortalCacheCacheEventListener(_cacheListener, _portalCache);
+		return new PortalCacheCacheEventListener<K, V>(
+			_cacheListener, _portalCache);
 	}
 
 	public void dispose() {
 	}
 
 	public void notifyElementEvicted(Ehcache ehcache, Element element) {
-		Serializable key = element.getKey();
+		@SuppressWarnings("unchecked")
+		K key = (K)element.getKey();
+		@SuppressWarnings("unchecked")
+		V value = (V)element.getObjectValue();
 
-		_cacheListener.notifyEntryEvicted(
-			_portalCache, String.valueOf(key), element.getObjectValue());
+		_cacheListener.notifyEntryEvicted(_portalCache, key, value);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Evicted " + key + " from " + ehcache.getName());
@@ -58,10 +63,12 @@ public class PortalCacheCacheEventListener implements CacheEventListener {
 	}
 
 	public void notifyElementExpired(Ehcache ehcache, Element element) {
-		Serializable key = element.getKey();
+		@SuppressWarnings("unchecked")
+		K key = (K)element.getKey();
+		@SuppressWarnings("unchecked")
+		V value = (V)element.getObjectValue();
 
-		_cacheListener.notifyEntryExpired(
-			_portalCache, String.valueOf(key), element.getObjectValue());
+		_cacheListener.notifyEntryExpired(_portalCache, key, value);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Expired " + key + " from " + ehcache.getName());
@@ -71,10 +78,12 @@ public class PortalCacheCacheEventListener implements CacheEventListener {
 	public void notifyElementPut(Ehcache ehcache, Element element)
 		throws CacheException {
 
-		Serializable key = element.getKey();
+		@SuppressWarnings("unchecked")
+		K key = (K)element.getKey();
+		@SuppressWarnings("unchecked")
+		V value = (V)element.getObjectValue();
 
-		_cacheListener.notifyEntryPut(
-			_portalCache, String.valueOf(key), element.getObjectValue());
+		_cacheListener.notifyEntryPut(_portalCache, key, value);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Inserted " + key + " into " + ehcache.getName());
@@ -84,10 +93,12 @@ public class PortalCacheCacheEventListener implements CacheEventListener {
 	public void notifyElementRemoved(Ehcache ehcache, Element element)
 		throws CacheException {
 
-		Serializable key = element.getKey();
+		@SuppressWarnings("unchecked")
+		K key = (K)element.getKey();
+		@SuppressWarnings("unchecked")
+		V value = (V)element.getObjectValue();
 
-		_cacheListener.notifyEntryRemoved(
-			_portalCache, String.valueOf(key), element.getObjectValue());
+		_cacheListener.notifyEntryRemoved(_portalCache, key, value);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Removed " + key + " from " + ehcache.getName());
@@ -97,10 +108,12 @@ public class PortalCacheCacheEventListener implements CacheEventListener {
 	public void notifyElementUpdated(Ehcache ehcache, Element element)
 		throws CacheException {
 
-		Serializable key = element.getKey();
+		@SuppressWarnings("unchecked")
+		K key = (K)element.getKey();
+		@SuppressWarnings("unchecked")
+		V value = (V)element.getObjectValue();
 
-		_cacheListener.notifyEntryUpdated(
-			_portalCache, String.valueOf(key), element.getObjectValue());
+		_cacheListener.notifyEntryUpdated(_portalCache, key, value);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Updated " + key + " in " + ehcache.getName());
@@ -118,7 +131,7 @@ public class PortalCacheCacheEventListener implements CacheEventListener {
 	private static Log _log = LogFactoryUtil.getLog(
 		PortalCacheCacheEventListener.class);
 
-	private CacheListener _cacheListener;
-	private PortalCache _portalCache;
+	private CacheListener<K, V> _cacheListener;
+	private PortalCache<K, V> _portalCache;
 
 }

@@ -37,7 +37,8 @@ import net.sf.ehcache.event.RegisteredEventListeners;
  * @author Edward Han
  * @author Shuyang Zhou
  */
-public class EhcachePortalCache implements PortalCache {
+public class EhcachePortalCache<K extends Serializable, V>
+	implements PortalCache<K, V> {
 
 	public EhcachePortalCache(Ehcache ehcache) {
 		_ehcache = ehcache;
@@ -46,24 +47,25 @@ public class EhcachePortalCache implements PortalCache {
 	public void destroy() {
 	}
 
-	public Collection<Object> get(Collection<Serializable> keys) {
-		List<Object> values = new ArrayList<Object>(keys.size());
+	public Collection<V> get(Collection<K> keys) {
+		List<V> values = new ArrayList<V>(keys.size());
 
-		for (Serializable key : keys) {
+		for (K key : keys) {
 			values.add(get(key));
 		}
 
 		return values;
 	}
 
-	public Object get(Serializable key) {
+	@SuppressWarnings("unchecked")
+	public V get(K key) {
 		Element element = _ehcache.get(key);
 
 		if (element == null) {
 			return null;
 		}
 		else {
-			return element.getObjectValue();
+			return (V)element.getObjectValue();
 		}
 	}
 
@@ -71,27 +73,13 @@ public class EhcachePortalCache implements PortalCache {
 		return _ehcache.getName();
 	}
 
-	public void put(Serializable key, Object value) {
+	public void put(K key, V value) {
 		Element element = new Element(key, value);
 
 		_ehcache.put(element);
 	}
 
-	public void put(Serializable key, Object value, int timeToLive) {
-		Element element = new Element(key, value);
-
-		element.setTimeToLive(timeToLive);
-
-		_ehcache.put(element);
-	}
-
-	public void put(Serializable key, Serializable value) {
-		Element element = new Element(key, value);
-
-		_ehcache.put(element);
-	}
-
-	public void put(Serializable key, Serializable value, int timeToLive) {
+	public void put(K key, V value, int timeToLive) {
 		Element element = new Element(key, value);
 
 		element.setTimeToLive(timeToLive);
@@ -99,19 +87,20 @@ public class EhcachePortalCache implements PortalCache {
 		_ehcache.put(element);
 	}
 
-	public void registerCacheListener(CacheListener cacheListener) {
+	public void registerCacheListener(CacheListener<K, V> cacheListener) {
 		registerCacheListener(cacheListener, CacheListenerScope.ALL);
 	}
 
 	public void registerCacheListener(
-		CacheListener cacheListener, CacheListenerScope cacheListenerScope) {
+		CacheListener<K, V> cacheListener,
+		CacheListenerScope cacheListenerScope) {
 
 		if (_cacheEventListeners.containsKey(cacheListener)) {
 			return;
 		}
 
 		CacheEventListener cacheEventListener =
-			new PortalCacheCacheEventListener(cacheListener, this);
+			new PortalCacheCacheEventListener<K, V>(cacheListener, this);
 
 		_cacheEventListeners.put(cacheListener, cacheEventListener);
 
@@ -125,7 +114,7 @@ public class EhcachePortalCache implements PortalCache {
 			cacheEventListener, notificationScope);
 	}
 
-	public void remove(Serializable key) {
+	public void remove(K key) {
 		_ehcache.remove(key);
 	}
 
@@ -137,7 +126,7 @@ public class EhcachePortalCache implements PortalCache {
 		_ehcache = ehcache;
 	}
 
-	public void unregisterCacheListener(CacheListener cacheListener) {
+	public void unregisterCacheListener(CacheListener<K, V> cacheListener) {
 		CacheEventListener cacheEventListener = _cacheEventListeners.get(
 			cacheListener);
 
@@ -178,8 +167,8 @@ public class EhcachePortalCache implements PortalCache {
 		}
 	}
 
-	private Map<CacheListener, CacheEventListener> _cacheEventListeners =
-		new ConcurrentHashMap<CacheListener, CacheEventListener>();
+	private Map<CacheListener<K, V>, CacheEventListener> _cacheEventListeners =
+		new ConcurrentHashMap<CacheListener<K, V>, CacheEventListener>();
 	private Ehcache _ehcache;
 
 }

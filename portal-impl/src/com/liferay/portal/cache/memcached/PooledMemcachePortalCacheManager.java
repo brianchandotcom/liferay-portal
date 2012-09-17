@@ -26,7 +26,8 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author Michael C. Han
  */
-public class PooledMemcachePortalCacheManager implements PortalCacheManager {
+public class PooledMemcachePortalCacheManager<V>
+	implements PortalCacheManager<String, V> {
 
 	public void afterPropertiesSet() {
 	}
@@ -36,20 +37,20 @@ public class PooledMemcachePortalCacheManager implements PortalCacheManager {
 	}
 
 	public void destroy() throws Exception {
-		for (PortalCache portalCache : _portalCaches.values()) {
+		for (PortalCache<String, V> portalCache : _portalCaches.values()) {
 			portalCache.destroy();
 		}
 	}
 
-	public PortalCache getCache(String name) {
+	public PortalCache<String, V> getCache(String name) {
 		return getCache(name, false);
 	}
 
-	public PortalCache getCache(String name, boolean blocking) {
-		PortalCache portalCache = _portalCaches.get(name);
+	public PortalCache<String, V> getCache(String name, boolean blocking) {
+		PortalCache<String, V> portalCache = _portalCaches.get(name);
 
 		if (portalCache == null) {
-			portalCache = new PooledMemcachePortalCache(
+			portalCache = new PooledMemcachePortalCache<V>(
 				name, _memcachedClientFactory, _timeout, _timeoutTimeUnit);
 
 			_portalCaches.put(name, portalCache);
@@ -80,8 +81,8 @@ public class PooledMemcachePortalCacheManager implements PortalCacheManager {
 	}
 
 	private MemcachedClientFactory _memcachedClientFactory;
-	private Map<String, PortalCache> _portalCaches =
-		new ConcurrentHashMap<String, PortalCache>();
+	private Map<String, PortalCache<String, V>> _portalCaches =
+		new ConcurrentHashMap<String, PortalCache<String, V>>();
 	private int _timeout;
 	private TimeUnit _timeoutTimeUnit;
 

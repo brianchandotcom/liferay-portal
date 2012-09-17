@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.template.TemplateResourceLoader;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 
+import java.io.Serializable;
 import java.io.Writer;
 
 import javax.servlet.http.HttpServletRequest;
@@ -148,7 +149,8 @@ public abstract class AbstractTemplate implements Template {
 		cacheName = cacheName.concat(StringPool.PERIOD).concat(
 			templateManagerName);
 
-		PortalCache portalCache = MultiVMPoolUtil.getCache(cacheName);
+		PortalCache<String, Serializable> portalCache =
+			MultiVMPoolUtil.getCache(cacheName);
 
 		Object object = portalCache.get(templateResource.getTemplateId());
 

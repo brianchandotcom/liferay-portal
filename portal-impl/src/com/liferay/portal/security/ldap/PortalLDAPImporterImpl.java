@@ -723,7 +723,7 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 
 			userGroupIdKey = sb.toString();
 
-			userGroupId = (Long)_portalCache.get(userGroupIdKey);
+			userGroupId = _portalCache.get(userGroupIdKey);
 		}
 
 		if (userGroupId != null) {
@@ -1261,7 +1261,7 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 		PortalLDAPImporterImpl.class);
 
 	private LDAPToPortalConverter _ldapToPortalConverter;
-	private PortalCache _portalCache = SingleVMPoolUtil.getCache(
+	private PortalCache<String, Long> _portalCache = SingleVMPoolUtil.getCache(
 		PortalLDAPImporter.class.getName(), false);
 
 }

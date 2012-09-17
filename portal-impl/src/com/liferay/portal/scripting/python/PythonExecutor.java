@@ -14,6 +14,7 @@
 
 package com.liferay.portal.scripting.python;
 
+import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
 import com.liferay.portal.kernel.scripting.BaseScriptingExecutor;
 import com.liferay.portal.kernel.scripting.ExecutionException;
@@ -36,7 +37,7 @@ public class PythonExecutor extends BaseScriptingExecutor {
 
 	@Override
 	public void clearCache() {
-		SingleVMPoolUtil.clear(_CACHE_NAME);
+		_scriptPortalCache.removeAll();
 	}
 
 	public Map<String, Object> eval(
@@ -94,13 +95,13 @@ public class PythonExecutor extends BaseScriptingExecutor {
 
 		String key = String.valueOf(script.hashCode());
 
-		PyCode compiledScript = (PyCode)SingleVMPoolUtil.get(_CACHE_NAME, key);
+		PyCode compiledScript = _scriptPortalCache.get(key);
 
 		if (compiledScript == null) {
 			compiledScript = Py.compile_flags(
 				script, "<string>", CompileMode.exec, Py.getCompilerFlags());
 
-			SingleVMPoolUtil.put(_CACHE_NAME, key, compiledScript);
+			_scriptPortalCache.put(key, compiledScript);
 		}
 
 		return compiledScript;
@@ -111,5 +112,7 @@ public class PythonExecutor extends BaseScriptingExecutor {
 	private static final String _LANGUAGE = "python";
 
 	private volatile boolean _initialized;
+	private PortalCache<String, PyCode> _scriptPortalCache =
+		SingleVMPoolUtil.getCache(_CACHE_NAME);
 
 }

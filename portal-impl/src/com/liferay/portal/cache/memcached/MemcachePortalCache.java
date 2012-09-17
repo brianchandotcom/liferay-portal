@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
-import java.io.Serializable;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -34,7 +32,7 @@ import net.spy.memcached.MemcachedClientIF;
 /**
  * @author Michael C. Han
  */
-public class MemcachePortalCache implements PortalCache {
+public class MemcachePortalCache<V> implements PortalCache<String, V> {
 
 	public MemcachePortalCache(
 		String name, MemcachedClientIF memcachedClient, int timeout,
@@ -50,11 +48,12 @@ public class MemcachePortalCache implements PortalCache {
 		_memcachedClient.shutdown();
 	}
 
-	public Collection<Object> get(Collection<Serializable> keys) {
+	@SuppressWarnings("unchecked")
+	public Collection<V> get(Collection<String> keys) {
 		List<String> processedKeys = new ArrayList<String>(keys.size());
 
-		for (Serializable key : keys) {
-			String processedKey = _name.concat(String.valueOf(key));
+		for (String key : keys) {
+			String processedKey = _name.concat(key);
 
 			processedKeys.add(processedKey);
 		}
@@ -86,14 +85,15 @@ public class MemcachePortalCache implements PortalCache {
 		}
 
 		if (values != null) {
-			return values.values();
+			return (Collection<V>)values.values();
 		}
 
 		return null;
 	}
 
-	public Object get(Serializable key) {
-		String processedKey = _name.concat(String.valueOf(key));
+	@SuppressWarnings("unchecked")
+	public V get(String key) {
+		String processedKey = _name.concat(key);
 
 		Future<Object> future = null;
 
@@ -121,19 +121,19 @@ public class MemcachePortalCache implements PortalCache {
 			future.cancel(true);
 		}
 
-		return value;
+		return (V)value;
 	}
 
 	public String getName() {
 		return _name;
 	}
 
-	public void put(Serializable key, Object value) {
+	public void put(String key, V value) {
 		put(key, value, _timeToLive);
 	}
 
-	public void put(Serializable key, Object value, int timeToLive) {
-		String processedKey = _name.concat(String.valueOf(key));
+	public void put(String key, V value, int timeToLive) {
+		String processedKey = _name.concat(key);
 
 		try {
 			_memcachedClient.set(processedKey, timeToLive, value);
@@ -145,35 +145,19 @@ public class MemcachePortalCache implements PortalCache {
 		}
 	}
 
-	public void put(Serializable key, Serializable value) {
-		put(key, value, _timeToLive);
-	}
-
-	public void put(Serializable key, Serializable value, int timeToLive) {
-		String processedKey = _name.concat(String.valueOf(key));
-
-		try {
-			_memcachedClient.set(processedKey, timeToLive, value);
-		}
-		catch (IllegalArgumentException iae) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Error storing value with key " + key, iae);
-			}
-		}
-	}
-
-	public void registerCacheListener(CacheListener cacheListener) {
+	public void registerCacheListener(CacheListener<String, V> cacheListener) {
 		registerCacheListener(cacheListener, CacheListenerScope.ALL);
 	}
 
 	public void registerCacheListener(
-		CacheListener cacheListener, CacheListenerScope cacheListenerScope) {
+		CacheListener<String, V> cacheListener,
+		CacheListenerScope cacheListenerScope) {
 
 		throw new UnsupportedOperationException();
 	}
 
-	public void remove(Serializable key) {
-		String processedKey = _name.concat(String.valueOf(key));
+	public void remove(String key) {
+		String processedKey = _name.concat(key);
 
 		try {
 			_memcachedClient.delete(processedKey);
@@ -193,7 +177,8 @@ public class MemcachePortalCache implements PortalCache {
 		_timeToLive = timeToLive;
 	}
 
-	public void unregisterCacheListener(CacheListener cacheListener) {
+	public void unregisterCacheListener(
+		CacheListener<String, V> cacheListener) {
 	}
 
 	public void unregisterCacheListeners() {

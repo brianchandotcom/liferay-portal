@@ -396,16 +396,16 @@ if (!selectableTree) {
 
 			updateSelectedNodes: function(node, state) {
 				var plid = TreeUtil.extractPlid(node);
-
 				var selectedNodes = TreeUtil.SELECTED_NODES;
+				var index = AArray.indexOf(selectedNodes, plid);
 
 				if (state) {
-					if (AArray.indexOf(selectedNodes, plid) == -1) {
+					if (index == -1) {
 						selectedNodes.push(plid);
 					}
 				}
-				else if (AArray.indexOf(selectedNodes, plid) > -1) {
-					selectedNodes.splice(AArray.indexOf(selectedNodes, plid), 1);
+				else if (index > -1) {
+					AArray.remove(selectedNodes, index);
 				}
 
 				AArray.each(

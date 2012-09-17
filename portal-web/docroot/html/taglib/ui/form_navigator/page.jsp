@@ -29,7 +29,7 @@ String jspPath = (String)request.getAttribute("liferay-ui:form-navigator:jspPath
 boolean showButtons = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:form-navigator:showButtons"));
 
 if (Validator.isNull(backURL)) {
-	PortletURL portletURL = renderResponse.createRenderURL();
+	PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
 	backURL = portletURL.toString();
 }

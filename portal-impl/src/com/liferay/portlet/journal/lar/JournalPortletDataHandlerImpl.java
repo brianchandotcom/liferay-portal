@@ -2537,20 +2537,19 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 				new ArticleIDComparator(true));
 
 			for (JournalArticle article : articles) {
-				if (PropsValues.JOURNAL_PUBLISH_LATEST_APPROVED_VERSION_ONLY &&
-					!JournalArticleLocalServiceUtil.isLatestVersion(
+				if (!PropsValues.JOURNAL_PUBLISH_LATEST_APPROVED_VERSION_ONLY ||
+					JournalArticleLocalServiceUtil.isLatestVersion(
 						article.getGroupId(), article.getArticleId(),
 						article.getVersion(),
 						WorkflowConstants.STATUS_APPROVED)) {
 
-					continue;
+					exportArticle(
+						portletDataContext, articlesElement, structuresElement,
+						templatesElement, dlFileEntryTypesElement,
+						dlFoldersElement, dlFilesElement, dlFileRanksElement,
+						dlRepositoriesElement, dlRepositoryEntriesElement,
+						article, true);
 				}
-
-				exportArticle(
-					portletDataContext, articlesElement, structuresElement,
-					templatesElement, dlFileEntryTypesElement, dlFoldersElement,
-					dlFilesElement, dlFileRanksElement, dlRepositoriesElement,
-					dlRepositoryEntriesElement, article, true);
 			}
 		}
 

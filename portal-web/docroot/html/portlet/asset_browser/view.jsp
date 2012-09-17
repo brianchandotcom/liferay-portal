@@ -90,8 +90,10 @@ portletURL.setParameter("callback", callback);
 
 			String rowHREF = null;
 
+			Group group = GroupLocalServiceUtil.getGroup(assetEntry.getGroupId());
+
 			if (assetEntry.getEntryId() != refererAssetEntryId) {
-				StringBundler sb = new StringBundler(9);
+				StringBundler sb = new StringBundler(11);
 
 				sb.append("javascript:Liferay.Util.getOpener().");
 				sb.append(callback);
@@ -101,6 +103,8 @@ portletURL.setParameter("callback", callback);
 				sb.append(ResourceActionsUtil.getModelResource(locale, assetEntry.getClassName()));
 				sb.append("', '");
 				sb.append(assetEntry.getTitle(locale));
+				sb.append("', '");
+				sb.append(group.getDescriptiveName(locale));
 				sb.append("');Liferay.Util.getWindow().close();");
 
 				rowHREF = sb.toString();
@@ -123,8 +127,6 @@ portletURL.setParameter("callback", callback);
 			row.addText(dateFormatDate.format(assetEntry.getModifiedDate()), rowHREF);
 
 			// Scope
-
-			Group group = GroupLocalServiceUtil.getGroup(assetEntry.getGroupId());
 
 			row.addText(group.getDescriptiveName(locale), rowHREF);
 

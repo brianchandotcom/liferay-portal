@@ -73,9 +73,11 @@ import javax.servlet.http.HttpServletRequest;
 public class LayoutImpl extends LayoutBaseImpl {
 
 	public static boolean hasFriendlyURLKeyword(String friendlyURL) {
-		String keyword = getFriendlyURLKeyword(friendlyURL);
+		if (Validator.isNotNull(getFriendlyURLKeyword(friendlyURL))) {
+			return true;
+		}
 
-		return keyword != null;
+		return false;
 	}
 
 	public static int validateFriendlyURL(String friendlyURL) {
@@ -118,7 +120,7 @@ public class LayoutImpl extends LayoutBaseImpl {
 
 		String keyword = getFriendlyURLKeyword(friendlyURL);
 
-		if (keyword != null) {
+		if (Validator.isNotNull(keyword)) {
 			LayoutFriendlyURLException lfurle =
 				new LayoutFriendlyURLException(
 					LayoutFriendlyURLException.KEYWORD_CONFLICT);
@@ -694,7 +696,7 @@ public class LayoutImpl extends LayoutBaseImpl {
 			new String[PropsValues.LAYOUT_FRIENDLY_URL_KEYWORDS.length];
 
 		for (int i = 0; i < PropsValues.LAYOUT_FRIENDLY_URL_KEYWORDS.length;
-			i++) {
+				i++) {
 
 			String keyword = PropsValues.LAYOUT_FRIENDLY_URL_KEYWORDS[i];
 

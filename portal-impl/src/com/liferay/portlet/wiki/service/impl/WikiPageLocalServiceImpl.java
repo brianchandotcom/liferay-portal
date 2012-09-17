@@ -1904,7 +1904,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		String subject = page.getTitle();
 
-		if (subject.indexOf(subjectPrefix) == -1) {
+		if (!subject.contains(subjectPrefix)) {
 			subject = subjectPrefix + StringPool.SPACE + subject;
 		}
 

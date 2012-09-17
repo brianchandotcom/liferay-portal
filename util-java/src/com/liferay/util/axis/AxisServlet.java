@@ -236,7 +236,7 @@ public class AxisServlet extends org.apache.axis.transport.http.AxisServlet {
 	}
 
 	protected String fixXml(String xml) throws Exception {
-		if (xml.indexOf("<wsdl:definitions") == -1) {
+		if (!xml.contains("<wsdl:definitions")) {
 			return xml;
 		}
 

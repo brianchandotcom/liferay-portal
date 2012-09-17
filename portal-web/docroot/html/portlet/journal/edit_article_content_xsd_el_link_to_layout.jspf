@@ -55,7 +55,7 @@ if (layoutList.size() > 1) {
 		}
 
 		if (linkableLayout != null) {
-			if (elContent.indexOf(StringPool.AT) == -1) {
+			if (!elContent.contains(StringPool.AT)) {
 				elContent += "@public";
 			}
 

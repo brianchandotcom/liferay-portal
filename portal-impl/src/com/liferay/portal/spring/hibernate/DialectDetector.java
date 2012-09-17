@@ -110,7 +110,7 @@ public class DialectDetector {
 		catch (Exception e) {
 			String msg = GetterUtil.getString(e.getMessage());
 
-			if (msg.indexOf("explicitly set for database: DB2") != -1) {
+			if (msg.contains("explicitly set for database: DB2")) {
 				dialect = new DB2400Dialect();
 
 				if (_log.isWarnEnabled()) {

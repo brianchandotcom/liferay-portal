@@ -446,7 +446,7 @@ public class PortalRequestProcessor extends TilesRequestProcessor {
 		if ((path != null) &&
 			!path.equals(_PATH_C) &&
 			!path.startsWith(_PATH_COMMON) &&
-			(path.indexOf(_PATH_J_SECURITY_CHECK) == -1) &&
+			!path.contains(_PATH_J_SECURITY_CHECK) &&
 			!path.startsWith(_PATH_PORTAL)) {
 
 			return true;
@@ -569,8 +569,8 @@ public class PortalRequestProcessor extends TilesRequestProcessor {
 			themeDisplay.getCompanyId(), session.getId());
 
 		if ((userTracker != null) && !path.equals(_PATH_C) &&
-			(path.indexOf(_PATH_J_SECURITY_CHECK) == -1) &&
-			(path.indexOf(_PATH_PORTAL_PROTECTED) == -1) &&
+			!path.contains(_PATH_J_SECURITY_CHECK) &&
+			!path.contains(_PATH_PORTAL_PROTECTED) &&
 			!_trackerIgnorePaths.contains(path)) {
 
 			String fullPath = null;

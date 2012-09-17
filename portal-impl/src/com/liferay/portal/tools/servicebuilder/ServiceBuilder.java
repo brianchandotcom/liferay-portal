@@ -1298,7 +1298,7 @@ public class ServiceBuilder {
 			return false;
 		}
 
-		if (genericsName.indexOf(".model.") == -1) {
+		if (!genericsName.contains(".model.")) {
 			return false;
 		}
 
@@ -1315,7 +1315,7 @@ public class ServiceBuilder {
 			return false;
 		}
 
-		if (parameterTypeValue.indexOf(".model.") == -1) {
+		if (!parameterTypeValue.contains(".model.")) {
 			return false;
 		}
 
@@ -4333,7 +4333,7 @@ public class ServiceBuilder {
 			if (found) {
 				String property = matcher.group();
 
-				if (property.indexOf("get") != -1) {
+				if (property.contains("get")) {
 					property = property.substring(
 						property.indexOf("get") + 3, property.length() - 1);
 				}
@@ -4738,7 +4738,7 @@ public class ServiceBuilder {
 				for (EntityColumn column : columnList) {
 					String name = column.getName();
 
-					if (finderWhere.indexOf(name) != -1) {
+					if (finderWhere.contains(name)) {
 						finderWhere = finderWhere.replaceAll(
 							name, alias + "." + name);
 					}

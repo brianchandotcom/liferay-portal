@@ -77,7 +77,7 @@ public class FriendlyURLNormalizerImpl implements FriendlyURLNormalizer {
 			friendlyURL = sb.toString();
 		}
 
-		while (friendlyURL.indexOf(StringPool.DOUBLE_DASH) >= 0) {
+		while (friendlyURL.contains(StringPool.DOUBLE_DASH)) {
 			friendlyURL = StringUtil.replace(
 				friendlyURL, StringPool.DOUBLE_DASH, StringPool.DASH);
 		}

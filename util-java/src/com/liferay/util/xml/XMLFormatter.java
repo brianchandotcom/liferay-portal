@@ -141,7 +141,7 @@ public class XMLFormatter {
 			content = content.substring(0, content.length() - 1);
 		}
 
-		while (content.indexOf(" \n") != -1) {
+		while (content.contains(" \n")) {
 			content = StringUtil.replace(content, " \n", "\n");
 		}
 

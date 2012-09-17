@@ -410,7 +410,7 @@ public class EditExpandoAction extends PortletAction {
 		while (enu.hasMoreElements()) {
 			String param = enu.nextElement();
 
-			if (param.indexOf("PropertyName--") != -1) {
+			if (param.contains("PropertyName--")) {
 				String propertyName = ParamUtil.getString(actionRequest, param);
 
 				propertyNames.add(propertyName);

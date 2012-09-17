@@ -44,7 +44,7 @@ String timeFormatPattern = ((SimpleDateFormat)(DateFormat.getTimeInstance(DateFo
 
 boolean timeFormatAmPm = true;
 
-if (timeFormatPattern.indexOf("a") == -1) {
+if (!timeFormatPattern.contains("a")) {
 	timeFormatAmPm = false;
 }
 

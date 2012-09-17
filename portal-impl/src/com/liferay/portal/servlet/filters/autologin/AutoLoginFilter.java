@@ -150,7 +150,7 @@ public class AutoLoginFilter extends BasePortalFilter {
 		String path = request.getRequestURI().toLowerCase();
 
 		if (!contextPath.equals(StringPool.SLASH) &&
-			(path.indexOf(contextPath) != -1)) {
+			path.contains(contextPath)) {
 
 			path = path.substring(contextPath.length());
 		}

@@ -25,12 +25,7 @@ public class FacesXMLDescriptor extends SimpleXMLDescriptor {
 
 	@Override
 	public boolean canHandleType(String doctype, Document root) {
-		if (doctype.indexOf("faces-config") != -1) {
-			return true;
-		}
-		else {
-			return false;
-		}
+		return doctype.contains("faces-config");
 	}
 
 	@Override

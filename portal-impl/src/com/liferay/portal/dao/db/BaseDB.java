@@ -832,8 +832,8 @@ public abstract class BaseDB implements DB {
 				String portalTableData = portalData.substring(x, y);
 
 				for (int i = 0; i < columns.length; i++) {
-					if (portalTableData.indexOf(
-							columns[i].trim() + " BOOLEAN") != -1) {
+					if (portalTableData.contains(
+							columns[i].trim() + " BOOLEAN")) {
 
 						append = false;
 

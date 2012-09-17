@@ -384,7 +384,7 @@ public class JournalFolderLocalServiceImpl
 			throw new FolderNameException();
 		}
 
-		if ((name.indexOf("\\\\") != -1) || (name.indexOf("//") != -1)) {
+		if (name.contains("\\\\") || name.contains("//")) {
 			throw new FolderNameException();
 		}
 	}

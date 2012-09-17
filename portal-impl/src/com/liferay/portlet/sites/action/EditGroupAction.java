@@ -330,7 +330,7 @@ public class EditGroupAction extends PortletAction {
 			oldPath = oldFriendlyURL;
 			newPath = group.getFriendlyURL();
 
-			if (closeRedirect.indexOf(oldPath) != -1) {
+			if (closeRedirect.contains(oldPath)) {
 				closeRedirect = PortalUtil.updateRedirect(
 					closeRedirect, oldPath, newPath);
 			}

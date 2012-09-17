@@ -108,7 +108,7 @@ public class SQLQueryImpl extends QueryImpl implements SQLQuery {
 		for (int pos = 0; pos < selectTokens.length; pos++) {
 			String s = selectTokens[pos];
 
-			if (s.indexOf(columnAlias) != -1) {
+			if (s.contains(columnAlias)) {
 				_scalars.add(pos);
 
 				_scalarTypes.add(type);

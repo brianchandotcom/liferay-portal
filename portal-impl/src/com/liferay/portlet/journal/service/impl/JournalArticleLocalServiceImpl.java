@@ -513,7 +513,7 @@ public class JournalArticleLocalServiceImpl
 
 		String content = GetterUtil.getString(article.getContent());
 
-		if (content.indexOf("\\n") != -1) {
+		if (content.contains("\\n")) {
 			content = StringUtil.replace(
 				content, new String[] {"\\n", "\\r"},
 				new String[] {"\n", "\r"});

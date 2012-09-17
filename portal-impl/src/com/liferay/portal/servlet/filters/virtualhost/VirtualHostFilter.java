@@ -158,7 +158,7 @@ public class VirtualHostFilter extends BasePortalFilter {
 		String friendlyURL = originalFriendlyURL;
 
 		if (Validator.isNotNull(contextPath) &&
-			(friendlyURL.indexOf(contextPath) != -1)) {
+			friendlyURL.contains(contextPath)) {
 
 			friendlyURL = friendlyURL.substring(contextPath.length());
 		}

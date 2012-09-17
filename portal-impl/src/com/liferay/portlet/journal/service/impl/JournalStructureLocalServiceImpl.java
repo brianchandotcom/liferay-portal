@@ -191,7 +191,7 @@ public class JournalStructureLocalServiceImpl
 
 		String xsd = structure.getXsd();
 
-		if ((xsd != null) && (xsd.indexOf("\\n") != -1)) {
+		if ((xsd != null) && xsd.contains("\\n")) {
 			xsd = StringUtil.replace(
 				xsd, new String[] {"\\n", "\\r"}, new String[] {"\n", "\r"});
 

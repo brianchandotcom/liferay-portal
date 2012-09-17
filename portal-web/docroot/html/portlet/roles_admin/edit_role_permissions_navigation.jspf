@@ -290,8 +290,8 @@ private boolean _isCurrent(String url, String portletResource, boolean showModel
 		showModelResourcesString = "1";
 	}
 
-	if ((url.indexOf("portletResource=" + portletResource + StringPool.AMPERSAND) != -1) &&
-		(url.indexOf("showModelResources=" + showModelResourcesString) != -1)) {
+	if (url.contains("portletResource=" + portletResource + StringPool.AMPERSAND) &&
+		url.contains("showModelResources=" + showModelResourcesString)) {
 
 		return true;
 	}

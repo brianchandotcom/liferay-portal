@@ -163,20 +163,20 @@ public class PostgreSQLDB extends BaseDB {
 						"using @old-column@::@type@;",
 					REWORD_TEMPLATE, template);
 			}
-			else if (line.indexOf(DROP_INDEX) != -1) {
+			else if (line.contains(DROP_INDEX)) {
 				String[] tokens = StringUtil.split(line, ' ');
 
 				line = StringUtil.replace(
 					"drop index @index@;", "@index@", tokens[2]);
 			}
-			else if (line.indexOf(DROP_PRIMARY_KEY) != -1) {
+			else if (line.contains(DROP_PRIMARY_KEY)) {
 				String[] tokens = StringUtil.split(line, ' ');
 
 				line = StringUtil.replace(
 					"alter table @table@ drop constraint @table@_pkey;",
 					"@table@", tokens[2]);
 			}
-			else if (line.indexOf("\\\'") != -1) {
+			else if (line.contains("\\\'")) {
 				line = StringUtil.replace(line, "\\\'", "\'\'");
 			}
 

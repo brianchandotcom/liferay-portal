@@ -1049,7 +1049,7 @@ public class LayoutTypePortletImpl
 		String nestedColumnIds = getTypeSettingsProperty(
 			LayoutTypePortletConstants.NESTED_COLUMN_IDS, StringPool.BLANK);
 
-		if (nestedColumnIds.indexOf(columnId) == -1) {
+		if (!nestedColumnIds.contains(columnId)) {
 			nestedColumnIds = StringUtil.add(nestedColumnIds, columnId);
 
 			setTypeSettingsProperty(

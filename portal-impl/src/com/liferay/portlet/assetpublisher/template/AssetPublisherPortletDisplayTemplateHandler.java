@@ -36,7 +36,7 @@ public class AssetPublisherPortletDisplayTemplateHandler
 
 	@Override
 	public String getHelpTemplatePath() {
-		return PropsValues.ASSET_PUBLISHER_DISPLAY_STYLES_TEMPLATE_CONTENT;
+		return PropsValues.ASSET_PUBLISHER_DISPLAY_STYLES_TEMPLATE_HELP_CONTENT;
 	}
 
 	public String getName(Locale locale) {

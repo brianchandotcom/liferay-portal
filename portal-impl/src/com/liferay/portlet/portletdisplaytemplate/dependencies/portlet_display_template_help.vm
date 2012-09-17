@@ -1,13 +1,13 @@
 ##
-## You can use Velocity to define display styles for the Blogs portlet.
+## You can use Velocity to define display styles for the this portlet.
 ##
 ## A set of variables have been made available for the template developers:
 ##
 ##  $ddmTemplateId: the current template id
 ##
-##  $entries: the list of entries that are being shown in the blogs portlet
+##  $entries: the list of entries that are being shown in this portlet
 ##
-##  $entry: this is the blogs entry when there's only ony asset entry
+##  $entry: this is entry when there's only one entry
 ##
 ##  $locale: the locale of the site
 ##

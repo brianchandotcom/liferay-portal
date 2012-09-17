@@ -39,7 +39,6 @@ if (!selectableTree) {
 
 <aui:script use="<%= modules %>">
 	var Lang = A.Lang;
-
 	var AArray = A.Array;
 
 	var Util = Liferay.Util;
@@ -396,7 +395,9 @@ if (!selectableTree) {
 
 			updateSelectedNodes: function(node, state) {
 				var plid = TreeUtil.extractPlid(node);
+
 				var selectedNodes = TreeUtil.SELECTED_NODES;
+
 				var index = AArray.indexOf(selectedNodes, plid);
 
 				if (state) {

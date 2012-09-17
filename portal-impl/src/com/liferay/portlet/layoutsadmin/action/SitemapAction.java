@@ -20,11 +20,16 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.LayoutSet;
+import com.liferay.portal.model.VirtualHost;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetLocalServiceUtil;
+import com.liferay.portal.service.VirtualHostLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
@@ -72,7 +77,33 @@ public class SitemapAction extends Action {
 			else {
 				String host = PortalUtil.getHost(request);
 
-				layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(host);
+				host = host.trim().toLowerCase();
+
+				VirtualHost virtualHost =
+					VirtualHostLocalServiceUtil.getVirtualHost(host);
+
+				if (virtualHost.getLayoutSetId() != 0) {
+					layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
+						virtualHost.getLayoutSetId());
+				}
+				else {
+					String virtualHostSiteName = "Guest";
+
+					String virtualHostDefaultSiteName = PropsUtil.get(
+						PropsKeys.VIRTUAL_HOSTS_DEFAULT_SITE_NAME);
+
+					if (Validator.isNotNull(virtualHostDefaultSiteName)) {
+						virtualHostSiteName = virtualHostDefaultSiteName;
+					}
+
+					long companyId = PortalUtil.getCompanyId(request);
+
+					Group group = GroupLocalServiceUtil.getGroup(
+						companyId, virtualHostSiteName);
+
+					layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
+						group.getGroupId(), false);
+				}
 			}
 
 			String sitemap = SitemapUtil.getSitemap(

@@ -15,6 +15,7 @@
 package com.liferay.portlet.dynamicdatamapping.model.impl;
 
 import com.liferay.portal.LocaleException;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -32,7 +33,9 @@ import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.xml.XPath;
 import com.liferay.portal.model.CacheField;
 import com.liferay.portlet.dynamicdatamapping.StructureFieldException;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
+import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMXMLUtil;
 
@@ -61,6 +64,19 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 			"available-locales");
 
 		return ListUtil.fromArray(StringUtil.split(availableLocales));
+	}
+
+	public String getCompleteXsd() throws Exception, PortalException {
+		if (super.getParentStructureId() == 0) {
+			return getXsd();
+		}
+		else {
+			DDMStructure parentStructure =
+				DDMStructureLocalServiceUtil.getStructure(
+					super.getParentStructureId());
+
+			return mergeXsds(getXsd(), parentStructure.getCompleteXsd());
+		}
 	}
 
 	public String getDefaultLanguageId() {
@@ -102,39 +118,39 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 	}
 
 	public String getFieldDataType(String fieldName)
-		throws StructureFieldException {
+		throws PortalException, SystemException {
 
 		return getFieldProperty(fieldName, "dataType");
 	}
 
 	public String getFieldLabel(String fieldName, Locale locale)
-		throws StructureFieldException {
+		throws PortalException, SystemException {
 
 		return getFieldLabel(fieldName, LocaleUtil.toLanguageId(locale));
 	}
 
 	public String getFieldLabel(String fieldName, String locale)
-		throws StructureFieldException {
+		throws PortalException, SystemException {
 
 		return GetterUtil.getString(
 			getFieldProperty(fieldName, "label", locale), fieldName);
 	}
 
-	public Set<String> getFieldNames() {
+	public Set<String> getFieldNames() throws SystemException, PortalException {
 		Map<String, Map<String, String>> fieldsMap = getFieldsMap();
 
 		return fieldsMap.keySet();
 	}
 
 	public String getFieldProperty(String fieldName, String property)
-		throws StructureFieldException {
+		throws PortalException, SystemException {
 
 		return getFieldProperty(fieldName, property, getDefaultLanguageId());
 	}
 
 	public String getFieldProperty(
 			String fieldName, String property, String locale)
-		throws StructureFieldException {
+		throws PortalException, SystemException {
 
 		if (!hasField(fieldName)) {
 			throw new StructureFieldException();
@@ -148,7 +164,7 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 	}
 
 	public boolean getFieldRequired(String fieldName)
-		throws StructureFieldException {
+		throws PortalException, SystemException {
 
 		return GetterUtil.getBoolean(getFieldProperty(fieldName, "required"));
 	}
@@ -191,16 +207,20 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 		return null;
 	}
 
-	public Map<String, Map<String, String>> getFieldsMap() {
+	public Map<String, Map<String, String>> getFieldsMap()
+		throws SystemException, PortalException {
+
 		return _getFieldsMap(getDefaultLanguageId());
 	}
 
-	public Map<String, Map<String, String>> getFieldsMap(String locale) {
+	public Map<String, Map<String, String>> getFieldsMap(String locale)
+		throws SystemException, PortalException {
+
 		return _getFieldsMap(locale);
 	}
 
 	public String getFieldType(String fieldName)
-		throws StructureFieldException {
+		throws PortalException, SystemException {
 
 		return getFieldProperty(fieldName, "type");
 	}
@@ -209,10 +229,22 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 		return DDMTemplateLocalServiceUtil.getTemplates(getStructureId());
 	}
 
-	public boolean hasField(String fieldName) {
+	public boolean hasField(String fieldName)
+		throws SystemException, PortalException {
+
 		Map<String, Map<String, String>> fieldsMap = getFieldsMap();
 
-		return fieldsMap.containsKey(fieldName);
+		boolean hasField = fieldsMap.containsKey(fieldName);
+
+		while (!hasField && (getParentStructureId() > 0)) {
+			DDMStructure parentStructure =
+				DDMStructureLocalServiceUtil.getStructure(
+					getParentStructureId());
+
+			hasField = parentStructure.hasField(fieldName);
+		}
+
+		return hasField;
 	}
 
 	@Override
@@ -253,6 +285,21 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 		_localizedFieldsMap.clear();
 	}
 
+	private String mergeXsds(String xsd1, String xsd2) throws Exception {
+		Document document1 = SAXReaderUtil.read(xsd1);
+		Document document2 = SAXReaderUtil.read(xsd2);
+
+		Element rootElement1 = document1.getRootElement();
+		Element rootElement2 = document2.getRootElement();
+
+		for (Element element : rootElement1.elements()) {
+			rootElement1.remove(element);
+			rootElement2.add(element);
+		}
+
+		return rootElement2.formattedString();
+	}
+
 	private Map<String, String> _getField(Element element, String locale) {
 		Map<String, String> field = new HashMap<String, String>();
 
@@ -291,12 +338,23 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 		return field;
 	}
 
-	private Map<String, Map<String, String>> _getFieldsMap(String locale) {
+	private Map<String, Map<String, String>> _getFieldsMap(String locale)
+		throws SystemException, PortalException {
+
 		Map<String, Map<String, String>> fieldsMap = _localizedFieldsMap.get(
 			locale);
 
 		if (fieldsMap == null) {
 			fieldsMap = new LinkedHashMap<String, Map<String, String>>();
+
+			if (getParentStructureId() > 0) {
+				DDMStructure parentStructure = null;
+
+				parentStructure = DDMStructureLocalServiceUtil.getStructure(
+					getParentStructureId());
+
+				fieldsMap = parentStructure.getFieldsMap(locale);
+			}
 
 			XPath xPathSelector = SAXReaderUtil.createXPath(
 				"//dynamic-element[@dataType]");

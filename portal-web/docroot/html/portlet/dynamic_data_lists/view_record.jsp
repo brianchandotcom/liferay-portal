@@ -64,7 +64,7 @@ if (editable) {
 	}
 	%>
 
-	<%= DDMXSDUtil.getHTML(pageContext, ddmStructure.getXsd(), fields, "", true, locale) %>
+	<%= DDMXSDUtil.getHTML(pageContext, ddmStructure.getCompleteXsd(), fields, "", true, locale) %>
 
 	<%
 	boolean pending = false;

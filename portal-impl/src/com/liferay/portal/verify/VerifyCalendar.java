@@ -77,8 +77,7 @@ public class VerifyCalendar extends VerifyProcess {
 			ps = con.prepareStatement(
 				"update CalEvent set endDate = null " +
 				"where (recurrence like '%\"until\":null%' " +
-				"or recurrence = 'null') " +
-				"and enddate is not null");
+				"or recurrence = 'null') and enddate is not null");
 
 			ps.executeUpdate();
 		}

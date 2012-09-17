@@ -17,6 +17,7 @@ package com.liferay.portal.cache.transactional;
 import com.liferay.portal.kernel.cache.CacheListener;
 import com.liferay.portal.kernel.cache.CacheListenerScope;
 import com.liferay.portal.kernel.cache.PortalCache;
+import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Serializable;
 
@@ -28,27 +29,28 @@ import java.util.List;
  * @author Shuyang Zhou
  * @author Edward Han
  */
-public class TransactionalPortalCache implements PortalCache {
+public class TransactionalPortalCache<K extends Serializable, V>
+	implements PortalCache<K, V> {
 
-	public TransactionalPortalCache(PortalCache portalCache) {
+	public TransactionalPortalCache(PortalCache<K, V> portalCache) {
 		_portalCache = portalCache;
 	}
 
 	public void destroy() {
 	}
 
-	public Collection<Object> get(Collection<Serializable> keys) {
-		List<Object> values = new ArrayList<Object>(keys.size());
+	public Collection<V> get(Collection<K> keys) {
+		List<V> values = new ArrayList<V>(keys.size());
 
-		for (Serializable key : keys) {
+		for (K key : keys) {
 			values.add(get(key));
 		}
 
 		return values;
 	}
 
-	public Object get(Serializable key) {
-		Object result = null;
+	public V get(K key) {
+		V result = null;
 
 		if (TransactionalPortalCacheHelper.isEnabled()) {
 			result = TransactionalPortalCacheHelper.get(_portalCache, key);
@@ -69,69 +71,50 @@ public class TransactionalPortalCache implements PortalCache {
 		return _portalCache.getName();
 	}
 
-	public void put(Serializable key, Object value) {
+	@SuppressWarnings("unchecked")
+	public void put(K key, V value) {
 		if (TransactionalPortalCacheHelper.isEnabled()) {
 			if (value == null) {
-				value = _nullHolder;
+				TransactionalPortalCacheHelper.put(
+					_portalCache, key, (V)_nullHolder);
 			}
-
-			TransactionalPortalCacheHelper.put(_portalCache, key, value);
+			else {
+				TransactionalPortalCacheHelper.put(_portalCache, key, value);
+			}
 		}
 		else {
 			_portalCache.put(key, value);
 		}
 	}
 
-	public void put(Serializable key, Object value, int timeToLive) {
+	@SuppressWarnings("unchecked")
+	public void put(K key, V value, int timeToLive) {
 		if (TransactionalPortalCacheHelper.isEnabled()) {
 			if (value == null) {
-				value = _nullHolder;
+				TransactionalPortalCacheHelper.put(
+					_portalCache, key, (V)_nullHolder);
 			}
-
-			TransactionalPortalCacheHelper.put(_portalCache, key, value);
+			else {
+				TransactionalPortalCacheHelper.put(_portalCache, key, value);
+			}
 		}
 		else {
 			_portalCache.put(key, value, timeToLive);
 		}
 	}
 
-	public void put(Serializable key, Serializable value) {
-		if (TransactionalPortalCacheHelper.isEnabled()) {
-			if (value == null) {
-				value = _nullHolder;
-			}
-
-			TransactionalPortalCacheHelper.put(_portalCache, key, value);
-		}
-		else {
-			_portalCache.put(key, value);
-		}
-	}
-
-	public void put(Serializable key, Serializable value, int timeToLive) {
-		if (TransactionalPortalCacheHelper.isEnabled()) {
-			if (value == null) {
-				value = _nullHolder;
-			}
-
-			TransactionalPortalCacheHelper.put(_portalCache, key, value);
-		}
-		else {
-			_portalCache.put(key, value, timeToLive);
-		}
-	}
-
-	public void registerCacheListener(CacheListener cacheListener) {
+	public void registerCacheListener(CacheListener<K, V> cacheListener) {
 		_portalCache.registerCacheListener(cacheListener);
 	}
 
 	public void registerCacheListener(
-		CacheListener cacheListener, CacheListenerScope cacheListenerScope) {
+		CacheListener<K, V> cacheListener,
+		CacheListenerScope cacheListenerScope) {
 
 		_portalCache.registerCacheListener(cacheListener, cacheListenerScope);
 	}
 
-	public void remove(Serializable key) {
+	public void remove(K key) {
 		if (TransactionalPortalCacheHelper.isEnabled()) {
 			TransactionalPortalCacheHelper.remove(_portalCache, key);
 		}
@@ -147,7 +130,7 @@ public class TransactionalPortalCache implements PortalCache {
 		_portalCache.removeAll();
 	}
 
-	public void unregisterCacheListener(CacheListener cacheListener) {
+	public void unregisterCacheListener(CacheListener<K, V> cacheListener) {
 		_portalCache.unregisterCacheListener(cacheListener);
 	}
 
@@ -155,8 +138,8 @@ public class TransactionalPortalCache implements PortalCache {
 		_portalCache.unregisterCacheListeners();
 	}
 
-	private static Serializable _nullHolder = new String();
+	private static Serializable _nullHolder = StringPool.BLANK;
 
-	private PortalCache _portalCache;
+	private PortalCache<K, V> _portalCache;
 
 }

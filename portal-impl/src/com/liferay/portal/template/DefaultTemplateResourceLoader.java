@@ -78,7 +78,8 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 
 		_portalCache = MultiVMPoolUtil.getCache(cacheName);
 
-		CacheListener cacheListener = new TemplateResourceCacheListener(name);
+		CacheListener<String, TemplateResource> cacheListener =
+			new TemplateResourceCacheListener(name);
 
 		_portalCache.registerCacheListener(
 			cacheListener, CacheListenerScope.ALL);
@@ -218,7 +219,7 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 
 	private long _modificationCheckInterval;
 	private String _name;
-	private PortalCache _portalCache;
+	private PortalCache<String, TemplateResource> _portalCache;
 	private Set<TemplateResourceParser> _templateResourceParsers =
 		new HashSet<TemplateResourceParser>();
 

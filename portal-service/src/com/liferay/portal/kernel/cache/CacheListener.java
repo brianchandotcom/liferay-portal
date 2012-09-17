@@ -18,30 +18,30 @@ import java.io.Serializable;
 
 /**
  * @author Edward Han
+ * @author Shuyang Zhou
  */
-public interface CacheListener {
+public interface CacheListener<K extends Serializable, V> {
 
 	public void notifyEntryEvicted(
-			PortalCache portalCache, Serializable key, Object value)
+			PortalCache<K, V> portalCache, K key, V value)
 		throws PortalCacheException;
 
 	public void notifyEntryExpired(
-			PortalCache portalCache, Serializable key, Object value)
+			PortalCache<K, V> portalCache, K key, V value)
 		throws PortalCacheException;
 
-	public void notifyEntryPut(
-			PortalCache portalCache, Serializable key, Object value)
+	public void notifyEntryPut(PortalCache<K, V> portalCache, K key, V value)
 		throws PortalCacheException;
 
 	public void notifyEntryRemoved(
-			PortalCache portalCache, Serializable key, Object value)
+			PortalCache<K, V> portalCache, K key, V value)
 		throws PortalCacheException;
 
 	public void notifyEntryUpdated(
-			PortalCache portalCache, Serializable key, Object value)
+			PortalCache<K, V> portalCache, K key, V value)
 		throws PortalCacheException;
 
-	public void notifyRemoveAll(PortalCache portalCache)
+	public void notifyRemoveAll(PortalCache<K, V> portalCache)
 		throws PortalCacheException;
 
 }

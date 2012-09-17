@@ -40,9 +40,13 @@ if (!selectableTree) {
 <aui:script use="<%= modules %>">
 	var Lang = A.Lang;
 
+	var AArray = A.Array;
+
 	var Util = Liferay.Util;
 
 	var LAYOUT_URL = '<%= portletURL + StringPool.AMPERSAND + portletDisplay.getNamespace() + "selPlid={selPlid}" + StringPool.AMPERSAND + portletDisplay.getNamespace() + "historyKey={historyKey}" %>';
+
+	var STR_CHILDREN = 'children';
 
 	var TreeUtil = {
 		DEFAULT_PARENT_LAYOUT_ID: <%= LayoutConstants.DEFAULT_PARENT_LAYOUT_ID %>,
@@ -271,7 +275,7 @@ if (!selectableTree) {
 
 			var plid = TreeUtil.extractPlid(node);
 
-			if (A.Array.indexOf(TreeUtil.SELECTED_NODES, plid) > -1) {
+			if (AArray.indexOf(TreeUtil.SELECTED_NODES, plid) > -1) {
 				if (node.check) {
 					var tree = node.get('ownerTree');
 
@@ -279,7 +283,7 @@ if (!selectableTree) {
 				}
 			}
 
-			A.Array.each(node.get('children'), TreeUtil.restoreNodeState);
+			AArray.each(node.get(STR_CHILDREN), TreeUtil.restoreNodeState);
 		},
 
 		restoreSelectedNode: function(node) {
@@ -355,7 +359,7 @@ if (!selectableTree) {
 
 						var layoutId = TreeUtil.extractLayoutId(curNode);
 
-						var children = curNode.get('children');
+						var children = curNode.get(STR_CHILDREN);
 
 						map[layoutId] = Math.ceil(children.length / paginationLimit) * paginationLimit;
 					}
@@ -393,19 +397,19 @@ if (!selectableTree) {
 			updateSelectedNodes: function(node, state) {
 				var plid = TreeUtil.extractPlid(node);
 
+				var selectedNodes = TreeUtil.SELECTED_NODES;
+
 				if (state) {
-					if (A.Array.indexOf(TreeUtil.SELECTED_NODES, plid) == -1) {
-						TreeUtil.SELECTED_NODES.push(plid);
+					if (AArray.indexOf(selectedNodes, plid) == -1) {
+						selectedNodes.push(plid);
 					}
 				}
-				else {
-					if (A.Array.indexOf(TreeUtil.SELECTED_NODES, plid) > -1) {
-						TreeUtil.SELECTED_NODES.splice(A.Array.indexOf(TreeUtil.SELECTED_NODES, plid), 1);
-					}
+				else if (AArray.indexOf(selectedNodes, plid) > -1) {
+					selectedNodes.splice(AArray.indexOf(selectedNodes, plid), 1);
 				}
 
-				A.Array.each(
-					node.get('children'),
+				AArray.each(
+					node.get(STR_CHILDREN),
 					function(item) {
 						TreeUtil.updateSelectedNodes(item, state);
 					}
@@ -671,7 +675,7 @@ if (!selectableTree) {
 			}
 
 			if (!foundItem) {
-				var children = (node || treeview).get('children');
+				var children = (node || treeview).get(STR_CHILDREN);
 
 				var length = children.length;
 

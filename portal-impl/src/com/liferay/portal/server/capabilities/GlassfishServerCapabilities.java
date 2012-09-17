@@ -56,8 +56,8 @@ public class GlassfishServerCapabilities implements ServerCapabilities {
 		deepNamedValueScanner = new DeepNamedValueScanner("autodeploy-enabled");
 
 		deepNamedValueScanner.setVisitMaps(true);
-		deepNamedValueScanner.setExcludedClassNames("org.apache.felix.",
-				"CountStatisticImpl");
+		deepNamedValueScanner.setExcludedClassNames(
+			"org.apache.felix.", "CountStatisticImpl");
 		deepNamedValueScanner.setSkipFirstCount(2);
 
 		deepNamedValueScanner.scan(masterViewObject);

@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.util.DateFormatFactory;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 
 import java.util.Locale;
 import java.util.TimeZone;
@@ -77,7 +76,7 @@ public class DateFormatFactoryImpl implements DateFormatFactory {
 	public DateFormat getSimpleDateFormat(
 		String pattern, Locale locale, TimeZone timeZone) {
 
-		DateFormat dateFormat = new SimpleDateFormat(pattern, locale);
+		DateFormat dateFormat = new PortalSimpleDateFormat(pattern, locale);
 
 		if (timeZone != null) {
 			dateFormat.setTimeZone(timeZone);

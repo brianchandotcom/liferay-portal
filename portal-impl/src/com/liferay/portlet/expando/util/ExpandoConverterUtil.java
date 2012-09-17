@@ -24,7 +24,6 @@ import com.liferay.portlet.expando.model.ExpandoColumnConstants;
 import java.io.Serializable;
 
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 
 import java.util.Date;
 
@@ -192,7 +191,7 @@ public class ExpandoConverterUtil {
 	}
 
 	private static DateFormat _getDateFormat() {
-		return new SimpleDateFormat(DateUtil.ISO_8601_PATTERN);
+		return DateUtil.getISO8601Format();
 	}
 
 }

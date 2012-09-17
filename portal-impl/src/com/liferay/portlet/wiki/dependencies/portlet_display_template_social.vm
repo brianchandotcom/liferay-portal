@@ -1,0 +1,167 @@
+#set ($assetEntryLocalService = $serviceLocator.findService("com.liferay.portlet.asset.service.AssetEntryLocalService"))
+#set ($wikiPageClassName = "com.liferay.portlet.wiki.model.WikiPage")
+#set ($assetEntry = $assetEntryLocalService.getEntry($wikiPageClassName, $entry.getResourcePrimKey()))
+#set ($assetRenderer = $assetEntry.getAssetRenderer())
+
+<div class="taglib-header">
+	<h1 class="header-title">$entry.getTitle()</h1>
+</div>
+
+<div style="float: right">
+	#edit_icon()
+	#details_icon()
+	#print_icon()
+</div>
+
+<div class="wiki-body">
+	<div class="wiki-info">
+		<span class="stats">$assetEntry.getViewCount() #language("views")</span> |
+		<span class="date">#language("last-modified") $dateTool.format($entry.getModifiedDate())</span>
+		<span class="author">#language("by") $htmlUtil.escape($portalUtil.getUserName($entry.getUserId(), $entry.getUserName()))</span>
+	</div>
+
+	<div class="wiki-content">
+		$taglibLiferay.socialBookmarks("normal", "_blank", "", $entry.getTitle(), $viewURL.toString())
+		$formattedContent
+	</div>
+
+	<div class="page-actions">
+		<div class="article-actions">
+			#add_child_icon()
+		   	#attatchments_icon()
+		</div>
+	</div>
+
+	</br>
+
+	#ratings()
+	#related_assets()
+</div>
+
+<div class="page-categorization">
+	<div class="page-categories">
+		#set ($categorizedPagesURL = $renderResponse.createRenderURL())
+		$categorizedPagesURL.setParameter("struts_action", "/wiki/view_categorized_pages")
+		$categorizedPagesURL.setParameter("nodeId", "$entry.getNodeId()")
+		$taglibLiferay.assetCategoriesSummary($wikiPageClassName, $entry.getResourcePrimKey(), "", $categorizedPagesURL)
+	</div>
+
+	<div class="page-tags">
+		#set ($taggedPagesURL = $renderResponse.createRenderURL())
+		$taggedPagesURL.setParameter("struts_action", "/wiki/view_tagged_pages")
+		$taggedPagesURL.setParameter("nodeId", "$entry.getNodeId()")
+		$taglibLiferay.assetTagsSummary($wikiPageClassName, $entry.getResourcePrimKey(), "", "", $taggedPagesURL)
+	</div>
+</div>
+
+#set ($childPages = $entry.getChildPages())
+
+#if (!$childPages.isEmpty())
+	<div class="child-pages">
+		<h2>#language("children-pages")</h2>
+
+		<table class="taglib-search-iterator">
+			<tr class="portlet-section-header results-header">
+				<th>#language("page")</th>
+				<th>#language("last-modified")</th>
+				<th>#language("ratings")</th>
+				<th>#language("views")</th>
+			</tr>
+
+			#foreach ($childPage in $childPages)
+				<tr class="results-row">
+					#set ($childAssetEntry = $assetEntryLocalService.getEntry($wikiPageClassName, $childPage.getResourcePrimKey()))
+					#set ($childPageViewURL = $renderResponse.createRenderURL())
+					$childPageViewURL.setParameter("struts_action", "/wiki/view")
+					$childPageViewURL.setParameter("nodeName", $childPage.getNode().getName())
+					$childPageViewURL.setParameter("title", $childPage.getTitle())
+					<td><a href="$childPageViewURL">$childPage.getTitle()</a></td>
+					<td><a href="$childPageViewURL">$dateTool.format($childPage.getModifiedDate()) #language("by") $htmlUtil.escape($portalUtil.getUserName($childPage.getUserId(), $childPage.getUserName()))</a></td>
+					<td>$taglibLiferay.ratings($wikiPageClassName, $childPage.getResourcePrimKey(), 5, "stars", "")</td>
+					<td><span class="stats">$childAssetEntry.getViewCount()</span></td>
+				</tr>
+			#end
+		</table>
+	</div>
+#end
+
+#discussion()
+
+## Wiki Macros
+
+#macro (add_child_icon)
+	#if ($assetRenderer.hasEditPermission($themeDisplay.getPermissionChecker()))
+		#set ($addPageURL = $renderResponse.createRenderURL())
+		#set ($redirectURL = $portalUtil.getCurrentURL($request))
+		$addPageURL.setParameter("struts_action", "/wiki/edit_page")
+		$addPageURL.setParameter("redirect", $redirectURL)
+		$addPageURL.setParameter("nodeId", "$entry.getNodeId()")
+		$addPageURL.setParameter("title", "")
+		$addPageURL.setParameter("editTitle", "1")
+
+		$taglibLiferay.icon("add_article", true, "add-child-page", $addPageURL.toString())
+	#end
+#end
+
+#macro (attatchments_icon)
+	#set ($viewAttachmentsURL = $renderResponse.createRenderURL())
+	$viewAttachmentsURL.setParameter("struts_action", "/wiki/view_page_attachments")
+	#set ($attatchments = $entry.getAttachmentsFiles())
+	$taglibLiferay.icon("clip", true, $languageUtil.get($locale, "attachments"), $viewAttachmentsURL.toString())
+#end
+
+#macro (discussion)
+	#if ($validator.isNotNull($assetRenderer.getDiscussionPath()) && $enableComments.equals("true"))
+	<br />
+		#set ($discussionURL = $renderResponse.createActionURL())
+		$discussionURL.setParameter("struts_action", "/wiki/$assetRenderer.getDiscussionPath()")
+		$taglibLiferay.discussion($wikiPageClassName, $entry.getResourcePrimKey(), $discussionURL.toString(), "fm2", false, $enableCommentRatings.equals("true"), $portalUtil.getCurrentURL($request), $assetRenderer.getTitle($locale), $assetRenderer.getUserId())
+	#end
+#end
+
+#macro (details_icon)
+	#set ($redirectURL = $portalUtil.getCurrentURL($request))
+	#set ($viewPageDetailsURL = $renderResponse.createRenderURL())
+	$viewPageDetailsURL.setParameter("struts_action", "/wiki/view_page_details")
+	$viewPageDetailsURL.setParameter("redirect", $redirectURL.toString())
+	$taglibLiferay.icon("history", false, "details", $viewPageDetailsURL.toString())
+#end
+
+#macro (edit_icon)
+	#if ($assetRenderer.hasEditPermission($themeDisplay.getPermissionChecker()))
+		#set ($redirectURL = $portalUtil.getCurrentURL($request))
+		#set ($editPageURL = $renderResponse.createRenderURL())
+		$editPageURL.setParameter("struts_action", "/wiki/edit_page")
+		$editPageURL.setParameter("redirect", $redirectURL.toString())
+		$editPageURL.setParameter("nodeId", "$entry.getNodeId()")
+		$editPageURL.setParameter("title", $entry.getTitle())
+
+		$taglibLiferay.icon("edit", false, $title, $editPageURL.toString())
+	#end
+#end
+
+#macro (print_icon)
+	#set ($printPortletURL = $renderResponse.createRenderURL())
+	$printPortletURL.setWindowState($taglibLiferay.getWindowState("pop_up"))
+	$printPortletURL.setParameter("viewMode", "print")
+	#set ($formatParams = ["aui-helper-hidden-accessible", $htmlUtil.escape($assetRenderer.getTitle($locale))])
+	#set ($title = $languageUtil.format($locale, "print-x-x", $formatParams.toArray()))
+	#set ($taglibPrintURL = "javascript:Liferay.Util.openWindow({dialog: {width: 960}, id:'" + $renderResponse.getNamespace() + "printAsset', title: '" + $title + "', uri:'" + $htmlUtil.escapeURL($printPortletURL.toString()) + "'});")
+	$taglibLiferay.icon("print", false, "print", $taglibPrintURL)
+#end
+
+#macro (ratings)
+	#if ($enablePageRatings.equals("true"))
+		<div class="page-ratings">
+			$taglibLiferay.ratings($wikiPageClassName, $entry.getResourcePrimKey(), 5, "stars", "")
+		</div>
+	#end
+#end
+
+#macro (related_assets)
+	#if ($assetEntry && $enableRelatedAssets.equals("true"))
+		<div class="entry-links">
+			$taglibLiferay.assetLinks($assetEntry.getEntryId(), $wikiPageClassName, $entry.getResourcePrimKey())
+		</div>
+	#end
+#end

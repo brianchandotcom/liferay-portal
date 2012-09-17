@@ -34,6 +34,8 @@ import com.liferay.portlet.social.model.impl.SocialActivityCounterImpl;
 import com.liferay.portlet.social.util.SocialCounterPeriodUtil;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
+import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -182,7 +184,7 @@ public class SocialActivityCounterFinderImpl
 			}
 			else {
 				if (endPeriod < SocialCounterPeriodUtil.getActivityDay()) {
-					_activityCounters.put(key, activityCounters);
+					_activityCounters.put(key, (Serializable)activityCounters);
 				}
 			}
 
@@ -353,7 +355,7 @@ public class SocialActivityCounterFinderImpl
 		}
 	}
 
-	private static PortalCache _activityCounters = MultiVMPoolUtil.getCache(
-		SocialActivityCounterFinder.class.getName());
+	private static PortalCache<String, Serializable> _activityCounters =
+		MultiVMPoolUtil.getCache(SocialActivityCounterFinder.class.getName());
 
 }

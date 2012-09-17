@@ -205,8 +205,7 @@ public class NtlmFilter extends BasePortalFilter {
 				return;
 			}
 
-			byte[] serverChallenge = (byte[])_portalCache.get(
-				request.getRemoteAddr());
+			byte[] serverChallenge = _portalCache.get(request.getRemoteAddr());
 
 			if (serverChallenge == null) {
 				response.setContentLength(0);
@@ -284,8 +283,8 @@ public class NtlmFilter extends BasePortalFilter {
 
 	private Map<Long, NtlmManager> _ntlmManagers =
 		new ConcurrentHashMap<Long, NtlmManager>();
-	private PortalCache _portalCache = SingleVMPoolUtil.getCache(
-		NtlmFilter.class.getName());
+	private PortalCache<String, byte[]> _portalCache =
+		SingleVMPoolUtil.getCache(NtlmFilter.class.getName());
 	private SecureRandom _secureRandom = new SecureRandom();
 
 }

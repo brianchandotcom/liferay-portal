@@ -70,7 +70,7 @@ public class PermissionCacheUtil {
 	public static PermissionCheckerBag getBag(long userId, long groupId) {
 		PermissionCheckerBag bag = null;
 
-		Serializable key = new BagKey(userId, groupId);
+		BagKey key = new BagKey(userId, groupId);
 
 		if (_localCacheAvailable) {
 			Map<String, Object> localCache = _localCache.get();
@@ -79,8 +79,7 @@ public class PermissionCacheUtil {
 		}
 
 		if (bag == null) {
-			bag = (PermissionCheckerBag)_permissionCheckerBagPortalCache.get(
-				key);
+			bag = _permissionCheckerBagPortalCache.get(key);
 		}
 
 		return bag;
@@ -92,7 +91,7 @@ public class PermissionCacheUtil {
 
 		Boolean value = null;
 
-		Serializable key = new PermissionKey(
+		PermissionKey key = new PermissionKey(
 			userId, signedIn, checkGuest, groupId, name, primKey, actionId);
 
 		if (_localCacheAvailable) {
@@ -102,7 +101,7 @@ public class PermissionCacheUtil {
 		}
 
 		if (value == null) {
-			value = (Boolean)_permissionPortalCache.get(key);
+			value = _permissionPortalCache.get(key);
 		}
 
 		return value;
@@ -114,7 +113,7 @@ public class PermissionCacheUtil {
 
 		ResourceBlockIdsBag resourceBlockIdsBag = null;
 
-		Serializable key = new ResourceBlockIdsBagKey(
+		ResourceBlockIdsBagKey key = new ResourceBlockIdsBagKey(
 			companyId, groupId, userId, name, checkGuest);
 
 		if (_localCacheAvailable) {
@@ -124,8 +123,7 @@ public class PermissionCacheUtil {
 		}
 
 		if (resourceBlockIdsBag == null) {
-			resourceBlockIdsBag =
-				(ResourceBlockIdsBag)_resourceBlockIdsBagCache.get(key);
+			resourceBlockIdsBag = _resourceBlockIdsBagCache.get(key);
 		}
 
 		return resourceBlockIdsBag;
@@ -138,7 +136,7 @@ public class PermissionCacheUtil {
 			return null;
 		}
 
-		Serializable key = new BagKey(userId, groupId);
+		BagKey key = new BagKey(userId, groupId);
 
 		if (_localCacheAvailable) {
 			Map<Serializable, Object> localCache = _localCache.get();
@@ -159,7 +157,7 @@ public class PermissionCacheUtil {
 			return null;
 		}
 
-		Serializable key = new PermissionKey(
+		PermissionKey key = new PermissionKey(
 			userId, signedIn, checkGuest, groupId, name, primKey, actionId);
 
 		if (_localCacheAvailable) {
@@ -181,7 +179,7 @@ public class PermissionCacheUtil {
 			return null;
 		}
 
-		Serializable key = new ResourceBlockIdsBagKey(
+		ResourceBlockIdsBagKey key = new ResourceBlockIdsBagKey(
 			companyId, groupId, userId, name, checkGuest);
 
 		if (_localCacheAvailable) {
@@ -197,16 +195,16 @@ public class PermissionCacheUtil {
 
 	private static ThreadLocal<LRUMap> _localCache;
 	private static boolean _localCacheAvailable;
-	private static PortalCache _permissionCheckerBagPortalCache =
-		MultiVMPoolUtil.getCache(
+	private static PortalCache<BagKey, PermissionCheckerBag>
+		_permissionCheckerBagPortalCache = MultiVMPoolUtil.getCache(
 			PERMISSION_CHECKER_BAG_CACHE_NAME,
 			PropsValues.PERMISSIONS_OBJECT_BLOCKING_CACHE);
-	private static PortalCache _permissionPortalCache =
+	private static PortalCache<PermissionKey, Boolean> _permissionPortalCache =
 		MultiVMPoolUtil.getCache(
 			PERMISSION_CACHE_NAME,
 			PropsValues.PERMISSIONS_OBJECT_BLOCKING_CACHE);
-	private static PortalCache _resourceBlockIdsBagCache =
-		MultiVMPoolUtil.getCache(
+	private static PortalCache<ResourceBlockIdsBagKey, ResourceBlockIdsBag>
+		_resourceBlockIdsBagCache = MultiVMPoolUtil.getCache(
 			RESOURCE_BLOCK_IDS_BAG_CACHE_NAME,
 			PropsValues.PERMISSIONS_OBJECT_BLOCKING_CACHE);
 

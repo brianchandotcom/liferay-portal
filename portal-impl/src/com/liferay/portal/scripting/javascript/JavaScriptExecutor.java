@@ -14,6 +14,7 @@
 
 package com.liferay.portal.scripting.javascript;
 
+import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
 import com.liferay.portal.kernel.scripting.BaseScriptingExecutor;
 import com.liferay.portal.kernel.scripting.ScriptingException;
@@ -36,7 +37,7 @@ public class JavaScriptExecutor extends BaseScriptingExecutor {
 
 	@Override
 	public void clearCache() {
-		SingleVMPoolUtil.clear(_CACHE_NAME);
+		_scriptPortalCache.removeAll();
 	}
 
 	public Map<String, Object> eval(
@@ -106,7 +107,7 @@ public class JavaScriptExecutor extends BaseScriptingExecutor {
 
 		String key = String.valueOf(script.hashCode());
 
-		Script compiledScript = (Script)SingleVMPoolUtil.get(_CACHE_NAME, key);
+		Script compiledScript = _scriptPortalCache.get(key);
 
 		if (compiledScript == null) {
 			try {
@@ -128,7 +129,7 @@ public class JavaScriptExecutor extends BaseScriptingExecutor {
 				Context.exit();
 			}
 
-			SingleVMPoolUtil.put(_CACHE_NAME, key, compiledScript);
+			_scriptPortalCache.put(key, compiledScript);
 		}
 
 		return compiledScript;
@@ -138,5 +139,8 @@ public class JavaScriptExecutor extends BaseScriptingExecutor {
 		JavaScriptExecutor.class.getName();
 
 	private static final String _LANGUAGE = "javascript";
+
+	private PortalCache<String, Script> _scriptPortalCache =
+		SingleVMPoolUtil.getCache(_CACHE_NAME);
 
 }

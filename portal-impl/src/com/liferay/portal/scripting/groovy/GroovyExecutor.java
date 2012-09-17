@@ -14,6 +14,7 @@
 
 package com.liferay.portal.scripting.groovy;
 
+import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
 import com.liferay.portal.kernel.scripting.BaseScriptingExecutor;
 import com.liferay.portal.kernel.scripting.ExecutionException;
@@ -38,7 +39,7 @@ public class GroovyExecutor extends BaseScriptingExecutor {
 
 	@Override
 	public void clearCache() {
-		SingleVMPoolUtil.clear(_CACHE_NAME);
+		_scriptPortalCache.removeAll();
 	}
 
 	public Map<String, Object> eval(
@@ -83,12 +84,12 @@ public class GroovyExecutor extends BaseScriptingExecutor {
 
 		String key = String.valueOf(script.hashCode());
 
-		Script compiledScript = (Script)SingleVMPoolUtil.get(_CACHE_NAME, key);
+		Script compiledScript = _scriptPortalCache.get(key);
 
 		if (compiledScript == null) {
 			compiledScript = groovyShell.parse(script);
 
-			SingleVMPoolUtil.put(_CACHE_NAME, key, compiledScript);
+			_scriptPortalCache.put(key, compiledScript);
 		}
 
 		return compiledScript;
@@ -133,5 +134,7 @@ public class GroovyExecutor extends BaseScriptingExecutor {
 	private volatile GroovyShell _groovyShell = new GroovyShell();
 	private volatile Map<ClassLoader, GroovyShell> _groovyShells =
 		new WeakHashMap<ClassLoader, GroovyShell>();
+	private PortalCache<String, Script> _scriptPortalCache =
+		SingleVMPoolUtil.getCache(_CACHE_NAME);
 
 }

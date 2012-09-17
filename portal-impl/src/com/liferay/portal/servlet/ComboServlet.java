@@ -107,8 +107,7 @@ public class ComboServlet extends HttpServlet {
 		if (!PropsValues.COMBO_CHECK_TIMESTAMP) {
 			modulePathsString = Arrays.toString(modulePaths);
 
-			bytesArray = (byte[][])_bytesArrayPortalCache.get(
-				modulePathsString);
+			bytesArray = _bytesArrayPortalCache.get(modulePathsString);
 		}
 
 		String firstModulePath = modulePaths[0];
@@ -202,8 +201,8 @@ public class ComboServlet extends HttpServlet {
 		String fileContentKey = resourcePath.concat(StringPool.QUESTION).concat(
 			minifierType);
 
-		FileContentBag fileContentBag =
-			(FileContentBag)_fileContentBagPortalCache.get(fileContentKey);
+		FileContentBag fileContentBag = _fileContentBagPortalCache.get(
+			fileContentKey);
 
 		if ((fileContentBag != null) && !PropsValues.COMBO_CHECK_TIMESTAMP) {
 			return fileContentBag._fileContent;
@@ -342,10 +341,10 @@ public class ComboServlet extends HttpServlet {
 
 	private static Log _log = LogFactoryUtil.getLog(ComboServlet.class);
 
-	private PortalCache _bytesArrayPortalCache = SingleVMPoolUtil.getCache(
-		ComboServlet.class.getName());
-	private PortalCache _fileContentBagPortalCache = SingleVMPoolUtil.getCache(
-		FileContentBag.class.getName());
+	private PortalCache<String, byte[][]> _bytesArrayPortalCache =
+		SingleVMPoolUtil.getCache(ComboServlet.class.getName());
+	private PortalCache<String, FileContentBag> _fileContentBagPortalCache =
+		SingleVMPoolUtil.getCache(FileContentBag.class.getName());
 
 	private static class FileContentBag implements Serializable {
 

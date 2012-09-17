@@ -28,8 +28,10 @@ import com.liferay.portal.kernel.webcache.WebCachePool;
  */
 public class WebCachePoolImpl implements WebCachePool {
 
+	@SuppressWarnings("unchecked")
 	public void afterPropertiesSet() {
-		_portalCache = _singleVMPool.getCache(_CACHE_NAME);
+		_portalCache = (PortalCache<String, Object>)_singleVMPool.getCache(
+			_CACHE_NAME);
 	}
 
 	public void clear() {
@@ -76,7 +78,7 @@ public class WebCachePoolImpl implements WebCachePool {
 
 	private static Log _log = LogFactoryUtil.getLog(WebCachePoolImpl.class);
 
-	private PortalCache _portalCache;
+	private PortalCache<String, Object> _portalCache;
 	private SingleVMPool _singleVMPool;
 
 }

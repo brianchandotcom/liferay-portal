@@ -26,6 +26,8 @@ import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.model.WikiPageDisplay;
 import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
 
+import java.io.Serializable;
+
 import java.util.Map;
 
 import javax.portlet.PortletURL;
@@ -90,7 +92,7 @@ public class WikiCacheUtil {
 		if (links == null) {
 			links = WikiUtil.getLinks(page);
 
-			_portalCache.put(key, links);
+			_portalCache.put(key, (Serializable)links);
 		}
 
 		return links;
@@ -145,7 +147,7 @@ public class WikiCacheUtil {
 
 	private static Log _log = LogFactoryUtil.getLog(WikiUtil.class);
 
-	private static PortalCache _portalCache = MultiVMPoolUtil.getCache(
-		_CACHE_NAME);
+	private static PortalCache<String, Serializable> _portalCache =
+		MultiVMPoolUtil.getCache(_CACHE_NAME);
 
 }

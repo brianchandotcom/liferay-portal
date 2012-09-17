@@ -70,8 +70,8 @@ public class SocialActivitySettingLocalServiceImpl
 
 		String key = encodeKey(groupId, className, activityType);
 
-		SocialActivityDefinition activityDefinition =
-			(SocialActivityDefinition)_activityDefinitions.get(key);
+		SocialActivityDefinition activityDefinition = _activityDefinitions.get(
+			key);
 
 		if (activityDefinition != null) {
 			return activityDefinition;
@@ -418,7 +418,8 @@ public class SocialActivitySettingLocalServiceImpl
 	private static Log _log = LogFactoryUtil.getLog(
 		SocialActivitySettingLocalServiceImpl.class);
 
-	private static PortalCache _activityDefinitions = MultiVMPoolUtil.getCache(
-		SocialActivitySettingLocalServiceImpl.class.getName());
+	private static PortalCache<String, SocialActivityDefinition>
+		_activityDefinitions = MultiVMPoolUtil.getCache(
+			SocialActivitySettingLocalServiceImpl.class.getName());
 
 }

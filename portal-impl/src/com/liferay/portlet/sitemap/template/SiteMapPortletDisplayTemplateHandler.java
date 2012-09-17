@@ -36,7 +36,7 @@ public class SiteMapPortletDisplayTemplateHandler
 
 	@Override
 	public String getHelpTemplatePath() {
-		return PropsValues.SITES_SITEMAP_DISPLAY_STYLES_TEMPLATE_CONTENT;
+		return PropsValues.SITES_SITEMAP_DISPLAY_STYLES_TEMPLATE_HELP_CONTENT;
 	}
 
 	public String getName(Locale locale) {
@@ -49,6 +49,11 @@ public class SiteMapPortletDisplayTemplateHandler
 
 	public String getResourceName() {
 		return "com.liferay.portlet.sitemap";
+	}
+
+	@Override
+	protected String getDefaultTemplatesConfigPath() {
+		return PropsValues.SITES_SITEMAP_DISPLAY_STYLES_TEMPLATE_DEFAULT_CONFIG;
 	}
 
 }

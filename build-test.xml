@@ -1393,7 +1393,7 @@
 
 		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="plugins-test-pacl" />
-			<param name="test.ant.script.plugin.portlets" value="chat-portlet,flash-portlet,test-pacl-portlet" />
+			<param name="test.ant.script.plugin.portlets" value="chat-portlet,flash-portlet,sample-service-builder-portlet,test-pacl-portlet" />
 			<param name="test.ant.script.suite" value="PluginsTestPACLTestSuite" />
 		</antcall>
 

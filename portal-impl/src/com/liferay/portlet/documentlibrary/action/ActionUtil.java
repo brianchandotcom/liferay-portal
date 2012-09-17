@@ -17,6 +17,7 @@ package com.liferay.portlet.documentlibrary.action;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -109,7 +110,11 @@ public class ActionUtil {
 
 			RawMetadataProcessorUtil.generateMetadata(fileVersion);
 
-			if (fileVersion.isInTrash()) {
+			String cmd = ParamUtil.getString(request, Constants.CMD);
+
+			if (fileVersion.isInTrash() &&
+				!cmd.equals(Constants.MOVE_FROM_TRASH)) {
+
 				throw new NoSuchFileEntryException();
 			}
 		}

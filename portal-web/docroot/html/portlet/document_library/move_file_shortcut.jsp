@@ -34,6 +34,12 @@ long folderId = BeanParamUtil.getLong(fileShortcut, request, "folderId");
 	<liferay-util:include page="/html/portlet/document_library/top_links.jsp" />
 </c:if>
 
+<c:if test="<%= cmd.equals(Constants.MOVE_FROM_TRASH) %>">
+	<div class="portlet-msg-alert">
+		<liferay-ui:message key="the-original-folder-does-not-exist-anymore" arguments='<%= fileShortcut.getToTitle() + " (" + LanguageUtil.get(pageContext, "shortcut") + ")" %>' />
+	</div>
+</c:if>
+
 <portlet:actionURL var="moveFileShortcutURL">
 	<portlet:param name="struts_action" value="/document_library/move_file_shortcut" />
 </portlet:actionURL>

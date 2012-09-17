@@ -31,6 +31,12 @@ long parentFolderId = BeanParamUtil.getLong(folder, request, "parentFolderId", D
 
 <liferay-util:include page="/html/portlet/document_library/top_links.jsp" />
 
+<c:if test="<%= cmd.equals(Constants.MOVE_FROM_TRASH) %>">
+	<div class="portlet-msg-alert">
+		<liferay-ui:message key="the-original-folder-does-not-exist-anymore" arguments="<%= folder.getName() %>" />
+	</div>
+</c:if>
+
 <portlet:actionURL var="moveFolderURL">
 	<portlet:param name="struts_action" value="/document_library/move_folder" />
 </portlet:actionURL>

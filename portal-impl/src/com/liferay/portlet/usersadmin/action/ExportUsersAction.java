@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CSVUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -170,7 +171,8 @@ public class ExportUsersAction extends PortletAction {
 		else if (!exportAllUsers) {
 			User user = themeDisplay.getUser();
 
-			long[] organizationIds = user.getOrganizationIds(true);
+			Long[] organizationIds = ArrayUtil.toArray(
+				user.getOrganizationIds(true));
 
 			if (organizationIds.length > 0) {
 				params.put("usersOrgs", organizationIds);

@@ -213,7 +213,6 @@ public class DeepNamedValueScanner {
 	}
 
 	private boolean _acceptClass(Class targetClass) {
-
 		String targetClassName = targetClass.getName();
 
 		targetClassName = targetClassName.toLowerCase();
@@ -233,7 +232,6 @@ public class DeepNamedValueScanner {
 		if (_excludedClassNames != null) {
 			for (String excludedClassName : _excludedClassNames) {
 				if (targetClassName.contains(excludedClassName)) {
-
 					return false;
 				}
 			}
@@ -273,7 +271,6 @@ public class DeepNamedValueScanner {
 		if (_excludedNames != null) {
 			for (String excludedNames : _excludedNames) {
 				if (name.contains(excludedNames)) {
-
 					return false;
 				}
 			}
@@ -288,6 +285,7 @@ public class DeepNamedValueScanner {
 
 	private void _incrementUsageCount(
 		HashMap<String, KeyValue> statMap, String name) {
+
 		KeyValue<String, MutableInteger> keyValue = statMap.get(name);
 
 		if (keyValue == null) {
@@ -314,6 +312,7 @@ public class DeepNamedValueScanner {
 		if (name.toLowerCase().contains(_value)) {
 			if (_skipFirstCount > 0) {
 				_skipFirstCount--;
+
 				return;
 			}
 
@@ -335,6 +334,7 @@ public class DeepNamedValueScanner {
 		if (name.toLowerCase().contains(_value)) {
 			if (_skipFirstCount > 0) {
 				_skipFirstCount--;
+
 				return;
 			}
 
@@ -345,7 +345,6 @@ public class DeepNamedValueScanner {
 	}
 
 	private void _printStats(Collection<KeyValue> values, int topCount) {
-
 		List<KeyValue<String, MutableInteger>> list =
 			new ArrayList<KeyValue<String, MutableInteger>>();
 
@@ -491,7 +490,6 @@ public class DeepNamedValueScanner {
 	}
 
 	private void _scanObject(Object target) throws Exception {
-
 		Class targetClass = target.getClass();
 
 		if (!_acceptClass(targetClass)) {
@@ -499,7 +497,6 @@ public class DeepNamedValueScanner {
 		}
 
 		while (targetClass != null) {
-
 			Field[] fields = targetClass.getDeclaredFields();
 
 			for (Field field : fields) {
@@ -516,7 +513,6 @@ public class DeepNamedValueScanner {
 				String fieldName = field.getName();
 
 				if (_acceptName(fieldName)) {
-
 					_matchField(target, field, fieldName);
 
 					field.setAccessible(true);

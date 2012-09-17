@@ -1926,7 +1926,7 @@ public class SourceFormatter {
 				});
 
 			if (newContent.contains("    ")) {
-				if (!fileName.endsWith("template.vm")) {
+				if (!fileName.matches(".*template.*\\.vm$")) {
 					_sourceFormatterHelper.printError(
 						fileName, "tab: " + fileName);
 				}

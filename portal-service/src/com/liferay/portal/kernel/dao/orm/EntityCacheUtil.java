@@ -41,7 +41,7 @@ public class EntityCacheUtil {
 		return _entityCache;
 	}
 
-	public static Object getResult(
+	public static Serializable getResult(
 		boolean entityCacheEnabled, Class<?> clazz, Serializable primaryKey) {
 
 		return getEntityCache().getResult(
@@ -52,7 +52,7 @@ public class EntityCacheUtil {
 		getEntityCache().invalidate();
 	}
 
-	public static Object loadResult(
+	public static Serializable loadResult(
 		boolean entityCacheEnabled, Class<?> clazz, Serializable primaryKey,
 		SessionFactory sessionFactory) {
 
@@ -62,7 +62,7 @@ public class EntityCacheUtil {
 
 	public static void putResult(
 		boolean entityCacheEnabled, Class<?> clazz, Serializable primaryKey,
-		Object result) {
+		Serializable result) {
 
 		getEntityCache().putResult(
 			entityCacheEnabled, clazz, primaryKey, result);

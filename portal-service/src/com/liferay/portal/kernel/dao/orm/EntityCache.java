@@ -27,18 +27,18 @@ public interface EntityCache {
 
 	public void clearLocalCache();
 
-	public Object getResult(
+	public Serializable getResult(
 		boolean entityCacheEnabled, Class<?> clazz, Serializable primaryKey);
 
 	public void invalidate();
 
-	public Object loadResult(
+	public Serializable loadResult(
 		boolean entityCacheEnabled, Class<?> clazz, Serializable primaryKey,
 		SessionFactory sessionFactory);
 
 	public void putResult(
 		boolean entityCacheEnabled, Class<?> clazz, Serializable primaryKey,
-		Object result);
+		Serializable result);
 
 	public void removeCache(String className);
 

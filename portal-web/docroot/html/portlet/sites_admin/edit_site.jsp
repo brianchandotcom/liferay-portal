@@ -20,7 +20,7 @@
 String viewOrganizationsRedirect = ParamUtil.getString(request, "viewOrganizationsRedirect", themeDisplay.getURLControlPanel());
 String redirect = ParamUtil.getString(request, "redirect", viewOrganizationsRedirect);
 String closeRedirect = ParamUtil.getString(request, "closeRedirect");
-String backURL = ParamUtil.getString(request, "backURL", redirect);
+String backURL = ParamUtil.getString(request, "backURL");
 
 Group group = (Group)request.getAttribute(WebKeys.GROUP);
 

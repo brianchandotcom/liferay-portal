@@ -667,6 +667,8 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 								List results = fileEntry.getFileVersions(status);
 								List resultRows = searchContainer.getResultRows();
 
+								searchContainer.setTotal(results.size());
+
 								for (int i = 0; i < results.size(); i++) {
 									FileVersion curFileVersion = (FileVersion)results.get(i);
 

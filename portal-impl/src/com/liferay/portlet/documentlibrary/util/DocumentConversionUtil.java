@@ -103,8 +103,8 @@ public class DocumentConversionUtil {
 			return false;
 		}
 
-		if (extension.equals("css") || extension.equals("js") ||
-			extension.equals("htm") || extension.equals("html") ||
+		if (extension.equals("css") || extension.equals("htm") ||
+			extension.equals("html") || extension.equals("js") ||
 			extension.equals("txt") || extension.equals("xml")) {
 
 			return true;

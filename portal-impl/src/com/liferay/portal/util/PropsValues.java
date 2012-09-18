@@ -758,6 +758,8 @@ public class PropsValues {
 
 	public static final boolean JOURNAL_PUBLISH_TO_LIVE_BY_DEFAULT = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.JOURNAL_PUBLISH_TO_LIVE_BY_DEFAULT));
 
+	public static final boolean JOURNAL_PUBLISH_VERSION_HISTORY_BY_DEFAULT = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.JOURNAL_PUBLISH_VERSION_HISTORY_BY_DEFAULT));
+
 	public static final boolean JOURNAL_STRUCTURE_FORCE_AUTOGENERATE_ID = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.JOURNAL_STRUCTURE_FORCE_AUTOGENERATE_ID));
 
 	public static final boolean JOURNAL_TEMPLATE_FORCE_AUTOGENERATE_ID = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.JOURNAL_TEMPLATE_FORCE_AUTOGENERATE_ID));

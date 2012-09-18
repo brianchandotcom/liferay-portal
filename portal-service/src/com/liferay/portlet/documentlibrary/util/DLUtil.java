@@ -461,10 +461,9 @@ public class DLUtil {
 			if (absoluteURL) {
 				sb.append(themeDisplay.getPortalURL());
 			}
-
-			sb.append(themeDisplay.getPathContext());
 		}
 
+		sb.append(PortalUtil.getPathContext());
 		sb.append("/documents/");
 		sb.append(fileEntry.getRepositoryId());
 		sb.append(StringPool.SLASH);

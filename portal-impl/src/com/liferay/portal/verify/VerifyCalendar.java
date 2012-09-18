@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.calendar.model.CalEvent;
 import com.liferay.portlet.calendar.service.CalEventLocalServiceUtil;
 
@@ -128,8 +129,12 @@ public class VerifyCalendar extends VerifyProcess {
 				long eventId = rs.getLong("eventId");
 				String recurrence = rs.getString("recurrence");
 
-				TZSRecurrence recurrenceObj =
-					(TZSRecurrence)jsonSerializer.fromJSON(recurrence);
+				TZSRecurrence recurrenceObj = null;
+
+				if (Validator.isNotNull(recurrence)) {
+					recurrenceObj =
+						(TZSRecurrence)jsonSerializer.fromJSON(recurrence);
+				}
 
 				String newRecurrence = JSONFactoryUtil.serialize(recurrenceObj);
 

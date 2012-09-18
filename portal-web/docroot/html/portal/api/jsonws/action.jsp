@@ -348,7 +348,7 @@ String signature = ParamUtil.getString(request, "signature");
 		String jsServicePath = servletContextPath + jsonWebServiceActionMapping.getPath();
 
 		if (Validator.isNotNull(servletContextPath)) {
-			jsServicePath = StringUtil.replace(jsServicePath, servletContextPath + StringPool.FORWARD_SLASH, servletContextPath + StringPool.POUND);
+			jsServicePath = StringUtil.replace(jsServicePath, servletContextPath + StringPool.FORWARD_SLASH, servletContextPath + StringPool.PERIOD);
 		}
 		%>
 

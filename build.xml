@@ -619,13 +619,11 @@ Plugins: ${lp.plugins.dir}</echo>
 		<ant antfile="build-test.xml" target="test" inheritAll="false" />
 	</target>
 
-	<target name="test-integration" depends="compile" >
+	<target name="test-integration" depends="compile">
 		<ant antfile="build-test.xml" target="test-integration" inheritAll="false" />
 	</target>
 
 	<target name="test-unit" depends="compile">
-		<ant dir="portal-test" target="compile" inheritAll="false" />
-
 		<ant antfile="build-test.xml" target="test-unit" inheritAll="false" />
 	</target>
 

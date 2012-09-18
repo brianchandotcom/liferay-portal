@@ -21,8 +21,8 @@ import com.liferay.portal.model.*;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutServiceUtil;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.ServiceTestUtil;
-import com.liferay.portal.util.TestPropsValues;
+import com.liferay.portal.test.service.ServiceTestUtil;
+import com.liferay.portal.test.util.TestPropsValues;
 
 import org.powermock.api.mockito.PowerMockito;
 

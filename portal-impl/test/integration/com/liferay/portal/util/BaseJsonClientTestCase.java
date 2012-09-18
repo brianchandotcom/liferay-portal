@@ -15,6 +15,7 @@
 package com.liferay.portal.util;
 
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.test.util.TestPropsValues;
 
 import java.io.IOException;
 

@@ -1362,7 +1362,8 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 	@Override
 	public PortletDataHandlerControl[] getExportControls() {
 		return new PortletDataHandlerControl[] {
-			_articles, _structuresTemplatesAndFeeds, _embeddedAssets
+			_articles, _structuresTemplatesAndFeeds, _embeddedAssets,
+			_versionHistory
 		};
 	}
 
@@ -2536,12 +2537,24 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 				new ArticleIDComparator(true));
 
+			boolean publishVersionHistory =
+				portletDataContext.getBooleanParameter(
+					_NAMESPACE, "version-history");
+
 			for (JournalArticle article : articles) {
-				exportArticle(
-					portletDataContext, articlesElement, structuresElement,
-					templatesElement, dlFileEntryTypesElement, dlFoldersElement,
-					dlFilesElement, dlFileRanksElement, dlRepositoriesElement,
-					dlRepositoryEntriesElement, article, true);
+				if (publishVersionHistory ||
+					JournalArticleLocalServiceUtil.isLatestVersion(
+						article.getGroupId(), article.getArticleId(),
+						article.getVersion(),
+						WorkflowConstants.STATUS_APPROVED)) {
+
+					exportArticle(
+						portletDataContext, articlesElement, structuresElement,
+						templatesElement, dlFileEntryTypesElement,
+						dlFoldersElement, dlFilesElement, dlFileRanksElement,
+						dlRepositoriesElement, dlRepositoryEntriesElement,
+						article, true);
+				}
 			}
 		}
 
@@ -2656,5 +2669,9 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 	private static PortletDataHandlerBoolean
 		_structuresTemplatesAndFeeds = new PortletDataHandlerBoolean(
 			_NAMESPACE, "structures-templates-and-feeds", true, true);
+
+	private static PortletDataHandlerBoolean _versionHistory =
+		new PortletDataHandlerBoolean(_NAMESPACE, "version-history",
+			PropsValues.JOURNAL_PUBLISH_VERSION_HISTORY_BY_DEFAULT);
 
 }

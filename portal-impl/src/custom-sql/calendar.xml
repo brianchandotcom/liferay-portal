@@ -31,7 +31,7 @@
 					) OR
 					(
 						(repeating = [$TRUE$]) AND
-						(endDate >= ?)
+						(endDate >= ? OR endDate IS NULL)
 					)
 				)
 		]]>

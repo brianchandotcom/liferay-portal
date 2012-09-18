@@ -53,6 +53,8 @@ import com.sun.syndication.feed.synd.SyndEntry;
 import com.sun.syndication.feed.synd.SyndEntryImpl;
 import com.sun.syndication.feed.synd.SyndFeed;
 import com.sun.syndication.feed.synd.SyndFeedImpl;
+import com.sun.syndication.feed.synd.SyndLink;
+import com.sun.syndication.feed.synd.SyndLinkImpl;
 import com.sun.syndication.io.FeedException;
 
 import java.io.InputStream;
@@ -770,7 +772,21 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 		}
 
 		syndFeed.setFeedType(RSSUtil.getFeedType(type, version));
-		syndFeed.setLink(feedURL);
+
+		List<SyndLink> syndLinks = new ArrayList<SyndLink>();
+
+		syndFeed.setLinks(syndLinks);
+
+		SyndLink syndLinkSelf = new SyndLinkImpl();
+
+		syndLinks.add(syndLinkSelf);
+
+		syndLinkSelf.setHref(feedURL);
+		syndLinkSelf.setRel("self");
+
+		syndFeed.setPublishedDate(new Date());
+		syndFeed.setTitle(name);
+		syndFeed.setUri(feedURL);
 		syndFeed.setPublishedDate(new Date());
 		syndFeed.setTitle(name);
 		syndFeed.setUri(feedURL);

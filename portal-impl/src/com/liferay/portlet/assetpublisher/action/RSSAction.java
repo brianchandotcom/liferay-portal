@@ -43,6 +43,8 @@ import com.sun.syndication.feed.synd.SyndEntry;
 import com.sun.syndication.feed.synd.SyndEntryImpl;
 import com.sun.syndication.feed.synd.SyndFeed;
 import com.sun.syndication.feed.synd.SyndFeedImpl;
+import com.sun.syndication.feed.synd.SyndLink;
+import com.sun.syndication.feed.synd.SyndLinkImpl;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -116,9 +118,18 @@ public class RSSAction extends com.liferay.portal.struts.RSSAction {
 
 		syndFeed.setFeedType(RSSUtil.getFeedType(type, version));
 
+		List<SyndLink> syndLinks = new ArrayList<SyndLink>();
+
+		syndFeed.setLinks(syndLinks);
+
+		SyndLink syndLinkSelf = new SyndLinkImpl();
+
+		syndLinks.add(syndLinkSelf);
+
 		String feedURL = getFeedURL(portletRequest);
 
-		syndFeed.setLink(feedURL);
+		syndLinkSelf.setHref(feedURL);
+		syndLinkSelf.setRel("self");
 
 		syndFeed.setPublishedDate(new Date());
 		syndFeed.setTitle(name);

@@ -181,7 +181,7 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 		throws SystemException {
 
 		if (status == WorkflowConstants.STATUS_ANY) {
-			return blogsEntryPersistence.filterFindByG_LtD_NeS(
+			return blogsEntryPersistence.filterFindByG_LtD_NotS(
 				groupId, displayDate, WorkflowConstants.STATUS_IN_TRASH, start,
 				end);
 		}
@@ -202,7 +202,7 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 		throws SystemException {
 
 		if (status == WorkflowConstants.STATUS_ANY) {
-			return blogsEntryPersistence.filterFindByG_NeS(
+			return blogsEntryPersistence.filterFindByG_NotS(
 				groupId, WorkflowConstants.STATUS_IN_TRASH, start, end);
 		}
 		else {
@@ -215,7 +215,7 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 		throws SystemException {
 
 		if (status == WorkflowConstants.STATUS_ANY) {
-			return blogsEntryPersistence.filterCountByG_LtD_NeS(
+			return blogsEntryPersistence.filterCountByG_LtD_NotS(
 				groupId, displayDate, WorkflowConstants.STATUS_IN_TRASH);
 		}
 		else {
@@ -228,7 +228,7 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 		throws SystemException {
 
 		if (status == WorkflowConstants.STATUS_ANY) {
-			return blogsEntryPersistence.filterCountByG_NeS(
+			return blogsEntryPersistence.filterCountByG_NotS(
 				groupId, WorkflowConstants.STATUS_IN_TRASH);
 		}
 		else {

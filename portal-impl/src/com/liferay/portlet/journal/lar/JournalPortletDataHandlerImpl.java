@@ -2645,7 +2645,7 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 		JournalPortletDataHandlerImpl.class);
 
 	private static PortletDataHandlerBoolean _articles =
-		new PortletDataHandlerBoolean(_NAMESPACE, "web-content", true, false);
+		new PortletDataHandlerBoolean(_NAMESPACE, "web-content");
 
 	private static PortletDataHandlerBoolean _embeddedAssets =
 		new PortletDataHandlerBoolean(_NAMESPACE, "embedded-assets");
@@ -2666,12 +2666,13 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 			new PortletDataHandlerBoolean(_NAMESPACE, "tags")
 		};
 
-	private static PortletDataHandlerBoolean
-		_structuresTemplatesAndFeeds = new PortletDataHandlerBoolean(
+	private static PortletDataHandlerBoolean _structuresTemplatesAndFeeds =
+		new PortletDataHandlerBoolean(
 			_NAMESPACE, "structures-templates-and-feeds", true, true);
 
 	private static PortletDataHandlerBoolean _versionHistory =
-		new PortletDataHandlerBoolean(_NAMESPACE, "version-history",
+		new PortletDataHandlerBoolean(
+			_NAMESPACE, "version-history",
 			PropsValues.JOURNAL_PUBLISH_VERSION_HISTORY_BY_DEFAULT);
 
 }

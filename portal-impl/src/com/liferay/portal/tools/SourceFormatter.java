@@ -1421,6 +1421,11 @@ public class SourceFormatter {
 
 			String trimmedLine = StringUtil.trimLeading(line);
 
+			if (trimmedLine.startsWith(StringPool.EQUAL)) {
+				_sourceFormatterHelper.printError(
+					fileName, "equal: " + fileName + " " + lineCount);
+			}
+
 			if (!trimmedLine.equals("{") && line.endsWith("{") &&
 				!line.endsWith(" {")) {
 

@@ -51,8 +51,9 @@ public class ShardGloballyAdvice implements MethodInterceptor {
 
 				dataSourceTargetSource.setDataSource(shardName);
 
-				ShardSessionFactoryTargetSource shardSessionFactoryTargetSource
-					= _shardAdvice.getShardSessionFactoryTargetSource();
+				ShardSessionFactoryTargetSource
+					shardSessionFactoryTargetSource =
+						_shardAdvice.getShardSessionFactoryTargetSource();
 
 				shardSessionFactoryTargetSource.setSessionFactory(shardName);
 

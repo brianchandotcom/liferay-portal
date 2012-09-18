@@ -308,8 +308,8 @@ public class JSONWebServiceActionsManagerImpl
 		}
 
 		for (int i = firstIndex; i <= lastIndex; i++) {
-			JSONWebServiceActionConfig jsonWebServiceActionConfig
-				= _jsonWebServiceActionConfigs.get(i);
+			JSONWebServiceActionConfig jsonWebServiceActionConfig =
+				_jsonWebServiceActionConfigs.get(i);
 
 			String jsonWebServiceActionConfigMethod =
 				jsonWebServiceActionConfig.getMethod();

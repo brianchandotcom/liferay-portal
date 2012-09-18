@@ -43,23 +43,25 @@ public class AddSitePublicPage1CPTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				selenium.clickAt("link=Sites", RuntimeVariables.replace("Sites"));
 				selenium.waitForPageToLoad("30000");
-				selenium.type("//input[@id='_134_name']",
+				selenium.type("//input[@name='_134_keywords']",
 					RuntimeVariables.replace("Site Name"));
 				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
+				assertEquals(RuntimeVariables.replace("Site Name"),
+					selenium.getText("//td[1]/a"));
 				assertEquals(RuntimeVariables.replace("Actions"),
 					selenium.getText(
 						"//span[@title='Actions']/ul/li/strong/a/span"));
 				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Manage Pages')]/a");
+					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Pages')]");
 				assertEquals(RuntimeVariables.replace("Manage Pages"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Manage Pages')]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Pages')]"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Manage Pages')]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Pages')]"));
 				selenium.waitForPageToLoad("30000");
 				selenium.clickAt("link=Public Pages",
 					RuntimeVariables.replace("Public Pages"));

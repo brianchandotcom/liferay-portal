@@ -32,11 +32,11 @@ public class SitesTestPlan extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
+		testSuite.addTest(LARTestPlan.suite());
 		testSuite.addTest(SiteTestPlan.suite());
 		testSuite.addTest(SitePageTestPlan.suite());
 		testSuite.addTest(SitePortletTestPlan.suite());
 		testSuite.addTest(SiteTeamTestPlan.suite());
-		testSuite.addTest(LARTestPlan.suite());
 
 		return testSuite;
 	}

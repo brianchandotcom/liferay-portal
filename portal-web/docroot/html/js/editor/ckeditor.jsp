@@ -29,7 +29,13 @@ if (Validator.isNull(doAsUserId)) {
 
 long doAsGroupId = themeDisplay.getDoAsGroupId();
 
-String ckEditorConfigFileName = ParamUtil.getString(request, "ckEditorConfigFileName", "ckconfig.jsp");
+List<String> ckEditorConfigFileNames = Arrays.asList("ckconfig.jsp", "ckconfig_bbcode.jsp", "ckconfig_creole.jsp");
+
+String ckEditorConfigFileName = ParamUtil.getString(request, "ckEditorConfigFileName");
+
+if (!ckEditorConfigFileNames.contains(ckEditorConfigFileName)) {
+	ckEditorConfigFileName = "ckconfig.jsp";
+}
 
 boolean useCustomDataProcessor = false;
 

@@ -94,6 +94,18 @@ public abstract class BaseTrashHandlerTestCase {
 		trashParent(false);
 	}
 
+	@Test
+	@Transactional
+	public void testTrashVersionAndDelete() throws Exception {
+		trashVersion(true);
+	}
+
+	@Test
+	@Transactional
+	public void testTrashVersionAndRestore() throws Exception {
+		trashVersion(false);
+	}
+
 	protected abstract BaseModel<?> addBaseModel(
 			BaseModel<?> parentBaseModel, boolean approved,
 			ServiceContext serviceContext)
@@ -521,6 +533,140 @@ public abstract class BaseTrashHandlerTestCase {
 					getTrashEntriesCount(group.getGroupId()));
 			}
 		}
+	}
+
+	protected void trashVersion(boolean delete) throws Exception {
+		Group group = ServiceTestUtil.addGroup();
+
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext();
+
+		serviceContext.setScopeGroupId(group.getGroupId());
+
+		BaseModel<?> parentBaseModel = getParentBaseModel(
+			group, serviceContext);
+
+		int initialBaseModelsCount = getBaseModelsNotInTrashCount(
+			parentBaseModel);
+		int initialBaseModelsSearchCount = 0;
+		int initialTrashEntriesCount = getTrashEntriesCount(group.getGroupId());
+		int initialTrashEntriesSearchCount = 0;
+
+		if (isIndexableModel()) {
+			initialBaseModelsSearchCount = searchBaseModelsCount(
+				getBaseModelClass(), group.getGroupId());
+			initialTrashEntriesSearchCount = searchTrashEntriesCount(
+				getSearchKeywords(), serviceContext);
+		}
+
+		BaseModel<?> baseModel = addBaseModel(
+			parentBaseModel, true, serviceContext);
+
+		baseModel = updateBaseModel(
+			(Long)baseModel.getPrimaryKeyObj(), serviceContext);
+
+		Assert.assertEquals(
+			initialBaseModelsCount + 1,
+			getBaseModelsNotInTrashCount(parentBaseModel));
+		Assert.assertEquals(
+			initialTrashEntriesCount, getTrashEntriesCount(group.getGroupId()));
+
+		if (isAssetableModel()) {
+			Assert.assertTrue(isAssetEntryVisible(baseModel));
+		}
+
+		if (isIndexableModel()) {
+			Assert.assertEquals(
+				initialBaseModelsSearchCount + 1,
+				searchBaseModelsCount(getBaseModelClass(), group.getGroupId()));
+
+			Assert.assertEquals(
+				initialTrashEntriesSearchCount,
+				searchTrashEntriesCount(getSearchKeywords(), serviceContext));
+		}
+
+		moveBaseModelToTrash((Long)baseModel.getPrimaryKeyObj());
+
+		Assert.assertEquals(
+			initialBaseModelsCount,
+			getBaseModelsNotInTrashCount(parentBaseModel));
+		Assert.assertEquals(
+			initialTrashEntriesCount + 1,
+			getTrashEntriesCount(group.getGroupId()));
+
+		if (isAssetableModel()) {
+			Assert.assertFalse(isAssetEntryVisible(baseModel));
+		}
+
+		if (isIndexableModel()) {
+			Assert.assertEquals(
+				initialBaseModelsSearchCount,
+				searchBaseModelsCount(getBaseModelClass(), group.getGroupId()));
+
+			Assert.assertEquals(
+				initialTrashEntriesSearchCount + 1,
+				searchTrashEntriesCount(getSearchKeywords(), serviceContext));
+		}
+
+		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
+			getBaseModelClassName());
+
+		if (delete) {
+			trashHandler.deleteTrashEntry(getTrashClassPK(baseModel));
+
+			Assert.assertEquals(
+				initialBaseModelsCount,
+				getBaseModelsNotInTrashCount(parentBaseModel));
+			Assert.assertNull(fetchAssetEntry(baseModel));
+			Assert.assertEquals(
+				initialTrashEntriesCount,
+				getTrashEntriesCount(group.getGroupId()));
+
+			if (isIndexableModel()) {
+				Assert.assertEquals(
+					initialBaseModelsSearchCount,
+					searchBaseModelsCount(
+						getBaseModelClass(), group.getGroupId()));
+
+				Assert.assertEquals(
+					initialTrashEntriesSearchCount,
+					searchTrashEntriesCount(
+						getSearchKeywords(), serviceContext));
+			}
+		}
+		else {
+			trashHandler.restoreTrashEntry(getTrashClassPK(baseModel));
+
+			Assert.assertEquals(
+				initialBaseModelsCount + 1,
+				getBaseModelsNotInTrashCount(parentBaseModel));
+
+		if (isAssetableModel()) {
+				Assert.assertTrue(isAssetEntryVisible(baseModel));
+			}
+
+			Assert.assertEquals(
+				initialTrashEntriesCount,
+				getTrashEntriesCount(group.getGroupId()));
+
+			if (isIndexableModel()) {
+				Assert.assertEquals(
+					initialBaseModelsSearchCount + 1,
+					searchBaseModelsCount(
+						getBaseModelClass(), group.getGroupId()));
+
+				Assert.assertEquals(
+					initialTrashEntriesSearchCount,
+					searchTrashEntriesCount(
+						getSearchKeywords(), serviceContext));
+			}
+		}
+	}
+
+	protected BaseModel<?> updateBaseModel(
+			long primaryKey, ServiceContext serviceContext)
+		throws Exception {
+
+		return getBaseModel(primaryKey);
 	}
 
 }

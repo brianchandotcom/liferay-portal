@@ -45,7 +45,6 @@ import com.liferay.portlet.documentlibrary.service.DLFileEntryServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileRankLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 import com.liferay.portlet.trash.BaseTrashHandlerTestCase;
-import com.liferay.portlet.trash.service.TrashEntryServiceUtil;
 
 import java.io.File;
 
@@ -68,18 +67,6 @@ public class DLFileEntryTrashHandlerTest extends BaseTrashHandlerTestCase {
 	@Transactional
 	public void testTrashFileRank() throws Exception {
 		trashFileRank();
-	}
-
-	@Test
-	@Transactional
-	public void testTrashFileVersionAndDelete() throws Exception {
-		trashDLFileEntry(true);
-	}
-
-	@Test
-	@Transactional
-	public void testTrashFileVersionAndRestore() throws Exception {
-		trashDLFileEntry(false);
 	}
 
 	@Override
@@ -226,98 +213,6 @@ public class DLFileEntryTrashHandlerTest extends BaseTrashHandlerTestCase {
 		DLAppServiceUtil.moveFolderToTrash(primaryKey);
 	}
 
-	protected void trashDLFileEntry(boolean delete) throws Exception {
-		Group group = ServiceTestUtil.addGroup();
-
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext();
-
-		serviceContext.setScopeGroupId(group.getGroupId());
-
-		BaseModel<?> parentBaseModel = getParentBaseModel(
-			group, serviceContext);
-
-		int initialBaseModelsCount = getBaseModelsNotInTrashCount(
-				parentBaseModel);
-		int initialBaseModelsSearchCount = searchBaseModelsCount(
-			getBaseModelClass(), group.getGroupId());
-		int initialTrashEntriesCount = getTrashEntriesCount(group.getGroupId());
-		int initialTrashEntriesSearchCount = searchTrashEntriesCount(
-			getSearchKeywords(), serviceContext);
-
-		BaseModel<?> baseModel = addBaseModel(
-			parentBaseModel, true, serviceContext);
-
-		updateBaseModel((Long)baseModel.getPrimaryKeyObj(), serviceContext);
-
-		Assert.assertEquals(
-			initialBaseModelsCount + 1,
-			getBaseModelsNotInTrashCount(parentBaseModel));
-		Assert.assertEquals(
-			initialTrashEntriesCount, getTrashEntriesCount(group.getGroupId()));
-
-		Assert.assertTrue(isAssetEntryVisible(baseModel));
-		Assert.assertEquals(
-			initialBaseModelsSearchCount + 1,
-			searchBaseModelsCount(getBaseModelClass(), group.getGroupId()));
-
-		Assert.assertEquals(
-			initialTrashEntriesSearchCount,
-			searchTrashEntriesCount(getSearchKeywords(), serviceContext));
-
-		moveBaseModelToTrash((Long)baseModel.getPrimaryKeyObj());
-
-		Assert.assertEquals(
-			initialBaseModelsCount,
-			getBaseModelsNotInTrashCount(parentBaseModel));
-		Assert.assertEquals(
-			initialTrashEntriesCount + 1,
-			getTrashEntriesCount(group.getGroupId()));
-		Assert.assertFalse(isAssetEntryVisible(baseModel));
-		Assert.assertEquals(
-			initialBaseModelsSearchCount,
-			searchBaseModelsCount(getBaseModelClass(), group.getGroupId()));
-		Assert.assertEquals(
-			initialTrashEntriesSearchCount + 1,
-			searchTrashEntriesCount(getSearchKeywords(), serviceContext));
-
-		if (delete) {
-			TrashEntryServiceUtil.deleteEntries(group.getGroupId());
-
-			Assert.assertEquals(
-				initialBaseModelsCount,
-				getBaseModelsNotInTrashCount(parentBaseModel));
-			Assert.assertNull(fetchAssetEntry(baseModel));
-			Assert.assertEquals(
-				initialBaseModelsSearchCount,
-				searchBaseModelsCount(getBaseModelClass(), group.getGroupId()));
-
-			Assert.assertEquals(0, getTrashEntriesCount(group.getGroupId()));
-			Assert.assertEquals(
-				0,
-				searchTrashEntriesCount(getSearchKeywords(), serviceContext));
-		}
-		else {
-			DLAppServiceUtil.restoreFileEntryFromTrash(
-				(Long)baseModel.getPrimaryKeyObj());
-
-			Assert.assertEquals(
-				initialBaseModelsCount + 1,
-				getBaseModelsNotInTrashCount(parentBaseModel));
-
-			Assert.assertTrue(isAssetEntryVisible(baseModel));
-			Assert.assertEquals(
-				initialBaseModelsSearchCount + 1,
-				searchBaseModelsCount(getBaseModelClass(), group.getGroupId()));
-
-			Assert.assertEquals(
-				initialTrashEntriesCount,
-				getTrashEntriesCount(group.getGroupId()));
-			Assert.assertEquals(
-				initialTrashEntriesSearchCount,
-				searchTrashEntriesCount(getSearchKeywords(), serviceContext));
-		}
-	}
-
 	protected void trashFileRank() throws Exception {
 		Group group = ServiceTestUtil.addGroup();
 
@@ -359,6 +254,7 @@ public class DLFileEntryTrashHandlerTest extends BaseTrashHandlerTestCase {
 				group.getGroupId(), (Long)baseModel.getPrimaryKeyObj()));
 	}
 
+	@Override
 	protected BaseModel<?> updateBaseModel(
 			long primaryKey, ServiceContext serviceContext)
 		throws Exception {

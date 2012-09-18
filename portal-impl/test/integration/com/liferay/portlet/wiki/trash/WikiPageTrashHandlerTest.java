@@ -106,7 +106,7 @@ public class WikiPageTrashHandlerTest extends BaseTrashHandlerTestCase {
 		throws Exception {
 
 		return WikiPageLocalServiceUtil.getPagesCount(
-			(Long)parentBaseModel.getPrimaryKeyObj(),
+			(Long)parentBaseModel.getPrimaryKeyObj(), true,
 			WorkflowConstants.STATUS_APPROVED);
 	}
 
@@ -169,6 +169,26 @@ public class WikiPageTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 		WikiNodeLocalServiceUtil.moveNodeToTrash(
 			TestPropsValues.getUserId(), primaryKey);
+	}
+
+	@Override
+	protected BaseModel<?> updateBaseModel(
+			long primaryKey, ServiceContext serviceContext)
+		throws Exception {
+
+		serviceContext = (ServiceContext)serviceContext.clone();
+
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
+
+		WikiPage wikiPage = WikiPageLocalServiceUtil.getPageByPageId(
+			primaryKey);
+
+		return WikiPageLocalServiceUtil.updatePage(
+			TestPropsValues.getUserId(), wikiPage.getNodeId(),
+			getSearchKeywords(), wikiPage.getVersion(),
+			ServiceTestUtil.randomString(), ServiceTestUtil.randomString(),
+			false, wikiPage.getFormat(), wikiPage.getParentTitle(),
+			wikiPage.getRedirectTitle(), serviceContext);
 	}
 
 }

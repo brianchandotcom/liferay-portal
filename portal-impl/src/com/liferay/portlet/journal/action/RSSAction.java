@@ -57,6 +57,7 @@ import com.sun.syndication.feed.synd.SyndLink;
 import com.sun.syndication.io.FeedException;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.portlet.PortletRequest;
@@ -89,6 +90,8 @@ public class RSSAction extends com.liferay.portal.struts.RSSAction {
 		syndFeed.setFeedType(feed.getFeedType() + "_" + feed.getFeedVersion());
 		syndFeed.setLink(feedURL.toString());
 		syndFeed.setTitle(feed.getName());
+		syndFeed.setPublishedDate(new Date());
+		syndFeed.setUri(feedURL.toString());
 
 		List<SyndEntry> syndEntries = new ArrayList<SyndEntry>();
 

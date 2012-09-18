@@ -63,6 +63,7 @@ import java.io.InputStream;
 import java.net.URL;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -464,6 +465,8 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 		syndFeed.setTitle(name);
 		syndFeed.setLink(feedURL);
 		syndFeed.setDescription(description);
+		syndFeed.setPublishedDate(new Date());
+		syndFeed.setUri(feedURL);
 
 		List<SyndEntry> syndEntries = new ArrayList<SyndEntry>();
 

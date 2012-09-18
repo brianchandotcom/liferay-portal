@@ -420,6 +420,8 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 		syndFeed.setTitle(name);
 		syndFeed.setLink(feedURL);
 		syndFeed.setDescription(description);
+		syndFeed.setPublishedDate(new Date());
+		syndFeed.setUri(feedURL);
 
 		List<SyndEntry> syndEntries = new ArrayList<SyndEntry>();
 

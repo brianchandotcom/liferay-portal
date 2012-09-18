@@ -59,6 +59,7 @@ import java.io.InputStream;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -712,6 +713,8 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 		syndFeed.setTitle(name);
 		syndFeed.setLink(feedURL);
 		syndFeed.setDescription(description);
+		syndFeed.setPublishedDate(new Date());
+		syndFeed.setUri(feedURL);
 
 		List<SyndEntry> syndEntries = new ArrayList<SyndEntry>();
 

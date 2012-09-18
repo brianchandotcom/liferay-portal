@@ -1037,6 +1037,9 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 	protected void populateExpandoAttributes(
 		ExpandoBridge expandoBridge, Map<String, String[]> expandoAttributes) {
 
+		Map<String, Serializable> expandoValues =
+			new HashMap<String, Serializable>();
+
 		for (Map.Entry<String, String[]> expandoAttribute :
 				expandoAttributes.entrySet()) {
 
@@ -1052,15 +1055,17 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 				ExpandoConverterUtil.getAttributeFromStringArray(
 					type, expandoAttribute.getValue());
 
-			try {
-				ExpandoValueLocalServiceUtil.addValue(
-					expandoBridge.getCompanyId(), expandoBridge.getClassName(),
-					ExpandoTableConstants.DEFAULT_TABLE_NAME, name,
-					expandoBridge.getClassPK(), value);
-			}
-			catch (Exception e) {
-				_log.error(e, e);
-			}
+			expandoValues.put(name, value);
+		}
+
+		try {
+			ExpandoValueLocalServiceUtil.addValues(
+				expandoBridge.getCompanyId(), expandoBridge.getClassName(),
+				ExpandoTableConstants.DEFAULT_TABLE_NAME,
+				expandoBridge.getClassPK(), expandoValues);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
 		}
 	}
 

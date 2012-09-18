@@ -320,6 +320,10 @@ public class SearchContainer<R> {
 	}
 
 	public int getTotal() {
+		if (_resultRows.size() > _total) {
+			_total = _resultRows.size();
+		}
+
 		return _total;
 	}
 

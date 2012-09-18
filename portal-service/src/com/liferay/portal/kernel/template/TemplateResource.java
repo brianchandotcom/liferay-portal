@@ -16,14 +16,14 @@ package com.liferay.portal.kernel.template;
 
 import com.liferay.portal.kernel.util.StringPool;
 
+import java.io.Externalizable;
 import java.io.IOException;
 import java.io.Reader;
-import java.io.Serializable;
 
 /**
  * @author Tina Tian
  */
-public interface TemplateResource extends Serializable {
+public interface TemplateResource extends Externalizable {
 
 	public static final String DEFAUT_ENCODING = StringPool.UTF8;
 

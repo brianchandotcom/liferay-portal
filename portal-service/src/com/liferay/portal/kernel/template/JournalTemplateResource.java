@@ -17,7 +17,11 @@ package com.liferay.portal.kernel.template;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.journal.model.JournalTemplate;
+import com.liferay.portlet.journal.service.JournalTemplateLocalServiceUtil;
 
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 import java.io.Reader;
 
 import java.util.Date;
@@ -26,6 +30,13 @@ import java.util.Date;
  * @author Tina Tian
  */
 public class JournalTemplateResource implements TemplateResource {
+
+	/**
+	 * Required by {@link java.io.Externalizable}, do not use this for other
+	 * purpose.
+	 */
+	public JournalTemplateResource() {
+	}
 
 	public JournalTemplateResource(
 		String templateId, JournalTemplate journalTemplate) {
@@ -83,6 +94,30 @@ public class JournalTemplateResource implements TemplateResource {
 	@Override
 	public int hashCode() {
 		return _templateId.hashCode() * 11 + _journalTemplate.hashCode();
+	}
+
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+
+		_templateId = objectInput.readUTF();
+
+		long journalTemplateId = objectInput.readLong();
+
+		try {
+			_journalTemplate =
+				JournalTemplateLocalServiceUtil.getJournalTemplate(
+					journalTemplateId);
+		}
+		catch (Exception e) {
+			throw new IOException(
+				"Unable to retrieve JournalTemplate with id " +
+					journalTemplateId, e);
+		}
+	}
+
+	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeUTF(_templateId);
+		objectOutput.writeLong(_journalTemplate.getId());
 	}
 
 	private JournalTemplate _journalTemplate;

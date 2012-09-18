@@ -190,12 +190,6 @@ public class VerifyResourcePermissions extends VerifyProcess {
 			BlogsEntry.class.getName(), "BlogsEntry", "entryId"
 		},
 		new String[] {
-			BookmarksEntry.class.getName(), "BookmarksEntry", "entryId"
-		},
-		new String[] {
-			BookmarksFolder.class.getName(), "BookmarksFolder", "folderId"
-		},
-		new String[] {
 			CalEvent.class.getName(), "CalEvent", "eventId"
 		},
 		new String[] {

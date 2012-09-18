@@ -17,12 +17,22 @@ package com.liferay.portal.kernel.template;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 import java.io.Reader;
 
 /**
  * @author Tina Tian
  */
 public class StringTemplateResource implements TemplateResource {
+
+	/**
+	 * Required by {@link java.io.Externalizable}, do not use this for other
+	 * purpose.
+	 */
+	public StringTemplateResource() {
+	}
 
 	public StringTemplateResource(String templateId, String templateContent) {
 		if (Validator.isNull(templateId)) {
@@ -78,6 +88,20 @@ public class StringTemplateResource implements TemplateResource {
 	@Override
 	public int hashCode() {
 		return _templateId.hashCode() * 11 + _templateContent.hashCode();
+	}
+
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+
+		_templateId = objectInput.readUTF();
+		_templateContent = objectInput.readUTF();
+		_lastModified = objectInput.readLong();
+	}
+
+	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeUTF(_templateId);
+		objectOutput.writeUTF(_templateContent);
+		objectOutput.writeLong(_lastModified);
 	}
 
 	private long _lastModified = System.currentTimeMillis();

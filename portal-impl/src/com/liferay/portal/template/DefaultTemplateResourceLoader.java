@@ -29,6 +29,9 @@ import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 import java.io.Reader;
 
 import java.util.HashSet;
@@ -226,6 +229,13 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 	private static class NullHolderTemplateResource
 		implements TemplateResource {
 
+		/**
+		 * Required by {@link java.io.Externalizable}, do not use this for other
+		 * purpose.
+		 */
+		public NullHolderTemplateResource() {
+		}
+
 		public long getLastModified() {
 			return _lastModified;
 		}
@@ -236,6 +246,18 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 
 		public String getTemplateId() {
 			return null;
+		}
+
+		public void readExternal(ObjectInput objectInput)
+			throws ClassNotFoundException, IOException {
+
+			_lastModified = objectInput.readLong();
+		}
+
+		public void writeExternal(ObjectOutput objectOutput)
+			throws IOException {
+
+			objectOutput.writeLong(_lastModified);
 		}
 
 		private long _lastModified = System.currentTimeMillis();

@@ -37,7 +37,7 @@ public class AssetCategoriesNavigationPortletDisplayTemplateHandler
 	@Override
 	public String getHelpTemplatePath() {
 		return PropsValues.
-			ASSET_CATEGORIES_NAVIGATION_DISPLAY_STYLES_TEMPLATE_CONTENT;
+			ASSET_CATEGORIES_NAVIGATION_DISPLAY_STYLES_TEMPLATE_HELP_CONTENT;
 	}
 
 	public String getName(Locale locale) {
@@ -50,6 +50,12 @@ public class AssetCategoriesNavigationPortletDisplayTemplateHandler
 
 	public String getResourceName() {
 		return "com.liferay.portlet.assetcategoriesnavigation";
+	}
+
+	@Override
+	protected String getDefaultTemplatesConfigPath() {
+		return PropsValues.
+			ASSET_CATEGORIES_NAVIGATION_DISPLAY_STYLES_TEMPLATE_DEFAULT_CONFIG;
 	}
 
 }

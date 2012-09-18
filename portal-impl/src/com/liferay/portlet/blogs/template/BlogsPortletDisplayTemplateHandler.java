@@ -36,7 +36,7 @@ public class BlogsPortletDisplayTemplateHandler
 
 	@Override
 	public String getHelpTemplatePath() {
-		return PropsValues.BLOGS_DISPLAY_STYLES_TEMPLATE_CONTENT;
+		return PropsValues.BLOGS_DISPLAY_STYLES_TEMPLATE_HELP_CONTENT;
 	}
 
 	public String getName(Locale locale) {
@@ -49,6 +49,11 @@ public class BlogsPortletDisplayTemplateHandler
 
 	public String getResourceName() {
 		return "com.liferay.portlet.blogs";
+	}
+
+	@Override
+	protected String getDefaultTemplatesConfigPath() {
+		return PropsValues.BLOGS_DISPLAY_STYLES_TEMPLATE_DEFAULT_CONFIG;
 	}
 
 }

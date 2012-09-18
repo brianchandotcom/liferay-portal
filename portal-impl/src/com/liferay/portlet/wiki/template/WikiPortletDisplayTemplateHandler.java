@@ -36,7 +36,7 @@ public class WikiPortletDisplayTemplateHandler
 
 	@Override
 	public String getHelpTemplatePath() {
-		return PropsValues.WIKI_DISPLAY_STYLES_TEMPLATE_CONTENT;
+		return PropsValues.WIKI_DISPLAY_STYLES_TEMPLATE_HELP_CONTENT;
 	}
 
 	public String getName(Locale locale) {
@@ -49,6 +49,11 @@ public class WikiPortletDisplayTemplateHandler
 
 	public String getResourceName() {
 		return "com.liferay.portlet.wiki";
+	}
+
+	@Override
+	protected String getDefaultTemplatesConfigPath() {
+		return PropsValues.WIKI_DISPLAY_STYLES_TEMPLATE_DEFAULT_CONFIG;
 	}
 
 }

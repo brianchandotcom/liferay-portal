@@ -1896,6 +1896,10 @@ plugins.includes=</echo>
 				includes="portal-service.jar"
 			/>
 			<fileset
+				dir="portal-test"
+				includes="portal-test.jar"
+			/>
+			<fileset
 				dir="lib/development"
 			/>
 			<fileset
@@ -2161,6 +2165,11 @@ plugins.includes=</echo>
 			<zipfileset
 				dir="portal-service"
 				includes="portal-service.jar"
+				prefix="liferay-portal-dependencies-${lp.version}"
+			/>
+			<zipfileset
+				dir="portal-test"
+				includes="portal-test.jar"
 				prefix="liferay-portal-dependencies-${lp.version}"
 			/>
 		</zip>

@@ -1033,6 +1033,8 @@ public interface PropsKeys {
 
 	public static final String JOURNAL_LAR_CREATION_STRATEGY = "journal.lar.creation.strategy";
 
+	public static final String JOURNAL_PUBLISH_LATEST_APPROVED_VERSION_ONLY = "journal.publish.latest.approved.version.only";
+
 	public static final String JOURNAL_PUBLISH_TO_LIVE_BY_DEFAULT = "journal.publish.to.live.by.default";
 
 	public static final String JOURNAL_STRUCTURE_FORCE_AUTOGENERATE_ID = "journal.structure.force.autogenerate.id";

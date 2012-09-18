@@ -74,7 +74,9 @@ public interface CalEventService extends BaseService {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* @deprecated {@link #addEvent(String, String, String, int, int, int, int, int, int, int, boolean, boolean, String, boolean, TZSRecurrence, int, int, int, ServiceContext)}
+	* @deprecated {@link #addEvent(String, String, String, int, int, int, int,
+	int, int, int, boolean, boolean, String, boolean,
+	TZSRecurrence, int, int, int, ServiceContext)}
 	*/
 	public com.liferay.portlet.calendar.model.CalEvent addEvent(
 		java.lang.String title, java.lang.String description,
@@ -177,7 +179,9 @@ public interface CalEventService extends BaseService {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* @deprecated {@link #updateEvent(long, String, String, String, int, int, int, int, int, int, int, boolean, boolean, String, boolean, TZSRecurrence, int, int, int, ServiceContext)}
+	* @deprecated {@link #updateEvent(long, String, String, String, int, int,
+	int, int, int, int, int, boolean, boolean, String, boolean,
+	TZSRecurrence, int, int, int, ServiceContext)}
 	*/
 	public com.liferay.portlet.calendar.model.CalEvent updateEvent(
 		long eventId, java.lang.String title, java.lang.String description,

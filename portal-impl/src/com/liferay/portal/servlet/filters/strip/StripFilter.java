@@ -550,9 +550,7 @@ public class StripFilter extends BasePortalFilter {
 		}
 
 		if (!Validator.isNull(minifiedContent)) {
-			writer.write(_CDATA_OPEN);
 			writer.write(minifiedContent);
-			writer.write(_CDATA_CLOSE);
 		}
 
 		outputCloseTag(charBuffer, writer, _MARKER_SCRIPT_CLOSE);
@@ -687,10 +685,6 @@ public class StripFilter extends BasePortalFilter {
 
 		writer.flush();
 	}
-
-	private static final String _CDATA_CLOSE = "/*]]>*/";
-
-	private static final String _CDATA_OPEN = "/*<![CDATA[*/";
 
 	private static final String _ENSURE_CONTENT_LENGTH = "ensureContentLength";
 

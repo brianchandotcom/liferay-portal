@@ -25,7 +25,8 @@ String tabs1Names = ParamUtil.getString(request, "tabs1Names", "users,organizati
 
 String tabs1Values = tabs1Names;
 
-String redirect = ParamUtil.getString(request, "redirect");
+String viewUsersRedirect = ParamUtil.getString(request, "viewUsersRedirect");
+String redirect = ParamUtil.getString(request, "redirect", viewUsersRedirect);
 String backURL = ParamUtil.getString(request, "backURL", redirect);
 %>
 

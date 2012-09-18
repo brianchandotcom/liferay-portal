@@ -28,11 +28,12 @@ import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutServiceUtil;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.ExecutionTestListeners;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.service.ServiceTestUtil;
+import com.liferay.portal.test.util.TestPropsValues;
 import com.liferay.portal.webdav.methods.Method;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 

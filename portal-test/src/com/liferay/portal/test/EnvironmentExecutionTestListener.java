@@ -14,7 +14,7 @@
 
 package com.liferay.portal.test;
 
-import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.test.service.ServiceTestUtil;
 
 /**
  * @author Miguel Pastor

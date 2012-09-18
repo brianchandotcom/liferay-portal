@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.util;
+package com.liferay.portal.test.util;
 
 import com.liferay.portal.kernel.util.ListUtil;
 

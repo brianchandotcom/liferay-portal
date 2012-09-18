@@ -50,8 +50,8 @@ public class TestContext {
 		_method = method;
 	}
 
-	private Class<?> _clazz;
 	private Object _instance;
+	private Class<?> _clazz;
 	private Method _method;
 
 }

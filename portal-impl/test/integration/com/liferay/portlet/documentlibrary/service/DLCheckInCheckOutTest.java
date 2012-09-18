@@ -25,7 +25,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.ExecutionTestListeners;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
-import com.liferay.portal.util.TestPropsValues;
+import com.liferay.portal.test.util.TestPropsValues;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;

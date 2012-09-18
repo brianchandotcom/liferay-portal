@@ -29,13 +29,13 @@ import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.test.ExecutionTestListeners;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
+import com.liferay.portal.test.service.ServiceTestUtil;
+import com.liferay.portal.test.util.TestPropsValues;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portal.webdav.methods.Method;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 

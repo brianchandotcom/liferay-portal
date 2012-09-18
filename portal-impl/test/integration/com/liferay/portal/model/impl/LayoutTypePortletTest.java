@@ -22,11 +22,11 @@ import com.liferay.portal.model.LayoutTemplate;
 import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.User;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.ExecutionTestListeners;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.TransactionalCallbackAwareExecutionTestListener;
+import com.liferay.portal.test.service.ServiceTestUtil;
 import com.liferay.portal.util.PortletKeys;
 
 import java.util.List;

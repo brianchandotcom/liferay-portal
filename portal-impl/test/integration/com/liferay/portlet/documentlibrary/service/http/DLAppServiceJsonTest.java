@@ -21,8 +21,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.ExecutionTestListeners;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.util.TestPropsValues;
 import com.liferay.portal.util.BaseJsonClientTestCase;
-import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 
 import org.apache.http.client.methods.HttpGet;

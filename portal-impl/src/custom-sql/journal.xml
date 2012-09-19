@@ -249,11 +249,9 @@
 		<![CDATA[
 			SELECT
 				{JournalStructure.*}
-			FROM
-				JournalStructure
-			WHERE
-				(id_ IN (
-					SELECT
+			FROM 
+				(
+					SELECT DISTINCT
 						id_
 					FROM
 						JournalStructure
@@ -265,7 +263,10 @@
 							(lower(name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 							(lower(description) LIKE ? [$AND_OR_NULL_CHECK$])
 						)
-				))
+				) TEMP_TABLE
+				INNER JOIN
+					JournalStructure ON
+						TEMP_TABLE.id_ = JournalStructure.id_
 			ORDER BY
 				structureId ASC
 		]]>
@@ -291,11 +292,9 @@
 		<![CDATA[
 			SELECT
 				{JournalTemplate.*}
-			FROM
-				JournalTemplate
-			WHERE
-				(id_ IN (
-					SELECT
+			FROM 
+				(
+					SELECT DISTINCT
 						id_
 					FROM
 						JournalTemplate
@@ -308,7 +307,10 @@
 							(lower(name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 							(lower(description) LIKE ? [$AND_OR_NULL_CHECK$])
 						)
-				))
+				) TEMP_TABLE
+				INNER JOIN
+					JournalTemplate ON
+						TEMP_TABLE.id_ = JournalTemplate.id_
 			ORDER BY
 				templateId ASC
 		]]>

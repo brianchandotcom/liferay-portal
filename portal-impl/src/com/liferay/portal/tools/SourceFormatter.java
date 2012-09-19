@@ -322,6 +322,17 @@ public class SourceFormatter {
 				return methodParameterTypes;
 			}
 
+			if (parameterType.endsWith("...")) {
+				parameterType = StringUtil.replaceLast(
+					parameterType, "...", StringPool.BLANK);
+			}
+
+			int pos = parameterType.lastIndexOf(StringPool.PERIOD);
+
+			if (pos != -1) {
+				parameterType = parameterType.substring(pos + 1);
+			}
+
 			methodParameterTypes.add(parameterType);
 
 			int y = line.indexOf(StringPool.COMMA);
@@ -624,11 +635,6 @@ public class SourceFormatter {
 			}
 
 			String parameterType = methodParameterTypes.get(i);
-
-			if (parameterType.endsWith("...")) {
-				parameterType = StringUtil.replaceLast(
-					parameterType, "...", StringPool.BLANK);
-			}
 
 			if (previousParameterType.compareToIgnoreCase(parameterType) < 0) {
 				return;
@@ -1483,8 +1489,10 @@ public class SourceFormatter {
 					if (Validator.isNotNull(javaTermName)) {
 						javaTermType = (Integer)tuple.getObject(1);
 
-						boolean isMethod = _isInJavaTermTypeGroup(
-							javaTermType, _TYPE_METHOD);
+						boolean isMethod =
+							_isInJavaTermTypeGroup(
+								javaTermType, _TYPE_CONSTRUCTOR) ||
+							_isInJavaTermTypeGroup(javaTermType, _TYPE_METHOD);
 
 						if (isMethod) {
 							readMethodParameterTypes = true;
@@ -3884,6 +3892,12 @@ public class SourceFormatter {
 	private static final int _TYPE_CLASS_PUBLIC = 8;
 
 	private static final int _TYPE_CLASS_PUBLIC_STATIC = 7;
+
+	private static final int[] _TYPE_CONSTRUCTOR = {
+		SourceFormatter._TYPE_CONSTRUCTOR_PRIVATE,
+		SourceFormatter._TYPE_CONSTRUCTOR_PROTECTED,
+		SourceFormatter._TYPE_CONSTRUCTOR_PUBLIC
+	};
 
 	private static final int _TYPE_CONSTRUCTOR_PRIVATE = 18;
 

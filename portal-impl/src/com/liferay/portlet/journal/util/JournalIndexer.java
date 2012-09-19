@@ -525,7 +525,7 @@ public class JournalIndexer extends BaseIndexer {
 
 		addReindexCriteria(
 			dynamicQuery, companyId, JournalArticleConstants.VERSION_DEFAULT,
-			WorkflowConstants.STATUS_APPROVED);
+			WorkflowConstants.STATUS_DRAFT);
 
 		return JournalArticleLocalServiceUtil.dynamicQuery(dynamicQuery);
 	}

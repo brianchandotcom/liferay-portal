@@ -100,12 +100,8 @@ boolean useAssetEntryQuery = false;
 			try {
 				FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(fileEntryId);
 
-				for (String mimeType : mediaGalleryMimeTypes) {
-					if (mimeType.equals(fileEntry.getMimeType())) {
-						results.add(fileEntry);
-
-						break;
-					}
+				if (ArrayUtil.contains(mediaGalleryMimeTypes, fileEntry.getMimeType())) {
+					results.add(fileEntry);
 				}
 			}
 			catch (Exception e) {

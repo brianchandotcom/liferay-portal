@@ -1721,6 +1721,8 @@
 		<struts-path>dynamic_data_mapping</struts-path>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
 		<portlet-data-handler-class>com.liferay.portlet.dynamicdatamapping.lar.DDMPortletDataHandlerImpl</portlet-data-handler-class>
+		<webdav-storage-token>dynamic_data_mapping</webdav-storage-token>
+		<webdav-storage-class>com.liferay.portlet.dynamicdatamapping.webdav.DDMWebDAVStorageImpl</webdav-storage-class>
 		<preferences-owned-by-group>true</preferences-owned-by-group>
 		<use-default-template>false</use-default-template>
 		<private-request-attributes>false</private-request-attributes>

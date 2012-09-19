@@ -38,6 +38,8 @@ if (Validator.isNotNull(script)) {
 if (scriptJSONArray != null) {
 	scriptJSONArray = _addStructureFieldAttributes(structure, scriptJSONArray);
 }
+
+Group scopeGroup = GroupLocalServiceUtil.getGroup(scopeGroupId);
 %>
 
 <portlet:actionURL var="editStructureURL">
@@ -141,6 +143,12 @@ if (scriptJSONArray != null) {
 					<aui:field-wrapper label="url">
 						<liferay-ui:input-resource url='<%= themeDisplay.getPortalURL() + themeDisplay.getPathMain() + "/dynamic_data_mapping/get_structure?structureId=" + classPK %>' />
 					</aui:field-wrapper>
+
+					<c:if test="<%= portletDisplay.isWebDAVEnabled() %>">
+						<aui:field-wrapper label="webdav-url">
+							<liferay-ui:input-resource url='<%= themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/webdav" + scopeGroup.getFriendlyURL() + "/dynamic_data_mapping/ddmStructures/" + classPK %>' />
+						</aui:field-wrapper>
+					</c:if>
 				</c:if>
 			</liferay-ui:panel>
 		</liferay-ui:panel-container>

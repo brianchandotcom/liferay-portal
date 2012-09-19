@@ -73,7 +73,7 @@ public class DDMPortletDataHandlerImpl extends BasePortletDataHandler {
 			structureElement.addAttribute("preloaded", "true");
 		}
 
-		structureElement.addAttribute("classname", structure.getClassName());
+		structureElement.addAttribute("class-name", structure.getClassName());
 
 		portletDataContext.addClassedModel(
 			structureElement, path, structure, _NAMESPACE);
@@ -100,7 +100,7 @@ public class DDMPortletDataHandlerImpl extends BasePortletDataHandler {
 
 		Element templateElement = templatesElement.addElement("template");
 
-		templateElement.addAttribute("classname", template.getClassName());
+		templateElement.addAttribute("class-name", template.getClassName());
 
 		portletDataContext.addClassedModel(
 			templateElement, path, template, _NAMESPACE);
@@ -121,7 +121,7 @@ public class DDMPortletDataHandlerImpl extends BasePortletDataHandler {
 
 		long classNameId = 0;
 
-		String className = structureElement.attributeValue("classname");
+		String className = structureElement.attributeValue("class-name");
 
 		if (Validator.isNotNull(className)) {
 			classNameId = PortalUtil.getClassNameId(className);
@@ -205,7 +205,7 @@ public class DDMPortletDataHandlerImpl extends BasePortletDataHandler {
 
 		long classNameId = 0;
 
-		String className = templateElement.attributeValue("classname");
+		String className = templateElement.attributeValue("class-name");
 
 		if (Validator.isNotNull(className)) {
 			classNameId = PortalUtil.getClassNameId(className);

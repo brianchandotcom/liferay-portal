@@ -176,6 +176,14 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 		articleElement.addAttribute(
 			"article-resource-uuid", article.getArticleResourceUuid());
 
+		if (article.getClassNameId() > 0) {
+			String className = PortalUtil.getClassName(
+				article.getClassNameId());
+
+			articleElement.addAttribute(
+				"class-name", className);
+		}
+
 		if (Validator.isNotNull(article.getStructureId())) {
 			JournalStructure structure =
 				JournalStructureLocalServiceUtil.getStructure(
@@ -331,13 +339,6 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 			(JournalArticle)portletDataContext.getZipEntryAsObject(path);
 
 		prepareLanguagesForImport(article);
-
-		long classNameId = 0;
-
-		if (article.getClassNameId() > 0) {
-			classNameId = PortalUtil.getClassNameId(
-				JournalStructure.class.getName());
-		}
 
 		long userId = portletDataContext.getUserId(article.getUserUuid());
 
@@ -687,6 +688,15 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 
 		String articleResourceUuid = articleElement.attributeValue(
 			"article-resource-uuid");
+
+		long classNameId = 0;
+
+		String className = articleElement.attributeValue(
+			"class-name");
+
+		if (Validator.isNotNull(className)) {
+			classNameId = PortalUtil.getClassNameId(className);
+		}
 
 		if (portletDataContext.isDataStrategyMirror()) {
 			JournalArticleResource articleResource =

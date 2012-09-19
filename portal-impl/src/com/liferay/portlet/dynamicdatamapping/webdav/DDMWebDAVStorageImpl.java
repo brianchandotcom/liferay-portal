@@ -30,10 +30,11 @@ import com.liferay.portlet.dynamicdatamapping.service.DDMStructureServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateServiceUtil;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Juan Fernández
@@ -265,6 +266,7 @@ public class DDMWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 	}
 
 	private static final String _TYPE_STRUCTURES = "ddmStructures";
+
 	private static final String _TYPE_TEMPLATES = "ddmTemplates";
 
 }

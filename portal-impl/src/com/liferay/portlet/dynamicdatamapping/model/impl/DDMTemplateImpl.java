@@ -31,24 +31,23 @@ public class DDMTemplateImpl extends DDMTemplateBaseImpl {
 	}
 
 	public String getDefaultLocale() {
-
 		Document document = null;
 
 		try {
 			document = SAXReaderUtil.read(getName());
-		} catch (DocumentException e) {
-			return String.valueOf(LocaleUtil.getDefault());
+
+			if (document != null) {
+				Element rootElement = document.getRootElement();
+
+				return rootElement.attributeValue("default-locale");
+			}
+		}
+		catch (DocumentException e) {
 		}
 
-		if (document == null) {
-			Locale locale = LocaleUtil.getDefault();
+		Locale locale = LocaleUtil.getDefault();
 
-			return locale.toString();
-		}
-
-		Element rootElement = document.getRootElement();
-
-		return rootElement.attributeValue("default-locale");
+		return locale.toString();
 	}
 
 }

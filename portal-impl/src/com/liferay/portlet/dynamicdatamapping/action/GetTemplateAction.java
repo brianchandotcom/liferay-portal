@@ -22,13 +22,14 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateServiceUtil;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Juan Fernández
@@ -42,7 +43,7 @@ public class GetTemplateAction extends Action {
 		throws Exception {
 
 		try {
-			long templateId  = ParamUtil.getLong(request, "templateId");
+			long templateId = ParamUtil.getLong(request, "templateId");
 
 			DDMTemplate template = DDMTemplateServiceUtil.getTemplate(
 				templateId);

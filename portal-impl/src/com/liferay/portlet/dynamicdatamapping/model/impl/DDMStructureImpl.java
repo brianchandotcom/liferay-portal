@@ -66,8 +66,8 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 		return ListUtil.fromArray(StringUtil.split(availableLocales));
 	}
 
-	public String getCompleteXsd() throws Exception, PortalException {
-		if (super.getParentStructureId() == 0) {
+	public String getCompleteXsd() throws PortalException, SystemException {
+		if (getParentStructureId() == 0) {
 			return getXsd();
 		}
 		else {
@@ -136,7 +136,7 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 			getFieldProperty(fieldName, "label", locale), fieldName);
 	}
 
-	public Set<String> getFieldNames() throws SystemException, PortalException {
+	public Set<String> getFieldNames() throws PortalException, SystemException {
 		Map<String, Map<String, String>> fieldsMap = getFieldsMap();
 
 		return fieldsMap.keySet();
@@ -208,13 +208,13 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 	}
 
 	public Map<String, Map<String, String>> getFieldsMap()
-		throws SystemException, PortalException {
+		throws PortalException, SystemException {
 
 		return _getFieldsMap(getDefaultLanguageId());
 	}
 
 	public Map<String, Map<String, String>> getFieldsMap(String locale)
-		throws SystemException, PortalException {
+		throws PortalException, SystemException {
 
 		return _getFieldsMap(locale);
 	}
@@ -230,7 +230,7 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 	}
 
 	public boolean hasField(String fieldName)
-		throws SystemException, PortalException {
+		throws PortalException, SystemException {
 
 		Map<String, Map<String, String>> fieldsMap = getFieldsMap();
 
@@ -285,19 +285,62 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 		_localizedFieldsMap.clear();
 	}
 
-	private String mergeXsds(String xsd1, String xsd2) throws Exception {
-		Document document1 = SAXReaderUtil.read(xsd1);
-		Document document2 = SAXReaderUtil.read(xsd2);
+	private String mergeXsds(String xsd1, String xsd2) throws PortalException {
+		try {
+			Document document1 = SAXReaderUtil.read(xsd1);
+			Document document2 = SAXReaderUtil.read(xsd2);
 
-		Element rootElement1 = document1.getRootElement();
-		Element rootElement2 = document2.getRootElement();
+			Element rootElement1 = document1.getRootElement();
+			Element rootElement2 = document2.getRootElement();
 
-		for (Element element : rootElement1.elements()) {
-			rootElement1.remove(element);
-			rootElement2.add(element);
+			for (Element element : rootElement1.elements()) {
+				rootElement1.remove(element);
+				rootElement2.add(element);
+			}
+
+			return rootElement2.formattedString();
+		}
+		catch (Exception e) {
+			throw new PortalException(e);
+		}
+	}
+
+	private Map<String, Map<String, String>> _getFieldsMap(String locale)
+		throws PortalException, SystemException {
+
+		Map<String, Map<String, String>> fieldsMap = _localizedFieldsMap.get(
+			locale);
+
+		if (fieldsMap == null) {
+			if (getParentStructureId() > 0) {
+				DDMStructure parentStructure = null;
+
+				parentStructure = DDMStructureLocalServiceUtil.getStructure(
+					getParentStructureId());
+
+				fieldsMap = parentStructure.getFieldsMap(locale);
+			}
+			else {
+				fieldsMap = new LinkedHashMap<String, Map<String, String>>();
+			}
+
+			XPath xPathSelector = SAXReaderUtil.createXPath(
+				"//dynamic-element[@dataType]");
+
+			List<Node> nodes = xPathSelector.selectNodes(getDocument());
+
+			for (Node node : nodes) {
+				Element element = (Element)node;
+
+				String name = element.attributeValue("name");
+
+				fieldsMap.put(name, _getField(element, locale));
+			}
+
+			_localizedFieldsMap.put(locale, fieldsMap);
 		}
 
-		return rootElement2.formattedString();
+		return fieldsMap;
 	}
 
 	private Map<String, String> _getField(Element element, String locale) {
@@ -336,43 +379,6 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 		}
 
 		return field;
-	}
-
-	private Map<String, Map<String, String>> _getFieldsMap(String locale)
-		throws SystemException, PortalException {
-
-		Map<String, Map<String, String>> fieldsMap = _localizedFieldsMap.get(
-			locale);
-
-		if (fieldsMap == null) {
-			fieldsMap = new LinkedHashMap<String, Map<String, String>>();
-
-			if (getParentStructureId() > 0) {
-				DDMStructure parentStructure = null;
-
-				parentStructure = DDMStructureLocalServiceUtil.getStructure(
-					getParentStructureId());
-
-				fieldsMap = parentStructure.getFieldsMap(locale);
-			}
-
-			XPath xPathSelector = SAXReaderUtil.createXPath(
-				"//dynamic-element[@dataType]");
-
-			List<Node> nodes = xPathSelector.selectNodes(getDocument());
-
-			for (Node node : nodes) {
-				Element element = (Element)node;
-
-				String name = element.attributeValue("name");
-
-				fieldsMap.put(name, _getField(element, locale));
-			}
-
-			_localizedFieldsMap.put(locale, fieldsMap);
-		}
-
-		return fieldsMap;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(DDMStructureImpl.class);

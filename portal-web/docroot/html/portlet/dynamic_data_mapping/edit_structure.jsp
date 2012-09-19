@@ -27,7 +27,7 @@ DDMStructure structure = (DDMStructure)request.getAttribute(WebKeys.DYNAMIC_DATA
 long classNameId = PortalUtil.getClassNameId(DDMStructure.class);
 long classPK = BeanParamUtil.getLong(structure, request, "structureId");
 
-long parentStructureId = BeanParamUtil.getLong(structure, request, "parentStructureId");
+long parentStructureId = BeanParamUtil.getLong(structure, request, "parentStructureId", DDLConstants.DEFAULT_PARENT_STRUCTURE_ID);
 String parentStructureName = StringPool.BLANK;
 
 try {

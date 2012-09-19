@@ -38,6 +38,7 @@ import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.base.DLFileEntryTypeLocalServiceBaseImpl;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
+import com.liferay.portlet.dynamicdatalists.util.DDLConstants;
 import com.liferay.portlet.dynamicdatamapping.StructureXsdException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants;
@@ -536,7 +537,8 @@ public class DLFileEntryTypeLocalServiceImpl
 				ddmStructure = ddmStructureLocalService.addStructure(
 					userId, groupId,
 					PortalUtil.getClassNameId(DLFileEntryMetadata.class),
-					ddmStructureKey, 0, nameMap, descriptionMap, xsd, "xml",
+					ddmStructureKey, DDLConstants.DEFAULT_PARENT_STRUCTURE_ID,
+					nameMap, descriptionMap, xsd, "xml",
 					DDMStructureConstants.TYPE_AUTO, serviceContext);
 			}
 			else {

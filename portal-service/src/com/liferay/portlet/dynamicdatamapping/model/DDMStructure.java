@@ -35,7 +35,7 @@ public interface DDMStructure extends DDMStructureModel, PersistedModel {
 
 	public java.lang.String getCompleteXsd()
 		throws com.liferay.portal.kernel.exception.PortalException,
-			java.lang.Exception;
+			com.liferay.portal.kernel.exception.SystemException;
 
 	public java.lang.String getDefaultLanguageId();
 

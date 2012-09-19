@@ -541,9 +541,8 @@ public class DLStoreImpl implements DLStore {
 				fileName, TempFileUtil.SUFFIX_TEMP_FILE_NAME, StringPool.BLANK);
 		}
 
-		fileName = fileName.toLowerCase();
-
 		if (validateFileExtension) {
+			String fileNameLowerCase = fileName.toLowerCase();
 			boolean validFileExtension = false;
 
 			String[] fileExtensions = PrefsPropsUtil.getStringArray(
@@ -551,7 +550,7 @@ public class DLStoreImpl implements DLStore {
 
 			for (String fileExtension : fileExtensions) {
 				if (StringPool.STAR.equals(fileExtension) ||
-					fileName.endsWith(fileExtension)) {
+					fileNameLowerCase.endsWith(fileExtension.toLowerCase())) {
 
 					validFileExtension = true;
 

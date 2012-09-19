@@ -249,7 +249,7 @@
 		<![CDATA[
 			SELECT
 				{JournalStructure.*}
-			FROM 
+			FROM
 				(
 					SELECT DISTINCT
 						id_
@@ -292,7 +292,7 @@
 		<![CDATA[
 			SELECT
 				{JournalTemplate.*}
-			FROM 
+			FROM
 				(
 					SELECT DISTINCT
 						id_

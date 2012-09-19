@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.zip.ZipReader;
 import com.liferay.portal.kernel.zip.ZipWriter;
+import com.liferay.portal.model.AttachedModel;
 import com.liferay.portal.model.AuditedModel;
 import com.liferay.portal.model.ClassedModel;
 import com.liferay.portal.model.Group;
@@ -288,6 +289,12 @@ public class PortletDataContextImpl implements PortletDataContext {
 			AuditedModel auditedModel = (AuditedModel)classedModel;
 
 			auditedModel.setUserUuid(auditedModel.getUserUuid());
+		}
+
+		if (classedModel instanceof AttachedModel) {
+			AttachedModel attachedModel = (AttachedModel)classedModel;
+
+			element.addAttribute("class-name", attachedModel.getClassName());
 		}
 
 		if (isResourceMain(classedModel)) {
@@ -676,6 +683,16 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 	public ClassLoader getClassLoader() {
 		return _xStream.getClassLoader();
+	}
+
+	public long getClassNameId(Element importedElement) {
+		String className = importedElement.attributeValue("class-name");
+
+		if (Validator.isNotNull(className)) {
+			return PortalUtil.getClassNameId(className);
+		}
+
+		return 0;
 	}
 
 	public Map<String, List<MBMessage>> getComments() {

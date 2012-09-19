@@ -140,6 +140,8 @@ public interface PortletDataContext extends Serializable {
 
 	public ClassLoader getClassLoader();
 
+	public long getClassNameId(Element importedElement);
+
 	public Map<String, List<MBMessage>> getComments();
 
 	public long getCompanyId();

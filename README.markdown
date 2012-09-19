@@ -16,12 +16,12 @@ Liferay's main source code resides in two repositories:
 [liferay-plugins](https://github.com/liferay/liferay-plugins). Liferay has
 additional repositories for the following:
 
-* [AlloyUI](https://github.com/liferay/alloy-ui) *
-[Documentation](https://github.com/liferay/liferay-docs) * [Git
-Tools](https://github.com/liferay/git-tools) * [Liferay
-Faces](https://github.com/liferay/liferay-faces) * [Liferay
-IDE](https://github.com/liferay/liferay-ide) * [Maven
-Support](https://github.com/liferay/liferay-maven-support)
+* [AlloyUI](https://github.com/liferay/alloy-ui)
+* [Documentation](https://github.com/liferay/liferay-docs)
+* [Git Tools](https://github.com/liferay/git-tools)
+* [Liferay Faces](https://github.com/liferay/liferay-faces)
+* [Liferay IDE](https://github.com/liferay/liferay-ide)
+* [Maven Support](https://github.com/liferay/liferay-maven-support)
 
 Liferay Portal *releases* are built from the liferay-portal repository and
 include select plugins from the liferay-plugins repository. You can build

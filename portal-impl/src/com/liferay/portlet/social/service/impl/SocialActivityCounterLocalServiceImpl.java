@@ -47,7 +47,6 @@ import com.liferay.portlet.social.model.SocialActivityProcessor;
 import com.liferay.portlet.social.service.SocialActivityCounterLocalService;
 import com.liferay.portlet.social.service.base.SocialActivityCounterLocalServiceBaseImpl;
 import com.liferay.portlet.social.service.persistence.SocialActivityCounterFinder;
-import com.liferay.portlet.social.service.persistence.SocialActivityCounterFinderUtil;
 import com.liferay.portlet.social.util.SocialCounterPeriodUtil;
 
 import java.util.Arrays;
@@ -977,8 +976,7 @@ public class SocialActivityCounterLocalServiceImpl
 	public int getUserActivityCountersCount(long groupId, String[] rankingNames)
 		throws SystemException {
 
-		return SocialActivityCounterFinderUtil.countU_ByG_N(
-			groupId, rankingNames);
+		return socialActivityCounterFinder.countU_ByG_N(groupId, rankingNames);
 	}
 
 	/**

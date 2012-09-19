@@ -843,6 +843,20 @@ public class PortletDataContextImpl implements PortletDataContext {
 		return getZipReader().getEntryAsInputStream(path);
 	}
 
+	public Object getZipEntryAsObject(String path, Element element) {
+		Object object = fromXML(getZipEntryAsString(path));
+
+		if (object instanceof AttachedModel) {
+			AttachedModel attachedModel = (AttachedModel) object;
+
+			long classNameId = getClassNameId(element);
+
+			attachedModel.setClassNameId(classNameId);
+		}
+
+		return object;
+	}
+
 	public Object getZipEntryAsObject(String path) {
 		return fromXML(getZipEntryAsString(path));
 	}

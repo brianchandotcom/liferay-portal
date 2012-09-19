@@ -192,9 +192,8 @@ public class DDMPortletDataHandlerImpl extends BasePortletDataHandler {
 		}
 
 		DDMTemplate template =
-			(DDMTemplate)portletDataContext.getZipEntryAsObject(path);
-
-		long classNameId = portletDataContext.getClassNameId(templateElement);
+			(DDMTemplate)portletDataContext.getZipEntryAsObject(
+				path, templateElement);
 
 		long userId = portletDataContext.getUserId(template.getUserUuid());
 
@@ -219,7 +218,7 @@ public class DDMPortletDataHandlerImpl extends BasePortletDataHandler {
 
 				importedTemplate = addTemplate(
 					userId, portletDataContext.getScopeGroupId(), template,
-					classNameId, classPK, serviceContext);
+					classPK, serviceContext);
 			}
 			else {
 				importedTemplate = DDMTemplateLocalServiceUtil.updateTemplate(
@@ -232,7 +231,7 @@ public class DDMPortletDataHandlerImpl extends BasePortletDataHandler {
 		else {
 			importedTemplate = addTemplate(
 				userId, portletDataContext.getScopeGroupId(), template, classPK,
-				classNameId, serviceContext);
+				serviceContext);
 		}
 
 		portletDataContext.importClassedModel(
@@ -260,7 +259,7 @@ public class DDMPortletDataHandlerImpl extends BasePortletDataHandler {
 	}
 
 	protected static DDMTemplate addTemplate(
-			long userId, long groupId, DDMTemplate template, long classNameId,
+			long userId, long groupId, DDMTemplate template,
 			long classPK, ServiceContext serviceContext)
 		throws Exception {
 
@@ -268,7 +267,7 @@ public class DDMPortletDataHandlerImpl extends BasePortletDataHandler {
 
 		try {
 			return DDMTemplateLocalServiceUtil.addTemplate(
-				userId, groupId, classNameId, classPK,
+				userId, groupId, template.getClassNameId(), classPK,
 				template.getTemplateKey(), template.getNameMap(),
 				template.getDescriptionMap(), template.getType(),
 				template.getMode(), template.getLanguage(),
@@ -276,7 +275,7 @@ public class DDMPortletDataHandlerImpl extends BasePortletDataHandler {
 		}
 		catch (TemplateDuplicateTemplateKeyException tdtke) {
 			newTemplate = DDMTemplateLocalServiceUtil.addTemplate(
-				userId, groupId, classNameId, classPK, null,
+				userId, groupId, template.getClassNameId(), classPK, null,
 				template.getNameMap(), template.getDescriptionMap(),
 				template.getType(), template.getMode(), template.getLanguage(),
 				template.getScript(), serviceContext);

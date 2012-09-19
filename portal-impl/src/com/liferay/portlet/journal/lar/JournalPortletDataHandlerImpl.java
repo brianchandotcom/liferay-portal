@@ -327,11 +327,10 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 		}
 
 		JournalArticle article =
-			(JournalArticle)portletDataContext.getZipEntryAsObject(path);
+			(JournalArticle)portletDataContext.getZipEntryAsObject(
+				path, articleElement);
 
 		prepareLanguagesForImport(article);
-
-		long classNameId = portletDataContext.getClassNameId(articleElement);
 
 		long userId = portletDataContext.getUserId(article.getUserUuid());
 
@@ -722,8 +721,8 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 			if (existingArticle == null) {
 				importedArticle = JournalArticleLocalServiceUtil.addArticle(
 					userId, portletDataContext.getScopeGroupId(), folderId,
-					classNameId, structurePrimaryKey, articleId, autoArticleId,
-					article.getVersion(), article.getTitleMap(),
+					article.getClassNameId(), structurePrimaryKey, articleId,
+					autoArticleId, article.getVersion(), article.getTitleMap(),
 					article.getDescriptionMap(), article.getContent(),
 					article.getType(), parentStructureId, parentTemplateId,
 					article.getLayoutUuid(), displayDateMonth, displayDateDay,
@@ -756,8 +755,8 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 		else {
 			importedArticle = JournalArticleLocalServiceUtil.addArticle(
 				userId, portletDataContext.getScopeGroupId(), folderId,
-				classNameId, structurePrimaryKey, articleId, autoArticleId,
-				article.getVersion(), article.getTitleMap(),
+				article.getClassNameId(), structurePrimaryKey, articleId,
+				autoArticleId, article.getVersion(), article.getTitleMap(),
 				article.getDescriptionMap(), article.getContent(),
 				article.getType(), parentStructureId, parentTemplateId,
 				article.getLayoutUuid(), displayDateMonth, displayDateDay,

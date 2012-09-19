@@ -57,7 +57,9 @@ public class SCLicenseLocalServiceImpl extends SCLicenseLocalServiceBaseImpl {
 
 		SCLicense license = scLicensePersistence.findByPrimaryKey(licenseId);
 
-		validate(licenseId);
+		if (scLicensePersistence.getSCProductEntriesSize(licenseId) > 0) {
+			throw new LicenseInUseException();
+		}
 
 		deleteLicense(license);
 	}
@@ -129,14 +131,6 @@ public class SCLicenseLocalServiceImpl extends SCLicenseLocalServiceBaseImpl {
 		scLicensePersistence.update(license, false);
 
 		return license;
-	}
-
-	protected void validate(long licenseId)
-		throws PortalException, SystemException {
-
-		if (scLicensePersistence.getSCProductEntriesSize(licenseId) > 0) {
-			throw new LicenseInUseException();
-		}
 	}
 
 	protected void validate(String name) throws PortalException {

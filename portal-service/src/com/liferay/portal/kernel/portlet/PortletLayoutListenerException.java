@@ -27,12 +27,12 @@ public class PortletLayoutListenerException extends RuntimeException {
 		super(msg);
 	}
 
-	public PortletLayoutListenerException(Throwable cause) {
-		super(cause);
-	}
-
 	public PortletLayoutListenerException(String msg, Throwable cause) {
 		super(msg, cause);
+	}
+
+	public PortletLayoutListenerException(Throwable cause) {
+		super(cause);
 	}
 
 }

@@ -24,12 +24,12 @@ public class Property implements ResponseElement {
 
 	public static final String OPEN_PARAGRAPH = "<p>";
 
-	public Property(String key, String value) {
-		this(key, value, true);
-	}
-
 	public Property(String key, ResponseElement value) {
 		this(key, StringPool.NEW_LINE + value.parse(), false);
+	}
+
+	public Property(String key, String value) {
+		this(key, value, true);
 	}
 
 	public Property(String key, String value, boolean newLine) {

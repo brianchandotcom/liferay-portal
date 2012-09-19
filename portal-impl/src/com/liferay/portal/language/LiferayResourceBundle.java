@@ -37,16 +37,6 @@ import java.util.Set;
  */
 public class LiferayResourceBundle extends ResourceBundle {
 
-	public LiferayResourceBundle(String string, String charsetName)
-		throws IOException {
-
-		_map = new HashMap<String, String>();
-
-		Properties properties = PropertiesUtil.load(string, charsetName);
-
-		LanguageResources.fixValues(_map, properties);
-	}
-
 	public LiferayResourceBundle(InputStream inputStream, String charsetName)
 		throws IOException {
 
@@ -63,6 +53,16 @@ public class LiferayResourceBundle extends ResourceBundle {
 		_map = new HashMap<String, String>();
 
 		Properties properties = PropertiesUtil.load(inputStream, charsetName);
+
+		LanguageResources.fixValues(_map, properties);
+	}
+
+	public LiferayResourceBundle(String string, String charsetName)
+		throws IOException {
+
+		_map = new HashMap<String, String>();
+
+		Properties properties = PropertiesUtil.load(string, charsetName);
 
 		LanguageResources.fixValues(_map, properties);
 	}

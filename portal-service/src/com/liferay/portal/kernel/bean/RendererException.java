@@ -27,12 +27,12 @@ public class RendererException extends RuntimeException {
 		super(msg);
 	}
 
-	public RendererException(Throwable cause) {
-		super(cause);
-	}
-
 	public RendererException(String msg, Throwable cause) {
 		super(msg, cause);
+	}
+
+	public RendererException(Throwable cause) {
+		super(cause);
 	}
 
 }

@@ -22,12 +22,12 @@ import java.util.List;
  */
 public class ColumnsComparator implements Comparator<Object> {
 
-	public ColumnsComparator(String columnName) {
-		this(new String[] {columnName});
-	}
-
 	public ColumnsComparator(List<String> columnNames) {
 		this(columnNames.toArray(new String[columnNames.size()]));
+	}
+
+	public ColumnsComparator(String columnName) {
+		this(new String[] {columnName});
 	}
 
 	public ColumnsComparator(String[] columnNames) {

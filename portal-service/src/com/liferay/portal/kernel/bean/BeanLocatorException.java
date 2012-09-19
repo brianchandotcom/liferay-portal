@@ -27,12 +27,12 @@ public class BeanLocatorException extends RuntimeException {
 		super(msg);
 	}
 
-	public BeanLocatorException(Throwable cause) {
-		super(cause);
-	}
-
 	public BeanLocatorException(String msg, Throwable cause) {
 		super(msg, cause);
+	}
+
+	public BeanLocatorException(Throwable cause) {
+		super(cause);
 	}
 
 }

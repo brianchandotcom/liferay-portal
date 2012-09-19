@@ -29,12 +29,12 @@ public class JSONException extends PortalException {
 		super(msg);
 	}
 
-	public JSONException(Throwable cause) {
-		super(cause);
-	}
-
 	public JSONException(String msg, Throwable cause) {
 		super(msg, cause);
+	}
+
+	public JSONException(Throwable cause) {
+		super(cause);
 	}
 
 }

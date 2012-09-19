@@ -41,16 +41,16 @@ public class PortletDataHandlerBoolean
 
 	public PortletDataHandlerBoolean(
 		String namespace, String controlName, boolean defaultState,
-		PortletDataHandlerControl[] children) {
+		boolean disabled, PortletDataHandlerControl[] children) {
 
-		super(namespace, controlName, defaultState, children);
+		super(namespace, controlName, defaultState, disabled, children);
 	}
 
 	public PortletDataHandlerBoolean(
 		String namespace, String controlName, boolean defaultState,
-		boolean disabled, PortletDataHandlerControl[] children) {
+		PortletDataHandlerControl[] children) {
 
-		super(namespace, controlName, defaultState, disabled, children);
+		super(namespace, controlName, defaultState, children);
 	}
 
 }

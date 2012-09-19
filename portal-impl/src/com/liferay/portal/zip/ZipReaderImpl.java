@@ -50,6 +50,10 @@ public class ZipReaderImpl implements ZipReader {
 				new ZipDriver()));
 	}
 
+	public ZipReaderImpl(java.io.File file) {
+		_zipFile = new File(file);
+	}
+
 	public ZipReaderImpl(InputStream inputStream) throws IOException {
 		_zipFile = new File(FileUtil.createTempFile("zip"));
 
@@ -62,10 +66,6 @@ public class ZipReaderImpl implements ZipReader {
 			outputStream.close();
 			inputStream.close();
 		}
-	}
-
-	public ZipReaderImpl(java.io.File file) {
-		_zipFile = new File(file);
 	}
 
 	public void close() {

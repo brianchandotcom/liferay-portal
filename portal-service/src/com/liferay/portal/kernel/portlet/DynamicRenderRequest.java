@@ -38,14 +38,14 @@ public class DynamicRenderRequest extends RenderRequestWrapper {
 		this(renderRequest, null, true);
 	}
 
+	public DynamicRenderRequest(RenderRequest renderRequest, boolean inherit) {
+		this(renderRequest, null, inherit);
+	}
+
 	public DynamicRenderRequest(
 		RenderRequest renderRequest, Map<String, String[]> params) {
 
 		this(renderRequest, params, true);
-	}
-
-	public DynamicRenderRequest(RenderRequest renderRequest, boolean inherit) {
-		this(renderRequest, null, inherit);
 	}
 
 	public DynamicRenderRequest(

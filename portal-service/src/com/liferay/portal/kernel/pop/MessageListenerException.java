@@ -29,12 +29,12 @@ public class MessageListenerException extends PortalException {
 		super(msg);
 	}
 
-	public MessageListenerException(Throwable cause) {
-		super(cause);
-	}
-
 	public MessageListenerException(String msg, Throwable cause) {
 		super(msg, cause);
+	}
+
+	public MessageListenerException(Throwable cause) {
+		super(cause);
 	}
 
 }

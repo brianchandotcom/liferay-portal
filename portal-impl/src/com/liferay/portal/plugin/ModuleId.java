@@ -112,15 +112,6 @@ public class ModuleId implements Serializable {
 			_groupId, _artifactId, _pluginVersion.toString(), _type);
 	}
 
-	protected ModuleId(
-		String groupId, String artifactId, Version pluginVersion, String type) {
-
-		_groupId = groupId;
-		_artifactId = artifactId;
-		_pluginVersion = pluginVersion;
-		_type = type;
-	}
-
 	protected ModuleId(String moduleId) {
 		StringTokenizer st = new StringTokenizer(moduleId, StringPool.SLASH);
 
@@ -133,6 +124,15 @@ public class ModuleId implements Serializable {
 		_artifactId = st.nextToken();
 		_pluginVersion = Version.getInstance(st.nextToken());
 		_type = st.nextToken();
+	}
+
+	protected ModuleId(
+		String groupId, String artifactId, Version pluginVersion, String type) {
+
+		_groupId = groupId;
+		_artifactId = artifactId;
+		_pluginVersion = pluginVersion;
+		_type = type;
 	}
 
 	private static Map<String, ModuleId> _moduleIds =

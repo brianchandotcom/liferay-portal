@@ -39,14 +39,14 @@ public class DynamicActionRequest extends ActionRequestWrapper {
 		this(actionRequest, null, true);
 	}
 
+	public DynamicActionRequest(ActionRequest actionRequest, boolean inherit) {
+		this(actionRequest, null, inherit);
+	}
+
 	public DynamicActionRequest(
 		ActionRequest actionRequest, Map<String, String[]> params) {
 
 		this(actionRequest, params, true);
-	}
-
-	public DynamicActionRequest(ActionRequest actionRequest, boolean inherit) {
-		this(actionRequest, null, inherit);
 	}
 
 	public DynamicActionRequest(

@@ -36,15 +36,15 @@ public class ProgressTracker {
 		this(request.getSession(), progressId);
 	}
 
-	public ProgressTracker(PortletRequest portletRequest, String progressId) {
-		this(portletRequest.getPortletSession(), progressId);
-	}
-
 	public ProgressTracker(HttpSession session, String progressId) {
 		_session = session;
 		_progressId = progressId;
 
 		addProgress(ProgressStatusConstants.PREPARED, 0, StringPool.BLANK);
+	}
+
+	public ProgressTracker(PortletRequest portletRequest, String progressId) {
+		this(portletRequest.getPortletSession(), progressId);
 	}
 
 	public ProgressTracker(PortletSession portletSession, String progressId) {

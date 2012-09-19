@@ -640,7 +640,7 @@ public abstract class BaseTrashHandlerTestCase {
 				initialBaseModelsCount + 1,
 				getBaseModelsNotInTrashCount(parentBaseModel));
 
-		if (isAssetableModel()) {
+			if (isAssetableModel()) {
 				Assert.assertTrue(isAssetEntryVisible(baseModel));
 			}
 

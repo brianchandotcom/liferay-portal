@@ -65,8 +65,8 @@ public class EditLicenseAction extends PortletAction {
 
 				setForward(actionRequest, "portlet.software_catalog.error");
 			}
-			else if (e instanceof RequiredLicenseException ||
-					 e instanceof LicenseNameException) {
+			else if (e instanceof LicenseNameException ||
+					 e instanceof RequiredLicenseException) {
 
 				SessionErrors.add(actionRequest, e.getClass());
 			}

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.struts.PortletAction;
+import com.liferay.portlet.softwarecatalog.LicenseInUseException;
 import com.liferay.portlet.softwarecatalog.LicenseNameException;
 import com.liferay.portlet.softwarecatalog.NoSuchLicenseException;
 import com.liferay.portlet.softwarecatalog.service.SCLicenseServiceUtil;
@@ -64,7 +65,9 @@ public class EditLicenseAction extends PortletAction {
 
 				setForward(actionRequest, "portlet.software_catalog.error");
 			}
-			else if (e instanceof LicenseNameException) {
+			else if (e instanceof LicenseInUseException ||
+					 e instanceof LicenseNameException) {
+
 				SessionErrors.add(actionRequest, e.getClass());
 			}
 			else {

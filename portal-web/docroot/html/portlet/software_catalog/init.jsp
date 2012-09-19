@@ -27,6 +27,7 @@ page import="com.liferay.portal.service.permission.PortalPermissionUtil" %><%@
 page import="com.liferay.portlet.softwarecatalog.DuplicateProductEntryModuleIdException" %><%@
 page import="com.liferay.portlet.softwarecatalog.DuplicateProductVersionDirectDownloadURLException" %><%@
 page import="com.liferay.portlet.softwarecatalog.FrameworkVersionNameException" %><%@
+page import="com.liferay.portlet.softwarecatalog.LicenseInUseException" %><%@
 page import="com.liferay.portlet.softwarecatalog.LicenseNameException" %><%@
 page import="com.liferay.portlet.softwarecatalog.NoSuchFrameworkVersionException" %><%@
 page import="com.liferay.portlet.softwarecatalog.NoSuchLicenseException" %><%@

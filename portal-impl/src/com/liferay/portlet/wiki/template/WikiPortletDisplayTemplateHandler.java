@@ -16,10 +16,10 @@ package com.liferay.portlet.wiki.template;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.wiki.model.WikiPage;
 
 import java.util.Locale;
@@ -34,11 +34,6 @@ public class WikiPortletDisplayTemplateHandler
 		return WikiPage.class.getName();
 	}
 
-	@Override
-	public String getHelpTemplatePath() {
-		return PropsValues.WIKI_DISPLAY_STYLES_TEMPLATE_CONTENT;
-	}
-
 	public String getName(Locale locale) {
 		String portletTitle = PortalUtil.getPortletTitle(
 			PortletKeys.WIKI, locale);
@@ -49,6 +44,11 @@ public class WikiPortletDisplayTemplateHandler
 
 	public String getResourceName() {
 		return "com.liferay.portlet.wiki";
+	}
+
+	@Override
+	protected String getHelpTemplatePathPropsKey() {
+		return PropsKeys.WIKI_DISPLAY_STYLES_TEMPLATE_HELP_CONTENT;
 	}
 
 }

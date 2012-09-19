@@ -7,6 +7,8 @@
 ##
 ##  $entries: the list of wiki pages that are being shown in the portlet
 ##
+##  $formattedContent: the formatted content of the wiki page
+##
 ##  $locale: the locale of the site
 ##
 ##  $renderRequest: the render request
@@ -22,7 +24,7 @@
 ##
 ##  <h1 class="header-title">$wikiPage.getTitle()</h1>
 ##
-##  <p>$wikiPage.getContent()</p>
+##  <p>$formattedContent</p>
 ##
 ##  <h3>Children Pages</h3>
 ##

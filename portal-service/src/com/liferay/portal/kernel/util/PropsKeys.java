@@ -89,7 +89,7 @@ public interface PropsKeys {
 
 	public static final String APPLICATION_STARTUP_EVENTS = "application.startup.events";
 
-	public static final String ASSET_CATEGORIES_NAVIGATION_DISPLAY_STYLES_TEMPLATE_CONTENT = "asset.categories.navigation.display.styles.template.content";
+	public static final String ASSET_CATEGORIES_NAVIGATION_DISPLAY_STYLES_TEMPLATE_HELP_CONTENT = "asset.categories.navigation.display.styles.template.help.content";
 
 	public static final String ASSET_CATEGORIES_PROPERTIES_DEFAULT = "asset.categories.properties.default";
 
@@ -103,9 +103,7 @@ public interface PropsKeys {
 
 	public static final String ASSET_PUBLISHER_DISPLAY_STYLES = "asset.publisher.display.styles";
 
-	public static final String ASSET_PUBLISHER_DISPLAY_STYLES_TEMPLATE_CONTENT = "asset.publisher.display.styles.template.content";
-
-	public static final String ASSET_PUBLISHER_DISPLAY_STYLES_TEMPLATE_DEFAULT_CONFIG = "asset.publisher.display.styles.template.default.config";
+	public static final String ASSET_PUBLISHER_DISPLAY_STYLES_TEMPLATE_HELP_CONTENT = "asset.publisher.display.styles.template.help.content";
 
 	public static final String ASSET_RENDERER_ENABLED = "asset.renderer.enabled.";
 
@@ -113,7 +111,7 @@ public interface PropsKeys {
 
 	public static final String ASSET_TAG_SUGGESTIONS_ENABLED = "asset.tag.suggestions.enabled";
 
-	public static final String ASSET_TAGS_NAVIGATION_DISPLAY_STYLES_TEMPLATE_CONTENT = "asset.tags.navigation.display.styles.template.content";
+	public static final String ASSET_TAGS_NAVIGATION_DISPLAY_STYLES_TEMPLATE_HELP_CONTENT = "asset.tags.navigation.display.styles.template.help.content";
 
 	public static final String ASSET_VOCABULARY_DEFAULT = "asset.vocabulary.default";
 
@@ -211,7 +209,7 @@ public interface PropsKeys {
 
 	public static final String BASIC_AUTH_PASSWORD_REQUIRED = "basic.auth.password.required";
 
-	public static final String BLOGS_DISPLAY_STYLES_TEMPLATE_CONTENT = "blogs.display.styles.template.content";
+	public static final String BLOGS_DISPLAY_STYLES_TEMPLATE_HELP_CONTENT = "blogs.display.styles.template.help.content";
 
 	public static final String BLOGS_EMAIL_ENTRY_ADDED_BODY = "blogs.email.entry.added.body";
 
@@ -558,6 +556,8 @@ public interface PropsKeys {
 	public static final String DISCUSSION_SUBSCRIBE_BY_DEFAULT = "discussion.subscribe.by.default";
 
 	public static final String DISCUSSION_THREAD_VIEW = "discussion.thread.view";
+
+	public static final String DISPLAY_STYLES_TEMPLATE_HELP_CONTENT = "display.styles.template.help.content";
 
 	public static final String DL_COMPARABLE_FILE_EXTENSIONS = "dl.comparable.file.extensions";
 
@@ -2065,9 +2065,7 @@ public interface PropsKeys {
 
 	public static final String SITES_SITEMAP_DEFAULT_PRIORITY = "sites.sitemap.default.priority";
 
-	public static final String SITES_SITEMAP_DISPLAY_STYLES_TEMPLATE_CONTENT = "sites.sitemap.display.styles.template.content";
-
-	public static final String SITES_SITEMAP_DISPLAY_STYLES_TEMPLATE_DEFAULT_CONFIG = "sites.sitemap.display.styles.template.default.config";
+	public static final String SITES_SITEMAP_DISPLAY_STYLES_TEMPLATE_HELP_CONTENT = "sites.sitemap.display.styles.template.help.content";
 
 	public static final String SOCIAL_ACTIVITY_CONTRIBUTION_INCREMENTS = "social.activity.contribution.increments";
 
@@ -2343,7 +2341,7 @@ public interface PropsKeys {
 
 	public static final String WIDGET_SERVLET_MAPPING = "widget.servlet.mapping";
 
-	public static final String WIKI_DISPLAY_STYLES_TEMPLATE_CONTENT = "wiki.display.styles.template.content";
+	public static final String WIKI_DISPLAY_STYLES_TEMPLATE_HELP_CONTENT = "wiki.display.styles.template.help.content";
 
 	public static final String WIKI_EMAIL_FROM_ADDRESS = "wiki.email.from.address";
 

@@ -16,11 +16,11 @@ package com.liferay.portlet.sitemap.template;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portal.util.PropsValues;
 
 import java.util.Locale;
 
@@ -34,11 +34,6 @@ public class SiteMapPortletDisplayTemplateHandler
 		return LayoutSet.class.getName();
 	}
 
-	@Override
-	public String getHelpTemplatePath() {
-		return PropsValues.SITES_SITEMAP_DISPLAY_STYLES_TEMPLATE_CONTENT;
-	}
-
 	public String getName(Locale locale) {
 		String portletTitle = PortalUtil.getPortletTitle(
 			PortletKeys.SITE_MAP, locale);
@@ -49,6 +44,11 @@ public class SiteMapPortletDisplayTemplateHandler
 
 	public String getResourceName() {
 		return "com.liferay.portlet.sitemap";
+	}
+
+	@Override
+	protected String getHelpTemplatePathPropsKey() {
+		return PropsKeys.SITES_SITEMAP_DISPLAY_STYLES_TEMPLATE_HELP_CONTENT;
 	}
 
 }

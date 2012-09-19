@@ -14,6 +14,9 @@
 
 package com.liferay.portal.kernel.portletdisplaytemplate;
 
+import com.liferay.portal.kernel.configuration.Filter;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
@@ -48,13 +51,17 @@ public abstract class BasePortletDisplayTemplateHandler
 		return rootElement.elements("template");
 	}
 
-	public String getHelpTemplatePath() {
-		return "com/liferay/portlet/portletdisplaytemplate/dependencies/" +
-			"portlet_display_template.vm";
+	public String getHelpTemplatePath(String language) {
+		return PropsUtil.get(
+			getHelpTemplatePathPropsKey(), new Filter(language));
 	}
 
 	protected String getDefaultTemplatesConfigPath() {
 		return null;
+	}
+
+	protected String getHelpTemplatePathPropsKey() {
+		return PropsKeys.DISPLAY_STYLES_TEMPLATE_HELP_CONTENT;
 	}
 
 }

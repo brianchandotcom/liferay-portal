@@ -16,10 +16,10 @@ package com.liferay.portlet.assetpublisher.template;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.asset.model.AssetEntry;
 
 import java.util.Locale;
@@ -32,11 +32,6 @@ public class AssetPublisherPortletDisplayTemplateHandler
 
 	public String getClassName() {
 		return AssetEntry.class.getName();
-	}
-
-	@Override
-	public String getHelpTemplatePath() {
-		return PropsValues.ASSET_PUBLISHER_DISPLAY_STYLES_TEMPLATE_CONTENT;
 	}
 
 	public String getName(Locale locale) {
@@ -52,9 +47,8 @@ public class AssetPublisherPortletDisplayTemplateHandler
 	}
 
 	@Override
-	protected String getDefaultTemplatesConfigPath() {
-		return
-			PropsValues.ASSET_PUBLISHER_DISPLAY_STYLES_TEMPLATE_DEFAULT_CONFIG;
+	protected String getHelpTemplatePathPropsKey() {
+		return PropsKeys.ASSET_PUBLISHER_DISPLAY_STYLES_TEMPLATE_HELP_CONTENT;
 	}
 
 }

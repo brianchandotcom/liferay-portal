@@ -38,16 +38,17 @@ if ((structure == null) && (template != null)) {
 	structure = DDMTemplateHelperUtil.fetchStructure(template);
 }
 
+String language = BeanParamUtil.getString(template, request, "language", DDMTemplateConstants.LANG_TYPE_VM);
 String mode = BeanParamUtil.getString(template, request, "mode", "create");
 String type = BeanParamUtil.getString(template, request, "type", "detail");
 String script = BeanParamUtil.getString(template, request, "script");
 
 if (Validator.isNull(script)) {
 	if (classNameId > 0) {
-		PortletDisplayTemplateHandler portletDislayTemplateHandler = PortletDisplayTemplateHandlerRegistryUtil.getPortletDisplayTemplateHandler(classNameId);
+		PortletDisplayTemplateHandler portletDisplayTemplateHandler = PortletDisplayTemplateHandlerRegistryUtil.getPortletDisplayTemplateHandler(classNameId);
 
-		if (portletDislayTemplateHandler != null) {
-			script = ContentUtil.get(portletDislayTemplateHandler.getHelpTemplatePath());
+		if (portletDisplayTemplateHandler != null) {
+			script = ContentUtil.get(portletDisplayTemplateHandler.getHelpTemplatePath(language));
 		}
 	}
 	else if (!type.equals("detail")) {

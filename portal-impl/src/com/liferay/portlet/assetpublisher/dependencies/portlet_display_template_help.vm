@@ -13,7 +13,7 @@
 ##
 ##  $entries: the list of entries that are being shown in the asset publisher
 ##
-##  $entry: this is the asset entry when there's only ony asset entry
+##  $entry: this is the asset entry when there's only one asset entry
 ##
 ##  $locale: the locale of the site
 ##

@@ -20,8 +20,6 @@ String scriptContent = ParamUtil.getString(request, "scriptContent");
 if (Validator.isNotNull(scriptContent)) {
 	script = scriptContent;
 }
-
-String language = BeanParamUtil.getString(template, request, "language", DDMTemplateConstants.LANG_TYPE_VM);
 %>
 
 <aui:input name="scriptContent" type="hidden" value="<%= script %>" />

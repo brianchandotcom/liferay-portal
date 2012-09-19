@@ -541,6 +541,8 @@ public class DLStoreImpl implements DLStore {
 				fileName, TempFileUtil.SUFFIX_TEMP_FILE_NAME, StringPool.BLANK);
 		}
 
+		fileName = fileName.toLowerCase();
+
 		if (validateFileExtension) {
 			boolean validFileExtension = false;
 

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
+import com.liferay.portal.util.PropsValues;
 
 import java.util.Locale;
 
@@ -44,6 +45,11 @@ public class SiteMapPortletDisplayTemplateHandler
 
 	public String getResourceName() {
 		return "com.liferay.portlet.sitemap";
+	}
+
+	@Override
+	protected String getDefaultTemplatesConfigPath() {
+		return PropsValues.SITES_SITEMAP_DISPLAY_STYLES_TEMPLATE_DEFAULT_CONFIG;
 	}
 
 	@Override

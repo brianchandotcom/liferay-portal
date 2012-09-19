@@ -2065,6 +2065,8 @@ public interface PropsKeys {
 
 	public static final String SITES_SITEMAP_DEFAULT_PRIORITY = "sites.sitemap.default.priority";
 
+	public static final String SITES_SITEMAP_DISPLAY_STYLES_TEMPLATE_DEFAULT_CONFIG = "sites.sitemap.display.styles.template.default.config";
+
 	public static final String SITES_SITEMAP_DISPLAY_STYLES_TEMPLATE_HELP_CONTENT = "sites.sitemap.display.styles.template.help.content";
 
 	public static final String SOCIAL_ACTIVITY_CONTRIBUTION_INCREMENTS = "social.activity.contribution.increments";

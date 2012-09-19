@@ -19,6 +19,8 @@ package com.liferay.portlet.portletdisplaytemplate.util;
  */
 public class PortletDisplayTemplateConstants {
 
+	public static final String APPLICATION = "Application";
+
 	public static final String ASSET_PUBLISHER_HELPER = "assetPublisherHelper";
 
 	public static final String DDM_TEMPLATE_ID = "ddmTemplateId";
@@ -27,7 +29,11 @@ public class PortletDisplayTemplateConstants {
 
 	public static final String ENTRY = "entry";
 
+	public static final String FTL_REQUEST = "Request";
+
 	public static final String LOCALE = "locale";
+
+	public static final String PORTAL_JSP_TAG_LIBS ="PortalJspTagLibs";
 
 	public static final String RENDER_REQUEST ="renderRequest";
 

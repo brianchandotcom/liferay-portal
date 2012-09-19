@@ -20,6 +20,8 @@ package com.liferay.portlet.dynamicdatalists.util;
  */
 public class DDLConstants {
 
+	public static final long DEFAULT_PARENT_STRUCTURE_ID = 0;
+
 	public static final String RESERVED_DDM_STRUCTURE_ID =
 		"reserved_ddm_structure_id";
 

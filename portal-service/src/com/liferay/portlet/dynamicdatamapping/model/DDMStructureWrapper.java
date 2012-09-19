@@ -807,7 +807,7 @@ public class DDMStructureWrapper implements DDMStructure,
 
 	public java.lang.String getCompleteXsd()
 		throws com.liferay.portal.kernel.exception.PortalException,
-			java.lang.Exception {
+			com.liferay.portal.kernel.exception.SystemException {
 		return _ddmStructure.getCompleteXsd();
 	}
 

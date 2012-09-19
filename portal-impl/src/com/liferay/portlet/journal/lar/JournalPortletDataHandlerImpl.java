@@ -53,6 +53,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.service.persistence.ImageUtil;
 import com.liferay.portal.service.persistence.LayoutUtil;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.lar.DLPortletDataHandlerImpl;
@@ -174,6 +175,14 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 
 		articleElement.addAttribute(
 			"article-resource-uuid", article.getArticleResourceUuid());
+
+		if (article.getClassNameId() > 0) {
+			String className = PortalUtil.getClassName(
+				article.getClassNameId());
+
+			articleElement.addAttribute(
+				"class-name", className);
+		}
 
 		if (Validator.isNotNull(article.getStructureId())) {
 			JournalStructure structure =
@@ -680,6 +689,15 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 		String articleResourceUuid = articleElement.attributeValue(
 			"article-resource-uuid");
 
+		long classNameId = 0;
+
+		String className = articleElement.attributeValue(
+			"class-name");
+
+		if (Validator.isNotNull(className)) {
+			classNameId = PortalUtil.getClassNameId(className);
+		}
+
 		if (portletDataContext.isDataStrategyMirror()) {
 			JournalArticleResource articleResource =
 				JournalArticleResourceUtil.fetchByUUID_G(
@@ -720,8 +738,8 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 			if (existingArticle == null) {
 				importedArticle = JournalArticleLocalServiceUtil.addArticle(
 					userId, portletDataContext.getScopeGroupId(), folderId,
-					article.getClassNameId(), structurePrimaryKey, articleId,
-					autoArticleId, article.getVersion(), article.getTitleMap(),
+					classNameId, structurePrimaryKey, articleId, autoArticleId,
+					article.getVersion(), article.getTitleMap(),
 					article.getDescriptionMap(), article.getContent(),
 					article.getType(), parentStructureId, parentTemplateId,
 					article.getLayoutUuid(), displayDateMonth, displayDateDay,
@@ -754,8 +772,8 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 		else {
 			importedArticle = JournalArticleLocalServiceUtil.addArticle(
 				userId, portletDataContext.getScopeGroupId(), folderId,
-				article.getClassNameId(), structurePrimaryKey, articleId,
-				autoArticleId, article.getVersion(), article.getTitleMap(),
+				classNameId, structurePrimaryKey, articleId, autoArticleId,
+				article.getVersion(), article.getTitleMap(),
 				article.getDescriptionMap(), article.getContent(),
 				article.getType(), parentStructureId, parentTemplateId,
 				article.getLayoutUuid(), displayDateMonth, displayDateDay,

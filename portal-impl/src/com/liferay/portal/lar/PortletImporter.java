@@ -73,6 +73,7 @@ import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.service.persistence.PortletPreferencesUtil;
 import com.liferay.portal.service.persistence.UserUtil;
 import com.liferay.portal.servlet.filters.cache.CacheUtil;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.PortletPreferencesImpl;
@@ -127,6 +128,7 @@ import org.apache.commons.lang.time.StopWatch;
  * @author Bruno Farache
  * @author Zsigmond Rab
  * @author Douglas Wong
+ * @author Mate Thurzo
  */
 public class PortletImporter {
 
@@ -1703,6 +1705,46 @@ public class PortletImporter {
 		}
 	}
 
+	protected void updateAssetPublisherClassNameIds(
+			javax.portlet.PortletPreferences jxPreferences, String key)
+		throws Exception {
+
+		String[] oldValues = jxPreferences.getValues(key, null);
+
+		if (oldValues == null) {
+			return;
+		}
+
+		String[] newValues = new String[oldValues.length];
+
+		int i = 0;
+
+		for (String oldValue : oldValues) {
+			if (key.equals("anyAssetType") &&
+				(oldValue.equals("false") || oldValue.equals("true"))) {
+
+				newValues[i++] = oldValue;
+
+				continue;
+			}
+
+			try {
+				long classNameId = PortalUtil.getClassNameId(oldValue);
+
+				newValues[i++] = String.valueOf(classNameId);
+			}
+			catch (Exception e) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Could not find classNameId for className: " +
+							oldValue);
+				}
+			}
+		}
+
+		jxPreferences.setValues(key, newValues);
+	}
+
 	protected void updateAssetPublisherClassPKs(
 			PortletDataContext portletDataContext,
 			javax.portlet.PortletPreferences jxPreferences, String key,
@@ -1870,6 +1912,11 @@ public class PortletImporter {
 			else if (name.equals("defaultScope") || name.equals("scopeIds")) {
 				updateAssetPublisherGlobalScopeId(
 					jxPreferences, name, companyGroup.getGroupId());
+			}
+			else if (name.equals("classNameIds") ||
+					 name.equals("anyAssetType")) {
+
+				updateAssetPublisherClassNameIds(jxPreferences, name);
 			}
 		}
 

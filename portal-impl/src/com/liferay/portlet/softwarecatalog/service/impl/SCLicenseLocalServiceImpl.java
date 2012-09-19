@@ -21,7 +21,6 @@ import com.liferay.portlet.softwarecatalog.LicenseInUseException;
 import com.liferay.portlet.softwarecatalog.LicenseNameException;
 import com.liferay.portlet.softwarecatalog.model.SCLicense;
 import com.liferay.portlet.softwarecatalog.service.base.SCLicenseLocalServiceBaseImpl;
-import com.liferay.portlet.softwarecatalog.service.persistence.SCLicenseUtil;
 
 import java.util.List;
 
@@ -135,10 +134,7 @@ public class SCLicenseLocalServiceImpl extends SCLicenseLocalServiceBaseImpl {
 	protected void validate(long licenseId)
 		throws PortalException, SystemException {
 
-		int scProductEntriesSize = SCLicenseUtil.getSCProductEntriesSize(
-			licenseId);
-
-		if (scProductEntriesSize > 0) {
+		if (scLicensePersistence.getSCProductEntriesSize(licenseId) > 0) {
 			throw new LicenseInUseException();
 		}
 	}

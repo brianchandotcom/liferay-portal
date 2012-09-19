@@ -23,8 +23,13 @@ import java.util.Date;
  */
 public class CronTrigger extends BaseTrigger {
 
-	public CronTrigger(String jobName, String groupName, String cronText) {
-		this(jobName, groupName, null, null, cronText);
+	public CronTrigger(
+		String jobName, String groupName, Date startDate, Date endDate,
+		String cronText) {
+
+		super(jobName, groupName, TriggerType.CRON, startDate, endDate);
+
+		_cronText = cronText;
 	}
 
 	public CronTrigger(
@@ -33,13 +38,8 @@ public class CronTrigger extends BaseTrigger {
 		this(jobName, groupName, startDate, null, cronText);
 	}
 
-	public CronTrigger(
-		String jobName, String groupName, Date startDate, Date endDate,
-		String cronText) {
-
-		super(jobName, groupName, TriggerType.CRON, startDate, endDate);
-
-		_cronText = cronText;
+	public CronTrigger(String jobName, String groupName, String cronText) {
+		this(jobName, groupName, null, null, cronText);
 	}
 
 	public String getTriggerContent() {

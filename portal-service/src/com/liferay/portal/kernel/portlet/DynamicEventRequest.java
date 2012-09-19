@@ -38,14 +38,14 @@ public class DynamicEventRequest extends EventRequestWrapper {
 		this(eventRequest, null, true);
 	}
 
+	public DynamicEventRequest(EventRequest eventRequest, boolean inherit) {
+		this(eventRequest, null, inherit);
+	}
+
 	public DynamicEventRequest(
 		EventRequest eventRequest, Map<String, String[]> params) {
 
 		this(eventRequest, params, true);
-	}
-
-	public DynamicEventRequest(EventRequest eventRequest, boolean inherit) {
-		this(eventRequest, null, inherit);
 	}
 
 	public DynamicEventRequest(

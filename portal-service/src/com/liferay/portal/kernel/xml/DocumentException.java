@@ -27,12 +27,12 @@ public class DocumentException extends Exception {
 		super(msg);
 	}
 
-	public DocumentException(Throwable cause) {
-		super(cause);
-	}
-
 	public DocumentException(String msg, Throwable cause) {
 		super(msg, cause);
+	}
+
+	public DocumentException(Throwable cause) {
+		super(cause);
 	}
 
 }

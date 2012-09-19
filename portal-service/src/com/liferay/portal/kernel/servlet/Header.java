@@ -39,16 +39,16 @@ public class Header implements Serializable {
 		_cookieValue = cookie;
 	}
 
-	public Header(long date) {
-		_type = Type.DATE;
-
-		_dateValue = date;
-	}
-
 	public Header(int integer) {
 		_type = Type.INTEGER;
 
 		_intValue = integer;
+	}
+
+	public Header(long date) {
+		_type = Type.DATE;
+
+		_dateValue = date;
 	}
 
 	public Header(String string) {

@@ -31,6 +31,10 @@ public class JSONArrayImpl implements JSONArray {
 		_jsonArray = new org.json.JSONArray();
 	}
 
+	public JSONArrayImpl(org.json.JSONArray jsonArray) {
+		_jsonArray = jsonArray;
+	}
+
 	public JSONArrayImpl(String json) throws JSONException {
 		try {
 			_jsonArray = new org.json.JSONArray(json);
@@ -38,10 +42,6 @@ public class JSONArrayImpl implements JSONArray {
 		catch (Exception e) {
 			throw new JSONException(e);
 		}
-	}
-
-	public JSONArrayImpl(org.json.JSONArray jsonArray) {
-		_jsonArray = jsonArray;
 	}
 
 	public boolean getBoolean(int index) {

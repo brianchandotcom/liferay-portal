@@ -28,12 +28,12 @@ public class TimeZoneSensitive extends XProperty {
 		super(PROPERTY_NAME);
 	}
 
-	public TimeZoneSensitive(String value) {
-		super(PROPERTY_NAME, value);
-	}
-
 	public TimeZoneSensitive(ParameterList list, String value) {
 		super(PROPERTY_NAME, list, value);
+	}
+
+	public TimeZoneSensitive(String value) {
+		super(PROPERTY_NAME, value);
 	}
 
 	public void setValue(boolean value) {

@@ -294,8 +294,8 @@ public class SourceFormatter {
 		}
 	}
 
-	private static List<String> _addMethodParameterTypes(
-		String line, List<String> methodParameterTypes) {
+	private static List<String> _addParameterTypes(
+		String line, List<String> parameterTypes) {
 
 		int x = line.indexOf(StringPool.OPEN_PARENTHESIS);
 
@@ -305,7 +305,7 @@ public class SourceFormatter {
 			if (Validator.isNull(line) ||
 				line.startsWith(StringPool.CLOSE_PARENTHESIS)) {
 
-				return methodParameterTypes;
+				return parameterTypes;
 			}
 		}
 
@@ -313,22 +313,33 @@ public class SourceFormatter {
 			x = line.indexOf(StringPool.SPACE);
 
 			if (x == -1) {
-				return methodParameterTypes;
+				return parameterTypes;
 			}
 
 			String parameterType = line.substring(0, x);
 
 			if (parameterType.equals("throws")) {
-				return methodParameterTypes;
+				return parameterTypes;
 			}
 
-			methodParameterTypes.add(parameterType);
+			if (parameterType.endsWith("...")) {
+				parameterType = StringUtil.replaceLast(
+					parameterType, "...", StringPool.BLANK);
+			}
+
+			int pos = parameterType.lastIndexOf(StringPool.PERIOD);
+
+			if (pos != -1) {
+				parameterType = parameterType.substring(pos + 1);
+			}
+
+			parameterTypes.add(parameterType);
 
 			int y = line.indexOf(StringPool.COMMA);
 			int z = line.indexOf(StringPool.CLOSE_PARENTHESIS);
 
 			if ((y == -1) || ((z != -1) && (z < y))) {
-				return methodParameterTypes;
+				return parameterTypes;
 			}
 
 			line = line.substring(y + 1);
@@ -624,11 +635,6 @@ public class SourceFormatter {
 			}
 
 			String parameterType = methodParameterTypes.get(i);
-
-			if (parameterType.endsWith("...")) {
-				parameterType = StringUtil.replaceLast(
-					parameterType, "...", StringPool.BLANK);
-			}
 
 			if (previousParameterType.compareToIgnoreCase(parameterType) < 0) {
 				return;
@@ -1343,11 +1349,11 @@ public class SourceFormatter {
 		String previousJavaTermName = null;
 		int previousJavaTermType = 0;
 
-		List<String> methodParameterTypes = new ArrayList<String>();
-		List<String> previousMethodParameterTypes = null;
+		List<String> parameterTypes = new ArrayList<String>();
+		List<String> previousParameterTypes = null;
 
-		boolean readMethodParameterTypes = false;
-		boolean hasSameMethodName = false;
+		boolean hasSameConstructorOrMethodName = false;
+		boolean readParameterTypes = false;
 
 		String ifClause = StringPool.BLANK;
 
@@ -1473,7 +1479,7 @@ public class SourceFormatter {
 				line.startsWith(StringPool.TAB + "protected ") ||
 				line.startsWith(StringPool.TAB + "public ")) {
 
-				hasSameMethodName = false;
+				hasSameConstructorOrMethodName = false;
 
 				Tuple tuple = _getJavaTermTuple(line);
 
@@ -1483,11 +1489,13 @@ public class SourceFormatter {
 					if (Validator.isNotNull(javaTermName)) {
 						javaTermType = (Integer)tuple.getObject(1);
 
-						boolean isMethod = _isInJavaTermTypeGroup(
-							javaTermType, _TYPE_METHOD);
+						boolean isConstructorOrMethod =
+							_isInJavaTermTypeGroup(
+								javaTermType, _TYPE_CONSTRUCTOR) ||
+							_isInJavaTermTypeGroup(javaTermType, _TYPE_METHOD);
 
-						if (isMethod) {
-							readMethodParameterTypes = true;
+						if (isConstructorOrMethod) {
+							readParameterTypes = true;
 						}
 
 						if (excluded == null) {
@@ -1514,11 +1522,11 @@ public class SourceFormatter {
 										"order: " + fileName + " " + lineCount);
 								}
 								else if (previousJavaTermType == javaTermType) {
-									if (isMethod &&
+									if (isConstructorOrMethod &&
 										previousJavaTermName.equals(
 											javaTermName)) {
 
-										hasSameMethodName = true;
+										hasSameConstructorOrMethodName = true;
 									}
 									else {
 										_compareJavaTermNames(
@@ -1535,23 +1543,22 @@ public class SourceFormatter {
 				}
 			}
 
-			if (readMethodParameterTypes) {
-				methodParameterTypes = _addMethodParameterTypes(
-					trimmedLine, methodParameterTypes);
+			if (readParameterTypes) {
+				parameterTypes = _addParameterTypes(
+					trimmedLine, parameterTypes);
 
 				if (trimmedLine.contains(StringPool.CLOSE_PARENTHESIS)) {
-					if (hasSameMethodName) {
+					if (hasSameConstructorOrMethodName) {
 						_compareMethodParameterTypes(
-							fileName, previousMethodParameterTypes,
-							methodParameterTypes, lineCount);
+							fileName, previousParameterTypes, parameterTypes,
+							lineCount);
 					}
 
-					readMethodParameterTypes = false;
+					readParameterTypes = false;
 
-					previousMethodParameterTypes = ListUtil.copy(
-						methodParameterTypes);
+					previousParameterTypes = ListUtil.copy(parameterTypes);
 
-					methodParameterTypes.clear();
+					parameterTypes.clear();
 				}
 			}
 
@@ -3884,6 +3891,12 @@ public class SourceFormatter {
 	private static final int _TYPE_CLASS_PUBLIC = 8;
 
 	private static final int _TYPE_CLASS_PUBLIC_STATIC = 7;
+
+	private static final int[] _TYPE_CONSTRUCTOR = {
+		SourceFormatter._TYPE_CONSTRUCTOR_PRIVATE,
+		SourceFormatter._TYPE_CONSTRUCTOR_PROTECTED,
+		SourceFormatter._TYPE_CONSTRUCTOR_PUBLIC
+	};
 
 	private static final int _TYPE_CONSTRUCTOR_PRIVATE = 18;
 

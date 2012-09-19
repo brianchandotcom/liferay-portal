@@ -33,14 +33,14 @@ public class PropertyComparator implements Comparator<Object> {
 		this(new String[] {propertyName}, true, false);
 	}
 
-	public PropertyComparator(String[] propertyNames) {
-		this(propertyNames, true, false);
-	}
-
 	public PropertyComparator(
 		String propertyName, boolean ascending, boolean caseSensitive) {
 
 		this(new String[] {propertyName}, ascending, caseSensitive);
+	}
+
+	public PropertyComparator(String[] propertyNames) {
+		this(propertyNames, true, false);
 	}
 
 	public PropertyComparator(

@@ -27,12 +27,12 @@ public class PortalCacheClusterException extends RuntimeException {
 		super(msg);
 	}
 
-	public PortalCacheClusterException(Throwable cause) {
-		super(cause);
-	}
-
 	public PortalCacheClusterException(String msg, Throwable cause) {
 		super(msg, cause);
+	}
+
+	public PortalCacheClusterException(Throwable cause) {
+		super(cause);
 	}
 
 }

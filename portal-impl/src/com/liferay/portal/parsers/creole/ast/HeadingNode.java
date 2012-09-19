@@ -22,13 +22,13 @@ import com.liferay.portal.parsers.creole.visitor.ASTVisitor;
 public class HeadingNode
 	extends BaseParentableNode implements Comparable<HeadingNode> {
 
-	public HeadingNode(int level) {
-		_level = level;
-	}
-
 	public HeadingNode(CollectionNode collectionNode, int level) {
 		super(collectionNode);
 
+		_level = level;
+	}
+
+	public HeadingNode(int level) {
 		_level = level;
 	}
 

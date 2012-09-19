@@ -49,12 +49,6 @@ public class PortletPreferencesImpl
 	}
 
 	public PortletPreferencesImpl(
-		String xml, Map<String, Preference> preferences) {
-
-		this(0, 0, 0, 0, null, xml, preferences);
-	}
-
-	public PortletPreferencesImpl(
 		long companyId, long ownerId, int ownerType, long plid,
 		String portletId, String xml, Map<String, Preference> preferences) {
 
@@ -62,6 +56,12 @@ public class PortletPreferencesImpl
 
 		_plid = plid;
 		_portletId = portletId;
+	}
+
+	public PortletPreferencesImpl(
+		String xml, Map<String, Preference> preferences) {
+
+		this(0, 0, 0, 0, null, xml, preferences);
 	}
 
 	@Override

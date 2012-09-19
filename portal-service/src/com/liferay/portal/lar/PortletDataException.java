@@ -30,12 +30,12 @@ public class PortletDataException
 		super(msg);
 	}
 
-	public PortletDataException(Throwable cause) {
-		super(cause);
-	}
-
 	public PortletDataException(String msg, Throwable cause) {
 		super(msg, cause);
+	}
+
+	public PortletDataException(Throwable cause) {
+		super(cause);
 	}
 
 }

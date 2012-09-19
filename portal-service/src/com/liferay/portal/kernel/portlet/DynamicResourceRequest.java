@@ -39,15 +39,15 @@ public class DynamicResourceRequest extends ResourceRequestWrapper {
 	}
 
 	public DynamicResourceRequest(
-		ResourceRequest resourceRequest, Map<String, String[]> params) {
-
-		this(resourceRequest, params, true);
-	}
-
-	public DynamicResourceRequest(
 		ResourceRequest resourceRequest, boolean inherit) {
 
 		this(resourceRequest, null, inherit);
+	}
+
+	public DynamicResourceRequest(
+		ResourceRequest resourceRequest, Map<String, String[]> params) {
+
+		this(resourceRequest, params, true);
 	}
 
 	public DynamicResourceRequest(

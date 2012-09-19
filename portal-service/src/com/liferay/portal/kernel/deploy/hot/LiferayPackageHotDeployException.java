@@ -29,12 +29,12 @@ public class LiferayPackageHotDeployException extends PortalException {
 		super(msg);
 	}
 
-	public LiferayPackageHotDeployException(Throwable cause) {
-		super(cause);
-	}
-
 	public LiferayPackageHotDeployException(String msg, Throwable cause) {
 		super(msg, cause);
+	}
+
+	public LiferayPackageHotDeployException(Throwable cause) {
+		super(cause);
 	}
 
 }

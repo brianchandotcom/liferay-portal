@@ -171,6 +171,17 @@ public class WikiPageImpl extends WikiPageBaseImpl {
 		return page;
 	}
 
+	public boolean isInTrashFolder() {
+		WikiNode node = getNode();
+
+		if (node != null) {
+			return node.isInTrash();
+		}
+		else {
+			return false;
+		}
+	}
+
 	@Override
 	public boolean isResourceMain() {
 		return isHead();

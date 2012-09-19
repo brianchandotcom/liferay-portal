@@ -2,7 +2,7 @@
 	<#list 1..maxWikiNodeCount as wikiNodeCount>
 		<#assign wikiNode = dataFactory.addWikiNode(groupId, firstUserId, "Test Node " + wikiNodeCount, "This is a test node " + wikiNodeCount + ".")>
 
-		insert into WikiNode values ('${portalUUIDUtil.generate()}', ${wikiNode.nodeId}, ${wikiNode.groupId}, ${companyId}, ${wikiNode.userId}, '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '${wikiNode.name}', '${wikiNode.description}', CURRENT_TIMESTAMP);
+		insert into WikiNode values ('${portalUUIDUtil.generate()}', ${wikiNode.nodeId}, ${wikiNode.groupId}, ${companyId}, ${wikiNode.userId}, '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '${wikiNode.name}', '${wikiNode.description}', CURRENT_TIMESTAMP, ${wikiNode.status}, ${wikiNode.statusByUserId}, '${wikiNode.statusByUserName}', CURRENT_TIMESTAMP);
 
 		<#if (maxWikiPageCount > 0)>
 			<#list 1..maxWikiPageCount as wikiPageCount>

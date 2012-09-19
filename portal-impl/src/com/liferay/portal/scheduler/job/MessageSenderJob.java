@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.scheduler.JobState;
 import com.liferay.portal.kernel.scheduler.JobStateSerializeUtil;
 import com.liferay.portal.kernel.scheduler.SchedulerEngine;
-import com.liferay.portal.kernel.scheduler.SchedulerEngineUtil;
+import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
 import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
@@ -126,7 +126,7 @@ public class MessageSenderJob implements Job {
 	private static Log _log = LogFactoryUtil.getLog(MessageSenderJob.class);
 
 	private static MethodKey _deleteJobMethodKey = new MethodKey(
-		SchedulerEngineUtil.class.getName(), "delete", String.class,
+		SchedulerEngineHelperUtil.class.getName(), "delete", String.class,
 		String.class, StorageType.class);
 
 }

@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.messaging.sender.MessageSender;
 import com.liferay.portal.kernel.messaging.sender.SynchronousMessageSender;
-import com.liferay.portal.kernel.scheduler.SchedulerEngineUtil;
+import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
@@ -326,7 +326,7 @@ public class ServiceTestUtil {
 		// Scheduler
 
 		try {
-			SchedulerEngineUtil.start();
+			SchedulerEngineHelperUtil.start();
 		}
 		catch (Exception e) {
 			e.printStackTrace();

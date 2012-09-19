@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.scheduler.CronTrigger;
-import com.liferay.portal.kernel.scheduler.SchedulerEngineUtil;
+import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
 import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -782,7 +782,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 				command, getUserId(), sourceGroupId, targetGroupId,
 				privateLayout, layoutIdMap, parameterMap, startDate, endDate);
 
-		SchedulerEngineUtil.schedule(
+		SchedulerEngineHelperUtil.schedule(
 			trigger, StorageType.PERSISTED, description,
 			DestinationNames.LAYOUTS_LOCAL_PUBLISHER, publisherRequest, 0);
 	}
@@ -842,7 +842,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		Trigger trigger = new CronTrigger(
 			jobName, groupName, schedulerStartDate, schedulerEndDate, cronText);
 
-		SchedulerEngineUtil.schedule(
+		SchedulerEngineHelperUtil.schedule(
 			trigger, StorageType.PERSISTED, description,
 			DestinationNames.LAYOUTS_REMOTE_PUBLISHER, publisherRequest, 0);
 	}
@@ -894,7 +894,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		GroupPermissionUtil.check(
 			getPermissionChecker(), groupId, ActionKeys.PUBLISH_STAGING);
 
-		SchedulerEngineUtil.delete(jobName, groupName, StorageType.PERSISTED);
+		SchedulerEngineHelperUtil.delete(jobName, groupName, StorageType.PERSISTED);
 	}
 
 	/**
@@ -916,7 +916,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		GroupPermissionUtil.check(
 			getPermissionChecker(), groupId, ActionKeys.PUBLISH_STAGING);
 
-		SchedulerEngineUtil.delete(jobName, groupName, StorageType.PERSISTED);
+		SchedulerEngineHelperUtil.delete(jobName, groupName, StorageType.PERSISTED);
 	}
 
 	/**

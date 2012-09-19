@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.scheduler.CronText;
 import com.liferay.portal.kernel.scheduler.CronTrigger;
-import com.liferay.portal.kernel.scheduler.SchedulerEngineUtil;
+import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
 import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
@@ -223,7 +223,7 @@ public class MBMailingListLocalServiceImpl
 		mailingListRequest.setInPassword(mailingList.getInPassword());
 		mailingListRequest.setAllowAnonymous(mailingList.getAllowAnonymous());
 
-		SchedulerEngineUtil.schedule(
+		SchedulerEngineHelperUtil.schedule(
 			trigger, StorageType.MEMORY_CLUSTERED, null,
 			DestinationNames.MESSAGE_BOARDS_MAILING_LIST, mailingListRequest,
 			0);
@@ -234,7 +234,7 @@ public class MBMailingListLocalServiceImpl
 
 		String groupName = getSchedulerGroupName(mailingList);
 
-		SchedulerEngineUtil.unschedule(groupName, StorageType.MEMORY_CLUSTERED);
+		SchedulerEngineHelperUtil.unschedule(groupName, StorageType.MEMORY_CLUSTERED);
 	}
 
 	protected void validate(

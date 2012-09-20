@@ -169,6 +169,13 @@ public class AutoLoginFilter extends BasePortalFilter {
 		String remoteUser = request.getRemoteUser();
 		String jUserName = (String)session.getAttribute("j_username");
 
+		// PLACEHOLDER1
+		// PLACEHOLDER2
+		// PLACEHOLDER3
+		// PLACEHOLDER4
+		// PLACEHOLDER5
+		// PLACEHOLDER6
+
 		if (!PropsValues.AUTH_LOGIN_DISABLED &&
 			(remoteUser == null) && (jUserName == null)) {
 

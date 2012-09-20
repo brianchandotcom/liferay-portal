@@ -29,7 +29,7 @@ for (String servletContextName : ServletContextPool.keySet()) {
 	List<Portlet> portlets = portletApp.getPortlets();
 
 	for (Portlet portlet : portlets) {
-		String path = StringPool.SLASH.concat(portlet.getPortletName()).concat("/invoke");
+		String path = StringPool.SLASH.concat(PortalUtil.getJsSafePortletId(portlet.getPortletName())).concat("/invoke");
 
 		RequestDispatcher requestDispatcher = servletContext.getRequestDispatcher(path);
 

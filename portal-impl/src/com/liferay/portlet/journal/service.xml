@@ -186,64 +186,6 @@
 		<reference package-path="com.liferay.portlet.messageboards" entity="MBMessage" />
 		<reference package-path="com.liferay.portlet.ratings" entity="RatingsStats" />
 	</entity>
-	<entity name="JournalFolder" uuid="true" local-service="true" remote-service="true">
-
-		<!-- PK fields -->
-
-		<column name="folderId" type="long" primary="true" accessor="true" />
-
-		<!-- Group instance -->
-
-		<column name="groupId" type="long" />
-
-		<!-- Audit fields -->
-
-		<column name="companyId" type="long" />
-		<column name="userId" type="long" />
-		<column name="userName" type="String" />
-		<column name="createDate" type="Date" />
-		<column name="modifiedDate" type="Date" />
-
-		<!-- Other fields -->
-
-		<column name="parentFolderId" type="long" />
-		<column name="name" type="String" />
-		<column name="description" type="String" />
-
-		<!-- Order -->
-
-		<order by="asc">
-			<order-column name="parentFolderId" />
-			<order-column name="name" case-sensitive="false" />
-		</order>
-
-		<!-- Finder methods -->
-
-		<finder name="GroupId" return-type="Collection">
-			<finder-column name="groupId" />
-		</finder>
-		<finder name="CompanyId" return-type="Collection">
-			<finder-column name="companyId" />
-		</finder>
-		<finder name="G_P" return-type="Collection">
-			<finder-column name="groupId" />
-			<finder-column name="parentFolderId" />
-		</finder>
-		<finder name="G_N" return-type="JournalFolder">
-			<finder-column name="groupId" />
-			<finder-column name="name" />
-		</finder>
-		<finder name="G_P_N" return-type="JournalFolder" unique="true">
-			<finder-column name="groupId" />
-			<finder-column name="parentFolderId" />
-			<finder-column name="name" />
-		</finder>
-
-		<!-- References -->
-
-		<reference package-path="com.liferay.portal" entity="Group" />
-		<reference package-path="com.liferay.portlet.expando" entity="ExpandoValue" />
-	</entity>
 	<entity name="JournalArticleImage" local-service="true" remote-service="false">
 
 		<!-- PK fields -->
@@ -431,6 +373,64 @@
 
 		<!-- References -->
 
+		<reference package-path="com.liferay.portlet.expando" entity="ExpandoValue" />
+	</entity>
+	<entity name="JournalFolder" uuid="true" local-service="true" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="folderId" type="long" primary="true" accessor="true" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="parentFolderId" type="long" />
+		<column name="name" type="String" />
+		<column name="description" type="String" />
+
+		<!-- Order -->
+
+		<order by="asc">
+			<order-column name="parentFolderId" />
+			<order-column name="name" case-sensitive="false" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="GroupId" return-type="Collection">
+			<finder-column name="groupId" />
+		</finder>
+		<finder name="CompanyId" return-type="Collection">
+			<finder-column name="companyId" />
+		</finder>
+		<finder name="G_P" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="parentFolderId" />
+		</finder>
+		<finder name="G_N" return-type="JournalFolder">
+			<finder-column name="groupId" />
+			<finder-column name="name" />
+		</finder>
+		<finder name="G_P_N" return-type="JournalFolder" unique="true">
+			<finder-column name="groupId" />
+			<finder-column name="parentFolderId" />
+			<finder-column name="name" />
+		</finder>
+
+		<!-- References -->
+
+		<reference package-path="com.liferay.portal" entity="Group" />
 		<reference package-path="com.liferay.portlet.expando" entity="ExpandoValue" />
 	</entity>
 	<entity name="JournalStructure" uuid="true" local-service="true" remote-service="true">

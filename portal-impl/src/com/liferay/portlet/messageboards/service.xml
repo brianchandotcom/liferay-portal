@@ -335,9 +335,9 @@
 		<reference package-path="com.liferay.portlet.asset" entity="AssetLink" />
 		<reference package-path="com.liferay.portlet.asset" entity="AssetTag" />
 		<reference package-path="com.liferay.portlet.blogs" entity="BlogsEntry" />
+		<reference package-path="com.liferay.portlet.expando" entity="ExpandoValue" />
 		<reference package-path="com.liferay.portlet.ratings" entity="RatingsStats" />
 		<reference package-path="com.liferay.portlet.social" entity="SocialActivity" />
-		<reference package-path="com.liferay.portlet.expando" entity="ExpandoValue" />
 		<reference package-path="com.liferay.portlet.wiki" entity="WikiPage" />
 	</entity>
 	<entity name="MBStatsUser" human-name="message boards stats user" local-service="true" remote-service="false">
@@ -509,14 +509,13 @@
 		<exception>BannedUser</exception>
 		<exception>CategoryName</exception>
 		<exception>LockedThread</exception>
-		<exception>MessageBody</exception>
-		<exception>MessageSubject</exception>
 		<exception>MailingListEmailAddress</exception>
 		<exception>MailingListInServerName</exception>
 		<exception>MailingListInUserName</exception>
 		<exception>MailingListOutEmailAddress</exception>
 		<exception>MailingListOutServerName</exception>
 		<exception>MailingListOutUserName</exception>
+		<exception>MessageBody</exception>
 		<exception>MessageSubject</exception>
 		<exception>RequiredMessage</exception>
 		<exception>SplitThread</exception>

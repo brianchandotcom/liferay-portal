@@ -244,8 +244,8 @@
 	<exceptions>
 		<exception>DuplicateProductEntryModuleId</exception>
 		<exception>DuplicateProductVersionDirectDownloadURL</exception>
-		<exception>LicenseName</exception>
 		<exception>FrameworkVersionName</exception>
+		<exception>LicenseName</exception>
 		<exception>ProductEntryAuthor</exception>
 		<exception>ProductEntryLicense</exception>
 		<exception>ProductEntryName</exception>

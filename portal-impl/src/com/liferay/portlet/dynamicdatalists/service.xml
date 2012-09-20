@@ -49,6 +49,48 @@
 		<reference package-path="com.liferay.portlet.asset" entity="AssetEntry" />
 		<reference package-path="com.liferay.portlet.dynamicdatamapping" entity="DDMStructure" />
 	</entity>
+	<entity name="DDLRecordSet" uuid="true" local-service="true" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="recordSetId" type="long" primary="true" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="DDMStructureId" type="long" />
+		<column name="recordSetKey" type="String" />
+		<column name="name" type="String" localized="true" />
+		<column name="description" type="String" localized="true" />
+		<column name="minDisplayRows" type="int" />
+		<column name="scope" type="int" />
+
+		<!-- Finder methods -->
+
+		<finder name="GroupId" return-type="Collection">
+			<finder-column name="groupId" />
+		</finder>
+		<finder name="G_R" return-type="DDLRecordSet" unique="true">
+			<finder-column name="groupId" />
+			<finder-column name="recordSetKey" />
+		</finder>
+
+		<!-- References -->
+
+		<reference package-path="com.liferay.portlet.dynamicdatamapping" entity="DDMStructure" />
+		<reference package-path="com.liferay.portlet.dynamicdatamapping" entity="DDMStructureLink" />
+	</entity>
 	<entity name="DDLRecordVersion" local-service="false" remote-service="false">
 
 		<!-- PK fields -->
@@ -91,48 +133,6 @@
 			<finder-column name="recordId" />
 			<finder-column name="status" />
 		</finder>
-	</entity>
-	<entity name="DDLRecordSet" uuid="true" local-service="true" remote-service="true">
-
-		<!-- PK fields -->
-
-		<column name="recordSetId" type="long" primary="true" />
-
-		<!-- Group instance -->
-
-		<column name="groupId" type="long" />
-
-		<!-- Audit fields -->
-
-		<column name="companyId" type="long" />
-		<column name="userId" type="long" />
-		<column name="userName" type="String" />
-		<column name="createDate" type="Date" />
-		<column name="modifiedDate" type="Date" />
-
-		<!-- Other fields -->
-
-		<column name="DDMStructureId" type="long" />
-		<column name="recordSetKey" type="String" />
-		<column name="name" type="String" localized="true" />
-		<column name="description" type="String" localized="true" />
-		<column name="minDisplayRows" type="int" />
-		<column name="scope" type="int" />
-
-		<!-- Finder methods -->
-
-		<finder name="GroupId" return-type="Collection">
-			<finder-column name="groupId" />
-		</finder>
-		<finder name="G_R" return-type="DDLRecordSet" unique="true">
-			<finder-column name="groupId" />
-			<finder-column name="recordSetKey" />
-		</finder>
-
-		<!-- References -->
-
-		<reference package-path="com.liferay.portlet.dynamicdatamapping" entity="DDMStructure" />
-		<reference package-path="com.liferay.portlet.dynamicdatamapping" entity="DDMStructureLink" />
 	</entity>
 	<exceptions>
 		<exception>RecordSetDDMStructureId</exception>

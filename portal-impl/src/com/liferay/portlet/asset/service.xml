@@ -203,7 +203,7 @@
 		<reference package-path="com.liferay.portlet.journal" entity="JournalArticleResource" />
 		<reference package-path="com.liferay.portlet.messageboards" entity="MBMessage" />
 		<reference package-path="com.liferay.portlet.social" entity="SocialActivity" />
-        <reference package-path="com.liferay.portlet.social" entity="SocialActivityCounter" />
+		<reference package-path="com.liferay.portlet.social" entity="SocialActivityCounter" />
 		<reference package-path="com.liferay.portlet.wiki" entity="WikiPage" />
 		<reference package-path="com.liferay.portlet.wiki" entity="WikiPageResource" />
 	</entity>
@@ -431,12 +431,12 @@
 		<exception>AssetCategoryName</exception>
 		<exception>AssetLink</exception>
 		<exception>AssetTag</exception>
-		<exception>DuplicateCategory</exception>
-		<exception>DuplicateTag</exception>
-		<exception>DuplicateVocabulary</exception>
 		<exception>CategoryName</exception>
 		<exception>CategoryPropertyKey</exception>
 		<exception>CategoryPropertyValue</exception>
+		<exception>DuplicateCategory</exception>
+		<exception>DuplicateTag</exception>
+		<exception>DuplicateVocabulary</exception>
 		<exception>TagPropertyKey</exception>
 		<exception>TagPropertyValue</exception>
 		<exception>VocabularyName</exception>

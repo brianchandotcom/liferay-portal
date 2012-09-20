@@ -15,7 +15,6 @@
 package com.liferay.portalweb.plugins.digg.portlet.addportletdiggmultiple;
 
 import com.liferay.portalweb.plugins.digg.portlet.addportletdigg.AddPageDiggTest;
-import com.liferay.portalweb.plugins.digg.portlet.addportletdigg.AddPortletDiggTest;
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
 
@@ -29,7 +28,7 @@ public class AddPortletDiggMultipleTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddPageDiggTest.class);
-		testSuite.addTestSuite(AddPortletDiggTest.class);
+		testSuite.addTestSuite(AddPortletDigg1Test.class);
 		testSuite.addTestSuite(AddPortletDigg2Test.class);
 		testSuite.addTestSuite(AddPortletDigg3Test.class);
 		testSuite.addTestSuite(TearDownPageTest.class);

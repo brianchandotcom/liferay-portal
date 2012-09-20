@@ -574,7 +574,7 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 
 			ServiceContext serviceContext = new ServiceContext();
 
-			prepareServiceContext(serviceContext, fileEntry);
+			populateServiceContext(serviceContext, fileEntry);
 
 			int status = HttpServletResponse.SC_CREATED;
 
@@ -698,7 +698,7 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 
 				description = fileEntry.getDescription();
 
-				prepareServiceContext(serviceContext, fileEntry);
+				populateServiceContext(serviceContext, fileEntry);
 
 				DLAppServiceUtil.updateFileEntry(
 					fileEntryId, title, contentType, title, description,
@@ -957,7 +957,7 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 		}
 	}
 
-	protected void prepareServiceContext(
+	protected void populateServiceContext(
 			ServiceContext serviceContext, FileEntry fileEntry)
 		throws SystemException {
 

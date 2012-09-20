@@ -1454,14 +1454,14 @@ release was successful.</echo>
 		<propertyregex
 			input="${app.server.weblogic.dir.windows}"
 			property="app.server.weblogic.dir.windows.double.slash"
-			regexp="\\" 
+			regexp="\\"
 			replace="\\\\\\\\"
 		/>
 
 		<propertyregex
 			input="${app.server.weblogic.dir.windows.double.slash}"
 			property="app.server.weblogic.dir.windows.escaped"
-			regexp=":" 
+			regexp=":"
 			replace="\\\\:"
 		/>
 
@@ -1671,14 +1671,14 @@ ${env.JAVA_HOME}/bin/java weblogic.WLST create-weblogic-domain.py</echo>
 		<propertyregex
 			input="${app.server.websphere.dir.windows}"
 			property="app.server.websphere.dir.windows.double.slash"
-			regexp="\\" 
+			regexp="\\"
 			replace="\\\\\\\\"
 		/>
 
 		<propertyregex
 			input="${app.server.websphere.dir.windows.double.slash}"
 			property="app.server.websphere.dir.windows.escaped"
-			regexp=":" 
+			regexp=":"
 			replace="\\\\:"
 		/>
 
@@ -2359,28 +2359,28 @@ plugins.includes=</echo>
 		<propertyregex
 			input="${app.server.parent.dir.windows}"
 			property="app.server.parent.dir.windows.double.slash"
-			regexp="\\" 
+			regexp="\\"
 			replace="\\\\\\\\"
 		/>
 
 		<propertyregex
 			input="${app.server.parent.dir.windows.double.slash}"
 			property="app.server.parent.dir.windows.escaped"
-			regexp=":" 
+			regexp=":"
 			replace="\\\\:"
 		/>
 
 		<propertyregex
 			input="${app.server.weblogic.dir.windows}"
 			property="app.server.weblogic.dir.windows.double.slash"
-			regexp="\\" 
+			regexp="\\"
 			replace="\\\\\\\\"
 		/>
 
 		<propertyregex
 			input="${app.server.weblogic.dir.windows.double.slash}"
 			property="app.server.weblogic.dir.windows.escaped"
-			regexp=":" 
+			regexp=":"
 			replace="\\\\:"
 		/>
 
@@ -2418,14 +2418,14 @@ plugins.includes=</echo>
 		<propertyregex
 			input="${app.server.websphere.dir.windows}"
 			property="app.server.websphere.dir.windows.double.slash"
-			regexp="\\" 
+			regexp="\\"
 			replace="\\\\\\\\"
 		/>
 
 		<propertyregex
 			input="${app.server.websphere.dir.windows.double.slash}"
 			property="app.server.websphere.dir.windows.escaped"
-			regexp=":" 
+			regexp=":"
 			replace="\\\\:"
 		/>
 

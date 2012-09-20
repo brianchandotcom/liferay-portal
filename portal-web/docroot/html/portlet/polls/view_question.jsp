@@ -52,7 +52,7 @@ if (viewResults && !PollsQuestionPermission.contains(permissionChecker, question
 	<liferay-ui:error exception="<%= NoSuchChoiceException.class %>" message="please-select-an-option" />
 
 	<aui:fieldset>
- 		<liferay-ui:header
+		<liferay-ui:header
 			backURL="<%= redirect %>"
 			escapeXml="<%= false %>"
 			localizeTitle="<%= false %>"

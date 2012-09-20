@@ -3088,7 +3088,7 @@ svn --username ${svn.username} --password ${svn.password} update -r ${svn.info.r
 127.0.0.1	www.easy.com
 127.0.0.1	www.fox.com</echo>
 
- 		<if>
+		<if>
 			<not>
 				<isset property="build.war" />
 			</not>

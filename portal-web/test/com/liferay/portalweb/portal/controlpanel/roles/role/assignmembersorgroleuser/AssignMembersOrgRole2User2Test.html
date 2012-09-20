@@ -14,6 +14,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
+	<td>AUI Editable Min</td>
+</tr>
+<tr>
 	<td>assertText</td>
 	<td>//li[@id='_145_mySites']/a/span</td>
 	<td>Go to</td>
@@ -50,22 +60,22 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[@id='_125_organizationsSearchContainer_col-name_row-1']/a[2]/strong</td>
+	<td>//tr[contains(.,'Organization Name')]/td[2]/a/strong</td>
 	<td>Organization Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[@id='_125_organizationsSearchContainer_col-type_row-1']/a</td>
+	<td>//tr[contains(.,'Organization Name')]/td[3]/a</td>
 	<td>Regular Organization</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//span[@title='Actions']/ul[@id='_125_organizationsSearchContainer_1_menu']/li/strong/a/span</td>
+	<td>//tr[contains(.,'Organization Name')]/td[4]/span[@title='Actions']/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//span[@title='Actions']/ul[@id='_125_organizationsSearchContainer_1_menu']/li/strong/a/span</td>
+	<td>//tr[contains(.,'Organization Name')]/td[4]/span[@title='Actions']/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
 <tr>
@@ -90,22 +100,32 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[contains(.,'Roles Orgrole2 Name')]/td[@headers='_125_ocerSearchContainer_col-name']/a</td>
+	<td>//tr[contains(.,'Roles Orgrole2 Name')]/td[1]/a</td>
 	<td>Roles Orgrole2 Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[contains(.,'Organization')]/td[@headers='_125_ocerSearchContainer_col-type']/a</td>
+	<td>//tr[contains(.,'Roles Orgrole2 Name')]/td[2]/a</td>
 	<td>Organization</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>//tr[contains(.,'Roles Orgrole2 Name')]/td[@headers='_125_ocerSearchContainer_col-name']/a</td>
-	<td>Roles Orgrole2 Name</td>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Roles Orgrole2 Name')]/td[3]/a</td>
+	<td></td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Available</td>
+	<td>//tr[contains(.,'Roles Orgrole2 Name')]/td[1]/a</td>
+	<td>Roles Orgrole2 Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//ul[@class='aui-tabview-list']/li/span/a[contains(.,'Available')]</td>
+	<td>Available</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//ul[@class='aui-tabview-list']/li/span/a[contains(.,'Available')]</td>
 	<td>Available</td>
 </tr>
 <tr>
@@ -120,28 +140,28 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[@id='_125_usersSearchContainer_col-name_row-usersn2']</td>
-	<td>userfn userln</td>
+	<td>//tr[contains(.,'userfn2 userln2')]/td[2]</td>
+	<td>userfn2 userln2</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[@id='_125_usersSearchContainer_col-screen-name_row-usersn2']</td>
+	<td>//tr[contains(.,'userfn2 userln2')]/td[3]</td>
 	<td>usersn2</td>
 </tr>
 <tr>
 	<td>assertNotChecked</td>
-	<td>//td[@id='_125_usersSearchContainer_col-rowChecker_row-usersn2']/input</td>
-	<td>Check User</td>
+	<td>//tr[contains(.,'userfn2 userln2')]/td[1]/input</td>
+	<td>Checkbox</td>
 </tr>
 <tr>
 	<td>check</td>
-	<td>//td[@id='_125_usersSearchContainer_col-rowChecker_row-usersn2']/input</td>
-	<td>Check User</td>
+	<td>//tr[contains(.,'userfn2 userln2')]/td[1]/input</td>
+	<td>Checkbox</td>
 </tr>
 <tr>
 	<td>assertChecked</td>
-	<td>//td[@id='_125_usersSearchContainer_col-rowChecker_row-usersn2']/input</td>
-	<td>Check User</td>
+	<td>//tr[contains(.,'userfn2 userln2')]/td[1]/input</td>
+	<td>Checkbox</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -155,8 +175,8 @@
 </tr>
 <tr>
 	<td>assertChecked</td>
-	<td>//td[@id='_125_usersSearchContainer_col-rowChecker_row-usersn2']/input</td>
-	<td>Check User</td>
+	<td>//tr[contains(.,'userfn2 userln2')]/td[1]/input</td>
+	<td>Checkbox</td>
 </tr>
 </tbody></table>
 </body>

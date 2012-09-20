@@ -14,6 +14,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
+	<td>AUI Editable Min</td>
+</tr>
+<tr>
 	<td>assertText</td>
 	<td>//li[@id='_145_mySites']/a/span</td>
 	<td>Go to</td>
@@ -50,32 +60,32 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[@id='_134_groupsSearchContainer_col-name_row--site-name']/a</td>
+	<td>//tr[contains(.,'Site Name')]/td[1]/a</td>
 	<td>Site Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//span[@title='Actions']/ul[@id='_134_groupsSearchContainer_-site-name_menu']/li/strong/a/span</td>
+	<td>//tr[contains(.,'Site Name')]/td[7]/span[@title='Actions']/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//span[@title='Actions']/ul[@id='_134_groupsSearchContainer_-site-name_menu']/li/strong/a/span</td>
+	<td>//tr[contains(.,'Site Name')]/td[7]/span[@title='Actions']/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Manage Memberships')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Memberships')]</td>
 	<td>Manage Memberships</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Manage Memberships')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Memberships')]</td>
 	<td>Manage Memberships</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Manage Memberships')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Memberships')]</td>
 	<td>Manage Memberships</td>
 </tr>
 <tr>
@@ -120,28 +130,33 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[@id='_174_ocerSearchContainer_col-name_row-1']/a</td>
+	<td>//tr[contains(.,'Roles Siterole3 Name')]/td[1]/a</td>
 	<td>Roles Siterole3 Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[@id='_174_ocerSearchContainer_col-type_row-1']/a</td>
+	<td>//tr[contains(.,'Roles Siterole3 Name')]/td[2]/a</td>
 	<td>Site</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//td[@id='_174_ocerSearchContainer_col-name_row-1']/a</td>
+	<td>//tr[contains(.,'Roles Siterole3 Name')]/td[1]/a</td>
 	<td>Roles Siterole3 Name</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//ul[@class='aui-tabview-list']/li/span/a[contains(.,'Available')]</td>
+	<td>Available</td>
+</tr>
+<tr>
 	<td>clickAtAndWait</td>
-	<td>link=Available</td>
+	<td>//ul[@class='aui-tabview-list']/li/span/a[contains(.,'Available')]</td>
 	<td>Available</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>//input[@name='_174_keywords']</td>
-	<td>usersn3</td>
+	<td>usersn</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -150,27 +165,27 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[@id='_174_usersSearchContainer_col-name_row-usersn3']</td>
+	<td>//tr[contains(.,'userfn3 userln3')]/td[2]</td>
 	<td>userfn3 userln3</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[@id='_174_usersSearchContainer_col-screen-name_row-usersn3']</td>
+	<td>//tr[contains(.,'userfn3 userln3')]/td[3]</td>
 	<td>usersn3</td>
 </tr>
 <tr>
 	<td>assertNotChecked</td>
-	<td>//td[@id='_174_usersSearchContainer_col-rowChecker_row-usersn3']/input</td>
+	<td>//tr[contains(.,'userfn3 userln3')]/td[1]/input</td>
 	<td>Checkbox</td>
 </tr>
 <tr>
 	<td>check</td>
-	<td>//td[@id='_174_usersSearchContainer_col-rowChecker_row-usersn3']/input</td>
+	<td>//tr[contains(.,'userfn3 userln3')]/td[1]/input</td>
 	<td>Checkbox</td>
 </tr>
 <tr>
 	<td>assertChecked</td>
-	<td>//td[@id='_174_usersSearchContainer_col-rowChecker_row-usersn3']/input</td>
+	<td>//tr[contains(.,'userfn3 userln3')]/td[1]/input</td>
 	<td>Checkbox</td>
 </tr>
 <tr>
@@ -185,7 +200,7 @@
 </tr>
 <tr>
 	<td>assertChecked</td>
-	<td>//td[@id='_174_usersSearchContainer_col-rowChecker_row-usersn3']/input</td>
+	<td>//tr[contains(.,'userfn3 userln3')]/td[1]/input</td>
 	<td>Checkbox</td>
 </tr>
 </tbody></table>

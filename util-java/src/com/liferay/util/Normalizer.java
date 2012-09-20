@@ -53,6 +53,6 @@ public class Normalizer {
 	};
 
 	private static Transliterator _transliterator = Transliterator.getInstance(
-		"Cyrillic-Latin; NFD; [:Nonspacing Mark:] Remove; NFC");
+		"Greek-Latin; Cyrillic-Latin; NFD; [:Nonspacing Mark:] Remove; NFC");
 
 }

@@ -87,6 +87,7 @@ public class SourceFormatter {
 						_formatDDLStructuresXML();
 						_formatFriendlyURLRoutesXML();
 						_formatPortletXML();
+						_formatServiceXML();
 						_formatSH();
 						_formatSQL();
 						_formatStrutsConfigXML();
@@ -2256,6 +2257,116 @@ public class SourceFormatter {
 		}
 
 		return document.formattedString();
+	}
+
+	private static void _formatServiceXML()
+		throws DocumentException, IOException {
+
+		String basedir = "./";
+
+		DirectoryScanner directoryScanner = new DirectoryScanner();
+
+		directoryScanner.setBasedir(basedir);
+		directoryScanner.setIncludes(new String[] {"**\\service.xml"});
+
+		List<String> fileNames = _sourceFormatterHelper.scanForFiles(
+			directoryScanner);
+
+		for (String fileName : fileNames) {
+			File file = new File(basedir + fileName);
+
+			String content = _fileUtil.read(file);
+
+			String newContent = _trimContent(content);
+
+			_formatServiceXML(fileName, content);
+
+			if ((newContent != null) && !content.equals(newContent)) {
+				_fileUtil.write(file, newContent);
+
+				_sourceFormatterHelper.printError(fileName, file);
+			}
+		}
+	}
+
+	private static void _formatServiceXML(String fileName, String content)
+		throws DocumentException, IOException {
+
+		Document document = _saxReaderUtil.read(content);
+
+		Element rootElement = document.getRootElement();
+
+		List<Element> entityElements = rootElement.elements("entity");
+
+		String previousEntityName = StringPool.BLANK;
+
+		for (Element entityElement : entityElements) {
+			String entityName = entityElement.attributeValue("name");
+
+			if (Validator.isNotNull(previousEntityName) &&
+				(previousEntityName.compareToIgnoreCase(entityName) > 0)) {
+
+				_sourceFormatterHelper.printError(
+					fileName, "sort: " + fileName + " " + entityName);
+			}
+
+			String previousReferenceEntity = StringPool.BLANK;
+			String previousReferencePackagePath = StringPool.BLANK;
+
+			List<Element> referenceElements = entityElement.elements(
+				"reference");
+
+			for (Element referenceElement : referenceElements) {
+				String referenceEntity = referenceElement.attributeValue(
+					"entity");
+				String referencePackagePath = referenceElement.attributeValue(
+					"package-path");
+
+
+				if (Validator.isNotNull(previousReferencePackagePath)) {
+					if ((previousReferencePackagePath.compareToIgnoreCase(
+							referencePackagePath) > 0) ||
+						(previousReferencePackagePath.equals(
+							referencePackagePath) &&
+						 (previousReferenceEntity.compareToIgnoreCase(
+							 referenceEntity) > 0))) {
+
+						_sourceFormatterHelper.printError(
+							fileName,
+							"sort: " + fileName + " " + referencePackagePath);
+					}
+				}
+
+				previousReferenceEntity = referenceEntity;
+				previousReferencePackagePath = referencePackagePath;
+			}
+
+			previousEntityName = entityName;
+		}
+
+		Element exceptionsElement = rootElement.element("exceptions");
+
+		if (exceptionsElement == null) {
+			return;
+		}
+
+		List<Element> exceptionElements = exceptionsElement.elements(
+			"exception");
+
+		String previousException = StringPool.BLANK;
+
+		for (Element exceptionElement : exceptionElements) {
+			String exception = exceptionElement.getStringValue();
+
+			if (Validator.isNotNull(previousException) &&
+				(previousException.compareToIgnoreCase(exception) > 0)) {
+
+				_sourceFormatterHelper.printError(
+					fileName, "sort: " + fileName + " " + exception);
+			}
+
+			previousException = exception;
+		}
 	}
 
 	private static void _formatSH() throws IOException {

@@ -47,7 +47,6 @@ import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.webdav.LockException;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetLink;
-import com.liferay.portlet.asset.model.AssetLinkConstants;
 import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetLinkLocalServiceUtil;
@@ -59,6 +58,7 @@ import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
+import com.liferay.portlet.expando.model.ExpandoBridge;
 
 import java.io.File;
 import java.io.InputStream;
@@ -961,26 +961,33 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 			ServiceContext serviceContext, FileEntry fileEntry)
 		throws SystemException {
 
+		String className = DLFileEntryConstants.getClassName();
+
 		long[] assetCategoryIds = AssetCategoryLocalServiceUtil.getCategoryIds(
-			DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId());
+			className, fileEntry.getFileEntryId());
 
-		String[] assetTagNames = AssetTagLocalServiceUtil.getTagNames(
-			DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId());
+		serviceContext.setAssetCategoryIds(assetCategoryIds);
 
-		AssetEntry entry = AssetEntryLocalServiceUtil.fetchEntry(
-			DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId());
+		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+			className, fileEntry.getFileEntryId());
 
-		List<AssetLink> assetLinks = AssetLinkLocalServiceUtil.getDirectLinks(
-			entry.getEntryId(), AssetLinkConstants.TYPE_RELATED);
+		List<AssetLink> assetLinks = AssetLinkLocalServiceUtil.getLinks(
+			assetEntry.getEntryId());
 
 		long[] assetLinkEntryIds = StringUtil.split(
 			ListUtil.toString(assetLinks, AssetLink.ENTRY_ID2_ACCESSOR), 0L);
 
-		serviceContext.setAssetCategoryIds(assetCategoryIds);
 		serviceContext.setAssetLinkEntryIds(assetLinkEntryIds);
+
+		String[] assetTagNames = AssetTagLocalServiceUtil.getTagNames(
+			className, fileEntry.getFileEntryId());
+
 		serviceContext.setAssetTagNames(assetTagNames);
+
+		ExpandoBridge expandoBridge = fileEntry.getExpandoBridge();
+
 		serviceContext.setExpandoBridgeAttributes(
-			fileEntry.getExpandoBridge().getAttributes());
+			expandoBridge.getAttributes());
 	}
 
 	protected Resource toResource(

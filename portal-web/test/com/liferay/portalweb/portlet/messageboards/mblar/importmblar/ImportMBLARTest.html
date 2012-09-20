@@ -20,6 +20,26 @@
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
+	<td>AUI Editable Min</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[@id='_145_manageContent']/a/span</td>
+	<td>Manage</td>
+</tr>
+<tr>
+	<td>mouseOver</td>
+	<td>//li[@id='_145_manageContent']/a/span</td>
+	<td>Manage</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//a[@title='Manage Site Content']</td>
+	<td>Site Content</td>
+</tr>
+<tr>
+	<td>assertText</td>
 	<td>//a[@title='Manage Site Content']</td>
 	<td>Site Content</td>
 </tr>
@@ -27,6 +47,21 @@
 	<td>clickAt</td>
 	<td>//a[@title='Manage Site Content']</td>
 	<td>Site Content</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//iframe[@id='manageContentDialog']</td>
+	<td>Manage Site Content</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//iframe[@id='manageContentDialog']</td>
+	<td>Manage Site Content</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/transition/transition-min.js')]</td>
+	<td>Transition Min</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -74,7 +109,7 @@
 	<td>Import</td>
 </tr>
 <tr>
-	<td>type</td>
+	<td>uploadFile</td>
 	<td>//input[@id='_86_importFileName']</td>
 	<td>L:\portal\build\portal-web\test\com\liferay\portalweb\portlet\messageboards\dependencies\Message_Boards-Selenium.portlet.lar</td>
 </tr>
@@ -117,6 +152,11 @@
 	<td>assertText</td>
 	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>relative=top</td>
+	<td>top</td>
 </tr>
 </tbody></table>
 </body>

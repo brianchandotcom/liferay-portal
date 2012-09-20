@@ -41,8 +41,8 @@ public class AddMBCategoryDescriptionTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals(RuntimeVariables.replace(
-				"MB Category Name\nMB Category Description"),
-			selenium.getText("//td[1]/a"));
+		assertEquals(RuntimeVariables.replace("MB Category Name"),
+			selenium.getText("//td[1]/a/strong"));
+		assertTrue(selenium.isPartialText("//td[1]/a", "MB Category Description"));
 	}
 }

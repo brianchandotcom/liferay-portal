@@ -3,8 +3,8 @@
 [Liferay
 Portal](http://www.liferay.com/community/liferay-projects/liferay-portal) is an
 open source enterprise web platform for building business solutions that deliver
-immediate results and long-term value. It started out as a personal development
-project in 2000 and was open sourced in 2001.
+immediate results and long-term value. Liferay Portal started out as a personal
+development project in 2000 and was open sourced in 2001.
 
 To get started, check out the project's community homepage at
 [http://liferay.org](http://liferay.org)!
@@ -28,16 +28,15 @@ include select plugins from the liferay-plugins repository. You can build
 Liferay Portal, its plugins, and/or any of the other supporting technologies
 from their respective repositories.
 
-## Quick start
+## Quick Start
 
 To get up and running quickly, *download* a [pre-built Liferay
 release](http://liferay.com/downloads) and follow the [Quick
 Start](http://liferay.com/quick-start) instructions.
 
-If you wish to *build* core Liferay or its plugins yourself, read the
-[CONTRIBUTING
+If you wish to *build* core Liferay or its plugins, read the [CONTRIBUTING
 guide](https://github.com/liferay/liferay-portal/blob/master/CONTRIBUTING.markdown).
-It includes details on cloning the repositories and building the software.
+It includes details on using the repositories and building the software.
 
 ## Versioning
 
@@ -47,15 +46,15 @@ maintain backward compatibility, we make a strong effort to uphold the
 Guidelines](http://www.liferay.com/community/wiki/-/wiki/Main/Liferay+Versioning+Policy)
 for our software.
 
-## Bug tracker
+## Bug Tracker
 
 Have a bug? Please file an issue at
-[http://issues.liferay.com](http://issues.liferay.com). Follow [Liferay's JIRA
+[http://issues.liferay.com](http://issues.liferay.com) following [Liferay's JIRA
 Guidelines](http://www.liferay.com/community/wiki/-/wiki/Main/JIRA).
 
-## Twitter account
+## Twitter Account
 
-Keep up to date on announcements and more by following Liferay on Twitter,
+Stay updated on announcements and more by following Liferay on Twitter,
 [@Liferay](http://twitter.com/Liferay).
 
 ## Blog
@@ -81,8 +80,8 @@ project](http://www.liferay.com/community/liferay-projects/liferay-ide) provides
 an Eclipse-based Liferay development environment to help you build and maintain
 Liferay projects easily.
 
-Finally, you can also use Maven to build Liferay and your Liferay projects. For
-an excellent overview of Maven support, check out [Mika Koivisto's
+Finally, consider using Maven to build Liferay and your Liferay projects. For
+excellent overviews of Maven support for Liferay, check out [Mika Koivisto's
 presentation](http://www.slideshare.net/koivimik/developing-liferay-plugins-with-maven)
 and [Getting Started with Liferay Maven
 SDK](http://www.liferay.com/web/mika.koivisto/blog/-/blogs/12322618).

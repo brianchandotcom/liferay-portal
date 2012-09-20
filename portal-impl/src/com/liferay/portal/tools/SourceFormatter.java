@@ -797,13 +797,15 @@ public class SourceFormatter {
 			directoryScanner);
 
 		for (String fileName : fileNames) {
-			fileName = StringUtil.replace(fileName, "\\", "/");
+			File file = new File(basedir + fileName);
 
-			String content = _fileUtil.read(basedir + fileName);
+			String content = _fileUtil.read(file);
 
-			content = _fixAntXMLProjectName(basedir, fileName, content);
+			String newContent = _trimContent(content);
 
-			Document document = _saxReaderUtil.read(content);
+			newContent = _fixAntXMLProjectName(basedir, fileName, newContent);
+
+			Document document = _saxReaderUtil.read(newContent);
 
 			Element rootElement = document.getRootElement();
 
@@ -827,6 +829,12 @@ public class SourceFormatter {
 				}
 
 				previousName = name;
+			}
+
+			if ((newContent != null) && !content.equals(newContent)) {
+				_fileUtil.write(file, newContent);
+
+				_sourceFormatterHelper.printError(fileName, file);
 			}
 		}
 	}
@@ -854,7 +862,9 @@ public class SourceFormatter {
 
 			String content = _fileUtil.read(file);
 
-			String newContent = _formatDDLStructuresXML(content);
+			String newContent = _trimContent(content);
+
+			newContent = _formatDDLStructuresXML(content);
 
 			if ((newContent != null) && !content.equals(newContent)) {
 				_fileUtil.write(file, newContent);
@@ -921,7 +931,9 @@ public class SourceFormatter {
 				continue;
 			}
 
-			String newContent = _formatFriendlyURLRoutesXML(content);
+			String newContent = _trimContent(content);
+
+			newContent = _formatFriendlyURLRoutesXML(content);
 
 			if ((newContent != null) && !content.equals(newContent)) {
 				_fileUtil.write(file, newContent);
@@ -1362,11 +1374,7 @@ public class SourceFormatter {
 		while ((line = unsyncBufferedReader.readLine()) != null) {
 			lineCount++;
 
-			if (line.trim().length() == 0) {
-				line = StringPool.BLANK;
-			}
-
-			line = StringUtil.trimTrailing(line);
+			line = _trimLine(line);
 
 			line = StringUtil.replace(
 				line,
@@ -1389,29 +1397,6 @@ public class SourceFormatter {
 
 					if (importPackageName.equals(packageName)) {
 						continue;
-					}
-				}
-			}
-
-			if (line.startsWith(StringPool.SPACE) && !line.startsWith(" *")) {
-				if (!line.startsWith(StringPool.FOUR_SPACES)) {
-					while (line.startsWith(StringPool.SPACE)) {
-						line = StringUtil.replaceFirst(
-							line, StringPool.SPACE, StringPool.BLANK);
-					}
-				}
-				else {
-					int pos = 0;
-
-					String temp = line;
-
-					while (temp.startsWith(StringPool.FOUR_SPACES)) {
-						line = StringUtil.replaceFirst(
-							line, StringPool.FOUR_SPACES, StringPool.TAB);
-
-						pos++;
-
-						temp = line.substring(pos);
 					}
 				}
 			}
@@ -2006,11 +1991,11 @@ public class SourceFormatter {
 		while ((line = unsyncBufferedReader.readLine()) != null) {
 			lineCount++;
 
-			if (line.trim().length() == 0) {
-				line = StringPool.BLANK;
-			}
+			if (!fileName.contains("jsonw") ||
+				!fileName.endsWith("action.jsp")) {
 
-			line = StringUtil.trimTrailing(line);
+				line = _trimLine(line);
+			}
 
 			if (line.contains("<aui:button ") &&
 				line.contains("type=\"button\"")) {
@@ -2234,7 +2219,9 @@ public class SourceFormatter {
 
 				String content = _fileUtil.read(file);
 
-				String newContent = _formatPortletXML(content);
+				String newContent = _trimContent(content);
+
+				newContent = _formatPortletXML(content);
 
 				if ((newContent != null) && !content.equals(newContent)) {
 					_fileUtil.write(file, newContent);
@@ -2335,11 +2322,7 @@ public class SourceFormatter {
 		String previousLineSqlCommand = StringPool.BLANK;
 
 		while ((line = unsyncBufferedReader.readLine()) != null) {
-			if (line.trim().length() == 0) {
-				line = StringPool.BLANK;
-			}
-
-			line = StringUtil.trimTrailing(line);
+			line = _trimLine(line);
 
 			if (Validator.isNotNull(line) && !line.startsWith(StringPool.TAB)) {
 				String sqlCommand = StringUtil.split(line, CharPool.SPACE)[0];
@@ -2386,7 +2369,9 @@ public class SourceFormatter {
 
 		String content = _fileUtil.read(file);
 
-		Document document = _saxReaderUtil.read(content);
+		String newContent = _trimContent(content);
+
+		Document document = _saxReaderUtil.read(newContent);
 
 		Element rootElement = document.getRootElement();
 
@@ -2409,6 +2394,12 @@ public class SourceFormatter {
 			}
 
 			previousPath = path;
+		}
+
+		if ((newContent != null) && !content.equals(newContent)) {
+			_fileUtil.write(file, newContent);
+
+			_sourceFormatterHelper.printError(fileName, file);
 		}
 	}
 
@@ -2488,7 +2479,9 @@ public class SourceFormatter {
 
 		String content = _fileUtil.read(file);
 
-		Document document = _saxReaderUtil.read(content);
+		String newContent = _trimContent(content);
+
+		Document document = _saxReaderUtil.read(newContent);
 
 		Element rootElement = document.getRootElement();
 
@@ -2509,6 +2502,12 @@ public class SourceFormatter {
 			}
 
 			previousName = name;
+		}
+
+		if ((newContent != null) && !content.equals(newContent)) {
+			_fileUtil.write(file, newContent);
+
+			_sourceFormatterHelper.printError(fileName, file);
 		}
 	}
 
@@ -2554,19 +2553,23 @@ public class SourceFormatter {
 
 			String content = _fileUtil.read(file);
 
-			int x = content.indexOf("<servlet-mapping>");
+			String newContent = _trimContent(content);
 
-			x = content.indexOf("<servlet-name>I18n Servlet</servlet-name>", x);
+			int x = newContent.indexOf("<servlet-mapping>");
 
-			x = content.lastIndexOf("<servlet-mapping>", x) - 1;
+			x = newContent.indexOf(
+				"<servlet-name>I18n Servlet</servlet-name>", x);
 
-			int y = content.lastIndexOf(
+			x = newContent.lastIndexOf("<servlet-mapping>", x) - 1;
+
+			int y = newContent.lastIndexOf(
 				"<servlet-name>I18n Servlet</servlet-name>");
 
-			y = content.indexOf("</servlet-mapping>", y) + 19;
+			y = newContent.indexOf("</servlet-mapping>", y) + 19;
 
-			String newContent =
-				content.substring(0, x) + sb.toString() + content.substring(y);
+			newContent =
+				newContent.substring(0, x) + sb.toString() +
+					newContent.substring(y);
 
 			x = newContent.indexOf("<security-constraint>");
 
@@ -3872,6 +3875,65 @@ public class SourceFormatter {
 		}
 
 		return newProperties;
+	}
+
+	private static String _trimContent(String content) throws IOException {
+		StringBundler sb = new StringBundler();
+
+		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
+			new UnsyncStringReader(content));
+
+		String line = null;
+
+		while ((line = unsyncBufferedReader.readLine()) != null) {
+			sb.append(_trimLine(line));
+			sb.append("\n");
+		}
+
+		unsyncBufferedReader.close();
+
+		content = sb.toString();
+
+		if (content.endsWith("\n")) {
+			content = content.substring(0, content.length() - 1);
+		}
+
+		return content;
+	}
+
+	private static String _trimLine(String line) {
+		if (line.trim().length() == 0) {
+			return StringPool.BLANK;
+		}
+
+		line = StringUtil.trimTrailing(line);
+
+		if (!line.startsWith(StringPool.SPACE) || line.startsWith(" *")) {
+			return line;
+		}
+
+		if (!line.startsWith(StringPool.FOUR_SPACES)) {
+			while (line.startsWith(StringPool.SPACE)) {
+				line = StringUtil.replaceFirst(
+					line, StringPool.SPACE, StringPool.BLANK);
+			}
+		}
+		else {
+			int pos = 0;
+
+			String temp = line;
+
+			while (temp.startsWith(StringPool.FOUR_SPACES)) {
+				line = StringUtil.replaceFirst(
+					line, StringPool.FOUR_SPACES, StringPool.TAB);
+
+				pos++;
+
+				temp = line.substring(pos);
+			}
+		}
+
+		return line;
 	}
 
 	private static final String[] _TAG_LIBRARIES = new String[] {

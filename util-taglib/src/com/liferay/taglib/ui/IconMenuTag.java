@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.PortalIncludeUtil;
 import com.liferay.portal.kernel.servlet.taglib.BaseBodyTagSupport;
 import com.liferay.portal.kernel.servlet.taglib.FileAvailabilityUtil;
+import com.liferay.portal.kernel.servlet.taglib.aui.ScriptData;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -56,6 +57,13 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 			(singleIcon == null)) {
 
 			bodyContent.clearBody();
+
+			ScriptData scriptData = (ScriptData)request.getAttribute(
+				WebKeys.AUI_SCRIPT_DATA);
+
+			if (scriptData != null) {
+				scriptData.reset();
+			}
 
 			request.setAttribute(
 				"liferay-ui:icon-menu:single-icon", Boolean.TRUE);
@@ -99,6 +107,13 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 	public int doStartTag() {
 		HttpServletRequest request =
 			(HttpServletRequest)pageContext.getRequest();
+
+		ScriptData scriptData = (ScriptData)request.getAttribute(
+			WebKeys.AUI_SCRIPT_DATA);
+
+		if (scriptData != null) {
+			scriptData.mark();
+		}
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);

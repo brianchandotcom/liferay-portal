@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
@@ -75,12 +77,32 @@ public class ScriptData implements Mergeable<ScriptData>, Serializable {
 		return useSet;
 	}
 
+	public void mark() {
+		for (PortletData portletData : _portletDataMap.values()) {
+			StringBundler callbackSB = portletData._callbackSB;
+
+			_sbIndexMap.put(callbackSB, callbackSB.index());
+
+			StringBundler rawSB = portletData._rawSB;
+
+			_sbIndexMap.put(rawSB, rawSB.index());
+		}
+	}
+
 	public ScriptData merge(ScriptData scriptData) {
 		if ((scriptData != null) && (scriptData != this)) {
 			_portletDataMap.putAll(scriptData._portletDataMap);
 		}
 
 		return this;
+	}
+
+	public void reset() {
+		for (Map.Entry<StringBundler, Integer> entry : _sbIndexMap.entrySet()) {
+			StringBundler sb = entry.getKey();
+
+			sb.setIndex(entry.getValue());
+		}
 	}
 
 	private PortletData _getPortletData(String portletId) {
@@ -108,6 +130,9 @@ public class ScriptData implements Mergeable<ScriptData>, Serializable {
 
 	private ConcurrentMap<String, PortletData> _portletDataMap =
 		new ConcurrentHashMap<String, PortletData>();
+
+	private Map<StringBundler, Integer> _sbIndexMap =
+		new HashMap<StringBundler, Integer>();
 
 	private class PortletData implements Serializable {
 

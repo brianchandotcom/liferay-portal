@@ -47,9 +47,9 @@ public class AssetCategoriesNavigationPortletDisplayTemplateHandler
 	}
 
 	@Override
-	protected String getHelpTemplatePathPropsKey() {
+	protected String getTemplatesHelpKey() {
 		return PropsKeys.
-			ASSET_CATEGORIES_NAVIGATION_DISPLAY_STYLES_TEMPLATE_HELP_CONTENT;
+			ASSET_CATEGORIES_NAVIGATION_DISPLAY_TEMPLATES_HELP;
 	}
 
 }

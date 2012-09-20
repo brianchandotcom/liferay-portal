@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.servlet.GenericServletWrapper;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.dynamicdatalists.util.DDLTransformer;
@@ -41,8 +42,6 @@ import freemarker.ext.servlet.ServletContextHashModel;
 import freemarker.template.ObjectWrapper;
 import freemarker.template.TemplateHashModel;
 
-import java.io.IOException;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -54,9 +53,6 @@ import javax.portlet.RenderResponse;
 import javax.servlet.GenericServlet;
 import javax.servlet.Servlet;
 import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -243,33 +239,17 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 			Map<String, Object> contextObjects, PageContext pageContext)
 		throws Exception {
 
-		TemplateHashModel portalTaglib =
-			FreeMarkerTaglibFactoryUtil.createTaglibFactory(
-				pageContext.getServletContext());
+		// Freemarker Servlet Application
 
-		contextObjects.put(
-			PortletDisplayTemplateConstants.PORTAL_JSP_TAG_LIBS, portalTaglib);
-
-		final Servlet servlet = (Servlet)pageContext.getPage();
+		final Servlet pageServlet = (Servlet)pageContext.getPage();
 
 		GenericServlet genericServlet = null;
 
-		if (servlet instanceof GenericServlet) {
-			genericServlet = (GenericServlet)servlet;
+		if (pageServlet instanceof GenericServlet) {
+			genericServlet = (GenericServlet)pageServlet;
 		}
 		else {
-			genericServlet = new GenericServlet() {
-
-				@Override
-				public void service(
-						ServletRequest servletRequest,
-						ServletResponse servletResponse)
-					throws IOException, ServletException {
-
-					servlet.service(servletRequest, servletResponse);
-				}
-
-			};
+			genericServlet = new GenericServletWrapper(pageServlet);
 
 			genericServlet.init(pageContext.getServletConfig());
 		}
@@ -279,19 +259,32 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 				genericServlet, ObjectWrapper.DEFAULT_WRAPPER);
 
 		contextObjects.put(
-			PortletDisplayTemplateConstants.APPLICATION,
+			PortletDisplayTemplateConstants.FREEMARKER_SERVLET_APPLICATION,
 			servletContextHashModel);
+
+		// Freemarker Servlet Request
 
 		HttpServletRequest request =
 			(HttpServletRequest)pageContext.getRequest();
 		HttpServletResponse response =
 			(HttpServletResponse)pageContext.getResponse();
 
-		HttpRequestHashModel httpRequestHashModel = new HttpRequestHashModel(
+		HttpRequestHashModel requestHashModel = new HttpRequestHashModel(
 			request, response, ObjectWrapper.DEFAULT_WRAPPER);
 
 		contextObjects.put(
-			PortletDisplayTemplateConstants.FTL_REQUEST, httpRequestHashModel);
+			PortletDisplayTemplateConstants.FREEMARKER_SERVLET_REQUEST,
+			requestHashModel);
+
+		// Taglib Liferay Hash
+
+		TemplateHashModel taglibLiferayHash =
+			FreeMarkerTaglibFactoryUtil.createTaglibFactory(
+				pageContext.getServletContext());
+
+		contextObjects.put(
+			PortletDisplayTemplateConstants.TAGLIB_LIFERAY_HASH,
+			taglibLiferayHash);
 	}
 
 	private void _addTaglibSupportVM(

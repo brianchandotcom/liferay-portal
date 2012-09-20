@@ -33,7 +33,7 @@ public abstract class BasePortletDisplayTemplateHandler
 	implements PortletDisplayTemplateHandler {
 
 	public List<Element> getDefaultTemplateElements() throws Exception {
-		String defaultTemplatesConfigPath = getDefaultTemplatesConfigPath();
+		String defaultTemplatesConfigPath = getTemplatesConfigFile();
 
 		if (Validator.isNull(defaultTemplatesConfigPath)) {
 			return Collections.emptyList();
@@ -51,17 +51,16 @@ public abstract class BasePortletDisplayTemplateHandler
 		return rootElement.elements("template");
 	}
 
-	public String getHelpTemplatePath(String language) {
-		return PropsUtil.get(
-			getHelpTemplatePathPropsKey(), new Filter(language));
-	}
-
-	protected String getDefaultTemplatesConfigPath() {
+	protected String getTemplatesConfigFile() {
 		return null;
 	}
 
-	protected String getHelpTemplatePathPropsKey() {
-		return PropsKeys.DISPLAY_STYLES_TEMPLATE_HELP_CONTENT;
+	protected String getTemplatesHelpKey() {
+		return PropsKeys.PORTLET_DISPLAY_TEMPLATES_HELP;
+	}
+
+	public String getTemplatesHelpPath(String language) {
+		return PropsUtil.get(getTemplatesHelpKey(), new Filter(language));
 	}
 
 }

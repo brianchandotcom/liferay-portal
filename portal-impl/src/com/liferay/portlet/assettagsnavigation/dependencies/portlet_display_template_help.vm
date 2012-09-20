@@ -1,5 +1,5 @@
 ##
-## You can use Velocity to define display styles for the Tags Navigation
+## You can use Velocity to define display templates for the Tags Navigation
 ## portlet.
 ##
 ## A set of variables have been made available for the template developers:
@@ -7,6 +7,8 @@
 ##  $ddmTemplateId: the current template id
 ##
 ##  $entries: the list of tags that are being shown in the portlet
+##
+##  $entry: the tag when there's only one tag entry
 ##
 ##  $locale: the locale of the site
 ##

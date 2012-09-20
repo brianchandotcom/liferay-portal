@@ -68,7 +68,6 @@ public class PropsValues {
 
 	public static final String[] APPLICATION_STARTUP_EVENTS = PropsUtil.getArray(PropsKeys.APPLICATION_STARTUP_EVENTS);
 
-	public static final String ASSET_CATEGORIES_NAVIGATION_DISPLAY_STYLES_TEMPLATE_HELP_CONTENT = PropsUtil.get(PropsKeys.ASSET_CATEGORIES_NAVIGATION_DISPLAY_STYLES_TEMPLATE_HELP_CONTENT);
 
 	public static final String[] ASSET_CATEGORIES_PROPERTIES_DEFAULT = PropsUtil.getArray(PropsKeys.ASSET_CATEGORIES_PROPERTIES_DEFAULT);
 
@@ -82,13 +81,9 @@ public class PropsValues {
 
 	public static String[] ASSET_PUBLISHER_DISPLAY_STYLES = PropsUtil.getArray(PropsKeys.ASSET_PUBLISHER_DISPLAY_STYLES);
 
-	public static final String ASSET_PUBLISHER_DISPLAY_STYLES_TEMPLATE_HELP_CONTENT = PropsUtil.get(PropsKeys.ASSET_PUBLISHER_DISPLAY_STYLES_TEMPLATE_HELP_CONTENT);
-
 	public static final String[] ASSET_TAG_PROPERTIES_DEFAULT = PropsUtil.getArray(PropsKeys.ASSET_TAG_PROPERTIES_DEFAULT);
 
 	public static final boolean ASSET_TAG_SUGGESTIONS_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.ASSET_TAG_SUGGESTIONS_ENABLED));
-
-	public static final String ASSET_TAGS_NAVIGATION_DISPLAY_STYLES_TEMPLATE_HELP_CONTENT = PropsUtil.get(PropsKeys.ASSET_TAGS_NAVIGATION_DISPLAY_STYLES_TEMPLATE_HELP_CONTENT);
 
 	public static final String ASSET_VOCABULARY_DEFAULT = PropsUtil.get(PropsKeys.ASSET_VOCABULARY_DEFAULT);
 
@@ -170,7 +165,6 @@ public class PropsValues {
 
 	public static final boolean BASIC_AUTH_PASSWORD_REQUIRED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.BASIC_AUTH_PASSWORD_REQUIRED));
 
-	public static final String BLOGS_DISPLAY_STYLES_TEMPLATE_HELP_CONTENT = PropsUtil.get(PropsKeys.BLOGS_DISPLAY_STYLES_TEMPLATE_HELP_CONTENT);
 
 	public static final String BLOGS_EMAIL_FROM_ADDRESS = PropsUtil.get(PropsKeys.BLOGS_EMAIL_FROM_ADDRESS);
 
@@ -457,8 +451,6 @@ public class PropsValues {
 	public static final boolean DISCUSSION_SUBSCRIBE_BY_DEFAULT = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.DISCUSSION_SUBSCRIBE_BY_DEFAULT));
 
 	public static final String DISCUSSION_THREAD_VIEW = PropsUtil.get(PropsKeys.DISCUSSION_THREAD_VIEW);
-
-	public static final String DISPLAY_STYLES_TEMPLATE_HELP_CONTENT = PropsUtil.get(PropsKeys.DISPLAY_STYLES_TEMPLATE_HELP_CONTENT);
 
 	public static final String[] DL_COMPARABLE_FILE_EXTENSIONS = PropsUtil.getArray(PropsKeys.DL_COMPARABLE_FILE_EXTENSIONS);
 
@@ -1496,6 +1488,8 @@ public class PropsValues {
 
 	public static final boolean SHOPPING_ORDER_COMMENTS_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.SHOPPING_ORDER_COMMENTS_ENABLED));
 
+	public static final String SITEMAP_DISPLAY_TEMPLATES_CONFIG_FILE = PropsUtil.get(PropsKeys.SITEMAP_DISPLAY_TEMPLATES_CONFIG_FILE);
+
 	public static final boolean SITEMINDER_AUTH_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.SITEMINDER_AUTH_ENABLED));
 
 	public static final boolean SITEMINDER_IMPORT_FROM_LDAP = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.SITEMINDER_IMPORT_FROM_LDAP));
@@ -1523,10 +1517,6 @@ public class PropsValues {
 	public static String SITES_SITEMAP_DEFAULT_CHANGE_FREQUENCY = PropsUtil.get(PropsKeys.SITES_SITEMAP_DEFAULT_CHANGE_FREQUENCY);
 
 	public static String SITES_SITEMAP_DEFAULT_PRIORITY = PropsUtil.get(PropsKeys.SITES_SITEMAP_DEFAULT_PRIORITY);
-
-	public static final String SITES_SITEMAP_DISPLAY_STYLES_TEMPLATE_DEFAULT_CONFIG = PropsUtil.get(PropsKeys.SITES_SITEMAP_DISPLAY_STYLES_TEMPLATE_DEFAULT_CONFIG);
-
-	public static final String SITES_SITEMAP_DISPLAY_STYLES_TEMPLATE_HELP_CONTENT = PropsUtil.get(PropsKeys.SITES_SITEMAP_DISPLAY_STYLES_TEMPLATE_HELP_CONTENT);
 
 	public static final int[] SOCIAL_ACTIVITY_CONTRIBUTION_INCREMENTS = GetterUtil.getIntegerValues(PropsUtil.getArray(PropsKeys.SOCIAL_ACTIVITY_CONTRIBUTION_INCREMENTS));
 
@@ -1735,8 +1725,6 @@ public class PropsValues {
 	public static final int WEBDAV_NONCE_EXPIRATION = GetterUtil.getInteger(PropsUtil.get(PropsKeys.WEBDAV_NONCE_EXPIRATION));
 
 	public static final String WIDGET_SERVLET_MAPPING = PropsUtil.get(PropsKeys.WIDGET_SERVLET_MAPPING);
-
-	public static final String WIKI_DISPLAY_STYLES_TEMPLATE_HELP_CONTENT = PropsUtil.get(PropsKeys.WIKI_DISPLAY_STYLES_TEMPLATE_HELP_CONTENT);
 
 	public static final String WIKI_EMAIL_FROM_ADDRESS = PropsUtil.get(PropsKeys.WIKI_EMAIL_FROM_ADDRESS);
 

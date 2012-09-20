@@ -48,13 +48,13 @@ public class SiteMapPortletDisplayTemplateHandler
 	}
 
 	@Override
-	protected String getDefaultTemplatesConfigPath() {
-		return PropsValues.SITES_SITEMAP_DISPLAY_STYLES_TEMPLATE_DEFAULT_CONFIG;
+	protected String getTemplatesHelpKey() {
+		return PropsKeys.SITEMAP_DISPLAY_TEMPLATES_HELP;
 	}
 
 	@Override
-	protected String getHelpTemplatePathPropsKey() {
-		return PropsKeys.SITES_SITEMAP_DISPLAY_STYLES_TEMPLATE_HELP_CONTENT;
+	protected String getTemplatesConfigFile() {
+		return PropsValues.SITEMAP_DISPLAY_TEMPLATES_CONFIG_FILE;
 	}
 
 }

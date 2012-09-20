@@ -1,6 +1,6 @@
-<#assign aui = PortalJspTagLibs["/WEB-INF/tld/aui.tld"] />
-<#assign liferay_portlet = PortalJspTagLibs["/WEB-INF/tld/liferay-portlet.tld"] />
-<#assign liferay_ui = PortalJspTagLibs["/WEB-INF/tld/liferay-ui.tld"] />
+<#assign aui = taglibLiferayHash["/WEB-INF/tld/aui.tld"] />
+<#assign liferay_portlet = taglibLiferayHash["/WEB-INF/tld/liferay-portlet.tld"] />
+<#assign liferay_ui = taglibLiferayHash["/WEB-INF/tld/liferay-ui.tld"] />
 
 <#if entries?has_content>
 	<@aui.layout>

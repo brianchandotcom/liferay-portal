@@ -47,8 +47,8 @@ public class WikiPortletDisplayTemplateHandler
 	}
 
 	@Override
-	protected String getHelpTemplatePathPropsKey() {
-		return PropsKeys.WIKI_DISPLAY_STYLES_TEMPLATE_HELP_CONTENT;
+	protected String getTemplatesHelpKey() {
+		return PropsKeys.WIKI_DISPLAY_TEMPLATES_HELP;
 	}
 
 }

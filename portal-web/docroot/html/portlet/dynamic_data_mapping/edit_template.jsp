@@ -48,7 +48,8 @@ if (Validator.isNull(script)) {
 		PortletDisplayTemplateHandler portletDisplayTemplateHandler = PortletDisplayTemplateHandlerRegistryUtil.getPortletDisplayTemplateHandler(classNameId);
 
 		if (portletDisplayTemplateHandler != null) {
-			script = ContentUtil.get(portletDisplayTemplateHandler.getHelpTemplatePath(language));
+			script = ContentUtil.get(portletDisplayTemplateHandler.getTemplatesHelpPath(
+					language));
 		}
 	}
 	else if (!type.equals("detail")) {

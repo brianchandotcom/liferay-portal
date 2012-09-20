@@ -64,6 +64,7 @@ public class MBThreadTestPlan extends BaseTestSuite {
 
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
+
 		testSuite.addTest(
 			DeleteMarkAsAnswerMBCategoryQuestionReplyTests.suite());
 		testSuite.addTest(DeleteMBCategoryThreadTests.suite());

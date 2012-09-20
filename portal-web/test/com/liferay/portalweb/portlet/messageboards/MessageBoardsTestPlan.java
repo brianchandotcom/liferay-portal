@@ -33,8 +33,8 @@ public class MessageBoardsTestPlan extends BaseTestSuite {
 		TestSuite testSuite = new TestSuite();
 
 		testSuite.addTest(HybridTestPlan.suite());
-		testSuite.addTest(MBLARTestPlan.suite());
 		testSuite.addTest(MBCategoryTestPlan.suite());
+		testSuite.addTest(MBLARTestPlan.suite());
 		testSuite.addTest(MBThreadTestPlan.suite());
 		testSuite.addTest(PortletTestPlan.suite());
 

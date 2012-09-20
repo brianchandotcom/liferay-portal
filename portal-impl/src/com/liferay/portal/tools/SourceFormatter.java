@@ -1323,7 +1323,7 @@ public class SourceFormatter {
 			String oldContent = newContent;
 
 			for (;;) {
-				newContent = _formatJavaContent(fileName, oldContent);
+				newContent = _formatJava(fileName, oldContent);
 
 				if (oldContent.equals(newContent)) {
 					break;
@@ -1340,7 +1340,7 @@ public class SourceFormatter {
 		}
 	}
 
-	private static String _formatJavaContent(String fileName, String content)
+	private static String _formatJava(String fileName, String content)
 		throws IOException {
 
 		StringBundler sb = new StringBundler();
@@ -1840,7 +1840,7 @@ public class SourceFormatter {
 			String newContent = StringPool.BLANK;
 
 			for (;;) {
-				newContent = _formatJSPContent(fileName, oldContent);
+				newContent = _formatJSP(fileName, oldContent);
 
 				if (oldContent.equals(newContent)) {
 					break;
@@ -1969,7 +1969,7 @@ public class SourceFormatter {
 		}
 	}
 
-	private static String _formatJSPContent(String fileName, String content)
+	private static String _formatJSP(String fileName, String content)
 		throws IOException {
 
 		StringBundler sb = new StringBundler();
@@ -2412,7 +2412,7 @@ public class SourceFormatter {
 
 			String content = _fileUtil.read(file);
 
-			String newContent = _formatSQLContent(content);
+			String newContent = _formatSQL(content);
 
 			if ((newContent != null) && !content.equals(newContent)) {
 				_fileUtil.write(file, newContent);
@@ -2422,7 +2422,7 @@ public class SourceFormatter {
 		}
 	}
 
-	private static String _formatSQLContent(String content) throws IOException {
+	private static String _formatSQL(String content) throws IOException {
 		StringBundler sb = new StringBundler();
 
 		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(

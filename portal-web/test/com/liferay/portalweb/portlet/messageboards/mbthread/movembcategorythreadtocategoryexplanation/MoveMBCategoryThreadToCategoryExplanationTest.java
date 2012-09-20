@@ -55,8 +55,8 @@ public class MoveMBCategoryThreadToCategoryExplanationTest extends BaseTestCase 
 			selenium.getText("//a[@id='_19_categoryName']"));
 		selenium.clickAt("//input[@value='Select']",
 			RuntimeVariables.replace("Select"));
-		selenium.waitForPopUp("category", RuntimeVariables.replace("30000"));
-		selenium.selectWindow("name=category");
+		Thread.sleep(5000);
+		selenium.selectWindow("title=Message Boards");
 		selenium.waitForVisible("//tr[3]/td[1]/a");
 		assertEquals(RuntimeVariables.replace("MB Category1 Name"),
 			selenium.getText("//tr[3]/td[1]/a"));

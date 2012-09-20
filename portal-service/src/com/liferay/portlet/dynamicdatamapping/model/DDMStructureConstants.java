@@ -20,6 +20,8 @@ package com.liferay.portlet.dynamicdatamapping.model;
  */
 public class DDMStructureConstants {
 
+	public static final long DEFAULT_PARENT_STRUCTURE_ID = 0;
+
 	public static final int TYPE_AUTO = 1;
 
 	public static final int TYPE_DEFAULT = 0;

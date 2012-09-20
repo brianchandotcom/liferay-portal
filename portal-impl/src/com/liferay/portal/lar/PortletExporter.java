@@ -102,6 +102,7 @@ import org.apache.commons.lang.time.StopWatch;
  * @author Bruno Farache
  * @author Zsigmond Rab
  * @author Douglas Wong
+ * @author Mate Thurzo
  */
 public class PortletExporter {
 
@@ -1392,6 +1393,48 @@ public class PortletExporter {
 		return sb.toString();
 	}
 
+	protected void updateAssetPublisherClassNameIds(
+			javax.portlet.PortletPreferences jxPreferences, String key)
+		throws Exception {
+
+		String[] oldValues = jxPreferences.getValues(key, null);
+
+		if (oldValues == null) {
+			return;
+		}
+
+		String[] newValues = new String[oldValues.length];
+
+		int i = 0;
+
+		for (String oldValue : oldValues) {
+			if (key.equals("anyAssetType") &&
+				(oldValue.equals("false") || oldValue.equals("true"))) {
+
+				newValues[i++] = oldValue;
+
+				continue;
+			}
+
+			try {
+				long classNameId = Long.parseLong(oldValue);
+
+				String className = PortalUtil.getClassName(classNameId);
+
+				newValues[i++] = className;
+			}
+			catch (Exception e) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Could not get className for classNameId: " +
+							oldValue);
+				}
+			}
+		}
+
+		jxPreferences.setValues(key, newValues);
+	}
+
 	protected void updateAssetPublisherClassPKs(
 			javax.portlet.PortletPreferences jxPreferences, String key,
 			String className)
@@ -1527,6 +1570,11 @@ public class PortletExporter {
 			}
 			else if (name.equals("defaultScope") || name.equals("scopeIds")) {
 				updateAssetPublisherGlobalScopeId(jxPreferences, name, plid);
+			}
+			else if (name.equals("classNameIds") ||
+					 name.equals("anyAssetType")) {
+
+				updateAssetPublisherClassNameIds(jxPreferences, name);
 			}
 		}
 

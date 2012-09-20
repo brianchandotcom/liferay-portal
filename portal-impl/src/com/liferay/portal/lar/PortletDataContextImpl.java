@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.zip.ZipReader;
 import com.liferay.portal.kernel.zip.ZipWriter;
+import com.liferay.portal.model.AttachedModel;
 import com.liferay.portal.model.AuditedModel;
 import com.liferay.portal.model.ClassedModel;
 import com.liferay.portal.model.Group;
@@ -288,6 +289,12 @@ public class PortletDataContextImpl implements PortletDataContext {
 			AuditedModel auditedModel = (AuditedModel)classedModel;
 
 			auditedModel.setUserUuid(auditedModel.getUserUuid());
+		}
+
+		if (classedModel instanceof AttachedModel) {
+			AttachedModel attachedModel = (AttachedModel)classedModel;
+
+			element.addAttribute("class-name", attachedModel.getClassName());
 		}
 
 		if (isResourceMain(classedModel)) {
@@ -678,6 +685,16 @@ public class PortletDataContextImpl implements PortletDataContext {
 		return _xStream.getClassLoader();
 	}
 
+	public long getClassNameId(Element importedElement) {
+		String className = importedElement.attributeValue("class-name");
+
+		if (Validator.isNotNull(className)) {
+			return PortalUtil.getClassNameId(className);
+		}
+
+		return 0;
+	}
+
 	public Map<String, List<MBMessage>> getComments() {
 		return _commentsMap;
 	}
@@ -824,6 +841,20 @@ public class PortletDataContextImpl implements PortletDataContext {
 		}
 
 		return getZipReader().getEntryAsInputStream(path);
+	}
+
+	public Object getZipEntryAsObject(String path, Element element) {
+		Object object = fromXML(getZipEntryAsString(path));
+
+		if (object instanceof AttachedModel) {
+			AttachedModel attachedModel = (AttachedModel) object;
+
+			long classNameId = getClassNameId(element);
+
+			attachedModel.setClassNameId(classNameId);
+		}
+
+		return object;
 	}
 
 	public Object getZipEntryAsObject(String path) {

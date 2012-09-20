@@ -65,6 +65,8 @@ public class DDMPortletDataHandlerImpl extends BasePortletDataHandler {
 
 		Element structureElement = structuresElement.addElement("structure");
 
+		structureElement.addAttribute("class-name", structure.getClassName());
+
 		long defaultUserId = UserLocalServiceUtil.getDefaultUserId(
 			structure.getCompanyId());
 
@@ -114,6 +116,8 @@ public class DDMPortletDataHandlerImpl extends BasePortletDataHandler {
 		DDMStructure structure =
 			(DDMStructure)portletDataContext.getZipEntryAsObject(path);
 
+		long classNameId = portletDataContext.getClassNameId(structureElement);
+
 		prepareLanguagesForImport(structure);
 
 		long userId = portletDataContext.getUserId(structure.getUserUuid());
@@ -147,11 +151,11 @@ public class DDMPortletDataHandlerImpl extends BasePortletDataHandler {
 				serviceContext.setUuid(structure.getUuid());
 
 				importedStructure = DDMStructureLocalServiceUtil.addStructure(
-					userId, portletDataContext.getScopeGroupId(),
-					structure.getClassNameId(), structure.getStructureKey(),
-					structure.getNameMap(), structure.getDescriptionMap(),
-					structure.getXsd(), structure.getStorageType(),
-					structure.getType(), serviceContext);
+					userId, portletDataContext.getScopeGroupId(), classNameId,
+					structure.getStructureKey(), structure.getNameMap(),
+					structure.getDescriptionMap(), structure.getXsd(),
+					structure.getStorageType(), structure.getType(),
+					serviceContext);
 			}
 			else {
 				importedStructure =
@@ -163,11 +167,11 @@ public class DDMPortletDataHandlerImpl extends BasePortletDataHandler {
 		}
 		else {
 			importedStructure = DDMStructureLocalServiceUtil.addStructure(
-				userId, portletDataContext.getScopeGroupId(),
-				structure.getClassNameId(), structure.getStructureKey(),
-				structure.getNameMap(), structure.getDescriptionMap(),
-				structure.getXsd(), structure.getStorageType(),
-				structure.getType(), serviceContext);
+				userId, portletDataContext.getScopeGroupId(), classNameId,
+				structure.getStructureKey(), structure.getNameMap(),
+				structure.getDescriptionMap(), structure.getXsd(),
+				structure.getStorageType(), structure.getType(),
+				serviceContext);
 		}
 
 		portletDataContext.importClassedModel(
@@ -188,7 +192,8 @@ public class DDMPortletDataHandlerImpl extends BasePortletDataHandler {
 		}
 
 		DDMTemplate template =
-			(DDMTemplate)portletDataContext.getZipEntryAsObject(path);
+			(DDMTemplate)portletDataContext.getZipEntryAsObject(
+				path, templateElement);
 
 		long userId = portletDataContext.getUserId(template.getUserUuid());
 
@@ -254,8 +259,8 @@ public class DDMPortletDataHandlerImpl extends BasePortletDataHandler {
 	}
 
 	protected static DDMTemplate addTemplate(
-			long userId, long groupId, DDMTemplate template, long classPK,
-			ServiceContext serviceContext)
+			long userId, long groupId, DDMTemplate template,
+			long classPK, ServiceContext serviceContext)
 		throws Exception {
 
 		DDMTemplate newTemplate = null;

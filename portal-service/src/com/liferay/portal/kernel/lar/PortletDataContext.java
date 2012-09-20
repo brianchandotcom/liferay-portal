@@ -140,6 +140,8 @@ public interface PortletDataContext extends Serializable {
 
 	public ClassLoader getClassLoader();
 
+	public long getClassNameId(Element importedElement);
+
 	public Map<String, List<MBMessage>> getComments();
 
 	public long getCompanyId();
@@ -201,6 +203,8 @@ public interface PortletDataContext extends Serializable {
 	public byte[] getZipEntryAsByteArray(String path);
 
 	public InputStream getZipEntryAsInputStream(String path);
+
+	public Object getZipEntryAsObject(String path, Element element);
 
 	public Object getZipEntryAsObject(String path);
 

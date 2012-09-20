@@ -26,6 +26,10 @@ public class DefineRegRoleContentBlogsAddEntryTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
@@ -41,15 +45,18 @@ public class DefineRegRoleContentBlogsAddEntryTest extends BaseTestCase {
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Roles Regrole Name"),
-			selenium.getText(
-				"//td[@id='_128_ocerSearchContainer_col-name_row-1']/a"));
+			selenium.getText("//tr[contains(.,'Roles Regrole Name')]/td[1]/a"));
 		assertEquals(RuntimeVariables.replace("Regular"),
-			selenium.getText(
-				"//td[@id='_128_ocerSearchContainer_col-type_row-1']/a"));
-		selenium.clickAt("//td[@id='_128_ocerSearchContainer_col-name_row-1']/a",
+			selenium.getText("//tr[contains(.,'Roles Regrole Name')]/td[2]/a"));
+		assertEquals(RuntimeVariables.replace(""),
+			selenium.getText("//tr[contains(.,'Roles Regrole Name')]/td[3]/a"));
+		selenium.clickAt("//tr[contains(.,'Roles Regrole Name')]/td[1]/a",
 			RuntimeVariables.replace("Roles Regrole Name"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Define Permissions",
+		assertEquals(RuntimeVariables.replace("Define Permissions"),
+			selenium.getText(
+				"//ul[@class='aui-tabview-list']/li/span/a[contains(.,'Define Permissions')]"));
+		selenium.clickAt("//ul[@class='aui-tabview-list']/li/span/a[contains(.,'Define Permissions')]",
 			RuntimeVariables.replace("Define Permissions"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Roles Regrole Name"),
@@ -71,16 +78,14 @@ public class DefineRegRoleContentBlogsAddEntryTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Summary"),
 			selenium.getText("//section[@id='portlet_128']/div/div/div/h3"));
 		assertEquals(RuntimeVariables.replace("Blogs"),
-			selenium.getText(
-				"//tr[contains(.,'Blogs')]/td[@headers='_128_ocerSearchContainer_col-resource-set']/a"));
+			selenium.getText("//tr[contains(.,'Blogs')]/td[1]/a"));
 		assertEquals(RuntimeVariables.replace("Blogs"),
-			selenium.getText(
-				"//tr[contains(.,'Blogs')]/td[@headers='_128_ocerSearchContainer_col-resource']"));
+			selenium.getText("//tr[contains(.,'Blogs')]/td[2]"));
 		assertEquals(RuntimeVariables.replace("Add Entry"),
-			selenium.getText(
-				"//tr[contains(.,'Add Entry')]/td[@headers='_128_ocerSearchContainer_col-action']"));
+			selenium.getText("//tr[contains(.,'Blogs')]/td[3]"));
 		assertEquals(RuntimeVariables.replace("Portal"),
-			selenium.getText(
-				"//tr[contains(.,'Portal')]/td[@headers='_128_ocerSearchContainer_col-scope']"));
+			selenium.getText("//tr[contains(.,'Blogs')]/td[4]"));
+		assertEquals(RuntimeVariables.replace("Delete"),
+			selenium.getText("//tr[contains(.,'Blogs')]/td[5]/span/a/span"));
 	}
 }

@@ -14,6 +14,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
+	<td>AUI Editable Min</td>
+</tr>
+<tr>
 	<td>assertText</td>
 	<td>//li[@id='_145_mySites']/a/span</td>
 	<td>Go to</td>
@@ -50,22 +60,27 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[@id='_128_ocerSearchContainer_col-name_row-1']</td>
+	<td>//tr[contains(.,'Roles Regrole Name')]/td[1]/a</td>
 	<td>Roles Regrole Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[@id='_128_ocerSearchContainer_col-type_row-1']</td>
+	<td>//tr[contains(.,'Roles Regrole Name')]/td[2]/a</td>
 	<td>Regular</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//span[@title='Actions']/ul[@id='_128_ocerSearchContainer_1_menu']/li/strong/a/span</td>
+	<td>//tr[contains(.,'Roles Regrole Name')]/td[3]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Roles Regrole Name')]/td[4]/span[@title='Actions']/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//span[@title='Actions']/ul[@id='_128_ocerSearchContainer_1_menu']/li/strong/a/span</td>
+	<td>//tr[contains(.,'Roles Regrole Name')]/td[4]/span[@title='Actions']/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
 <tr>
@@ -89,8 +104,13 @@
 	<td>Roles Regrole Name</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//ul[@class='aui-tabview-list']/li/span/a[contains(.,'Available')]</td>
+	<td>Available</td>
+</tr>
+<tr>
 	<td>clickAtAndWait</td>
-	<td>link=Available</td>
+	<td>//ul[@class='aui-tabview-list']/li/span/a[contains(.,'Available')]</td>
 	<td>Available</td>
 </tr>
 <tr>
@@ -105,27 +125,27 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[@id='_128_usersSearchContainer_col-name_row-usersn']</td>
+	<td>//tr[contains(.,'userfn userln')]/td[2]</td>
 	<td>userfn userln</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[@id='_128_usersSearchContainer_col-screen-name_row-usersn']</td>
+	<td>//tr[contains(.,'userfn userln')]/td[3]</td>
 	<td>usersn</td>
 </tr>
 <tr>
 	<td>assertNotChecked</td>
-	<td>//td[@id='_128_usersSearchContainer_col-rowChecker_row-usersn']/input</td>
+	<td>//tr[contains(.,'userfn userln')]/td[1]/input</td>
 	<td>Checkbox</td>
 </tr>
 <tr>
 	<td>check</td>
-	<td>//td[@id='_128_usersSearchContainer_col-rowChecker_row-usersn']/input</td>
+	<td>//tr[contains(.,'userfn userln')]/td[1]/input</td>
 	<td>Checkbox</td>
 </tr>
 <tr>
 	<td>assertChecked</td>
-	<td>//td[@id='_128_usersSearchContainer_col-rowChecker_row-usersn']/input</td>
+	<td>//tr[contains(.,'userfn userln')]/td[1]/input</td>
 	<td>Checkbox</td>
 </tr>
 <tr>
@@ -140,7 +160,7 @@
 </tr>
 <tr>
 	<td>assertChecked</td>
-	<td>//td[@id='_128_usersSearchContainer_col-rowChecker_row-usersn']/input</td>
+	<td>//tr[contains(.,'userfn userln')]/td[1]/input</td>
 	<td>Checkbox</td>
 </tr>
 </tbody></table>

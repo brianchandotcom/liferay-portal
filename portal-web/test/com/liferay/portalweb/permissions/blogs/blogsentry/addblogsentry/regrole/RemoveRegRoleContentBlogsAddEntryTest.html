@@ -14,6 +14,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
+	<td>AUI Editable Min</td>
+</tr>
+<tr>
 	<td>assertText</td>
 	<td>//li[@id='_145_mySites']/a/span</td>
 	<td>Go to</td>
@@ -50,22 +60,32 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[@id='_128_ocerSearchContainer_col-name_row-1']/a</td>
+	<td>//tr[contains(.,'Roles Regrole Name')]/td[1]/a</td>
 	<td>Roles Regrole Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[@id='_128_ocerSearchContainer_col-type_row-1']/a</td>
+	<td>//tr[contains(.,'Roles Regrole Name')]/td[2]/a</td>
 	<td>Regular</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>//td[@id='_128_ocerSearchContainer_col-name_row-1']/a</td>
-	<td>Roles Regrole Name</td>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Roles Regrole Name')]/td[3]/a</td>
+	<td></td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Define Permissions</td>
+	<td>//tr[contains(.,'Roles Regrole Name')]/td[1]/a</td>
+	<td>Roles Regrole Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//ul[@class='aui-tabview-list']/li/span/a[contains(.,'Define Permissions')]</td>
+	<td>Define Permissions</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//ul[@class='aui-tabview-list']/li/span/a[contains(.,'Define Permissions')]</td>
 	<td>Define Permissions</td>
 </tr>
 <tr>
@@ -80,32 +100,32 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[@id='_128_ocerSearchContainer_col-resource-set_row-1']/a</td>
+	<td>//tr[contains(.,'Blogs')]/td[1]/a</td>
 	<td>Blogs</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[@id='_128_ocerSearchContainer_col-resource_row-1']</td>
+	<td>//tr[contains(.,'Blogs')]/td[2]</td>
 	<td>Blogs</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[@id='_128_ocerSearchContainer_col-action_row-1']</td>
+	<td>//tr[contains(.,'Blogs')]/td[3]</td>
 	<td>Add Entry</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[@id='_128_ocerSearchContainer_col-scope_row-1']</td>
+	<td>//tr[contains(.,'Blogs')]/td[4]</td>
 	<td>Portal</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//a[@id='_128_ocerSearchContainer_1_menu_delete']/span</td>
+	<td>//tr[contains(.,'Blogs')]/td[5]/span/a/span</td>
 	<td>Delete</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//a[@id='_128_ocerSearchContainer_1_menu_delete']/span</td>
+	<td>//tr[contains(.,'Blogs')]/td[5]/span/a/span</td>
 	<td>Delete</td>
 </tr>
 <tr>

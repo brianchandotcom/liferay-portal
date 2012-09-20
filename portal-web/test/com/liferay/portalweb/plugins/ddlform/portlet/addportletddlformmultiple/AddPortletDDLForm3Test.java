@@ -48,18 +48,16 @@ public class AddPortletDDLForm3Test extends BaseTestCase {
 		selenium.waitForVisible("//div[@title='Dynamic Data List Form']/p/a");
 		selenium.clickAt("//div[@title='Dynamic Data List Form']/p/a",
 			RuntimeVariables.replace("Add"));
-		selenium.waitForVisible("//section");
-		assertTrue(selenium.isVisible("//section"));
-		selenium.waitForVisible("//div[1]/div/section");
-		assertTrue(selenium.isVisible("//div[1]/div/section"));
+		selenium.waitForVisible("//div[1]/section");
+		assertTrue(selenium.isVisible("//div[1]/section"));
 		assertEquals(RuntimeVariables.replace("Dynamic Data List Form"),
-			selenium.getText("xPath=(//span[@class='portlet-title-text'])"));
-		selenium.waitForVisible("//div[2]/div/section");
-		assertTrue(selenium.isVisible("//div[2]/div/section"));
+			selenium.getText("xPath=(//span[@class='portlet-title-text'])[1]"));
+		selenium.waitForVisible("//div[2]/section");
+		assertTrue(selenium.isVisible("//div[2]/section"));
 		assertEquals(RuntimeVariables.replace("Dynamic Data List Form"),
 			selenium.getText("xPath=(//span[@class='portlet-title-text'])[2]"));
-		selenium.waitForVisible("//div[3]/div/section");
-		assertTrue(selenium.isVisible("//div[3]/div/section"));
+		selenium.waitForVisible("//div[3]/section");
+		assertTrue(selenium.isVisible("//div[3]/section"));
 		assertEquals(RuntimeVariables.replace("Dynamic Data List Form"),
 			selenium.getText("xPath=(//span[@class='portlet-title-text'])[3]"));
 	}

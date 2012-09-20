@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AddPortletDDLForm2Test extends BaseTestCase {
-	public void testAddPortletDDLForm2() throws Exception {
+public class AddPortletDDLForm1Test extends BaseTestCase {
+	public void testAddPortletDDLForm1() throws Exception {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
@@ -48,13 +48,7 @@ public class AddPortletDDLForm2Test extends BaseTestCase {
 		selenium.waitForVisible("//div[@title='Dynamic Data List Form']/p/a");
 		selenium.clickAt("//div[@title='Dynamic Data List Form']/p/a",
 			RuntimeVariables.replace("Add"));
-		selenium.waitForVisible("//div[1]/section");
-		assertTrue(selenium.isVisible("//div[1]/section"));
-		assertEquals(RuntimeVariables.replace("Dynamic Data List Form"),
-			selenium.getText("xPath=(//span[@class='portlet-title-text'])[1]"));
-		selenium.waitForVisible("//div[2]/section");
-		assertTrue(selenium.isVisible("//div[2]/section"));
-		assertEquals(RuntimeVariables.replace("Dynamic Data List Form"),
-			selenium.getText("xPath=(//span[@class='portlet-title-text'])[2]"));
+		selenium.waitForVisible("//section");
+		assertTrue(selenium.isVisible("//section"));
 	}
 }

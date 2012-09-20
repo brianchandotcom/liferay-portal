@@ -30,8 +30,8 @@ public class RemovePortletEDTest extends BaseTestCase {
 			RuntimeVariables.replace("Events Display Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.click("//img[@alt='Remove']");
-		assertTrue(selenium.getConfirmation()
-						   .matches("^Are you sure you want to remove this component[\\s\\S]$"));
+		selenium.waitForConfirmation(
+			"Are you sure you want to remove this component?");
 		selenium.waitForElementNotPresent("//section");
 		assertTrue(selenium.isElementNotPresent("//section"));
 	}

@@ -20,16 +20,27 @@ import com.liferay.portal.kernel.trash.BaseTrashHandler;
 import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PortletKeys;
+import com.liferay.portlet.PortletURLFactoryUtil;
 import com.liferay.portlet.documentlibrary.NoSuchDirectoryException;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
+import com.liferay.portlet.messageboards.model.MBCategory;
+import com.liferay.portlet.messageboards.model.MBCategoryConstants;
 import com.liferay.portlet.messageboards.model.MBThread;
+import com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBThreadLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBThreadServiceUtil;
 import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.util.Date;
+
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
 
 /**
  * Represents the trash handler for message boards threads.
@@ -123,6 +134,76 @@ public class MBThreadTrashHandler extends BaseTrashHandler {
 	 */
 	public String getClassName() {
 		return CLASS_NAME;
+	}
+
+	/**
+	 * Returns the link to the restored message boards thread
+	 *
+	 * @param  portletRequest the portlet request
+	 * @param  classPK the primary key of the message boards thread
+	 * @return Returns the link to the restored message boards thread
+	 * @throws PortalException if the message boards thread could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public String getRestoreLink(PortletRequest portletRequest, long classPK)
+		throws PortalException, SystemException {
+
+		MBThread thread = MBThreadLocalServiceUtil.getThread(classPK);
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletURL portletURL = PortletURLFactoryUtil.create(
+			portletRequest, PortletKeys.MESSAGE_BOARDS_ADMIN,
+			PortalUtil.getControlPanelPlid(themeDisplay.getCompanyId()),
+			PortletRequest.RENDER_PHASE);
+
+		portletURL.setParameter("struts_action", "/message_boards_admin/view");
+
+		if (thread.getCategoryId() !=
+				MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
+
+			portletURL.setParameter(
+				"mbCategoryId", String.valueOf(thread.getCategoryId()));
+		}
+
+		return portletURL.toString();
+	}
+
+	/**
+	 * Returns the path of the restored message boards thread
+	 *
+	 * The returned string is a path of categories the restored message boards
+	 * thread belongs to.
+	 *
+	 * @param  portletRequest the portlet request
+	 * @param  classPK the primary key of the message boards thread
+	 * @return Returns the path of the restored message boards thread
+	 * @throws PortalException if the message boards thread could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public String getRestoreMessage(PortletRequest portletRequest, long classPK)
+		throws PortalException, SystemException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String restorePath = StringPool.SLASH + themeDisplay.translate("home");
+
+		MBThread thread = MBThreadLocalServiceUtil.getThread(classPK);
+
+		if (thread.getCategoryId() ==
+				MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
+
+			return restorePath;
+		}
+
+		MBCategory category = MBCategoryLocalServiceUtil.fetchMBCategory(
+			thread.getCategoryId());
+
+		return restorePath + category.getAbsolutePath();
 	}
 
 	/**

@@ -17,6 +17,8 @@ package com.liferay.portlet.dynamicdatamapping.util;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portlet.dynamicdatamapping.StructureFieldException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.storage.Field;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
@@ -39,27 +41,43 @@ public class DDMIndexerImpl implements DDMIndexer {
 		while (itr.hasNext()) {
 			Field field = itr.next();
 
-			String name = encodeName(
-				ddmStructure.getStructureId(), field.getName());
+			try {
+				String indexType = ddmStructure.getFieldProperty(
+					field.getName(), "indexType");
 
-			Serializable value = field.getValue();
+				if (Validator.isNull(indexType)) {
+					continue;
+				}
 
-			if (value instanceof Boolean) {
-				document.addKeyword(name, (Boolean)value);
-			}
-			else if (value instanceof Date) {
-				document.addDate(name, (Date)value);
-			}
-			else if (value instanceof Double) {
-				document.addKeyword(name, (Double)value);
-			}
-			else if (value instanceof Integer) {
-				document.addKeyword(name, (Integer)value);
-			}
-			else {
-				String valueString = String.valueOf(value);
+				String name = encodeName(
+					ddmStructure.getStructureId(), field.getName());
 
-				document.addText(name, valueString);
+				Serializable value = field.getValue();
+
+				if (value instanceof Boolean) {
+					document.addKeyword(name, (Boolean)value);
+				}
+				else if (value instanceof Date) {
+					document.addDate(name, (Date)value);
+				}
+				else if (value instanceof Double) {
+					document.addKeyword(name, (Double)value);
+				}
+				else if (value instanceof Integer) {
+					document.addKeyword(name, (Integer)value);
+				}
+				else {
+					String valueString = String.valueOf(value);
+
+					if (indexType.equals("keyword")) {
+						document.addKeyword(name, valueString);
+					}
+					else {
+						document.addText(name, valueString);
+					}
+				}
+			}
+			catch (StructureFieldException e) {
 			}
 		}
 	}

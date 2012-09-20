@@ -112,7 +112,10 @@ if (type.equals("all_pages") || type.equals("categorized_pages") || type.equals(
 
 String emptyResultsMessage = null;
 
-if (type.equals("categorized_pages")) {
+if (type.equals("all_pages")) {
+	emptyResultsMessage = "there-are-no-pages";
+}
+else if (type.equals("categorized_pages")) {
 	emptyResultsMessage = "there-are-no-pages-with-this-category";
 }
 else if (type.equals("draft_pages")) {
@@ -120,6 +123,9 @@ else if (type.equals("draft_pages")) {
 }
 else if (type.equals("incoming_links")) {
 	emptyResultsMessage = "there-are-no-pages-that-link-to-this-page";
+}
+else if (type.equals("orphan_pages")) {
+	emptyResultsMessage = "there-are-no-orphan-pages";
 }
 else if (type.equals("outgoing_links")) {
 	emptyResultsMessage = "this-page-has-no-links";

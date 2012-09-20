@@ -64,6 +64,8 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 
+import java.io.Serializable;
+
 import java.lang.reflect.Method;
 
 import java.util.Date;
@@ -295,6 +297,28 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 		return new CronTrigger(
 			getSchedulerJobName(), getSchedulerGroupName(),
 			cronText.toString());
+	}
+
+	protected Map<String, Serializable> getSearchAttributes(
+			Object... attributes)
+		throws Exception {
+
+		Map<String, Serializable> attributesMap =
+			new HashMap<String, Serializable>();
+
+		if ((attributes.length == 0) || ((attributes.length % 2) != 0)) {
+			throw new Exception("Arguments length is not an even number");
+		}
+
+		for (int i = 0; i < attributes.length; i += 2) {
+			String name = String.valueOf(attributes[i]);
+
+			Serializable value = (Serializable)attributes[i + 1];
+
+			attributesMap.put(name, value);
+		}
+
+		return attributesMap;
 	}
 
 	protected long increment(String name) throws Exception {
@@ -589,11 +613,8 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 		render(_VIEW_PATH_ERROR);
 	}
 
-	protected AlloySearchResult search(String keywords) throws Exception {
-		return search(keywords, null);
-	}
-
-	protected AlloySearchResult search(String keywords, Sort[] sorts)
+	protected AlloySearchResult search(
+			Map<String, Serializable> attributes, String keywords, Sort[] sorts)
 		throws Exception {
 
 		if (indexer == null) {
@@ -609,6 +630,10 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 				portletRequest, portletURL, null, null);
 
 		SearchContext searchContext = SearchContextFactory.getInstance(request);
+
+		if ((attributes != null) && (attributes.size() > 0)) {
+			searchContext.setAttributes(attributes);
+		}
 
 		searchContext.setEnd(searchContainer.getEnd());
 
@@ -631,6 +656,16 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 		alloySearchResult.afterPropertiesSet();
 
 		return alloySearchResult;
+	}
+
+	protected AlloySearchResult search(String keywords) throws Exception {
+		return search(keywords, null);
+	}
+
+	protected AlloySearchResult search(String keywords, Sort[] sorts)
+		throws Exception {
+
+		return search(null, keywords, sorts);
 	}
 
 	protected String translate(String pattern, Object... arguments) {

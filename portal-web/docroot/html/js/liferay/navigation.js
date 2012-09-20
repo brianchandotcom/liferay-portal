@@ -403,13 +403,15 @@ AUI.add(
 					instance.fire(eventName, options);
 				};
 
+				var comboBoxIconRandomId = Util.randomInt();
+
 				var icons = [
 					{
 						handler: function(event) {
 							comboBox.fire('savePage', options);
 						},
 						icon: 'check',
-						id: 'save'
+						id: 'save_' + comboBoxIconRandomId
 					}
 				];
 
@@ -431,7 +433,7 @@ AUI.add(
 								comboBox._optionsOverlay[action]();
 							},
 							icon: 'gear',
-							id: 'options'
+							id: 'options_' + comboBoxIconRandomId
 						}
 					);
 				}
@@ -487,7 +489,7 @@ AUI.add(
 				).render(listItem);
 
 				if (prototypeTemplate && instance._optionsOpen && !prevVal) {
-					var optionItem = comboBox.icons.item('options');
+					var optionItem = comboBox.icons.item('options_' + comboBoxIconRandomId);
 
 					optionItem.StateInteraction.set('active', true);
 					optionsOverlay.show();

@@ -210,7 +210,7 @@ portletURL.setParameter("tabs1", tabs1);
 		<liferay-ui:search-container-column-text
 			name="type"
 			orderable="<%= true %>"
-			value="<%= LanguageUtil.get(pageContext, trashRenderer.getType()) %>"
+			value="<%= ResourceActionsUtil.getModelResource(locale, entry.getClassName()) %>"
 		/>
 
 		<liferay-ui:search-container-column-text

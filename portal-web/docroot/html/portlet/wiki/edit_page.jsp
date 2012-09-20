@@ -482,7 +482,7 @@ if (Validator.isNull(redirect)) {
 
 	function <portlet:namespace />moveToTrashPage() {
 		<portlet:renderURL var="nodeURL">
-			<portlet:param name="struts_action" value="/wiki/view_draft_pages" />
+			<portlet:param name="struts_action" value="/wiki/view" />
 			<portlet:param name="title" value="<%= WikiPageConstants.FRONT_PAGE %>" />
 			<portlet:param name="tag" value="<%= StringPool.BLANK %>" />
 		</portlet:renderURL>

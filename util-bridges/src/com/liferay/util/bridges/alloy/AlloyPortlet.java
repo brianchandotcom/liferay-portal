@@ -16,9 +16,13 @@ package com.liferay.util.bridges.alloy;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.messaging.MessageBusUtil;
+import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
 import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
 import com.liferay.portal.kernel.portlet.Router;
+import com.liferay.portal.kernel.scheduler.SchedulerEngineUtil;
+import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.servlet.HttpMethods;
@@ -64,6 +68,24 @@ public class AlloyPortlet extends GenericPortlet {
 
 			if (indexer != null) {
 				IndexerRegistryUtil.unregister(indexer);
+			}
+
+			MessageListener scheduler = baseAlloyControllerImpl.scheduler;
+
+			if (scheduler == null) {
+				continue;
+			}
+
+			try {
+				SchedulerEngineUtil.unschedule(
+					baseAlloyControllerImpl.getSchedulerJobName(),
+					baseAlloyControllerImpl.getSchedulerGroupName(),
+					StorageType.MEMORY_CLUSTERED);
+
+				MessageBusUtil.removeDestination(
+					baseAlloyControllerImpl.getSchedulerDestinationName());
+			}
+			catch (Exception e) {
 			}
 		}
 	}

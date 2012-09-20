@@ -26,6 +26,10 @@ public class DefineSiteRoleContentBlogsDeleteEntryTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/site-name/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
@@ -41,15 +45,16 @@ public class DefineSiteRoleContentBlogsDeleteEntryTest extends BaseTestCase {
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Roles Siterole Name"),
-			selenium.getText(
-				"//td[@id='_128_ocerSearchContainer_col-name_row-1']/a"));
+			selenium.getText("//tr[contains(.,'Roles Siterole Name')]/td[1]/a"));
 		assertEquals(RuntimeVariables.replace("Site"),
-			selenium.getText(
-				"//td[@id='_128_ocerSearchContainer_col-type_row-1']/a"));
-		selenium.clickAt("//td[@id='_128_ocerSearchContainer_col-name_row-1']/a",
+			selenium.getText("//tr[contains(.,'Roles Siterole Name')]/td[2]/a"));
+		selenium.clickAt("//tr[contains(.,'Roles Siterole Name')]/td[1]/a",
 			RuntimeVariables.replace("Roles Siterole Name"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Define Permissions",
+		assertEquals(RuntimeVariables.replace("Define Permissions"),
+			selenium.getText(
+				"//ul[@class='aui-tabview-list']/li/span/a[contains(.,'Define Permissions')]"));
+		selenium.clickAt("//ul[@class='aui-tabview-list']/li/span/a[contains(.,'Define Permissions')]",
 			RuntimeVariables.replace("Define Permissions"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Roles Siterole Name"),
@@ -72,13 +77,12 @@ public class DefineSiteRoleContentBlogsDeleteEntryTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Summary"),
 			selenium.getText("//section[@id='portlet_128']/div/div/div/h3"));
 		assertEquals(RuntimeVariables.replace("Blogs"),
-			selenium.getText(
-				"//td[@id='_128_ocerSearchContainer_col-resource-set_row-1']"));
+			selenium.getText("//tr[contains(.,'Blogs')]/td[1]/a"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry"),
-			selenium.getText(
-				"//td[@id='_128_ocerSearchContainer_col-resource_row-1']"));
+			selenium.getText("//tr[contains(.,'Blogs')]/td[2]"));
 		assertEquals(RuntimeVariables.replace("Delete"),
-			selenium.getText(
-				"//td[@id='_128_ocerSearchContainer_col-action_row-1']"));
+			selenium.getText("//tr[contains(.,'Blogs')]/td[3]"));
+		assertEquals(RuntimeVariables.replace("Delete"),
+			selenium.getText("//tr[contains(.,'Blogs')]/td[4]/span/a/span"));
 	}
 }

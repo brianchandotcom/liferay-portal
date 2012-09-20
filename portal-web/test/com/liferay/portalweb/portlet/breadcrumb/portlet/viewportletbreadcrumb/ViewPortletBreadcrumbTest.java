@@ -25,7 +25,6 @@ public class ViewPortletBreadcrumbTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Breadcrumb Test Page");
 		selenium.clickAt("link=Breadcrumb Test Page",
 			RuntimeVariables.replace("Breadcrumb Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -37,6 +36,8 @@ public class ViewPortletBreadcrumbTest extends BaseTestCase {
 				"//div/ul[@class='breadcrumbs breadcrumbs-horizontal lfr-component']/li[2]/span/a"));
 		assertTrue(selenium.isElementNotPresent(
 				"//div[@class='portlet-body']/ul/li[3]"));
+		selenium.mouseOver("link=Breadcrumb Test Page");
+		selenium.waitForVisible("link=Child Test Page");
 		selenium.clickAt("link=Child Test Page",
 			RuntimeVariables.replace("Child Test Page"));
 		selenium.waitForPageToLoad("30000");

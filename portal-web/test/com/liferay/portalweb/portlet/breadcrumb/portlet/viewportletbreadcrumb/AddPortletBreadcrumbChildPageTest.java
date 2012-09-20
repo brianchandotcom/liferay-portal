@@ -25,10 +25,8 @@ public class AddPortletBreadcrumbChildPageTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Breadcrumb Test Page");
-		selenium.clickAt("link=Breadcrumb Test Page",
-			RuntimeVariables.replace("Breadcrumb Test Page"));
-		selenium.waitForPageToLoad("30000");
+		selenium.mouseOver("link=Breadcrumb Test Page");
+		selenium.waitForVisible("link=Child Test Page");
 		selenium.clickAt("link=Child Test Page",
 			RuntimeVariables.replace("Child Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -47,12 +45,8 @@ public class AddPortletBreadcrumbChildPageTest extends BaseTestCase {
 		selenium.waitForElementPresent(
 			"//script[contains(@src,'/aui/aui-live-search/aui-live-search-min.js')]");
 		selenium.waitForVisible("//input[@id='layout_configuration_content']");
-		selenium.type("//input[@id='layout_configuration_content']",
+		selenium.sendKeys("//input[@id='layout_configuration_content']",
 			RuntimeVariables.replace("b"));
-		selenium.keyDown("//input[@id='layout_configuration_content']",
-			RuntimeVariables.replace("\\13"));
-		selenium.keyUp("//input[@id='layout_configuration_content']",
-			RuntimeVariables.replace("\\13"));
 		selenium.waitForVisible("//div[@title='Breadcrumb']/p/a");
 		selenium.clickAt("//div[@title='Breadcrumb']/p/a",
 			RuntimeVariables.replace("Add"));

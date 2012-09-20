@@ -14,14 +14,14 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
+	<td>mouseOver</td>
 	<td>link=Breadcrumb Test Page</td>
 	<td>Breadcrumb Test Page</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>link=Breadcrumb Test Page</td>
-	<td>Breadcrumb Test Page</td>
+	<td>waitForVisible</td>
+	<td>link=Child Test Page</td>
+	<td>Child Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -74,24 +74,15 @@
 	<td>Search applications (searches as you type).</td>
 </tr>
 <tr>
-	<td>type</td>
+	<td>sendKeys</td>
 	<td>//input[@id='layout_configuration_content']</td>
 	<td>b</td>
-</tr>
-<tr>
-	<td>keyDown</td>
-	<td>//input[@id='layout_configuration_content']</td>
-	<td>\13</td>
-</tr>
-<tr>
-	<td>keyUp</td>
-	<td>//input[@id='layout_configuration_content']</td>
-	<td>\13</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
 	<td>//div[@title='Breadcrumb']/p/a</td>
 	<td>Add</td>
+</tr>
 <tr>
 	<td>clickAt</td>
 	<td>//div[@title='Breadcrumb']/p/a</td>
@@ -122,7 +113,6 @@
 	<td>//div/ul[@class='breadcrumbs breadcrumbs-horizontal lfr-component']/li[3]/span/a</td>
 	<td>Child Test Page</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

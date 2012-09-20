@@ -325,10 +325,10 @@ public class DDMPortletDataHandlerImpl extends BasePortletDataHandler {
 		throws PortalException {
 
 		Locale structureDefaultLocale = LocaleUtil.fromLanguageId(
-			structure.getDefaultLanguageId());
+			structure.getDefaultLocale());
 
 		Locale[] structureAvailableLocales = LocaleUtil.fromLanguageIds(
-			structure.getAvailableLanguageIds());
+			structure.getAvailableLocales());
 
 		Locale defaultImportLocale = LocalizationUtil.getDefaultImportLocale(
 			DDMStructure.class.getName(), structure.getPrimaryKey(),

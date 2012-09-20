@@ -33,7 +33,7 @@ public class DDMStructureResourceImpl extends BaseResourceImpl {
 
 		super(
 			parentPath, name,
-			structure.getName(structure.getDefaultLanguageId()),
+			structure.getName(structure.getDefaultLocale()),
 			structure.getCreateDate(), structure.getModifiedDate(),
 			structure.getXsd().length());
 

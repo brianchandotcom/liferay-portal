@@ -476,6 +476,7 @@
 		<!-- Other fields -->
 
 		<column name="repositoryId" type="long" />
+		<column name="repositoryType" type="int" />
 		<column name="mountPoint" type="boolean" />
 		<column name="parentFolderId" type="long" />
 		<column name="name" type="String" />
@@ -538,6 +539,12 @@
 			<finder-column name="mountPoint" />
 			<finder-column name="parentFolderId" />
 			<finder-column name="status" />
+		</finder>
+		<finder name="G_M_R_P" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="mountPoint" />
+			<finder-column name="repositoryType" />
+			<finder-column name="parentFolderId" />
 		</finder>
 
 		<!-- References -->

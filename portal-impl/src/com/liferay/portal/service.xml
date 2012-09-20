@@ -1505,6 +1505,10 @@
 		<finder name="GroupId" return-type="Collection">
 			<finder-column name="groupId" />
 		</finder>
+		<finder name="G_P" return-type="Repository" unique="true">
+			<finder-column name="groupId" />
+			<finder-column name="portletId" />
+		</finder>
 
 		<!-- References -->
 

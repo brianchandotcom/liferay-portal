@@ -30,6 +30,10 @@ public class DLFolderConstants {
 
 	public static final long DEFAULT_PARENT_FOLDER_ID = 0;
 
+	public static final int PORTLET_REPOSITORY = 1;
+
+	public static final int REGULAR_REPOSITORY = 0;
+
 	public static String getClassName() {
 		return DLFolder.class.getName();
 	}

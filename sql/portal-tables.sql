@@ -655,6 +655,7 @@ create table DLFolder (
 	createDate DATE null,
 	modifiedDate DATE null,
 	repositoryId LONG,
+	repositoryType INTEGER,
 	mountPoint BOOLEAN,
 	parentFolderId LONG,
 	name VARCHAR(100) null,

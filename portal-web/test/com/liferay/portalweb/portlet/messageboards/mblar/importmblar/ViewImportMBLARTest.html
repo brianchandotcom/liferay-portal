@@ -25,8 +25,33 @@
 </tr>
 <tr>
 	<td>assertText</td>
+	<td>//tr[3]/td[1]/a[1]/strong</td>
+	<td>Tést Catégory</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//tr[3]/td[1]/a[1]</td>
+	<td>This is a tést catégory!</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//tr[3]/td[1]/span</td>
+	<td>Subcategories</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[3]/td[1]/a[2]</td>
+	<td>Tést Subcatégory</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[3]/td[1]/a/strong</td>
+	<td>Tést Catégory</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
 	<td>//tr[3]/td[1]/a</td>
-	<td>Tést Catégory<br />This is a tést catégory!</td>
+	<td><br />This is a tést catégory!</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -45,8 +70,13 @@
 </tr>
 <tr>
 	<td>assertText</td>
+	<td>//tr[4]/td[1]/a/strong</td>
+	<td>Tést Catégory Editéd</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
 	<td>//tr[4]/td[1]/a</td>
-	<td>Tést Catégory Editéd<br />This is a tést catégory edited!</td>
+	<td>This is a tést catégory edited!</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -65,13 +95,18 @@
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//tr[3]/td[1]/a[1]</td>
-	<td>Tést Catégory<br />This is a tést catégory!</td>
+	<td>//tr[3]/td[1]/a[1]/strong</td>
+	<td>Tést Catégory</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[1]/a/strong</td>
+	<td>//td[1]/a[1]/strong</td>
 	<td>Tést Subcatégory</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[1]/a[2]</td>
+	<td>Sécond Tést Subcatégory</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -155,13 +190,13 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[1]/a</td>
-	<td>Tést Catégory<br />This is a tést catégory!</td>
+	<td>//tr[3]/td[1]/a[1]/strong</td>
+	<td>Tést Catégory</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//td[1]/a</td>
-	<td>Tést Catégory<br />This is a tést catégory!</td>
+	<td>//tr[3]/td[1]/a[1]/strong</td>
+	<td>Tést Catégory</td>
 </tr>
 <tr>
 	<td>assertText</td>

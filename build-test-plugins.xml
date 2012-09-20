@@ -41,7 +41,7 @@ auto.deploy.dir=$${user.home}/liferay/deploy
 plugins.includes=${plugins.includes}</echo>
 			</else>
 		</if>
-			
+
 		<if>
 			<isset property="plugin.portlets.properties" />
 			<then>

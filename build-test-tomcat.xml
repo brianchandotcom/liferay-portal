@@ -3,7 +3,7 @@
 <project name="portal-test-tomcat" basedir="." default="test" xmlns:antelope="antlib:ise.antelope.tasks">
 	<import file="build-test.xml" />
 
- 	<target name="copy-5.1.7-5.2.7-upgrade-dependencies">
+	<target name="copy-5.1.7-5.2.7-upgrade-dependencies">
 		<copy
 			file="${hudson.portal.dependencies.dir}${lp.version}/lpe2005.7-ee5207-portal-impl-jdk5.jar"
 			todir="${app.server.tomcat.lib.portal.dir}"

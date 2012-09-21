@@ -373,6 +373,7 @@ public class JSONWebServiceConfigurator extends ClassFinder {
 				for (String excludedMethodName : _excludedMethodNames) {
 					if (excludedMethodName.equals(methodName)) {
 						registerMethod = false;
+
 						break;
 					}
 				}

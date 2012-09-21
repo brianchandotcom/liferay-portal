@@ -44,11 +44,15 @@ public class Normalizer {
 		return false;
 	}
 
-	private static final String _NORMALIZED_TEXT = "l";
+	private static final String[] _NORMALIZED_TEXT = new String[] {
+		"l", "'", "\""
+	};
 
-	private static final String _UNICODE_TEXT = "\u0142";
+	private static final String[] _UNICODE_TEXT = new String[] {
+		"\u0142", "\u02B9", "\u02BA"
+	};
 
 	private static Transliterator _transliterator = Transliterator.getInstance(
-		"NFD; [:Nonspacing Mark:] Remove; NFC");
+		"Greek-Latin; Cyrillic-Latin; NFD; [:Nonspacing Mark:] Remove; NFC");
 
 }

@@ -88,13 +88,12 @@
 
 		a {
 			&, label {
-				padding: 5px 10px 5px 5px;
 				display: block;
 			}
 
 			label {
-				margin: -5px -10px -5px -5px;
 				cursor: pointer;
+				padding: 5px 0 5px 5px;
 			}
 		}
 

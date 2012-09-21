@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.TestPropsValues;
-import com.liferay.portlet.dynamicdatalists.util.DDLConstants;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
@@ -85,7 +84,8 @@ public class BaseDDMServiceTestCase {
 
 		return DDMStructureLocalServiceUtil.addStructure(
 			TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
-			classNameId, structureKey, DDLConstants.DEFAULT_PARENT_STRUCTURE_ID,
+			classNameId, structureKey,
+			DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
 			getDefaultLocaleMap(name), null, xsd, storageType, type,
 			ServiceTestUtil.getServiceContext());
 	}

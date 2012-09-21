@@ -75,7 +75,7 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 				DDMStructureLocalServiceUtil.getStructure(
 					super.getParentStructureId());
 
-			return mergeXsds(getXsd(), parentStructure.getCompleteXsd());
+			return _mergeXsds(getXsd(), parentStructure.getCompleteXsd());
 		}
 	}
 
@@ -285,24 +285,42 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 		_localizedFieldsMap.clear();
 	}
 
-	private String mergeXsds(String xsd1, String xsd2) throws PortalException {
-		try {
-			Document document1 = SAXReaderUtil.read(xsd1);
-			Document document2 = SAXReaderUtil.read(xsd2);
+	private Map<String, String> _getField(Element element, String locale) {
+		Map<String, String> field = new HashMap<String, String>();
 
-			Element rootElement1 = document1.getRootElement();
-			Element rootElement2 = document2.getRootElement();
+		List<String> availableLocales = getAvailableLanguageIds();
 
-			for (Element element : rootElement1.elements()) {
-				rootElement1.remove(element);
-				rootElement2.add(element);
+		if ((locale != null) && !availableLocales.contains(locale)) {
+			locale = getDefaultLanguageId();
+		}
+
+		locale = HtmlUtil.escapeXPathAttribute(locale);
+
+		String xPathExpression =
+			"meta-data[@locale=".concat(locale).concat("]");
+
+		XPath xPathSelector = SAXReaderUtil.createXPath(xPathExpression);
+
+		Node node = xPathSelector.selectSingleNode(element);
+
+		Element metaDataElement = (Element)node.asXPathResult(node.getParent());
+
+		if (metaDataElement != null) {
+			List<Element> childMetaDataElements = metaDataElement.elements();
+
+			for (Element childMetaDataElement : childMetaDataElements) {
+				String name = childMetaDataElement.attributeValue("name");
+				String value = childMetaDataElement.getText();
+
+				field.put(name, value);
 			}
+		}
 
-			return rootElement2.formattedString();
+		for (Attribute attribute : element.attributes()) {
+			field.put(attribute.getName(), attribute.getValue());
 		}
-		catch (Exception e) {
-			throw new PortalException(e);
-		}
+
+		return field;
 	}
 
 	private Map<String, Map<String, String>> _getFieldsMap(String locale)
@@ -343,42 +361,24 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 		return fieldsMap;
 	}
 
-	private Map<String, String> _getField(Element element, String locale) {
-		Map<String, String> field = new HashMap<String, String>();
+	private String _mergeXsds(String xsd1, String xsd2) throws PortalException {
+		try {
+			Document document1 = SAXReaderUtil.read(xsd1);
+			Document document2 = SAXReaderUtil.read(xsd2);
 
-		List<String> availableLocales = getAvailableLanguageIds();
+			Element rootElement1 = document1.getRootElement();
+			Element rootElement2 = document2.getRootElement();
 
-		if ((locale != null) && !availableLocales.contains(locale)) {
-			locale = getDefaultLanguageId();
-		}
-
-		locale = HtmlUtil.escapeXPathAttribute(locale);
-
-		String xPathExpression =
-			"meta-data[@locale=".concat(locale).concat("]");
-
-		XPath xPathSelector = SAXReaderUtil.createXPath(xPathExpression);
-
-		Node node = xPathSelector.selectSingleNode(element);
-
-		Element metaDataElement = (Element)node.asXPathResult(node.getParent());
-
-		if (metaDataElement != null) {
-			List<Element> childMetaDataElements = metaDataElement.elements();
-
-			for (Element childMetaDataElement : childMetaDataElements) {
-				String name = childMetaDataElement.attributeValue("name");
-				String value = childMetaDataElement.getText();
-
-				field.put(name, value);
+			for (Element element : rootElement1.elements()) {
+				rootElement1.remove(element);
+				rootElement2.add(element);
 			}
-		}
 
-		for (Attribute attribute : element.attributes()) {
-			field.put(attribute.getName(), attribute.getValue());
+			return rootElement2.formattedString();
 		}
-
-		return field;
+		catch (Exception e) {
+			throw new PortalException(e);
+		}
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(DDMStructureImpl.class);

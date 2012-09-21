@@ -1571,6 +1571,7 @@
 			<hint name="upper-case">true</hint>
 			<hint name="auto-escape">false</hint>
 		</field>
+		<field name="parentStructureId" type="long" />
 		<field name="name" type="String" localized="true">
 			<validator name="required" />
 		</field>

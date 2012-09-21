@@ -56,7 +56,7 @@ import com.liferay.portlet.dynamicdatamapping.service.DDMStructureServiceUtil;
 public class DDMStructureServiceHttp {
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructure addStructure(
 		HttpPrincipal httpPrincipal, long groupId, long classNameId,
-		java.lang.String structureKey,
+		java.lang.String structureKey, long parentStructureId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String xsd, java.lang.String storageType, int type,
@@ -68,8 +68,8 @@ public class DDMStructureServiceHttp {
 					"addStructure", _addStructureParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					classNameId, structureKey, nameMap, descriptionMap, xsd,
-					storageType, type, serviceContext);
+					classNameId, structureKey, parentStructureId, nameMap,
+					descriptionMap, xsd, storageType, type, serviceContext);
 
 			Object returnObj = null;
 
@@ -385,7 +385,7 @@ public class DDMStructureServiceHttp {
 	}
 
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructure updateStructure(
-		HttpPrincipal httpPrincipal, long structureId,
+		HttpPrincipal httpPrincipal, long structureId, long parentStructureId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String xsd,
@@ -397,7 +397,8 @@ public class DDMStructureServiceHttp {
 					"updateStructure", _updateStructureParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					structureId, nameMap, descriptionMap, xsd, serviceContext);
+					structureId, parentStructureId, nameMap, descriptionMap,
+					xsd, serviceContext);
 
 			Object returnObj = null;
 
@@ -427,7 +428,7 @@ public class DDMStructureServiceHttp {
 
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructure updateStructure(
 		HttpPrincipal httpPrincipal, long groupId,
-		java.lang.String structureKey,
+		java.lang.String structureKey, long parentStructureId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String xsd,
@@ -439,7 +440,8 @@ public class DDMStructureServiceHttp {
 					"updateStructure", _updateStructureParameterTypes10);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					structureKey, nameMap, descriptionMap, xsd, serviceContext);
+					structureKey, parentStructureId, nameMap, descriptionMap,
+					xsd, serviceContext);
 
 			Object returnObj = null;
 
@@ -469,9 +471,10 @@ public class DDMStructureServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(DDMStructureServiceHttp.class);
 	private static final Class<?>[] _addStructureParameterTypes0 = new Class[] {
-			long.class, long.class, java.lang.String.class, java.util.Map.class,
-			java.util.Map.class, java.lang.String.class, java.lang.String.class,
-			int.class, com.liferay.portal.service.ServiceContext.class
+			long.class, long.class, java.lang.String.class, long.class,
+			java.util.Map.class, java.util.Map.class, java.lang.String.class,
+			java.lang.String.class, int.class,
+			com.liferay.portal.service.ServiceContext.class
 		};
 	private static final Class<?>[] _copyStructureParameterTypes1 = new Class[] {
 			long.class, java.util.Map.class, java.util.Map.class,
@@ -506,12 +509,12 @@ public class DDMStructureServiceHttp {
 			boolean.class
 		};
 	private static final Class<?>[] _updateStructureParameterTypes9 = new Class[] {
-			long.class, java.util.Map.class, java.util.Map.class,
+			long.class, long.class, java.util.Map.class, java.util.Map.class,
 			java.lang.String.class,
 			com.liferay.portal.service.ServiceContext.class
 		};
 	private static final Class<?>[] _updateStructureParameterTypes10 = new Class[] {
-			long.class, java.lang.String.class, java.util.Map.class,
+			long.class, java.lang.String.class, long.class, java.util.Map.class,
 			java.util.Map.class, java.lang.String.class,
 			com.liferay.portal.service.ServiceContext.class
 		};

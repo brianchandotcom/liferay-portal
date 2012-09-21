@@ -161,7 +161,8 @@ public class DDMWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 				String xsd = StringUtil.read(request.getInputStream());
 
 				DDMStructureServiceUtil.updateStructure(
-					structure.getStructureId(), structure.getNameMap(),
+					structure.getStructureId(),
+					structure.getParentStructureId(), structure.getNameMap(),
 					structure.getDescriptionMap(), xsd, new ServiceContext());
 
 				return HttpServletResponse.SC_CREATED;

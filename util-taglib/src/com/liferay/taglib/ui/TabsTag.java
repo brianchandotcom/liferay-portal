@@ -14,6 +14,7 @@
 
 package com.liferay.taglib.ui;
 
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringPool;
@@ -128,10 +129,8 @@ public class TabsTag extends IncludeTag {
 
 			boolean match = false;
 
-			for (int i = 0; i < _tabsValues.length; i++) {
-				if (_value.equals(_tabsValues[i])) {
-					match = true;
-				}
+			if (ArrayUtil.contains(_tabsValues, _value)) {
+				match = true;
 			}
 
 			if (!match) {

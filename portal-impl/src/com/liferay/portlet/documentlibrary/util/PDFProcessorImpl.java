@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -700,12 +701,8 @@ public class PDFProcessorImpl
 			String[] conversions = DocumentConversionUtil.getConversions(
 				extension);
 
-			for (String conversion : conversions) {
-				if (conversion.equals("pdf")) {
-					generateImages = true;
-
-					break;
-				}
+			if (ArrayUtil.contains(conversions, "pdf")) {
+				generateImages = true;
 			}
 		}
 

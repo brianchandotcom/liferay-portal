@@ -129,12 +129,8 @@ public class DocumentConversionUtil {
 			return false;
 		}
 
-		String[] conversions = getConversions(extension);
-
-		for (int i = 0; i < conversions.length; i++) {
-			if (conversions[i].equals("txt")) {
-				return true;
-			}
+		if (ArrayUtil.contains(getConversions(extension), "txt")) {
+			return true;
 		}
 
 		return false;

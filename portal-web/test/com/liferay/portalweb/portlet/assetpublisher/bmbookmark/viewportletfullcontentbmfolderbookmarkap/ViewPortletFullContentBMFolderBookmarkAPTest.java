@@ -26,7 +26,6 @@ public class ViewPortletFullContentBMFolderBookmarkAPTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Asset Publisher Test Page");
 		selenium.clickAt("link=Asset Publisher Test Page",
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -40,8 +39,8 @@ public class ViewPortletFullContentBMFolderBookmarkAPTest extends BaseTestCase {
 		selenium.clickAt("//div[@class='asset-more']/a",
 			RuntimeVariables.replace("View in Context \u00bb"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=exact:http://www.liferay.com",
-			RuntimeVariables.replace("exact:http://www.liferay.com"));
+		selenium.clickAt("link=http://www.liferay.com",
+			RuntimeVariables.replace("http://www.liferay.com"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isElementPresent("//img[@alt='Liferay']"));
 	}

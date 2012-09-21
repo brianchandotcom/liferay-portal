@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Asset Publisher Test Page</td>
-	<td>Asset Publisher Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Asset Publisher Test Page</td>
 	<td>Asset Publisher Test Page</td>
@@ -45,7 +40,7 @@
 </tr>
 <tr>
 	<td>assertSelectedLabel</td>
-	<td>//select</td>
+	<td>//select[contains(@id,'PageIterator')]</td>
 	<td>1</td>
 </tr>
 <tr>
@@ -75,7 +70,7 @@
 </tr>
 <tr>
 	<td>assertSelectedLabel</td>
-	<td>//select</td>
+	<td>//select[contains(@id,'PageIterator')]</td>
 	<td>2</td>
 </tr>
 <tr>
@@ -105,10 +100,9 @@
 </tr>
 <tr>
 	<td>assertSelectedLabel</td>
-	<td>//select</td>
+	<td>//select[contains(@id,'PageIterator')]</td>
 	<td>3</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

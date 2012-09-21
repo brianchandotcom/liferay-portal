@@ -25,7 +25,6 @@ public class PreviousButtonAPTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Asset Publisher Test Page");
 		selenium.clickAt("link=Asset Publisher Test Page",
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -39,7 +38,8 @@ public class PreviousButtonAPTest extends BaseTestCase {
 			selenium.getText("//a[@class='previous']"));
 		assertTrue(selenium.isElementNotPresent("//a[@class='next']"));
 		assertTrue(selenium.isElementNotPresent("//a[@class='last']"));
-		assertEquals("3", selenium.getSelectedLabel("//select"));
+		assertEquals("3",
+			selenium.getSelectedLabel("//select[contains(@id,'PageIterator')]"));
 		selenium.clickAt("//a[@class='previous']",
 			RuntimeVariables.replace("Previous"));
 		selenium.waitForPageToLoad("30000");
@@ -51,7 +51,8 @@ public class PreviousButtonAPTest extends BaseTestCase {
 			selenium.getText("//a[@class='next']"));
 		assertEquals(RuntimeVariables.replace("Last"),
 			selenium.getText("//a[@class='last']"));
-		assertEquals("2", selenium.getSelectedLabel("//select"));
+		assertEquals("2",
+			selenium.getSelectedLabel("//select[contains(@id,'PageIterator')]"));
 		selenium.clickAt("//a[@class='previous']",
 			RuntimeVariables.replace("Previous"));
 		selenium.waitForPageToLoad("30000");
@@ -61,6 +62,7 @@ public class PreviousButtonAPTest extends BaseTestCase {
 			selenium.getText("//a[@class='next']"));
 		assertEquals(RuntimeVariables.replace("Last"),
 			selenium.getText("//a[@class='last']"));
-		assertEquals("1", selenium.getSelectedLabel("//select"));
+		assertEquals("1",
+			selenium.getSelectedLabel("//select[contains(@id,'PageIterator')]"));
 	}
 }

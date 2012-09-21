@@ -14,19 +14,19 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Asset Publisher Test Page</td>
-	<td>Asset Publisher Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Asset Publisher Test Page</td>
 	<td>Asset Publisher Test Page</td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
+	<td>waitForElementPresent</td>
+	<td>//nav[@class='site-breadcrumbs aui-helper-hidden lfr-hudcrumbs']</td>
+	<td>AUI Help Hidden LFR Hudcrumbs</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//span[@title='Options']/ul/li/strong/a</td>
+	<td>Options</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -54,6 +54,16 @@
 	<td>Configuration</td>
 </tr>
 <tr>
+	<td>waitForElementPresent</td>
+	<td>//iframe[contains(@id,'configurationIframeDialog')]</td>
+	<td>iFrame</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//iframe[contains(@id,'configurationIframeDialog')]</td>
+	<td>iFrame</td>
+</tr>
+<tr>
 	<td>waitForVisible</td>
 	<td>//select[@id='_86_displayStyle']</td>
 	<td>Display Style</td>
@@ -78,7 +88,11 @@
 	<td>//select[@id='_86_displayStyle']</td>
 	<td>Title List</td>
 </tr>
-
+<tr>
+	<td>selectFrame</td>
+	<td>relative=top</td>
+	<td>top</td>
+</tr>
 </tbody></table>
 </body>
 </html>

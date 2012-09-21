@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Asset Publisher Test Page</td>
-	<td>Asset Publisher Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Asset Publisher Test Page</td>
 	<td>Asset Publisher Test Page</td>
@@ -27,6 +22,11 @@
 	<td>waitForElementPresent</td>
 	<td>//nav[@class='site-breadcrumbs aui-helper-hidden lfr-hudcrumbs']</td>
 	<td>AUI Help Hidden LFR Hudcrumbs</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//span[@title='Options']/ul/li/strong/a</td>
+	<td>Options</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -54,6 +54,16 @@
 	<td>Configuration</td>
 </tr>
 <tr>
+	<td>waitForElementPresent</td>
+	<td>//iframe[contains(@id,'configurationIframeDialog')]</td>
+	<td>iFrame</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//iframe[contains(@id,'configurationIframeDialog')]</td>
+	<td>iFrame</td>
+</tr>
+<tr>
 	<td>waitForVisible</td>
 	<td>//div[@class='archived-setups']/span/a/span</td>
 	<td>Archive/Restore Setup</td>
@@ -74,11 +84,6 @@
 	<td>Navigation Interaction</td>
 </tr>
 <tr>
-	<td>selectFrame</td>
-	<td>//iframe[contains(@id,'configurationIframeDialog')]</td>
-	<td>iFrame</td>
-</tr>
-<tr>
 	<td>assertText</td>
 	<td>//tr[3]/td[1]</td>
 	<td>Archive Name</td>
@@ -87,6 +92,11 @@
 	<td>assertText</td>
 	<td>//tr[3]/td[2]</td>
 	<td>Joe Bloggs</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -144,6 +154,11 @@
 	<td>AUI Help Hidden LFR Hudcrumbs</td>
 </tr>
 <tr>
+	<td>waitForVisible</td>
+	<td>//span[@title='Options']/ul/li/strong/a</td>
+	<td>Options</td>
+</tr>
+<tr>
 	<td>assertText</td>
 	<td>//span[@title='Options']/ul/li/strong/a</td>
 	<td>Options</td>
@@ -169,6 +184,16 @@
 	<td>Configuration</td>
 </tr>
 <tr>
+	<td>waitForElementPresent</td>
+	<td>//iframe[contains(@id,'configurationIframeDialog')]</td>
+	<td>iFrame</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//iframe[contains(@id,'configurationIframeDialog')]</td>
+	<td>iFrame</td>
+</tr>
+<tr>
 	<td>waitForVisible</td>
 	<td>//select[@id='_86_selectionStyle']</td>
 	<td>Asset Selection</td>
@@ -187,6 +212,11 @@
 	<td>assertText</td>
 	<td>xPath=(//div[@class='lfr-panel-title'])[2]/span</td>
 	<td>Display Settings</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>relative=top</td>
+	<td>top</td>
 </tr>
 </tbody></table>
 </body>

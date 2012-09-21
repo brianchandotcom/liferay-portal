@@ -14,19 +14,19 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Asset Publisher Test Page</td>
-	<td>Asset Publisher Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Asset Publisher Test Page</td>
 	<td>Asset Publisher Test Page</td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
+	<td>waitForElementPresent</td>
+	<td>//nav[@class='site-breadcrumbs aui-helper-hidden lfr-hudcrumbs']</td>
+	<td>AUI Help Hidden LFR Hudcrumbs</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//span[@title='Options']/ul/li/strong/a</td>
+	<td>Options</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -64,7 +64,7 @@
 	<td>Import</td>
 </tr>
 <tr>
-	<td>type</td>
+	<td>uploadFile</td>
 	<td>//input[@id='_86_importFileName']</td>
 	<td>L:\portal\build\portal-web\test\com\liferay\portalweb\portlet\assetpublisher\dependencies\Asset_Publisher-Selenium.portlet.lar</td>
 </tr>
@@ -78,7 +78,6 @@
 	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

@@ -26,11 +26,12 @@ public class ConfigurePortletPaginationTypeSimpleTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Asset Publisher Test Page");
 		selenium.clickAt("link=Asset Publisher Test Page",
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
-		Thread.sleep(5000);
+		selenium.waitForElementPresent(
+			"//nav[@class='site-breadcrumbs aui-helper-hidden lfr-hudcrumbs']");
+		selenium.waitForVisible("//span[@title='Options']/ul/li/strong/a");
 		assertEquals(RuntimeVariables.replace("Options"),
 			selenium.getText("//span[@title='Options']/ul/li/strong/a"));
 		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
@@ -42,6 +43,10 @@ public class ConfigurePortletPaginationTypeSimpleTest extends BaseTestCase {
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
 		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a",
 			RuntimeVariables.replace("Configuration"));
+		selenium.waitForElementPresent(
+			"//iframe[contains(@id,'configurationIframeDialog')]");
+		selenium.selectFrame(
+			"//iframe[contains(@id,'configurationIframeDialog')]");
 		selenium.waitForVisible("//select[@id='_86_paginationType']");
 		selenium.select("//select[@id='_86_paginationType']",
 			RuntimeVariables.replace("Simple"));
@@ -55,5 +60,6 @@ public class ConfigurePortletPaginationTypeSimpleTest extends BaseTestCase {
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals("Simple",
 			selenium.getSelectedLabel("//select[@id='_86_paginationType']"));
+		selenium.selectFrame("relative=top");
 	}
 }

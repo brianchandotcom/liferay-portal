@@ -16,8 +16,11 @@ package com.liferay.portalweb.portlet.assetpublisher.blogsentry.rateblogsentryap
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
+import com.liferay.portalweb.portlet.assetpublisher.blogsentry.addnewblogsentryapactions.AddNewBlogsEntryAPActionsTest;
 import com.liferay.portalweb.portlet.assetpublisher.portlet.addportletap.AddPageAPTest;
 import com.liferay.portalweb.portlet.assetpublisher.portlet.addportletap.AddPortletAPTest;
+import com.liferay.portalweb.portlet.assetpublisher.portlet.configureportletapenableratings.ConfigurePortletAPEnableRatingsTest;
+import com.liferay.portalweb.portlet.assetpublisher.portlet.configureportletdisplaystylefullcontent.ConfigurePortletDisplayStyleFullContentTest;
 import com.liferay.portalweb.portlet.blogs.blogsentry.addblogsentry.TearDownBlogsEntryTest;
 import com.liferay.portalweb.portlet.blogs.portlet.addportletblogs.AddPageBlogsTest;
 import com.liferay.portalweb.portlet.blogs.portlet.addportletblogs.AddPortletBlogsTest;
@@ -37,7 +40,7 @@ public class RateBlogsEntryAPTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddPortletBlogsTest.class);
 		testSuite.addTestSuite(AddNewBlogsEntryAPActionsTest.class);
 		testSuite.addTestSuite(ConfigurePortletDisplayStyleFullContentTest.class);
-		testSuite.addTestSuite(ConfigurePortletEnableRatingsTest.class);
+		testSuite.addTestSuite(ConfigurePortletAPEnableRatingsTest.class);
 		testSuite.addTestSuite(RateBlogsEntryAPTest.class);
 		testSuite.addTestSuite(TearDownBlogsEntryTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);

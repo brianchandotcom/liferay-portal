@@ -25,11 +25,12 @@ public class AddNewBlogsEntryAPActionsTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Asset Publisher Test Page");
 		selenium.clickAt("link=Asset Publisher Test Page",
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
-		Thread.sleep(5000);
+		selenium.waitForElementPresent(
+			"//nav[@class='site-breadcrumbs aui-helper-hidden lfr-hudcrumbs']");
+		selenium.waitForVisible("//span[@title='Add New']/ul/li/strong/a");
 		assertEquals(RuntimeVariables.replace("Add New"),
 			selenium.getText("//span[@title='Add New']/ul/li/strong/a"));
 		selenium.clickAt("//span[@title='Add New']/ul/li/strong/a",
@@ -41,13 +42,14 @@ public class AddNewBlogsEntryAPActionsTest extends BaseTestCase {
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
 		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a",
 			RuntimeVariables.replace("Blogs Entry"));
-		selenium.waitForVisible("//iframe");
-		selenium.selectFrame("//iframe");
+		selenium.waitForVisible("//iframe[contains(@id,'editAsset')]");
+		selenium.selectFrame("//iframe[contains(@id,'editAsset')]");
 		selenium.waitForVisible("//input[@id='_33_title']");
 		selenium.type("//input[@id='_33_title']",
 			RuntimeVariables.replace("Blogs Entry Title"));
 		selenium.waitForElementPresent(
 			"//textarea[@id='_33_editor' and @style='display: none;']");
+		selenium.waitForVisible("//span[.='Source']");
 		assertEquals(RuntimeVariables.replace("Source"),
 			selenium.getText("//span[.='Source']"));
 		selenium.clickAt("//span[.='Source']",
@@ -66,6 +68,9 @@ public class AddNewBlogsEntryAPActionsTest extends BaseTestCase {
 		selenium.selectFrame("//td[@id='cke_contents__33_editor']/iframe");
 		selenium.waitForText("//body", "Blogs Entry Content");
 		selenium.selectFrame("relative=top");
+		selenium.waitForVisible("//iframe[contains(@id,'editAsset')]");
+		selenium.selectFrame("//iframe[contains(@id,'editAsset')]");
+		selenium.waitForVisible("//input[@value='Publish']");
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");

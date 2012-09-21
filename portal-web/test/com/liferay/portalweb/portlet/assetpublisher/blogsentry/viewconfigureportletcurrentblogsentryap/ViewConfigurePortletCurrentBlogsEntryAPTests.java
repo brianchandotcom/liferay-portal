@@ -16,8 +16,12 @@ package com.liferay.portalweb.portlet.assetpublisher.blogsentry.viewconfigurepor
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
+import com.liferay.portalweb.portlet.assetpublisher.blogsentry.addnewblogsentryapactions.AddNewBlogsEntryAPActionsTest;
+import com.liferay.portalweb.portlet.assetpublisher.blogsentry.viewconfigureportletavailableblogsentryap.ViewConfigurePortletAvailableBlogsEntryAPTest;
 import com.liferay.portalweb.portlet.assetpublisher.portlet.addportletap.AddPageAPTest;
 import com.liferay.portalweb.portlet.assetpublisher.portlet.addportletap.AddPortletAPTest;
+import com.liferay.portalweb.portlet.assetpublisher.portlet.configureportletavailableblogsentry.ConfigurePortletAvailableBlogsEntryTest;
+import com.liferay.portalweb.portlet.assetpublisher.portlet.configureportletcurrentblogsentry.ConfigurePortletCurrentBlogsEntryTest;
 import com.liferay.portalweb.portlet.blogs.blogsentry.addblogsentry.TearDownBlogsEntryTest;
 import com.liferay.portalweb.portlet.blogs.portlet.addportletblogs.AddPageBlogsTest;
 import com.liferay.portalweb.portlet.blogs.portlet.addportletblogs.AddPortletBlogsTest;

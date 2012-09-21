@@ -15,9 +15,13 @@
 package com.liferay.portalweb.portlet.assetpublisher.wcwebcontent.ratewcwebcontentap;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.addwcwebcontent.TearDownWCWebContentTest;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
 import com.liferay.portalweb.portlet.assetpublisher.portlet.addportletap.AddPageAPTest;
 import com.liferay.portalweb.portlet.assetpublisher.portlet.addportletap.AddPortletAPTest;
+import com.liferay.portalweb.portlet.assetpublisher.portlet.configureportletapenableratings.ConfigurePortletAPEnableRatingsTest;
+import com.liferay.portalweb.portlet.assetpublisher.portlet.configureportletdisplaystylefullcontent.ConfigurePortletDisplayStyleFullContentTest;
+import com.liferay.portalweb.portlet.assetpublisher.wcwebcontent.addnewwcwebcontentapactions.AddNewWCWebContentAPActionsTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -32,7 +36,7 @@ public class RateWCWebContentAPTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddPortletAPTest.class);
 		testSuite.addTestSuite(AddNewWCWebContentAPActionsTest.class);
 		testSuite.addTestSuite(ConfigurePortletDisplayStyleFullContentTest.class);
-		testSuite.addTestSuite(ConfigurePortletEnableRatingsTest.class);
+		testSuite.addTestSuite(ConfigurePortletAPEnableRatingsTest.class);
 		testSuite.addTestSuite(RateWCWebContentAPTest.class);
 		testSuite.addTestSuite(TearDownWCWebContentTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);

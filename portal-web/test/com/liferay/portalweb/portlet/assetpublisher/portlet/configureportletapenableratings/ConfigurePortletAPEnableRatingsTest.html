@@ -19,9 +19,14 @@
 	<td>Asset Publisher Test Page</td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
+	<td>waitForElementPresent</td>
+	<td>//nav[@class='site-breadcrumbs aui-helper-hidden lfr-hudcrumbs']</td>
+	<td>AUI Help Hidden LFR Hudcrumbs</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//span[@title='Options']/ul/li/strong/a</td>
+	<td>Options</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -49,14 +54,14 @@
 	<td>Configuration</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>//iframe</td>
-	<td>Asset Publisher - Configuration</td>
+	<td>waitForElementPresent</td>
+	<td>//iframe[contains(@id,'configurationIframeDialog')]</td>
+	<td>iFrame</td>
 </tr>
 <tr>
 	<td>selectFrame</td>
-	<td>//iframe</td>
-	<td>Asset Publisher - Configuration</td>
+	<td>//iframe[contains(@id,'configurationIframeDialog')]</td>
+	<td>iFrame</td>
 </tr>
 <tr>
 	<td>waitForElementPresent</td>

@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Asset Publisher Test Page</td>
-	<td>Asset Publisher Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Asset Publisher Test Page</td>
 	<td>Asset Publisher Test Page</td>
@@ -27,6 +22,11 @@
 	<td>waitForElementPresent</td>
 	<td>//nav[@class='site-breadcrumbs aui-helper-hidden lfr-hudcrumbs']</td>
 	<td>AUI Help Hidden LFR Hudcrumbs</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//span[@title='Options']/ul/li/strong/a</td>
+	<td>Options</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -52,6 +52,16 @@
 	<td>click</td>
 	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
 	<td>Configuration</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//iframe[contains(@id,'configurationIframeDialog')]</td>
+	<td>iFrame</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//iframe[contains(@id,'configurationIframeDialog')]</td>
+	<td>iFrame</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -82,11 +92,6 @@
 	<td>waitForElementPresent</td>
 	<td>//script[contains(@src,'liferay/navigation_interaction.js')]</td>
 	<td>Navigation Interaction</td>
-</tr>
-<tr>
-	<td>selectFrame</td>
-	<td>//iframe[contains(@id,'configurationIframeDialog')]</td>
-	<td>iFrame</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -134,11 +139,6 @@
 	<td>Navigation Interaction</td>
 </tr>
 <tr>
-	<td>selectFrame</td>
-	<td>//iframe[contains(@id,'configurationIframeDialog')]</td>
-	<td>iFrame</td>
-</tr>
-<tr>
 	<td>assertText</td>
 	<td>//span[@title='Actions']/ul/li/strong</td>
 	<td>Actions</td>
@@ -182,11 +182,6 @@
 	<td>waitForElementPresent</td>
 	<td>//script[contains(@src,'liferay/navigation_interaction.js')]</td>
 	<td>Navigation Interaction</td>
-</tr>
-<tr>
-	<td>selectFrame</td>
-	<td>//iframe[contains(@id,'configurationIframeDialog')]</td>
-	<td>iFrame</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -234,11 +229,6 @@
 	<td>Navigation Interaction</td>
 </tr>
 <tr>
-	<td>selectFrame</td>
-	<td>//iframe[contains(@id,'configurationIframeDialog')]</td>
-	<td>iFrame</td>
-</tr>
-<tr>
 	<td>assertText</td>
 	<td>//span[@title='Actions']/ul/li/strong</td>
 	<td>Actions</td>
@@ -282,11 +272,6 @@
 	<td>waitForElementPresent</td>
 	<td>//script[contains(@src,'liferay/navigation_interaction.js')]</td>
 	<td>Navigation Interaction</td>
-</tr>
-<tr>
-	<td>selectFrame</td>
-	<td>//iframe[contains(@id,'configurationIframeDialog')]</td>
-	<td>iFrame</td>
 </tr>
 <tr>
 	<td>assertText</td>

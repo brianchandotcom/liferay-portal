@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Asset Publisher Test Page</td>
-	<td>Asset Publisher Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Asset Publisher Test Page</td>
 	<td>Asset Publisher Test Page</td>
@@ -244,14 +239,14 @@
 	<td>Rate this as bad.</td>
 </tr>
 <tr>
-	<td>assertElementNotPresent</td>
-	<td>//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-up aui-rating-element-on']</td>
-	<td>Rate this as good (selected)</td>
+	<td>assertElementPresent</td>
+	<td>//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-up']</td>
+	<td>Thumb Up not highlighted</td>
 </tr>
 <tr>
-	<td>assertElementNotPresent</td>
-	<td>//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-down aui-rating-element-on']</td>
-	<td>Rate this as bad (selected)</td>
+	<td>assertElementPresent</td>
+	<td>//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-down']</td>
+	<td>Thumb down not highlighted</td>
 </tr>
 </tbody></table>
 </body>

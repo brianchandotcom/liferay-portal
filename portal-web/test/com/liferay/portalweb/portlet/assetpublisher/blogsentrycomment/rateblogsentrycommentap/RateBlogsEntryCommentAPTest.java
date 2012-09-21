@@ -25,7 +25,6 @@ public class RateBlogsEntryCommentAPTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Asset Publisher Test Page");
 		selenium.clickAt("link=Asset Publisher Test Page",
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -55,9 +54,9 @@ public class RateBlogsEntryCommentAPTest extends BaseTestCase {
 				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-down aui-rating-element-on']"));
 		selenium.clickAt("//div[@id='zyfa_ratingThumbContent']/a[2]",
 			RuntimeVariables.replace("Rate this as bad."));
-		assertTrue(selenium.isElementNotPresent(
-				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-up aui-rating-element-on']"));
-		assertTrue(selenium.isElementNotPresent(
-				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-down aui-rating-element-on']"));
+		assertTrue(selenium.isElementPresent(
+				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-up']"));
+		assertTrue(selenium.isElementPresent(
+				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-down']"));
 	}
 }

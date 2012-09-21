@@ -14,19 +14,19 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Asset Publisher Test Page</td>
-	<td>Asset Publisher Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Asset Publisher Test Page</td>
 	<td>Asset Publisher Test Page</td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
+	<td>waitForElementPresent</td>
+	<td>//nav[@class='site-breadcrumbs aui-helper-hidden lfr-hudcrumbs']</td>
+	<td>AUI Help Hidden LFR Hudcrumbs</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//span[@title='Add New']/ul/li/strong/a</td>
+	<td>Add New</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -55,12 +55,12 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//iframe</td>
+	<td>//iframe[contains(@id,'editAsset')]</td>
 	<td>Blogs Entry</td>
 </tr>
 <tr>
 	<td>selectFrame</td>
-	<td>//iframe</td>
+	<td>//iframe[contains(@id,'editAsset')]</td>
 	<td>Blogs Entry</td>
 </tr>
 <tr>
@@ -77,6 +77,11 @@
 	<td>waitForElementPresent</td>
 	<td>//textarea[@id='_33_editor' and @style='display: none;']</td>
 	<td>Text Area</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//span[.='Source']</td>
+	<td>Source</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -139,6 +144,21 @@
 	<td>top</td>
 </tr>
 <tr>
+	<td>waitForVisible</td>
+	<td>//iframe[contains(@id,'editAsset')]</td>
+	<td>Blogs Entry</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//iframe[contains(@id,'editAsset')]</td>
+	<td>Blogs Entry</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//input[@value='Publish']</td>
+	<td>Publish</td>
+</tr>
+<tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Publish']</td>
 	<td>Publish</td>
@@ -163,7 +183,6 @@
 	<td>//div[@class='asset-summary']</td>
 	<td>Blogs Entry Content</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

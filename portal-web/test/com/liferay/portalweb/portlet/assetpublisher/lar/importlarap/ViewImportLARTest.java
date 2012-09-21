@@ -25,11 +25,12 @@ public class ViewImportLARTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Asset Publisher Test Page");
 		selenium.clickAt("link=Asset Publisher Test Page",
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
-		Thread.sleep(5000);
+		selenium.waitForElementPresent(
+			"//nav[@class='site-breadcrumbs aui-helper-hidden lfr-hudcrumbs']");
+		selenium.waitForVisible("//span[@title='Options']/ul/li/strong/a");
 		assertEquals(RuntimeVariables.replace("Options"),
 			selenium.getText("//span[@title='Options']/ul/li/strong/a"));
 		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
@@ -41,6 +42,10 @@ public class ViewImportLARTest extends BaseTestCase {
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
 		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a",
 			RuntimeVariables.replace("Configuration"));
+		selenium.waitForElementPresent(
+			"//iframe[contains(@id,'configurationIframeDialog')]");
+		selenium.selectFrame(
+			"//iframe[contains(@id,'configurationIframeDialog')]");
 		selenium.waitForVisible("//select[@id='_86_selectionStyle']");
 		assertEquals("Dynamic",
 			selenium.getSelectedLabel("//select[@id='_86_selectionStyle']"));
@@ -54,5 +59,6 @@ public class ViewImportLARTest extends BaseTestCase {
 			selenium.getText("xpath=(//div[@class='lfr-panel-title'])[4]"));
 		assertEquals(RuntimeVariables.replace("Display Settings"),
 			selenium.getText("xpath=(//div[@class='lfr-panel-title'])[5]"));
+		selenium.selectFrame("relative=top");
 	}
 }

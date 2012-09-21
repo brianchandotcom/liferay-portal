@@ -15,6 +15,18 @@
 package com.liferay.portalweb.portlet.assetpublisher.bmbookmark.viewportletcurrentbookmarksentryap;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.util.TearDownPageTest;
+import com.liferay.portalweb.portlet.assetpublisher.bmbookmark.addnewbmfolderbookmarkapactions.AddBMFolderTest;
+import com.liferay.portalweb.portlet.assetpublisher.bmbookmark.addnewbmfolderbookmarkapactions.AddNewBMFolderBookmarkAPActionsTest;
+import com.liferay.portalweb.portlet.assetpublisher.bmbookmark.addnewbmfolderbookmarkapactions.TearDownBMEntryTest;
+import com.liferay.portalweb.portlet.assetpublisher.bmbookmark.addnewbmfolderbookmarkapactions.TearDownBMFolderTest;
+import com.liferay.portalweb.portlet.assetpublisher.bmbookmark.viewportletavailablebookmarksentryap.ViewPortletAvailableBookmarksEntryAPTest;
+import com.liferay.portalweb.portlet.assetpublisher.portlet.addportletap.AddPageAPTest;
+import com.liferay.portalweb.portlet.assetpublisher.portlet.addportletap.AddPortletAPTest;
+import com.liferay.portalweb.portlet.assetpublisher.portlet.configureportletavailablebookmarksentry.ConfigurePortletAvailableBookmarksEntryTest;
+import com.liferay.portalweb.portlet.assetpublisher.portlet.configureportletcurrentbookmarksentry.ConfigurePortletCurrentBookmarksEntryTest;
+import com.liferay.portalweb.portlet.bookmarks.portlet.addportletbookmarks.AddPageBookmarksTest;
+import com.liferay.portalweb.portlet.bookmarks.portlet.addportletbookmarks.AddPortletBookmarksTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -25,6 +37,19 @@ import junit.framework.TestSuite;
 public class ViewPortletCurrentBookmarksEntryAPTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
+		testSuite.addTestSuite(AddPageAPTest.class);
+		testSuite.addTestSuite(AddPortletAPTest.class);
+		testSuite.addTestSuite(AddPageBookmarksTest.class);
+		testSuite.addTestSuite(AddPortletBookmarksTest.class);
+		testSuite.addTestSuite(AddBMFolderTest.class);
+		testSuite.addTestSuite(AddNewBMFolderBookmarkAPActionsTest.class);
+		testSuite.addTestSuite(ConfigurePortletAvailableBookmarksEntryTest.class);
+		testSuite.addTestSuite(ViewPortletAvailableBookmarksEntryAPTest.class);
+		testSuite.addTestSuite(ConfigurePortletCurrentBookmarksEntryTest.class);
+		testSuite.addTestSuite(ViewPortletCurrentBookmarksEntryAPTest.class);
+		testSuite.addTestSuite(TearDownBMFolderTest.class);
+		testSuite.addTestSuite(TearDownBMEntryTest.class);
+		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;
 	}

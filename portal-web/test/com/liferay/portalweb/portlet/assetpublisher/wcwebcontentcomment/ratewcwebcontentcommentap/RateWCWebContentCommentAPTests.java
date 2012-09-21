@@ -15,9 +15,14 @@
 package com.liferay.portalweb.portlet.assetpublisher.wcwebcontentcomment.ratewcwebcontentcommentap;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.addwcwebcontent.TearDownWCWebContentTest;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
 import com.liferay.portalweb.portlet.assetpublisher.portlet.addportletap.AddPageAPTest;
 import com.liferay.portalweb.portlet.assetpublisher.portlet.addportletap.AddPortletAPTest;
+import com.liferay.portalweb.portlet.assetpublisher.portlet.configureportletdisplaystylefullcontent.ConfigurePortletDisplayStyleFullContentTest;
+import com.liferay.portalweb.portlet.assetpublisher.wcwebcontent.addnewwcwebcontentapactions.AddNewWCWebContentAPActionsTest;
+import com.liferay.portalweb.portlet.assetpublisher.wcwebcontentcomment.bethefirstwcwebcontentcommentap.BeTheFirstWCWebContentCommentAPTest;
+import com.liferay.portalweb.portlet.assetpublisher.wcwebcontentcomment.bethefirstwcwebcontentcommentap.ConfigurePortletEnableCommentsTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

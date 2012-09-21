@@ -30,11 +30,13 @@ public class AddNewBMFolderBookmarkAPActionsTest extends BaseTestCase {
 				selenium.selectWindow("null");
 				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
-				selenium.waitForVisible("link=Asset Publisher Test Page");
 				selenium.clickAt("link=Asset Publisher Test Page",
 					RuntimeVariables.replace("Asset Publisher Test Page"));
 				selenium.waitForPageToLoad("30000");
-				Thread.sleep(5000);
+				selenium.waitForElementPresent(
+					"//nav[@class='site-breadcrumbs aui-helper-hidden lfr-hudcrumbs']");
+				selenium.waitForVisible(
+					"//span[@title='Add New']/ul/li/strong/a");
 				assertEquals(RuntimeVariables.replace("Add New"),
 					selenium.getText("//span[@title='Add New']/ul/li/strong/a"));
 				selenium.clickAt("//span[@title='Add New']/ul/li/strong/a",
@@ -46,13 +48,13 @@ public class AddNewBMFolderBookmarkAPActionsTest extends BaseTestCase {
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
 				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a",
 					RuntimeVariables.replace("Bookmarks Entry"));
+				selenium.waitForVisible("//iframe[contains(@id,'editAsset')]");
+				selenium.selectFrame("//iframe[contains(@id,'editAsset')]");
 				selenium.waitForVisible("//input[@value='Select']");
 				selenium.clickAt("//input[@value='Select']",
 					RuntimeVariables.replace("Select"));
-				selenium.waitForPopUp("folder",
-					RuntimeVariables.replace("30000"));
-				selenium.selectWindow("name=folder");
 				Thread.sleep(5000);
+				selenium.selectWindow("title=Bookmarks");
 
 				boolean choose1Present = selenium.isElementPresent(
 						"//td[4]/input");
@@ -65,6 +67,9 @@ public class AddNewBMFolderBookmarkAPActionsTest extends BaseTestCase {
 
 				selenium.close();
 				selenium.selectWindow("null");
+				selenium.selectFrame("relative=top");
+				selenium.waitForVisible("//iframe[contains(@id,'editAsset')]");
+				selenium.selectFrame("//iframe[contains(@id,'editAsset')]");
 
 			case 2:
 
@@ -82,6 +87,9 @@ public class AddNewBMFolderBookmarkAPActionsTest extends BaseTestCase {
 
 			case 3:
 				selenium.selectWindow("null");
+				selenium.selectFrame("relative=top");
+				selenium.waitForVisible("//iframe[contains(@id,'editAsset')]");
+				selenium.selectFrame("//iframe[contains(@id,'editAsset')]");
 				selenium.waitForText("//a[@id='_28_folderName']",
 					"BM Folder Name");
 				assertEquals(RuntimeVariables.replace("BM Folder Name"),
@@ -93,6 +101,7 @@ public class AddNewBMFolderBookmarkAPActionsTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
+				selenium.selectFrame("relative=top");
 				selenium.waitForVisible("//h3[@class='asset-title']/a");
 				assertEquals(RuntimeVariables.replace("BM Folder Bookmark Name"),
 					selenium.getText("//h3[@class='asset-title']/a"));

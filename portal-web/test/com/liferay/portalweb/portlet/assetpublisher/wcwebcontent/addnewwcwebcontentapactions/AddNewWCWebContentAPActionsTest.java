@@ -25,7 +25,6 @@ public class AddNewWCWebContentAPActionsTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Asset Publisher Test Page");
 		selenium.clickAt("link=Asset Publisher Test Page",
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -42,6 +41,8 @@ public class AddNewWCWebContentAPActionsTest extends BaseTestCase {
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
 		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a",
 			RuntimeVariables.replace("Web Content"));
+		selenium.waitForVisible("//iframe[contains(@id,'editAsset')]");
+		selenium.selectFrame("//iframe[contains(@id,'editAsset')]");
 		selenium.waitForVisible("//input[@id='_15_title_en_US']");
 		selenium.type("//input[@id='_15_title_en_US']",
 			RuntimeVariables.replace("WC Web Content Title"));
@@ -69,9 +70,12 @@ public class AddNewWCWebContentAPActionsTest extends BaseTestCase {
 			"//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/iframe");
 		selenium.waitForText("//body", "WC Web Content Content");
 		selenium.selectFrame("relative=top");
+		selenium.waitForVisible("//iframe[contains(@id,'editAsset')]");
+		selenium.selectFrame("//iframe[contains(@id,'editAsset')]");
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
+		selenium.selectFrame("relative=top");
 		selenium.waitForVisible("//h3[@class='asset-title']/a");
 		assertEquals(RuntimeVariables.replace("WC Web Content Title"),
 			selenium.getText("//h3[@class='asset-title']/a"));

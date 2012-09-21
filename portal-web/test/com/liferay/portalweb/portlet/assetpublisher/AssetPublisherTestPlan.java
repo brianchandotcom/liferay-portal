@@ -19,9 +19,9 @@ import com.liferay.portalweb.portlet.assetpublisher.archivedsetup.ArchivedSetupT
 import com.liferay.portalweb.portlet.assetpublisher.blogsentry.BlogsEntryTestPlan;
 import com.liferay.portalweb.portlet.assetpublisher.blogsentrycomment.BlogsEntryCommentTestPlan;
 import com.liferay.portalweb.portlet.assetpublisher.bmbookmark.BMBookmarkTestPlan;
-import com.liferay.portalweb.portlet.assetpublisher.dldocument.DLDocumentTestPlan;
-import com.liferay.portalweb.portlet.assetpublisher.dldocumentcomment.DLDocumentCommentTestPlan;
-import com.liferay.portalweb.portlet.assetpublisher.igimage.IGImageTestPlan;
+import com.liferay.portalweb.portlet.assetpublisher.dmdocument.DMDocumentTestPlan;
+import com.liferay.portalweb.portlet.assetpublisher.dmdocumentcomment.DMDocumentCommentTestPlan;
+import com.liferay.portalweb.portlet.assetpublisher.dmimage.DMImageTestPlan;
 import com.liferay.portalweb.portlet.assetpublisher.lar.LARTestPlan;
 import com.liferay.portalweb.portlet.assetpublisher.mbthread.MBThreadTestPlan;
 import com.liferay.portalweb.portlet.assetpublisher.portlet.PortletTestPlan;
@@ -45,9 +45,9 @@ public class AssetPublisherTestPlan extends BaseTestSuite {
 		testSuite.addTest(BlogsEntryTestPlan.suite());
 		testSuite.addTest(BlogsEntryCommentTestPlan.suite());
 		testSuite.addTest(BMBookmarkTestPlan.suite());
-		testSuite.addTest(DLDocumentTestPlan.suite());
-		testSuite.addTest(DLDocumentCommentTestPlan.suite());
-		testSuite.addTest(IGImageTestPlan.suite());
+		testSuite.addTest(DMDocumentTestPlan.suite());
+		testSuite.addTest(DMDocumentCommentTestPlan.suite());
+		testSuite.addTest(DMImageTestPlan.suite());
 		testSuite.addTest(LARTestPlan.suite());
 		testSuite.addTest(MBThreadTestPlan.suite());
 		testSuite.addTest(PortletTestPlan.suite());

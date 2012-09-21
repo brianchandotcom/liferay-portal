@@ -15,9 +15,12 @@
 package com.liferay.portalweb.portlet.assetpublisher.wcwebcontent.viewconfigureportletavailablewebcontentap;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.addwcwebcontent.TearDownWCWebContentTest;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
 import com.liferay.portalweb.portlet.assetpublisher.portlet.addportletap.AddPageAPTest;
 import com.liferay.portalweb.portlet.assetpublisher.portlet.addportletap.AddPortletAPTest;
+import com.liferay.portalweb.portlet.assetpublisher.portlet.configureportletavailablewebcontent.ConfigurePortletAvailableWebContentTest;
+import com.liferay.portalweb.portlet.assetpublisher.wcwebcontent.addnewwcwebcontentapactions.AddNewWCWebContentAPActionsTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

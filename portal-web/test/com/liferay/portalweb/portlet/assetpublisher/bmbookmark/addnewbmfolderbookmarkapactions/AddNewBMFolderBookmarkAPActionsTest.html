@@ -14,68 +14,73 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Asset Publisher Test Page</td>
-	<td>Asset Publisher Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Asset Publisher Test Page</td>
 	<td>Asset Publisher Test Page</td>
 </tr>
 <tr>
+	<td>waitForElementPresent</td>
+	<td>//nav[@class='site-breadcrumbs aui-helper-hidden lfr-hudcrumbs']</td>
+	<td>AUI Help Hidden LFR Hudcrumbs</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//span[@title='Add New']/ul/li/strong/a</td>
+	<td>Add New</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@title='Add New']/ul/li/strong/a</td>
+	<td>Add New</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//span[@title='Add New']/ul/li/strong/a</td>
+	<td>Add New</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>Bookmarks Entry</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>Bookmarks Entry</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>Bookmarks Entry</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//iframe[contains(@id,'editAsset')]</td>
+	<td>Bookmarks Entry</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//iframe[contains(@id,'editAsset')]</td>
+	<td>Bookmarks Entry</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//input[@value='Select']</td>
+	<td>Select</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@value='Select']</td>
+	<td>Select</td>
+</tr>
+<tr>
 	<td>pause</td>
 	<td>5000</td>
 	<td></td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//span[@title='Add New']/ul/li/strong/a</td>
-	<td>Add New</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//span[@title='Add New']/ul/li/strong/a</td>
-	<td>Add New</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
-	<td>Bookmarks Entry</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
-	<td>Bookmarks Entry</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
-	<td>Bookmarks Entry</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//input[@value='Select']</td>
-	<td>Select</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//input[@value='Select']</td>
-	<td>Select</td>
-</tr>
-<tr>
-	<td>waitForPopUp</td>
-	<td>folder</td>
-	<td>30000</td>
 </tr>
 <tr>
 	<td>selectWindow</td>
-	<td>name=folder</td>
-	<td></td>
-</tr>
-<tr>
-	<td>pause</td>
-	<td>5000</td>
+	<td>title=Bookmarks</td>
 	<td></td>
 </tr>
 <tr>
@@ -97,6 +102,21 @@
 	<td>selectWindow</td>
 	<td>null</td>
 	<td></td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>relative=top</td>
+	<td>top</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//iframe[contains(@id,'editAsset')]</td>
+	<td>Bookmarks Entry</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//iframe[contains(@id,'editAsset')]</td>
+	<td>Bookmarks Entry</td>
 </tr>
 <tr>
 	<td>label</td>
@@ -134,6 +154,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>selectFrame</td>
+	<td>relative=top</td>
+	<td>top</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//iframe[contains(@id,'editAsset')]</td>
+	<td>Bookmarks Entry</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//iframe[contains(@id,'editAsset')]</td>
+	<td>Bookmarks Entry</td>
+</tr>
+<tr>
 	<td>waitForText</td>
 	<td>//a[@id='_28_folderName']</td>
 	<td>BM Folder Name</td>
@@ -159,6 +194,11 @@
 	<td>Save</td>
 </tr>
 <tr>
+	<td>selectFrame</td>
+	<td>relative=top</td>
+	<td>top</td>
+</tr>
+<tr>
 	<td>waitForVisible</td>
 	<td>//h3[@class='asset-title']/a</td>
 	<td>BM Folder Bookmark Name</td>
@@ -168,7 +208,6 @@
 	<td>//h3[@class='asset-title']/a</td>
 	<td>BM Folder Bookmark Name</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

@@ -30,10 +30,10 @@ public class TearDownBMEntryTest extends BaseTestCase {
 				selenium.selectWindow("null");
 				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
-				selenium.waitForVisible("link=Bookmarks Test Page");
 				selenium.clickAt("link=Bookmarks Test Page",
 					RuntimeVariables.replace("Bookmarks Test Page"));
 				selenium.waitForPageToLoad("30000");
+				Thread.sleep(5000);
 
 				boolean bookmarksEntry1Present = selenium.isElementPresent(
 						"//td[5]/span/ul/li/strong/a");
@@ -44,6 +44,9 @@ public class TearDownBMEntryTest extends BaseTestCase {
 					continue;
 				}
 
+				Thread.sleep(5000);
+				selenium.waitForVisible(
+					"//span[@title='Actions']/ul/li/strong/a");
 				assertEquals(RuntimeVariables.replace("Actions"),
 					selenium.getText("//td[5]/span/ul/li/strong/a"));
 				selenium.clickAt("//td[5]/span/ul/li/strong/a",
@@ -68,6 +71,9 @@ public class TearDownBMEntryTest extends BaseTestCase {
 					continue;
 				}
 
+				Thread.sleep(5000);
+				selenium.waitForVisible(
+					"//span[@title='Actions']/ul/li/strong/a");
 				assertEquals(RuntimeVariables.replace("Actions"),
 					selenium.getText("//td[5]/span/ul/li/strong/a"));
 				selenium.clickAt("//td[5]/span/ul/li/strong/a",
@@ -92,6 +98,9 @@ public class TearDownBMEntryTest extends BaseTestCase {
 					continue;
 				}
 
+				Thread.sleep(5000);
+				selenium.waitForVisible(
+					"//span[@title='Actions']/ul/li/strong/a");
 				assertEquals(RuntimeVariables.replace("Actions"),
 					selenium.getText("//td[5]/span/ul/li/strong/a"));
 				selenium.clickAt("//td[5]/span/ul/li/strong/a",
@@ -140,6 +149,9 @@ public class TearDownBMEntryTest extends BaseTestCase {
 					continue;
 				}
 
+				Thread.sleep(5000);
+				selenium.waitForVisible(
+					"//span[@title='Actions']/ul/li/strong/a");
 				assertEquals(RuntimeVariables.replace("Actions"),
 					selenium.getText("//td[5]/span/ul/li/strong/a"));
 				selenium.clickAt("//td[5]/span/ul/li/strong/a",

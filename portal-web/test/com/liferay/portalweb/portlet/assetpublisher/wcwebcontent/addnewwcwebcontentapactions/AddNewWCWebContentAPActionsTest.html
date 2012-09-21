@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Asset Publisher Test Page</td>
-	<td>Asset Publisher Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Asset Publisher Test Page</td>
 	<td>Asset Publisher Test Page</td>
@@ -53,6 +48,17 @@
 	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a</td>
 	<td>Web Content</td>
 </tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//iframe[contains(@id,'editAsset')]</td>
+	<td>Web Content IFrame</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//iframe[contains(@id,'editAsset')]</td>
+	<td>Web Content IFrame</td>
+</tr>
+<tr>
 <tr>
 	<td>waitForVisible</td>
 	<td>//input[@id='_15_title_en_US']</td>
@@ -134,9 +140,24 @@
 	<td>top</td>
 </tr>
 <tr>
+	<td>waitForVisible</td>
+	<td>//iframe[contains(@id,'editAsset')]</td>
+	<td>Web Content IFrame</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//iframe[contains(@id,'editAsset')]</td>
+	<td>Web Content IFrame</td>
+</tr>
+<tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Publish']</td>
 	<td>Publish</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>relative=top</td>
+	<td>top</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>

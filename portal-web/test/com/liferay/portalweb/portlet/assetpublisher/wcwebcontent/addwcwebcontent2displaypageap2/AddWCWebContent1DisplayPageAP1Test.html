@@ -49,29 +49,9 @@
 	<td>Web Content</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//span[@title='Add']/ul/li/strong/a/span</td>
-	<td>Add</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//span[@title='Add']/ul/li/strong/a/span</td>
-	<td>Add</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//a[contains(@id,'basic-web-content')]</td>
-	<td>Basic Web Content</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//a[contains(@id,'basic-web-content')]</td>
-	<td>Basic Web Content</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
-	<td>//a[contains(@id,'basic-web-content')]</td>
-	<td>Basic Web Content</td>
+	<td>//input[@value='Add']</td>
+	<td>Add</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -146,17 +126,17 @@
 <tr>
 	<td>waitForVisible</td>
 	<td>//a[@id='_15_displayPageLink']</td>
-	<td>Display Page (Modified)</td>
+	<td>Display Page</td>
 </tr>
 <tr>
-	<td>assertText</td>
+	<td>assertPartialText</td>
 	<td>//a[@id='_15_displayPageLink']</td>
-	<td>Display Page (Modified)</td>
+	<td>Display Page</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>//a[@id='_15_displayPageLink']</td>
-	<td>Display Page (Modified)</td>
+	<td>Display Page</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -194,7 +174,7 @@
 	<td>Asset Publisher Test Page1</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
+	<td>waitForText</td>
 	<td>//div[@id='_15_selectedPageMessage']</td>
 	<td>Public Pages > Asset Publisher Test Page1</td>
 </tr>

@@ -16,8 +16,12 @@ package com.liferay.portalweb.portlet.assetpublisher.archivedsetup.restoreaparch
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
+import com.liferay.portalweb.portlet.assetpublisher.archivedsetup.saveaparchivedsetup.SaveAPArchivedSetupTest;
+import com.liferay.portalweb.portlet.assetpublisher.archivedsetup.saveaparchivedsetup.TearDownAPArchivedSetupTest;
 import com.liferay.portalweb.portlet.assetpublisher.portlet.addportletap.AddPageAPTest;
 import com.liferay.portalweb.portlet.assetpublisher.portlet.addportletap.AddPortletAPTest;
+import com.liferay.portalweb.portlet.assetpublisher.portlet.configureportletassetselectiondynamic.ConfigurePortletAssetSelectionDynamicTest;
+import com.liferay.portalweb.portlet.assetpublisher.portlet.configureportletassetselectionmanual.ConfigurePortletAssetSelectionManualTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

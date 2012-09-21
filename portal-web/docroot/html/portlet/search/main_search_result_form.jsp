@@ -103,7 +103,7 @@ if (indexer != null) {
 }
 else if (assetRenderer != null) {
 	entryTitle = assetRenderer.getTitle(locale);
-	entrySummary = assetRenderer.getSummary(locale);
+	entrySummary = HtmlUtil.extractText(BBCodeTranslatorUtil.getHTML(assetRenderer.getSummary(locale)));
 }
 
 if ((assetRendererFactory == null) && viewInContext) {

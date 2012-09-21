@@ -61,12 +61,16 @@ public class MBMessageAssetRenderer extends BaseAssetRenderer {
 		return _message.getGroupId();
 	}
 
+	@Override
 	public String getSearchSummary(Locale locale) {
-		return _message.isFormatBBCode()?HtmlUtil.extractText(
-			BBCodeTranslatorUtil.getHTML(_message.getBody())):
-			HtmlUtil.stripHtml(_message.getBody());
+		if (_message.isFormatBBCode()) {
+			return HtmlUtil.extractText(
+				BBCodeTranslatorUtil.getHTML(_message.getBody()));
+		}
+
+		return getSummary(locale);
 	}
-	
+
 	public String getSummary(Locale locale) {
 		return HtmlUtil.stripHtml(_message.getBody());
 	}

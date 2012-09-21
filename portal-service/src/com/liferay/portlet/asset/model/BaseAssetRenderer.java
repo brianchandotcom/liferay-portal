@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.asset.model;
 
+import java.util.Locale;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -75,6 +77,10 @@ public abstract class BaseAssetRenderer implements AssetRenderer {
 
 	public String getRestorePath(RenderRequest renderRequest) {
 		return null;
+	}
+
+	public String getSearchSummary(Locale locale) {
+		return getSummary(locale);
 	}
 
 	public String getURLDownload(ThemeDisplay themeDisplay) {

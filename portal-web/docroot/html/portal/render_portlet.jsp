@@ -78,7 +78,9 @@ if (allowAddPortletDefaultResource) {
 	if (Validator.isNotNull(scopeLayoutUuid)) {
 		Layout scopeLayout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(scopeLayoutUuid, group.getGroupId());
 
-		portletPreferencesIds = PortletPreferencesFactoryUtil.getPortletPreferencesIds(request, scopeLayout, portletId);
+		if (scopeLayout != null) {
+			portletPreferencesIds = PortletPreferencesFactoryUtil.getPortletPreferencesIds(request, scopeLayout, portletId);
+		}
 
 		portletPreferences = PortletPreferencesLocalServiceUtil.getPreferences(portletPreferencesIds);
 	}

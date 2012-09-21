@@ -29,6 +29,7 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
+import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.model.impl.DLFolderImpl;
 import com.liferay.portlet.documentlibrary.service.base.DLFolderServiceBaseImpl;
 import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
@@ -280,8 +281,9 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 			OrderByComparator obc)
 		throws SystemException {
 
-		return dlFolderPersistence.filterFindByG_M_P(
-			groupId, true, parentFolderId, start, end, obc);
+		return dlFolderPersistence.filterFindByG_M_R_P(
+			groupId, true, DLFolderConstants.REGULAR_REPOSITORY, parentFolderId,
+			start, end, obc);
 	}
 
 	public int getMountFoldersCount(long groupId, long parentFolderId)

@@ -657,6 +657,51 @@ public class RepositoryUtil {
 	}
 
 	/**
+	* Returns the repository where groupId = &#63; and portletId = &#63; or throws a {@link com.liferay.portal.NoSuchRepositoryException} if it could not be found.
+	*
+	* @param groupId the group ID
+	* @param portletId the portlet ID
+	* @return the matching repository
+	* @throws com.liferay.portal.NoSuchRepositoryException if a matching repository could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Repository findByG_P(long groupId,
+		java.lang.String portletId)
+		throws com.liferay.portal.NoSuchRepositoryException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByG_P(groupId, portletId);
+	}
+
+	/**
+	* Returns the repository where groupId = &#63; and portletId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param groupId the group ID
+	* @param portletId the portlet ID
+	* @return the matching repository, or <code>null</code> if a matching repository could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Repository fetchByG_P(long groupId,
+		java.lang.String portletId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByG_P(groupId, portletId);
+	}
+
+	/**
+	* Returns the repository where groupId = &#63; and portletId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param groupId the group ID
+	* @param portletId the portlet ID
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the matching repository, or <code>null</code> if a matching repository could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Repository fetchByG_P(long groupId,
+		java.lang.String portletId, boolean retrieveFromCache)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByG_P(groupId, portletId, retrieveFromCache);
+	}
+
+	/**
 	* Returns all the repositories.
 	*
 	* @return the repositories
@@ -755,6 +800,21 @@ public class RepositoryUtil {
 	}
 
 	/**
+	* Removes the repository where groupId = &#63; and portletId = &#63; from the database.
+	*
+	* @param groupId the group ID
+	* @param portletId the portlet ID
+	* @return the repository that was removed
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Repository removeByG_P(
+		long groupId, java.lang.String portletId)
+		throws com.liferay.portal.NoSuchRepositoryException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().removeByG_P(groupId, portletId);
+	}
+
+	/**
 	* Removes all the repositories from the database.
 	*
 	* @throws SystemException if a system exception occurred
@@ -812,6 +872,19 @@ public class RepositoryUtil {
 	public static int countByGroupId(long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence().countByGroupId(groupId);
+	}
+
+	/**
+	* Returns the number of repositories where groupId = &#63; and portletId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param portletId the portlet ID
+	* @return the number of matching repositories
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByG_P(long groupId, java.lang.String portletId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByG_P(groupId, portletId);
 	}
 
 	/**

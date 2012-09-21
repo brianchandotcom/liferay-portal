@@ -248,6 +248,7 @@ alter table DLFolder add status INTEGER;
 alter table DLFolder add statusByUserId LONG;
 alter table DLFolder add statusByUserName VARCHAR(75) null;
 alter table DLFolder add statusDate DATE null;
+alter table DLFolder add repositoryType INTEGER;
 
 COMMIT_TRANSACTION;
 
@@ -255,6 +256,7 @@ update DLFolder set status = 0;
 update DLFolder set statusByUserId = userId;
 update DLFolder set statusByUserName = userName;
 update DLFolder set statusDate = modifiedDate;
+update DLFolder set repositoryType = 0;
 
 drop table Groups_Permissions;
 

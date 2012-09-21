@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManagerUtil
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceMode;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
@@ -367,16 +368,8 @@ public class JSONWebServiceConfigurator extends ClassFinder {
 				}
 			}
 
-			if (_excludedMethodNames != null) {
-				String methodName = method.getName();
-
-				for (String excludedMethodName : _excludedMethodNames) {
-					if (excludedMethodName.equals(methodName)) {
-						registerMethod = false;
-
-						break;
-					}
-				}
+			if (ArrayUtil.contains(_excludedMethodNames, method.getName())) {
+				registerMethod = false;
 			}
 
 			if (registerMethod) {

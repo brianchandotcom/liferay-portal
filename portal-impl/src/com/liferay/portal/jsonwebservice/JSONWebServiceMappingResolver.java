@@ -16,6 +16,7 @@ package com.liferay.portal.jsonwebservice;
 
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.servlet.HttpMethods;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CamelCaseUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -112,10 +113,8 @@ public class JSONWebServiceMappingResolver {
 	}
 
 	private String _prefixToHttpMethod(String prefix) {
-		for (String postPrefix : _GET_PREFIXES) {
-			if (prefix.equals(postPrefix)) {
-				return HttpMethods.GET;
-			}
+		if (ArrayUtil.contains(_GET_PREFIXES, prefix)) {
+			return HttpMethods.GET;
 		}
 
 		return HttpMethods.POST;

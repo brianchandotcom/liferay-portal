@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContextPathUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MethodParameter;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.SortedArrayList;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.PortalUtil;
@@ -37,6 +38,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -243,18 +245,16 @@ public class JSONWebServiceActionsManagerImpl
 
 		int matched = 0;
 
+		Set<String> parameterNamesSet = SetUtil.fromArray(parameterNames);
+
 		for (MethodParameter methodParameter : methodParameters) {
 			String methodParameterName = methodParameter.getName();
 
 			methodParameterName = CamelCaseUtil.normalizeCamelCase(
 				methodParameterName);
 
-			for (String parameterName : parameterNames) {
-				if (parameterName.equals(methodParameterName)) {
-					matched++;
-
-					break;
-				}
+			if (parameterNamesSet.contains(methodParameterName)) {
+				matched++;
 			}
 		}
 

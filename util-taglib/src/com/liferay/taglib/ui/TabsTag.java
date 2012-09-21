@@ -16,10 +16,13 @@ package com.liferay.taglib.ui;
 
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.ServerDetector;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.util.IncludeTag;
+
+import java.util.Set;
 
 import javax.portlet.PortletURL;
 
@@ -128,10 +131,10 @@ public class TabsTag extends IncludeTag {
 
 			boolean match = false;
 
-			for (int i = 0; i < _tabsValues.length; i++) {
-				if (_value.equals(_tabsValues[i])) {
-					match = true;
-				}
+			Set<String> tabsValuesSet = SetUtil.fromArray(_tabsValues);
+
+			if (tabsValuesSet.contains(_value)) {
+				match = true;
 			}
 
 			if (!match) {

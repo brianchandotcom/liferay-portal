@@ -43,7 +43,6 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.Vector;
@@ -155,10 +154,10 @@ public class PDFProcessorImpl
 			for (String extension : extensions) {
 				extension = extension.substring(1);
 
-				String[] targetExtensions =
+				Set<String> targetExtensions =
 					DocumentConversionUtil.getConversions(extension);
 
-				if (Arrays.binarySearch(targetExtensions, "pdf") >= 0) {
+				if (targetExtensions.contains("pdf")) {
 					return true;
 				}
 			}
@@ -697,15 +696,11 @@ public class PDFProcessorImpl
 			generateImages = true;
 		}
 		else if (DocumentConversionUtil.isEnabled()) {
-			String[] conversions = DocumentConversionUtil.getConversions(
+			Set<String> conversions = DocumentConversionUtil.getConversions(
 				extension);
 
-			for (String conversion : conversions) {
-				if (conversion.equals("pdf")) {
-					generateImages = true;
-
-					break;
-				}
+			if (conversions.contains("pdf")) {
+				generateImages = true;
 			}
 		}
 

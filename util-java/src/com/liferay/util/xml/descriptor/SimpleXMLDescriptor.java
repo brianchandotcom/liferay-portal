@@ -14,8 +14,11 @@
 
 package com.liferay.util.xml.descriptor;
 
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.util.xml.ElementComparator;
 import com.liferay.util.xml.ElementIdentifier;
+
+import java.util.Set;
 
 import org.dom4j.Document;
 import org.dom4j.Element;
@@ -144,13 +147,9 @@ public abstract class SimpleXMLDescriptor implements XMLDescriptor {
 	}
 
 	private boolean _isIncluded(Element element, String[] elemNames) {
-		for (int i = 0; i < elemNames.length; i++) {
-			if (element.getName().equals(elemNames[i])) {
-				return true;
-			}
-		}
+		Set<String> elemNamesSet = SetUtil.fromArray(elemNames);
 
-		return false;
+		return elemNamesSet.contains(element.getName());
 	}
 
 }

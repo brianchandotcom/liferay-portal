@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -36,6 +37,7 @@ import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import javax.portlet.PortletRequest;
 
@@ -56,10 +58,10 @@ public class AssetEntryQuery {
 			return ORDER_BY_COLUMNS[2];
 		}
 
-		for (String curOrderByCol : ORDER_BY_COLUMNS) {
-			if (orderByCol.equals(curOrderByCol)) {
-				return orderByCol;
-			}
+		Set<String> orderByColumns = SetUtil.fromArray(ORDER_BY_COLUMNS);
+
+		if (orderByColumns.contains(orderByCol)) {
+			return orderByCol;
 		}
 
 		return ORDER_BY_COLUMNS[2];

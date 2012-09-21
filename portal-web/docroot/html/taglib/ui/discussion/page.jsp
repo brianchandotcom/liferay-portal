@@ -117,16 +117,25 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 					%>
 
 					<c:choose>
-						<c:when test="<%= messagesCount == 1 %>">
-							<liferay-ui:message key="no-comments-yet" /> <a href="<%= taglibPostReplyURL %>"><liferay-ui:message key="be-the-first" /></a>
+						<c:when test="<%= TrashUtil.isInTrash(className, classPK) %>">
+							<div class="portlet-msg-alert">
+								<liferay-ui:message key="commenting-is-disabled-because-this-entry-is-in-the-recycle-bin" />
+							</div>
 						</c:when>
 						<c:otherwise>
-							<liferay-ui:icon
-								image="reply"
-								label="<%= true %>"
-								message="add-comment"
-								url="<%= taglibPostReplyURL %>"
-							/>
+							<c:choose>
+								<c:when test="<%= messagesCount == 1 %>">
+									<liferay-ui:message key="no-comments-yet" /> <a href="<%= taglibPostReplyURL %>"><liferay-ui:message key="be-the-first" /></a>
+								</c:when>
+								<c:otherwise>
+									<liferay-ui:icon
+										image="reply"
+										label="<%= true %>"
+										message="add-comment"
+										url="<%= taglibPostReplyURL %>"
+									/>
+								</c:otherwise>
+							</c:choose>
 						</c:otherwise>
 					</c:choose>
 
@@ -136,7 +145,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 					String subscriptionURL = "javascript:" + randomNamespace + "subscribeToComments(" + !subscribed + ");";
 					%>
 
-					<c:if test="<%= themeDisplay.isSignedIn() %>">
+					<c:if test="<%= themeDisplay.isSignedIn() && !TrashUtil.isInTrash(className, classPK) %>">
 						<c:choose>
 							<c:when test="<%= subscribed %>">
 								<liferay-ui:icon
@@ -328,7 +337,8 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 								</div>
 
 								<div class="lfr-discussion-controls">
-									<c:if test="<%= ratingsEnabled %>">
+
+									<c:if test="<%= ratingsEnabled && !TrashUtil.isInTrash(message.getClassName(), message.getClassPK()) %>">
 
 										<%
 										RatingsEntry ratingsEntry = getRatingsEntry(ratingsEntries, message.getMessageId());
@@ -344,7 +354,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 										/>
 									</c:if>
 
-									<c:if test="<%= !hideControls %>">
+									<c:if test="<%= !hideControls && !TrashUtil.isInTrash(message.getClassName(), message.getClassPK()) %>">
 										<ul class="lfr-discussion-actions">
 											<c:if test="<%= MBDiscussionPermission.contains(permissionChecker, company.getCompanyId(), scopeGroupId, permissionClassName, permissionClassPK, userId, ActionKeys.ADD_DISCUSSION) %>">
 												<li class="lfr-discussion-reply-to">

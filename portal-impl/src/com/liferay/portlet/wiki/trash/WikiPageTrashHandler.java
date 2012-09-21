@@ -206,6 +206,18 @@ public class WikiPageTrashHandler extends BaseTrashHandler {
 		return new WikiPageAssetRenderer(page);
 	}
 
+	public boolean isInTrash(long classPK)
+		throws PortalException, SystemException {
+
+		WikiPage page = WikiPageLocalServiceUtil.getPage(classPK);
+
+		if (page.isInTrashFolder() || page.isInTrash()) {
+			return true;
+		}
+
+		return false;
+	}
+
 	/**
 	 * Restores all wiki pages with the matching primary keys.
 	 *

@@ -16,8 +16,6 @@
 
 <%@ include file="/html/taglib/init.jsp" %>
 
-<%@ page import="com.liferay.portlet.trash.util.TrashUtil" %>
-
 <%
 String confirmMessage = (String)request.getAttribute("liferay-ui:trash-empty:confirmMessage");
 String emptyMessage = (String)request.getAttribute("liferay-ui:trash-empty:emptyMessage");

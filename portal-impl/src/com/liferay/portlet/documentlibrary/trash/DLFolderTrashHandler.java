@@ -146,6 +146,18 @@ public class DLFolderTrashHandler extends BaseTrashHandler {
 		return new DLFolderTrashRenderer(folder);
 	}
 
+	public boolean isInTrash(long classPK)
+		throws PortalException, SystemException {
+
+		DLFolder dlFolder = getDLFolder(classPK);
+
+		if (dlFolder.isInTrashFolder() || dlFolder.isInTrash()) {
+			return true;
+		}
+
+		return false;
+	}
+
 	/**
 	 * Restores all folders with the matching primary keys.
 	 *

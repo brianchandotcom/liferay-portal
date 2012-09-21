@@ -110,6 +110,14 @@ public class WikiNodeTrashHandler extends BaseTrashHandler {
 		return new WikiNodeTrashRenderer(node);
 	}
 
+	public boolean isInTrash(long classPK)
+		throws PortalException, SystemException {
+
+		WikiNode node = WikiNodeLocalServiceUtil.getNode(classPK);
+
+		return node.isInTrash();
+	}
+
 	/**
 	 * Restores all wiki nodes with the matching primary keys.
 	 *

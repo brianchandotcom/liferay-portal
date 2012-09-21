@@ -89,6 +89,12 @@ public class TrashUtil {
 		return getTrash().getTrashTime(title, separator);
 	}
 
+	public static boolean isInTrash(String className, long classPK)
+		throws PortalException, SystemException {
+
+		return getTrash().isInTrash(className, classPK);
+	}
+
 	public static boolean isTrashEnabled(long groupId)
 		throws PortalException, SystemException {
 

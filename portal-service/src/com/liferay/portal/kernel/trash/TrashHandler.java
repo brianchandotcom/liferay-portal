@@ -136,6 +136,9 @@ public interface TrashHandler {
 	public TrashRenderer getTrashRenderer(long classPK)
 		throws PortalException, SystemException;
 
+	public boolean isInTrash(long classPK)
+		throws PortalException, SystemException;
+
 	/**
 	 * Restores all entries with the primary keys.
 	 *

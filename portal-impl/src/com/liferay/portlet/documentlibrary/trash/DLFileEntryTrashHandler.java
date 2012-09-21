@@ -134,6 +134,20 @@ public class DLFileEntryTrashHandler extends BaseTrashHandler {
 		return DLUtil.getAbsolutePath(portletRequest, dlFolder.getFolderId());
 	}
 
+	public boolean isInTrash(long classPK)
+		throws PortalException, SystemException {
+
+		DLFileEntry dlFileEntry = getDLFileEntry(classPK);
+
+		DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
+
+		if (dlFileEntry.isInTrashFolder() || dlFileVersion.isInTrash()) {
+			return true;
+		}
+
+		return false;
+	}
+
 	/**
 	 * Restores all file entries with the matching primary keys.
 	 *

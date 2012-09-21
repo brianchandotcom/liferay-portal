@@ -48,6 +48,9 @@ public interface Trash {
 
 	public String getTrashTime(String title, String separator);
 
+	public boolean isInTrash(String className, long classPK)
+		throws PortalException, SystemException;
+
 	public boolean isTrashEnabled(long groupId)
 		throws PortalException, SystemException;
 

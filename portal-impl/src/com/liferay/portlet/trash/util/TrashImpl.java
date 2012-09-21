@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.trash.TrashHandler;
+import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -189,6 +191,19 @@ public class TrashImpl implements Trash {
 		}
 
 		return title.substring(index + 1, title.length());
+	}
+
+	public boolean isInTrash(String className, long classPK)
+		throws PortalException, SystemException {
+
+		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
+			className);
+
+		if (trashHandler == null) {
+			return false;
+		}
+
+		return trashHandler.isInTrash(classPK);
 	}
 
 	public boolean isTrashEnabled(long groupId)

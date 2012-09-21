@@ -115,6 +115,19 @@ public class DLFileShortcutTrashHandler extends BaseTrashHandler {
 		return new DLFileShortcutTrashRenderer(fileShortcut);
 	}
 
+	public boolean isInTrash(long classPK)
+		throws PortalException, SystemException {
+
+		DLFileShortcut fileShortcut =
+			DLFileShortcutLocalServiceUtil.getDLFileShortcut(classPK);
+
+		if (fileShortcut.isInTrashFolder() || fileShortcut.isInTrash()) {
+			return true;
+		}
+
+		return false;
+	}
+
 	/**
 	 * Restores all file entries with the matching primary keys.
 	 *

@@ -62,6 +62,14 @@ public class BlogsEntryTrashHandler extends BaseTrashHandler {
 		return CLASS_NAME;
 	}
 
+	public boolean isInTrash(long classPK)
+		throws PortalException, SystemException {
+
+		BlogsEntry entry = BlogsEntryServiceUtil.getEntry(classPK);
+
+		return entry.isInTrash();
+	}
+
 	/**
 	 * Restores all blogs entries with the matching primary keys.
 	 *

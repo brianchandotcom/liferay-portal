@@ -144,17 +144,6 @@ Liferay = window.Liferay || {};
 			throw 'You must specify a service.';
 		}
 
-		var pieces = service.split('#');
-
-		var url;
-
-		if (pieces.length > 1) {
-			url = Lang.sub(Service.PLUGIN_URL_BASE, pieces);
-		}
-		else {
-			url = Service.URL_BASE + service;
-		}
-
 		if (String(method).toUpperCase() == 'GET') {
 			config.cache = false;
 		}
@@ -176,10 +165,8 @@ Liferay = window.Liferay || {};
 
 		config.data = prefixedData;
 
-		return Service._ioRequest(url, config);
+		return Service._ioRequest(Service.URL_BASE + service, config);
 	};
-
-	Service.PLUGIN_URL_BASE = CONTEXT + '/{0}/api/jsonws/{1}';
 
 	Service.URL_BASE = CONTEXT + '/api/jsonws/';
 

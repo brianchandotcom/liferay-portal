@@ -192,107 +192,101 @@ int screenshotsCount = ParamUtil.getInteger(request, "screenshotsCount", product
 
 </table>
 
-<br />
+<div class="lfr-asset-panels">
+	<liferay-ui:panel-container extended="<%= false %>" id="productEntryPanelContainer" persistState="<%= true %>">
+		<liferay-ui:panel extended="<%= false %>" id="pluginRepositoryPanel" persistState="<%= true %>" title="plugin-repository">
+			<table class="lfr-table">
+			<tr>
+				<td>
+					<liferay-ui:message key="site-id" />
+				</td>
+				<td>
+					<liferay-ui:input-field bean="<%= productEntry %>" field="repoGroupId" model="<%= SCProductEntry.class %>" />
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<liferay-ui:message key="artifact-id" />
+				</td>
+				<td>
+					<liferay-ui:input-field bean="<%= productEntry %>" field="repoArtifactId" model="<%= SCProductEntry.class %>" />
+				</td>
+			</tr>
+			</table>
+		</liferay-ui:panel>
 
-<input type="submit" value="<liferay-ui:message key="save" />" />
+		<liferay-ui:panel extended="<%= false %>" id="screenshotsPanel" persistState="<%= true %>" title="screenshots">
+			<table class="lfr-table">
 
-<input type="button" value="<liferay-ui:message key="cancel" />" onClick="location.href = '<%= HtmlUtil.escape(PortalUtil.escapeRedirect(redirect)) %>';" />
+			<%
+			for (int i = 0; i < screenshotsCount; i++) {
+				SCProductScreenshot productScreenshot = null;
 
-<br /><br />
+				if (i < productScreenshots.size()) {
+					productScreenshot = (SCProductScreenshot)productScreenshots.get(i);
+				}
+			%>
 
-<liferay-ui:header
-	title="plugin-repository"
-/>
-
-<table class="lfr-table">
-<tr>
-	<td>
-		<liferay-ui:message key="site-id" />
-	</td>
-	<td>
-		<liferay-ui:input-field bean="<%= productEntry %>" field="repoGroupId" model="<%= SCProductEntry.class %>" />
-	</td>
-</tr>
-<tr>
-	<td>
-		<liferay-ui:message key="artifact-id" />
-	</td>
-	<td>
-		<liferay-ui:input-field bean="<%= productEntry %>" field="repoArtifactId" model="<%= SCProductEntry.class %>" />
-	</td>
-</tr>
-</table>
-
-<br />
-
-<liferay-ui:header
-	title="screenshots"
-/>
-
-<table class="lfr-table">
-
-<%
-for (int i = 0; i < screenshotsCount; i++) {
-	SCProductScreenshot productScreenshot = null;
-
-	if (i < productScreenshots.size()) {
-		productScreenshot = (SCProductScreenshot)productScreenshots.get(i);
-	}
-%>
-
-	<tr>
-		<td>
-			<liferay-ui:message key="thumbnail" />
-		</td>
-		<td>
-			<input class="lfr-input-text" name="<portlet:namespace />thumbnail<%= i %>" type="file" />
-		</td>
-
-		<c:if test="<%= productScreenshot != null %>">
-			<td class="lfr-top" rowspan="3">
-				<table class="lfr-table">
 				<tr>
 					<td>
-						<aui:a href='<%= themeDisplay.getPathImage() + "/software_catalog?img_id=" + productScreenshot.getThumbnailId() + "&t=" + WebServerServletTokenUtil.getToken(productScreenshot.getThumbnailId()) %>' target="_blank"><liferay-ui:message key="see-thumbnail" /></aui:a>
+						<liferay-ui:message key="thumbnail" />
 					</td>
 					<td>
-						<aui:a href='<%= themeDisplay.getPathImage() + "/software_catalog?img_id=" + productScreenshot.getFullImageId() + "&t=" + WebServerServletTokenUtil.getToken(productScreenshot.getFullImageId()) %>' target="_blank"><liferay-ui:message key="see-full-image" /></aui:a>
+						<input class="lfr-input-text" name="<portlet:namespace />thumbnail<%= i %>" type="file" />
+					</td>
+
+					<c:if test="<%= productScreenshot != null %>">
+						<td class="lfr-top" rowspan="3">
+							<table class="lfr-table">
+							<tr>
+								<td>
+									<aui:a href='<%= themeDisplay.getPathImage() + "/software_catalog?img_id=" + productScreenshot.getThumbnailId() + "&t=" + WebServerServletTokenUtil.getToken(productScreenshot.getThumbnailId()) %>' target="_blank"><liferay-ui:message key="see-thumbnail" /></aui:a>
+								</td>
+								<td>
+									<aui:a href='<%= themeDisplay.getPathImage() + "/software_catalog?img_id=" + productScreenshot.getFullImageId() + "&t=" + WebServerServletTokenUtil.getToken(productScreenshot.getFullImageId()) %>' target="_blank"><liferay-ui:message key="see-full-image" /></aui:a>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									<liferay-ui:message key="use-existing-images" /> <liferay-ui:input-checkbox param='<%= "preserveScreenshot" + i %>' defaultValue="<%= true %>" />
+								</td>
+							</tr>
+						</table>
+						</td>
+					</c:if>
+				</tr>
+				<tr>
+					<td>
+						<liferay-ui:message key="full-image" />
+					</td>
+					<td>
+						<input class="lfr-input-text" name="<portlet:namespace />fullImage<%= i %>" type="file" />
 					</td>
 				</tr>
 				<tr>
 					<td colspan="2">
-						<liferay-ui:message key="use-existing-images" /> <liferay-ui:input-checkbox param='<%= "preserveScreenshot" + i %>' defaultValue="<%= true %>" />
+						<br />
 					</td>
 				</tr>
-				</table>
-			</td>
-		</c:if>
-	</tr>
-	<tr>
-		<td>
-			<liferay-ui:message key="full-image" />
-		</td>
-		<td>
-			<input class="lfr-input-text" name="<portlet:namespace />fullImage<%= i %>" type="file" />
-		</td>
-	</tr>
-	<tr>
-		<td colspan="2">
-			<br />
-		</td>
-	</tr>
 
-<%
-}
-%>
+			<%
+			}
+			%>
 
-</table>
+			</table>
 
-<input type="button" value="<liferay-ui:message key="add-screenshot" />" onClick="<portlet:namespace />addScreenShot();" />
+			<input type="button" value="<liferay-ui:message key="add-screenshot" />" onClick="<portlet:namespace />addScreenShot();" />
 
-<c:if test="<%= screenshotsCount > 0 %>">
-	<input type="button" value="<liferay-ui:message key="remove-screenshot" />" onClick="<portlet:namespace />removeScreenShot();" />
-</c:if>
+			<c:if test="<%= screenshotsCount > 0 %>">
+				<input type="button" value="<liferay-ui:message key="remove-screenshot" />" onClick="<portlet:namespace />removeScreenShot();" />
+			</c:if>
+		</liferay-ui:panel>
+	</liferay-ui:panel-container>
+</div>
+
+<input type="submit" value="<liferay-ui:message key="save" />" />
+
+<input type="button" value="<liferay-ui:message key="cancel" />" onClick="location.href = '<%= HtmlUtil.escape(PortalUtil.escapeRedirect(redirect)) %>';" />
 
 </form>
 

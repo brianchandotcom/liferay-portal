@@ -51,6 +51,8 @@ public interface AssetRenderer {
 
 	public String getIconPath(PortletRequest portletRequest);
 
+	public String getSearchSummary(Locale locale);
+
 	public String getSummary(Locale locale);
 
 	public String getTitle(Locale locale);

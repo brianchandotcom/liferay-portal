@@ -16,6 +16,7 @@ package com.liferay.portlet.messageboards.asset;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.parsers.bbcode.BBCodeTranslatorUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -58,6 +59,16 @@ public class MBMessageAssetRenderer extends BaseAssetRenderer {
 
 	public long getGroupId() {
 		return _message.getGroupId();
+	}
+
+	@Override
+	public String getSearchSummary(Locale locale) {
+		if (_message.isFormatBBCode()) {
+			return HtmlUtil.extractText(
+				BBCodeTranslatorUtil.getHTML(_message.getBody()));
+		}
+
+		return getSummary(locale);
 	}
 
 	public String getSummary(Locale locale) {

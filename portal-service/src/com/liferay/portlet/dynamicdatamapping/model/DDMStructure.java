@@ -33,33 +33,45 @@ public interface DDMStructure extends DDMStructureModel, PersistedModel {
 	 */
 	public java.util.List<java.lang.String> getAvailableLanguageIds();
 
+	public java.lang.String getCompleteXsd()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	public java.lang.String getDefaultLanguageId();
 
 	public com.liferay.portal.kernel.xml.Document getDocument();
 
 	public java.lang.String getFieldDataType(java.lang.String fieldName)
-		throws com.liferay.portlet.dynamicdatamapping.StructureFieldException;
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
 
 	public java.lang.String getFieldLabel(java.lang.String fieldName,
 		java.util.Locale locale)
-		throws com.liferay.portlet.dynamicdatamapping.StructureFieldException;
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
 
 	public java.lang.String getFieldLabel(java.lang.String fieldName,
 		java.lang.String locale)
-		throws com.liferay.portlet.dynamicdatamapping.StructureFieldException;
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
 
-	public java.util.Set<java.lang.String> getFieldNames();
+	public java.util.Set<java.lang.String> getFieldNames()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
 
 	public java.lang.String getFieldProperty(java.lang.String fieldName,
 		java.lang.String property)
-		throws com.liferay.portlet.dynamicdatamapping.StructureFieldException;
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
 
 	public java.lang.String getFieldProperty(java.lang.String fieldName,
 		java.lang.String property, java.lang.String locale)
-		throws com.liferay.portlet.dynamicdatamapping.StructureFieldException;
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
 
 	public boolean getFieldRequired(java.lang.String fieldName)
-		throws com.liferay.portlet.dynamicdatamapping.StructureFieldException;
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
 
 	public java.util.Map<java.lang.String, java.lang.String> getFields(
 		java.lang.String fieldName, java.lang.String attributeName,
@@ -69,18 +81,25 @@ public interface DDMStructure extends DDMStructureModel, PersistedModel {
 		java.lang.String fieldName, java.lang.String attributeName,
 		java.lang.String attributeValue, java.lang.String locale);
 
-	public java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.lang.String>> getFieldsMap();
+	public java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.lang.String>> getFieldsMap()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
 
 	public java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.lang.String>> getFieldsMap(
-		java.lang.String locale);
+		java.lang.String locale)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
 
 	public java.lang.String getFieldType(java.lang.String fieldName)
-		throws com.liferay.portlet.dynamicdatamapping.StructureFieldException;
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
 
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> getTemplates()
 		throws com.liferay.portal.kernel.exception.SystemException;
 
-	public boolean hasField(java.lang.String fieldName);
+	public boolean hasField(java.lang.String fieldName)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
 
 	public void prepareLocalizedFieldsForImport(
 		java.util.Locale defaultImportLocale)

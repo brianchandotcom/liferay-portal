@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portlet.dynamicdatamapping.StructureFieldException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.storage.Field;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
@@ -79,9 +78,9 @@ public class DDMIndexerImpl implements DDMIndexer {
 					}
 				}
 			}
-			catch (StructureFieldException sfe) {
+			catch (Exception e) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(sfe, sfe);
+					_log.warn(e, e);
 				}
 			}
 		}

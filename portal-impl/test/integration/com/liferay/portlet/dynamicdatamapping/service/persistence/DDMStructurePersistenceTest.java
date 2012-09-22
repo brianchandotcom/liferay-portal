@@ -128,6 +128,8 @@ public class DDMStructurePersistenceTest {
 
 		newDDMStructure.setStructureKey(ServiceTestUtil.randomString());
 
+		newDDMStructure.setParentStructureId(ServiceTestUtil.nextLong());
+
 		newDDMStructure.setName(ServiceTestUtil.randomString());
 
 		newDDMStructure.setDescription(ServiceTestUtil.randomString());
@@ -164,6 +166,8 @@ public class DDMStructurePersistenceTest {
 			newDDMStructure.getClassNameId());
 		Assert.assertEquals(existingDDMStructure.getStructureKey(),
 			newDDMStructure.getStructureKey());
+		Assert.assertEquals(existingDDMStructure.getParentStructureId(),
+			newDDMStructure.getParentStructureId());
 		Assert.assertEquals(existingDDMStructure.getName(),
 			newDDMStructure.getName());
 		Assert.assertEquals(existingDDMStructure.getDescription(),
@@ -335,6 +339,8 @@ public class DDMStructurePersistenceTest {
 		ddmStructure.setClassNameId(ServiceTestUtil.nextLong());
 
 		ddmStructure.setStructureKey(ServiceTestUtil.randomString());
+
+		ddmStructure.setParentStructureId(ServiceTestUtil.nextLong());
 
 		ddmStructure.setName(ServiceTestUtil.randomString());
 

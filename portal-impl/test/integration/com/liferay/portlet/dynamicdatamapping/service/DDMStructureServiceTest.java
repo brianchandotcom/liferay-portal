@@ -251,9 +251,9 @@ public class DDMStructureServiceTest extends BaseDDMServiceTestCase {
 		throws Exception {
 
 		return DDMStructureLocalServiceUtil.updateStructure(
-			structure.getStructureId(), structure.getNameMap(),
-			structure.getDescriptionMap(), structure.getXsd(),
-			ServiceTestUtil.getServiceContext());
+			structure.getStructureId(), structure.getParentStructureId(),
+			structure.getNameMap(), structure.getDescriptionMap(),
+			structure.getXsd(), ServiceTestUtil.getServiceContext());
 	}
 
 	private long _classNameId = PortalUtil.getClassNameId(DDLRecord.class);

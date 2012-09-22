@@ -231,6 +231,20 @@ public interface DDMStructureModel extends BaseModel<DDMStructure>, GroupedModel
 	public void setStructureKey(String structureKey);
 
 	/**
+	 * Returns the parent structure ID of this d d m structure.
+	 *
+	 * @return the parent structure ID of this d d m structure
+	 */
+	public long getParentStructureId();
+
+	/**
+	 * Sets the parent structure ID of this d d m structure.
+	 *
+	 * @param parentStructureId the parent structure ID of this d d m structure
+	 */
+	public void setParentStructureId(long parentStructureId);
+
+	/**
 	 * Returns the name of this d d m structure.
 	 *
 	 * @return the name of this d d m structure

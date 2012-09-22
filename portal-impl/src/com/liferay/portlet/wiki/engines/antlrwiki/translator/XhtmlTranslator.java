@@ -17,6 +17,7 @@ package com.liferay.portlet.wiki.engines.antlrwiki.translator;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -34,7 +35,9 @@ import com.liferay.portlet.wiki.engines.antlrwiki.translator.internal.Unformatte
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.portlet.PortletURL;
 
@@ -274,25 +277,23 @@ public class XhtmlTranslator extends XhtmlTranslationVisitor {
 	}
 
 	protected String searchLinkInAttachments(LinkNode linkNode) {
-		String[] attachments = null;
+		Set<String> attachments = new HashSet<String>();
 
 		try {
-			attachments = _page.getAttachmentsFiles();
+			attachments = SetUtil.fromArray(_page.getAttachmentsFiles());
 		}
 		catch (Exception e) {
 			return null;
 		}
 
 		String link =
-			StringPool.SLASH + _page.getAttachmentsDir() +
-				StringPool.SLASH + linkNode.getLink();
+			StringPool.SLASH + _page.getAttachmentsDir() + StringPool.SLASH +
+				linkNode.getLink();
 
-		for (String attachment : attachments) {
-			if (attachment.equals(link)) {
-				int pos = attachment.lastIndexOf(StringPool.SLASH);
+		if (attachments.contains(link)) {
+			int pos = link.lastIndexOf(StringPool.SLASH);
 
-				return attachment.substring(pos + 1);
-			}
+			return link.substring(pos + 1);
 		}
 
 		return null;

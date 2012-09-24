@@ -420,17 +420,9 @@ AUI.add(
 						{
 							activeState: true,
 							handler: function(event) {
-								var toolItem = this;
-
 								event.halt();
 
-								var action = 'show';
-
-								if (toolItem.StateInteraction.get('active')) {
-									action = 'hide';
-								}
-
-								comboBox._optionsOverlay[action]();
+								comboBox._optionsOverlay.toggle(this.StateInteraction.get('active'));
 							},
 							icon: 'gear',
 							id: id + 'Options'
@@ -438,7 +430,7 @@ AUI.add(
 					);
 				}
 
-				var optionsOverlay = new A.Overlay(
+				var optionsOverlay = new A.OverlayBase(
 					{
 						bodyContent: prototypeTemplate,
 						align: {

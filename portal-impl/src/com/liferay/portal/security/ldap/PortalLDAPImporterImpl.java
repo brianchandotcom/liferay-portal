@@ -533,9 +533,7 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 			UserGroupLocalServiceUtil.getUserUserGroups(userId);
 
 		for (UserGroup userGroup : userGroups) {
-			if (!userGroupIds.contains(userGroup.getUserGroupId()) &&
-				!userGroup.isAddedByLDAPImport()) {
-
+			if (!userGroup.isAddedByLDAPImport()) {
 				userGroupIds.add(userGroup.getUserGroupId());
 			}
 		}

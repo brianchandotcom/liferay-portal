@@ -129,9 +129,7 @@ public class JSONIncludesManager {
 
 				String name = field.getName();
 
-				if (!set.contains(name)) {
-					set.add(name);
-				}
+				set.add(name);
 			}
 		}
 
@@ -146,9 +144,7 @@ public class JSONIncludesManager {
 				String name = _getPropertyName(method);
 
 				if (name != null) {
-					if (!set.contains(name)) {
-						set.add(name);
-					}
+					set.add(name);
 				}
 			}
 		}

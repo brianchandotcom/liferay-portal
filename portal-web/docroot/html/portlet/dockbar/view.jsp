@@ -380,11 +380,11 @@ boolean hasLayoutUpdatePermission = LayoutPermissionUtil.contains(permissionChec
 				%>
 
 					<li>
-						<label>
-							<a href="javascript:;">
+						<a href="javascript:;">
+							<label>
 								<input name="template" type="radio" value="<%= layoutPrototype.getLayoutPrototypeId() %>" /> <%= HtmlUtil.escape(layoutPrototype.getName(user.getLanguageId())) %>
-							</a>
-						</label>
+							</label>
+						</a>
 					</li>
 
 				<%

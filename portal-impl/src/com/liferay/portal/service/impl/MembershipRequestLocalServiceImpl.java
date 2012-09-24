@@ -41,7 +41,9 @@ import com.liferay.portal.util.SubscriptionSender;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Jorge Ferrer
@@ -258,7 +260,7 @@ public class MembershipRequestLocalServiceImpl
 				currentGroupActions, currentGroupTemplateActions,
 				currentCompanyActions);
 
-			List<String> currentActions = new ArrayList<String>();
+			Set<String> currentActions = new HashSet<String>();
 
 			currentActions.addAll(currentIndividualActions);
 			currentActions.addAll(currentGroupActions);

@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.UniqueList;
@@ -961,26 +962,23 @@ public class UsersAdminImpl implements UsersAdmin {
 			PermissionChecker permissionChecker, User user)
 		throws PortalException, SystemException {
 
-		String[] fieldEditiableUserEmailAddress =
+		Set<String> fieldEditableUserEmailAddress = SetUtil.fromArray(
 			PropsValues.
-				FIELD_EDITABLE_COM_LIFERAY_PORTAL_MODEL_USER_EMAILADDRESS;
+				FIELD_EDITABLE_COM_LIFERAY_PORTAL_MODEL_USER_EMAILADDRESS);
 
-		if (ArrayUtil.contains(
-				fieldEditiableUserEmailAddress, "administrator") &&
+		if (fieldEditableUserEmailAddress.contains("administrator") &&
 			permissionChecker.isCompanyAdmin()) {
 
 			return true;
 		}
 
-		if (ArrayUtil.contains(
-				fieldEditiableUserEmailAddress, "user-with-mx") &&
+		if (fieldEditableUserEmailAddress.contains("user-with-mx") &&
 			user.hasCompanyMx()) {
 
 			return true;
 		}
 
-		if (ArrayUtil.contains(
-				fieldEditiableUserEmailAddress, "user-without-mx") &&
+		if (fieldEditableUserEmailAddress.contains("user-without-mx") &&
 			!user.hasCompanyMx()) {
 
 			return true;
@@ -993,26 +991,23 @@ public class UsersAdminImpl implements UsersAdmin {
 			PermissionChecker permissionChecker, User user)
 		throws PortalException, SystemException {
 
-		String[] fieldEditiableUserScreenName =
+		Set<String> fieldEditableUserScreenName = SetUtil.fromArray(
 			PropsValues.
-				FIELD_EDITABLE_COM_LIFERAY_PORTAL_MODEL_USER_SCREENNAME;
+				FIELD_EDITABLE_COM_LIFERAY_PORTAL_MODEL_USER_SCREENNAME);
 
-		if (ArrayUtil.contains(
-				fieldEditiableUserScreenName, "administrator") &&
+		if (fieldEditableUserScreenName.contains("administrator") &&
 			permissionChecker.isCompanyAdmin()) {
 
 			return true;
 		}
 
-		if (ArrayUtil.contains(
-				fieldEditiableUserScreenName, "user-with-mx") &&
+		if (fieldEditableUserScreenName.contains("user-with-mx") &&
 			user.hasCompanyMx()) {
 
 			return true;
 		}
 
-		if (ArrayUtil.contains(
-				fieldEditiableUserScreenName, "user-without-mx") &&
+		if (fieldEditableUserScreenName.contains("user-without-mx") &&
 			!user.hasCompanyMx()) {
 
 			return true;

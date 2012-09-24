@@ -19,10 +19,10 @@ import com.liferay.portal.kernel.json.JSON;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Igor Spasic
@@ -36,24 +36,24 @@ public class JSONIncludesManager {
 			return excludes;
 		}
 
-		List<String> list = new ArrayList<String>();
+		Set<String> set = new HashSet<String>();
 
 		while (type != null) {
 			JSON jsonAnnotation = type.getAnnotation(JSON.class);
 
 			if ((jsonAnnotation != null) && jsonAnnotation.strict()) {
-				list.add(_EXCLUDE_ALL);
+				set.add(_EXCLUDE_ALL);
 
 				break;
 			}
 			else {
-				_scanFieldsAndMethods(list, type, false);
+				_scanFieldsAndMethods(set, type, false);
 			}
 
 			type = type.getSuperclass();
 		}
 
-		excludes = _listToArray(list);
+		excludes = _setToArray(set);
 
 		_excludesMap.put(type, excludes);
 
@@ -67,15 +67,15 @@ public class JSONIncludesManager {
 			return includes;
 		}
 
-		List<String> list = new ArrayList<String>();
+		Set<String> set = new HashSet<String>();
 
 		while (type != null) {
-			_scanFieldsAndMethods(list, type, true);
+			_scanFieldsAndMethods(set, type, true);
 
 			type = type.getSuperclass();
 		}
 
-		includes = _listToArray(list);
+		includes = _setToArray(set);
 
 		_includesMap.put(type, includes);
 
@@ -116,17 +116,8 @@ public class JSONIncludesManager {
 			propertyName.substring(1);
 	}
 
-	private String[] _listToArray(List<String> list) {
-		if (list.isEmpty()) {
-			return _EMPTY_LIST;
-		}
-		else {
-			return list.toArray(new String[list.size()]);
-		}
-	}
-
 	private void _scanFieldsAndMethods(
-		List<String> list, Class<?> type, boolean include) {
+		Set<String> set, Class<?> type, boolean include) {
 
 		Field[] fields = type.getDeclaredFields();
 
@@ -138,8 +129,8 @@ public class JSONIncludesManager {
 
 				String name = field.getName();
 
-				if (!list.contains(name)) {
-					list.add(name);
+				if (!set.contains(name)) {
+					set.add(name);
 				}
 			}
 		}
@@ -155,11 +146,20 @@ public class JSONIncludesManager {
 				String name = _getPropertyName(method);
 
 				if (name != null) {
-					if (!list.contains(name)) {
-						list.add(name);
+					if (!set.contains(name)) {
+						set.add(name);
 					}
 				}
 			}
+		}
+	}
+
+	private String[] _setToArray(Set<String> set) {
+		if (set.isEmpty()) {
+			return _EMPTY_LIST;
+		}
+		else {
+			return set.toArray(new String[set.size()]);
 		}
 	}
 

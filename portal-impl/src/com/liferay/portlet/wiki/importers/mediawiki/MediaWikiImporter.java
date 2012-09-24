@@ -20,12 +20,12 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ProgressTracker;
 import com.liferay.portal.kernel.util.ProgressTrackerThreadLocal;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -67,6 +67,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -79,6 +80,14 @@ public class MediaWikiImporter implements WikiImporter {
 	public static final String SHARED_IMAGES_CONTENT = "See attachments";
 
 	public static final String SHARED_IMAGES_TITLE = "SharedImages";
+
+	public MediaWikiImporter() {
+		_specialMediaWikiDirs = SetUtil.fromArray(
+				new String[] {
+					"thumb", "temp", "archive"
+				}
+			);
+	}
 
 	public void importPages(
 			long userId, WikiNode node, InputStream[] inputStreams,
@@ -214,13 +223,11 @@ public class MediaWikiImporter implements WikiImporter {
 	}
 
 	protected boolean isValidImage(String[] paths, InputStream inputStream) {
-		if (ArrayUtil.contains(_SPECIAL_MEDIA_WIKI_DIRS, paths[0])) {
+		if (_specialMediaWikiDirs.contains(paths[0])) {
 			return false;
 		}
 
-		if ((paths.length > 1) &&
-			(ArrayUtil.contains(_SPECIAL_MEDIA_WIKI_DIRS, paths[1]))) {
-
+		if ((paths.length > 1) && _specialMediaWikiDirs.contains(paths[1])) {
 			return false;
 		}
 
@@ -694,10 +701,6 @@ public class MediaWikiImporter implements WikiImporter {
 		return usersMap;
 	}
 
-	private static final String[] _SPECIAL_MEDIA_WIKI_DIRS = {
-		"thumb", "temp", "archive"
-	};
-
 	private static final String _WORK_IN_PROGRESS = "{{Work in progress}}";
 
 	private static final String _WORK_IN_PROGRESS_TAG = "work in progress";
@@ -710,6 +713,7 @@ public class MediaWikiImporter implements WikiImporter {
 		"\\{{2}OtherTopics\\|([^\\}]*)\\}{2}");
 	private static Pattern _redirectPattern = Pattern.compile(
 		"#REDIRECT \\[\\[([^\\]]*)\\]\\]");
+	private static Set<String> _specialMediaWikiDirs;
 
 	private MediaWikiToCreoleTranslator _translator =
 		new MediaWikiToCreoleTranslator();

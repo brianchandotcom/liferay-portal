@@ -69,7 +69,6 @@ import com.liferay.portal.kernel.servlet.taglib.FileAvailabilityUtil;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.struts.StrutsPortletAction;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -80,6 +79,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -269,6 +269,21 @@ public class HookHotDeployListener
 			_overrideStringArraysContainerMap.put(
 				key, new OverrideStringArraysContainer(key));
 		}
+
+		_propsKeysEvents = SetUtil.fromArray(
+				new String[] {
+					LOGIN_EVENTS_POST, LOGIN_EVENTS_PRE, LOGOUT_EVENTS_POST,
+					LOGOUT_EVENTS_PRE, SERVLET_SERVICE_EVENTS_POST,
+					SERVLET_SERVICE_EVENTS_PRE
+				}
+			);
+
+		_propsKeysSessionEvents = SetUtil.fromArray(
+				new String[] {
+					SERVLET_SESSION_CREATE_EVENTS,
+					SERVLET_SESSION_DESTROY_EVENTS
+				}
+			);
 	}
 
 	public void invokeDeploy(HotDeployEvent hotDeployEvent)
@@ -1237,7 +1252,7 @@ public class HookHotDeployListener
 			return null;
 		}
 
-		if (ArrayUtil.contains(_PROPS_KEYS_EVENTS, eventName)) {
+		if (_propsKeysEvents.contains(eventName)) {
 			Action action = (Action)portletClassLoader.loadClass(
 				eventClassName).newInstance();
 
@@ -1248,7 +1263,7 @@ public class HookHotDeployListener
 			return action;
 		}
 
-		if (ArrayUtil.contains(_PROPS_KEYS_SESSION_EVENTS, eventName)) {
+		if (_propsKeysSessionEvents.contains(eventName)) {
 			SessionAction sessionAction =
 				(SessionAction)portletClassLoader.loadClass(
 					eventClassName).newInstance();
@@ -1277,8 +1292,8 @@ public class HookHotDeployListener
 			String key = (String)entry.getKey();
 
 			if (!key.equals(APPLICATION_STARTUP_EVENTS) &&
-				!ArrayUtil.contains(_PROPS_KEYS_EVENTS, key) &&
-				!ArrayUtil.contains(_PROPS_KEYS_SESSION_EVENTS, key)) {
+				!_propsKeysEvents.contains(key) &&
+				!_propsKeysSessionEvents.contains(key)) {
 
 				continue;
 			}
@@ -2511,16 +2526,6 @@ public class HookHotDeployListener
 			release.getReleaseId(), buildNumber, null, true);
 	}
 
-	private static final String[] _PROPS_KEYS_EVENTS = {
-		LOGIN_EVENTS_POST, LOGIN_EVENTS_PRE, LOGOUT_EVENTS_POST,
-		LOGOUT_EVENTS_PRE, SERVLET_SERVICE_EVENTS_POST,
-		SERVLET_SERVICE_EVENTS_PRE
-	};
-
-	private static final String[] _PROPS_KEYS_SESSION_EVENTS = {
-		SERVLET_SESSION_CREATE_EVENTS, SERVLET_SESSION_DESTROY_EVENTS
-	};
-
 	private static final String[] _PROPS_VALUES_BOOLEAN = {
 		"auth.forward.by.last.path", "captcha.check.portal.create_account",
 		"dl.file.entry.drafts.enabled",
@@ -2645,6 +2650,8 @@ public class HookHotDeployListener
 			new HashMap<String, StringArraysContainer>();
 	private Map<String, Properties> _portalPropertiesMap =
 		new HashMap<String, Properties>();
+	private Set<String> _propsKeysEvents;
+	private Set<String> _propsKeysSessionEvents;
 	private ServicesContainer _servicesContainer = new ServicesContainer();
 	private Set<String> _servletContextNames = new HashSet<String>();
 	private Map<String, ServletFiltersContainer> _servletFiltersContainerMap =

@@ -181,25 +181,23 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 				ResourceBlockLocalServiceUtil.getResourceBlockIdsBag(
 					companyId, groupId, className, roleIdsArray);
 
-			long actionId =
-				ResourceBlockLocalServiceUtil.getActionId(
-					className, ActionKeys.VIEW);
+			long actionId = ResourceBlockLocalServiceUtil.getActionId(
+				className, ActionKeys.VIEW);
 
 			List<Long> resourceBlockIds =
 				resourceBlockIdsBag.getResourceBlockIds(actionId);
 
 			hasResourcePermissions = new boolean[roleIdsArray.length];
 
-			for (int i = 0; i < resourceBlockIds.size(); i++) {
-				for (int j = 0; j < roleIdsArray.length; j++) {
+			for (long resourceBlockId : resourceBlockIds) {
+				for (int i = 0; i < roleIdsArray.length; i++) {
 					try {
 						ResourceBlockPermissionUtil.findByR_R(
-							resourceBlockIds.get(i), roleIdsArray[j]);
+							resourceBlockId, roleIdsArray[i]);
 
-						hasResourcePermissions[j] = true;
+						hasResourcePermissions[i] = true;
 					}
 					catch (NoSuchResourceBlockPermissionException nsrbpe) {
-
 					}
 				}
 			}

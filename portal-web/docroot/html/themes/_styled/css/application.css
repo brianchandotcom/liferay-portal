@@ -417,6 +417,18 @@
 	z-index: 450;
 }
 
+.lfr-page-templates li {
+	a {
+		padding: 0;
+
+		label {
+			cursor: pointer;
+			display: block;
+			padding: 5px 0 5px 5px;
+		}
+	}
+}
+
 .aui-menu {
 	position: absolute;
 	width: auto;

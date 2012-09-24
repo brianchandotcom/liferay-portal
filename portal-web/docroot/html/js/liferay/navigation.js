@@ -378,7 +378,7 @@ AUI.add(
 
 				var prototypeTemplate = instance._prototypeMenuTemplate || '';
 
-				prototypeTemplate = prototypeTemplate.replace(/name=\"template\"/g, 'name="' + id + '_template"');
+				prototypeTemplate = prototypeTemplate.replace(/name=\"template\"/g, 'name="' + id + 'Template"');
 
 				var prevVal = options.prevVal;
 
@@ -411,7 +411,7 @@ AUI.add(
 							comboBox.fire('savePage', options);
 						},
 						icon: 'check',
-						id: 'save_' + id
+						id: id + 'Save'
 					}
 				];
 
@@ -433,7 +433,7 @@ AUI.add(
 								comboBox._optionsOverlay[action]();
 							},
 							icon: 'gear',
-							id: 'options_' + id
+							id: id + 'Options'
 						}
 					);
 				}
@@ -489,7 +489,7 @@ AUI.add(
 				).render(listItem);
 
 				if (prototypeTemplate && instance._optionsOpen && !prevVal) {
-					var optionItem = comboBox.icons.item('options_' + id);
+					var optionItem = comboBox.icons.item(id + 'Options');
 
 					optionItem.StateInteraction.set('active', true);
 					optionsOverlay.show();

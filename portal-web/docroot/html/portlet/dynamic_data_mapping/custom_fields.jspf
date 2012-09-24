@@ -21,7 +21,7 @@
 	var camelize = Liferay.Util.camelize;
 	var trim = A.Lang.trim;
 
-	var EMPTY_STRING = '';
+	var STR_BLANK = '';
 
 	var TPL_BUTTON = '<div class="aui-field-labels-inline">' +
 						'<input type="button" value="<%= UnicodeLanguageUtil.get(pageContext, "select") %>" />' +
@@ -41,7 +41,7 @@
 		},
 
 		indexType: {
-			value: EMPTY_STRING
+			value: STR_BLANK
 		},
 
 		name: {
@@ -56,51 +56,50 @@
 
 	A.Base.mix(A.FormBuilderField, [LiferayFormBuilderField]);
 
-	A.FormBuilderField.prototype.getPropertyModel = (function(original) {
-		return function() {
-			var instance = this;
+	var FormBuilderProto = A.FormBuilderField.prototype;
 
-			var model = original.call(this);
-			var type = instance.get('type');
+	var originalGetPropertyModel = FormBuilderProto.getPropertyModel;
 
-			var options = {
-				'': '<liferay-ui:message key="no" />',
-				'keyword': '<liferay-ui:message key="yes" />'
-			};
+	FormBuilderProto.getPropertyModel = function() {
+		var instance = this;
 
-			if ((type == 'text') || (type == 'textarea')) {
-				options = {
-					'': '<liferay-ui:message key="not-indexable" />',
-					'keyword': '<liferay-ui:message key="indexable-keyword" />',
-					'text': '<liferay-ui:message key="indexable-text" />'
-				};
-			}
+		var model = originalGetPropertyModel.call(instance);
 
-			model.push(
-				{
-					attributeName: 'indexType',
-					editor: new A.RadioCellEditor(
-						{
-							options: options
-						}
-					),
-					formatter: function(o) {
-						return options[o.data.value];
-					},
-					name: '<liferay-ui:message key="indexable" />'
-				}
-			);
+		var type = instance.get('type');
 
-			return model;
+		var options = {
+			'': '<liferay-ui:message key="no" />',
+			'keyword': '<liferay-ui:message key="yes" />'
 		};
-	}(A.FormBuilderField.prototype.getPropertyModel));
+
+		if (type == 'text' || type == 'textarea') {
+			options = {
+				'': '<liferay-ui:message key="not-indexable" />',
+				'keyword': '<liferay-ui:message key="indexable-keyword" />',
+				'text': '<liferay-ui:message key="indexable-text" />'
+			};
+		}
+
+		model.push(
+			{
+				attributeName: 'indexType',
+				editor: new A.RadioCellEditor(
+					{
+						options: options
+					}
+				),
+				formatter: function(val) {
+					return options[val.data.value];
+				},
+				name: '<liferay-ui:message key="indexable" />'
+			}
+		);
+
+		return model;
+	};
 
 	var DDMDateField = A.Component.create(
 		{
-			EXTENDS: A.FormBuilderTextField,
-
-			NAME: 'ddm-date',
-
 			ATTRS: {
 				dataType: {
 					value: 'date'
@@ -110,6 +109,10 @@
 					value: 'ddm'
 				}
 			},
+
+			EXTENDS: A.FormBuilderTextField,
+
+			NAME: 'ddm-date',
 
 			prototype: {
 				getPropertyModel: function() {
@@ -160,10 +163,6 @@
 
 	var DDMDecimalField = A.Component.create(
 		{
-			EXTENDS: A.FormBuilderTextField,
-
-			NAME: 'ddm-decimal',
-
 			ATTRS: {
 				dataType: {
 					value: 'double'
@@ -172,17 +171,16 @@
 				fieldNamespace: {
 					value: 'ddm'
 				}
-			}
+			},
 
+			EXTENDS: A.FormBuilderTextField,
+
+			NAME: 'ddm-decimal'
 		}
 	);
 
 	var DDMDocumentLibraryField = A.Component.create(
 		{
-			EXTENDS: A.FormBuilderField,
-
-			NAME: 'ddm-documentlibrary',
-
 			ATTRS: {
 				dataType: {
 					value: 'document-library'
@@ -198,6 +196,10 @@
 					}
 				}
 			},
+
+			EXTENDS: A.FormBuilderField,
+
+			NAME: 'ddm-documentlibrary',
 
 			prototype: {
 				getHTML: function() {
@@ -221,11 +223,11 @@
 								item.formatter = function(obj) {
 									var data = obj.data;
 
-									var label = EMPTY_STRING;
+									var label = STR_BLANK;
 
 									var value = data.value;
 
-									if (value !== EMPTY_STRING) {
+									if (value !== STR_BLANK) {
 										label = '(<%= UnicodeLanguageUtil.get(pageContext, "file") %>)';
 									}
 
@@ -258,10 +260,6 @@
 
 	var DDMFileUploadField = A.Component.create(
 		{
-			EXTENDS: A.FormBuilderFileUploadField,
-
-			NAME: 'ddm-fileupload',
-
 			ATTRS: {
 				acceptFiles: {
 					value: '<%= UnicodeFormatter.toString(StringUtil.merge(PrefsPropsUtil.getStringArray(PropsKeys.DL_FILE_EXTENSIONS, StringPool.COMMA))) %>'
@@ -281,17 +279,23 @@
 							val = A.JSON.parse(val);
 						}
 
-						return val
+						return val;
 					},
+
 					value: {
 						folderId: <%= DLFolderConstants.DEFAULT_PARENT_FOLDER_ID %>,
 						folderName: '<%= UnicodeLanguageUtil.get(pageContext, "home") %>'
 					}
 				},
+
 				tip: {
 					value: '<%= UnicodeLanguageUtil.format(locale, "upload-documents-no-larger-than-x-k", PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE) / 1024, false) %>'
 				}
 			},
+
+			EXTENDS: A.FormBuilderFileUploadField,
+
+			NAME: 'ddm-fileupload',
 
 			prototype: {
 				getPropertyModel: function() {
@@ -317,18 +321,12 @@
 
 					return model;
 				}
-
 			}
-
 		}
 	);
 
 	var DDMIntegerField = A.Component.create(
 		{
-			EXTENDS: A.FormBuilderTextField,
-
-			NAME: 'ddm-integer',
-
 			ATTRS: {
 				dataType: {
 					value: 'integer'
@@ -337,16 +335,16 @@
 				fieldNamespace: {
 					value: 'ddm'
 				}
-			}
+			},
+
+			EXTENDS: A.FormBuilderTextField,
+
+			NAME: 'ddm-integer'
 		}
 	);
 
 	var DDMNumberField = A.Component.create(
 		{
-			EXTENDS: A.FormBuilderTextField,
-
-			NAME: 'ddm-number',
-
 			ATTRS: {
 				dataType: {
 					value: 'number'
@@ -355,7 +353,11 @@
 				fieldNamespace: {
 					value: 'ddm'
 				}
-			}
+			},
+
+			EXTENDS: A.FormBuilderTextField,
+
+			NAME: 'ddm-number'
 		}
 	);
 
@@ -376,15 +378,15 @@
 				},
 
 				style: {
-					value: EMPTY_STRING
+					value: STR_BLANK
 				}
 			},
-
-			UI_ATTRS: ['label', 'style'],
 
 			EXTENDS: A.FormBuilderField,
 
 			NAME: 'ddm-paragraph',
+
+			UI_ATTRS: ['label', 'style'],
 
 			prototype: {
 				getHTML: function() {
@@ -422,10 +424,11 @@
 				_uiSetStyle: function(val) {
 					var instance = this;
 
-					var styles = val.replace(/\n/g, EMPTY_STRING).split(';');
+					var styles = val.replace(/\n/g, STR_BLANK).split(';');
+
 					var templateNode = instance.get('templateNode');
 
-					templateNode.setStyle(EMPTY_STRING);
+					templateNode.setStyle(STR_BLANK);
 
 					A.Array.each(
 						styles,

@@ -46,6 +46,7 @@ import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBThreadLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.permission.MBMessagePermission;
+import com.liferay.portlet.messageboards.trash.MBThreadTrashRenderer;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -152,6 +153,12 @@ public class MBThreadIndexer extends BaseIndexer {
 
 		if (message.isAnonymous()) {
 			document.remove(Field.USER_NAME);
+		}
+
+		if (thread.isInTrash()) {
+			addTrashFields(
+				document, MBThread.class.getName(), thread.getThreadId(), null,
+				null, MBThreadTrashRenderer.TYPE);
 		}
 
 		return document;

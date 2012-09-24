@@ -52,14 +52,8 @@ public class AssetEntryQuery {
 	};
 
 	public static String checkOrderByCol(String orderByCol) {
-		if (orderByCol == null) {
-			return ORDER_BY_COLUMNS[2];
-		}
-
-		for (String curOrderByCol : ORDER_BY_COLUMNS) {
-			if (orderByCol.equals(curOrderByCol)) {
-				return orderByCol;
-			}
+		if (ArrayUtil.contains(ORDER_BY_COLUMNS, orderByCol)) {
+			return orderByCol;
 		}
 
 		return ORDER_BY_COLUMNS[2];

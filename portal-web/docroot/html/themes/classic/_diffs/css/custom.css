@@ -368,6 +368,16 @@ hr, .separator {
 	}
 }
 
+.ie7 {
+	#banner {
+		z-index: 2;
+	}
+
+	#navigation ul {
+		padding: 2px;
+	}
+}
+
 .ie6 {
 	#wrapper {
 		width: 90%;
@@ -376,10 +386,6 @@ hr, .separator {
 	#banner, #banner h1.logo {
 		height: 1%;
 	}
-}
-
-.ie7 #navigation ul {
-	padding: 2px;
 }
 
 .ie6 .portlet-topper, .ie7 #navigation .child-menu li a {

@@ -25,7 +25,6 @@ public class ViewPortletSiteMapTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Site Map Test Page");
 		selenium.clickAt("link=Site Map Test Page",
 			RuntimeVariables.replace("Site Map Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -41,7 +40,6 @@ public class ViewPortletSiteMapTest extends BaseTestCase {
 		assertTrue(selenium.isVisible("xPath=(//section[@class='portlet'])[1]"));
 		assertTrue(selenium.isVisible("xPath=(//section[@class='portlet'])[2]"));
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Site Map Test Page");
 		selenium.clickAt("link=Site Map Test Page",
 			RuntimeVariables.replace("Site Map Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -54,7 +52,6 @@ public class ViewPortletSiteMapTest extends BaseTestCase {
 			selenium.getText("//h1[@class='portlet-title']"));
 		assertTrue(selenium.isVisible("//section[@class='portlet']"));
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Site Map Test Page");
 		selenium.clickAt("link=Site Map Test Page",
 			RuntimeVariables.replace("Site Map Test Page"));
 		selenium.waitForPageToLoad("30000");

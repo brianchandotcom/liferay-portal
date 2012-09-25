@@ -843,8 +843,8 @@ public class EditLayoutsAction extends PortletAction {
 
 				layout = LayoutServiceUtil.addLayout(
 					groupId, privateLayout, parentLayoutId, nameMap, titleMap,
-					parentLayout.getDescriptionMap(), parentLayout.
-					getKeywordsMap(), parentLayout.getRobotsMap(),
+					parentLayout.getDescriptionMap(),
+					parentLayout.getKeywordsMap(), parentLayout.getRobotsMap(),
 					parentLayout.getType(), hidden, friendlyURL,
 					serviceContext);
 
@@ -852,15 +852,14 @@ public class EditLayoutsAction extends PortletAction {
 					layout.getGroupId(), layout.isPrivateLayout(),
 					layout.getLayoutId(), parentLayout.getTypeSettings());
 
+				updateMobileRuleGroups(layout, serviceContext);
+
 				if (parentLayout.isTypePortlet()) {
 					ActionUtil.copyPreferences(
 						actionRequest, layout, parentLayout);
 
 					SitesUtil.copyLookAndFeel(layout, parentLayout);
 				}
-
-				updateMobileRuleGroups(groupId, privateLayout, Layout.class.
-						getName(), layout, parentLayout, serviceContext);
 			}
 			else if (layoutPrototypeId > 0) {
 				LayoutPrototype layoutPrototype =
@@ -1117,32 +1116,33 @@ public class EditLayoutsAction extends PortletAction {
 	}
 
 	protected void updateMobileRuleGroups(
-			long groupId, boolean privateLayout, String className,
-			Layout layout, Layout parentLayout, ServiceContext serviceContext)
+			Layout layout, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		List<MDRRuleGroupInstance> parentMDRRuleGroupInstances =
 			MDRRuleGroupInstanceLocalServiceUtil.getRuleGroupInstances(
-				className, parentLayout.getPlid());
+				Layout.class.getName(), layout.getParentPlid());
 
 		for (MDRRuleGroupInstance parentMDRRuleGroupInstance :
-			parentMDRRuleGroupInstances) {
+				parentMDRRuleGroupInstances) {
 
 			MDRRuleGroupInstance mdrRuleGroupInstance =
 				MDRRuleGroupInstanceServiceUtil.addRuleGroupInstance(
-					groupId, className, layout.getPlid(),
+					layout.getGroupId(), Layout.class.getName(),
+					layout.getPlid(),
 					parentMDRRuleGroupInstance.getRuleGroupId(),
 					parentMDRRuleGroupInstance.getPriority(), serviceContext);
 
-			List<MDRAction> parentMDRActions = MDRActionLocalServiceUtil.
-				getActions(parentMDRRuleGroupInstance.getRuleGroupInstanceId());
+			List<MDRAction> parentMDRActions =
+				MDRActionLocalServiceUtil.getActions(
+					parentMDRRuleGroupInstance.getRuleGroupInstanceId());
 
-			for (MDRAction prentMDRAction : parentMDRActions) {
+			for (MDRAction mdrAction : parentMDRActions) {
 				MDRActionServiceUtil.addAction(
 					mdrRuleGroupInstance.getRuleGroupInstanceId(),
-					prentMDRAction.getNameMap(), prentMDRAction.
-					getDescriptionMap(), prentMDRAction.getType(),
-					prentMDRAction.getTypeSettings(), serviceContext);
+					mdrAction.getNameMap(), mdrAction.getDescriptionMap(),
+					mdrAction.getType(), mdrAction.getTypeSettings(),
+					serviceContext);
 			}
 		}
 	}

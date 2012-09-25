@@ -39,7 +39,7 @@ public class AddPageHVTest extends BaseTestCase {
 		selenium.waitForVisible("//input[@type='text']");
 		selenium.type("//input[@type='text']",
 			RuntimeVariables.replace("Hello Velocity Test Page"));
-		selenium.clickAt("//button[@id='save']",
+		selenium.clickAt("//button[contains(@id,'Save')]",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForVisible("link=Hello Velocity Test Page");
 		selenium.clickAt("link=Hello Velocity Test Page",

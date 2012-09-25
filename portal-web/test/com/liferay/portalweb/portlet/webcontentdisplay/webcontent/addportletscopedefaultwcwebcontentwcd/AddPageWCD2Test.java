@@ -39,7 +39,7 @@ public class AddPageWCD2Test extends BaseTestCase {
 		selenium.waitForVisible("//input[@type='text']");
 		selenium.type("//input[@type='text']",
 			RuntimeVariables.replace("Web Content Display Test Page2"));
-		selenium.clickAt("//button[@id='save']",
+		selenium.clickAt("//button[contains(@id,'Save')]",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForVisible("link=Web Content Display Test Page2");
 		selenium.clickAt("link=Web Content Display Test Page2",

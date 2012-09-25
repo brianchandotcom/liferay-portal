@@ -40,8 +40,8 @@ public class EditPortletPCNameTest extends BaseTestCase {
 		selenium.waitForVisible("//div[5]/div/div/div/span[1]/span/input");
 		selenium.type("//div[5]/div/div/div/span[1]/span/input",
 			RuntimeVariables.replace("Page Comments Edit"));
-		selenium.waitForVisible("//button[@id='save']");
-		selenium.clickAt("//button[@id='save']",
+		selenium.waitForVisible("//button[contains(@id,'Save')]");
+		selenium.clickAt("//button[contains(@id,'Save')]",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForText("//h1[@class='portlet-title']/span[2]",
 			"Page Comments Edit");
@@ -63,8 +63,8 @@ public class EditPortletPCNameTest extends BaseTestCase {
 		selenium.waitForVisible("//div[5]/div/div/div/span[1]/span/input");
 		selenium.type("//div[5]/div/div/div/span[1]/span/input",
 			RuntimeVariables.replace("Page Comments"));
-		selenium.waitForVisible("//button[@id='save']");
-		selenium.clickAt("//button[@id='save']",
+		selenium.waitForVisible("//button[contains(@id,'Save')]");
+		selenium.clickAt("//button[contains(@id,'Save')]",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForText("//h1[@class='portlet-title']/span[2]",
 			"Page Comments");

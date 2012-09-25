@@ -39,7 +39,7 @@ public class AddPageAP1Test extends BaseTestCase {
 		selenium.waitForVisible("//input[@type='text']");
 		selenium.type("//input[@type='text']",
 			RuntimeVariables.replace("Asset Publisher Test Page1"));
-		selenium.clickAt("//button[@id='save']",
+		selenium.clickAt("//button[contains(@id,'Save')]",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForVisible("link=Asset Publisher Test Page1");
 		selenium.clickAt("link=Asset Publisher Test Page1",

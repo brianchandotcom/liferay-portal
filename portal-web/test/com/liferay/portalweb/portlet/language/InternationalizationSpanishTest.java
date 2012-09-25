@@ -37,7 +37,7 @@ public class InternationalizationSpanishTest extends BaseTestCase {
 		selenium.waitForVisible("//input[@type='text']");
 		selenium.type("//input[@type='text']",
 			RuntimeVariables.replace("P\u00e1gina de la prueba de lengua"));
-		selenium.clickAt("//button[@id='save']",
+		selenium.clickAt("//button[contains(@id,'Save')]",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForVisible("link=P\u00e1gina de la prueba de lengua");
 		assertTrue(selenium.isVisible("link=P\u00e1gina de la prueba de lengua"));

@@ -83,7 +83,8 @@ import com.liferay.portalweb.portal.controlpanel.users.user.addusersocialnetwork
 import com.liferay.portalweb.portal.controlpanel.users.user.advancedsearchuser.AdvancedSearchUserTests;
 import com.liferay.portalweb.portal.controlpanel.users.user.changeuserpassword.ChangeUserPasswordTests;
 import com.liferay.portalweb.portal.controlpanel.users.user.changeuserpasswordinvalid.ChangeUserPasswordInvalidTests;
-import com.liferay.portalweb.portal.controlpanel.users.user.deactivateuser.DeactivateUserTests;
+import com.liferay.portalweb.portal.controlpanel.users.user.deactivateuseractions.DeactivateUserActionsTests;
+import com.liferay.portalweb.portal.controlpanel.users.user.deactivateuserdetails.DeactivateUserDetailsTests;
 import com.liferay.portalweb.portal.controlpanel.users.user.deleteuser.DeleteUserTests;
 import com.liferay.portalweb.portal.controlpanel.users.user.edituserorgrole.EditUserOrgRoleTests;
 import com.liferay.portalweb.portal.controlpanel.users.user.edituserpassword.EditUserPasswordTests;
@@ -176,7 +177,8 @@ public class UserTestPlan extends BaseTestSuite {
 		testSuite.addTest(AdvancedSearchUserTests.suite());
 		testSuite.addTest(ChangeUserPasswordTests.suite());
 		testSuite.addTest(ChangeUserPasswordInvalidTests.suite());
-		testSuite.addTest(DeactivateUserTests.suite());
+		testSuite.addTest(DeactivateUserActionsTests.suite());
+		testSuite.addTest(DeactivateUserDetailsTests.suite());
 		testSuite.addTest(DeleteUserTests.suite());
 		testSuite.addTest(EditUserOrgRoleTests.suite());
 		testSuite.addTest(EditUserPasswordTests.suite());

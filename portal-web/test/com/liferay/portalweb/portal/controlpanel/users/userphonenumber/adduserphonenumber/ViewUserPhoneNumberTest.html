@@ -1,12 +1,12 @@
-<html>
+e<html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>AddUserPhoneNumberTest</title>
+<title>ViewUserPhoneNumberTest</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">AddUserPhoneNumberTest</td></tr>
+<tr><td rowspan="1" colspan="3">ViewUserPhoneNumberTest</td></tr>
 </thead><tbody>
 <tr>
 	<td>open</td>
@@ -69,11 +69,6 @@
 	<td>userfn</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>//a[@id='_125_phoneNumbersLink']</td>
-	<td>Phone Numbers</td>
-</tr>
-<tr>
 	<td>assertPartialText</td>
 	<td>//a[@id='_125_phoneNumbersLink']</td>
 	<td>Phone Numbers</td>
@@ -84,34 +79,64 @@
 	<td>Phone Numbers</td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>//input[@id='_125_phoneNumber0']</td>
-	<td>123-123-1234</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>//input[@id='_125_phoneExtension0']</td>
-	<td>123</td>
-</tr>
-<tr>
-	<td>select</td>
-	<td>//select[@id='_125_phoneTypeId0']</td>
-	<td>label=Business</td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>//input[@value='Save']</td>
-	<td>Save</td>
-</tr>
-<tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='portlet-msg-success']</td>
-	<td>Your request completed successfully.</td>
+	<td>//h1[@class='portlet-title']/span</td>
+	<td>Users and Organizations</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='portlet-msg-success']</td>
-	<td>Your request completed successfully.</td>
+	<td>//h1[@class='portlet-title']/span</td>
+	<td>Users and Organizations</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-portlet-toolbar']/span/a[contains(.,'View All')]</td>
+	<td>View All</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-portlet-toolbar']/span/ul/li/strong/a/span[contains(.,'Add')]</td>
+	<td>Add</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-portlet-toolbar']/span/a[contains(.,'Export All Users')]</td>
+	<td>Export All Users</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//h1[@class='header-title']/span</td>
+	<td>userfn userln</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@class='header-back-to']/a</td>
+	<td>« Back</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='_125_phoneNumbers']/h3</td>
+	<td>Phone Numbers</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='_125_phoneNumbers']/div</td>
+	<td>Phone number and type are required fields. Extension must be numeric.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='row-fields']/span/span/label[contains(.,'Number')]</td>
+	<td>Number</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='row-fields']/span/span/label[contains(.,'Extension')]</td>
+	<td>Extension</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='row-fields']/span/span/label[contains(.,'Type')]</td>
+	<td>Type</td>
 </tr>
 <tr>
 	<td>assertValue</td>
@@ -127,6 +152,21 @@
 	<td>assertSelectedLabel</td>
 	<td>//select[@id='_125_phoneTypeId0']</td>
 	<td>Business</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@id='_125_phonePrimary0']</td>
+	<td>Primary Button</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//button[contains(@class,'add-row aui-button')]/span</td>
+	<td>Add Row</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//button[contains(@class,'delete-row aui-button')]/span</td>
+	<td>Delete Row</td>
 </tr>
 </tbody></table>
 </body>

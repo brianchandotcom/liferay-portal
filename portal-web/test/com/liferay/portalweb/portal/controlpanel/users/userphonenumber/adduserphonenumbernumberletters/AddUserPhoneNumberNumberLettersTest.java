@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.controlpanel.users.userphonenumber.adduserphonenumber;
+package com.liferay.portalweb.portal.controlpanel.users.userphonenumber.adduserphonenumbernumberletters;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,19 +20,12 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AddUserPhoneNumberTest extends BaseTestCase {
-	public void testAddUserPhoneNumber() throws Exception {
+public class AddUserPhoneNumberNumberLettersTest extends BaseTestCase {
+	public void testAddUserPhoneNumberNumberLetters() throws Exception {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.clickAt("//div[@id='dockbar']",
-			RuntimeVariables.replace("Dockbar"));
-		selenium.waitForElementPresent(
-			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
-		assertEquals(RuntimeVariables.replace("Go to"),
-			selenium.getText("//li[@id='_145_mySites']/a/span"));
-		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
-		selenium.waitForVisible("link=Control Panel");
+		selenium.waitForElementPresent("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
@@ -54,23 +47,16 @@ public class AddUserPhoneNumberTest extends BaseTestCase {
 		selenium.clickAt("//a[@id='_125_phoneNumbersLink']",
 			RuntimeVariables.replace("Phone Numbers"));
 		selenium.type("//input[@id='_125_phoneNumber0']",
-			RuntimeVariables.replace("123-123-1234"));
-		selenium.type("//input[@id='_125_phoneExtension0']",
-			RuntimeVariables.replace("123"));
+			RuntimeVariables.replace("phone number"));
 		selenium.select("//select[@id='_125_phoneTypeId0']",
 			RuntimeVariables.replace("label=Business"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForVisible("//div[@class='portlet-msg-success']");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals("123-123-1234",
+		assertEquals("phone number",
 			selenium.getValue("//input[@id='_125_phoneNumber0']"));
-		assertEquals("123",
-			selenium.getValue("//input[@id='_125_phoneExtension0']"));
-		assertEquals("Business",
-			selenium.getSelectedLabel("//select[@id='_125_phoneTypeId0']"));
 	}
 }

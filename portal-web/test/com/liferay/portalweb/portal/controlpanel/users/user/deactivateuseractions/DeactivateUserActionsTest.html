@@ -1,12 +1,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>AddUserPhoneNumberTest</title>
+<title>DeactivateUserActionsTest</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">AddUserPhoneNumberTest</td></tr>
+<tr><td rowspan="1" colspan="3">DeactivateUserActionsTest</td></tr>
 </thead><tbody>
 <tr>
 	<td>open</td>
@@ -64,44 +64,59 @@
 	<td>userfn</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>//td[2]/a</td>
-	<td>userfn</td>
+	<td>assertText</td>
+	<td>//td[3]/a</td>
+	<td>userln</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>//a[@id='_125_phoneNumbersLink']</td>
-	<td>Phone Numbers</td>
+	<td>assertText</td>
+	<td>//td[4]/a</td>
+	<td>usersn</td>
 </tr>
 <tr>
-	<td>assertPartialText</td>
-	<td>//a[@id='_125_phoneNumbersLink']</td>
-	<td>Phone Numbers</td>
+	<td>assertText</td>
+	<td>//td[5]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[6]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[7]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[8]/span[@title='Actions']/ul/li/strong/a</td>
+	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//a[@id='_125_phoneNumbersLink']</td>
-	<td>Phone Numbers</td>
+	<td>//td[8]/span[@title='Actions']/ul/li/strong/a</td>
+	<td>Actions</td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>//input[@id='_125_phoneNumber0']</td>
-	<td>123-123-1234</td>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Deactivate')]</td>
+	<td>Deactivate</td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>//input[@id='_125_phoneExtension0']</td>
-	<td>123</td>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Deactivate')]</td>
+	<td>Deactivate</td>
 </tr>
 <tr>
-	<td>select</td>
-	<td>//select[@id='_125_phoneTypeId0']</td>
-	<td>label=Business</td>
+	<td>clickAndWait</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Deactivate')]</td>
+	<td>Deactivate</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>//input[@value='Save']</td>
-	<td>Save</td>
+	<td>assertConfirmation</td>
+	<td>Are you sure you want to deactivate this?</td>
+	<td></td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -114,19 +129,34 @@
 	<td>Your request completed successfully.</td>
 </tr>
 <tr>
-	<td>assertValue</td>
-	<td>//input[@id='_125_phoneNumber0']</td>
-	<td>123-123-1234</td>
+	<td>assertText</td>
+	<td>//div[@id='usersAdminUsersPanel']/div/div/span</td>
+	<td>Inactive Users (Search All Users)</td>
 </tr>
 <tr>
-	<td>assertValue</td>
-	<td>//input[@id='_125_phoneExtension0']</td>
-	<td>123</td>
+	<td>assertVisible</td>
+	<td>//input[@value='Delete']</td>
+	<td>Delete</td>
 </tr>
 <tr>
-	<td>assertSelectedLabel</td>
-	<td>//select[@id='_125_phoneTypeId0']</td>
-	<td>Business</td>
+	<td>assertVisible</td>
+	<td>//input[@value='Restore']</td>
+	<td>Restore</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[2]/a</td>
+	<td>userfn</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[3]/a</td>
+	<td>userln</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[4]/a</td>
+	<td>usersn</td>
 </tr>
 </tbody></table>
 </body>

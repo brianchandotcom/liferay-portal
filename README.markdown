@@ -89,7 +89,7 @@ SDK](http://www.liferay.com/web/mika.koivisto/blog/-/blogs/12322618).
 ## Contributing
 
 Liferay welcomes any and all contributions! Please read the [CONTRIBUTING
-guide](https://github.com/liferay/liferay-portal/blob/master/CONTRIBUTING.md)
+guide](https://github.com/liferay/liferay-portal/blob/master/CONTRIBUTING.markdown)
 for details on developing and submitting your contributions.
 
 ## Liferay Portal Community Edition License

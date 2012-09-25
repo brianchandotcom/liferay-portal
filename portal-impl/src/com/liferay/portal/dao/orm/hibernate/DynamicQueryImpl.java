@@ -101,19 +101,19 @@ public class DynamicQueryImpl implements DynamicQuery {
 		_end = Integer.valueOf(end);
 	}
 
-	public DynamicQuery setNoColumnAliasProjection(Projection projection) {
-		Projection noColumnAliasProjection =
-			ProjectionFactoryUtil.sqlProjection(_detachedCriteria.getAlias() +
-				"_." + projection.toString(), null, null);
-
-		ProjectionImpl projectionImpl = (ProjectionImpl)noColumnAliasProjection;
-
-		_detachedCriteria.setProjection(projectionImpl.getWrappedProjection());
-
-		return this;
+	public DynamicQuery setProjection(Projection projection) {
+		return setProjection(projection, true);
 	}
 
-	public DynamicQuery setProjection(Projection projection) {
+	public DynamicQuery setProjection(
+		Projection projection, boolean useColumnAlias) {
+
+		if (!useColumnAlias) {
+			projection = ProjectionFactoryUtil.sqlProjection(
+				_detachedCriteria.getAlias() + "_." + projection.toString(),
+				null, null);
+		}
+
 		ProjectionImpl projectionImpl = (ProjectionImpl)projection;
 
 		_detachedCriteria.setProjection(projectionImpl.getWrappedProjection());

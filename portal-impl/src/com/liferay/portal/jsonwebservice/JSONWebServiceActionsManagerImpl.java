@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManager;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.HttpMethods;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.BinarySearch;
 import com.liferay.portal.kernel.util.CamelCaseUtil;
 import com.liferay.portal.kernel.util.CharPool;
@@ -249,12 +250,8 @@ public class JSONWebServiceActionsManagerImpl
 			methodParameterName = CamelCaseUtil.normalizeCamelCase(
 				methodParameterName);
 
-			for (String parameterName : parameterNames) {
-				if (parameterName.equals(methodParameterName)) {
-					matched++;
-
-					break;
-				}
+			if (ArrayUtil.contains(parameterNames, methodParameterName)) {
+				matched++;
 			}
 		}
 

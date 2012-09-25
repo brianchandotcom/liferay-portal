@@ -274,7 +274,7 @@ public class StagingImpl implements Staging {
 				sourceGroupId, privateLayout, parameterMap, startDate, endDate);
 		}
 		else {
-			List<Layout> layouts = new ArrayList<Layout>();
+			Set<Layout> layouts = new HashSet<Layout>();
 
 			for (Map.Entry<Long, Boolean> entry : layoutIdMap.entrySet()) {
 				long plid = GetterUtil.getLong(String.valueOf(entry.getKey()));
@@ -941,7 +941,7 @@ public class StagingImpl implements Staging {
 
 		Layout layout = LayoutLocalServiceUtil.getLayout(plid);
 
-		List<Layout> layouts = new ArrayList<Layout>();
+		Set<Layout> layouts = new HashSet<Layout>();
 
 		layouts.add(layout);
 
@@ -991,7 +991,7 @@ public class StagingImpl implements Staging {
 			Map<String, String[]> parameterMap, Date startDate, Date endDate)
 		throws Exception {
 
-		List<Layout> layouts = new ArrayList<Layout>();
+		Set<Layout> layouts = new HashSet<Layout>();
 
 		for (Map.Entry<Long, Boolean> entry : layoutIdMap.entrySet()) {
 			long plid = GetterUtil.getLong(String.valueOf(entry.getKey()));
@@ -1536,13 +1536,15 @@ public class StagingImpl implements Staging {
 			GetterUtil.getInteger(group.getTypeSettingsProperty(param)));
 	}
 
-	protected long[] getLayoutIds(List<Layout> layouts) {
+	protected long[] getLayoutIds(Set<Layout> layouts) {
 		long[] layoutIds = new long[layouts.size()];
 
-		for (int i = 0; i < layouts.size(); i++) {
-			Layout layout = layouts.get(i);
+		int index = 0;
 
-			layoutIds[i] = layout.getLayoutId();
+		for (Layout layout : layouts) {
+			layoutIds[index] = layout.getLayoutId();
+
+			index++;
 		}
 
 		return layoutIds;

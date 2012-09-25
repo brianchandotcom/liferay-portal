@@ -1003,6 +1003,7 @@ AUI.add(
 						var instance = this;
 
 						var categoryNode = instance._categoriesContainer.one('#' + STR_CATEGORY_NODE + categoryId);
+
 						var category = categoryNode.getData('tree-node');
 
 						if (!A.instanceOf(category, A.TreeNode)) {

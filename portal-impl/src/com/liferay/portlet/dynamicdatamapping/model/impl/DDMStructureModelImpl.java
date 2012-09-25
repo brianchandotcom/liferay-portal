@@ -747,6 +747,14 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 	public void setDocument(com.liferay.portal.kernel.xml.Document document) {
 	}
 
+	public java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.lang.String>>> getLocalizedFieldsMap() {
+		return null;
+	}
+
+	public void setLocalizedFieldsMap(
+		java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.lang.String>>> localizedFieldsMap) {
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -974,6 +982,8 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 		ddmStructureCacheModel.type = getType();
 
 		ddmStructureCacheModel._document = getDocument();
+
+		ddmStructureCacheModel._localizedFieldsMap = getLocalizedFieldsMap();
 
 		return ddmStructureCacheModel;
 	}

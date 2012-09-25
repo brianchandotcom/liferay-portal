@@ -27,7 +27,7 @@ public class SchedulerLifecycle extends BasePortalLifecycle {
 
 	@Override
 	protected void doPortalInit() throws Exception {
-		SchedulerEngineUtil.start();
+		SchedulerEngineHelperUtil.start();
 	}
 
 }

@@ -15,12 +15,14 @@
 package com.liferay.portlet.documentlibrary.webdav;
 
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.webdav.BaseResourceImpl;
 import com.liferay.portal.kernel.webdav.WebDAVException;
 import com.liferay.portal.kernel.webdav.WebDAVRequest;
 import com.liferay.portal.model.Lock;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 
 import java.io.InputStream;
 
@@ -48,9 +50,11 @@ public class DLFileEntryResourceImpl extends BaseResourceImpl {
 	@Override
 	public InputStream getContentAsStream() throws WebDAVException {
 		try {
+			FileVersion fileVersion = _fileEntry.getLatestFileVersion();
+
 			String version = StringPool.BLANK;
 
-			return _fileEntry.getContentStream(version);
+			return fileVersion.getContentStream(false);
 		}
 		catch (Exception e) {
 			throw new WebDAVException(e);
@@ -58,8 +62,27 @@ public class DLFileEntryResourceImpl extends BaseResourceImpl {
 	}
 
 	@Override
+	public long getSize() {
+		try {
+			FileVersion fileVersion = _fileEntry.getLatestFileVersion();
+
+			return fileVersion.getSize();
+		}
+		catch (Exception e) {
+			return _fileEntry.getSize();
+		}
+	}
+
+	@Override
 	public String getContentType() {
-		return _fileEntry.getMimeType();
+		try {
+			FileVersion fileVersion = _fileEntry.getLatestFileVersion();
+
+			return fileVersion.getMimeType();
+		}
+		catch (Exception e) {
+			return _fileEntry.getMimeType();
+		}
 	}
 
 	@Override

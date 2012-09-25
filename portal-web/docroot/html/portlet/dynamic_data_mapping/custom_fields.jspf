@@ -72,7 +72,7 @@
 			'keyword': '<liferay-ui:message key="yes" />'
 		};
 
-		if (type == 'text' || type == 'textarea') {
+		if ((type == 'text') || (type == 'textarea')) {
 			options = {
 				'': '<liferay-ui:message key="not-indexable" />',
 				'keyword': '<liferay-ui:message key="indexable-keyword" />',

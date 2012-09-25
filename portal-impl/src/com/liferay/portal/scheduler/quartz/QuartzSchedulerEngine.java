@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.scheduler.IntervalTrigger;
 import com.liferay.portal.kernel.scheduler.JobState;
 import com.liferay.portal.kernel.scheduler.JobStateSerializeUtil;
 import com.liferay.portal.kernel.scheduler.SchedulerEngine;
-import com.liferay.portal.kernel.scheduler.SchedulerEngineUtil;
+import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
 import com.liferay.portal.kernel.scheduler.SchedulerException;
 import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
@@ -886,7 +886,7 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 				message.put(JOB_NAME, jobKey.getName());
 				message.put(GROUP_NAME, jobKey.getGroup());
 
-				SchedulerEngineUtil.auditSchedulerJobs(
+				SchedulerEngineHelperUtil.auditSchedulerJobs(
 					message, TriggerState.EXPIRED);
 
 				_persistedScheduler.deleteJob(jobKey);

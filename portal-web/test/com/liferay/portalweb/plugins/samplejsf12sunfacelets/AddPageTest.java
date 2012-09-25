@@ -33,7 +33,7 @@ public class AddPageTest extends BaseTestCase {
 		selenium.waitForVisible("//input[@type='text']");
 		selenium.type("//input[@type='text']",
 			RuntimeVariables.replace("Sample JSF 1.2 Sun Facelets Portlet"));
-		selenium.clickAt("//button[@id='save']",
+		selenium.clickAt("//button[contains(@id,'Save')]",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForVisible("link=Sample JSF 1.2 Sun Facelets Portlet");
 		selenium.clickAt("link=Sample JSF 1.2 Sun Facelets Portlet",

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.scheduler.messaging;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
@@ -21,7 +23,7 @@ import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.messaging.MessageListenerException;
 import com.liferay.portal.kernel.scheduler.JobState;
 import com.liferay.portal.kernel.scheduler.SchedulerEngine;
-import com.liferay.portal.kernel.scheduler.SchedulerEngineUtil;
+import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
 import com.liferay.portal.kernel.scheduler.TriggerState;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -100,10 +102,13 @@ public class SchedulerEventMessageListenerWrapper implements MessageListener {
 			}
 
 			try {
-				SchedulerEngineUtil.auditSchedulerJobs(message, triggerState);
+				SchedulerEngineHelperUtil.auditSchedulerJobs(
+					message, triggerState);
 			}
 			catch (Exception e) {
-				throw new MessageListenerException(e);
+				if (_log.isInfoEnabled()) {
+					_log.info("Unable to send audit message", e);
+				}
 			}
 		}
 	}
@@ -139,6 +144,9 @@ public class SchedulerEventMessageListenerWrapper implements MessageListener {
 			jobState.addException(exception, new Date());
 		}
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		SchedulerEventMessageListenerWrapper.class);
 
 	private String _groupName;
 	private String _jobName;

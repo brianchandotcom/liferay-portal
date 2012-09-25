@@ -39,7 +39,7 @@ public class AddPageTest extends BaseTestCase {
 		selenium.waitForVisible("//input[@type='text']");
 		selenium.type("//input[@type='text']",
 			RuntimeVariables.replace("Sample Test Dependency Page"));
-		selenium.clickAt("//button[@id='save']",
+		selenium.clickAt("//button[contains(@id,'Save')]",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForVisible("link=Sample Test Dependency Page");
 		selenium.clickAt("link=Sample Test Dependency Page",

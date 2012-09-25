@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
 import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
 import com.liferay.portal.kernel.portlet.Router;
-import com.liferay.portal.kernel.scheduler.SchedulerEngineUtil;
+import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
 import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
@@ -78,7 +78,7 @@ public class AlloyPortlet extends GenericPortlet {
 			}
 
 			try {
-				SchedulerEngineUtil.unschedule(
+				SchedulerEngineHelperUtil.unschedule(
 					baseAlloyControllerImpl.getSchedulerJobName(),
 					baseAlloyControllerImpl.getSchedulerGroupName(),
 					StorageType.MEMORY_CLUSTERED);

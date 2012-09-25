@@ -83,7 +83,7 @@ public class User_AddPageWhiteElephantSPVariationChristmasTest
 				selenium.waitForVisible("//input[@type='text']");
 				selenium.type("//input[@type='text']",
 					RuntimeVariables.replace("White Elephant"));
-				selenium.clickAt("//button[@id='save']",
+				selenium.clickAt("//button[contains(@id,'Save')]",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForVisible("link=White Elephant");
 				selenium.clickAt("link=White Elephant",

@@ -33,7 +33,7 @@ import com.liferay.portal.kernel.portlet.PortletBagPool;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.scheduler.CronText;
 import com.liferay.portal.kernel.scheduler.CronTrigger;
-import com.liferay.portal.kernel.scheduler.SchedulerEngineUtil;
+import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
 import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.search.Hits;
@@ -526,7 +526,7 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 				}
 
 				try {
-					SchedulerEngineUtil.unschedule(
+					SchedulerEngineHelperUtil.unschedule(
 						getSchedulerJobName(), getSchedulerGroupName(),
 						StorageType.MEMORY_CLUSTERED);
 
@@ -554,7 +554,7 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 			MessageBusUtil.registerMessageListener(
 				getSchedulerDestinationName(), schedulerMessageListener);
 
-			SchedulerEngineUtil.schedule(
+			SchedulerEngineHelperUtil.schedule(
 				getSchedulerTrigger(), StorageType.MEMORY_CLUSTERED, null,
 				getSchedulerDestinationName(), null, 0);
 		}

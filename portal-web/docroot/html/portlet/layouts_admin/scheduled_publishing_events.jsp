@@ -33,7 +33,7 @@ headerNames.add(StringPool.BLANK);
 searchContainer.setHeaderNames(headerNames);
 searchContainer.setEmptyResultsMessage("there-are-no-scheduled-events");
 
-List<SchedulerResponse> results = SchedulerEngineUtil.getScheduledJobs(StagingUtil.getSchedulerGroupName(destinationName, groupId), StorageType.PERSISTED);
+List<SchedulerResponse> results = SchedulerEngineHelperUtil.getScheduledJobs(StagingUtil.getSchedulerGroupName(destinationName, groupId), StorageType.PERSISTED);
 
 List resultRows = searchContainer.getResultRows();
 
@@ -48,13 +48,13 @@ for (int i = 0; i < results.size(); i++) {
 
 	// Start date
 
-	Date startDate = SchedulerEngineUtil.getStartTime(schedulerResponse);
+	Date startDate = SchedulerEngineHelperUtil.getStartTime(schedulerResponse);
 
 	row.addText(dateFormatDateTime.format(startDate));
 
 	// End date
 
-	Date endDate = SchedulerEngineUtil.getEndTime(schedulerResponse);
+	Date endDate = SchedulerEngineHelperUtil.getEndTime(schedulerResponse);
 
 	if (endDate != null) {
 		row.addText(dateFormatDateTime.format(endDate));

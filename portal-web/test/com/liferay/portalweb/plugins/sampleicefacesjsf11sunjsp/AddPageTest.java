@@ -34,7 +34,7 @@ public class AddPageTest extends BaseTestCase {
 		selenium.type("//input[@type='text']",
 			RuntimeVariables.replace(
 				"Sample Icefaces JSF 1.1 Sun JSP Test Page"));
-		selenium.clickAt("//button[@id='save']",
+		selenium.clickAt("//button[contains(@id,'Save')]",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForVisible(
 			"link=Sample Icefaces JSF 1.1 Sun JSP Test Page");

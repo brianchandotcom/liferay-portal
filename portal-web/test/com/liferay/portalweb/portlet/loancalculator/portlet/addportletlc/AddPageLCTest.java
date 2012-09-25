@@ -39,7 +39,7 @@ public class AddPageLCTest extends BaseTestCase {
 		selenium.waitForVisible("//input[@type='text']");
 		selenium.type("//input[@type='text']",
 			RuntimeVariables.replace("Loan Calculator Test Page"));
-		selenium.clickAt("//button[@id='save']",
+		selenium.clickAt("//button[contains(@id,'Save')]",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForVisible("link=Loan Calculator Test Page");
 		selenium.clickAt("link=Loan Calculator Test Page",

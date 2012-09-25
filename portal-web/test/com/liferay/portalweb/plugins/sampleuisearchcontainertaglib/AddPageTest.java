@@ -34,7 +34,7 @@ public class AddPageTest extends BaseTestCase {
 		selenium.type("//input[@type='text']",
 			RuntimeVariables.replace(
 				"Sample UI Search Container Tag Libs Test Page"));
-		selenium.clickAt("//button[@id='save']",
+		selenium.clickAt("//button[contains(@id,'Save')]",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForVisible(
 			"link=Sample UI Search Container Tag Libs Test Page");

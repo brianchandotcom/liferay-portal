@@ -33,7 +33,7 @@ public class AddPageNWTest extends BaseTestCase {
 		selenium.waitForVisible("//input[@type='text']");
 		selenium.type("//input[@type='text']",
 			RuntimeVariables.replace("Netvibes Widget Test Page"));
-		selenium.clickAt("//button[@id='save']",
+		selenium.clickAt("//button[contains(@id,'Save')]",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForVisible("link=Netvibes Widget Test Page");
 		selenium.clickAt("link=Netvibes Widget Test Page",

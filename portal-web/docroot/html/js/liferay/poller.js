@@ -24,13 +24,10 @@ AUI.add(
 		var _metaData = {
 			startPolling: true,
 			browserKey: _browserKey,
-			companyId: themeDisplay.getCompanyId(),
-			initialRequest: true
+			companyId: themeDisplay.getCompanyId()
 		};
 
 		var _portlets = {};
-		var _registeredPortlets = [];
-		var _requestData = [_metaData];
 		var _requestDelay = _delays[0];
 		var _sendQueue = [];
 		var _suspended = false;
@@ -81,6 +78,7 @@ AUI.add(
 
 		var _processResponse = function(id, obj) {
 			var response = A.JSON.parse(obj.responseText);
+			var send = false;
 
 			if (Util.isArray(response)) {
 				var meta = response.shift();
@@ -95,15 +93,17 @@ AUI.add(
 					var portlet = _portlets[portletId];
 
 					if (portlet) {
-						if (meta.initialRequest && chunkData) {
-							chunkData.initialRequest = true;
-						}
-
 						portlet.listener.call(portlet.scope || Poller, chunk.data, chunk.chunkId);
 
 						if (chunkData && chunkData.pollerHintHighConnectivity) {
 							_requestDelay = _delays[0];
 							_delayIndex = 0;
+						}
+
+						if (portlet.initialRequest) {
+							send = true;
+
+							portlet.initialRequest = false;
 						}
 					}
 				}
@@ -112,10 +112,8 @@ AUI.add(
 					delete _metaData.startPolling;
 				}
 
-				if ('initialRequest' in _metaData) {
+				if (send) {
 					_send();
-
-					delete _metaData.initialRequest;
 				}
 
 				if (!meta.suspendPolling) {
@@ -131,7 +129,11 @@ AUI.add(
 			if (!_suspended && !_frozen) {
 				_metaData.userId = _getEncryptedUserId();
 				_metaData.timestamp = (new Date()).getTime();
-				_metaData.portletIds = _registeredPortlets.join(',');
+				_metaData.portletIdsMap = {};
+
+				for (var i in _portlets) {
+					_metaData.portletIdsMap[i] = _portlets[i].initialRequest;
+				}
 
 				var requestStr = A.JSON.stringify([_metaData]);
 
@@ -167,7 +169,11 @@ AUI.add(
 
 				_metaData.userId = _getEncryptedUserId();
 				_metaData.timestamp = (new Date()).getTime();
-				_metaData.portletIds = _registeredPortlets.join(',');
+				_metaData.portletIdsMap = {};
+
+				for (var i in _portlets) {
+					_metaData.portletIdsMap[i] = _portlets[i].initialRequest;
+				}
 
 				var requestStr = A.JSON.stringify([_metaData].concat(data));
 
@@ -204,13 +210,10 @@ AUI.add(
 
 			addListener: function(key, listener, scope) {
 				_portlets[key] = {
+					initialRequest: true,
 					listener: listener,
 					scope: scope
 				};
-
-				if (A.Array.indexOf(_registeredPortlets, key) == -1) {
-					_registeredPortlets.push(key);
-				}
 
 				if (!_enabled) {
 					_enabled = true;
@@ -249,13 +252,7 @@ AUI.add(
 					delete _portlets[key];
 				}
 
-				var index = A.Array.indexOf(_registeredPortlets, key);
-
-				if (index > -1) {
-					_registeredPortlets.splice(index, 1);
-				}
-
-				if (!_registeredPortlets.length) {
+				if (A.Object.keys(_portlets).length == 0) {
 					_enabled = false;
 
 					_cancelRequestTimer();

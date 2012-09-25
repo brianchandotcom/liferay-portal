@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.poller;
 
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -84,7 +85,9 @@ public class PollerRequest {
 	}
 
 	public String[] getPortletIds() {
-		return _pollerHeader.getPortletIds();
+		Map<String, Boolean> portletIdsMap = _pollerHeader.getPortletIdsMap();
+
+		return ArrayUtil.toStringArray(portletIdsMap.keySet().toArray());
 	}
 
 	public HttpServletRequest getRequest() {
@@ -110,7 +113,9 @@ public class PollerRequest {
 	}
 
 	public boolean isInitialRequest() {
-		return _pollerHeader.isInitialRequest();
+		Map<String, Boolean> portletIdsMap = _pollerHeader.getPortletIdsMap();
+
+		return portletIdsMap.get(_portletId);
 	}
 
 	public boolean isReceiveRequest() {

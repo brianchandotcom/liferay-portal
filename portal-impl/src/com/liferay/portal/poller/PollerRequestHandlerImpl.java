@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.poller.PollerHeader;
 import com.liferay.portal.kernel.poller.PollerProcessor;
 import com.liferay.portal.kernel.poller.PollerRequest;
 import com.liferay.portal.kernel.poller.PollerResponse;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -177,7 +178,10 @@ public class PollerRequestHandlerImpl
 			Map<String, Object>[] pollerRequestChunks, boolean receiveRequest)
 		throws Exception {
 
-		String[] portletIds = pollerHeader.getPortletIds();
+		Map<String, Boolean> portletIdsMap = pollerHeader.getPortletIdsMap();
+
+		String[] portletIds = ArrayUtil.toStringArray(
+			portletIdsMap.keySet().toArray());
 
 		List<PollerRequest> pollerRequests = new ArrayList<PollerRequest>(
 			portletIds.length);
@@ -262,8 +266,6 @@ public class PollerRequestHandlerImpl
 			JSONFactoryUtil.createJSONObject();
 
 		pollerResponseHeaderJSONObject.put("userId", pollerHeader.getUserId());
-		pollerResponseHeaderJSONObject.put(
-			"initialRequest", pollerHeader.isInitialRequest());
 		pollerResponseHeaderJSONObject.put("suspendPolling", suspendPolling);
 
 		return pollerResponseHeaderJSONObject;
@@ -393,10 +395,8 @@ public class PollerRequestHandlerImpl
 			String.valueOf(pollerRequestChunk.get("userId")));
 		long browserKey = GetterUtil.getLong(
 			String.valueOf(pollerRequestChunk.get("browserKey")));
-		String[] portletIds = StringUtil.split(
-			String.valueOf(pollerRequestChunk.get("portletIds")));
-		boolean initialRequest = GetterUtil.getBoolean(
-			String.valueOf(pollerRequestChunk.get("initialRequest")));
+		Map<String, Boolean> portletIdsMap =
+			(Map<String, Boolean>)pollerRequestChunk.get("portletIdsMap");
 		boolean startPolling = GetterUtil.getBoolean(
 			String.valueOf(pollerRequestChunk.get("startPolling")));
 
@@ -407,8 +407,7 @@ public class PollerRequestHandlerImpl
 		}
 
 		return new PollerHeader(
-			companyId, userId, browserKey, portletIds, initialRequest,
-			startPolling);
+			companyId, userId, browserKey, portletIdsMap, startPolling);
 	}
 
 	protected Map<String, Object>[] parsePollerRequestParameters(

@@ -66,6 +66,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -525,16 +526,14 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 	}
 
 	protected void addUserGroupsNotAddedByLDAPImport(
-			long userId, List<Long> userGroupIds)
+			long userId, Set<Long> userGroupIds)
 		throws Exception {
 
 		List<UserGroup> userGroups =
 			UserGroupLocalServiceUtil.getUserUserGroups(userId);
 
 		for (UserGroup userGroup : userGroups) {
-			if (!userGroupIds.contains(userGroup.getUserGroupId()) &&
-				!userGroup.isAddedByLDAPImport()) {
-
+			if (!userGroup.isAddedByLDAPImport()) {
 				userGroupIds.add(userGroup.getUserGroupId());
 			}
 		}
@@ -702,10 +701,10 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 		}
 	}
 
-	protected List<Long> importGroup(
+	protected Set<Long> importGroup(
 			long ldapServerId, long companyId, LdapContext ldapContext,
 			String fullGroupDN, User user, Properties groupMappings,
-			List<Long> newUserGroupIds)
+			Set<Long> newUserGroupIds)
 		throws Exception {
 
 		String userGroupIdKey = null;
@@ -776,7 +775,7 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 			Properties groupMappings)
 		throws Exception {
 
-		List<Long> newUserGroupIds = new ArrayList<Long>();
+		Set<Long> newUserGroupIds = new LinkedHashSet<Long>();
 
 		if (PrefsPropsUtil.getBoolean(
 				companyId, PropsKeys.LDAP_IMPORT_GROUP_SEARCH_FILTER_ENABLED)) {
@@ -981,7 +980,7 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 			long userGroupId, Attribute attribute)
 		throws Exception {
 
-		List<Long> newUserIds = new ArrayList<Long>(attribute.size());
+		Set<Long> newUserIds = new LinkedHashSet<Long>(attribute.size());
 
 		for (int i = 0; i < attribute.size(); i++) {
 			String fullUserDN = (String)attribute.get(i);

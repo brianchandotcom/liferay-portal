@@ -286,6 +286,20 @@ public class RepositoryLocalServiceUtil {
 		long classNameId, long parentFolderId, java.lang.String name,
 		java.lang.String description, java.lang.String portletId,
 		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties,
+		int repositoryType,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .addRepository(userId, groupId, classNameId, parentFolderId,
+			name, description, portletId, typeSettingsProperties,
+			repositoryType, serviceContext);
+	}
+
+	public static long addRepository(long userId, long groupId,
+		long classNameId, long parentFolderId, java.lang.String name,
+		java.lang.String description, java.lang.String portletId,
+		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -318,6 +332,12 @@ public class RepositoryLocalServiceUtil {
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .getLocalRepositoryImpl(folderId, fileEntryId, fileVersionId);
+	}
+
+	public static com.liferay.portal.model.Repository getRepository(
+		long groupId, java.lang.String portletId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getRepository(groupId, portletId);
 	}
 
 	public static com.liferay.portal.kernel.repository.Repository getRepositoryImpl(

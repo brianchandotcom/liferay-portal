@@ -75,6 +75,7 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "repositoryId", Types.BIGINT },
+			{ "repositoryType", Types.INTEGER },
 			{ "mountPoint", Types.BOOLEAN },
 			{ "parentFolderId", Types.BIGINT },
 			{ "name", Types.VARCHAR },
@@ -87,7 +88,7 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 			{ "statusByUserName", Types.VARCHAR },
 			{ "statusDate", Types.TIMESTAMP }
 		};
-	public static final String TABLE_SQL_CREATE = "create table DLFolder (uuid_ VARCHAR(75) null,folderId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,repositoryId LONG,mountPoint BOOLEAN,parentFolderId LONG,name VARCHAR(100) null,description STRING null,lastPostDate DATE null,defaultFileEntryTypeId LONG,overrideFileEntryTypes BOOLEAN,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table DLFolder (uuid_ VARCHAR(75) null,folderId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,repositoryId LONG,repositoryType INTEGER,mountPoint BOOLEAN,parentFolderId LONG,name VARCHAR(100) null,description STRING null,lastPostDate DATE null,defaultFileEntryTypeId LONG,overrideFileEntryTypes BOOLEAN,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table DLFolder";
 	public static final String ORDER_BY_JPQL = " ORDER BY dlFolder.parentFolderId ASC, dlFolder.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY DLFolder.parentFolderId ASC, DLFolder.name ASC";
@@ -109,8 +110,9 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 	public static long NAME_COLUMN_BITMASK = 8L;
 	public static long PARENTFOLDERID_COLUMN_BITMASK = 16L;
 	public static long REPOSITORYID_COLUMN_BITMASK = 32L;
-	public static long STATUS_COLUMN_BITMASK = 64L;
-	public static long UUID_COLUMN_BITMASK = 128L;
+	public static long REPOSITORYTYPE_COLUMN_BITMASK = 64L;
+	public static long STATUS_COLUMN_BITMASK = 128L;
+	public static long UUID_COLUMN_BITMASK = 256L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -134,6 +136,7 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setRepositoryId(soapModel.getRepositoryId());
+		model.setRepositoryType(soapModel.getRepositoryType());
 		model.setMountPoint(soapModel.getMountPoint());
 		model.setParentFolderId(soapModel.getParentFolderId());
 		model.setName(soapModel.getName());
@@ -223,6 +226,7 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("repositoryId", getRepositoryId());
+		attributes.put("repositoryType", getRepositoryType());
 		attributes.put("mountPoint", getMountPoint());
 		attributes.put("parentFolderId", getParentFolderId());
 		attributes.put("name", getName());
@@ -292,6 +296,12 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 
 		if (repositoryId != null) {
 			setRepositoryId(repositoryId);
+		}
+
+		Integer repositoryType = (Integer)attributes.get("repositoryType");
+
+		if (repositoryType != null) {
+			setRepositoryType(repositoryType);
 		}
 
 		Boolean mountPoint = (Boolean)attributes.get("mountPoint");
@@ -504,6 +514,27 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 
 	public long getOriginalRepositoryId() {
 		return _originalRepositoryId;
+	}
+
+	@JSON
+	public int getRepositoryType() {
+		return _repositoryType;
+	}
+
+	public void setRepositoryType(int repositoryType) {
+		_columnBitmask |= REPOSITORYTYPE_COLUMN_BITMASK;
+
+		if (!_setOriginalRepositoryType) {
+			_setOriginalRepositoryType = true;
+
+			_originalRepositoryType = _repositoryType;
+		}
+
+		_repositoryType = repositoryType;
+	}
+
+	public int getOriginalRepositoryType() {
+		return _originalRepositoryType;
 	}
 
 	@JSON
@@ -812,6 +843,7 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 		dlFolderImpl.setCreateDate(getCreateDate());
 		dlFolderImpl.setModifiedDate(getModifiedDate());
 		dlFolderImpl.setRepositoryId(getRepositoryId());
+		dlFolderImpl.setRepositoryType(getRepositoryType());
 		dlFolderImpl.setMountPoint(getMountPoint());
 		dlFolderImpl.setParentFolderId(getParentFolderId());
 		dlFolderImpl.setName(getName());
@@ -904,6 +936,10 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 
 		dlFolderModelImpl._setOriginalRepositoryId = false;
 
+		dlFolderModelImpl._originalRepositoryType = dlFolderModelImpl._repositoryType;
+
+		dlFolderModelImpl._setOriginalRepositoryType = false;
+
 		dlFolderModelImpl._originalMountPoint = dlFolderModelImpl._mountPoint;
 
 		dlFolderModelImpl._setOriginalMountPoint = false;
@@ -969,6 +1005,8 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 
 		dlFolderCacheModel.repositoryId = getRepositoryId();
 
+		dlFolderCacheModel.repositoryType = getRepositoryType();
+
 		dlFolderCacheModel.mountPoint = getMountPoint();
 
 		dlFolderCacheModel.parentFolderId = getParentFolderId();
@@ -1028,7 +1066,7 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(41);
+		StringBundler sb = new StringBundler(43);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -1048,6 +1086,8 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 		sb.append(getModifiedDate());
 		sb.append(", repositoryId=");
 		sb.append(getRepositoryId());
+		sb.append(", repositoryType=");
+		sb.append(getRepositoryType());
 		sb.append(", mountPoint=");
 		sb.append(getMountPoint());
 		sb.append(", parentFolderId=");
@@ -1076,7 +1116,7 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 	}
 
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(64);
+		StringBundler sb = new StringBundler(67);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portlet.documentlibrary.model.DLFolder");
@@ -1117,6 +1157,10 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 		sb.append(
 			"<column><column-name>repositoryId</column-name><column-value><![CDATA[");
 		sb.append(getRepositoryId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>repositoryType</column-name><column-value><![CDATA[");
+		sb.append(getRepositoryType());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>mountPoint</column-name><column-value><![CDATA[");
@@ -1189,6 +1233,9 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 	private long _repositoryId;
 	private long _originalRepositoryId;
 	private boolean _setOriginalRepositoryId;
+	private int _repositoryType;
+	private int _originalRepositoryType;
+	private boolean _setOriginalRepositoryType;
 	private boolean _mountPoint;
 	private boolean _originalMountPoint;
 	private boolean _setOriginalMountPoint;

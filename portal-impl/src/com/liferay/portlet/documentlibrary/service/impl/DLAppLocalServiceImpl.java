@@ -668,6 +668,26 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 			toLocalRepository, serviceContext);
 	}
 
+	public FileEntry moveFileEntryToTrash(long userId, long fileEntryId)
+		throws PortalException, SystemException {
+
+		LocalRepository localRepository = getLocalRepository(0, fileEntryId, 0);
+
+		FileEntry fileEntry = localRepository.getFileEntry(fileEntryId);
+
+		return dlAppHelperLocalService.moveFileEntryToTrash(userId, fileEntry);
+	}
+
+	public void restoreFileEntryFromTrash(long userId, long fileEntryId)
+		throws PortalException, SystemException {
+
+		LocalRepository localRepository = getLocalRepository(0, fileEntryId, 0);
+
+		FileEntry fileEntry = localRepository.getFileEntry(fileEntryId);
+
+		dlAppHelperLocalService.restoreFileEntryFromTrash(userId, fileEntry);
+	}
+
 	/**
 	 * Updates the file entry's asset replacing its asset categories, tags, and
 	 * links.

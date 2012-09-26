@@ -534,6 +534,19 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService,
 			newFolderId, serviceContext);
 	}
 
+	public com.liferay.portal.kernel.repository.model.FileEntry moveFileEntryToTrash(
+		long userId, long fileEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _dlAppLocalService.moveFileEntryToTrash(userId, fileEntryId);
+	}
+
+	public void restoreFileEntryFromTrash(long userId, long fileEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_dlAppLocalService.restoreFileEntryFromTrash(userId, fileEntryId);
+	}
+
 	/**
 	* Updates the file entry's asset replacing its asset categories, tags, and
 	* links.

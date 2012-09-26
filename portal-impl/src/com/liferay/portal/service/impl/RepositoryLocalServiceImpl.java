@@ -44,6 +44,7 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.RepositoryNameException;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
+import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 
 import java.util.Date;
 import java.util.List;
@@ -58,7 +59,7 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 	public long addRepository(
 			long userId, long groupId, long classNameId, long parentFolderId,
 			String name, String description, String portletId,
-			UnicodeProperties typeSettingsProperties,
+			UnicodeProperties typeSettingsProperties, int repositoryType,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
@@ -84,7 +85,7 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 		repository.setDlFolderId(
 			getDLFolderId(
 				user, groupId, repositoryId, parentFolderId, name, description,
-				serviceContext));
+				repositoryType, serviceContext));
 
 		repositoryPersistence.update(repository, false);
 
@@ -102,6 +103,19 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 		}
 
 		return repositoryId;
+	}
+
+	public long addRepository(
+			long userId, long groupId, long classNameId, long parentFolderId,
+			String name, String description, String portletId,
+			UnicodeProperties typeSettingsProperties,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		return addRepository(
+			userId, groupId, classNameId, parentFolderId, name, description,
+			portletId, typeSettingsProperties,
+			DLFolderConstants.REGULAR_REPOSITORY, serviceContext);
 	}
 
 	public void checkRepository(long repositoryId) throws SystemException {
@@ -230,6 +244,12 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 			repositoryEntryId, localRepositoryImpl);
 
 		return localRepositoryImpl;
+	}
+
+	public Repository getRepository(long groupId, String portletId)
+		throws SystemException {
+
+		return repositoryPersistence.fetchByG_P(groupId, portletId);
 	}
 
 	public com.liferay.portal.kernel.repository.Repository getRepositoryImpl(
@@ -421,7 +441,8 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 
 	protected long getDLFolderId(
 			User user, long groupId, long repositoryId, long parentFolderId,
-			String name, String description, ServiceContext serviceContext)
+			String name, String description, int repositoryType,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		if (Validator.isNull(name)) {
@@ -430,7 +451,7 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 
 		DLFolder dlFolder = dlFolderLocalService.addFolder(
 			user.getUserId(), groupId, repositoryId, true, parentFolderId, name,
-			description, serviceContext);
+			description, repositoryType, serviceContext);
 
 		return dlFolder.getFolderId();
 	}

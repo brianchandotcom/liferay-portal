@@ -31,9 +31,7 @@ import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.invitation.util.InvitationUtil;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import javax.mail.internet.InternetAddress;
@@ -60,8 +58,8 @@ public class ViewAction extends PortletAction {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		List<String> validEmailAddresses = new ArrayList<String>();
 		Set<String> invalidEmailAddresses = new HashSet<String>();
+		Set<String> validEmailAddresses = new HashSet<String>();
 
 		int emailMessageMaxRecipients =
 			InvitationUtil.getEmailMessageMaxRecipients();
@@ -71,9 +69,7 @@ public class ViewAction extends PortletAction {
 				actionRequest, "emailAddress" + i);
 
 			if (Validator.isEmailAddress(emailAddress)) {
-				if (!validEmailAddresses.contains(emailAddress)) {
-					validEmailAddresses.add(emailAddress);
-				}
+				validEmailAddresses.add(emailAddress);
 			}
 			else if (Validator.isNotNull(emailAddress)) {
 				invalidEmailAddresses.add("emailAddress" + i);

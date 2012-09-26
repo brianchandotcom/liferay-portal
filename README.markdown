@@ -32,7 +32,10 @@ from their respective repositories.
 
 To get up and running quickly, *download* a [pre-built Liferay
 release](http://liferay.com/downloads) and follow the [Quick
-Start](http://liferay.com/quick-start) instructions.
+Start](http://liferay.com/quick-start) instructions.  For more detailed
+installation instructions, please read the [Installation and Setup
+chapter](http://www.liferay.com/documentation/liferay-portal/6.1/user-guide/-/ai/installing-lifer-2)
+of the *Liferay User Guide*.
 
 If you wish to *build* core Liferay or its plugins, read the [CONTRIBUTING
 guide](https://github.com/liferay/liferay-portal/blob/master/CONTRIBUTING.markdown).
@@ -75,7 +78,12 @@ Channel: `#liferay`
 
 ## Development Options
 
-Check out Liferay IDE. The [Liferay IDE
+To understand how to develop for Liferay, read the [Liferay Development
+Guide](http://www.liferay.com/documentation/liferay-portal/6.1/development).
+This guide contains indispensable explanations, examples, and reference material
+on the Liferay platform and surrounding technologies.
+
+Also, check out Liferay IDE. The [Liferay IDE
 project](http://www.liferay.com/community/liferay-projects/liferay-ide) provides
 an Eclipse-based Liferay development environment to help you build and maintain
 Liferay projects easily.
@@ -91,6 +99,12 @@ SDK](http://www.liferay.com/web/mika.koivisto/blog/-/blogs/12322618).
 Liferay welcomes any and all contributions! Please read the [CONTRIBUTING
 guide](https://github.com/liferay/liferay-portal/blob/master/CONTRIBUTING.markdown)
 for details on developing and submitting your contributions.
+
+## Professional Services
+
+If you need professional consultation or help with Liferay and your business, 
+check out the [offerings from Liferay, Inc.](http://www.liferay.com/services)
+and its [partner network](http://www.liferay.com/partners/service-partners).
 
 ## Liferay Portal Community Edition License
 

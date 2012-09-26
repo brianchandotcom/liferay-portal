@@ -15,7 +15,11 @@
 package com.liferay.portal.kernel.servlet;
 
 import com.liferay.portal.kernel.configuration.Filter;
+import com.liferay.portal.kernel.io.DummyOutputStream;
+import com.liferay.portal.kernel.io.DummyWriter;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
+import com.liferay.portal.kernel.io.unsync.UnsyncPrintWriter;
+import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.test.TestCase;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -35,6 +39,8 @@ import java.nio.CharBuffer;
 import java.util.Properties;
 
 import javax.servlet.ServletOutputStream;
+
+import org.junit.Assert;
 
 /**
  * @author Shuyang Zhou
@@ -162,7 +168,7 @@ public class BufferCacheServletResponseTest extends TestCase {
 		}
 	}
 
-	public void testGetByteBuffer() throws IOException {
+	public void testGetByteBuffer() throws Exception {
 		StubHttpServletResponse stubHttpServletResponse =
 			new StubHttpServletResponse() {
 
@@ -197,6 +203,28 @@ public class BufferCacheServletResponseTest extends TestCase {
 
 		assertSame(byteBuffer, bufferCacheServletResponse.getByteBuffer());
 
+		ServletOutputStreamAdapter servletOutputStreamAdapter =
+			(ServletOutputStreamAdapter)
+				bufferCacheServletResponse.getOutputStream();
+
+		Assert.assertTrue(
+			servletOutputStreamAdapter.outputStream instanceof
+				DummyOutputStream);
+		Assert.assertTrue(bufferCacheServletResponse.calledGetOutputStream);
+
+		bufferCacheServletResponse.setByteBuffer(null);
+
+		Assert.assertFalse(bufferCacheServletResponse.calledGetOutputStream);
+
+		servletOutputStreamAdapter =
+			(ServletOutputStreamAdapter)
+				bufferCacheServletResponse.getOutputStream();
+
+		Assert.assertTrue(
+			servletOutputStreamAdapter.outputStream instanceof
+				UnsyncByteArrayOutputStream);
+		Assert.assertTrue(bufferCacheServletResponse.calledGetOutputStream);
+
 		// Char buffer
 
 		bufferCacheServletResponse = new BufferCacheServletResponse(
@@ -212,6 +240,27 @@ public class BufferCacheServletResponseTest extends TestCase {
 		assertEquals(0, charBuffer.position());
 		assertEquals(_TEST_STRING.length(), charBuffer.limit());
 		assertEquals(_TEST_STRING.length(), charBuffer.capacity());
+
+		UnsyncPrintWriter unsyncPrintWriter =
+			(UnsyncPrintWriter)bufferCacheServletResponse.getWriter();
+
+		Field writerField = ReflectionUtil.getDeclaredField(
+			UnsyncPrintWriter.class, "_writer");
+
+		Assert.assertTrue(
+			writerField.get(unsyncPrintWriter) instanceof DummyWriter);
+		Assert.assertTrue(bufferCacheServletResponse.calledGetWriter);
+
+		bufferCacheServletResponse.setCharBuffer(null);
+
+		Assert.assertFalse(bufferCacheServletResponse.calledGetWriter);
+
+		unsyncPrintWriter =
+			(UnsyncPrintWriter)bufferCacheServletResponse.getWriter();
+
+		Assert.assertTrue(
+			writerField.get(unsyncPrintWriter) instanceof UnsyncStringWriter);
+		Assert.assertTrue(bufferCacheServletResponse.calledGetWriter);
 
 		// Servlet output stream
 

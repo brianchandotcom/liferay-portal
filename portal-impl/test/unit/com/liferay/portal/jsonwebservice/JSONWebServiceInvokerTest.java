@@ -215,6 +215,38 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 		Assert.assertEquals(
 			"[{\"id\":1},{\"id\":2},{\"id\":3}]", toJSON(invokerResult));
 	}
+	@Test
+	public void testListFilteringAndFlags() throws Exception {
+		Map<String, Object> map = new LinkedHashMap<String, Object>();
+
+		Map<String, Object> params = new LinkedHashMap<String, Object>();
+
+		map.put("$world[id] = /foo/get-foo-datas", params);
+
+		Map<String, Object> map2 = new LinkedHashMap<String, Object>();
+
+		params.put("$resource[id,value] = /foo/get-foo-data", map2);
+
+		map2.put("@id", "$world.id");
+
+		String json = toJSON(map);
+
+		JSONWebServiceAction jsonWebServiceAction = prepareInvokerAction(json);
+
+		Object result = jsonWebServiceAction.invoke();
+
+		JSONWebServiceInvokerAction.InvokerResult invokerResult =
+			(JSONWebServiceInvokerAction.InvokerResult)result;
+
+		result = invokerResult.getResult();
+
+		Assert.assertTrue(result instanceof List);
+		Assert.assertEquals(
+			"[{\"id\":1,\"resource\":{\"id\":1,\"value\":\"foo!\"}}," +
+			"{\"id\":2,\"resource\":{\"id\":2,\"value\":\"foo!\"}}," +
+			"{\"id\":3,\"resource\":{\"id\":3,\"value\":\"foo!\"}}]",
+			toJSON(invokerResult));
+	}
 
 	@Test
 	public void testSimpleCall() throws Exception {

@@ -25,10 +25,6 @@ import com.liferay.portal.kernel.util.Time;
  */
 public class SchedulerEntryImpl implements SchedulerEntry {
 
-	public String getContextPath() {
-		return _contextPath;
-	}
-
 	public String getDescription() {
 		return _description;
 	}
@@ -96,10 +92,6 @@ public class SchedulerEntryImpl implements SchedulerEntry {
 		return _triggerValue;
 	}
 
-	public void setContextPath(String contextPath) {
-		_contextPath = contextPath;
-	}
-
 	public void setDescription(String description) {
 		_description = description;
 	}
@@ -138,10 +130,8 @@ public class SchedulerEntryImpl implements SchedulerEntry {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(17);
 
-		sb.append("{contextPath=");
-		sb.append(_contextPath);
 		sb.append(", description=");
 		sb.append(_description);
 		sb.append(", eventListener=");
@@ -163,7 +153,6 @@ public class SchedulerEntryImpl implements SchedulerEntry {
 		return sb.toString();
 	}
 
-	private String _contextPath = StringPool.BLANK;
 	private String _description = StringPool.BLANK;
 	private transient MessageListener _eventListener;
 	private String _eventListenerClass = StringPool.BLANK;

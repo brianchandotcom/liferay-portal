@@ -23,8 +23,6 @@ import java.io.Serializable;
  */
 public interface SchedulerEntry extends Serializable {
 
-	public String getContextPath();
-
 	public String getDescription();
 
 	public MessageListener getEventListener();
@@ -40,8 +38,6 @@ public interface SchedulerEntry extends Serializable {
 	public TriggerType getTriggerType();
 
 	public String getTriggerValue();
-
-	public void setContextPath(String contextPath);
 
 	public void setDescription(String description);
 

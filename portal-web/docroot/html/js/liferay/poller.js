@@ -24,7 +24,8 @@ AUI.add(
 		var _metaData = {
 			startPolling: true,
 			browserKey: _browserKey,
-			companyId: themeDisplay.getCompanyId()
+			companyId: themeDisplay.getCompanyId(),
+			portletIdsMap: {}
 		};
 
 		var _portlets = {};
@@ -129,7 +130,6 @@ AUI.add(
 			if (!_suspended && !_frozen) {
 				_metaData.userId = _getEncryptedUserId();
 				_metaData.timestamp = (new Date()).getTime();
-				_metaData.portletIdsMap = {};
 
 				for (var i in _portlets) {
 					_metaData.portletIdsMap[i] = _portlets[i].initialRequest;
@@ -169,7 +169,6 @@ AUI.add(
 
 				_metaData.userId = _getEncryptedUserId();
 				_metaData.timestamp = (new Date()).getTime();
-				_metaData.portletIdsMap = {};
 
 				for (var i in _portlets) {
 					_metaData.portletIdsMap[i] = _portlets[i].initialRequest;

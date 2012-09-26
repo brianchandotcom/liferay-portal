@@ -44,6 +44,8 @@ public class AddDMFolder2MGTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertEquals(RuntimeVariables.replace("DM Folder1 Name"),
+			selenium.getText("xPath=(//span[@class='image-title'])[1]"));
 		assertEquals(RuntimeVariables.replace("DM Folder2 Name"),
 			selenium.getText("xPath=(//span[@class='image-title'])[2]"));
 	}

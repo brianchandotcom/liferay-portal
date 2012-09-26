@@ -53,7 +53,7 @@ public class ViewDMFolderImageMGTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Image 1 of 1"),
 			selenium.getText("//div[@class='aui-image-viewer-info']"));
 		assertTrue(selenium.isVisible(
-				"//div[@class='lfr-image-gallery-actions']/div/div/span[1]/a/img[@alt='Download (12.9k)']"));
+				"//div[@class='lfr-image-gallery-actions']/div/div/span[1]/a/img[@alt='Download (13k)']"));
 		assertTrue(selenium.isVisible(
 				"//div[@class='lfr-image-gallery-actions']/div/div/span[2]/a/img[@alt='View']"));
 		assertTrue(selenium.isVisible(
@@ -61,7 +61,7 @@ public class ViewDMFolderImageMGTest extends BaseTestCase {
 		assertTrue(selenium.isVisible(
 				"//div[@class='lfr-image-gallery-actions']/div/div/span[4]/a/img[@alt='Permissions']"));
 		assertTrue(selenium.isVisible(
-				"//div[@class='lfr-image-gallery-actions']/div/div/span[5]/a/img[@alt='Delete']"));
+				"//div[@class='lfr-image-gallery-actions']/div/div/span[5]/a/img[@alt='Move to the Recycle Bin']"));
 		assertTrue(selenium.isVisible(
 				"//span[@class='aui-image-gallery-paginator-thumb']"));
 		assertTrue(selenium.isVisible(

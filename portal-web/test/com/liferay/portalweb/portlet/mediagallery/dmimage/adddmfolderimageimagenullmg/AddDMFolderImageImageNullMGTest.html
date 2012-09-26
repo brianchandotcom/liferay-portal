@@ -50,13 +50,13 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//iframe</td>
-	<td>Select Document Type</td>
+	<td>//iframe[contains(@id,'selectFileEntryType')]</td>
+	<td>Select File Entry Type</td>
 </tr>
 <tr>
 	<td>selectFrame</td>
-	<td>//iframe</td>
-	<td>Select Document Type</td>
+	<td>//iframe[contains(@id,'selectFileEntryType')]</td>
+	<td>Select File Entry Type</td>
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
@@ -64,12 +64,17 @@
 	<td>Navigation Interaction</td>
 </tr>
 <tr>
+	<td>waitForVisible</td>
+	<td>//td[contains(@id,'name_row-1')]/a</td>
+	<td>Basic Document</td>
+</tr>
+<tr>
 	<td>assertText</td>
 	<td>//td[contains(@id,'name_row-1')]/a</td>
 	<td>Basic Document</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
+	<td>clickAt</td>
 	<td>//td[contains(@id,'name_row-1')]/a</td>
 	<td>Basic Document</td>
 </tr>
@@ -79,7 +84,17 @@
 	<td>top</td>
 </tr>
 <tr>
-	<td>type</td>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//input[@id='_31_file']</td>
+	<td>File Name</td>
+</tr>
+<tr>
+	<td>sendKeys</td>
 	<td>//input[@id='_31_file']</td>
 	<td></td>
 </tr>

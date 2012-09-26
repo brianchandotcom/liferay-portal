@@ -50,7 +50,7 @@ public class MoveDMSubfolderToFolderMGTest extends BaseTestCase {
 			selenium.getText("//a[@id='_31_parentFolderName']"));
 		selenium.clickAt("//input[@value='Select']",
 			RuntimeVariables.replace("Select"));
-		selenium.waitForPopUp("folder", RuntimeVariables.replace("30000"));
+		selenium.waitForPopUp("null", RuntimeVariables.replace("30000"));
 		selenium.selectWindow("title=Media Gallery");
 		selenium.waitForText("link=Home", "Home");
 		selenium.clickAt("link=Home", RuntimeVariables.replace("Home"));

@@ -25,41 +25,46 @@ public class EditFolderEntryTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Bookmarks Test Page");
 		selenium.clickAt("link=Bookmarks Test Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Bookmarks Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//a/strong", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("Test Folder"),
+			selenium.getText("//a/strong"));
+		selenium.clickAt("//a/strong", RuntimeVariables.replace("Test Folder"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Test Folder Entry"),
 			selenium.getText("//td[1]/a"));
 		assertEquals(RuntimeVariables.replace("http://www.liferay.com"),
 			selenium.getText("//td[2]/a"));
-		selenium.clickAt("//td[5]/span/ul/li/strong/a",
-			RuntimeVariables.replace(""));
-		selenium.waitForElementPresent(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a");
-		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
+		Thread.sleep(5000);
+		assertEquals(RuntimeVariables.replace("Actions"),
+			selenium.getText(
+				"//td[5]/span[@title='Actions']/ul/li/strong/a/span"));
+		selenium.clickAt("//td[5]/span[@title='Actions']/ul/li/strong/a/span",
+			RuntimeVariables.replace("Actions"));
+		selenium.waitForVisible(
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]");
+		assertEquals(RuntimeVariables.replace("Edit"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]",
+			RuntimeVariables.replace("Edit"));
 		selenium.waitForPageToLoad("30000");
-		selenium.type("_28_name",
+		selenium.type("//input[@id='_28_name']",
 			RuntimeVariables.replace("Test Folder Entry Edited"));
-		selenium.type("_28_url",
+		selenium.type("//input[@id='_28_url']",
 			RuntimeVariables.replace("http://www.alloyui.com"));
-		selenium.type("_28_description",
+		selenium.type("//textarea[@id='_28_description']",
 			RuntimeVariables.replace("This is a test folder entry. Edited."));
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
-			selenium.getText("//section/div/div/div/div[1]"));
+			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("Test Folder Entry Edited"),
 			selenium.getText("//td[1]/a"));
 		assertEquals(RuntimeVariables.replace("http://www.alloyui.com"),
-			selenium.getText("//td[2]/a"));
-		assertNotEquals(RuntimeVariables.replace("Test Folder Entry"),
-			selenium.getText("//td[1]/a"));
-		assertNotEquals(RuntimeVariables.replace("http://www.liferay.com"),
 			selenium.getText("//td[2]/a"));
 	}
 }

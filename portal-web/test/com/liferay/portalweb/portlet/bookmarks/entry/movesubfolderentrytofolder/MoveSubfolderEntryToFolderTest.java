@@ -25,49 +25,71 @@ public class MoveSubfolderEntryToFolderTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Bookmarks Test Page");
 		selenium.clickAt("link=Bookmarks Test Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Bookmarks Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//a/strong", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("Test Folder"),
+			selenium.getText("//a/strong"));
+		selenium.clickAt("//a/strong", RuntimeVariables.replace("Test Folder"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//a/strong", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("Test Subfolder"),
+			selenium.getText("//a/strong"));
+		selenium.clickAt("//a/strong",
+			RuntimeVariables.replace("Test Subfolder"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isElementPresent("link=http://www.liferay.com"));
-		selenium.clickAt("//td[5]/span/ul/li/strong/a",
-			RuntimeVariables.replace(""));
-		selenium.waitForElementPresent(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a");
-		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
+		assertEquals(RuntimeVariables.replace("Test Subfolder Entry"),
+			selenium.getText("//td[1]/a"));
+		assertEquals(RuntimeVariables.replace("http://www.liferay.com"),
+			selenium.getText("//td[2]/a"));
+		Thread.sleep(5000);
+		assertEquals(RuntimeVariables.replace("Actions"),
+			selenium.getText(
+				"//td[5]/span[@title='Actions']/ul/li/strong/a/span"));
+		selenium.clickAt("//td[5]/span[@title='Actions']/ul/li/strong/a/span",
+			RuntimeVariables.replace("Actions"));
+		selenium.waitForVisible(
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]");
+		assertEquals(RuntimeVariables.replace("Edit"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]",
+			RuntimeVariables.replace("Edit"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("//input[@value='Select']",
-			RuntimeVariables.replace(""));
-		selenium.waitForPopUp("folder", RuntimeVariables.replace("30000"));
-		selenium.selectWindow("folder");
-		selenium.waitForElementPresent("link=Home");
-		selenium.clickAt("link=Home", RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Select"));
+		Thread.sleep(5000);
+		selenium.selectWindow("title=Bookmarks");
+		selenium.waitForVisible("link=Home");
+		selenium.clickAt("link=Home", RuntimeVariables.replace("Home"));
 		selenium.waitForPageToLoad("30000");
 		selenium.click("//input[@value='Choose']");
 		selenium.selectWindow("null");
 		assertEquals(RuntimeVariables.replace("Test Folder"),
-			selenium.getText("_28_folderName"));
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+			selenium.getText("//a[@id='_28_folderName']"));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
-			selenium.getText("//section/div/div/div/div[1]"));
-		assertTrue(selenium.isElementNotPresent("link=http://www.liferay.com"));
+			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertFalse(selenium.isTextPresent("Test Subfolder Entry"));
+		assertFalse(selenium.isTextPresent("http://www.liferay.com"));
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Bookmarks Test Page");
 		selenium.clickAt("link=Bookmarks Test Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Bookmarks Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//a/strong", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("Test Folder"),
+			selenium.getText("//a/strong"));
+		selenium.clickAt("//a/strong", RuntimeVariables.replace("Test Folder"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isElementPresent("link=http://www.liferay.com"));
-		selenium.clickAt("//a/strong", RuntimeVariables.replace(""));
+		assertTrue(selenium.isVisible("link=Test Subfolder Entry"));
+		assertTrue(selenium.isVisible("link=http://www.liferay.com"));
+		assertEquals(RuntimeVariables.replace("Test Subfolder"),
+			selenium.getText("//a/strong"));
+		selenium.clickAt("//a/strong",
+			RuntimeVariables.replace("Test Subfolder"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isElementNotPresent("link=http://www.liferay.com"));
+		assertFalse(selenium.isTextPresent("Test Subfolder Entry"));
+		assertFalse(selenium.isTextPresent("http://www.liferay.com"));
 	}
 }

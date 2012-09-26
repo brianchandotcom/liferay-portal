@@ -14,61 +14,100 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Bookmarks Test Page</td>
-	<td></td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Bookmarks Test Page</td>
-	<td></td>
+	<td>Bookmarks Test Page</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//a/strong</td>
+	<td>Test Folder</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//a/strong</td>
+	<td>Test Folder</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//a/strong</td>
+	<td>Test Subfolder</td>
+</tr>
+<tr>
+	<td>assertTextNotPresent</td>
+	<td>Test Subfolder Entry</td>
 	<td></td>
 </tr>
 <tr>
-	<td>assertElementNotPresent</td>
-	<td>link=Test Subfolder Entry</td>
+	<td>pause</td>
+	<td>5000</td>
 	<td></td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>//td[4]/span/ul/li/strong/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//td[4]/span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>_28_mergeWithParentFolderCheckbox</td>
-	<td></td>
+	<td>//td[4]/span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>Actions</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]</td>
+	<td>Edit</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]</td>
+	<td>Edit</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]</td>
+	<td>Edit</td>
+</tr>
+<tr>
+	<td>assertNotChecked</td>
+	<td>//input[@id='_28_mergeWithParentFolderCheckbox']</td>
+	<td>Merge with Parent Folder</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@id='_28_mergeWithParentFolderCheckbox']</td>
+	<td>Merge with Parent Folder</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@id='_28_mergeWithParentFolderCheckbox']</td>
+	<td>Merge with Parent Folder</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
-	<td></td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>link=Test Subfolder Entry</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//td[1]/a</td>
+	<td>Test Subfolder Entry</td>
 </tr>
-
+<tr>
+	<td>assertText</td>
+	<td>//td[2]/a</td>
+	<td>http://www.liferay.com</td>
+</tr>
+<tr>
+	<td>assertElementNotPresent</td>
+	<td>//a/strong</td>
+	<td>Test Subfolder</td>
+</tr>
 </tbody></table>
 </body>
 </html>

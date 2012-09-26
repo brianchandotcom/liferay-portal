@@ -25,24 +25,26 @@ public class AddFolderTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Bookmarks Test Page");
 		selenium.clickAt("link=Bookmarks Test Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Bookmarks Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//div[2]/ul/li[2]/a", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("Add Folder"),
+			selenium.getText("//div[2]/ul/li[2]/a"));
+		selenium.clickAt("//div[2]/ul/li[2]/a",
+			RuntimeVariables.replace("Add Folder"));
 		selenium.waitForPageToLoad("30000");
-		selenium.type("_28_name", RuntimeVariables.replace("Test Folder"));
-		selenium.type("_28_description",
+		selenium.type("//input[@id='_28_name']",
+			RuntimeVariables.replace("Test Folder"));
+		selenium.type("//textarea[@id='_28_description']",
 			RuntimeVariables.replace("This is a test folder."));
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
-			selenium.getText("//section/div/div/div/div[1]"));
+			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("Test Folder"),
 			selenium.getText("//td[1]/a/strong"));
-		assertEquals(RuntimeVariables.replace(
-				"Test Folder\nThis is a test folder."),
-			selenium.getText("//td[1]/a"));
+		assertTrue(selenium.isPartialText("//td[1]/a", "This is a test folder."));
 	}
 }

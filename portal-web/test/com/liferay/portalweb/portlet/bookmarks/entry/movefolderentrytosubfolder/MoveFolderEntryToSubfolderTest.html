@@ -14,64 +14,84 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Bookmarks Test Page</td>
-	<td></td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Bookmarks Test Page</td>
-	<td></td>
+	<td>Bookmarks Test Page</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//a/strong</td>
+	<td>Test Folder</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//a/strong</td>
+	<td>Test Folder</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>link=Test Folder Entry</td>
+	<td>Test Folder Entry</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>link=http://www.liferay.com</td>
+	<td>http://www.liferay.com</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
 	<td></td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>link=http://www.liferay.com</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//td[5]/span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//td[5]/span/ul/li/strong/a</td>
-	<td></td>
+	<td>//td[5]/span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>Actions</td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
-	<td></td>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]</td>
+	<td>Edit</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]</td>
+	<td>Edit</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]</td>
+	<td>Edit</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>//input[@value='Select']</td>
-	<td></td>
+	<td>Select</td>
 </tr>
 <tr>
-	<td>waitForPopUp</td>
-	<td>folder</td>
-	<td>30000</td>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
 </tr>
 <tr>
 	<td>selectWindow</td>
-	<td>folder</td>
+	<td>title=Bookmarks</td>
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>//input[@value='Choose']</td>
-	<td></td>
+	<td>Choose</td>
 </tr>
 <tr>
 	<td>click</td>
 	<td>//input[@value='Choose']</td>
-	<td></td>
+	<td>Choose</td>
 </tr>
 <tr>
 	<td>selectWindow</td>
@@ -80,22 +100,27 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>_28_folderName</td>
+	<td>//a[@id='_28_folderName']</td>
 	<td>Test Subfolder</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//section/div/div/div/div[1]</td>
+	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
 </tr>
 <tr>
-	<td>assertElementNotPresent</td>
-	<td>link=http://www.liferay.com</td>
+	<td>assertTextNotPresent</td>
+	<td>Test Folder Entry</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextNotPresent</td>
+	<td>http://www.liferay.com</td>
 	<td></td>
 </tr>
 <tr>
@@ -104,31 +129,40 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Bookmarks Test Page</td>
-	<td></td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Bookmarks Test Page</td>
-	<td></td>
+	<td>Bookmarks Test Page</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//a/strong</td>
+	<td>Test Folder</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//a/strong</td>
-	<td></td>
+	<td>Test Folder</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//a/strong</td>
+	<td>Test Subfolder</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//a/strong</td>
-	<td></td>
+	<td>Test Subfolder</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>link=http://www.liferay.com</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//td[1]/a</td>
+	<td>Test Folder Entry</td>
 </tr>
-
+<tr>
+	<td>assertText</td>
+	<td>//td[2]/a</td>
+	<td>http://www.liferay.com</td>
+</tr>
 </tbody></table>
 </body>
 </html>

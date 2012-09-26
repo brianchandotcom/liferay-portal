@@ -25,25 +25,30 @@ public class AddFolderEntry1Test extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Bookmarks Test Page");
 		selenium.clickAt("link=Bookmarks Test Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Bookmarks Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//a/strong", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("Test Folder"),
+			selenium.getText("//a/strong"));
+		selenium.clickAt("//a/strong", RuntimeVariables.replace("Test Folder"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//div[2]/ul/li[5]/a", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("Add Bookmark"),
+			selenium.getText("//div[2]/ul/li[5]/a"));
+		selenium.clickAt("//div[2]/ul/li[5]/a",
+			RuntimeVariables.replace("Add Bookmark"));
 		selenium.waitForPageToLoad("30000");
-		selenium.type("_28_name",
+		selenium.type("//input[@id='_28_name']",
 			RuntimeVariables.replace("Test1 Folder1 Entry1"));
-		selenium.type("_28_url",
+		selenium.type("//input[@id='_28_url']",
 			RuntimeVariables.replace("http://www.liferay.com"));
-		selenium.type("_28_description",
+		selenium.type("//textarea[@id='_28_description']",
 			RuntimeVariables.replace("This is a test1 folder1 entry1."));
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
-			selenium.getText("//section/div/div/div/div[1]"));
+			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("Test1 Folder1 Entry1"),
 			selenium.getText("//td[1]/a"));
 		assertEquals(RuntimeVariables.replace("http://www.liferay.com"),

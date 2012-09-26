@@ -25,13 +25,14 @@ public class ViewFolderEntryRecentEntriesTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Bookmarks Test Page");
 		selenium.clickAt("link=Bookmarks Test Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Bookmarks Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Recent", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Recent", RuntimeVariables.replace("Recent"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isElementPresent("link=Test Folder Entry"));
-		assertTrue(selenium.isElementPresent("link=http://www.liferay.com"));
+		assertEquals(RuntimeVariables.replace("Test Folder Entry"),
+			selenium.getText("//td[1]/a"));
+		assertEquals(RuntimeVariables.replace("http://www.liferay.com"),
+			selenium.getText("//td[2]/a"));
 	}
 }

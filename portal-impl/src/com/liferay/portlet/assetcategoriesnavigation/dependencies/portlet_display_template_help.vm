@@ -1,0 +1,35 @@
+##
+## You can use Velocity to define display templates for the Categories
+## Navigation portlet.
+##
+## A set of variables have been made available for the template developers:
+##
+##  $ddmTemplateId: the current template id
+##
+##  $entries: the list of vocabularies that are being shown in the portlet
+##
+##  $entry: the vocabulary when there's only one vocabulary
+##
+##  $locale: the locale of the site
+##
+##  $renderRequest: the render request
+##
+##  $renderResponse: the render response
+##
+##  $taglibLiferay: object that provides access to Liferay's taglibs
+##
+##  $themeDisplay: the theme display
+##
+## It is possible to use these variables to create advanced templates to display
+## a list of assets in your asset publisher. Here's a simple template example:
+##
+##  #foreach ($entry in $entries)
+##    <h1 class="vocabulary-title">
+##      $entry.getTitle($locale)
+##    </h1>
+##
+##    #foreach ($category in $entry.getCategories())
+##      - $category.getName()
+##    #end
+##  #end
+##

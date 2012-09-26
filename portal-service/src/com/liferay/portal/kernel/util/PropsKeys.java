@@ -89,7 +89,7 @@ public interface PropsKeys {
 
 	public static final String APPLICATION_STARTUP_EVENTS = "application.startup.events";
 
-	public static final String ASSET_CATEGORIES_NAVIGATION_DISPLAY_STYLES_TEMPLATE_CONTENT = "asset.categories.navigation.display.styles.template.content";
+	public static final String ASSET_CATEGORIES_NAVIGATION_DISPLAY_TEMPLATES_HELP = "asset.categories.navigation.display.templates.help";
 
 	public static final String ASSET_CATEGORIES_PROPERTIES_DEFAULT = "asset.categories.properties.default";
 
@@ -103,9 +103,7 @@ public interface PropsKeys {
 
 	public static final String ASSET_PUBLISHER_DISPLAY_STYLES = "asset.publisher.display.styles";
 
-	public static final String ASSET_PUBLISHER_DISPLAY_STYLES_TEMPLATE_CONTENT = "asset.publisher.display.styles.template.content";
-
-	public static final String ASSET_PUBLISHER_DISPLAY_STYLES_TEMPLATE_DEFAULT_CONFIG = "asset.publisher.display.styles.template.default.config";
+	public static final String ASSET_PUBLISHER_DISPLAY_TEMPLATES_HELP = "asset.publisher.display.templates.help";
 
 	public static final String ASSET_RENDERER_ENABLED = "asset.renderer.enabled.";
 
@@ -113,7 +111,7 @@ public interface PropsKeys {
 
 	public static final String ASSET_TAG_SUGGESTIONS_ENABLED = "asset.tag.suggestions.enabled";
 
-	public static final String ASSET_TAGS_NAVIGATION_DISPLAY_STYLES_TEMPLATE_CONTENT = "asset.tags.navigation.display.styles.template.content";
+	public static final String ASSET_TAGS_NAVIGATION_DISPLAY_TEMPLATES_HELP = "asset.tags.navigation.display.templates.help";
 
 	public static final String ASSET_VOCABULARY_DEFAULT = "asset.vocabulary.default";
 
@@ -213,7 +211,7 @@ public interface PropsKeys {
 
 	public static final String BASIC_AUTH_PASSWORD_REQUIRED = "basic.auth.password.required";
 
-	public static final String BLOGS_DISPLAY_STYLES_TEMPLATE_CONTENT = "blogs.display.styles.template.content";
+	public static final String BLOGS_DISPLAY_TEMPLATES_HELP = "blogs.display.templates.help";
 
 	public static final String BLOGS_EMAIL_ENTRY_ADDED_BODY = "blogs.email.entry.added.body";
 
@@ -1797,6 +1795,8 @@ public interface PropsKeys {
 
 	public static final String PORTLET_CSS_ENABLED = "portlet.css.enabled";
 
+	public static final String PORTLET_DISPLAY_TEMPLATES_HELP = "portlet.display.templates.help";
+
 	public static final String PORTLET_EVENT_DISTRIBUTION = "portlet.event.distribution";
 
 	public static final String PORTLET_PUBLIC_RENDER_PARAMETER_DISTRIBUTION = "portlet.public.render.parameter.distribution";
@@ -2027,6 +2027,10 @@ public interface PropsKeys {
 
 	public static final String SHUTDOWN_PROGRAMMATICALLY_EXIT = "shutdown.programmatically.exit";
 
+	public static final String SITEMAP_DISPLAY_TEMPLATES_CONFIG_FILE = "sitemap.display.templates.config.file";
+
+	public static final String SITEMAP_DISPLAY_TEMPLATES_HELP = "sitemap.display.templates.help";
+
 	public static final String SITEMINDER_AUTH_ENABLED = "siteminder.auth.enabled";
 
 	public static final String SITEMINDER_IMPORT_FROM_LDAP = "siteminder.import.from.ldap";
@@ -2066,10 +2070,6 @@ public interface PropsKeys {
 	public static final String SITES_SITEMAP_DEFAULT_CHANGE_FREQUENCY = "sites.sitemap.default.change.frequency";
 
 	public static final String SITES_SITEMAP_DEFAULT_PRIORITY = "sites.sitemap.default.priority";
-
-	public static final String SITES_SITEMAP_DISPLAY_STYLES_TEMPLATE_CONTENT = "sites.sitemap.display.styles.template.content";
-
-	public static final String SITES_SITEMAP_DISPLAY_STYLES_TEMPLATE_DEFAULT_CONFIG = "sites.sitemap.display.styles.template.default.config";
 
 	public static final String SOCIAL_ACTIVITY_CONTRIBUTION_INCREMENTS = "social.activity.contribution.increments";
 
@@ -2345,7 +2345,7 @@ public interface PropsKeys {
 
 	public static final String WIDGET_SERVLET_MAPPING = "widget.servlet.mapping";
 
-	public static final String WIKI_DISPLAY_STYLES_TEMPLATE_CONTENT = "wiki.display.styles.template.content";
+	public static final String WIKI_DISPLAY_TEMPLATES_HELP = "wiki.display.templates.help";
 
 	public static final String WIKI_EMAIL_FROM_ADDRESS = "wiki.email.from.address";
 

@@ -5,15 +5,17 @@
 ##
 ##  $ddmTemplateId: the current template id
 ##
-##  $entries: the list of entries that are being shown in the blogs portlet
+##  $entries: the list of blog entries that are being shown in the blogs portlet
 ##
-##  $entry: this is the blogs entry when there's only ony asset entry
+##  $entry: the blogs entry when there's only one blog entry
 ##
 ##  $locale: the locale of the site
 ##
 ##  $renderRequest: the render request
 ##
 ##  $renderResponse: the render response
+##
+##  $taglibLiferay: object that provides access to Liferay's taglibs
 ##
 ##  $themeDisplay: the theme display
 ##

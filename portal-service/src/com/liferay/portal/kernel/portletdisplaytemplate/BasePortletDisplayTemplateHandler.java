@@ -14,6 +14,9 @@
 
 package com.liferay.portal.kernel.portletdisplaytemplate;
 
+import com.liferay.portal.kernel.configuration.Filter;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
@@ -30,7 +33,7 @@ public abstract class BasePortletDisplayTemplateHandler
 	implements PortletDisplayTemplateHandler {
 
 	public List<Element> getDefaultTemplateElements() throws Exception {
-		String defaultTemplatesConfigPath = getDefaultTemplatesConfigPath();
+		String defaultTemplatesConfigPath = getTemplatesConfigFile();
 
 		if (Validator.isNull(defaultTemplatesConfigPath)) {
 			return Collections.emptyList();
@@ -48,13 +51,16 @@ public abstract class BasePortletDisplayTemplateHandler
 		return rootElement.elements("template");
 	}
 
-	public String getHelpTemplatePath() {
-		return "com/liferay/portlet/portletdisplaytemplate/dependencies/" +
-			"portlet_display_template.vm";
+	protected String getTemplatesConfigFile() {
+		return null;
 	}
 
-	protected String getDefaultTemplatesConfigPath() {
-		return null;
+	protected String getTemplatesHelpKey() {
+		return PropsKeys.PORTLET_DISPLAY_TEMPLATES_HELP;
+	}
+
+	public String getTemplatesHelpPath(String language) {
+		return PropsUtil.get(getTemplatesHelpKey(), new Filter(language));
 	}
 
 }

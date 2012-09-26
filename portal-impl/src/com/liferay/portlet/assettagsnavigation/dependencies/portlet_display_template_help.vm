@@ -1,12 +1,14 @@
 ##
-## You can use Velocity to define display styles for the Categories Navigation
+## You can use Velocity to define display templates for the Tags Navigation
 ## portlet.
 ##
 ## A set of variables have been made available for the template developers:
 ##
 ##  $ddmTemplateId: the current template id
 ##
-##  $entries: the list of vocabularies that are being shown in the portlet
+##  $entries: the list of tags that are being shown in the portlet
+##
+##  $entry: the tag when there's only one tag entry
 ##
 ##  $locale: the locale of the site
 ##
@@ -17,15 +19,12 @@
 ##  $themeDisplay: the theme display
 ##
 ## It is possible to use these variables to create advanced templates to display
-## a list of assets in your asset publisher. Here's a simple template example:
+## a set of tags in your tags navigation portlet. Here's a simple template
+## example:
 ##
 ##  #foreach ($entry in $entries)
-##    <h1 class="vocabulary-title">
-##      $entry.getTitle($locale)
-##    </h1>
-##
-##    #foreach ($category in $entry.getCategories())
-##      - $category.getName()
-##    #end
+##      <h1 class="tag-name">
+##          $entry.getName()
+##      </h1>
 ##  #end
 ##

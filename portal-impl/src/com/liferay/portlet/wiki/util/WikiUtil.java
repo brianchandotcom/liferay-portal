@@ -137,8 +137,8 @@ public class WikiUtil {
 			return emailPageAddedBody;
 		}
 		else {
-			return ContentUtil.get(PropsUtil.get(
-				PropsKeys.WIKI_EMAIL_PAGE_ADDED_BODY));
+			return ContentUtil.get(
+				PropsUtil.get(PropsKeys.WIKI_EMAIL_PAGE_ADDED_BODY));
 		}
 	}
 
@@ -152,8 +152,8 @@ public class WikiUtil {
 			return GetterUtil.getBoolean(emailPageAddedEnabled);
 		}
 		else {
-			return GetterUtil.getBoolean(PropsUtil.get(
-				PropsKeys.WIKI_EMAIL_PAGE_ADDED_ENABLED));
+			return GetterUtil.getBoolean(
+				PropsUtil.get(PropsKeys.WIKI_EMAIL_PAGE_ADDED_ENABLED));
 		}
 	}
 
@@ -167,8 +167,8 @@ public class WikiUtil {
 			return emailPageAddedSignature;
 		}
 		else {
-			return ContentUtil.get(PropsUtil.get(
-				PropsKeys.WIKI_EMAIL_PAGE_ADDED_SIGNATURE));
+			return ContentUtil.get(
+				PropsUtil.get(PropsKeys.WIKI_EMAIL_PAGE_ADDED_SIGNATURE));
 		}
 	}
 
@@ -182,8 +182,8 @@ public class WikiUtil {
 			return emailPageAddedSubjectPrefix;
 		}
 		else {
-			return ContentUtil.get(PropsUtil.get(
-				PropsKeys.WIKI_EMAIL_PAGE_ADDED_SUBJECT_PREFIX));
+			return ContentUtil.get(
+				PropsUtil.get(PropsKeys.WIKI_EMAIL_PAGE_ADDED_SUBJECT_PREFIX));
 		}
 	}
 
@@ -197,8 +197,8 @@ public class WikiUtil {
 			return emailPageUpdatedBody;
 		}
 		else {
-			return ContentUtil.get(PropsUtil.get(
-				PropsKeys.WIKI_EMAIL_PAGE_UPDATED_BODY));
+			return ContentUtil.get(
+				PropsUtil.get(PropsKeys.WIKI_EMAIL_PAGE_UPDATED_BODY));
 		}
 	}
 
@@ -212,8 +212,8 @@ public class WikiUtil {
 			return GetterUtil.getBoolean(emailPageUpdatedEnabled);
 		}
 		else {
-			return GetterUtil.getBoolean(PropsUtil.get(
-				PropsKeys.WIKI_EMAIL_PAGE_UPDATED_ENABLED));
+			return GetterUtil.getBoolean(
+				PropsUtil.get(PropsKeys.WIKI_EMAIL_PAGE_UPDATED_ENABLED));
 		}
 	}
 
@@ -227,8 +227,8 @@ public class WikiUtil {
 			return emailPageUpdatedSignature;
 		}
 		else {
-			return ContentUtil.get(PropsUtil.get(
-				PropsKeys.WIKI_EMAIL_PAGE_UPDATED_SIGNATURE));
+			return ContentUtil.get(
+				PropsUtil.get(PropsKeys.WIKI_EMAIL_PAGE_UPDATED_SIGNATURE));
 		}
 	}
 
@@ -242,8 +242,9 @@ public class WikiUtil {
 			return emailPageUpdatedSubject;
 		}
 		else {
-			return ContentUtil.get(PropsUtil.get(
-				PropsKeys.WIKI_EMAIL_PAGE_UPDATED_SUBJECT_PREFIX));
+			return ContentUtil.get(
+				PropsUtil.get(
+					PropsKeys.WIKI_EMAIL_PAGE_UPDATED_SUBJECT_PREFIX));
 		}
 	}
 

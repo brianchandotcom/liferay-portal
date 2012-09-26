@@ -34,8 +34,8 @@ public class UnsyncByteArrayOutputStreamTest extends TestCase {
 		unsyncByteArrayOutputStream.write(_BUFFER);
 
 		assertEquals(_BUFFER_SIZE, unsyncByteArrayOutputStream.size());
-		assertTrue(Arrays.equals(
-			_BUFFER, unsyncByteArrayOutputStream.toByteArray()));
+		assertTrue(
+			Arrays.equals(_BUFFER, unsyncByteArrayOutputStream.toByteArray()));
 	}
 
 	public void testConstructor() {

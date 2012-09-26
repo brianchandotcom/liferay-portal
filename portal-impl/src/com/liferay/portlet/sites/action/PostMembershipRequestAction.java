@@ -103,8 +103,9 @@ public class PostMembershipRequestAction extends PortletAction {
 			}
 		}
 
-		return mapping.findForward(getForward(
-			renderRequest, "portlet.sites_admin.post_membership_request"));
+		return mapping.findForward(
+			getForward(
+				renderRequest, "portlet.sites_admin.post_membership_request"));
 	}
 
 }

@@ -36,8 +36,9 @@ public class ShoppingCartImpl extends ShoppingCartBaseImpl {
 	}
 
 	public void addItemId(long itemId, String fields) {
-		setItemIds(StringUtil.add(
-			getItemIds(), itemId + fields, StringPool.COMMA, true));
+		setItemIds(
+			StringUtil.add(
+				getItemIds(), itemId + fields, StringPool.COMMA, true));
 	}
 
 	public ShoppingCoupon getCoupon() throws PortalException, SystemException {

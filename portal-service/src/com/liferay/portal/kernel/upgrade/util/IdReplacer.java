@@ -110,8 +110,8 @@ public class IdReplacer {
 			else {
 				sb.append(s.substring(pos, x + begin.length()));
 
-				Long oldValue = new Long(GetterUtil.getLong(
-					s.substring(x + begin.length(), y)));
+				Long oldValue = new Long(
+					GetterUtil.getLong(s.substring(x + begin.length(), y)));
 
 				Long newValue = null;
 

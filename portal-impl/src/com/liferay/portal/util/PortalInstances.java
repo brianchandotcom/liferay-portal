@@ -388,8 +388,8 @@ public class PortalInstances {
 		}
 
 		try {
-			String xml = HttpUtil.URLtoString(servletContext.getResource(
-				"/WEB-INF/liferay-display.xml"));
+			String xml = HttpUtil.URLtoString(
+				servletContext.getResource("/WEB-INF/liferay-display.xml"));
 
 			PortletCategory portletCategory = (PortletCategory)WebAppPool.get(
 				companyId, WebKeys.PORTLET_CATEGORY);

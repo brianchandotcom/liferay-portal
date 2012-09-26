@@ -95,8 +95,8 @@ public class EditOrgLaborAction extends PortletAction {
 			}
 		}
 
-		return mapping.findForward(getForward(
-			renderRequest, "portlet.users_admin.edit_org_labor"));
+		return mapping.findForward(
+			getForward(renderRequest, "portlet.users_admin.edit_org_labor"));
 	}
 
 	protected void deleteOrgLabor(ActionRequest actionRequest)

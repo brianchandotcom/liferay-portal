@@ -43,8 +43,9 @@ import org.vps.crypt.Crypt;
 public class PwdEncryptor {
 
 	public static final String PASSWORDS_ENCRYPTION_ALGORITHM =
-		GetterUtil.getString(PropsUtil.get(
-			PropsKeys.PASSWORDS_ENCRYPTION_ALGORITHM)).toUpperCase();
+		GetterUtil.getString(
+			PropsUtil.get(
+				PropsKeys.PASSWORDS_ENCRYPTION_ALGORITHM)).toUpperCase();
 
 	public static final char[] SALT_CHARS =
 		"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789./"

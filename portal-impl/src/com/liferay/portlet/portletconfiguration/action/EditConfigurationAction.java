@@ -125,8 +125,10 @@ public class EditConfigurationAction extends PortletAction {
 			}
 		}
 
-		return mapping.findForward(getForward(
-			renderRequest, "portlet.portlet_configuration.edit_configuration"));
+		return mapping.findForward(
+			getForward(
+				renderRequest,
+				"portlet.portlet_configuration.edit_configuration"));
 	}
 
 	@Override

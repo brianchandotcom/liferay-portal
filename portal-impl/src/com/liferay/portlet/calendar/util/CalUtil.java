@@ -51,8 +51,8 @@ public class CalUtil {
 			return emailEventReminderBody;
 		}
 		else {
-			return ContentUtil.get(PropsUtil.get(
-				PropsKeys.CALENDAR_EMAIL_EVENT_REMINDER_BODY));
+			return ContentUtil.get(
+				PropsUtil.get(PropsKeys.CALENDAR_EMAIL_EVENT_REMINDER_BODY));
 		}
 	}
 
@@ -66,8 +66,8 @@ public class CalUtil {
 			return GetterUtil.getBoolean(emailEventReminderEnabled);
 		}
 		else {
-			return GetterUtil.getBoolean(PropsUtil.get(
-				PropsKeys.CALENDAR_EMAIL_EVENT_REMINDER_ENABLED));
+			return GetterUtil.getBoolean(
+				PropsUtil.get(PropsKeys.CALENDAR_EMAIL_EVENT_REMINDER_ENABLED));
 		}
 	}
 
@@ -81,8 +81,8 @@ public class CalUtil {
 			return emailEventReminderSubject;
 		}
 		else {
-			return ContentUtil.get(PropsUtil.get(
-				PropsKeys.CALENDAR_EMAIL_EVENT_REMINDER_SUBJECT));
+			return ContentUtil.get(
+				PropsUtil.get(PropsKeys.CALENDAR_EMAIL_EVENT_REMINDER_SUBJECT));
 		}
 	}
 

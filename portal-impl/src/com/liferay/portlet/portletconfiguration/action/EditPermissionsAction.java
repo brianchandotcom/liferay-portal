@@ -120,8 +120,10 @@ public class EditPermissionsAction extends EditConfigurationAction {
 			renderResponse.setTitle(getTitle(portlet, renderRequest));
 		}
 
-		return mapping.findForward(getForward(
-			renderRequest, "portlet.portlet_configuration.edit_permissions"));
+		return mapping.findForward(
+			getForward(
+				renderRequest,
+				"portlet.portlet_configuration.edit_permissions"));
 	}
 
 	protected String[] getActionIds(

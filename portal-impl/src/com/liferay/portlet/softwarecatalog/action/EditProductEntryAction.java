@@ -131,8 +131,9 @@ public class EditProductEntryAction extends PortletAction {
 			}
 		}
 
-		return mapping.findForward(getForward(
-			renderRequest, "portlet.software_catalog.edit_product_entry"));
+		return mapping.findForward(
+			getForward(
+				renderRequest, "portlet.software_catalog.edit_product_entry"));
 	}
 
 	protected void deleteProductEntry(ActionRequest actionRequest)

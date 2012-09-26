@@ -99,8 +99,9 @@ public class EditTeamAssignmentsAction extends PortletAction {
 			}
 		}
 
-		return mapping.findForward(getForward(
-			renderRequest, "portlet.sites_admin.edit_team_assignments"));
+		return mapping.findForward(
+			getForward(
+				renderRequest, "portlet.sites_admin.edit_team_assignments"));
 	}
 
 	protected void updateTeamUserGroups(ActionRequest actionRequest)

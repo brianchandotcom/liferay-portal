@@ -133,8 +133,9 @@ public class EditDiscussionAction extends PortletAction {
 			}
 		}
 
-		return mapping.findForward(getForward(
-			renderRequest, "portlet.message_boards.edit_discussion"));
+		return mapping.findForward(
+			getForward(
+				renderRequest, "portlet.message_boards.edit_discussion"));
 	}
 
 	protected void deleteMessage(ActionRequest actionRequest) throws Exception {

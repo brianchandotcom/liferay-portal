@@ -3049,15 +3049,15 @@ public class SourceFormatter {
 		int pos = line.indexOf(StringPool.OPEN_PARENTHESIS);
 
 		if (line.startsWith(StringPool.TAB + "public static final ") &&
-			(line.endsWith(StringPool.SEMICOLON) ||
-			 line.contains(StringPool.EQUAL))) {
+			(line.contains(StringPool.EQUAL) ||
+			(line.endsWith(StringPool.SEMICOLON) && (pos == -1)))) {
 
 			return new Tuple(
 				_getVariableName(line), _TYPE_VARIABLE_PUBLIC_STATIC_FINAL);
 		}
 		else if (line.startsWith(StringPool.TAB + "public static ")) {
-			if (line.endsWith(StringPool.SEMICOLON) ||
-				line.contains(StringPool.EQUAL)) {
+			if (line.contains(StringPool.EQUAL) ||
+				(line.endsWith(StringPool.SEMICOLON) && (pos == -1))) {
 
 				return new Tuple(
 					_getVariableName(line), _TYPE_VARIABLE_PUBLIC_STATIC);
@@ -3076,8 +3076,7 @@ public class SourceFormatter {
 		}
 		else if (line.startsWith(StringPool.TAB + "public ")) {
 			if (line.contains(StringPool.EQUAL) ||
-				(line.endsWith(StringPool.SEMICOLON) &&
-				 !line.contains(StringPool.OPEN_PARENTHESIS))) {
+				(line.endsWith(StringPool.SEMICOLON) && (pos == -1))) {
 
 				return new Tuple(_getVariableName(line), _TYPE_VARIABLE_PUBLIC);
 			}
@@ -3103,8 +3102,8 @@ public class SourceFormatter {
 			}
 		}
 		else if (line.startsWith(StringPool.TAB + "protected static final ")) {
-			if (line.endsWith(StringPool.SEMICOLON) ||
-				line.contains(StringPool.EQUAL)) {
+			if (line.contains(StringPool.EQUAL) ||
+				(line.endsWith(StringPool.SEMICOLON) && (pos == -1))) {
 
 				return new Tuple(
 					_getVariableName(line),
@@ -3112,8 +3111,8 @@ public class SourceFormatter {
 			}
 		}
 		else if (line.startsWith(StringPool.TAB + "protected static ")) {
-			if (line.endsWith(StringPool.SEMICOLON) ||
-				line.contains(StringPool.EQUAL)) {
+			if (line.contains(StringPool.EQUAL) ||
+				(line.endsWith(StringPool.SEMICOLON) && (pos == -1))) {
 
 				return new Tuple(
 					_getVariableName(line), _TYPE_VARIABLE_PROTECTED_STATIC);
@@ -3156,8 +3155,8 @@ public class SourceFormatter {
 			return new Tuple(_getVariableName(line), _TYPE_VARIABLE_PROTECTED);
 		}
 		else if (line.startsWith(StringPool.TAB + "private static final ")) {
-			if (line.endsWith(StringPool.SEMICOLON) ||
-				line.contains(StringPool.EQUAL)) {
+			if (line.contains(StringPool.EQUAL) ||
+				(line.endsWith(StringPool.SEMICOLON) && (pos == -1))) {
 
 				return new Tuple(
 					_getVariableName(line),
@@ -3165,8 +3164,8 @@ public class SourceFormatter {
 			}
 		}
 		else if (line.startsWith(StringPool.TAB + "private static ")) {
-			if (line.endsWith(StringPool.SEMICOLON) ||
-				line.contains(StringPool.EQUAL)) {
+			if (line.contains(StringPool.EQUAL) ||
+				(line.endsWith(StringPool.SEMICOLON) && (pos == -1))) {
 
 				return new Tuple(
 					_getVariableName(line), _TYPE_VARIABLE_PRIVATE_STATIC);
@@ -3184,8 +3183,8 @@ public class SourceFormatter {
 			}
 		}
 		else if (line.startsWith(StringPool.TAB + "private ")) {
-			if (line.endsWith(StringPool.SEMICOLON) ||
-				line.contains(StringPool.EQUAL)) {
+			if (line.contains(StringPool.EQUAL) ||
+				(line.endsWith(StringPool.SEMICOLON) && (pos == -1))) {
 
 				return new Tuple(
 					_getVariableName(line), _TYPE_VARIABLE_PRIVATE);

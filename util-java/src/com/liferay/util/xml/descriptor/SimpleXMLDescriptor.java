@@ -14,6 +14,7 @@
 
 package com.liferay.util.xml.descriptor;
 
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.util.xml.ElementComparator;
 import com.liferay.util.xml.ElementIdentifier;
 
@@ -33,7 +34,7 @@ public abstract class SimpleXMLDescriptor implements XMLDescriptor {
 			return false;
 		}
 
-		if (_isIncluded(el1, getUniqueElements())) {
+		if (ArrayUtil.contains(getUniqueElements(), el1.getName())) {
 			return true;
 		}
 
@@ -77,7 +78,7 @@ public abstract class SimpleXMLDescriptor implements XMLDescriptor {
 	public abstract boolean canHandleType(String doctype, Document root);
 
 	public boolean canJoinChildren(Element element) {
-		return _isIncluded(element, getJoinableElements());
+		return ArrayUtil.contains(getJoinableElements(), element.getName());
 	}
 
 	public String[] getChildrenOrder(Element parentElement) {
@@ -141,16 +142,6 @@ public abstract class SimpleXMLDescriptor implements XMLDescriptor {
 		}*/
 
 		return child;
-	}
-
-	private boolean _isIncluded(Element element, String[] elemNames) {
-		for (int i = 0; i < elemNames.length; i++) {
-			if (element.getName().equals(elemNames[i])) {
-				return true;
-			}
-		}
-
-		return false;
 	}
 
 }

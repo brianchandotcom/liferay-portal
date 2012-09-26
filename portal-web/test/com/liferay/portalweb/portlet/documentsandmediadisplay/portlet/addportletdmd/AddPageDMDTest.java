@@ -39,7 +39,7 @@ public class AddPageDMDTest extends BaseTestCase {
 		selenium.waitForVisible("//input[@type='text']");
 		selenium.type("//input[@type='text']",
 			RuntimeVariables.replace("Documents and Media Display Test Page"));
-		selenium.clickAt("//button[@id='save']",
+		selenium.clickAt("//button[contains(@id,'Save')]",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForVisible("link=Documents and Media Display Test Page");
 		selenium.clickAt("link=Documents and Media Display Test Page",

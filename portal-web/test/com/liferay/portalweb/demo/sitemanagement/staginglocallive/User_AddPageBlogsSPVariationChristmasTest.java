@@ -82,7 +82,7 @@ public class User_AddPageBlogsSPVariationChristmasTest extends BaseTestCase {
 				selenium.waitForVisible("//input[@type='text']");
 				selenium.type("//input[@type='text']",
 					RuntimeVariables.replace("Blogs Test Page"));
-				selenium.clickAt("//button[@id='save']",
+				selenium.clickAt("//button[contains(@id,'Save')]",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForVisible("link=Blogs Test Page");
 				selenium.clickAt("link=Blogs Test Page",

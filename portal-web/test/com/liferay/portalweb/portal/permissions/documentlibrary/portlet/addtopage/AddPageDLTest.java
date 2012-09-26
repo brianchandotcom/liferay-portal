@@ -33,7 +33,7 @@ public class AddPageDLTest extends BaseTestCase {
 		selenium.waitForVisible("//input[@type='text']");
 		selenium.type("//input[@type='text']",
 			RuntimeVariables.replace("Document Library Permissions Page"));
-		selenium.clickAt("//button[@id='save']",
+		selenium.clickAt("//button[contains(@id,'Save')]",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForVisible("link=Document Library Permissions Page");
 		selenium.clickAt("link=Document Library Permissions Page",

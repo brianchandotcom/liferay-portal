@@ -39,7 +39,7 @@ public class AddPageCalendarTest extends BaseTestCase {
 		selenium.waitForVisible("//input[@type='text']");
 		selenium.type("//input[@type='text']",
 			RuntimeVariables.replace("Calendar Test Page"));
-		selenium.clickAt("//button[@id='save']",
+		selenium.clickAt("//button[contains(@id,'Save')]",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForVisible("link=Calendar Test Page");
 		selenium.clickAt("link=Calendar Test Page",

@@ -39,7 +39,7 @@ public class AddPageDictionaryTest extends BaseTestCase {
 		selenium.waitForVisible("//input[@type='text']");
 		selenium.type("//input[@type='text']",
 			RuntimeVariables.replace("Dictionary Test Page"));
-		selenium.clickAt("//button[@id='save']",
+		selenium.clickAt("//button[contains(@id,'Save')]",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForVisible("link=Dictionary Test Page");
 		selenium.clickAt("link=Dictionary Test Page",

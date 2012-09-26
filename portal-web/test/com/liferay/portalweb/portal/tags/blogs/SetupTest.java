@@ -33,7 +33,7 @@ public class SetupTest extends BaseTestCase {
 		selenium.waitForVisible("//input[@type='text']");
 		selenium.type("//input[@type='text']",
 			RuntimeVariables.replace("Blogs Tags Test Page"));
-		selenium.clickAt("//button[@id='save']",
+		selenium.clickAt("//button[contains(@id,'Save')]",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForVisible("link=Blogs Tags Test Page");
 		selenium.clickAt("link=Blogs Tags Test Page",

@@ -38,7 +38,7 @@ public class InternationalizationJapaneseTest extends BaseTestCase {
 		selenium.type("//input[@type='text']",
 			RuntimeVariables.replace(
 				"\u8a00\u8a9e\u30c6\u30b9\u30c8\u30da\u30fc\u30b8"));
-		selenium.clickAt("//button[@id='save']",
+		selenium.clickAt("//button[contains(@id,'Save')]",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForVisible(
 			"link=\u8a00\u8a9e\u30c6\u30b9\u30c8\u30da\u30fc\u30b8");

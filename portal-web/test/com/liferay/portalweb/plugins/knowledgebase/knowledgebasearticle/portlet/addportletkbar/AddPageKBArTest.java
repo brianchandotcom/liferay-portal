@@ -39,7 +39,7 @@ public class AddPageKBArTest extends BaseTestCase {
 		selenium.waitForVisible("//input[@type='text']");
 		selenium.type("//input[@type='text']",
 			RuntimeVariables.replace("Knowledge Base Article Test Page"));
-		selenium.clickAt("//button[@id='save']",
+		selenium.clickAt("//button[contains(@id,'Save')]",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForVisible("link=Knowledge Base Article Test Page");
 		selenium.clickAt("link=Knowledge Base Article Test Page",

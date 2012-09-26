@@ -39,7 +39,7 @@ public class SA_AddPageTest extends BaseTestCase {
 		selenium.waitForVisible("//input[@type='text']");
 		selenium.type("//input[@type='text']",
 			RuntimeVariables.replace("Blogs Permissions Page"));
-		selenium.clickAt("//button[@id='save']",
+		selenium.clickAt("//button[contains(@id,'Save')]",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForVisible("link=Blogs Permissions Page");
 		selenium.clickAt("link=Blogs Permissions Page",

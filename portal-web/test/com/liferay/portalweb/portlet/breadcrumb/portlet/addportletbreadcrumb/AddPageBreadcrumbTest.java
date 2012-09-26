@@ -39,7 +39,7 @@ public class AddPageBreadcrumbTest extends BaseTestCase {
 		selenium.waitForVisible("//input[@type='text']");
 		selenium.type("//input[@type='text']",
 			RuntimeVariables.replace("Breadcrumb Test Page"));
-		selenium.clickAt("//button[@id='save']",
+		selenium.clickAt("//button[contains(@id,'Save')]",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForVisible("link=Breadcrumb Test Page");
 		selenium.clickAt("link=Breadcrumb Test Page",

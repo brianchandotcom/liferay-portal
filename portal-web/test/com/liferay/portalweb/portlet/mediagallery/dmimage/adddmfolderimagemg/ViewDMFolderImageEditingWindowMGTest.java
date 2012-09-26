@@ -41,12 +41,12 @@ public class ViewDMFolderImageEditingWindowMGTest extends BaseTestCase {
 		selenium.waitForVisible("//a[@class='aui-image-viewer-close']");
 		selenium.waitForVisible("//img");
 		assertTrue(selenium.isVisible("//img"));
-		selenium.waitForVisible("//img[@alt='Download (12.9k)']");
-		assertTrue(selenium.isVisible("//img[@alt='Download (12.9k)']"));
+		selenium.waitForVisible("//img[@alt='Download (13k)']");
+		assertTrue(selenium.isVisible("//img[@alt='Download (13k)']"));
 		assertTrue(selenium.isVisible("//img[@alt='View']"));
 		assertTrue(selenium.isVisible("//img[@alt='Edit']"));
 		assertTrue(selenium.isVisible("//img[@alt='Permissions']"));
-		assertTrue(selenium.isVisible("//img[@alt='Delete']"));
+		assertTrue(selenium.isVisible("//img[@alt='Move to the Recycle Bin']"));
 		selenium.click("//a[@class='aui-image-viewer-close']");
 	}
 }

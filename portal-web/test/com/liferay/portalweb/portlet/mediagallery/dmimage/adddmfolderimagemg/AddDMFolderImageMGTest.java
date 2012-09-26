@@ -43,8 +43,8 @@ public class AddDMFolderImageMGTest extends BaseTestCase {
 				"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li/a[contains(.,'Add Media')]"));
 		selenium.clickAt("//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li/a[contains(.,'Add Media')]",
 			RuntimeVariables.replace("Add Media"));
-		selenium.waitForVisible("//iframe");
-		selenium.selectFrame("//iframe");
+		selenium.waitForVisible("//iframe[contains(@id,'selectFileEntryType')]");
+		selenium.selectFrame("//iframe[contains(@id,'selectFileEntryType')]");
 		selenium.waitForElementPresent(
 			"//script[contains(@src,'/liferay/navigation_interaction.js')]");
 		selenium.waitForVisible("//tr[3]/td[1]/a");
@@ -52,6 +52,7 @@ public class AddDMFolderImageMGTest extends BaseTestCase {
 			RuntimeVariables.replace("Basic Document"));
 		selenium.waitForPageToLoad("30000");
 		selenium.selectFrame("relative=top");
+		Thread.sleep(5000);
 		selenium.uploadCommonFile("//input[@id='_31_file']",
 			RuntimeVariables.replace("Document_1.jpg"));
 		selenium.type("//input[@id='_31_title']",
@@ -67,6 +68,6 @@ public class AddDMFolderImageMGTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("DM Folder Name"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace("DM Folder Image Title"),
-			selenium.getText("xPath=(//span[@class='image-title'])[1]"));
+			selenium.getText("//span[@class='image-title']"));
 	}
 }

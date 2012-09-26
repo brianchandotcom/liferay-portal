@@ -40,7 +40,11 @@ public class ViewImportMGLARTest extends BaseTestCase {
 				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]"));
 		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]",
 			RuntimeVariables.replace("Configuration"));
-		Thread.sleep(5000);
+		selenium.waitForVisible("//iframe[@id='_31_configurationIframeDialog']");
+		selenium.selectFrame("//iframe[@id='_31_configurationIframeDialog']");
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/liferay/navigation_interaction.js')]");
+		selenium.waitForVisible("//input[contains(@id,'showActionsCheckbox')]");
 		assertTrue(selenium.isChecked(
 				"//input[contains(@id,'showActionsCheckbox')]"));
 		assertTrue(selenium.isChecked(
@@ -49,34 +53,35 @@ public class ViewImportMGLARTest extends BaseTestCase {
 				"//input[contains(@id,'showTabsCheckbox')]"));
 		assertTrue(selenium.isChecked(
 				"//input[contains(@id,'showFoldersSearchCheckbox')]"));
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("link=Media Gallery Test Page",
 			RuntimeVariables.replace("Media Gallery Test Page"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("MG Folder1 Name"),
+		assertEquals(RuntimeVariables.replace("DM Folder1 Name"),
 			selenium.getText("xPath=(//span[@class='image-title'])[1]"));
-		assertEquals(RuntimeVariables.replace("MG Folder2 Name"),
+		assertEquals(RuntimeVariables.replace("DM Folder2 Name"),
 			selenium.getText("xPath=(//span[@class='image-title'])[2]"));
 		selenium.clickAt("xPath=(//span[@class='image-title'])[1]",
-			RuntimeVariables.replace("MG Folder1 Name"));
+			RuntimeVariables.replace("DM Folder1 Name"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("MG Folder1 Subfolder Name"),
+		assertEquals(RuntimeVariables.replace("DM Folder1 Subfolder Name"),
 			selenium.getText("//span[@class='image-title']"));
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("link=Media Gallery Test Page",
 			RuntimeVariables.replace("Media Gallery Test Page"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("MG Folder2 Name"),
+		assertEquals(RuntimeVariables.replace("DM Folder2 Name"),
 			selenium.getText("xPath=(//span[@class='image-title'])[2]"));
 		selenium.clickAt("xPath=(//span[@class='image-title'])[2]",
-			RuntimeVariables.replace("MG Folder2 Name"));
+			RuntimeVariables.replace("DM Folder2 Name"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("MG Folder2 Subfolder Name"),
+		assertEquals(RuntimeVariables.replace("DM Folder2 Subfolder Name"),
 			selenium.getText("//span[@class='image-title']"));
 		selenium.clickAt("//span[@class='image-title']",
-			RuntimeVariables.replace("MG Folder2 Subfolder Name"));
+			RuntimeVariables.replace("DM Folder2 Subfolder Name"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("MG Folder2 Subfolder Name"),
+		assertEquals(RuntimeVariables.replace("DM Folder2 Subfolder Name"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		selenium.waitForVisible(
 			"//img[@alt='MG Folder2 Subfolder Image Title - MG Folder2 Subfolder Image Description']");

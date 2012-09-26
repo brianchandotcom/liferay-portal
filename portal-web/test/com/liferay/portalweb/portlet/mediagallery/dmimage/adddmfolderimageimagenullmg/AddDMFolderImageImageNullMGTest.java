@@ -43,17 +43,20 @@ public class AddDMFolderImageImageNullMGTest extends BaseTestCase {
 				"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li/a[contains(.,'Add Media')]"));
 		selenium.clickAt("//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li/a[contains(.,'Add Media')]",
 			RuntimeVariables.replace("Add Media"));
-		selenium.waitForVisible("//iframe");
-		selenium.selectFrame("//iframe");
+		selenium.waitForVisible("//iframe[contains(@id,'selectFileEntryType')]");
+		selenium.selectFrame("//iframe[contains(@id,'selectFileEntryType')]");
 		selenium.waitForElementPresent(
 			"//script[contains(@src,'/liferay/navigation_interaction.js')]");
+		selenium.waitForVisible("//td[contains(@id,'name_row-1')]/a");
 		assertEquals(RuntimeVariables.replace("Basic Document"),
 			selenium.getText("//td[contains(@id,'name_row-1')]/a"));
 		selenium.clickAt("//td[contains(@id,'name_row-1')]/a",
 			RuntimeVariables.replace("Basic Document"));
-		selenium.waitForPageToLoad("30000");
 		selenium.selectFrame("relative=top");
-		selenium.type("//input[@id='_31_file']", RuntimeVariables.replace(""));
+		Thread.sleep(5000);
+		selenium.waitForVisible("//input[@id='_31_file']");
+		selenium.sendKeys("//input[@id='_31_file']",
+			RuntimeVariables.replace(""));
 		selenium.type("//input[@id='_31_title']",
 			RuntimeVariables.replace("DM Folder Image Title"));
 		selenium.type("//textarea[@id='_31_description']",

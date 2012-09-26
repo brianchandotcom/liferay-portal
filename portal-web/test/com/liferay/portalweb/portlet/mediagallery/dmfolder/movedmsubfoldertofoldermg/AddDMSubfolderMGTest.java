@@ -52,6 +52,6 @@ public class AddDMSubfolderMGTest extends BaseTestCase {
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("DM Subfolder Name"),
-			selenium.getText("xPath=(//span[@class='image-title'])[1]"));
+			selenium.getText("//span[@class='image-title']"));
 	}
 }

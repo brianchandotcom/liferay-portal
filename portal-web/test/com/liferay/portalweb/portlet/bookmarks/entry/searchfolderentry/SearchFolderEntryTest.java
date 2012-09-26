@@ -25,14 +25,17 @@ public class SearchFolderEntryTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Bookmarks Test Page");
 		selenium.clickAt("link=Bookmarks Test Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Bookmarks Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.type("_28_keywords", RuntimeVariables.replace("Test"));
+		selenium.type("//input[@name='_28_keywords']",
+			RuntimeVariables.replace("Test"));
 		selenium.clickAt("//input[@value='Search']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isElementPresent("link=Test Folder Entry"));
+		assertEquals(RuntimeVariables.replace("Test Folder"),
+			selenium.getText("//td[2]/a"));
+		assertEquals(RuntimeVariables.replace("Test Folder Entry"),
+			selenium.getText("//td[3]/a"));
 	}
 }

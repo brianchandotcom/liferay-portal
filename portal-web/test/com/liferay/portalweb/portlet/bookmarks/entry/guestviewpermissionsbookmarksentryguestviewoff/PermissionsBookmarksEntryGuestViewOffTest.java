@@ -26,7 +26,6 @@ public class PermissionsBookmarksEntryGuestViewOffTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Bookmarks Test Page");
 		selenium.clickAt("link=Bookmarks Test Page",
 			RuntimeVariables.replace("Bookmarks Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -39,7 +38,7 @@ public class PermissionsBookmarksEntryGuestViewOffTest extends BaseTestCase {
 			selenium.getText("//div[2]/ul/li[2]/a"));
 		selenium.clickAt("//div[2]/ul/li[2]/a",
 			RuntimeVariables.replace("Permissions"));
-		selenium.waitForVisible("//input[@name='16_ACTION_VIEW']");
+		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isChecked("//input[@name='16_ACTION_VIEW']"));
 		selenium.uncheck("//input[@name='16_ACTION_VIEW']");
 		assertFalse(selenium.isChecked("//input[@name='16_ACTION_VIEW']"));

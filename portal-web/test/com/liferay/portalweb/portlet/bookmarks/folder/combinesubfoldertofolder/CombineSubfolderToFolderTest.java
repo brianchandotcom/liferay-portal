@@ -25,25 +25,46 @@ public class CombineSubfolderToFolderTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Bookmarks Test Page");
 		selenium.clickAt("link=Bookmarks Test Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Bookmarks Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//a/strong", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace("Test Folder"),
+			selenium.getText("//a/strong"));
+		selenium.clickAt("//a/strong", RuntimeVariables.replace("Test Folder"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isElementNotPresent("link=Test Subfolder Entry"));
-		selenium.click("//td[4]/span/ul/li/strong/a");
-		selenium.waitForElementPresent(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a");
-		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
+		assertEquals(RuntimeVariables.replace("Test Subfolder"),
+			selenium.getText("//a/strong"));
+		assertFalse(selenium.isTextPresent("Test Subfolder Entry"));
+		Thread.sleep(5000);
+		assertEquals(RuntimeVariables.replace("Actions"),
+			selenium.getText(
+				"//td[4]/span[@title='Actions']/ul/li/strong/a/span"));
+		selenium.clickAt("//td[4]/span[@title='Actions']/ul/li/strong/a/span",
+			RuntimeVariables.replace("Actions"));
+		selenium.waitForVisible(
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]");
+		assertEquals(RuntimeVariables.replace("Edit"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]",
+			RuntimeVariables.replace("Edit"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("_28_mergeWithParentFolderCheckbox",
-			RuntimeVariables.replace(""));
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		assertFalse(selenium.isChecked(
+				"//input[@id='_28_mergeWithParentFolderCheckbox']"));
+		selenium.clickAt("//input[@id='_28_mergeWithParentFolderCheckbox']",
+			RuntimeVariables.replace("Merge with Parent Folder"));
+		assertTrue(selenium.isChecked(
+				"//input[@id='_28_mergeWithParentFolderCheckbox']"));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isTextPresent(
-				"Your request completed successfully."));
-		assertTrue(selenium.isElementPresent("link=Test Subfolder Entry"));
+		assertEquals(RuntimeVariables.replace(
+				"Your request completed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertEquals(RuntimeVariables.replace("Test Subfolder Entry"),
+			selenium.getText("//td[1]/a"));
+		assertEquals(RuntimeVariables.replace("http://www.liferay.com"),
+			selenium.getText("//td[2]/a"));
+		assertTrue(selenium.isElementNotPresent("//a/strong"));
 	}
 }

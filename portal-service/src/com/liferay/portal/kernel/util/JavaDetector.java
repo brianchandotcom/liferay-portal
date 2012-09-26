@@ -113,12 +113,12 @@ public class JavaDetector {
 
 	protected JavaDetector() {
 		_javaClassPath = System.getProperty("java.class.path");
-		_javaClassVersion = GetterUtil.getDouble(System.getProperty(
-			"java.class.version"));
+		_javaClassVersion = GetterUtil.getDouble(
+			System.getProperty("java.class.version"));
 		_javaRuntimeName = System.getProperty("java.runtime.name");
 		_javaRuntimeVersion = System.getProperty("java.runtime.version");
-		_javaSpecificationVersion = GetterUtil.getDouble(System.getProperty(
-			"java.specification.version"));
+		_javaSpecificationVersion = GetterUtil.getDouble(
+			System.getProperty("java.specification.version"));
 		_javaVendor = System.getProperty("java.vendor");
 		_javaVersion = System.getProperty("java.version");
 		_javaVmVersion = System.getProperty("java.vm.version");

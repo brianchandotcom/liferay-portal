@@ -119,8 +119,8 @@ public class ShoppingCartLocalServiceImpl
 
 		Map<ShoppingCartItem, Integer> items = getItems(groupId, itemIds);
 
-		boolean minQtyMultiple = GetterUtil.getBoolean(PropsUtil.get(
-			PropsKeys.SHOPPING_CART_MIN_QTY_MULTIPLE));
+		boolean minQtyMultiple = GetterUtil.getBoolean(
+			PropsUtil.get(PropsKeys.SHOPPING_CART_MIN_QTY_MULTIPLE));
 
 		for (Map.Entry<ShoppingCartItem, Integer> entry : items.entrySet()) {
 			ShoppingCartItem cartItem = entry.getKey();

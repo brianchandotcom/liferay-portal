@@ -108,8 +108,8 @@ public class EditTeamAction extends PortletAction {
 			}
 		}
 
-		return mapping.findForward(getForward(
-			renderRequest, "portlet.sites_admin.edit_team"));
+		return mapping.findForward(
+			getForward(renderRequest, "portlet.sites_admin.edit_team"));
 	}
 
 	protected void deleteTeam(ActionRequest actionRequest) throws Exception {

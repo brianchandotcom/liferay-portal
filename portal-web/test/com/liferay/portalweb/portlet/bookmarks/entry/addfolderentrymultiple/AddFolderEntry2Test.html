@@ -14,58 +14,63 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Bookmarks Test Page</td>
-	<td></td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Bookmarks Test Page</td>
-	<td></td>
+	<td>Bookmarks Test Page</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//a/strong</td>
+	<td>Test Folder</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//a/strong</td>
-	<td></td>
+	<td>Test Folder</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[2]/ul/li[5]/a</td>
+	<td>Add Bookmark</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//div[2]/ul/li[5]/a</td>
-	<td></td>
+	<td>Add Bookmark</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_28_name</td>
+	<td>//input[@id='_28_name']</td>
 	<td>Test2 Folder2 Entry2</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_28_url</td>
+	<td>//input[@id='_28_url']</td>
 	<td>http://www.openqa.org</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_28_description</td>
+	<td>//textarea[@id='_28_description']</td>
 	<td>This is a test2 folder2 entry2.</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//section/div/div/div/div[1]</td>
+	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[1]/a</td>
+	<td>//tr[3]/td[1]/a</td>
 	<td>Test1 Folder1 Entry1</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[2]/a</td>
+	<td>//tr[3]/td[2]/a</td>
 	<td>http://www.liferay.com</td>
 </tr>
 <tr>
@@ -78,7 +83,6 @@
 	<td>//tr[4]/td[2]/a</td>
 	<td>http://www.openqa.org</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

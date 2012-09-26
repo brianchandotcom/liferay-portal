@@ -184,8 +184,8 @@ public class EditOrganizationAction extends PortletAction {
 			}
 		}
 
-		return mapping.findForward(getForward(
-			renderRequest, "portlet.users_admin.edit_organization"));
+		return mapping.findForward(
+			getForward(renderRequest, "portlet.users_admin.edit_organization"));
 	}
 
 	protected void deleteOrganizations(ActionRequest actionRequest)

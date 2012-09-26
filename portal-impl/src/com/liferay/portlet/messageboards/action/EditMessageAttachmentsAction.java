@@ -102,9 +102,10 @@ public class EditMessageAttachmentsAction extends PortletAction {
 			}
 		}
 
-		return mapping.findForward(getForward(
-			renderRequest,
-			"portlet.message_boards.view_deleted_message_attachments"));
+		return mapping.findForward(
+			getForward(
+				renderRequest,
+				"portlet.message_boards.view_deleted_message_attachments"));
 	}
 
 	protected void deleteAttachment(ActionRequest actionRequest)

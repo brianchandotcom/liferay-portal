@@ -153,8 +153,9 @@ public class ExportImportAction extends EditConfigurationAction {
 
 		renderResponse.setTitle(getTitle(portlet, renderRequest));
 
-		return mapping.findForward(getForward(
-			renderRequest, "portlet.portlet_configuration.export_import"));
+		return mapping.findForward(
+			getForward(
+				renderRequest, "portlet.portlet_configuration.export_import"));
 	}
 
 	protected void checkExceededSizeLimit(PortletRequest portletRequest)

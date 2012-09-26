@@ -171,8 +171,9 @@ public class ProppatchMethodImpl extends BasePropMethodImpl {
 							webDavProps.addProp(name, prefix, uri, text);
 						}
 
-						newProps.add(SAXReaderUtil.createQName(
-							customPropElement.getName(), namespace));
+						newProps.add(
+							SAXReaderUtil.createQName(
+								customPropElement.getName(), namespace));
 					}
 					else if (instructionElement.getName().equals("remove")) {
 						webDavProps.removeProp(name, prefix, uri);

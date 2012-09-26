@@ -55,6 +55,10 @@ public class Tuple implements Serializable {
 		return _array[i];
 	}
 
+	public int getSize() {
+		return _array.length;
+	}
+
 	@Override
 	public int hashCode() {
 		int hashCode = 0;

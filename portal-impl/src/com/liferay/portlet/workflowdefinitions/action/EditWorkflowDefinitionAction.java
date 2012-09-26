@@ -110,9 +110,10 @@ public class EditWorkflowDefinitionAction extends PortletAction {
 			}
 		}
 
-		return mapping.findForward(getForward(
-			renderRequest,
-			"portlet.workflow_definitions.edit_workflow_definition"));
+		return mapping.findForward(
+			getForward(
+				renderRequest,
+				"portlet.workflow_definitions.edit_workflow_definition"));
 	}
 
 	protected void deleteWorkflowDefinition(ActionRequest actionRequest)

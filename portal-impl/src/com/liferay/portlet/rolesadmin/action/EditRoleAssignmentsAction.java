@@ -104,8 +104,9 @@ public class EditRoleAssignmentsAction extends PortletAction {
 			}
 		}
 
-		return mapping.findForward(getForward(
-			renderRequest, "portlet.roles_admin.edit_role_assignments"));
+		return mapping.findForward(
+			getForward(
+				renderRequest, "portlet.roles_admin.edit_role_assignments"));
 	}
 
 	protected void updateRoleGroups(ActionRequest actionRequest)

@@ -14,29 +14,24 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Bookmarks Test Page</td>
-	<td></td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Bookmarks Test Page</td>
-	<td></td>
+	<td>Bookmarks Test Page</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_28_keywords</td>
+	<td>//input[@name='_28_keywords']</td>
 	<td>Test1</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Search']</td>
-	<td></td>
+	<td>Search</td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-info']</td>
 	<td>No entries were found that matched the keywords: Test1.</td>
-	<td></td>
 </tr>
 </tbody></table>
 </body>

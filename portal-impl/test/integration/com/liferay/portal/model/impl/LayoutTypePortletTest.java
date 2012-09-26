@@ -87,13 +87,13 @@ public class LayoutTypePortletTest {
 
 		String portletId = PortletKeys.JOURNAL_CONTENT;
 
-		Assert.assertFalse(layoutTypePortlet.hasModeEditDefaultsPortletId(
-			portletId));
+		Assert.assertFalse(
+			layoutTypePortlet.hasModeEditDefaultsPortletId(portletId));
 
 		layoutTypePortlet.addModeEditDefaultsPortletId(portletId);
 
-		Assert.assertTrue(layoutTypePortlet.hasModeEditDefaultsPortletId(
-			portletId));
+		Assert.assertTrue(
+			layoutTypePortlet.hasModeEditDefaultsPortletId(portletId));
 	}
 
 	@Test
@@ -103,13 +103,13 @@ public class LayoutTypePortletTest {
 
 		String portletId = PortletKeys.JOURNAL_CONTENT;
 
-		Assert.assertFalse(layoutTypePortlet.hasModeEditGuestPortletId(
-			portletId));
+		Assert.assertFalse(
+			layoutTypePortlet.hasModeEditGuestPortletId(portletId));
 
 		layoutTypePortlet.addModeEditGuestPortletId(portletId);
 
-		Assert.assertTrue(layoutTypePortlet.hasModeEditGuestPortletId(
-			portletId));
+		Assert.assertTrue(
+			layoutTypePortlet.hasModeEditGuestPortletId(portletId));
 	}
 
 	@Test
@@ -147,8 +147,8 @@ public class LayoutTypePortletTest {
 
 		String portletId = PortletKeys.JOURNAL_CONTENT;
 
-		Assert.assertFalse(layoutTypePortlet.hasModePreviewPortletId(
-			portletId));
+		Assert.assertFalse(
+			layoutTypePortlet.hasModePreviewPortletId(portletId));
 
 		layoutTypePortlet.addModePreviewPortletId(portletId);
 

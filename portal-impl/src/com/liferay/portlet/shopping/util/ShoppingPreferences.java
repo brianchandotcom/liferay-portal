@@ -166,8 +166,9 @@ public class ShoppingPreferences {
 			return emailOrderConfirmationBody;
 		}
 		else {
-			return ContentUtil.get(PropsUtil.get(
-				PropsKeys.SHOPPING_EMAIL_ORDER_CONFIRMATION_BODY));
+			return ContentUtil.get(
+				PropsUtil.get(
+					PropsKeys.SHOPPING_EMAIL_ORDER_CONFIRMATION_BODY));
 		}
 	}
 
@@ -179,8 +180,9 @@ public class ShoppingPreferences {
 			return GetterUtil.getBoolean(emailOrderConfirmationEnabled);
 		}
 		else {
-			return GetterUtil.getBoolean(PropsUtil.get(
-				PropsKeys.SHOPPING_EMAIL_ORDER_CONFIRMATION_ENABLED));
+			return GetterUtil.getBoolean(
+				PropsUtil.get(
+					PropsKeys.SHOPPING_EMAIL_ORDER_CONFIRMATION_ENABLED));
 		}
 	}
 
@@ -192,8 +194,9 @@ public class ShoppingPreferences {
 			return emailOrderConfirmationSubject;
 		}
 		else {
-			return ContentUtil.get(PropsUtil.get(
-				PropsKeys.SHOPPING_EMAIL_ORDER_CONFIRMATION_SUBJECT));
+			return ContentUtil.get(
+				PropsUtil.get(
+					PropsKeys.SHOPPING_EMAIL_ORDER_CONFIRMATION_SUBJECT));
 		}
 	}
 
@@ -205,8 +208,8 @@ public class ShoppingPreferences {
 			return emailOrderShippingBody;
 		}
 		else {
-			return ContentUtil.get(PropsUtil.get(
-				PropsKeys.SHOPPING_EMAIL_ORDER_SHIPPING_BODY));
+			return ContentUtil.get(
+				PropsUtil.get(PropsKeys.SHOPPING_EMAIL_ORDER_SHIPPING_BODY));
 		}
 	}
 
@@ -218,8 +221,8 @@ public class ShoppingPreferences {
 			return GetterUtil.getBoolean(emailOrderShippingEnabled);
 		}
 		else {
-			return GetterUtil.getBoolean(PropsUtil.get(
-				PropsKeys.SHOPPING_EMAIL_ORDER_SHIPPING_ENABLED));
+			return GetterUtil.getBoolean(
+				PropsUtil.get(PropsKeys.SHOPPING_EMAIL_ORDER_SHIPPING_ENABLED));
 		}
 	}
 
@@ -231,8 +234,8 @@ public class ShoppingPreferences {
 			return emailOrderShippingSubject;
 		}
 		else {
-			return ContentUtil.get(PropsUtil.get(
-				PropsKeys.SHOPPING_EMAIL_ORDER_SHIPPING_SUBJECT));
+			return ContentUtil.get(
+				PropsUtil.get(PropsKeys.SHOPPING_EMAIL_ORDER_SHIPPING_SUBJECT));
 		}
 	}
 
@@ -252,8 +255,8 @@ public class ShoppingPreferences {
 	}
 
 	public double getMinOrder() {
-		return GetterUtil.getDouble(_portletPreferences.getValue(
-			"minOrder", StringPool.BLANK));
+		return GetterUtil.getDouble(
+			_portletPreferences.getValue("minOrder", StringPool.BLANK));
 	}
 
 	public String getPayPalEmailAddress() {

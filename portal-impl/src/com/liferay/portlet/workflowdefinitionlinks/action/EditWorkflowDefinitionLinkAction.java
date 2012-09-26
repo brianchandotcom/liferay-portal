@@ -71,8 +71,9 @@ public class EditWorkflowDefinitionLinkAction extends PortletAction {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws Exception {
 
-		return mapping.findForward(getForward(
-			renderRequest, "portlet.workflow_definition_links.view"));
+		return mapping.findForward(
+			getForward(
+				renderRequest, "portlet.workflow_definition_links.view"));
 	}
 
 	protected void updateWorkflowDefinitionLinks(ActionRequest actionRequest)

@@ -101,9 +101,10 @@ public class EditOrganizationAssignmentsAction extends PortletAction {
 			}
 		}
 
-		return mapping.findForward(getForward(
-			renderRequest,
-			"portlet.users_admin.edit_organization_assignments"));
+		return mapping.findForward(
+			getForward(
+				renderRequest,
+				"portlet.users_admin.edit_organization_assignments"));
 	}
 
 	protected void updateOrganizationUserGroups(ActionRequest actionRequest)

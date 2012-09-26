@@ -14,36 +14,30 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>link=Bookmarks Test Page</td>
-	<td></td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Bookmarks Test Page</td>
-	<td></td>
+	<td>Bookmarks Test Page</td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
+	<td>assertText</td>
+	<td>//a/strong</td>
 	<td>Edited Test Folder</td>
-	<td></td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//a/strong</td>
-	<td></td>
+	<td>Edited Test Folder</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>link=Edited Test Bookmark</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//td[1]/a</td>
+	<td>Edited Test Bookmark</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>link=http://www.narutofan.com</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//td[2]/a</td>
+	<td>http://www.narutofan.com</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

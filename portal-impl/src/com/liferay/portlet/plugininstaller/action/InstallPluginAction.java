@@ -266,8 +266,8 @@ public class InstallPluginAction extends PortletAction {
 				BaseDeployer.DEPLOY_TO_PREFIX + deploymentContext + ".war";
 		}
 		else {
-			fileName = GetterUtil.getString(uploadPortletRequest.getFileName(
-				"file"));
+			fileName = GetterUtil.getString(
+				uploadPortletRequest.getFileName("file"));
 
 			int pos = fileName.lastIndexOf(CharPool.PERIOD);
 

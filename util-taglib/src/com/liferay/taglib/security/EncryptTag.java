@@ -114,8 +114,9 @@ public class EncryptTag extends TagSupport {
 					}
 					else {
 						try {
-							sb.append(HttpUtil.encodeURL(
-								Encryptor.encrypt(key, value)));
+							sb.append(
+								HttpUtil.encodeURL(
+									Encryptor.encrypt(key, value)));
 						}
 						catch (EncryptorException ee) {
 							_log.error(ee.getMessage());

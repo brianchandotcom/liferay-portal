@@ -25,7 +25,6 @@ public class Guest_ViewBookmarksEntryTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Bookmarks Test Page");
 		selenium.clickAt("link=Bookmarks Test Page",
 			RuntimeVariables.replace("Bookmarks Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -38,7 +37,7 @@ public class Guest_ViewBookmarksEntryTest extends BaseTestCase {
 		assertTrue(selenium.isVisible("//td[4]/a"));
 		assertEquals(RuntimeVariables.replace("Showing 1 result."),
 			selenium.getText("//div[@class='search-results']"));
-		selenium.clickAt("//td/a",
+		selenium.clickAt("//td[1]/a",
 			RuntimeVariables.replace("Bookmarks Entry Name"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Bookmarks Entry Name"),

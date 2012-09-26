@@ -115,9 +115,10 @@ public class EditLayoutSetPrototypeAction extends PortletAction {
 			}
 		}
 
-		return mapping.findForward(getForward(
-			renderRequest,
-			"portlet.layout_set_prototypes.edit_layout_set_prototype"));
+		return mapping.findForward(
+			getForward(
+				renderRequest,
+				"portlet.layout_set_prototypes.edit_layout_set_prototype"));
 	}
 
 	protected void deleteLayoutSetPrototypes(ActionRequest actionRequest)

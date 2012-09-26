@@ -14,71 +14,80 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>link=Bookmarks Test Page</td>
-	<td></td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Bookmarks Test Page</td>
-	<td></td>
+	<td>Bookmarks Test Page</td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
+	<td>assertText</td>
+	<td>//td[1]/a/strong</td>
 	<td>Test Folder</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//td[1]/a</td>
+	<td>This is a test folder.</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
 	<td></td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
-	<td>This is a test folder.</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//td[4]/span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//td[4]/span/ul/li/strong/a</td>
-	<td></td>
+	<td>//td[4]/span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>Actions</td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
-	<td></td>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]</td>
+	<td>Edit</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]</td>
+	<td>Edit</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]</td>
+	<td>Edit</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_28_name</td>
+	<td>//input[@id='_28_name']</td>
 	<td>Test Folder Edited</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_28_description</td>
+	<td>//textarea[@id='_28_description']</td>
 	<td>This is a test folder. Edited.</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
-	<td></td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
+	<td>assertText</td>
+	<td>//td[1]/a/strong</td>
 	<td>Test Folder Edited</td>
-	<td></td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
+	<td>assertPartialText</td>
+	<td>//td[1]/a</td>
 	<td>This is a test folder. Edited.</td>
-	<td></td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

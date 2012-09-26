@@ -174,8 +174,8 @@ public class BookmarksUtil {
 			return GetterUtil.getBoolean(emailEntryAddedEnabled);
 		}
 		else {
-			return GetterUtil.getBoolean(PropsUtil.get(
-				PropsKeys.BOOKMARKS_EMAIL_ENTRY_ADDED_ENABLED));
+			return GetterUtil.getBoolean(
+				PropsUtil.get(PropsKeys.BOOKMARKS_EMAIL_ENTRY_ADDED_ENABLED));
 		}
 	}
 
@@ -233,8 +233,8 @@ public class BookmarksUtil {
 			return GetterUtil.getBoolean(emailEntryUpdatedEnabled);
 		}
 		else {
-			return GetterUtil.getBoolean(PropsUtil.get(
-				PropsKeys.BOOKMARKS_EMAIL_ENTRY_UPDATED_ENABLED));
+			return GetterUtil.getBoolean(
+				PropsUtil.get(PropsKeys.BOOKMARKS_EMAIL_ENTRY_UPDATED_ENABLED));
 		}
 	}
 

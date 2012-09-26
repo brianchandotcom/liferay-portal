@@ -132,8 +132,9 @@ public class EditScopeAction extends EditConfigurationAction {
 
 		renderResponse.setTitle(getTitle(portlet, renderRequest));
 
-		return mapping.findForward(getForward(
-			renderRequest, "portlet.portlet_configuration.edit_scope"));
+		return mapping.findForward(
+			getForward(
+				renderRequest, "portlet.portlet_configuration.edit_scope"));
 	}
 
 	protected Tuple getNewScope(ActionRequest actionRequest) throws Exception {

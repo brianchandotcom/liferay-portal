@@ -111,8 +111,10 @@ public class EditProductVersionAction extends PortletAction {
 			}
 		}
 
-		return mapping.findForward(getForward(
-			renderRequest, "portlet.software_catalog.edit_product_version"));
+		return mapping.findForward(
+			getForward(
+				renderRequest,
+				"portlet.software_catalog.edit_product_version"));
 	}
 
 	protected void deleteProductVersion(ActionRequest actionRequest)

@@ -115,8 +115,9 @@ public class EditRolePermissionsAction extends PortletAction {
 			}
 		}
 
-		return mapping.findForward(getForward(
-			renderRequest, "portlet.roles_admin.edit_role_permissions"));
+		return mapping.findForward(
+			getForward(
+				renderRequest, "portlet.roles_admin.edit_role_permissions"));
 	}
 
 	protected void deletePermission(

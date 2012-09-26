@@ -807,10 +807,10 @@ public class UsersAdminImpl implements UsersAdmin {
 
 		List<UserGroupRole> userGroupRoles = new UniqueList<UserGroupRole>();
 
-		long[] groupRolesRoleIds= StringUtil.split(ParamUtil.getString(
-			portletRequest, "groupRolesRoleIds"), 0L);
-		long[] groupRolesGroupIds= StringUtil.split(ParamUtil.getString(
-			portletRequest, "groupRolesGroupIds"), 0L);
+		long[] groupRolesRoleIds= StringUtil.split(
+			ParamUtil.getString(portletRequest, "groupRolesRoleIds"), 0L);
+		long[] groupRolesGroupIds= StringUtil.split(
+			ParamUtil.getString(portletRequest, "groupRolesGroupIds"), 0L);
 
 		if (groupRolesGroupIds.length != groupRolesRoleIds.length) {
 			return userGroupRoles;

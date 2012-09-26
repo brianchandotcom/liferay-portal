@@ -119,8 +119,9 @@ public class EditFileShortcutAction extends PortletAction {
 			}
 		}
 
-		return mapping.findForward(getForward(
-			renderRequest, "portlet.document_library.edit_file_shortcut"));
+		return mapping.findForward(
+			getForward(
+				renderRequest, "portlet.document_library.edit_file_shortcut"));
 	}
 
 	protected void deleteFileShortcut(

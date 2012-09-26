@@ -119,9 +119,10 @@ public class EditPublicRenderParametersAction extends EditConfigurationAction {
 
 		renderResponse.setTitle(getTitle(portlet, renderRequest));
 
-		return mapping.findForward(getForward(
-			renderRequest,
-			"portlet.portlet_configuration.edit_public_render_parameters"));
+		return mapping.findForward(
+			getForward(
+				renderRequest,
+				"portlet.portlet_configuration.edit_public_render_parameters"));
 	}
 
 	protected void updatePreferences(

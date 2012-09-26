@@ -1543,9 +1543,10 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 	}
 
 	public boolean isJEEDeploymentEnabled() {
-		return GetterUtil.getBoolean(PropsUtil.get(
-			"auto.deploy." + ServerDetector.getServerId() +
-				".jee.deployment.enabled"));
+		return GetterUtil.getBoolean(
+			PropsUtil.get(
+				"auto.deploy." + ServerDetector.getServerId() +
+					".jee.deployment.enabled"));
 	}
 
 	public void mergeDirectory(File mergeDir, File targetDir) {

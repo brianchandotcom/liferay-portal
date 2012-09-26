@@ -122,8 +122,9 @@ public class EditWorkflowTaskAction extends PortletAction {
 			}
 		}
 
-		return mapping.findForward(getForward(
-			renderRequest, "portlet.workflow_tasks.edit_workflow_task"));
+		return mapping.findForward(
+			getForward(
+				renderRequest, "portlet.workflow_tasks.edit_workflow_task"));
 	}
 
 	protected void assignTask(ActionRequest actionRequest) throws Exception {

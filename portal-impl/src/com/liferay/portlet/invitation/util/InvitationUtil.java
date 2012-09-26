@@ -36,14 +36,14 @@ public class InvitationUtil {
 			return emailMessageBody;
 		}
 		else {
-			return ContentUtil.get(PropsUtil.get(
-				PropsKeys.INVITATION_EMAIL_MESSAGE_BODY));
+			return ContentUtil.get(
+				PropsUtil.get(PropsKeys.INVITATION_EMAIL_MESSAGE_BODY));
 		}
 	}
 
 	public static int getEmailMessageMaxRecipients() {
-		return GetterUtil.getInteger(PropsUtil.get(
-			PropsKeys.INVITATION_EMAIL_MAX_RECIPIENTS));
+		return GetterUtil.getInteger(
+			PropsUtil.get(PropsKeys.INVITATION_EMAIL_MAX_RECIPIENTS));
 	}
 
 	public static String getEmailMessageSubject(
@@ -56,8 +56,8 @@ public class InvitationUtil {
 			return emailMessageSubject;
 		}
 		else {
-			return ContentUtil.get(PropsUtil.get(
-				PropsKeys.INVITATION_EMAIL_MESSAGE_SUBJECT));
+			return ContentUtil.get(
+				PropsUtil.get(PropsKeys.INVITATION_EMAIL_MESSAGE_SUBJECT));
 		}
 	}
 

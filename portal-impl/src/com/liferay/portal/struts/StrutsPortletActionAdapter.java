@@ -15,6 +15,7 @@
 package com.liferay.portal.struts;
 
 import com.liferay.portal.kernel.struts.BaseStrutsPortletAction;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -48,9 +49,21 @@ public class StrutsPortletActionAdapter extends BaseStrutsPortletAction {
 			ActionResponse actionResponse)
 		throws Exception {
 
-		_portletAction.processAction(
-			_actionMapping, _actionForm, portletConfig, actionRequest,
-			actionResponse);
+		Thread currentThread = Thread.currentThread();
+
+		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+
+		currentThread.setContextClassLoader(
+			PortalClassLoaderUtil.getClassLoader());
+
+		try {
+			_portletAction.processAction(
+				_actionMapping, _actionForm, portletConfig, actionRequest,
+				actionResponse);
+		}
+		finally {
+			currentThread.setContextClassLoader(contextClassLoader);
+		}
 	}
 
 	@Override
@@ -59,15 +72,27 @@ public class StrutsPortletActionAdapter extends BaseStrutsPortletAction {
 			RenderResponse renderResponse)
 		throws Exception {
 
-		ActionForward actionForward = _portletAction.render(
-			_actionMapping, _actionForm, portletConfig, renderRequest,
-			renderResponse);
+		Thread currentThread = Thread.currentThread();
 
-		if (actionForward != null) {
-			return actionForward.getPath();
+		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+
+		currentThread.setContextClassLoader(
+			PortalClassLoaderUtil.getClassLoader());
+
+		try {
+			ActionForward actionForward = _portletAction.render(
+				_actionMapping, _actionForm, portletConfig, renderRequest,
+				renderResponse);
+
+			if (actionForward != null) {
+				return actionForward.getPath();
+			}
+
+			return null;
 		}
-
-		return null;
+		finally {
+			currentThread.setContextClassLoader(contextClassLoader);
+		}
 	}
 
 	@Override
@@ -76,9 +101,21 @@ public class StrutsPortletActionAdapter extends BaseStrutsPortletAction {
 			ResourceResponse resourceResponse)
 		throws Exception {
 
-		_portletAction.serveResource(
-			_actionMapping, _actionForm, portletConfig, resourceRequest,
-			resourceResponse);
+		Thread currentThread = Thread.currentThread();
+
+		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+
+		currentThread.setContextClassLoader(
+			PortalClassLoaderUtil.getClassLoader());
+
+		try {
+			_portletAction.serveResource(
+				_actionMapping, _actionForm, portletConfig, resourceRequest,
+				resourceResponse);
+		}
+		finally {
+			currentThread.setContextClassLoader(contextClassLoader);
+		}
 	}
 
 	private ActionForm _actionForm;

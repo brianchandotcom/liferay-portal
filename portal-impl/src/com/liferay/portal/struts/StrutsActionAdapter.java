@@ -15,6 +15,7 @@
 package com.liferay.portal.struts;
 
 import com.liferay.portal.kernel.struts.BaseStrutsAction;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -42,14 +43,26 @@ public class StrutsActionAdapter extends BaseStrutsAction {
 			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
-		ActionForward actionForward = _action.execute(
-			_actionMapping, _actionForm, request, response);
+		Thread currentThread = Thread.currentThread();
 
-		if (actionForward == null) {
-			return null;
+		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+
+		currentThread.setContextClassLoader(
+			PortalClassLoaderUtil.getClassLoader());
+
+		try {
+			ActionForward actionForward = _action.execute(
+				_actionMapping, _actionForm, request, response);
+
+			if (actionForward == null) {
+				return null;
+			}
+
+			return actionForward.getPath();
 		}
-
-		return actionForward.getPath();
+		finally {
+			currentThread.setContextClassLoader(contextClassLoader);
+		}
 	}
 
 	private Action _action;

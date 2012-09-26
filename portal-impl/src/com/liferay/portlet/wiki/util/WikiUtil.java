@@ -242,8 +242,9 @@ public class WikiUtil {
 			return emailPageUpdatedSubject;
 		}
 		else {
-			return ContentUtil.get(PropsUtil.get(
-				PropsKeys.WIKI_EMAIL_PAGE_UPDATED_SUBJECT_PREFIX));
+			return ContentUtil.get(
+				PropsUtil.get(
+					PropsKeys.WIKI_EMAIL_PAGE_UPDATED_SUBJECT_PREFIX));
 		}
 	}
 

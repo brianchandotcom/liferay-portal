@@ -557,8 +557,9 @@ public class JournalUtil {
 			return emailArticleApprovalDeniedBody;
 		}
 		else {
-			return ContentUtil.get(PropsUtil.get(
-				PropsKeys.JOURNAL_EMAIL_ARTICLE_APPROVAL_DENIED_BODY));
+			return ContentUtil.get(
+				PropsUtil.get(
+					PropsKeys.JOURNAL_EMAIL_ARTICLE_APPROVAL_DENIED_BODY));
 		}
 	}
 
@@ -572,8 +573,9 @@ public class JournalUtil {
 			return GetterUtil.getBoolean(emailArticleApprovalDeniedEnabled);
 		}
 		else {
-			return GetterUtil.getBoolean(PropsUtil.get(
-				PropsKeys.JOURNAL_EMAIL_ARTICLE_APPROVAL_DENIED_ENABLED));
+			return GetterUtil.getBoolean(
+				PropsUtil.get(
+					PropsKeys.JOURNAL_EMAIL_ARTICLE_APPROVAL_DENIED_ENABLED));
 		}
 	}
 
@@ -587,8 +589,9 @@ public class JournalUtil {
 			return emailArticleApprovalDeniedSubject;
 		}
 		else {
-			return ContentUtil.get(PropsUtil.get(
-				PropsKeys.JOURNAL_EMAIL_ARTICLE_APPROVAL_DENIED_SUBJECT));
+			return ContentUtil.get(
+				PropsUtil.get(
+					PropsKeys.JOURNAL_EMAIL_ARTICLE_APPROVAL_DENIED_SUBJECT));
 		}
 	}
 
@@ -602,8 +605,9 @@ public class JournalUtil {
 			return emailArticleApprovalGrantedBody;
 		}
 		else {
-			return ContentUtil.get(PropsUtil.get(
-				PropsKeys.JOURNAL_EMAIL_ARTICLE_APPROVAL_GRANTED_BODY));
+			return ContentUtil.get(
+				PropsUtil.get(
+					PropsKeys.JOURNAL_EMAIL_ARTICLE_APPROVAL_GRANTED_BODY));
 		}
 	}
 
@@ -617,8 +621,9 @@ public class JournalUtil {
 			return GetterUtil.getBoolean(emailArticleApprovalGrantedEnabled);
 		}
 		else {
-			return GetterUtil.getBoolean(PropsUtil.get(
-				PropsKeys.JOURNAL_EMAIL_ARTICLE_APPROVAL_GRANTED_ENABLED));
+			return GetterUtil.getBoolean(
+				PropsUtil.get(
+					PropsKeys.JOURNAL_EMAIL_ARTICLE_APPROVAL_GRANTED_ENABLED));
 		}
 	}
 
@@ -632,8 +637,9 @@ public class JournalUtil {
 			return emailArticleApprovalGrantedSubject;
 		}
 		else {
-			return ContentUtil.get(PropsUtil.get(
-				PropsKeys.JOURNAL_EMAIL_ARTICLE_APPROVAL_GRANTED_SUBJECT));
+			return ContentUtil.get(
+				PropsUtil.get(
+					PropsKeys.JOURNAL_EMAIL_ARTICLE_APPROVAL_GRANTED_SUBJECT));
 		}
 	}
 
@@ -647,8 +653,9 @@ public class JournalUtil {
 			return emailArticleApprovalRequestedBody;
 		}
 		else {
-			return ContentUtil.get(PropsUtil.get(
-				PropsKeys.JOURNAL_EMAIL_ARTICLE_APPROVAL_REQUESTED_BODY));
+			return ContentUtil.get(
+				PropsUtil.get(
+					PropsKeys.JOURNAL_EMAIL_ARTICLE_APPROVAL_REQUESTED_BODY));
 		}
 	}
 
@@ -662,8 +669,10 @@ public class JournalUtil {
 			return GetterUtil.getBoolean(emailArticleApprovalRequestedEnabled);
 		}
 		else {
-			return GetterUtil.getBoolean(PropsUtil.get(
-				PropsKeys.JOURNAL_EMAIL_ARTICLE_APPROVAL_REQUESTED_ENABLED));
+			return GetterUtil.getBoolean(
+				PropsUtil.get(
+					PropsKeys.
+						JOURNAL_EMAIL_ARTICLE_APPROVAL_REQUESTED_ENABLED));
 		}
 	}
 
@@ -677,8 +686,10 @@ public class JournalUtil {
 			return emailArticleApprovalRequestedSubject;
 		}
 		else {
-			return ContentUtil.get(PropsUtil.get(
-				PropsKeys.JOURNAL_EMAIL_ARTICLE_APPROVAL_REQUESTED_SUBJECT));
+			return ContentUtil.get(
+				PropsUtil.get(
+					PropsKeys.
+						JOURNAL_EMAIL_ARTICLE_APPROVAL_REQUESTED_SUBJECT));
 		}
 	}
 

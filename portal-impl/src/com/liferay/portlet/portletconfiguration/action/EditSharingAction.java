@@ -137,8 +137,9 @@ public class EditSharingAction extends EditConfigurationAction {
 
 		renderResponse.setTitle(getTitle(portlet, renderRequest));
 
-		return mapping.findForward(getForward(
-			renderRequest, "portlet.portlet_configuration.edit_sharing"));
+		return mapping.findForward(
+			getForward(
+				renderRequest, "portlet.portlet_configuration.edit_sharing"));
 	}
 
 	protected void updateAnyWebsite(

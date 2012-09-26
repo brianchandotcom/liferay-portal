@@ -84,9 +84,10 @@ public class EditSupportedClientsAction extends EditConfigurationAction {
 
 		renderResponse.setTitle(getTitle(portlet, renderRequest));
 
-		return mapping.findForward(getForward(
-			renderRequest,
-			"portlet.portlet_configuration.edit_supported_clients"));
+		return mapping.findForward(
+			getForward(
+				renderRequest,
+				"portlet.portlet_configuration.edit_supported_clients"));
 	}
 
 	protected void updateSupportedClients(

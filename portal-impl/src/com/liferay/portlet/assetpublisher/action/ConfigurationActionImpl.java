@@ -398,14 +398,16 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 			String[] values = null;
 
 			if (name.equals("assetTags")) {
-				values = StringUtil.split(ParamUtil.getString(
-					actionRequest, "queryTagNames" + queryRulesIndex));
+				values = StringUtil.split(
+					ParamUtil.getString(
+						actionRequest, "queryTagNames" + queryRulesIndex));
 
 				AssetTagLocalServiceUtil.checkTags(userId, groupId, values);
 			}
 			else {
-				values = StringUtil.split(ParamUtil.getString(
-					actionRequest, "queryCategoryIds" + queryRulesIndex));
+				values = StringUtil.split(
+					ParamUtil.getString(
+						actionRequest, "queryCategoryIds" + queryRulesIndex));
 			}
 
 			setPreference(

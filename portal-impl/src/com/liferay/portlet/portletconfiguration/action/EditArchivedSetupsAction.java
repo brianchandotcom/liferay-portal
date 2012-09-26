@@ -144,9 +144,10 @@ public class EditArchivedSetupsAction extends EditConfigurationAction {
 
 		renderResponse.setTitle(getTitle(portlet, renderRequest));
 
-		return mapping.findForward(getForward(
-			renderRequest,
-			"portlet.portlet_configuration.edit_archived_setups"));
+		return mapping.findForward(
+			getForward(
+				renderRequest,
+				"portlet.portlet_configuration.edit_archived_setups"));
 	}
 
 	protected void deleteSetup(ActionRequest actionRequest) throws Exception {

@@ -54,8 +54,9 @@ public class ViewMembershipRequestsAction extends PortletAction {
 			}
 		}
 
-		return mapping.findForward(getForward(
-			renderRequest, "portlet.sites_admin.view_membership_requests"));
+		return mapping.findForward(
+			getForward(
+				renderRequest, "portlet.sites_admin.view_membership_requests"));
 	}
 
 }

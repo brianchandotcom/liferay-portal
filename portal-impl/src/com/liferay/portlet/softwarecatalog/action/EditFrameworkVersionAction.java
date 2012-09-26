@@ -98,8 +98,10 @@ public class EditFrameworkVersionAction extends PortletAction {
 			}
 		}
 
-		return mapping.findForward(getForward(
-			renderRequest, "portlet.software_catalog.edit_framework_version"));
+		return mapping.findForward(
+			getForward(
+				renderRequest,
+				"portlet.software_catalog.edit_framework_version"));
 	}
 
 	protected void deleteFrameworkVersion(ActionRequest actionRequest)

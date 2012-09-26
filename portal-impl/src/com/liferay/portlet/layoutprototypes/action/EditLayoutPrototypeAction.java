@@ -108,8 +108,10 @@ public class EditLayoutPrototypeAction extends PortletAction {
 			}
 		}
 
-		return mapping.findForward(getForward(
-			renderRequest, "portlet.layout_prototypes.edit_layout_prototype"));
+		return mapping.findForward(
+			getForward(
+				renderRequest,
+				"portlet.layout_prototypes.edit_layout_prototype"));
 	}
 
 	protected void deleteLayoutPrototypes(ActionRequest actionRequest)

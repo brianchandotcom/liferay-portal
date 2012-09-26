@@ -14,7 +14,6 @@
 
 package com.liferay.portal.search;
 
-import com.liferay.portal.NoSuchResourceBlockPermissionException;
 import com.liferay.portal.NoSuchResourceException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -191,14 +190,10 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 
 			for (long resourceBlockId : resourceBlockIds) {
 				for (int i = 0; i < roleIdsArray.length; i++) {
-					try {
-						ResourceBlockPermissionUtil.findByR_R(
-							resourceBlockId, roleIdsArray[i]);
+					int count = ResourceBlockPermissionUtil.countByR_R(
+						resourceBlockId, roleIdsArray[i]);
 
-						hasResourcePermissions[i] = true;
-					}
-					catch (NoSuchResourceBlockPermissionException nsrbpe) {
-					}
+					hasResourcePermissions[i] = (count > 0);
 				}
 			}
 		}

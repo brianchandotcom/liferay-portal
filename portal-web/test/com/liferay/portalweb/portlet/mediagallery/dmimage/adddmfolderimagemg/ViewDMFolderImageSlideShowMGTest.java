@@ -40,7 +40,7 @@ public class ViewDMFolderImageSlideShowMGTest extends BaseTestCase {
 				"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li/a[contains(.,'View Slide Show')]"));
 		selenium.clickAt("//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li/a[contains(.,'View Slide Show')]",
 			RuntimeVariables.replace("View Slide Show"));
-		selenium.waitForPopUp("null", RuntimeVariables.replace("30000"));
+		Thread.sleep(5000);
 		selenium.selectWindow("title=Media Gallery");
 		Thread.sleep(5000);
 		selenium.waitForVisible("//img[@name='_31_slideShow']");

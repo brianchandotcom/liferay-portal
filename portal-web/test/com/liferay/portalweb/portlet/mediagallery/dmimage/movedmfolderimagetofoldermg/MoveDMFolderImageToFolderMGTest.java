@@ -53,7 +53,7 @@ public class MoveDMFolderImageToFolderMGTest extends BaseTestCase {
 			selenium.getText("//a[@id='_31_folderName']"));
 		selenium.clickAt("//input[@value='Select']",
 			RuntimeVariables.replace("Select"));
-		selenium.waitForPopUp("null", RuntimeVariables.replace("10000"));
+		Thread.sleep(5000);
 		selenium.selectWindow("title=Media Gallery");
 		selenium.waitForVisible("link=Home");
 		selenium.clickAt("link=Home", RuntimeVariables.replace("Home"));

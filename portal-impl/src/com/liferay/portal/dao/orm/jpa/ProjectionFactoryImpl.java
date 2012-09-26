@@ -17,6 +17,7 @@ package com.liferay.portal.dao.orm.jpa;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactory;
 import com.liferay.portal.kernel.dao.orm.ProjectionList;
+import com.liferay.portal.kernel.dao.orm.Type;
 
 /**
  * @author Prashant Dighe
@@ -65,6 +66,12 @@ public class ProjectionFactoryImpl implements ProjectionFactory {
 	}
 
 	public Projection rowCount() {
+		throw new UnsupportedOperationException();
+	}
+
+	public Projection sqlProjection(
+		String sql, String[] columnAliases, Type[] types) {
+
 		throw new UnsupportedOperationException();
 	}
 

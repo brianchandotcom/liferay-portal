@@ -37,4 +37,7 @@ public interface DynamicQuery {
 
 	public DynamicQuery setProjection(Projection projection);
 
+	public DynamicQuery setProjection(
+		Projection projection, boolean useColumnAlias);
+
 }

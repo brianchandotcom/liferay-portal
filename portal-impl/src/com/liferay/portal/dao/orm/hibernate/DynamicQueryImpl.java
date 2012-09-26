@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.dao.orm.Criterion;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Order;
 import com.liferay.portal.kernel.dao.orm.Projection;
+import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -101,6 +102,18 @@ public class DynamicQueryImpl implements DynamicQuery {
 	}
 
 	public DynamicQuery setProjection(Projection projection) {
+		return setProjection(projection, true);
+	}
+
+	public DynamicQuery setProjection(
+		Projection projection, boolean useColumnAlias) {
+
+		if (!useColumnAlias) {
+			projection = ProjectionFactoryUtil.sqlProjection(
+				_detachedCriteria.getAlias() + "_." + projection.toString(),
+				null, null);
+		}
+
 		ProjectionImpl projectionImpl = (ProjectionImpl)projection;
 
 		_detachedCriteria.setProjection(projectionImpl.getWrappedProjection());

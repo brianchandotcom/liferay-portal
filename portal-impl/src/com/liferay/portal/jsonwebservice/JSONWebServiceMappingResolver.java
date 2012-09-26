@@ -17,15 +17,26 @@ package com.liferay.portal.jsonwebservice;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.util.CamelCaseUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.lang.reflect.Method;
 
+import java.util.Set;
+
 /**
  * @author Igor Spasic
  */
 public class JSONWebServiceMappingResolver {
+
+	public JSONWebServiceMappingResolver() {
+		_prefixes = SetUtil.fromArray(
+				new String[] {
+					"get", "has", "is"
+				}
+			);
+	}
 
 	public String resolveHttpMethod(Method method) {
 		JSONWebService jsonWebServiceAnnotation = method.getAnnotation(
@@ -112,17 +123,13 @@ public class JSONWebServiceMappingResolver {
 	}
 
 	private String _prefixToHttpMethod(String prefix) {
-		for (String postPrefix : _GET_PREFIXES) {
-			if (prefix.equals(postPrefix)) {
-				return HttpMethods.GET;
-			}
+		if (_prefixes.contains(prefix)) {
+			return HttpMethods.GET;
 		}
 
 		return HttpMethods.POST;
 	}
 
-	private static final String[] _GET_PREFIXES = new String[] {
-		"get", "has", "is",
-	};
+	private static Set<String> _prefixes;
 
 }

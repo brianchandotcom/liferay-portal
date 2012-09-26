@@ -67,9 +67,11 @@ public class JSONWebServiceConfigurator extends ClassFinder {
 
 		_servletContextPath = servletContextPath;
 
-		_excludedMethodNames = new String[] {
-			"getBeanIdentifier", "setBeanIdentifier"
-		};
+		_excludedMethodNames = SetUtil.fromArray(
+				new String[] {
+					"getBeanIdentifier", "setBeanIdentifier"
+				}
+			);
 	}
 
 	public void clean() {
@@ -367,16 +369,10 @@ public class JSONWebServiceConfigurator extends ClassFinder {
 				}
 			}
 
-			if (_excludedMethodNames != null) {
-				String methodName = method.getName();
+			if ((_excludedMethodNames != null) &&
+				_excludedMethodNames.contains(method.getName())) {
 
-				for (String excludedMethodName : _excludedMethodNames) {
-					if (excludedMethodName.equals(methodName)) {
-						registerMethod = false;
-
-						break;
-					}
-				}
+				registerMethod = false;
 			}
 
 			if (registerMethod) {
@@ -420,7 +416,7 @@ public class JSONWebServiceConfigurator extends ClassFinder {
 		JSONWebServiceConfigurator.class);
 
 	private ClassLoader _classLoader;
-	private String[] _excludedMethodNames;
+	private Set<String> _excludedMethodNames;
 	private Set<String> _invalidHttpMethods = SetUtil.fromArray(
 		PropsValues.JSONWS_WEB_SERVICE_INVALID_HTTP_METHODS);
 	private byte[] _jsonWebServiceAnnotationBytes = getTypeSignatureBytes(

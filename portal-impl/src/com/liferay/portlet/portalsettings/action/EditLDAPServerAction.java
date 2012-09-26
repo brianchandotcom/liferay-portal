@@ -16,7 +16,6 @@ package com.liferay.portlet.portalsettings.action;
 
 import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
@@ -33,6 +32,7 @@ import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.WebKeys;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.portlet.ActionRequest;
@@ -98,10 +98,10 @@ public class EditLDAPServerAction extends PortletAction {
 
 		String defaultPostfix = LDAPSettingsUtil.getPropertyPostfix(0);
 
-		String[] defaultKeys = new String[_KEYS.length];
+		Set<String> defaultKeys = new HashSet<String>(_KEYS.length);
 
-		for (int i = 0; i < _KEYS.length; i++) {
-			defaultKeys[i] = _KEYS[i] + defaultPostfix;
+		for (String key : _KEYS) {
+			defaultKeys.add(key + defaultPostfix);
 		}
 
 		long ldapServerId = CounterLocalServiceUtil.increment();
@@ -110,10 +110,8 @@ public class EditLDAPServerAction extends PortletAction {
 
 		Set<String> keysSet = properties.keySet();
 
-		String[] keys = keysSet.toArray(new String[keysSet.size()]);
-
-		for (String key : keys) {
-			if (ArrayUtil.contains(defaultKeys, key)) {
+		for (String key : keysSet) {
+			if (defaultKeys.contains(key)) {
 				String value = properties.remove(key);
 
 				if (key.equals(

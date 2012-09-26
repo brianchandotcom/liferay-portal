@@ -318,13 +318,26 @@ int secondReminder = BeanParamUtil.getInteger(event, request, "secondReminder", 
 <aui:script use="aui-base">
 	var allDayCheckbox = A.one('#<portlet:namespace />allDayCheckbox');
 	var durationHour = A.one('#<portlet:namespace />durationHour');
+	var timeZoneSensitiveCheckbox = A.one('#<portlet:namespace />timeZoneSensitiveCheckbox');
 
-	if (allDayCheckbox && durationHour) {
+	if (allDayCheckbox) {
 		allDayCheckbox.on(
 			'change',
 			function() {
-				if (!this.get('checked') && (durationHour.val() == '24')) {
+				if (!this.get('checked') && durationHour && (durationHour.val() == '24')) {
 					durationHour.val('1');
+				}
+
+				if (this.get('checked')) {
+					timeZoneSensitiveCheckbox.attr('checked', false);
+					timeZoneSensitiveCheckbox.attr('disabled', true);
+				}
+				else {
+					timeZoneSensitiveCheckbox.attr('disabled', false);
+
+					if (timeZoneSensitiveCheckbox.previous().val() == 'true') {
+						timeZoneSensitiveCheckbox.attr('checked', true);
+					}
 				}
 			}
 		);

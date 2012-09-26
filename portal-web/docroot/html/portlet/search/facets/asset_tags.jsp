@@ -39,24 +39,25 @@ boolean showAssetCount = dataJSONObject.getBoolean("showAssetCount", true);
 		int maxCount = 1;
 		int minCount = 1;
 
-		if (showAssetCount && displayStyle.equals("cloud")) {
-			for (int i = 0; i < termCollectors.size(); i++) {
-				if (i >= maxTerms) {
-					break;
-				}
+if (showAssetCount && displayStyle.equals("cloud")) {
+    for (int i = 0, j = 0; i < termCollectors.size(); i++, j++) {
+        if (j >= maxTerms) {
+            break;
+        }
 
-				TermCollector termCollector = termCollectors.get(i);
+        TermCollector termCollector = termCollectors.get(i);
 
-				int frequency = termCollector.getFrequency();
+        int frequency = termCollector.getFrequency();
 
-				if (frequencyThreshold > frequency) {
-					continue;
-				}
+        if (frequencyThreshold > frequency) {
+            j--;
+            continue;
+        }
 
-				maxCount = Math.max(maxCount, frequency);
-				minCount = Math.min(minCount, frequency);
-			}
-		}
+        maxCount = Math.max(maxCount, frequency);
+        minCount = Math.min(minCount, frequency);
+    }
+}
 
 		double multiplier = 1;
 
@@ -64,8 +65,8 @@ boolean showAssetCount = dataJSONObject.getBoolean("showAssetCount", true);
 			multiplier = (double)5 / (maxCount - minCount);
 		}
 
-		for (int i = 0; i < termCollectors.size(); i++) {
-			if (i >= maxTerms) {
+		for (int i = 0, j = 0; i < termCollectors.size(); i++, j++) {
+			if (j >= maxTerms) {
 				break;
 			}
 
@@ -87,6 +88,7 @@ boolean showAssetCount = dataJSONObject.getBoolean("showAssetCount", true);
 			int popularity = (int)(1 + ((maxCount - (maxCount - (termCollector.getFrequency() - minCount))) * multiplier));
 
 			if (frequencyThreshold > termCollector.getFrequency()) {
+                j--;
 				continue;
 			}
 		%>

@@ -258,14 +258,12 @@ public class MembershipRequestLocalServiceImpl
 				currentGroupActions, currentGroupTemplateActions,
 				currentCompanyActions);
 
-			List<String> currentActions = new ArrayList<String>();
+			if (currentIndividualActions.contains(ActionKeys.ASSIGN_MEMBERS) ||
+				currentGroupActions.contains(ActionKeys.ASSIGN_MEMBERS) ||
+				currentGroupTemplateActions.contains(
+					ActionKeys.ASSIGN_MEMBERS) ||
+				currentCompanyActions.contains(ActionKeys.ASSIGN_MEMBERS)) {
 
-			currentActions.addAll(currentIndividualActions);
-			currentActions.addAll(currentGroupActions);
-			currentActions.addAll(currentGroupTemplateActions);
-			currentActions.addAll(currentCompanyActions);
-
-			if (currentActions.contains(ActionKeys.ASSIGN_MEMBERS)) {
 				List<UserGroupRole> currentUserGroupRoles =
 					userGroupRoleLocalService.getUserGroupRolesByGroupAndRole(
 						groupId, role.getRoleId());

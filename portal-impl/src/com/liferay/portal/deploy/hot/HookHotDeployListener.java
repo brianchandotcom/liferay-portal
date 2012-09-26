@@ -269,21 +269,6 @@ public class HookHotDeployListener
 			_overrideStringArraysContainerMap.put(
 				key, new OverrideStringArraysContainer(key));
 		}
-
-		_propsKeysEvents = SetUtil.fromArray(
-				new String[] {
-					LOGIN_EVENTS_POST, LOGIN_EVENTS_PRE, LOGOUT_EVENTS_POST,
-					LOGOUT_EVENTS_PRE, SERVLET_SERVICE_EVENTS_POST,
-					SERVLET_SERVICE_EVENTS_PRE
-				}
-			);
-
-		_propsKeysSessionEvents = SetUtil.fromArray(
-				new String[] {
-					SERVLET_SESSION_CREATE_EVENTS,
-					SERVLET_SESSION_DESTROY_EVENTS
-				}
-			);
 	}
 
 	public void invokeDeploy(HotDeployEvent hotDeployEvent)

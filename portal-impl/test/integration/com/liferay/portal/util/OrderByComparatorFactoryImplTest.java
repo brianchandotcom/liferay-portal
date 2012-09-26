@@ -41,9 +41,9 @@ public class OrderByComparatorFactoryImplTest {
 	@Test
 	public void testCollectionsSortMultipleColumnsAscending() throws Exception {
 		EmailAddress emailAddress1 = newEmailAddress(
-			newDate(0, 1, 2012), "abc@liferay.com");
+			1, newDate(0, 1, 2012), "abc@liferay.com");
 		EmailAddress emailAddress2 = newEmailAddress(
-			newDate(0, 2, 2012), "abc@liferay.com");
+			2, newDate(0, 2, 2012), "abc@liferay.com");
 
 		List<EmailAddress> expectedList = new ArrayList<EmailAddress>();
 
@@ -61,7 +61,7 @@ public class OrderByComparatorFactoryImplTest {
 
 		Collections.sort(actualList, obc);
 
-		Assert.assertEquals(expectedList, actualList);
+		Assert.assertEquals(expectedList.toString(), actualList.toString());
 	}
 
 	@Test
@@ -69,9 +69,9 @@ public class OrderByComparatorFactoryImplTest {
 		throws Exception {
 
 		EmailAddress emailAddress1 = newEmailAddress(
-			newDate(0, 1, 2012), "abc@liferay.com");
+			1, newDate(0, 1, 2012), "abc@liferay.com");
 		EmailAddress emailAddress2 = newEmailAddress(
-			newDate(0, 2, 2012), "abc@liferay.com");
+			2, newDate(0, 2, 2012), "abc@liferay.com");
 
 		List<EmailAddress> expectedList = new ArrayList<EmailAddress>();
 
@@ -89,15 +89,15 @@ public class OrderByComparatorFactoryImplTest {
 
 		Collections.sort(actualList, obc);
 
-		Assert.assertEquals(expectedList, actualList);
+		Assert.assertEquals(expectedList.toString(), actualList.toString());
 	}
 
 	@Test
 	public void testCollectionsSortSingleColumnAscending() throws Exception {
 		EmailAddress emailAddress1 = newEmailAddress(
-			newDate(0, 1, 2012), "abc@liferay.com");
+			1, newDate(0, 1, 2012), "abc@liferay.com");
 		EmailAddress emailAddress2 = newEmailAddress(
-			newDate(0, 2, 2012), "def@liferay.com");
+			2, newDate(0, 2, 2012), "def@liferay.com");
 
 		List<EmailAddress> expectedList = new ArrayList<EmailAddress>();
 
@@ -114,15 +114,15 @@ public class OrderByComparatorFactoryImplTest {
 
 		Collections.sort(actualList, obc);
 
-		Assert.assertEquals(expectedList, actualList);
+		Assert.assertEquals(expectedList.toString(), actualList.toString());
 	}
 
 	@Test
 	public void testCollectionsSortSingleColumnDescending() throws Exception {
 		EmailAddress emailAddress1 = newEmailAddress(
-			newDate(0, 1, 2012), "abc@liferay.com");
+			1, newDate(0, 1, 2012), "abc@liferay.com");
 		EmailAddress emailAddress2 = newEmailAddress(
-			newDate(0, 2, 2012), "def@liferay.com");
+			2, newDate(0, 2, 2012), "def@liferay.com");
 
 		List<EmailAddress> expectedList = new ArrayList<EmailAddress>();
 
@@ -139,7 +139,61 @@ public class OrderByComparatorFactoryImplTest {
 
 		Collections.sort(actualList, obc);
 
-		Assert.assertEquals(expectedList, actualList);
+		Assert.assertEquals(expectedList.toString(), actualList.toString());
+	}
+
+	@Test
+	public void testCollectionsSortSingleColumnPrimitiveAscending()
+		throws Exception {
+
+		EmailAddress emailAddress1 = newEmailAddress(
+			1, newDate(0, 1, 2012), "abc@liferay.com");
+		EmailAddress emailAddress2 = newEmailAddress(
+			2, newDate(0, 2, 2012), "abc@liferay.com");
+
+		List<EmailAddress> expectedList = new ArrayList<EmailAddress>();
+
+		expectedList.add(emailAddress1);
+		expectedList.add(emailAddress2);
+
+		List<EmailAddress> actualList = new ArrayList<EmailAddress>();
+
+		actualList.add(emailAddress2);
+		actualList.add(emailAddress1);
+
+		OrderByComparator obc = OrderByComparatorFactoryUtil.create(
+			EmailAddressModelImpl.TABLE_NAME, "companyId", true);
+
+		Collections.sort(actualList, obc);
+
+		Assert.assertEquals(expectedList.toString(), actualList.toString());
+	}
+
+	@Test
+	public void testCollectionsSortSingleColumnPrimitiveDescending()
+		throws Exception {
+
+		EmailAddress emailAddress1 = newEmailAddress(
+			1, newDate(0, 1, 2012), "abc@liferay.com");
+		EmailAddress emailAddress2 = newEmailAddress(
+			2, newDate(0, 2, 2012), "abc@liferay.com");
+
+		List<EmailAddress> expectedList = new ArrayList<EmailAddress>();
+
+		expectedList.add(emailAddress2);
+		expectedList.add(emailAddress1);
+
+		List<EmailAddress> actualList = new ArrayList<EmailAddress>();
+
+		actualList.add(emailAddress1);
+		actualList.add(emailAddress2);
+
+		OrderByComparator obc = OrderByComparatorFactoryUtil.create(
+			EmailAddressModelImpl.TABLE_NAME, "companyId", false);
+
+		Collections.sort(actualList, obc);
+
+		Assert.assertEquals(expectedList.toString(), actualList.toString());
 	}
 
 	@Test
@@ -215,9 +269,12 @@ public class OrderByComparatorFactoryImplTest {
 		return calendar.getTime();
 	}
 
-	protected EmailAddress newEmailAddress(Date createDate, String address) {
+	protected EmailAddress newEmailAddress(
+		long companyId, Date createDate, String address) {
+
 		EmailAddress emailAddress = new EmailAddressImpl();
 
+		emailAddress.setCompanyId(companyId);
 		emailAddress.setCreateDate(createDate);
 		emailAddress.setAddress(address);
 

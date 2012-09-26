@@ -12,11 +12,14 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.controlpanel.users.userphonenumber.adduserphonenumber;
+package com.liferay.portalweb.portal.controlpanel.users.user.deactivateuseractions;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.controlpanel.users.user.adduser.AddUserTest;
 import com.liferay.portalweb.portal.controlpanel.users.user.adduser.TearDownUserTest;
+import com.liferay.portalweb.portal.controlpanel.users.user.edituserpassword.EditUserPasswordTest;
+import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignInTest;
+import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignOutTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -24,12 +27,15 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AddUserPhoneNumberTests extends BaseTestSuite {
+public class DeactivateUserActionsTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddUserTest.class);
-		testSuite.addTestSuite(AddUserPhoneNumberTest.class);
-		testSuite.addTestSuite(ViewUserPhoneNumberTest.class);
+		testSuite.addTestSuite(EditUserPasswordTest.class);
+		testSuite.addTestSuite(DeactivateUserActionsTest.class);
+		testSuite.addTestSuite(SignOutTest.class);
+		testSuite.addTestSuite(DeactivateUser_SignInTest.class);
+		testSuite.addTestSuite(SignInTest.class);
 		testSuite.addTestSuite(TearDownUserTest.class);
 
 		return testSuite;

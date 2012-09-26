@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.controlpanel.users.userphonenumber.adduserphonenumber;
+package com.liferay.portalweb.portal.controlpanel.users.userphonenumber.adduserphonenumbernumberletters;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.controlpanel.users.user.adduser.AddUserTest;
@@ -24,12 +24,12 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AddUserPhoneNumberTests extends BaseTestSuite {
+public class AddUserPhoneNumberNumberLettersTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddUserTest.class);
-		testSuite.addTestSuite(AddUserPhoneNumberTest.class);
-		testSuite.addTestSuite(ViewUserPhoneNumberTest.class);
+		testSuite.addTestSuite(AddUserPhoneNumberNumberLettersTest.class);
+		testSuite.addTestSuite(ViewUserPhoneNumberNumberLettersTest.class);
 		testSuite.addTestSuite(TearDownUserTest.class);
 
 		return testSuite;

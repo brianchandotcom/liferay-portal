@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AddUserPhoneNumberTest extends BaseTestCase {
-	public void testAddUserPhoneNumber() throws Exception {
+public class ViewUserPhoneNumberTest extends BaseTestCase {
+	public void testViewUserPhoneNumber() throws Exception {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
@@ -48,29 +48,50 @@ public class AddUserPhoneNumberTest extends BaseTestCase {
 			selenium.getText("//td[2]/a"));
 		selenium.clickAt("//td[2]/a", RuntimeVariables.replace("userfn"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForVisible("//a[@id='_125_phoneNumbersLink']");
 		assertTrue(selenium.isPartialText("//a[@id='_125_phoneNumbersLink']",
 				"Phone Numbers"));
 		selenium.clickAt("//a[@id='_125_phoneNumbersLink']",
 			RuntimeVariables.replace("Phone Numbers"));
-		selenium.type("//input[@id='_125_phoneNumber0']",
-			RuntimeVariables.replace("123-123-1234"));
-		selenium.type("//input[@id='_125_phoneExtension0']",
-			RuntimeVariables.replace("123"));
-		selenium.select("//select[@id='_125_phoneTypeId0']",
-			RuntimeVariables.replace("label=Business"));
-		selenium.clickAt("//input[@value='Save']",
-			RuntimeVariables.replace("Save"));
-		selenium.waitForPageToLoad("30000");
-		selenium.waitForVisible("//div[@class='portlet-msg-success']");
+		selenium.waitForVisible("//h1[@class='portlet-title']/span");
+		assertEquals(RuntimeVariables.replace("Users and Organizations"),
+			selenium.getText("//h1[@class='portlet-title']/span"));
+		assertEquals(RuntimeVariables.replace("View All"),
+			selenium.getText(
+				"//div[@class='lfr-portlet-toolbar']/span/a[contains(.,'View All')]"));
+		assertEquals(RuntimeVariables.replace("Add"),
+			selenium.getText(
+				"//div[@class='lfr-portlet-toolbar']/span/ul/li/strong/a/span[contains(.,'Add')]"));
+		assertEquals(RuntimeVariables.replace("Export All Users"),
+			selenium.getText(
+				"//div[@class='lfr-portlet-toolbar']/span/a[contains(.,'Export All Users')]"));
+		assertEquals(RuntimeVariables.replace("userfn userln"),
+			selenium.getText("//h1[@class='header-title']/span"));
+		assertEquals(RuntimeVariables.replace("\u00ab Back"),
+			selenium.getText("//span[@class='header-back-to']/a"));
+		assertEquals(RuntimeVariables.replace("Phone Numbers"),
+			selenium.getText("//div[@id='_125_phoneNumbers']/h3"));
 		assertEquals(RuntimeVariables.replace(
-				"Your request completed successfully."),
-			selenium.getText("//div[@class='portlet-msg-success']"));
+				"Phone number and type are required fields. Extension must be numeric."),
+			selenium.getText("//div[@id='_125_phoneNumbers']/div"));
+		assertEquals(RuntimeVariables.replace("Number"),
+			selenium.getText(
+				"//div[@class='row-fields']/span/span/label[contains(.,'Number')]"));
+		assertEquals(RuntimeVariables.replace("Extension"),
+			selenium.getText(
+				"//div[@class='row-fields']/span/span/label[contains(.,'Extension')]"));
+		assertEquals(RuntimeVariables.replace("Type"),
+			selenium.getText(
+				"//div[@class='row-fields']/span/span/label[contains(.,'Type')]"));
 		assertEquals("123-123-1234",
 			selenium.getValue("//input[@id='_125_phoneNumber0']"));
 		assertEquals("123",
 			selenium.getValue("//input[@id='_125_phoneExtension0']"));
 		assertEquals("Business",
 			selenium.getSelectedLabel("//select[@id='_125_phoneTypeId0']"));
+		assertTrue(selenium.isChecked("//input[@id='_125_phonePrimary0']"));
+		assertTrue(selenium.isVisible(
+				"//button[contains(@class,'add-row aui-button')]/span"));
+		assertTrue(selenium.isVisible(
+				"//button[contains(@class,'delete-row aui-button')]/span"));
 	}
 }

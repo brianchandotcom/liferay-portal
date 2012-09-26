@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.controlpanel.users.userphonenumber.adduserphonenumber;
+package com.liferay.portalweb.portal.controlpanel.users.user.deactivateuserdetails;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AddUserPhoneNumberTest extends BaseTestCase {
-	public void testAddUserPhoneNumber() throws Exception {
+public class DeactivateUserDetailsTest extends BaseTestCase {
+	public void testDeactivateUserDetails() throws Exception {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
@@ -46,31 +46,35 @@ public class AddUserPhoneNumberTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("userfn"),
 			selenium.getText("//td[2]/a"));
-		selenium.clickAt("//td[2]/a", RuntimeVariables.replace("userfn"));
+		assertEquals(RuntimeVariables.replace("userln"),
+			selenium.getText("//td[3]/a"));
+		assertEquals(RuntimeVariables.replace("usersn"),
+			selenium.getText("//td[4]/a"));
+		assertEquals(RuntimeVariables.replace(""), selenium.getText("//td[5]/a"));
+		assertEquals(RuntimeVariables.replace(""), selenium.getText("//td[6]/a"));
+		assertEquals(RuntimeVariables.replace(""), selenium.getText("//td[7]/a"));
+		assertFalse(selenium.isChecked("//td[1]/input[@name='_125_rowIds']"));
+		selenium.clickAt("//td[1]/input[@name='_125_rowIds']",
+			RuntimeVariables.replace("User Checkbox"));
+		assertTrue(selenium.isChecked("//td[1]/input[@name='_125_rowIds']"));
+		selenium.click(RuntimeVariables.replace("//input[@value='Deactivate']"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForVisible("//a[@id='_125_phoneNumbersLink']");
-		assertTrue(selenium.isPartialText("//a[@id='_125_phoneNumbersLink']",
-				"Phone Numbers"));
-		selenium.clickAt("//a[@id='_125_phoneNumbersLink']",
-			RuntimeVariables.replace("Phone Numbers"));
-		selenium.type("//input[@id='_125_phoneNumber0']",
-			RuntimeVariables.replace("123-123-1234"));
-		selenium.type("//input[@id='_125_phoneExtension0']",
-			RuntimeVariables.replace("123"));
-		selenium.select("//select[@id='_125_phoneTypeId0']",
-			RuntimeVariables.replace("label=Business"));
-		selenium.clickAt("//input[@value='Save']",
-			RuntimeVariables.replace("Save"));
-		selenium.waitForPageToLoad("30000");
+		assertTrue(selenium.getConfirmation()
+						   .matches("^Are you sure you want to deactivate the selected users[\\s\\S]$"));
 		selenium.waitForVisible("//div[@class='portlet-msg-success']");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals("123-123-1234",
-			selenium.getValue("//input[@id='_125_phoneNumber0']"));
-		assertEquals("123",
-			selenium.getValue("//input[@id='_125_phoneExtension0']"));
-		assertEquals("Business",
-			selenium.getSelectedLabel("//select[@id='_125_phoneTypeId0']"));
+		assertEquals(RuntimeVariables.replace(
+				"Inactive Users (Search All Users)"),
+			selenium.getText("//div[@id='usersAdminUsersPanel']/div/div/span"));
+		assertTrue(selenium.isVisible("//input[@value='Delete']"));
+		assertTrue(selenium.isVisible("//input[@value='Restore']"));
+		assertEquals(RuntimeVariables.replace("userfn"),
+			selenium.getText("//td[2]/a"));
+		assertEquals(RuntimeVariables.replace("userln"),
+			selenium.getText("//td[3]/a"));
+		assertEquals(RuntimeVariables.replace("usersn"),
+			selenium.getText("//td[4]/a"));
 	}
 }

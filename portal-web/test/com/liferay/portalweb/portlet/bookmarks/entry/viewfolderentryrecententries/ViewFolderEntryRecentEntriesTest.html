@@ -14,31 +14,25 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Bookmarks Test Page</td>
-	<td></td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Bookmarks Test Page</td>
-	<td></td>
+	<td>Bookmarks Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Recent</td>
-	<td></td>
+	<td>Recent</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>link=Test Folder Entry</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//td[1]/a</td>
+	<td>Test Folder Entry</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>link=http://www.liferay.com</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//td[2]/a</td>
+	<td>http://www.liferay.com</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

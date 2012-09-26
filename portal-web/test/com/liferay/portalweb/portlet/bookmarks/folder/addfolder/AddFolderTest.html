@@ -14,38 +14,38 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Bookmarks Test Page</td>
-	<td></td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Bookmarks Test Page</td>
-	<td></td>
+	<td>Bookmarks Test Page</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[2]/ul/li[2]/a</td>
+	<td>Add Folder</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//div[2]/ul/li[2]/a</td>
-	<td></td>
+	<td>Add Folder</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_28_name</td>
+	<td>//input[@id='_28_name']</td>
 	<td>Test Folder</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_28_description</td>
+	<td>//textarea[@id='_28_description']</td>
 	<td>This is a test folder.</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//section/div/div/div/div[1]</td>
+	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
 </tr>
 <tr>
@@ -54,11 +54,10 @@
 	<td>Test Folder</td>
 </tr>
 <tr>
-	<td>assertText</td>
+	<td>assertPartialText</td>
 	<td>//td[1]/a</td>
-	<td>Test Folder<br />This is a test folder.</td>
+	<td>This is a test folder.</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

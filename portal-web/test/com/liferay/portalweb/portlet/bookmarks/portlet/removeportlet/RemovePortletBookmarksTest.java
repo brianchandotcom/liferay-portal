@@ -25,13 +25,12 @@ public class RemovePortletBookmarksTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Bookmarks Test Page");
 		selenium.clickAt("link=Bookmarks Test Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Bookmarks Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.click("//img[@alt='Remove']");
-		assertTrue(selenium.getConfirmation()
-						   .matches("^Are you sure you want to remove this component[\\s\\S]$"));
+		selenium.waitForConfirmation(
+			"Are you sure you want to remove this component?");
 		selenium.waitForElementNotPresent("//section");
 		assertTrue(selenium.isElementNotPresent("//section"));
 	}

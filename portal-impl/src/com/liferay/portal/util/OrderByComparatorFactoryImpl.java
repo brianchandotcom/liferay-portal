@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Brian Wing Shun Chan
@@ -37,7 +39,7 @@ public class OrderByComparatorFactoryImpl implements OrderByComparatorFactory {
 		return new DefaultOrderByComparator(tableName, columns);
 	}
 
-	protected class DefaultOrderByComparator extends OrderByComparator {
+	protected static class DefaultOrderByComparator extends OrderByComparator {
 
 		@Override
 		public int compare(Object object1, Object object2) {
@@ -46,15 +48,20 @@ public class OrderByComparatorFactoryImpl implements OrderByComparatorFactory {
 				boolean columnAscending = Boolean.valueOf(
 					String.valueOf(_columns[i + 1]));
 
+				Object columnInstance = null;
+
 				Class<?> columnClass = BeanPropertiesUtil.getObjectTypeSilent(
 					object1, columnName);
 
-				Object columnInstance = null;
-
-				try {
-					columnInstance = columnClass.newInstance();
+				if (columnClass.isPrimitive()) {
+					columnInstance = _primitiveObjects.get(columnClass);
 				}
-				catch (Exception e) {
+				else {
+					try {
+						columnInstance = columnClass.newInstance();
+					}
+					catch (Exception e) {
+					}
 				}
 
 				Object columnValue1 = BeanPropertiesUtil.getObjectSilent(
@@ -174,8 +181,22 @@ public class OrderByComparatorFactoryImpl implements OrderByComparatorFactory {
 
 		private static final String _ORDER_BY_DESC = " DESC";
 
+		private static Map<Class<?>, Object> _primitiveObjects =
+			new HashMap<Class<?>, Object>();
+
 		private Object[] _columns;
 		private String _tableName;
+
+		static {
+			_primitiveObjects.put(boolean.class, new Boolean(true));
+			_primitiveObjects.put(byte.class, new Byte("0"));
+			_primitiveObjects.put(char.class, new Character('0'));
+			_primitiveObjects.put(double.class, new Double(0));
+			_primitiveObjects.put(float.class, new Float(0));
+			_primitiveObjects.put(int.class, new Integer(0));
+			_primitiveObjects.put(long.class, new Long(0));
+			_primitiveObjects.put(short.class, new Short("0"));
+		}
 
 	}
 

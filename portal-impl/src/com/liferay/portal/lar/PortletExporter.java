@@ -265,6 +265,9 @@ public class PortletExporter {
 		Element headerElement = rootElement.addElement("header");
 
 		headerElement.addAttribute(
+			"available-locales",
+			StringUtil.merge(LanguageUtil.getAvailableLocales()));
+		headerElement.addAttribute(
 			"build-number", String.valueOf(ReleaseInfo.getBuildNumber()));
 		headerElement.addAttribute("export-date", Time.getRFC822());
 
@@ -932,12 +935,6 @@ public class PortletExporter {
 		element.addAttribute("portlet-id", portletId);
 		element.addAttribute("layout-id", String.valueOf(layoutId));
 		element.addAttribute("path", path);
-
-		Element availableLocalesElement = parentElement.addElement("locale");
-
-		availableLocalesElement.addAttribute(
-			"available-locales",
-			StringUtil.merge(LanguageUtil.getAvailableLocales()));
 
 		if (portletDataContext.isPathNotProcessed(path)) {
 			try {

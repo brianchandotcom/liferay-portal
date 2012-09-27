@@ -606,6 +606,7 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 							repository.getName(), repository.getDescription(),
 							repository.getPortletId(),
 							repository.getTypeSettingsProperties(),
+							DLFolderConstants.REGULAR_REPOSITORY,
 							serviceContext);
 				}
 				else {

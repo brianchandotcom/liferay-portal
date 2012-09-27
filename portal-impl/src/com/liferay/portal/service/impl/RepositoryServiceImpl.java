@@ -28,6 +28,7 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.RepositoryServiceBaseImpl;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
 import com.liferay.portlet.documentlibrary.service.permission.DLPermission;
 
@@ -49,7 +50,8 @@ public class RepositoryServiceImpl extends RepositoryServiceBaseImpl {
 
 		return repositoryLocalService.addRepository(
 			getUserId(), groupId, classNameId, parentFolderId, name,
-			description, portletId, typeSettingsProperties, serviceContext);
+			description, portletId, typeSettingsProperties,
+			DLFolderConstants.REGULAR_REPOSITORY, serviceContext);
 	}
 
 	public void checkRepository(long repositoryId)

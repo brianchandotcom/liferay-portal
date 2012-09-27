@@ -21,9 +21,11 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portlet.documentlibrary.NoSuchDirectoryException;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 import com.liferay.portlet.messageboards.model.MBThread;
+import com.liferay.portlet.messageboards.service.permission.MBPermission;
 import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.util.Date;
@@ -36,6 +38,13 @@ import java.util.Date;
 public class MBThreadTrashHandler extends BaseTrashHandler {
 
 	public static final String CLASS_NAME = MBThread.class.getName();
+
+	public void checkPermission(
+			PermissionChecker permissionChecker, long groupId, String actionId)
+		throws PortalException, SystemException {
+
+		MBPermission.check(permissionChecker, groupId, actionId);
+	}
 
 	/**
 	 * Deletes trash attachments from all the message boards messages from a

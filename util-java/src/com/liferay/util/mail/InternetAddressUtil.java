@@ -100,18 +100,14 @@ public class InternetAddressUtil {
 			return StringPool.BLANK;
 		}
 
-		StringBundler sb = new StringBundler(addresses.length * 3 - 2);
+		StringBundler sb = new StringBundler(addresses.length * 2 - 1);
 
-		if (addresses != null) {
-			for (int i = 0; i < addresses.length; i++) {
-				sb.append(toString(addresses[i]));
-
-				if (i < (addresses.length - 1)) {
-					sb.append(StringPool.COMMA);
-					sb.append(StringPool.NBSP);
-				}
-			}
+		for (int i = 0; i < (addresses.length - 1); i++) {
+			sb.append(toString(addresses[i]));
+			sb.append(StringPool.COMMA);
 		}
+
+		sb.append(toString(addresses[addresses.length - 1]));
 
 		return sb.toString();
 	}

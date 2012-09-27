@@ -17,6 +17,7 @@ package com.liferay.portal.json;
 import com.liferay.portal.dao.orm.common.EntityCacheImpl;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONSerializer;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -30,7 +31,19 @@ public class JSONFactoryTest extends TestCase {
 
 	@Override
 	public void setUp() throws Exception {
+		JSONInit.init();
+
 		new JSONFactoryUtil().setJSONFactory(new JSONFactoryImpl());
+	}
+
+	public void testHasProperty() {
+		Three three = new Three();
+
+		JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
+
+		String jsonString = jsonSerializer.exclude("class").serialize(three);
+
+		assertEquals("{\"flag\":true}", jsonString);
 	}
 
 	public void testLooseDeserialize() {

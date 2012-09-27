@@ -1,7 +1,11 @@
 AUI.add(
 	'liferay-poller',
 	function(A) {
+		var AObject = A.Object;
+		var JSON = A.JSON;
 		var Util = Liferay.Util;
+
+		var owns = AObject.owns;
 
 		var _browserKey = Util.randomInt();
 		var _enabled = false;
@@ -21,16 +25,16 @@ AUI.add(
 
 		var _maxDelay = _delays.length - 1;
 
+		var _portletIdsMap = {};
+
 		var _metaData = {
 			startPolling: true,
 			browserKey: _browserKey,
 			companyId: themeDisplay.getCompanyId(),
-			initialRequest: true
+			portletIdsMap: _portletIdsMap
 		};
 
 		var _portlets = {};
-		var _registeredPortlets = [];
-		var _requestData = [_metaData];
 		var _requestDelay = _delays[0];
 		var _sendQueue = [];
 		var _suspended = false;
@@ -80,7 +84,8 @@ AUI.add(
 		};
 
 		var _processResponse = function(id, obj) {
-			var response = A.JSON.parse(obj.responseText);
+			var response = JSON.parse(obj.responseText);
+			var send = false;
 
 			if (Util.isArray(response)) {
 				var meta = response.shift();
@@ -95,15 +100,17 @@ AUI.add(
 					var portlet = _portlets[portletId];
 
 					if (portlet) {
-						if (meta.initialRequest && chunkData) {
-							chunkData.initialRequest = true;
-						}
-
 						portlet.listener.call(portlet.scope || Poller, chunk.data, chunk.chunkId);
 
 						if (chunkData && chunkData.pollerHintHighConnectivity) {
 							_requestDelay = _delays[0];
 							_delayIndex = 0;
+						}
+
+						if (portlet.initialRequest) {
+							send = true;
+
+							portlet.initialRequest = false;
 						}
 					}
 				}
@@ -112,10 +119,8 @@ AUI.add(
 					delete _metaData.startPolling;
 				}
 
-				if ('initialRequest' in _metaData) {
+				if (send) {
 					_send();
-
-					delete _metaData.initialRequest;
 				}
 
 				if (!meta.suspendPolling) {
@@ -131,9 +136,10 @@ AUI.add(
 			if (!_suspended && !_frozen) {
 				_metaData.userId = _getEncryptedUserId();
 				_metaData.timestamp = (new Date()).getTime();
-				_metaData.portletIds = _registeredPortlets.join(',');
 
-				var requestStr = A.JSON.stringify([_metaData]);
+				AObject.each(_portlets, _updatePortletIdsMap);
+
+				var requestStr = JSON.stringify([_metaData]);
 
 				A.io(
 					_getReceiveUrl(),
@@ -167,9 +173,10 @@ AUI.add(
 
 				_metaData.userId = _getEncryptedUserId();
 				_metaData.timestamp = (new Date()).getTime();
-				_metaData.portletIds = _registeredPortlets.join(',');
 
-				var requestStr = A.JSON.stringify([_metaData].concat(data));
+				AObject.each(_portlets, _updatePortletIdsMap);
+
+				var requestStr = JSON.stringify([_metaData].concat(data));
 
 				A.io(
 					_getSendUrl(),
@@ -192,6 +199,10 @@ AUI.add(
 			_createRequestTimer();
 		};
 
+		var _updatePortletIdsMap = function(item, index, collection) {
+			_portletIdsMap[index] = item.initialRequest;
+		};
+
 		var Poller = {
 			init: function(options) {
 				var instance = this;
@@ -204,13 +215,10 @@ AUI.add(
 
 			addListener: function(key, listener, scope) {
 				_portlets[key] = {
+					initialRequest: true,
 					listener: listener,
 					scope: scope
 				};
-
-				if (A.Array.indexOf(_registeredPortlets, key) == -1) {
-					_registeredPortlets.push(key);
-				}
 
 				if (!_enabled) {
 					_enabled = true;
@@ -249,13 +257,7 @@ AUI.add(
 					delete _portlets[key];
 				}
 
-				var index = A.Array.indexOf(_registeredPortlets, key);
-
-				if (index > -1) {
-					_registeredPortlets.splice(index, 1);
-				}
-
-				if (!_registeredPortlets.length) {
+				if (AObject.keys(_portlets).length === 0) {
 					_enabled = false;
 
 					_cancelRequestTimer();
@@ -287,13 +289,15 @@ AUI.add(
 			submitRequest: function(key, data, chunkId) {
 				if (!_frozen && (key in _portlets)) {
 					for (var i in data) {
-						var content = data[i];
+						if (owns(data, i)) {
+							var content = data[i];
 
-						if (content.replace) {
-							content = content.replace(_openCurlyBrace, _escapedOpenCurlyBrace);
-							content = content.replace(_closeCurlyBrace, _escapedCloseCurlyBrace);
+							if (content.replace) {
+								content = content.replace(_openCurlyBrace, _escapedOpenCurlyBrace);
+								content = content.replace(_closeCurlyBrace, _escapedCloseCurlyBrace);
 
-							data[i] = content;
+								data[i] = content;
+							}
 						}
 					}
 

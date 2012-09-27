@@ -29,6 +29,8 @@ import java.util.TimeZone;
  */
 public class DateUtil {
 
+	public static final long DAY_IN_MILLIS = 24 * 60 *60 * 1000;
+
 	public static final String ISO_8601_PATTERN = "yyyy-MM-dd'T'HH:mm:ssZ";
 
 	public static int compareTo(Date date1, Date date2) {

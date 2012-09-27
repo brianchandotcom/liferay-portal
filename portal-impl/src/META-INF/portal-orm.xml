@@ -2021,6 +2021,7 @@
 				<temporal>TIMESTAMP</temporal>
 			</basic>
 			<basic name="repositoryId" />
+			<basic name="repositoryType" />
 			<basic name="mountPoint" />
 			<basic name="parentFolderId" />
 			<basic name="name" />

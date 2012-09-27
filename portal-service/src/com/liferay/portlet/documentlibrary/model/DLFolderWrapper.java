@@ -54,6 +54,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("repositoryId", getRepositoryId());
+		attributes.put("repositoryType", getRepositoryType());
 		attributes.put("mountPoint", getMountPoint());
 		attributes.put("parentFolderId", getParentFolderId());
 		attributes.put("name", getName());
@@ -122,6 +123,12 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 
 		if (repositoryId != null) {
 			setRepositoryId(repositoryId);
+		}
+
+		Integer repositoryType = (Integer)attributes.get("repositoryType");
+
+		if (repositoryType != null) {
+			setRepositoryType(repositoryType);
 		}
 
 		Boolean mountPoint = (Boolean)attributes.get("mountPoint");
@@ -391,6 +398,24 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	*/
 	public void setRepositoryId(long repositoryId) {
 		_dlFolder.setRepositoryId(repositoryId);
+	}
+
+	/**
+	* Returns the repository type of this document library folder.
+	*
+	* @return the repository type of this document library folder
+	*/
+	public int getRepositoryType() {
+		return _dlFolder.getRepositoryType();
+	}
+
+	/**
+	* Sets the repository type of this document library folder.
+	*
+	* @param repositoryType the repository type of this document library folder
+	*/
+	public void setRepositoryType(int repositoryType) {
+		_dlFolder.setRepositoryType(repositoryType);
 	}
 
 	/**

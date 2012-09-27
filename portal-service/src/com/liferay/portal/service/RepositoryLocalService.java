@@ -258,6 +258,15 @@ public interface RepositoryLocalService extends BaseLocalService,
 		long parentFolderId, java.lang.String name,
 		java.lang.String description, java.lang.String portletId,
 		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties,
+		int repositoryType,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public long addRepository(long userId, long groupId, long classNameId,
+		long parentFolderId, java.lang.String name,
+		java.lang.String description, java.lang.String portletId,
+		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
@@ -280,6 +289,11 @@ public interface RepositoryLocalService extends BaseLocalService,
 		long folderId, long fileEntryId, long fileVersionId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.Repository getRepository(long groupId,
+		java.lang.String portletId)
+		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.kernel.repository.Repository getRepositoryImpl(

@@ -207,6 +207,20 @@ public interface DLFolderModel extends BaseModel<DLFolder>, GroupedModel,
 	public void setRepositoryId(long repositoryId);
 
 	/**
+	 * Returns the repository type of this document library folder.
+	 *
+	 * @return the repository type of this document library folder
+	 */
+	public int getRepositoryType();
+
+	/**
+	 * Sets the repository type of this document library folder.
+	 *
+	 * @param repositoryType the repository type of this document library folder
+	 */
+	public void setRepositoryType(int repositoryType);
+
+	/**
 	 * Returns the mount point of this document library folder.
 	 *
 	 * @return the mount point of this document library folder

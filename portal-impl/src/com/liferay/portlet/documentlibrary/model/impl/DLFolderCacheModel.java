@@ -34,7 +34,7 @@ import java.util.Date;
 public class DLFolderCacheModel implements CacheModel<DLFolder>, Serializable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(41);
+		StringBundler sb = new StringBundler(43);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -54,6 +54,8 @@ public class DLFolderCacheModel implements CacheModel<DLFolder>, Serializable {
 		sb.append(modifiedDate);
 		sb.append(", repositoryId=");
 		sb.append(repositoryId);
+		sb.append(", repositoryType=");
+		sb.append(repositoryType);
 		sb.append(", mountPoint=");
 		sb.append(mountPoint);
 		sb.append(", parentFolderId=");
@@ -118,6 +120,7 @@ public class DLFolderCacheModel implements CacheModel<DLFolder>, Serializable {
 		}
 
 		dlFolderImpl.setRepositoryId(repositoryId);
+		dlFolderImpl.setRepositoryType(repositoryType);
 		dlFolderImpl.setMountPoint(mountPoint);
 		dlFolderImpl.setParentFolderId(parentFolderId);
 
@@ -175,6 +178,7 @@ public class DLFolderCacheModel implements CacheModel<DLFolder>, Serializable {
 	public long createDate;
 	public long modifiedDate;
 	public long repositoryId;
+	public int repositoryType;
 	public boolean mountPoint;
 	public long parentFolderId;
 	public String name;

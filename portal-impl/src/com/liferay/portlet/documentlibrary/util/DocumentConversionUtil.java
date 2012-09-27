@@ -28,8 +28,10 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.SortedArrayList;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.SystemProperties;
@@ -42,11 +44,10 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * @author Bruno Farache
@@ -67,7 +68,7 @@ public class DocumentConversionUtil {
 		_instance._disconnect();
 	}
 
-	public static Set<String> getConversions(String extension) {
+	public static String[] getConversions(String extension) {
 		return _instance._getConversions(extension);
 	}
 
@@ -128,10 +129,12 @@ public class DocumentConversionUtil {
 			return false;
 		}
 
-		Set<String> conversions = getConversions(extension);
+		String[] conversions = getConversions(extension);
 
-		if (conversions.contains("txt")) {
-			return true;
+		for (int i = 0; i < conversions.length; i++) {
+			if (conversions[i].equals("txt")) {
+				return true;
+			}
 		}
 
 		return false;
@@ -240,16 +243,29 @@ public class DocumentConversionUtil {
 		return extension;
 	}
 
-	private Set<String> _getConversions(String extension) {
+	private String[] _getConversions(String extension) {
 		extension = _fixExtension(extension);
 
-		Set<String> conversions = _conversionsMap.get(extension);
+		String[] conversions = _conversionsMap.get(extension);
 
 		if (conversions == null) {
-			conversions = Collections.emptySet();
+			conversions = _DEFAULT_CONVERSIONS;
 		}
-		else if (conversions.contains(extension)) {
-			conversions.remove(extension);
+		else {
+			if (ArrayUtil.contains(conversions, extension)) {
+				List<String> conversionsList = new ArrayList<String>();
+
+				for (int i = 0; i < conversions.length; i++) {
+					String conversion = conversions[i];
+
+					if (!conversion.equals(extension)) {
+						conversionsList.add(conversion);
+					}
+				}
+
+				conversions = conversionsList.toArray(
+					new String[conversionsList.size()]);
+			}
 		}
 
 		return conversions;
@@ -303,7 +319,7 @@ public class DocumentConversionUtil {
 			PropsKeys.OPENOFFICE_CONVERSION_TARGET_EXTENSIONS, filter);
 
 		for (String sourceExtension : sourceExtensions) {
-			Set<String> conversions = new HashSet<String>();
+			List<String> conversions = new SortedArrayList<String>();
 
 			DocumentFormat sourceDocumentFormat =
 				documentFormatRegistry.getFormatByFileExtension(
@@ -350,7 +366,9 @@ public class DocumentConversionUtil {
 							" to " + conversions);
 				}
 
-				_conversionsMap.put(sourceExtension, conversions);
+				_conversionsMap.put(
+					sourceExtension,
+					conversions.toArray(new String[conversions.size()]));
 			}
 		}
 	}
@@ -370,6 +388,8 @@ public class DocumentConversionUtil {
 	private static final String[] _COMPARABLE_FILE_EXTENSIONS =
 		PropsValues.DL_COMPARABLE_FILE_EXTENSIONS;
 
+	private static final String[] _DEFAULT_CONVERSIONS = new String[0];
+
 	private static final String _LOCALHOST = "localhost";
 
 	private static final String _LOCALHOST_IP = "127.0.0.1";
@@ -380,8 +400,8 @@ public class DocumentConversionUtil {
 	private static DocumentConversionUtil _instance =
 		new DocumentConversionUtil();
 
-	private Map<String, Set<String>> _conversionsMap =
-		new HashMap<String, Set<String>>();
+	private Map<String, String[]> _conversionsMap =
+		new HashMap<String, String[]>();
 	private DocumentConverter _documentConverter;
 	private OpenOfficeConnection _openOfficeConnection;
 

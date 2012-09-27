@@ -2984,7 +2984,8 @@ public class SourceFormatter {
 			return new Tuple(previousLine + line);
 		}
 
-		if ((line.endsWith(StringPool.OPEN_CURLY_BRACE) ||
+		if (((line.endsWith(StringPool.OPEN_CURLY_BRACE) &&
+			  !line.startsWith("new ")) ||
 			 line.endsWith(StringPool.CLOSE_PARENTHESIS)) &&
 			(trimmedPreviousLine.startsWith("else ") ||
 			 trimmedPreviousLine.startsWith("if ") ||

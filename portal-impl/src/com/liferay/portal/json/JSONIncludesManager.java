@@ -96,9 +96,6 @@ public class JSONIncludesManager {
 		if (methodName.startsWith("get")) {
 			propertyName = methodName.substring(3);
 		}
-		else if (methodName.startsWith("has")) {
-			propertyName = methodName.substring(3);
-		}
 		else if (methodName.startsWith("is")) {
 			propertyName = methodName.substring(2);
 		}

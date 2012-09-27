@@ -59,7 +59,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	public DLFolder addFolder(
 			long userId, long groupId, long repositoryId, boolean mountPoint,
 			long parentFolderId, String name, String description,
-			ServiceContext serviceContext)
+			int repositoryType, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		// Folder
@@ -81,6 +81,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		dlFolder.setCreateDate(serviceContext.getCreateDate(now));
 		dlFolder.setModifiedDate(serviceContext.getModifiedDate(now));
 		dlFolder.setRepositoryId(repositoryId);
+		dlFolder.setRepositoryType(repositoryType);
 		dlFolder.setMountPoint(mountPoint);
 		dlFolder.setParentFolderId(parentFolderId);
 		dlFolder.setName(name);
@@ -127,6 +128,17 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 			new LiferayFolder(dlFolder), serviceContext);
 
 		return dlFolder;
+	}
+
+	public DLFolder addFolder(
+			long userId, long groupId, long repositoryId, boolean mountPoint,
+			long parentFolderId, String name, String description,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		return addFolder(
+			userId, groupId, repositoryId, mountPoint, parentFolderId, name,
+			description, DLFolderConstants.REGULAR_REPOSITORY, serviceContext);
 	}
 
 	public void deleteAll(long groupId)

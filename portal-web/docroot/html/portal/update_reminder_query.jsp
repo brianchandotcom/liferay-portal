@@ -43,22 +43,7 @@ if (referer.equals(themeDisplay.getPathMain() + "/portal/update_reminder_query")
 	</c:if>
 
 	<aui:fieldset label="password-reminder">
-		<aui:select label="question" name="reminderQueryQuestion">
-
-			<%
-			for (String question : user.getReminderQueryQuestions()) {
-			%>
-
-				<aui:option label="<%= question %>" />
-
-			<%
-			}
-			%>
-
-			<c:if test="<%= PropsValues.USERS_REMINDER_QUERIES_CUSTOM_QUESTION_ENABLED %>">
-				<aui:option label="<%= UsersAdminUtil.CUSTOM_QUESTION %>" />
-			</c:if>
-		</aui:select>
+		<%@ include file="/html/portal/update_reminder_query_question.jspf" %>
 
 		<c:if test="<%= PropsValues.USERS_REMINDER_QUERIES_CUSTOM_QUESTION_ENABLED %>">
 			<div class="aui-helper-hidden" id="customQuestionContainer">

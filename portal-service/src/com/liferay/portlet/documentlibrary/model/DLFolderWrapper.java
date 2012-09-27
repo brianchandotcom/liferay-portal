@@ -717,6 +717,42 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 		return _dlFolder.isScheduled();
 	}
 
+	/**
+	* Returns the container id of this document library folder.
+	*
+	* @return the container id of this document library folder
+	*/
+	public long getContainerId() {
+		return _dlFolder.getContainerId();
+	}
+
+	/**
+	* Sets the container id of this document library folder.
+	*
+	* @param container id of this document library folder
+	*/
+	public void setContainerId(long containerId) {
+		_dlFolder.setContainerId(containerId);
+	}
+
+	/**
+	* Returns the parent container id of this document library folder.
+	*
+	* @return the parent container id of this document library folder
+	*/
+	public long getParentContainerId() {
+		return _dlFolder.getParentContainerId();
+	}
+
+	/**
+	* Sets the parent container id of this document library folder.
+	*
+	* @param parent container id of this document library folder
+	*/
+	public void setParentContainerId(long containerId) {
+		_dlFolder.setParentContainerId(containerId);
+	}
+
 	public boolean isNew() {
 		return _dlFolder.isNew();
 	}

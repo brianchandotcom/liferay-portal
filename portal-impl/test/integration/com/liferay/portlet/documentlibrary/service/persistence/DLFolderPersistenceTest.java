@@ -126,6 +126,8 @@ public class DLFolderPersistenceTest {
 
 		newDLFolder.setRepositoryId(ServiceTestUtil.nextLong());
 
+		newDLFolder.setRepositoryType(ServiceTestUtil.nextInt());
+
 		newDLFolder.setMountPoint(ServiceTestUtil.randomBoolean());
 
 		newDLFolder.setParentFolderId(ServiceTestUtil.nextLong());
@@ -171,6 +173,8 @@ public class DLFolderPersistenceTest {
 			Time.getShortTimestamp(newDLFolder.getModifiedDate()));
 		Assert.assertEquals(existingDLFolder.getRepositoryId(),
 			newDLFolder.getRepositoryId());
+		Assert.assertEquals(existingDLFolder.getRepositoryType(),
+			newDLFolder.getRepositoryType());
 		Assert.assertEquals(existingDLFolder.getMountPoint(),
 			newDLFolder.getMountPoint());
 		Assert.assertEquals(existingDLFolder.getParentFolderId(),
@@ -358,6 +362,8 @@ public class DLFolderPersistenceTest {
 		dlFolder.setModifiedDate(ServiceTestUtil.nextDate());
 
 		dlFolder.setRepositoryId(ServiceTestUtil.nextLong());
+
+		dlFolder.setRepositoryType(ServiceTestUtil.nextInt());
 
 		dlFolder.setMountPoint(ServiceTestUtil.randomBoolean());
 

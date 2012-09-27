@@ -547,6 +547,19 @@ public class DLAppLocalServiceUtil {
 			serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.repository.model.FileEntry moveFileEntryToTrash(
+		long userId, long fileEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().moveFileEntryToTrash(userId, fileEntryId);
+	}
+
+	public static void restoreFileEntryFromTrash(long userId, long fileEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().restoreFileEntryFromTrash(userId, fileEntryId);
+	}
+
 	/**
 	* Updates the file entry's asset replacing its asset categories, tags, and
 	* links.

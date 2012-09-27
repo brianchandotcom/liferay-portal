@@ -44,6 +44,7 @@ public class TearDownDMDFolderTest extends BaseTestCase {
 					continue;
 				}
 
+				Thread.sleep(5000);
 				assertEquals(RuntimeVariables.replace("Actions"),
 					selenium.getText(
 						"//a[contains(@id,'foldersSearchContainer_1_menuButton')]/span"));
@@ -72,6 +73,7 @@ public class TearDownDMDFolderTest extends BaseTestCase {
 					continue;
 				}
 
+				Thread.sleep(5000);
 				assertEquals(RuntimeVariables.replace("Actions"),
 					selenium.getText(
 						"//a[contains(@id,'foldersSearchContainer_1_menuButton')]/span"));
@@ -100,6 +102,7 @@ public class TearDownDMDFolderTest extends BaseTestCase {
 					continue;
 				}
 
+				Thread.sleep(5000);
 				assertEquals(RuntimeVariables.replace("Actions"),
 					selenium.getText(
 						"//a[contains(@id,'foldersSearchContainer_1_menuButton')]/span"));
@@ -128,6 +131,7 @@ public class TearDownDMDFolderTest extends BaseTestCase {
 					continue;
 				}
 
+				Thread.sleep(5000);
 				assertEquals(RuntimeVariables.replace("Actions"),
 					selenium.getText(
 						"//a[contains(@id,'foldersSearchContainer_1_menuButton')]/span"));
@@ -156,6 +160,7 @@ public class TearDownDMDFolderTest extends BaseTestCase {
 					continue;
 				}
 
+				Thread.sleep(5000);
 				assertEquals(RuntimeVariables.replace("Actions"),
 					selenium.getText(
 						"//a[contains(@id,'foldersSearchContainer_1_menuButton')]/span"));

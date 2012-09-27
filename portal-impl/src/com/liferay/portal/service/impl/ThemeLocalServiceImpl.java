@@ -48,9 +48,12 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.util.ContextReplace;
 
+import java.io.InputStream;
+
 import java.net.URL;
 
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -61,10 +64,15 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.ServletContext;
 
+import org.apache.commons.io.IOUtils;
+
+import org.springframework.core.io.UrlResource;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Jorge Ferrer
  * @author Raymond Augé
+ * @author Tomas Polesovsky
  */
 public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 
@@ -262,6 +270,48 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 					}
 				}
 			}
+
+			Set<String> themes = new HashSet<String>();
+			ClassLoader classLoader = getClass().getClassLoader();
+			// load xmls
+			String resourceName = "WEB-INF/liferay-look-and-feel-ext.xml";
+			Enumeration<URL> resources = classLoader.getResources(resourceName);
+
+			if (_log.isDebugEnabled() && !resources.hasMoreElements()) {
+				_log.debug("No " + resourceName + " has been found");
+			}
+
+			while (resources.hasMoreElements()) {
+				URL resource = resources.nextElement();
+				if (_log.isDebugEnabled()) {
+					_log.debug("Loading " + resourceName + " from: " +
+						resource);
+				}
+
+				if (resource == null) {
+					continue;
+				}
+
+				InputStream is = new UrlResource(resource).getInputStream();
+				try {
+					String xmlExt = IOUtils.toString(is, "UTF-8");
+					themes.addAll(_readThemes(
+						servletContextName, servletContext, themesPath,
+						loadFromServletContext, xmlExt, pluginPackage));
+
+				} catch (Exception e) {
+					_log.error("Problem while loading file " + resource, e);
+				} finally {
+					is.close();
+				}
+			}
+
+			for (String themeId : themes) {
+				if (!themeIdsList.contains(themeId)) {
+					themeIdsList.add(themeId);
+				}
+			}
+
 		}
 		catch (Exception e) {
 			e.printStackTrace();

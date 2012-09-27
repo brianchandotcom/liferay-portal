@@ -14,12 +14,18 @@
 
 package com.liferay.portal.util;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 
+import java.io.File;
+
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -29,8 +35,35 @@ import javax.servlet.ServletContext;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Tomas Polesovsky
  */
 public class ExtRegistry {
+
+	public static final List<String> EXT_PLUGIN_JARS_GLOBAL_CL =
+		Arrays.asList(new String[] {
+			"ext-service"
+		});
+
+	public static final List<String> EXT_PLUGIN_JARS_PORTAL_CL =
+		Arrays.asList(new String[] {
+			"ext-impl", "ext-util-bridges", "ext-util-java", "ext-util-taglib"
+		});
+
+	public static final List<String> IGNORED_FILES =
+		Arrays.asList(new String[] {
+			"log4j.dtd", "service.xml", "sql"+File.separator
+		});
+
+	public static final List<String> SUPPORTED_MERGING_FILES =
+		Arrays.asList(new String[] {
+			"ext-model-hints.xml", "ext-spring.xml", "ext-hbm.xml",
+			"portal-log4j-ext.xml", "content/Language-ext",
+			"portal-ext.properties", "tiles-defs-ext.xml",
+			"struts-config-ext.xml", "liferay-portlet-ext.xml",
+			"liferay-look-and-feel-ext.xml", "liferay-layout-templates-ext.xml",
+			"portlet-ext.xml", "liferay-display-ext.xml",
+			"remoting-servlet-ext.xml", "web.xml"
+		});
 
 	public static Map<String, Set<String>> getConflicts(
 			ServletContext servletContext)
@@ -43,9 +76,11 @@ public class ExtRegistry {
 
 		Map<String, Set<String>> conflicts = new HashMap<String, Set<String>>();
 
-		for (Map.Entry<String, Set<String>> entry : _extMap.entrySet()) {
-			String curServletContextName = entry.getKey();
-			Set<String> curFiles = entry.getValue();
+		for (String curServletContextName : _extMap.keySet()) {
+			ExtRegistryInfo extRegistryInfo = _extMap.get(
+				curServletContextName);
+
+			Set<String> curFiles = extRegistryInfo.getFiles();
 
 			for (String file : files) {
 				if (!curFiles.contains(file)) {
@@ -68,8 +103,50 @@ public class ExtRegistry {
 		return conflicts;
 	}
 
+	public static Set<String> getFiles(String servletContextName) {
+		return Collections.unmodifiableSet(_extMap.get(servletContextName)
+			.getFiles());
+	}
+
 	public static Set<String> getServletContextNames() {
 		return Collections.unmodifiableSet(_extMap.keySet());
+	}
+
+	public static Set<ServletContext> getServletContexts() {
+		Set<ServletContext> result = new HashSet<ServletContext>(
+			_extMap.size());
+
+		for (ExtRegistryInfo info : _extMap.values()) {
+			if (info.getServletContext() != null) {
+				result.add(info.getServletContext());
+			}
+		}
+
+		return Collections.unmodifiableSet(result);
+	}
+
+	public static boolean isIgnoredFile(String name) {
+		if (isMergedFile(name)) {
+			return true;
+		}
+
+		for (String ignoredFile : IGNORED_FILES) {
+			if (name.contains(ignoredFile)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	public static boolean isMergedFile(String name) {
+		for (String mergedFile : SUPPORTED_MERGING_FILES) {
+			if (name.contains(mergedFile)) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	public static boolean isRegistered(String servletContextName) {
@@ -81,6 +158,41 @@ public class ExtRegistry {
 		}
 	}
 
+	public static boolean isRestartPending(String servletContextName) {
+		ExtRegistryInfo extRegistryInfo = _extMap.get(servletContextName);
+		if (extRegistryInfo == null) {
+			throw new IllegalStateException(
+				"Ext plugin is not registered: " + servletContextName);
+		}
+
+		return extRegistryInfo.isRestartPending();
+	}
+
+	public static boolean isStarted(String servletContextName) {
+		ExtRegistryInfo extRegistryInfo = _extMap.get(servletContextName);
+		if (extRegistryInfo == null) {
+			throw new IllegalStateException(
+				"Ext plugin is not registered: " + servletContextName);
+		}
+
+		if (extRegistryInfo.getServletContext() == null) {
+			return false;
+		}
+		else {
+			return true;
+		}
+	}
+
+	public static boolean isUndeployed(String servletContextName) {
+		ExtRegistryInfo extRegistryInfo = _extMap.get(servletContextName);
+		if (extRegistryInfo == null) {
+			throw new IllegalStateException(
+				"Ext plugin is not registered: " + servletContextName);
+		}
+
+		return extRegistryInfo.isUndeployed();
+	}
+
 	public static void registerExt(ServletContext servletContext)
 		throws Exception {
 
@@ -89,7 +201,8 @@ public class ExtRegistry {
 		Set<String> files = _readExtFiles(
 			servletContext, "/WEB-INF/ext-" + servletContextName + ".xml");
 
-		_extMap.put(servletContextName, files);
+		_extMap.put(
+			servletContextName, new ExtRegistryInfo(servletContext, files));
 	}
 
 	public static void registerPortal(ServletContext servletContext)
@@ -110,9 +223,54 @@ public class ExtRegistry {
 
 				Set<String> files = _readExtFiles(servletContext, resourcePath);
 
-				_extMap.put(servletContextName, files);
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						"Registering installed ext plugin for " +
+							servletContextName);
+				}
+
+				_extMap.put(
+					servletContextName, new ExtRegistryInfo(null, files));
 			}
 		}
+	}
+
+	public static void setRestartPending(String servletContextName) {
+		ExtRegistryInfo extRegistryInfo = _extMap.get(servletContextName);
+		if (extRegistryInfo == null) {
+			throw new IllegalStateException(
+				"Ext plugin is not registered: " + servletContextName);
+		}
+
+		extRegistryInfo.setRestartPending(true);
+	}
+
+	public static void setStarted(ServletContext servletContext) {
+		String servletContextName = servletContext.getServletContextName();
+		ExtRegistryInfo extRegistryInfo = _extMap.get(servletContextName);
+		if (extRegistryInfo == null) {
+			throw new IllegalStateException(
+				"Ext plugin is not registered: " + servletContextName);
+		}
+
+		extRegistryInfo.setRestartPending(false);
+		extRegistryInfo.setServletContext(servletContext);
+		extRegistryInfo.setUndeployed(false);
+	}
+
+	public static void setUndeployed(String servletContextName) {
+		ExtRegistryInfo extRegistryInfo = _extMap.get(servletContextName);
+		if (extRegistryInfo == null) {
+			throw new IllegalStateException(
+				"Ext plugin is not registered: " + servletContextName);
+		}
+
+		extRegistryInfo.setServletContext(null);
+		extRegistryInfo.setUndeployed(true);
+	}
+
+	public static void unregisterExt(String servletContextName) {
+		_extMap.remove(servletContextName);
 	}
 
 	private static Set<String> _readExtFiles(
@@ -131,13 +289,65 @@ public class ExtRegistry {
 		List<Element> fileElements = filesElement.elements("file");
 
 		for (Element fileElement : fileElements) {
-			files.add(fileElement.getText());
+			String fileName = fileElement.getText();
+			if (!isIgnoredFile(fileName)) {
+				files.add(fileName);
+			}
 		}
 
 		return files;
 	}
 
-	private static Map<String, Set<String>> _extMap =
-		new HashMap<String, Set<String>>();
+	private static Log _log = LogFactoryUtil.getLog(ExtRegistry.class);
+
+	private static Map<String, ExtRegistryInfo> _extMap =
+		Collections.synchronizedMap(new HashMap<String, ExtRegistryInfo>());
+
+	private static class ExtRegistryInfo {
+
+		public ExtRegistryInfo(
+			ServletContext servletContext, Set<String> files) {
+
+			this._servletContext = servletContext;
+			this._files = files;
+		}
+
+		public boolean isRestartPending() {
+			return this._restartPending;
+		}
+
+		public boolean isUndeployed() {
+			return this._undeployed;
+		}
+
+		public Set<String> getFiles() {
+			return _files;
+		}
+
+		public ServletContext getServletContext() {
+			return _servletContext;
+		}
+
+		public void setFiles(Set<String> files) {
+			this._files = files;
+		}
+
+		public void setRestartPending(boolean restartPending) {
+			this._restartPending = restartPending;
+		}
+
+		public void setServletContext(ServletContext servletContext) {
+			this._servletContext = servletContext;
+		}
+
+		public void setUndeployed(boolean undeployed) {
+			this._undeployed = undeployed;
+		}
+
+		private Set<String> _files;
+		private ServletContext _servletContext;
+		private boolean _undeployed;
+		private boolean _restartPending;
+	}
 
 }

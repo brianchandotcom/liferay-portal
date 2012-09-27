@@ -31,6 +31,7 @@ import java.io.InputStream;
 import java.net.URL;
 
 import java.util.Collections;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -192,23 +193,38 @@ public class LanguageResources {
 
 			ClassLoader classLoader = LanguageResources.class.getClassLoader();
 
-			URL url = classLoader.getResource(name);
-
-			if (_log.isInfoEnabled()) {
-				_log.info("Attempting to load " + name);
+			Enumeration<URL> urls = classLoader.getResources(name);
+			if (_log.isDebugEnabled() && !urls.hasMoreElements()) {
+				_log.debug("No " + name + " has been found");
 			}
 
-			if (url != null) {
-				InputStream inputStream = url.openStream();
-
-				properties = PropertiesUtil.load(inputStream, StringPool.UTF8);
-
-				inputStream.close();
+			while (urls.hasMoreElements()) {
+				URL url = urls.nextElement();
 
 				if (_log.isInfoEnabled()) {
-					_log.info(
-						"Loading " + url + " with " + properties.size() +
-							" values");
+					_log.info("Attempting to load " + name);
+				}
+
+				if (url != null) {
+					InputStream inputStream = url.openStream();
+
+					try {
+						Properties urlProps = PropertiesUtil.load(
+							inputStream, StringPool.UTF8);
+
+						for (String key : urlProps.stringPropertyNames()) {
+							properties.setProperty(
+								key, urlProps.getProperty(key));
+						}
+					} finally {
+						inputStream.close();
+					}
+
+					if (_log.isInfoEnabled()) {
+						_log.info(
+							"Loading " + url + " with " + properties.size() +
+								" values");
+					}
 				}
 			}
 		}

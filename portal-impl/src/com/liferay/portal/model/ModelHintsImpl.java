@@ -32,8 +32,11 @@ import com.liferay.util.PwdGenerator;
 
 import java.io.InputStream;
 
+import java.net.URL;
+
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -42,8 +45,11 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
+import org.springframework.core.io.UrlResource;
+
 /**
  * @author Brian Wing Shun Chan
+ * @author Tomas Polesovsky
  */
 public class ModelHintsImpl implements ModelHints {
 
@@ -60,7 +66,34 @@ public class ModelHintsImpl implements ModelHints {
 				PropsUtil.get(PropsKeys.MODEL_HINTS_CONFIGS));
 
 			for (int i = 0; i < configs.length; i++) {
-				read(classLoader, configs[i]);
+				if (!configs[i].startsWith("classpath*:")) {
+					read(classLoader, configs[i]);
+				} else {
+					String configName = configs[i].substring(
+						"classpath*:".length());
+
+					Enumeration<URL> resources = classLoader.getResources(
+						configName);
+
+					if (_log.isDebugEnabled() && !resources.hasMoreElements()) {
+						_log.debug("No " + configName + " has been found");
+					}
+
+					while (resources.hasMoreElements()) {
+						URL resource = resources.nextElement();
+						if (_log.isDebugEnabled()) {
+							_log.debug("Loading " + configName + " from: " +
+								resource);
+						}
+
+						InputStream is = new UrlResource(resource)
+							.getInputStream();
+
+						if (is != null) {
+							read(classLoader, resource.toString(), is);
+						}
+					}
+				}
 			}
 		}
 		catch (Exception e) {
@@ -205,7 +238,11 @@ public class ModelHintsImpl implements ModelHints {
 	}
 
 	public void read(ClassLoader classLoader, String source) throws Exception {
-		InputStream is = classLoader.getResourceAsStream(source);
+		read(classLoader, source, classLoader.getResourceAsStream(source));
+	}
+
+	public void read(ClassLoader classLoader, String source, InputStream is)
+		throws Exception {
 
 		if (is == null) {
 			if (_log.isWarnEnabled()) {

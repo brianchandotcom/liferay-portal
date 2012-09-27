@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PortalLifecycleUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ReleaseInfo;
@@ -99,7 +100,11 @@ import com.liferay.util.ContentUtil;
 import com.liferay.util.servlet.EncryptedServletRequest;
 
 import java.io.IOException;
+import java.io.InputStream;
 
+import java.net.URL;
+
+import java.util.Enumeration;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
@@ -112,11 +117,13 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
+import javax.servlet.UnavailableException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.PageContext;
 
+import org.apache.commons.digester.Digester;
 import org.apache.struts.Globals;
 import org.apache.struts.action.ActionServlet;
 import org.apache.struts.action.RequestProcessor;
@@ -124,10 +131,15 @@ import org.apache.struts.config.ControllerConfig;
 import org.apache.struts.config.ModuleConfig;
 import org.apache.struts.tiles.TilesUtilImpl;
 
+import org.springframework.core.io.UrlResource;
+
+import org.xml.sax.InputSource;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Jorge Ferrer
  * @author Brian Myunghun Kim
+ * @author Tomas Polesovsky
  */
 public class MainServlet extends ActionServlet {
 
@@ -824,6 +836,52 @@ public class MainServlet extends ActionServlet {
 			servletContext, xmls, pluginPackage);
 	}
 
+	@Override
+	protected void initOther() throws ServletException {
+		super.initOther();
+
+		StringBuilder sb = new StringBuilder(super.config);
+
+		ClassLoader portalClassLoader = PortalClassLoaderUtil.getClassLoader();
+		try {
+			String resourceName = "WEB-INF/struts-config-ext.xml";
+			Enumeration<URL> urls = portalClassLoader.getResources(
+				resourceName);
+
+			if (_log.isDebugEnabled() && !urls.hasMoreElements()) {
+				_log.debug("No " + resourceName + " has been found");
+			}
+
+			while (urls.hasMoreElements()) {
+				URL url = urls.nextElement();
+				if (_log.isDebugEnabled()) {
+					_log.debug("Loading " + resourceName + " from " + url);
+				}
+
+				sb.append(StringPool.COMMA);
+
+				// We must flag that this url is going to be loaded from
+				// classloader and not like other web app resource
+
+				sb.append(_STRUTS_CONFIG_EXT_FILE_FLAG);
+
+				// Comma is a path delimiter in config, therefore we must
+				// escape the path using other character
+
+				String safeUrl = url.toString().replaceAll(
+					StringPool.COMMA, _COMMA_REPLACEMENT_CHAR);
+
+				sb.append(safeUrl);
+			}
+
+		} catch (IOException ex) {
+			_log.error("Problem with loading struts config files: " +
+				ex.getMessage(), ex);
+		}
+
+		super.config = sb.toString();
+	}
+
 	protected PluginPackage initPluginPackage() throws Exception {
 		ServletContext servletContext = getServletContext();
 
@@ -1026,6 +1084,47 @@ public class MainServlet extends ActionServlet {
 			response);
 
 		return userId;
+	}
+
+	@Override
+	protected void parseModuleConfigFile(Digester digester, String path)
+			throws UnavailableException {
+
+		if (!path.contains(_STRUTS_CONFIG_EXT_FILE_FLAG)) {
+			super.parseModuleConfigFile(digester, path);
+			return;
+		}
+
+		try {
+
+			// remove our flag and replace back comma
+
+			URL url = new URL(path.substring(_STRUTS_CONFIG_EXT_FILE_FLAG.
+				length()).replaceAll(
+					_COMMA_REPLACEMENT_CHAR, StringPool.COMMA));
+
+			InputStream is = new UrlResource(url).getInputStream();
+			try {
+				InputSource xmlStream = new InputSource(url.toExternalForm());
+				xmlStream.setByteStream(is);
+				digester.parse(is);
+
+			} catch (Exception e) {
+				_log.error("Cannot load Ext struts config file: " + url, e);
+			} finally {
+				if (is != null) {
+					try {
+						is.close();
+					} catch (IOException e) {
+						_log.error("Cannot close stream to the struts config " +
+							"file: " + url, e);
+					}
+				}
+			}
+		} catch (Exception e) {
+			_log.error(
+				"Cannot load Ext Struts config files: " + e.getMessage(), e);
+		}
 	}
 
 	protected boolean processCompanyInactiveRequest(
@@ -1282,7 +1381,7 @@ public class MainServlet extends ActionServlet {
 		dynamicRequest.setParameter("layoutId", StringPool.BLANK);
 		dynamicRequest.setParameter("privateLayout", StringPool.BLANK);
 
-		PortalUtil.sendError(status, (Exception)t, dynamicRequest, response);
+		PortalUtil.sendError(status, (Exception) t, dynamicRequest, response);
 	}
 
 	protected void setPortalPort(HttpServletRequest request) {
@@ -1309,6 +1408,8 @@ public class MainServlet extends ActionServlet {
 		PrincipalThreadLocal.setPassword(password);
 	}
 
+	private static final String _COMMA_REPLACEMENT_CHAR = "\u2615";
+
 	private static final boolean _HTTP_HEADER_VERSION_VERBOSITY_DEFAULT =
 		PropsValues.HTTP_HEADER_VERSION_VERBOSITY.equalsIgnoreCase(
 			ReleaseInfo.getName());
@@ -1318,6 +1419,8 @@ public class MainServlet extends ActionServlet {
 
 	private static final String _LIFERAY_PORTAL_REQUEST_HEADER =
 		"Liferay-Portal";
+
+	private static final String _STRUTS_CONFIG_EXT_FILE_FLAG = "\u2604";
 
 	private static Log _log = LogFactoryUtil.getLog(MainServlet.class);
 

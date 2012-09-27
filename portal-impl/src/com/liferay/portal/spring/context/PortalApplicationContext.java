@@ -25,6 +25,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
 import org.springframework.core.io.DefaultResourceLoader;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.web.context.support.XmlWebApplicationContext;
 
 /**
@@ -36,6 +37,7 @@ import org.springframework.web.context.support.XmlWebApplicationContext;
  *
  * @author Brian Wing Shun Chan
  * @author Alexander Chow
+ * @author Tomas Polesovsky
  */
 public class PortalApplicationContext extends XmlWebApplicationContext {
 
@@ -67,6 +69,9 @@ public class PortalApplicationContext extends XmlWebApplicationContext {
 		else {
 			configLocations.remove("META-INF/jpa-spring.xml");
 		}
+
+		xmlBeanDefinitionReader.setResourceLoader(
+			new PathMatchingResourcePatternResolver());
 
 		for (String configLocation : configLocations) {
 			try {

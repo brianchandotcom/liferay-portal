@@ -19,6 +19,7 @@
 	<%
 	for (String question : user.getReminderQueryQuestions()) {
 	%>
+
 		<aui:option label="<%= question %>" />
 
 	<%

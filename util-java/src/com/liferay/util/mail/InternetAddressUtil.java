@@ -108,7 +108,6 @@ public class InternetAddressUtil {
 
 				if (i < (addresses.length - 1)) {
 					sb.append(StringPool.COMMA);
-					sb.append(StringPool.NBSP);
 				}
 			}
 		}

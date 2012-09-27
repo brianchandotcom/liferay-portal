@@ -48,8 +48,8 @@ import org.junit.runner.RunWith;
  */
 @ExecutionTestListeners(
 	listeners = {
-			EnvironmentExecutionTestListener.class,
-			TransactionalExecutionTestListener.class
+		EnvironmentExecutionTestListener.class,
+		TransactionalExecutionTestListener.class
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class RepositoryTest {

@@ -87,7 +87,7 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 
 		String contentType = MimeTypesUtil.getContentType(file);
 
-		boolean isEnabled = DLAppHelperThreadLocal.isEnabled();
+		boolean previousEnabled = DLAppHelperThreadLocal.isEnabled();
 
 		try {
 			DLAppHelperThreadLocal.setEnabled(false);
@@ -97,7 +97,7 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 				StringPool.BLANK, StringPool.BLANK, file, serviceContext);
 		}
 		finally {
-			DLAppHelperThreadLocal.setEnabled(isEnabled);
+			DLAppHelperThreadLocal.setEnabled(previousEnabled);
 		}
 	}
 
@@ -132,7 +132,7 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 		String contentType = MimeTypesUtil.getContentType(
 			inputStream, fileName);
 
-		boolean isEnabled = DLAppHelperThreadLocal.isEnabled();
+		boolean previousEnabled = DLAppHelperThreadLocal.isEnabled();
 
 		try {
 			DLAppHelperThreadLocal.setEnabled(false);
@@ -143,7 +143,7 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 				serviceContext);
 		}
 		finally {
-			DLAppHelperThreadLocal.setEnabled(isEnabled);
+			DLAppHelperThreadLocal.setEnabled(previousEnabled);
 		}
 	}
 
@@ -162,7 +162,7 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 	public void deletePortletFileEntry(long fileEntryId)
 		throws PortalException, SystemException {
 
-		boolean isEnabled = DLAppHelperThreadLocal.isEnabled();
+		boolean previousEnabled = DLAppHelperThreadLocal.isEnabled();
 
 		try {
 			DLAppHelperThreadLocal.setEnabled(false);
@@ -170,7 +170,7 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 			DLAppLocalServiceUtil.deleteFileEntry(fileEntryId);
 		}
 		finally {
-			DLAppHelperThreadLocal.setEnabled(isEnabled);
+			DLAppHelperThreadLocal.setEnabled(previousEnabled);
 		}
 	}
 
@@ -235,7 +235,7 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 	public void movePortletFileEntryFromTrash(long userId, long fileEntryId)
 		throws PortalException, SystemException {
 
-		boolean isEnabled = DLAppHelperThreadLocal.isEnabled();
+		boolean previousEnabled = DLAppHelperThreadLocal.isEnabled();
 
 		try {
 			DLAppHelperThreadLocal.setEnabled(false);
@@ -244,7 +244,7 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 				userId, fileEntryId);
 		}
 		finally {
-			DLAppHelperThreadLocal.setEnabled(isEnabled);
+			DLAppHelperThreadLocal.setEnabled(previousEnabled);
 		}
 	}
 
@@ -261,7 +261,7 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 	public void movePortletFileEntryToTrash(long userId, long fileEntryId)
 			throws PortalException, SystemException {
 
-		boolean isEnabled = DLAppHelperThreadLocal.isEnabled();
+		boolean previousEnabled = DLAppHelperThreadLocal.isEnabled();
 
 		try {
 			DLAppHelperThreadLocal.setEnabled(false);
@@ -269,7 +269,7 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 			DLAppLocalServiceUtil.moveFileEntryToTrash(userId, fileEntryId);
 		}
 		finally {
-			DLAppHelperThreadLocal.setEnabled(isEnabled);
+			DLAppHelperThreadLocal.setEnabled(previousEnabled);
 		}
 	}
 

@@ -49,7 +49,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -398,6 +401,61 @@ public class UpgradeImageGallery extends UpgradeProcess {
 		upgradeDocumentLibrary.updateSyncs();
 	}
 
+	protected Map<String, Long> getActionValuesByResource(String resourceName)
+		throws Exception {
+
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		HashMap<String, Long> actionIdValues = new HashMap<String, Long>();
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			ps = con.prepareStatement(
+				"select actionId, bitwiseValue from resourceaction " +
+					"where name = ?");
+
+			ps.setString(1, resourceName);
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				String actionid = rs.getString("actionId");
+				long bitwiseValue = rs.getLong("bitwiseValue");
+
+				actionIdValues.put(actionid, bitwiseValue);
+			}
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to find the resource actions for " + resourceName);
+			}
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
+
+		return actionIdValues;
+	}
+
+	protected long getBitwiseValue(
+			Map<String, Long> actionIdValues, List<String> actionNames) {
+
+		long bitwiseValue = 0;
+
+		for (String actionName : actionNames) {
+			Long actionIdBitwiseValue = actionIdValues.get(actionName);
+
+			bitwiseValue |=
+				(actionIdBitwiseValue != null)?actionIdBitwiseValue:0;
+		}
+
+		return bitwiseValue;
+	}
+
 	protected long getCompanyGroupId(long companyId) throws Exception {
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -479,6 +537,22 @@ public class UpgradeImageGallery extends UpgradeProcess {
 		finally {
 			DataAccess.cleanUp(con, ps, rs);
 		}
+	}
+
+	protected List<String> getResourceActionNames(
+			Map<String, Long> actionIdValues, int actionIds) {
+
+		List<String> actionNames = new ArrayList<String>();
+
+		for (String actionName : actionIdValues.keySet()) {
+			long bitwiseValue = actionIdValues.get(actionName);
+
+			if ((actionIds & bitwiseValue) == bitwiseValue) {
+				actionNames.add(actionName);
+			}
+		}
+
+		return actionNames;
 	}
 
 	protected void migrateFile(
@@ -728,9 +802,8 @@ public class UpgradeImageGallery extends UpgradeProcess {
 		deleteConflictingIGPermissions(
 			_IG_FOLDER_CLASS_NAME, DLFolder.class.getName());
 
-		runSQL("update ResourcePermission set name = '" +
-			DLFolder.class.getName() +
-				"' where name = '" + _IG_FOLDER_CLASS_NAME + "'");
+		updateIGtoDLPermissions(
+			_IG_FOLDER_CLASS_NAME, DLFolder.class.getName());
 	}
 
 	protected void updateIGImageEntries() throws Exception {
@@ -907,10 +980,61 @@ public class UpgradeImageGallery extends UpgradeProcess {
 		deleteConflictingIGPermissions(
 			_IG_IMAGE_CLASS_NAME, DLFileEntry.class.getName());
 
-		runSQL(
-			"update ResourcePermission set name = '" +
-				DLFileEntry.class.getName() + "' where name = '" +
-					_IG_IMAGE_CLASS_NAME + "'");
+		updateIGtoDLPermissions(
+			_IG_IMAGE_CLASS_NAME, DLFileEntry.class.getName());
+	}
+
+	protected void updateIGtoDLPermissions(
+			String igResourceName, String dlResourceName)
+		throws Exception {
+
+		Map<String, Long> igActionIdValues = getActionValuesByResource(
+				igResourceName);
+
+		if (igActionIdValues.isEmpty()) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Do not exist resource actions for " + igResourceName +
+						". Please check the permissions for those objects");
+			}
+
+			return;
+		}
+
+		Map<String, Long> dlActionIdValues = getActionValuesByResource(
+				dlResourceName);
+
+		if (dlActionIdValues.isEmpty()) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Do not exist resource actions for " + dlResourceName +
+						". Please check the permissions for those objects");
+			}
+
+			return;
+		}
+
+		double igActionIdsCombinations = 
+				Math.pow(2, (double)igActionIdValues.size());
+
+		for (int igActionIds=0; igActionIds<igActionIdsCombinations;
+				igActionIds++)
+		{
+			List<String> igActionNames = getResourceActionNames(
+				igActionIdValues, igActionIds);
+
+			if (igResourceName.equals(_IG_FOLDER_CLASS_NAME)) {
+				Collections.replaceAll(
+					igActionNames, "ADD_IMAGE", "ADD_DOCUMENT");
+			}
+
+			long dlActionIds = getBitwiseValue(dlActionIdValues, igActionNames);
+
+			runSQL(
+				"update ResourcePermission set name = '" + dlResourceName +
+					"', actionIds = " + dlActionIds + " where name = '" +
+					igResourceName + "'" + " and actionIds = " + igActionIds);
+		}
 	}
 
 	private static final String _IG_FOLDER_CLASS_NAME =

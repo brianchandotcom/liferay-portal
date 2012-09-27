@@ -1,7 +1,11 @@
 AUI.add(
 	'liferay-poller',
 	function(A) {
+		var AObject = A.Object;
+		var JSON = A.JSON;
 		var Util = Liferay.Util;
+
+		var owns = AObject.owns;
 
 		var _browserKey = Util.randomInt();
 		var _enabled = false;
@@ -21,11 +25,13 @@ AUI.add(
 
 		var _maxDelay = _delays.length - 1;
 
+		var _portletIdsMap = {};
+
 		var _metaData = {
 			startPolling: true,
 			browserKey: _browserKey,
 			companyId: themeDisplay.getCompanyId(),
-			portletIdsMap: {}
+			portletIdsMap: _portletIdsMap
 		};
 
 		var _portlets = {};
@@ -78,7 +84,7 @@ AUI.add(
 		};
 
 		var _processResponse = function(id, obj) {
-			var response = A.JSON.parse(obj.responseText);
+			var response = JSON.parse(obj.responseText);
 			var send = false;
 
 			if (Util.isArray(response)) {
@@ -131,11 +137,9 @@ AUI.add(
 				_metaData.userId = _getEncryptedUserId();
 				_metaData.timestamp = (new Date()).getTime();
 
-				for (var i in _portlets) {
-					_metaData.portletIdsMap[i] = _portlets[i].initialRequest;
-				}
+				AObject.each(_portlets, _updatePortletIdsMap);
 
-				var requestStr = A.JSON.stringify([_metaData]);
+				var requestStr = JSON.stringify([_metaData]);
 
 				A.io(
 					_getReceiveUrl(),
@@ -170,11 +174,9 @@ AUI.add(
 				_metaData.userId = _getEncryptedUserId();
 				_metaData.timestamp = (new Date()).getTime();
 
-				for (var i in _portlets) {
-					_metaData.portletIdsMap[i] = _portlets[i].initialRequest;
-				}
+				AObject.each(_portlets, _updatePortletIdsMap);
 
-				var requestStr = A.JSON.stringify([_metaData].concat(data));
+				var requestStr = JSON.stringify([_metaData].concat(data));
 
 				A.io(
 					_getSendUrl(),
@@ -195,6 +197,10 @@ AUI.add(
 			_frozen = false;
 
 			_createRequestTimer();
+		};
+
+		var _updatePortletIdsMap = function(item, index, collection) {
+			_portletIdsMap[index] = item.initialRequest;
 		};
 
 		var Poller = {
@@ -251,7 +257,7 @@ AUI.add(
 					delete _portlets[key];
 				}
 
-				if (A.Object.keys(_portlets).length == 0) {
+				if (AObject.keys(_portlets).length === 0) {
 					_enabled = false;
 
 					_cancelRequestTimer();
@@ -283,13 +289,15 @@ AUI.add(
 			submitRequest: function(key, data, chunkId) {
 				if (!_frozen && (key in _portlets)) {
 					for (var i in data) {
-						var content = data[i];
+						if (owns(data, i)) {
+							var content = data[i];
 
-						if (content.replace) {
-							content = content.replace(_openCurlyBrace, _escapedOpenCurlyBrace);
-							content = content.replace(_closeCurlyBrace, _escapedCloseCurlyBrace);
+							if (content.replace) {
+								content = content.replace(_openCurlyBrace, _escapedOpenCurlyBrace);
+								content = content.replace(_closeCurlyBrace, _escapedCloseCurlyBrace);
 
-							data[i] = content;
+								data[i] = content;
+							}
 						}
 					}
 

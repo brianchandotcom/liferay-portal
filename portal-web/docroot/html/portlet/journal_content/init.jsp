@@ -70,7 +70,7 @@ boolean enableComments = PropsValues.JOURNAL_ARTICLE_COMMENTS_ENABLED && GetterU
 boolean enableCommentRatings = GetterUtil.getBoolean(preferences.getValue("enableCommentRatings", null));
 boolean enableViewCountIncrement = GetterUtil.getBoolean(preferences.getValue("enableViewCountIncrement", null), PropsValues.ASSET_ENTRY_INCREMENT_VIEW_COUNTER_ENABLED);
 
-String[] conversions = DocumentConversionUtil.getConversions("html");
+Set<String> conversions = DocumentConversionUtil.getConversions("html");
 
 boolean openOfficeServerEnabled = PrefsPropsUtil.getBoolean(PropsKeys.OPENOFFICE_SERVER_ENABLED, PropsValues.OPENOFFICE_SERVER_ENABLED);
 boolean enableConversions = openOfficeServerEnabled && (extensions != null) && (extensions.length > 0);

@@ -29,6 +29,11 @@
 	<td>DMDocument1NotPresent</td>
 </tr>
 <tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
 	<td>assertText</td>
 	<td>//a[contains(@id,'objectsSearchContainer_1_menuButton')]/span</td>
 	<td>Actions</td>
@@ -72,6 +77,11 @@
 	<td>gotoIf</td>
 	<td>!${dmDocument2Present}</td>
 	<td>DMDocument2NotPresent</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -119,6 +129,11 @@
 	<td>DMDocument3NotPresent</td>
 </tr>
 <tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
 	<td>assertText</td>
 	<td>//a[contains(@id,'objectsSearchContainer_1_menuButton')]/span</td>
 	<td>Actions</td>
@@ -164,6 +179,11 @@
 	<td>DMDocument4NotPresent</td>
 </tr>
 <tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
 	<td>assertText</td>
 	<td>//a[contains(@id,'objectsSearchContainer_1_menuButton')]/span</td>
 	<td>Actions</td>
@@ -207,6 +227,11 @@
 	<td>gotoIf</td>
 	<td>!${dmDocument5Present}</td>
 	<td>DMDocument5NotPresent</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -277,6 +302,16 @@
 	<td>open</td>
 	<td>/web/guest/home/</td>
 	<td></td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
+	<td>AUI Editable Min</td>
 </tr>
 <tr>
 	<td>assertText</td>

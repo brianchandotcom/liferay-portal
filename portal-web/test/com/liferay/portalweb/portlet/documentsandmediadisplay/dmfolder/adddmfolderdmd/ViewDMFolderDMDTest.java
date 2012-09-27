@@ -28,7 +28,7 @@ public class ViewDMFolderDMDTest extends BaseTestCase {
 		selenium.clickAt("link=Documents and Media Display Test Page",
 			RuntimeVariables.replace("Documents and Media Display Test Page"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Folder"),
+		assertEquals(RuntimeVariables.replace("Name"),
 			selenium.getText("//tr[1]/th[1]"));
 		assertEquals(RuntimeVariables.replace("# of Folders"),
 			selenium.getText("//tr[1]/th[2]"));

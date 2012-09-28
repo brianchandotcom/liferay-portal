@@ -113,7 +113,6 @@ public class LoginAction extends Action {
 
 		if (PropsValues.COMPANY_SECURITY_AUTH_REQUIRES_HTTPS) {
 			String portalURL = PortalUtil.getPortalURL(request);
-
 			String portalURLSecure = PortalUtil.getPortalURL(request, true);
 
 			if (!portalURL.equals(portalURLSecure)) {

@@ -32,7 +32,7 @@ birthday.set(Calendar.YEAR, 1970);
 boolean male = ParamUtil.getBoolean(request, "male", true);
 %>
 
-<portlet:actionURL var="createAccoutURL">
+<portlet:actionURL secure="<%= PropsValues.COMPANY_SECURITY_AUTH_REQUIRES_HTTPS || request.isSecure() %>" var="createAccoutURL">
 	<portlet:param name="saveLastPath" value="0" />
 	<portlet:param name="struts_action" value="/login/create_account" />
 </portlet:actionURL>

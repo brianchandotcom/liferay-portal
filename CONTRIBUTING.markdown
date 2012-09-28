@@ -13,20 +13,19 @@ maintainer(s)](http://issues.liferay.com/browse/LPS#selectedTab=com.atlassian.ji
 and engage them as you contribute to the areas they maintain.
 
 As you have ideas for features you want to implement, follow the contribution
-steps outlined in the sections, below. For more details on specific steps,
-and to get a deeper understanding of Liferay in general, make sure to read
-Liferay's Official [User
+steps outlined in the sections, below. For more details on specific steps, and
+to get a deeper understanding of Liferay in general, make sure to read Liferay's
+Official [User
 Guide](http://www.liferay.com/documentation/liferay-portal/6.1/user-guide) and
 [Development
 Guide](http://www.liferay.com/documentation/liferay-portal/6.1/development).
 These guides contain extensive explanations, examples, and reference material
 that you will use over and over again.
 
-
 Also, check out Liferay's extensive Wiki, including its articles on
 [Understanding and Improving
 Liferay](http://www.liferay.com/community/wiki/-/wiki/tag/understanding+and+improving+liferay).
-Lastly, visit the links listed in *Additional Resources* section, below.
+Lastly, visit the links listed in the *Additional Resources* section, below.
 
 ## Getting Started
 
@@ -51,12 +50,12 @@ Github](http://www.liferay.com/community/wiki/-/wiki/Main/Contribute+using+Git+a
 
 ## Making Changes
 
-* Ensure you have a working Liferay development environment.  For some tips on
+* Ensure you have a working Liferay development environment. For some tips on
 setting up an efficient workspace, read [Optimal Liferay Core
 Development](http://www.liferay.com/es/community/wiki/-/wiki/Main/Optimal+Liferay+Core+Development).
 This guide provides detailed instructions on how to set up a highly efficient
-development system with the necessary tools and procedures for optimizing
-common and repetitive tasks.
+development system with the necessary tools and procedures for optimizing common
+and repetitive tasks.
 * Create a branch from an existing branch (typically the *master* branch) from
 which you want to base your changes.
 * Commit logical units of work.
@@ -71,7 +70,7 @@ For example:
 
 * *Test* your changes thoroughly! Consider the wide variety of operating
 systems, databases, application servers, and other related technologies Liferay
-supports. Make sure your changes in one environment don't break something in a
+supports. Make sure your changes in one environment don't break something in
 another environment. See [Unit and Integration
 Tests](http://www.liferay.com/community/wiki/-/wiki/Main/Unit+and+Integration+tests)
 for details on executing Liferay's automated tests.
@@ -80,12 +79,13 @@ for details on executing Liferay's automated tests.
 
 * Push changes in your branch to your fork.
 * Send a pull request to the core maintainer of the area to which your changes
-apply.
-** You can use github.com to initiate the pull request, or you can use
+apply. You can use [github.com](https://github.com/) to initiate the pull
+request, or you can use
 [git-pull-request](https://github.com/liferay/git-tools/tree/master/git-pull-request),
-a command line tool for issuing pull requests, developed specifically for the Liferay Community.
-* In the LPS ticket, provide a link to your GitHub pull request and
-respond to the [Contributor License
+a command line tool for issuing pull requests, developed specifically for the
+Liferay Community.
+* In the LPS ticket, provide a link to your GitHub pull request and respond to
+the [Contributor License
 Agreement](http://www.liferay.com/legal/contributors-agreement) displayed by
 clicking the *Contribute Solution* button.
 * You're done! Well, not quite ... be sure to respond to comments and questions

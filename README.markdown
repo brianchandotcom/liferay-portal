@@ -32,10 +32,10 @@ from their respective repositories.
 
 To get up and running quickly, *download* a [pre-built Liferay
 release](http://liferay.com/downloads) and follow the [Quick
-Start](http://liferay.com/quick-start) instructions.  For more detailed
-installation instructions, please read the [Installation and Setup
-chapter](http://www.liferay.com/documentation/liferay-portal/6.1/user-guide/-/ai/installing-lifer-2)
-of the *Liferay User Guide*.
+Start](http://liferay.com/quick-start) instructions. For more detailed
+installation instructions, please read the [Installation and
+Setup](http://www.liferay.com/documentation/liferay-portal/6.1/user-guide/-/ai/installing-lifer-2)
+chapter of the *Liferay User Guide*.
 
 If you wish to *build* core Liferay or its plugins, read the [CONTRIBUTING
 guide](https://github.com/liferay/liferay-portal/blob/master/CONTRIBUTING.markdown).

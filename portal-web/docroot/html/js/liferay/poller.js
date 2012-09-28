@@ -100,7 +100,11 @@ AUI.add(
 					var portlet = _portlets[portletId];
 
 					if (portlet) {
-						portlet.listener.call(portlet.scope || Poller, chunk.data, chunk.chunkId);
+						if (chunkData) {
+							chunkData.initialRequest = portlet.initialRequest;
+						}
+
+						portlet.listener.call(portlet.scope || Poller, chunkData, chunk.chunkId);
 
 						if (chunkData && chunkData.pollerHintHighConnectivity) {
 							_requestDelay = _delays[0];

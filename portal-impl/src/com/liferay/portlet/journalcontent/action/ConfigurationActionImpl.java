@@ -158,7 +158,7 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 		Class<?> clazz = getClass();
 
 		try {
-			_doProcessActionMethod = clazz.getMethod(
+			_doProcessActionMethod = clazz.getDeclaredMethod(
 				"doProcessAction",
 				new Class<?>[] {
 					PortletConfig.class, ActionRequest.class,

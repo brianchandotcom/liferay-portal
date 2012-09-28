@@ -100,8 +100,29 @@ public class AggregateFilter extends BasePortalFilter {
 			else {
 				sb.append(content.substring(pos, importX));
 
-				String importFileName = content.substring(
-					importX + _CSS_IMPORT_BEGIN.length(), importY);
+				String mediaQuery = StringPool.BLANK;
+
+				int mediaQueryImportX = content.indexOf(
+					CharPool.CLOSE_PARENTHESIS,
+					importX + _CSS_IMPORT_BEGIN.length());
+
+				int mediaQueryImportY = content.indexOf(
+					CharPool.SEMICOLON, importX + _CSS_IMPORT_BEGIN.length());
+
+				String importFileName;
+
+				if (importY != mediaQueryImportX) {
+					importFileName = content.substring(
+						importX + _CSS_IMPORT_BEGIN.length(),
+						mediaQueryImportX);
+
+					mediaQuery = content.substring(
+						mediaQueryImportX + 1, mediaQueryImportY);
+				}
+				else {
+					importFileName = content.substring(
+						importX + _CSS_IMPORT_BEGIN.length(), importY);
+				}
 
 				String importContent = aggregateContext.getContent(
 					importFileName);
@@ -158,9 +179,20 @@ public class AggregateFilter extends BasePortalFilter {
 				importContent = StringUtil.replace(
 					importContent, "[$TEMP_RELATIVE_PATH$]", StringPool.BLANK);
 
-				sb.append(importContent);
+				if (Validator.isNotNull(mediaQuery)) {
+					sb.append(_MEDIA_QUERY_BEGIN + CharPool.SPACE);
+					sb.append(mediaQuery);
+					sb.append(CharPool.OPEN_CURLY_BRACE);
+					sb.append(importContent);
+					sb.append(CharPool.CLOSE_CURLY_BRACE);
 
-				pos = importY + _CSS_IMPORT_END.length();
+					pos = mediaQueryImportY + 1;
+				}
+				else {
+					sb.append(importContent);
+
+					pos = importY + _CSS_IMPORT_END.length();
+				}
 			}
 		}
 
@@ -537,6 +569,8 @@ public class AggregateFilter extends BasePortalFilter {
 	private static final String _JAVASCRIPT_EXTENSION = ".js";
 
 	private static final String _JSP_EXTENSION = ".jsp";
+
+	private static final String _MEDIA_QUERY_BEGIN = "@media";
 
 	private static final String _TEMP_DIR = "aggregate";
 

@@ -206,11 +206,25 @@ request.setAttribute("view.jsp-total", String.valueOf(total));
 <c:if test="<%= results.isEmpty() %>">
 	<div class="entries-empty portlet-msg-info">
 		<c:choose>
-			<c:when test="<%= total == 0 %>">
-				<liferay-ui:message key="there-are-no-documents-or-media-files-in-this-folder" />
+			<c:when test="<%= (fileEntryTypeId >= 0) %>">
+				<c:choose>
+					<c:when test="<%= total == 0 %>">
+						<liferay-ui:message arguments="<%= dlFileEntryTypeName %>" key="there-are-no-documents-or-media-files-of-type-x" />
+					</c:when>
+					<c:otherwise>
+						<liferay-ui:message arguments="<%= dlFileEntryTypeName %>" key="there-are-no-documents-or-media-files-of-type-x-on-this-page" />
+					</c:otherwise>
+				</c:choose>
 			</c:when>
 			<c:otherwise>
-				<liferay-ui:message key="there-are-no-documents-or-media-files-on-this-page" />
+				<c:choose>
+					<c:when test="<%= total == 0 %>">
+						<liferay-ui:message key="there-are-no-documents-or-media-files-in-this-folder" />
+					</c:when>
+					<c:otherwise>
+						<liferay-ui:message key="there-are-no-documents-or-media-files-on-this-page" />
+					</c:otherwise>
+				</c:choose>
 			</c:otherwise>
 		</c:choose>
 	</div>

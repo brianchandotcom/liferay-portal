@@ -74,6 +74,8 @@ searchContainer.setRowChecker(entriesChecker);
 ArticleDisplayTerms displayTerms = (ArticleDisplayTerms)searchContainer.getDisplayTerms();
 
 boolean showAddArticleButton = JournalPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_ARTICLE);
+
+String name = LanguageUtil.get(pageContext, "basic-web-content");
 %>
 
 <c:if test="<%= Validator.isNotNull(displayTerms.getStructureId()) %>">
@@ -83,8 +85,6 @@ boolean showAddArticleButton = JournalPermission.contains(permissionChecker, sco
 		<div class="portlet-msg-info">
 
 			<%
-			String name = LanguageUtil.get(pageContext, "basic-web-content");
-
 			String structureId = StringPool.BLANK;
 
 			if (!displayTerms.getStructureId().equals("0")) {
@@ -228,7 +228,28 @@ request.setAttribute("view.jsp-total", String.valueOf(total));
 
 <c:if test="<%= results.isEmpty() %>">
 	<div class="entries-empty portlet-msg-info">
-		<liferay-ui:message key="no-web-content-were-found" />
+		<c:choose>
+			<c:when test="<%= (Validator.isNotNull(displayTerms.getStructureId())) %>">
+				<c:choose>
+					<c:when test="<%= total == 0 %>">
+						<liferay-ui:message arguments="<%= name %>" key="there-is-no-web-content-with-structure-x" />
+					</c:when>
+					<c:otherwise>
+						<liferay-ui:message arguments="<%= name %>" key="there-is-no-web-content-with-structure-x-on-this-page" />
+					</c:otherwise>
+				</c:choose>
+			</c:when>
+			<c:otherwise>
+				<c:choose>
+					<c:when test="<%= total == 0 %>">
+						<liferay-ui:message key="no-web-content-were-found" />
+					</c:when>
+					<c:otherwise>
+						<liferay-ui:message key="there-is-no-web-content-on-this-page" />
+					</c:otherwise>
+				</c:choose>
+			</c:otherwise>
+		</c:choose>
 	</div>
 </c:if>
 

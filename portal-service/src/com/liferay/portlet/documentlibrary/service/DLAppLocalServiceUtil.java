@@ -548,6 +548,35 @@ public class DLAppLocalServiceUtil {
 	}
 
 	/**
+	* Moves the file entry with the primary key to the trash portlet.
+	*
+	* @param userId the primary key of the user
+	* @param fileEntryId the primary key of the file entry
+	* @throws PortalException if the file entry could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.kernel.repository.model.FileEntry moveFileEntryToTrash(
+		long userId, long fileEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().moveFileEntryToTrash(userId, fileEntryId);
+	}
+
+	/**
+	* Restores the file entry with the primary key from the trash portlet.
+	*
+	* @param userId the primary key of the user
+	* @param fileEntryId the primary key of the file entry
+	* @throws PortalException if the file entry could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void restoreFileEntryFromTrash(long userId, long fileEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().restoreFileEntryFromTrash(userId, fileEntryId);
+	}
+
+	/**
 	* Updates the file entry's asset replacing its asset categories, tags, and
 	* links.
 	*

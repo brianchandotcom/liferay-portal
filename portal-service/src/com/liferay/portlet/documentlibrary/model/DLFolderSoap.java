@@ -46,6 +46,7 @@ public class DLFolderSoap implements Serializable {
 		soapModel.setDescription(model.getDescription());
 		soapModel.setLastPostDate(model.getLastPostDate());
 		soapModel.setDefaultFileEntryTypeId(model.getDefaultFileEntryTypeId());
+		soapModel.setHidden(model.getHidden());
 		soapModel.setOverrideFileEntryTypes(model.getOverrideFileEntryTypes());
 		soapModel.setStatus(model.getStatus());
 		soapModel.setStatusByUserId(model.getStatusByUserId());
@@ -227,6 +228,18 @@ public class DLFolderSoap implements Serializable {
 		_defaultFileEntryTypeId = defaultFileEntryTypeId;
 	}
 
+	public boolean getHidden() {
+		return _hidden;
+	}
+
+	public boolean isHidden() {
+		return _hidden;
+	}
+
+	public void setHidden(boolean hidden) {
+		_hidden = hidden;
+	}
+
 	public boolean getOverrideFileEntryTypes() {
 		return _overrideFileEntryTypes;
 	}
@@ -286,6 +299,7 @@ public class DLFolderSoap implements Serializable {
 	private String _description;
 	private Date _lastPostDate;
 	private long _defaultFileEntryTypeId;
+	private boolean _hidden;
 	private boolean _overrideFileEntryTypes;
 	private int _status;
 	private long _statusByUserId;

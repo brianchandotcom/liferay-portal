@@ -278,8 +278,8 @@ portletURL.setParameter("tabs1", tabs1);
 <aui:form action="<%= moveEntryURL.toString() %>" method="post" name="fm1">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.MOVE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
-	<aui:input name="entryId" type="hidden" value="" />
-	<aui:input name="containerId" type="hidden" value="" />
+	<aui:input name="entryId" type="hidden" />
+	<aui:input name="containerId" type="hidden" />
 </aui:form>
 
 <aui:script use="liferay-trash">

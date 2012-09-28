@@ -134,31 +134,6 @@ public class GroupFinderImpl
 		GroupFinder.class.getName() + ".joinByUsersGroups";
 
 	public int countByKeywords(
-			long companyId, long[] classNameIds, long parentGroupId,
-			String parentGroupIdComparator, String keywords,
-			LinkedHashMap<String, Object> params)
-		throws SystemException {
-
-		String[] names = null;
-		String[] realNames = null;
-		String[] descriptions = null;
-		boolean andOperator = false;
-
-		if (Validator.isNotNull(keywords)) {
-			names = CustomSQLUtil.keywords(keywords);
-			realNames = CustomSQLUtil.keywords(keywords);
-			descriptions = CustomSQLUtil.keywords(keywords);
-		}
-		else {
-			andOperator = true;
-		}
-
-		return countByC_C_PG_N_D(
-			companyId, classNameIds, parentGroupId, parentGroupIdComparator,
-			names, realNames, descriptions, params, andOperator);
-	}
-
-	public int countByKeywords(
 			long companyId, long parentGroupId, String parentGroupIdComparator,
 			String keywords, LinkedHashMap<String, Object> params)
 		throws SystemException {
@@ -181,6 +156,31 @@ public class GroupFinderImpl
 			companyId, _getGroupOrganizationClassNameIds(), parentGroupId,
 			parentGroupIdComparator, names, realNames, descriptions, params,
 			andOperator);
+	}
+
+	public int countByKeywords(
+			long companyId, long[] classNameIds, long parentGroupId,
+			String parentGroupIdComparator, String keywords,
+			LinkedHashMap<String, Object> params)
+		throws SystemException {
+
+		String[] names = null;
+		String[] realNames = null;
+		String[] descriptions = null;
+		boolean andOperator = false;
+
+		if (Validator.isNotNull(keywords)) {
+			names = CustomSQLUtil.keywords(keywords);
+			realNames = CustomSQLUtil.keywords(keywords);
+			descriptions = CustomSQLUtil.keywords(keywords);
+		}
+		else {
+			andOperator = true;
+		}
+
+		return countByC_C_PG_N_D(
+			companyId, classNameIds, parentGroupId, parentGroupIdComparator,
+			names, realNames, descriptions, params, andOperator);
 	}
 
 	public int countByKeywords(
@@ -500,6 +500,32 @@ public class GroupFinderImpl
 	}
 
 	public List<Group> findByKeywords(
+			long companyId, long parentGroupId, String parentGroupIdComparator,
+			String keywords, LinkedHashMap<String, Object> params, int start,
+			int end, OrderByComparator obc)
+		throws SystemException {
+
+		String[] names = null;
+		String[] realNames = null;
+		String[] descriptions = null;
+		boolean andOperator = false;
+
+		if (Validator.isNotNull(keywords)) {
+			names = CustomSQLUtil.keywords(keywords);
+			realNames = CustomSQLUtil.keywords(keywords);
+			descriptions = CustomSQLUtil.keywords(keywords);
+		}
+		else {
+			andOperator = true;
+		}
+
+		return findByC_C_PG_N_D(
+			companyId, _getGroupOrganizationClassNameIds(), parentGroupId,
+			parentGroupIdComparator, names, realNames, descriptions, params,
+			andOperator, start, end, obc);
+	}
+
+	public List<Group> findByKeywords(
 			long companyId, long[] classNameIds, long parentGroupId,
 			String parentGroupIdComparator, String keywords,
 			LinkedHashMap<String, Object> params, int start, int end,
@@ -524,32 +550,6 @@ public class GroupFinderImpl
 			companyId, classNameIds, parentGroupId, parentGroupIdComparator,
 			names, realNames, descriptions, params, andOperator, start, end,
 			obc);
-	}
-
-	public List<Group> findByKeywords(
-			long companyId, long parentGroupId, String parentGroupIdComparator,
-			String keywords, LinkedHashMap<String, Object> params, int start,
-			int end, OrderByComparator obc)
-		throws SystemException {
-
-		String[] names = null;
-		String[] realNames = null;
-		String[] descriptions = null;
-		boolean andOperator = false;
-
-		if (Validator.isNotNull(keywords)) {
-			names = CustomSQLUtil.keywords(keywords);
-			realNames = CustomSQLUtil.keywords(keywords);
-			descriptions = CustomSQLUtil.keywords(keywords);
-		}
-		else {
-			andOperator = true;
-		}
-
-		return findByC_C_PG_N_D(
-			companyId, _getGroupOrganizationClassNameIds(), parentGroupId,
-			parentGroupIdComparator, names, realNames, descriptions, params,
-			andOperator, start, end, obc);
 	}
 
 	public List<Group> findByKeywords(

@@ -25,15 +25,17 @@ public class CalculateLoanTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Loan Calculator Test Page");
 		selenium.clickAt("link=Loan Calculator Test Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Loan Calculator Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.type("_61_loanAmount", RuntimeVariables.replace("1,000"));
-		selenium.type("_61_interest", RuntimeVariables.replace("4.75"));
-		selenium.type("_61_years", RuntimeVariables.replace("20"));
+		selenium.type("//input[@name='_61_loanAmount']",
+			RuntimeVariables.replace("1,000"));
+		selenium.type("//input[@name='_61_interest']",
+			RuntimeVariables.replace("4.75"));
+		selenium.type("//input[@name='_61_years']",
+			RuntimeVariables.replace("20"));
 		selenium.clickAt("//input[@value='Calculate']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Calculate"));
 		selenium.waitForText("//tr[6]/td[2]/strong", "1,551");
 		assertEquals(RuntimeVariables.replace("1,551"),
 			selenium.getText("//tr[6]/td[2]/strong"));

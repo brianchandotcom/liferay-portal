@@ -1730,9 +1730,9 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 * </p>
 	 *
 	 * @param  companyId the primary key of the company
-	 * @param  parentGroupId the primary key of the parent group
 	 * @param  classNameIds the class names of entities to include in the search
 	 *         (optionally <code>null</code>)
+	 * @param  parentGroupId the primary key of the parent group
 	 * @param  keywords the keywords (space separated), which may occur in the
 	 *         sites's name, or description (optionally <code>null</code>)
 	 * @param  params the finder params (optionally <code>null</code>). To
@@ -1749,13 +1749,13 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<Group> search(
-			long companyId, long parentGroupId, long[] classNameIds,
+			long companyId, long[] classNameIds, long parentGroupId,
 			String keywords, LinkedHashMap<String, Object> params, int start,
 			int end)
 		throws SystemException {
 
 		return search(
-			companyId, parentGroupId, classNameIds, keywords, params, start,
+			companyId, classNameIds, parentGroupId, keywords, params, start,
 			end, null);
 	}
 
@@ -1776,9 +1776,9 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 * </p>
 	 *
 	 * @param  companyId the primary key of the company
-	 * @param  parentGroupId the primary key of the parent group
 	 * @param  classNameIds the group's class name IDs (optionally
 	 *         <code>null</code>)
+	 * @param  parentGroupId the primary key of the parent group
 	 * @param  keywords the keywords (space separated), which may occur in the
 	 *         sites's name, or description (optionally <code>null</code>)
 	 * @param  params the finder params (optionally <code>null</code>). To
@@ -1797,7 +1797,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<Group> search(
-			long companyId, long parentGroupId, long[] classNameIds,
+			long companyId, long[] classNameIds, long parentGroupId,
 			String keywords, LinkedHashMap<String, Object> params, int start,
 			int end, OrderByComparator obc)
 		throws SystemException {
@@ -1813,7 +1813,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		}
 
 		return groupFinder.findByKeywords(
-			companyId, parentGroupId, parentGroupIdComparator, classNameIds,
+			companyId, classNameIds, parentGroupId, parentGroupIdComparator,
 			keywords, params, start, end, obc);
 	}
 
@@ -1834,9 +1834,9 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 * </p>
 	 *
 	 * @param  companyId the primary key of the company
-	 * @param  parentGroupId the primary key of the parent group
 	 * @param  classNameIds the class names of entities to include in the search
 	 *         (optionally <code>null</code>)
+	 * @param  parentGroupId the primary key of the parent group
 	 * @param  name the group's name (optionally <code>null</code>)
 	 * @param  description the group's description (optionally
 	 *         <code>null</code>)
@@ -1856,14 +1856,14 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<Group> search(
-			long companyId, long parentGroupId, long[] classNameIds,
+			long companyId, long[] classNameIds, long parentGroupId,
 			String name, String description,
 			LinkedHashMap<String, Object> params, boolean andOperator,
 			int start, int end)
 		throws SystemException {
 
 		return search(
-			companyId, parentGroupId, classNameIds, name, description, params,
+			companyId, classNameIds, parentGroupId, name, description, params,
 			andOperator, start, end, null);
 	}
 
@@ -1884,9 +1884,9 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 * </p>
 	 *
 	 * @param  companyId the primary key of the company
-	 * @param  parentGroupId the primary key of the parent group
 	 * @param  classNameIds the group's class name IDs (optionally
 	 *         <code>null</code>)
+	 * @param  parentGroupId the primary key of the parent group
 	 * @param  name the group's name (optionally <code>null</code>)
 	 * @param  description the group's description (optionally
 	 *         <code>null</code>)
@@ -1908,7 +1908,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<Group> search(
-			long companyId, long parentGroupId, long[] classNameIds,
+			long companyId, long[] classNameIds, long parentGroupId,
 			String name, String description,
 			LinkedHashMap<String, Object> params, boolean andOperator,
 			int start, int end, OrderByComparator obc)
@@ -1926,8 +1926,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 		String realName = getRealName(companyId, name);
 
-		return groupFinder.findByC_PG_C_N_D(
-			companyId, parentGroupId, parentGroupIdComparator, classNameIds,
+		return groupFinder.findByC_C_PG_N_D(
+			companyId, classNameIds, parentGroupId, parentGroupIdComparator,
 			name, realName, description, params, andOperator, start, end, obc);
 	}
 
@@ -2519,9 +2519,9 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 * included.
 	 *
 	 * @param  companyId the primary key of the company
-	 * @param  parentGroupId the primary key of the parent group
 	 * @param  classNameIds the class names of entities to include in the search
 	 *         (optionally <code>null</code>)
+	 * @param  parentGroupId the primary key of the parent group
 	 * @param  keywords the keywords (space separated), which may occur in the
 	 *         sites's name, or description (optionally <code>null</code>)
 	 * @param  params the finder params (optionally <code>null</code>). To
@@ -2535,7 +2535,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 */
 	@ThreadLocalCachable
 	public int searchCount(
-			long companyId, long parentGroupId, long[] classNameIds,
+			long companyId, long[] classNameIds, long parentGroupId,
 			String keywords, LinkedHashMap<String, Object> params)
 		throws SystemException {
 
@@ -2546,7 +2546,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		}
 
 		return groupFinder.countByKeywords(
-			companyId, parentGroupId, parentGroupIdComparator, classNameIds,
+			companyId, classNameIds, parentGroupId, parentGroupIdComparator,
 			keywords, params);
 	}
 
@@ -2557,9 +2557,9 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 * are not included.
 	 *
 	 * @param  companyId the primary key of the company
-	 * @param  parentGroupId the primary key of the parent group
 	 * @param  classNameIds the class names of entities to include in the search
 	 *         (optionally <code>null</code>)
+	 * @param  parentGroupId the primary key of the parent group
 	 * @param  name the group's name (optionally <code>null</code>)
 	 * @param  description the group's description (optionally
 	 *         <code>null</code>)
@@ -2576,7 +2576,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 */
 	@ThreadLocalCachable
 	public int searchCount(
-			long companyId, long parentGroupId, long[] classNameIds,
+			long companyId, long[] classNameIds, long parentGroupId,
 			String name, String description,
 			LinkedHashMap<String, Object> params, boolean andOperator)
 		throws SystemException {
@@ -2589,8 +2589,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 		String realName = getRealName(companyId, name);
 
-		return groupFinder.countByC_PG_C_N_D(
-			companyId, parentGroupId, parentGroupIdComparator, classNameIds,
+		return groupFinder.countByC_C_PG_N_D(
+			companyId, classNameIds, parentGroupId, parentGroupIdComparator,
 			name, realName, description, params, andOperator);
 	}
 

@@ -118,7 +118,7 @@
 				(Group_.type_ != 4)
 		]]>
 	</sql>
-	<sql id="com.liferay.portal.service.persistence.GroupFinder.countByC_PG_N_D">
+	<sql id="com.liferay.portal.service.persistence.GroupFinder.countByC_C_PG_N_D">
 		<![CDATA[
 			SELECT
 				Group_.groupId AS groupId
@@ -128,8 +128,8 @@
 			WHERE
 				[$WHERE$]
 				(Group_.companyId = ?) AND
-				(Group_.parentGroupId [$PARENT_GROUP_ID_COMPARATOR$] ?) AND
 				(Group_.classNameId = ?) AND
+				(Group_.parentGroupId [$PARENT_GROUP_ID_COMPARATOR$] ?) AND
 				(Group_.liveGroupId = 0) AND
 				(Group_.name != 'Control Panel') AND
 				(lower(Group_.name) LIKE ? OR lower(Group_.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
@@ -244,7 +244,7 @@
 				(Group_.type_ != 4)
 		]]>
 	</sql>
-	<sql id="com.liferay.portal.service.persistence.GroupFinder.findByC_PG_N_D">
+	<sql id="com.liferay.portal.service.persistence.GroupFinder.findByC_C_PG_N_D">
 		<![CDATA[
 			SELECT
 				Group_.groupId AS groupId, Group_.name AS groupName, Group_.type_ AS groupType, Group_.friendlyURL AS groupFriendlyURL
@@ -254,8 +254,8 @@
 			WHERE
 				[$WHERE$]
 				(Group_.companyId = ?) AND
-				(Group_.parentGroupId [$PARENT_GROUP_ID_COMPARATOR$] ?) AND
 				(Group_.classNameId = ?) AND
+				(Group_.parentGroupId [$PARENT_GROUP_ID_COMPARATOR$] ?) AND
 				(Group_.liveGroupId = 0) AND
 				(Group_.name != 'Control Panel') AND
 				(lower(Group_.name) LIKE ? OR lower(Group_.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]

@@ -61,8 +61,8 @@ public class GroupFinderImpl
 	public static final String COUNT_BY_GROUP_ID =
 		GroupFinder.class.getName() + ".countByGroupId";
 
-	public static final String COUNT_BY_C_PG_N_D =
-		GroupFinder.class.getName() + ".countByC_PG_N_D";
+	public static final String COUNT_BY_C_C_PG_N_D =
+		GroupFinder.class.getName() + ".countByC_C_PG_N_D";
 
 	public static final String FIND_BY_LAYOUTS =
 		GroupFinder.class.getName() + ".findByLayouts";
@@ -85,8 +85,8 @@ public class GroupFinderImpl
 	public static final String FIND_BY_C_N =
 		GroupFinder.class.getName() + ".findByC_N";
 
-	public static final String FIND_BY_C_PG_N_D =
-		GroupFinder.class.getName() + ".findByC_PG_N_D";
+	public static final String FIND_BY_C_C_PG_N_D =
+		GroupFinder.class.getName() + ".findByC_C_PG_N_D";
 
 	public static final String JOIN_BY_ACTIVE =
 		GroupFinder.class.getName() + ".joinByActive";
@@ -134,8 +134,8 @@ public class GroupFinderImpl
 		GroupFinder.class.getName() + ".joinByUsersGroups";
 
 	public int countByKeywords(
-			long companyId, long parentGroupId, String parentGroupIdComparator,
-			long[] classNameIds, String keywords,
+			long companyId, long[] classNameIds, long parentGroupId,
+			String parentGroupIdComparator, String keywords,
 			LinkedHashMap<String, Object> params)
 		throws SystemException {
 
@@ -153,8 +153,8 @@ public class GroupFinderImpl
 			andOperator = true;
 		}
 
-		return countByC_PG_C_N_D(
-			companyId, parentGroupId, parentGroupIdComparator, classNameIds,
+		return countByC_C_PG_N_D(
+			companyId, classNameIds, parentGroupId, parentGroupIdComparator,
 			names, realNames, descriptions, params, andOperator);
 	}
 
@@ -177,10 +177,10 @@ public class GroupFinderImpl
 			andOperator = true;
 		}
 
-		return countByC_PG_C_N_D(
-			companyId, parentGroupId, parentGroupIdComparator,
-			_getGroupOrganizationClassNameIds(), names, realNames, descriptions,
-			params, andOperator);
+		return countByC_C_PG_N_D(
+			companyId, _getGroupOrganizationClassNameIds(), parentGroupId,
+			parentGroupIdComparator, names, realNames, descriptions, params,
+			andOperator);
 	}
 
 	public int countByKeywords(
@@ -202,9 +202,10 @@ public class GroupFinderImpl
 			andOperator = true;
 		}
 
-		return countByC_PG_C_N_D(
-			companyId, GroupConstants.ANY_PARENT_GROUP_ID, StringPool.NOT_EQUAL,
-			classNameIds, names, realNames, descriptions, params, andOperator);
+		return countByC_C_PG_N_D(
+			companyId, classNameIds, GroupConstants.ANY_PARENT_GROUP_ID,
+			StringPool.NOT_EQUAL, names, realNames, descriptions, params,
+			andOperator);
 	}
 
 	public int countByKeywords(
@@ -226,10 +227,10 @@ public class GroupFinderImpl
 			andOperator = true;
 		}
 
-		return countByC_PG_C_N_D(
-			companyId, GroupConstants.ANY_PARENT_GROUP_ID, StringPool.NOT_EQUAL,
-			_getGroupOrganizationClassNameIds(), names, realNames, descriptions,
-			params, andOperator);
+		return countByC_C_PG_N_D(
+			companyId, _getGroupOrganizationClassNameIds(),
+			GroupConstants.ANY_PARENT_GROUP_ID, StringPool.NOT_EQUAL, names,
+			realNames, descriptions, params, andOperator);
 	}
 
 	public int countByLayouts(long companyId, long parentGroupId, boolean site)
@@ -331,10 +332,10 @@ public class GroupFinderImpl
 		String[] realNames = CustomSQLUtil.keywords(realName);
 		String[] descriptions = CustomSQLUtil.keywords(description);
 
-		return countByC_PG_C_N_D(
-			companyId, parentGroupId, parentGroupIdComparator,
-			_getGroupOrganizationClassNameIds(), names, realNames, descriptions,
-			params, andOperator);
+		return countByC_C_PG_N_D(
+			companyId, _getGroupOrganizationClassNameIds(), parentGroupId,
+			parentGroupIdComparator, names, realNames, descriptions, params,
+			andOperator);
 	}
 
 	public int countByC_PG_N_D(
@@ -343,10 +344,10 @@ public class GroupFinderImpl
 			LinkedHashMap<String, Object> params, boolean andOperator)
 		throws SystemException {
 
-		return countByC_PG_C_N_D(
-			companyId, parentGroupId, parentGroupIdComparator,
-			_getGroupOrganizationClassNameIds(), names, realNames, descriptions,
-			params, andOperator);
+		return countByC_C_PG_N_D(
+			companyId, _getGroupOrganizationClassNameIds(), parentGroupId,
+			parentGroupIdComparator, names, realNames, descriptions, params,
+			andOperator);
 	}
 
 	public int countByC_N_D(
@@ -361,10 +362,10 @@ public class GroupFinderImpl
 		String[] realNames = CustomSQLUtil.keywords(realName);
 		String[] descriptions = CustomSQLUtil.keywords(description);
 
-		return countByC_PG_C_N_D(
-			companyId, GroupConstants.ANY_PARENT_GROUP_ID, StringPool.NOT_EQUAL,
-			_getGroupOrganizationClassNameIds(), names, realNames, descriptions,
-			params, andOperator);
+		return countByC_C_PG_N_D(
+			companyId, _getGroupOrganizationClassNameIds(),
+			GroupConstants.ANY_PARENT_GROUP_ID, StringPool.NOT_EQUAL, names,
+			realNames, descriptions, params, andOperator);
 	}
 
 	public int countByC_N_D(
@@ -373,15 +374,15 @@ public class GroupFinderImpl
 			boolean andOperator)
 		throws SystemException {
 
-		return countByC_PG_C_N_D(
-			companyId, GroupConstants.ANY_PARENT_GROUP_ID, StringPool.NOT_EQUAL,
-			_getGroupOrganizationClassNameIds(), names, realNames, descriptions,
-			params, andOperator);
+		return countByC_C_PG_N_D(
+			companyId, _getGroupOrganizationClassNameIds(),
+			GroupConstants.ANY_PARENT_GROUP_ID, StringPool.NOT_EQUAL, names,
+			realNames, descriptions, params, andOperator);
 	}
 
-	public int countByC_PG_C_N_D(
-			long companyId, long parentGroupId, String parentGroupIdComparator,
-			long[] classNameIds, String name, String realName,
+	public int countByC_C_PG_N_D(
+			long companyId, long[] classNameIds, long parentGroupId,
+			String parentGroupIdComparator, String name, String realName,
 			String description, LinkedHashMap<String, Object> params,
 			boolean andOperator)
 		throws SystemException {
@@ -390,14 +391,14 @@ public class GroupFinderImpl
 		String[] realNames = CustomSQLUtil.keywords(realName);
 		String[] descriptions = CustomSQLUtil.keywords(description);
 
-		return countByC_PG_C_N_D(
-			companyId, parentGroupId, parentGroupIdComparator, classNameIds,
+		return countByC_C_PG_N_D(
+			companyId, classNameIds, parentGroupId, parentGroupIdComparator,
 			names, realNames, descriptions, params, andOperator);
 	}
 
-	public int countByC_PG_C_N_D(
-			long companyId, long parentGroupId, String parentGroupIdComparator,
-			long[] classNameIds, String[] names, String[] realNames,
+	public int countByC_C_PG_N_D(
+			long companyId, long[] classNameIds, long parentGroupId,
+			String parentGroupIdComparator, String[] names, String[] realNames,
 			String[] descriptions, LinkedHashMap<String, Object> params,
 			boolean andOperator)
 		throws SystemException {
@@ -447,29 +448,29 @@ public class GroupFinderImpl
 			Set<Long> groupIds = new HashSet<Long>();
 
 			groupIds.addAll(
-				countByC_PG_C_N_D(
-					session, companyId, parentGroupId, parentGroupIdComparator,
-					classNameIds, names, realNames, descriptions, params1,
-					andOperator));
+				countByC_C_PG_N_D(
+					session, companyId, classNameIds, parentGroupId,
+					parentGroupIdComparator, names, realNames, descriptions,
+					params1, andOperator));
 
 			if (doUnion) {
 				groupIds.addAll(
-					countByC_PG_C_N_D(
-						session, companyId, parentGroupId,
-						parentGroupIdComparator, classNameIds, names, realNames,
-						descriptions, params2, andOperator));
+					countByC_C_PG_N_D(
+						session, companyId, classNameIds, parentGroupId,
+						parentGroupIdComparator, names, realNames, descriptions,
+						params2, andOperator));
 
 				groupIds.addAll(
-					countByC_PG_C_N_D(
-						session, companyId, parentGroupId,
-						parentGroupIdComparator, classNameIds, names, realNames,
-						descriptions, params3, andOperator));
+					countByC_C_PG_N_D(
+						session, companyId, classNameIds, parentGroupId,
+						parentGroupIdComparator, names, realNames, descriptions,
+						params3, andOperator));
 
 				groupIds.addAll(
-					countByC_PG_C_N_D(
-						session, companyId, parentGroupId,
-						parentGroupIdComparator, classNameIds, names, realNames,
-						descriptions, params4, andOperator));
+					countByC_C_PG_N_D(
+						session, companyId, classNameIds, parentGroupId,
+						parentGroupIdComparator, names, realNames, descriptions,
+						params4, andOperator));
 			}
 
 			return groupIds.size();
@@ -492,14 +493,15 @@ public class GroupFinderImpl
 		String[] realNames = CustomSQLUtil.keywords(realName);
 		String[] descriptions = CustomSQLUtil.keywords(description);
 
-		return countByC_PG_C_N_D(
-			companyId, GroupConstants.ANY_PARENT_GROUP_ID, StringPool.NOT_EQUAL,
-			classNameIds, names, realNames, descriptions, params, andOperator);
+		return countByC_C_PG_N_D(
+			companyId, classNameIds, GroupConstants.ANY_PARENT_GROUP_ID,
+			StringPool.NOT_EQUAL, names, realNames, descriptions, params,
+			andOperator);
 	}
 
 	public List<Group> findByKeywords(
-			long companyId, long parentGroupId, String parentGroupIdComparator,
-			long[] classNameIds, String keywords,
+			long companyId, long[] classNameIds, long parentGroupId,
+			String parentGroupIdComparator, String keywords,
 			LinkedHashMap<String, Object> params, int start, int end,
 			OrderByComparator obc)
 		throws SystemException {
@@ -518,8 +520,8 @@ public class GroupFinderImpl
 			andOperator = true;
 		}
 
-		return findByC_PG_C_N_D(
-			companyId, parentGroupId, parentGroupIdComparator, classNameIds,
+		return findByC_C_PG_N_D(
+			companyId, classNameIds, parentGroupId, parentGroupIdComparator,
 			names, realNames, descriptions, params, andOperator, start, end,
 			obc);
 	}
@@ -544,10 +546,10 @@ public class GroupFinderImpl
 			andOperator = true;
 		}
 
-		return findByC_PG_C_N_D(
-			companyId, parentGroupId, parentGroupIdComparator,
-			_getGroupOrganizationClassNameIds(), names, realNames, descriptions,
-			params, andOperator, start, end, obc);
+		return findByC_C_PG_N_D(
+			companyId, _getGroupOrganizationClassNameIds(), parentGroupId,
+			parentGroupIdComparator, names, realNames, descriptions, params,
+			andOperator, start, end, obc);
 	}
 
 	public List<Group> findByKeywords(
@@ -570,10 +572,10 @@ public class GroupFinderImpl
 			andOperator = true;
 		}
 
-		return findByC_PG_C_N_D(
-			companyId, GroupConstants.ANY_PARENT_GROUP_ID, StringPool.NOT_EQUAL,
-			classNameIds, names, realNames, descriptions, params, andOperator,
-			start, end, obc);
+		return findByC_C_PG_N_D(
+			companyId, classNameIds, GroupConstants.ANY_PARENT_GROUP_ID,
+			StringPool.NOT_EQUAL, names, realNames, descriptions, params,
+			andOperator, start, end, obc);
 	}
 
 	public List<Group> findByKeywords(
@@ -596,10 +598,10 @@ public class GroupFinderImpl
 			andOperator = true;
 		}
 
-		return findByC_PG_C_N_D(
-			companyId, GroupConstants.ANY_PARENT_GROUP_ID, StringPool.NOT_EQUAL,
-			_getGroupOrganizationClassNameIds(), names, realNames, descriptions,
-			params, andOperator, start, end, obc);
+		return findByC_C_PG_N_D(
+			companyId, _getGroupOrganizationClassNameIds(),
+			GroupConstants.ANY_PARENT_GROUP_ID, StringPool.NOT_EQUAL, names,
+			realNames, descriptions, params, andOperator, start, end, obc);
 	}
 
 	public List<Group> findByLayouts(
@@ -932,10 +934,10 @@ public class GroupFinderImpl
 		String[] realNames = CustomSQLUtil.keywords(realName);
 		String[] descriptions = CustomSQLUtil.keywords(description);
 
-		return findByC_PG_C_N_D(
-			companyId, parentGroupId, parentGroupIdComparator,
-			_getGroupOrganizationClassNameIds(), names, realNames, descriptions,
-			params, andOperator, start, end, obc);
+		return findByC_C_PG_N_D(
+			companyId, _getGroupOrganizationClassNameIds(), parentGroupId,
+			parentGroupIdComparator, names, realNames, descriptions, params,
+			andOperator, start, end, obc);
 	}
 
 	public List<Group> findByC_PG_N_D(
@@ -945,10 +947,10 @@ public class GroupFinderImpl
 			int start, int end, OrderByComparator obc)
 		throws SystemException {
 
-		return findByC_PG_C_N_D(
-			companyId, parentGroupId, parentGroupIdComparator,
-			_getGroupOrganizationClassNameIds(), names, realNames, descriptions,
-			params, andOperator, start, end, obc);
+		return findByC_C_PG_N_D(
+			companyId, _getGroupOrganizationClassNameIds(), parentGroupId,
+			parentGroupIdComparator, names, realNames, descriptions, params,
+			andOperator, start, end, obc);
 	}
 
 	public List<Group> findByC_N_D(
@@ -964,10 +966,10 @@ public class GroupFinderImpl
 		String[] realNames = CustomSQLUtil.keywords(realName);
 		String[] descriptions = CustomSQLUtil.keywords(description);
 
-		return findByC_PG_C_N_D(
-			companyId, GroupConstants.ANY_PARENT_GROUP_ID, StringPool.NOT_EQUAL,
-			_getGroupOrganizationClassNameIds(), names, realNames, descriptions,
-			params, andOperator, start, end, obc);
+		return findByC_C_PG_N_D(
+			companyId, _getGroupOrganizationClassNameIds(),
+			GroupConstants.ANY_PARENT_GROUP_ID, StringPool.NOT_EQUAL, names,
+			realNames, descriptions, params, andOperator, start, end, obc);
 	}
 
 	public List<Group> findByC_N_D(
@@ -976,15 +978,15 @@ public class GroupFinderImpl
 			boolean andOperator, int start, int end, OrderByComparator obc)
 		throws SystemException {
 
-		return findByC_PG_C_N_D(
-			companyId, GroupConstants.ANY_PARENT_GROUP_ID, StringPool.NOT_EQUAL,
-			_getGroupOrganizationClassNameIds(), names, realNames, descriptions,
-			params, andOperator, start, end, obc);
+		return findByC_C_PG_N_D(
+			companyId, _getGroupOrganizationClassNameIds(),
+			GroupConstants.ANY_PARENT_GROUP_ID, StringPool.NOT_EQUAL, names,
+			realNames, descriptions, params, andOperator, start, end, obc);
 	}
 
-	public List<Group> findByC_PG_C_N_D(
-			long companyId, long parentGroupId, String parentGroupIdComparator,
-			long[] classNameIds, String name, String realName,
+	public List<Group> findByC_C_PG_N_D(
+			long companyId, long[] classNameIds, long parentGroupId,
+			String parentGroupIdComparator, String name, String realName,
 			String description, LinkedHashMap<String, Object> params,
 			boolean andOperator, int start, int end, OrderByComparator obc)
 		throws SystemException {
@@ -993,15 +995,15 @@ public class GroupFinderImpl
 		String[] realNames = CustomSQLUtil.keywords(realName);
 		String[] descriptions = CustomSQLUtil.keywords(description);
 
-		return findByC_PG_C_N_D(
-			companyId, parentGroupId, parentGroupIdComparator, classNameIds,
+		return findByC_C_PG_N_D(
+			companyId, classNameIds, parentGroupId, parentGroupIdComparator,
 			names, realNames, descriptions, params, andOperator, start, end,
 			obc);
 	}
 
-	public List<Group> findByC_PG_C_N_D(
-			long companyId, long parentGroupId, String parentGroupIdComparator,
-			long[] classNameIds, String[] names, String[] realNames,
+	public List<Group> findByC_C_PG_N_D(
+			long companyId, long[] classNameIds, long parentGroupId,
+			String parentGroupIdComparator, String[] names, String[] realNames,
 			String[] descriptions, LinkedHashMap<String, Object> params,
 			boolean andOperator, int start, int end, OrderByComparator obc)
 		throws SystemException {
@@ -1050,11 +1052,11 @@ public class GroupFinderImpl
 			String sqlKey = _buildSQLKey(
 				params1, params2, params3, params4, obc, doUnion);
 
-			sql = _findByC_PG_C_N_DSQLCache.get(sqlKey);
+			sql = _findByC_C_PG_N_DSQLCache.get(sqlKey);
 		}
 
 		if (sql == null) {
-			String findByC_PG_N_D_SQL = CustomSQLUtil.get(FIND_BY_C_PG_N_D);
+			String findByC_PG_N_D_SQL = CustomSQLUtil.get(FIND_BY_C_C_PG_N_D);
 
 			if (classNameIds == null) {
 				findByC_PG_N_D_SQL = StringUtil.replace(
@@ -1098,7 +1100,7 @@ public class GroupFinderImpl
 				String sqlKey = _buildSQLKey(
 					params1, params2, params3, params4, obc, doUnion);
 
-				_findByC_PG_C_N_DSQLCache.put(sqlKey, sql);
+				_findByC_C_PG_N_DSQLCache.put(sqlKey, sql);
 			}
 		}
 
@@ -1194,10 +1196,10 @@ public class GroupFinderImpl
 		String[] realNames = CustomSQLUtil.keywords(realName);
 		String[] descriptions = CustomSQLUtil.keywords(description);
 
-		return findByC_PG_C_N_D(
-			companyId, GroupConstants.ANY_PARENT_GROUP_ID, StringPool.NOT_EQUAL,
-			classNameIds, names, realNames, descriptions, params, andOperator,
-			start, end, obc);
+		return findByC_C_PG_N_D(
+			companyId, classNameIds, GroupConstants.ANY_PARENT_GROUP_ID,
+			StringPool.NOT_EQUAL, names, realNames, descriptions, params,
+			andOperator, start, end, obc);
 	}
 
 	protected int countByGroupId(
@@ -1230,13 +1232,13 @@ public class GroupFinderImpl
 		return 0;
 	}
 
-	protected List<Long> countByC_PG_C_N_D(
-		Session session, long companyId, long parentGroupId,
-		String parentGroupIdComparator, long[] classNameIds, String[] names,
+	protected List<Long> countByC_C_PG_N_D(
+		Session session, long companyId, long[] classNameIds,
+		long parentGroupId, String parentGroupIdComparator, String[] names,
 		String[] realNames, String[] descriptions,
 		LinkedHashMap<String, Object> params, boolean andOperator) {
 
-		String sql = CustomSQLUtil.get(COUNT_BY_C_PG_N_D);
+		String sql = CustomSQLUtil.get(COUNT_BY_C_C_PG_N_D);
 
 		if (classNameIds == null) {
 			sql = StringUtil.replace(
@@ -1718,7 +1720,7 @@ public class GroupFinderImpl
 
 	private LinkedHashMap<String, Object> _emptyLinkedHashMap =
 		new LinkedHashMap<String, Object>(0);
-	private Map<String, String> _findByC_PG_C_N_DSQLCache =
+	private Map<String, String> _findByC_C_PG_N_DSQLCache =
 		new ConcurrentHashMap<String, String>();
 	private Map<String, String> _findByCompanyIdSQLCache =
 		new ConcurrentHashMap<String, String>();

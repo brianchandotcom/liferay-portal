@@ -16,6 +16,8 @@ package com.liferay.portlet.messageboards.model.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
 import com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil;
@@ -29,6 +31,23 @@ import java.util.List;
 public class MBCategoryImpl extends MBCategoryBaseImpl {
 
 	public MBCategoryImpl() {
+	}
+
+	public String getAbsolutePath() throws PortalException, SystemException {
+		List<MBCategory> ancestors = getAncestors();
+
+		ancestors.add(0, this);
+
+		StringBundler sb = new StringBundler(ancestors.size() * 2);
+
+		for (int i = ancestors.size() - 1; i >= 0; i--) {
+			MBCategory category = ancestors.get(i);
+
+			sb.append(StringPool.SLASH);
+			sb.append(category.getName());
+		}
+
+		return sb.toString();
 	}
 
 	public List<Long> getAncestorCategoryIds()

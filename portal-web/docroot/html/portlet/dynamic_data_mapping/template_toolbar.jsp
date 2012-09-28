@@ -17,8 +17,6 @@
 <%@ include file="/html/portlet/dynamic_data_mapping/init.jsp" %>
 
 <%
-String backURL = ParamUtil.getString(request, "backURL");
-
 String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all");
 
 long classNameId = ParamUtil.getLong(request, "classNameId");
@@ -28,7 +26,6 @@ long classPK = ParamUtil.getLong(request, "classPK");
 <div class="lfr-portlet-toolbar">
 	<portlet:renderURL var="viewTemplatesURL">
 		<portlet:param name="struts_action" value="/dynamic_data_mapping/view_template" />
-		<portlet:param name="backURL" value="<%= backURL %>" />
 		<portlet:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
 		<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
 	</portlet:renderURL>
@@ -47,7 +44,6 @@ long classPK = ParamUtil.getLong(request, "classPK");
 				<portlet:renderURL var="addTemplateURL">
 					<portlet:param name="struts_action" value="/dynamic_data_mapping/edit_template" />
 					<portlet:param name="redirect" value="<%= viewTemplatesURL %>" />
-					<portlet:param name="backURL" value="<%= viewTemplatesURL %>" />
 					<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
 					<portlet:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
 					<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
@@ -69,7 +65,6 @@ long classPK = ParamUtil.getLong(request, "classPK");
 				<portlet:renderURL var="addTemplateURL">
 					<portlet:param name="struts_action" value="/dynamic_data_mapping/edit_template" />
 					<portlet:param name="redirect" value="<%= viewTemplatesURL %>" />
-					<portlet:param name="backURL" value="<%= viewTemplatesURL %>" />
 					<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
 					<portlet:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
 					<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />

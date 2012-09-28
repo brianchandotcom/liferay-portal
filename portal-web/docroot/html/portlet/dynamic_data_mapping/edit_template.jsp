@@ -115,8 +115,14 @@ if (Validator.isNotNull(structureAvailableFields)) {
 	}
 	%>
 
+	<portlet:renderURL var="viewTemplatesURL">
+		<portlet:param name="struts_action" value="/dynamic_data_mapping/view_template" />
+		<portlet:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
+		<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
+	</portlet:renderURL>
+
 	<liferay-ui:header
-		backURL="<%= backURL %>"
+		backURL="<%= portletName.equals(PortletKeys.PORTLET_DISPLAY_TEMPLATES) ? backURL : viewTemplatesURL %>"
 		localizeTitle="<%= false %>"
 		title="<%= title %>"
 	/>

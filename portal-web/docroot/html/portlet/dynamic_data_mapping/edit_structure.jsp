@@ -18,7 +18,6 @@
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
-String backURL = ParamUtil.getString(request, "backURL");
 
 String portletResourceNamespace = ParamUtil.getString(request, "portletResourceNamespace");
 
@@ -91,8 +90,12 @@ if (scriptJSONArray != null) {
 	}
 	%>
 
+	<portlet:renderURL var="viewRecordsURL">
+		<portlet:param name="struts_action" value="/dynamic_data_lists/view" />
+	</portlet:renderURL>
+
 	<liferay-ui:header
-		backURL="<%= backURL %>"
+		backURL="<%= viewRecordsURL %>"
 		localizeTitle="<%= localizeTitle %>"
 		title="<%= title %>"
 	/>

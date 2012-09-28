@@ -52,15 +52,18 @@ if (!portletName.equals(PortletKeys.PORTLET_DISPLAY_TEMPLATES)) {
 }
 %>
 
+<portlet:renderURL var="viewRecordsURL">
+	<portlet:param name="struts_action" value="/dynamic_data_lists/view" />
+</portlet:renderURL>
+
 <liferay-ui:header
-	backURL="<%= backURL %>"
+	backURL="<%= portletName.equals(PortletKeys.PORTLET_DISPLAY_TEMPLATES) ? backURL : viewRecordsURL %>"
 	title="<%= title %>"
 />
 
 <liferay-util:include page="/html/portlet/dynamic_data_mapping/template_toolbar.jsp">
 	<liferay-util:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
 	<liferay-util:param name="classPK" value="<%= String.valueOf(classPK) %>" />
-	<liferay-util:param name="backURL" value="<%= backURL %>" />
 </liferay-util:include>
 
 <aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
@@ -126,7 +129,6 @@ if (!portletName.equals(PortletKeys.PORTLET_DISPLAY_TEMPLATES)) {
 
 				rowURL.setParameter("struts_action", "/dynamic_data_mapping/edit_template");
 				rowURL.setParameter("redirect", currentURL);
-				rowURL.setParameter("backURL", currentURL);
 				rowURL.setParameter("groupId", String.valueOf(template.getGroupId()));
 				rowURL.setParameter("templateId", String.valueOf(template.getTemplateId()));
 				rowURL.setParameter("classNameId", String.valueOf(classNameId));

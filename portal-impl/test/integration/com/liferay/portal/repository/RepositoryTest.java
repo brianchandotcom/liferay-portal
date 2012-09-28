@@ -19,20 +19,25 @@ import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.repository.liferayrepository.LiferayRepository;
 import com.liferay.portal.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.service.RepositoryServiceUtil;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.TransactionalExecutionTestListener;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
+import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFolderServiceUtil;
 
 import java.io.InputStream;
@@ -44,11 +49,16 @@ import org.junit.runner.RunWith;
 /**
  * @author Alexander Chow
  */
-@ExecutionTestListeners(listeners = {EnvironmentExecutionTestListener.class})
+@ExecutionTestListeners(
+	listeners = {
+		EnvironmentExecutionTestListener.class,
+		TransactionalExecutionTestListener.class
+	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class RepositoryTest {
 
 	@Test
+	@Transactional
 	public void testBasic() throws Exception {
 
 		// Create repositories
@@ -91,6 +101,7 @@ public class RepositoryTest {
 	}
 
 	@Test
+	@Transactional
 	public void testCreateAndDeleteFileEntries() throws Exception {
 
 		// One default and one mapped repository
@@ -190,6 +201,88 @@ public class RepositoryTest {
 			catch (Exception e) {
 			}
 		}
+	}
+
+	@Test
+	@Transactional
+	public void testHiddenRepository() throws Exception {
+		hiddenRepository(true);
+	}
+
+	@Test
+	@Transactional
+	public void testVisibleRepository() throws Exception {
+		hiddenRepository(false);
+	}
+
+	protected void hiddenRepository(boolean hidden) throws Exception {
+
+		int initialMountFolders = DLFolderServiceUtil.getMountFoldersCount(
+			TestPropsValues.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		long classNameId = PortalUtil.getClassNameId(LiferayRepository.class);
+
+		long repositoryId = RepositoryLocalServiceUtil.addRepository(
+			TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
+			classNameId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			ServiceTestUtil.randomString(), ServiceTestUtil.randomString(),
+			PortletKeys.DOCUMENT_LIBRARY, new UnicodeProperties(), hidden,
+			new ServiceContext());
+
+		if (hidden) {
+			Assert.assertEquals(
+				initialMountFolders,
+				DLFolderServiceUtil.getMountFoldersCount(
+					TestPropsValues.getGroupId(),
+					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID));
+		}
+		else {
+			Assert.assertEquals(
+				initialMountFolders + 1,
+				DLFolderServiceUtil.getMountFoldersCount(
+					TestPropsValues.getGroupId(),
+					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID));
+		}
+
+		LocalRepository localRepository =
+			RepositoryServiceUtil.getLocalRepositoryImpl(repositoryId);
+
+		Folder folder = localRepository.addFolder(
+			TestPropsValues.getUserId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			String.valueOf(repositoryId), String.valueOf(repositoryId),
+			new ServiceContext());
+
+		InputStream inputStream = new UnsyncByteArrayInputStream(
+			_TEST_CONTENT.getBytes());
+
+		String name = ServiceTestUtil.randomString() + ".txt";
+
+		localRepository.addFileEntry(
+			TestPropsValues.getUserId(), folder.getFolderId(), name,
+			ContentTypes.TEXT_PLAIN, name, StringPool.BLANK, StringPool.BLANK,
+			inputStream, _TEST_CONTENT.length(), new ServiceContext());
+
+		Assert.assertEquals(
+			1,
+			DLAppServiceUtil.getFoldersCount(
+				repositoryId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID));
+
+		Assert.assertEquals(
+			1,
+			DLAppServiceUtil.getFileEntriesAndFileShortcutsCount(
+				repositoryId, folder.getFolderId(),
+				WorkflowConstants.STATUS_ANY));
+
+		RepositoryLocalServiceUtil.deleteRepositories(
+			TestPropsValues.getGroupId());
+
+		Assert.assertEquals(
+			initialMountFolders,
+			DLFolderServiceUtil.getMountFoldersCount(
+				TestPropsValues.getGroupId(),
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID));
 	}
 
 	private static final String _TEST_CONTENT =

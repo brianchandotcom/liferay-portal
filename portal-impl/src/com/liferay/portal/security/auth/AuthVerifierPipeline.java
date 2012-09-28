@@ -105,6 +105,10 @@ public class AuthVerifierPipeline {
 		List<AuthVerifierConfiguration> authVerifierConfigurations =
 			new ArrayList<AuthVerifierConfiguration>();
 
+		String requestURI =
+			request.getRequestURI().substring(
+				request.getContextPath().length());
+
 		for (AuthVerifierConfiguration authVerifierConfiguration :
 				_authVerifierConfigurations) {
 
@@ -112,9 +116,7 @@ public class AuthVerifierPipeline {
 				_mergeAuthVerifierConfiguration(
 					authVerifierConfiguration, accessControlContext);
 
-			if (_isMatchingRequestURI(
-					authVerifierConfiguration, request.getRequestURI())) {
-
+			if (_isMatchingRequestURI(authVerifierConfiguration, requestURI)) {
 				authVerifierConfigurations.add(authVerifierConfiguration);
 			}
 		}

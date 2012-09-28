@@ -626,6 +626,49 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 		}
 	</#list>
 
+	<#if entity.isContainerModel()>
+		<#assign hasParentContainerModelId = entity.hasColumn("parentContainerModelId")>
+
+		<#list entity.columnList as column>
+			<#if column.isContainerModelReference() && (column.name != "containerModelId")>
+				public long getContainerModelId() {
+					return get${column.methodName}();
+				}
+
+				public void setContainerModelId(long containerModelId) {
+					_${column.name} = containerModelId;
+				}
+			</#if>
+
+			<#if column.isParentContainerModelReference() && (column.name != "parentContainerModelId")>
+				<#assign hasParentContainerModelId = true>
+
+				public long getParentContainerModelId() {
+					return get${column.methodName}();
+				}
+
+				public void setParentContainerModelId(long parentContainerModelId) {
+					_${column.name} = parentContainerModelId;
+				}
+			</#if>
+		</#list>
+
+		<#if !hasParentContainerModelId>
+			public long getParentContainerModelId() {
+				return 0;
+			}
+
+			public void setParentContainerModelId(long parentContainerModelId) {
+			}
+		</#if>
+	</#if>
+
+	<#if (entity.isContainerModel() && !entity.hasColumn("name"))>
+		public String getName() {
+			return String.valueOf(getContainerModelId());
+		}
+	</#if>
+
 	<#if entity.isWorkflowEnabled()>
 		/**
 		 * @deprecated {@link #isApproved}

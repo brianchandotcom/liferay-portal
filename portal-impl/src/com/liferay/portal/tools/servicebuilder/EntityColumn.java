@@ -28,7 +28,8 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 	public EntityColumn(String name) {
 		this(
 			name, null, null, false, false, false, null, null, null, true, true,
-			false, null, null, null, null, true, true, false, false);
+			false, null, null, null, null, true, true, false, false, false,
+			false);
 	}
 
 	public EntityColumn(
@@ -38,7 +39,8 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 		boolean orderByAscending, boolean orderColumn, String comparator,
 		String arrayableOperator, String idType, String idParam,
 		boolean convertNull, boolean lazy, boolean localized,
-		boolean jsonEnabled) {
+		boolean jsonEnabled, boolean referencesContainerModel,
+		boolean referencesParentContainerModel) {
 
 		_name = name;
 		_dbName = dbName;
@@ -62,6 +64,8 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 		_lazy = lazy;
 		_localized = localized;
 		_jsonEnabled = jsonEnabled;
+		_referencesContainerModel = referencesContainerModel;
+		_referencesParentContainerModel = referencesParentContainerModel;
 	}
 
 	public EntityColumn(
@@ -69,12 +73,14 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 		boolean accessor, boolean filterPrimary, String ejbName,
 		String mappingKey, String mappingTable, String idType, String idParam,
 		boolean convertNull, boolean lazy, boolean localized,
-		boolean jsonEnabled) {
+		boolean jsonEnabled, boolean referencesContainerModel,
+		boolean referencesParentContainerModel) {
 
 		this(
 			name, dbName, type, primary, accessor, filterPrimary, ejbName,
 			mappingKey, mappingTable, true, true, false, null, null, idType,
-			idParam, convertNull, lazy, localized, jsonEnabled);
+			idParam, convertNull, lazy, localized, jsonEnabled,
+			referencesContainerModel, referencesParentContainerModel);
 	}
 
 	@Override
@@ -84,7 +90,8 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 			isFilterPrimary(), getEJBName(), getMappingKey(), getMappingTable(),
 			isCaseSensitive(), isOrderByAscending(), isOrderColumn(),
 			getComparator(), getArrayableOperator(), getIdType(), getIdParam(),
-			isConvertNull(), isLazy(), isLocalized(), isJsonEnabled());
+			isConvertNull(), isLazy(), isLocalized(), isJsonEnabled(),
+			isContainerModelReference(), isParentContainerModelReference());
 	}
 
 	public int compareTo(EntityColumn entityColumn) {
@@ -239,6 +246,10 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 		}
 	}
 
+	public boolean isContainerModelReference() {
+		return _referencesContainerModel;
+	}
+
 	public boolean isConvertNull() {
 		return _convertNull;
 	}
@@ -277,6 +288,10 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 
 	public boolean isOrderColumn() {
 		return _orderColumn;
+	}
+
+	public boolean isParentContainerModelReference() {
+		return _referencesParentContainerModel;
 	}
 
 	public boolean isPrimary() {
@@ -340,6 +355,10 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 		_comparator = comparator;
 	}
 
+	public void setContainerModelReference(boolean referencesContainerModel) {
+		_referencesContainerModel = referencesContainerModel;
+	}
+
 	public void setConvertNull(boolean convertNull) {
 		_convertNull = convertNull;
 	}
@@ -374,6 +393,12 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 
 	public void setOrderColumn(boolean orderColumn) {
 		_orderColumn = orderColumn;
+	}
+
+	public void setParentContainerModelReference(
+		boolean referencesParentContainerModel) {
+
+		_referencesParentContainerModel = referencesParentContainerModel;
 	}
 
 	protected String convertComparatorToHtml(String comparator) {
@@ -422,6 +447,8 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 	private boolean _orderByAscending;
 	private boolean _orderColumn;
 	private boolean _primary;
+	private boolean _referencesContainerModel;
+	private boolean _referencesParentContainerModel;
 	private String _type;
 
 }

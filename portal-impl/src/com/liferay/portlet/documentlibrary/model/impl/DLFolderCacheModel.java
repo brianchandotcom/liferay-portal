@@ -34,7 +34,7 @@ import java.util.Date;
 public class DLFolderCacheModel implements CacheModel<DLFolder>, Serializable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(41);
+		StringBundler sb = new StringBundler(43);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -66,6 +66,8 @@ public class DLFolderCacheModel implements CacheModel<DLFolder>, Serializable {
 		sb.append(lastPostDate);
 		sb.append(", defaultFileEntryTypeId=");
 		sb.append(defaultFileEntryTypeId);
+		sb.append(", hidden=");
+		sb.append(hidden);
 		sb.append(", overrideFileEntryTypes=");
 		sb.append(overrideFileEntryTypes);
 		sb.append(", status=");
@@ -143,6 +145,7 @@ public class DLFolderCacheModel implements CacheModel<DLFolder>, Serializable {
 		}
 
 		dlFolderImpl.setDefaultFileEntryTypeId(defaultFileEntryTypeId);
+		dlFolderImpl.setHidden(hidden);
 		dlFolderImpl.setOverrideFileEntryTypes(overrideFileEntryTypes);
 		dlFolderImpl.setStatus(status);
 		dlFolderImpl.setStatusByUserId(statusByUserId);
@@ -181,6 +184,7 @@ public class DLFolderCacheModel implements CacheModel<DLFolder>, Serializable {
 	public String description;
 	public long lastPostDate;
 	public long defaultFileEntryTypeId;
+	public boolean hidden;
 	public boolean overrideFileEntryTypes;
 	public int status;
 	public long statusByUserId;

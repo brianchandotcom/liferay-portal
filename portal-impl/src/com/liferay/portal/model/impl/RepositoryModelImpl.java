@@ -96,7 +96,9 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 			true);
 	public static long COMPANYID_COLUMN_BITMASK = 1L;
 	public static long GROUPID_COLUMN_BITMASK = 2L;
-	public static long UUID_COLUMN_BITMASK = 4L;
+	public static long NAME_COLUMN_BITMASK = 4L;
+	public static long PORTLETID_COLUMN_BITMASK = 8L;
+	public static long UUID_COLUMN_BITMASK = 16L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -448,7 +450,17 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 	}
 
 	public void setName(String name) {
+		_columnBitmask |= NAME_COLUMN_BITMASK;
+
+		if (_originalName == null) {
+			_originalName = _name;
+		}
+
 		_name = name;
+	}
+
+	public String getOriginalName() {
+		return GetterUtil.getString(_originalName);
 	}
 
 	@JSON
@@ -476,7 +488,17 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 	}
 
 	public void setPortletId(String portletId) {
+		_columnBitmask |= PORTLETID_COLUMN_BITMASK;
+
+		if (_originalPortletId == null) {
+			_originalPortletId = _portletId;
+		}
+
 		_portletId = portletId;
+	}
+
+	public String getOriginalPortletId() {
+		return GetterUtil.getString(_originalPortletId);
 	}
 
 	@JSON
@@ -611,6 +633,10 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 		repositoryModelImpl._originalCompanyId = repositoryModelImpl._companyId;
 
 		repositoryModelImpl._setOriginalCompanyId = false;
+
+		repositoryModelImpl._originalName = repositoryModelImpl._name;
+
+		repositoryModelImpl._originalPortletId = repositoryModelImpl._portletId;
 
 		repositoryModelImpl._columnBitmask = 0;
 	}
@@ -826,8 +852,10 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 	private Date _modifiedDate;
 	private long _classNameId;
 	private String _name;
+	private String _originalName;
 	private String _description;
 	private String _portletId;
+	private String _originalPortletId;
 	private String _typeSettings;
 	private long _dlFolderId;
 	private long _columnBitmask;

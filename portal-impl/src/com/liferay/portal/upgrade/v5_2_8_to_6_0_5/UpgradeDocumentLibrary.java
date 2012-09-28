@@ -130,7 +130,10 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 							companyId, repositoryId, name, newName);
 					}
 					catch (NoSuchFileException nsfe) {
-						_log.error(nsfe);
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								"Unable to update file for " + name, nsfe);
+						}
 					}
 				}
 			}

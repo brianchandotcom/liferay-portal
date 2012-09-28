@@ -16,9 +16,11 @@ package com.liferay.portal.security.auth;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.util.Portal;
 import com.liferay.portlet.login.util.LoginUtil;
 
 import java.util.Properties;
@@ -157,6 +159,25 @@ public class BasicAuthHeaderAutoLogin implements AuthVerifier, AutoLogin {
 				authVerifierResult.setState(AuthVerifierResult.State.SUCCESS);
 				authVerifierResult.setUserId(Long.valueOf(credentials[0]));
 			}
+			// backward compatibility
+			else {
+				boolean forcedBasicAuth =
+					GetterUtil.getBoolean(
+						accessControlContext.getSettings().get("basic_auth"));
+
+				if (forcedBasicAuth) {
+					HttpServletResponse response =
+						accessControlContext.getResponse();
+
+					response.setHeader(
+						HttpHeaders.WWW_AUTHENTICATE, _BASIC_REALM);
+
+					response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+
+					authVerifierResult.setState(
+						AuthVerifierResult.State.INVALID_CREDENTIALS);
+				}
+			}
 
 			return authVerifierResult;
 		}
@@ -164,6 +185,9 @@ public class BasicAuthHeaderAutoLogin implements AuthVerifier, AutoLogin {
 			throw new AuthException(e);
 		}
 	}
+
+	private static final String _BASIC_REALM =
+		"Basic realm=\"" + Portal.PORTAL_REALM + "\"";
 
 	private static Log _log = LogFactoryUtil.getLog(
 		BasicAuthHeaderAutoLogin.class);

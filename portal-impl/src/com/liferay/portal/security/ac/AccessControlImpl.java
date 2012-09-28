@@ -39,7 +39,8 @@ import javax.servlet.http.HttpServletResponse;
 public class AccessControlImpl implements AccessControl {
 
 	public void initAccessControlContext(
-		HttpServletRequest request, HttpServletResponse response) {
+		HttpServletRequest request, HttpServletResponse response,
+		Map<String, Object> initConfiguration) {
 
 		AccessControlContext accessControlContext =
 			AccessControlUtil.getAccessControlContext();
@@ -53,6 +54,7 @@ public class AccessControlImpl implements AccessControl {
 
 		accessControlContext.setRequest(request);
 		accessControlContext.setResponse(response);
+		accessControlContext.getSettings().putAll(initConfiguration);
 
 		AccessControlUtil.setAccessControlContext(accessControlContext);
 	}

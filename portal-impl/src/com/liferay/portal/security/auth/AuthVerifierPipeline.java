@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -29,6 +30,7 @@ import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -106,6 +108,10 @@ public class AuthVerifierPipeline {
 		for (AuthVerifierConfiguration authVerifierConfiguration :
 				_authVerifierConfigurations) {
 
+			authVerifierConfiguration =
+				_mergeAuthVerifierConfiguration(
+					authVerifierConfiguration, accessControlContext);
+
 			if (_isMatchingRequestURI(
 					authVerifierConfiguration, request.getRequestURI())) {
 
@@ -129,6 +135,7 @@ public class AuthVerifierPipeline {
 
 				AuthVerifier authVerifier =
 					(AuthVerifier)InstanceFactory.newInstance(
+						PortalClassLoaderUtil.getClassLoader(),
 						authVerifierClassName);
 
 				authVerifierConfiguration.setAuthVerifier(authVerifier);
@@ -167,6 +174,61 @@ public class AuthVerifierPipeline {
 		}
 
 		return Wildcard.matchOne(requestURI, urls) > -1;
+	}
+
+	private AuthVerifierConfiguration _mergeAuthVerifierConfiguration(
+		AuthVerifierConfiguration authVerifierConfiguration,
+		AccessControlContext accessControlContext) {
+
+		Map<String, Object> settings = accessControlContext.getSettings();
+
+		String authVerifierSettingsKey =
+			PropsKeys.AUTH_VERIFIER +
+				authVerifierConfiguration.getAuthVerifier().
+					getClass().getSimpleName() + StringPool.PERIOD;
+
+		boolean merge = false;
+
+		for (Iterator<String> it = settings.keySet().iterator();
+			it.hasNext() && !merge;) {
+
+			String settingsKey = it.next();
+			if (settingsKey.startsWith(authVerifierSettingsKey)) {
+				if (settings.get(settingsKey) instanceof String) {
+					merge = true;
+				}
+			}
+		}
+
+		if (!merge) {
+			return authVerifierConfiguration;
+		}
+
+		AuthVerifierConfiguration result = new AuthVerifierConfiguration();
+		result.setAuthVerifier(authVerifierConfiguration.getAuthVerifier());
+
+		Properties mergedProperties =
+			new Properties(authVerifierConfiguration.getProperties());
+
+		for (String settingsKey : settings.keySet()) {
+
+			if (settingsKey.startsWith(authVerifierSettingsKey)) {
+
+				Object settingsValue = settings.get(settingsKey);
+				if (settingsValue instanceof String) {
+					String propertiesKey = settingsKey.substring(
+						authVerifierSettingsKey.length());
+
+					mergedProperties.setProperty(
+						propertiesKey, (String) settingsValue);
+				}
+
+			}
+		}
+
+		result.setProperties(mergedProperties);
+
+		return result;
 	}
 
 	private Map<String, Object> _mergeSettings(

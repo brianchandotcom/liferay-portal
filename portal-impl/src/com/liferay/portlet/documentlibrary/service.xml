@@ -483,6 +483,7 @@
 		<column name="description" type="String" />
 		<column name="lastPostDate" type="Date" />
 		<column name="defaultFileEntryTypeId" type="long" />
+		<column name="hidden" type="boolean" />
 		<column name="overrideFileEntryTypes" type="boolean" />
 		<column name="status" type="int" />
 		<column name="statusByUserId" type="long" />
@@ -539,6 +540,12 @@
 			<finder-column name="mountPoint" />
 			<finder-column name="parentFolderId" />
 			<finder-column name="status" />
+		</finder>
+		<finder name="G_M_P_H" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="mountPoint" />
+			<finder-column name="parentFolderId" />
+			<finder-column name="hidden" />
 		</finder>
 
 		<!-- References -->

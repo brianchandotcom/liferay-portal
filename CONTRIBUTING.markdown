@@ -20,7 +20,7 @@ Guide](http://www.liferay.com/documentation/liferay-portal/6.1/user-guide) and
 [Development
 Guide](http://www.liferay.com/documentation/liferay-portal/6.1/development).
 These guides contain extensive explanations, examples, and reference material
-that you will use over and over again.
+for you to consult time and time again.
 
 Also, check out Liferay's extensive Wiki, including its articles on
 [Understanding and Improving

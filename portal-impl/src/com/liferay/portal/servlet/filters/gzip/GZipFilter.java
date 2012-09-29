@@ -42,9 +42,9 @@ public class GZipFilter extends BasePortalFilter {
 		// Tomcat, but may break on other servers
 
 		if (super.isFilterEnabled()) {
-			if (ServerDetector.isJBoss() || ServerDetector.isJetty() ||
-				ServerDetector.isJOnAS() || ServerDetector.isOC4J() ||
-				ServerDetector.isTomcat()) {
+			if (ServerDetector.isJBoss() || ServerDetector.isJBoss5() ||
+				ServerDetector.isJetty() || ServerDetector.isJOnAS() ||
+				ServerDetector.isOC4J() || ServerDetector.isTomcat()) {
 
 				_filterEnabled = true;
 			}

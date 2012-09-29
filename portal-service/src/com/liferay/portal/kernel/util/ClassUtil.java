@@ -74,10 +74,11 @@ public class ClassUtil {
 					st.ordinaryChar(' ');
 					st.wordChars('=', '=');
 
-					String[] las = _processAnnotation(st.sval, st);
+					String[] annotationClasses = _processAnnotation(
+						st.sval, st);
 
-					for (int i = 0; i < las.length; i++) {
-						classes.add(las[i]);
+					for (String annotationClass : annotationClasses) {
+						classes.add(annotationClass);
 					}
 
 					_setupParseTableForAnnotationProcessing(st);
@@ -156,7 +157,7 @@ public class ClassUtil {
 			path = url.getFile();
 		}
 
-		if (ServerDetector.isJBoss()) {
+		if (ServerDetector.isJBoss() || ServerDetector.isJBoss5()) {
 			if (path.startsWith("file:") && !path.startsWith("file:/")) {
 				path = path.substring(5);
 
@@ -206,8 +207,8 @@ public class ClassUtil {
 			if (b.isInterface()) {
 				Class<?>[] interfaces = x.getInterfaces();
 
-				for (int i = 0; i < interfaces.length; i++) {
-					if (isSubclass(interfaces[i], b)) {
+				for (Class<?> interfaceClass : interfaces) {
+					if (isSubclass(interfaceClass, b)) {
 						return true;
 					}
 				}
@@ -233,8 +234,8 @@ public class ClassUtil {
 
 			Class<?>[] interfaces = x.getInterfaces();
 
-			for (int i = 0; i < interfaces.length; i++) {
-				if (isSubclass(interfaces[i], s)) {
+			for (Class<?> interfaceClass : interfaces) {
+				if (isSubclass(interfaceClass, s)) {
 					return true;
 				}
 			}

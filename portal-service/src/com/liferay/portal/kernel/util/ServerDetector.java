@@ -17,6 +17,10 @@ package com.liferay.portal.kernel.util;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
+import javax.management.MBeanServer;
+import javax.management.MBeanServerFactory;
+import javax.management.ObjectName;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -27,6 +31,8 @@ public class ServerDetector {
 	public static final String GLASSFISH_ID = "glassfish";
 
 	public static final String JBOSS_ID = "jboss";
+
+	public static final String JBOSS5_ID = "jboss5";
 
 	public static final String JETTY_ID = "jetty";
 
@@ -70,6 +76,9 @@ public class ServerDetector {
 		else if (serverId.equals(JBOSS_ID)) {
 			serverDetector._jBoss = true;
 		}
+		else if (serverId.equals(JBOSS5_ID)) {
+			serverDetector._jBoss5 = true;
+		}
 		else if (serverId.equals(JETTY_ID)) {
 			serverDetector._jetty = true;
 		}
@@ -108,6 +117,10 @@ public class ServerDetector {
 
 	public static boolean isJBoss() {
 		return getInstance()._jBoss;
+	}
+
+	public static boolean isJBoss5() {
+		return getInstance()._jBoss5;
 	}
 
 	public static boolean isJetty() {
@@ -199,6 +212,13 @@ public class ServerDetector {
 			_serverId = GLASSFISH_ID;
 			_glassfish = true;
 		}
+
+		// Check for JBoss 5 before JBoss 7
+
+		else if (_isJBoss5()) {
+			_serverId = JBOSS5_ID;
+			_jBoss5 = true;
+		}
 		else if (_isJBoss()) {
 			_serverId = JBOSS_ID;
 			_jBoss = true;
@@ -263,6 +283,33 @@ public class ServerDetector {
 		return _hasSystemProperty("jboss.home.dir");
 	}
 
+	private boolean _isJBoss5() {
+		try {
+
+			// JBoss5 has a built in MBeanServer even when the platform server is not
+			// enabled, us it to detect the JBoss version
+
+			MBeanServer server = locateMBeanServer("jboss");
+
+			if (server == null) {
+				return false;
+			}
+
+			ObjectName name = new ObjectName("jboss.system:type=Server");
+
+			String version = (String)server.getAttribute(name, "VersionNumber");
+
+			if (version.contains("5.1.0")) {
+				return true;
+			}
+		}
+		catch (Exception e) {
+			_log.error(e.getMessage());
+		}
+
+		return false;
+	}
+
 	private boolean _isJetty() {
 		return _hasSystemProperty("jetty.home");
 	}
@@ -291,6 +338,16 @@ public class ServerDetector {
 		return _detect("/com/ibm/websphere/product/VersionInfo.class");
 	}
 
+	private MBeanServer locateMBeanServer(String defaultDomain) {
+		for (MBeanServer server : MBeanServerFactory.findMBeanServer(null)) {
+			if (server.getDefaultDomain().equals(defaultDomain)) {
+				return server;
+			}
+		}
+
+		return null;
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(ServerDetector.class);
 
 	private static ServerDetector _instance;
@@ -298,6 +355,7 @@ public class ServerDetector {
 	private boolean _geronimo;
 	private boolean _glassfish;
 	private boolean _jBoss;
+	private boolean _jBoss5;
 	private boolean _jetty;
 	private boolean _jonas;
 	private boolean _oc4j;

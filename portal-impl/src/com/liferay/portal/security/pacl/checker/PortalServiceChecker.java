@@ -234,7 +234,9 @@ public class PortalServiceChecker extends BaseChecker {
 
 		ClassLoader classLoader = getCommonClassLoader();
 
-		if (ServerDetector.isGeronimo() || ServerDetector.isJBoss()) {
+		if (ServerDetector.isGeronimo() || ServerDetector.isJBoss() ||
+			ServerDetector.isJBoss()) {
+
 			classLoader = getPortalClassLoader();
 		}
 

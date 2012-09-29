@@ -39,9 +39,11 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.apache.log4j.Appender;
 import org.apache.log4j.Level;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.apache.log4j.WriterAppender;
 import org.apache.log4j.xml.DOMConfigurator;
 
 import org.dom4j.Document;
@@ -72,6 +74,18 @@ public class Log4JUtil {
 			logger.log(
 				java.util.logging.Level.WARNING,
 				"Unable to load portal-log4j-ext.xml", ioe);
+		}
+
+		Enumeration allAppenders = LogManager.getRootLogger().getAllAppenders();
+
+		while (allAppenders.hasMoreElements()) {
+			Appender appender = (Appender)allAppenders.nextElement();
+
+			if (appender instanceof WriterAppender) {
+				WriterAppender writerAppender = (WriterAppender)appender;
+
+				writerAppender.activateOptions();
+			}
 		}
 	}
 

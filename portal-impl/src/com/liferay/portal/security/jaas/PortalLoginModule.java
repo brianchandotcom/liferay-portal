@@ -45,7 +45,7 @@ public class PortalLoginModule implements LoginModule {
 		}
 
 		if (_loginModule == null) {
-			if (ServerDetector.isJBoss()) {
+			if (ServerDetector.isJBoss() || ServerDetector.isJBoss5()) {
 				_loginModule =
 					new com.liferay.portal.security.jaas.ext.jboss.
 						PortalLoginModule();

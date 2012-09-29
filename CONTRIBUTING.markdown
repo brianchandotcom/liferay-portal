@@ -15,7 +15,7 @@ and engage them as you contribute to the areas they maintain.
 As you have ideas for features you want to implement, follow the contribution
 steps outlined in the sections, below. For more details on specific steps, and
 to get a deeper understanding of Liferay in general, make sure to read Liferay's
-Official [User
+official [User
 Guide](http://www.liferay.com/documentation/liferay-portal/6.1/user-guide) and
 [Development
 Guide](http://www.liferay.com/documentation/liferay-portal/6.1/development).

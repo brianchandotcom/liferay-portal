@@ -82,6 +82,15 @@ public abstract class BaseRepositoryImpl implements BaseRepository {
 		}
 	}
 
+	/**
+	 * @deprecated {@link #checkInFileEntry(long, String, ServiceContext)}
+	 */
+	public void checkInFileEntry(long fileEntryId, String lockUuid)
+		throws PortalException, SystemException {
+
+		checkInFileEntry(fileEntryId, lockUuid, new ServiceContext());
+	}
+
 	public void deleteFileEntry(long folderId, String title)
 		throws PortalException, SystemException {
 

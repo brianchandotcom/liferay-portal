@@ -244,6 +244,10 @@ public class FileEntryProxyBean
 		return _fileEntry.isEscapedModel();
 	}
 
+	public boolean isManualCheckInRequired() {
+		return _fileEntry.isManualCheckInRequired();
+	}
+
 	public boolean isSupportsLocking() {
 		return _fileEntry.isSupportsLocking();
 	}

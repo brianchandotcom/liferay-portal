@@ -52,6 +52,8 @@ public interface WebDAVRequest {
 
 	public boolean isMac();
 
+	public boolean isManualCheckInRequired();
+
 	public boolean isWindows();
 
 }

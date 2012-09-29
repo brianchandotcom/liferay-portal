@@ -200,6 +200,7 @@ public class HookHotDeployListener
 		"company.settings.form.miscellaneous",
 		"control.panel.entry.class.default", "convert.processes",
 		"default.landing.page.path", "dl.file.entry.drafts.enabled",
+		"dl.file.entry.open.in.ms.office.manual.check.in.required",
 		"dl.file.entry.processors", "dl.repository.impl",
 		"dl.store.antivirus.impl", "dl.store.impl", "dockbar.add.portlets",
 		"field.enable.com.liferay.portal.model.Contact.birthday",
@@ -2524,6 +2525,7 @@ public class HookHotDeployListener
 	private static final String[] _PROPS_VALUES_BOOLEAN = {
 		"auth.forward.by.last.path", "captcha.check.portal.create_account",
 		"dl.file.entry.drafts.enabled",
+		"dl.file.entry.open.in.ms.office.manual.check.in.required",
 		"field.enable.com.liferay.portal.model.Contact.birthday",
 		"field.enable.com.liferay.portal.model.Contact.male",
 		"field.enable.com.liferay.portal.model.Organization.status",

@@ -37,6 +37,7 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.comparator.GroupFriendlyURLComparator;
+import com.liferay.portlet.documentlibrary.util.DLUtil;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -313,6 +314,19 @@ public class WebDAVUtil {
 
 	public static boolean isOverwrite(HttpServletRequest request) {
 		return getInstance()._isOverwrite(request);
+	}
+
+	public static String stripManualCheckInRequiredPath(String pathInfo) {
+		int index = pathInfo.indexOf(DLUtil.MANUAL_CHECKIN_REQUIRED_PATH);
+
+		if (index >= 0) {
+			pathInfo = pathInfo.substring(0, index) +
+	pathInfo.substring(
+		index + DLUtil.MANUAL_CHECKIN_REQUIRED_PATH.length(),
+		pathInfo.length());
+		}
+
+	return pathInfo;
 	}
 
 	private WebDAVUtil() {

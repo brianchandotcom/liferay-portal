@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.servlet.PortalSessionThreadLocal;
 import com.liferay.portal.kernel.util.AutoResetThreadLocal;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -64,6 +65,7 @@ import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.service.persistence.DLFolderUtil;
+import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.documentlibrary.util.comparator.RepositoryModelCreateDateComparator;
 import com.liferay.portlet.documentlibrary.util.comparator.RepositoryModelModifiedDateComparator;
 import com.liferay.portlet.documentlibrary.util.comparator.RepositoryModelNameComparator;
@@ -256,6 +258,21 @@ public class CMISRepository extends BaseCmisRepository {
 
 			String versionSeriesId = toFileEntryId(fileEntryId);
 
+			boolean webDAVCheckInMode = GetterUtil.getBoolean(
+				serviceContext.getAttribute(DLUtil.WEBDAV_CHECKIN_MODE));
+
+			RepositoryEntry repositoryEntry =
+				RepositoryEntryUtil.findByPrimaryKey(fileEntryId);
+
+			boolean manualCheckInRequired =
+				repositoryEntry.getManualCheckInRequired();
+
+			if (!webDAVCheckInMode && manualCheckInRequired) {
+				repositoryEntry.setManualCheckInRequired(false);
+
+				RepositoryEntryUtil.update(repositoryEntry, false);
+			}
+
 			Document document = (Document)session.getObject(versionSeriesId);
 
 			document.refresh();
@@ -285,9 +302,10 @@ public class CMISRepository extends BaseCmisRepository {
 		}
 	}
 
-	public void checkInFileEntry(long fileEntryId, String lockUuid) {
-		checkInFileEntry(
-			fileEntryId, false, StringPool.BLANK, new ServiceContext());
+	public void checkInFileEntry(
+		long fileEntryId, String lockUuid, ServiceContext serviceContext) {
+
+		checkInFileEntry(fileEntryId, false, StringPool.BLANK, serviceContext);
 	}
 
 	public FileEntry checkOutFileEntry(
@@ -298,6 +316,18 @@ public class CMISRepository extends BaseCmisRepository {
 			Session session = getSession();
 
 			String versionSeriesId = toFileEntryId(fileEntryId);
+
+			boolean manualCheckInRequired = GetterUtil.getBoolean(
+				serviceContext.getAttribute(DLUtil.MANUAL_CHECKIN_REQUIRED));
+
+			if (manualCheckInRequired) {
+				RepositoryEntry repositoryEntry =
+					RepositoryEntryUtil.findByPrimaryKey(fileEntryId);
+
+				repositoryEntry.setManualCheckInRequired(manualCheckInRequired);
+
+				RepositoryEntryUtil.update(repositoryEntry, false);
+			}
 
 			Document document = (Document)session.getObject(versionSeriesId);
 

@@ -43,7 +43,19 @@ public class WebDAVRequestImpl implements WebDAVRequest {
 		_response = response;
 		_userAgent = userAgent;
 		_lockUuid = WebDAVUtil.getLockUuid(request);
-		_path = HttpUtil.fixPath(_request.getPathInfo(), false, true);
+
+		String pathInfo = HttpUtil.fixPath(_request.getPathInfo(), false, true);
+
+		String strippedPathInfo = WebDAVUtil.stripManualCheckInRequiredPath(
+			pathInfo);
+
+		if (strippedPathInfo.length() != pathInfo.length()) {
+			pathInfo = strippedPathInfo;
+
+			_manualCheckInRequired = true;
+		}
+
+		_path = pathInfo;
 		_companyId = PortalUtil.getCompanyId(request);
 		_groupId = WebDAVUtil.getGroupId(_companyId, _path);
 		_userId = GetterUtil.getLong(_request.getRemoteUser());
@@ -115,6 +127,10 @@ public class WebDAVRequestImpl implements WebDAVRequest {
 		return _userAgent.contains("WebDAVFS");
 	}
 
+	public boolean isManualCheckInRequired() {
+		return _manualCheckInRequired;
+	}
+
 	public boolean isWindows() {
 		return _userAgent.contains(
 			"Microsoft Data Access Internet Publishing Provider");
@@ -125,6 +141,7 @@ public class WebDAVRequestImpl implements WebDAVRequest {
 	private long _companyId;
 	private long _groupId;
 	private String _lockUuid;
+	private boolean _manualCheckInRequired;
 	private String _path = StringPool.BLANK;
 	private PermissionChecker _permissionChecker;
 	private HttpServletRequest _request;

@@ -80,10 +80,12 @@ public abstract class CMISRepositoryHandler extends BaseRepositoryImpl {
 			fileEntryId, major, changeLog, serviceContext);
 	}
 
-	public void checkInFileEntry(long fileEntryId, String lockUuid)
+	public void checkInFileEntry(
+			long fileEntryId, String lockUuid, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		_baseCmisRepository.checkInFileEntry(fileEntryId, lockUuid);
+		_baseCmisRepository.checkInFileEntry(
+			fileEntryId, lockUuid, serviceContext);
 	}
 
 	public FileEntry checkOutFileEntry(

@@ -29,11 +29,13 @@ import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Lock;
+import com.liferay.portal.model.RepositoryEntry;
 import com.liferay.portal.model.User;
 import com.liferay.portal.repository.cmis.CMISRepository;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.CMISRepositoryLocalServiceUtil;
+import com.liferay.portal.service.RepositoryEntryLocalServiceUtil;
 import com.liferay.portal.service.persistence.LockUtil;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.NoSuchFileVersionException;
@@ -481,6 +483,23 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 
 	public void setFileEntryId(long fileEntryId) {
 		_fileEntryId = fileEntryId;
+	}
+
+	public boolean isManualCheckInRequired() {
+		try {
+			RepositoryEntry repositoryEntry =
+				RepositoryEntryLocalServiceUtil.getRepositoryEntry(
+					_fileEntryId);
+
+			return repositoryEntry.isManualCheckInRequired();
+		}
+		catch (Exception e) {
+			if (_log.isInfoEnabled()) {
+				_log.info("Unable to retrieve repository entry", e);
+			}
+
+			return false;
+		}
 	}
 
 	public void setGroupId(long groupId) {

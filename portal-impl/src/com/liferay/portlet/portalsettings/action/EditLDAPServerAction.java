@@ -110,7 +110,9 @@ public class EditLDAPServerAction extends PortletAction {
 
 		Set<String> keysSet = properties.keySet();
 
-		for (String key : keysSet) {
+		String[] keys = keysSet.toArray(new String[keysSet.size()]);
+
+		for (String key : keys) {
 			if (defaultKeys.contains(key)) {
 				String value = properties.remove(key);
 

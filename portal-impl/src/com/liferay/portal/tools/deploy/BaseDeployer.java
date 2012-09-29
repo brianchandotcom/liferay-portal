@@ -225,6 +225,7 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 		if (!appServerType.equals(ServerDetector.GERONIMO_ID) &&
 			!appServerType.equals(ServerDetector.GLASSFISH_ID) &&
 			!appServerType.equals(ServerDetector.JBOSS_ID) &&
+			!appServerType.equals(ServerDetector.JBOSS5_ID) &&
 			!appServerType.equals(ServerDetector.JONAS_ID) &&
 			!appServerType.equals(ServerDetector.JETTY_ID) &&
 			!appServerType.equals(ServerDetector.OC4J_ID) &&
@@ -336,8 +337,8 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 				"portal-dependency-jars",
 				properties.getProperty("portal.dependency.jars")));
 
-		for (int i = 0; i < portalJars.length; i++) {
-			String portalJar = portalJars[i].trim();
+		for (String portalJar : portalJars) {
+			portalJar = portalJar.trim();
 
 			portalJar = fixPortalDependencyJar(portalJar);
 
@@ -363,8 +364,8 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 				"portal-dependency-tlds",
 				properties.getProperty("portal.dependency.tlds")));
 
-		for (int i = 0; i < portalTlds.length; i++) {
-			String portalTld = portalTlds[i].trim();
+		for (String portalTld : portalTlds) {
+			portalTld = portalTld.trim();
 
 			if (_log.isDebugEnabled()) {
 				_log.debug("Copy portal TLD " + portalTld);
@@ -531,6 +532,10 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 			copyDependencyXml(
 				"jboss-deployment-structure.xml", srcFile + "/WEB-INF");
 		}
+		else if (appServerType.equals(ServerDetector.JBOSS5_ID)) {
+			copyDependencyXml(
+				"jboss-web.xml", srcFile + "/WEB-INF");
+		}
 		else if (appServerType.equals(ServerDetector.WEBLOGIC_ID)) {
 			copyDependencyXml("weblogic.xml", srcFile + "/WEB-INF");
 		}
@@ -553,9 +558,7 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 
 			files = FileUtil.sortFiles(files);
 
-			for (int i = 0; i < files.length; i++) {
-				File srcFile = files[i];
-
+			for (File srcFile : files) {
 				String fileName = srcFile.getName().toLowerCase();
 
 				boolean deploy = false;
@@ -647,14 +650,16 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 
 		String excludes = StringPool.BLANK;
 
-		if (appServerType.equals(ServerDetector.JBOSS_ID)) {
+		if (appServerType.equals(ServerDetector.JBOSS_ID) ||
+			appServerType.equals(ServerDetector.JBOSS5_ID)) {
+
 			excludes += "**/WEB-INF/lib/log4j.jar,";
 		}
 		else if (appServerType.equals(ServerDetector.TOMCAT_ID)) {
 			String[] libs = FileUtil.listFiles(tomcatLibDir);
 
-			for (int i = 0; i < libs.length; i++) {
-				excludes += "**/WEB-INF/lib/" + libs[i] + ",";
+			for (String lib : libs) {
+				excludes += "**/WEB-INF/lib/" + lib + ",";
 			}
 
 			File contextXml = new File(srcFile + "/META-INF/context.xml");
@@ -1845,19 +1850,19 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 	}
 
 	public void rewriteFiles(File srcDir) throws Exception {
-		String[] files = FileUtil.listFiles(srcDir + "/WEB-INF/");
+		String[] fileNames = FileUtil.listFiles(srcDir + "/WEB-INF/");
 
-		for (int i = 0; i < files.length; i++) {
-			String fileName = GetterUtil.getString(
-				FileUtil.getShortFileName(files[i]));
+		for (String fileName : fileNames) {
+			String shortFileName = GetterUtil.getString(
+				FileUtil.getShortFileName(fileName));
 
 			// LEP-6415
 
-			if (fileName.equalsIgnoreCase("mule-config.xml")) {
+			if (shortFileName.equalsIgnoreCase("mule-config.xml")) {
 				continue;
 			}
 
-			String ext = GetterUtil.getString(FileUtil.getExtension(files[i]));
+			String ext = GetterUtil.getString(FileUtil.getExtension(fileName));
 
 			if (!ext.equalsIgnoreCase("xml")) {
 				continue;
@@ -1866,7 +1871,7 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 			// Make sure to rewrite any XML files to include external entities
 			// into same file. See LEP-3142.
 
-			File file = new File(srcDir + "/WEB-INF/" + files[i]);
+			File file = new File(srcDir + "/WEB-INF/" + fileName);
 
 			try {
 				Document doc = SAXReaderUtil.read(file);

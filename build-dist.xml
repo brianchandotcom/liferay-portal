@@ -53,6 +53,24 @@
 		</antcall>
 	</target>
 
+	<target name="build-dist-jboss5">
+		<antcall target="unzip-jboss5" />
+
+		<echo file="app.server.${user.name}.properties">app.server.type=jboss5</echo>
+
+		<delete dir="${project.dir}/portal-web/classes" />
+
+		<ant target="deploy" inheritAll="false" />
+
+		<delete file="app.server.${user.name}.properties" />
+
+		<antcall target="deploy-plugins">
+			<param name="deployer.dest.dir" value="${app.server.parent.dir}/jboss-${app.server.jboss5.version}/server/default/deploy" />
+			<param name="deployer.app.server.type" value="jboss5" />
+			<param name="deployer.app.server.lib.portal.dir" value="${app.server.parent.dir}/jboss-${app.server.jboss5.version}/server/default/deploy/ROOT.war/WEB-INF/lib" />
+		</antcall>
+	</target>
+
 	<target name="build-dist-jetty">
 		<antcall target="unzip-jetty" />
 
@@ -1051,6 +1069,56 @@ release was successful.</echo>
 				<include name="*.sh" />
 			</fileset>
 		</chmod>
+	</target>
+
+	<target name="unzip-jboss5">
+		<delete dir="${app.server.parent.dir}/jboss-${app.server.jboss5.version}" />
+
+		<if>
+			<not>
+				<available file="${app.server.parent.dir}/${app.server.jboss5.zip.name}" />
+			</not>
+			<then>
+				<get
+					dest="${app.server.parent.dir}/${app.server.jboss5.zip.name}"
+					src="${app.server.jboss5.zip.url}"
+					verbose="true"
+				/>
+			</then>
+		</if>
+
+		<unzip
+			dest="${app.server.parent.dir}"
+			src="${app.server.parent.dir}/${app.server.jboss5.zip.name}"
+		>
+			<patternset
+				excludes="jboss-${app.server.jboss5.version}.GA/server/all/**,jboss-${app.server.jboss5.version}.GA/server/default/**,jboss-${app.server.jboss5.version}.GA/server/minimal/**,jboss-${app.server.jboss5.version}.GA/server/standard/**"
+			/>
+			<mapper
+				type="glob"
+				from="jboss-${app.server.jboss5.version}.GA/*"
+				to="jboss-${app.server.jboss5.version}/*"
+			/>
+		</unzip>
+
+		<replace file="${app.server.parent.dir}/jboss-${app.server.jboss5.version}/server/web/conf/jboss-service.xml">
+			<replacetoken><![CDATA[<attribute name="Port">-1</attribute>]]></replacetoken>
+			<replacevalue><![CDATA[<attribute name="Port"><value-factory bean="ServiceBindingManager" method="getIntBinding"><parameter>jboss:service=Naming</parameter><parameter>Port</parameter></value-factory></attribute>]]></replacevalue>
+		</replace>
+
+		<replace file="${app.server.parent.dir}/jboss-${app.server.jboss5.version}/server/web/conf/login-config.xml">
+			<replacetoken><![CDATA[</policy>]]></replacetoken>
+			<replacevalue><![CDATA[
+					<application-policy name="PortalRealm">
+						<authentication>
+							<login-module code="com.liferay.portal.security.jaas.PortalLoginModule" flag="required" />
+						</authentication>
+					</application-policy>
+				</policy>]]>
+			</replacevalue>
+		</replace>
+
+		<move file="${app.server.parent.dir}/jboss-${app.server.jboss5.version}/server/web" tofile="${app.server.parent.dir}/jboss-${app.server.jboss5.version}/server/default" />
 	</target>
 
 	<target name="unzip-jetty">

@@ -37,6 +37,9 @@ public class ServerCapabilitiesUtil {
 		else if (ServerDetector.isJBoss()) {
 			serverCapabilities = new JBossServerCapabilities();
 		}
+		else if (ServerDetector.isJBoss5()) {
+			serverCapabilities = new JBoss5ServerCapabilities();
+		}
 		else if (ServerDetector.isJetty()) {
 			serverCapabilities = new JettyServerCapabilities();
 		}

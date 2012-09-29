@@ -116,6 +116,8 @@ public class RepositoryEntryPersistenceTest {
 
 		newRepositoryEntry.setMappedId(ServiceTestUtil.randomString());
 
+		newRepositoryEntry.setManualCheckInRequired(ServiceTestUtil.randomBoolean());
+
 		_persistence.update(newRepositoryEntry, false);
 
 		RepositoryEntry existingRepositoryEntry = _persistence.findByPrimaryKey(newRepositoryEntry.getPrimaryKey());
@@ -130,6 +132,8 @@ public class RepositoryEntryPersistenceTest {
 			newRepositoryEntry.getRepositoryId());
 		Assert.assertEquals(existingRepositoryEntry.getMappedId(),
 			newRepositoryEntry.getMappedId());
+		Assert.assertEquals(existingRepositoryEntry.getManualCheckInRequired(),
+			newRepositoryEntry.getManualCheckInRequired());
 	}
 
 	@Test
@@ -284,6 +288,8 @@ public class RepositoryEntryPersistenceTest {
 		repositoryEntry.setRepositoryId(ServiceTestUtil.nextLong());
 
 		repositoryEntry.setMappedId(ServiceTestUtil.randomString());
+
+		repositoryEntry.setManualCheckInRequired(ServiceTestUtil.randomBoolean());
 
 		_persistence.update(repositoryEntry, false);
 

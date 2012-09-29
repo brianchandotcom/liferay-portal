@@ -80,10 +80,21 @@ public class DLFileEntryServiceWrapper implements DLFileEntryService,
 			serviceContext);
 	}
 
+	/**
+	* @deprecated {@link #checkInFileEntry(long, String, ServiceContext)
+	*/
 	public void checkInFileEntry(long fileEntryId, java.lang.String lockUuid)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		_dlFileEntryService.checkInFileEntry(fileEntryId, lockUuid);
+	}
+
+	public void checkInFileEntry(long fileEntryId, java.lang.String lockUuid,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_dlFileEntryService.checkInFileEntry(fileEntryId, lockUuid,
+			serviceContext);
 	}
 
 	/**

@@ -775,6 +775,7 @@
 		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="repositoryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="mappedId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="manualCheckInRequired" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 	</class>
 	<class name="com.liferay.portal.model.impl.ResourceActionImpl" table="ResourceAction">
 		<cache usage="read-write" />
@@ -1425,6 +1426,7 @@
 		<property name="largeImageId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="custom1ImageId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="custom2ImageId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="manualCheckInRequired" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 	</class>
 	<class name="com.liferay.portlet.documentlibrary.model.impl.DLFileEntryMetadataImpl" table="DLFileEntryMetadata">
 		<cache usage="read-write" />

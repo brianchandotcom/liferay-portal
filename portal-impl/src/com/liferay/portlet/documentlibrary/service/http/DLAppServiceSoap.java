@@ -247,6 +247,21 @@ public class DLAppServiceSoap {
 	}
 
 	/**
+	* @deprecated {@link #checkInFileEntry(long, String, ServiceContext)
+	*/
+	public static void checkInFileEntry(long fileEntryId,
+		java.lang.String lockUuid) throws RemoteException {
+		try {
+			DLAppServiceUtil.checkInFileEntry(fileEntryId, lockUuid);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	/**
 	* Checks in the file entry using the lock's UUID. If a user has not checked
 	* out the specified file entry, invoking this method will result in no
 	* changes. This method is primarily used by WebDAV.
@@ -264,15 +279,19 @@ public class DLAppServiceSoap {
 	*
 	* @param fileEntryId the primary key of the file entry to check in
 	* @param lockUuid the lock's universally unique identifier
+	* @param serviceContext the service context to be applied
 	* @throws PortalException if the file entry could not be found
 	* @throws SystemException if a system exception occurred
 	* @see #cancelCheckOut(long)
 	* @see #checkOutFileEntry(long, String, long, ServiceContext)
 	*/
 	public static void checkInFileEntry(long fileEntryId,
-		java.lang.String lockUuid) throws RemoteException {
+		java.lang.String lockUuid,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws RemoteException {
 		try {
-			DLAppServiceUtil.checkInFileEntry(fileEntryId, lockUuid);
+			DLAppServiceUtil.checkInFileEntry(fileEntryId, lockUuid,
+				serviceContext);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

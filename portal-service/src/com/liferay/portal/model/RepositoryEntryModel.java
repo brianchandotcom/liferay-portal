@@ -127,6 +127,27 @@ public interface RepositoryEntryModel extends BaseModel<RepositoryEntry> {
 	 */
 	public void setMappedId(String mappedId);
 
+	/**
+	 * Returns the manual check in required of this repository entry.
+	 *
+	 * @return the manual check in required of this repository entry
+	 */
+	public boolean getManualCheckInRequired();
+
+	/**
+	 * Returns <code>true</code> if this repository entry is manual check in required.
+	 *
+	 * @return <code>true</code> if this repository entry is manual check in required; <code>false</code> otherwise
+	 */
+	public boolean isManualCheckInRequired();
+
+	/**
+	 * Sets whether this repository entry is manual check in required.
+	 *
+	 * @param manualCheckInRequired the manual check in required of this repository entry
+	 */
+	public void setManualCheckInRequired(boolean manualCheckInRequired);
+
 	public boolean isNew();
 
 	public void setNew(boolean n);

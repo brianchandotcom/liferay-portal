@@ -57,6 +57,7 @@ public class DLFileEntrySoap implements Serializable {
 		soapModel.setLargeImageId(model.getLargeImageId());
 		soapModel.setCustom1ImageId(model.getCustom1ImageId());
 		soapModel.setCustom2ImageId(model.getCustom2ImageId());
+		soapModel.setManualCheckInRequired(model.getManualCheckInRequired());
 
 		return soapModel;
 	}
@@ -317,6 +318,18 @@ public class DLFileEntrySoap implements Serializable {
 		_custom2ImageId = custom2ImageId;
 	}
 
+	public boolean getManualCheckInRequired() {
+		return _manualCheckInRequired;
+	}
+
+	public boolean isManualCheckInRequired() {
+		return _manualCheckInRequired;
+	}
+
+	public void setManualCheckInRequired(boolean manualCheckInRequired) {
+		_manualCheckInRequired = manualCheckInRequired;
+	}
+
 	private String _uuid;
 	private long _fileEntryId;
 	private long _groupId;
@@ -343,4 +356,5 @@ public class DLFileEntrySoap implements Serializable {
 	private long _largeImageId;
 	private long _custom1ImageId;
 	private long _custom2ImageId;
+	private boolean _manualCheckInRequired;
 }

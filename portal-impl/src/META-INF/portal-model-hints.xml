@@ -686,6 +686,7 @@
 		<field name="groupId" type="long" />
 		<field name="repositoryId" type="long" />
 		<field name="mappedId" type="String" />
+		<field name="manualCheckInRequired" type="boolean" />
 	</model>
 	<model name="com.liferay.portal.model.ResourceAction">
 		<field name="resourceActionId" type="long" />
@@ -1346,6 +1347,7 @@
 		<field name="largeImageId" type="long" />
 		<field name="custom1ImageId" type="long" />
 		<field name="custom2ImageId" type="long" />
+		<field name="manualCheckInRequired" type="boolean" />
 	</model>
 	<model name="com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata">
 		<field name="uuid" type="String" />

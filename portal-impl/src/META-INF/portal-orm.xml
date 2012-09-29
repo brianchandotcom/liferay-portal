@@ -896,6 +896,7 @@
 			<basic name="groupId" />
 			<basic name="repositoryId" />
 			<basic name="mappedId" />
+			<basic name="manualCheckInRequired" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
@@ -1860,6 +1861,7 @@
 			<basic name="largeImageId" />
 			<basic name="custom1ImageId" />
 			<basic name="custom2ImageId" />
+			<basic name="manualCheckInRequired" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />

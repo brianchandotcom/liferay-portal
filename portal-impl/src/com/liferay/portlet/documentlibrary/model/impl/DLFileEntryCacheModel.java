@@ -35,7 +35,7 @@ public class DLFileEntryCacheModel implements CacheModel<DLFileEntry>,
 	Serializable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(53);
+		StringBundler sb = new StringBundler(55);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -89,6 +89,8 @@ public class DLFileEntryCacheModel implements CacheModel<DLFileEntry>,
 		sb.append(custom1ImageId);
 		sb.append(", custom2ImageId=");
 		sb.append(custom2ImageId);
+		sb.append(", manualCheckInRequired=");
+		sb.append(manualCheckInRequired);
 		sb.append("}");
 
 		return sb.toString();
@@ -199,6 +201,7 @@ public class DLFileEntryCacheModel implements CacheModel<DLFileEntry>,
 		dlFileEntryImpl.setLargeImageId(largeImageId);
 		dlFileEntryImpl.setCustom1ImageId(custom1ImageId);
 		dlFileEntryImpl.setCustom2ImageId(custom2ImageId);
+		dlFileEntryImpl.setManualCheckInRequired(manualCheckInRequired);
 
 		dlFileEntryImpl.resetOriginalValues();
 
@@ -231,4 +234,5 @@ public class DLFileEntryCacheModel implements CacheModel<DLFileEntry>,
 	public long largeImageId;
 	public long custom1ImageId;
 	public long custom2ImageId;
+	public boolean manualCheckInRequired;
 }

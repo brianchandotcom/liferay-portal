@@ -510,6 +510,7 @@ public class RepositoryEntryPersistenceImpl extends BasePersistenceImpl<Reposito
 		repositoryEntryImpl.setGroupId(repositoryEntry.getGroupId());
 		repositoryEntryImpl.setRepositoryId(repositoryEntry.getRepositoryId());
 		repositoryEntryImpl.setMappedId(repositoryEntry.getMappedId());
+		repositoryEntryImpl.setManualCheckInRequired(repositoryEntry.isManualCheckInRequired());
 
 		return repositoryEntryImpl;
 	}

@@ -316,11 +316,23 @@ public class DLFileEntryLocalServiceUtil {
 			serviceContext);
 	}
 
+	/**
+	* @deprecated {@link #checkInFileEntry(long, long, String, ServiceContext)
+	*/
 	public static void checkInFileEntry(long userId, long fileEntryId,
 		java.lang.String lockUuid)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		getService().checkInFileEntry(userId, fileEntryId, lockUuid);
+	}
+
+	public static void checkInFileEntry(long userId, long fileEntryId,
+		java.lang.String lockUuid,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService()
+			.checkInFileEntry(userId, fileEntryId, lockUuid, serviceContext);
 	}
 
 	/**

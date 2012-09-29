@@ -525,7 +525,7 @@ AUI.add(
 					instance.fire('editPage');
 				}
 			},
-			['aui-form-combobox', 'overlay'],
+			['aui-form-combobox', 'aui-overlay'],
 			true
 		);
 

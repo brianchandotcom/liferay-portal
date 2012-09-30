@@ -34,10 +34,10 @@ import org.junit.runners.model.InitializationError;
 /**
  * @author Shuyang Zhou
  */
-public class ApsectJMockingNewClassLoaderJUnitTestRunner
+public class AspectJMockingNewClassLoaderJUnitTestRunner
 	extends NewClassLoaderJUnitTestRunner {
 
-	public ApsectJMockingNewClassLoaderJUnitTestRunner(Class<?> clazz)
+	public AspectJMockingNewClassLoaderJUnitTestRunner(Class<?> clazz)
 		throws InitializationError {
 
 		super(clazz);

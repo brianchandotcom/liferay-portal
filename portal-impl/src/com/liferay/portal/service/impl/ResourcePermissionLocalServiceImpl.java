@@ -18,6 +18,7 @@ import com.liferay.portal.NoSuchResourcePermissionException;
 import com.liferay.portal.kernel.concurrent.LockRegistry;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
@@ -159,6 +160,8 @@ public class ResourcePermissionLocalServiceImpl
 	 * @param  scope the scope
 	 * @param  resourceActionBitwiseValue the bitwise IDs of the actions
 	 * @throws SystemException if a system exception occurred
+	 * @deprecated {@link #addResourcePermissions(Role, String, int,long, int,
+	 *             int)}
 	 */
 	public void addResourcePermissions(
 			String resourceName, String roleName, int scope,
@@ -168,43 +171,51 @@ public class ResourcePermissionLocalServiceImpl
 		List<Role> roles = rolePersistence.findByName(roleName);
 
 		for (Role role : roles) {
-			List<String> primKeys = resourcePermissionFinder.findByC_N_S(
-				role.getCompanyId(), resourceName, scope);
-
-			for (String primKey : primKeys) {
-				List<ResourcePermission> resourcePermissions =
-					resourcePermissionPersistence.findByC_N_S_P_R(
-						role.getCompanyId(), resourceName, scope, primKey,
-						role.getRoleId());
-
-				ResourcePermission resourcePermission = null;
-
-				if (resourcePermissions.isEmpty()) {
-					long resourcePermissionId = counterLocalService.increment(
-						ResourcePermission.class.getName());
-
-					resourcePermission = resourcePermissionPersistence.create(
-						resourcePermissionId);
-
-					resourcePermission.setCompanyId(role.getCompanyId());
-					resourcePermission.setName(resourceName);
-					resourcePermission.setScope(scope);
-					resourcePermission.setPrimKey(primKey);
-					resourcePermission.setRoleId(role.getRoleId());
-				}
-				else {
-					resourcePermission = resourcePermissions.get(0);
-				}
-
-				long actionIdsLong = resourcePermission.getActionIds();
-
-				actionIdsLong |= resourceActionBitwiseValue;
-
-				resourcePermission.setActionIds(actionIdsLong);
-
-				resourcePermissionPersistence.update(resourcePermission, false);
-			}
+			addResourcePermissions(
+				role, resourceName, scope, resourceActionBitwiseValue,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 		}
+	}
+
+	public void addResourcePermissions(
+			Role role, String name, int scope, long resourceActionBitwiseValue,
+			int start, int end)
+		throws SystemException {
+
+		List<ResourcePermission> resourcePermissions =
+			resourcePermissionPersistence.findByC_N_S_R(
+				role.getCompanyId(), name, scope, role.getRoleId(), start, end);
+
+		for (ResourcePermission resourcePermission : resourcePermissions) {
+			long actionIdsLong = resourcePermission.getActionIds();
+
+			actionIdsLong |= resourceActionBitwiseValue;
+
+			resourcePermission.setActionIds(actionIdsLong);
+
+			resourcePermissionPersistence.update(resourcePermission, false);
+		}
+	}
+
+	public void addResourcePermissions(
+			Role role, String name, int scope, String[] actionIds, int start,
+			int end)
+		throws PortalException, SystemException {
+
+		if ((actionIds == null) || (actionIds.length == 0)) {
+			return;
+		}
+
+		long actionIdsLong = 0;
+
+		for (String actionId : actionIds) {
+			ResourceAction resourceAction =
+				resourceActionLocalService.getResourceAction(name, actionId);
+
+			actionIdsLong |= resourceAction.getBitwiseValue();
+		}
+
+		addResourcePermissions(role, name, scope, actionIdsLong, start, end);
 	}
 
 	/**
@@ -426,6 +437,14 @@ public class ResourcePermissionLocalServiceImpl
 
 		return resourcePermissionPersistence.findByC_N_S_P(
 			companyId, name, scope, primKey);
+	}
+
+	public int getResourcePermissionsCount(
+			long companyId, String name, int scope, long roleId)
+		throws SystemException {
+
+		return resourcePermissionPersistence.countByC_N_S_R(
+			companyId, name, scope, roleId);
 	}
 
 	/**

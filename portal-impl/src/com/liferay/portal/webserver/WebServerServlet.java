@@ -1048,7 +1048,7 @@ public class WebServerServlet extends HttpServlet {
 
 		InputStream inputStream = fileEntry.getContentStream();
 
-		ServletResponseUtil.write(response, inputStream);
+		ServletResponseUtil.write(response, inputStream, fileEntry.getSize());
 	}
 
 	protected void sendFileWithRangeHeader(

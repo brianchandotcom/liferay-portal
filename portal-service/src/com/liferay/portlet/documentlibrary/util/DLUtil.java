@@ -84,6 +84,14 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class DLUtil {
 
+	public static final String MANUAL_CHECKIN_REQUIRED =
+		"manualCheckInRequired";
+
+	public static final String MANUAL_CHECKIN_REQUIRED_PATH =
+		StringPool.SLASH + MANUAL_CHECKIN_REQUIRED;
+
+	public static final String WEBDAV_CHECKIN_MODE = "webDAVCheckInMode";
+
 	public static void addPortletBreadcrumbEntries(
 			DLFileShortcut dlFileShortcut, HttpServletRequest request,
 			RenderResponse renderResponse)
@@ -678,6 +686,14 @@ public class DLUtil {
 			ThemeDisplay themeDisplay, Folder folder, FileEntry fileEntry)
 		throws PortalException, SystemException {
 
+		return getWebDavURL(themeDisplay, folder, fileEntry, false);
+	}
+
+	public static String getWebDavURL(
+			ThemeDisplay themeDisplay, Folder folder, FileEntry fileEntry,
+			boolean manualCheckInRequired)
+		throws PortalException, SystemException {
+
 		StringBuilder sb = new StringBuilder();
 
 		if (folder != null) {
@@ -706,9 +722,21 @@ public class DLUtil {
 
 		Group group = themeDisplay.getScopeGroup();
 
-		return themeDisplay.getPortalURL() + themeDisplay.getPathContext() +
-			"/webdav" + group.getFriendlyURL() + "/document_library" +
-				sb.toString();
+		StringBundler webDavURL = new StringBundler(7);
+
+		webDavURL.append(themeDisplay.getPortalURL());
+		webDavURL.append(themeDisplay.getPathContext());
+		webDavURL.append("/api/secure/webdav");
+
+		if (manualCheckInRequired) {
+			webDavURL.append(MANUAL_CHECKIN_REQUIRED_PATH);
+		}
+
+		webDavURL.append(group.getFriendlyURL());
+		webDavURL.append("/document_library");
+		webDavURL.append(sb.toString());
+
+		return webDavURL.toString();
 	}
 
 	public static boolean hasWorkflowDefinitionLink(

@@ -454,6 +454,15 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	}
 
 	/**
+	 * @deprecated {@link #checkInFileEntry(long, String, ServiceContext)}
+	 */
+	public void checkInFileEntry(long fileEntryId, String lockUuid)
+		throws PortalException, SystemException {
+
+		checkInFileEntry(fileEntryId, lockUuid, new ServiceContext());
+	}
+
+	/**
 	 * Checks in the file entry using the lock's UUID. If a user has not checked
 	 * out the specified file entry, invoking this method will result in no
 	 * changes. This method is primarily used by WebDAV.
@@ -471,12 +480,14 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	 *
 	 * @param  fileEntryId the primary key of the file entry to check in
 	 * @param  lockUuid the lock's universally unique identifier
+	 * @param  serviceContext the service context to be applied
 	 * @throws PortalException if the file entry could not be found
 	 * @throws SystemException if a system exception occurred
 	 * @see    #cancelCheckOut(long)
 	 * @see    #checkOutFileEntry(long, String, long, ServiceContext)
 	 */
-	public void checkInFileEntry(long fileEntryId, String lockUuid)
+	public void checkInFileEntry(
+			long fileEntryId, String lockUuid, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		Repository repository = getRepository(0, fileEntryId, 0);
@@ -485,7 +496,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 		FileVersion oldFileVersion = oldFileEntry.getFileVersion();
 
-		repository.checkInFileEntry(fileEntryId, lockUuid);
+		repository.checkInFileEntry(fileEntryId, lockUuid, serviceContext);
 
 		FileEntry fileEntry = getFileEntry(fileEntryId);
 

@@ -150,6 +150,8 @@ public interface FileEntry extends RepositoryModel<FileEntry> {
 
 	public boolean isDefaultRepository();
 
+	public boolean isManualCheckInRequired();
+
 	public boolean isSupportsLocking();
 
 	public boolean isSupportsMetadata();

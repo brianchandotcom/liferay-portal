@@ -322,6 +322,13 @@ public interface DLAppService extends BaseService {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* @deprecated {@link #checkInFileEntry(long, String, ServiceContext)
+	*/
+	public void checkInFileEntry(long fileEntryId, java.lang.String lockUuid)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Checks in the file entry using the lock's UUID. If a user has not checked
 	* out the specified file entry, invoking this method will result in no
 	* changes. This method is primarily used by WebDAV.
@@ -339,12 +346,14 @@ public interface DLAppService extends BaseService {
 	*
 	* @param fileEntryId the primary key of the file entry to check in
 	* @param lockUuid the lock's universally unique identifier
+	* @param serviceContext the service context to be applied
 	* @throws PortalException if the file entry could not be found
 	* @throws SystemException if a system exception occurred
 	* @see #cancelCheckOut(long)
 	* @see #checkOutFileEntry(long, String, long, ServiceContext)
 	*/
-	public void checkInFileEntry(long fileEntryId, java.lang.String lockUuid)
+	public void checkInFileEntry(long fileEntryId, java.lang.String lockUuid,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 

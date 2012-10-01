@@ -128,6 +128,7 @@
 		<column name="largeImageId" type="long" />
 		<column name="custom1ImageId" type="long" />
 		<column name="custom2ImageId" type="long" />
+		<column name="manualCheckInRequired" type="boolean" />
 
 		<!-- Order -->
 

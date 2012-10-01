@@ -263,6 +263,10 @@ public class LiferayFileEntry extends LiferayModel implements FileEntry {
 		return _escapedModel;
 	}
 
+	public boolean isManualCheckInRequired() {
+		return _dlFileEntry.isManualCheckInRequired();
+	}
+
 	public boolean isSupportsLocking() {
 		return true;
 	}

@@ -62,7 +62,14 @@ public interface Repository {
 			ServiceContext serviceContext)
 		throws PortalException, SystemException;
 
+	/**
+	 * @deprecated {@link #checkInFileEntry(long, String, ServiceContext)}
+	 */
 	public void checkInFileEntry(long fileEntryId, String lockUuid)
+		throws PortalException, SystemException;
+
+	public void checkInFileEntry(
+			long fileEntryId, String lockUuid, ServiceContext serviceContext)
 		throws PortalException, SystemException;
 
 	public FileEntry checkOutFileEntry(

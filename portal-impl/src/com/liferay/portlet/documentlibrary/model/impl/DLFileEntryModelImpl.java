@@ -90,9 +90,10 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 			{ "smallImageId", Types.BIGINT },
 			{ "largeImageId", Types.BIGINT },
 			{ "custom1ImageId", Types.BIGINT },
-			{ "custom2ImageId", Types.BIGINT }
+			{ "custom2ImageId", Types.BIGINT },
+			{ "manualCheckInRequired", Types.BOOLEAN }
 		};
-	public static final String TABLE_SQL_CREATE = "create table DLFileEntry (uuid_ VARCHAR(75) null,fileEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,versionUserId LONG,versionUserName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,repositoryId LONG,folderId LONG,name VARCHAR(255) null,extension VARCHAR(75) null,mimeType VARCHAR(75) null,title VARCHAR(255) null,description STRING null,extraSettings TEXT null,fileEntryTypeId LONG,version VARCHAR(75) null,size_ LONG,readCount INTEGER,smallImageId LONG,largeImageId LONG,custom1ImageId LONG,custom2ImageId LONG)";
+	public static final String TABLE_SQL_CREATE = "create table DLFileEntry (uuid_ VARCHAR(75) null,fileEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,versionUserId LONG,versionUserName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,repositoryId LONG,folderId LONG,name VARCHAR(255) null,extension VARCHAR(75) null,mimeType VARCHAR(75) null,title VARCHAR(255) null,description STRING null,extraSettings TEXT null,fileEntryTypeId LONG,version VARCHAR(75) null,size_ LONG,readCount INTEGER,smallImageId LONG,largeImageId LONG,custom1ImageId LONG,custom2ImageId LONG,manualCheckInRequired BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table DLFileEntry";
 	public static final String ORDER_BY_JPQL = " ORDER BY dlFileEntry.folderId ASC, dlFileEntry.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY DLFileEntry.folderId ASC, DLFileEntry.name ASC";
@@ -157,6 +158,7 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		model.setLargeImageId(soapModel.getLargeImageId());
 		model.setCustom1ImageId(soapModel.getCustom1ImageId());
 		model.setCustom2ImageId(soapModel.getCustom2ImageId());
+		model.setManualCheckInRequired(soapModel.getManualCheckInRequired());
 
 		return model;
 	}
@@ -241,6 +243,7 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		attributes.put("largeImageId", getLargeImageId());
 		attributes.put("custom1ImageId", getCustom1ImageId());
 		attributes.put("custom2ImageId", getCustom2ImageId());
+		attributes.put("manualCheckInRequired", getManualCheckInRequired());
 
 		return attributes;
 	}
@@ -401,6 +404,13 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 
 		if (custom2ImageId != null) {
 			setCustom2ImageId(custom2ImageId);
+		}
+
+		Boolean manualCheckInRequired = (Boolean)attributes.get(
+				"manualCheckInRequired");
+
+		if (manualCheckInRequired != null) {
+			setManualCheckInRequired(manualCheckInRequired);
 		}
 	}
 
@@ -803,6 +813,19 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		_custom2ImageId = custom2ImageId;
 	}
 
+	@JSON
+	public boolean getManualCheckInRequired() {
+		return _manualCheckInRequired;
+	}
+
+	public boolean isManualCheckInRequired() {
+		return _manualCheckInRequired;
+	}
+
+	public void setManualCheckInRequired(boolean manualCheckInRequired) {
+		_manualCheckInRequired = manualCheckInRequired;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -861,6 +884,7 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		dlFileEntryImpl.setLargeImageId(getLargeImageId());
 		dlFileEntryImpl.setCustom1ImageId(getCustom1ImageId());
 		dlFileEntryImpl.setCustom2ImageId(getCustom2ImageId());
+		dlFileEntryImpl.setManualCheckInRequired(getManualCheckInRequired());
 
 		dlFileEntryImpl.resetOriginalValues();
 
@@ -1088,12 +1112,14 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 
 		dlFileEntryCacheModel.custom2ImageId = getCustom2ImageId();
 
+		dlFileEntryCacheModel.manualCheckInRequired = getManualCheckInRequired();
+
 		return dlFileEntryCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(53);
+		StringBundler sb = new StringBundler(55);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -1147,13 +1173,15 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		sb.append(getCustom1ImageId());
 		sb.append(", custom2ImageId=");
 		sb.append(getCustom2ImageId());
+		sb.append(", manualCheckInRequired=");
+		sb.append(getManualCheckInRequired());
 		sb.append("}");
 
 		return sb.toString();
 	}
 
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(82);
+		StringBundler sb = new StringBundler(85);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portlet.documentlibrary.model.DLFileEntry");
@@ -1263,6 +1291,10 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 			"<column><column-name>custom2ImageId</column-name><column-value><![CDATA[");
 		sb.append(getCustom2ImageId());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>manualCheckInRequired</column-name><column-value><![CDATA[");
+		sb.append(getManualCheckInRequired());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -1315,6 +1347,7 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 	private long _largeImageId;
 	private long _custom1ImageId;
 	private long _custom2ImageId;
+	private boolean _manualCheckInRequired;
 	private long _columnBitmask;
 	private DLFileEntry _escapedModelProxy;
 }

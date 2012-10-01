@@ -552,7 +552,8 @@ create table DLFileEntry (
 	smallImageId LONG,
 	largeImageId LONG,
 	custom1ImageId LONG,
-	custom2ImageId LONG
+	custom2ImageId LONG,
+	manualCheckInRequired BOOLEAN
 );
 
 create table DLFileEntryMetadata (
@@ -1537,7 +1538,8 @@ create table RepositoryEntry (
 	repositoryEntryId LONG not null primary key,
 	groupId LONG,
 	repositoryId LONG,
-	mappedId VARCHAR(75) null
+	mappedId VARCHAR(75) null,
+	manualCheckInRequired BOOLEAN
 );
 
 create table ResourceAction (

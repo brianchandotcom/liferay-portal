@@ -1529,6 +1529,7 @@
 
 		<column name="repositoryId" type="long" />
 		<column name="mappedId" type="String" />
+		<column name="manualCheckInRequired" type="boolean" />
 
 		<!-- Finder methods -->
 

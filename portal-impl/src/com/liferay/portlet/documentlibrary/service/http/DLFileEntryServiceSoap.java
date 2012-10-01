@@ -94,10 +94,28 @@ public class DLFileEntryServiceSoap {
 		}
 	}
 
+	/**
+	* @deprecated {@link #checkInFileEntry(long, String, ServiceContext)
+	*/
 	public static void checkInFileEntry(long fileEntryId,
 		java.lang.String lockUuid) throws RemoteException {
 		try {
 			DLFileEntryServiceUtil.checkInFileEntry(fileEntryId, lockUuid);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static void checkInFileEntry(long fileEntryId,
+		java.lang.String lockUuid,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			DLFileEntryServiceUtil.checkInFileEntry(fileEntryId, lockUuid,
+				serviceContext);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

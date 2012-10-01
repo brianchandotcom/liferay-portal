@@ -193,10 +193,21 @@ public class LiferayRepository
 			fileEntryId, major, changeLog, serviceContext);
 	}
 
+	/**
+	 * @deprecated {@link #checkInFileEntry(long, String, ServiceContext)}
+	 */
 	public void checkInFileEntry(long fileEntryId, String lockUuid)
 		throws PortalException, SystemException {
 
-		dlFileEntryService.checkInFileEntry(fileEntryId, lockUuid);
+		checkInFileEntry(fileEntryId, lockUuid, new ServiceContext());
+	}
+
+	public void checkInFileEntry(
+			long fileEntryId, String lockUuid, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		dlFileEntryService.checkInFileEntry(
+			fileEntryId, lockUuid, serviceContext);
 	}
 
 	public FileEntry checkOutFileEntry(

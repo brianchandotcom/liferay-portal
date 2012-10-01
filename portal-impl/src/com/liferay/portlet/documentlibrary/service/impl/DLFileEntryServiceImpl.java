@@ -95,7 +95,17 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 			getUserId(), fileEntryId, major, changeLog, serviceContext);
 	}
 
+	/**
+	 * @deprecated {@link #checkInFileEntry(long, String, ServiceContext)}
+	 */
 	public void checkInFileEntry(long fileEntryId, String lockUuid)
+		throws PortalException, SystemException {
+
+		checkInFileEntry(fileEntryId, lockUuid, new ServiceContext());
+	}
+
+	public void checkInFileEntry(
+			long fileEntryId, String lockUuid, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		try {
@@ -106,7 +116,7 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 		}
 
 		dlFileEntryLocalService.checkInFileEntry(
-			getUserId(), fileEntryId, lockUuid);
+			getUserId(), fileEntryId, lockUuid, serviceContext);
 	}
 
 	/**

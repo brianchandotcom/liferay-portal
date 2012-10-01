@@ -465,6 +465,27 @@ public interface DLFileEntryModel extends BaseModel<DLFileEntry>, GroupedModel {
 	 */
 	public void setCustom2ImageId(long custom2ImageId);
 
+	/**
+	 * Returns the manual check in required of this document library file entry.
+	 *
+	 * @return the manual check in required of this document library file entry
+	 */
+	public boolean getManualCheckInRequired();
+
+	/**
+	 * Returns <code>true</code> if this document library file entry is manual check in required.
+	 *
+	 * @return <code>true</code> if this document library file entry is manual check in required; <code>false</code> otherwise
+	 */
+	public boolean isManualCheckInRequired();
+
+	/**
+	 * Sets whether this document library file entry is manual check in required.
+	 *
+	 * @param manualCheckInRequired the manual check in required of this document library file entry
+	 */
+	public void setManualCheckInRequired(boolean manualCheckInRequired);
+
 	public boolean isNew();
 
 	public void setNew(boolean n);

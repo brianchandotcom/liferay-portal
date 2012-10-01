@@ -160,6 +160,8 @@ public class DLFileEntryPersistenceTest {
 
 		newDLFileEntry.setCustom2ImageId(ServiceTestUtil.nextLong());
 
+		newDLFileEntry.setManualCheckInRequired(ServiceTestUtil.randomBoolean());
+
 		_persistence.update(newDLFileEntry, false);
 
 		DLFileEntry existingDLFileEntry = _persistence.findByPrimaryKey(newDLFileEntry.getPrimaryKey());
@@ -218,6 +220,8 @@ public class DLFileEntryPersistenceTest {
 			newDLFileEntry.getCustom1ImageId());
 		Assert.assertEquals(existingDLFileEntry.getCustom2ImageId(),
 			newDLFileEntry.getCustom2ImageId());
+		Assert.assertEquals(existingDLFileEntry.getManualCheckInRequired(),
+			newDLFileEntry.getManualCheckInRequired());
 	}
 
 	@Test
@@ -421,6 +425,8 @@ public class DLFileEntryPersistenceTest {
 		dlFileEntry.setCustom1ImageId(ServiceTestUtil.nextLong());
 
 		dlFileEntry.setCustom2ImageId(ServiceTestUtil.nextLong());
+
+		dlFileEntry.setManualCheckInRequired(ServiceTestUtil.randomBoolean());
 
 		_persistence.update(dlFileEntry, false);
 

@@ -32,7 +32,7 @@ public class RepositoryEntryCacheModel implements CacheModel<RepositoryEntry>,
 	Serializable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(13);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -44,6 +44,8 @@ public class RepositoryEntryCacheModel implements CacheModel<RepositoryEntry>,
 		sb.append(repositoryId);
 		sb.append(", mappedId=");
 		sb.append(mappedId);
+		sb.append(", manualCheckInRequired=");
+		sb.append(manualCheckInRequired);
 		sb.append("}");
 
 		return sb.toString();
@@ -70,6 +72,8 @@ public class RepositoryEntryCacheModel implements CacheModel<RepositoryEntry>,
 			repositoryEntryImpl.setMappedId(mappedId);
 		}
 
+		repositoryEntryImpl.setManualCheckInRequired(manualCheckInRequired);
+
 		repositoryEntryImpl.resetOriginalValues();
 
 		return repositoryEntryImpl;
@@ -80,4 +84,5 @@ public class RepositoryEntryCacheModel implements CacheModel<RepositoryEntry>,
 	public long groupId;
 	public long repositoryId;
 	public String mappedId;
+	public boolean manualCheckInRequired;
 }

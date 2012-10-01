@@ -916,6 +916,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 		dlFileEntryImpl.setLargeImageId(dlFileEntry.getLargeImageId());
 		dlFileEntryImpl.setCustom1ImageId(dlFileEntry.getCustom1ImageId());
 		dlFileEntryImpl.setCustom2ImageId(dlFileEntry.getCustom2ImageId());
+		dlFileEntryImpl.setManualCheckInRequired(dlFileEntry.isManualCheckInRequired());
 
 		return dlFileEntryImpl;
 	}

@@ -15,6 +15,8 @@
 package com.liferay.portlet.portalsettings.action;
 
 import com.liferay.counter.service.CounterLocalServiceUtil;
+import com.liferay.portal.DuplicateLDAPServerNameException;
+import com.liferay.portal.LDAPServerNameException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -74,6 +76,10 @@ public class EditLDAPServerAction extends PortletAction {
 				SessionErrors.add(actionRequest, e.getClass());
 
 				setForward(actionRequest, "portlet.portal_settings.error");
+			}
+			else if (e instanceof LDAPServerNameException ||
+				e instanceof DuplicateLDAPServerNameException) {
+					SessionErrors.add(actionRequest, e.getClass());
 			}
 			else {
 				throw e;
@@ -193,12 +199,42 @@ public class EditLDAPServerAction extends PortletAction {
 		UnicodeProperties properties = PropertiesParamUtil.getProperties(
 			actionRequest, "settings--");
 
+		validateLDAPServerName(
+			themeDisplay.getCompanyId(), ldapServerId, properties);
+
 		if (ldapServerId <= 0) {
 			properties = addLDAPServer(themeDisplay.getCompanyId(), properties);
 		}
 
 		CompanyServiceUtil.updatePreferences(
 			themeDisplay.getCompanyId(), properties);
+	}
+
+	protected void validateLDAPServerName(
+			long companyId, long ldapServerId, UnicodeProperties properties)
+		throws Exception {
+
+		long[] ldapServerIdList = StringUtil.split(
+			PrefsPropsUtil.getString(companyId, "ldap.server.ids"), 0L);
+
+		String ldapServerName = properties.getProperty(
+			"ldap.server.name." + ldapServerId);
+
+		if (ldapServerName.isEmpty()) {
+			throw new LDAPServerNameException();
+		}
+
+		for (long ldapServerIterator : ldapServerIdList) {
+			if (ldapServerId == ldapServerIterator) {
+				continue;
+			}
+			else {
+				if (ldapServerName.equals(PrefsPropsUtil.getString(
+					companyId, "ldap.server.name." + ldapServerIterator))) {
+					throw new DuplicateLDAPServerNameException();
+				}
+			}
+		}
 	}
 
 	private static final String[] _KEYS = {

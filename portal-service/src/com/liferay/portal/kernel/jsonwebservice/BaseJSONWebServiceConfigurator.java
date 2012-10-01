@@ -12,61 +12,38 @@
  * details.
  */
 
-package com.liferay.portal.jsonwebservice;
+package com.liferay.portal.kernel.jsonwebservice;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
-import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManagerUtil;
-import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceMode;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
-import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PropsValues;
 
-import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
-import java.net.URL;
-import java.net.URLDecoder;
-
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import jodd.io.findfile.ClassFinder;
-import jodd.io.findfile.FindFile;
-import jodd.io.findfile.RegExpFindFile;
-
-import jodd.util.ClassLoaderUtil;
-
-import org.apache.commons.lang.time.StopWatch;
-
-import org.objectweb.asm.ClassReader;
+import javax.servlet.ServletContext;
 
 /**
  * @author Igor Spasic
+ * @author Raymond Augé
  */
-public class JSONWebServiceConfigurator extends ClassFinder {
-
-	public JSONWebServiceConfigurator(String servletContextPath) {
-		setIncludedJars(
-			"*_wl_cls_gen.jar", "*-hook-service*.jar", "*-portlet-service*.jar",
-			"*-web-service*.jar", "*portal-impl.jar", "*portal-service.jar");
-
-		_servletContextPath = servletContextPath;
-	}
+public abstract class BaseJSONWebServiceConfigurator
+	implements JSONWebServiceConfigurator {
 
 	public void clean() {
 		int count =
@@ -85,119 +62,54 @@ public class JSONWebServiceConfigurator extends ClassFinder {
 		}
 	}
 
-	public void configure(ClassLoader classLoader)
-		throws PortalException, SystemException {
+	public abstract void configure() throws PortalException, SystemException;
 
-		File[] classPathFiles = null;
-
-		if (classLoader != null) {
-			URL servicePropertiesURL = classLoader.getResource(
-				"service.properties");
-
-			String servicePropertiesPath = null;
-
-			try {
-				servicePropertiesPath = URLDecoder.decode(
-					servicePropertiesURL.getPath(), StringPool.UTF8);
-			}
-			catch (UnsupportedEncodingException uee) {
-				throw new SystemException(uee);
-			}
-
-			File classPathFile = null;
-
-			File libDir = null;
-
-			int pos = servicePropertiesPath.indexOf("_wl_cls_gen.jar!");
-
-			if (pos != -1) {
-				String wlClsGenJarPath = servicePropertiesPath.substring(
-					0, pos + 15);
-
-				classPathFile = new File(wlClsGenJarPath);
-
-				libDir = new File(classPathFile.getParent());
-			}
-			else {
-				File servicePropertiesFile = new File(servicePropertiesPath);
-
-				classPathFile = servicePropertiesFile.getParentFile();
-
-				libDir = new File(classPathFile.getParent(), "lib");
-			}
-
-			classPathFiles = new File[2];
-
-			classPathFiles[0] = classPathFile;
-
-			FindFile findFile = new RegExpFindFile(
-				".*-(hook|portlet|web)-service.*\\.jar");
-
-			findFile.searchPath(libDir);
-
-			classPathFiles[1] = findFile.nextFile();
-
-			if (classPathFiles[1] == null) {
-				File classesDir = new File(libDir.getParent(), "classes");
-
-				classPathFiles[1] = classesDir;
-			}
-		}
-		else {
-			classLoader = PACLClassLoaderUtil.getContextClassLoader();
-
-			File portalImplJarFile = new File(
-				PortalUtil.getPortalLibDir(), "portal-impl.jar");
-			File portalServiceJarFile = new File(
-				PortalUtil.getGlobalLibDir(), "portal-service.jar");
-
-			if (portalImplJarFile.exists() && portalServiceJarFile.exists()) {
-				classPathFiles = new File[2];
-
-				classPathFiles[0] = portalImplJarFile;
-				classPathFiles[1] = portalServiceJarFile;
-			}
-			else {
-				classPathFiles = ClassLoaderUtil.getDefaultClasspath(
-					classLoader);
-			}
-		}
-
-		_classLoader = classLoader;
-
-		_configure(classPathFiles);
+	public ClassLoader getClassLoader() {
+		return _classLoader;
 	}
 
-	@Override
-	protected void onEntry(EntryData entryData) throws Exception {
-		String className = entryData.getName();
+	public ServletContext getServletContext() {
+		return _servletContext;
+	}
 
-		if (className.endsWith("Service") ||
-			className.endsWith("ServiceImpl")) {
+	public String getServletContextPath() {
+		return _servletContextPath;
+	}
 
-			InputStream inputStream = entryData.openInputStream();
+	public void init(
+		String servletContextPath, ServletContext servletContext,
+		ClassLoader classLoader) {
 
-			if (!isTypeSignatureInUse(
-					inputStream, _jsonWebServiceAnnotationBytes)) {
+		_classLoader = classLoader;
+		_servletContext = servletContext;
+		_servletContextPath = servletContextPath;
+	}
 
-				return;
-			}
+	public void registerClass(String className, InputStream inputStream)
+		throws Exception {
 
-			if (!entryData.isArchive()) {
-				StreamUtil.cleanUp(inputStream);
+		if (!className.endsWith("Service") &&
+			!className.endsWith("ServiceImpl")) {
 
-				ClassReader classReader = new ClassReader(
-					entryData.openInputStream());
+			return;
+		}
 
+		if (inputStream.markSupported()) {
+			inputStream.mark(Integer.MAX_VALUE);
+		}
+
+		if (!isTypeSignatureInUse(inputStream)) {
+			return;
+		}
+
+		if (inputStream.markSupported()) {
+			inputStream.reset();
+
+			try {
 				JSONWebServiceClassVisitor jsonWebServiceClassVisitor =
-					new JSONWebServiceClassVisitor();
+					JSONWebServiceClassVisitorFactoryUtil.create(inputStream);
 
-				try {
-					classReader.accept(jsonWebServiceClassVisitor, 0);
-				}
-				catch (Exception e) {
-					return;
-				}
+				jsonWebServiceClassVisitor.accept();
 
 				if (!className.equals(
 						jsonWebServiceClassVisitor.getClassName())) {
@@ -205,34 +117,14 @@ public class JSONWebServiceConfigurator extends ClassFinder {
 					return;
 				}
 			}
+			catch (Exception e) {
+				_log.error(e, e);
 
-			_onJSONWebServiceClass(className);
-		}
-	}
-
-	private void _configure(File... classPathFiles) throws PortalException {
-		StopWatch stopWatch = null;
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Configure JSON web service actions");
-
-			stopWatch = new StopWatch();
-
-			stopWatch.start();
+				return;
+			}
 		}
 
-		try {
-			scanPaths(classPathFiles);
-		}
-		catch (Exception e) {
-			throw new PortalException(e.getMessage(), e);
-		}
-
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Configured " + _registeredActionsCount + " actions in " +
-					stopWatch.getTime() + " ms");
-		}
+		_onJSONWebServiceClass(className);
 	}
 
 	private boolean _hasAnnotatedServiceImpl(String className) {
@@ -363,12 +255,6 @@ public class JSONWebServiceConfigurator extends ClassFinder {
 				}
 			}
 
-			if ((_excludedMethodNames != null) &&
-				_excludedMethodNames.contains(method.getName())) {
-
-				registerMethod = false;
-			}
-
 			if (registerMethod) {
 				_registerJSONWebServiceAction(actionClass, method);
 			}
@@ -406,20 +292,78 @@ public class JSONWebServiceConfigurator extends ClassFinder {
 		_registeredActionsCount++;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
-		JSONWebServiceConfigurator.class);
+	protected byte[] getTypeSignatureBytes(Class<?> clazz) {
+		return ('L' + clazz.getName().replace('.', '/') + ';').getBytes();
+	}
 
-	private static Set<String> _excludedMethodNames = SetUtil.fromArray(
-		new String[] {"getBeanIdentifier", "setBeanIdentifier"});
+	protected boolean isTypeSignatureInUse(InputStream inputStream) {
+		try {
+
+			// create a buffer the same length as the type signature array
+
+			byte[] buffer = new byte[_jsonWebServiceAnnotationBytes.length];
+
+			// read an initial number of bytes into the buffer
+
+			int value = inputStream.read(buffer);
+
+			// if the number of bytes read is less than the type signature
+			// length immediately fail
+
+			if ((value < _jsonWebServiceAnnotationBytes.length)) {
+				return false;
+			}
+
+			// if the buffer equals the type signature immediately succeed
+
+			if (Arrays.equals(buffer, _jsonWebServiceAnnotationBytes)) {
+				return true;
+			}
+
+			// read a single byte from the stream
+
+			while ((value = inputStream.read()) != -1) {
+				// immediately fail if we're at the end of the stream
+
+				if (value == -1) {
+					return false;
+				}
+
+				// shift the buffer left
+
+				System.arraycopy(buffer, 1, buffer, 0, buffer.length - 1);
+
+				// add the read byte to the end of the buffer
+
+				buffer[buffer.length - 1] = (byte)value;
+
+				// compare the updated buffer to the signature
+
+				if (Arrays.equals(buffer, _jsonWebServiceAnnotationBytes)) {
+					return true;
+				}
+			}
+		}
+		catch (IOException ioe) {
+			throw new IllegalStateException(
+				"Unable to read bytes from input stream.", ioe);
+		}
+
+		return false;
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		BaseJSONWebServiceConfigurator.class);
 
 	private ClassLoader _classLoader;
 	private Set<String> _invalidHttpMethods = SetUtil.fromArray(
-		PropsValues.JSONWS_WEB_SERVICE_INVALID_HTTP_METHODS);
-	private byte[] _jsonWebServiceAnnotationBytes = getTypeSignatureBytes(
+		PropsUtil.getArray(PropsKeys.JSONWS_WEB_SERVICE_INVALID_HTTP_METHODS));
+	private final byte[] _jsonWebServiceAnnotationBytes = getTypeSignatureBytes(
 		JSONWebService.class);
 	private JSONWebServiceMappingResolver _jsonWebServiceMappingResolver =
 		new JSONWebServiceMappingResolver();
 	private int _registeredActionsCount;
+	private ServletContext _servletContext;
 	private String _servletContextPath;
 	private Map<Class<?>, Class<?>> _utilClasses =
 		new HashMap<Class<?>, Class<?>>();

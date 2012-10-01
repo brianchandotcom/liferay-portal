@@ -12,9 +12,8 @@
  * details.
  */
 
-package com.liferay.portal.jsonwebservice;
+package com.liferay.portal.kernel.jsonwebservice;
 
-import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.util.CamelCaseUtil;
 import com.liferay.portal.kernel.util.SetUtil;

@@ -12,30 +12,15 @@
  * details.
  */
 
-package com.liferay.portal.jsonwebservice;
-
-import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.StringUtil;
-
-import jodd.asm.EmptyClassVisitor;
+package com.liferay.portal.kernel.jsonwebservice;
 
 /**
- * @author Igor Spasic
+ * @author Raymond Augé
  */
-public class JSONWebServiceClassVisitor extends EmptyClassVisitor {
+public interface JSONWebServiceClassVisitor {
 
-	public String getClassName() {
-		return _className;
-	}
+	public void accept() throws Exception;
 
-	@Override
-	public void visit(
-		int version, int access, String name, String signature,
-		String superName, String[] interfaces) {
-
-		_className = StringUtil.replace(name, CharPool.SLASH, CharPool.PERIOD);
-	}
-
-	private String _className;
+	public String getClassName();
 
 }

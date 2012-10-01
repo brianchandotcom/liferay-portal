@@ -159,7 +159,8 @@ public class JSONWebServiceServlet extends JSONServlet {
 			PluginContextListener.PLUGIN_CLASS_LOADER);
 
 		_jsonWebServiceServiceAction = new JSONWebServiceServiceAction(
-			ContextPathUtil.getContextPath(servletContext), classLoader);
+			ContextPathUtil.getContextPath(servletContext), servletContext,
+			classLoader);
 
 		_jsonWebServiceServiceAction.setServletContext(servletContext);
 

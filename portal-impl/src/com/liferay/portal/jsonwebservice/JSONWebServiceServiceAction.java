@@ -19,13 +19,20 @@ import com.liferay.portal.jsonwebservice.action.JSONWebServiceInvokerAction;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceAction;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManagerUtil;
+import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceConfigurator;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ServiceLoader;
+import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.lang.reflect.InvocationTargetException;
 
+import java.util.List;
+
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -34,20 +41,30 @@ import org.apache.struts.action.ActionMapping;
 
 /**
  * @author Igor Spasic
+ * @author Raymond Augé
  */
 public class JSONWebServiceServiceAction extends JSONServiceAction {
 
 	public JSONWebServiceServiceAction(
-		String servletContextPath, ClassLoader classLoader) {
+		String servletContextPath, ServletContext servletContext,
+		ClassLoader classLoader) {
 
-		_jsonWebServiceConfigurator = new JSONWebServiceConfigurator(
-			servletContextPath);
+		if ((classLoader == null) &&
+			PortalUtil.getPathContext().equals(servletContextPath)) {
+
+			classLoader = PACLClassLoaderUtil.getPortalClassLoader();
+		}
+
+		_jsonWebServiceConfigurator = getConfigurator(classLoader);
+
+		_jsonWebServiceConfigurator.init(
+			servletContextPath, servletContext, classLoader);
 
 		_jsonWebServiceConfigurator.clean();
 
 		if (PropsValues.JSON_WEB_SERVICE_ENABLED) {
 			try {
-				_jsonWebServiceConfigurator.configure(classLoader);
+				_jsonWebServiceConfigurator.configure();
 			}
 			catch (Exception e) {
 				_log.error(e, e);
@@ -58,6 +75,30 @@ public class JSONWebServiceServiceAction extends JSONServiceAction {
 				_log.info("JSON web service is disabled");
 			}
 		}
+	}
+
+	protected JSONWebServiceConfigurator getConfigurator(
+		ClassLoader classLoader) {
+
+		JSONWebServiceConfigurator configurator = null;
+
+		try {
+			List<JSONWebServiceConfigurator> configurators = ServiceLoader.load(
+				classLoader, JSONWebServiceConfigurator.class);
+
+			if (!configurators.isEmpty()) {
+				configurator = configurators.get(0);
+			}
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
+		if (configurator == null) {
+			configurator = new JSONWebServiceConfiguratorImpl();
+		}
+
+		return configurator;
 	}
 
 	public void destroy() {

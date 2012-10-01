@@ -15,18 +15,16 @@
 </@>
 
 <@aui.script use="aui-base">
-	var namespacedField = A.one('#${portletNamespace}${namespacedFieldName}');
+	var field = A.one('#${portletNamespace}${namespacedFieldName}');
 
-	if (namespacedField) {
-		var form = namespacedField.ancestor('form');
+	if (field) {
+		var form = field.get('form');
 
 		if (form) {
 			form.on(
 				'submit',
 				function(event) {
-					namespacedField.val(window.${portletNamespace}${namespacedFieldName}Editor.getHTML());
-
-					submitForm(form.getDOM());
+					field.val(window.${portletNamespace}${namespacedFieldName}Editor.getHTML());
 				}
 			);
 		}

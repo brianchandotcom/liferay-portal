@@ -34,11 +34,11 @@
 		margin-bottom: 15px;
 	}
 
-	.lfr-ddm-html-text, .lfr-ddm-html-text-icon {
+	.lfr-ddm-text-html, .lfr-ddm-text-html-icon {
 		background-image: url(@theme_image_path@/aui/textarea.png);
 	}
 
-	.lfr-ddm-html-text {
+	.lfr-ddm-text-html {
 		background-position: 4px;
 		background-repeat: no-repeat;
 	}

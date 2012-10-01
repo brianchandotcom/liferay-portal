@@ -114,11 +114,11 @@ portletURL.setParameter("recordSetId", String.valueOf(recordSet.getRecordSetId()
 			// Columns
 
 			for (Map<String, String> fields : fieldsMap.values()) {
-				%>
+			%>
 
 				<%@ include file="/html/portlet/dynamic_data_lists/record_row_value.jspf" %>
 
-				<%
+			<%
 			}
 
 			if (editable) {
@@ -140,3 +140,7 @@ portletURL.setParameter("recordSetId", String.valueOf(recordSet.getRecordSetId()
 		<liferay-ui:search-iterator />
 	</liferay-ui:search-container>
 </aui:form>
+
+<aui:script>
+	AUI().use('liferay-portlet-dynamic-data-lists');
+</aui:script>

@@ -27,7 +27,7 @@ if (fieldsModel.contains(name)) {
 	value = field.getRenderedValue(themeDisplay.getLocale());
 
 	if (dataType.equals(FieldConstants.HTML)) {
-		value = "<a href=\"javascript:" + renderResponse.getNamespace() + "viewHTMLValue('" + HtmlUtil.escape(value) + "');\">(" + LanguageUtil.get(pageContext, "preview") + ")</a>";
+		value = "<a href=\"javascript:Liferay.DDLUtil.openPreviewDialog('" + HtmlUtil.escape(value) + "');\">(" + LanguageUtil.get(pageContext, "preview") + ")</a>";
 	}
 }
 else {
@@ -41,34 +41,3 @@ else {
 	row.addText(value);
 }
 %>
-
-<aui:script>
-
-Liferay.provide(
-	window,
-	'<portlet:namespace />viewHTMLValue',
-	function(content) {
-		var A = AUI();
-
-		var dialog = new A.Dialog(
-			{
-				align: Liferay.Util.Window.ALIGN_CENTER,
-				bodyContent: content,
-				buttons: [
-					{
-						handler: function() {
-							this.close();
-						},
-						label: '<liferay-ui:message key="ok" />'
-					}
-				],
-				modal: true,
-				title: '<liferay-ui:message key="content" />',
-				width: 400
-			}
-		).render();
-	},
-	['aui-dialog']
-);
-
-</aui:script>

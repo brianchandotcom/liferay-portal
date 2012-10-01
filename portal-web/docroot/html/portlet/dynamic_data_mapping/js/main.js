@@ -768,9 +768,9 @@ AUI.add(
 				},
 				{
 					hiddenAttributes: MAP_HIDDEN_FIELD_ATTRS.DEFAULT,
-					iconClass: 'aui-form-builder-field-icon lfr-ddm-html-text-icon',
-					label: Liferay.Language.get('text-area'),
-					type: 'ddm-html-text'
+					iconClass: 'aui-form-builder-field-icon lfr-ddm-text-html-icon',
+					label: Liferay.Language.get('html'),
+					type: 'ddm-text-html'
 				}
 			],
 

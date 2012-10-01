@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.servlet.PortalSessionThreadLocal;
 import com.liferay.portal.kernel.util.AutoResetThreadLocal;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -65,7 +64,6 @@ import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.service.persistence.DLFolderUtil;
-import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.documentlibrary.util.comparator.RepositoryModelCreateDateComparator;
 import com.liferay.portlet.documentlibrary.util.comparator.RepositoryModelModifiedDateComparator;
 import com.liferay.portlet.documentlibrary.util.comparator.RepositoryModelNameComparator;
@@ -254,20 +252,7 @@ public class CMISRepository extends BaseCmisRepository {
 		ServiceContext serviceContext) {
 
 		try {
-			boolean webDAVCheckInMode = GetterUtil.getBoolean(
-				serviceContext.getAttribute(DLUtil.WEBDAV_CHECK_IN_MODE));
-
-			RepositoryEntry repositoryEntry =
-				RepositoryEntryUtil.findByPrimaryKey(fileEntryId);
-
-			boolean manualCheckInRequired =
-				repositoryEntry.getManualCheckInRequired();
-
-			if (!webDAVCheckInMode && manualCheckInRequired) {
-				repositoryEntry.setManualCheckInRequired(false);
-
-				RepositoryEntryUtil.update(repositoryEntry, false);
-			}
+			clearManualCheckInRequired(fileEntryId, serviceContext);
 
 			Session session = getSession();
 
@@ -313,21 +298,11 @@ public class CMISRepository extends BaseCmisRepository {
 		throws PortalException, SystemException {
 
 		try {
+			setManualCheckInRequired(fileEntryId, serviceContext);
+
 			Session session = getSession();
 
 			String versionSeriesId = toFileEntryId(fileEntryId);
-
-			boolean manualCheckInRequired = GetterUtil.getBoolean(
-				serviceContext.getAttribute(DLUtil.MANUAL_CHECK_IN_REQUIRED));
-
-			if (manualCheckInRequired) {
-				RepositoryEntry repositoryEntry =
-					RepositoryEntryUtil.findByPrimaryKey(fileEntryId);
-
-				repositoryEntry.setManualCheckInRequired(manualCheckInRequired);
-
-				RepositoryEntryUtil.update(repositoryEntry, false);
-			}
 
 			Document document = (Document)session.getObject(versionSeriesId);
 

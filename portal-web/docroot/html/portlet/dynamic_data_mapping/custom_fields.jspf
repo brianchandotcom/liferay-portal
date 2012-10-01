@@ -31,6 +31,8 @@
 
 	var TPL_SEPARATOR = '<div class="separator"></div>';
 
+	var TPL_TEXTAREA = '<textarea class="aui-form-builder-field-node lfr-ddm-html-text"></textarea>';
+
 	var LiferayFormBuilderField = function() {
 	};
 
@@ -487,10 +489,41 @@
 		}
 	);
 
+	var DDMHTMLTextField = A.Component.create(
+		{
+			ATTRS: {
+				dataType: {
+					value: 'html'
+				},
+
+				fieldNamespace: {
+					value: 'ddm'
+				}
+			},
+
+			EXTENDS: FormBuilderTextField,
+
+			NAME: 'ddm-html-text',
+
+			prototype: {
+				initializer: function() {
+					var instance = this;
+
+					console.log();
+				},
+
+				getHTML: function() {
+					return TPL_TEXTAREA;
+				}
+			}
+		}
+	);
+
 	FormBuilderTypes['ddm-date'] = DDMDateField;
 	FormBuilderTypes['ddm-decimal'] = DDMDecimalField;
 	FormBuilderTypes['ddm-documentlibrary'] = DDMDocumentLibraryField;
 	FormBuilderTypes['ddm-fileupload'] = DDMFileUploadField;
+	FormBuilderTypes['ddm-html-text'] = DDMHTMLTextField;
 	FormBuilderTypes['ddm-integer'] = DDMIntegerField;
 	FormBuilderTypes['ddm-number'] = DDMNumberField;
 	FormBuilderTypes['ddm-paragraph'] = DDMParagraphField;

@@ -42,6 +42,8 @@ public class FieldConstants {
 
 	public static final String FLOAT = "float";
 
+	public static final String HTML = "html";
+
 	public static final String INTEGER = "integer";
 
 	public static final String LABEL = "label";

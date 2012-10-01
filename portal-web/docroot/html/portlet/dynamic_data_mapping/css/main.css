@@ -34,6 +34,15 @@
 		margin-bottom: 15px;
 	}
 
+	.lfr-ddm-html-text, .lfr-ddm-html-text-icon {
+		background-image: url(@theme_image_path@/aui/textarea.png);
+	}
+
+	.lfr-ddm-html-text {
+		background-position: 4px;
+		background-repeat: no-repeat;
+	}
+
 	.lfr-ddm-types-form-column .aui-column-content-first {
 		margin-right: 10px;
 	}

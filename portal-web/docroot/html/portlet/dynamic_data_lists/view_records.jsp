@@ -114,26 +114,11 @@ portletURL.setParameter("recordSetId", String.valueOf(recordSet.getRecordSetId()
 			// Columns
 
 			for (Map<String, String> fields : fieldsMap.values()) {
-				String dataType = fields.get(FieldConstants.DATA_TYPE);
-				String name = fields.get(FieldConstants.NAME);
+				%>
 
-				String value = null;
+				<%@ include file="/html/portlet/dynamic_data_lists/record_row_value.jspf" %>
 
-				if (fieldsModel.contains(name)) {
-					com.liferay.portlet.dynamicdatamapping.storage.Field field = fieldsModel.get(name);
-
-					value = field.getRenderedValue(themeDisplay.getLocale());
-				}
-				else {
-					value = StringPool.BLANK;
-				}
-
-				if (editable) {
-					row.addText(value, rowURL);
-				}
-				else {
-					row.addText(value);
-				}
+				<%
 			}
 
 			if (editable) {

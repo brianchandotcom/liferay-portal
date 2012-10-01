@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Repository;
 import com.liferay.portal.model.User;
@@ -40,7 +39,6 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.service.DLFileEntryServiceUtil;
 import com.liferay.portlet.documentlibrary.util.DLAppHelperThreadLocal;
 
 import java.io.File;
@@ -232,16 +230,15 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 	public List<DLFileEntry> getPortletFileEntries(long groupId, long folderId)
 		throws SystemException {
 
-		return DLFileEntryServiceUtil.getFileEntries(
-			groupId, folderId, WorkflowConstants.STATUS_APPROVED,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+		return DLFileEntryLocalServiceUtil.getFileEntries(
+			groupId, folderId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	public int getPortletFileEntriesCount(long groupId, long folderId)
 		throws SystemException {
 
-		return DLFileEntryServiceUtil.getFileEntriesCount(
-				groupId, folderId, WorkflowConstants.STATUS_APPROVED);
+		return DLFileEntryLocalServiceUtil.getFileEntriesCount(
+				groupId, folderId);
 	}
 
 	public long getPortletRepository(

@@ -216,7 +216,6 @@ public class RepositoryTest {
 	}
 
 	protected void hiddenRepository(boolean hidden) throws Exception {
-
 		int initialMountFolders = DLFolderServiceUtil.getMountFoldersCount(
 			TestPropsValues.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);

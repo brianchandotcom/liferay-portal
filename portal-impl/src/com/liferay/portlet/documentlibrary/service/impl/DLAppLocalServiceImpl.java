@@ -668,6 +668,14 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 			toLocalRepository, serviceContext);
 	}
 
+	/**
+	 * Moves the file entry with the primary key to the trash portlet.
+	 *
+	 * @param  userId the primary key of the user
+	 * @param  fileEntryId the primary key of the file entry
+	 * @throws PortalException if the file entry could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
 	public FileEntry moveFileEntryToTrash(long userId, long fileEntryId)
 		throws PortalException, SystemException {
 
@@ -678,6 +686,14 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 		return dlAppHelperLocalService.moveFileEntryToTrash(userId, fileEntry);
 	}
 
+	/**
+	 * Restores the file entry with the primary key from the trash portlet.
+	 *
+	 * @param  userId the primary key of the user
+	 * @param  fileEntryId the primary key of the file entry
+	 * @throws PortalException if the file entry could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void restoreFileEntryFromTrash(long userId, long fileEntryId)
 		throws PortalException, SystemException {
 

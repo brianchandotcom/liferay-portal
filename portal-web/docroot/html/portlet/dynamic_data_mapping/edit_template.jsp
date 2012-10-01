@@ -122,7 +122,7 @@ if (Validator.isNotNull(structureAvailableFields)) {
 	</portlet:renderURL>
 
 	<liferay-ui:header
-		backURL="<%= portletName.equals(PortletKeys.PORTLET_DISPLAY_TEMPLATES) || Validator.isNotNull(portletResource) ? backURL : viewTemplatesURL %>"
+		backURL="<%= (portletName.equals(PortletKeys.PORTLET_DISPLAY_TEMPLATES) || Validator.isNotNull(portletResource)) ? backURL : viewTemplatesURL %>"
 		localizeTitle="<%= false %>"
 		title="<%= title %>"
 	/>

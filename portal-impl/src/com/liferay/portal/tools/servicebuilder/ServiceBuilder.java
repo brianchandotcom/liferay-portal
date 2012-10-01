@@ -4554,11 +4554,17 @@ public class ServiceBuilder {
 				columnElement.attributeValue("localized"));
 			boolean colJsonEnabled = GetterUtil.getBoolean(
 				columnElement.attributeValue("json-enabled"), jsonEnabled);
+			boolean referencesContainerModel = GetterUtil.getBoolean(
+				columnElement.attributeValue("references-container-model"));
+			boolean referencesParentContainerModel = GetterUtil.getBoolean(
+				columnElement.attributeValue(
+					"references-parent-container-model"));
 
 			EntityColumn col = new EntityColumn(
 				columnName, columnDBName, columnType, primary, accessor,
 				filterPrimary, collectionEntity, mappingKey, mappingTable,
-				idType, idParam, convertNull, lazy, localized, colJsonEnabled);
+				idType, idParam, convertNull, lazy, localized, colJsonEnabled,
+				referencesContainerModel, referencesParentContainerModel);
 
 			if (primary) {
 				pkList.add(col);

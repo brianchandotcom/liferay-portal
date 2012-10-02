@@ -257,6 +257,7 @@ create unique index IX_C99B2650 on DLFileVersion (uuid_, groupId);
 create index IX_A74DB14C on DLFolder (companyId);
 create index IX_F2EA1ACE on DLFolder (groupId);
 create index IX_C6081B20 on DLFolder (groupId, mountPoint, parentFolderId);
+create index IX_F78286C5 on DLFolder (groupId, mountPoint, parentFolderId, hidden_);
 create index IX_86893A06 on DLFolder (groupId, mountPoint, parentFolderId, status);
 create index IX_49C37475 on DLFolder (groupId, parentFolderId);
 create unique index IX_902FD874 on DLFolder (groupId, parentFolderId, name);
@@ -624,6 +625,7 @@ create unique index IX_A2635F5C on Region (countryId, regionCode);
 create index IX_8BD6BCA7 on Release_ (servletContextName);
 
 create index IX_5253B1FA on Repository (groupId);
+create unique index IX_60C8634C on Repository (groupId, name, portletId);
 create index IX_74C17B04 on Repository (uuid_);
 create index IX_F543EA4 on Repository (uuid_, companyId);
 create unique index IX_11641E26 on Repository (uuid_, groupId);

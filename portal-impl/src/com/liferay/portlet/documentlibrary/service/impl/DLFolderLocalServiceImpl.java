@@ -59,7 +59,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	public DLFolder addFolder(
 			long userId, long groupId, long repositoryId, boolean mountPoint,
 			long parentFolderId, String name, String description,
-			ServiceContext serviceContext)
+			boolean hidden, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		// Folder
@@ -85,6 +85,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		dlFolder.setParentFolderId(parentFolderId);
 		dlFolder.setName(name);
 		dlFolder.setDescription(description);
+		dlFolder.setHidden(hidden);
 		dlFolder.setOverrideFileEntryTypes(false);
 		dlFolder.setExpandoBridgeAttributes(serviceContext);
 
@@ -127,6 +128,21 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 			new LiferayFolder(dlFolder), serviceContext);
 
 		return dlFolder;
+	}
+
+	/**
+	 * @deprecated {@link #addFolder(long, long, long, boolean, long, String,
+	 * 				String, boolean, ServiceContext)}
+	 */
+	public DLFolder addFolder(
+			long userId, long groupId, long repositoryId, boolean mountPoint,
+			long parentFolderId, String name, String description,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		return addFolder(
+			userId, groupId, repositoryId, mountPoint, parentFolderId, name,
+			description, false, serviceContext);
 	}
 
 	public void deleteAll(long groupId)

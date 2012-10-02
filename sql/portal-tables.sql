@@ -663,6 +663,7 @@ create table DLFolder (
 	description STRING null,
 	lastPostDate DATE null,
 	defaultFileEntryTypeId LONG,
+	hidden_ BOOLEAN,
 	overrideFileEntryTypes BOOLEAN,
 	status INTEGER,
 	statusByUserId LONG,

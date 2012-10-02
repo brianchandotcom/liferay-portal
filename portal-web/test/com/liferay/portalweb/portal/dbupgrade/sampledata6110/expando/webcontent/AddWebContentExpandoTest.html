@@ -14,14 +14,29 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Web Content Display Page</td>
-	<td>Web Content Display Page</td>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>link=Web Content Display Page</td>
-	<td>Web Content Display Page</td>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
+	<td>AUI Editable Min</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>mouseOver</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>link=Control Panel</td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -45,23 +60,23 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Basic Web Content')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Basic Web Content')]</td>
 	<td>Basic Web Content</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Basic Web Content')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Basic Web Content')]</td>
 	<td>Basic Web Content</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Basic Web Content')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Basic Web Content')]</td>
 	<td>Basic Web Content</td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>//input[@id='_15_title_en_US']</td>
-	<td>Expando Web Content Test</td>
+	<td>waitForElementPresent</td>
+	<td>//textarea[@id='_15__15_structure_el_TextAreaField_content' and @style='display: none;']</td>
+	<td>Textarea</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -70,21 +85,41 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
+	<td>//iframe[contains(@src,'select_structure')]</td>
+	<td>Change Structure</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//iframe[contains(@src,'select_structure')]</td>
+	<td>Change Structure</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
 	<td>//td[2]/a</td>
-	<td>Expando Structure Test<br />This is an expando structure test.</td>
+	<td>Expando Structure Test</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[2]/a</td>
+	<td>Expando Structure Test</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>//td[2]/a</td>
-	<td>Expando Structure Test<br />This is an expando structure test.</td>
+	<td>Expando Structure Test</td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>5000</td>
+	<td>waitForConfirmation</td>
+	<td>Selecting a new structure will change the available input fields and available templates? Do you want to proceed?</td>
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
+	<td>selectFrame</td>
+	<td>relative=top</td>
+	<td>top</td>
+</tr>
+<tr>
+	<td>waitForText</td>
 	<td>//span[@id='_15_structureNameLabel']</td>
 	<td>Expando Structure Test</td>
 </tr>
@@ -94,8 +129,18 @@
 	<td>Expando Structure Test</td>
 </tr>
 <tr>
-	<td>assertConfirmation</td>
-	<td>Selecting a new structure will change the available input fields and available templates? Do you want to proceed?</td>
+	<td>assertText</td>
+	<td>//span[@class='template-name-label']</td>
+	<td>Expando Template Test</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//input[@id='_15_title_en_US']</td>
+	<td>Expando Web Content Test</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
 	<td></td>
 </tr>
 <tr>

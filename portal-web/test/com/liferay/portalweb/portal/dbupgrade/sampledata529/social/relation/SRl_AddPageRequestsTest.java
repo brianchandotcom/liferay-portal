@@ -25,13 +25,18 @@ public class SRl_AddPageRequestsTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/socialrelationsn1/home/");
-		selenium.waitForElementPresent("//div[@id='add-page']/a/span");
+		selenium.waitForVisible("//div[@id='add-page']/a/span");
+		assertEquals(RuntimeVariables.replace("Add Page"),
+			selenium.getText("//div[@id='add-page']/a/span"));
 		selenium.clickAt("//div[@id='add-page']/a/span",
 			RuntimeVariables.replace("Add Page"));
-		selenium.waitForElementPresent("new_page");
-		selenium.type("new_page", RuntimeVariables.replace("Requests Test Page"));
-		selenium.clickAt("link=Save", RuntimeVariables.replace("Save"));
-		selenium.waitForElementPresent("link=Requests Test Page");
+		selenium.waitForVisible("//input[@name='new_page']");
+		selenium.type("//input[@name='new_page']",
+			RuntimeVariables.replace("Requests Test Page"));
+		selenium.waitForVisible("//a[@class='save-page']");
+		selenium.clickAt("//a[@class='save-page']",
+			RuntimeVariables.replace("Save"));
+		selenium.waitForVisible("link=Requests Test Page");
 		selenium.clickAt("link=Requests Test Page",
 			RuntimeVariables.replace("Requests Test Page"));
 		selenium.waitForPageToLoad("30000");

@@ -25,7 +25,7 @@ import junit.framework.TestSuite;
 public class FolderTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
-		testSuite.addTestSuite(AddCommunityDocumentLibraryFolderTest.class);
+		testSuite.addTestSuite(AddDocumentLibraryFolderCommunityTest.class);
 		testSuite.addTestSuite(AddPageTest.class);
 		testSuite.addTestSuite(AddPortletTest.class);
 		testSuite.addTestSuite(AddFolderTest.class);

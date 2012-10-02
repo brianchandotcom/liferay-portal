@@ -26,8 +26,8 @@ public class ViewActivityMBCategoryThreadMessageTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/joebloggs/home/");
-		selenium.waitForElementPresent("link=Activities Page");
-		selenium.clickAt("link=Activities Page", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Activities Page",
+			RuntimeVariables.replace("Activities Page"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"Joe wrote a new message board post, MB Category Thread Message Subject, in Guest."),

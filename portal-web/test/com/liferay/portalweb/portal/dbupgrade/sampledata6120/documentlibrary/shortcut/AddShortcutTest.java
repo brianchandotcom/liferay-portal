@@ -25,13 +25,13 @@ public class AddShortcutTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/document-library-shortcut-community/");
-		selenium.waitForVisible("link=Document Library Page");
 		selenium.clickAt("link=Document Library Page",
 			RuntimeVariables.replace("Document Library Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForVisible("//div/a/span[contains(.,'Test2 Folder2')]");
 		assertEquals(RuntimeVariables.replace("Test2 Folder2"),
-			selenium.getText("//div[3]/a/span[2]"));
-		selenium.clickAt("//div[3]/a/span[2]",
+			selenium.getText("//div/a/span[contains(.,'Test2 Folder2')]"));
+		selenium.clickAt("//div/a/span[contains(.,'Test2 Folder2')]",
 			RuntimeVariables.replace("Test2 Folder2"));
 		selenium.waitForVisible(
 			"//li[@class='folder selected']/a/span[contains(.,'Test2 Folder2')]");
@@ -46,18 +46,17 @@ public class AddShortcutTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Add']/ul/li/strong/a",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Shortcut')]/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Shortcut')]");
 		assertEquals(RuntimeVariables.replace("Shortcut"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Shortcut')]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Shortcut')]"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Shortcut')]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Shortcut')]"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//div/span[2]/span/input",
-			RuntimeVariables.replace("Select Site"));
-		selenium.waitForPopUp("Document Library",
-			RuntimeVariables.replace("30000"));
-		selenium.selectWindow("Document Library");
+		selenium.clickAt("xpath=(//input[@value='Select'])[1]",
+			RuntimeVariables.replace("Select"));
+		Thread.sleep(5000);
+		selenium.selectWindow("title=Documents and Media");
 		selenium.waitForVisible("link=Document Library Shortcut Community");
 		selenium.clickAt("link=Document Library Shortcut Community",
 			RuntimeVariables.replace("Document Library Shortcut Community"));
@@ -66,17 +65,16 @@ public class AddShortcutTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Document Library Shortcut Community"),
 			selenium.getText("//span[@id='_20_toGroupName']"));
-		selenium.clickAt("//input[@id='_20_selectToFileEntryButton']",
-			RuntimeVariables.replace("Select Document"));
-		selenium.waitForPopUp("Document Library",
-			RuntimeVariables.replace("30000"));
-		selenium.selectWindow("Document Library");
+		selenium.clickAt("xpath=(//input[@value='Select'])[2]",
+			RuntimeVariables.replace("Select"));
+		Thread.sleep(5000);
+		selenium.selectWindow("title=Documents and Media");
 		selenium.waitForVisible("link=Test1 Folder1");
 		selenium.click(RuntimeVariables.replace("link=Test1 Folder1"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace(
-				"Test1 Document1.txt\nThis is test1 document1."),
-			selenium.getText("//td[1]/a"));
+		assertTrue(selenium.isPartialText("//td[1]/a", "Test1 Document1.txt"));
+		assertTrue(selenium.isPartialText("//td[1]/a",
+				"This is test1 document1."));
 		selenium.click("//td[1]/a");
 		selenium.selectWindow("null");
 		selenium.waitForVisible("//span[@id='_20_toFileEntryTitle']");
@@ -90,6 +88,6 @@ public class AddShortcutTest extends BaseTestCase {
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("Test1 Document1.txt"),
-			selenium.getText("//div[2]/a/span[2]"));
+			selenium.getText("//div/a/span[contains(.,'Test1 Document1.txt')]"));
 	}
 }

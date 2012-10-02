@@ -24,20 +24,9 @@ public class ViewFolderTest extends BaseTestCase {
 	public void testViewFolder() throws Exception {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
-		selenium.open("/user/joebloggs/home/");
-		selenium.waitForElementPresent("link=Communities I Own");
-		selenium.clickAt("link=Communities I Own", RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.type("_29_name",
-			RuntimeVariables.replace("Document Library Folder Community"));
-		selenium.clickAt("//input[@value='Search']",
-			RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Open", RuntimeVariables.replace("Open"));
-		selenium.waitForPageToLoad("30000");
-		selenium.waitForElementPresent("link=Document Library Page");
+		selenium.open("/web/document-library-folder-community/");
 		selenium.clickAt("link=Document Library Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Document Library Page"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Test1 Folder1"),
 			selenium.getText("//b"));

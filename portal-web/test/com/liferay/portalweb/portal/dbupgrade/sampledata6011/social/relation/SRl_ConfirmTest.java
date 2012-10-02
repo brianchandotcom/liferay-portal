@@ -25,7 +25,6 @@ public class SRl_ConfirmTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/socialrelationsn1/home/");
-		selenium.waitForVisible("link=Requests Test Page");
 		selenium.click(RuntimeVariables.replace("link=Requests Test Page"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Confirm"),
@@ -33,6 +32,8 @@ public class SRl_ConfirmTest extends BaseTestCase {
 		selenium.clickAt("//td[2]/ul/li[1]/a/span",
 			RuntimeVariables.replace("Confirm"));
 		selenium.waitForPageToLoad("30000");
+		assertFalse(selenium.isTextPresent(
+				"socialrelationfn2 socialrelationmn2 socialrelationln2"));
 		assertFalse(selenium.isTextPresent("Confirm"));
 	}
 }

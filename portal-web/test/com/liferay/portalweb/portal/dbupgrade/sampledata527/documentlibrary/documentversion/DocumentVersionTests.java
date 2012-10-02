@@ -31,6 +31,7 @@ public class DocumentVersionTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddFolderTest.class);
 		testSuite.addTestSuite(AddDocumentTest.class);
 		testSuite.addTestSuite(AddDocumentVersionTest.class);
+		testSuite.addTestSuite(ViewDocumentVersionTest.class);
 
 		return testSuite;
 	}

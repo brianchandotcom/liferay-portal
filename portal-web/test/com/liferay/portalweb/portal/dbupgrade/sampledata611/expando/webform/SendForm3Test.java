@@ -25,13 +25,12 @@ public class SendForm3Test extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/expando-web-form-community/");
-		selenium.waitForVisible("link=Web Form Page");
 		selenium.clickAt("link=Web Form Page",
 			RuntimeVariables.replace("Web Form Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@type='text']", RuntimeVariables.replace("Houn"));
-		selenium.clickAt("//input[@type='checkbox']",
-			RuntimeVariables.replace(""));
+		selenium.clickAt("//input[contains(@id,'_field2Checkbox')]",
+			RuntimeVariables.replace("Checkbox"));
 		selenium.clickAt("//input[@value='Male']",
 			RuntimeVariables.replace("Male"));
 		selenium.select("//select", RuntimeVariables.replace("label=Excellent"));

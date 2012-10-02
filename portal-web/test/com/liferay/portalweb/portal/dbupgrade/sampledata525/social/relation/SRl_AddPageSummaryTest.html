@@ -14,7 +14,12 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
+	<td>//div[@id='add-page']/a/span</td>
+	<td>Add Page</td>
+</tr>
+<tr>
+	<td>assertText</td>
 	<td>//div[@id='add-page']/a/span</td>
 	<td>Add Page</td>
 </tr>
@@ -24,22 +29,27 @@
 	<td>Add Page</td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>new_page</td>
+	<td>waitForVisible</td>
+	<td>//input[@name='new_page']</td>
 	<td>New Page</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>new_page</td>
+	<td>//input[@name='new_page']</td>
 	<td>Summary Test Page</td>
 </tr>
 <tr>
-	<td>clickAt</td>
-	<td>link=Save</td>
+	<td>waitForVisible</td>
+	<td>//a[@class='save-page']</td>
 	<td>Save</td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>clickAt</td>
+	<td>//a[@class='save-page']</td>
+	<td>Save</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
 	<td>link=Summary Test Page</td>
 	<td>Summary Test Page</td>
 </tr>
@@ -48,7 +58,6 @@
 	<td>link=Summary Test Page</td>
 	<td>Summary Test Page</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

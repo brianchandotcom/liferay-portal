@@ -24,36 +24,26 @@ public class AddFolderTest extends BaseTestCase {
 	public void testAddFolder() throws Exception {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
-		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent("link=Control Panel");
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Communities", RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.type("_134_name",
-			RuntimeVariables.replace("Document Library Folder Community"));
-		selenium.clickAt("//input[@value='Search']",
-			RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//td[2]/a", RuntimeVariables.replace("Open"));
-		selenium.waitForPageToLoad("30000");
+		selenium.open("/web/document-library-folder-community/");
 		selenium.clickAt("link=Document Library Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Document Library Page"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Add Folder"),
-			selenium.getText("//div[2]/ul/li[2]/a"));
-		selenium.clickAt("//div[2]/ul/li[2]/a",
+			selenium.getText("//li/a[contains(.,'Add Folder')]"));
+		selenium.clickAt("//li/a[contains(.,'Add Folder')]",
 			RuntimeVariables.replace("Add Folder"));
 		selenium.waitForPageToLoad("30000");
-		selenium.type("_20_name", RuntimeVariables.replace("Test1 Folder1"));
-		selenium.type("_20_description",
+		selenium.type("//input[@id='_20_name']",
+			RuntimeVariables.replace("Test1 Folder1"));
+		selenium.type("//textarea[@id='_20_description']",
 			RuntimeVariables.replace("This is test1 folder1."));
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"Your request processed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("Test1 Folder1"),
-			selenium.getText("//a/strong"));
+			selenium.getText("//a/strong[contains(.,'Test1 Folder1')]"));
 	}
 }

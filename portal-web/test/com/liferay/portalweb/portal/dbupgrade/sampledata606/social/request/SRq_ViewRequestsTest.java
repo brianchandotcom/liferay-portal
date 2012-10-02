@@ -25,7 +25,6 @@ public class SRq_ViewRequestsTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/socialrequestsn1/home/");
-		selenium.waitForVisible("link=Requests Test Page");
 		selenium.click(RuntimeVariables.replace("link=Requests Test Page"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(

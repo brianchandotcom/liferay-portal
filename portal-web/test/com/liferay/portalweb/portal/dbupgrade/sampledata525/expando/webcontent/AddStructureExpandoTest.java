@@ -24,53 +24,52 @@ public class AddStructureExpandoTest extends BaseTestCase {
 	public void testAddStructureExpando() throws Exception {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
-		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent("link=Control Panel");
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.open("/web/expando-web-content-community/");
+		assertTrue(selenium.isPartialText("//h2[@class='user-greeting']/span",
+				"Welcome"));
+		selenium.mouseOver("//h2[@class='user-greeting']/span");
+		selenium.clickAt("//h2[@class='user-greeting']/span",
+			RuntimeVariables.replace("Welcome"));
+		selenium.waitForVisible("link=Control Panel");
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Communities", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Web Content",
+			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
-		selenium.type("_134_name",
-			RuntimeVariables.replace("Expando Web Content Community"));
-		selenium.clickAt("//input[@value='Search']",
-			RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//tr[@class='portlet-section-body results-row']/td[1]/a",
-			RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Web Content", RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Structures", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Structures",
+			RuntimeVariables.replace("Structures"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("//input[@value='Add Structure']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Add Structure"));
 		selenium.waitForPageToLoad("30000");
-		selenium.type("_15_newStructureId",
+		selenium.type("//input[@id='_15_newStructureId']",
 			RuntimeVariables.replace("test_expando"));
-		selenium.type("_15_name",
+		selenium.type("//input[@id='_15_name']",
 			RuntimeVariables.replace("Expando Structure Test"));
-		selenium.type("_15_description",
+		selenium.type("//textarea[@id='_15_description']",
 			RuntimeVariables.replace("This is an expando structure test."));
-		selenium.clickAt("_15_editorButton", RuntimeVariables.replace(""));
-		selenium.waitForVisible("_15_xsdContent");
-		selenium.type("_15_xsdContent",
-			RuntimeVariables.replace(
-				"<root>\n	<dynamic-element name='content' type='text'></dynamic-element>\n</root>"));
-		selenium.click("//input[@value='Update']");
-		selenium.waitForElementPresent("_15_structure_el0_name");
-		assertTrue(selenium.isElementPresent("_15_structure_el0_name"));
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.clickAt("//input[@value='Add Row']",
+			RuntimeVariables.replace("Add Row"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isTextPresent(
-				"Your request processed successfully."));
+		selenium.type("//input[@id='_15_structure_el0_name']",
+			RuntimeVariables.replace("content"));
+		selenium.select("//select[@id='_15_structure_el0_type']",
+			RuntimeVariables.replace("Text"));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
+		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace(
+				"Your request processed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("TEST_EXPANDO"),
 			selenium.getText(
 				"//tr[@class='portlet-section-body results-row']/td[2]"));
-		assertEquals(RuntimeVariables.replace(
-				"Expando Structure Test\nThis is an expando structure test."),
-			selenium.getText(
-				"//tr[@class='portlet-section-body results-row']/td[3]"));
+		assertTrue(selenium.isPartialText(
+				"//tr[@class='portlet-section-body results-row']/td[3]",
+				"Expando Structure Test"));
+		assertTrue(selenium.isPartialText(
+				"//tr[@class='portlet-section-body results-row']/td[3]",
+				"This is an expando structure test."));
 	}
 }

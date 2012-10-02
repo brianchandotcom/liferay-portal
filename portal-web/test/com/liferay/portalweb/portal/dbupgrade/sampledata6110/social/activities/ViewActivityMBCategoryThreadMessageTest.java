@@ -26,7 +26,6 @@ public class ViewActivityMBCategoryThreadMessageTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/joebloggs/home/");
-		selenium.waitForVisible("link=Activities Page");
 		selenium.clickAt("link=Activities Page",
 			RuntimeVariables.replace("Activities Page"));
 		selenium.waitForPageToLoad("30000");

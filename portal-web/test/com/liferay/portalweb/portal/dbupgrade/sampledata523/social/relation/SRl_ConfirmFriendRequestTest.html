@@ -14,28 +14,23 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Requests Test Page</td>
-	<td>Requests Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Requests Test Page</td>
 	<td>Requests Test Page</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div/a[2]</td>
+	<td>//div/a[contains(.,'socialrelationfn2')]</td>
 	<td>socialrelationfn2 socialrelationmn2 socialrelationln2</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[2]/ul/li[1]/a[2]</td>
+	<td>//a[.='Confirm']</td>
 	<td>Confirm</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//td[2]/ul/li[1]/a[2]</td>
+	<td>//a[.='Confirm']</td>
 	<td>Confirm</td>
 </tr>
 <tr>
@@ -43,7 +38,11 @@
 	<td>Confirm</td>
 	<td></td>
 </tr>
-
+<tr>
+	<td>assertTextNotPresent</td>
+	<td>socialrelationfn2 socialrelationmn2 socialrelationln2</td>
+	<td></td>
+</tr>
 </tbody></table>
 </body>
 </html>

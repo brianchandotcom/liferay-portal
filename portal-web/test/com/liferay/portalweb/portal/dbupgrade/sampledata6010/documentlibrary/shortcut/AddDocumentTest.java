@@ -24,55 +24,38 @@ public class AddDocumentTest extends BaseTestCase {
 	public void testAddDocument() throws Exception {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
-		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent("link=Control Panel");
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Communities", RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.type("_134_name",
-			RuntimeVariables.replace("Document Library Shortcut Community"));
-		selenium.clickAt("//input[@value='Search']",
-			RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//td[2]/a", RuntimeVariables.replace("Open"));
-		selenium.waitForPageToLoad("30000");
+		selenium.open("/web/document-library-shortcut-community/");
 		selenium.clickAt("link=Document Library Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Document Library Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//a/strong", RuntimeVariables.replace("Test1 Folder1"));
+		assertEquals(RuntimeVariables.replace("Test1 Folder1"),
+			selenium.getText("//a/strong[.='Test1 Folder1']"));
+		selenium.clickAt("//a/strong[.='Test1 Folder1']",
+			RuntimeVariables.replace("Test1 Folder1"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Add Document"),
-			selenium.getText("//div[2]/ul/li[5]/a"));
-		selenium.clickAt("//div[2]/ul/li[5]/a",
+			selenium.getText("//li/a[contains(.,'Add Document')]"));
+		selenium.clickAt("//li/a[contains(.,'Add Document')]",
 			RuntimeVariables.replace("Add Document"));
 		selenium.waitForPageToLoad("30000");
-		Thread.sleep(5000);
-		selenium.selectWindow("null");
-		selenium.windowFocus();
 		selenium.waitForVisible("link=Use the classic uploader.");
 		selenium.click("link=Use the classic uploader.");
-		selenium.waitForVisible("_20_file");
-		selenium.type("_20_file",
-			RuntimeVariables.replace(
-				"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\portal\\dbupgrade\\sampledata6010\\documentlibrary\\shortcut\\dependencies\\test_document.txt"));
-		selenium.type("_20_title",
+		selenium.waitForVisible("//input[@id='_20_file']");
+		selenium.uploadCommonFile("//input[@id='_20_file']",
+			RuntimeVariables.replace("Document_1.txt"));
+		selenium.type("//input[@id='_20_title']",
 			RuntimeVariables.replace("Test1 Document1.txt"));
-		selenium.type("_20_description",
+		selenium.type("//textarea[@id='_20_description']",
 			RuntimeVariables.replace("This is test1 document1."));
 		selenium.clickAt("//input[@value='Publish']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForText("//div[@class='portlet-msg-success']",
-			"Your request processed successfully.");
 		assertEquals(RuntimeVariables.replace(
 				"Your request processed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		selenium.waitForText("//a/span/span", "Test1 Document1.txt");
 		assertEquals(RuntimeVariables.replace("Test1 Document1.txt"),
-			selenium.getText("//a/span/span"));
-		selenium.waitForText("//a/div", "This is test1 document1.");
+			selenium.getText("//a/span/span[.='Test1 Document1.txt']"));
 		assertEquals(RuntimeVariables.replace("This is test1 document1."),
-			selenium.getText("//a/div"));
+			selenium.getText("//a/div[contains(.,'This is test1 document1.')]"));
 	}
 }

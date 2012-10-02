@@ -24,30 +24,20 @@ public class ViewDocumentVersionTest extends BaseTestCase {
 	public void testViewDocumentVersion() throws Exception {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
-		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent("link=Control Panel");
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Communities", RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.type("_134_name",
-			RuntimeVariables.replace(
-				"Document Library Document Version Community"));
-		selenium.clickAt("//input[@value='Search']",
-			RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//td[2]/a", RuntimeVariables.replace("Open"));
-		selenium.waitForPageToLoad("30000");
+		selenium.open("/web/document-library-document-version-community/");
 		selenium.clickAt("link=Document Library Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Document Library Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//a/strong", RuntimeVariables.replace("Test1 Folder1"));
+		assertEquals(RuntimeVariables.replace("Test1 Folder1"),
+			selenium.getText("//a/strong[.='Test1 Folder1']"));
+		selenium.clickAt("//a/strong[.='Test1 Folder1']",
+			RuntimeVariables.replace("Test1 Folder1"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Test2 Document2.txt"),
-			selenium.getText("//a/span/span"));
+			selenium.getText("//a/span/span[contains(.,'Test2 Document2.txt')]"));
 		assertEquals(RuntimeVariables.replace("This is test2 document2."),
-			selenium.getText("//a/div"));
-		selenium.clickAt("//a/span/span",
+			selenium.getText("//a/div[contains(.,'This is test2 document2.')]"));
+		selenium.clickAt("//a/span/span[contains(.,'Test2 Document2.txt')]",
 			RuntimeVariables.replace("Test2 Document2.txt"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("1.1"),

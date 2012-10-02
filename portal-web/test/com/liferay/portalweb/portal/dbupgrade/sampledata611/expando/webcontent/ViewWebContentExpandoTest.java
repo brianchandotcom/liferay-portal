@@ -25,7 +25,6 @@ public class ViewWebContentExpandoTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/expando-web-content-community/");
-		selenium.waitForVisible("link=Web Content Display Page");
 		selenium.clickAt("link=Web Content Display Page",
 			RuntimeVariables.replace("Web Content Display Page"));
 		selenium.waitForPageToLoad("30000");

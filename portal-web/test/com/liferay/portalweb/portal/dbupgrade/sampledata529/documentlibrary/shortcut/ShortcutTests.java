@@ -25,7 +25,7 @@ import junit.framework.TestSuite;
 public class ShortcutTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
-		testSuite.addTestSuite(AddCommunityDocumentLibraryShortcutTest.class);
+		testSuite.addTestSuite(AddDocumentLibraryShortcutCommunityTest.class);
 		testSuite.addTestSuite(AddPageTest.class);
 		testSuite.addTestSuite(AddPortletTest.class);
 		testSuite.addTestSuite(AddFolderTest.class);

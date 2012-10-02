@@ -25,7 +25,12 @@ public class AddBlogsEntryCPTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent("link=Control Panel");
+		assertTrue(selenium.isPartialText("//h2[@class='user-greeting']/span",
+				"Welcome"));
+		selenium.mouseOver("//h2[@class='user-greeting']/span");
+		selenium.clickAt("//h2[@class='user-greeting']/span",
+			RuntimeVariables.replace("Welcome"));
+		selenium.waitForVisible("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
@@ -36,14 +41,32 @@ public class AddBlogsEntryCPTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_33_title']",
 			RuntimeVariables.replace("Blogs Entry Title"));
-		Thread.sleep(5000);
 		selenium.waitForVisible("//iframe[@id='_33_editor']");
-		selenium.waitForVisible("//iframe[@id='FCKeditor1___Frame']");
-		selenium.waitForVisible("//td[@id='xEditingArea']/iframe");
 		selenium.selectFrame("//iframe[@id='_33_editor']");
+		selenium.waitForVisible("//iframe[@id='FCKeditor1___Frame']");
 		selenium.selectFrame("//iframe[@id='FCKeditor1___Frame']");
+		selenium.waitForText("//td[@class='SC_FieldLabel']/label", "Normal");
+		selenium.waitForVisible("//div[.='Source']");
+		assertEquals(RuntimeVariables.replace("Source"),
+			selenium.getText("//div[.='Source']"));
+		selenium.clickAt("//div[.='Source']", RuntimeVariables.replace("Source"));
+		selenium.waitForVisible(
+			"//td[@id='xEditingArea']/textarea[@class='SourceField']");
+		selenium.waitForVisible("//div[@class='TB_Button_On']");
+		selenium.type("//td[@id='xEditingArea']/textarea[@class='SourceField']",
+			RuntimeVariables.replace("Blogs Entry Content"));
+		assertEquals(RuntimeVariables.replace("Source"),
+			selenium.getText("//div[.='Source']"));
+		selenium.clickAt("//div[.='Source']", RuntimeVariables.replace("Source"));
+		selenium.waitForElementNotPresent("//div[@class='TB_Button_On']");
+		selenium.selectFrame("relative=top");
+		selenium.waitForVisible("//iframe[@id='_33_editor']");
+		selenium.selectFrame("//iframe[@id='_33_editor']");
+		selenium.waitForVisible("//iframe[@id='FCKeditor1___Frame']");
+		selenium.selectFrame("//iframe[@id='FCKeditor1___Frame']");
+		selenium.waitForVisible("//td[@id='xEditingArea']/iframe");
 		selenium.selectFrame("//td[@id='xEditingArea']/iframe");
-		selenium.type("//body", RuntimeVariables.replace("Blogs Entry Content"));
+		selenium.waitForText("//body", "Blogs Entry Content");
 		selenium.selectFrame("relative=top");
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));

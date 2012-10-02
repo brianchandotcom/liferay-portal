@@ -25,13 +25,21 @@ public class AddPortletActivitiesTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/joebloggs/home/");
-		selenium.waitForVisible("link=Activities Page");
 		selenium.clickAt("link=Activities Page",
 			RuntimeVariables.replace("Activities Page"));
 		selenium.waitForPageToLoad("30000");
+		assertTrue(selenium.isPartialText("//h2[@class='user-greeting']/span",
+				"Welcome"));
+		selenium.mouseOver("//h2[@class='user-greeting']/span");
+		selenium.clickAt("//h2[@class='user-greeting']/span",
+			RuntimeVariables.replace("Welcome"));
+		selenium.waitForVisible("link=Add Application");
 		selenium.clickAt("link=Add Application",
 			RuntimeVariables.replace("Add Application"));
-		selenium.waitForElementPresent("//div[@title='Activities']/p/a");
+		selenium.waitForVisible("//input[@id='layout_configuration_content']");
+		selenium.sendKeys("//input[@id='layout_configuration_content']",
+			RuntimeVariables.replace("a"));
+		selenium.waitForVisible("//div[@title='Activities']/p/a");
 		selenium.clickAt("//div[@title='Activities']/p/a",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible("//td[1]/div/div[1]/div");

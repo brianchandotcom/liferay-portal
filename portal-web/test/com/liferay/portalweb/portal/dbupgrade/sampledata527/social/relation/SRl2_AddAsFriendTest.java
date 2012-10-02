@@ -25,14 +25,11 @@ public class SRl2_AddAsFriendTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/socialrelationsn1/home/");
-		selenium.waitForVisible("link=Summary Test Page");
 		selenium.clickAt("link=Summary Test Page",
 			RuntimeVariables.replace("Summary Test Page"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Add as Friend"),
-			selenium.getText("//p[@class='add-as-friend']/span/a[2]"));
 		selenium.clickAt("//p[@class='add-as-friend']/span/a[2]",
-			RuntimeVariables.replace("Add as Friend"));
+			RuntimeVariables.replace("ADD AS FRIEND"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"Your request processed successfully."),

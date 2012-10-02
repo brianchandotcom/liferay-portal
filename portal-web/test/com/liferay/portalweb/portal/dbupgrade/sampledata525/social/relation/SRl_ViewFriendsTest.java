@@ -25,13 +25,13 @@ public class SRl_ViewFriendsTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/socialrelationsn1/home/");
-		selenium.waitForVisible("link=Friends Test Page");
 		selenium.clickAt("link=Friends Test Page",
 			RuntimeVariables.replace("Friends Test Page"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("You have 1 friends."),
-			selenium.getText("//div[2]/div/div/div[1]"));
-		assertTrue(selenium.isPartialText("//td[2]/div/a",
+			selenium.getText(
+				"//div[@class='portlet-content-container']/div/div"));
+		assertTrue(selenium.isPartialText("//a[@class='user-name']",
 				"socialrelationfn2 socialrelationmn2 socialrelationln2"));
 	}
 }

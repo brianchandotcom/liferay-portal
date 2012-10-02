@@ -14,31 +14,25 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Requests Test Page</td>
-	<td>Requests Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Requests Test Page</td>
 	<td>Requests Test Page</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[2]/div</td>
-	<td>socialrequestfn2 socialrequestmn2 socialrequestln2 wants to be your friend.</td>
+	<td>//div/a[contains(.,'socialrequestfn2')]</td>
+	<td>socialrequestfn2 socialrequestmn2 socialrequestln2</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[2]/ul/li[1]/a[2]</td>
+	<td>//a[.='Confirm']</td>
 	<td>Confirm</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[2]/ul/li[2]/a[2]</td>
+	<td>//a[.='Ignore']</td>
 	<td>Ignore</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

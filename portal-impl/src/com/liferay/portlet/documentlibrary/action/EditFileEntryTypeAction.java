@@ -39,6 +39,7 @@ import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
 import com.liferay.portlet.dynamicdatamapping.RequiredStructureException;
 import com.liferay.portlet.dynamicdatamapping.StructureDuplicateElementException;
+import com.liferay.portlet.dynamicdatamapping.StructureNameException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 
@@ -91,7 +92,8 @@ public class EditFileEntryTypeAction extends PortletAction {
 		catch (Exception e) {
 			if (e instanceof DuplicateFileEntryTypeException ||
 				e instanceof NoSuchMetadataSetException ||
-				e instanceof StructureDuplicateElementException) {
+				e instanceof StructureDuplicateElementException ||
+				e instanceof StructureNameException) {
 
 				SessionErrors.add(actionRequest, e.getClass());
 			}

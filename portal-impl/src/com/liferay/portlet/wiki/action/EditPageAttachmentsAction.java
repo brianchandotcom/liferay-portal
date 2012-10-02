@@ -149,8 +149,14 @@ public class EditPageAttachmentsAction extends EditFileEntryAction {
 				HttpServletResponse response =
 					PortalUtil.getHttpServletResponse(actionResponse);
 
-				response.setStatus(
-					ServletResponseConstants.SC_FILE_NAME_EXCEPTION);
+				if (e instanceof DuplicateFileException) {
+					response.setStatus(
+						ServletResponseConstants.SC_DUPLICATE_FILE_EXCEPTION);
+				}
+				else {
+					response.setStatus(
+						ServletResponseConstants.SC_FILE_NAME_EXCEPTION);
+				}
 			}
 			else if (e instanceof FileSizeException) {
 				SessionErrors.add(actionRequest, e.getClass());

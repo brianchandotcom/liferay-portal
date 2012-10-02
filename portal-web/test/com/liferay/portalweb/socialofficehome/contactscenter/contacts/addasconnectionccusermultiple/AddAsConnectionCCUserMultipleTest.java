@@ -87,10 +87,25 @@ public class AddAsConnectionCCUserMultipleTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"This user has received a connection request from you."),
 			selenium.getText("//span[@class='portlet-msg-success']"));
+		assertEquals(RuntimeVariables.replace("User01 Social01"),
+			selenium.getText(
+				"xPath=(//div[contains(@class, 'lfr-contact-name')]/a)[contains(.,'User01 Social01')]"));
+		assertTrue(selenium.isVisible(
+				"xPath=(//div[@class='lfr-contact-thumb'])[4]"));
 		assertEquals(RuntimeVariables.replace("Connection Requested"),
 			selenium.getText("xPath=(//div[@class='lfr-social-relations'])[1]"));
+		assertEquals(RuntimeVariables.replace("User02 Social02"),
+			selenium.getText(
+				"xPath=(//div[contains(@class, 'lfr-contact-name')]/a)[contains(.,'User02 Social02')]"));
+		assertTrue(selenium.isVisible(
+				"xPath=(//div[@class='lfr-contact-thumb'])[5]"));
 		assertEquals(RuntimeVariables.replace("Connection Requested"),
 			selenium.getText("xPath=(//div[@class='lfr-social-relations'])[2]"));
+		assertEquals(RuntimeVariables.replace("User03 Social03"),
+			selenium.getText(
+				"xPath=(//div[contains(@class, 'lfr-contact-name')]/a)[contains(.,'User03 Social03')]"));
+		assertTrue(selenium.isVisible(
+				"xPath=(//div[@class='lfr-contact-thumb'])[6]"));
 		assertEquals(RuntimeVariables.replace("Connection Requested"),
 			selenium.getText("xPath=(//div[@class='lfr-social-relations'])[3]"));
 		assertFalse(selenium.isVisible(

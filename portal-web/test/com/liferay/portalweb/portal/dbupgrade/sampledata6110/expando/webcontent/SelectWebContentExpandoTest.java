@@ -25,14 +25,17 @@ public class SelectWebContentExpandoTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/expando-web-content-community/");
-		selenium.waitForVisible("link=Web Content Display Page");
 		selenium.clickAt("link=Web Content Display Page",
 			RuntimeVariables.replace("Web Content Display Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("//img[@alt='Select Web Content']",
 			RuntimeVariables.replace("Select Web Content"));
-		selenium.waitForVisible("link=Expando Web Content Test");
-		selenium.clickAt("link=Expando Web Content Test",
+		selenium.waitForVisible("//iframe");
+		selenium.selectFrame("//iframe");
+		selenium.waitForVisible("//td[2]/a");
+		assertEquals(RuntimeVariables.replace("Expando Web Content Test"),
+			selenium.getText("//td[2]/a"));
+		selenium.clickAt("//td[2]/a",
 			RuntimeVariables.replace("Expando Web Content Test"));
 		selenium.waitForPartialText("//form[@id='_86_fm1']/div",
 			"Displaying Content:");
@@ -45,5 +48,6 @@ public class SelectWebContentExpandoTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"You have successfully updated the setup."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
+		selenium.selectFrame("relative=top");
 	}
 }

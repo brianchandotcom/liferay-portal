@@ -10,58 +10,43 @@
 </thead><tbody>
 <tr>
 	<td>open</td>
-	<td>/web/guest/home/</td>
+	<td>/web/expando-web-content-community/</td>
 	<td></td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>link=Control Panel</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>link=Control Panel</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>link=Communities</td>
-	<td></td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>_134_name</td>
-	<td>Expando Web Content Community</td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>//input[@value='Search']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>//td[2]/a</td>
-	<td>Open</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Web Content Display Page</td>
-	<td></td>
+	<td>Web Content Display Page</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>//img[@alt='Select Web Content']</td>
-	<td></td>
+	<td>Select Web Content</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>link=Expando Web Content Test</td>
-	<td></td>
+	<td>//iframe[contains(@id,'_configurationIframe')]</td>
+	<td>Web Content Display - Configuration</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//iframe[contains(@id,'_configurationIframe')]</td>
+	<td>Web Content Display - Configuration</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//td[2]/a</td>
+	<td>Expando Web Content Test</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[2]/a</td>
+	<td>Expando Web Content Test</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>link=Expando Web Content Test</td>
-	<td></td>
+	<td>//td[2]/a</td>
+	<td>Expando Web Content Test</td>
 </tr>
 <tr>
 	<td>waitForPartialText</td>
@@ -76,12 +61,17 @@
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//div[@class='portlet-msg-success']</td>
 	<td>You have successfully updated the setup.</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>relative=top</td>
+	<td>top</td>
 </tr>
 </tbody></table>
 </body>

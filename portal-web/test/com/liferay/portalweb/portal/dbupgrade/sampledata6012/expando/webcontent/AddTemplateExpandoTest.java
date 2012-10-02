@@ -29,42 +29,35 @@ public class AddTemplateExpandoTest extends BaseTestCase {
 			case 1:
 				selenium.selectWindow("null");
 				selenium.selectFrame("relative=top");
-				selenium.open("/web/guest/home/");
-				selenium.waitForElementPresent("link=Control Panel");
+				selenium.open("/web/expando-web-content-community/");
+				selenium.clickAt("//div[@id='dockbar']",
+					RuntimeVariables.replace("Dockbar"));
+				selenium.waitForElementPresent(
+					"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+				assertEquals(RuntimeVariables.replace("Manage"),
+					selenium.getText("//li[@id='_145_manageContent']/a/span"));
+				selenium.mouseOver("//li[@id='_145_manageContent']/a/span");
+				selenium.waitForVisible("link=Control Panel");
 				selenium.clickAt("link=Control Panel",
-					RuntimeVariables.replace(""));
-				selenium.waitForPageToLoad("30000");
-				selenium.clickAt("link=Communities",
-					RuntimeVariables.replace(""));
-				selenium.waitForPageToLoad("30000");
-				selenium.type("_134_name",
-					RuntimeVariables.replace("Expando Web Content Community"));
-				selenium.clickAt("//input[@value='Search']",
-					RuntimeVariables.replace(""));
-				selenium.waitForPageToLoad("30000");
-				selenium.clickAt("//td[2]/a", RuntimeVariables.replace("Open"));
-				selenium.waitForPageToLoad("30000");
-				selenium.clickAt("link=Control Panel",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
 				selenium.clickAt("link=Web Content",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Web Content"));
 				selenium.waitForPageToLoad("30000");
-				selenium.clickAt("link=Templates", RuntimeVariables.replace(""));
+				selenium.clickAt("link=Templates",
+					RuntimeVariables.replace("Templates"));
 				selenium.waitForPageToLoad("30000");
 				selenium.clickAt("//input[@value='Add Template']",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Add Template"));
 				selenium.waitForPageToLoad("30000");
-				selenium.type("_15_newTemplateId",
-					RuntimeVariables.replace("test_expando"));
-				selenium.type("_15_name",
+				selenium.type("//input[@id='_15_name']",
 					RuntimeVariables.replace("Expando Template Test"));
-				selenium.type("_15_description",
+				selenium.type("//textarea[@id='_15_description']",
 					RuntimeVariables.replace(
 						"This is an expando template test."));
 
 				boolean cacheableChecked = selenium.isChecked(
-						"_15_cacheableCheckbox");
+						"//input[@id='_15_cacheableCheckbox']");
 
 				if (!cacheableChecked) {
 					label = 2;
@@ -72,35 +65,37 @@ public class AddTemplateExpandoTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("_15_cacheableCheckbox",
-					RuntimeVariables.replace(""));
+				selenium.clickAt("//input[@id='_15_cacheableCheckbox']",
+					RuntimeVariables.replace("Cacheable"));
 
 			case 2:
 				selenium.clickAt("//input[@value='Select']",
-					RuntimeVariables.replace(""));
-				selenium.waitForPopUp("structure",
-					RuntimeVariables.replace("30000"));
-				selenium.selectWindow("name=structure");
-				selenium.selectWindow("name=structure");
-				selenium.clickAt("//td[1]/a", RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Select"));
+				Thread.sleep(5000);
+				selenium.selectWindow("title=Web Content");
+				selenium.waitForVisible("//td[2]/a");
+				assertTrue(selenium.isPartialText("//td[2]/a",
+						"Expando Structure Test"));
+				selenium.click("//td[2]/a");
 				selenium.selectWindow("null");
-				selenium.waitForText("_15_structureName",
+				selenium.waitForText("//a[@id='_15_structureName']",
 					"Expando Structure Test");
 				assertEquals(RuntimeVariables.replace("Expando Structure Test"),
-					selenium.getText("_15_structureName"));
-				selenium.type("_15_xsl",
+					selenium.getText("//a[@id='_15_structureName']"));
+				selenium.uploadFile("//input[@id='_15_xsl']",
 					RuntimeVariables.replace(
-						"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\portal\\dbupgrade\\sampledata6012\\expando\\webcontent\\dependencies\\Expando.htm"));
+						"L:\\private\\ee-6.1.x-portal\\portal-web\\test\\com\\liferay\\portalweb\\portal\\dbupgrade\\sampledata6012\\expando\\webcontent\\dependencies\\Expando.htm"));
 				selenium.clickAt("//input[@value='Save']",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace(
 						"Your request processed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
-				assertEquals(RuntimeVariables.replace(
-						"Expando Template Test\n This is an expando template test."),
-					selenium.getText(
-						"//tr[@class='portlet-section-body results-row last']/td[3]"));
+				assertTrue(selenium.isVisible("//td[2]/a"));
+				assertTrue(selenium.isPartialText("//td[3]/a",
+						"Expando Template Test"));
+				assertTrue(selenium.isPartialText("//td[3]/a",
+						"This is an expando template test."));
 
 			case 100:
 				label = -1;

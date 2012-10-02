@@ -24,32 +24,23 @@ public class SendForm3Test extends BaseTestCase {
 	public void testSendForm3() throws Exception {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
-		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent("link=Control Panel");
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Communities", RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.type("_134_name",
-			RuntimeVariables.replace("Expando Web Form Community"));
-		selenium.clickAt("//input[@value='Search']",
-			RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//tr[@class='portlet-section-body results-row last']/td[1]/a",
-			RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Web Form Page", RuntimeVariables.replace(""));
+		selenium.open("/web/expando-web-form-community/");
+		selenium.clickAt("link=Web Form Page",
+			RuntimeVariables.replace("Web Form Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@type='text']", RuntimeVariables.replace("Houn"));
 		selenium.clickAt("//input[@type='checkbox']",
-			RuntimeVariables.replace(""));
-		selenium.clickAt("//input[@value='Male']", RuntimeVariables.replace(""));
-		selenium.select("//select", RuntimeVariables.replace("label=Excellent"));
+			RuntimeVariables.replace("Checkbox"));
+		selenium.clickAt("//input[@value='Male']",
+			RuntimeVariables.replace("Male"));
+		selenium.select("//select", RuntimeVariables.replace("Excellent"));
 		selenium.type("//textarea",
 			RuntimeVariables.replace("This is a comment. Houn."));
-		selenium.clickAt("//input[@value='Send']", RuntimeVariables.replace(""));
+		selenium.clickAt("//input[@value='Send']",
+			RuntimeVariables.replace("Send"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isTextPresent(
-				"The form information was sent successfully."));
+		assertEquals(RuntimeVariables.replace(
+				"The form information was sent successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
 	}
 }

@@ -25,10 +25,14 @@ public class AddWebContentExpandoTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/expando-web-content-community/");
-		selenium.waitForVisible("link=Web Content Display Page");
-		selenium.clickAt("link=Web Content Display Page",
-			RuntimeVariables.replace("Web Content Display Page"));
-		selenium.waitForPageToLoad("30000");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
+		selenium.waitForVisible("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
@@ -40,27 +44,36 @@ public class AddWebContentExpandoTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Add']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Basic Web Content')]/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Basic Web Content')]");
 		assertEquals(RuntimeVariables.replace("Basic Web Content"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Basic Web Content')]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Basic Web Content')]"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Basic Web Content')]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Basic Web Content')]"));
 		selenium.waitForPageToLoad("30000");
-		selenium.type("//input[@id='_15_title_en_US']",
-			RuntimeVariables.replace("Expando Web Content Test"));
+		selenium.waitForElementPresent(
+			"//textarea[@id='_15__15_structure_el_TextAreaField_content' and @style='display: none;']");
 		selenium.clickAt("//img[@alt='Change']",
 			RuntimeVariables.replace("Change"));
+		selenium.waitForVisible("//iframe[contains(@src,'select_structure')]");
+		selenium.selectFrame("//iframe[contains(@src,'select_structure')]");
 		selenium.waitForVisible("//td[2]/a");
+		assertEquals(RuntimeVariables.replace("Expando Structure Test"),
+			selenium.getText("//td[2]/a"));
 		selenium.clickAt("//td[2]/a",
-			RuntimeVariables.replace(
-				"Expando Structure Test\nThis is an expando structure test."));
-		Thread.sleep(5000);
-		selenium.waitForVisible("//span[@id='_15_structureNameLabel']");
+			RuntimeVariables.replace("Expando Structure Test"));
+		selenium.waitForConfirmation(
+			"Selecting a new structure will change the available input fields and available templates? Do you want to proceed?");
+		selenium.selectFrame("relative=top");
+		selenium.waitForText("//span[@id='_15_structureNameLabel']",
+			"Expando Structure Test");
 		assertEquals(RuntimeVariables.replace("Expando Structure Test"),
 			selenium.getText("//span[@id='_15_structureNameLabel']"));
-		assertTrue(selenium.getConfirmation()
-						   .matches("^Selecting a new structure will change the available input fields and available templates[\\s\\S] Do you want to proceed[\\s\\S]$"));
+		assertEquals(RuntimeVariables.replace("Expando Template Test"),
+			selenium.getText("//span[@class='template-name-label']"));
+		selenium.type("//input[@id='_15_title_en_US']",
+			RuntimeVariables.replace("Expando Web Content Test"));
+		Thread.sleep(5000);
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");

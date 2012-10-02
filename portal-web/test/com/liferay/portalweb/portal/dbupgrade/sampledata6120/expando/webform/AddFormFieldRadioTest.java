@@ -25,7 +25,6 @@ public class AddFormFieldRadioTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/expando-web-form-community/");
-		selenium.waitForVisible("link=Web Form Page");
 		selenium.clickAt("link=Web Form Page",
 			RuntimeVariables.replace("Web Form Page"));
 		selenium.waitForPageToLoad("30000");
@@ -35,20 +34,27 @@ public class AddFormFieldRadioTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
 			RuntimeVariables.replace("Options"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]");
 		assertEquals(RuntimeVariables.replace("Configuration"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
-		selenium.waitForVisible("//div[3]/span/span/button[1]");
-		selenium.clickAt("//div[3]/span/span/button[1]",
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]"));
+		selenium.click(
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]");
+		selenium.waitForVisible(
+			"//iframe[contains(@id,'_configurationIframeDialog')]");
+		selenium.selectFrame(
+			"//iframe[contains(@id,'_configurationIframeDialog')]");
+		selenium.waitForVisible(
+			"//span/span/button[contains(@class,'add-row')]");
+		selenium.clickAt("//span/span/button[contains(@class,'add-row')]",
 			RuntimeVariables.replace("Add Row"));
 		selenium.waitForVisible("//select[@id='_86_fieldType4']");
 		selenium.select("//select[@id='_86_fieldType4']",
-			RuntimeVariables.replace("label=Radio Buttons"));
+			RuntimeVariables.replace("Radio Buttons"));
 		selenium.waitForVisible("//input[@id='_86_fieldLabel4_en_US']");
 		selenium.type("//input[@id='_86_fieldLabel4_en_US']",
 			RuntimeVariables.replace("Gender"));
+		selenium.waitForVisible("//input[@id='_86_fieldOptions4_en_US']");
 		selenium.type("//input[@id='_86_fieldOptions4_en_US']",
 			RuntimeVariables.replace("Male,Female"));
 		selenium.clickAt("//input[@value='Save']",
@@ -58,12 +64,14 @@ public class AddFormFieldRadioTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"You have successfully updated the setup."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		selenium.waitForVisible("link=Web Form Page");
+		selenium.selectFrame("relative=top");
+		selenium.open("/web/expando-web-form-community/");
 		selenium.clickAt("link=Web Form Page",
 			RuntimeVariables.replace("Web Form Page"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isTextPresent("Gender"));
-		assertTrue(selenium.isElementPresent("//input[@value='Male']"));
-		assertTrue(selenium.isElementPresent("//input[@value='Female']"));
+		assertEquals(RuntimeVariables.replace("Gender"),
+			selenium.getText("//label[contains(@for,'_field2')]"));
+		assertTrue(selenium.isVisible("//input[@value='Male']"));
+		assertTrue(selenium.isVisible("//input[@value='Female']"));
 	}
 }

@@ -25,10 +25,14 @@ public class AddStructureExpandoTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/expando-web-content-community/");
-		selenium.waitForVisible("link=Web Content Display Page");
-		selenium.clickAt("link=Web Content Display Page",
-			RuntimeVariables.replace("Web Content Display Page"));
-		selenium.waitForPageToLoad("30000");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
+		selenium.waitForVisible("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
@@ -45,19 +49,13 @@ public class AddStructureExpandoTest extends BaseTestCase {
 			RuntimeVariables.replace("Expando Structure Test"));
 		selenium.type("//textarea[@id='_15_description_en_US']",
 			RuntimeVariables.replace("This is an expando structure test."));
-		selenium.clickAt("//input[@id='_15_editorButton']",
-			RuntimeVariables.replace("Launch Editor"));
-		Thread.sleep(5000);
-		selenium.waitForVisible("//textarea[@id='_15_plainEditorField']");
-		selenium.type("//textarea[@id='_15_plainEditorField']",
-			RuntimeVariables.replace(
-				"<root>\n	<dynamic-element name='content' type='text'></dynamic-element>\n</root>"));
-		Thread.sleep(5000);
-		selenium.click("//input[@value='Update']");
-		selenium.waitForElementPresent("//input[@id='_15_structure_el0_name']");
-		assertTrue(selenium.isElementPresent(
-				"//input[@id='_15_structure_el0_name']"));
-		Thread.sleep(5000);
+		selenium.click(RuntimeVariables.replace("//input[@value='Add Row']"));
+		selenium.waitForPageToLoad("30000");
+		selenium.waitForVisible("//input[@id='_15_structure_el0_name']");
+		selenium.type("//input[@id='_15_structure_el0_name']",
+			RuntimeVariables.replace("content"));
+		selenium.select("//select[@id='_15_structure_el0_type']",
+			RuntimeVariables.replace("Text"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");

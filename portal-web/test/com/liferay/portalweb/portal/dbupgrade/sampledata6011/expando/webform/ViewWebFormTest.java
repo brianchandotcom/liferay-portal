@@ -24,39 +24,32 @@ public class ViewWebFormTest extends BaseTestCase {
 	public void testViewWebForm() throws Exception {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
-		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent("link=Control Panel");
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.open("/web/expando-web-form-community/");
+		selenium.clickAt("link=Web Form Page",
+			RuntimeVariables.replace("Web Form Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Communities", RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.type("_134_name",
-			RuntimeVariables.replace("Expando Web Form Community"));
-		selenium.clickAt("//input[@value='Search']",
-			RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//td[2]/a", RuntimeVariables.replace("Open"));
-		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Web Form Page", RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Web Form Page", RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
+		Thread.sleep(5000);
+		assertEquals(RuntimeVariables.replace("Options"),
+			selenium.getText("//strong/a"));
 		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]");
 		assertEquals(RuntimeVariables.replace("Configuration"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
-		selenium.waitForText("//div[3]/div[2]/fieldset/div/div[1]",
-			"There is existing form data. Please export and delete it before making changes to the fields.");
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]"));
+		selenium.click(
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]");
+		selenium.waitForVisible(
+			"//iframe[contains(@id,'_configurationIframe')]");
+		selenium.selectFrame("//iframe[contains(@id,'_configurationIframe')]");
+		selenium.waitForVisible("//div[@class='portlet-msg-alert']");
 		assertEquals(RuntimeVariables.replace(
 				"There is existing form data. Please export and delete it before making changes to the fields."),
-			selenium.getText("//div[3]/div[2]/fieldset/div/div[1]"));
-		assertTrue(selenium.isElementPresent("//input[@value='Export Data']"));
-		assertTrue(selenium.isElementPresent("//input[@value='Delete Data']"));
-		assertTrue(selenium.isElementNotPresent("//div[3]/span/span/button[1]"));
-		assertTrue(selenium.isElementNotPresent("//div[4]/span/span/button[1]"));
-		assertTrue(selenium.isElementNotPresent("//div[5]/span/span/button[1]"));
+			selenium.getText("//div[@class='portlet-msg-alert']"));
+		assertTrue(selenium.isVisible("//input[@value='Export Data']"));
+		assertTrue(selenium.isVisible("//input[@value='Delete Data']"));
+		selenium.waitForElementPresent("//button[contains(@class,'add-row')]");
+		assertFalse(selenium.isVisible("//button[contains(@class,'add-row')]"));
+		selenium.selectFrame("relative=top");
 	}
 }

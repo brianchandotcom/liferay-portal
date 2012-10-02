@@ -24,43 +24,48 @@ public class AddFormFieldRadioTest extends BaseTestCase {
 	public void testAddFormFieldRadio() throws Exception {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
-		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent("link=Control Panel");
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.open("/web/expando-web-form-community/");
+		selenium.clickAt("link=Web Form Page",
+			RuntimeVariables.replace("Web Form Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Communities", RuntimeVariables.replace(""));
+		Thread.sleep(5000);
+		assertEquals(RuntimeVariables.replace("Options"),
+			selenium.getText("//strong/span"));
+		selenium.clickAt("//strong/span", RuntimeVariables.replace("Options"));
+		selenium.waitForVisible(
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]");
+		assertEquals(RuntimeVariables.replace("Configuration"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]"));
+		selenium.click(RuntimeVariables.replace(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]"));
 		selenium.waitForPageToLoad("30000");
-		selenium.type("_134_name",
-			RuntimeVariables.replace("Expando Web Form Community"));
-		selenium.clickAt("//input[@value='Search']",
-			RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//tr[@class='portlet-section-body results-row']/td[1]/a",
-			RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Web Form Page", RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Configuration", RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Form Fields", RuntimeVariables.replace(""));
-		selenium.waitForVisible("link=Add Row");
-		selenium.clickAt("link=Add Row", RuntimeVariables.replace(""));
-		selenium.waitForVisible("_86_fieldType4");
-		selenium.select("_86_fieldType4",
-			RuntimeVariables.replace("label=Radio Buttons"));
-		selenium.waitForElementPresent("_86_fieldOptions4");
-		selenium.type("_86_fieldLabel4", RuntimeVariables.replace("Gender"));
-		selenium.type("_86_fieldOptions4",
+		selenium.clickAt("link=Form Fields",
+			RuntimeVariables.replace("Form Fields"));
+		selenium.waitForVisible("//a[@class='add-row']");
+		selenium.clickAt("//a[@class='add-row']",
+			RuntimeVariables.replace("Add Row"));
+		selenium.waitForVisible("//select[@id='_86_fieldType4']");
+		selenium.select("//select[@id='_86_fieldType4']",
+			RuntimeVariables.replace("Radio Buttons"));
+		selenium.waitForVisible("//input[@id='_86_fieldOptions4']");
+		selenium.type("//input[@id='_86_fieldLabel4']",
+			RuntimeVariables.replace("Gender"));
+		selenium.type("//input[@id='_86_fieldOptions4']",
 			RuntimeVariables.replace("Male,Female"));
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isTextPresent(
-				"You have successfully updated the setup."));
-		selenium.waitForElementPresent("link=Web Form Page");
-		selenium.clickAt("link=Web Form Page", RuntimeVariables.replace(""));
+		assertEquals(RuntimeVariables.replace(
+				"You have successfully updated the setup."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
+		selenium.open("/web/expando-web-form-community/");
+		selenium.clickAt("link=Web Form Page",
+			RuntimeVariables.replace("Web Form Page"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isTextPresent("Gender"));
-		assertTrue(selenium.isElementPresent("//input[@value='Male']"));
-		assertTrue(selenium.isElementPresent("//input[@value='Female']"));
+		assertEquals(RuntimeVariables.replace("Gender"),
+			selenium.getText("//label[contains(@for,'_field2')]"));
+		assertTrue(selenium.isVisible("//input[@value='Male']"));
+		assertTrue(selenium.isVisible("//input[@value='Female']"));
 	}
 }

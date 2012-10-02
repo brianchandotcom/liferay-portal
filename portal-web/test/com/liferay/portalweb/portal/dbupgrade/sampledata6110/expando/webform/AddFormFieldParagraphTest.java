@@ -25,7 +25,6 @@ public class AddFormFieldParagraphTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/expando-web-form-community/");
-		selenium.waitForVisible("link=Web Form Page");
 		selenium.clickAt("link=Web Form Page",
 			RuntimeVariables.replace("Web Form Page"));
 		selenium.waitForPageToLoad("30000");
@@ -35,17 +34,21 @@ public class AddFormFieldParagraphTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
 			RuntimeVariables.replace("Options"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]");
 		assertEquals(RuntimeVariables.replace("Configuration"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
-		selenium.waitForVisible("//div[4]/span/span/button[1]");
-		selenium.clickAt("//div[4]/span/span/button[1]",
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]"));
+		selenium.click(
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]");
+		selenium.waitForVisible("//iframe");
+		selenium.selectFrame("//iframe");
+		selenium.waitForVisible(
+			"//span/span/button[contains(@class,'add-row')]");
+		selenium.clickAt("//span/span/button[contains(@class,'add-row')]",
 			RuntimeVariables.replace("Add Row"));
 		selenium.waitForVisible("//select[@id='_86_fieldType5']");
 		selenium.select("//select[@id='_86_fieldType5']",
-			RuntimeVariables.replace("label=Paragraph"));
+			RuntimeVariables.replace("Paragraph"));
 		selenium.waitForVisible("//input[@id='_86_fieldOptions5_en_US']");
 		selenium.type("//input[@id='_86_fieldOptions5_en_US']",
 			RuntimeVariables.replace("This is a test paragraph."));
@@ -56,11 +59,12 @@ public class AddFormFieldParagraphTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"You have successfully updated the setup."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		selenium.waitForVisible("link=Web Form Page");
+		selenium.selectFrame("relative=top");
+		selenium.open("/web/expando-web-form-community/");
 		selenium.clickAt("link=Web Form Page",
 			RuntimeVariables.replace("Web Form Page"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("This is a test paragraph."),
-			selenium.getText("//p"));
+			selenium.getText("//p[contains(@id,'_field2')]"));
 	}
 }

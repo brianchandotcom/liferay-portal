@@ -24,30 +24,19 @@ public class CreateAccountExpando3Test extends BaseTestCase {
 	public void testCreateAccountExpando3() throws Exception {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
-		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent("link=Control Panel");
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Communities", RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.type("_134_name",
-			RuntimeVariables.replace("Expando Web Content Community"));
-		selenium.clickAt("//input[@value='Search']",
-			RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//td[2]/a", RuntimeVariables.replace("Open"));
-		selenium.waitForPageToLoad("30000");
+		selenium.open("/web/expando-web-content-community/");
 		selenium.clickAt("link=Web Content Display Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Web Content Display Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("//input[@value='Create Account']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Create Account"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//td[2]/input", RuntimeVariables.replace("Michael"));
 		selenium.type("//tr[2]/td[2]/input",
 			RuntimeVariables.replace("Saechang"));
 		selenium.type("//tr[3]/td[2]/input", RuntimeVariables.replace("1000000"));
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Michael"),
 			selenium.getText("//tr[4]/td[2]"));

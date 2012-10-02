@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
@@ -22,6 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 
 /**
@@ -56,12 +58,22 @@ public class LocaleUtil {
 		return _instance;
 	}
 
+	public static String getLongDisplayName(Locale locale) {
+		return getInstance()._getLongDisplayName(locale);
+	}
+
 	public static Map<String, String> getISOLanguages(Locale locale) {
 		return getInstance()._getISOLanguages(locale);
 	}
 
 	public static Locale getMostRelevantLocale() {
 		return getInstance()._getMostRelevantLocale();
+	}
+
+	public static String getShortDisplayName(
+		Locale locale, Set<String> duplicateLanguages) {
+
+		return getInstance()._getShortDisplayName(locale, duplicateLanguages);
 	}
 
 	public static void setDefault(
@@ -209,6 +221,17 @@ public class LocaleUtil {
 		return isoLanguages;
 	}
 
+	private String _getLongDisplayName(Locale locale) {
+
+		String displayName = locale.getDisplayName(locale);
+
+		if (LanguageUtil.isBetaLocale(locale)) {
+			return displayName.concat(_BETA_FLAG);
+		}
+
+		return displayName;
+	}
+
 	private Locale _getMostRelevantLocale() {
 		Locale locale = LocaleThreadLocal.getThemeDisplayLocale();
 
@@ -217,6 +240,33 @@ public class LocaleUtil {
 		}
 
 		return locale;
+	}
+
+	private String _getShortDisplayName(
+		Locale locale, Set<String> duplicateLanguages) {
+
+		StringBundler sb = new StringBundler(6);
+
+		String language = locale.getDisplayLanguage(locale);
+
+		if (language.length() > 3) {
+			language = locale.getLanguage().toUpperCase();
+		}
+
+		sb.append(language);
+
+		if (duplicateLanguages.contains(locale.getLanguage())) {
+			sb.append(StringPool.SPACE);
+			sb.append(StringPool.OPEN_PARENTHESIS);
+			sb.append(locale.getCountry().toUpperCase());
+			sb.append(StringPool.CLOSE_PARENTHESIS);
+		}
+
+		if (LanguageUtil.isBetaLocale(locale)) {
+			sb.append(_BETA_FLAG);
+		}
+
+		return sb.toString();
 	}
 
 	private void _setDefault(
@@ -324,6 +374,7 @@ public class LocaleUtil {
 		return w3cLanguageIds;
 	}
 
+	private static final String _BETA_FLAG = " [Beta]";
 	private static final int _MAX_LOCALES = 1000;
 
 	private static Log _log = LogFactoryUtil.getLog(LocaleUtil.class);

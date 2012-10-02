@@ -14,23 +14,23 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Document Library Page</td>
-	<td>Document Library Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Document Library Page</td>
 	<td>Document Library Page</td>
 </tr>
 <tr>
+	<td>waitForVisible</td>
+	<td>//div/a/span[contains(.,'Test2 Folder2')]</td>
+	<td>Test2 Folder2</td>
+</tr>
+<tr>
 	<td>assertText</td>
-	<td>//div[3]/a/span[2]</td>
+	<td>//div/a/span[contains(.,'Test2 Folder2')]</td>
 	<td>Test2 Folder2</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//div[3]/a/span[2]</td>
+	<td>//div/a/span[contains(.,'Test2 Folder2')]</td>
 	<td>Test2 Folder2</td>
 </tr>
 <tr>
@@ -65,33 +65,33 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Shortcut')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Shortcut')]</td>
 	<td>Shortcut</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Shortcut')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Shortcut')]</td>
 	<td>Shortcut</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Shortcut')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Shortcut')]</td>
 	<td>Shortcut</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//div/span[2]/span/input</td>
-	<td>Select Site</td>
+	<td>xpath=(//input[@value='Select'])[1]</td>
+	<td>Select</td>
 </tr>
 <tr>
-	<td>waitForPopUp</td>
-	<td>Document Library</td>
-	<td>30000</td>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
 </tr>
 <tr>
 	<td>selectWindow</td>
-	<td>Document Library</td>
-	<td></td>
+	<td>title=Documents and Media</td>
+	<td>Documents and Media</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -120,18 +120,18 @@
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//input[@id='_20_selectToFileEntryButton']</td>
-	<td>Select Document</td>
+	<td>xpath=(//input[@value='Select'])[2]</td>
+	<td>Select</td>
 </tr>
 <tr>
-	<td>waitForPopUp</td>
-	<td>Document Library</td>
-	<td>30000</td>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
 </tr>
 <tr>
 	<td>selectWindow</td>
-	<td>Document Library</td>
-	<td></td>
+	<td>title=Documents and Media</td>
+	<td>Documents and Media</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -144,14 +144,19 @@
 	<td>Test1 Folder1</td>
 </tr>
 <tr>
-	<td>assertText</td>
+	<td>assertPartialText</td>
 	<td>//td[1]/a</td>
-	<td>Test1 Document1.txt<br />This is test1 document1.</td>
+	<td>Test1 Document1.txt</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//td[1]/a</td>
+	<td>This is test1 document1.</td>
 </tr>
 <tr>
 	<td>click</td>
 	<td>//td[1]/a</td>
-	<td>Test1 Document1.txt<br />This is test1 document1.</td>
+	<td>Test1 Document1.txt</td>
 </tr>
 <tr>
 	<td>selectWindow</td>
@@ -185,7 +190,7 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[2]/a/span[2]</td>
+	<td>//div/a/span[contains(.,'Test1 Document1.txt')]</td>
 	<td>Test1 Document1.txt</td>
 </tr>
 </tbody></table>

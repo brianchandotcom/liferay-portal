@@ -30,6 +30,7 @@ public class DocumentTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddPortletTest.class);
 		testSuite.addTestSuite(AddFolderTest.class);
 		testSuite.addTestSuite(AddDocumentTest.class);
+		testSuite.addTestSuite(ViewDocumentTest.class);
 
 		return testSuite;
 	}

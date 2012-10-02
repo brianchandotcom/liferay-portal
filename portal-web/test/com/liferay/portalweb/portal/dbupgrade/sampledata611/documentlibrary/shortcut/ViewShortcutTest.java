@@ -25,21 +25,26 @@ public class ViewShortcutTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/document-library-shortcut-community/");
-		selenium.waitForVisible("link=Document Library Page");
 		selenium.clickAt("link=Document Library Page",
 			RuntimeVariables.replace("Document Library Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForVisible("//div/a/span[contains(.,'Test2 Folder2')]");
 		assertEquals(RuntimeVariables.replace("Test2 Folder2"),
-			selenium.getText("//div[3]/a/span[2]"));
-		selenium.clickAt("//div[3]/a/span[2]",
+			selenium.getText("//div/a/span[contains(.,'Test2 Folder2')]"));
+		selenium.clickAt("//div/a/span[contains(.,'Test2 Folder2')]",
 			RuntimeVariables.replace("Test2 Folder2"));
-		selenium.waitForText("//div/a/span[2]", "Test1 Document1.txt");
+		selenium.waitForText("//div/a/span[contains(.,'Test1 Document1.txt')]",
+			"Test1 Document1.txt");
 		assertEquals(RuntimeVariables.replace("Test1 Document1.txt"),
-			selenium.getText("//div/a/span[2]"));
-		selenium.clickAt("//div/a/span[2]",
+			selenium.getText("//div/a/span[contains(.,'Test1 Document1.txt')]"));
+		assertTrue(selenium.isVisible(
+				"//div[contains(.,'Test1 Document1.txt')]/a/span/img[@alt='Shortcut']"));
+		selenium.clickAt("//div/a/span[contains(.,'Test1 Document1.txt')]",
 			RuntimeVariables.replace("Test1 Document1.txt"));
 		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("Test1 Document1.txt"),
+			selenium.getText("//h2[@class='document-title']"));
 		assertEquals(RuntimeVariables.replace("This is test1 document1."),
-			selenium.getText("//div[2]/div[1]/span[4]"));
+			selenium.getText("//span[@class='document-description']"));
 	}
 }

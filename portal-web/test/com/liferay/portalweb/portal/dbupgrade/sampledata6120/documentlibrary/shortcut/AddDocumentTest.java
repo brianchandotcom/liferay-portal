@@ -29,8 +29,8 @@ public class AddDocumentTest extends BaseTestCase {
 			RuntimeVariables.replace("Document Library Page"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Test1 Folder1"),
-			selenium.getText("//div/a/span[2]"));
-		selenium.clickAt("//div/a/span[2]",
+			selenium.getText("//div/a/span[contains(.,'Test1 Folder1')]"));
+		selenium.clickAt("//div/a/span[contains(.,'Test1 Folder1')]",
 			RuntimeVariables.replace("Test1 Folder1"));
 		selenium.waitForVisible(
 			"//li[@class='folder selected']/a/span[contains(.,'Test1 Folder1')]");
@@ -53,9 +53,8 @@ public class AddDocumentTest extends BaseTestCase {
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Basic Document')]/a"));
 		selenium.waitForPageToLoad("30000");
 		selenium.waitForVisible("//input[@id='_20_file']");
-		selenium.type("//input[@id='_20_file']",
-			RuntimeVariables.replace(
-				"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\portal\\dbupgrade\\sampledata6120\\documentlibrary\\shortcut\\dependencies\\test_document.txt"));
+		selenium.uploadCommonFile("//input[@id='_20_file']",
+			RuntimeVariables.replace("Document_1.txt"));
 		selenium.type("//input[@id='_20_title']",
 			RuntimeVariables.replace("Test1 Document1.txt"));
 		selenium.type("//textarea[@id='_20_description']",
@@ -68,6 +67,6 @@ public class AddDocumentTest extends BaseTestCase {
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("Test1 Document1.txt"),
-			selenium.getText("//div/a/span[2]"));
+			selenium.getText("//div/a/span[contains(.,'Test1 Document1.txt')]"));
 	}
 }

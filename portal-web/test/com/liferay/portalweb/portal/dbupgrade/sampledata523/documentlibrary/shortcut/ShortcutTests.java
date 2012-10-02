@@ -32,6 +32,7 @@ public class ShortcutTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddDocumentTest.class);
 		testSuite.addTestSuite(AddFolder2Test.class);
 		testSuite.addTestSuite(AddShortcutTest.class);
+		testSuite.addTestSuite(ViewShortcutTest.class);
 
 		return testSuite;
 	}

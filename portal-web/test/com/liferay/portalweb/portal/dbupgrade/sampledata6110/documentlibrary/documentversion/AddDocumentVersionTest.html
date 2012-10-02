@@ -20,12 +20,12 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div/a/span[2]</td>
+	<td>//div/a/span[contains(.,'Test1 Folder1')]</td>
 	<td>Test1 Folder1</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//div/a/span[2]</td>
+	<td>//div/a/span[contains(.,'Test1 Folder1')]</td>
 	<td>Test1 Folder1</td>
 </tr>
 <tr>
@@ -55,23 +55,23 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]</td>
 	<td>Edit</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]</td>
 	<td>Edit</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]</td>
 	<td>Edit</td>
 </tr>
 <tr>
-	<td>type</td>
+	<td>uploadCommonFile</td>
 	<td>//input[@id='_20_file']</td>
-	<td>L:\portal\build\portal-web\test\com\liferay\portalweb\portal\dbupgrade\sampledata6110\documentlibrary\documentversion\dependencies\test_document2.txt</td>
+	<td>Document_2.txt</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -100,12 +100,12 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div/a/span[2]</td>
+	<td>//div/a/span[contains(.,'Test2 Document2.txt')]</td>
 	<td>Test2 Document2.txt</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div/a/span[2]</td>
+	<td>//div/a/span[contains(.,'Test2 Document2.txt')]</td>
 	<td>Test2 Document2.txt</td>
 </tr>
 <tr>

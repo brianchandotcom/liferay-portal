@@ -442,6 +442,13 @@ public class DLFileEntryLocalServiceWrapper implements DLFileEntryLocalService,
 		return _dlFileEntryLocalService.fetchFileEntryByAnyImageId(imageId);
 	}
 
+	public com.liferay.portlet.documentlibrary.model.DLFileEntry fetchFileEntryByName(
+		long groupId, long folderId, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _dlFileEntryLocalService.fetchFileEntryByName(groupId, folderId,
+			name);
+	}
+
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getExtraSettingsFileEntries(
 		int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {

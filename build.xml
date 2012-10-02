@@ -327,7 +327,7 @@ ${app.server.tomcat.dir}, then run "ant -buildfile build-dist.xml unzip-tomcat".
 				<copy todir="${app.server.lib.global.dir}">
 					<fileset
 						dir="lib/development"
-						includes="activation.jar,jms.jar,jta.jar,mail.jar,persistence.jar"
+						includes="activation.jar,junit.jar,jms.jar,jta.jar,mail.jar,persistence.jar"
 					/>
 				</copy>
 

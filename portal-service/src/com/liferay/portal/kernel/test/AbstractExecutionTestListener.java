@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.test;
+package com.liferay.portal.kernel.test;
 
 /**
  * @author Miguel Pastor

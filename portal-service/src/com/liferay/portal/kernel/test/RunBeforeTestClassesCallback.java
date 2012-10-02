@@ -12,19 +12,32 @@
  * details.
  */
 
-package com.liferay.portal.test;
+package com.liferay.portal.kernel.test;
+
+import org.junit.runners.model.Statement;
 
 /**
  * @author Miguel Pastor
  */
-public interface ExecutionTestListener {
+public class RunBeforeTestClassesCallback extends AbstractStatementCallback {
 
-	public void runAfterClass(TestContext testContext);
+	public RunBeforeTestClassesCallback(
+		Statement statement, TestContextHandler testContextHandler) {
 
-	public void runAfterTest(TestContext testContext);
+		super(statement, testContextHandler);
+	}
 
-	public void runBeforeClass(TestContext testContext);
+	@Override
+	public void evaluate() throws Throwable {
+		TestContextHandler testContextHandler = getTestContextHandler();
 
-	public void runBeforeTest(TestContext testContext);
+		testContextHandler.runBeforeTestClasses();
+
+		Statement statement = getStatement();
+
+		if (statement != null) {
+			statement.evaluate();
+		}
+	}
 
 }

@@ -53,9 +53,9 @@ public interface WikiPage extends WikiPageModel, PersistedModel {
 
 	public com.liferay.portlet.wiki.model.WikiPage getRedirectPage();
 
-	public boolean isResourceMain();
-
 	public boolean isInTrashFolder();
+
+	public boolean isResourceMain();
 
 	public void setAttachmentsDir(java.lang.String attachmentsDir);
 

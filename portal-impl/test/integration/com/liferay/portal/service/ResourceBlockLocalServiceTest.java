@@ -15,10 +15,10 @@
 package com.liferay.portal.service;
 
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.model.PermissionedModel;
 import com.liferay.portal.model.ResourceBlockPermissionsContainer;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
-import com.liferay.portal.test.ExecutionTestListeners;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 
 import java.sql.Connection;

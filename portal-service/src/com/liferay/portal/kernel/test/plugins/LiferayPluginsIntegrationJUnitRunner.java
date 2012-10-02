@@ -12,32 +12,22 @@
  * details.
  */
 
-package com.liferay.portal.test;
+package com.liferay.portal.kernel.test.plugins;
 
-import org.junit.runners.model.Statement;
+import com.liferay.portal.kernel.test.AbstractIntegrationJUnitTestRunner;
+
+import org.junit.runners.model.InitializationError;
 
 /**
- * @author Miguel Pastor
+ * @author Manuel de la Peña
  */
-public class RunBeforeTestClassesCallback extends AbstractStatementCallback {
+public class LiferayPluginsIntegrationJUnitRunner
+	extends AbstractIntegrationJUnitTestRunner {
 
-	public RunBeforeTestClassesCallback(
-		Statement statement, TestContextHandler testContextHandler) {
+	public LiferayPluginsIntegrationJUnitRunner(Class<?> clazz)
+		throws InitializationError {
 
-		super(statement, testContextHandler);
-	}
-
-	@Override
-	public void evaluate() throws Throwable {
-		TestContextHandler testContextHandler = getTestContextHandler();
-
-		testContextHandler.runBeforeTestClasses();
-
-		Statement statement = getStatement();
-
-		if (statement != null) {
-			statement.evaluate();
-		}
+		super(clazz);
 	}
 
 }

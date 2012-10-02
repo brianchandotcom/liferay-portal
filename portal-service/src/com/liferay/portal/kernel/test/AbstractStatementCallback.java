@@ -12,41 +12,34 @@
  * details.
  */
 
-package com.liferay.portal.test;
-
-import java.lang.reflect.Method;
+package com.liferay.portal.kernel.test;
 
 import org.junit.runners.model.Statement;
 
 /**
  * @author Miguel Pastor
  */
-public class RunBeforeTestMethodCallback extends AbstractStatementCallback {
+public abstract class AbstractStatementCallback extends Statement {
 
-	public RunBeforeTestMethodCallback(
-		Object instance, Method method, Statement statement,
-		TestContextHandler testContextHandler) {
+	public AbstractStatementCallback(
+		Statement statement, TestContextHandler testContextHandler) {
 
-		super(statement, testContextHandler);
-
-		_instance = instance;
-		_method = method;
+		_statement = statement;
+		_testContextHandler = testContextHandler;
 	}
 
 	@Override
-	public void evaluate() throws Throwable {
-		TestContextHandler testContextHandler = getTestContextHandler();
+	public abstract void evaluate() throws Throwable;
 
-		testContextHandler.runBeforeTestMethod(_instance, _method);
-
-		Statement statement = getStatement();
-
-		if (statement != null) {
-			statement.evaluate();
-		}
+	public Statement getStatement() {
+		return _statement;
 	}
 
-	private Object _instance;
-	private Method _method;
+	public TestContextHandler getTestContextHandler() {
+		return _testContextHandler;
+	}
+
+	private Statement _statement;
+	private TestContextHandler _testContextHandler;
 
 }

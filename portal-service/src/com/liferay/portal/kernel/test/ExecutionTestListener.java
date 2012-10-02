@@ -12,46 +12,19 @@
  * details.
  */
 
-package com.liferay.portal.test;
-
-import java.lang.reflect.Method;
+package com.liferay.portal.kernel.test;
 
 /**
  * @author Miguel Pastor
  */
-public class TestContext {
+public interface ExecutionTestListener {
 
-	public TestContext(Class<?> clazz) {
-		_clazz = clazz;
-	}
+	public void runAfterClass(TestContext testContext);
 
-	public TestContext(Object instance, Method method) {
-		_instance = instance;
-		_method = method;
-	}
+	public void runAfterTest(TestContext testContext);
 
-	public Class<?> getClazz() {
-		return _clazz;
-	}
+	public void runBeforeClass(TestContext testContext);
 
-	public Object getInstance() {
-		return _instance;
-	}
-
-	public Method getMethod() {
-		return _method;
-	}
-
-	public void setInstance(Object instance) {
-		_instance = instance;
-	}
-
-	public void setMethod(Method method) {
-		_method = method;
-	}
-
-	private Class<?> _clazz;
-	private Object _instance;
-	private Method _method;
+	public void runBeforeTest(TestContext testContext);
 
 }

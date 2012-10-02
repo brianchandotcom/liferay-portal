@@ -302,7 +302,9 @@ public class CalEventLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated {@link #addEvent(long, String, String, String, int, int, int, int, int, int, int, boolean, boolean, String, boolean, TZSRecurrence, int, int, int, ServiceContext)}
+	* @deprecated {@link #addEvent(long, String, String, String, int, int, int,
+	int, int, int, int, boolean, boolean, String, boolean,
+	TZSRecurrence, int, int, int, ServiceContext)}
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent addEvent(
 		long userId, java.lang.String title, java.lang.String description,
@@ -536,7 +538,9 @@ public class CalEventLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated {@link #updateEvent(long, long, String, String, String, int, int, int, int, int, int, int, boolean, boolean, String, boolean, TZSRecurrence, int, int, int, ServiceContext)}
+	* @deprecated {@link #updateEvent(long, long, String, String, String, int,
+	int, int, int, int, int, int, boolean, boolean, String,
+	boolean, TZSRecurrence, int, int, int, ServiceContext)}
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent updateEvent(
 		long userId, long eventId, java.lang.String title,

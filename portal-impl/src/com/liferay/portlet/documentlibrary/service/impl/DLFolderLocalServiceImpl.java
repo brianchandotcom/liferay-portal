@@ -130,6 +130,10 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		return dlFolder;
 	}
 
+	/**
+	 * @deprecated {@link #addFolder(long, long, long, boolean, long, String,
+	 * 				String, boolean, ServiceContext)}
+	 */
 	public DLFolder addFolder(
 			long userId, long groupId, long repositoryId, boolean mountPoint,
 			long parentFolderId, String name, String description,

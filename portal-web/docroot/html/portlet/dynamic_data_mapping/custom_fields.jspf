@@ -517,6 +517,7 @@
 	FormBuilderTypes['ddm-decimal'] = DDMDecimalField;
 	FormBuilderTypes['ddm-documentlibrary'] = DDMDocumentLibraryField;
 	FormBuilderTypes['ddm-fileupload'] = DDMFileUploadField;
+	FormBuilderTypes['ddm-text-html'] = DDMHTMLTextField;
 	FormBuilderTypes['ddm-integer'] = DDMIntegerField;
 	FormBuilderTypes['ddm-number'] = DDMNumberField;
 	FormBuilderTypes['ddm-paragraph'] = DDMParagraphField;

@@ -356,6 +356,11 @@
 		.taglib-icon, .membership-type {
 			margin-left: 10px;
 		}
+		
+		dl, dt, dd {
+			display: inline;
+			margin: 0;
+		}
 	}
 
 	.site-categorization {

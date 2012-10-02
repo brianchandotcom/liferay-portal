@@ -62,6 +62,7 @@ public interface JournalArticle extends JournalArticleModel, PersistedModel {
 
 	public boolean isTemplateDriven();
 
+	@java.lang.SuppressWarnings(value = "unused")
 	public void prepareLocalizedFieldsForImport(
 		java.util.Locale defaultImportLocale)
 		throws com.liferay.portal.LocaleException;

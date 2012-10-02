@@ -92,7 +92,9 @@ public class CalEventServiceSoap {
 	}
 
 	/**
-	* @deprecated {@link #addEvent(String, String, String, int, int, int, int, int, int, int, boolean, boolean, String, boolean, TZSRecurrence, int, int, int, ServiceContext)}
+	* @deprecated {@link #addEvent(String, String, String, int, int, int, int,
+	int, int, int, boolean, boolean, String, boolean,
+	TZSRecurrence, int, int, int, ServiceContext)}
 	*/
 	public static com.liferay.portlet.calendar.model.CalEventSoap addEvent(
 		java.lang.String title, java.lang.String description,
@@ -312,7 +314,9 @@ public class CalEventServiceSoap {
 	}
 
 	/**
-	* @deprecated {@link #updateEvent(long, String, String, String, int, int, int, int, int, int, int, boolean, boolean, String, boolean, TZSRecurrence, int, int, int, ServiceContext)}
+	* @deprecated {@link #updateEvent(long, String, String, String, int, int,
+	int, int, int, int, int, boolean, boolean, String, boolean,
+	TZSRecurrence, int, int, int, ServiceContext)}
 	*/
 	public static com.liferay.portlet.calendar.model.CalEventSoap updateEvent(
 		long eventId, java.lang.String title, java.lang.String description,

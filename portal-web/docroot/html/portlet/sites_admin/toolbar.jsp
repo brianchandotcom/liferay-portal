@@ -22,7 +22,7 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "browse");
 %>
 
 <div class="lfr-portlet-toolbar">
-	<portlet:renderURL copyCurrentRenderParameters="<%= false %>" var="viewSitesTreeURL">
+	<portlet:renderURL var="viewSitesTreeURL">
 		<portlet:param name="struts_action" value="/sites_admin/view" />
 		<portlet:param name="sitesListView" value="<%= SiteConstants.LIST_VIEW_TREE %>" />
 		<portlet:param name="toolbarItem" value="browse" />
@@ -32,7 +32,7 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "browse");
 		<a href="<%= viewSitesTreeURL %>"><liferay-ui:message key="browse" /></a>
 	</span>
 
-	<portlet:renderURL copyCurrentRenderParameters="<%= false %>" var="viewSitesFlatURL">
+	<portlet:renderURL var="viewSitesFlatURL">
 		<portlet:param name="struts_action" value="/sites_admin/view" />
 		<portlet:param name="sitesListView" value="<%= SiteConstants.LIST_VIEW_FLAT_SITES %>" />
 		<portlet:param name="toolbarItem" value="view-all-sites" />

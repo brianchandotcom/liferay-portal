@@ -54,9 +54,7 @@ String portletURLString = portletURL.toString();
 	%>
 
 	<c:if test="<%= portletName.equals(PortletKeys.USERS_ADMIN) %>">
-		<liferay-util:include page="/html/portlet/users_admin/toolbar.jsp">
-			<liferay-util:param name="toolbarItem" value="view-all" />
-		</liferay-util:include>
+		<liferay-util:include page="/html/portlet/users_admin/toolbar.jsp" />
 
 		<c:if test="<%= usersListView.equals(UserConstants.LIST_VIEW_FLAT_ORGANIZATIONS) || usersListView.equals(UserConstants.LIST_VIEW_FLAT_USERS) %>">
 			<portlet:renderURL var="headerBackURL">

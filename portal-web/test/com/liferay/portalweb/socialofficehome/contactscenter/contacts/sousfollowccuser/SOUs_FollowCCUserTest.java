@@ -58,8 +58,10 @@ public class SOUs_FollowCCUserTest extends BaseTestCase {
 				"//button[@id='_1_WAR_contactsportlet_followButton']"));
 		selenium.clickAt("//button[@id='_1_WAR_contactsportlet_followButton']",
 			RuntimeVariables.replace("Follow"));
-		selenium.waitForVisible(
-			"//button[@id='_1_WAR_contactsportlet_unfollowButton']");
+		selenium.waitForVisible("//span[@class='portlet-msg-success']");
+		assertEquals(RuntimeVariables.replace(
+				"You are now following this user."),
+			selenium.getText("//span[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("Unfollow"),
 			selenium.getText(
 				"//button[@id='_1_WAR_contactsportlet_unfollowButton']"));

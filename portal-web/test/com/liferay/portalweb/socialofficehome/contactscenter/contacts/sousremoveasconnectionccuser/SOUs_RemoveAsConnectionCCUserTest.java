@@ -56,8 +56,10 @@ public class SOUs_RemoveAsConnectionCCUserTest extends BaseTestCase {
 				"//button[@id='_1_WAR_contactsportlet_removeConnectionButton']"));
 		selenium.clickAt("//button[@id='_1_WAR_contactsportlet_removeConnectionButton']",
 			RuntimeVariables.replace("Remove Connection"));
-		selenium.waitForVisible(
-			"//button[@id='_1_WAR_contactsportlet_addConnectionButton']");
+		selenium.waitForVisible("//span[@class='portlet-msg-success']");
+		assertEquals(RuntimeVariables.replace(
+				"You are not connected to this user anymore."),
+			selenium.getText("//span[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("Add Connection"),
 			selenium.getText(
 				"//button[@id='_1_WAR_contactsportlet_addConnectionButton']"));

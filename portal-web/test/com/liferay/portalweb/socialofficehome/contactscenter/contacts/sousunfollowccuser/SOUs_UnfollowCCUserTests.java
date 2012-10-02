@@ -22,6 +22,8 @@ import com.liferay.portalweb.socialoffice.users.user.selectregularrolessouser.Se
 import com.liferay.portalweb.socialoffice.users.user.signinso.SOUs_SignInSOTest;
 import com.liferay.portalweb.socialoffice.users.user.signinso.SignInSOTest;
 import com.liferay.portalweb.socialoffice.users.user.signinso.SignOutSOTest;
+import com.liferay.portalweb.socialofficehome.contactscenter.contacts.sousfollowccuser.SOUs_FollowCCUserTest;
+import com.liferay.portalweb.socialofficehome.contactscenter.contacts.sousfollowccuser.SOUs_ViewFollowCCUserTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

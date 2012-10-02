@@ -58,13 +58,14 @@ public class SOUs_UnfollowCCUserTest extends BaseTestCase {
 				"//button[@id='_1_WAR_contactsportlet_unfollowButton']"));
 		selenium.clickAt("//button[@id='_1_WAR_contactsportlet_unfollowButton']",
 			RuntimeVariables.replace("Unfollow"));
-		selenium.waitForVisible(
-			"//button[@id='_1_WAR_contactsportlet_followButton']");
-		assertEquals(RuntimeVariables.replace("Follow"),
-			selenium.getText(
-				"//button[@id='_1_WAR_contactsportlet_followButton']"));
+		selenium.waitForVisible("//span[@class='portlet-msg-success']");
 		assertEquals(RuntimeVariables.replace(
 				"You are not following this user anymore."),
 			selenium.getText("//span[@class='portlet-msg-success']"));
+		assertEquals(RuntimeVariables.replace("Follow"),
+			selenium.getText(
+				"//button[@id='_1_WAR_contactsportlet_followButton']"));
+		assertFalse(selenium.isVisible(
+				"//button[@id='_1_WAR_contactsportlet_unfollowButton']"));
 	}
 }

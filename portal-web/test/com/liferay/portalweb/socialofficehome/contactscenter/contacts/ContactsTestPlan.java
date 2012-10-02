@@ -20,6 +20,7 @@ import com.liferay.portalweb.socialofficehome.contactscenter.contacts.addcontact
 import com.liferay.portalweb.socialofficehome.contactscenter.contacts.blockccconnection.BlockCCConnectionTests;
 import com.liferay.portalweb.socialofficehome.contactscenter.contacts.blockccuser.BlockCCUserTests;
 import com.liferay.portalweb.socialofficehome.contactscenter.contacts.blockccusermultiple.BlockCCUserMultipleTests;
+import com.liferay.portalweb.socialofficehome.contactscenter.contacts.editcontactcc.EditContactCCTests;
 import com.liferay.portalweb.socialofficehome.contactscenter.contacts.followccusermultiple.FollowCCUserMultipleTests;
 import com.liferay.portalweb.socialofficehome.contactscenter.contacts.removeasconnectionccusermultiple.RemoveAsConnectionCCUserMultipleTests;
 import com.liferay.portalweb.socialofficehome.contactscenter.contacts.searchconnectiondropdownconnectionscc.SearchConnectionDropDownConnectionsCCTests;
@@ -51,6 +52,7 @@ public class ContactsTestPlan extends BaseTestSuite {
 		testSuite.addTest(BlockCCConnectionTests.suite());
 		testSuite.addTest(BlockCCUserTests.suite());
 		testSuite.addTest(BlockCCUserMultipleTests.suite());
+		testSuite.addTest(EditContactCCTests.suite());
 		testSuite.addTest(FollowCCUserMultipleTests.suite());
 		testSuite.addTest(RemoveAsConnectionCCUserMultipleTests.suite());
 		testSuite.addTest(SearchConnectionDropDownConnectionsCCTests.suite());

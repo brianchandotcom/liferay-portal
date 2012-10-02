@@ -44,6 +44,7 @@ import com.liferay.portlet.messageboards.service.base.MBMessageServiceBaseImpl;
 import com.liferay.portlet.messageboards.service.permission.MBCategoryPermission;
 import com.liferay.portlet.messageboards.service.permission.MBDiscussionPermission;
 import com.liferay.portlet.messageboards.service.permission.MBMessagePermission;
+import com.liferay.portlet.messageboards.util.MBUtil;
 import com.liferay.portlet.messageboards.util.comparator.MessageCreateDateComparator;
 import com.liferay.util.RSSUtil;
 
@@ -744,17 +745,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			else {
 				value = BBCodeTranslatorUtil.getHTML(message.getBody());
 
-				value = StringUtil.replace(
-					value,
-					new String[] {
-						"@theme_images_path@", "href=\"/", "src=\"/"
-					},
-					new String[] {
-						themeDisplay.getURLPortal() +
-							themeDisplay.getPathThemeImages(),
-						"href=\"" + themeDisplay.getURLPortal() + "/",
-						"src=\"" + themeDisplay.getURLPortal() + "/"
-					});
+				value = MBUtil.replaceMessageBodyElements(value, themeDisplay);
 			}
 
 			syndContent.setValue(value);

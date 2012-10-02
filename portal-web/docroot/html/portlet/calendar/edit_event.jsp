@@ -325,11 +325,13 @@ int secondReminder = BeanParamUtil.getInteger(event, request, "secondReminder", 
 	allDayCheckbox.on(
 		'change',
 		function() {
-			if (!allDayCheckbox.get('checked') && durationHour && (durationHour.val() === '24')) {
+			var allDayChecked = allDayCheckbox.attr('checked');
+
+			if (!allDayChecked && durationHour && (durationHour.val() === '24')) {
 				durationHour.val('1');
 			}
 
-			if (allDayCheckbox.get('checked')) {
+			if (allDayChecked) {
 				timeZoneSensitiveCheckbox.attr('checked', false);
 				timeZoneSensitiveCheckbox.attr('disabled', true);
 			}

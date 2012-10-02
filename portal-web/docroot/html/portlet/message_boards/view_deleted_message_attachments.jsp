@@ -36,7 +36,7 @@ portletURL.setParameter("messageId", String.valueOf(message.getMessageId()));
 
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "edit"), portletURL.toString());
 
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "deleted-attachments"), currentURL);
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "removed-attachments"), currentURL);
 
 PortletURL iteratorURL = renderResponse.createRenderURL();
 
@@ -47,7 +47,7 @@ iteratorURL.setParameter("messageId", String.valueOf(messageId));
 
 <liferay-ui:header
 	backURL="<%= redirect %>"
-	title="deleted-attachments"
+	title="removed-attachments"
 />
 
 <portlet:actionURL var="emptyTrashURL">
@@ -56,8 +56,8 @@ iteratorURL.setParameter("messageId", String.valueOf(messageId));
 </portlet:actionURL>
 
 <liferay-ui:trash-empty
-	confirmMessage="are-you-sure-you-want-to-delete-the-attachments-for-this-message"
-	emptyMessage="delete-the-attachments-for-this-message"
+	confirmMessage="are-you-sure-you-want-to-remove-the-attachments-for-this-message"
+	emptyMessage="remove-the-attachments-for-this-message"
 	portletURL="<%= emptyTrashURL.toString() %>"
 	totalEntries="<%= attachments.size() %>"
 />

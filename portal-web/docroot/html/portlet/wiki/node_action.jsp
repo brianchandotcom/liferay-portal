@@ -127,7 +127,7 @@ WikiNode node = (WikiNode)row.getObject();
 
 		<liferay-ui:icon
 			image="delete_attachment"
-			message="view-deleted-attachments"
+			message="view-removed-attachments"
 			url="<%= viewDeletedAttachmentsURL %>"
 		/>
 	</c:if>

@@ -45,7 +45,7 @@ iteratorURL.setParameter("viewTrashAttachments", Boolean.TRUE.toString());
 
 <liferay-ui:header
 	backURL="<%= redirect %>"
-	title="deleted-attachments"
+	title="removed-attachments"
 />
 
 <portlet:actionURL var="emptyTrashURL">
@@ -54,8 +54,8 @@ iteratorURL.setParameter("viewTrashAttachments", Boolean.TRUE.toString());
 </portlet:actionURL>
 
 <liferay-ui:trash-empty
-	confirmMessage="are-you-sure-you-want-to-delete-the-attachments-for-this-wiki-node"
-	emptyMessage="delete-the-attachments-for-this-wiki-node"
+	confirmMessage="are-you-sure-you-want-to-remove-the-attachments-for-this-wiki-node"
+	emptyMessage="remove-the-attachments-for-this-wiki-node"
 	portletURL="<%= emptyTrashURL.toString() %>"
 	totalEntries="<%= attachments.size() %>"
 />

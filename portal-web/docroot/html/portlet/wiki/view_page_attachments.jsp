@@ -63,7 +63,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "att
 <c:if test="<%= viewTrashAttachments %>">
 	<liferay-ui:header
 		backURL="<%= redirect %>"
-		title="deleted-attachments"
+		title="removed-attachments"
 	/>
 </c:if>
 
@@ -158,8 +158,8 @@ for (int i = 0; i < results.size(); i++) {
 			</portlet:actionURL>
 
 			<liferay-ui:trash-empty
-				confirmMessage="are-you-sure-you-want-to-delete-the-attachments-for-this-page"
-				emptyMessage="delete-the-attachments-for-this-page"
+				confirmMessage="are-you-sure-you-want-to-remove-the-attachments-for-this-page"
+				emptyMessage="remove-the-attachments-for-this-page"
 				portletURL="<%= emptyTrashURL.toString() %>"
 				totalEntries="<%= attachments.length %>"
 			/>
@@ -183,7 +183,7 @@ for (int i = 0; i < results.size(); i++) {
 					cssClass="trash-attachments"
 					image="delete"
 					label="<%= true %>"
-					message='<%= LanguageUtil.format(pageContext, "x-recent-deleted-attachments", deletedAttachments.length) %>'
+					message='<%= LanguageUtil.format(pageContext, "x-recent-removed-attachments", deletedAttachments.length) %>'
 					url="<%= viewTrashAttachmentsURL %>"
 				/>
 			</c:if>

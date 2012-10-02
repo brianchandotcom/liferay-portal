@@ -506,12 +506,6 @@
 			NAME: 'ddm-text-html',
 
 			prototype: {
-				initializer: function() {
-					var instance = this;
-
-					console.log();
-				},
-
 				getHTML: function() {
 					return TPL_TEXT_HTML;
 				}

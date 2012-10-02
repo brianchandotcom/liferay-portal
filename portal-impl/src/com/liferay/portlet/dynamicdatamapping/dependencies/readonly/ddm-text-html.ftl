@@ -1,7 +1,7 @@
 <#include "../init.ftl">
 
 <#if fieldValue?? && fieldValue != "">
-	<div class="lfr-forms-field-wrapper aui-field-wrapper-content">
+	<div class="aui-field-wrapper-content lfr-forms-field-wrapper">
 		<@aui.input name=namespacedFieldName type="hidden" value=fieldValue />
 
 		<label class="aui-field-label">

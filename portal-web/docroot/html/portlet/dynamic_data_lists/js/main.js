@@ -673,7 +673,7 @@ AUI.add(
 							bodyContent: content,
 							centered: true,
 							modal: true,
-							width: 0.5 * A.DOM.winWidth(),
+							width: A.getWin().width() / 2,
 							title: Liferay.Language.get('preview')
 						}
 					).render();
@@ -682,7 +682,8 @@ AUI.add(
 				}
 				else {
 					previewDialog.show();
-					previewDialog.setStdModContent(A.WidgetStdMod.BODY, content);
+
+					previewDialog.set('bodyContent', content);
 				}
 
 				return previewDialog;

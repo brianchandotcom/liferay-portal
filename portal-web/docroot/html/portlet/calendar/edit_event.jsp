@@ -317,31 +317,31 @@ int secondReminder = BeanParamUtil.getInteger(event, request, "secondReminder", 
 
 <aui:script use="aui-base">
 	var allDayCheckbox = A.one('#<portlet:namespace />allDayCheckbox');
+
 	var durationHour = A.one('#<portlet:namespace />durationHour');
+
 	var timeZoneSensitiveCheckbox = A.one('#<portlet:namespace />timeZoneSensitiveCheckbox');
 
-	if (allDayCheckbox) {
-		allDayCheckbox.on(
-			'change',
-			function() {
-				if (!this.get('checked') && durationHour && (durationHour.val() == '24')) {
-					durationHour.val('1');
-				}
+	allDayCheckbox.on(
+		'change',
+		function() {
+			if (!allDayCheckbox.get('checked') && durationHour && (durationHour.val() === '24')) {
+				durationHour.val('1');
+			}
 
-				if (this.get('checked')) {
-					timeZoneSensitiveCheckbox.attr('checked', false);
-					timeZoneSensitiveCheckbox.attr('disabled', true);
-				}
-				else {
-					timeZoneSensitiveCheckbox.attr('disabled', false);
+			if (allDayCheckbox.get('checked')) {
+				timeZoneSensitiveCheckbox.attr('checked', false);
+				timeZoneSensitiveCheckbox.attr('disabled', true);
+			}
+			else {
+				timeZoneSensitiveCheckbox.attr('disabled', false);
 
-					if (timeZoneSensitiveCheckbox.previous().val() == 'true') {
-						timeZoneSensitiveCheckbox.attr('checked', true);
-					}
+				if (timeZoneSensitiveCheckbox.previous().val() === 'true') {
+					timeZoneSensitiveCheckbox.attr('checked', true);
 				}
 			}
-		);
-	}
+		}
+	);
 
 	A.all('#<portlet:namespace />recurrenceTypeNever, #<portlet:namespace />recurrenceTypeDaily, #<portlet:namespace />recurrenceTypeWeekly, #<portlet:namespace />recurrenceTypeMonthly, #<portlet:namespace />recurrenceTypeYearly').on(
 		'change',

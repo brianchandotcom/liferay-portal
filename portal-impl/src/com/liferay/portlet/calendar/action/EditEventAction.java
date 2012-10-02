@@ -44,12 +44,9 @@ import com.liferay.portlet.calendar.NoSuchEventException;
 import com.liferay.portlet.calendar.model.CalEvent;
 import com.liferay.portlet.calendar.model.CalEventConstants;
 import com.liferay.portlet.calendar.service.CalEventServiceUtil;
-
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-import java.util.Locale;
-import java.util.TimeZone;
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionForward;
+import org.apache.struts.action.ActionMapping;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -57,10 +54,11 @@ import javax.portlet.PortletConfig;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.WindowState;
-
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 /**
  * @author Brian Wing Shun Chan
@@ -190,11 +188,14 @@ public class EditEventAction extends PortletAction {
 		int durationMinute = ParamUtil.getInteger(
 			actionRequest, "durationMinute");
 		boolean allDay = ParamUtil.getBoolean(actionRequest, "allDay");
-		boolean timeZoneSensitive = ParamUtil.getBoolean(
-			actionRequest, "timeZoneSensitive");
+		boolean timeZoneSensitive;
 
 		if (allDay) {
 			timeZoneSensitive = false;
+		}
+		else {
+			timeZoneSensitive = ParamUtil.getBoolean(
+				actionRequest, "timeZoneSensitive");
 		}
 
 		String type = ParamUtil.getString(actionRequest, "type");

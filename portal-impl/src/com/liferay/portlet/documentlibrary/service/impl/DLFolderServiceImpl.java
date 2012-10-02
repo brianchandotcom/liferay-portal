@@ -54,7 +54,7 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 
 		return dlFolderLocalService.addFolder(
 			getUserId(), groupId, repositoryId, mountPoint, parentFolderId,
-			name, description, serviceContext);
+			name, description, false, serviceContext);
 	}
 
 	public void deleteFolder(long folderId)
@@ -280,15 +280,15 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 			OrderByComparator obc)
 		throws SystemException {
 
-		return dlFolderPersistence.filterFindByG_M_P(
-			groupId, true, parentFolderId, start, end, obc);
+		return dlFolderPersistence.filterFindByG_M_P_H(
+			groupId, true, parentFolderId, false, start, end, obc);
 	}
 
 	public int getMountFoldersCount(long groupId, long parentFolderId)
 		throws SystemException {
 
-		return dlFolderPersistence.filterCountByG_M_P(
-			groupId, true, parentFolderId);
+		return dlFolderPersistence.filterCountByG_M_P_H(
+			groupId, true, parentFolderId, false);
 	}
 
 	public void getSubfolderIds(

@@ -156,7 +156,8 @@ public class LiferayLocalRepository
 
 		DLFolder dlFolder = dlFolderLocalService.addFolder(
 			userId, getGroupId(), getRepositoryId(), mountPoint,
-			toFolderId(parentFolderId), title, description, serviceContext);
+			toFolderId(parentFolderId), title, description, false,
+			serviceContext);
 
 		return new LiferayFolder(dlFolder);
 	}

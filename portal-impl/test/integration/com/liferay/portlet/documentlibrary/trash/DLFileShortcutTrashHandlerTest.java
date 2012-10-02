@@ -133,7 +133,8 @@ public class DLFileShortcutTrashHandlerTest extends BaseTrashHandlerTestCase {
 		return DLFolderLocalServiceUtil.addFolder(
 			TestPropsValues.getUserId(), group.getGroupId(), group.getGroupId(),
 			false, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			ServiceTestUtil.randomString(), StringPool.BLANK, serviceContext);
+			ServiceTestUtil.randomString(), StringPool.BLANK, false,
+			serviceContext);
 	}
 
 	@Override

@@ -60,6 +60,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 		attributes.put("description", getDescription());
 		attributes.put("lastPostDate", getLastPostDate());
 		attributes.put("defaultFileEntryTypeId", getDefaultFileEntryTypeId());
+		attributes.put("hidden", getHidden());
 		attributes.put("overrideFileEntryTypes", getOverrideFileEntryTypes());
 		attributes.put("status", getStatus());
 		attributes.put("statusByUserId", getStatusByUserId());
@@ -159,6 +160,12 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 
 		if (defaultFileEntryTypeId != null) {
 			setDefaultFileEntryTypeId(defaultFileEntryTypeId);
+		}
+
+		Boolean hidden = (Boolean)attributes.get("hidden");
+
+		if (hidden != null) {
+			setHidden(hidden);
 		}
 
 		Boolean overrideFileEntryTypes = (Boolean)attributes.get(
@@ -508,6 +515,33 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	*/
 	public void setDefaultFileEntryTypeId(long defaultFileEntryTypeId) {
 		_dlFolder.setDefaultFileEntryTypeId(defaultFileEntryTypeId);
+	}
+
+	/**
+	* Returns the hidden of this document library folder.
+	*
+	* @return the hidden of this document library folder
+	*/
+	public boolean getHidden() {
+		return _dlFolder.getHidden();
+	}
+
+	/**
+	* Returns <code>true</code> if this document library folder is hidden.
+	*
+	* @return <code>true</code> if this document library folder is hidden; <code>false</code> otherwise
+	*/
+	public boolean isHidden() {
+		return _dlFolder.isHidden();
+	}
+
+	/**
+	* Sets whether this document library folder is hidden.
+	*
+	* @param hidden the hidden of this document library folder
+	*/
+	public void setHidden(boolean hidden) {
+		_dlFolder.setHidden(hidden);
 	}
 
 	/**

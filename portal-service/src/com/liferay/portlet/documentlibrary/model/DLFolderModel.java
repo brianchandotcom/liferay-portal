@@ -301,6 +301,27 @@ public interface DLFolderModel extends BaseModel<DLFolder>, ContainerModel,
 	public void setDefaultFileEntryTypeId(long defaultFileEntryTypeId);
 
 	/**
+	 * Returns the hidden of this document library folder.
+	 *
+	 * @return the hidden of this document library folder
+	 */
+	public boolean getHidden();
+
+	/**
+	 * Returns <code>true</code> if this document library folder is hidden.
+	 *
+	 * @return <code>true</code> if this document library folder is hidden; <code>false</code> otherwise
+	 */
+	public boolean isHidden();
+
+	/**
+	 * Sets whether this document library folder is hidden.
+	 *
+	 * @param hidden the hidden of this document library folder
+	 */
+	public void setHidden(boolean hidden);
+
+	/**
 	 * Returns the override file entry types of this document library folder.
 	 *
 	 * @return the override file entry types of this document library folder

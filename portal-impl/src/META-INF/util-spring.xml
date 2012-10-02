@@ -522,6 +522,10 @@
 			</bean>
 		</property>
 	</bean>
+	<bean id="com.liferay.portal.portletfilerepository.PortletFileRepository" class="com.liferay.portal.portletfilerepository.PortletFileRepositoryImpl" />
+	<bean id="com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil" class="com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil">
+		<property name="portletFileRepository" ref="com.liferay.portal.portletfilerepository.PortletFileRepository" />
+	</bean>
 	<bean id="com.liferay.portal.security.ac.AccessControlUtil" class="com.liferay.portal.security.ac.AccessControlUtil">
 		<property name="accessControl">
 			<bean class="com.liferay.portal.security.ac.AccessControlImpl" />

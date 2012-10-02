@@ -19,9 +19,9 @@ import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ORMException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.model.Lock;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
-import com.liferay.portal.test.ExecutionTestListeners;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 
 import java.util.ArrayList;

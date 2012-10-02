@@ -14,6 +14,8 @@
 
 package com.liferay.portal.test;
 
+import com.liferay.portal.kernel.test.AbstractExecutionTestListener;
+import com.liferay.portal.kernel.test.TestContext;
 import com.liferay.portal.service.ServiceTestUtil;
 
 /**

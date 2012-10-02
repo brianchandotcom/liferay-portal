@@ -14,10 +14,10 @@
 
 package com.liferay.portlet.documentlibrary.webdav;
 
+import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.webdav.WebDAVUtil;
-import com.liferay.portal.test.ExecutionTestListeners;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.webdav.methods.Method;
 

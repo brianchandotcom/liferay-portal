@@ -15,6 +15,8 @@
 package com.liferay.portal.test;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.portal.kernel.test.AbstractExecutionTestListener;
+import com.liferay.portal.kernel.test.TestContext;
 
 import java.lang.reflect.Method;
 

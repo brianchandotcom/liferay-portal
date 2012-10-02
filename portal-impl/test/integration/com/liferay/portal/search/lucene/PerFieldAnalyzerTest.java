@@ -15,8 +15,8 @@
 package com.liferay.portal.search.lucene;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
-import com.liferay.portal.test.ExecutionTestListeners;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 
 import org.apache.lucene.analysis.Analyzer;

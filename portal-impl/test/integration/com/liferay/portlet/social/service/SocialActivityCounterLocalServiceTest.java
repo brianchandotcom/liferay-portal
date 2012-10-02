@@ -14,8 +14,8 @@
 
 package com.liferay.portlet.social.service;
 
+import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
-import com.liferay.portal.test.ExecutionTestListeners;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
 import com.liferay.portlet.social.model.SocialActivityCounter;

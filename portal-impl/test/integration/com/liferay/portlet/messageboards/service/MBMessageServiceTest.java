@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.messageboards.service;
 
+import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
@@ -21,7 +22,6 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.DoAsUserThread;
 import com.liferay.portal.service.*;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
-import com.liferay.portal.test.ExecutionTestListeners;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.messageboards.model.MBCategory;

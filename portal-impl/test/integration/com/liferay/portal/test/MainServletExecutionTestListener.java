@@ -14,6 +14,7 @@
 
 package com.liferay.portal.test;
 
+import com.liferay.portal.kernel.test.TestContext;
 import com.liferay.portal.servlet.MainServlet;
 
 import java.io.File;

@@ -14,9 +14,9 @@
 
 package com.liferay.portlet.documentlibrary.webdav;
 
+import com.liferay.portal.kernel.test.TestContext;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
-import com.liferay.portal.test.TestContext;
 import com.liferay.portal.webdav.WebDAVServlet;
 import com.liferay.portal.webdav.methods.Method;
 

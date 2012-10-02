@@ -15,12 +15,12 @@
 package com.liferay.portal.service;
 
 import com.liferay.portal.NoSuchResourceException;
+import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.DoAsUserThread;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
-import com.liferay.portal.test.ExecutionTestListeners;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.TestPropsValues;
 

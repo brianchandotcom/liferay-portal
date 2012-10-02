@@ -15,10 +15,10 @@
 package com.liferay.counter.service;
 
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.service.PortalServiceUtil;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
-import com.liferay.portal.test.ExecutionTestListeners;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 
 import org.junit.Assert;

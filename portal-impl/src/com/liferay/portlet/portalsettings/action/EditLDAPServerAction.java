@@ -73,14 +73,15 @@ public class EditLDAPServerAction extends PortletAction {
 			sendRedirect(actionRequest, actionResponse);
 		}
 		catch (Exception e) {
-			if (e instanceof PrincipalException) {
+			if (e instanceof DuplicateLDAPServerNameException ||
+				e instanceof LDAPServerNameException) {
+
+				SessionErrors.add(actionRequest, e.getClass());
+			}
+			else if (e instanceof PrincipalException) {
 				SessionErrors.add(actionRequest, e.getClass());
 
 				setForward(actionRequest, "portlet.portal_settings.error");
-			}
-			else if (e instanceof LDAPServerNameException ||
-				e instanceof DuplicateLDAPServerNameException) {
-					SessionErrors.add(actionRequest, e.getClass());
 			}
 			else {
 				throw e;

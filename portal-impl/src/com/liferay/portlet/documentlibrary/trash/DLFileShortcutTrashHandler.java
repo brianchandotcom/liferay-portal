@@ -18,10 +18,13 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.trash.BaseTrashHandler;
 import com.liferay.portal.kernel.trash.TrashRenderer;
+import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileShortcutLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 
 import javax.portlet.PortletRequest;
@@ -37,6 +40,17 @@ public class DLFileShortcutTrashHandler extends BaseTrashHandler {
 	 * The class name of the file shortcut entity.
 	 */
 	public static final String CLASS_NAME = DLFileShortcut.class.getName();
+
+	@Override
+	public void checkAddPermission(
+			PermissionChecker permissionChecker, long groupId,
+			long containerModelId)
+		throws PortalException, SystemException {
+
+		DLFolderPermission.check(
+			permissionChecker, groupId, containerModelId,
+			ActionKeys.ADD_SHORTCUT);
+	}
 
 	/**
 	 * Deletes all file shortcuts with the matching primary keys.

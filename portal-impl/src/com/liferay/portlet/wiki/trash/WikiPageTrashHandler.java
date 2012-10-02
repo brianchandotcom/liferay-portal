@@ -53,7 +53,8 @@ public class WikiPageTrashHandler extends BaseTrashHandler {
 	public static final String CLASS_NAME = WikiPage.class.getName();
 
 	@Override
-	public void checkDuplicateTrashEntry(TrashEntry trashEntry, String newName)
+	public void checkDuplicateTrashEntry(
+			TrashEntry trashEntry, long containerModelId, String newName)
 		throws PortalException, SystemException {
 
 		WikiPage page = WikiPageLocalServiceUtil.getPage(
@@ -68,7 +69,7 @@ public class WikiPageTrashHandler extends BaseTrashHandler {
 		String originalTitle = TrashUtil.stripTrashNamespace(restoredTitle);
 
 		WikiPage duplicatePage = WikiPageLocalServiceUtil.fetchPage(
-			page.getNodeId(), originalTitle, page.getVersion());
+			containerModelId, originalTitle, page.getVersion());
 
 		if (duplicatePage != null) {
 			DuplicateEntryException dee = new DuplicateEntryException();

@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.ldap.LDAPSettingsUtil;
 import com.liferay.portal.service.CompanyServiceUtil;
@@ -214,25 +215,26 @@ public class EditLDAPServerAction extends PortletAction {
 			long companyId, long ldapServerId, UnicodeProperties properties)
 		throws Exception {
 
-		long[] ldapServerIdList = StringUtil.split(
-			PrefsPropsUtil.getString(companyId, "ldap.server.ids"), 0L);
-
 		String ldapServerName = properties.getProperty(
 			"ldap.server.name." + ldapServerId);
 
-		if (ldapServerName.isEmpty()) {
+		if (Validator.isNull(ldapServerName)) {
 			throw new LDAPServerNameException();
 		}
 
-		for (long ldapServerIterator : ldapServerIdList) {
-			if (ldapServerId == ldapServerIterator) {
+		long[] existingLDAPServerIds = StringUtil.split(
+			PrefsPropsUtil.getString(companyId, "ldap.server.ids"), 0L);
+
+		for (long existingLDAPServerId : existingLDAPServerIds) {
+			if (ldapServerId == existingLDAPServerId) {
 				continue;
 			}
-			else {
-				if (ldapServerName.equals(PrefsPropsUtil.getString(
-					companyId, "ldap.server.name." + ldapServerIterator))) {
-					throw new DuplicateLDAPServerNameException();
-				}
+
+			String existingLDAPServerName = PrefsPropsUtil.getString(
+				companyId, "ldap.server.name." + existingLDAPServerId);
+
+			if (ldapServerName.equals(existingLDAPServerName)) {
+				throw new DuplicateLDAPServerNameException();
 			}
 		}
 	}

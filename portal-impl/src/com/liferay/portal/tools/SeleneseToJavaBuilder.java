@@ -515,7 +515,7 @@ public class SeleneseToJavaBuilder {
 		y = 0;
 
 		while (true) {
-			x = content.indexOf("<tr>", x);
+			x = content.indexOf("<tr>", y);
 			y = content.indexOf("\n</tr>", x);
 
 			if ((x == -1) || (y == -1)) {
@@ -566,7 +566,7 @@ public class SeleneseToJavaBuilder {
 		sb.append("selenium.selectFrame(\"relative=top\");");
 
 		while (true) {
-			x = content.indexOf("<tr>", x);
+			x = content.indexOf("<tr>", y);
 			y = content.indexOf("\n</tr>", x);
 
 			if ((x == -1) || (y == -1)) {

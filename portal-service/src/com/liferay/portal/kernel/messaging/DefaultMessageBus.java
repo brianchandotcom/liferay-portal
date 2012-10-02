@@ -108,10 +108,12 @@ public class DefaultMessageBus implements MessageBus {
 	public synchronized Destination removeDestination(String destinationName) {
 		Destination destinationModel = _destinations.remove(destinationName);
 
-		destinationModel.removeDestinationEventListeners();
-		destinationModel.unregisterMessageListeners();
+		if (destinationModel != null) {
+			destinationModel.removeDestinationEventListeners();
+			destinationModel.unregisterMessageListeners();
 
-		fireDestinationRemovedEvent(destinationModel);
+			fireDestinationRemovedEvent(destinationModel);
+		}
 
 		return destinationModel;
 	}

@@ -78,7 +78,7 @@ public class DLFolderTrashHandlerTest extends BaseTrashHandlerTestCase {
 		DLFolder dlFolder = DLFolderLocalServiceUtil.addFolder(
 			TestPropsValues.getUserId(), parentDLFolder.getGroupId(),
 			parentDLFolder.getGroupId(), false, parentDLFolder.getFolderId(),
-			getSearchKeywords(), StringPool.BLANK, serviceContext);
+			getSearchKeywords(), StringPool.BLANK, false, serviceContext);
 
 		return dlFolder;
 	}
@@ -119,7 +119,8 @@ public class DLFolderTrashHandlerTest extends BaseTrashHandlerTestCase {
 		return DLFolderLocalServiceUtil.addFolder(
 			TestPropsValues.getUserId(), group.getGroupId(), group.getGroupId(),
 			false, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			ServiceTestUtil.randomString(), StringPool.BLANK, serviceContext);
+			ServiceTestUtil.randomString(), StringPool.BLANK, false,
+			serviceContext);
 	}
 
 	@Override

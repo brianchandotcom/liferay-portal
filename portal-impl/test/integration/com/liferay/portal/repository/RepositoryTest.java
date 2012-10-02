@@ -28,7 +28,6 @@ import com.liferay.portal.repository.liferayrepository.LiferayRepository;
 import com.liferay.portal.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.service.RepositoryServiceUtil;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
@@ -59,50 +58,31 @@ public class RepositoryTest {
 
 	@Test
 	@Transactional
-	public void testBasic() throws Exception {
-
-		// Create repositories
-
-		long[] repositoryIds = new long[2];
-
-		long classNameId = PortalUtil.getClassNameId(LiferayRepository.class);
-
-		repositoryIds[0] = RepositoryServiceUtil.addRepository(
-			TestPropsValues.getGroupId(), classNameId,
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Test 1", "Test 1",
-			PortletKeys.DOCUMENT_LIBRARY, new UnicodeProperties(),
-			new ServiceContext());
-
-		DLFolder dlFolder = DLFolderServiceUtil.addFolder(
-			TestPropsValues.getGroupId(), TestPropsValues.getGroupId(), false,
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Folder", "Folder",
-			new ServiceContext());
-
-		repositoryIds[1] = RepositoryServiceUtil.addRepository(
-			TestPropsValues.getGroupId(), classNameId, dlFolder.getFolderId(),
-			"Test 2", "Test 2", PortletKeys.DOCUMENT_LIBRARY,
-			new UnicodeProperties(), new ServiceContext());
-
-		// Delete repositories
-
-		RepositoryLocalServiceUtil.deleteRepositories(
-			TestPropsValues.getGroupId());
-
-		for (long repositoryId : repositoryIds) {
-			try {
-				RepositoryServiceUtil.getLocalRepositoryImpl(repositoryId);
-
-				Assert.fail(
-					"Should not be able to access repository " + repositoryId);
-			}
-			catch (Exception e) {
-			}
-		}
+	public void testCreateAndDeleteFileEntries() throws Exception {
+		createAndDeleteFileEntries(false);
 	}
 
 	@Test
 	@Transactional
-	public void testCreateAndDeleteFileEntries() throws Exception {
+	public void testCreateAndDeleteFileEntriesInHiddenRepository()
+		throws Exception {
+
+		createAndDeleteFileEntries(true);
+	}
+
+	@Test
+	@Transactional
+	public void testCreateAndDeleteHiddenRepositories() throws Exception {
+		createAndDeleteRepositories(true);
+	}
+
+	@Test
+	@Transactional
+	public void testCreateAndDeleteRepositories() throws Exception {
+		createAndDeleteRepositories(false);
+	}
+
+	protected void createAndDeleteFileEntries(boolean hidden) throws Exception {
 
 		// One default and one mapped repository
 
@@ -110,13 +90,17 @@ public class RepositoryTest {
 
 		long classNameId = PortalUtil.getClassNameId(LiferayRepository.class);
 
-		long dlRepositoryId = RepositoryServiceUtil.addRepository(
-			TestPropsValues.getGroupId(), classNameId,
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Test 1", "Test 1",
-			PortletKeys.DOCUMENT_LIBRARY, new UnicodeProperties(),
-			new ServiceContext());
+		long dlRepositoryId = RepositoryLocalServiceUtil.addRepository(
+			TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
+			classNameId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Test 1",
+			"Test 1", PortletKeys.DOCUMENT_LIBRARY, new UnicodeProperties(),
+			hidden, new ServiceContext());
 
-		long[] repositoryIds = {defaultRepositoryId, dlRepositoryId};
+		long[] repositoryIds = {dlRepositoryId};
+
+		if (!hidden) {
+			repositoryIds = new long[]{defaultRepositoryId, dlRepositoryId};
+		}
 
 		long[] fileEntryIds = new long[4];
 
@@ -129,6 +113,9 @@ public class RepositoryTest {
 
 		for (int i = 0; i < repositoryIds.length; i++) {
 			long repositoryId = repositoryIds[i];
+
+			int initialFoldersCount = DLAppServiceUtil.getFoldersCount(
+				repositoryId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 			LocalRepository localRepository =
 				RepositoryServiceUtil.getLocalRepositoryImpl(repositoryId);
@@ -163,6 +150,23 @@ public class RepositoryTest {
 				new ServiceContext());
 
 			fileEntryIds[i + 2] = fileEntry2.getFileEntryId();
+
+			Assert.assertEquals(
+				initialFoldersCount + 1,
+				DLAppServiceUtil.getFoldersCount(
+					repositoryId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID));
+
+			Assert.assertEquals(
+				1,
+				DLAppServiceUtil.getFileEntriesAndFileShortcutsCount(
+					repositoryId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+					WorkflowConstants.STATUS_ANY));
+
+			Assert.assertEquals(
+				1,
+				DLAppServiceUtil.getFileEntriesAndFileShortcutsCount(
+					repositoryId, folder.getFolderId(),
+					WorkflowConstants.STATUS_ANY));
 		}
 
 		// Verify mapped folder
@@ -203,29 +207,33 @@ public class RepositoryTest {
 		}
 	}
 
-	@Test
-	@Transactional
-	public void testHiddenRepository() throws Exception {
-		hiddenRepository(true);
-	}
+	protected void createAndDeleteRepositories(boolean hidden)
+		throws Exception {
 
-	@Test
-	@Transactional
-	public void testVisibleRepository() throws Exception {
-		hiddenRepository(false);
-	}
-
-	protected void hiddenRepository(boolean hidden) throws Exception {
 		int initialMountFolders = DLFolderServiceUtil.getMountFoldersCount(
 			TestPropsValues.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
+		// Create repositories
+
+		long[] repositoryIds = new long[2];
+
 		long classNameId = PortalUtil.getClassNameId(LiferayRepository.class);
 
-		long repositoryId = RepositoryLocalServiceUtil.addRepository(
+		repositoryIds[0] = RepositoryLocalServiceUtil.addRepository(
 			TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
-			classNameId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			ServiceTestUtil.randomString(), ServiceTestUtil.randomString(),
+			classNameId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Test 1",
+			"Test 1", PortletKeys.DOCUMENT_LIBRARY, new UnicodeProperties(),
+			hidden, new ServiceContext());
+
+		DLFolder dlFolder = DLFolderServiceUtil.addFolder(
+			TestPropsValues.getGroupId(), TestPropsValues.getGroupId(), false,
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Folder", "Folder",
+			new ServiceContext());
+
+		repositoryIds[1] = RepositoryLocalServiceUtil.addRepository(
+			TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
+			classNameId, dlFolder.getFolderId(), "Test 2", "Test 2",
 			PortletKeys.DOCUMENT_LIBRARY, new UnicodeProperties(), hidden,
 			new ServiceContext());
 
@@ -244,38 +252,21 @@ public class RepositoryTest {
 					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID));
 		}
 
-		LocalRepository localRepository =
-			RepositoryServiceUtil.getLocalRepositoryImpl(repositoryId);
-
-		Folder folder = localRepository.addFolder(
-			TestPropsValues.getUserId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			String.valueOf(repositoryId), String.valueOf(repositoryId),
-			new ServiceContext());
-
-		InputStream inputStream = new UnsyncByteArrayInputStream(
-			_TEST_CONTENT.getBytes());
-
-		String name = ServiceTestUtil.randomString() + ".txt";
-
-		localRepository.addFileEntry(
-			TestPropsValues.getUserId(), folder.getFolderId(), name,
-			ContentTypes.TEXT_PLAIN, name, StringPool.BLANK, StringPool.BLANK,
-			inputStream, _TEST_CONTENT.length(), new ServiceContext());
-
-		Assert.assertEquals(
-			1,
-			DLAppServiceUtil.getFoldersCount(
-				repositoryId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID));
-
-		Assert.assertEquals(
-			1,
-			DLAppServiceUtil.getFileEntriesAndFileShortcutsCount(
-				repositoryId, folder.getFolderId(),
-				WorkflowConstants.STATUS_ANY));
+		// Delete repositories
 
 		RepositoryLocalServiceUtil.deleteRepositories(
 			TestPropsValues.getGroupId());
+
+		for (long repositoryId : repositoryIds) {
+			try {
+				RepositoryServiceUtil.getLocalRepositoryImpl(repositoryId);
+
+				Assert.fail(
+					"Should not be able to access repository " + repositoryId);
+			}
+			catch (Exception e) {
+			}
+		}
 
 		Assert.assertEquals(
 			initialMountFolders,

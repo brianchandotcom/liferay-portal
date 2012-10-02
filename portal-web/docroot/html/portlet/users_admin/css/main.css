@@ -238,6 +238,10 @@
 	.lfr-asset-column-details {
 		margin-top: 1em;
 	}
+
+	.lfr-asset-summary img.avatar {
+		max-width: 210px;
+	}
 }
 
 .lfr-floating-container {

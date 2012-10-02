@@ -16,6 +16,7 @@ package com.liferay.portlet.sites.util;
 
 import com.liferay.portal.RequiredLayoutException;
 import com.liferay.portal.events.EventsProcessorUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -41,10 +42,13 @@ import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.LayoutSetPrototype;
 import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.Lock;
+import com.liferay.portal.model.Organization;
+import com.liferay.portal.model.OrganizationConstants;
 import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
+import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.model.impl.VirtualLayout;
 import com.liferay.portal.security.auth.PrincipalException;
@@ -61,6 +65,7 @@ import com.liferay.portal.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetPrototypeLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetServiceUtil;
 import com.liferay.portal.service.LockLocalServiceUtil;
+import com.liferay.portal.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
@@ -85,6 +90,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.PortletPreferencesImpl;
+import com.liferay.portlet.usersadmin.search.GroupSearchTerms;
 
 import java.io.File;
 import java.io.InputStream;
@@ -732,6 +738,37 @@ public class SitesUtil {
 		return true;
 	}
 
+	public static boolean isOrganizationUser(
+			long companyId, Group group, User user,
+			GroupSearchTerms searchTerms, List<String> names)
+		throws Exception {
+
+		boolean organizationUser = false;
+
+		LinkedHashMap organizationParams = new LinkedHashMap();
+
+		organizationParams.put(
+			"organizationsGroups", new Long(group.getGroupId()));
+
+		List<Organization> organizationsGroups =
+			OrganizationLocalServiceUtil.search(
+				companyId, OrganizationConstants.ANY_PARENT_ORGANIZATION_ID,
+				searchTerms.getKeywords(), null, null, null, organizationParams,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		for (Organization organization : organizationsGroups) {
+			for (long userOrganizationId : user.getOrganizationIds()) {
+				if (userOrganizationId == organization.getOrganizationId()) {
+					names.add(organization.getName());
+
+					organizationUser = true;
+				}
+			}
+		}
+
+		return organizationUser;
+	}
+
 	public static boolean isUserGroupLayoutSetViewable(
 			PermissionChecker permissionChecker, Group userGroupGroup)
 		throws PortalException, SystemException {
@@ -758,6 +795,33 @@ public class SitesUtil {
 		else {
 			return false;
 		}
+	}
+
+	public static boolean isUserGroupUser(
+			long companyId, Group group, User user, List<String> names)
+		throws Exception {
+
+		boolean userGroupUser = false;
+
+		LinkedHashMap userGroupParams = new LinkedHashMap();
+
+		userGroupParams.put("userGroupsGroups", new Long(group.getGroupId()));
+
+		List<UserGroup> userGroupsGroups = UserGroupLocalServiceUtil.search(
+			companyId, null, null, userGroupParams, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+
+		for (UserGroup userGroup : userGroupsGroups) {
+			for (long userGroupId : user.getUserGroupIds()) {
+				if (userGroupId == userGroup.getUserGroupId()) {
+					names.add(userGroup.getName());
+
+					userGroupUser = true;
+				}
+			}
+		}
+
+		return userGroupUser;
 	}
 
 	public static void mergeLayoutProtypeLayout(Group group, Layout layout)

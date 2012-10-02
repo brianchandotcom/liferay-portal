@@ -1,0 +1,167 @@
+<%--
+/**
+ * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<liferay-ui:search-container-column-text
+	buffer="buffer"
+	href="<%= rowURL %>"
+	name="name"
+	orderable="<%= true %>"
+>
+
+	<%
+	buffer.append(HtmlUtil.escape(curGroup.getDescriptiveName(locale)));
+
+	if (curGroup.isOrganization()) {
+		Organization organization = OrganizationLocalServiceUtil.getOrganization(curGroup.getOrganizationId());
+
+		buffer.append("<br />");
+		buffer.append(LanguageUtil.format(pageContext, "belongs-to-an-organization-of-type-x", LanguageUtil.get(pageContext, organization.getType())));
+	}
+	else {
+		List<String> names = new ArrayList<String>();
+
+		boolean organizationUser = SitesUtil.isOrganizationUser(company.getCompanyId(), curGroup, user, searchTerms, names);
+
+		row.setParameter("organizationUser", organizationUser);
+
+		boolean userGroupUser = SitesUtil.isUserGroupUser(company.getCompanyId(), curGroup, user, names);
+
+		row.setParameter("userGroupUser", userGroupUser);
+
+		String message = StringPool.BLANK;
+
+		if (organizationUser || userGroupUser) {
+			StringBundler namesSB = new StringBundler();
+
+			for (int j = 0; j < (names.size() - 1); j++) {
+				namesSB.append(names.get(j));
+
+				if (j < (names.size() - 2)) {
+					namesSB.append(", ");
+				}
+			}
+
+			if (names.size() == 1) {
+				message = LanguageUtil.format(pageContext, "you-are-a-member-of-x-because-you-belong-to-x", new Object[] {HtmlUtil.escape(curGroup.getDescriptiveName(locale)), names.get(0)});
+			}
+			else {
+				message = LanguageUtil.format(pageContext, "you-are-a-member-of-x-because-you-belong-to-x-and-x", new Object[] {HtmlUtil.escape(curGroup.getDescriptiveName(locale)), namesSB, names.get(names.size() - 1)});
+			}
+	%>
+
+			<liferay-util:buffer var="iconHelp">
+				<liferay-ui:icon-help message="<%= message %>" />
+			</liferay-util:buffer>
+
+	<%
+			buffer.append(iconHelp);
+		}
+	}
+	%>
+
+</liferay-ui:search-container-column-text>
+
+<liferay-ui:search-container-column-text
+	href="<%= rowURL %>"
+	name="type"
+	value="<%= LanguageUtil.get(pageContext, curGroup.getTypeLabel()) %>"
+/>
+
+<liferay-ui:search-container-column-text
+	buffer="buffer"
+	name="members"
+>
+
+	<%
+	LinkedHashMap userParams = new LinkedHashMap();
+
+	userParams.put("inherit", true);
+	userParams.put("usersGroups", new Long(curGroup.getGroupId()));
+
+	int usersCount = UserLocalServiceUtil.searchCount(company.getCompanyId(), null, WorkflowConstants.STATUS_APPROVED, userParams);
+
+	if (usersCount > 0) {
+		buffer.append("<div class=\"user-count\">");
+		buffer.append(LanguageUtil.format(pageContext, usersCount > 1 ? "x-users" : "x-user", usersCount));
+		buffer.append("</div>");
+	}
+
+	LinkedHashMap organizationParams = new LinkedHashMap();
+
+	organizationParams.put("organizationsGroups", new Long(curGroup.getGroupId()));
+
+	int organizationsCount = OrganizationLocalServiceUtil.searchCount(company.getCompanyId(), OrganizationConstants.ANY_PARENT_ORGANIZATION_ID, searchTerms.getKeywords(), null, null, null, organizationParams);
+
+	if (curGroup.isOrganization()) {
+		organizationsCount += 1;
+	}
+	if (organizationsCount > 0) {
+		buffer.append("<div class=\"organization-count\">");
+		buffer.append(LanguageUtil.format(pageContext, organizationsCount > 1 ? "x-organizations" : "x-organization", organizationsCount));
+		buffer.append("</div>");
+	}
+
+	LinkedHashMap userGroupParams = new LinkedHashMap();
+
+	userGroupParams.put("userGroupsGroups", new Long(curGroup.getGroupId()));
+
+	int userGroupsCount = UserGroupLocalServiceUtil.searchCount(company.getCompanyId(), null, null, userGroupParams);
+
+	if (userGroupsCount > 0) {
+		buffer.append("<div class=\"user-group-count\">");
+		buffer.append(LanguageUtil.format(pageContext, userGroupsCount > 1 ? "x-user-groups" : "x-user-group", userGroupsCount));
+		buffer.append("</div>");
+	}
+
+	if (buffer.length() == 0) {
+		buffer.append("0");
+	}
+	%>
+
+</liferay-ui:search-container-column-text>
+
+<c:if test="<%= PropsValues.LIVE_USERS_ENABLED %>">
+	<liferay-ui:search-container-column-text
+		name="online-now"
+		value="<%= String.valueOf(LiveUsers.getGroupUsersCount(company.getCompanyId(), curGroup.getGroupId())) %>"
+	/>
+</c:if>
+
+<liferay-ui:search-container-column-text
+	name="active"
+	value='<%= LanguageUtil.get(pageContext, (curGroup.isActive() ? "yes" : "no")) %>'
+/>
+
+<c:if test="<%= permissionChecker.isGroupAdmin(themeDisplay.getScopeGroupId()) %>">
+	<liferay-ui:search-container-column-text
+		name="pending-requests"
+		value="<%= (curGroup.getType() == GroupConstants.TYPE_SITE_RESTRICTED) ? String.valueOf(MembershipRequestLocalServiceUtil.searchCount(curGroup.getGroupId(), MembershipRequestConstants.STATUS_PENDING)) : StringPool.BLANK %>"
+	/>
+</c:if>
+
+<liferay-ui:search-container-column-text
+	name="tags"
+>
+	<liferay-ui:asset-tags-summary
+		className="<%= Group.class.getName() %>"
+		classPK="<%= curGroup.getGroupId() %>"
+	/>
+</liferay-ui:search-container-column-text>
+
+<liferay-ui:search-container-column-jsp
+	align="right"
+	path="/html/portlet/sites_admin/site_action.jsp"
+/>

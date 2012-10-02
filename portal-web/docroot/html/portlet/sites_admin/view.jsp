@@ -17,300 +17,108 @@
 <%@ include file="/html/portlet/sites_admin/init.jsp" %>
 
 <%
+String sitesListView = ParamUtil.get(request, "sitesListView", SiteConstants.LIST_VIEW_TREE);
+String toolbarItem = ParamUtil.getString(request, "toolbarItem", "browse");
+
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("struts_action", "/sites_admin/view");
+portletURL.setParameter("sitesListView", sitesListView);
 
 pageContext.setAttribute("portletURL", portletURL);
+
+String portletURLString = portletURL.toString();
 %>
 
 <liferay-ui:success key="membership_request_sent" message="your-request-was-sent-you-will-receive-a-reply-by-email" />
 
-<aui:form action="<%= portletURL.toString() %>" method="get" name="fm">
+<aui:form action="<%= portletURLString %>" method="get" name="fm">
 	<liferay-portlet:renderURLParams varImpl="portletURL" />
+	<aui:input name="<%= Constants.CMD %>" type="hidden" />
+	<aui:input name="redirect" type="hidden" value="<%= portletURLString %>" />
+	<aui:input name="toolbarItem" type="hidden" value="<%= toolbarItem %>" />
 
-	<liferay-util:include page="/html/portlet/sites_admin/toolbar.jsp">
-		<liferay-util:param name="toolbarItem" value="view-all" />
-	</liferay-util:include>
+	<liferay-util:include page="/html/portlet/sites_admin/toolbar.jsp" />
 
-	<liferay-ui:search-container
-		searchContainer="<%= new GroupSearch(renderRequest, portletURL) %>"
-	>
+	<liferay-ui:error exception="<%= NoSuchLayoutSetException.class %>">
 
 		<%
-		GroupSearchTerms searchTerms = (GroupSearchTerms)searchContainer.getSearchTerms();
+		NoSuchLayoutSetException nslse = (NoSuchLayoutSetException)errorException;
 
-		LinkedHashMap groupParams = new LinkedHashMap();
+		PKParser pkParser = new PKParser(nslse.getMessage());
 
-		groupParams.put("site", Boolean.TRUE);
+		long groupId = pkParser.getLong("groupId");
 
-		if (!permissionChecker.isCompanyAdmin()) {
-			groupParams.put("usersGroups", new Long(user.getUserId()));
-			//groupParams.put("active", Boolean.TRUE);
-		}
+		Group group = GroupLocalServiceUtil.getGroup(groupId);
 		%>
 
-		<liferay-ui:search-container-results>
-
-			<%
-			if (searchTerms.isAdvancedSearch()) {
-				results = GroupLocalServiceUtil.search(company.getCompanyId(), searchTerms.getName(), searchTerms.getDescription(), groupParams, searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
-				total = GroupLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getName(), searchTerms.getDescription(), groupParams, searchTerms.isAndOperator());
-			}
-			else {
-				results = GroupLocalServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), groupParams, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
-				total = GroupLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getKeywords(), groupParams);
-			}
-
-			pageContext.setAttribute("results", results);
-			pageContext.setAttribute("total", total);
-			%>
-
-		</liferay-ui:search-container-results>
-
-		<liferay-ui:search-form
-			page="/html/portlet/users_admin/group_search.jsp"
-			searchContainer="<%= searchContainer %>"
-			showAddButton="<%= false %>"
-		/>
-
-		<liferay-ui:error exception="<%= NoSuchLayoutSetException.class %>">
-
-			<%
-			NoSuchLayoutSetException nslse = (NoSuchLayoutSetException)errorException;
-
-			PKParser pkParser = new PKParser(nslse.getMessage());
-
-			long groupId = pkParser.getLong("groupId");
-
-			Group group = GroupLocalServiceUtil.getGroup(groupId);
-			%>
-
-			<liferay-ui:message arguments="<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>" key="site-x-does-not-have-any-private-pages" />
-		</liferay-ui:error>
-
-		<liferay-ui:error exception="<%= RequiredGroupException.class %>">
-
-			<%
-			RequiredGroupException rge = (RequiredGroupException)errorException;
-			%>
-
-			<c:if test="<%= rge.getType() == RequiredGroupException.CURRENT_GROUP %>">
-				<liferay-ui:message key="you-cannot-delete-this-site-because-you-are-currently-accessing-this-site" />
-			</c:if>
-
-			<c:if test="<%= rge.getType() == RequiredGroupException.PARENT_GROUP %>">
-				<liferay-ui:message key="you-cannot-delete-sites-that-have-subsites" />
-			</c:if>
-
-			<c:if test="<%= rge.getType() == RequiredGroupException.SYSTEM_GROUP %>">
-				<liferay-ui:message key="the-site-cannot-be-deleted-or-deactivated-because-it-is-a-required-system-site" />
-			</c:if>
-		</liferay-ui:error>
-
-		<liferay-ui:search-container-row
-			className="com.liferay.portal.model.Group"
-			escapedModel="<%= true %>"
-			keyProperty="groupId"
-			modelVar="group"
-			rowIdProperty="friendlyURL"
-			rowVar="row"
-		>
-			<liferay-portlet:renderURL doAsGroupId="<%= group.getGroupId() %>" portletName="<%= PortletKeys.SITE_SETTINGS %>" varImpl="rowURL">
-				<portlet:param name="redirect" value="<%= currentURL %>" />
-			</liferay-portlet:renderURL>
-
-			<%
-			if (!GroupPermissionUtil.contains(permissionChecker, group, ActionKeys.UPDATE)) {
-				rowURL = null;
-			}
-			%>
-
-			<liferay-ui:search-container-column-text
-				buffer="buffer"
-				href="<%= rowURL %>"
-				name="name"
-				orderable="<%= true %>"
-			>
-
-				<%
-				buffer.append(HtmlUtil.escape(group.getDescriptiveName(locale)));
-
-				if (group.isOrganization()) {
-					Organization organization = OrganizationLocalServiceUtil.getOrganization(group.getOrganizationId());
-
-					buffer.append("<br />");
-					buffer.append(LanguageUtil.format(pageContext, "belongs-to-an-organization-of-type-x", LanguageUtil.get(pageContext, organization.getType())));
-				}
-				else {
-					boolean organizationUser = false;
-
-					LinkedHashMap organizationParams = new LinkedHashMap();
-
-					organizationParams.put("organizationsGroups", new Long(group.getGroupId()));
-
-					List<Organization> organizationsGroups = OrganizationLocalServiceUtil.search(company.getCompanyId(), OrganizationConstants.ANY_PARENT_ORGANIZATION_ID, searchTerms.getKeywords(), null, null, null, organizationParams, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-					List<String> names = new ArrayList<String>();
-
-					for (Organization organization : organizationsGroups) {
-						for (long userOrganizationId : user.getOrganizationIds()) {
-							if (userOrganizationId == organization.getOrganizationId()) {
-								names.add(organization.getName());
-
-								organizationUser = true;
-							}
-						}
-					}
-
-					row.setParameter("organizationUser", organizationUser);
-
-					boolean userGroupUser = false;
-
-					LinkedHashMap userGroupParams = new LinkedHashMap();
-
-					userGroupParams.put("userGroupsGroups", new Long(group.getGroupId()));
-
-					List<UserGroup> userGroupsGroups = UserGroupLocalServiceUtil.search(company.getCompanyId(), null, null, userGroupParams, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-
-					for (UserGroup userGroup : userGroupsGroups) {
-						for (long userGroupId : user.getUserGroupIds()) {
-							if (userGroupId == userGroup.getUserGroupId()) {
-								names.add(userGroup.getName());
-
-								userGroupUser = true;
-							}
-						}
-					}
-
-					row.setParameter("userGroupUser", userGroupUser);
-
-					String message = StringPool.BLANK;
-
-					if (organizationUser || userGroupUser) {
-						StringBundler namesSB = new StringBundler();
-
-						for (int j = 0; j < (names.size() - 1); j++) {
-							namesSB.append(names.get(j));
-
-							if (j < (names.size() - 2)) {
-								namesSB.append(", ");
-							}
-						}
-
-						if (names.size() == 1) {
-							message = LanguageUtil.format(pageContext, "you-are-a-member-of-x-because-you-belong-to-x", new Object[] {HtmlUtil.escape(group.getDescriptiveName(locale)), names.get(0)});
-						}
-						else {
-							message = LanguageUtil.format(pageContext, "you-are-a-member-of-x-because-you-belong-to-x-and-x", new Object[] {HtmlUtil.escape(group.getDescriptiveName(locale)), namesSB, names.get(names.size() - 1)});
-						}
-			%>
-
-						<liferay-util:buffer var="iconHelp">
-							<liferay-ui:icon-help message="<%= message %>" />
-						</liferay-util:buffer>
-
-			<%
-						buffer.append(iconHelp);
-					}
-				}
-			%>
-
-			</liferay-ui:search-container-column-text>
-
-			<liferay-ui:search-container-column-text
-				href="<%= rowURL %>"
-				name="type"
-				value="<%= LanguageUtil.get(pageContext, group.getTypeLabel()) %>"
-			/>
-
-			<liferay-ui:search-container-column-text
-				buffer="buffer"
-				name="members"
-			>
-
-				<%
-				LinkedHashMap userParams = new LinkedHashMap();
-
-				userParams.put("inherit", true);
-				userParams.put("usersGroups", new Long(group.getGroupId()));
-
-				int usersCount = UserLocalServiceUtil.searchCount(company.getCompanyId(), null, WorkflowConstants.STATUS_APPROVED, userParams);
-
-				if (usersCount > 0) {
-					buffer.append("<div class=\"user-count\">");
-					buffer.append(LanguageUtil.format(pageContext, usersCount > 1 ? "x-users" : "x-user", usersCount));
-					buffer.append("</div>");
-				}
-
-				LinkedHashMap organizationParams = new LinkedHashMap();
-
-				organizationParams.put("organizationsGroups", new Long(group.getGroupId()));
-
-				int organizationsCount = OrganizationLocalServiceUtil.searchCount(company.getCompanyId(), OrganizationConstants.ANY_PARENT_ORGANIZATION_ID, searchTerms.getKeywords(), null, null, null, organizationParams);
-
-				if (group.isOrganization()) {
-					organizationsCount += 1;
-				}
-				if (organizationsCount > 0) {
-					buffer.append("<div class=\"organization-count\">");
-					buffer.append(LanguageUtil.format(pageContext, organizationsCount > 1 ? "x-organizations" : "x-organization", organizationsCount));
-					buffer.append("</div>");
-				}
-
-				LinkedHashMap userGroupParams = new LinkedHashMap();
-
-				userGroupParams.put("userGroupsGroups", new Long(group.getGroupId()));
-
-				int userGroupsCount = UserGroupLocalServiceUtil.searchCount(company.getCompanyId(), null, null, userGroupParams);
-
-				if (userGroupsCount > 0) {
-					buffer.append("<div class=\"user-group-count\">");
-					buffer.append(LanguageUtil.format(pageContext, userGroupsCount > 1 ? "x-user-groups" : "x-user-group", userGroupsCount));
-					buffer.append("</div>");
-				}
-
-				if (buffer.length() == 0) {
-					buffer.append("0");
-				}
-				%>
-
-			</liferay-ui:search-container-column-text>
-
-			<c:if test="<%= PropsValues.LIVE_USERS_ENABLED %>">
-				<liferay-ui:search-container-column-text
-					name="online-now"
-					value="<%= String.valueOf(LiveUsers.getGroupUsersCount(company.getCompanyId(), group.getGroupId())) %>"
-				/>
-			</c:if>
-
-			<liferay-ui:search-container-column-text
-				name="active"
-				value='<%= LanguageUtil.get(pageContext, (group.isActive() ? "yes" : "no")) %>'
-			/>
-
-			<c:if test="<%= permissionChecker.isGroupAdmin(themeDisplay.getScopeGroupId()) %>">
-				<liferay-ui:search-container-column-text
-					name="pending-requests"
-					value="<%= (group.getType() == GroupConstants.TYPE_SITE_RESTRICTED) ? String.valueOf(MembershipRequestLocalServiceUtil.searchCount(group.getGroupId(), MembershipRequestConstants.STATUS_PENDING)) : StringPool.BLANK %>"
-				/>
-			</c:if>
-
-			<liferay-ui:search-container-column-text
-				name="tags"
-			>
-				<liferay-ui:asset-tags-summary
-					className="<%= Group.class.getName() %>"
-					classPK="<%= group.getGroupId() %>"
-				/>
-			</liferay-ui:search-container-column-text>
-
-			<liferay-ui:search-container-column-jsp
-				align="right"
-				path="/html/portlet/sites_admin/site_action.jsp"
-			/>
-		</liferay-ui:search-container-row>
-
-		<liferay-ui:search-iterator />
-	</liferay-ui:search-container>
+		<liferay-ui:message arguments="<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>" key="site-x-does-not-have-any-private-pages" />
+	</liferay-ui:error>
+
+	<liferay-ui:error exception="<%= RequiredGroupException.class %>">
+
+		<%
+		RequiredGroupException rge = (RequiredGroupException)errorException;
+		%>
+
+		<c:if test="<%= rge.getType() == RequiredGroupException.CURRENT_GROUP %>">
+			<liferay-ui:message key="you-cannot-delete-this-site-because-you-are-currently-accessing-this-site" />
+		</c:if>
+
+		<c:if test="<%= rge.getType() == RequiredGroupException.PARENT_GROUP%>">
+			<liferay-ui:message key="you-cannot-delete-sites-that-have-subsites" />
+		</c:if>
+
+		<c:if test="<%= rge.getType() == RequiredGroupException.SYSTEM_GROUP %>">
+			<liferay-ui:message key="the-site-cannot-be-deleted-or-deactivated-because-it-is-a-required-system-site" />
+		</c:if>
+	</liferay-ui:error>
+
+	<c:choose>
+		<c:when test="<%= sitesListView.equals(SiteConstants.LIST_VIEW_FLAT_SITES) %>">
+			<%@ include file="/html/portlet/sites_admin/view_flat_sites.jspf" %>
+		</c:when>
+		<c:otherwise>
+			<%@ include file="/html/portlet/sites_admin/view_tree.jspf" %>
+		</c:otherwise>
+	</c:choose>
 </aui:form>
+
+<aui:script>
+	function <portlet:namespace />doDeleteSite(id) {
+		var ids = id;
+
+		if (confirm('<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-delete-this") %>')) {
+			<portlet:namespace />doDeleteSites(ids);
+		}
+	}
+
+	function <portlet:namespace />doDeleteSites(siteIds) {
+		document.<portlet:namespace />fm.method = "post";
+		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= Constants.DELETE %>";
+		document.<portlet:namespace />fm.<portlet:namespace />redirect.value = document.<portlet:namespace />fm.<portlet:namespace />sitesRedirect.value;
+		document.<portlet:namespace />fm.<portlet:namespace />deleteGroupIds.value = siteIds;
+		submitForm(document.<portlet:namespace />fm, "<portlet:actionURL><portlet:param name="struts_action" value="/sites_admin/edit_site" /></portlet:actionURL>");
+	}
+
+	function <portlet:namespace />search() {
+		document.<portlet:namespace />fm.method = "get";
+		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "";
+		submitForm(document.<portlet:namespace />fm, '<%= portletURLString %>');
+	}
+
+	Liferay.provide(
+		window,
+		'<portlet:namespace />deleteSites',
+		function() {
+			var siteIds = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, "<portlet:namespace />allRowIds");
+
+			if (!siteIds) {
+				return;
+			}
+
+			<portlet:namespace />doDeleteSite(siteIds);
+		},
+		['liferay-util-list-fields']
+	);
+</aui:script>

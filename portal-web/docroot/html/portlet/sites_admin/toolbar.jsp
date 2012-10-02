@@ -17,16 +17,29 @@
 <%@ include file="/html/portlet/sites_admin/init.jsp" %>
 
 <%
-String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all");
+String sitesListView = ParamUtil.get(request, "sitesListView", SiteConstants.LIST_VIEW_TREE);
+String toolbarItem = ParamUtil.getString(request, "toolbarItem", "browse");
 %>
 
 <div class="lfr-portlet-toolbar">
-	<portlet:renderURL var="viewSitesURL">
+	<portlet:renderURL copyCurrentRenderParameters="<%= false %>" var="viewSitesTreeURL">
 		<portlet:param name="struts_action" value="/sites_admin/view" />
+		<portlet:param name="sitesListView" value="<%= SiteConstants.LIST_VIEW_TREE %>" />
+		<portlet:param name="toolbarItem" value="browse" />
 	</portlet:renderURL>
 
-	<span class="lfr-toolbar-button view-button <%= toolbarItem.equals("view-all") ? "current" : StringPool.BLANK %>">
-		<a href="<%= viewSitesURL %>"><liferay-ui:message key="view-all" /></a>
+	<span class="lfr-toolbar-button view-button <%= toolbarItem.equals("browse") ? "current" : StringPool.BLANK %>">
+		<a href="<%= viewSitesTreeURL %>"><liferay-ui:message key="browse" /></a>
+	</span>
+
+	<portlet:renderURL copyCurrentRenderParameters="<%= false %>" var="viewSitesFlatURL">
+		<portlet:param name="struts_action" value="/sites_admin/view" />
+		<portlet:param name="sitesListView" value="<%= SiteConstants.LIST_VIEW_FLAT_SITES %>" />
+		<portlet:param name="toolbarItem" value="view-all-sites" />
+	</portlet:renderURL>
+
+	<span class="lfr-toolbar-button view-button <%= toolbarItem.equals("view-all-sites") ? "current" : StringPool.BLANK %>">
+		<a href="<%= viewSitesFlatURL %>"><liferay-ui:message key="view-all" /></a>
 	</span>
 
 	<c:if test="<%= PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_COMMUNITY) %>">
@@ -34,6 +47,11 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all");
 		<%
 		List<LayoutSetPrototype> layoutSetPrototypes = LayoutSetPrototypeServiceUtil.search(company.getCompanyId(), Boolean.TRUE, null);
 		%>
+
+		<portlet:renderURL var="viewSitesURL">
+			<portlet:param name="struts_action" value="/sites_admin/view" />
+			<portlet:param name="sitesListView" value="<%= sitesListView %>" />
+		</portlet:renderURL>
 
 		<liferay-portlet:renderURL varImpl="addSiteURL">
 			<portlet:param name="struts_action" value="/sites_admin/edit_site" />

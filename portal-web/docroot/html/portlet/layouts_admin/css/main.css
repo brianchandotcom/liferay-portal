@@ -338,7 +338,36 @@
 
 	.site-membership-type {
 		font-weight: bold;
-		padding: 0 0 15px;
+		margin-bottom: 10px;
+	}
+
+	.membership-info, .description {
+		margin-bottom: 20px;
+	}
+
+	.membership-info {
+		margin-top: -1em;
+
+		.members-info {
+			padding-right: 10px;
+			border-right: 1px solid #999;
+		}
+
+		.taglib-icon, .membership-type {
+			margin-left: 10px;
+		}
+	}
+
+	.site-categorization {
+		margin-bottom: 20px;
+	}
+
+	.taglib-asset-categories-summary, .taglib-asset-tags-summary {
+		display: block;
+	}
+
+	.layout-set-info {
+		margin-bottom: 15px;
 	}
 }
 

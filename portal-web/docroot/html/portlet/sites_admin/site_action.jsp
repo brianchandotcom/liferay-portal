@@ -19,15 +19,38 @@
 <%
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
-Group group = (Group)row.getObject();
+Group group = null;
 
-boolean organizationUser = GetterUtil.getBoolean(row.getParameter("organizationUser"));
-boolean userGroupUser = GetterUtil.getBoolean(row.getParameter("userGroupUser"));
+boolean organizationUser = false;
+boolean userGroupUser = false;
+
+if (row != null) {
+	group = (Group)row.getObject();
+
+	organizationUser = GetterUtil.getBoolean(row.getParameter("organizationUser"));
+	userGroupUser = GetterUtil.getBoolean(row.getParameter("userGroupUser"));
+}
+else {
+	group = (Group)request.getAttribute("view_sites_tree.jsp-site");
+
+	GroupSearchTerms searchTerms = (GroupSearchTerms)request.getAttribute("view_sites_tree.jsp-searchTerms");
+
+	if (!group.isOrganization()) {
+		organizationUser = SitesUtil.isOrganizationUser(company.getCompanyId(), group, user, searchTerms, new ArrayList<String>());
+		userGroupUser = SitesUtil.isUserGroupUser(company.getCompanyId(), group, user, new ArrayList<String>());
+	}
+}
 
 boolean hasUpdatePermission = GroupPermissionUtil.contains(permissionChecker, group.getGroupId(), ActionKeys.UPDATE);
+
+boolean view = false;
+
+if (row == null) {
+	view = true;
+}
 %>
 
-<liferay-ui:icon-menu>
+<liferay-ui:icon-menu showExpanded="<%= view %>" showWhenSingleIcon="<%= view %>">
 	<c:if test="<%= hasUpdatePermission %>">
 		<liferay-portlet:renderURL doAsGroupId="<%= group.getGroupId() %>" portletName="<%= PortletKeys.SITE_SETTINGS %>" var="editURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />

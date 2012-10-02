@@ -25,13 +25,23 @@ public class SRq_AddPortletFriendsTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/socialrequestsn1/home/");
-		selenium.waitForVisible("link=Friends Test Page");
 		selenium.click(RuntimeVariables.replace("link=Friends Test Page"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("More\u2026"),
-			selenium.getText("//a[@id='_145_addApplication']"));
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+		assertEquals(RuntimeVariables.replace("Add"),
+			selenium.getText("//li[@id='_145_addContent']/a/span"));
+		selenium.mouseOver("//li[@id='_145_addContent']/a/span");
+		selenium.waitForVisible("//a[@id='_145_addApplication']");
 		selenium.clickAt("//a[@id='_145_addApplication']",
-			RuntimeVariables.replace("More\u2026"));
+			RuntimeVariables.replace("Add Application"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-live-search/aui-live-search-min.js')]");
+		selenium.waitForVisible("//input[@id='layout_configuration_content']");
+		selenium.sendKeys("//input[@id='layout_configuration_content']",
+			RuntimeVariables.replace("f"));
 		selenium.waitForElementPresent("//div[@title='Friends']/p/a");
 		selenium.clickAt("//div[@title='Friends']/p/a",
 			RuntimeVariables.replace("Add"));

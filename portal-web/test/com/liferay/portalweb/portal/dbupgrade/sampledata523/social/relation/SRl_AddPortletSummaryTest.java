@@ -25,13 +25,21 @@ public class SRl_AddPortletSummaryTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/socialrelationsn1/home/");
-		selenium.waitForVisible("link=Summary Test Page");
 		selenium.clickAt("link=Summary Test Page",
 			RuntimeVariables.replace("Summary Test Page"));
 		selenium.waitForPageToLoad("30000");
+		assertTrue(selenium.isPartialText("//h2[@class='user-greeting']/span",
+				"Welcome"));
+		selenium.mouseOver("//h2[@class='user-greeting']/span");
+		selenium.clickAt("//h2[@class='user-greeting']/span",
+			RuntimeVariables.replace("Welcome"));
+		selenium.waitForVisible("link=Add Application");
 		selenium.clickAt("link=Add Application",
 			RuntimeVariables.replace("Add Application"));
-		selenium.waitForElementPresent("//div[@title='Summary']/p/a");
+		selenium.waitForVisible("//input[@id='layout_configuration_content']");
+		selenium.sendKeys("//input[@id='layout_configuration_content']",
+			RuntimeVariables.replace("s"));
+		selenium.waitForVisible("//div[@title='Summary']/p/a");
 		selenium.clickAt("//div[@title='Summary']/p/a",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible("//td[1]/div/div[1]/div");

@@ -33,7 +33,9 @@ public class SRl_AddPageSummaryTest extends BaseTestCase {
 		selenium.waitForVisible("//input[@name='new_page']");
 		selenium.type("//input[@name='new_page']",
 			RuntimeVariables.replace("Summary Test Page"));
-		selenium.clickAt("link=Save", RuntimeVariables.replace("Save"));
+		selenium.waitForVisible("//a[@class='save-page']");
+		selenium.clickAt("//a[@class='save-page']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForVisible("link=Summary Test Page");
 		selenium.clickAt("link=Summary Test Page",
 			RuntimeVariables.replace("Summary Test Page"));

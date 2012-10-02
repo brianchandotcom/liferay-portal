@@ -14,26 +14,20 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Friends Test Page</td>
-	<td>Friends Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Friends Test Page</td>
 	<td>Friends Test Page</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[2]/div/div/div[1]</td>
+	<td>//div[@class='portlet-content-container']/div/div</td>
 	<td>You have 1 friends.</td>
 </tr>
 <tr>
 	<td>assertPartialText</td>
-	<td>//td[2]/div/a</td>
+	<td>//a[@class='user-name']</td>
 	<td>socialrelationfn2 socialrelationmn2 socialrelationln2</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

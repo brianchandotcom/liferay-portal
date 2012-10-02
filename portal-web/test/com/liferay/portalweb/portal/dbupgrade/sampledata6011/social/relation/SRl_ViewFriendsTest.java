@@ -25,7 +25,6 @@ public class SRl_ViewFriendsTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/socialrelationsn1/home/");
-		selenium.waitForVisible("link=Friends Test Page");
 		selenium.click(RuntimeVariables.replace("link=Friends Test Page"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("You have 1 friends."),

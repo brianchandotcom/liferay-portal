@@ -25,7 +25,14 @@ public class AddUserSRlPasswordTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent("link=Control Panel");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+		assertEquals(RuntimeVariables.replace("Manage"),
+			selenium.getText("//li[@id='_145_manageContent']/a/span"));
+		selenium.mouseOver("//li[@id='_145_manageContent']/a/span");
+		selenium.waitForVisible("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
@@ -41,8 +48,6 @@ public class AddUserSRlPasswordTest extends BaseTestCase {
 		selenium.clickAt("//td[2]/a",
 			RuntimeVariables.replace("socialrelationfn1"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isPartialText("//a[@id='_125_passwordLink']",
-				"Password"));
 		selenium.clickAt("//a[@id='_125_passwordLink']",
 			RuntimeVariables.replace("Password"));
 		selenium.waitForVisible("//input[@id='_125_password1']");

@@ -14,14 +14,29 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>clickAtAndWait</td>
 	<td>link=Requests Test Page</td>
 	<td>Requests Test Page</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>link=Requests Test Page</td>
-	<td>Requests Test Page</td>
+	<td>assertPartialText</td>
+	<td>//h2[@class='user-greeting']/span</td>
+	<td>Welcome</td>
+</tr>
+<tr>
+	<td>mouseOver</td>
+	<td>//h2[@class='user-greeting']/span</td>
+	<td>Welcome</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//h2[@class='user-greeting']/span</td>
+	<td>Welcome</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>link=Add Application</td>
+	<td>Add Application</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -29,7 +44,17 @@
 	<td>Add Application</td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
+	<td>//input[@id='layout_configuration_content']</td>
+	<td>Search applications (searches as you type).</td>
+</tr>
+<tr>
+	<td>sendKeys</td>
+	<td>//input[@id='layout_configuration_content']</td>
+	<td>r</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
 	<td>//div[@title='Requests']/p/a</td>
 	<td>Add</td>
 </tr>
@@ -39,16 +64,15 @@
 	<td>Add</td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>//td[1]/div/div[1]/div</td>
-	<td>Requests Portlet</td>
+	<td>Portlet</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
+	<td>assertVisible</td>
 	<td>//td[1]/div/div[1]/div</td>
-	<td>Requests Portlet</td>
+	<td>Portlet</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

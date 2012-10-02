@@ -33,7 +33,9 @@ public class SRl_AddPageRequestsTest extends BaseTestCase {
 		selenium.waitForVisible("//input[@name='new_page']");
 		selenium.type("//input[@name='new_page']",
 			RuntimeVariables.replace("Requests Test Page"));
-		selenium.clickAt("link=Save", RuntimeVariables.replace("Save"));
+		selenium.waitForVisible("//a[@class='save-page']");
+		selenium.clickAt("//a[@class='save-page']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForVisible("link=Requests Test Page");
 		selenium.clickAt("link=Requests Test Page",
 			RuntimeVariables.replace("Requests Test Page"));

@@ -25,15 +25,14 @@ public class SRq_ViewRequestsTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/socialrequestsn1/home/");
-		selenium.waitForVisible("link=Requests Test Page");
 		selenium.click(RuntimeVariables.replace("link=Requests Test Page"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"socialrequestfn2 socialrequestmn2 socialrequestln2 wants to be your friend."),
-			selenium.getText("//div/div/div/div[2]/div/div"));
+			selenium.getText("//div[@class='request-title']"));
 		assertEquals(RuntimeVariables.replace("Confirm"),
-			selenium.getText("//div[2]/div/ul/li/a/span"));
+			selenium.getText("//a/span[.='Confirm']"));
 		assertEquals(RuntimeVariables.replace("Ignore"),
-			selenium.getText("//div[2]/div/ul/li[2]/a/span"));
+			selenium.getText("//a/span[.='Ignore']"));
 	}
 }

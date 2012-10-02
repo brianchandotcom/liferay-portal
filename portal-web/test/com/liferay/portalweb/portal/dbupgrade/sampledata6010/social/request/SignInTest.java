@@ -48,7 +48,7 @@ public class SignInTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 
 				boolean iAgreePresent = selenium.isElementPresent(
-						"//span/input");
+						"//input[@value='I Agree']");
 
 				if (!iAgreePresent) {
 					label = 2;

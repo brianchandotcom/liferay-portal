@@ -25,15 +25,18 @@ public class SRl_ConfirmFriendRequestTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/socialrelationsn1/home/");
-		selenium.waitForVisible("link=Requests Test Page");
 		selenium.clickAt("link=Requests Test Page",
 			RuntimeVariables.replace("Requests Test Page"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"socialrelationfn2 socialrelationmn2 socialrelationln2"),
-			selenium.getText("//div/a[2]"));
-		selenium.clickAt("link=Confirm", RuntimeVariables.replace("Confirm"));
+			selenium.getText("//div/a[contains(.,'socialrelationfn2')]"));
+		assertEquals(RuntimeVariables.replace("Confirm"),
+			selenium.getText("//a[.='Confirm']"));
+		selenium.clickAt("//a[.='Confirm']", RuntimeVariables.replace("Confirm"));
 		selenium.waitForPageToLoad("30000");
-		assertFalse(selenium.isTextPresent("link=Confirm"));
+		assertFalse(selenium.isTextPresent("Confirm"));
+		assertFalse(selenium.isTextPresent(
+				"socialrelationfn2 socialrelationmn2 socialrelationln2"));
 	}
 }

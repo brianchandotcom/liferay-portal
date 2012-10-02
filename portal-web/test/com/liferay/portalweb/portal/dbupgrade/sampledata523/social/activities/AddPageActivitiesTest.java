@@ -30,9 +30,12 @@ public class AddPageActivitiesTest extends BaseTestCase {
 			selenium.getText("//div[@id='add-page']/a/span"));
 		selenium.clickAt("//div[@id='add-page']/a/span",
 			RuntimeVariables.replace("Add Page"));
-		selenium.waitForVisible("new_page");
-		selenium.type("new_page", RuntimeVariables.replace("Activities Page"));
-		selenium.clickAt("link=Save", RuntimeVariables.replace("Save"));
+		selenium.waitForVisible("//input[@name='new_page']");
+		selenium.type("//input[@name='new_page']",
+			RuntimeVariables.replace("Activities Page"));
+		selenium.waitForVisible("//a[@class='save-page']");
+		selenium.clickAt("//a[@class='save-page']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForElementPresent("link=Activities Page");
 		selenium.clickAt("link=Activities Page",
 			RuntimeVariables.replace("Activities Page"));

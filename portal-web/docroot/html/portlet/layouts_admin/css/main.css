@@ -361,6 +361,10 @@
 			display: inline;
 			margin: 0;
 		}
+
+		dt {
+			font-weight: bold;
+		}
 	}
 
 	.site-categorization {

@@ -60,27 +60,21 @@ plugins.includes=${plugins.includes}</echo>
 
 	<target name="deploy-versioned-simple-server-plugins">
 		<if>
-			<or>
-				<equals arg1="${lp.version}" arg2="5.2.3" />
-				<equals arg1="${lp.version}" arg2="5.2.4" />
-			</or>
+			<equals arg1="${lp.version}" arg2="6.1.1" />
 			<then>
-				<copy todir="${user.home}/liferay/deploy">
-					<fileset
-						dir="${hudson.plugin.dependencies.dir}/5.2.2"
-						includes="${plugins.includes}"
-					/>
-				</copy>
+				<property name="file.dir" value="6.1.1-ga2" />
 			</then>
 			<else>
-				<copy todir="${user.home}/liferay/deploy">
-					<fileset
-						dir="${hudson.plugin.dependencies.dir}/${lp.version}"
-						includes="${plugins.includes}"
-					/>
-				</copy>
+				<property name="file.dir" value="${lp.version}" />
 			</else>
 		</if>
+
+		<copy todir="${user.home}/liferay/deploy">
+			<fileset
+				dir="${hudson.plugin.dependencies.dir}/${file.dir}"
+				includes="${plugins.includes}"
+			/>
+		</copy>
 	</target>
 
 	<target name="deploy-websphere-6.1-plugins">

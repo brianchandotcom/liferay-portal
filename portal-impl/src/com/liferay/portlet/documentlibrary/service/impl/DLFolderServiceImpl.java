@@ -54,7 +54,7 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 
 		return dlFolderLocalService.addFolder(
 			getUserId(), groupId, repositoryId, mountPoint, parentFolderId,
-			name, description, serviceContext);
+			name, description, false, serviceContext);
 	}
 
 	public void deleteFolder(long folderId)

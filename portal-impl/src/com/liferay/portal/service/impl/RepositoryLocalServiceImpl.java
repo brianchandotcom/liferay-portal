@@ -105,7 +105,8 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated {@link #addRepository}
+	 * @deprecated {@link #addRepository(long, long, long, long, String, String,
+	 * 				String, UnicodeProperties, boolean, ServiceContext)}
 	 */
 	public long addRepository(
 			long userId, long groupId, long classNameId, long parentFolderId,

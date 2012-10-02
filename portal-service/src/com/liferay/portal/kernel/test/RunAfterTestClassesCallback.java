@@ -12,9 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.test;
-
-import java.lang.reflect.Method;
+package com.liferay.portal.kernel.test;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,16 +23,12 @@ import org.junit.runners.model.Statement;
 /**
  * @author Miguel Pastor
  */
-public class RunAfterTestMethodCallback extends AbstractStatementCallback {
+public class RunAfterTestClassesCallback extends AbstractStatementCallback {
 
-	public RunAfterTestMethodCallback(
-		Object instance, Method method, Statement statement,
-		TestContextHandler testContextHandler) {
+	public RunAfterTestClassesCallback(
+		Statement statement, TestContextHandler testContextHandler) {
 
 		super(statement, testContextHandler);
-
-		_instance = instance;
-		_method = method;
 	}
 
 	@Override
@@ -43,7 +37,7 @@ public class RunAfterTestMethodCallback extends AbstractStatementCallback {
 
 		Statement statement = getStatement();
 
-		if (statement != null) {
+		if ( statement != null) {
 			try {
 				statement.evaluate();
 			}
@@ -55,7 +49,7 @@ public class RunAfterTestMethodCallback extends AbstractStatementCallback {
 		try {
 			TestContextHandler testContextHandler = getTestContextHandler();
 
-			testContextHandler.runAfterTestMethod(_instance, _method);
+			testContextHandler.runAfterTestClasses();
 		}
 		catch (Exception e) {
 			throwables.add(e);
@@ -65,8 +59,5 @@ public class RunAfterTestMethodCallback extends AbstractStatementCallback {
 			throw new MultipleFailureException(throwables);
 		}
 	}
-
-	private Object _instance;
-	private Method _method;
 
 }

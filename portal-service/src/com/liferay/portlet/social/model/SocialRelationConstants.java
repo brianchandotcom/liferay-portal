@@ -23,6 +23,8 @@ public class SocialRelationConstants {
 	public static final int TYPE_BI_CONNECTION = 12;
 
 	public static final int TYPE_BI_COWORKER = 1;
+	
+	public static final int TYPE_BI_ENEMY = 9;
 
 	public static final int TYPE_BI_FRIEND = 2;
 
@@ -33,8 +35,6 @@ public class SocialRelationConstants {
 	public static final int TYPE_BI_SPOUSE = 5;
 
 	public static final int TYPE_UNI_CHILD = 6;
-
-	public static final int TYPE_UNI_ENEMY = 9;
 
 	public static final int TYPE_UNI_FOLLOWER = 8;
 
@@ -49,9 +49,9 @@ public class SocialRelationConstants {
 	}
 
 	public static boolean isTypeUni(int type) {
-		if ((type == TYPE_UNI_CHILD) || (type == TYPE_UNI_ENEMY) ||
-			(type == TYPE_UNI_FOLLOWER) || (type == TYPE_UNI_PARENT) ||
-			(type == TYPE_UNI_SUBORDINATE) || (type == TYPE_UNI_SUPERVISOR)) {
+		if ((type == TYPE_UNI_CHILD) || (type == TYPE_UNI_FOLLOWER) ||
+			(type == TYPE_UNI_PARENT) || (type == TYPE_UNI_SUBORDINATE) ||
+			(type == TYPE_UNI_SUPERVISOR)) {
 
 			return true;
 		}

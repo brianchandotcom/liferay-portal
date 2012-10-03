@@ -304,7 +304,7 @@
 						var portlets = instance._portletItems;
 
 						instance._dialogBody.delegate(
-							'mousedown',
+							'click',
 							function(event) {
 								var link = event.currentTarget;
 								var portlet = link.ancestor('.lfr-portlet-item');
@@ -360,7 +360,7 @@
 						}
 
 						instance._dialogBody.delegate(
-							'mousedown',
+							'click',
 							function(event) {
 								var heading = event.currentTarget.get('parentNode');
 								var category = heading.one('> .lfr-content-category');

@@ -79,7 +79,7 @@ if (!categories.isEmpty() || !portlets.isEmpty()) {
 			<span><%= Validator.isNotNull(externalPortletCategory) ? externalPortletCategory : LanguageUtil.get(pageContext, portletCategory.getName()) %></span>
 		</h2>
 
-		<div class="lfr-content-category <%= layout.isTypePortlet() ? "aui-helper-hidden" : "" %>">
+		<ul class="lfr-content-category <%= layout.isTypePortlet() ? "aui-helper-hidden" : "" %>">
 
 			<%
 			for (PortletCategory category : categories) {
@@ -121,7 +121,7 @@ if (!categories.isEmpty() || !portlets.isEmpty()) {
 
 				<c:choose>
 					<c:when test="<%= layout.isTypePortlet() %>">
-						<div
+						<li
 							class="lfr-portlet-item <c:if test="<%= portletLocked %>">lfr-portlet-used</c:if> <c:if test="<%= portletInstanceable %>">lfr-instanceable</c:if>"
 							id="<portlet:namespace />portletItem<%= portlet.getPortletId() %>"
 							instanceable="<%= portletInstanceable %>"
@@ -130,7 +130,7 @@ if (!categories.isEmpty() || !portlets.isEmpty()) {
 							title="<%= PortalUtil.getPortletTitle(portlet, application, locale) %>"
 						>
 							<p><%= PortalUtil.getPortletTitle(portlet, application, locale) %> <a href="javascript:;"><liferay-ui:message key="add" /></a></p>
-						</div>
+						</li>
 
 						<input id="<portlet:namespace />portletItem<%= portlet.getPortletId() %>CategoryPath" type="hidden" value="<%= divId.toString().replace(':', '-') %>" />
 
@@ -152,7 +152,7 @@ if (!categories.isEmpty() || !portlets.isEmpty()) {
 							}
 						%>
 
-							<div
+							<li
 								class="lfr-portlet-item lfr-archived-setup"
 								id="<portlet:namespace />portletItem<%= portletItem.getPortletItemId() %>"
 								instanceable="<%= portletInstanceable %>"
@@ -162,7 +162,7 @@ if (!categories.isEmpty() || !portlets.isEmpty()) {
 								title="<%= HtmlUtil.escape(portletItem.getName()) %>"
 							>
 								<p><%= HtmlUtil.escape(portletItem.getName()) %> <a href="javascript:;"><liferay-ui:message key="add" /></a></p>
-							</div>
+							</li>
 
 							<input id="<portlet:namespace />portletItem<%= portletItem.getPortletItemId() %>CategoryPath" type="hidden" value="<%= divId.toString().replace(':', '-') %>" />
 
@@ -182,7 +182,7 @@ if (!categories.isEmpty() || !portlets.isEmpty()) {
 			}
 			%>
 
-		</div>
+		</ul>
 	</div>
 
 	<input id="<portlet:namespace />portletCategory<%= portletCategoryIndex %>CategoryPath" type="hidden" value="<%= newCategoryPath.replace(':', '-') %>" />

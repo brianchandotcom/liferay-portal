@@ -26,17 +26,18 @@ public class AddWDFrontPageChildPageNameDuplicateTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Wiki Display Test Page");
 		selenium.clickAt("link=Wiki Display Test Page",
 			RuntimeVariables.replace("Wiki Display Test Page"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Add Child Page"),
-			selenium.getText("//div[1]/span[1]/a/span"));
-		selenium.clickAt("//div[1]/span[1]/a/span",
+			selenium.getText(
+				"//div[@class='article-actions']/span/a[contains(.,'Add Child Page')]"));
+		selenium.clickAt("//div[@class='article-actions']/span/a[contains(.,'Add Child Page')]",
 			RuntimeVariables.replace("Add Child Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[contains(@id,'_title')]",
 			RuntimeVariables.replace("Wiki FrontPage ChildPage Title"));
+		selenium.waitForVisible("//td[@class='cke_top']");
 		selenium.waitForElementPresent(
 			"//textarea[contains(@id,'_editor') and contains(@style,'display: none;')]");
 		assertEquals(RuntimeVariables.replace("Source"),
@@ -52,8 +53,7 @@ public class AddWDFrontPageChildPageNameDuplicateTest extends BaseTestCase {
 			selenium.getText("//span[.='Source']"));
 		selenium.clickAt("//span[.='Source']",
 			RuntimeVariables.replace("Source"));
-		selenium.waitForElementPresent(
-			"//textarea[contains(@id,'_editor') and contains(@style,'display: none;')]");
+		selenium.waitForVisible("//a[@class='cke_button_source cke_off']");
 		assertTrue(selenium.isVisible(
 				"//td[contains(@id,'cke_contents__54')]/iframe"));
 		selenium.selectFrame("//td[contains(@id,'cke_contents__54')]/iframe");
@@ -71,5 +71,13 @@ public class AddWDFrontPageChildPageNameDuplicateTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"This page does not exist yet. Use the form below to create it."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
+		selenium.open("/web/guest/home/");
+		selenium.clickAt("link=Wiki Display Test Page",
+			RuntimeVariables.replace("Wiki Display Test Page"));
+		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("Wiki FrontPage ChildPage Title"),
+			selenium.getText("xpath=(//div[@class='child-pages']/ul/li/a)[1]"));
+		assertTrue(selenium.isElementNotPresent(
+				"xpath=(//div[@class='child-pages']/ul/li/a)[2]"));
 	}
 }

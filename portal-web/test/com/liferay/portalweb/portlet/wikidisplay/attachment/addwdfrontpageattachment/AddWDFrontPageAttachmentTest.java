@@ -25,7 +25,6 @@ public class AddWDFrontPageAttachmentTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Wiki Display Test Page");
 		selenium.clickAt("link=Wiki Display Test Page",
 			RuntimeVariables.replace("Wiki Display Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -35,33 +34,26 @@ public class AddWDFrontPageAttachmentTest extends BaseTestCase {
 			RuntimeVariables.replace("0 Attachments"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
-				"This page does not have any file attachments."),
+				"This page does not have file attachments."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
 		selenium.clickAt("//input[@value='Add Attachments']",
 			RuntimeVariables.replace("Add Attachments"));
 		selenium.waitForPageToLoad("30000");
-		selenium.selectWindow("null");
 		Thread.sleep(5000);
-		selenium.windowFocus();
-		selenium.waitForVisible("//a[@class='use-fallback using-new-uploader']");
-		selenium.click("//a[@class='use-fallback using-new-uploader']");
-		selenium.waitForVisible("//fieldset/div/span[1]/span/span/input");
-		selenium.uploadCommonFile("//fieldset/div/span[1]/span/span/input",
+		selenium.waitForVisible("//input[@value='Select Files']");
+		selenium.clickAt("//input[@value='Select Files']",
+			RuntimeVariables.replace("Select Files"));
+		selenium.waitForVisible("//input[@type='file']");
+		selenium.uploadCommonFile("//input[@type='file']",
 			RuntimeVariables.replace("Document_1.jpg"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace(
-				"Your request completed successfully."),
-			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertEquals(RuntimeVariables.replace("Successfully saved."),
+			selenium.getText("//span[@class='success-message']"));
 		assertEquals(RuntimeVariables.replace("Document_1.jpg"),
-			selenium.getText("//td[1]/a"));
-		assertEquals(RuntimeVariables.replace("12.9k"),
-			selenium.getText("//td[2]/a"));
-		assertEquals(RuntimeVariables.replace("Showing 1 result."),
-			selenium.getText("//div[@class='search-results']/"));
+			selenium.getText("//span[@class='file-title']"));
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Wiki Display Test Page");
 		selenium.clickAt("link=Wiki Display Test Page",
 			RuntimeVariables.replace("Wiki Display Test Page"));
 		selenium.waitForPageToLoad("30000");

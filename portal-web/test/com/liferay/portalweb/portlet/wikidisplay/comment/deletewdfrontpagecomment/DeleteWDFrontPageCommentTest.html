@@ -14,28 +14,23 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Wiki Display Test Page</td>
-	<td>Wiki Display Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Wiki Display Test Page</td>
 	<td>Wiki Display Test Page</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div/div[3]/div/div[1]</td>
-	<td>Wiki Front Page Comment Body</td>
+	<td>//div[@class='lfr-discussion-message']</td>
+	<td>Wiki FrontPage Comment</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//li[contains(.,'Delete')]/span/a/span</td>
+	<td>//ul[@class='lfr-discussion-actions']/li/span/a[contains(.,'Delete')]</td>
 	<td>Delete</td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>//li[contains(.,'Delete')]/span/a/span</td>
+	<td>clickAt</td>
+	<td>//ul[@class='lfr-discussion-actions']/li/span/a[contains(.,'Delete')]</td>
 	<td>Delete</td>
 </tr>
 <tr>
@@ -55,10 +50,9 @@
 </tr>
 <tr>
 	<td>assertTextNotPresent</td>
-	<td>Wiki Front Page Comment Body</td>
+	<td>Wiki FrontPage Comment</td>
 	<td></td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

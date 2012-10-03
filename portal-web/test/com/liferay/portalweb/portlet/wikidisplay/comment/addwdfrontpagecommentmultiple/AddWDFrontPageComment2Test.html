@@ -14,34 +14,29 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Wiki Display Test Page</td>
-	<td>Wiki Display Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Wiki Display Test Page</td>
 	<td>Wiki Display Test Page</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//fieldset/div/span[1]/a/span</td>
+	<td>//fieldset[@class='aui-fieldset add-comment ']/div/span/a/span</td>
 	<td>Add Comment</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//fieldset/div/span[1]/a/span</td>
+	<td>//fieldset[@class='aui-fieldset add-comment ']/div/span/a/span</td>
 	<td>Add Comment</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
 	<td>//textarea</td>
-	<td>Comment (Required)</td>
+	<td>Comment</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>//textarea</td>
-	<td>Wiki Front Page Comment2 Body</td>
+	<td>Wiki FrontPage Comment2</td>
 </tr>
 <tr>
 	<td>click</td>
@@ -60,15 +55,14 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div/div[3]/div/div[1]</td>
-	<td>Wiki Front Page Comment1 Body</td>
+	<td>xpath=(//div[@class='lfr-discussion-message'])[1]</td>
+	<td>Wiki FrontPage Comment1</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[2]/div[3]/div/div[1]</td>
-	<td>Wiki Front Page Comment2 Body</td>
+	<td>xpath=(//div[@class='lfr-discussion-message'])[2]</td>
+	<td>Wiki FrontPage Comment2</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

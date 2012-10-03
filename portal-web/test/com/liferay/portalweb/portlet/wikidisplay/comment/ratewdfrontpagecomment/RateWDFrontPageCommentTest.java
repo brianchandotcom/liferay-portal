@@ -25,35 +25,28 @@ public class RateWDFrontPageCommentTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Wiki Display Test Page");
 		selenium.clickAt("link=Wiki Display Test Page",
 			RuntimeVariables.replace("Wiki Display Test Page"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("0 (0 Votes)"),
-			selenium.getText("//div[3]/div/div[2]/div/div/div/div"));
-		selenium.clickAt("//div[@class='taglib-ratings thumbs']/div/div/a[1]",
-			RuntimeVariables.replace("+1"));
-		selenium.waitForText("//div[3]/div/div[2]/div/div/div/div",
-			"+1 (1 Vote)");
-		assertEquals(RuntimeVariables.replace("+1 (1 Vote)"),
-			selenium.getText("//div[3]/div/div[2]/div/div/div/div"));
-		selenium.clickAt("//div[@class='taglib-ratings thumbs']/div/div/a[1]",
-			RuntimeVariables.replace("+1"));
-		selenium.waitForText("//div[3]/div/div[2]/div/div/div/div",
-			"0 (0 Votes)");
-		assertEquals(RuntimeVariables.replace("0 (0 Votes)"),
-			selenium.getText("//div[3]/div/div[2]/div/div/div/div"));
-		selenium.clickAt("//div[@class='taglib-ratings thumbs']/div/div/a[2]",
-			RuntimeVariables.replace("-1"));
-		selenium.waitForText("//div[3]/div/div[2]/div/div/div/div",
+			selenium.getText("//div[contains(@id,'ratingThumbContent')]/div"));
+		selenium.clickAt("//div[contains(@id,'ratingThumbContent')]/a[contains(@class,'thumb-down')]",
+			RuntimeVariables.replace("Thumb Down"));
+		selenium.waitForText("//div[contains(@id,'ratingThumbContent')]/div",
 			"-1 (1 Vote)");
 		assertEquals(RuntimeVariables.replace("-1 (1 Vote)"),
-			selenium.getText("//div[3]/div/div[2]/div/div/div/div"));
-		selenium.clickAt("//div[@class='taglib-ratings thumbs']/div/div/a[2]",
-			RuntimeVariables.replace("-1"));
-		selenium.waitForText("//div[3]/div/div[2]/div/div/div/div",
+			selenium.getText("//div[contains(@id,'ratingThumbContent')]/div"));
+		selenium.clickAt("//div[contains(@id,'ratingThumbContent')]/a[contains(@class,'thumb-down')]",
+			RuntimeVariables.replace("Thumb Down"));
+		selenium.waitForText("//div[contains(@id,'ratingThumbContent')]/div",
 			"0 (0 Votes)");
 		assertEquals(RuntimeVariables.replace("0 (0 Votes)"),
-			selenium.getText("//div[3]/div/div[2]/div/div/div/div"));
+			selenium.getText("//div[contains(@id,'ratingThumbContent')]/div"));
+		selenium.clickAt("//div[contains(@id,'ratingThumbContent')]/a[contains(@class,'thumb-up')]",
+			RuntimeVariables.replace("Thumb Up"));
+		selenium.waitForText("//div[contains(@id,'ratingThumbContent')]/div",
+			"+1 (1 Vote)");
+		assertEquals(RuntimeVariables.replace("+1 (1 Vote)"),
+			selenium.getText("//div[contains(@id,'ratingThumbContent')]/div"));
 	}
 }

@@ -14,23 +14,18 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Wiki Display Test Page</td>
-	<td>Wiki Display Test Page</td>
-</tr>
-<tr>
 	<td>clickAndWait</td>
 	<td>link=Wiki Display Test Page</td>
 	<td>Wiki Display Test Page</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[3]/span[2]/a/span</td>
+	<td>//div[@class='page-actions top-actions']/span/a[contains(.,'Details')]</td>
 	<td>Details</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div[3]/span[2]/a/span</td>
+	<td>//div[@class='page-actions top-actions']/span/a[contains(.,'Details')]</td>
 	<td>Details</td>
 </tr>
 <tr>
@@ -40,7 +35,7 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[4]/a</td>
+	<td>//tr[3]/td[4]/a</td>
 	<td>1.2</td>
 </tr>
 <tr>
@@ -54,9 +49,24 @@
 	<td>1.0 (Minor Edit)</td>
 </tr>
 <tr>
-	<td>check</td>
-	<td>//td[1]/input</td>
+	<td>assertNotChecked</td>
+	<td>//tr[3]/td[1]/input</td>
 	<td>1.2</td>
+</tr>
+<tr>
+	<td>check</td>
+	<td>//tr[3]/td[1]/input</td>
+	<td>1.2</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//tr[3]/td[1]/input</td>
+	<td>1.2</td>
+</tr>
+<tr>
+	<td>assertNotChecked</td>
+	<td>//tr[4]/td[1]/input</td>
+	<td>1.1</td>
 </tr>
 <tr>
 	<td>check</td>
@@ -64,9 +74,14 @@
 	<td>1.1</td>
 </tr>
 <tr>
-	<td>uncheck</td>
-	<td>//tr[5]/td[1]/input</td>
+	<td>assertChecked</td>
+	<td>//tr[4]/td[1]/input</td>
 	<td>1.1</td>
+</tr>
+<tr>
+	<td>assertNotChecked</td>
+	<td>//tr[5]/td[1]/input</td>
+	<td>1.1 (Minor Edit)</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -85,12 +100,17 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[3]/div/a</td>
+	<td>//span[@class='diff-html-added']</td>
+	<td>Edit</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//a[@class='change-mode']</td>
 	<td>Text Mode</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div[3]/div/a</td>
+	<td>//a[@class='change-mode']</td>
 	<td>Text Mode</td>
 </tr>
 <tr>
@@ -113,7 +133,6 @@
 	<td>xPath=(//table[@class='taglib-diff-table']/tbody/tr/td)[2]</td>
 	<td>Wiki FrontPage Content Edit</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

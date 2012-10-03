@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Wiki Display Test Page</td>
-	<td>Wiki Display Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Wiki Display Test Page</td>
 	<td>Wiki Display Test Page</td>
@@ -30,12 +25,12 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[3]/span[2]/a/span</td>
+	<td>//div[@class='page-actions top-actions']/span/a[contains(.,'Details')]</td>
 	<td>Details</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div[3]/span[2]/a/span</td>
+	<td>//div[@class='page-actions top-actions']/span/a[contains(.,'Details')]</td>
 	<td>Details</td>
 </tr>
 <tr>
@@ -44,28 +39,28 @@
 	<td>History</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//td[4]/a</td>
-	<td>1.2 (Minor Edit)</td>
-</tr>
-<tr>
 	<td>assertTextNotPresent</td>
 	<td>1.3</td>
 	<td></td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[8]/span/a/span</td>
+	<td>//tr[3]/td[4]/a</td>
+	<td>1.2 (Minor Edit)</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[4]/td[8]/span/a/span</td>
 	<td>Revert</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//td[8]/span/a/span</td>
+	<td>//tr[4]/td[8]/span/a/span</td>
 	<td>Revert</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[4]/a</td>
+	<td>//tr[3]/td[4]/a</td>
 	<td>1.3</td>
 </tr>
 <tr>
@@ -77,11 +72,6 @@
 	<td>open</td>
 	<td>/web/guest/home/</td>
 	<td></td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>link=Wiki Test Page</td>
-	<td>Wiki Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -100,12 +90,12 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[3]/span[2]/a/span</td>
+	<td>//div[@class='page-actions top-actions']/span/a[contains(.,'Details')]</td>
 	<td>Details</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div[3]/span[2]/a/span</td>
+	<td>//div[@class='page-actions top-actions']/span/a[contains(.,'Details')]</td>
 	<td>Details</td>
 </tr>
 <tr>
@@ -113,7 +103,6 @@
 	<td>Minor Edit</td>
 	<td></td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

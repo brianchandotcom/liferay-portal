@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Wiki Display Test Page</td>
-	<td>Wiki Display Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Wiki Display Test Page</td>
 	<td>Wiki Display Test Page</td>
@@ -30,13 +25,18 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//span[contains(.,'Edit')]/a/span</td>
+	<td>//div[@class='page-actions top-actions']/span/a[contains(.,'Edit')]</td>
 	<td>Edit</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//span[contains(.,'Edit')]/a/span</td>
+	<td>//div[@class='page-actions top-actions']/span/a[contains(.,'Edit')]</td>
 	<td>Edit</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//td[@class='cke_top']</td>
+	<td>CKE Toolbar</td>
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
@@ -104,16 +104,6 @@
 	<td>top</td>
 </tr>
 <tr>
-	<td>storeChecked</td>
-	<td>//input[contains(@id,'_minorEditCheckbox')]</td>
-	<td>minorEditChecked</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>${minorEditChecked}</td>
-	<td>MinorEditChecked</td>
-</tr>
-<tr>
 	<td>assertNotChecked</td>
 	<td>//input[contains(@id,'_minorEditCheckbox')]</td>
 	<td>This is a minor edit.</td>
@@ -122,11 +112,6 @@
 	<td>clickAt</td>
 	<td>//input[contains(@id,'_minorEditCheckbox')]</td>
 	<td>This is a minor edit.</td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>MinorEditChecked</td>
-	<td></td>
 </tr>
 <tr>
 	<td>assertChecked</td>
@@ -159,23 +144,18 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Wiki Display Test Page</td>
-	<td>Wiki Display Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Wiki Display Test Page</td>
 	<td>Wiki Display Test Page</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[3]/span[2]/a/span</td>
+	<td>//div[@class='page-actions top-actions']/span/a[contains(.,'Details')]</td>
 	<td>Details</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div[3]/span[2]/a/span</td>
+	<td>//div[@class='page-actions top-actions']/span/a[contains(.,'Details')]</td>
 	<td>Details</td>
 </tr>
 <tr>
@@ -185,7 +165,7 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[4]/a</td>
+	<td>//tr[3]/td[4]/a</td>
 	<td>1.2 (Minor Edit)</td>
 </tr>
 <tr>

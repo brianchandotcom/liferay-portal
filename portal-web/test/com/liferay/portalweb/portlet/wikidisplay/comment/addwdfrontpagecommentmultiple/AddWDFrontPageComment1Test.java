@@ -25,25 +25,25 @@ public class AddWDFrontPageComment1Test extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Wiki Display Test Page");
 		selenium.clickAt("link=Wiki Display Test Page",
 			RuntimeVariables.replace("Wiki Display Test Page"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Be the first."),
-			selenium.getText("//fieldset/div/a"));
-		selenium.clickAt("//fieldset/div/a",
+			selenium.getText("//fieldset[contains(@class,'add-comment')]/div/a"));
+		selenium.clickAt("//fieldset[contains(@class,'add-comment')]/div/a",
 			RuntimeVariables.replace("Be the first."));
 		selenium.waitForVisible("//textarea");
 		selenium.type("//textarea",
-			RuntimeVariables.replace("Wiki Front Page Comment1 Body"));
-		selenium.click("//input[@value='Reply']");
+			RuntimeVariables.replace("Wiki FrontPage Comment1"));
+		selenium.clickAt("//input[@value='Reply']",
+			RuntimeVariables.replace("Reply"));
 		selenium.waitForVisible(
 			"//div[@class='lfr-message-response portlet-msg-success']");
 		assertEquals(RuntimeVariables.replace(
 				"Your request processed successfully."),
 			selenium.getText(
 				"//div[@class='lfr-message-response portlet-msg-success']"));
-		assertEquals(RuntimeVariables.replace("Wiki Front Page Comment1 Body"),
-			selenium.getText("//div/div[3]/div/div[1]"));
+		assertEquals(RuntimeVariables.replace("Wiki FrontPage Comment1"),
+			selenium.getText("//div[@class='lfr-discussion-message']"));
 	}
 }

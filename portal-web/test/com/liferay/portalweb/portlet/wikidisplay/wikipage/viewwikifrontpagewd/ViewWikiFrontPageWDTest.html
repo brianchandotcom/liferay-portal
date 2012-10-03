@@ -20,27 +20,27 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='top-links-container']/div/ul/li[1]/span</td>
+	<td>//ul[@class='top-links-navigation']/li/span[contains(.,'FrontPage')]</td>
 	<td>FrontPage</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='top-links-container']/div/ul/li[2]/span</td>
+	<td>//ul[@class='top-links-navigation']/li/span[contains(.,'Recent Changes')]</td>
 	<td>Recent Changes</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='top-links-container']/div/ul/li[3]/span</td>
+	<td>//ul[@class='top-links-navigation']/li/span[contains(.,'All Pages')]</td>
 	<td>All Pages</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='top-links-container']/div/ul/li[4]/span</td>
+	<td>//ul[@class='top-links-navigation']/li/span[contains(.,'Orphan Pages')]</td>
 	<td>Orphan Pages</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='top-links-container']/div/ul/li[5]/span</td>
+	<td>//ul[@class='top-links-navigation']/li/span[contains(.,'Draft Pages')]</td>
 	<td>Draft Pages</td>
 </tr>
 <tr>
@@ -60,17 +60,17 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='page-actions top-actions']/span[1]/a</td>
+	<td>//div[@class='page-actions top-actions']/span/a[contains(.,'Edit')]</td>
 	<td>Edit</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='page-actions top-actions']/span[2]/a</td>
+	<td>//div[@class='page-actions top-actions']/span/a[contains(.,'Details')]</td>
 	<td>Details</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='page-actions top-actions']/span[3]/a</td>
+	<td>//div[@class='page-actions top-actions']/span/a[contains(.,'Print')]</td>
 	<td>Print</td>
 </tr>
 <tr>
@@ -80,32 +80,32 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='article-actions']/span[1]/a</td>
+	<td>//div[@class='article-actions']/span/a[contains(.,'Add Child Page')]</td>
 	<td>Add Child Page</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='article-actions']/span[2]/a</td>
+	<td>//div[@class='article-actions']/span/a[contains(.,'0 Attachments')]</td>
 	<td>0 Attachments</td>
 </tr>
 <tr>
-	<td>assertPartialText</td>
-	<td>//div[@class='stats']</td>
-	<td>Views</td>
+	<td>assertVisible</td>
+	<td>//div[@class='page-actions']/div[@class='stats']</td>
+	<td>Stats</td>
 </tr>
 <tr>
-	<td>assertVisible</td>
-	<td>//div[@class='page-ratings']/div/div[contains(@id,'ratingStar')]</td>
+	<td>assertPartialText</td>
+	<td>//div[contains(@id,'ratingStarContent')]</td>
 	<td>Your Rating</td>
 </tr>
 <tr>
-	<td>assertVisible</td>
-	<td>//div[@class='page-ratings']/div/div[contains(@id,'ratingScore')]</td>
-	<td>Average Rating</td>
+	<td>assertText</td>
+	<td>//div[contains(@id,'ratingScoreContent')]</td>
+	<td>Average (0 Votes)</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-panel-title']/span</td>
+	<td>//div[@id='wikiCommentsPanel']/div/div/span</td>
 	<td>Comments</td>
 </tr>
 <tr>
@@ -120,7 +120,7 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//fieldset[@class='aui-fieldset add-comment ']/div/span</td>
+	<td>//span[@class='subscribe-link']/a/span</td>
 	<td>Subscribe to Comments</td>
 </tr>
 </tbody></table>

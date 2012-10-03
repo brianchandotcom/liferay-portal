@@ -27,21 +27,23 @@ public class LinkWDFrontPageChildPageToWDFrontPageChildPageTest
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Wiki Display Test Page");
 		selenium.clickAt("link=Wiki Display Test Page",
 			RuntimeVariables.replace("Wiki Display Test Page"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Wiki FrontPage ChildPage2 Title"),
-			selenium.getText("xPath=(//div[@class='child-pages']/ul/li/a)[2]"));
-		selenium.clickAt("xPath=(//div[@class='child-pages']/ul/li/a)[2]",
+			selenium.getText(
+				"//div[@class='child-pages']/ul/li/a[contains(.,'Wiki FrontPage ChildPage2 Title')]"));
+		selenium.clickAt("//div[@class='child-pages']/ul/li/a[contains(.,'Wiki FrontPage ChildPage2 Title')]",
 			RuntimeVariables.replace("Wiki FrontPage ChildPage2 Title"));
 		selenium.waitForPageToLoad("30000");
-		assertFalse(selenium.isTextPresent("Wiki Front Page Child Page1 Title"));
+		assertFalse(selenium.isTextPresent("Wiki FrontPage Child Page1 Title"));
 		assertEquals(RuntimeVariables.replace("Edit"),
-			selenium.getText("//div[3]/span[1]/a/span"));
-		selenium.clickAt("//div[3]/span[1]/a/span",
+			selenium.getText(
+				"//div[@class='page-actions top-actions']/span/a[contains(.,'Edit')]"));
+		selenium.clickAt("//div[@class='page-actions top-actions']/span/a[contains(.,'Edit')]",
 			RuntimeVariables.replace("Edit"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForVisible("//td[@class='cke_top']");
 		selenium.waitForElementPresent(
 			"//textarea[contains(@id,'_editor') and contains(@style,'display: none;')]");
 		assertEquals(RuntimeVariables.replace("Source"),
@@ -76,15 +78,17 @@ public class LinkWDFrontPageChildPageToWDFrontPageChildPageTest
 		assertEquals(RuntimeVariables.replace("Wiki FrontPage ChildPage1 Title"),
 			selenium.getText("//div[@class='wiki-body']/p/a"));
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Wiki Display Test Page");
 		selenium.clickAt("link=Wiki Display Test Page",
 			RuntimeVariables.replace("Wiki Display Test Page"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Wiki FrontPage ChildPage2 Title"),
-			selenium.getText("xPath=(//div[@class='child-pages']/ul/li/a)[2]"));
-		selenium.clickAt("xPath=(//div[@class='child-pages']/ul/li/a)[2]",
+			selenium.getText(
+				"//div[@class='child-pages']/ul/li/a[contains(.,'Wiki FrontPage ChildPage2 Title')]"));
+		selenium.clickAt("//div[@class='child-pages']/ul/li/a[contains(.,'Wiki FrontPage ChildPage2 Title')]",
 			RuntimeVariables.replace("Wiki FrontPage ChildPage2 Title"));
 		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("Wiki FrontPage ChildPage1 Title"),
+			selenium.getText("//div[@class='wiki-body']/p/a"));
 		selenium.clickAt("//div[@class='wiki-body']/p/a",
 			RuntimeVariables.replace("Wiki FrontPage ChildPage1 Title"));
 		selenium.waitForPageToLoad("30000");

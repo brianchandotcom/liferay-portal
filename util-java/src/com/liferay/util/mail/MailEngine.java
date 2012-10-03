@@ -225,6 +225,9 @@ public class MailEngine {
 
 			Message message = new LiferayMimeMessage(session);
 
+			message.addHeader(
+				"X-Auto-Response-Suppress", "AutoReply, DR, NDR, NRN, OOF, RN");
+
 			message.setFrom(from);
 			message.setRecipients(Message.RecipientType.TO, to);
 

@@ -50,6 +50,7 @@ import java.io.InputStream;
 import java.util.List;
 
 import javax.mail.Message;
+import javax.mail.MessagingException;
 
 import org.apache.commons.lang.time.StopWatch;
 
@@ -62,6 +63,11 @@ public class MessageListenerImpl implements MessageListener {
 
 	public boolean accept(String from, String recipient, Message message) {
 		try {
+
+			if (isAutoReply(message)) {
+				return false;
+			}
+
 			String messageId = getMessageId(recipient, message);
 
 			if ((messageId == null) ||
@@ -325,6 +331,28 @@ public class MessageListenerImpl implements MessageListener {
 		}
 
 		return MBUtil.getParentMessageId(message);
+	}
+
+	protected boolean isAutoReply(Message message) throws MessagingException {
+		String[] autoReply = message.getHeader("X-Autoreply");
+
+		if ((autoReply != null) && (autoReply.length > 0)) {
+			return true;
+		}
+
+		String[] autoReplyFrom = message.getHeader("X-Autoreply-From");
+
+		if ((autoReplyFrom != null) && (autoReplyFrom.length > 0)) {
+			return true;
+		}
+
+		String[] mailAutoReply = message.getHeader("X-Mail-Autoreply");
+
+		if ((mailAutoReply != null) && (mailAutoReply.length > 0)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(MessageListenerImpl.class);

@@ -44,7 +44,6 @@ LayoutSet selLayoutSet = ((LayoutSet)request.getAttribute("edit_pages.jsp-selLay
 	</liferay-ui:error>
 
 	<liferay-ui:error exception="<%= ImageTypeException.class %>" message="please-enter-a-file-with-a-valid-file-type" />
-
 	<liferay-ui:error exception="<%= UploadException.class %>" message="an-unexpected-error-occurred-while-uploading-your-file" />
 
 	<aui:input name="useLogo" type="hidden" value="<%= selLayoutSet.isLogo() %>" />

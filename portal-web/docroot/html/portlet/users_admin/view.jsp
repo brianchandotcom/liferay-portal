@@ -23,6 +23,7 @@ String backURL = ParamUtil.getString(request, "backURL", viewUsersRedirect);
 int status = ParamUtil.getInteger(request, "status", WorkflowConstants.STATUS_APPROVED);
 
 String usersListView = ParamUtil.get(request, "usersListView", UserConstants.LIST_VIEW_TREE);
+String toolbarItem = ParamUtil.getString(request, "toolbarItem", "browse");
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
@@ -45,6 +46,7 @@ String portletURLString = portletURL.toString();
 	<liferay-portlet:renderURLParams varImpl="portletURL" />
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
 	<aui:input name="redirect" type="hidden" value="<%= portletURLString %>" />
+	<aui:input name="toolbarItem" type="hidden" value="<%= toolbarItem %>" />
 
 	<%
 	long organizationGroupId = 0;

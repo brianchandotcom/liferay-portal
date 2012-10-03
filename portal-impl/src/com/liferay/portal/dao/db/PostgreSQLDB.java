@@ -163,6 +163,13 @@ public class PostgreSQLDB extends BaseDB {
 						"using @old-column@::@type@;",
 					REWORD_TEMPLATE, template);
 			}
+			else if (line.startsWith(ALTER_TABLE_NAME)) {
+				String[] template = buildTableNameTokens(line);
+
+				line = StringUtil.replace(
+					"alter table @old-table@ rename to @new-table@;",
+					RENAME_TABLE_TEMPLATE, template);
+			}
 			else if (line.contains(DROP_INDEX)) {
 				String[] tokens = StringUtil.split(line, ' ');
 

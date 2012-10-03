@@ -19,7 +19,10 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.PortalPreferences;
 
-import java.io.Serializable;
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 
 /**
  * The cache model class for representing PortalPreferences in entity cache.
@@ -29,7 +32,7 @@ import java.io.Serializable;
  * @generated
  */
 public class PortalPreferencesCacheModel implements CacheModel<PortalPreferences>,
-	Serializable {
+	Externalizable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(9);
@@ -64,6 +67,32 @@ public class PortalPreferencesCacheModel implements CacheModel<PortalPreferences
 		portalPreferencesImpl.resetOriginalValues();
 
 		return portalPreferencesImpl;
+	}
+
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+		portalPreferencesId = objectInput.readLong();
+
+		ownerId = objectInput.readLong();
+
+		ownerType = objectInput.readInt();
+		preferences = objectInput.readUTF();
+	}
+
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
+		objectOutput.writeLong(portalPreferencesId);
+
+		objectOutput.writeLong(ownerId);
+
+		objectOutput.writeInt(ownerType);
+
+		if (preferences == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(preferences);
+		}
 	}
 
 	public long portalPreferencesId;

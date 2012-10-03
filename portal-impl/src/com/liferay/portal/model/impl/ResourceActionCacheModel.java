@@ -19,7 +19,10 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ResourceAction;
 
-import java.io.Serializable;
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 
 /**
  * The cache model class for representing ResourceAction in entity cache.
@@ -29,7 +32,7 @@ import java.io.Serializable;
  * @generated
  */
 public class ResourceActionCacheModel implements CacheModel<ResourceAction>,
-	Serializable {
+	Externalizable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(9);
@@ -71,6 +74,36 @@ public class ResourceActionCacheModel implements CacheModel<ResourceAction>,
 		resourceActionImpl.resetOriginalValues();
 
 		return resourceActionImpl;
+	}
+
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+		resourceActionId = objectInput.readLong();
+		name = objectInput.readUTF();
+		actionId = objectInput.readUTF();
+
+		bitwiseValue = objectInput.readLong();
+	}
+
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
+		objectOutput.writeLong(resourceActionId);
+
+		if (name == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(name);
+		}
+
+		if (actionId == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(actionId);
+		}
+
+		objectOutput.writeLong(bitwiseValue);
 	}
 
 	public long resourceActionId;

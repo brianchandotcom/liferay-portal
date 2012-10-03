@@ -19,7 +19,10 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.WorkflowDefinitionLink;
 
-import java.io.Serializable;
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 
 import java.util.Date;
 
@@ -31,7 +34,7 @@ import java.util.Date;
  * @generated
  */
 public class WorkflowDefinitionLinkCacheModel implements CacheModel<WorkflowDefinitionLink>,
-	Serializable {
+	Externalizable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(25);
@@ -110,6 +113,65 @@ public class WorkflowDefinitionLinkCacheModel implements CacheModel<WorkflowDefi
 		workflowDefinitionLinkImpl.resetOriginalValues();
 
 		return workflowDefinitionLinkImpl;
+	}
+
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+		workflowDefinitionLinkId = objectInput.readLong();
+
+		groupId = objectInput.readLong();
+
+		companyId = objectInput.readLong();
+
+		userId = objectInput.readLong();
+		userName = objectInput.readUTF();
+		createDate = objectInput.readLong();
+		modifiedDate = objectInput.readLong();
+
+		classNameId = objectInput.readLong();
+
+		classPK = objectInput.readLong();
+
+		typePK = objectInput.readLong();
+		workflowDefinitionName = objectInput.readUTF();
+
+		workflowDefinitionVersion = objectInput.readInt();
+	}
+
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
+		objectOutput.writeLong(workflowDefinitionLinkId);
+
+		objectOutput.writeLong(groupId);
+
+		objectOutput.writeLong(companyId);
+
+		objectOutput.writeLong(userId);
+
+		if (userName == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(userName);
+		}
+
+		objectOutput.writeLong(createDate);
+		objectOutput.writeLong(modifiedDate);
+
+		objectOutput.writeLong(classNameId);
+
+		objectOutput.writeLong(classPK);
+
+		objectOutput.writeLong(typePK);
+
+		if (workflowDefinitionName == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(workflowDefinitionName);
+		}
+
+		objectOutput.writeInt(workflowDefinitionVersion);
 	}
 
 	public long workflowDefinitionLinkId;

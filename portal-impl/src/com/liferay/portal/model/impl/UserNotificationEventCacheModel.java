@@ -19,7 +19,10 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.UserNotificationEvent;
 
-import java.io.Serializable;
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 
 /**
  * The cache model class for representing UserNotificationEvent in entity cache.
@@ -29,7 +32,7 @@ import java.io.Serializable;
  * @generated
  */
 public class UserNotificationEventCacheModel implements CacheModel<UserNotificationEvent>,
-	Serializable {
+	Externalizable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(19);
@@ -93,6 +96,61 @@ public class UserNotificationEventCacheModel implements CacheModel<UserNotificat
 		userNotificationEventImpl.resetOriginalValues();
 
 		return userNotificationEventImpl;
+	}
+
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+		uuid = objectInput.readUTF();
+
+		userNotificationEventId = objectInput.readLong();
+
+		companyId = objectInput.readLong();
+
+		userId = objectInput.readLong();
+		type = objectInput.readUTF();
+
+		timestamp = objectInput.readLong();
+
+		deliverBy = objectInput.readLong();
+		payload = objectInput.readUTF();
+
+		archived = objectInput.readBoolean();
+	}
+
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
+		if (uuid == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(uuid);
+		}
+
+		objectOutput.writeLong(userNotificationEventId);
+
+		objectOutput.writeLong(companyId);
+
+		objectOutput.writeLong(userId);
+
+		if (type == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(type);
+		}
+
+		objectOutput.writeLong(timestamp);
+
+		objectOutput.writeLong(deliverBy);
+
+		if (payload == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(payload);
+		}
+
+		objectOutput.writeBoolean(archived);
 	}
 
 	public String uuid;

@@ -20,7 +20,10 @@ import com.liferay.portal.model.CacheModel;
 
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion;
 
-import java.io.Serializable;
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 
 import java.util.Date;
 
@@ -32,7 +35,7 @@ import java.util.Date;
  * @generated
  */
 public class DDLRecordVersionCacheModel implements CacheModel<DDLRecordVersion>,
-	Serializable {
+	Externalizable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(31);
@@ -126,6 +129,82 @@ public class DDLRecordVersionCacheModel implements CacheModel<DDLRecordVersion>,
 		ddlRecordVersionImpl.resetOriginalValues();
 
 		return ddlRecordVersionImpl;
+	}
+
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+		recordVersionId = objectInput.readLong();
+
+		groupId = objectInput.readLong();
+
+		companyId = objectInput.readLong();
+
+		userId = objectInput.readLong();
+		userName = objectInput.readUTF();
+		createDate = objectInput.readLong();
+
+		DDMStorageId = objectInput.readLong();
+
+		recordSetId = objectInput.readLong();
+
+		recordId = objectInput.readLong();
+		version = objectInput.readUTF();
+
+		displayIndex = objectInput.readInt();
+
+		status = objectInput.readInt();
+
+		statusByUserId = objectInput.readLong();
+		statusByUserName = objectInput.readUTF();
+		statusDate = objectInput.readLong();
+	}
+
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
+		objectOutput.writeLong(recordVersionId);
+
+		objectOutput.writeLong(groupId);
+
+		objectOutput.writeLong(companyId);
+
+		objectOutput.writeLong(userId);
+
+		if (userName == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(userName);
+		}
+
+		objectOutput.writeLong(createDate);
+
+		objectOutput.writeLong(DDMStorageId);
+
+		objectOutput.writeLong(recordSetId);
+
+		objectOutput.writeLong(recordId);
+
+		if (version == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(version);
+		}
+
+		objectOutput.writeInt(displayIndex);
+
+		objectOutput.writeInt(status);
+
+		objectOutput.writeLong(statusByUserId);
+
+		if (statusByUserName == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(statusByUserName);
+		}
+
+		objectOutput.writeLong(statusDate);
 	}
 
 	public long recordVersionId;

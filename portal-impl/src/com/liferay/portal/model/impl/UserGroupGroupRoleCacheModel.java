@@ -18,7 +18,10 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.UserGroupGroupRole;
 
-import java.io.Serializable;
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 
 /**
  * The cache model class for representing UserGroupGroupRole in entity cache.
@@ -28,7 +31,7 @@ import java.io.Serializable;
  * @generated
  */
 public class UserGroupGroupRoleCacheModel implements CacheModel<UserGroupGroupRole>,
-	Serializable {
+	Externalizable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(7);
@@ -54,6 +57,24 @@ public class UserGroupGroupRoleCacheModel implements CacheModel<UserGroupGroupRo
 		userGroupGroupRoleImpl.resetOriginalValues();
 
 		return userGroupGroupRoleImpl;
+	}
+
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+		userGroupId = objectInput.readLong();
+
+		groupId = objectInput.readLong();
+
+		roleId = objectInput.readLong();
+	}
+
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
+		objectOutput.writeLong(userGroupId);
+
+		objectOutput.writeLong(groupId);
+
+		objectOutput.writeLong(roleId);
 	}
 
 	public long userGroupId;

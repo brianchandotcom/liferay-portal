@@ -18,7 +18,10 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.OrgLabor;
 
-import java.io.Serializable;
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 
 /**
  * The cache model class for representing OrgLabor in entity cache.
@@ -27,7 +30,7 @@ import java.io.Serializable;
  * @see OrgLabor
  * @generated
  */
-public class OrgLaborCacheModel implements CacheModel<OrgLabor>, Serializable {
+public class OrgLaborCacheModel implements CacheModel<OrgLabor>, Externalizable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(35);
@@ -95,6 +98,80 @@ public class OrgLaborCacheModel implements CacheModel<OrgLabor>, Serializable {
 		orgLaborImpl.resetOriginalValues();
 
 		return orgLaborImpl;
+	}
+
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+		orgLaborId = objectInput.readLong();
+
+		organizationId = objectInput.readLong();
+
+		typeId = objectInput.readInt();
+
+		sunOpen = objectInput.readInt();
+
+		sunClose = objectInput.readInt();
+
+		monOpen = objectInput.readInt();
+
+		monClose = objectInput.readInt();
+
+		tueOpen = objectInput.readInt();
+
+		tueClose = objectInput.readInt();
+
+		wedOpen = objectInput.readInt();
+
+		wedClose = objectInput.readInt();
+
+		thuOpen = objectInput.readInt();
+
+		thuClose = objectInput.readInt();
+
+		friOpen = objectInput.readInt();
+
+		friClose = objectInput.readInt();
+
+		satOpen = objectInput.readInt();
+
+		satClose = objectInput.readInt();
+	}
+
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
+		objectOutput.writeLong(orgLaborId);
+
+		objectOutput.writeLong(organizationId);
+
+		objectOutput.writeInt(typeId);
+
+		objectOutput.writeInt(sunOpen);
+
+		objectOutput.writeInt(sunClose);
+
+		objectOutput.writeInt(monOpen);
+
+		objectOutput.writeInt(monClose);
+
+		objectOutput.writeInt(tueOpen);
+
+		objectOutput.writeInt(tueClose);
+
+		objectOutput.writeInt(wedOpen);
+
+		objectOutput.writeInt(wedClose);
+
+		objectOutput.writeInt(thuOpen);
+
+		objectOutput.writeInt(thuClose);
+
+		objectOutput.writeInt(friOpen);
+
+		objectOutput.writeInt(friClose);
+
+		objectOutput.writeInt(satOpen);
+
+		objectOutput.writeInt(satClose);
 	}
 
 	public long orgLaborId;

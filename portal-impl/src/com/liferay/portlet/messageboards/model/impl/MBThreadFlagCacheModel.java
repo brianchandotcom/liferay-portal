@@ -19,7 +19,10 @@ import com.liferay.portal.model.CacheModel;
 
 import com.liferay.portlet.messageboards.model.MBThreadFlag;
 
-import java.io.Serializable;
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 
 import java.util.Date;
 
@@ -31,7 +34,7 @@ import java.util.Date;
  * @generated
  */
 public class MBThreadFlagCacheModel implements CacheModel<MBThreadFlag>,
-	Serializable {
+	Externalizable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(9);
@@ -67,6 +70,26 @@ public class MBThreadFlagCacheModel implements CacheModel<MBThreadFlag>,
 		mbThreadFlagImpl.resetOriginalValues();
 
 		return mbThreadFlagImpl;
+	}
+
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+		threadFlagId = objectInput.readLong();
+
+		userId = objectInput.readLong();
+		modifiedDate = objectInput.readLong();
+
+		threadId = objectInput.readLong();
+	}
+
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
+		objectOutput.writeLong(threadFlagId);
+
+		objectOutput.writeLong(userId);
+		objectOutput.writeLong(modifiedDate);
+
+		objectOutput.writeLong(threadId);
 	}
 
 	public long threadFlagId;

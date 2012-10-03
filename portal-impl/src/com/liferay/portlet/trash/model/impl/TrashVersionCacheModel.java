@@ -19,7 +19,10 @@ import com.liferay.portal.model.CacheModel;
 
 import com.liferay.portlet.trash.model.TrashVersion;
 
-import java.io.Serializable;
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 
 /**
  * The cache model class for representing TrashVersion in entity cache.
@@ -29,7 +32,7 @@ import java.io.Serializable;
  * @generated
  */
 public class TrashVersionCacheModel implements CacheModel<TrashVersion>,
-	Serializable {
+	Externalizable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(11);
@@ -61,6 +64,32 @@ public class TrashVersionCacheModel implements CacheModel<TrashVersion>,
 		trashVersionImpl.resetOriginalValues();
 
 		return trashVersionImpl;
+	}
+
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+		versionId = objectInput.readLong();
+
+		entryId = objectInput.readLong();
+
+		classNameId = objectInput.readLong();
+
+		classPK = objectInput.readLong();
+
+		status = objectInput.readInt();
+	}
+
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
+		objectOutput.writeLong(versionId);
+
+		objectOutput.writeLong(entryId);
+
+		objectOutput.writeLong(classNameId);
+
+		objectOutput.writeLong(classPK);
+
+		objectOutput.writeInt(status);
 	}
 
 	public long versionId;

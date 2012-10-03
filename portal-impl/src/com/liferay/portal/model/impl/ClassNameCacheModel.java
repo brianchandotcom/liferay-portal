@@ -19,7 +19,10 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ClassName;
 
-import java.io.Serializable;
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 
 /**
  * The cache model class for representing ClassName in entity cache.
@@ -28,7 +31,8 @@ import java.io.Serializable;
  * @see ClassName
  * @generated
  */
-public class ClassNameCacheModel implements CacheModel<ClassName>, Serializable {
+public class ClassNameCacheModel implements CacheModel<ClassName>,
+	Externalizable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(5);
@@ -57,6 +61,24 @@ public class ClassNameCacheModel implements CacheModel<ClassName>, Serializable 
 		classNameImpl.resetOriginalValues();
 
 		return classNameImpl;
+	}
+
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+		classNameId = objectInput.readLong();
+		value = objectInput.readUTF();
+	}
+
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
+		objectOutput.writeLong(classNameId);
+
+		if (value == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(value);
+		}
 	}
 
 	public long classNameId;

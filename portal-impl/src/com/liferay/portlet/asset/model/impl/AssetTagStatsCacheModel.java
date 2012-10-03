@@ -19,7 +19,10 @@ import com.liferay.portal.model.CacheModel;
 
 import com.liferay.portlet.asset.model.AssetTagStats;
 
-import java.io.Serializable;
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 
 /**
  * The cache model class for representing AssetTagStats in entity cache.
@@ -29,7 +32,7 @@ import java.io.Serializable;
  * @generated
  */
 public class AssetTagStatsCacheModel implements CacheModel<AssetTagStats>,
-	Serializable {
+	Externalizable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(9);
@@ -58,6 +61,28 @@ public class AssetTagStatsCacheModel implements CacheModel<AssetTagStats>,
 		assetTagStatsImpl.resetOriginalValues();
 
 		return assetTagStatsImpl;
+	}
+
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+		tagStatsId = objectInput.readLong();
+
+		tagId = objectInput.readLong();
+
+		classNameId = objectInput.readLong();
+
+		assetCount = objectInput.readInt();
+	}
+
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
+		objectOutput.writeLong(tagStatsId);
+
+		objectOutput.writeLong(tagId);
+
+		objectOutput.writeLong(classNameId);
+
+		objectOutput.writeInt(assetCount);
 	}
 
 	public long tagStatsId;

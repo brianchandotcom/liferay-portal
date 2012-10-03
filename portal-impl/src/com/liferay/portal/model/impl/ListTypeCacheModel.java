@@ -19,7 +19,10 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ListType;
 
-import java.io.Serializable;
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 
 /**
  * The cache model class for representing ListType in entity cache.
@@ -28,7 +31,7 @@ import java.io.Serializable;
  * @see ListType
  * @generated
  */
-public class ListTypeCacheModel implements CacheModel<ListType>, Serializable {
+public class ListTypeCacheModel implements CacheModel<ListType>, Externalizable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(7);
@@ -66,6 +69,32 @@ public class ListTypeCacheModel implements CacheModel<ListType>, Serializable {
 		listTypeImpl.resetOriginalValues();
 
 		return listTypeImpl;
+	}
+
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+		listTypeId = objectInput.readInt();
+		name = objectInput.readUTF();
+		type = objectInput.readUTF();
+	}
+
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
+		objectOutput.writeInt(listTypeId);
+
+		if (name == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(name);
+		}
+
+		if (type == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(type);
+		}
 	}
 
 	public int listTypeId;

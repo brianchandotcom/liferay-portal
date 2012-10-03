@@ -19,7 +19,10 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.Subscription;
 
-import java.io.Serializable;
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 
 import java.util.Date;
 
@@ -31,7 +34,7 @@ import java.util.Date;
  * @generated
  */
 public class SubscriptionCacheModel implements CacheModel<Subscription>,
-	Serializable {
+	Externalizable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(19);
@@ -100,6 +103,53 @@ public class SubscriptionCacheModel implements CacheModel<Subscription>,
 		subscriptionImpl.resetOriginalValues();
 
 		return subscriptionImpl;
+	}
+
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+		subscriptionId = objectInput.readLong();
+
+		companyId = objectInput.readLong();
+
+		userId = objectInput.readLong();
+		userName = objectInput.readUTF();
+		createDate = objectInput.readLong();
+		modifiedDate = objectInput.readLong();
+
+		classNameId = objectInput.readLong();
+
+		classPK = objectInput.readLong();
+		frequency = objectInput.readUTF();
+	}
+
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
+		objectOutput.writeLong(subscriptionId);
+
+		objectOutput.writeLong(companyId);
+
+		objectOutput.writeLong(userId);
+
+		if (userName == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(userName);
+		}
+
+		objectOutput.writeLong(createDate);
+		objectOutput.writeLong(modifiedDate);
+
+		objectOutput.writeLong(classNameId);
+
+		objectOutput.writeLong(classPK);
+
+		if (frequency == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(frequency);
+		}
 	}
 
 	public long subscriptionId;

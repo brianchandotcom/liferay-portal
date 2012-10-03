@@ -19,7 +19,10 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.Company;
 
-import java.io.Serializable;
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 
 /**
  * The cache model class for representing Company in entity cache.
@@ -28,7 +31,7 @@ import java.io.Serializable;
  * @see Company
  * @generated
  */
-public class CompanyCacheModel implements CacheModel<Company>, Serializable {
+public class CompanyCacheModel implements CacheModel<Company>, Externalizable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(21);
@@ -102,6 +105,72 @@ public class CompanyCacheModel implements CacheModel<Company>, Serializable {
 		companyImpl.setKeyObj(_keyObj);
 
 		return companyImpl;
+	}
+
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+		companyId = objectInput.readLong();
+
+		accountId = objectInput.readLong();
+		webId = objectInput.readUTF();
+		key = objectInput.readUTF();
+		mx = objectInput.readUTF();
+		homeURL = objectInput.readUTF();
+
+		logoId = objectInput.readLong();
+
+		system = objectInput.readBoolean();
+
+		maxUsers = objectInput.readInt();
+
+		active = objectInput.readBoolean();
+
+		_keyObj = (java.security.Key)objectInput.readObject();
+	}
+
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
+		objectOutput.writeLong(companyId);
+
+		objectOutput.writeLong(accountId);
+
+		if (webId == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(webId);
+		}
+
+		if (key == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(key);
+		}
+
+		if (mx == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(mx);
+		}
+
+		if (homeURL == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(homeURL);
+		}
+
+		objectOutput.writeLong(logoId);
+
+		objectOutput.writeBoolean(system);
+
+		objectOutput.writeInt(maxUsers);
+
+		objectOutput.writeBoolean(active);
+
+		objectOutput.writeObject(_keyObj);
 	}
 
 	public long companyId;

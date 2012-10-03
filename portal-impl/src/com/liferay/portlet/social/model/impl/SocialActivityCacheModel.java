@@ -20,7 +20,10 @@ import com.liferay.portal.model.CacheModel;
 
 import com.liferay.portlet.social.model.SocialActivity;
 
-import java.io.Serializable;
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 
 /**
  * The cache model class for representing SocialActivity in entity cache.
@@ -30,7 +33,7 @@ import java.io.Serializable;
  * @generated
  */
 public class SocialActivityCacheModel implements CacheModel<SocialActivity>,
-	Serializable {
+	Externalizable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(23);
@@ -87,6 +90,60 @@ public class SocialActivityCacheModel implements CacheModel<SocialActivity>,
 		socialActivityImpl.resetOriginalValues();
 
 		return socialActivityImpl;
+	}
+
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+		activityId = objectInput.readLong();
+
+		groupId = objectInput.readLong();
+
+		companyId = objectInput.readLong();
+
+		userId = objectInput.readLong();
+
+		createDate = objectInput.readLong();
+
+		mirrorActivityId = objectInput.readLong();
+
+		classNameId = objectInput.readLong();
+
+		classPK = objectInput.readLong();
+
+		type = objectInput.readInt();
+		extraData = objectInput.readUTF();
+
+		receiverUserId = objectInput.readLong();
+	}
+
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
+		objectOutput.writeLong(activityId);
+
+		objectOutput.writeLong(groupId);
+
+		objectOutput.writeLong(companyId);
+
+		objectOutput.writeLong(userId);
+
+		objectOutput.writeLong(createDate);
+
+		objectOutput.writeLong(mirrorActivityId);
+
+		objectOutput.writeLong(classNameId);
+
+		objectOutput.writeLong(classPK);
+
+		objectOutput.writeInt(type);
+
+		if (extraData == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(extraData);
+		}
+
+		objectOutput.writeLong(receiverUserId);
 	}
 
 	public long activityId;

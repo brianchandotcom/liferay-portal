@@ -20,7 +20,10 @@ import com.liferay.portal.model.CacheModel;
 
 import com.liferay.portlet.asset.model.AssetLink;
 
-import java.io.Serializable;
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 
 import java.util.Date;
 
@@ -31,7 +34,8 @@ import java.util.Date;
  * @see AssetLink
  * @generated
  */
-public class AssetLinkCacheModel implements CacheModel<AssetLink>, Serializable {
+public class AssetLinkCacheModel implements CacheModel<AssetLink>,
+	Externalizable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(19);
@@ -88,6 +92,51 @@ public class AssetLinkCacheModel implements CacheModel<AssetLink>, Serializable 
 		assetLinkImpl.resetOriginalValues();
 
 		return assetLinkImpl;
+	}
+
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+		linkId = objectInput.readLong();
+
+		companyId = objectInput.readLong();
+
+		userId = objectInput.readLong();
+		userName = objectInput.readUTF();
+		createDate = objectInput.readLong();
+
+		entryId1 = objectInput.readLong();
+
+		entryId2 = objectInput.readLong();
+
+		type = objectInput.readInt();
+
+		weight = objectInput.readInt();
+	}
+
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
+		objectOutput.writeLong(linkId);
+
+		objectOutput.writeLong(companyId);
+
+		objectOutput.writeLong(userId);
+
+		if (userName == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(userName);
+		}
+
+		objectOutput.writeLong(createDate);
+
+		objectOutput.writeLong(entryId1);
+
+		objectOutput.writeLong(entryId2);
+
+		objectOutput.writeInt(type);
+
+		objectOutput.writeInt(weight);
 	}
 
 	public long linkId;

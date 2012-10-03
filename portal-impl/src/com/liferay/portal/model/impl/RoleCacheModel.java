@@ -19,7 +19,10 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.Role;
 
-import java.io.Serializable;
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 
 /**
  * The cache model class for representing Role in entity cache.
@@ -28,7 +31,7 @@ import java.io.Serializable;
  * @see Role
  * @generated
  */
-public class RoleCacheModel implements CacheModel<Role>, Serializable {
+public class RoleCacheModel implements CacheModel<Role>, Externalizable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(19);
@@ -97,6 +100,64 @@ public class RoleCacheModel implements CacheModel<Role>, Serializable {
 		roleImpl.resetOriginalValues();
 
 		return roleImpl;
+	}
+
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+		roleId = objectInput.readLong();
+
+		companyId = objectInput.readLong();
+
+		classNameId = objectInput.readLong();
+
+		classPK = objectInput.readLong();
+		name = objectInput.readUTF();
+		title = objectInput.readUTF();
+		description = objectInput.readUTF();
+
+		type = objectInput.readInt();
+		subtype = objectInput.readUTF();
+	}
+
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
+		objectOutput.writeLong(roleId);
+
+		objectOutput.writeLong(companyId);
+
+		objectOutput.writeLong(classNameId);
+
+		objectOutput.writeLong(classPK);
+
+		if (name == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(name);
+		}
+
+		if (title == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(title);
+		}
+
+		if (description == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(description);
+		}
+
+		objectOutput.writeInt(type);
+
+		if (subtype == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(subtype);
+		}
 	}
 
 	public long roleId;

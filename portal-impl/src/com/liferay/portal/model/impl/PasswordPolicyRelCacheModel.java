@@ -18,7 +18,10 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.PasswordPolicyRel;
 
-import java.io.Serializable;
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 
 /**
  * The cache model class for representing PasswordPolicyRel in entity cache.
@@ -28,7 +31,7 @@ import java.io.Serializable;
  * @generated
  */
 public class PasswordPolicyRelCacheModel implements CacheModel<PasswordPolicyRel>,
-	Serializable {
+	Externalizable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(9);
@@ -57,6 +60,28 @@ public class PasswordPolicyRelCacheModel implements CacheModel<PasswordPolicyRel
 		passwordPolicyRelImpl.resetOriginalValues();
 
 		return passwordPolicyRelImpl;
+	}
+
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+		passwordPolicyRelId = objectInput.readLong();
+
+		passwordPolicyId = objectInput.readLong();
+
+		classNameId = objectInput.readLong();
+
+		classPK = objectInput.readLong();
+	}
+
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
+		objectOutput.writeLong(passwordPolicyRelId);
+
+		objectOutput.writeLong(passwordPolicyId);
+
+		objectOutput.writeLong(classNameId);
+
+		objectOutput.writeLong(classPK);
 	}
 
 	public long passwordPolicyRelId;

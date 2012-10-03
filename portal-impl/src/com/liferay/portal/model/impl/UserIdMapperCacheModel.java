@@ -19,7 +19,10 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.UserIdMapper;
 
-import java.io.Serializable;
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 
 /**
  * The cache model class for representing UserIdMapper in entity cache.
@@ -29,7 +32,7 @@ import java.io.Serializable;
  * @generated
  */
 public class UserIdMapperCacheModel implements CacheModel<UserIdMapper>,
-	Serializable {
+	Externalizable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(11);
@@ -79,6 +82,44 @@ public class UserIdMapperCacheModel implements CacheModel<UserIdMapper>,
 		userIdMapperImpl.resetOriginalValues();
 
 		return userIdMapperImpl;
+	}
+
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+		userIdMapperId = objectInput.readLong();
+
+		userId = objectInput.readLong();
+		type = objectInput.readUTF();
+		description = objectInput.readUTF();
+		externalUserId = objectInput.readUTF();
+	}
+
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
+		objectOutput.writeLong(userIdMapperId);
+
+		objectOutput.writeLong(userId);
+
+		if (type == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(type);
+		}
+
+		if (description == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(description);
+		}
+
+		if (externalUserId == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(externalUserId);
+		}
 	}
 
 	public long userIdMapperId;

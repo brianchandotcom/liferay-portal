@@ -20,7 +20,10 @@ import com.liferay.portal.model.CacheModel;
 
 import com.liferay.portlet.journal.model.JournalTemplate;
 
-import java.io.Serializable;
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 
 import java.util.Date;
 
@@ -32,7 +35,7 @@ import java.util.Date;
  * @generated
  */
 public class JournalTemplateCacheModel implements CacheModel<JournalTemplate>,
-	Serializable {
+	Externalizable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(37);
@@ -170,6 +173,118 @@ public class JournalTemplateCacheModel implements CacheModel<JournalTemplate>,
 		journalTemplateImpl.resetOriginalValues();
 
 		return journalTemplateImpl;
+	}
+
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+		uuid = objectInput.readUTF();
+
+		id = objectInput.readLong();
+
+		groupId = objectInput.readLong();
+
+		companyId = objectInput.readLong();
+
+		userId = objectInput.readLong();
+		userName = objectInput.readUTF();
+		createDate = objectInput.readLong();
+		modifiedDate = objectInput.readLong();
+		templateId = objectInput.readUTF();
+		structureId = objectInput.readUTF();
+		name = objectInput.readUTF();
+		description = objectInput.readUTF();
+		xsl = objectInput.readUTF();
+		langType = objectInput.readUTF();
+
+		cacheable = objectInput.readBoolean();
+
+		smallImage = objectInput.readBoolean();
+
+		smallImageId = objectInput.readLong();
+		smallImageURL = objectInput.readUTF();
+	}
+
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
+		if (uuid == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(uuid);
+		}
+
+		objectOutput.writeLong(id);
+
+		objectOutput.writeLong(groupId);
+
+		objectOutput.writeLong(companyId);
+
+		objectOutput.writeLong(userId);
+
+		if (userName == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(userName);
+		}
+
+		objectOutput.writeLong(createDate);
+		objectOutput.writeLong(modifiedDate);
+
+		if (templateId == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(templateId);
+		}
+
+		if (structureId == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(structureId);
+		}
+
+		if (name == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(name);
+		}
+
+		if (description == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(description);
+		}
+
+		if (xsl == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(xsl);
+		}
+
+		if (langType == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(langType);
+		}
+
+		objectOutput.writeBoolean(cacheable);
+
+		objectOutput.writeBoolean(smallImage);
+
+		objectOutput.writeLong(smallImageId);
+
+		if (smallImageURL == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(smallImageURL);
+		}
 	}
 
 	public String uuid;

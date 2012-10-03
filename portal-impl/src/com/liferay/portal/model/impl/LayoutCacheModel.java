@@ -19,7 +19,10 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.Layout;
 
-import java.io.Serializable;
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 
 import java.util.Date;
 
@@ -30,7 +33,7 @@ import java.util.Date;
  * @see Layout
  * @generated
  */
-public class LayoutCacheModel implements CacheModel<Layout>, Serializable {
+public class LayoutCacheModel implements CacheModel<Layout>, Externalizable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(59);
@@ -247,6 +250,189 @@ public class LayoutCacheModel implements CacheModel<Layout>, Serializable {
 		layoutImpl.resetOriginalValues();
 
 		return layoutImpl;
+	}
+
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+		uuid = objectInput.readUTF();
+
+		plid = objectInput.readLong();
+
+		groupId = objectInput.readLong();
+
+		companyId = objectInput.readLong();
+		createDate = objectInput.readLong();
+		modifiedDate = objectInput.readLong();
+
+		privateLayout = objectInput.readBoolean();
+
+		layoutId = objectInput.readLong();
+
+		parentLayoutId = objectInput.readLong();
+		name = objectInput.readUTF();
+		title = objectInput.readUTF();
+		description = objectInput.readUTF();
+		keywords = objectInput.readUTF();
+		robots = objectInput.readUTF();
+		type = objectInput.readUTF();
+		typeSettings = objectInput.readUTF();
+
+		hidden = objectInput.readBoolean();
+		friendlyURL = objectInput.readUTF();
+
+		iconImage = objectInput.readBoolean();
+
+		iconImageId = objectInput.readLong();
+		themeId = objectInput.readUTF();
+		colorSchemeId = objectInput.readUTF();
+		wapThemeId = objectInput.readUTF();
+		wapColorSchemeId = objectInput.readUTF();
+		css = objectInput.readUTF();
+
+		priority = objectInput.readInt();
+		layoutPrototypeUuid = objectInput.readUTF();
+
+		layoutPrototypeLinkEnabled = objectInput.readBoolean();
+		sourcePrototypeLayoutUuid = objectInput.readUTF();
+	}
+
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
+		if (uuid == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(uuid);
+		}
+
+		objectOutput.writeLong(plid);
+
+		objectOutput.writeLong(groupId);
+
+		objectOutput.writeLong(companyId);
+		objectOutput.writeLong(createDate);
+		objectOutput.writeLong(modifiedDate);
+
+		objectOutput.writeBoolean(privateLayout);
+
+		objectOutput.writeLong(layoutId);
+
+		objectOutput.writeLong(parentLayoutId);
+
+		if (name == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(name);
+		}
+
+		if (title == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(title);
+		}
+
+		if (description == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(description);
+		}
+
+		if (keywords == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(keywords);
+		}
+
+		if (robots == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(robots);
+		}
+
+		if (type == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(type);
+		}
+
+		if (typeSettings == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(typeSettings);
+		}
+
+		objectOutput.writeBoolean(hidden);
+
+		if (friendlyURL == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(friendlyURL);
+		}
+
+		objectOutput.writeBoolean(iconImage);
+
+		objectOutput.writeLong(iconImageId);
+
+		if (themeId == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(themeId);
+		}
+
+		if (colorSchemeId == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(colorSchemeId);
+		}
+
+		if (wapThemeId == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(wapThemeId);
+		}
+
+		if (wapColorSchemeId == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(wapColorSchemeId);
+		}
+
+		if (css == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(css);
+		}
+
+		objectOutput.writeInt(priority);
+
+		if (layoutPrototypeUuid == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(layoutPrototypeUuid);
+		}
+
+		objectOutput.writeBoolean(layoutPrototypeLinkEnabled);
+
+		if (sourcePrototypeLayoutUuid == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(sourcePrototypeLayoutUuid);
+		}
 	}
 
 	public String uuid;

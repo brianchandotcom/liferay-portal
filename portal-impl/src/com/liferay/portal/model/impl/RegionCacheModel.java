@@ -19,7 +19,10 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.Region;
 
-import java.io.Serializable;
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 
 /**
  * The cache model class for representing Region in entity cache.
@@ -28,7 +31,7 @@ import java.io.Serializable;
  * @see Region
  * @generated
  */
-public class RegionCacheModel implements CacheModel<Region>, Serializable {
+public class RegionCacheModel implements CacheModel<Region>, Externalizable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(11);
@@ -73,6 +76,40 @@ public class RegionCacheModel implements CacheModel<Region>, Serializable {
 		regionImpl.resetOriginalValues();
 
 		return regionImpl;
+	}
+
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+		regionId = objectInput.readLong();
+
+		countryId = objectInput.readLong();
+		regionCode = objectInput.readUTF();
+		name = objectInput.readUTF();
+
+		active = objectInput.readBoolean();
+	}
+
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
+		objectOutput.writeLong(regionId);
+
+		objectOutput.writeLong(countryId);
+
+		if (regionCode == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(regionCode);
+		}
+
+		if (name == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(name);
+		}
+
+		objectOutput.writeBoolean(active);
 	}
 
 	public long regionId;

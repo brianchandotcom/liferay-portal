@@ -20,7 +20,10 @@ import com.liferay.portal.model.CacheModel;
 
 import com.liferay.portlet.expando.model.ExpandoTable;
 
-import java.io.Serializable;
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 
 /**
  * The cache model class for representing ExpandoTable in entity cache.
@@ -30,7 +33,7 @@ import java.io.Serializable;
  * @generated
  */
 public class ExpandoTableCacheModel implements CacheModel<ExpandoTable>,
-	Serializable {
+	Externalizable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(9);
@@ -65,6 +68,32 @@ public class ExpandoTableCacheModel implements CacheModel<ExpandoTable>,
 		expandoTableImpl.resetOriginalValues();
 
 		return expandoTableImpl;
+	}
+
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+		tableId = objectInput.readLong();
+
+		companyId = objectInput.readLong();
+
+		classNameId = objectInput.readLong();
+		name = objectInput.readUTF();
+	}
+
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
+		objectOutput.writeLong(tableId);
+
+		objectOutput.writeLong(companyId);
+
+		objectOutput.writeLong(classNameId);
+
+		if (name == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(name);
+		}
 	}
 
 	public long tableId;

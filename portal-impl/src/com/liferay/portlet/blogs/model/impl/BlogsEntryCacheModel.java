@@ -20,7 +20,10 @@ import com.liferay.portal.model.CacheModel;
 
 import com.liferay.portlet.blogs.model.BlogsEntry;
 
-import java.io.Serializable;
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 
 import java.util.Date;
 
@@ -32,7 +35,7 @@ import java.util.Date;
  * @generated
  */
 public class BlogsEntryCacheModel implements CacheModel<BlogsEntry>,
-	Serializable {
+	Externalizable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(47);
@@ -199,6 +202,136 @@ public class BlogsEntryCacheModel implements CacheModel<BlogsEntry>,
 		blogsEntryImpl.resetOriginalValues();
 
 		return blogsEntryImpl;
+	}
+
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+		uuid = objectInput.readUTF();
+
+		entryId = objectInput.readLong();
+
+		groupId = objectInput.readLong();
+
+		companyId = objectInput.readLong();
+
+		userId = objectInput.readLong();
+		userName = objectInput.readUTF();
+		createDate = objectInput.readLong();
+		modifiedDate = objectInput.readLong();
+		title = objectInput.readUTF();
+		urlTitle = objectInput.readUTF();
+		description = objectInput.readUTF();
+		content = objectInput.readUTF();
+		displayDate = objectInput.readLong();
+
+		allowPingbacks = objectInput.readBoolean();
+
+		allowTrackbacks = objectInput.readBoolean();
+		trackbacks = objectInput.readUTF();
+
+		smallImage = objectInput.readBoolean();
+
+		smallImageId = objectInput.readLong();
+		smallImageURL = objectInput.readUTF();
+
+		status = objectInput.readInt();
+
+		statusByUserId = objectInput.readLong();
+		statusByUserName = objectInput.readUTF();
+		statusDate = objectInput.readLong();
+	}
+
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
+		if (uuid == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(uuid);
+		}
+
+		objectOutput.writeLong(entryId);
+
+		objectOutput.writeLong(groupId);
+
+		objectOutput.writeLong(companyId);
+
+		objectOutput.writeLong(userId);
+
+		if (userName == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(userName);
+		}
+
+		objectOutput.writeLong(createDate);
+		objectOutput.writeLong(modifiedDate);
+
+		if (title == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(title);
+		}
+
+		if (urlTitle == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(urlTitle);
+		}
+
+		if (description == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(description);
+		}
+
+		if (content == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(content);
+		}
+
+		objectOutput.writeLong(displayDate);
+
+		objectOutput.writeBoolean(allowPingbacks);
+
+		objectOutput.writeBoolean(allowTrackbacks);
+
+		if (trackbacks == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(trackbacks);
+		}
+
+		objectOutput.writeBoolean(smallImage);
+
+		objectOutput.writeLong(smallImageId);
+
+		if (smallImageURL == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(smallImageURL);
+		}
+
+		objectOutput.writeInt(status);
+
+		objectOutput.writeLong(statusByUserId);
+
+		if (statusByUserName == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(statusByUserName);
+		}
+
+		objectOutput.writeLong(statusDate);
 	}
 
 	public String uuid;

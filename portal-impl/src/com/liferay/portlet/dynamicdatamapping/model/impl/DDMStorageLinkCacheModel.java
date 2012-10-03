@@ -20,7 +20,10 @@ import com.liferay.portal.model.CacheModel;
 
 import com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink;
 
-import java.io.Serializable;
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 
 /**
  * The cache model class for representing DDMStorageLink in entity cache.
@@ -30,7 +33,7 @@ import java.io.Serializable;
  * @generated
  */
 public class DDMStorageLinkCacheModel implements CacheModel<DDMStorageLink>,
-	Serializable {
+	Externalizable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(11);
@@ -68,6 +71,37 @@ public class DDMStorageLinkCacheModel implements CacheModel<DDMStorageLink>,
 		ddmStorageLinkImpl.resetOriginalValues();
 
 		return ddmStorageLinkImpl;
+	}
+
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+		uuid = objectInput.readUTF();
+
+		storageLinkId = objectInput.readLong();
+
+		classNameId = objectInput.readLong();
+
+		classPK = objectInput.readLong();
+
+		structureId = objectInput.readLong();
+	}
+
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
+		if (uuid == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(uuid);
+		}
+
+		objectOutput.writeLong(storageLinkId);
+
+		objectOutput.writeLong(classNameId);
+
+		objectOutput.writeLong(classPK);
+
+		objectOutput.writeLong(structureId);
 	}
 
 	public String uuid;

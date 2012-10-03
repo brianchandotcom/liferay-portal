@@ -19,7 +19,10 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.LayoutSet;
 
-import java.io.Serializable;
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 
 import java.util.Date;
 
@@ -30,7 +33,8 @@ import java.util.Date;
  * @see LayoutSet
  * @generated
  */
-public class LayoutSetCacheModel implements CacheModel<LayoutSet>, Serializable {
+public class LayoutSetCacheModel implements CacheModel<LayoutSet>,
+	Externalizable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(35);
@@ -155,6 +159,104 @@ public class LayoutSetCacheModel implements CacheModel<LayoutSet>, Serializable 
 		layoutSetImpl.resetOriginalValues();
 
 		return layoutSetImpl;
+	}
+
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+		layoutSetId = objectInput.readLong();
+
+		groupId = objectInput.readLong();
+
+		companyId = objectInput.readLong();
+		createDate = objectInput.readLong();
+		modifiedDate = objectInput.readLong();
+
+		privateLayout = objectInput.readBoolean();
+
+		logo = objectInput.readBoolean();
+
+		logoId = objectInput.readLong();
+		themeId = objectInput.readUTF();
+		colorSchemeId = objectInput.readUTF();
+		wapThemeId = objectInput.readUTF();
+		wapColorSchemeId = objectInput.readUTF();
+		css = objectInput.readUTF();
+
+		pageCount = objectInput.readInt();
+		settings = objectInput.readUTF();
+		layoutSetPrototypeUuid = objectInput.readUTF();
+
+		layoutSetPrototypeLinkEnabled = objectInput.readBoolean();
+	}
+
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
+		objectOutput.writeLong(layoutSetId);
+
+		objectOutput.writeLong(groupId);
+
+		objectOutput.writeLong(companyId);
+		objectOutput.writeLong(createDate);
+		objectOutput.writeLong(modifiedDate);
+
+		objectOutput.writeBoolean(privateLayout);
+
+		objectOutput.writeBoolean(logo);
+
+		objectOutput.writeLong(logoId);
+
+		if (themeId == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(themeId);
+		}
+
+		if (colorSchemeId == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(colorSchemeId);
+		}
+
+		if (wapThemeId == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(wapThemeId);
+		}
+
+		if (wapColorSchemeId == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(wapColorSchemeId);
+		}
+
+		if (css == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(css);
+		}
+
+		objectOutput.writeInt(pageCount);
+
+		if (settings == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(settings);
+		}
+
+		if (layoutSetPrototypeUuid == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(layoutSetPrototypeUuid);
+		}
+
+		objectOutput.writeBoolean(layoutSetPrototypeLinkEnabled);
 	}
 
 	public long layoutSetId;

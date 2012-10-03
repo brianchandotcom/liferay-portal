@@ -19,7 +19,10 @@ import com.liferay.portal.model.CacheModel;
 
 import com.liferay.portlet.documentlibrary.model.DLFileRank;
 
-import java.io.Serializable;
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 
 import java.util.Date;
 
@@ -31,7 +34,7 @@ import java.util.Date;
  * @generated
  */
 public class DLFileRankCacheModel implements CacheModel<DLFileRank>,
-	Serializable {
+	Externalizable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(15);
@@ -76,6 +79,38 @@ public class DLFileRankCacheModel implements CacheModel<DLFileRank>,
 		dlFileRankImpl.resetOriginalValues();
 
 		return dlFileRankImpl;
+	}
+
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+		fileRankId = objectInput.readLong();
+
+		groupId = objectInput.readLong();
+
+		companyId = objectInput.readLong();
+
+		userId = objectInput.readLong();
+		createDate = objectInput.readLong();
+
+		fileEntryId = objectInput.readLong();
+
+		active = objectInput.readBoolean();
+	}
+
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
+		objectOutput.writeLong(fileRankId);
+
+		objectOutput.writeLong(groupId);
+
+		objectOutput.writeLong(companyId);
+
+		objectOutput.writeLong(userId);
+		objectOutput.writeLong(createDate);
+
+		objectOutput.writeLong(fileEntryId);
+
+		objectOutput.writeBoolean(active);
 	}
 
 	public long fileRankId;

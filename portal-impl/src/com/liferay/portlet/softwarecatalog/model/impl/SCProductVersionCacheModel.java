@@ -20,7 +20,10 @@ import com.liferay.portal.model.CacheModel;
 
 import com.liferay.portlet.softwarecatalog.model.SCProductVersion;
 
-import java.io.Serializable;
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 
 import java.util.Date;
 
@@ -32,7 +35,7 @@ import java.util.Date;
  * @generated
  */
 public class SCProductVersionCacheModel implements CacheModel<SCProductVersion>,
-	Serializable {
+	Externalizable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(25);
@@ -129,6 +132,77 @@ public class SCProductVersionCacheModel implements CacheModel<SCProductVersion>,
 		scProductVersionImpl.resetOriginalValues();
 
 		return scProductVersionImpl;
+	}
+
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+		productVersionId = objectInput.readLong();
+
+		companyId = objectInput.readLong();
+
+		userId = objectInput.readLong();
+		userName = objectInput.readUTF();
+		createDate = objectInput.readLong();
+		modifiedDate = objectInput.readLong();
+
+		productEntryId = objectInput.readLong();
+		version = objectInput.readUTF();
+		changeLog = objectInput.readUTF();
+		downloadPageURL = objectInput.readUTF();
+		directDownloadURL = objectInput.readUTF();
+
+		repoStoreArtifact = objectInput.readBoolean();
+	}
+
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
+		objectOutput.writeLong(productVersionId);
+
+		objectOutput.writeLong(companyId);
+
+		objectOutput.writeLong(userId);
+
+		if (userName == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(userName);
+		}
+
+		objectOutput.writeLong(createDate);
+		objectOutput.writeLong(modifiedDate);
+
+		objectOutput.writeLong(productEntryId);
+
+		if (version == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(version);
+		}
+
+		if (changeLog == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(changeLog);
+		}
+
+		if (downloadPageURL == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(downloadPageURL);
+		}
+
+		if (directDownloadURL == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(directDownloadURL);
+		}
+
+		objectOutput.writeBoolean(repoStoreArtifact);
 	}
 
 	public long productVersionId;

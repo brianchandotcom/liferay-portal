@@ -19,7 +19,10 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ServiceComponent;
 
-import java.io.Serializable;
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 
 /**
  * The cache model class for representing ServiceComponent in entity cache.
@@ -29,7 +32,7 @@ import java.io.Serializable;
  * @generated
  */
 public class ServiceComponentCacheModel implements CacheModel<ServiceComponent>,
-	Serializable {
+	Externalizable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(11);
@@ -74,6 +77,40 @@ public class ServiceComponentCacheModel implements CacheModel<ServiceComponent>,
 		serviceComponentImpl.resetOriginalValues();
 
 		return serviceComponentImpl;
+	}
+
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+		serviceComponentId = objectInput.readLong();
+		buildNamespace = objectInput.readUTF();
+
+		buildNumber = objectInput.readLong();
+
+		buildDate = objectInput.readLong();
+		data = objectInput.readUTF();
+	}
+
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
+		objectOutput.writeLong(serviceComponentId);
+
+		if (buildNamespace == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(buildNamespace);
+		}
+
+		objectOutput.writeLong(buildNumber);
+
+		objectOutput.writeLong(buildDate);
+
+		if (data == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(data);
+		}
 	}
 
 	public long serviceComponentId;

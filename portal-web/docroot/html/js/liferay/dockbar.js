@@ -565,7 +565,7 @@ AUI.add(
 								if (event.newVal) {
 									var menuBoundingBox = mySitesMenu.get('boundingBox');
 
-									if (menuBoundingBox.get('clientHeight') > 300) {
+									if (menuBoundingBox.height() > 300) {
 										menuBoundingBox.addClass('aui-menu-scroll');
 									}
 								}

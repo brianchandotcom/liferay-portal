@@ -348,15 +348,14 @@
 	.membership-info {
 		margin-top: -1em;
 
-		.members-info {
-			padding-right: 10px;
-			border-right: 1px solid #999;
+		.members-info a {
+			padding-right: 5px;
 		}
 
-		.taglib-icon, .membership-type, .requests-pending {
-			margin-left: 10px;
+		.membership-requests {
+			padding-left: 10px;
 		}
-		
+
 		dl, dt, dd {
 			display: inline;
 			margin: 0;
@@ -364,6 +363,20 @@
 
 		dt {
 			font-weight: bold;
+			margin-left: 10px;
+
+			&.first {
+				margin-left: 0;
+			}
+		}
+
+		dd {
+			border-right: 1px solid #999;
+			padding-right: 10px;
+
+			&.last {
+				border-width: 0;
+			}
 		}
 	}
 

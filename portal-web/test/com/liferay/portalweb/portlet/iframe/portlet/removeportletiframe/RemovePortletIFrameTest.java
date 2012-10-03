@@ -25,7 +25,6 @@ public class RemovePortletIFrameTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=IFrame Test Page");
 		selenium.clickAt("link=IFrame Test Page",
 			RuntimeVariables.replace("IFrame Test Page"));
 		selenium.waitForPageToLoad("30000");

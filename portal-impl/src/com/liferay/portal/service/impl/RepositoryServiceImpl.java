@@ -49,7 +49,8 @@ public class RepositoryServiceImpl extends RepositoryServiceBaseImpl {
 
 		return repositoryLocalService.addRepository(
 			getUserId(), groupId, classNameId, parentFolderId, name,
-			description, portletId, typeSettingsProperties, serviceContext);
+			description, portletId, typeSettingsProperties, false,
+			serviceContext);
 	}
 
 	public void checkRepository(long repositoryId)

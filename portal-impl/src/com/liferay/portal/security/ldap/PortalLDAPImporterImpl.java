@@ -1089,28 +1089,66 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 
 		Contact contact = user.getContact();
 
-		ldapContact.setAimSn(GetterUtil.getString(contact.getAimSn()));
+		ldapContact.setAimSn(
+			GetterUtil.getString(
+				ldapContact.getAimSn(), contact.getAimSn(), false));
 		ldapContact.setFacebookSn(
-			GetterUtil.getString(contact.getFacebookSn()));
-		ldapContact.setIcqSn(GetterUtil.getString(contact.getIcqSn()));
-		ldapContact.setJabberSn(GetterUtil.getString(contact.getJabberSn()));
-		ldapContact.setMale(GetterUtil.getBoolean(contact.getMale()));
-		ldapContact.setMsnSn(GetterUtil.getString(contact.getMsnSn()));
-		ldapContact.setMySpaceSn(GetterUtil.getString(contact.getMySpaceSn()));
-		ldapContact.setPrefixId(GetterUtil.getInteger(contact.getPrefixId()));
-		ldapContact.setSkypeSn(GetterUtil.getString(contact.getSkypeSn()));
-		ldapContact.setSmsSn(GetterUtil.getString(contact.getSmsSn()));
-		ldapContact.setSuffixId(GetterUtil.getInteger(contact.getSuffixId()));
-		ldapContact.setTwitterSn(GetterUtil.getString(contact.getTwitterSn()));
-		ldapContact.setYmSn(GetterUtil.getString(contact.getYmSn()));
+			GetterUtil.getString(
+				ldapContact.getFacebookSn(), contact.getFacebookSn(), false));
+		ldapContact.setIcqSn(
+			GetterUtil.getString(
+				ldapContact.getIcqSn(), contact.getIcqSn(), false));
+		ldapContact.setJabberSn(
+			GetterUtil.getString(
+				ldapContact.getJabberSn(), contact.getJabberSn(), false));
+		ldapContact.setMale(
+			GetterUtil.getBoolean(ldapContact.getMale(), contact.getMale()));
+		ldapContact.setMsnSn(
+			GetterUtil.getString(
+				ldapContact.getMsnSn(), contact.getMsnSn(), false));
+		ldapContact.setMySpaceSn(
+			GetterUtil.getString(
+				ldapContact.getMySpaceSn(), contact.getMySpaceSn(), false));
+		ldapContact.setPrefixId(
+			GetterUtil.getInteger(
+				ldapContact.getPrefixId(), contact.getPrefixId()));
+		ldapContact.setSkypeSn(
+			GetterUtil.getString(
+				ldapContact.getSkypeSn(), contact.getSkypeSn(), false));
+		ldapContact.setSmsSn(
+			GetterUtil.getString(
+				ldapContact.getSmsSn(), contact.getSmsSn(), false));
+		ldapContact.setSuffixId(
+			GetterUtil.getInteger(
+				ldapContact.getSuffixId(), contact.getSuffixId()));
+		ldapContact.setTwitterSn(
+			GetterUtil.getString(
+				ldapContact.getTwitterSn(), contact.getTwitterSn(), false));
+		ldapContact.setYmSn(
+			GetterUtil.getString(
+				ldapContact.getYmSn(), contact.getYmSn(), false));
 
-		ldapUser.setComments(GetterUtil.getString(user.getComments()));
-		ldapUser.setGreeting(GetterUtil.getString(user.getGreeting()));
-		ldapUser.setJobTitle(GetterUtil.getString(user.getJobTitle()));
-		ldapUser.setLanguageId(GetterUtil.getString(user.getLanguageId()));
-		ldapUser.setMiddleName(GetterUtil.getString(user.getMiddleName()));
-		ldapUser.setOpenId(GetterUtil.getString(user.getOpenId()));
-		ldapUser.setTimeZoneId(GetterUtil.getString(user.getTimeZoneId()));
+		ldapUser.setComments(
+			GetterUtil.getString(
+				ldapUser.getComments(), user.getComments(), false));
+		ldapUser.setGreeting(
+			GetterUtil.getString(
+				ldapUser.getGreeting(), user.getGreeting(), false));
+		ldapUser.setJobTitle(
+			GetterUtil.getString(
+				ldapUser.getJobTitle(), user.getJobTitle(), false));
+		ldapUser.setLanguageId(
+			GetterUtil.getString(
+				ldapUser.getLanguageId(), user.getLanguageId(), false));
+		ldapUser.setMiddleName(
+			GetterUtil.getString(
+				ldapUser.getMiddleName(), user.getMiddleName(), false));
+		ldapUser.setOpenId(
+			GetterUtil.getString(
+				ldapUser.getOpenId(), user.getOpenId(), false));
+		ldapUser.setTimeZoneId(
+			GetterUtil.getString(
+				ldapUser.getTimeZoneId(), user.getTimeZoneId(), false));
 	}
 
 	protected User updateUser(

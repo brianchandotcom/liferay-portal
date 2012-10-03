@@ -88,6 +88,13 @@ public class SAPDB extends BaseDB {
 					"alter table @table@ modify @old-column@ @type@;",
 					REWORD_TEMPLATE, template);
 			}
+			else if (line.startsWith(ALTER_TABLE_NAME)) {
+				String[] template = buildTableNameTokens(line);
+
+				line = StringUtil.replace(
+					"alter table @old-table@ to @new-table@;",
+					RENAME_TABLE_TEMPLATE, template);
+			}
 
 			sb.append(line);
 			sb.append("\n");

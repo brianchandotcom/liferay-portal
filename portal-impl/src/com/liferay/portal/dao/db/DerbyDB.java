@@ -122,6 +122,13 @@ public class DerbyDB extends BaseDB {
 						"This statement is not supported by Derby: " + line);
 				}
 			}
+			else if (line.startsWith(ALTER_TABLE_NAME)) {
+				String[] template = buildTableNameTokens(line);
+
+				line = StringUtil.replace(
+					"alter table @old-table@ to @new-table@;",
+					RENAME_TABLE_TEMPLATE, template);
+			}
 			else if (line.contains(DROP_INDEX)) {
 				String[] tokens = StringUtil.split(line, ' ');
 

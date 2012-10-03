@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 
 import java.util.Locale;
@@ -44,6 +45,11 @@ public class BlogsPortletDisplayTemplateHandler
 
 	public String getResourceName() {
 		return "com.liferay.portlet.blogs";
+	}
+
+	@Override
+	protected String getTemplatesConfigPath() {
+		return PropsValues.BLOGS_DISPLAY_TEMPLATES_CONFIG;
 	}
 
 	@Override

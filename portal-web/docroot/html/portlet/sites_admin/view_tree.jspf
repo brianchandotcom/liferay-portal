@@ -50,7 +50,7 @@ if ((group != null) && !group.isRoot()) {
 </c:if>
 
 <aui:layout>
-	<liferay-util:buffer var="sitesTree">
+	<aui:column columnWidth="<%= (group != null) ? 75 : 100 %>" cssClass="lfr-asset-column lfr-asset-column-details" first="<%= true %>">
 		<c:if test="<%= group != null %>">
 			<%@ include file="/html/portlet/sites_admin/view_site_info.jspf" %>
 
@@ -153,11 +153,6 @@ if ((group != null) && !group.isRoot()) {
 
 			<liferay-ui:search-iterator />
 		</liferay-ui:search-container>
-	</liferay-util:buffer>
-
-	<aui:column columnWidth="<%= (group != null) ? 75 : 100 %>" cssClass="lfr-asset-column lfr-asset-column-details" first="<%= true %>">
-
-		<%= sitesTree %>
 
 		<aui:input name="deleteGroupIds" type="hidden" />
 		<aui:input disabled="<%= true %>" name="sitesRedirect" type="hidden" value="<%= portletURL.toString() %>" />

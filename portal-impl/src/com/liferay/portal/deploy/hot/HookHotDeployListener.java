@@ -234,7 +234,7 @@ public class HookHotDeployListener
 		"portlet.add.default.resource.check.enabled",
 		"portlet.add.default.resource.check.whitelist",
 		"portlet.add.default.resource.check.whitelist.actions",
-		"portal.authentication.verifier.pipeline", "rss.feeds.enabled",
+		"auth.verifier.pipeline", "rss.feeds.enabled",
 		"sanitizer.impl", "servlet.session.create.events",
 		"servlet.session.destroy.events", "servlet.service.events.post",
 		"servlet.service.events.pre", "session.max.allowed",

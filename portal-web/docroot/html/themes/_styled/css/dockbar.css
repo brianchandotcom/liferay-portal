@@ -339,7 +339,12 @@ html > .lfr-dockbar-pinned {
 }
 
 .ie6 .my-sites-menu a {
-	height: 1%;
+	zoom: 1;
+}
+
+.ie6 .aui-menu-scroll {
+	height: 300px;
+	overflow-y: auto;
 }
 
 .dockbar .toggle-controls a {

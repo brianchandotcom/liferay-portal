@@ -555,6 +555,25 @@ AUI.add(
 					}
 				);
 
+				if (A.UA.ie === 6) {
+					var mySitesMenu = Dockbar.mySites;
+
+					if (mySitesMenu) {
+						mySitesMenu.onceAfter(
+							'visibleChange',
+							function(event) {
+								if (event.newVal) {
+									var menuBoundingBox = mySitesMenu.get('boundingBox');
+
+									if (menuBoundingBox.height() > 300) {
+										menuBoundingBox.addClass('aui-menu-scroll');
+									}
+								}
+							}
+						);
+					}
+				}
+
 				var userOptionsContainer = A.one('#' + namespace + 'userOptionsContainer');
 
 				if (userOptionsContainer) {

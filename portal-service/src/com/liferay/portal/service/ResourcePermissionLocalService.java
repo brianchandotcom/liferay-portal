@@ -303,10 +303,23 @@ public interface ResourcePermissionLocalService extends BaseLocalService,
 	* @param scope the scope
 	* @param resourceActionBitwiseValue the bitwise IDs of the actions
 	* @throws SystemException if a system exception occurred
+	* @deprecated {@link #addResourcePermissions(Role, String, int,long, int,
+	int)}
 	*/
 	public void addResourcePermissions(java.lang.String resourceName,
 		java.lang.String roleName, int scope, long resourceActionBitwiseValue)
 		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public void addResourcePermissions(com.liferay.portal.model.Role role,
+		java.lang.String name, int scope, long resourceActionBitwiseValue,
+		int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public void addResourcePermissions(com.liferay.portal.model.Role role,
+		java.lang.String name, int scope, java.lang.String[] actionIds,
+		int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
 	* Deletes all resource permissions at the scope to resources of the type.
@@ -434,6 +447,11 @@ public interface ResourcePermissionLocalService extends BaseLocalService,
 	public java.util.List<com.liferay.portal.model.ResourcePermission> getResourcePermissions(
 		long companyId, java.lang.String name, int scope,
 		java.lang.String primKey)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getResourcePermissionsCount(long companyId,
+		java.lang.String name, int scope, long roleId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

@@ -247,6 +247,9 @@ public interface ResourceActionLocalService extends BaseLocalService,
 		java.util.List<java.lang.String> actionIds)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	/**
+	* @deprecated {@link #checkResourceActions(String, List<String>)}
+	*/
 	public void checkResourceActions(java.lang.String name,
 		java.util.List<java.lang.String> actionIds, boolean addDefaultActions)
 		throws com.liferay.portal.kernel.exception.SystemException;

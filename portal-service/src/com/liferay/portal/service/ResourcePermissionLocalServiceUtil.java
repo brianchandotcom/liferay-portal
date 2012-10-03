@@ -333,6 +333,8 @@ public class ResourcePermissionLocalServiceUtil {
 	* @param scope the scope
 	* @param resourceActionBitwiseValue the bitwise IDs of the actions
 	* @throws SystemException if a system exception occurred
+	* @deprecated {@link #addResourcePermissions(Role, String, int,long, int,
+	int)}
 	*/
 	public static void addResourcePermissions(java.lang.String resourceName,
 		java.lang.String roleName, int scope, long resourceActionBitwiseValue)
@@ -340,6 +342,24 @@ public class ResourcePermissionLocalServiceUtil {
 		getService()
 			.addResourcePermissions(resourceName, roleName, scope,
 			resourceActionBitwiseValue);
+	}
+
+	public static void addResourcePermissions(
+		com.liferay.portal.model.Role role, java.lang.String name, int scope,
+		long resourceActionBitwiseValue, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService()
+			.addResourcePermissions(role, name, scope,
+			resourceActionBitwiseValue, start, end);
+	}
+
+	public static void addResourcePermissions(
+		com.liferay.portal.model.Role role, java.lang.String name, int scope,
+		java.lang.String[] actionIds, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService()
+			.addResourcePermissions(role, name, scope, actionIds, start, end);
 	}
 
 	/**
@@ -483,6 +503,13 @@ public class ResourcePermissionLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .getResourcePermissions(companyId, name, scope, primKey);
+	}
+
+	public static int getResourcePermissionsCount(long companyId,
+		java.lang.String name, int scope, long roleId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getResourcePermissionsCount(companyId, name, scope, roleId);
 	}
 
 	/**

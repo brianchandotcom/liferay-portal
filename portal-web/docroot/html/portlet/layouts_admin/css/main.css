@@ -353,7 +353,7 @@
 			border-right: 1px solid #999;
 		}
 
-		.taglib-icon, .membership-type {
+		.taglib-icon, .membership-type, .requests-pending {
 			margin-left: 10px;
 		}
 		

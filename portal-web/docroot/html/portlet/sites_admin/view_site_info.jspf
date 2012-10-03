@@ -36,7 +36,7 @@ LinkedHashMap userGroupParams = new LinkedHashMap();
 
 userGroupParams.put("userGroupsGroups", new Long(groupId));
 
-int userGroupsCount = UserGroupLocalServiceUtil.searchCount(company.getCompanyId(), null, null, userGroupParams);
+int userGroupsCount = UserGroupLocalServiceUtil.searchCount(company.getCompanyId(), null, userGroupParams);
 
 int pendingRequests = 0;
 
@@ -47,72 +47,68 @@ if (group.getType() == GroupConstants.TYPE_SITE_RESTRICTED) {
 
 <div class="membership-info">
 	<c:if test="<%= (usersCount > 0) || (organizationsCount > 0) ||(userGroupsCount > 0) || (pendingRequests > 0) %>">
-		<dl>
+		<dl class="members-info">
 			<dt>
 				<%= LanguageUtil.get(pageContext, "members") + StringPool.COLON %>
 			</dt>
 			<dd>
-				<span class="members-info">
-					<c:if test="<%= (usersCount > 0) %>">
-						<liferay-ui:icon
-							image="user_icon"
-							label="<%= true %>"
-							message='<%= LanguageUtil.format(pageContext, (usersCount == 1) ? "x-site-member" : "x-site-members", usersCount) %>'
-							url='<%= HttpUtil.addParameter(assignMembersURL.toString(), "tabs1", "users") %>'
-						/>
-					</c:if>
-
-					<c:if test="<%= (organizationsCount > 0) %>">
-						<liferay-ui:icon
-							image="organization_icon"
-							label="<%= true %>"
-							message='<%= LanguageUtil.format(pageContext, (organizationsCount == 1) ? "x-organization" : "x-organizations", organizationsCount) %>'
-							url='<%= HttpUtil.addParameter(assignMembersURL.toString(), "tabs1", "organizations") %>'
-						/>
-					</c:if>
-
-					<c:if test="<%= (userGroupsCount > 0) %>">
-						<liferay-ui:icon
-							image="group"
-							label="<%= true %>"
-							message='<%= LanguageUtil.format(pageContext, (userGroupsCount == 1) ? "x-user-groups" : "x-user-groups", userGroupsCount) %>'
-							url='<%= HttpUtil.addParameter(assignMembersURL.toString(), "tabs1", "user-groups") %>'
-						/>
-					</c:if>
-				</span>
-			</dd>
-
-			<c:if test="<%= (pendingRequests > 0) %>">
-				<dt>
+				<c:if test="<%= (usersCount > 0) %>">
 					<liferay-ui:icon
-						image="manage_task"
+						image="user_icon"
 						label="<%= true %>"
-						message='<%= LanguageUtil.get(pageContext, "requests-pending") + StringPool.COLON + StringPool.SPACE %>'
+						message='<%= LanguageUtil.format(pageContext, (usersCount == 1) ? "x-site-member" : "x-site-members", usersCount) %>'
+						url='<%= HttpUtil.addParameter(assignMembersURL.toString(), "tabs1", "users") %>'
 					/>
-				</dt>
-				<dd>
+				</c:if>
+
+				<c:if test="<%= (organizationsCount > 0) %>">
+					<liferay-ui:icon
+						image="organization_icon"
+						label="<%= true %>"
+						message='<%= LanguageUtil.format(pageContext, (organizationsCount == 1) ? "x-organization" : "x-organizations", organizationsCount) %>'
+						url='<%= HttpUtil.addParameter(assignMembersURL.toString(), "tabs1", "organizations") %>'
+					/>
+				</c:if>
+
+				<c:if test="<%= (userGroupsCount > 0) %>">
+					<liferay-ui:icon
+						image="group"
+						label="<%= true %>"
+						message='<%= LanguageUtil.format(pageContext, (userGroupsCount == 1) ? "x-user-groups" : "x-user-groups", userGroupsCount) %>'
+						url='<%= HttpUtil.addParameter(assignMembersURL.toString(), "tabs1", "user-groups") %>'
+					/>
+				</c:if>
+
+				<c:if test="<%= (pendingRequests > 0) %>">
 					<portlet:renderURL var="viewMembershipRequestsURL">
 						<portlet:param name="struts_action" value="/sites_admin/view_membership_requests" />
 						<portlet:param name="redirect" value="<%= currentURL %>" />
 						<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
 					</portlet:renderURL>
 
-					<a href="<%= viewMembershipRequestsURL %>"><%= String.valueOf(pendingRequests) %></a>
-				</dd>
-			</c:if>
-
-			<dt>
-				<span class="membership-type">
 					<liferay-ui:icon
-						image="assign"
+						image="manage_task"
 						label="<%= true %>"
-						message='<%= LanguageUtil.get(pageContext, "membership-type") + StringPool.COLON + StringPool.SPACE %>'
+						message='<%= LanguageUtil.format(pageContext, (pendingRequests == 1) ? "x-request-pending" : "x-requests-pending", pendingRequests) %>'
+						url="<%= viewMembershipRequestsURL %>"
 					/>
-				</span>
-			</dt>
-			<dd>
-				<%= LanguageUtil.get(pageContext, GroupConstants.getTypeLabel(group.getType())) %>
+				</c:if>
 			</dd>
 		</dl>
 	</c:if>
+
+	<dl>
+		<dt>
+			<span class="membership-type">
+				<liferay-ui:icon
+					image="assign"
+					label="<%= true %>"
+					message='<%= LanguageUtil.get(pageContext, "membership-type") + StringPool.COLON + StringPool.SPACE %>'
+				/>
+			</span>
+		</dt>
+		<dd>
+			<%= LanguageUtil.get(pageContext, GroupConstants.getTypeLabel(group.getType())) %>
+		</dd>
+	</dl>
 </div>

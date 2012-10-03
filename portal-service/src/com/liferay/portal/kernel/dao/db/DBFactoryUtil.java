@@ -39,6 +39,10 @@ public class DBFactoryUtil {
 		return _dbFactory;
 	}
 
+	public static void reset() {
+		setDBFactory(null);
+	}
+
 	public static void setDB(Object dialect) {
 		getDBFactory().setDB(dialect);
 	}

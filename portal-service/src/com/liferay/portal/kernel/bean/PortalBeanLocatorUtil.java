@@ -100,6 +100,10 @@ public class PortalBeanLocatorUtil {
 		}
 	}
 
+	public static void reset() {
+		setBeanLocator(null);
+	}
+
 	public static void setBeanLocator(BeanLocator beanLocator) {
 		PortalRuntimePermission.checkSetBeanProperty(
 			PortalBeanLocatorUtil.class);

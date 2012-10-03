@@ -77,6 +77,12 @@ public class DeployManagerUtil {
 		getDeployManager().redeploy(context);
 	}
 
+	public static void reset() {
+		PortalRuntimePermission.checkSetBeanProperty(DeployManagerUtil.class);
+
+		_deployManager = null;
+	}
+
 	public static void undeploy(String context) throws Exception {
 		getDeployManager().undeploy(context);
 	}

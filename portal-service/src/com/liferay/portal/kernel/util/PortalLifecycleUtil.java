@@ -81,6 +81,20 @@ public class PortalLifecycleUtil {
 		}
 	}
 
+	public static void reset() {
+		_inFlushDestroys = false;
+
+		if (_portalLifecyclesInit == null) {
+			_portalLifecyclesInit = Collections.synchronizedList(
+				new ArrayList<PortalLifecycle>());
+		}
+		else {
+			_portalLifecyclesInit.clear();
+		}
+
+		_portalLifecyclesDestroy.clear();
+	}
+
 	private static boolean _inFlushDestroys;
 	private static List<PortalLifecycle> _portalLifecyclesDestroy =
 		Collections.synchronizedList(new ArrayList<PortalLifecycle>());

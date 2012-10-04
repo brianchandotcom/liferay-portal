@@ -31,6 +31,10 @@ import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.util.PropsValues;
 
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 import java.io.Serializable;
 
 import java.util.Map;
@@ -352,7 +356,10 @@ public class EntityCacheImpl implements CacheRegistryItem, EntityCache {
 			new ConcurrentHashMap
 				<String, PortalCache<Serializable, Serializable>>();
 
-	private static class CacheKey implements Serializable {
+	private static class CacheKey implements Externalizable {
+
+		public CacheKey() {
+		}
 
 		public CacheKey(String shardName, Serializable primaryKey) {
 			_shardName = shardName;
@@ -378,10 +385,24 @@ public class EntityCacheImpl implements CacheRegistryItem, EntityCache {
 			return _shardName.hashCode() * 11 + _primaryKey.hashCode();
 		}
 
+		public void readExternal(ObjectInput objectInput)
+			throws ClassNotFoundException, IOException {
+
+			_primaryKey = (Serializable)objectInput.readObject();
+			_shardName = objectInput.readUTF();
+		}
+
+		public void writeExternal(ObjectOutput objectOutput)
+			throws IOException {
+
+			objectOutput.writeObject(_primaryKey);
+			objectOutput.writeUTF(_shardName);
+		}
+
 		private static final long serialVersionUID = 1L;
 
-		private final Serializable _primaryKey;
-		private final String _shardName;
+		private Serializable _primaryKey;
+		private String _shardName;
 
 	}
 

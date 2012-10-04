@@ -1993,24 +1993,28 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 			return;
 		}
 
-		Element structureElement = structuresElement.addElement("structure");
-
 		String parentStructureId = structure.getParentStructureId();
+
+		JournalStructure parentStructure = null;
 
 		if (Validator.isNotNull(parentStructureId)) {
 			try {
-				JournalStructure parentStructure =
+				parentStructure =
 					JournalStructureLocalServiceUtil.getStructure(
 						structure.getGroupId(), parentStructureId, true);
-
-				structureElement.addAttribute(
-					"parent-structure-uuid", parentStructure.getUuid());
 
 				exportStructure(
 					portletDataContext, structuresElement, parentStructure);
 			}
 			catch (NoSuchStructureException nsse) {
 			}
+		}
+
+		Element structureElement = structuresElement.addElement("structure");
+
+		if (parentStructure != null) {
+			structureElement.addAttribute(
+				"parent-structure-uuid", parentStructure.getUuid());
 		}
 
 		portletDataContext.addClassedModel(

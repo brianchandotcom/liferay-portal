@@ -311,7 +311,7 @@
 
 								instance._addPortlet(portlet);
 							},
-							'a'
+							'.lfr-portlet-item a'
 						);
 
 						var portletItem = null;
@@ -362,7 +362,7 @@
 						instance._dialogBody.delegate(
 							'click',
 							function(event) {
-								var heading = event.currentTarget.get('parentNode');
+								var heading = event.currentTarget.ancestor('.lfr-add-content');
 								var category = heading.one('> .lfr-content-category');
 
 								if (category) {
@@ -373,7 +373,7 @@
 									heading.toggleClass('collapsed').toggleClass('expanded');
 								}
 							},
-							'.lfr-add-content > h2'
+							'.lfr-add-content > h2 a'
 						);
 
 						Util.focusFormField('#layout_configuration_content');

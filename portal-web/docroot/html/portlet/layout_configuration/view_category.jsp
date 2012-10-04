@@ -76,7 +76,7 @@ if (!categories.isEmpty() || !portlets.isEmpty()) {
 
 	<div class="lfr-add-content <%= layout.isTypePortlet() ? "collapsed" : "" %>" id="<portlet:namespace />portletCategory<%= portletCategoryIndex %>">
 		<h2>
-			<span><%= Validator.isNotNull(externalPortletCategory) ? externalPortletCategory : LanguageUtil.get(pageContext, portletCategory.getName()) %></span>
+			<a href="javascript:;"><%= Validator.isNotNull(externalPortletCategory) ? externalPortletCategory : LanguageUtil.get(pageContext, portletCategory.getName()) %></a>
 		</h2>
 
 		<ul class="lfr-content-category <%= layout.isTypePortlet() ? "aui-helper-hidden" : "" %>">

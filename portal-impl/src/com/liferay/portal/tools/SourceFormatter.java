@@ -1251,10 +1251,6 @@ public class SourceFormatter {
 					"com.liferay.portal.kernel.util.LocalizationUtil"
 				});
 
-			newContent = StringUtil.replace(
-				newContent, "private static final Log _log",
-				"private static Log _log");
-
 			newContent = stripJavaImports(newContent, packagePath, className);
 
 			newContent = StringUtil.replace(

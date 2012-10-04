@@ -70,7 +70,7 @@ public class AggregateFilter extends BasePortalFilter {
 			AggregateContext aggregateContext, String content)
 		throws IOException {
 
-		StringBundler sb = new StringBundler(content.length());
+		StringBundler sb = new StringBundler();
 
 		int pos = 0;
 

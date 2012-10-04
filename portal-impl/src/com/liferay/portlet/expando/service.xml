@@ -51,6 +51,7 @@
 
 		<column name="tableId" type="long" />
 		<column name="classPK" type="long" />
+		<column name="modifiedDate" type="Date" />
 
 		<!-- Finder methods -->
 

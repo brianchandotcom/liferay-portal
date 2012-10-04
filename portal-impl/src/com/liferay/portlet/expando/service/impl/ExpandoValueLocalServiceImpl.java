@@ -823,6 +823,8 @@ public class ExpandoValueLocalServiceImpl
 			expandoRowPersistence.update(row, false);
 		}
 
+		boolean rowModified = false;
+
 		for (ExpandoColumn column : columns) {
 			String dataString = data.get(column.getName());
 
@@ -846,9 +848,23 @@ public class ExpandoValueLocalServiceImpl
 				value.setClassPK(classPK);
 			}
 
-			value.setData(dataString);
+			if (value.isNew() ||
+				((value.getData() == null) && (dataString != null)) ||
+				((value.getData() != null) &&
+					!value.getData().equals(dataString))) {
 
-			expandoValuePersistence.update(value, false);
+				value.setData(dataString);
+
+				expandoValuePersistence.update(value, false);
+
+				rowModified = true;
+			}
+		}
+
+		if (rowModified) {
+			row.setModifiedDate(new Date());
+
+			expandoRowPersistence.update(row, false);
 		}
 	}
 
@@ -2010,9 +2026,17 @@ public class ExpandoValueLocalServiceImpl
 			value.setClassPK(classPK);
 		}
 
-		value.setData(data);
+		if (value.isNew() || ((value.getData() == null) && (data != null)) ||
+			((value.getData() != null) && !value.getData().equals(data))) {
 
-		expandoValuePersistence.update(value, false);
+			value.setData(data);
+
+			expandoValuePersistence.update(value, false);
+
+			row.setModifiedDate(new Date());
+
+			expandoRowPersistence.update(row, false);
+		}
 
 		return value;
 	}

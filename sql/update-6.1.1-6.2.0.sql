@@ -262,6 +262,12 @@ update DLFolder set statusByUserId = userId;
 update DLFolder set statusByUserName = userName;
 update DLFolder set statusDate = modifiedDate;
 
+alter table ExpandoRow add modifiedDate DATE null;
+
+COMMIT_TRANSACTION;
+
+update ExpandoRow set modifiedDate = CURRENT_TIMESTAMP;
+
 update Group_ set site = FALSE where name = 'Control Panel';
 
 drop table Groups_Permissions;

@@ -951,6 +951,19 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 			);
 		</c:if>
 
+		<c:if test="<%= DLPermission.contains(permissionChecker, scopeGroupId, ActionKeys.OVERRIDE_CHECKOUT) && fileEntry.isCheckedOut() && !fileEntry.hasLock() %>">
+			fileEntryToolbarChildren.push(
+				{
+					handler: function(event) {
+                    	document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.OVERRIDE_CHECKOUT %>';
+                    	submitForm(document.<portlet:namespace />fm);
+					},
+					icon: 'permissions',
+					label: '<%= UnicodeLanguageUtil.get(pageContext, "override-checkout[document]") %>'
+				}
+			);
+		</c:if>
+
 		<c:if test="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.DELETE) && (!(fileEntry.getModel() instanceof DLFileEntry) || !TrashUtil.isTrashEnabled(scopeGroupId)) %>">
 			fileEntryToolbarChildren.push(
 				{

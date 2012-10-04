@@ -58,6 +58,21 @@
 					url="<%= cancelCheckOutURL %>"
 				/>
 			</c:if>
+
+			<c:if test="<%= DLPermission.contains(permissionChecker, scopeGroupId, ActionKeys.OVERRIDE_CHECKOUT) && !fileEntry.hasLock() %>">
+				<portlet:actionURL var="overrideCheckOutURL">
+					<portlet:param name="struts_action" value="/document_library/edit_file_entry" />
+						<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.OVERRIDE_CHECKOUT %>" />
+						<portlet:param name="redirect" value="<%= currentURL %>" />
+						<portlet:param name="fileEntryId" value="<%= String.valueOf(fileEntry.getFileEntryId()) %>" />
+				</portlet:actionURL>
+
+				<liferay-ui:icon
+					image="undo"
+					message="override-checkout[document]"
+					url="<%= overrideCheckOutURL %>"
+				/>
+			</c:if>
 		</c:otherwise>
 	</c:choose>
 </c:if>

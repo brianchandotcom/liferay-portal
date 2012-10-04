@@ -86,6 +86,7 @@ public class SourceFormatter {
 						_formatAntXML();
 						_formatDDLStructuresXML();
 						_formatFriendlyURLRoutesXML();
+						_formatFTL();
 						_formatPortletXML();
 						_formatServiceXML();
 						_formatSH();
@@ -1066,6 +1067,38 @@ public class SourceFormatter {
 		sb.append("</routes>");
 
 		return sb.toString();
+	}
+
+	private static void _formatFTL() throws IOException {
+		String basedir = "./";
+
+		DirectoryScanner directoryScanner = new DirectoryScanner();
+
+		directoryScanner.setBasedir(basedir);
+		directoryScanner.setIncludes(new String[] {"**\\*.ftl"});
+		directoryScanner.setExcludes(
+			new String[] {
+				"**\\journal\\dependencies\\template.ftl",
+				"**\\servicebuilder\\dependencies\\props.ftl"
+			}
+		);
+
+		List<String> fileNames = _sourceFormatterHelper.scanForFiles(
+			directoryScanner);
+
+		for (String fileName : fileNames) {
+			File file = new File(basedir + fileName);
+
+			String content = _fileUtil.read(file);
+
+			String newContent = _trimContent(content);
+
+			if ((newContent != null) && !content.equals(newContent)) {
+				_fileUtil.write(file, newContent);
+
+				_sourceFormatterHelper.printError(fileName, file);
+			}
+		}
 	}
 
 	private static String _formatImports(String imports, int classStartPos)

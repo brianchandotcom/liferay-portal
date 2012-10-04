@@ -209,6 +209,8 @@ public class ActionKeys {
 
 	public static final String MOVE_THREAD = "MOVE_THREAD";
 
+	public static final String OVERRIDE_CHECKOUT = "OVERRIDE_CHECKOUT";
+
 	public static final String PERMISSIONS = "PERMISSIONS";
 
 	public static final String PERMISSIONS_USER = "PERMISSIONS_USER";

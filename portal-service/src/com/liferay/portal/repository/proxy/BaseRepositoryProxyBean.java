@@ -545,6 +545,12 @@ public class BaseRepositoryProxyBean
 		return newFolderProxyBean(folder);
 	}
 
+	public FileVersion overrideCheckOut(long fileEntryId, long groupId)
+		throws PortalException, SystemException {
+
+		return _baseRepository.overrideCheckOut(fileEntryId, groupId);
+	}
+
 	public Lock refreshFileEntryLock(
 			String lockUuid, long companyId, long expirationTime)
 		throws PortalException, SystemException {

@@ -2287,6 +2287,39 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	}
 
 	/**
+	 * Overrides the check out of the file entry. If a user has the permission
+	 * to override the check out of the specified file entry, the file entry
+	 * will be unlocked, and the Private Working Copy is deleted.
+	 *
+	 * @param  fileEntryId the primary key of the file entry to cancel the
+	 *         checkout
+	 * @throws PortalException if the file entry could not be found
+	 * @throws SystemException if a system exception occurred
+	 * @see    #checkInFileEntry(long, boolean, String, ServiceContext)
+	 * @see    #checkOutFileEntry(long)
+	 */
+	public void overrideCheckOut(long fileEntryId)
+		throws PortalException, SystemException {
+
+		Repository repository = getRepository(0, fileEntryId, 0);
+
+		FileEntry fileEntry = repository.getFileEntry(fileEntryId);
+
+		DLProcessorRegistryUtil.cleanUp(fileEntry.getLatestFileVersion());
+
+		FileVersion draftFileVersion = repository.overrideCheckOut(
+			fileEntryId, fileEntry.getGroupId());
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
+
+		dlAppHelperLocalService.cancelCheckOut(
+			getUserId(), fileEntry, fileEntry.getFileVersion(),
+			draftFileVersion, serviceContext);
+	}
+
+	/**
 	 * Refreshes the lock for the file entry. This method is primarily used by
 	 * WebDAV.
 	 *

@@ -1086,6 +1086,48 @@ public class CMISRepository extends BaseCmisRepository {
 		}
 	}
 
+	public FileVersion overrideCheckOut(long fileEntryId, long groupId)
+		throws SystemException {
+
+		Document draftDocument = null;
+
+		try {
+			Session session = getSession();
+
+			String versionSeriesId = toFileEntryId(fileEntryId);
+
+			Document document = (Document)session.getObject(versionSeriesId);
+
+			document.refresh();
+
+			String versionSeriesCheckedOutId =
+				document.getVersionSeriesCheckedOutId();
+
+			if (Validator.isNotNull(versionSeriesCheckedOutId)) {
+				draftDocument = (Document)session.getObject(
+					versionSeriesCheckedOutId);
+
+				draftDocument.cancelCheckOut();
+
+				document = (Document)session.getObject(versionSeriesId);
+
+				document.refresh();
+			}
+		}
+		catch (Exception e) {
+			_log.error(
+				"Unable to cancel checkout for file entry with {fileEntryId=" +
+					fileEntryId + "}",
+				e);
+		}
+
+		if (draftDocument != null) {
+			return toFileVersion(draftDocument);
+		}
+
+		return null;
+	}
+
 	public Lock refreshFileEntryLock(
 		String lockUuid, long companyId, long expirationTime) {
 

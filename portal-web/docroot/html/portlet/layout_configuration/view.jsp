@@ -34,7 +34,7 @@
 
 				<c:if test="<%= layout.isTypePortlet() %>">
 					<div class="portal-add-content-search" id="portal_add_content_title">
-						<aui:input cssClass="lfr-auto-focus" id="layout_configuration_content" label="search-applications-searches-as-you-type" name="layout_configuration_content" onKeyPress="if (event.keyCode == 13) { return false; }" />
+						<aui:input cssClass="lfr-add-content-search lfr-auto-focus" id="layout_configuration_content" label="search-applications-searches-as-you-type" name="layout_configuration_content" onKeyPress="if (event.keyCode == 13) { return false; }" />
 					</div>
 				</c:if>
 

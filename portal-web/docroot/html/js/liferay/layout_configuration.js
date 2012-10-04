@@ -83,6 +83,10 @@
 
 						instance.menu = menu;
 
+						var searchInput = A.one('#layout_configuration_content');
+
+						instance._searchInput = searchInput;
+
 						if (menu) {
 							instance.portlets = menu.all('.lfr-portlet-item');
 							instance.categories = menu.all('.lfr-content-category');
@@ -108,7 +112,7 @@
 									hide: function(node) {
 										node.hide();
 									},
-									input: '#layout_configuration_content',
+									input: searchInput,
 									nodes: '#portal_add_content .lfr-portlet-item',
 									show: function(node) {
 										node.show();
@@ -157,7 +161,7 @@
 									},
 									data: data,
 									hide: function(node) {
-										var children = node.all('.lfr-content-category > div');
+										var children = node.all('.lfr-content-category > li');
 
 										var action = 'hide';
 
@@ -167,7 +171,7 @@
 
 										node[action]();
 									},
-									input: '#layout_configuration_content',
+									input: searchInput,
 									nodes: '#portal_add_content .lfr-add-content'
 								}
 							);
@@ -303,7 +307,9 @@
 
 						var portlets = instance._portletItems;
 
-						instance._dialogBody.delegate(
+						var dialogBody = instance._dialogBody;
+
+						dialogBody.delegate(
 							'click',
 							function(event) {
 								var link = event.currentTarget;
@@ -342,7 +348,7 @@
 						}
 
 						if (Browser.isIe()) {
-							instance._dialogBody.delegate(
+							dialogBody.delegate(
 								'mouseenter',
 								function(event) {
 									event.currentTarget.addClass('over');
@@ -350,8 +356,8 @@
 								'.lfr-portlet-item'
 							);
 
-							instance._dialogBody.delegate(
-								'mouseenter',
+							dialogBody.delegate(
+								'mouseleave',
 								function(event) {
 									event.currentTarget.removeClass('over');
 								},
@@ -359,10 +365,11 @@
 							);
 						}
 
-						instance._dialogBody.delegate(
+						dialogBody.delegate(
 							'click',
 							function(event) {
 								var heading = event.currentTarget.ancestor('.lfr-add-content');
+
 								var category = heading.one('> .lfr-content-category');
 
 								if (category) {
@@ -373,10 +380,10 @@
 									heading.toggleClass('collapsed').toggleClass('expanded');
 								}
 							},
-							'.lfr-add-content > h2 a'
+							'.lfr-add-content > h2'
 						);
 
-						Util.focusFormField('#layout_configuration_content');
+						Util.focusFormField(instance._searchInput);
 					},
 
 					_onPortletClose: function(event) {

@@ -1243,14 +1243,12 @@ public class SourceFormatter {
 				new String[] {
 					"com.liferay.portal.PortalException",
 					"com.liferay.portal.SystemException",
-					"com.liferay.util.LocalizationUtil",
-					"private static final Log _log"
+					"com.liferay.util.LocalizationUtil"
 				},
 				new String[] {
 					"com.liferay.portal.kernel.exception.PortalException",
 					"com.liferay.portal.kernel.exception.SystemException",
-					"com.liferay.portal.kernel.util.LocalizationUtil",
-					"private static Log _log"
+					"com.liferay.portal.kernel.util.LocalizationUtil"
 				});
 
 			newContent = stripJavaImports(newContent, packagePath, className);

@@ -20,7 +20,10 @@ import com.liferay.portal.model.CacheModel;
 
 import com.liferay.portlet.documentlibrary.model.DLSync;
 
-import java.io.Serializable;
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 
 import java.util.Date;
 
@@ -31,7 +34,7 @@ import java.util.Date;
  * @see DLSync
  * @generated
  */
-public class DLSyncCacheModel implements CacheModel<DLSync>, Serializable {
+public class DLSyncCacheModel implements CacheModel<DLSync>, Externalizable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(27);
@@ -137,6 +140,84 @@ public class DLSyncCacheModel implements CacheModel<DLSync>, Serializable {
 		dlSyncImpl.resetOriginalValues();
 
 		return dlSyncImpl;
+	}
+
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+		syncId = objectInput.readLong();
+
+		companyId = objectInput.readLong();
+		createDate = objectInput.readLong();
+		modifiedDate = objectInput.readLong();
+
+		fileId = objectInput.readLong();
+		fileUuid = objectInput.readUTF();
+
+		repositoryId = objectInput.readLong();
+
+		parentFolderId = objectInput.readLong();
+		name = objectInput.readUTF();
+		description = objectInput.readUTF();
+		event = objectInput.readUTF();
+		type = objectInput.readUTF();
+		version = objectInput.readUTF();
+	}
+
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
+		objectOutput.writeLong(syncId);
+
+		objectOutput.writeLong(companyId);
+		objectOutput.writeLong(createDate);
+		objectOutput.writeLong(modifiedDate);
+
+		objectOutput.writeLong(fileId);
+
+		if (fileUuid == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(fileUuid);
+		}
+
+		objectOutput.writeLong(repositoryId);
+
+		objectOutput.writeLong(parentFolderId);
+
+		if (name == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(name);
+		}
+
+		if (description == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(description);
+		}
+
+		if (event == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(event);
+		}
+
+		if (type == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(type);
+		}
+
+		if (version == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(version);
+		}
 	}
 
 	public long syncId;

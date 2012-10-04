@@ -20,7 +20,10 @@ import com.liferay.portal.model.CacheModel;
 
 import com.liferay.portlet.expando.model.ExpandoValue;
 
-import java.io.Serializable;
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 
 /**
  * The cache model class for representing ExpandoValue in entity cache.
@@ -30,7 +33,7 @@ import java.io.Serializable;
  * @generated
  */
 public class ExpandoValueCacheModel implements CacheModel<ExpandoValue>,
-	Serializable {
+	Externalizable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(17);
@@ -77,6 +80,48 @@ public class ExpandoValueCacheModel implements CacheModel<ExpandoValue>,
 		expandoValueImpl.resetOriginalValues();
 
 		return expandoValueImpl;
+	}
+
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+		valueId = objectInput.readLong();
+
+		companyId = objectInput.readLong();
+
+		tableId = objectInput.readLong();
+
+		columnId = objectInput.readLong();
+
+		rowId = objectInput.readLong();
+
+		classNameId = objectInput.readLong();
+
+		classPK = objectInput.readLong();
+		data = objectInput.readUTF();
+	}
+
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
+		objectOutput.writeLong(valueId);
+
+		objectOutput.writeLong(companyId);
+
+		objectOutput.writeLong(tableId);
+
+		objectOutput.writeLong(columnId);
+
+		objectOutput.writeLong(rowId);
+
+		objectOutput.writeLong(classNameId);
+
+		objectOutput.writeLong(classPK);
+
+		if (data == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(data);
+		}
 	}
 
 	public long valueId;

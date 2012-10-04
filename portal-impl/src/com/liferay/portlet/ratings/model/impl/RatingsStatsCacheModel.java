@@ -19,7 +19,10 @@ import com.liferay.portal.model.CacheModel;
 
 import com.liferay.portlet.ratings.model.RatingsStats;
 
-import java.io.Serializable;
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 
 /**
  * The cache model class for representing RatingsStats in entity cache.
@@ -29,7 +32,7 @@ import java.io.Serializable;
  * @generated
  */
 public class RatingsStatsCacheModel implements CacheModel<RatingsStats>,
-	Serializable {
+	Externalizable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(13);
@@ -64,6 +67,36 @@ public class RatingsStatsCacheModel implements CacheModel<RatingsStats>,
 		ratingsStatsImpl.resetOriginalValues();
 
 		return ratingsStatsImpl;
+	}
+
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+		statsId = objectInput.readLong();
+
+		classNameId = objectInput.readLong();
+
+		classPK = objectInput.readLong();
+
+		totalEntries = objectInput.readInt();
+
+		totalScore = objectInput.readDouble();
+
+		averageScore = objectInput.readDouble();
+	}
+
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
+		objectOutput.writeLong(statsId);
+
+		objectOutput.writeLong(classNameId);
+
+		objectOutput.writeLong(classPK);
+
+		objectOutput.writeInt(totalEntries);
+
+		objectOutput.writeDouble(totalScore);
+
+		objectOutput.writeDouble(averageScore);
 	}
 
 	public long statsId;

@@ -19,7 +19,10 @@ import com.liferay.portal.model.CacheModel;
 
 import com.liferay.portlet.softwarecatalog.model.SCProductScreenshot;
 
-import java.io.Serializable;
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 
 /**
  * The cache model class for representing SCProductScreenshot in entity cache.
@@ -29,7 +32,7 @@ import java.io.Serializable;
  * @generated
  */
 public class SCProductScreenshotCacheModel implements CacheModel<SCProductScreenshot>,
-	Serializable {
+	Externalizable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(15);
@@ -67,6 +70,40 @@ public class SCProductScreenshotCacheModel implements CacheModel<SCProductScreen
 		scProductScreenshotImpl.resetOriginalValues();
 
 		return scProductScreenshotImpl;
+	}
+
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+		productScreenshotId = objectInput.readLong();
+
+		companyId = objectInput.readLong();
+
+		groupId = objectInput.readLong();
+
+		productEntryId = objectInput.readLong();
+
+		thumbnailId = objectInput.readLong();
+
+		fullImageId = objectInput.readLong();
+
+		priority = objectInput.readInt();
+	}
+
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
+		objectOutput.writeLong(productScreenshotId);
+
+		objectOutput.writeLong(companyId);
+
+		objectOutput.writeLong(groupId);
+
+		objectOutput.writeLong(productEntryId);
+
+		objectOutput.writeLong(thumbnailId);
+
+		objectOutput.writeLong(fullImageId);
+
+		objectOutput.writeInt(priority);
 	}
 
 	public long productScreenshotId;

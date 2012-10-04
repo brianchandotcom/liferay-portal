@@ -18,7 +18,10 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.BrowserTracker;
 import com.liferay.portal.model.CacheModel;
 
-import java.io.Serializable;
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 
 /**
  * The cache model class for representing BrowserTracker in entity cache.
@@ -28,7 +31,7 @@ import java.io.Serializable;
  * @generated
  */
 public class BrowserTrackerCacheModel implements CacheModel<BrowserTracker>,
-	Serializable {
+	Externalizable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(7);
@@ -54,6 +57,24 @@ public class BrowserTrackerCacheModel implements CacheModel<BrowserTracker>,
 		browserTrackerImpl.resetOriginalValues();
 
 		return browserTrackerImpl;
+	}
+
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+		browserTrackerId = objectInput.readLong();
+
+		userId = objectInput.readLong();
+
+		browserKey = objectInput.readLong();
+	}
+
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
+		objectOutput.writeLong(browserTrackerId);
+
+		objectOutput.writeLong(userId);
+
+		objectOutput.writeLong(browserKey);
 	}
 
 	public long browserTrackerId;

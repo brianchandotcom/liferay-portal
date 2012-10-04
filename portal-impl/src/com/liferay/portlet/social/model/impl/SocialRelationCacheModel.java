@@ -20,7 +20,10 @@ import com.liferay.portal.model.CacheModel;
 
 import com.liferay.portlet.social.model.SocialRelation;
 
-import java.io.Serializable;
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 
 /**
  * The cache model class for representing SocialRelation in entity cache.
@@ -30,7 +33,7 @@ import java.io.Serializable;
  * @generated
  */
 public class SocialRelationCacheModel implements CacheModel<SocialRelation>,
-	Serializable {
+	Externalizable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(15);
@@ -74,6 +77,45 @@ public class SocialRelationCacheModel implements CacheModel<SocialRelation>,
 		socialRelationImpl.resetOriginalValues();
 
 		return socialRelationImpl;
+	}
+
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+		uuid = objectInput.readUTF();
+
+		relationId = objectInput.readLong();
+
+		companyId = objectInput.readLong();
+
+		createDate = objectInput.readLong();
+
+		userId1 = objectInput.readLong();
+
+		userId2 = objectInput.readLong();
+
+		type = objectInput.readInt();
+	}
+
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
+		if (uuid == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(uuid);
+		}
+
+		objectOutput.writeLong(relationId);
+
+		objectOutput.writeLong(companyId);
+
+		objectOutput.writeLong(createDate);
+
+		objectOutput.writeLong(userId1);
+
+		objectOutput.writeLong(userId2);
+
+		objectOutput.writeInt(type);
 	}
 
 	public String uuid;

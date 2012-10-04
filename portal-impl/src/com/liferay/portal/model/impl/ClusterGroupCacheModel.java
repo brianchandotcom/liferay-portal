@@ -19,7 +19,10 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ClusterGroup;
 
-import java.io.Serializable;
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 
 /**
  * The cache model class for representing ClusterGroup in entity cache.
@@ -29,7 +32,7 @@ import java.io.Serializable;
  * @generated
  */
 public class ClusterGroupCacheModel implements CacheModel<ClusterGroup>,
-	Serializable {
+	Externalizable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(9);
@@ -71,6 +74,36 @@ public class ClusterGroupCacheModel implements CacheModel<ClusterGroup>,
 		clusterGroupImpl.resetOriginalValues();
 
 		return clusterGroupImpl;
+	}
+
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+		clusterGroupId = objectInput.readLong();
+		name = objectInput.readUTF();
+		clusterNodeIds = objectInput.readUTF();
+
+		wholeCluster = objectInput.readBoolean();
+	}
+
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
+		objectOutput.writeLong(clusterGroupId);
+
+		if (name == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(name);
+		}
+
+		if (clusterNodeIds == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(clusterNodeIds);
+		}
+
+		objectOutput.writeBoolean(wholeCluster);
 	}
 
 	public long clusterGroupId;

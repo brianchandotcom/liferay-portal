@@ -19,7 +19,10 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.PasswordPolicy;
 
-import java.io.Serializable;
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 
 import java.util.Date;
 
@@ -31,7 +34,7 @@ import java.util.Date;
  * @generated
  */
 public class PasswordPolicyCacheModel implements CacheModel<PasswordPolicy>,
-	Serializable {
+	Externalizable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(65);
@@ -176,6 +179,149 @@ public class PasswordPolicyCacheModel implements CacheModel<PasswordPolicy>,
 		passwordPolicyImpl.resetOriginalValues();
 
 		return passwordPolicyImpl;
+	}
+
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+		passwordPolicyId = objectInput.readLong();
+
+		companyId = objectInput.readLong();
+
+		userId = objectInput.readLong();
+		userName = objectInput.readUTF();
+		createDate = objectInput.readLong();
+		modifiedDate = objectInput.readLong();
+
+		defaultPolicy = objectInput.readBoolean();
+		name = objectInput.readUTF();
+		description = objectInput.readUTF();
+
+		changeable = objectInput.readBoolean();
+
+		changeRequired = objectInput.readBoolean();
+
+		minAge = objectInput.readLong();
+
+		checkSyntax = objectInput.readBoolean();
+
+		allowDictionaryWords = objectInput.readBoolean();
+
+		minAlphanumeric = objectInput.readInt();
+
+		minLength = objectInput.readInt();
+
+		minLowerCase = objectInput.readInt();
+
+		minNumbers = objectInput.readInt();
+
+		minSymbols = objectInput.readInt();
+
+		minUpperCase = objectInput.readInt();
+
+		history = objectInput.readBoolean();
+
+		historyCount = objectInput.readInt();
+
+		expireable = objectInput.readBoolean();
+
+		maxAge = objectInput.readLong();
+
+		warningTime = objectInput.readLong();
+
+		graceLimit = objectInput.readInt();
+
+		lockout = objectInput.readBoolean();
+
+		maxFailure = objectInput.readInt();
+
+		lockoutDuration = objectInput.readLong();
+
+		requireUnlock = objectInput.readBoolean();
+
+		resetFailureCount = objectInput.readLong();
+
+		resetTicketMaxAge = objectInput.readLong();
+	}
+
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
+		objectOutput.writeLong(passwordPolicyId);
+
+		objectOutput.writeLong(companyId);
+
+		objectOutput.writeLong(userId);
+
+		if (userName == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(userName);
+		}
+
+		objectOutput.writeLong(createDate);
+		objectOutput.writeLong(modifiedDate);
+
+		objectOutput.writeBoolean(defaultPolicy);
+
+		if (name == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(name);
+		}
+
+		if (description == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(description);
+		}
+
+		objectOutput.writeBoolean(changeable);
+
+		objectOutput.writeBoolean(changeRequired);
+
+		objectOutput.writeLong(minAge);
+
+		objectOutput.writeBoolean(checkSyntax);
+
+		objectOutput.writeBoolean(allowDictionaryWords);
+
+		objectOutput.writeInt(minAlphanumeric);
+
+		objectOutput.writeInt(minLength);
+
+		objectOutput.writeInt(minLowerCase);
+
+		objectOutput.writeInt(minNumbers);
+
+		objectOutput.writeInt(minSymbols);
+
+		objectOutput.writeInt(minUpperCase);
+
+		objectOutput.writeBoolean(history);
+
+		objectOutput.writeInt(historyCount);
+
+		objectOutput.writeBoolean(expireable);
+
+		objectOutput.writeLong(maxAge);
+
+		objectOutput.writeLong(warningTime);
+
+		objectOutput.writeInt(graceLimit);
+
+		objectOutput.writeBoolean(lockout);
+
+		objectOutput.writeInt(maxFailure);
+
+		objectOutput.writeLong(lockoutDuration);
+
+		objectOutput.writeBoolean(requireUnlock);
+
+		objectOutput.writeLong(resetFailureCount);
+
+		objectOutput.writeLong(resetTicketMaxAge);
 	}
 
 	public long passwordPolicyId;

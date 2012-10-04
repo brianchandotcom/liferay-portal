@@ -20,7 +20,10 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 
-import java.io.Serializable;
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 
 /**
  * The cache model class for representing Counter in entity cache.
@@ -29,7 +32,7 @@ import java.io.Serializable;
  * @see Counter
  * @generated
  */
-public class CounterCacheModel implements CacheModel<Counter>, Serializable {
+public class CounterCacheModel implements CacheModel<Counter>, Externalizable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(5);
@@ -58,6 +61,25 @@ public class CounterCacheModel implements CacheModel<Counter>, Serializable {
 		counterImpl.resetOriginalValues();
 
 		return counterImpl;
+	}
+
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+		name = objectInput.readUTF();
+
+		currentId = objectInput.readLong();
+	}
+
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
+		if (name == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(name);
+		}
+
+		objectOutput.writeLong(currentId);
 	}
 
 	public String name;

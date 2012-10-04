@@ -19,7 +19,10 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.VirtualHost;
 
-import java.io.Serializable;
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 
 /**
  * The cache model class for representing VirtualHost in entity cache.
@@ -29,7 +32,7 @@ import java.io.Serializable;
  * @generated
  */
 public class VirtualHostCacheModel implements CacheModel<VirtualHost>,
-	Serializable {
+	Externalizable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(9);
@@ -64,6 +67,32 @@ public class VirtualHostCacheModel implements CacheModel<VirtualHost>,
 		virtualHostImpl.resetOriginalValues();
 
 		return virtualHostImpl;
+	}
+
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+		virtualHostId = objectInput.readLong();
+
+		companyId = objectInput.readLong();
+
+		layoutSetId = objectInput.readLong();
+		hostname = objectInput.readUTF();
+	}
+
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
+		objectOutput.writeLong(virtualHostId);
+
+		objectOutput.writeLong(companyId);
+
+		objectOutput.writeLong(layoutSetId);
+
+		if (hostname == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(hostname);
+		}
 	}
 
 	public long virtualHostId;

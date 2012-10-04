@@ -19,7 +19,10 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ResourceBlock;
 
-import java.io.Serializable;
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 
 /**
  * The cache model class for representing ResourceBlock in entity cache.
@@ -29,7 +32,7 @@ import java.io.Serializable;
  * @generated
  */
 public class ResourceBlockCacheModel implements CacheModel<ResourceBlock>,
-	Serializable {
+	Externalizable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(13);
@@ -77,6 +80,44 @@ public class ResourceBlockCacheModel implements CacheModel<ResourceBlock>,
 		resourceBlockImpl.resetOriginalValues();
 
 		return resourceBlockImpl;
+	}
+
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+		resourceBlockId = objectInput.readLong();
+
+		companyId = objectInput.readLong();
+
+		groupId = objectInput.readLong();
+		name = objectInput.readUTF();
+		permissionsHash = objectInput.readUTF();
+
+		referenceCount = objectInput.readLong();
+	}
+
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
+		objectOutput.writeLong(resourceBlockId);
+
+		objectOutput.writeLong(companyId);
+
+		objectOutput.writeLong(groupId);
+
+		if (name == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(name);
+		}
+
+		if (permissionsHash == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(permissionsHash);
+		}
+
+		objectOutput.writeLong(referenceCount);
 	}
 
 	public long resourceBlockId;

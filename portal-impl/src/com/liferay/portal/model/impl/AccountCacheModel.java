@@ -19,7 +19,10 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Account;
 import com.liferay.portal.model.CacheModel;
 
-import java.io.Serializable;
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 
 import java.util.Date;
 
@@ -30,7 +33,7 @@ import java.util.Date;
  * @see Account
  * @generated
  */
-public class AccountCacheModel implements CacheModel<Account>, Serializable {
+public class AccountCacheModel implements CacheModel<Account>, Externalizable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(33);
@@ -168,6 +171,113 @@ public class AccountCacheModel implements CacheModel<Account>, Serializable {
 		accountImpl.resetOriginalValues();
 
 		return accountImpl;
+	}
+
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+		accountId = objectInput.readLong();
+
+		companyId = objectInput.readLong();
+
+		userId = objectInput.readLong();
+		userName = objectInput.readUTF();
+		createDate = objectInput.readLong();
+		modifiedDate = objectInput.readLong();
+
+		parentAccountId = objectInput.readLong();
+		name = objectInput.readUTF();
+		legalName = objectInput.readUTF();
+		legalId = objectInput.readUTF();
+		legalType = objectInput.readUTF();
+		sicCode = objectInput.readUTF();
+		tickerSymbol = objectInput.readUTF();
+		industry = objectInput.readUTF();
+		type = objectInput.readUTF();
+		size = objectInput.readUTF();
+	}
+
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
+		objectOutput.writeLong(accountId);
+
+		objectOutput.writeLong(companyId);
+
+		objectOutput.writeLong(userId);
+
+		if (userName == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(userName);
+		}
+
+		objectOutput.writeLong(createDate);
+		objectOutput.writeLong(modifiedDate);
+
+		objectOutput.writeLong(parentAccountId);
+
+		if (name == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(name);
+		}
+
+		if (legalName == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(legalName);
+		}
+
+		if (legalId == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(legalId);
+		}
+
+		if (legalType == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(legalType);
+		}
+
+		if (sicCode == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(sicCode);
+		}
+
+		if (tickerSymbol == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(tickerSymbol);
+		}
+
+		if (industry == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(industry);
+		}
+
+		if (type == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(type);
+		}
+
+		if (size == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(size);
+		}
 	}
 
 	public long accountId;

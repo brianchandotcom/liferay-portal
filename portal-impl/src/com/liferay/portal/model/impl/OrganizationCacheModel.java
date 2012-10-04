@@ -19,7 +19,10 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.Organization;
 
-import java.io.Serializable;
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 
 /**
  * The cache model class for representing Organization in entity cache.
@@ -29,7 +32,7 @@ import java.io.Serializable;
  * @generated
  */
 public class OrganizationCacheModel implements CacheModel<Organization>,
-	Serializable {
+	Externalizable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(23);
@@ -104,6 +107,72 @@ public class OrganizationCacheModel implements CacheModel<Organization>,
 		organizationImpl.resetOriginalValues();
 
 		return organizationImpl;
+	}
+
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+		organizationId = objectInput.readLong();
+
+		companyId = objectInput.readLong();
+
+		parentOrganizationId = objectInput.readLong();
+		treePath = objectInput.readUTF();
+		name = objectInput.readUTF();
+		type = objectInput.readUTF();
+
+		recursable = objectInput.readBoolean();
+
+		regionId = objectInput.readLong();
+
+		countryId = objectInput.readLong();
+
+		statusId = objectInput.readInt();
+		comments = objectInput.readUTF();
+	}
+
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
+		objectOutput.writeLong(organizationId);
+
+		objectOutput.writeLong(companyId);
+
+		objectOutput.writeLong(parentOrganizationId);
+
+		if (treePath == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(treePath);
+		}
+
+		if (name == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(name);
+		}
+
+		if (type == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(type);
+		}
+
+		objectOutput.writeBoolean(recursable);
+
+		objectOutput.writeLong(regionId);
+
+		objectOutput.writeLong(countryId);
+
+		objectOutput.writeInt(statusId);
+
+		if (comments == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(comments);
+		}
 	}
 
 	public long organizationId;

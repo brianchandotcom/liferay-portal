@@ -19,7 +19,10 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.Image;
 
-import java.io.Serializable;
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 
 import java.util.Date;
 
@@ -30,7 +33,7 @@ import java.util.Date;
  * @see Image
  * @generated
  */
-public class ImageCacheModel implements CacheModel<Image>, Serializable {
+public class ImageCacheModel implements CacheModel<Image>, Externalizable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(15);
@@ -87,6 +90,46 @@ public class ImageCacheModel implements CacheModel<Image>, Serializable {
 		imageImpl.resetOriginalValues();
 
 		return imageImpl;
+	}
+
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+		imageId = objectInput.readLong();
+		modifiedDate = objectInput.readLong();
+		text = objectInput.readUTF();
+		type = objectInput.readUTF();
+
+		height = objectInput.readInt();
+
+		width = objectInput.readInt();
+
+		size = objectInput.readInt();
+	}
+
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
+		objectOutput.writeLong(imageId);
+		objectOutput.writeLong(modifiedDate);
+
+		if (text == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(text);
+		}
+
+		if (type == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(type);
+		}
+
+		objectOutput.writeInt(height);
+
+		objectOutput.writeInt(width);
+
+		objectOutput.writeInt(size);
 	}
 
 	public long imageId;

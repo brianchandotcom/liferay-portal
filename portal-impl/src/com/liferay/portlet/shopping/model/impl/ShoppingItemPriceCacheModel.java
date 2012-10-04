@@ -19,7 +19,10 @@ import com.liferay.portal.model.CacheModel;
 
 import com.liferay.portlet.shopping.model.ShoppingItemPrice;
 
-import java.io.Serializable;
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 
 /**
  * The cache model class for representing ShoppingItemPrice in entity cache.
@@ -29,7 +32,7 @@ import java.io.Serializable;
  * @generated
  */
 public class ShoppingItemPriceCacheModel implements CacheModel<ShoppingItemPrice>,
-	Serializable {
+	Externalizable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(21);
@@ -76,6 +79,52 @@ public class ShoppingItemPriceCacheModel implements CacheModel<ShoppingItemPrice
 		shoppingItemPriceImpl.resetOriginalValues();
 
 		return shoppingItemPriceImpl;
+	}
+
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+		itemPriceId = objectInput.readLong();
+
+		itemId = objectInput.readLong();
+
+		minQuantity = objectInput.readInt();
+
+		maxQuantity = objectInput.readInt();
+
+		price = objectInput.readDouble();
+
+		discount = objectInput.readDouble();
+
+		taxable = objectInput.readBoolean();
+
+		shipping = objectInput.readDouble();
+
+		useShippingFormula = objectInput.readBoolean();
+
+		status = objectInput.readInt();
+	}
+
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
+		objectOutput.writeLong(itemPriceId);
+
+		objectOutput.writeLong(itemId);
+
+		objectOutput.writeInt(minQuantity);
+
+		objectOutput.writeInt(maxQuantity);
+
+		objectOutput.writeDouble(price);
+
+		objectOutput.writeDouble(discount);
+
+		objectOutput.writeBoolean(taxable);
+
+		objectOutput.writeDouble(shipping);
+
+		objectOutput.writeBoolean(useShippingFormula);
+
+		objectOutput.writeInt(status);
 	}
 
 	public long itemPriceId;

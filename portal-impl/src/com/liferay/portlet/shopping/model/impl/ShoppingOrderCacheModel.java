@@ -20,7 +20,10 @@ import com.liferay.portal.model.CacheModel;
 
 import com.liferay.portlet.shopping.model.ShoppingOrder;
 
-import java.io.Serializable;
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 
 import java.util.Date;
 
@@ -32,7 +35,7 @@ import java.util.Date;
  * @generated
  */
 public class ShoppingOrderCacheModel implements CacheModel<ShoppingOrder>,
-	Serializable {
+	Externalizable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(103);
@@ -419,6 +422,345 @@ public class ShoppingOrderCacheModel implements CacheModel<ShoppingOrder>,
 		shoppingOrderImpl.resetOriginalValues();
 
 		return shoppingOrderImpl;
+	}
+
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+		orderId = objectInput.readLong();
+
+		groupId = objectInput.readLong();
+
+		companyId = objectInput.readLong();
+
+		userId = objectInput.readLong();
+		userName = objectInput.readUTF();
+		createDate = objectInput.readLong();
+		modifiedDate = objectInput.readLong();
+		number = objectInput.readUTF();
+
+		tax = objectInput.readDouble();
+
+		shipping = objectInput.readDouble();
+		altShipping = objectInput.readUTF();
+
+		requiresShipping = objectInput.readBoolean();
+
+		insure = objectInput.readBoolean();
+
+		insurance = objectInput.readDouble();
+		couponCodes = objectInput.readUTF();
+
+		couponDiscount = objectInput.readDouble();
+		billingFirstName = objectInput.readUTF();
+		billingLastName = objectInput.readUTF();
+		billingEmailAddress = objectInput.readUTF();
+		billingCompany = objectInput.readUTF();
+		billingStreet = objectInput.readUTF();
+		billingCity = objectInput.readUTF();
+		billingState = objectInput.readUTF();
+		billingZip = objectInput.readUTF();
+		billingCountry = objectInput.readUTF();
+		billingPhone = objectInput.readUTF();
+
+		shipToBilling = objectInput.readBoolean();
+		shippingFirstName = objectInput.readUTF();
+		shippingLastName = objectInput.readUTF();
+		shippingEmailAddress = objectInput.readUTF();
+		shippingCompany = objectInput.readUTF();
+		shippingStreet = objectInput.readUTF();
+		shippingCity = objectInput.readUTF();
+		shippingState = objectInput.readUTF();
+		shippingZip = objectInput.readUTF();
+		shippingCountry = objectInput.readUTF();
+		shippingPhone = objectInput.readUTF();
+		ccName = objectInput.readUTF();
+		ccType = objectInput.readUTF();
+		ccNumber = objectInput.readUTF();
+
+		ccExpMonth = objectInput.readInt();
+
+		ccExpYear = objectInput.readInt();
+		ccVerNumber = objectInput.readUTF();
+		comments = objectInput.readUTF();
+		ppTxnId = objectInput.readUTF();
+		ppPaymentStatus = objectInput.readUTF();
+
+		ppPaymentGross = objectInput.readDouble();
+		ppReceiverEmail = objectInput.readUTF();
+		ppPayerEmail = objectInput.readUTF();
+
+		sendOrderEmail = objectInput.readBoolean();
+
+		sendShippingEmail = objectInput.readBoolean();
+	}
+
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
+		objectOutput.writeLong(orderId);
+
+		objectOutput.writeLong(groupId);
+
+		objectOutput.writeLong(companyId);
+
+		objectOutput.writeLong(userId);
+
+		if (userName == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(userName);
+		}
+
+		objectOutput.writeLong(createDate);
+		objectOutput.writeLong(modifiedDate);
+
+		if (number == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(number);
+		}
+
+		objectOutput.writeDouble(tax);
+
+		objectOutput.writeDouble(shipping);
+
+		if (altShipping == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(altShipping);
+		}
+
+		objectOutput.writeBoolean(requiresShipping);
+
+		objectOutput.writeBoolean(insure);
+
+		objectOutput.writeDouble(insurance);
+
+		if (couponCodes == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(couponCodes);
+		}
+
+		objectOutput.writeDouble(couponDiscount);
+
+		if (billingFirstName == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(billingFirstName);
+		}
+
+		if (billingLastName == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(billingLastName);
+		}
+
+		if (billingEmailAddress == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(billingEmailAddress);
+		}
+
+		if (billingCompany == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(billingCompany);
+		}
+
+		if (billingStreet == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(billingStreet);
+		}
+
+		if (billingCity == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(billingCity);
+		}
+
+		if (billingState == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(billingState);
+		}
+
+		if (billingZip == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(billingZip);
+		}
+
+		if (billingCountry == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(billingCountry);
+		}
+
+		if (billingPhone == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(billingPhone);
+		}
+
+		objectOutput.writeBoolean(shipToBilling);
+
+		if (shippingFirstName == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(shippingFirstName);
+		}
+
+		if (shippingLastName == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(shippingLastName);
+		}
+
+		if (shippingEmailAddress == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(shippingEmailAddress);
+		}
+
+		if (shippingCompany == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(shippingCompany);
+		}
+
+		if (shippingStreet == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(shippingStreet);
+		}
+
+		if (shippingCity == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(shippingCity);
+		}
+
+		if (shippingState == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(shippingState);
+		}
+
+		if (shippingZip == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(shippingZip);
+		}
+
+		if (shippingCountry == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(shippingCountry);
+		}
+
+		if (shippingPhone == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(shippingPhone);
+		}
+
+		if (ccName == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(ccName);
+		}
+
+		if (ccType == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(ccType);
+		}
+
+		if (ccNumber == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(ccNumber);
+		}
+
+		objectOutput.writeInt(ccExpMonth);
+
+		objectOutput.writeInt(ccExpYear);
+
+		if (ccVerNumber == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(ccVerNumber);
+		}
+
+		if (comments == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(comments);
+		}
+
+		if (ppTxnId == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(ppTxnId);
+		}
+
+		if (ppPaymentStatus == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(ppPaymentStatus);
+		}
+
+		objectOutput.writeDouble(ppPaymentGross);
+
+		if (ppReceiverEmail == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(ppReceiverEmail);
+		}
+
+		if (ppPayerEmail == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(ppPayerEmail);
+		}
+
+		objectOutput.writeBoolean(sendOrderEmail);
+
+		objectOutput.writeBoolean(sendShippingEmail);
 	}
 
 	public long orderId;

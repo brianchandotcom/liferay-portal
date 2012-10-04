@@ -19,7 +19,10 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.Group;
 
-import java.io.Serializable;
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 
 /**
  * The cache model class for representing Group in entity cache.
@@ -28,7 +31,7 @@ import java.io.Serializable;
  * @see Group
  * @generated
  */
-public class GroupCacheModel implements CacheModel<Group>, Serializable {
+public class GroupCacheModel implements CacheModel<Group>, Externalizable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(29);
@@ -113,6 +116,84 @@ public class GroupCacheModel implements CacheModel<Group>, Serializable {
 		groupImpl.resetOriginalValues();
 
 		return groupImpl;
+	}
+
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+		groupId = objectInput.readLong();
+
+		companyId = objectInput.readLong();
+
+		creatorUserId = objectInput.readLong();
+
+		classNameId = objectInput.readLong();
+
+		classPK = objectInput.readLong();
+
+		parentGroupId = objectInput.readLong();
+
+		liveGroupId = objectInput.readLong();
+		name = objectInput.readUTF();
+		description = objectInput.readUTF();
+
+		type = objectInput.readInt();
+		typeSettings = objectInput.readUTF();
+		friendlyURL = objectInput.readUTF();
+
+		site = objectInput.readBoolean();
+
+		active = objectInput.readBoolean();
+	}
+
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
+		objectOutput.writeLong(groupId);
+
+		objectOutput.writeLong(companyId);
+
+		objectOutput.writeLong(creatorUserId);
+
+		objectOutput.writeLong(classNameId);
+
+		objectOutput.writeLong(classPK);
+
+		objectOutput.writeLong(parentGroupId);
+
+		objectOutput.writeLong(liveGroupId);
+
+		if (name == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(name);
+		}
+
+		if (description == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(description);
+		}
+
+		objectOutput.writeInt(type);
+
+		if (typeSettings == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(typeSettings);
+		}
+
+		if (friendlyURL == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(friendlyURL);
+		}
+
+		objectOutput.writeBoolean(site);
+
+		objectOutput.writeBoolean(active);
 	}
 
 	public long groupId;

@@ -19,7 +19,10 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.UserTracker;
 
-import java.io.Serializable;
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 
 import java.util.Date;
 
@@ -31,7 +34,7 @@ import java.util.Date;
  * @generated
  */
 public class UserTrackerCacheModel implements CacheModel<UserTracker>,
-	Serializable {
+	Externalizable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(17);
@@ -102,6 +105,58 @@ public class UserTrackerCacheModel implements CacheModel<UserTracker>,
 		userTrackerImpl.resetOriginalValues();
 
 		return userTrackerImpl;
+	}
+
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+		userTrackerId = objectInput.readLong();
+
+		companyId = objectInput.readLong();
+
+		userId = objectInput.readLong();
+		modifiedDate = objectInput.readLong();
+		sessionId = objectInput.readUTF();
+		remoteAddr = objectInput.readUTF();
+		remoteHost = objectInput.readUTF();
+		userAgent = objectInput.readUTF();
+	}
+
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
+		objectOutput.writeLong(userTrackerId);
+
+		objectOutput.writeLong(companyId);
+
+		objectOutput.writeLong(userId);
+		objectOutput.writeLong(modifiedDate);
+
+		if (sessionId == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(sessionId);
+		}
+
+		if (remoteAddr == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(remoteAddr);
+		}
+
+		if (remoteHost == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(remoteHost);
+		}
+
+		if (userAgent == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(userAgent);
+		}
 	}
 
 	public long userTrackerId;

@@ -314,6 +314,12 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 		if (_type.equals("Boolean")) {
 			return true;
 		}
+		else if (_type.equals("Byte")) {
+			return true;
+		}
+		else if (_type.equals("Char")) {
+			return true;
+		}
 		else if (_type.equals("Double")) {
 			return true;
 		}

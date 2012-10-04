@@ -20,7 +20,10 @@ import com.liferay.portal.model.CacheModel;
 
 import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
 
-import java.io.Serializable;
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 
 /**
  * The cache model class for representing DLFileEntryMetadata in entity cache.
@@ -30,7 +33,7 @@ import java.io.Serializable;
  * @generated
  */
 public class DLFileEntryMetadataCacheModel implements CacheModel<DLFileEntryMetadata>,
-	Serializable {
+	Externalizable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(15);
@@ -74,6 +77,45 @@ public class DLFileEntryMetadataCacheModel implements CacheModel<DLFileEntryMeta
 		dlFileEntryMetadataImpl.resetOriginalValues();
 
 		return dlFileEntryMetadataImpl;
+	}
+
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+		uuid = objectInput.readUTF();
+
+		fileEntryMetadataId = objectInput.readLong();
+
+		DDMStorageId = objectInput.readLong();
+
+		DDMStructureId = objectInput.readLong();
+
+		fileEntryTypeId = objectInput.readLong();
+
+		fileEntryId = objectInput.readLong();
+
+		fileVersionId = objectInput.readLong();
+	}
+
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
+		if (uuid == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(uuid);
+		}
+
+		objectOutput.writeLong(fileEntryMetadataId);
+
+		objectOutput.writeLong(DDMStorageId);
+
+		objectOutput.writeLong(DDMStructureId);
+
+		objectOutput.writeLong(fileEntryTypeId);
+
+		objectOutput.writeLong(fileEntryId);
+
+		objectOutput.writeLong(fileVersionId);
 	}
 
 	public String uuid;

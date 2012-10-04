@@ -19,7 +19,10 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.Release;
 
-import java.io.Serializable;
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 
 import java.util.Date;
 
@@ -30,7 +33,7 @@ import java.util.Date;
  * @see Release
  * @generated
  */
-public class ReleaseCacheModel implements CacheModel<Release>, Serializable {
+public class ReleaseCacheModel implements CacheModel<Release>, Externalizable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(19);
@@ -106,6 +109,50 @@ public class ReleaseCacheModel implements CacheModel<Release>, Serializable {
 		releaseImpl.resetOriginalValues();
 
 		return releaseImpl;
+	}
+
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+		releaseId = objectInput.readLong();
+		createDate = objectInput.readLong();
+		modifiedDate = objectInput.readLong();
+		servletContextName = objectInput.readUTF();
+
+		buildNumber = objectInput.readInt();
+		buildDate = objectInput.readLong();
+
+		verified = objectInput.readBoolean();
+
+		state = objectInput.readInt();
+		testString = objectInput.readUTF();
+	}
+
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
+		objectOutput.writeLong(releaseId);
+		objectOutput.writeLong(createDate);
+		objectOutput.writeLong(modifiedDate);
+
+		if (servletContextName == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(servletContextName);
+		}
+
+		objectOutput.writeInt(buildNumber);
+		objectOutput.writeLong(buildDate);
+
+		objectOutput.writeBoolean(verified);
+
+		objectOutput.writeInt(state);
+
+		if (testString == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(testString);
+		}
 	}
 
 	public long releaseId;

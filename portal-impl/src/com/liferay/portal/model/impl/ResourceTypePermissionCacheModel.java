@@ -19,7 +19,10 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ResourceTypePermission;
 
-import java.io.Serializable;
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 
 /**
  * The cache model class for representing ResourceTypePermission in entity cache.
@@ -29,7 +32,7 @@ import java.io.Serializable;
  * @generated
  */
 public class ResourceTypePermissionCacheModel implements CacheModel<ResourceTypePermission>,
-	Serializable {
+	Externalizable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(13);
@@ -71,6 +74,40 @@ public class ResourceTypePermissionCacheModel implements CacheModel<ResourceType
 		resourceTypePermissionImpl.resetOriginalValues();
 
 		return resourceTypePermissionImpl;
+	}
+
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+		resourceTypePermissionId = objectInput.readLong();
+
+		companyId = objectInput.readLong();
+
+		groupId = objectInput.readLong();
+		name = objectInput.readUTF();
+
+		roleId = objectInput.readLong();
+
+		actionIds = objectInput.readLong();
+	}
+
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
+		objectOutput.writeLong(resourceTypePermissionId);
+
+		objectOutput.writeLong(companyId);
+
+		objectOutput.writeLong(groupId);
+
+		if (name == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(name);
+		}
+
+		objectOutput.writeLong(roleId);
+
+		objectOutput.writeLong(actionIds);
 	}
 
 	public long resourceTypePermissionId;

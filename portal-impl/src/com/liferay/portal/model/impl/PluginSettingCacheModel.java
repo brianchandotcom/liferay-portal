@@ -19,7 +19,10 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.PluginSetting;
 
-import java.io.Serializable;
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 
 /**
  * The cache model class for representing PluginSetting in entity cache.
@@ -29,7 +32,7 @@ import java.io.Serializable;
  * @generated
  */
 public class PluginSettingCacheModel implements CacheModel<PluginSetting>,
-	Serializable {
+	Externalizable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(13);
@@ -83,6 +86,48 @@ public class PluginSettingCacheModel implements CacheModel<PluginSetting>,
 		pluginSettingImpl.resetOriginalValues();
 
 		return pluginSettingImpl;
+	}
+
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+		pluginSettingId = objectInput.readLong();
+
+		companyId = objectInput.readLong();
+		pluginId = objectInput.readUTF();
+		pluginType = objectInput.readUTF();
+		roles = objectInput.readUTF();
+
+		active = objectInput.readBoolean();
+	}
+
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
+		objectOutput.writeLong(pluginSettingId);
+
+		objectOutput.writeLong(companyId);
+
+		if (pluginId == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(pluginId);
+		}
+
+		if (pluginType == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(pluginType);
+		}
+
+		if (roles == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(roles);
+		}
+
+		objectOutput.writeBoolean(active);
 	}
 
 	public long pluginSettingId;

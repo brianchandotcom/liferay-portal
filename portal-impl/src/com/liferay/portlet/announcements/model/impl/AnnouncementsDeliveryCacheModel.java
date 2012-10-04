@@ -20,7 +20,10 @@ import com.liferay.portal.model.CacheModel;
 
 import com.liferay.portlet.announcements.model.AnnouncementsDelivery;
 
-import java.io.Serializable;
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 
 /**
  * The cache model class for representing AnnouncementsDelivery in entity cache.
@@ -30,7 +33,7 @@ import java.io.Serializable;
  * @generated
  */
 public class AnnouncementsDeliveryCacheModel implements CacheModel<AnnouncementsDelivery>,
-	Serializable {
+	Externalizable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(15);
@@ -75,6 +78,44 @@ public class AnnouncementsDeliveryCacheModel implements CacheModel<Announcements
 		announcementsDeliveryImpl.resetOriginalValues();
 
 		return announcementsDeliveryImpl;
+	}
+
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+		deliveryId = objectInput.readLong();
+
+		companyId = objectInput.readLong();
+
+		userId = objectInput.readLong();
+		type = objectInput.readUTF();
+
+		email = objectInput.readBoolean();
+
+		sms = objectInput.readBoolean();
+
+		website = objectInput.readBoolean();
+	}
+
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
+		objectOutput.writeLong(deliveryId);
+
+		objectOutput.writeLong(companyId);
+
+		objectOutput.writeLong(userId);
+
+		if (type == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(type);
+		}
+
+		objectOutput.writeBoolean(email);
+
+		objectOutput.writeBoolean(sms);
+
+		objectOutput.writeBoolean(website);
 	}
 
 	public long deliveryId;

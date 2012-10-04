@@ -6,7 +6,10 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 
-import java.io.Serializable;
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 
 import java.util.Date;
 
@@ -17,7 +20,7 @@ import java.util.Date;
  * @see ${entity.name}
  * @generated
  */
-public class ${entity.name}CacheModel implements CacheModel<${entity.name}>, Serializable {
+public class ${entity.name}CacheModel implements CacheModel<${entity.name}>, Externalizable {
 
 	@Override
 	public String toString() {
@@ -78,6 +81,67 @@ public class ${entity.name}CacheModel implements CacheModel<${entity.name}>, Ser
 		</#list>
 
 		return ${entity.varName}Impl;
+	}
+
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+
+		<#list entity.regularColList as column>
+			<#if column.type != "Blob">
+				<#if column.type == "Date">
+					${column.name} = objectInput.readLong();
+				<#else>
+					<#if column.primitiveType >
+						<#assign typeName = textFormatter.format(column.type, 6)>
+
+						${column.name} = objectInput.read${typeName}();
+					<#else>
+						<#if column.type == "String">
+							${column.name} = objectInput.readUTF();
+						<#else>
+							${column.name} = (${column.type})objectInput.readObject();
+						</#if>
+					</#if>
+				</#if>
+			</#if>
+		</#list>
+
+		<#list cacheFields as cacheField>
+			${cacheField.name} = (${cacheField.type.genericValue})objectInput.readObject();
+		</#list>
+	}
+
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
+
+		<#list entity.regularColList as column>
+			<#if column.type != "Blob">
+				<#if column.type == "Date">
+					objectOutput.writeLong(${column.name});
+				<#else>
+					<#if column.primitiveType >
+						<#assign typeName = textFormatter.format(column.type, 6)>
+
+						objectOutput.write${typeName}(${column.name});
+					<#else>
+						<#if column.type == "String">
+							if (${column.name} == null) {
+								objectOutput.writeUTF(StringPool.BLANK);
+							}
+							else {
+								objectOutput.writeUTF(${column.name});
+							}
+						<#else>
+							objectOutput.writeObject(${column.name});
+						</#if>
+					</#if>
+				</#if>
+			</#if>
+		</#list>
+
+		<#list cacheFields as cacheField>
+			objectOutput.writeObject(${cacheField.name});
+		</#list>
 	}
 
 	<#list entity.regularColList as column>

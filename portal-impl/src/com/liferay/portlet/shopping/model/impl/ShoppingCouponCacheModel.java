@@ -20,7 +20,10 @@ import com.liferay.portal.model.CacheModel;
 
 import com.liferay.portlet.shopping.model.ShoppingCoupon;
 
-import java.io.Serializable;
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 
 import java.util.Date;
 
@@ -32,7 +35,7 @@ import java.util.Date;
  * @generated
  */
 public class ShoppingCouponCacheModel implements CacheModel<ShoppingCoupon>,
-	Serializable {
+	Externalizable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(37);
@@ -171,6 +174,106 @@ public class ShoppingCouponCacheModel implements CacheModel<ShoppingCoupon>,
 		shoppingCouponImpl.resetOriginalValues();
 
 		return shoppingCouponImpl;
+	}
+
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+		couponId = objectInput.readLong();
+
+		groupId = objectInput.readLong();
+
+		companyId = objectInput.readLong();
+
+		userId = objectInput.readLong();
+		userName = objectInput.readUTF();
+		createDate = objectInput.readLong();
+		modifiedDate = objectInput.readLong();
+		code = objectInput.readUTF();
+		name = objectInput.readUTF();
+		description = objectInput.readUTF();
+		startDate = objectInput.readLong();
+		endDate = objectInput.readLong();
+
+		active = objectInput.readBoolean();
+		limitCategories = objectInput.readUTF();
+		limitSkus = objectInput.readUTF();
+
+		minOrder = objectInput.readDouble();
+
+		discount = objectInput.readDouble();
+		discountType = objectInput.readUTF();
+	}
+
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
+		objectOutput.writeLong(couponId);
+
+		objectOutput.writeLong(groupId);
+
+		objectOutput.writeLong(companyId);
+
+		objectOutput.writeLong(userId);
+
+		if (userName == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(userName);
+		}
+
+		objectOutput.writeLong(createDate);
+		objectOutput.writeLong(modifiedDate);
+
+		if (code == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(code);
+		}
+
+		if (name == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(name);
+		}
+
+		if (description == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(description);
+		}
+
+		objectOutput.writeLong(startDate);
+		objectOutput.writeLong(endDate);
+
+		objectOutput.writeBoolean(active);
+
+		if (limitCategories == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(limitCategories);
+		}
+
+		if (limitSkus == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(limitSkus);
+		}
+
+		objectOutput.writeDouble(minOrder);
+
+		objectOutput.writeDouble(discount);
+
+		if (discountType == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(discountType);
+		}
 	}
 
 	public long couponId;

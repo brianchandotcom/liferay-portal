@@ -20,7 +20,10 @@ import com.liferay.portal.model.CacheModel;
 
 import com.liferay.portlet.messageboards.model.MBMailingList;
 
-import java.io.Serializable;
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 
 import java.util.Date;
 
@@ -32,7 +35,7 @@ import java.util.Date;
  * @generated
  */
 public class MBMailingListCacheModel implements CacheModel<MBMailingList>,
-	Serializable {
+	Externalizable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(53);
@@ -211,6 +214,158 @@ public class MBMailingListCacheModel implements CacheModel<MBMailingList>,
 		mbMailingListImpl.resetOriginalValues();
 
 		return mbMailingListImpl;
+	}
+
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+		uuid = objectInput.readUTF();
+
+		mailingListId = objectInput.readLong();
+
+		groupId = objectInput.readLong();
+
+		companyId = objectInput.readLong();
+
+		userId = objectInput.readLong();
+		userName = objectInput.readUTF();
+		createDate = objectInput.readLong();
+		modifiedDate = objectInput.readLong();
+
+		categoryId = objectInput.readLong();
+		emailAddress = objectInput.readUTF();
+		inProtocol = objectInput.readUTF();
+		inServerName = objectInput.readUTF();
+
+		inServerPort = objectInput.readInt();
+
+		inUseSSL = objectInput.readBoolean();
+		inUserName = objectInput.readUTF();
+		inPassword = objectInput.readUTF();
+
+		inReadInterval = objectInput.readInt();
+		outEmailAddress = objectInput.readUTF();
+
+		outCustom = objectInput.readBoolean();
+		outServerName = objectInput.readUTF();
+
+		outServerPort = objectInput.readInt();
+
+		outUseSSL = objectInput.readBoolean();
+		outUserName = objectInput.readUTF();
+		outPassword = objectInput.readUTF();
+
+		allowAnonymous = objectInput.readBoolean();
+
+		active = objectInput.readBoolean();
+	}
+
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
+		if (uuid == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(uuid);
+		}
+
+		objectOutput.writeLong(mailingListId);
+
+		objectOutput.writeLong(groupId);
+
+		objectOutput.writeLong(companyId);
+
+		objectOutput.writeLong(userId);
+
+		if (userName == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(userName);
+		}
+
+		objectOutput.writeLong(createDate);
+		objectOutput.writeLong(modifiedDate);
+
+		objectOutput.writeLong(categoryId);
+
+		if (emailAddress == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(emailAddress);
+		}
+
+		if (inProtocol == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(inProtocol);
+		}
+
+		if (inServerName == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(inServerName);
+		}
+
+		objectOutput.writeInt(inServerPort);
+
+		objectOutput.writeBoolean(inUseSSL);
+
+		if (inUserName == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(inUserName);
+		}
+
+		if (inPassword == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(inPassword);
+		}
+
+		objectOutput.writeInt(inReadInterval);
+
+		if (outEmailAddress == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(outEmailAddress);
+		}
+
+		objectOutput.writeBoolean(outCustom);
+
+		if (outServerName == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(outServerName);
+		}
+
+		objectOutput.writeInt(outServerPort);
+
+		objectOutput.writeBoolean(outUseSSL);
+
+		if (outUserName == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(outUserName);
+		}
+
+		if (outPassword == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(outPassword);
+		}
+
+		objectOutput.writeBoolean(allowAnonymous);
+
+		objectOutput.writeBoolean(active);
 	}
 
 	public String uuid;

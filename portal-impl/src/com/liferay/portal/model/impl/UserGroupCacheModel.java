@@ -19,7 +19,10 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.UserGroup;
 
-import java.io.Serializable;
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 
 /**
  * The cache model class for representing UserGroup in entity cache.
@@ -28,7 +31,8 @@ import java.io.Serializable;
  * @see UserGroup
  * @generated
  */
-public class UserGroupCacheModel implements CacheModel<UserGroup>, Serializable {
+public class UserGroupCacheModel implements CacheModel<UserGroup>,
+	Externalizable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(13);
@@ -76,6 +80,44 @@ public class UserGroupCacheModel implements CacheModel<UserGroup>, Serializable 
 		userGroupImpl.resetOriginalValues();
 
 		return userGroupImpl;
+	}
+
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+		userGroupId = objectInput.readLong();
+
+		companyId = objectInput.readLong();
+
+		parentUserGroupId = objectInput.readLong();
+		name = objectInput.readUTF();
+		description = objectInput.readUTF();
+
+		addedByLDAPImport = objectInput.readBoolean();
+	}
+
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
+		objectOutput.writeLong(userGroupId);
+
+		objectOutput.writeLong(companyId);
+
+		objectOutput.writeLong(parentUserGroupId);
+
+		if (name == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(name);
+		}
+
+		if (description == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(description);
+		}
+
+		objectOutput.writeBoolean(addedByLDAPImport);
 	}
 
 	public long userGroupId;

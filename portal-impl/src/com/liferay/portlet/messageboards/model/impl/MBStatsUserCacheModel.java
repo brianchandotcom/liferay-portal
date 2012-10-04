@@ -19,7 +19,10 @@ import com.liferay.portal.model.CacheModel;
 
 import com.liferay.portlet.messageboards.model.MBStatsUser;
 
-import java.io.Serializable;
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 
 import java.util.Date;
 
@@ -31,7 +34,7 @@ import java.util.Date;
  * @generated
  */
 public class MBStatsUserCacheModel implements CacheModel<MBStatsUser>,
-	Serializable {
+	Externalizable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(11);
@@ -69,6 +72,30 @@ public class MBStatsUserCacheModel implements CacheModel<MBStatsUser>,
 		mbStatsUserImpl.resetOriginalValues();
 
 		return mbStatsUserImpl;
+	}
+
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+		statsUserId = objectInput.readLong();
+
+		groupId = objectInput.readLong();
+
+		userId = objectInput.readLong();
+
+		messageCount = objectInput.readInt();
+		lastPostDate = objectInput.readLong();
+	}
+
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
+		objectOutput.writeLong(statsUserId);
+
+		objectOutput.writeLong(groupId);
+
+		objectOutput.writeLong(userId);
+
+		objectOutput.writeInt(messageCount);
+		objectOutput.writeLong(lastPostDate);
 	}
 
 	public long statsUserId;

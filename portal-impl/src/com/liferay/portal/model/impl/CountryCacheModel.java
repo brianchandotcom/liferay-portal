@@ -19,7 +19,10 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.Country;
 
-import java.io.Serializable;
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 
 /**
  * The cache model class for representing Country in entity cache.
@@ -28,7 +31,7 @@ import java.io.Serializable;
  * @see Country
  * @generated
  */
-public class CountryCacheModel implements CacheModel<Country>, Serializable {
+public class CountryCacheModel implements CacheModel<Country>, Externalizable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(17);
@@ -100,6 +103,64 @@ public class CountryCacheModel implements CacheModel<Country>, Serializable {
 		countryImpl.resetOriginalValues();
 
 		return countryImpl;
+	}
+
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+		countryId = objectInput.readLong();
+		name = objectInput.readUTF();
+		a2 = objectInput.readUTF();
+		a3 = objectInput.readUTF();
+		number = objectInput.readUTF();
+		idd = objectInput.readUTF();
+
+		zipRequired = objectInput.readBoolean();
+
+		active = objectInput.readBoolean();
+	}
+
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
+		objectOutput.writeLong(countryId);
+
+		if (name == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(name);
+		}
+
+		if (a2 == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(a2);
+		}
+
+		if (a3 == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(a3);
+		}
+
+		if (number == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(number);
+		}
+
+		if (idd == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(idd);
+		}
+
+		objectOutput.writeBoolean(zipRequired);
+
+		objectOutput.writeBoolean(active);
 	}
 
 	public long countryId;

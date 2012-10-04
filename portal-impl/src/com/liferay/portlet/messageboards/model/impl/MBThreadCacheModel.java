@@ -20,7 +20,10 @@ import com.liferay.portal.model.CacheModel;
 
 import com.liferay.portlet.messageboards.model.MBThread;
 
-import java.io.Serializable;
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 
 import java.util.Date;
 
@@ -31,7 +34,7 @@ import java.util.Date;
  * @see MBThread
  * @generated
  */
-public class MBThreadCacheModel implements CacheModel<MBThread>, Serializable {
+public class MBThreadCacheModel implements CacheModel<MBThread>, Externalizable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(33);
@@ -115,6 +118,77 @@ public class MBThreadCacheModel implements CacheModel<MBThread>, Serializable {
 		mbThreadImpl.resetOriginalValues();
 
 		return mbThreadImpl;
+	}
+
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+		threadId = objectInput.readLong();
+
+		groupId = objectInput.readLong();
+
+		companyId = objectInput.readLong();
+
+		categoryId = objectInput.readLong();
+
+		rootMessageId = objectInput.readLong();
+
+		rootMessageUserId = objectInput.readLong();
+
+		messageCount = objectInput.readInt();
+
+		viewCount = objectInput.readInt();
+
+		lastPostByUserId = objectInput.readLong();
+		lastPostDate = objectInput.readLong();
+
+		priority = objectInput.readDouble();
+
+		question = objectInput.readBoolean();
+
+		status = objectInput.readInt();
+
+		statusByUserId = objectInput.readLong();
+		statusByUserName = objectInput.readUTF();
+		statusDate = objectInput.readLong();
+	}
+
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
+		objectOutput.writeLong(threadId);
+
+		objectOutput.writeLong(groupId);
+
+		objectOutput.writeLong(companyId);
+
+		objectOutput.writeLong(categoryId);
+
+		objectOutput.writeLong(rootMessageId);
+
+		objectOutput.writeLong(rootMessageUserId);
+
+		objectOutput.writeInt(messageCount);
+
+		objectOutput.writeInt(viewCount);
+
+		objectOutput.writeLong(lastPostByUserId);
+		objectOutput.writeLong(lastPostDate);
+
+		objectOutput.writeDouble(priority);
+
+		objectOutput.writeBoolean(question);
+
+		objectOutput.writeInt(status);
+
+		objectOutput.writeLong(statusByUserId);
+
+		if (statusByUserName == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(statusByUserName);
+		}
+
+		objectOutput.writeLong(statusDate);
 	}
 
 	public long threadId;

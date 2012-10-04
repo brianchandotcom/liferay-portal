@@ -19,7 +19,10 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.PortletPreferences;
 
-import java.io.Serializable;
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 
 /**
  * The cache model class for representing PortletPreferences in entity cache.
@@ -29,7 +32,7 @@ import java.io.Serializable;
  * @generated
  */
 public class PortletPreferencesCacheModel implements CacheModel<PortletPreferences>,
-	Serializable {
+	Externalizable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(13);
@@ -76,6 +79,44 @@ public class PortletPreferencesCacheModel implements CacheModel<PortletPreferenc
 		portletPreferencesImpl.resetOriginalValues();
 
 		return portletPreferencesImpl;
+	}
+
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+		portletPreferencesId = objectInput.readLong();
+
+		ownerId = objectInput.readLong();
+
+		ownerType = objectInput.readInt();
+
+		plid = objectInput.readLong();
+		portletId = objectInput.readUTF();
+		preferences = objectInput.readUTF();
+	}
+
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
+		objectOutput.writeLong(portletPreferencesId);
+
+		objectOutput.writeLong(ownerId);
+
+		objectOutput.writeInt(ownerType);
+
+		objectOutput.writeLong(plid);
+
+		if (portletId == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(portletId);
+		}
+
+		if (preferences == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(preferences);
+		}
 	}
 
 	public long portletPreferencesId;

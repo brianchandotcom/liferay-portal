@@ -20,7 +20,10 @@ import com.liferay.portal.model.CacheModel;
 
 import com.liferay.portlet.journal.model.JournalArticleResource;
 
-import java.io.Serializable;
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 
 /**
  * The cache model class for representing JournalArticleResource in entity cache.
@@ -30,7 +33,7 @@ import java.io.Serializable;
  * @generated
  */
 public class JournalArticleResourceCacheModel implements CacheModel<JournalArticleResource>,
-	Serializable {
+	Externalizable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(9);
@@ -71,6 +74,37 @@ public class JournalArticleResourceCacheModel implements CacheModel<JournalArtic
 		journalArticleResourceImpl.resetOriginalValues();
 
 		return journalArticleResourceImpl;
+	}
+
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+		uuid = objectInput.readUTF();
+
+		resourcePrimKey = objectInput.readLong();
+
+		groupId = objectInput.readLong();
+		articleId = objectInput.readUTF();
+	}
+
+	public void writeExternal(ObjectOutput objectOutput)
+		throws IOException {
+		if (uuid == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(uuid);
+		}
+
+		objectOutput.writeLong(resourcePrimKey);
+
+		objectOutput.writeLong(groupId);
+
+		if (articleId == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(articleId);
+		}
 	}
 
 	public String uuid;

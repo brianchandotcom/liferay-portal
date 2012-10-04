@@ -21,21 +21,16 @@ import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.trash.BaseTrashHandler;
 import com.liferay.portal.kernel.trash.TrashRenderer;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.repository.liferayrepository.LiferayRepository;
-import com.liferay.portal.security.permission.ActionKeys;
-import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.RepositoryServiceUtil;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFolderServiceUtil;
-import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.trash.DuplicateEntryException;
-import com.liferay.portlet.trash.TrashEntryConstants;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.util.TrashUtil;
 
@@ -52,19 +47,7 @@ public class DLFolderTrashHandler extends BaseTrashHandler {
 	public static final String CLASS_NAME = DLFolder.class.getName();
 
 	@Override
-	public void checkAddPermission(
-			PermissionChecker permissionChecker, long groupId,
-			long containerModelId)
-		throws PortalException, SystemException {
-
-		DLFolderPermission.check(
-			permissionChecker, groupId, containerModelId,
-			ActionKeys.ADD_FOLDER);
-	}
-
-	@Override
-	public void checkDuplicateTrashEntry(
-			TrashEntry trashEntry, long containerModelId, String newName)
+	public void checkDuplicateTrashEntry(TrashEntry trashEntry, String newName)
 		throws PortalException, SystemException {
 
 		DLFolder dlFolder = getDLFolder(trashEntry.getClassPK());
@@ -76,15 +59,6 @@ public class DLFolderTrashHandler extends BaseTrashHandler {
 		}
 
 		String originalTitle = TrashUtil.stripTrashNamespace(restoredTitle);
-
-		if (restoredTitle.indexOf(StringPool.FORWARD_SLASH) > 0) {
-			originalTitle = restoredTitle.substring(
-				0, restoredTitle.indexOf(StringPool.FORWARD_SLASH));
-		}
-
-		if (containerModelId == TrashEntryConstants.DEFAULT_CONTAINER_ID) {
-			containerModelId = dlFolder.getParentFolderId();
-		}
 
 		DLFolder duplicateDLFolder = DLFolderLocalServiceUtil.fetchFolder(
 			dlFolder.getGroupId(), dlFolder.getParentFolderId(), originalTitle);

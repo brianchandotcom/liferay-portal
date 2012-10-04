@@ -21,14 +21,11 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.ContainerModel;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.security.permission.ActionKeys;
-import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.trash.model.TrashEntry;
-import com.liferay.portlet.trash.service.TrashEntryLocalServiceUtil;
 
 import java.util.Date;
 import java.util.List;
@@ -56,11 +53,12 @@ import javax.portlet.PortletRequest;
  */
 public abstract class BaseTrashHandler implements TrashHandler {
 
-	public void checkDuplicateTrashEntry(
-			TrashEntry trashEntry, long containerModelId, String newName)
+	@SuppressWarnings("unused")
+	public void checkDuplicateTrashEntry(TrashEntry trashEntry, String newName)
 		throws PortalException, SystemException {
 	}
 
+	@SuppressWarnings("unused")
 	public void deleteTrashAttachments(Group group, Date date)
 		throws PortalException, SystemException {
 	}
@@ -111,12 +109,14 @@ public abstract class BaseTrashHandler implements TrashHandler {
 		return "deleted-in-x";
 	}
 
+	@SuppressWarnings("unused")
 	public String getRestoreLink(PortletRequest PortletRequest, long classPK)
 		throws PortalException, SystemException {
 
 		return StringPool.BLANK;
 	}
 
+	@SuppressWarnings("unused")
 	public String getRestoreMessage(PortletRequest portletRequest, long classPK)
 		throws PortalException, SystemException {
 
@@ -146,32 +146,6 @@ public abstract class BaseTrashHandler implements TrashHandler {
 		}
 
 		return null;
-	}
-
-	public boolean hasTrashPermission(
-			PermissionChecker permissionChecker, long groupId, long classPK,
-			String trashActionId)
-		throws PortalException, SystemException {
-
-		String actionId = trashActionId;
-
-		if (trashActionId.equals(ActionKeys.DELETE)) {
-			actionId = ActionKeys.DELETE;
-		}
-		else if (trashActionId.equals(TrashActionKeys.OVERWRITE)) {
-			actionId = ActionKeys.DELETE;
-		}
-		else if (trashActionId.equals(TrashActionKeys.MOVE)) {
-			return false;
-		}
-		else if (trashActionId.equals(TrashActionKeys.RENAME)) {
-			actionId = ActionKeys.UPDATE;
-		}
-		else if (trashActionId.equals(TrashActionKeys.RESTORE)) {
-			actionId = ActionKeys.DELETE;
-		}
-
-		return hasPermission(permissionChecker, classPK, actionId);
 	}
 
 	public boolean isRestorable(long classPK)
@@ -208,16 +182,6 @@ public abstract class BaseTrashHandler implements TrashHandler {
 		return AssetRendererFactoryRegistryUtil.
 			getAssetRendererFactoryByClassName(getClassName());
 	}
-
-	protected TrashEntry getEntry(long entryId)
-		throws PortalException, SystemException {
-
-		return TrashEntryLocalServiceUtil.getEntry(entryId);
-	}
-
-	protected abstract boolean hasPermission(
-		PermissionChecker permissionChecker, long classPK, String actionId)
-	throws PortalException, SystemException;
 
 	private static Log _log = LogFactoryUtil.getLog(BaseTrashHandler.class);
 

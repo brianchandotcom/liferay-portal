@@ -20,11 +20,8 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.trash.BaseTrashHandler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.repository.liferayrepository.LiferayRepository;
-import com.liferay.portal.security.permission.ActionKeys;
-import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.RepositoryServiceUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
@@ -33,10 +30,8 @@ import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.trash.DuplicateEntryException;
-import com.liferay.portlet.trash.TrashEntryConstants;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.util.TrashUtil;
 
@@ -54,19 +49,7 @@ public class DLFileEntryTrashHandler extends BaseTrashHandler {
 	public static final String CLASS_NAME = DLFileEntry.class.getName();
 
 	@Override
-	public void checkAddPermission(
-			PermissionChecker permissionChecker, long groupId,
-			long containerModelId)
-		throws PortalException, SystemException {
-
-		DLFolderPermission.check(
-			permissionChecker, groupId, containerModelId,
-			ActionKeys.ADD_DOCUMENT);
-	}
-
-	@Override
-	public void checkDuplicateTrashEntry(
-			TrashEntry trashEntry, long containerModelId, String newName)
+	public void checkDuplicateTrashEntry(TrashEntry trashEntry, String newName)
 		throws PortalException, SystemException {
 
 		DLFileEntry dlFileEntry = getDLFileEntry(trashEntry.getClassPK());
@@ -79,18 +62,10 @@ public class DLFileEntryTrashHandler extends BaseTrashHandler {
 
 		String originalTitle = TrashUtil.stripTrashNamespace(restoredTitle);
 
-		if (restoredTitle.indexOf(StringPool.FORWARD_SLASH) > 0) {
-			originalTitle = restoredTitle.substring(
-				0, restoredTitle.indexOf(StringPool.FORWARD_SLASH));
-		}
-
-		if (containerModelId == TrashEntryConstants.DEFAULT_CONTAINER_ID) {
-			containerModelId = dlFileEntry.getFolderId();
-		}
-
 		DLFileEntry duplicateDLFileEntry =
 			DLFileEntryLocalServiceUtil.fetchFileEntry(
-				dlFileEntry.getGroupId(), containerModelId, originalTitle);
+				dlFileEntry.getGroupId(), dlFileEntry.getFolderId(),
+				originalTitle);
 
 		if (duplicateDLFileEntry != null) {
 			DuplicateEntryException dee = new DuplicateEntryException();

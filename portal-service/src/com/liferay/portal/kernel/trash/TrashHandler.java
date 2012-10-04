@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.ContainerModel;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.trash.model.TrashEntry;
 
@@ -94,15 +93,13 @@ public interface TrashHandler {
 	 * being restored or moved out of the trash.
 	 *
 	 * @param  trashEntry the trash entry to check
-	 * @param  containerModelId the primary key of the destination container
 	 *         (e.g. folder)
 	 * @param  newName the new name to be assigned if the check is successful
 	 *         (optionally <code>null</code> if there is no rename)
 	 * @throws PortalException if the entry could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void checkDuplicateTrashEntry(
-			TrashEntry trashEntry, long containerModelId, String newName)
+	public void checkDuplicateTrashEntry(TrashEntry trashEntry, String newName)
 		throws PortalException, SystemException;
 
 	/**
@@ -301,25 +298,6 @@ public interface TrashHandler {
 	 */
 	public TrashRenderer getTrashRenderer(long classPK)
 		throws PortalException, SystemException;
-
-	/**
-	 * Returns <code>true</code> if the user has the required permission on the
-	 * entry with the primary key.
-	 *
-	 * @param  permissionChecker the permission checker
-	 * @param  groupId the primary key of the group
-	 * @param  classPK the primary key of the entry
-	 * @param  trashActionId the permission to check for
-	 * @return <code>true</code> if the user has the required permission;
-	 *         <code>false</code> otherwise
-	 * @throws PortalException if the entry with the primary key could not be
-	 *         found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public boolean hasTrashPermission(
-		PermissionChecker permissionChecker, long groupId, long classPK,
-		String trashActionId)
-	throws PortalException, SystemException;
 
 	/**
 	 * Returns <code>true</code> if the entry with the primary key is in the

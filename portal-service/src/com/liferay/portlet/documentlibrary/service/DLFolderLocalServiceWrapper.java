@@ -291,8 +291,9 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 	}
 
 	/**
-	* @deprecated {@link #addFolder(long, long, long, boolean, long, String,
-	String, boolean, ServiceContext)}
+	* @deprecated As of 6.2, replaced by more general {@link #addFolder(long,
+	long, long, boolean, long, String, String, boolean,
+	ServiceContext)}
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFolder addFolder(
 		long userId, long groupId, long repositoryId, boolean mountPoint,
@@ -341,8 +342,8 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 	}
 
 	/**
-	* @deprecated {@link #getFileEntriesAndFileShortcuts(long, long,
-	QueryDefinition)}
+	* @deprecated Replaced by {@link #getFileEntriesAndFileShortcuts(long,
+	long, QueryDefinition)}
 	*/
 	public java.util.List<java.lang.Object> getFileEntriesAndFileShortcuts(
 		long groupId, long folderId, int status, int start, int end)
@@ -360,8 +361,8 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 	}
 
 	/**
-	* @deprecated {@link #getFileEntriesAndFileShortcutsCount(long, long,
-	QueryDefinition)}
+	* @deprecated Replaced by {@link #getFileEntriesAndFileShortcutsCount(long,
+	long, QueryDefinition)}
 	*/
 	public int getFileEntriesAndFileShortcutsCount(long groupId, long folderId,
 		int status) throws com.liferay.portal.kernel.exception.SystemException {
@@ -425,7 +426,8 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 	}
 
 	/**
-	* @deprecated {@link #getFoldersAndFileEntriesAndFileShortcuts(long, long,
+	* @deprecated Replaced by {@link
+	#getFoldersAndFileEntriesAndFileShortcuts(long, long,
 	String[], boolean, QueryDefinition)}
 	*/
 	public java.util.List<java.lang.Object> getFoldersAndFileEntriesAndFileShortcuts(
@@ -437,8 +439,9 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 	}
 
 	/**
-	* @deprecated {@link #getFoldersAndFileEntriesAndFileShortcutsCount(long,
-	long, String[], boolean, QueryDefinition)}
+	* @deprecated Replaced by {@link
+	#getFoldersAndFileEntriesAndFileShortcutsCount(long, long,
+	String[], boolean, QueryDefinition)}
 	*/
 	public java.util.List<java.lang.Object> getFoldersAndFileEntriesAndFileShortcuts(
 		long groupId, long folderId, int status, java.lang.String[] mimeTypes,
@@ -459,8 +462,9 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 	}
 
 	/**
-	* @deprecated {@link #getFoldersAndFileEntriesAndFileShortcutsCount(long,
-	long, String[], boolean, QueryDefinition)}
+	* @deprecated Replaced by {@link
+	#getFoldersAndFileEntriesAndFileShortcutsCount(long, long,
+	String[], boolean, QueryDefinition)}
 	*/
 	public int getFoldersAndFileEntriesAndFileShortcutsCount(long groupId,
 		long folderId, int status, boolean includeMountFolders)
@@ -470,8 +474,9 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 	}
 
 	/**
-	* @deprecated {@link #getFoldersAndFileEntriesAndFileShortcutsCount(long,
-	long, String[], boolean, QueryDefinition)}
+	* @deprecated Replaced by {@link
+	#getFoldersAndFileEntriesAndFileShortcutsCount(long, long,
+	String[], boolean, QueryDefinition)}
 	*/
 	public int getFoldersAndFileEntriesAndFileShortcutsCount(long groupId,
 		long folderId, int status, java.lang.String[] mimeTypes,

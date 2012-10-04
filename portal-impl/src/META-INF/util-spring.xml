@@ -466,6 +466,20 @@
 			<bean class="com.liferay.portal.util.PrefsPropsImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portal.kernel.util.ThreadLocalDistributor" class="com.liferay.portal.kernel.util.ThreadLocalDistributor">
+		<property name="threadLocalSources">
+			<list>
+				<bean class="com.liferay.portal.kernel.util.KeyValuePair">
+					<constructor-arg name="key" value="com.liferay.portal.service.ServiceContextThreadLocal" />
+					<constructor-arg name="value" value="_serviceContextThreadLocal" />
+				</bean>
+				<bean class="com.liferay.portal.kernel.util.KeyValuePair">
+					<constructor-arg name="key" value="com.liferay.portal.kernel.staging.MergeLayoutPrototypesThreadLocal" />
+					<constructor-arg name="value" value="_inProgress" />
+				</bean>
+			</list>
+		</property>
+	</bean>
 	<bean id="com.liferay.portal.kernel.uuid.PortalUUID" class="com.liferay.portal.uuid.PortalUUIDImpl" />
 	<bean id="com.liferay.portal.kernel.uuid.PortalUUIDUtil" class="com.liferay.portal.kernel.uuid.PortalUUIDUtil">
 		<property name="portalUUID" ref="com.liferay.portal.kernel.uuid.PortalUUID" />

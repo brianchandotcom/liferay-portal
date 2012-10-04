@@ -281,7 +281,7 @@
 	</target>
 
 	<target name="build-test-ant-scripts">
-		<property name="build-test-ant-scripts.version" value="0" />
+		<property name="build-test-ant-scripts.version" value="1" />
 
 		<if>
 			<available file="portal-web/test-ant-scripts/version" />
@@ -1497,8 +1497,73 @@
 		</antcall>
 
 		<antcall target="build-test-ant-script">
-			<param name="test.ant.script.command" value="portal-web-asset-publisher" />
-			<param name="test.ant.script.suite" value="PortalWebAssetPublisherTestSuite" />
+			<param name="test.ant.script.command" value="portal-web-asset-publisher-archived-setup" />
+			<param name="test.ant.script.suite" value="PortalWebAssetPublisherArchivedSetupTestSuite" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="portal-web-asset-publisher-blogs-entry" />
+			<param name="test.ant.script.suite" value="PortalWebAssetPublisherBlogsEntryTestSuite" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="portal-web-asset-publisher-blogs-entry-comment" />
+			<param name="test.ant.script.suite" value="PortalWebAssetPublisherBlogsEntryCommentTestSuite" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="portal-web-asset-publisher-bm-bookmark" />
+			<param name="test.ant.script.suite" value="PortalWebAssetPublisherBMBookmarkTestSuite" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="portal-web-asset-publisher-dm-document" />
+			<param name="test.ant.script.suite" value="PortalWebAssetPublisherDMDocumentTestSuite" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="portal-web-asset-publisher-dm-document-comment" />
+			<param name="test.ant.script.suite" value="PortalWebAssetPublisherDMDocumentCommentTestSuite" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="portal-web-asset-publisher-dm-image" />
+			<param name="test.ant.script.suite" value="PortalWebAssetPublisherDMImageTestSuite" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="portal-web-asset-publisher-lar" />
+			<param name="test.ant.script.suite" value="PortalWebAssetPublisherLARTestSuite" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="portal-web-asset-publisher-mb-thread" />
+			<param name="test.ant.script.suite" value="PortalWebAssetPublisherMBThreadTestSuite" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="portal-web-asset-publisher-portlet" />
+			<param name="test.ant.script.suite" value="PortalWebAssetPublisherPortletTestSuite" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="portal-web-asset-publisher-wc-web-content" />
+			<param name="test.ant.script.suite" value="PortalWebAssetPublisherWCWebContentTestSuite" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="portal-web-asset-publisher-wc-web-content-comment" />
+			<param name="test.ant.script.suite" value="PortalWebAssetPublisherWCWebContentCommentTestSuite" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="portal-web-asset-publisher-wiki-page" />
+			<param name="test.ant.script.suite" value="PortalWebAssetPublisherWikiPageTestSuite" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="portal-web-asset-publisher-wiki-page-comment" />
+			<param name="test.ant.script.suite" value="PortalWebAssetPublisherWikiPageCommentTestSuite" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">

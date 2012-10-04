@@ -615,6 +615,10 @@ public class ThemeDisplay
 		return _lifecycleAction;
 	}
 
+	public boolean isLifecycleEvent() {
+		return _lifecycleEvent;
+	}
+
 	public boolean isLifecycleRender() {
 		return _lifecycleRender;
 	}
@@ -886,6 +890,10 @@ public class ThemeDisplay
 
 	public void setLifecycleAction(boolean lifecycleAction) {
 		_lifecycleAction = lifecycleAction;
+	}
+
+	public void setLifecycleEvent(boolean lifecycleEvent) {
+		_lifecycleEvent = lifecycleEvent;
 	}
 
 	public void setLifecycleRender(boolean lifecycleRender) {
@@ -1360,6 +1368,7 @@ public class ThemeDisplay
 	private LayoutTypePortlet _layoutTypePortlet;
 	private String _lifecycle;
 	private boolean _lifecycleAction;
+	private boolean _lifecycleEvent;
 	private boolean _lifecycleRender;
 	private boolean _lifecycleResource;
 	private Locale _locale;

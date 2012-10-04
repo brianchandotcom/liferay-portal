@@ -46,8 +46,8 @@ public class JSONWebServiceActionsManagerUtil {
 	public static JSONWebServiceActionMapping getJSONWebServiceActionMapping(
 		String signature) {
 
-		return getJSONWebServiceActionsManager().
-			getJSONWebServiceActionMapping(signature);
+		return getJSONWebServiceActionsManager().getJSONWebServiceActionMapping(
+			signature);
 	}
 
 	public static List<JSONWebServiceActionMapping>

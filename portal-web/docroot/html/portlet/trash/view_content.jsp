@@ -118,8 +118,8 @@
 	</c:if>
 </div>
 
-<aui:script use="liferay-trash">
-	new Liferay.Portlet.Trash(
+<aui:script use="liferay-restore-entry">
+	new Liferay.RestoreEntry(
 		{
 			checkEntryURL: '<portlet:actionURL><portlet:param name="<%= Constants.CMD %>" value="checkEntry" /><portlet:param name="struts_action" value="/trash/edit_entry" /></portlet:actionURL>',
 			namespace: '<portlet:namespace />',

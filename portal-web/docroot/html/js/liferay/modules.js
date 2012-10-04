@@ -90,6 +90,7 @@
 			'staging-branch': ['liferay-staging'],
 			'staging-version': ['aui-button-item', 'liferay-staging'],
 			'store': ['aui-io-request'],
+			'restore-entry': ['aui-dialog', 'aui-io-request', 'liferay-portlet-base'],
 			'token-list': ['aui-base', 'aui-template'],
 			'translation-manager': ['aui-base'],
 			'undo-manager': ['aui-data-set', 'base'],

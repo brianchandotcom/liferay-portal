@@ -1553,6 +1553,9 @@
 		<icon>/html/icons/my_workflow_tasks.png</icon>
 		<struts-path>my_workflow_tasks</struts-path>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
+		<friendly-url-mapper-class>com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper</friendly-url-mapper-class>
+		<friendly-url-mapping>my_workflow_tasks</friendly-url-mapping>
+		<friendly-url-routes>com/liferay/portlet/workflowtasks/my-workflow-tasks-friendly-url-routes.xml</friendly-url-routes>
 		<control-panel-entry-category>my</control-panel-entry-category>
 		<control-panel-entry-weight>3.0</control-panel-entry-weight>
 		<control-panel-entry-class>com.liferay.portal.workflow.MyWorkflowTasksControlPanelEntry</control-panel-entry-class>
@@ -1622,6 +1625,9 @@
 		<icon>/html/icons/my_workflow_instances.png</icon>
 		<struts-path>my_workflow_instances</struts-path>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
+		<friendly-url-mapper-class>com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper</friendly-url-mapper-class>
+		<friendly-url-mapping>my_workflow_instances</friendly-url-mapping>
+		<friendly-url-routes>com/liferay/portlet/workflowinstances/workflow-instances-friendly-url-routes.xml</friendly-url-routes>
 		<control-panel-entry-category>my</control-panel-entry-category>
 		<control-panel-entry-weight>4.0</control-panel-entry-weight>
 		<control-panel-entry-class>com.liferay.portal.workflow.MyWorkflowInstancesControlPanelEntry</control-panel-entry-class>

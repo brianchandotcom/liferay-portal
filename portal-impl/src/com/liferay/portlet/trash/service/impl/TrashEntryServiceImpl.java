@@ -20,9 +20,9 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
-import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.trash.model.TrashEntry;
@@ -65,10 +65,10 @@ public class TrashEntryServiceImpl extends TrashEntryServiceBaseImpl {
 				TrashHandler trashHandler =
 					TrashHandlerRegistryUtil.getTrashHandler(className);
 
-				TrashRenderer trashRenderer = trashHandler.getTrashRenderer(
-					classPK);
+				if (trashHandler.hasPermission(
+						permissionChecker, className, classPK,
+						ActionKeys.DELETE)) {
 
-				if (trashRenderer.hasDeletePermission(permissionChecker)) {
 					trashHandler.deleteTrashEntry(classPK);
 				}
 			}
@@ -133,10 +133,10 @@ public class TrashEntryServiceImpl extends TrashEntryServiceBaseImpl {
 				TrashHandler trashHandler =
 					TrashHandlerRegistryUtil.getTrashHandler(className);
 
-				TrashRenderer trashRenderer = trashHandler.getTrashRenderer(
-					classPK);
+				if (trashHandler.hasPermission(
+						permissionChecker, className, classPK,
+						ActionKeys.VIEW)) {
 
-				if (trashRenderer.hasViewPermission(permissionChecker)) {
 					filteredEntries.add(entry);
 				}
 			}

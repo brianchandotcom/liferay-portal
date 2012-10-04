@@ -23,12 +23,14 @@ import com.liferay.portal.kernel.trash.BaseTrashHandler;
 import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.repository.liferayrepository.LiferayRepository;
+import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.RepositoryServiceUtil;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFolderServiceUtil;
+import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.trash.DuplicateEntryException;
 import com.liferay.portlet.trash.model.TrashEntry;
@@ -145,6 +147,18 @@ public class DLFolderTrashHandler extends BaseTrashHandler {
 		Folder folder = DLAppLocalServiceUtil.getFolder(classPK);
 
 		return new DLFolderTrashRenderer(folder);
+	}
+
+	@Override
+	public boolean hasPermission(
+			PermissionChecker permissionChecker, String className, long classPK,
+			String actionId)
+		throws PortalException, SystemException {
+
+		DLFolder dlFolder = getDLFolder(classPK);
+
+		return DLFolderPermission.contains(
+			permissionChecker, dlFolder, actionId);
 	}
 
 	public boolean isInTrash(long classPK)

@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.ContainerModel;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.trash.model.TrashEntry;
 
@@ -297,6 +298,11 @@ public interface TrashHandler {
 	 * @throws SystemException if a system exception occurred
 	 */
 	public TrashRenderer getTrashRenderer(long classPK)
+		throws PortalException, SystemException;
+
+	public boolean hasPermission(
+			PermissionChecker permissionChecker, String className, long classPK,
+			String actionId)
 		throws PortalException, SystemException;
 
 	/**

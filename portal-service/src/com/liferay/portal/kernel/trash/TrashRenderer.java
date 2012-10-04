@@ -14,10 +14,6 @@
 
 package com.liferay.portal.kernel.trash;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.security.permission.PermissionChecker;
-
 import java.util.Locale;
 
 import javax.portlet.PortletRequest;
@@ -40,12 +36,6 @@ public interface TrashRenderer {
 	public String getTitle(Locale locale);
 
 	public String getType();
-
-	public boolean hasDeletePermission(PermissionChecker permissionChecker)
-		throws PortalException, SystemException;
-
-	public boolean hasViewPermission(PermissionChecker permissionChecker)
-		throws PortalException, SystemException;
 
 	public String render(
 			RenderRequest renderRequest, RenderResponse renderResponse,

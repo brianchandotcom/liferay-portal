@@ -33,13 +33,14 @@
 			title=entry.getTitle()
 			url=viewURL
 		/>
+
 		${formattedContent}
 	</div>
 
 	<div class="page-actions">
 		<div class="article-actions">
 			<@add_child_icon />
-		   	<@attatchments_icon />
+			<@attatchments_icon />
 		</div>
 	</div>
 
@@ -52,6 +53,7 @@
 <div class="page-categorization">
 	<div class="page-categories">
 		<#assign categorizedPagesURL = renderResponse.createRenderURL() />
+
 		${categorizedPagesURL.setParameter("struts_action", "/wiki/view_categorized_pages")}
 		${categorizedPagesURL.setParameter("nodeId", entry.getNodeId()?string)}
 
@@ -64,6 +66,7 @@
 
 	<div class="page-tags">
 		<#assign taggedPagesURL = renderResponse.createRenderURL() />
+
 		${taggedPagesURL.setParameter("struts_action", "/wiki/view_tagged_pages")}
 		${taggedPagesURL.setParameter("nodeId", entry.getNodeId()?string)}
 
@@ -93,9 +96,11 @@
 				<tr class="results-row">
 					<#assign childAssetEntry = assetEntryLocalService.getEntry(wikiPageClassName, childPage.getResourcePrimKey()) />
 					<#assign childPageViewURL = renderResponse.createRenderURL() />
+
 					${childPageViewURL.setParameter("struts_action", "/wiki/view")}
 					${childPageViewURL.setParameter("nodeName", childPage.getNode().getName())}
 					${childPageViewURL.setParameter("title", childPage.getTitle())}
+
 					<td><a href="${childPageViewURL}">${childPage.getTitle()}</a></td>
 					<td><a href="${childPageViewURL}">${dateUtil.getDate(childPage.getModifiedDate(),"dd MMM yyyy - HH:mm:ss", locale)} <@liferay.language key="by" /> ${htmlUtil.escape(portalUtil.getUserName(childPage.getUserId(), childPage.getUserName()))}</a></td>
 					<td>
@@ -114,6 +119,7 @@
 	<#if assetRenderer.hasEditPermission(themeDisplay.getPermissionChecker())>
 		<#assign redirectURL = portalUtil.getCurrentURL(request) />
 		<#assign addPageURL = renderResponse.createRenderURL() />
+
 		${addPageURL.setParameter("struts_action", "/wiki/edit_page")}
 		${addPageURL.setParameter("redirect", redirectURL)}
 		${addPageURL.setParameter("nodeId", entry.getNodeId()?string)}
@@ -131,9 +137,10 @@
 </#macro>
 
 <#macro attatchments_icon>
-	<#assign viewAttachmentsURL = renderResponse.createRenderURL() />
-	${viewAttachmentsURL.setParameter("struts_action", "/wiki/view_page_attachments") }
 	<#assign attachments = entry.getAttachmentsFiles() />
+	<#assign viewAttachmentsURL = renderResponse.createRenderURL() />
+
+	${viewAttachmentsURL.setParameter("struts_action", "/wiki/view_page_attachments") }
 
 	<@liferay_ui["icon"]
 		image="clip"
@@ -146,6 +153,7 @@
 <#macro details_icon>
 	<#assign redirectURL = portalUtil.getCurrentURL(request) />
 	<#assign viewPageDetailsURL = renderResponse.createRenderURL() />
+
 	${viewPageDetailsURL.setParameter("struts_action", "/wiki/view_page_details")}
 	${viewPageDetailsURL.setParameter("redirect", redirectURL?string)}
 
@@ -161,6 +169,7 @@
 		<br />
 
 		<#assign discussionURL = renderResponse.createActionURL() />
+
 		${discussionURL.setParameter("struts_action", "/wiki/" + assetRenderer.getDiscussionPath())}
 
 		<@liferay_ui["discussion"]
@@ -180,6 +189,7 @@
 	<#if assetRenderer.hasEditPermission(themeDisplay.getPermissionChecker())>
 		<#assign redirectURL = portalUtil.getCurrentURL(request) />
 		<#assign editPageURL = renderResponse.createRenderURL() />
+
 		${editPageURL.setParameter("struts_action", "/wiki/edit_page")}
 		${editPageURL.setParameter("redirect", redirectURL)}
 		${editPageURL.setParameter("nodeId", entry.getNodeId()?string)}

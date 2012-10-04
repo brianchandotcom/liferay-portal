@@ -30,8 +30,10 @@
 		<ul class="categories">
 			<#list categories as category>
 				<#assign categoryURL = renderResponse.createRenderURL()>
+
 				${categoryURL.setParameter("resetCur", "true")}
 				${categoryURL.setParameter("categoryId", category.getCategoryId()?string)}
+
 				<li>
 					<a href="${categoryURL}">${category.getName()}</a>
 

@@ -31,7 +31,8 @@
 	<ul class="tag-items tag-list">
 		<#list entries as entry>
 			<#assign tagURL = renderResponse.createRenderURL() />
-		   	${tagURL.setParameter("resetCur", "true")}
+
+			${tagURL.setParameter("resetCur", "true")}
 			${tagURL.setParameter("tag", "true")}
 			${tagURL.setParameter("resetCur", entry.getName())}
 

@@ -9,6 +9,7 @@
 <#list entries as entry>
 	<#assign assetEntry = assetEntryLocalService.getEntry(blogsEntryClassName, entry.getEntryId()) />
 	<#assign viewURL = renderResponse.createRenderURL() />
+
 	${viewURL.setParameter("struts_action", "/blogs/view_entry")}
 	${viewURL.setParameter("redirect", portalUtil.getCurrentURL(request))}
 	${viewURL.setParameter("urlTitle", entry.getUrlTitle())}

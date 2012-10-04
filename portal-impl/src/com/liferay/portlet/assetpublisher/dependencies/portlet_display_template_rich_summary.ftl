@@ -33,7 +33,9 @@
 
 			<div class="asset-summary">
 				<@metadata_field fieldName="author" />
+
 				${assetRenderer.getSummary(locale)}
+
 				<a href="${viewURL}"><@liferay.language key="read-more" /><span class="aui-helper-hidden-accessible"><@liferay.language key="about"/>${entry.getTitle(locale)}</span>&raquo;</a>
 			</div>
 
@@ -50,6 +52,7 @@
 		<br />
 
 		<#assign discussionURL = renderResponse.createActionURL() />
+
 		${discussionURL.setParameter("struts_action", "/asset_publisher/" + assetRenderer.getDiscussionPath())}
 
 		<@liferay_ui["discussion"]
@@ -68,6 +71,7 @@
 <#macro edit_icon>
 	<#if assetRenderer.hasEditPermission(themeDisplay.getPermissionChecker())>
 		<#assign redirectURL = renderResponse.createRenderURL() />
+
 		${redirectURL.setWindowState("pop_up")}
 		${redirectURL.setParameter("struts_action", "/asset_publisher/add_asset_redirect")}
 
@@ -106,8 +110,9 @@
 	<#if (metadataFieldArray?seq_contains(metadataFieldName))>
 		<span class="metadata-entry metadata-"${metadataFieldName}">
 			<#switch fieldName>
-			    <#case "author">
+				<#case "author">
 					<@liferay.language key="by" /> ${portalUtil.getUserName(assetRenderer.getUserId(), assetRenderer.getUserName())}
+
 					<#break>
 				<#case "categories">
 					<@liferay_ui["asset-categories-summary"]
@@ -115,21 +120,27 @@
 						classPK=entry.getClassPK()
 						portletURL=renderResponse.createRenderURL()
 					/>
+
 					<#break>
 				<#case "create-date">
 					${dateUtil.getDate(entry.getCreateDate(), dateFormat, locale)}
+
 					<#break>
 				<#case "expiration-date">
 					${dateUtil.getDate(entry.getExpirationDate(), dateFormat, locale)}
+
 					<#break>
 				<#case "modified-date">
 					${dateUtil.getDate(entry.getModifiedDate(), dateFormat, locale)}
+
 					<#break>
 				<#case "priority">
 					${entry.getPriority()}
+
 					<#break>
 				<#case "publish-date">
 					${ddateUtil.getDate(entry.getPublishDate(), dateFormat, locale)}
+
 					<#break>
 				<#case "tags">
 					<@liferay_ui["asset-tags-summary"]
@@ -137,12 +148,15 @@
 						classPK=entry.getClassPK()
 						portletURL=renderResponse.createRenderURL()
 					/>
+
 					<#break>
 				<#case "view-count">
 					<@liferay_ui["icon"]
 						image="history"
 					/>
+
 					${entry.getViewCount()} <@liferay.language key="views" />
+
 					<#break>
 			</#switch>
 		</span>
@@ -152,6 +166,7 @@
 <#macro print_icon>
 	<#if enablePrint == "true" >
 		<#assign printPortletURL = renderResponse.createRenderURL() />
+
 		${printPortletURL.setWindowState("pop_up")}
 		${printPortletURL.setParameter("struts_action", "/asset_publisher/view_content")}
 		${printPortletURL.setParameter("assetEntryId", entry.getEntryId()?string)}
@@ -162,12 +177,14 @@
 			<#if (assetRenderer.getGroupId() != themeDisplay.getScopeGroupId())>
 				${printPortletURL.setParameter("groupId", assetRenderer.getGroupId()?string)}
 			</#if>
+
 			${printPortletURL.setParameter("urlTitle", assetRenderer.getUrlTitle())}
 		</#if>
 
 		<#assign formatParams = ["aui-helper-hidden-accessible", htmlUtil.escape(assetRenderer.getTitle(locale))] />
 		<#assign title = languageUtil.format(locale, "print-x-x", formatParams) />
 		<#assign taglibPrintURL = "javascript:Liferay.Util.openWindow({dialog: {width: 960}, id:'" + renderResponse.getNamespace() + "printAsset', title: '" + title + "', uri:'" + htmlUtil.escapeURL(printPortletURL.toString()) + "'});" />
+
 		<@liferay_ui["icon"]
 			image="print"
 			message="print"

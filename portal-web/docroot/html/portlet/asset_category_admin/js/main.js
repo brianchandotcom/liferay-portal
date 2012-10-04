@@ -137,6 +137,10 @@ AUI.add(
 
 		var STR_TITLE = 'title';
 
+		var STR_TREE_NODE = 'tree-node';
+
+		var STR_TREE_VIEW = 'tree-view';
+
 		var STR_URI = 'uri';
 
 		var STR_VOCABULARY_ID = 'vocabularyId';
@@ -424,6 +428,32 @@ AUI.add(
 										var vocabularyId = instance._selectedVocabularyId;
 
 										instance._merge(fromCategoryId, toCategoryId, vocabularyId);
+
+										var dragNode = tree.dragNode;
+										var dropNode = tree.dropNode;
+
+										instance._categoriesTreeView.reinsertChild(dragNode, dropNode);
+									},
+									dropFailed: function(event) {
+										var tree = event.tree;
+
+										var parentNode = tree.dropNode.get(STR_PARENT_NODE);
+										var dragParentNode = tree.dragNode.get(STR_PARENT_NODE);
+
+										var toCategoryId = instance._getCategoryId(tree.dropNode);
+										var fromCategoryId = instance._getCategoryId(dragParentNode);
+
+										if (instance.dropAction != 'append') {
+											toCategoryId = instance._getCategoryId(parentNode);
+										}
+
+										var errorKey = Liferay.Language.get('there-is-another-category-with-the-same-name-and-the-same-parent');;
+
+										if (toCategoryId == fromCategoryId) {
+											errorKey = Liferay.Language.get('rearrange-the-order-of-the-categories-is-not-supported');
+										}
+
+										instance._sendMessage(MESSAGE_TYPE_ERROR, errorKey);
 									},
 									dropInsert: function(event) {
 										var tree = event.tree;
@@ -434,6 +464,11 @@ AUI.add(
 										var vocabularyId = instance._selectedVocabularyId;
 
 										instance._merge(fromCategoryId, toCategoryId, vocabularyId);
+
+										var dragNode = tree.dragNode;
+										var dropNode = parentNode;
+
+										instance._categoriesTreeView.reinsertChild(dragNode, dropNode);
 									}
 								},
 								type: 'normal'
@@ -2579,6 +2614,48 @@ AUI.add(
 				EXTENDS: A.TreeViewDD,
 
 				prototype: {
+					reinsertChild: function(dragNode, dropNode) {
+						var categoryName = dragNode.get(STR_LABEL);
+
+						dropNode.removeChild(dragNode);
+
+						var children = dropNode.get('children');
+
+						if (children.length > 0) {
+							var result = A.some(
+								children,
+								function(item, index, collection) {
+									if (item.get(STR_LABEL) > categoryName) {
+										item.insertBefore(dragNode);
+
+										return true;
+									}
+									else {
+										var nextItem = collection[index];
+
+										if (nextItem != 'undefined') {
+											if (nextItem.get(STR_LABEL) > categoryName) {
+												nextItem.insertBefore(dragNode);
+
+												return true;
+											}
+										}
+										else {
+											item.insertAfter(dragNode);
+
+											return true;
+										}
+									}
+
+									return false;
+								}
+							);
+						}
+						else {
+							dropNode.append(dragNode);
+						}
+					},
+
 					_findCategoryByName: function(event) {
 						var instance = this;
 
@@ -2586,7 +2663,7 @@ AUI.add(
 
 						var dragNode = event.drag.get(STR_NODE).get(STR_PARENT_NODE);
 
-						var dragTreeNode = Widget.getByNode(dragNode);
+						var dragTreeNode = dragNode.getData(STR_TREE_NODE);
 
 						if (dragTreeNode) {
 							var categoryName = dragTreeNode.get(STR_LABEL);
@@ -2599,7 +2676,11 @@ AUI.add(
 								dropNode = dropNode.get('parentNode.parentNode');
 							}
 
-							var dropTreeNode = Widget.getByNode(dropNode);
+							var dropTreeNode = dropNode.getData(STR_TREE_NODE);
+
+							if (!A.instanceOf(dropTreeNode, A.TreeNode)) {
+								dropTreeNode = dropNode.getData(STR_TREE_VIEW);
+							}
 
 							if (dropTreeNode) {
 								var children = dropTreeNode.get('children');
@@ -2620,6 +2701,21 @@ AUI.add(
 						var instance = this;
 
 						if (instance._findCategoryByName(event)) {
+							var dropAction = instance.dropAction;
+
+							var dragNode = event.drag.get(STR_NODE).get(STR_PARENT_NODE);
+							var dropNode = event.drop.get(STR_NODE).get(STR_PARENT_NODE);
+
+							var dropTreeNode = dropNode.getData(STR_TREE_NODE);
+							var dragTreeNode = dragNode.getData(STR_TREE_NODE);
+
+							var output = instance.getEventOutputMap(instance);
+
+							output.tree.dropNode = dropTreeNode;
+							output.tree.dragNode = dragTreeNode;
+
+							instance.bubbleEvent('dropFailed', output);
+
 							event.halt();
 
 							instance._resetState(instance.nodeContent);
@@ -2639,10 +2735,6 @@ AUI.add(
 						}
 						else {
 							CategoriesTree.superclass._updateNodeState.apply(instance, arguments);
-
-							if (instance._findCategoryByName(event)) {
-								instance._resetState(instance.nodeContent);
-							}
 						}
 					}
 				}

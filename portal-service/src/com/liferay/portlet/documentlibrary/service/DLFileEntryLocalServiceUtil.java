@@ -306,6 +306,13 @@ public class DLFileEntryLocalServiceUtil {
 		return getService().cancelCheckOut(userId, fileEntryId);
 	}
 
+	public static com.liferay.portlet.documentlibrary.model.DLFileVersion cancelCheckOut(
+		long userId, long fileEntryId, boolean override)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().cancelCheckOut(userId, fileEntryId, override);
+	}
+
 	public static void checkInFileEntry(long userId, long fileEntryId,
 		boolean majorVersion, java.lang.String changeLog,
 		com.liferay.portal.service.ServiceContext serviceContext)

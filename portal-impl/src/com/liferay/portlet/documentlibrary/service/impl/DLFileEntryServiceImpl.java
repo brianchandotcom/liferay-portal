@@ -541,6 +541,10 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 				getPermissionChecker(), groupId, ActionKeys.OVERRIDE_CHECKOUT);
 		}
 		catch (NoSuchFileEntryException nsfee) {
+		}
+
+		return dlFileEntryLocalService.cancelCheckOut(
+			getUserId(), fileEntryId, true);
 	}
 
 	public Lock refreshFileEntryLock(

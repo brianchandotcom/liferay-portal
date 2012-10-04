@@ -567,6 +567,21 @@ public class DLFileEntryServiceSoap {
 		}
 	}
 
+	public static com.liferay.portlet.documentlibrary.model.DLFileVersionSoap overrideCheckOut(
+		long fileEntryId, long groupId) throws RemoteException {
+		try {
+			com.liferay.portlet.documentlibrary.model.DLFileVersion returnValue = DLFileEntryServiceUtil.overrideCheckOut(fileEntryId,
+					groupId);
+
+			return com.liferay.portlet.documentlibrary.model.DLFileVersionSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static void revertFileEntry(long fileEntryId,
 		java.lang.String version,
 		com.liferay.portal.service.ServiceContext serviceContext)

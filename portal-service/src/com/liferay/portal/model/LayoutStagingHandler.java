@@ -35,6 +35,8 @@ import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.LayoutTypePortletFactoryUtil;
 
+import java.io.Serializable;
+
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -47,7 +49,7 @@ import java.util.Set;
  * @author Raymond Augé
  * @author Brian Wing Shun Chan
  */
-public class LayoutStagingHandler implements InvocationHandler {
+public class LayoutStagingHandler implements InvocationHandler, Serializable {
 
 	public LayoutStagingHandler(Layout layout) {
 		this(layout, null);

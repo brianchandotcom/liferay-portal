@@ -26,6 +26,8 @@ import com.liferay.portal.service.LayoutSetBranchLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 
+import java.io.Serializable;
+
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -37,7 +39,8 @@ import java.util.Set;
  * @author Julio Camarero
  * @author Brian Wing Shun Chan
  */
-public class LayoutSetStagingHandler implements InvocationHandler {
+public class LayoutSetStagingHandler
+	implements InvocationHandler, Serializable {
 
 	public LayoutSetStagingHandler(LayoutSet layoutSet) {
 		_layoutSet = layoutSet;

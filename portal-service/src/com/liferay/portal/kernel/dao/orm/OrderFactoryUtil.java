@@ -32,7 +32,7 @@ public class OrderFactoryUtil {
 		String[] orderByFields = obc.getOrderByFields();
 
 		for (String orderByField : orderByFields) {
-			if (obc.isAscending()) {
+			if (obc.isAscending(orderByField)) {
 				dynamicQuery.addOrder(asc(orderByField));
 			}
 			else {

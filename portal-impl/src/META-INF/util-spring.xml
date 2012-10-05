@@ -426,6 +426,11 @@
 			<bean class="com.liferay.portal.util.HashCodeFactoryImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portal.kernel.util.HexUtil" class="com.liferay.portal.kernel.util.HexUtil">
+		<property name="hex">
+			<bean class="com.liferay.portal.util.HexImpl" />
+		</property>
+	</bean>
 	<bean id="com.liferay.portal.kernel.util.HtmlUtil" class="com.liferay.portal.kernel.util.HtmlUtil">
 		<property name="html">
 			<bean class="com.liferay.portal.util.HtmlImpl" />

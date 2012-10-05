@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Country;
+import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.base.CountryServiceBaseImpl;
 
@@ -94,8 +95,18 @@ public class CountryServiceImpl extends CountryServiceBaseImpl {
 		return countryPersistence.findAll();
 	}
 
-	public List<Country> getCountries(boolean active) throws SystemException {
-		return countryPersistence.findByActive(active);
+	public List<Country> getCountries(boolean active)
+		throws PortalException, SystemException {
+
+		User user = getUser();
+
+		return getCountriesAndSetLanguage(active, user.getLanguageId());
+	}
+
+	public List<Country> getCountries(boolean active, String languageId)
+		throws SystemException {
+
+		return getCountriesAndSetLanguage(active, languageId);
 	}
 
 	public Country getCountry(long countryId)
@@ -120,6 +131,21 @@ public class CountryServiceImpl extends CountryServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		return countryPersistence.findByName(name);
+	}
+
+	protected List<Country> getCountriesAndSetLanguage(
+		boolean active, String languageId)
+		throws SystemException {
+
+		List<Country> countryList = countryPersistence.findByActive(active);
+
+		if (Validator.isNotNull(languageId)) {
+			for (Country country : countryList) {
+				country.setNameCurrentLanguageId(languageId);
+			}
+		}
+
+		return countryList;
 	}
 
 }

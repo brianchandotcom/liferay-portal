@@ -79,8 +79,15 @@ public class CountryServiceWrapper implements CountryService,
 
 	public java.util.List<com.liferay.portal.model.Country> getCountries(
 		boolean active)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		return _countryService.getCountries(active);
+	}
+
+	public java.util.List<com.liferay.portal.model.Country> getCountries(
+		boolean active, java.lang.String languageId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _countryService.getCountries(active, languageId);
 	}
 
 	public com.liferay.portal.model.Country getCountry(long countryId)

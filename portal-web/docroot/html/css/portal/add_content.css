@@ -24,7 +24,8 @@
 		cursor: pointer;
 		margin: 0;
 
-		span {
+		a {
+			display: block;
 			padding-left: 20px;
 		}
 	}
@@ -41,7 +42,7 @@
 	}
 }
 
-.lfr-content-category {
+.dockbar .lfr-content-category {
 	padding-left: 10px;
 	padding-top: 3px;
 
@@ -77,7 +78,7 @@
 		font-size: 1.1em;
 		font-weight: bold;
 
-		span {
+		a {
 			background: url(@theme_image_path@/add_content/portlet_category.png) no-repeat 0 50%;
 		}
 	}
@@ -92,6 +93,10 @@
 			background: url(@theme_image_path@/arrows/01_minus.png) no-repeat 100% 50%;
 		}
 	}
+}
+
+.lfr-add-content-search .aui-field-label {
+	font-weight: normal;
 }
 
 .lfr-install-more {

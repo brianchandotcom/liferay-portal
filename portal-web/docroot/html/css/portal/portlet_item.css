@@ -1,6 +1,7 @@
 .lfr-portlet-item {
 	border: 1px solid transparent;
 	cursor: move;
+	display: block;
 	margin-bottom: 3px;
 	padding: 0 5px 0 20px;
 

@@ -7,7 +7,7 @@
 .dockbar, .staging-bar {
 }
 
-.dockbar-ready .dockbar, .staging-ready .staging-bar, .live-view .staging-bar {
+.dockbar-ready .dockbar, .staging .staging-bar, .live-view .staging-bar {
 }
 
 .dockbar-ready .portlet-dockbar, .staging-ready .portlet-staging-bar, .portal-popup .portlet-dockbar, .portal-popup .portlet-staging-bar {
@@ -80,17 +80,32 @@ html > .lfr-dockbar-pinned {
 
 .layout-revision-container {
 
-	.current-version {	}
+	.aproximate-date {
+	}
 
-	.current-version-pointer img {	}
+	.current-version {
+	}
 
-	.layout-variation-name {	}
+	.current-version-pointer {
+	}
 
-	.layout-revision-current {	}
+	.current-version-pointer img {
+	}
 
-	.real-date {	}
+	.layout-variation-name {
+	}
 
-	.taglib-workflow-status .workflow-status {	}
+	.layout-revision-current {
+	}
+
+	.real-date {
+	}
+
+	.taglib-workflow-status .workflow-status {
+
+		.workflow-status-ready-for-publication {
+		}
+	}
 }
 
 .layout-revision-container-root {
@@ -194,6 +209,9 @@ html > .lfr-dockbar-pinned {
 .ie6 .my-sites-menu a {
 }
 
+.ie6 .aui-menu-scroll {
+}
+
 .dockbar .toggle-controls a {
 }
 
@@ -281,4 +299,7 @@ html > .lfr-dockbar-pinned {
 }
 
 .page-customization-bar .page-customization-actions a {
+}
+
+.page-customization-bar .reset-prototype {
 }

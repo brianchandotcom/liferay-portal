@@ -1,14 +1,25 @@
+@mixin input-field-default {
+}
+
+@mixin input-field-focus {
+}
+
+@mixin button-default {
+}
+
+@mixin button-disabled {
+}
+
+@mixin button-hover {
+}
+
+@mixin button-focus {
+}
+
 fieldset {
 }
 
-.ie fieldset {
-}
-
-.ie7 .aui-fieldset {
-}
-
 .aui-fieldset {
-}
 
 .aui-dialog-iframe-popup .aui-fieldset {
 }
@@ -16,19 +27,26 @@ fieldset {
 .aui-fieldset .aui-field-content, .aui-field-row, .aui-button-holder, .aui-field-wrapper-content {
 }
 
-.aui-field-inline .aui-field-content, .aui-field-row .aui-field-content {
+.aui-field-inline, .aui-field-row {
+	.aui-field-content {
+	}
 }
 
-.aui-search-bar .aui-field-content {
-}
+.aui-search-bar {
+	.aui-field-content {
+	}
 
-.aui-search-bar .aui-field-content, .aui-search-bar .aui-button-content {
+	.aui-field-content, .aui-button-content {
+	}
 }
 
 .aui-field-choice .aui-field-label {
 }
 
 .aui-field-date .aui-field-content {
+}
+
+.aui-text-placeholder {
 }
 
 legend {
@@ -44,6 +62,7 @@ input {
 }
 
 input[type="text"], input[type="password"], input[type="file"], input[type="submit"], input[type="button"], input[type="reset"], select, textarea, .textarea, button, .aui-field-input-text {
+	@include input-field-default;
 }
 
 select {
@@ -53,24 +72,60 @@ input[type="image"] {
 }
 
 input[type="submit"], input[type="button"], input[type="reset"], button {
+	@include button-default;
+
+	&:hover {
+		@include button-hover;
+	}
+
+	&:focus {
+		@include button-focus;
+	}
 }
 
-input[type="submit"]:hover, input[type="button"]:hover, input[type="reset"]:hover, input[type="submit"]:focus, input[type="button"]:focus, input[type="reset"]:focus, button:hover, button:focus {
+input, textarea {
+	&.focus {
+		@include input-field-focus;
+	}
 }
 
-input[type="submit"], input[type="button"], input[type="reset"], button, .lfr-actions.lfr-extended, .lfr-actions.lfr-extended ul {
-}
+.lfr-actions.lfr-extended {
+	&, ul {
+		@include button-default;
+	}
 
-.aui-button-disabled input[type], .aui-button-disabled button, .aui-button-disabled input[type]:hover, .aui-button-disabled input[type]:focus, .aui-button-disabled button:hover, .aui-button-disabled button:focus, .aui-buttonitem-disabled, .aui-buttonitem-disabled:hover, .lfr-actions.lfr-extended.disabled, .lfr-actions.lfr-extended.disabled ul, .lfr-actions.lfr-extended.disabled:hover, .lfr-actions.lfr-extended.disabled:hover ul {
+	&:focus {
+		&, ul {
+			@include button-focus;
+		}
+	}
+
+	&.disabled, &.disabled:hover {
+		&, ul {
+			@include button-disabled;
+		}
+	}
+
+	&:hover {
+		&, ul {
+			@include button-hover;
+		}
+	}
 }
 
 .lfr-actions.disabled .taglib-text {
 }
 
-input[type="submit"]:hover, input[type="button"]:hover, input[type="reset"]:hover, button:hover, .lfr-actions.lfr-extended:hover, .lfr-actions.lfr-extended:hover ul {
+.aui-button-disabled {
+	input[type], button {
+		&, &:hover, &:focus {
+			@include button-disabled;
+		}
+	}
 }
 
-input[type="submit"]:focus, input[type="button"]:focus, input[type="reset"]:focus, button:focus, .lfr-actions.lfr-extended:focus, .lfr-actions.lfr-extended:focus ul {
+.aui-buttonitem-disabled {
+	@include button-disabled;
 }
 
 input.aui-form-validator-error, textarea.aui-form-validator-error, select.aui-form-validator-error {
@@ -78,17 +133,36 @@ input.aui-form-validator-error, textarea.aui-form-validator-error, select.aui-fo
 
 /* ---------- IE6 chokes on attribute selectors in a chain, so we separate them into their own rule ---------- */
 
-.ie6 input.text, input.password, .ie6 input.submit, .ie6 input.file, .ie6 input.button, .ie6 button {
+.ie {
+	fieldset {
+	}
+
+	.aui-button-disabled input {
+	}
 }
 
-.ie6 input.submit, .ie6 input.button, .ie6 button, .ie6 .aui-button-disabled input.submit, .ie6 .aui-button-disabled input.button, .ie6 .aui-button-disabled button {
+.ie7 {
+	.aui-fieldset {
+	}
 }
 
-input.focus, textarea.focus, .ie6 input.focus, .ie6 textarea.focus {
-}
+.ie6 {
+	input.text, input.password, input.submit, input.file, input.button, button {
+		@include input-field-default;
+	}
 
-.ie6 .aui-button-disabled input.submit, .ie6 .aui-button-disabled input.button, .ie6 .aui-button-disabled button {
-}
+	input.submit, input.button, button, .aui-button-disabled input.submit, .aui-button-disabled input.button, .aui-button-disabled button {
+		@include button-default;
+	}
 
-.ie .aui-button-disabled input {
+	.aui-button-disabled {
+		input.submit, input.button, button {
+		}
+	}
+
+	input, textarea {
+		&.focus {
+			@include input-field-focus;
+		}
+	}
 }

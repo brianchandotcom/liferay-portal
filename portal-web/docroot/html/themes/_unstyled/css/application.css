@@ -10,51 +10,74 @@
 }
 
 .results-grid {
+
+.context-pane-content .results-grid {
 }
 
 .results-header {
+
+	th {
+
+		&.sort-column {
+
+			.result-column-name {
+			}
+		}
+
+		&.first {
+		}
+
+		&.last {
+		}
+	}
+
+	th, td {
+	}
+
+	th.sort-desc .result-column-name {
+	}
+
+	span, a {
+	}
+
+	a {
+
+		&:hover {
+		}
+	}
 }
 
-.results-header th {
+.results-row {
+	td {
+
+		&.sort-column {
+		}
+	}
+
+ 	&.selected td, &.selected.hover td {
+
+		& a {
+		}
+	}
+
+	&.alt.selected td, &.alt.selected.hover td {
+	}
+
+	&.alt td {
+	}
+
+	&.hover td {
+	}
 }
 
-.results-header th, .results-header td {
-}
+.taglib-search-iterator .results-row {
+	td, th {
+		&.first {
+		}
 
-.results-header th.sort-column {
-}
-
-.results-header .sort-column .result-column-name {
-}
-
-.results-header .sort-desc .result-column-name {
-}
-
-.results-row td {
-}
-
-.results-row.alt td {
-}
-
-.results-row td.sort-column {
-}
-
-.results-row.hover td {
-}
-
-.results-header span, .results-header a {
-}
-
-.results-header a {
-}
-
-.results-header a:hover {
-}
-
-.taglib-search-iterator .results-row td.first, .taglib-search-iterator th.first {
-}
-
-.taglib-search-iterator .results-row td.last, .taglib-search-iterator th.last {
+		&.last {
+		}
+	}
 }
 
 /* ---------- Dragging/sorting indicators ---------- */
@@ -69,36 +92,27 @@
 }
 
 .portlet-boundary.yui3-dd-dragging {
-}
 
-.ie .portlet-boundary.yui3-dd-dragging {
-}
-
-.portlet-boundary.yui3-dd-dragging .portlet {
+	.portlet {
+	}
 }
 
 .aui-portal-layout-proxy {
-}
 
-.aui-portal-layout-proxy .portlet-topper {
+	.portlet-topper {
+	}
 }
 
 .aui-proxy {
-}
 
-.ie .aui-proxy {
-}
+	&.generic-portlet {
 
-.aui-proxy.generic-portlet {
-}
+		.portlet-title {
+		}
+	}
 
-.aui-proxy.generic-portlet .portlet-title {
-}
-
-.aui-proxy.not-intersecting .forbidden-action {
-}
-
-.ie .aui-proxy.not-intersecting .forbidden-action {
+	&.not-intersecting .forbidden-action {
+	}
 }
 
 .aui-resizable-proxy {
@@ -121,24 +135,26 @@
 /* ---------- Tags ---------- */
 
 .aui-tagselector-content {
+
+	.aui-textboxlistentry-holder {
+	}
 }
 
-.aui-tagselector-content .aui-textboxlistentry-holder {
-}
+.aui-tagselector {
+	.lfr-tag-selector-input {
+	}
 
-.aui-tagselector .lfr-tag-selector-input {
+	.aui-field .aui-field-content {
+	}
+
+	.aui-toolbar {
+	}
+
+	.aui-textboxlist-input-container {
+	}
 }
 
 .aui-tagselector-focused .aui-textboxlistentry-holder {
-}
-
-.aui-tagselector .aui-field .aui-field-content {
-}
-
-.aui-tagselector .aui-toolbar {
-}
-
-.aui-tagselector .aui-textboxlist-input-container {
 }
 
 .aui-categoriesselector-content .aui-textboxlistentry-holder {
@@ -147,44 +163,42 @@
 /* ---------- Tag cloud and tag list ---------- */
 
 .tag-items {
+
+	li {
+
+	a {
+	}
 }
 
 .tag-cloud {
+
+	.tag-asset-count {
+	}
 }
 
 .tag-selected {
 }
 
-.tag-items li {
-}
+.tag-cloud {
 
-.tag-items a {
-}
+	.tag-asset-count {
+	}
 
-.tag-cloud .tag-asset-count {
-}
-
-.tag-cloud .tag-popularity-1 {
-}
-
-.tag-cloud .tag-popularity-2 {
-}
-
-.tag-cloud .tag-popularity-3 {
-}
-
-.tag-cloud .tag-popularity-4 {
-}
-
-.tag-cloud .tag-popularity-5 {
-}
-
-.tag-cloud .tag-popularity-6 {
+	@for $i from 1 through 6 {
+		.tag-popularity-#{$i} {
+		}
+	}
 }
 
 /* ---------- Underlay ---------- */
 
 .aui-underlay {
+
+	.yui3-widget-hd {
+	}
+
+	.lfr-portlet-item {
+	}
 }
 
 .aui-underlay-hidden {
@@ -193,36 +207,18 @@
 .aui-underlay-content {
 }
 
-.aui-underlay .yui3-widget-hd {
-}
-
 .aui-underlay-close {
-}
-
-.aui-underlay .lfr-portlet-item {
 }
 
 /* ---------- Tabs ---------- */
 
-.aui-tabview-list {
+.aui-tab-active strong {
 }
 
-.ie7 .aui-tabview-list {
+.aui-tab-back {
 }
 
-.aui-tab {
-}
-
-.aui-tab-content {
-}
-
-.aui-tab-active {
-}
-
-.aui-tab-active, .aui-tab-active a {
-}
-
-.aui-tabview-list .toggle {
+.aui-tab-back-content {
 }
 
 /* ---------- Misc. ---------- */
@@ -233,36 +229,59 @@
 .lfr-panel-container {
 }
 
+.lfr-panel-content {
+}
+
+.lfr-panel-basic .lfr-panel-content {
+}
+
 .aui-dialog-bd {
 }
 
 .aui-dialog-content {
-}
 
 .aui-panel-hd {
 }
 
-/* ---------- Menus ---------- */
-
-.lfr-actions.portlet-options .lfr-trigger strong span, .visible.portlet-options .lfr-trigger strong span {
+.app-view-drop-active {
 }
 
-.lfr-actions.portlet-options:hover, .lfr-actions.portlet-options:hover ul {
+/* ---------- Menus ---------- */
+
+.lfr-actions.portlet-options, .visible.portlet-options {
+	.lfr-trigger strong span {
+	}
+}
+
+.lfr-actions.portlet-options:hover {
+	&, ul {
+	}
 }
 
 .lfr-menu-list {
 }
 
-.aui-menu .notice-message {
+.lfr-page-templates li {
+	a {
+
+		label {
+		}
+	}
 }
 
 .aui-menu {
+
+	.notice-message {
+	}
 }
 
 .aui-menu-content {
-}
 
-.aui-menu-content li {
+	li {
+
+		.disabled {
+		}
+	}
 }
 
 .aui-menu-content, .lfr-menu-list ul {
@@ -277,9 +296,6 @@
 .aui-menu-content li, .lfr-menu-list ul li {
 }
 
-.ie7 .aui-menu-content li {
-}
-
 .aui-menu-content li.first, .lfr-menu-list ul li.first {
 }
 
@@ -289,7 +305,7 @@
 .aui-menu-content li a, .lfr-menu-list ul li .taglib-icon, .aui-menu-content li .disabled {
 }
 
-.aui-menu-content li .disabled {
+.lfr-menu-list ul li.disabled .taglib-icon {
 }
 
 .aui-menu-content li a.aui-focus, .lfr-menu-list ul .taglib-icon.aui-focus, .lfr-menu-expanded li a:focus {
@@ -301,9 +317,6 @@
 /* ---------- Toolbar ---------- */
 
 .aui-toolbar li {
-}
-
-.ie6 .aui-toolbar li, .ie7 .aui-toolbar li {
 }
 
 .aui-toolbar-separator {
@@ -327,10 +340,10 @@
 .aui-dragging .portlet-column.customizable {
 }
 
-.customizable-layout-column-content.yui3-widget-content-expanded {
-}
-
 .customizable-layout-column-content {
+
+	&.yui3-widget-content-expanded {
+	}
 }
 
 .customizable .customizable-layout-column-content {
@@ -339,13 +352,7 @@
 .layout-customizable-controls {
 }
 
-.ie .layout-customizable-controls {
-}
-
 /* ---------- Pagination ---------- */
-
-.aui-paginator-link  {
-}
 
 .aui-paginator-link {
 }
@@ -356,11 +363,13 @@
 .aui-paginator-current-page {
 }
 
+.ie7 .aui-paginator-current-page {
+}
+
 .aui-paginator-page-link {
 }
 
 .ie7 .aui-paginator-page-link {
-}
 
 .aui-paginator-first-link {
 }
@@ -380,10 +389,77 @@
 .aui-paginator-current-page-report {
 }
 
+.taglib-page-iterator .search-pages .page-links {
+}
+
+/* ---------- Application Column View ---------- */
+
+.lfr-app-column-view {
+
+	.aui-layout-content {
+	}
+
+	.aui-column:before {
+	}
+
+	.aui-column-content {
+
+		.lfr-message-response {
+		}
+	}
+}
+
 /* ---------- Header row ---------- */
 
 .lfr-header-row {
+
+	.lfr-actions.show-arrow.direction-down .lfr-trigger strong a {
+	}
+
+	.aui-toolbar {
+		.aui-toolbar-content {
+		}
+
+		.aui-toolbar-item {
+		}
+
+		.aui-toolbar-last {
+		}
+	}
 }
 
-.lfr-header-row .lfr-actions.show-arrow.direction-down .lfr-trigger strong a {
+.ie {
+	.portlet-boundary.yui3-dd-dragging {
+	}
+
+	.aui-proxy {
+	}
+
+	.aui-proxy.not-intersecting .forbidden-action {
+	}
+
+	.layout-customizable-controls {
+	}
+}
+
+.ie7 {
+	.aui-tabview-list {
+	}
+
+	.aui-menu-content li {
+	}
+}
+
+.ie6, .ie7 {
+	.aui-toolbar li {
+	}
+
+	.lfr-header-row .aui-buttonitem-content {
+
+		.aui-buttonitem-label {
+		}
+	}
+
+	.results-row.hover td {
+	}
 }

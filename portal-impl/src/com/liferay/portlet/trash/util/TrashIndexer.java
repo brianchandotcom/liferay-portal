@@ -25,9 +25,7 @@ import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
-import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.trash.model.TrashEntry;
@@ -38,6 +36,7 @@ import javax.portlet.PortletURL;
 
 /**
  * @author Julio Camarero
+ * @author Zsolt Berentey
  */
 public class TrashIndexer extends BaseIndexer {
 
@@ -104,17 +103,11 @@ public class TrashIndexer extends BaseIndexer {
 			long entryClassPK, String actionId)
 		throws Exception {
 
-		if (actionId.equals(ActionKeys.VIEW)) {
-			TrashHandler trashHandler =
-				TrashHandlerRegistryUtil.getTrashHandler(entryClassName);
+		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
+			entryClassName);
 
-			TrashRenderer trashRenderer = trashHandler.getTrashRenderer(
-				entryClassPK);
-
-			return trashRenderer.hasViewPermission(permissionChecker);
-		}
-
-		return false;
+		return trashHandler.hasPermission(
+			permissionChecker, entryClassName, entryClassPK, actionId);
 	}
 
 	@Override

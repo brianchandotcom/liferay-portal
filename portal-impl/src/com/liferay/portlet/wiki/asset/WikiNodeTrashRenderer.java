@@ -16,14 +16,11 @@ package com.liferay.portlet.wiki.asset;
 
 import com.liferay.portal.kernel.trash.BaseTrashRenderer;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.security.permission.ActionKeys;
-import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.trash.util.TrashUtil;
 import com.liferay.portlet.wiki.model.WikiNode;
-import com.liferay.portlet.wiki.service.permission.WikiNodePermission;
 
 import java.util.Locale;
 
@@ -64,16 +61,6 @@ public class WikiNodeTrashRenderer extends BaseTrashRenderer {
 
 	public String getType() {
 		return TYPE;
-	}
-
-	public boolean hasDeletePermission(PermissionChecker permissionChecker) {
-		return WikiNodePermission.contains(
-			permissionChecker, _node, ActionKeys.DELETE);
-	}
-
-	public boolean hasViewPermission(PermissionChecker permissionChecker) {
-		return WikiNodePermission.contains(
-			permissionChecker, _node, ActionKeys.VIEW);
 	}
 
 	public String render(

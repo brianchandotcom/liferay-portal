@@ -21,9 +21,12 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portlet.documentlibrary.NoSuchDirectoryException;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 import com.liferay.portlet.messageboards.model.MBThread;
+import com.liferay.portlet.messageboards.service.MBThreadLocalServiceUtil;
+import com.liferay.portlet.messageboards.service.permission.MBMessagePermission;
 import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.util.Date;
@@ -41,7 +44,7 @@ public class MBThreadTrashHandler extends BaseTrashHandler {
 	 * Deletes trash attachments from all the message boards messages from a
 	 * group that were deleted after a given date.
 	 *
-	 * @param  group ID the primary key of the group
+	 * @param  group the group
 	 * @param  date the date from which attachments will be deleted
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -94,6 +97,17 @@ public class MBThreadTrashHandler extends BaseTrashHandler {
 
 	public String getClassName() {
 		return CLASS_NAME;
+	}
+
+	public boolean hasPermission(
+			PermissionChecker permissionChecker, String className, long classPK,
+			String actionId)
+		throws PortalException, SystemException {
+
+		MBThread thread = MBThreadLocalServiceUtil.getThread(classPK);
+
+		return MBMessagePermission.contains(
+			permissionChecker, thread.getRootMessageId(), actionId);
 	}
 
 	public boolean isInTrash(long classPK) {

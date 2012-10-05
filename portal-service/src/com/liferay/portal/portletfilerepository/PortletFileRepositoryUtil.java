@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.util.ObjectValuePair;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 
@@ -102,11 +103,36 @@ public class PortletFileRepositoryUtil {
 			groupId, folderId);
 	}
 
+	public static List<DLFileEntry> getPortletFileEntries(
+			long groupId, long folderId, int status)
+		throws SystemException {
+
+		return getPortletFileRepository().getPortletFileEntries(
+			groupId, folderId, status);
+	}
+
+	public static List<DLFileEntry> getPortletFileEntries(
+			long groupId, long folderId, int status, int start, int end,
+			OrderByComparator obc)
+		throws SystemException {
+
+		return getPortletFileRepository().getPortletFileEntries(
+			groupId, folderId, status, start, end, obc);
+	}
+
 	public static int getPortletFileEntriesCount(long groupId, long folderId)
 		throws SystemException {
 
 		return getPortletFileRepository().getPortletFileEntriesCount(
 			groupId, folderId);
+	}
+
+	public static int getPortletFileEntriesCount(
+			long groupId, long folderId, int status)
+		throws SystemException {
+
+		return getPortletFileRepository().getPortletFileEntriesCount(
+			groupId, folderId, status);
 	}
 
 	public static PortletFileRepository getPortletFileRepository() {

@@ -29,7 +29,7 @@ import java.util.Arrays;
 
 /**
  * @author Shuyang Zhou
- * @see Deserializer
+ * @see    Deserializer
  */
 public class Serializer {
 

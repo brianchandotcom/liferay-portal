@@ -27,7 +27,7 @@ import java.nio.ByteBuffer;
 
 /**
  * @author Shuyang Zhou
- * @see Serializer
+ * @see    Serializer
  */
 public class Deserializer {
 

@@ -41,7 +41,7 @@ public class MBThreadTrashHandler extends BaseTrashHandler {
 	 * Deletes trash attachments from all the message boards messages from a
 	 * group that were deleted after a given date.
 	 *
-	 * @param  groupId the primary key of the group
+	 * @param  group ID the primary key of the group
 	 * @param  date the date from which attachments will be deleted
 	 * @throws SystemException if a system exception occurred
 	 */

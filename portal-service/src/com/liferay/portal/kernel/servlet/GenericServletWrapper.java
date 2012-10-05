@@ -23,9 +23,9 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
 /**
-* @author Eduardo García
-* @author Jorge Ferrer
-*/
+ * @author Eduardo García
+ * @author Jorge Ferrer
+ */
 public class GenericServletWrapper extends GenericServlet {
 
 	public GenericServletWrapper(Servlet servlet) {

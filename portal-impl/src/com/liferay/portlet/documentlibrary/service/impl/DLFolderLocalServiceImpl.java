@@ -131,8 +131,9 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated {@link #addFolder(long, long, long, boolean, long, String,
-	 * 				String, boolean, ServiceContext)}
+	 * @deprecated As of 6.2, replaced by more general {@link #addFolder(long,
+	 *             long, long, boolean, long, String, String, boolean,
+	 *             ServiceContext)}
 	 */
 	public DLFolder addFolder(
 			long userId, long groupId, long repositoryId, boolean mountPoint,
@@ -205,8 +206,8 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated {@link #getFileEntriesAndFileShortcuts(long, long,
-	 *             QueryDefinition)}
+	 * @deprecated Replaced by {@link #getFileEntriesAndFileShortcuts(long,
+	 *             long, QueryDefinition)}
 	 */
 	public List<Object> getFileEntriesAndFileShortcuts(
 			long groupId, long folderId, int status, int start, int end)
@@ -228,8 +229,8 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated {@link #getFileEntriesAndFileShortcutsCount(long, long,
-	 *             QueryDefinition)}
+	 * @deprecated Replaced by {@link #getFileEntriesAndFileShortcutsCount(long,
+	 *             long, QueryDefinition)}
 	 */
 	public int getFileEntriesAndFileShortcutsCount(
 			long groupId, long folderId, int status)
@@ -321,7 +322,8 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated {@link #getFoldersAndFileEntriesAndFileShortcuts(long, long,
+	 * @deprecated Replaced by {@link
+	 *             #getFoldersAndFileEntriesAndFileShortcuts(long, long,
 	 *             String[], boolean, QueryDefinition)}
 	 */
 	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(
@@ -338,8 +340,9 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated {@link #getFoldersAndFileEntriesAndFileShortcutsCount(long,
-	 *             long, String[], boolean, QueryDefinition)}
+	 * @deprecated Replaced by {@link
+	 *             #getFoldersAndFileEntriesAndFileShortcutsCount(long, long,
+	 *             String[], boolean, QueryDefinition)}
 	 */
 	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(
 			long groupId, long folderId, int status, String[] mimeTypes,
@@ -364,8 +367,9 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated {@link #getFoldersAndFileEntriesAndFileShortcutsCount(long,
-	 *             long, String[], boolean, QueryDefinition)}
+	 * @deprecated Replaced by {@link
+	 *             #getFoldersAndFileEntriesAndFileShortcutsCount(long, long,
+	 *             String[], boolean, QueryDefinition)}
 	 */
 	public int getFoldersAndFileEntriesAndFileShortcutsCount(
 			long groupId, long folderId, int status,
@@ -379,8 +383,9 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated {@link #getFoldersAndFileEntriesAndFileShortcutsCount(long,
-	 *             long, String[], boolean, QueryDefinition)}
+	 * @deprecated Replaced by {@link
+	 *             #getFoldersAndFileEntriesAndFileShortcutsCount(long, long,
+	 *             String[], boolean, QueryDefinition)}
 	 */
 	public int getFoldersAndFileEntriesAndFileShortcutsCount(
 			long groupId, long folderId, int status, String[] mimeTypes,

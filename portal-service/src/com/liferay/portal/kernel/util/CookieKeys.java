@@ -14,11 +14,23 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.portal.CookieNotSupportedException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Minhchau Dang
  */
-public interface CookieKeys {
+public class CookieKeys {
 
 	public static final String COMPANY_ID = "COMPANY_ID";
 
@@ -32,6 +44,8 @@ public interface CookieKeys {
 
 	public static final String LOGIN = "LOGIN";
 
+	public static final int MAX_AGE = 31536000;
+
 	public static final String PASSWORD = "PASSWORD";
 
 	public static final String REMEMBER_ME = "REMEMBER_ME";
@@ -39,5 +53,257 @@ public interface CookieKeys {
 	public static final String SCREEN_NAME = "SCREEN_NAME";
 
 	public static final String USER_UUID = "USER_UUID";
+
+	public static final int VERSION = 0;
+
+	public static void addCookie(
+		HttpServletRequest request, HttpServletResponse response,
+		Cookie cookie) {
+
+		addCookie(request, response, cookie, request.isSecure());
+	}
+
+	public static void addCookie(
+		HttpServletRequest request, HttpServletResponse response, Cookie cookie,
+		boolean secure) {
+
+		if (!_SESSION_ENABLE_PERSISTENT_COOKIES || _TCK_URL) {
+			return;
+		}
+
+		// LEP-5175
+
+		String name = cookie.getName();
+
+		String originalValue = cookie.getValue();
+		String encodedValue = originalValue;
+
+		if (isEncodedCookie(name)) {
+			encodedValue = new String(
+				HexUtil.encodeHex(originalValue.getBytes()));
+
+			if (_log.isDebugEnabled()) {
+				_log.debug("Add encoded cookie " + name);
+				_log.debug("Original value " + originalValue);
+				_log.debug("Hex encoded value " + encodedValue);
+			}
+		}
+
+		cookie.setSecure(secure);
+		cookie.setValue(encodedValue);
+		cookie.setVersion(VERSION);
+
+		// Setting a cookie will cause the TCK to lose its ability to track
+		// sessions
+
+		response.addCookie(cookie);
+	}
+
+	public static void addSupportCookie(
+		HttpServletRequest request, HttpServletResponse response) {
+
+		Cookie cookieSupportCookie = new Cookie(COOKIE_SUPPORT, "true");
+
+		cookieSupportCookie.setPath(StringPool.SLASH);
+		cookieSupportCookie.setMaxAge(MAX_AGE);
+
+		addCookie(request, response, cookieSupportCookie);
+	}
+
+	public static String get(HttpServletRequest request, String name) {
+		return get(request, name, true);
+	}
+
+	public static String get(
+		HttpServletRequest request, String name, boolean toUpperCase) {
+
+		Map<String, Cookie> cookieMap = _getCookieMap(request);
+
+		if (toUpperCase) {
+			name = name.toUpperCase();
+		}
+
+		Cookie cookie = cookieMap.get(name);
+
+		if (cookie == null) {
+			return null;
+		}
+		else {
+			return cookie.getValue();
+		}
+	}
+
+	public static String getCookie(HttpServletRequest request, String name) {
+		return getCookie(request, name, true);
+	}
+
+	public static String getCookie(
+		HttpServletRequest request, String name, boolean toUpperCase) {
+
+		String value = get(request, name, toUpperCase);
+
+		if ((value != null) && isEncodedCookie(name)) {
+			try {
+				String encodedValue = value;
+				String originalValue = new String(
+					HexUtil.decodeHex(encodedValue.toCharArray()));
+
+				if (_log.isDebugEnabled()) {
+					_log.debug("Get encoded cookie " + name);
+					_log.debug("Hex encoded value " + encodedValue);
+					_log.debug("Original value " + originalValue);
+				}
+
+				return originalValue;
+			}
+			catch (Exception e) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(e.getMessage());
+				}
+
+				return value;
+			}
+		}
+
+		return value;
+	}
+
+	public static String getDomain(HttpServletRequest request) {
+
+		// See LEP-4602 and	LEP-4618.
+
+		if (Validator.isNotNull(_SESSION_COOKIE_DOMAIN)) {
+			return _SESSION_COOKIE_DOMAIN;
+		}
+
+		String host = request.getServerName();
+
+		return getDomain(host);
+	}
+
+	public static String getDomain(String host) {
+
+		// See LEP-4602 and LEP-4645.
+
+		if (host == null) {
+			return null;
+		}
+
+		// See LEP-5595.
+
+		if (Validator.isIPAddress(host)) {
+			return host;
+		}
+
+		int x = host.lastIndexOf(CharPool.PERIOD);
+
+		if (x <= 0) {
+			return null;
+		}
+
+		int y = host.lastIndexOf(CharPool.PERIOD, x - 1);
+
+		if (y <= 0) {
+			return StringPool.PERIOD + host;
+		}
+
+		int z = host.lastIndexOf(CharPool.PERIOD, y - 1);
+
+		String domain = null;
+
+		if (z <= 0) {
+			domain = host.substring(y);
+		}
+		else {
+			domain = host.substring(z);
+		}
+
+		return domain;
+	}
+
+	public static boolean hasSessionId(HttpServletRequest request) {
+		String jsessionid = getCookie(request, JSESSIONID, false);
+
+		if (jsessionid != null) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	public static boolean isEncodedCookie(String name) {
+		if (name.equals(ID) || name.equals(LOGIN) || name.equals(PASSWORD) ||
+			name.equals(SCREEN_NAME)) {
+
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	public static void validateSupportCookie(HttpServletRequest request)
+		throws CookieNotSupportedException {
+
+		if (_SESSION_ENABLE_PERSISTENT_COOKIES &&
+			_SESSION_TEST_COOKIE_SUPPORT) {
+
+			String cookieSupport = getCookie(request, COOKIE_SUPPORT, false);
+
+			if (Validator.isNull(cookieSupport)) {
+				throw new CookieNotSupportedException();
+			}
+		}
+	}
+
+	private static Map<String, Cookie> _getCookieMap(
+		HttpServletRequest request) {
+
+		Map<String, Cookie> cookieMap =
+			(Map<String, Cookie>)request.getAttribute(
+				CookieKeys.class.getName());
+
+		if (cookieMap != null) {
+			return cookieMap;
+		}
+
+		Cookie[] cookies = request.getCookies();
+
+		if (cookies == null) {
+			cookieMap = Collections.emptyMap();
+		}
+		else {
+			cookieMap = new HashMap<String, Cookie>(cookies.length * 4 / 3);
+
+			for (Cookie cookie : cookies) {
+				String cookieName = GetterUtil.getString(cookie.getName());
+
+				cookieName = cookieName.toUpperCase();
+
+				cookieMap.put(cookieName, cookie);
+			}
+		}
+
+		request.setAttribute(CookieKeys.class.getName(), cookieMap);
+
+		return cookieMap;
+	}
+
+	private static final String _SESSION_COOKIE_DOMAIN = PropsUtil.get(
+		PropsKeys.SESSION_COOKIE_DOMAIN);
+
+	private static final boolean _SESSION_ENABLE_PERSISTENT_COOKIES =
+		GetterUtil.getBoolean(
+			PropsUtil.get(PropsKeys.SESSION_ENABLE_PERSISTENT_COOKIES));
+
+	private static final boolean _SESSION_TEST_COOKIE_SUPPORT =
+		GetterUtil.getBoolean(
+			PropsUtil.get(PropsKeys.SESSION_TEST_COOKIE_SUPPORT));
+
+	private static final boolean _TCK_URL = GetterUtil.getBoolean(
+		PropsUtil.get(PropsKeys.TCK_URL));
+
+	private static Log _log = LogFactoryUtil.getLog(CookieKeys.class);
 
 }

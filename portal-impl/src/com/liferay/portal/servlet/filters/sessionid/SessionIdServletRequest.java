@@ -16,9 +16,9 @@ package com.liferay.portal.servlet.filters.sessionid;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.util.CookieKeys;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;

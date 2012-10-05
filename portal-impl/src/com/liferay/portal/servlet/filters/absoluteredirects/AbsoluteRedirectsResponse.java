@@ -15,8 +15,8 @@
 package com.liferay.portal.servlet.filters.absoluteredirects;
 
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.util.CookieKeys;
 import com.liferay.portal.util.PortalUtil;
 
 import java.io.IOException;

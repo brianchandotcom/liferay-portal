@@ -12,28 +12,19 @@
  * details.
  */
 
-package com.liferay.util;
-
-import com.liferay.portal.kernel.util.CookieKeys;
-
-import javax.servlet.http.HttpServletRequest;
+package com.liferay.portal.kernel.util;
 
 /**
- * @author Brian Wing Shun Chan
- * @author Shuyang Zhou
- * @deprecated {@link com.liferay.portal.kernel.util.CookieKeys}
-
+ * @author Julio Camarero
  */
-public class CookieUtil {
+public interface Hex {
 
-	public static String get(HttpServletRequest request, String name) {
-		return get(request, name, true);
-	}
+	public byte[] decodeHex(char[] data) throws Exception;
 
-	public static String get(
-		HttpServletRequest request, String name, boolean toUpperCase) {
+	public char[] encodeHex(byte[] data);
 
-		return CookieKeys.get(request, name, toUpperCase);
-	}
+	public char[] encodeHex(byte[] data, boolean toLowerCase);
+
+	public String encodeHexString(byte[] data);
 
 }

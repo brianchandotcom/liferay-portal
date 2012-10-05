@@ -81,6 +81,8 @@ public interface Constants {
 
 	public static final String OVERRIDE = "override";
 
+	public static final String OVERRIDE_CHECKOUT = "override_checkout";
+
 	public static final String PREVIEW = "preview";
 
 	public static final String PRINT = "print";

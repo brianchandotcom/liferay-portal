@@ -32,6 +32,7 @@ import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryImpl;
 import com.liferay.portlet.documentlibrary.service.base.DLFileEntryServiceBaseImpl;
 import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission;
 import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
+import com.liferay.portlet.documentlibrary.service.permission.DLPermission;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 
@@ -529,6 +530,21 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 
 		return dlFileEntryLocalService.moveFileEntry(
 			getUserId(), fileEntryId, newFolderId, serviceContext);
+
+	}
+
+	public DLFileVersion overrideCheckOut(long fileEntryId, long groupId)
+		throws PortalException, SystemException {
+
+		try {
+			DLPermission.check(
+				getPermissionChecker(), groupId, ActionKeys.OVERRIDE_CHECKOUT);
+		}
+		catch (NoSuchFileEntryException nsfee) {
+		}
+
+		return dlFileEntryLocalService.cancelCheckOut(
+			getUserId(), fileEntryId, true);
 	}
 
 	public Lock refreshFileEntryLock(

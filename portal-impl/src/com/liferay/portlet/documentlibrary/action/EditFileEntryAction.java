@@ -170,6 +170,9 @@ public class EditFileEntryAction extends PortletAction {
 				deleteFileEntry(
 					(LiferayPortletConfig)portletConfig, actionRequest, true);
 			}
+			else if (cmd.equals(Constants.OVERRIDE_CHECKOUT)) {
+				overrideFileEntryCheckOut(actionRequest);
+			}
 			else if (cmd.equals(Constants.REVERT)) {
 				revertFileEntry(actionRequest);
 			}
@@ -716,6 +719,14 @@ public class EditFileEntryAction extends PortletAction {
 					moveFileEntryId, newFolderId, serviceContext);
 			}
 		}
+	}
+
+	protected void overrideFileEntryCheckOut(ActionRequest actionRequest)
+		throws Exception {
+
+		long fileEntryId = ParamUtil.getLong(actionRequest, "fileEntryId");
+
+		DLAppServiceUtil.overrideCheckOut(fileEntryId);
 	}
 
 	protected void revertFileEntry(ActionRequest actionRequest)

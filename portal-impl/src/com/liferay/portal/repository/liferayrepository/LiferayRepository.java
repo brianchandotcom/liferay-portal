@@ -633,6 +633,19 @@ public class LiferayRepository
 		return new LiferayFolder(dlFolder);
 	}
 
+	public FileVersion overrideCheckOut(long fileEntryId, long groupId)
+		throws PortalException, SystemException {
+
+		DLFileVersion dlFileVersion = dlFileEntryService.overrideCheckOut(
+			fileEntryId, groupId);
+
+		if (dlFileVersion != null) {
+			return new LiferayFileVersion(dlFileVersion);
+		}
+
+		return null;
+	}
+
 	public Lock refreshFileEntryLock(
 			String lockUuid, long companyId, long expirationTime)
 		throws PortalException, SystemException {

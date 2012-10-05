@@ -255,6 +255,9 @@ public interface Repository {
 			ServiceContext serviceContext)
 		throws PortalException, SystemException;
 
+	public FileVersion overrideCheckOut(long fileEntryId, long groupId)
+		throws PortalException, SystemException;
+
 	public Lock refreshFileEntryLock(
 			String lockUuid, long companyId, long expirationTime)
 		throws PortalException, SystemException;

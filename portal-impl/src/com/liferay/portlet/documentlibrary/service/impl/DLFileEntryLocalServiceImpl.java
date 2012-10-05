@@ -212,11 +212,22 @@ public class DLFileEntryLocalServiceImpl
 	public DLFileVersion cancelCheckOut(long userId, long fileEntryId)
 		throws PortalException, SystemException {
 
+		return cancelCheckOut(userId, fileEntryId, false);
+	}
+
+	public DLFileVersion cancelCheckOut(
+			long userId, long fileEntryId, boolean override)
+		throws PortalException, SystemException {
+
 		if (!isFileEntryCheckedOut(fileEntryId)) {
 			return null;
 		}
 
 		if (!hasFileEntryLock(userId, fileEntryId)) {
+			if (override) {
+				unlockFileEntry(fileEntryId);
+			}
+
 			lockFileEntry(userId, fileEntryId);
 		}
 

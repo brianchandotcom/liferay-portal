@@ -1933,6 +1933,24 @@ public class DLAppServiceUtil {
 	}
 
 	/**
+	* Overrides the check out of the file entry. If a user has the permission
+	* to override the check out of the specified file entry, the file entry
+	* will be unlocked, and the Private Working Copy is deleted.
+	*
+	* @param fileEntryId the primary key of the file entry to cancel the
+	checkout
+	* @throws PortalException if the file entry could not be found
+	* @throws SystemException if a system exception occurred
+	* @see #checkInFileEntry(long, boolean, String, ServiceContext)
+	* @see #checkOutFileEntry(long)
+	*/
+	public static void overrideCheckOut(long fileEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().overrideCheckOut(fileEntryId);
+	}
+
+	/**
 	* Refreshes the lock for the file entry. This method is primarily used by
 	* WebDAV.
 	*

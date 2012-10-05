@@ -881,8 +881,7 @@ public class DLFileEntryLocalServiceImpl
 		QueryDefinition queryDefinition = new QueryDefinition(
 			status, false, start, end, obc);
 
-		return dlFileEntryFinder.findByG_F(
-			groupId, folderIds, queryDefinition);
+		return dlFileEntryFinder.findByG_F(groupId, folderIds, queryDefinition);
 	}
 
 	public List<DLFileEntry> getFileEntries(
@@ -1287,6 +1286,16 @@ public class DLFileEntryLocalServiceImpl
 
 		int oldStatus = dlFileVersion.getStatus();
 
+		List<DLFileVersion> dlFileVersions =
+			(List<DLFileVersion>)workflowContext.get("dlFileVersions");
+
+		DLFileVersion oldDLFileVersion = dlFileVersions.get(0);
+
+		int oldDLFileVersionStatus = oldDLFileVersion.getStatus();
+
+		List<ObjectValuePair<Long, Integer>> dlFileVersionStatuses =
+			getDlFileVersionStatuses(dlFileVersions);
+
 		dlFileVersion.setStatus(status);
 		dlFileVersion.setStatusByUserId(user.getUserId());
 		dlFileVersion.setStatusByUserName(user.getFullName());
@@ -1388,29 +1397,7 @@ public class DLFileEntryLocalServiceImpl
 
 			// Trash
 
-			List<DLFileVersion> dlFileVersions =
-				(List<DLFileVersion>)workflowContext.get("dlFileVersions");
-
-			List<ObjectValuePair<Long, Integer>> dlFileVersionStatuses =
-				new ArrayList<ObjectValuePair<Long, Integer>>(
-					dlFileVersions.size());
-
-			DLFileVersion oldDLFileVersion = dlFileVersions.get(0);
-
-			int oldDLFileVersionStatus = oldDLFileVersion.getStatus();
-
 			for (DLFileVersion curDLFileVersion : dlFileVersions) {
-				int dlFileVersionStatus = curDLFileVersion.getStatus();
-
-				if (dlFileVersionStatus == WorkflowConstants.STATUS_PENDING) {
-					dlFileVersionStatus = WorkflowConstants.STATUS_DRAFT;
-				}
-
-				dlFileVersionStatuses.add(
-					new ObjectValuePair<Long, Integer>(
-						curDLFileVersion.getFileVersionId(),
-						dlFileVersionStatus));
-
 				curDLFileVersion.setStatus(WorkflowConstants.STATUS_IN_TRASH);
 
 				dlFileVersionPersistence.update(curDLFileVersion, false);
@@ -1618,6 +1605,28 @@ public class DLFileEntryLocalServiceImpl
 
 			expandoBridge.setAttribute(key, serializable);
 		}
+	}
+
+	protected List<ObjectValuePair<Long, Integer>> getDlFileVersionStatuses(
+		List<DLFileVersion> dlFileVersions) {
+
+		List<ObjectValuePair<Long, Integer>> dlFileVersionStatuses =
+			new ArrayList<ObjectValuePair<Long, Integer>>(
+				dlFileVersions.size());
+
+		for (DLFileVersion curDLFileVersion : dlFileVersions) {
+			int dlFileVersionStatus = curDLFileVersion.getStatus();
+
+			if (dlFileVersionStatus == WorkflowConstants.STATUS_PENDING) {
+				dlFileVersionStatus = WorkflowConstants.STATUS_DRAFT;
+			}
+
+			dlFileVersionStatuses.add(
+				new ObjectValuePair<Long, Integer>(
+					curDLFileVersion.getFileVersionId(), dlFileVersionStatus));
+		}
+
+		return dlFileVersionStatuses;
 	}
 
 	protected Long getFileEntryTypeId(

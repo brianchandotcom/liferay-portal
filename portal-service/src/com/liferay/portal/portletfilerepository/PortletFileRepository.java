@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.ObjectValuePair;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 
@@ -67,7 +68,20 @@ public interface PortletFileRepository {
 	public List<DLFileEntry> getPortletFileEntries(long groupId, long folderId)
 		throws SystemException;
 
+	public List<DLFileEntry> getPortletFileEntries(
+			long groupId, long folderId, int status)
+		throws SystemException;
+
+	public List<DLFileEntry> getPortletFileEntries(
+			long groupId, long folderId, int status, int start, int end,
+			OrderByComparator obc)
+		throws SystemException;
+
 	public int getPortletFileEntriesCount(long groupId, long folderId)
+		throws SystemException;
+
+	public int getPortletFileEntriesCount(
+			long groupId, long folderId, int status)
 		throws SystemException;
 
 	public long getPortletRepository(

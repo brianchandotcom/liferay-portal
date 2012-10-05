@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
@@ -225,11 +226,37 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 			groupId, folderId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
+	public List<DLFileEntry> getPortletFileEntries(
+			long groupId, long folderId, int status)
+		throws SystemException {
+
+		return getPortletFileEntries(
+			groupId, folderId, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			null);
+	}
+
+	public List<DLFileEntry> getPortletFileEntries(
+			long groupId, long folderId, int status, int start, int end,
+			OrderByComparator obc)
+		throws SystemException {
+
+		return DLFileEntryLocalServiceUtil.getFileEntries(
+			groupId, folderId, status, start, end, obc);
+	}
+
 	public int getPortletFileEntriesCount(long groupId, long folderId)
 		throws SystemException {
 
 		return DLFileEntryLocalServiceUtil.getFileEntriesCount(
 			groupId, folderId);
+	}
+
+	public int getPortletFileEntriesCount(
+			long groupId, long folderId, int status)
+		throws SystemException {
+
+		return DLFileEntryLocalServiceUtil.getFileEntriesCount(
+			groupId, folderId, status);
 	}
 
 	public long getPortletRepository(

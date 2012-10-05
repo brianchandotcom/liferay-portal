@@ -291,6 +291,13 @@ public class DLFileEntryFinderImpl
 			"No DLFileEntry exists with the imageId " + imageId);
 	}
 
+	public List<DLFileEntry> findByG_F(
+			long groupId, List<Long> folderIds, QueryDefinition queryDefinition)
+		throws SystemException {
+
+		return doFindByG_F(groupId, folderIds, queryDefinition, false);
+	}
+
 	public List<DLFileEntry> findByExtraSettings(int start, int end)
 		throws SystemException {
 

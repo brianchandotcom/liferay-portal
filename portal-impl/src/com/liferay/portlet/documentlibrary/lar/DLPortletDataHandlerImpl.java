@@ -1065,8 +1065,10 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 			return;
 		}
 		else if (!folder.isDefaultRepository()) {
-			//no need to export non-Liferay Repository items since they would
-			//be exported as part of repository export
+
+			// no need to export non-Liferay Repository items since they would
+			// be exported as part of repository export
+
 			return;
 		}
 

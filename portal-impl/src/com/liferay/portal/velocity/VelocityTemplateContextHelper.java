@@ -116,6 +116,7 @@ public class VelocityTemplateContextHelper extends TemplateContextHelper {
 			WebKeys.THEME_DISPLAY);
 
 		if (themeDisplay != null) {
+
 			// Init
 
 			templateContext.put(
@@ -134,6 +135,7 @@ public class VelocityTemplateContextHelper extends TemplateContextHelper {
 		}
 
 		if (theme != null) {
+
 			// Full css and templates path
 
 			String servletContextName = GetterUtil.getString(

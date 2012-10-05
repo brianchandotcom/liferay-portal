@@ -195,6 +195,7 @@ public class RepositoryTest {
 	}
 
 	protected void addAndDeleteRepositories(boolean hidden) throws Exception {
+
 		// Add repositories
 
 		int initialMountFolders = DLFolderServiceUtil.getMountFoldersCount(

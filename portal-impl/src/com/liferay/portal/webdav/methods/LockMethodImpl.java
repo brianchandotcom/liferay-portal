@@ -129,6 +129,7 @@ public class LockMethodImpl implements Method {
 		}
 		else {
 			try {
+
 				// Refresh existing lock
 
 				lock = storage.refreshResourceLock(

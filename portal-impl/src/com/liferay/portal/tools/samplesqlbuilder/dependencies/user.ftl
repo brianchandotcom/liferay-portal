@@ -26,7 +26,7 @@ insert into Contact_ values (${contact.contactId}, ${companyId}, ${user.userId},
 </#if>
 
 <#if userGroupRoles??>
-    <#list userGroupRoles as userGroupRole>
+	<#list userGroupRoles as userGroupRole>
 		insert into UserGroupRole values (${user.userId}, ${userGroupRole.groupId}, ${userGroupRole.roleId});
-    </#list>
+	</#list>
 </#if>

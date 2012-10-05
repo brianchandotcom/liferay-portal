@@ -25,22 +25,23 @@ public class CopyWDFrontPageTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Wiki Display Test Page");
 		selenium.clickAt("link=Wiki Display Test Page",
 			RuntimeVariables.replace("Wiki Display Test Page"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Details"),
-			selenium.getText("//div[3]/span[2]/a/span"));
-		selenium.clickAt("//div[3]/span[2]/a/span",
+			selenium.getText(
+				"//div[@class='page-actions top-actions']/span/a[contains(.,'Details')]"));
+		selenium.clickAt("//div[@class='page-actions top-actions']/span/a[contains(.,'Details')]",
 			RuntimeVariables.replace("Details"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Copy"),
-			selenium.getText("//tr[9]/td/ul/li[2]/a/span"));
-		selenium.clickAt("//tr[9]/td/ul/li[2]/a/span",
+			selenium.getText(
+				"//ul[@class='lfr-component taglib-icon-list']/li/a/span[contains(.,'Copy')]"));
+		selenium.clickAt("//ul[@class='lfr-component taglib-icon-list']/li/a/span[contains(.,'Copy')]",
 			RuntimeVariables.replace("Copy"));
 		selenium.waitForPageToLoad("30000");
 		Thread.sleep(5000);
-		selenium.type("//div/span[1]/span/span/input",
+		selenium.type("//input[contains(@id,'title')]",
 			RuntimeVariables.replace("FrontPage2"));
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
@@ -49,11 +50,14 @@ public class CopyWDFrontPageTest extends BaseTestCase {
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Wiki Display Test Page");
 		selenium.clickAt("link=Wiki Display Test Page",
 			RuntimeVariables.replace("Wiki Display Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=All Pages", RuntimeVariables.replace("All Pages"));
+		assertEquals(RuntimeVariables.replace("All Pages"),
+			selenium.getText(
+				"//ul[@class='top-links-navigation']/li/span[contains(.,'All Pages')]"));
+		selenium.clickAt("//ul[@class='top-links-navigation']/li/span[contains(.,'All Pages')]/a",
+			RuntimeVariables.replace("All Pages"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("FrontPage2"),
 			selenium.getText("//tr[4]/td[1]/a"));

@@ -20,8 +20,10 @@ import com.liferay.portalweb.portlet.wiki.portlet.addportletwiki.AddPageWikiTest
 import com.liferay.portalweb.portlet.wiki.portlet.addportletwiki.AddPortletWikiTest;
 import com.liferay.portalweb.portlet.wiki.wikinode.addwikinode.TearDownWikiNodeTest;
 import com.liferay.portalweb.portlet.wiki.wikipage.addwikifrontpage.AddWikiFrontPageTest;
+import com.liferay.portalweb.portlet.wikidisplay.comment.addwdfrontpagecomment.AddWDFrontPageCommentTest;
 import com.liferay.portalweb.portlet.wikidisplay.portlet.addportletwd.AddPageWDTest;
 import com.liferay.portalweb.portlet.wikidisplay.portlet.addportletwd.AddPortletWDTest;
+import com.liferay.portalweb.portlet.wikidisplay.wikinode.selectmainnode.SelectMainNodeTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -40,6 +42,7 @@ public class RateWDFrontPageCommentTests extends BaseTestSuite {
 		testSuite.addTestSuite(SelectMainNodeTest.class);
 		testSuite.addTestSuite(AddWDFrontPageCommentTest.class);
 		testSuite.addTestSuite(RateWDFrontPageCommentTest.class);
+		testSuite.addTestSuite(ViewRateWDFrontPageCommentTest.class);
 		testSuite.addTestSuite(TearDownWikiNodeTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 

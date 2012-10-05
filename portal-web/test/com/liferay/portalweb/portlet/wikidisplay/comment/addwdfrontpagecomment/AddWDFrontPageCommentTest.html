@@ -14,37 +14,32 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Wiki Display Test Page</td>
-	<td>Wiki Display Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Wiki Display Test Page</td>
 	<td>Wiki Display Test Page</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//fieldset/div/a</td>
+	<td>//fieldset[contains(@class,'add-comment')]/div/a</td>
 	<td>Be the first.</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//fieldset/div/a</td>
+	<td>//fieldset[contains(@class,'add-comment')]/div/a</td>
 	<td>Be the first.</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
 	<td>//textarea</td>
-	<td>Comment (Required)</td>
+	<td>Comment</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>//textarea</td>
-	<td>Wiki Front Page Comment Body</td>
+	<td>Wiki FrontPage Comment</td>
 </tr>
 <tr>
-	<td>click</td>
+	<td>clickAt</td>
 	<td>//input[@value='Reply']</td>
 	<td>Reply</td>
 </tr>
@@ -60,10 +55,9 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div/div[3]/div/div[1]</td>
-	<td>Wiki Front Page Comment Body</td>
+	<td>//div[@class='lfr-discussion-message']</td>
+	<td>Wiki FrontPage Comment</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

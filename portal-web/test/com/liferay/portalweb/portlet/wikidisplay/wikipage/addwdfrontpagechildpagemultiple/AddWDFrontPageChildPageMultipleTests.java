@@ -22,6 +22,10 @@ import com.liferay.portalweb.portlet.wiki.wikinode.addwikinode.TearDownWikiNodeT
 import com.liferay.portalweb.portlet.wiki.wikipage.addwikifrontpage.AddWikiFrontPageTest;
 import com.liferay.portalweb.portlet.wikidisplay.portlet.addportletwd.AddPageWDTest;
 import com.liferay.portalweb.portlet.wikidisplay.portlet.addportletwd.AddPortletWDTest;
+import com.liferay.portalweb.portlet.wikidisplay.wikinode.selectmainnode.SelectMainNodeTest;
+import com.liferay.portalweb.portlet.wikidisplay.wikipage.addwdfrontpagechildpage.AddWDFrontPageChildPage1Test;
+import com.liferay.portalweb.portlet.wikidisplay.wikipage.addwdfrontpagechildpage.AddWDFrontPageChildPage2Test;
+import com.liferay.portalweb.portlet.wikidisplay.wikipage.addwdfrontpagechildpage.AddWDFrontPageChildPage3Test;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -41,6 +45,7 @@ public class AddWDFrontPageChildPageMultipleTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddWDFrontPageChildPage1Test.class);
 		testSuite.addTestSuite(AddWDFrontPageChildPage2Test.class);
 		testSuite.addTestSuite(AddWDFrontPageChildPage3Test.class);
+		testSuite.addTestSuite(ViewWDFrontPageChildPageMulitpleTest.class);
 		testSuite.addTestSuite(TearDownWikiNodeTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 

@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Wiki Display Test Page</td>
-	<td>Wiki Display Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Wiki Display Test Page</td>
 	<td>Wiki Display Test Page</td>
@@ -29,28 +24,38 @@
 	<td>Wiki FrontPage Content</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//div[@class='child-pages']/h2</td>
+	<td>Children Pages</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='child-pages']/ul/li/a</td>
+	<td>Wiki FrontPage ChildPage Title</td>
+</tr>
+<tr>
 	<td>clickAtAndWait</td>
 	<td>//div[@class='child-pages']/ul/li/a</td>
-	<td>Wiki Front Page Child Page Title</td>
+	<td>Wiki FrontPage ChildPage Title</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[3]/span[2]/a/span</td>
+	<td>//div[@class='page-actions top-actions']/span/a[contains(.,'Details')]</td>
 	<td>Details</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div[3]/span[2]/a/span</td>
+	<td>//div[@class='page-actions top-actions']/span/a[contains(.,'Details')]</td>
 	<td>Details</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td/ul/li[4]/a/span</td>
+	<td>//ul[@class='lfr-component taglib-icon-list']/li/a[contains(.,'Delete')]</td>
 	<td>Delete</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//td/ul/li[4]/a/span</td>
+	<td>//ul[@class='lfr-component taglib-icon-list']/li/a[contains(.,'Delete')]</td>
 	<td>Delete</td>
 </tr>
 <tr>
@@ -60,10 +65,14 @@
 </tr>
 <tr>
 	<td>assertTextNotPresent</td>
-	<td>Wiki Front Page Child Page Title</td>
+	<td>Children Pages</td>
 	<td></td>
 </tr>
-
+<tr>
+	<td>assertTextNotPresent</td>
+	<td>Wiki FrontPage ChildPage Title</td>
+	<td></td>
+</tr>
 </tbody></table>
 </body>
 </html>

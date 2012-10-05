@@ -25,67 +25,73 @@ public class RenameWDFrontPageChildPageTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Wiki Display Test Page");
 		selenium.clickAt("link=Wiki Display Test Page",
 			RuntimeVariables.replace("Wiki Display Test Page"));
 		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("Wiki FrontPage ChildPage Title"),
+			selenium.getText("//div[@class='child-pages']/ul/li/a"));
 		selenium.clickAt("//div[@class='child-pages']/ul/li/a",
-			RuntimeVariables.replace("Wiki FrontPage ChildPage1 Title"));
+			RuntimeVariables.replace("Wiki FrontPage ChildPage Title"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Wiki FrontPage ChildPage1 Title"),
+		assertEquals(RuntimeVariables.replace("Wiki FrontPage ChildPage Title"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace(
-				"Wiki FrontPage ChildPage1 Content"),
+				"Wiki FrontPage ChildPage Content"),
 			selenium.getText("//div[@class='wiki-body']/p"));
 		assertEquals(RuntimeVariables.replace("Details"),
-			selenium.getText("//div[3]/span[2]/a/span"));
-		selenium.clickAt("//div[3]/span[2]/a/span",
+			selenium.getText(
+				"//div[@class='page-actions top-actions']/span/a[contains(.,'Details')]"));
+		selenium.clickAt("//div[@class='page-actions top-actions']/span/a[contains(.,'Details')]",
 			RuntimeVariables.replace("Details"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Move"),
-			selenium.getText("//tr[9]/td/ul/li[3]/a/span"));
-		selenium.clickAt("//tr[9]/td/ul/li[3]/a/span",
-			RuntimeVariables.replace("Move"));
+			selenium.getText(
+				"//ul[@class='lfr-component taglib-icon-list']/li/a[contains(.,'Move')]"));
+		selenium.click(RuntimeVariables.replace(
+				"//ul[@class='lfr-component taglib-icon-list']/li/a[contains(.,'Move')]"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Wiki FrontPage ChildPage1 Title"),
+		assertEquals(RuntimeVariables.replace("Wiki FrontPage ChildPage Title"),
 			selenium.getText("//h1[@class='header-title']/span"));
-		selenium.type("//div/span/span/span/input",
-			RuntimeVariables.replace("Wiki FrontPage ChildPage2 Title"));
+		selenium.type("//input[contains(@id,'_newTitle')]",
+			RuntimeVariables.replace("Wiki FrontPage ChildPage Title Rename"));
 		selenium.clickAt("//input[@value='Rename']",
 			RuntimeVariables.replace("Rename"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals(RuntimeVariables.replace("Wiki FrontPage ChildPage2 Title"),
+		assertEquals(RuntimeVariables.replace(
+				"Wiki FrontPage ChildPage Title Rename"),
+			selenium.getText("//h1[@class='header-title']/span"));
+		assertNotEquals(RuntimeVariables.replace(
+				"Wiki FrontPage ChildPage Title"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace(
-				"(Redirected from Wiki FrontPage ChildPage1 Title)"),
+				"(Redirected from Wiki FrontPage ChildPage Title)"),
 			selenium.getText("//div[@class='page-redirect']"));
 		assertEquals(RuntimeVariables.replace(
-				"Wiki FrontPage ChildPage1 Content"),
+				"Wiki FrontPage ChildPage Content"),
 			selenium.getText("//div[@class='wiki-body']/p"));
-		assertNotEquals(RuntimeVariables.replace(
-				"Wiki FrontPage ChildPage1 Title"),
-			selenium.getText("//h1[@class='header-title']/span"));
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Wiki Display Test Page");
 		selenium.clickAt("link=Wiki Display Test Page",
 			RuntimeVariables.replace("Wiki Display Test Page"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Wiki FrontPage ChildPage2 Title"),
+		assertEquals(RuntimeVariables.replace(
+				"Wiki FrontPage ChildPage Title Rename"),
 			selenium.getText("//div[@class='child-pages']/ul/li/a"));
-		assertFalse(selenium.isTextPresent("Wiki FrontPage ChildPage1 Title"));
+		assertNotEquals(RuntimeVariables.replace(
+				"Wiki FrontPage ChildPage Title"),
+			selenium.getText("//div[@class='child-pages']/ul/li/a"));
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Wiki Display Test Page");
 		selenium.clickAt("link=Wiki Display Test Page",
 			RuntimeVariables.replace("Wiki Display Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=All Pages", RuntimeVariables.replace("All Pages"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Wiki FrontPage ChildPage1 Title"),
+		assertEquals(RuntimeVariables.replace("Wiki FrontPage ChildPage Title"),
 			selenium.getText("//tr[4]/td[1]/a"));
-		assertEquals(RuntimeVariables.replace("Wiki FrontPage ChildPage2 Title"),
+		assertEquals(RuntimeVariables.replace(
+				"Wiki FrontPage ChildPage Title Rename"),
 			selenium.getText("//tr[5]/td[1]/a"));
 	}
 }

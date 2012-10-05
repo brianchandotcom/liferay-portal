@@ -53,10 +53,10 @@ public class SelectMainNodeTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"You have successfully updated the setup."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals(RuntimeVariables.replace("Main"),
-			selenium.getText("//select[@id='_86_nodeId']"));
-		assertEquals(RuntimeVariables.replace("FrontPage"),
-			selenium.getText("//select[@id='_86_title']"));
+		assertEquals("Main",
+			selenium.getSelectedLabel("//select[@id='_86_nodeId']"));
+		assertEquals("FrontPage",
+			selenium.getSelectedLabel("//select[@id='_86_title']"));
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("link=Wiki Display Test Page",

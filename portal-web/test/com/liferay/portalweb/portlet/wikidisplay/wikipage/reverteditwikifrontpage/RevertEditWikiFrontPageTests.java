@@ -22,6 +22,9 @@ import com.liferay.portalweb.portlet.wiki.wikinode.addwikinode.TearDownWikiNodeT
 import com.liferay.portalweb.portlet.wiki.wikipage.addwikifrontpage.AddWikiFrontPageTest;
 import com.liferay.portalweb.portlet.wikidisplay.portlet.addportletwd.AddPageWDTest;
 import com.liferay.portalweb.portlet.wikidisplay.portlet.addportletwd.AddPortletWDTest;
+import com.liferay.portalweb.portlet.wikidisplay.wikinode.selectmainnode.SelectMainNodeTest;
+import com.liferay.portalweb.portlet.wikidisplay.wikipage.editwikifrontpage.EditWikiFrontPageTest;
+import com.liferay.portalweb.portlet.wikidisplay.wikipage.editwikifrontpage.ViewEditWikiFrontPageTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -40,6 +43,7 @@ public class RevertEditWikiFrontPageTests extends BaseTestSuite {
 		testSuite.addTestSuite(SelectMainNodeTest.class);
 		testSuite.addTestSuite(EditWikiFrontPageTest.class);
 		testSuite.addTestSuite(RevertEditWikiFrontPageTest.class);
+		testSuite.addTestSuite(ViewEditWikiFrontPageTest.class);
 		testSuite.addTestSuite(TearDownWikiNodeTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 

@@ -16,10 +16,10 @@ package com.liferay.portalweb.portlet.wikidisplay.comment;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portlet.wikidisplay.comment.addwdfrontpagecomment.AddWDFrontPageCommentTests;
-import com.liferay.portalweb.portlet.wikidisplay.comment.addwdfrontpagecommentbodynull.AddWDFrontPageCommentBodyNullTests;
 import com.liferay.portalweb.portlet.wikidisplay.comment.addwdfrontpagecommentmultiple.AddWDFrontPageCommentMultipleTests;
+import com.liferay.portalweb.portlet.wikidisplay.comment.addwdfrontpagecommentnull.AddWDFrontPageCommentNullTests;
 import com.liferay.portalweb.portlet.wikidisplay.comment.deletewdfrontpagecomment.DeleteWDFrontPageCommentTests;
-import com.liferay.portalweb.portlet.wikidisplay.comment.editwdfrontpagecommentbody.EditWDFrontPageCommentBodyTests;
+import com.liferay.portalweb.portlet.wikidisplay.comment.editwdfrontpagecomment.EditWDFrontPageCommentTests;
 import com.liferay.portalweb.portlet.wikidisplay.comment.ratewdfrontpagecomment.RateWDFrontPageCommentTests;
 
 import junit.framework.Test;
@@ -34,10 +34,10 @@ public class CommentTestPlan extends BaseTestSuite {
 		TestSuite testSuite = new TestSuite();
 
 		testSuite.addTest(AddWDFrontPageCommentTests.suite());
-		testSuite.addTest(AddWDFrontPageCommentBodyNullTests.suite());
 		testSuite.addTest(AddWDFrontPageCommentMultipleTests.suite());
+		testSuite.addTest(AddWDFrontPageCommentNullTests.suite());
 		testSuite.addTest(DeleteWDFrontPageCommentTests.suite());
-		testSuite.addTest(EditWDFrontPageCommentBodyTests.suite());
+		testSuite.addTest(EditWDFrontPageCommentTests.suite());
 		testSuite.addTest(RateWDFrontPageCommentTests.suite());
 
 		return testSuite;

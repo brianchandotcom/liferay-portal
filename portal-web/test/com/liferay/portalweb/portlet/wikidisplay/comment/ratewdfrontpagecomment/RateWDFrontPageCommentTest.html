@@ -14,81 +14,60 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Wiki Display Test Page</td>
-	<td>Wiki Display Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Wiki Display Test Page</td>
 	<td>Wiki Display Test Page</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[3]/div/div[2]/div/div/div/div</td>
+	<td>//div[contains(@id,'ratingThumbContent')]/div</td>
 	<td>0 (0 Votes)</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//div[@class='taglib-ratings thumbs']/div/div/a[1]</td>
-	<td>+1</td>
+	<td>//div[contains(@id,'ratingThumbContent')]/a[contains(@class,'thumb-down')]</td>
+	<td>Thumb Down</td>
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//div[3]/div/div[2]/div/div/div/div</td>
-	<td>+1 (1 Vote)</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[3]/div/div[2]/div/div/div/div</td>
-	<td>+1 (1 Vote)</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//div[@class='taglib-ratings thumbs']/div/div/a[1]</td>
-	<td>+1</td>
-</tr>
-<tr>
-	<td>waitForText</td>
-	<td>//div[3]/div/div[2]/div/div/div/div</td>
-	<td>0 (0 Votes)</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[3]/div/div[2]/div/div/div/div</td>
-	<td>0 (0 Votes)</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//div[@class='taglib-ratings thumbs']/div/div/a[2]</td>
-	<td>-1</td>
-</tr>
-<tr>
-	<td>waitForText</td>
-	<td>//div[3]/div/div[2]/div/div/div/div</td>
+	<td>//div[contains(@id,'ratingThumbContent')]/div</td>
 	<td>-1 (1 Vote)</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[3]/div/div[2]/div/div/div/div</td>
+	<td>//div[contains(@id,'ratingThumbContent')]/div</td>
 	<td>-1 (1 Vote)</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//div[@class='taglib-ratings thumbs']/div/div/a[2]</td>
-	<td>-1</td>
+	<td>//div[contains(@id,'ratingThumbContent')]/a[contains(@class,'thumb-down')]</td>
+	<td>Thumb Down</td>
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//div[3]/div/div[2]/div/div/div/div</td>
+	<td>//div[contains(@id,'ratingThumbContent')]/div</td>
 	<td>0 (0 Votes)</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[3]/div/div[2]/div/div/div/div</td>
+	<td>//div[contains(@id,'ratingThumbContent')]/div</td>
 	<td>0 (0 Votes)</td>
 </tr>
-
+<tr>
+	<td>clickAt</td>
+	<td>//div[contains(@id,'ratingThumbContent')]/a[contains(@class,'thumb-up')]</td>
+	<td>Thumb Up</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//div[contains(@id,'ratingThumbContent')]/div</td>
+	<td>+1 (1 Vote)</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[contains(@id,'ratingThumbContent')]/div</td>
+	<td>+1 (1 Vote)</td>
+</tr>
 </tbody></table>
 </body>
 </html>

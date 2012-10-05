@@ -25,17 +25,18 @@ public class AddWDFrontPageChildPageNameNullTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Wiki Display Test Page");
 		selenium.clickAt("link=Wiki Display Test Page",
 			RuntimeVariables.replace("Wiki Display Test Page"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Add Child Page"),
-			selenium.getText("//div[1]/span[1]/a/span"));
-		selenium.clickAt("//div[1]/span[1]/a/span",
+			selenium.getText(
+				"//div[@class='article-actions']/span/a[contains(.,'Add Child Page')]"));
+		selenium.clickAt("//div[@class='article-actions']/span/a[contains(.,'Add Child Page')]",
 			RuntimeVariables.replace("Add Child Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[contains(@id,'_title')]",
 			RuntimeVariables.replace(""));
+		selenium.waitForVisible("//td[@class='cke_top']");
 		selenium.waitForElementPresent(
 			"//textarea[contains(@id,'_editor') and contains(@style,'display: none;')]");
 		assertEquals(RuntimeVariables.replace("Source"),
@@ -46,7 +47,7 @@ public class AddWDFrontPageChildPageNameNullTest extends BaseTestCase {
 		selenium.waitForVisible(
 			"//td[contains(@id,'cke_contents__54')]/textarea");
 		selenium.type("//td[contains(@id,'cke_contents__54')]/textarea",
-			RuntimeVariables.replace("Wiki Front Page Child Page Content"));
+			RuntimeVariables.replace("Wiki FrontPage Child Page Content"));
 		assertEquals(RuntimeVariables.replace("Source"),
 			selenium.getText("//span[.='Source']"));
 		selenium.clickAt("//span[.='Source']",
@@ -56,7 +57,7 @@ public class AddWDFrontPageChildPageNameNullTest extends BaseTestCase {
 		assertTrue(selenium.isVisible(
 				"//td[contains(@id,'cke_contents__54')]/iframe"));
 		selenium.selectFrame("//td[contains(@id,'cke_contents__54')]/iframe");
-		selenium.waitForText("//body", "Wiki Front Page Child Page Content");
+		selenium.waitForText("//body", "Wiki FrontPage Child Page Content");
 		selenium.selectFrame("relative=top");
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
@@ -66,5 +67,12 @@ public class AddWDFrontPageChildPageNameNullTest extends BaseTestCase {
 			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[1]"));
 		assertEquals(RuntimeVariables.replace("Please enter a valid title."),
 			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[2]"));
+		selenium.open("/web/guest/home/");
+		selenium.clickAt("link=Wiki Display Test Page",
+			RuntimeVariables.replace("Wiki Display Test Page"));
+		selenium.waitForPageToLoad("30000");
+		assertFalse(selenium.isTextPresent("Children Pages"));
+		assertTrue(selenium.isElementNotPresent(
+				"//div[@class='child-pages']/ul/li/a"));
 	}
 }

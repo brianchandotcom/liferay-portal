@@ -14,29 +14,29 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Wiki Display Test Page</td>
-	<td>Wiki Display Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Wiki Display Test Page</td>
 	<td>Wiki Display Test Page</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[1]/span[1]/a/span</td>
+	<td>//div[@class='article-actions']/span/a[contains(.,'Add Child Page')]</td>
 	<td>Add Child Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div[1]/span[1]/a/span</td>
+	<td>//div[@class='article-actions']/span/a[contains(.,'Add Child Page')]</td>
 	<td>Add Child Page</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>//input[contains(@id,'_title')]</td>
 	<td>Wiki FrontPage ChildPage Title</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//td[@class='cke_top']</td>
+	<td>CKE Toolbar</td>
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
@@ -132,11 +132,6 @@
 	<td>open</td>
 	<td>/web/guest/home/</td>
 	<td></td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>link=Wiki Display Test Page</td>
-	<td>Wiki Display Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>

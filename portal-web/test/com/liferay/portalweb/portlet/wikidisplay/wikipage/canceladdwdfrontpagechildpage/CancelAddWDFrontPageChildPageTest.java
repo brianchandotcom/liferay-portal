@@ -25,17 +25,18 @@ public class CancelAddWDFrontPageChildPageTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Wiki Display Test Page");
 		selenium.clickAt("link=Wiki Display Test Page",
 			RuntimeVariables.replace("Wiki Display Test Page"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Add Child Page"),
-			selenium.getText("//div[1]/span[1]/a/span"));
-		selenium.clickAt("//div[1]/span[1]/a/span",
+			selenium.getText(
+				"//div[@class='article-actions']/span/a[contains(.,'Add Child Page')]"));
+		selenium.clickAt("//div[@class='article-actions']/span/a[contains(.,'Add Child Page')]",
 			RuntimeVariables.replace("Add Child Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[contains(@id,'_title')]",
 			RuntimeVariables.replace("Wiki FrontPage ChildPage Title"));
+		selenium.waitForVisible("//td[@class='cke_top']");
 		selenium.waitForElementPresent(
 			"//textarea[contains(@id,'_editor') and contains(@style,'display: none;')]");
 		assertEquals(RuntimeVariables.replace("Source"),
@@ -63,7 +64,13 @@ public class CancelAddWDFrontPageChildPageTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertFalse(selenium.isTextPresent(
 				"Your request completed successfully."));
-		assertFalse(selenium.isTextPresent("Wiki Front Page Child Page Title"));
-		assertFalse(selenium.isTextPresent("Wiki Front Page Child Page Content"));
+		assertFalse(selenium.isTextPresent("Wiki FrontPage Child Page Title"));
+		assertFalse(selenium.isTextPresent("Wiki FrontPage Child Page Content"));
+		selenium.open("/web/guest/home/");
+		selenium.clickAt("link=Wiki Display Test Page",
+			RuntimeVariables.replace("Wiki Display Test Page"));
+		selenium.waitForPageToLoad("30000");
+		assertFalse(selenium.isTextPresent("Children Pages"));
+		assertFalse(selenium.isTextPresent("Wiki FrontPage ChildPage Title"));
 	}
 }

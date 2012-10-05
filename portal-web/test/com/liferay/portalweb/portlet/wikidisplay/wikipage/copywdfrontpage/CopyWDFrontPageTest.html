@@ -14,33 +14,28 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Wiki Display Test Page</td>
-	<td>Wiki Display Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Wiki Display Test Page</td>
 	<td>Wiki Display Test Page</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[3]/span[2]/a/span</td>
+	<td>//div[@class='page-actions top-actions']/span/a[contains(.,'Details')]</td>
 	<td>Details</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div[3]/span[2]/a/span</td>
+	<td>//div[@class='page-actions top-actions']/span/a[contains(.,'Details')]</td>
 	<td>Details</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[9]/td/ul/li[2]/a/span</td>
+	<td>//ul[@class='lfr-component taglib-icon-list']/li/a/span[contains(.,'Copy')]</td>
 	<td>Copy</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//tr[9]/td/ul/li[2]/a/span</td>
+	<td>//ul[@class='lfr-component taglib-icon-list']/li/a/span[contains(.,'Copy')]</td>
 	<td>Copy</td>
 </tr>
 <tr>
@@ -50,7 +45,7 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>//div/span[1]/span/span/input</td>
+	<td>//input[contains(@id,'title')]</td>
 	<td>FrontPage2</td>
 </tr>
 <tr>
@@ -69,18 +64,18 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Wiki Display Test Page</td>
-	<td>Wiki Display Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Wiki Display Test Page</td>
 	<td>Wiki Display Test Page</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//ul[@class='top-links-navigation']/li/span[contains(.,'All Pages')]</td>
+	<td>All Pages</td>
+</tr>
+<tr>
 	<td>clickAtAndWait</td>
-	<td>link=All Pages</td>
+	<td>//ul[@class='top-links-navigation']/li/span[contains(.,'All Pages')]/a</td>
 	<td>All Pages</td>
 </tr>
 <tr>
@@ -103,7 +98,6 @@
 	<td>//div[@class='wiki-body']/p</td>
 	<td>Wiki FrontPage Content</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

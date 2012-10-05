@@ -59,6 +59,9 @@ public class ResourceActionLocalServiceImpl
 		checkResourceActions(name, actionIds, false);
 	}
 
+	/**
+	 * @deprecated {@link #checkResourceActions(String, List<String>)}
+	 */
 	public void checkResourceActions(
 			String name, List<String> actionIds, boolean addDefaultActions)
 		throws SystemException {

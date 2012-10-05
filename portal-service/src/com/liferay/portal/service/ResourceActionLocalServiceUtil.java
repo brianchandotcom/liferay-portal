@@ -277,6 +277,9 @@ public class ResourceActionLocalServiceUtil {
 		getService().checkResourceActions(name, actionIds);
 	}
 
+	/**
+	* @deprecated {@link #checkResourceActions(String, List<String>)}
+	*/
 	public static void checkResourceActions(java.lang.String name,
 		java.util.List<java.lang.String> actionIds, boolean addDefaultActions)
 		throws com.liferay.portal.kernel.exception.SystemException {

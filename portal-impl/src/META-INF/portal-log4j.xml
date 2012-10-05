@@ -846,7 +846,7 @@
 		<priority value="ERROR" />
 	</category>
 
-	<category name="com.liferay.portal.util.CookieKeys">
+	<category name="com.liferay.portal.kernel.util.CookieKeys">
 		<priority value="ERROR" />
 	</category>
 

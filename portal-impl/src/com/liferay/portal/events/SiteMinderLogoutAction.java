@@ -17,10 +17,10 @@ package com.liferay.portal.events;
 import com.liferay.portal.kernel.events.Action;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.AuthSettingsUtil;
-import com.liferay.portal.util.CookieKeys;
 import com.liferay.portal.util.PortalUtil;
 
 import javax.servlet.http.Cookie;

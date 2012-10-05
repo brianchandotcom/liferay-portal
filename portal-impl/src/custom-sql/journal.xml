@@ -215,7 +215,7 @@
 				(JournalArticle.groupId = ?)
 				[$ARTICLE_FOLDER_ID$]
 			GROUP BY
-				JournalArticle.articleId, JournalArticle.folderId, JournalArticle.createDate, JournalArticle.modifiedDate, JournalArticle.title, JournalArticle.displayDate
+				JournalArticle.folderId, JournalArticle.createDate, JournalArticle.modifiedDate, JournalArticle.articleId, JournalArticle.title, JournalArticle.displayDate
 		]]>
 	</sql>
 	<sql id="com.liferay.portlet.journal.service.persistence.JournalFolderFinder.findF_ByG_F">

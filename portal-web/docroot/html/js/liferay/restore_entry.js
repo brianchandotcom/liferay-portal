@@ -1,5 +1,5 @@
 AUI.add(
-	'liferay-trash',
+	'liferay-restore-entry',
 	function(A) {
 		var Lang = A.Lang;
 
@@ -9,7 +9,7 @@ AUI.add(
 
 		var STR_CHECKENTRY_URL = 'checkEntryURL';
 
-		var Trash = A.Component.create(
+		var RestoreEntry = A.Component.create(
 			{
 				ATTRS: {
 					checkEntryURL: {
@@ -29,7 +29,7 @@ AUI.add(
 
 				EXTENDS: A.Base,
 
-				NAME: 'trash',
+				NAME: 'restoreentry',
 
 				prototype: {
 					initializer: function(config) {
@@ -221,7 +221,7 @@ AUI.add(
 			}
 		);
 
-		Liferay.Portlet.Trash = Trash;
+		Liferay.RestoreEntry = RestoreEntry;
 	},
 	'',
 	{

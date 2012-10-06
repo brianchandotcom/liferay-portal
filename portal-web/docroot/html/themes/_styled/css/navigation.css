@@ -28,14 +28,16 @@
 	}
 
 	li {
-		a.ancestor {
-			font-weight: bold;
-		}
+		a {
+			&.ancestor {
+				font-weight: bold;
+			}
 
-		a.selected {
-			color: #000;
-			font-weight: bold;
-			text-decoration: none;
+			&.selected {
+				color: #000;
+				font-weight: bold;
+				text-decoration: none;
+			}
 		}
 	}
 }
@@ -72,7 +74,7 @@
 		width: 16px;
 	}
 
-	&:hover, &:focus {
+	&:focus, &:hover {
 		background-color: #83B0CA;
 		background-image: url(../images/application/button_bg_over.png);
 	}
@@ -82,7 +84,7 @@
 	background-color: #EBEBEB;
 	background-image: url(../images/application/button_bg_selected.png);
 
-	&:hover, &:focus {
+	&:focus, &:hover {
 		background-color: #B7DEF4;
 		background-image: url(../images/application/button_bg_selected_over.png);
 	}

@@ -40,25 +40,27 @@
 	@include border-radius(1px);
 }
 
-.lfr-search-combobox .aui-field-input-text {
-	@include border-radius(4px 1px 1px 4px);
-}
+.lfr-search-combobox {
+	.aui-field-input-text {
+		@include border-radius(4px 1px 1px 4px);
+	}
 
-.lfr-search-combobox .aui-button-input {
-	@include border-radius(1px 4px 4px 1px);
+	.aui-button-input {
+		@include border-radius(1px 4px 4px 1px);
+	}
 }
 
 .lfr-upload-container {
 	 .progress-bar, .progress {
-	 	@include border-radius(10px);
+		@include border-radius(10px);
 	 }
 }
 
-body > .lfr-menu-list, body > .lfr-menu-list ul, .lfr-actions, .aui-dialog-content, .aui-dialog .yui3-widget-hd, .modify-pages .delete-tab, input[type="submit"], input[type="button"], input[type="reset"], button, .tags-search-combobox .aui-field-input-text, .staging-icon-menu-container .staging-icon-menu.lfr-actions .lfr-trigger strong a, .active-area-proxy, .entry-display-style .entry-thumbnail img, .aui-paginator-link, .lfr-header-row .aui-toolbar-only, .lfr-translation-manager, .lfr-translation-manager-translation, .select-documents, .select-files, .taglib-ratings.stars:hover, .taglib-ratings.stars:hover .liferay-rating-vote, .rule-group-instance-container .rule-group-instance, .portlet-search .search-facet .facet-value, .lfr-api-results, .portlet-image-gallery-display .image-thumbnail img, .taglib-logo-selector .lfr-change-logo.show-background, .portlet-journal .lfr-table .journal-metadata, .lfr-upload-container .cancel-button {
+body > .lfr-menu-list, body > .lfr-menu-list ul, button, input[type="button"], input[type="submit"], input[type="reset"], .active-area-proxy, .aui-dialog .yui3-widget-hd, .aui-dialog-content, .aui-paginator-link, .entry-display-style .entry-thumbnail img, .lfr-actions, .lfr-api-results, .lfr-header-row .aui-toolbar-only, .lfr-translation-manager, .lfr-translation-manager-translation, .lfr-upload-container .cancel-button .modify-pages .delete-tab, .portlet-image-gallery-display .image-thumbnail img, .portlet-journal .lfr-table .journal-metadata, .portlet-search .search-facet .facet-value, .rule-group-instance-container .rule-group-instance, .select-documents, .select-files, .staging-icon-menu-container.staging-icon-menu.lfr-actions .lfr-trigger strong a, .taglib-logo-selector .lfr-change-logo.show-background, .taglib-ratings.stars:hover, .taglib-ratings.stars:hover .liferay-rating-vote, .tags-search-combobox .aui-field-input-text {
 	@include border-radius(4px);
 }
 
-.lfr-header-row .aui-toolbar-content, .lfr-search-combobox, .select-documents, .select-files, .entry-display-style, .lfr-upload-container .upload-target, .lfr-upload-container .upload-file, .portlet-document-library .common-file-metadata-container.selected, .portlet-document-library-display .common-file-metadata-container.selected, .portlet-image-gallery-display .image-icon {
+.entry-display-style, .lfr-header-row .aui-toolbar-content, .lfr-search-combobox, .lfr-upload-container .upload-file, .lfr-upload-container .upload-target, .portlet-document-library .common-file-metadata-container.selected, .portlet-document-library-display .common-file-metadata-container.selected, .portlet-image-gallery-display .image-icon, .select-documents, .select-files {
 	@include border-radius(5px);
 }
 
@@ -109,7 +111,7 @@ body > .lfr-menu-list, body > .lfr-menu-list ul, .lfr-actions, .aui-dialog-conte
 	@include box-shadow(inset 0 3em 1em rgba(0, 0, 0, 0.8));
 }
 
-.staging-tabview-list .aui-tab-active .aui-tab-content, .site-variations-tabview-list .aui-tab-content{
+.site-variations-tabview-list .aui-tab-content, .staging-tabview-list .aui-tab-active .aui-tab-content {
 	@include box-shadow(none);
 }
 
@@ -189,7 +191,7 @@ body:first-of-type {
 		@include single-transition(opacity, 0.5s, ease, 0s);
 	}
 
-	.portlet-journal-content .icon-actions .taglib-text, .portlet-borderless-bar .portlet-actions {
+	.portlet-borderless-bar .portlet-actions, .portlet-journal-content .icon-actions .taglib-text {
 		display: inline-block;
 		max-width: 0;
 		overflow: hidden;
@@ -199,7 +201,7 @@ body:first-of-type {
 		@include single-transition(max-width, 0.3s, ease-in, 0.2s);
 	}
 
-	.portlet-journal-content:hover .icon-actions .taglib-text, .portlet-borderless-bar .portlet-actions {
+	.portlet-borderless-bar .portlet-actions, .portlet-journal-content:hover .icon-actions .taglib-text {
 		@include single-transition(max-width, 0.3s, ease, 0s);
 	}
 
@@ -231,7 +233,7 @@ body:first-of-type {
 	75% {
 		background-color: #DDEDDE;
 		border-color: #7D7;
- 	}
+	}
 	100% {
 		background-color: #EBEBEB;
 		border-color: #DDD;

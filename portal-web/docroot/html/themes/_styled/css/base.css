@@ -4,7 +4,7 @@ article, aside, canvas, details, figcaption, figure, footer, header, hgroup, men
 	display: block;
 }
 
-body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input, textarea, p, blockquote, th, td {
+body, blockquote, div, dl, dt, dd, fieldset, form, h1, h2, h3, h4, h5, h6, input, li, ol, p, pre, ul, td, textarea, th {
 	margin: 0;
 	padding: 0;
 }
@@ -40,35 +40,35 @@ abbr, acronym {
 
 html {
 	overflow-y: scroll;
-}
 
-html.aui-dialog-iframe-root-node {
-	overflow: auto;
+	&.aui-dialog-iframe-root-node {
+		overflow: auto;
+	}
 }
 
 body {
 	background: #FFF;
 	font: 62.5%/1.4 Arial, Helvetica, Verdana, sans-serif;
+
+	&.portal-popup {
+		background: none;
+		padding: 10px;
+	}
+
+	&.aui-dialog-iframe-popup {
+		padding-bottom: 0;
+	}
+
+	&.portal-iframe {
+		padding: 0;
+	}
 }
 
-body.portal-popup {
-	background: none;
-	padding: 10px;
-}
-
-body.aui-dialog-iframe-popup {
-	padding-bottom: 0;
-}
-
-body.portal-iframe {
-	padding: 0;
-}
-
-blockquote, ul, ol, dl {
+blockquote, dl, ol, ul {
 	margin: 1em;
 }
 
-ol, ul, dl {
+dl, ol, ul {
 	margin-left: 2em;
 }
 
@@ -108,12 +108,11 @@ p {
 /* ---------- Links ---------- */
 
 a {
-}
+	&:hover {
+	}
 
-a:hover {
-}
-
-a:visited {
+	&:visited {
+	}
 }
 
 /* ---------- Headers ---------- */
@@ -157,34 +156,36 @@ body.html-editor {
 	color: #000;
 }
 
-.html-editor.portlet-message-boards blockquote {
-	background: #EEF0F2 url(../images/message_boards/quoteleft.png) no-repeat 5px 5px;
-	border: 1px solid #777;
-	position: relative;
-	padding: 5px 45px;
-}
+.html-editor.portlet-message-boards {
+	blockquote {
+		background: #EEF0F2 url(../images/message_boards/quoteleft.png) no-repeat 5px 5px;
+		border: 1px solid #777;
+		position: relative;
+		padding: 5px 45px;
 
-.html-editor.portlet-message-boards blockquote:after {
-	background: url(../images/message_boards/quoteright.png) no-repeat 50%;
-	bottom: 5px;
-	content: '';
-	display: block;
-	height: 24px;
-	position: absolute;
-	right: 5px;
-	width: 31px;
-	z-index: 999;
-}
+		&:after {
+			background: url(../images/message_boards/quoteright.png) no-repeat 50%;
+			bottom: 5px;
+			content: '';
+			display: block;
+			height: 24px;
+			position: absolute;
+			right: 5px;
+			width: 31px;
+			z-index: 999;
+		}
 
-.html-editor.portlet-message-boards blockquote cite {
-	display: block;
-	font-weight: bold;
-}
+		cite {
+			display: block;
+			font-weight: bold;
+		}
+	}
 
-.html-editor.portlet-message-boards pre {
-	background: #F9F9F9;
-	border: 1px solid #777;
-	padding: 0.5em;
+	pre {
+		background: #F9F9F9;
+		border: 1px solid #777;
+		padding: 0.5em;
+	}
 }
 
 /* ---------- Text formatting ---------- */
@@ -234,10 +235,10 @@ code, pre {
 	background: #FFF;
 	text-align: left;
 	z-index: 20;
-}
 
-.portal-add-content a {
-	text-decoration: none;
+	a {
+		text-decoration: none;
+	}
 }
 
 /* ---------- Loading animation ---------- */

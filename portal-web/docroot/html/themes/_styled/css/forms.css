@@ -58,7 +58,7 @@ fieldset {
 	margin-bottom: 0;
 }
 
-.aui-fieldset .aui-field-content, .aui-field-row, .aui-button-holder, .aui-field-wrapper-content {
+.aui-button-holder, .aui-field-row, .aui-field-wrapper-content, .aui-fieldset .aui-field-content {
 	margin: 10px 0;
 }
 
@@ -74,7 +74,7 @@ fieldset {
 		margin-right: 0;
 	}
 
-	.aui-field-content, .aui-button-content {
+	.aui-button-content, .aui-field-content {
 		display: inline-block;
 		vertical-align: middle;
 	}
@@ -115,7 +115,7 @@ input {
 	background: #FFF;
 }
 
-input[type="text"], input[type="password"], input[type="file"], input[type="submit"], input[type="button"], input[type="reset"], select, textarea, .textarea, button, .aui-field-input-text {
+button, input[type="button"], input[type="file"], input[type="password"], input[type="reset"], input[type="submit"], input[type="text"], select, textarea, .textarea, .aui-field-input-text {
 	@include input-field-default;
 }
 
@@ -129,7 +129,7 @@ input[type="image"] {
 	padding: 0;
 }
 
-input[type="submit"], input[type="button"], input[type="reset"], button {
+button, input[type="button"], input[type="reset"], input[type="submit"] {
 	@include button-default;
 
 	&:hover {
@@ -177,8 +177,8 @@ input, textarea {
 }
 
 .aui-button-disabled {
-	input[type], button {
-		&, &:hover, &:focus {
+	button, input[type] {
+		&, &:focus, &:hover {
 			@include button-disabled;
 		}
 	}
@@ -188,7 +188,7 @@ input, textarea {
 	@include button-disabled;
 }
 
-input.aui-form-validator-error, textarea.aui-form-validator-error, select.aui-form-validator-error {
+input.aui-form-validator-error, select.aui-form-validator-error, textarea.aui-form-validator-error {
 	border-color: #900;
 	border-style: dotted;
 }
@@ -213,16 +213,16 @@ input.aui-form-validator-error, textarea.aui-form-validator-error, select.aui-fo
 }
 
 .ie6 {
-	input.text, input.password, input.submit, input.file, input.button, button {
+	button, input.button, input.file, input.password, input.submit, input.text {
 		@include input-field-default;
 	}
 
-	input.submit, input.button, button, .aui-button-disabled input.submit, .aui-button-disabled input.button, .aui-button-disabled button {
+	button, input.button, input.submit, .aui-button-disabled button, .aui-button-disabled input.button, .aui-button-disabled input.submit {
 		@include button-default;
 	}
 
 	.aui-button-disabled {
-		input.submit, input.button, button {
+		button, input.button, input.submit {
 			color: #555;
 		}
 	}

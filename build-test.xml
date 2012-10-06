@@ -52,14 +52,21 @@
 
 	<target name="build-test-ant-script">
 		<if>
-			<isset property="test.ant.script.sevencogs" />
+			<isset property="test.ant.script.kaleo" />
 			<then>
-				<property name="test.ant.script.plugin.hooks" value="audit-hook,default-site-templates-hook,default-web-content-hook,sevencogs-hook" />
-				<property name="test.ant.script.plugin.layouttpls" value="1-2-1-columns-layouttpl,1-3-1-columns-layouttpl,1-3-2-columns-layouttpl,2-1-2-columns-layouttpl,3-2-3-columns-layouttpl" />
-				<property name="test.ant.script.plugin.portlets" value="audit-portlet,chat-portlet,flash-portlet,google-adsense-portlet,google-maps-portlet,ip-geocoder-portlet,knowledge-base-portlet,mail-portlet,netvibes-widget-portlet,opensocial-portlet,social-coding-portlet,social-networking-portlet,twitter-portlet,weather-portlet,web-form-portlet,wsrp-portlet" />
-				<property name="test.ant.script.plugin.themes" value="sevencogs-theme" />
-				<property name="test.ant.script.plugin.webs" value="drools-web,jasperreports-web,kaleo-web" />
+				<property name="test.ant.script.plugin.hooks" value="kaleo-upgrade-hook" />
+				<property name="test.ant.script.plugin.webs" value="kaleo-web" />
 			</then>
+			<elseif>
+				<isset property="test.ant.script.sevencogs" />
+				<then>
+					<property name="test.ant.script.plugin.hooks" value="audit-hook,default-site-templates-hook,default-web-content-hook,sevencogs-hook" />
+					<property name="test.ant.script.plugin.layouttpls" value="1-2-1-columns-layouttpl,1-3-1-columns-layouttpl,1-3-2-columns-layouttpl,2-1-2-columns-layouttpl,3-2-3-columns-layouttpl" />
+					<property name="test.ant.script.plugin.portlets" value="audit-portlet,chat-portlet,flash-portlet,google-adsense-portlet,google-maps-portlet,ip-geocoder-portlet,knowledge-base-portlet,mail-portlet,netvibes-widget-portlet,opensocial-portlet,social-coding-portlet,social-networking-portlet,twitter-portlet,weather-portlet,web-form-portlet,wsrp-portlet" />
+					<property name="test.ant.script.plugin.themes" value="sevencogs-theme" />
+					<property name="test.ant.script.plugin.webs" value="drools-web,jasperreports-web,kaleo-web" />
+				</then>
+			</elseif>
 			<elseif>
 				<isset property="test.ant.script.social.office" />
 				<then>
@@ -281,7 +288,7 @@
 	</target>
 
 	<target name="build-test-ant-scripts">
-		<property name="build-test-ant-scripts.version" value="2" />
+		<property name="build-test-ant-scripts.version" value="3" />
 
 		<if>
 			<available file="portal-web/test-ant-scripts/version" />
@@ -494,49 +501,49 @@
 
 		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="db-sharding-kaleo-asset-publisher" />
-			<param name="test.ant.script.plugin.webs" value="kaleo-web" />
+			<param name="test.ant.script.kaleo" value="true" />
 			<param name="test.ant.script.suite" value="KaleoAssetPublisherTestSuite" />
 			<param name="test.ant.script.template" value="ant-script-db-sharding.xml" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="db-sharding-kaleo-my-submissions" />
-			<param name="test.ant.script.plugin.webs" value="kaleo-web" />
+			<param name="test.ant.script.kaleo" value="true" />
 			<param name="test.ant.script.suite" value="KaleoMySubmissionsTestSuite" />
 			<param name="test.ant.script.template" value="ant-script-db-sharding.xml" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="db-sharding-kaleo-my-workflow-tasks" />
-			<param name="test.ant.script.plugin.webs" value="kaleo-web" />
+			<param name="test.ant.script.kaleo" value="true" />
 			<param name="test.ant.script.suite" value="KaleoMyWorkflowTasksTestSuite" />
 			<param name="test.ant.script.template" value="ant-script-db-sharding.xml" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="db-sharding-kaleo-web-content" />
-			<param name="test.ant.script.plugin.webs" value="kaleo-web" />
+			<param name="test.ant.script.kaleo" value="true" />
 			<param name="test.ant.script.suite" value="KaleoWebContentTestSuite" />
 			<param name="test.ant.script.template" value="ant-script-db-sharding.xml" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="db-sharding-kaleo-web-content-display" />
-			<param name="test.ant.script.plugin.webs" value="kaleo-web" />
+			<param name="test.ant.script.kaleo" value="true" />
 			<param name="test.ant.script.suite" value="KaleoWebContentDisplayTestSuite" />
 			<param name="test.ant.script.template" value="ant-script-db-sharding.xml" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="db-sharding-kaleo-workflow" />
-			<param name="test.ant.script.plugin.webs" value="kaleo-web" />
+			<param name="test.ant.script.kaleo" value="true" />
 			<param name="test.ant.script.suite" value="KaleoWorkflowTestSuite" />
 			<param name="test.ant.script.template" value="ant-script-db-sharding.xml" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="db-sharding-kaleo-workflow-configuration" />
-			<param name="test.ant.script.plugin.webs" value="kaleo-web" />
+			<param name="test.ant.script.kaleo" value="true" />
 			<param name="test.ant.script.suite" value="KaleoWorkflowConfigurationTestSuite" />
 			<param name="test.ant.script.template" value="ant-script-db-sharding.xml" />
 		</antcall>
@@ -784,8 +791,8 @@
 
 		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="demo-dynamic-data" />
+			<param name="test.ant.script.kaleo" value="true" />
 			<param name="test.ant.script.plugin.portlets" value="kaleo-designer-portlet,kaleo-forms-portlet" />
-			<param name="test.ant.script.plugin.webs" value="kaleo-web" />
 			<param name="test.ant.script.suite" value="DemoDynamicDataTestSuite" />
 		</antcall>
 
@@ -805,13 +812,13 @@
 
 		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="demo-media" />
-			<param name="test.ant.script.plugin.webs" value="kaleo-web" />
+			<param name="test.ant.script.kaleo" value="true" />
 			<param name="test.ant.script.suite" value="DemoMediaTestSuite" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="demo-site-management" />
-			<param name="test.ant.script.plugin.webs" value="kaleo-web" />
+			<param name="test.ant.script.kaleo" value="true" />
 			<param name="test.ant.script.suite" value="DemoSiteManagementTestSuite" />
 		</antcall>
 
@@ -822,67 +829,67 @@
 
 		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="kaleo-asset-publisher" />
-			<param name="test.ant.script.plugin.webs" value="kaleo-web" />
+			<param name="test.ant.script.kaleo" value="true" />
 			<param name="test.ant.script.suite" value="KaleoAssetPublisherTestSuite" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="kaleo-blogs" />
-			<param name="test.ant.script.plugin.webs" value="kaleo-web" />
+			<param name="test.ant.script.kaleo" value="true" />
 			<param name="test.ant.script.suite" value="KaleoBlogsTestSuite" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="kaleo-message-boards" />
-			<param name="test.ant.script.plugin.webs" value="kaleo-web" />
+			<param name="test.ant.script.kaleo" value="true" />
 			<param name="test.ant.script.suite" value="KaleoMessageBoardsTestSuite" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="kaleo-my-submissions" />
-			<param name="test.ant.script.plugin.webs" value="kaleo-web" />
+			<param name="test.ant.script.kaleo" value="true" />
 			<param name="test.ant.script.suite" value="KaleoMySubmissionsTestSuite" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="kaleo-my-workflow-tasks" />
-			<param name="test.ant.script.plugin.webs" value="kaleo-web" />
+			<param name="test.ant.script.kaleo" value="true" />
 			<param name="test.ant.script.suite" value="KaleoMyWorkflowTasksTestSuite" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="kaleo-page-comments" />
-			<param name="test.ant.script.plugin.webs" value="kaleo-web" />
+			<param name="test.ant.script.kaleo" value="true" />
 			<param name="test.ant.script.suite" value="KaleoPageCommentsTestSuite" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="kaleo-web-content" />
-			<param name="test.ant.script.plugin.webs" value="kaleo-web" />
+			<param name="test.ant.script.kaleo" value="true" />
 			<param name="test.ant.script.suite" value="KaleoWebContentTestSuite" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="kaleo-web-content-display" />
-			<param name="test.ant.script.plugin.webs" value="kaleo-web" />
+			<param name="test.ant.script.kaleo" value="true" />
 			<param name="test.ant.script.suite" value="KaleoWebContentDisplayTestSuite" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="kaleo-wiki" />
-			<param name="test.ant.script.plugin.webs" value="kaleo-web" />
+			<param name="test.ant.script.kaleo" value="true" />
 			<param name="test.ant.script.suite" value="KaleoWikiTestSuite" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="kaleo-workflow" />
-			<param name="test.ant.script.plugin.webs" value="kaleo-web" />
+			<param name="test.ant.script.kaleo" value="true" />
 			<param name="test.ant.script.suite" value="KaleoWorkflowTestSuite" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="kaleo-workflow-configuration" />
-			<param name="test.ant.script.plugin.webs" value="kaleo-web" />
+			<param name="test.ant.script.kaleo" value="true" />
 			<param name="test.ant.script.suite" value="KaleoWorkflowConfigurationTestSuite" />
 		</antcall>
 
@@ -2051,7 +2058,7 @@
 
 		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="staging-community-blogs" />
-			<param name="test.ant.script.plugin.webs" value="kaleo-web" />
+			<param name="test.ant.script.kaleo" value="true" />
 			<param name="test.ant.script.suite" value="StagingCommunityBlogsTestSuite" />
 		</antcall>
 
@@ -2067,13 +2074,13 @@
 
 		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="staging-community-web-content-display" />
-			<param name="test.ant.script.plugin.webs" value="kaleo-web" />
+			<param name="test.ant.script.kaleo" value="true" />
 			<param name="test.ant.script.suite" value="StagingCommunityWebContentDisplayTestSuite" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="staging-organization-blogs" />
-			<param name="test.ant.script.plugin.webs" value="kaleo-web" />
+			<param name="test.ant.script.kaleo" value="true" />
 			<param name="test.ant.script.suite" value="StagingOrganizationBlogsTestSuite" />
 		</antcall>
 

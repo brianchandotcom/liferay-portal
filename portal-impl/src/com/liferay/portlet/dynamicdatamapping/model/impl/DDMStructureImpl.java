@@ -23,8 +23,9 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Attribute;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
@@ -39,6 +40,7 @@ import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUt
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMXMLUtil;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -171,7 +173,7 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 		String fieldName, String attributeName, String attributeValue) {
 
 		return getFields(
-			fieldName, attributeName, attributeValue, getDefaultLanguageId());
+				fieldName, attributeName, attributeValue, getDefaultLanguageId());
 	}
 
 	public Map<String, String> getFields(
@@ -179,17 +181,8 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 		String locale) {
 
 		try {
-			Map<String, Map<String, String>> fieldsMap = _getFieldsMap(locale);
-
-			Map<String, String> field = fieldsMap.get(fieldName);
-
-			if (field != null) {
-				String value = field.get(attributeName);
-
-				if (Validator.equals(value, attributeValue)) {
-					return field;
-				}
-			}
+			return _getQueryResult(
+				fieldName, attributeName, attributeValue, locale);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -223,6 +216,13 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 		return _localizedFieldsMap;
 	}
 
+	@Override
+	public Map<String, Map<String, Map<String, String>>>
+		getLocalizedQueryMap() {
+
+		return _localizedQueryMap;
+	}
+
 	public List<DDMTemplate> getTemplates() throws SystemException {
 		return DDMTemplateLocalServiceUtil.getTemplates(getStructureId());
 	}
@@ -252,7 +252,7 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 		super.prepareLocalizedFieldsForImport(defaultImportLocale);
 
 		Locale ddmStructureDefaultLocale = LocaleUtil.fromLanguageId(
-			getDefaultLanguageId());
+				getDefaultLanguageId());
 
 		try {
 			setXsd(
@@ -274,6 +274,13 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 		Map<String, Map<String, Map<String, String>>> localizedFieldsMap) {
 
 		_localizedFieldsMap = localizedFieldsMap;
+	}
+
+	@Override
+	public void setLocalizedQueryMap(
+		Map<String, Map<String, Map<String, String>>> localizedQueryMap) {
+
+		_localizedQueryMap = localizedQueryMap;
 	}
 
 	@Override
@@ -359,6 +366,86 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 		return fieldsMap;
 	}
 
+	private Map<String, Map<String, String>> _getQueryMap(
+		String locale) {
+
+		Map<String, Map<String, String>> queryMap =
+			_localizedQueryMap.get(locale);
+
+		if (queryMap != null) {
+			return queryMap;
+		}
+
+		queryMap = new LinkedHashMap<String, Map<String, String>>();
+
+		XPath xPathSelector = SAXReaderUtil.createXPath(
+			"//dynamic-element[@dataType]");
+
+		List<Node> fieldNodes = xPathSelector.selectNodes(getDocument());
+
+		for (Node fieldNode : fieldNodes) {
+			Element fieldElement = (Element) fieldNode;
+
+			String fieldName = fieldElement.attributeValue("name");
+
+			List<Element> subfieldElements = fieldElement.elements(
+				"dynamic-element");
+
+			for (Element subfieldElement : subfieldElements) {
+				Map<String, String> subfield = _getField(
+					subfieldElement, locale);
+
+				List<Attribute> attributes = subfieldElement.attributes();
+
+				for (Attribute attribute : attributes) {
+					String attributeName = attribute.getName();
+					String attributeValue = attribute.getValue();
+
+					String cacheKey = _getQueryMapCacheKey(
+						fieldName, attributeName, attributeValue);
+
+					if (!queryMap.containsKey(cacheKey)) {
+						queryMap.put(cacheKey, subfield);
+					}
+				}
+			}
+		}
+
+		_localizedQueryMap.put(locale, queryMap);
+
+		return queryMap;
+	}
+
+	private String _getQueryMapCacheKey(
+			String fieldName, String attributeName, String attributeValue) {
+
+		StringBundler sb = new StringBundler();
+
+		sb.append(fieldName);
+		sb.append(StringPool.OPEN_BRACKET);
+		sb.append(attributeName);
+		sb.append(StringPool.EQUAL);
+		sb.append(attributeValue);
+		sb.append(StringPool.CLOSE_BRACKET);
+
+		return sb.toString();
+	}
+
+	private Map<String, String> _getQueryResult(
+		String fieldName, String attributeName, String attributeValue,
+		String locale) {
+
+		Map<String, Map<String, String>> queryMap =
+			_getQueryMap(locale);
+
+		String cacheKey = _getQueryMapCacheKey(
+			fieldName, attributeName, attributeValue);
+
+		Map<String, String> queryResult = queryMap.get(cacheKey);
+
+		return queryResult;
+	}
+
 	private String _mergeXsds(String xsd1, String xsd2) throws SystemException {
 		try {
 			Document document1 = SAXReaderUtil.read(xsd1);
@@ -387,6 +474,10 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 
 	@CacheField
 	private Map<String, Map<String, Map<String, String>>> _localizedFieldsMap =
+		new ConcurrentHashMap<String, Map<String, Map<String, String>>>();
+
+	@CacheField
+	private Map<String, Map<String, Map<String, String>>> _localizedQueryMap =
 		new ConcurrentHashMap<String, Map<String, Map<String, String>>>();
 
 }

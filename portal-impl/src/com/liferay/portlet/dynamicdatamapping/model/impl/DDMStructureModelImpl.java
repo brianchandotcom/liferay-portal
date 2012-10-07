@@ -755,6 +755,14 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 		java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.lang.String>>> localizedFieldsMap) {
 	}
 
+	public java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.lang.String>>> getLocalizedQueryMap() {
+		return null;
+	}
+
+	public void setLocalizedQueryMap(
+		java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.lang.String>>> localizedQueryMap) {
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -984,6 +992,8 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 		ddmStructureCacheModel._document = getDocument();
 
 		ddmStructureCacheModel._localizedFieldsMap = getLocalizedFieldsMap();
+
+		ddmStructureCacheModel._localizedQueryMap = getLocalizedQueryMap();
 
 		return ddmStructureCacheModel;
 	}

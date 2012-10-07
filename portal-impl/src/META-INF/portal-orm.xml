@@ -2238,6 +2238,7 @@
 			<transient name="descriptionMap" />
 			<transient name="document" />
 			<transient name="localizedFieldsMap" />
+			<transient name="localizedQueryMap" />
 			<transient name="modelAttributes" />
 			<transient name="nameCurrentLanguageId" />
 			<transient name="nameMap" />

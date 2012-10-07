@@ -901,6 +901,10 @@ public class DDMStructureWrapper implements DDMStructure,
 		return _ddmStructure.getLocalizedFieldsMap();
 	}
 
+	public java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.lang.String>>> getLocalizedQueryMap() {
+		return _ddmStructure.getLocalizedQueryMap();
+	}
+
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> getTemplates()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _ddmStructure.getTemplates();
@@ -919,6 +923,11 @@ public class DDMStructureWrapper implements DDMStructure,
 	public void setLocalizedFieldsMap(
 		java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.lang.String>>> localizedFieldsMap) {
 		_ddmStructure.setLocalizedFieldsMap(localizedFieldsMap);
+	}
+
+	public void setLocalizedQueryMap(
+		java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.lang.String>>> localizedQueryMap) {
+		_ddmStructure.setLocalizedQueryMap(localizedQueryMap);
 	}
 
 	/**

@@ -84,6 +84,12 @@ if (group != null) {
 	miscellaneousSections = PropsValues.SITES_FORM_UPDATE_MISCELLANEOUS;
 }
 
+String[] analyticsTypes = PropsValues.SITES_FORM_ANALYTICS;
+
+if ((analyticsTypes.length == 0) && ArrayUtil.contains(advancedSections, "analytics")) {
+	advancedSections = ArrayUtil.remove(advancedSections, "analytics");
+}
+
 int trashEnabled = PrefsPropsUtil.getInteger(company.getCompanyId(), PropsKeys.TRASH_ENABLED);
 
 if ((trashEnabled == 0) && ArrayUtil.contains(advancedSections, "recycle-bin")) {

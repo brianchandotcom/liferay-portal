@@ -1,3 +1,5 @@
+<%@ page import="com.liferay.portlet.sites.util.SitesUtil" %>
+
 <%--
 /**
  * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
@@ -393,31 +395,61 @@
 	// ]]>
 </script>
 
-<%-- Google Analytics --%>
+<%-- Analytics --%>
 
 <%
-UnicodeProperties groupTypeSettings = group.getTypeSettingsProperties();
+String[] analyticsTypes = PropsValues.SITES_FORM_ANALYTICS;
 
-String googleAnalyticsId = groupTypeSettings.getProperty("googleAnalyticsId");
+UnicodeProperties groupTypeSettings = group.getTypeSettingsProperties();
 %>
 
-<c:if test="<%= Validator.isNotNull(googleAnalyticsId) %>">
-	<script type="text/javascript">
-		var _gaq = _gaq || [];
+<%
+for (String analyticsType : analyticsTypes) {
+%>
 
-		_gaq.push(['_setAccount', '<%= googleAnalyticsId %>']);
-		_gaq.push(['_trackPageview']);
+<c:choose>
+	<c:when test='<%= analyticsType.equals("google") %>'>
 
-		(function() {
-			var ga = document.createElement('script');
+		<%
+		String googleAnalyticsId = groupTypeSettings.getProperty("googleAnalyticsId");
+		%>
 
-			ga.async = true;
-			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-			ga.type = 'text/javascript';
+		<c:if test="<%= Validator.isNotNull(googleAnalyticsId) %>">
+			<script type="text/javascript">
+				var _gaq = _gaq || [];
 
-			var s = document.getElementsByTagName('script')[0];
+				_gaq.push(['_setAccount', '<%= googleAnalyticsId %>']);
+				_gaq.push(['_trackPageview']);
 
-			s.parentNode.insertBefore(ga, s);
-		})();
-	</script>
-</c:if>
+				(function() {
+					var ga = document.createElement('script');
+
+					ga.async = true;
+					ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+					ga.type = 'text/javascript';
+
+					var s = document.getElementsByTagName('script')[0];
+
+					s.parentNode.insertBefore(ga, s);
+				})();
+			</script>
+		</c:if>
+	</c:when>
+	<c:otherwise>
+
+		<%
+		String analyticsScript = groupTypeSettings.getProperty(SitesUtil.ANALYTICS_PREFIX + analyticsType);
+		%>
+
+		<c:if test="<%= Validator.isNotNull(analyticsScript) %>">
+
+			<%= analyticsScript %>
+
+		</c:if>
+
+	</c:otherwise>
+</c:choose>
+
+<%
+}
+%>

@@ -136,11 +136,11 @@ public class SybaseDB extends BaseDB {
 					REWORD_TEMPLATE, template);
 			}
 
-			if (line.startsWith(ALTER_COLUMN_NAME)) {
+			else if (line.startsWith(ALTER_TABLE_NAME)) {
 				String[] template = buildTableNameTokens(line);
 
 				line = StringUtil.replace(
-					"exec sp_rename @old-table@, @new-table@",
+					"exec sp_rename @old-table@, @new-table@;",
 					RENAME_TABLE_TEMPLATE, template);
 			}
 			else if (line.contains(DROP_INDEX)) {

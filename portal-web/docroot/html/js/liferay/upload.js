@@ -430,10 +430,10 @@ AUI.add(
 
 						var dataTransfer = event._event.dataTransfer;
 
-						var dragDropFiles = dataTransfer && dataTransfer.files;
+						var dragDropFiles = dataTransfer && AArray(dataTransfer.files);
 
 						if (dragDropFiles && (target === uploaderBoundingBox || uploaderBoundingBox.contains(target))) {
-							event.fileList = A.map(
+							event.fileList = AArray.map(
 								dragDropFiles,
 								function(item, index, collection) {
 									return new A.FileHTML5(item);

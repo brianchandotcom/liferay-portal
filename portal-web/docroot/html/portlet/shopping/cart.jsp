@@ -57,7 +57,7 @@ boolean minQuantityMultiple = PrefsPropsUtil.getBoolean(company.getCompanyId(), 
 		submitForm(document.<portlet:namespace />fm);
 	}
 
-	function <portlet:namespace />updateCart() {
+	function <portlet:namespace />updateCart(itemId) {
 		var itemIds = "";
 		var count = 0;
 
@@ -68,7 +68,12 @@ boolean minQuantityMultiple = PrefsPropsUtil.getBoolean(company.getCompanyId(), 
 			ShoppingItem item = cartItem.getItem();
 		%>
 
-			count = document.<portlet:namespace />fm.<portlet:namespace />item_<%= item.getItemId() %>_<%= itemsCount %>_count.value;
+			if (itemId && (itemId == <%= item.getItemId() %>)) {
+				count = 0;
+			}
+			else {
+				count = document.<portlet:namespace />fm.<portlet:namespace />item_<%= item.getItemId() %>_<%= itemsCount %>_count.value;
+			}
 
 			for (var i = 0; i < count; i++) {
 				itemIds += "<%= cartItem.getCartItemId() %>,";
@@ -147,6 +152,7 @@ boolean minQuantityMultiple = PrefsPropsUtil.getBoolean(company.getCompanyId(), 
 	headerNames.add("description");
 	headerNames.add("quantity");
 	headerNames.add("price");
+	headerNames.add(StringPool.BLANK);
 
 	searchContainer.setHeaderNames(headerNames);
 	searchContainer.setEmptyResultsMessage("your-cart-is-empty");
@@ -376,6 +382,17 @@ boolean minQuantityMultiple = PrefsPropsUtil.getBoolean(company.getCompanyId(), 
 		// Price
 
 		row.addText(currencyFormat.format(ShoppingUtil.calculateActualPrice(item, count.intValue()) / count.intValue()), rowURL);
+
+		// Action
+
+		sb.setIndex(0);
+
+		sb.append(renderResponse.getNamespace());
+		sb.append("updateCart('");
+		sb.append(item.getItemId());
+		sb.append("');");
+
+		row.addButton("right", SearchEntry.DEFAULT_VALIGN, LanguageUtil.get(pageContext, "delete"), sb.toString());
 
 		// Add result row
 

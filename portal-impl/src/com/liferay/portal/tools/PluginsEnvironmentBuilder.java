@@ -263,7 +263,7 @@ public class PluginsEnvironmentBuilder {
 		boolean addJunitJars = false;
 
 		for (String testType :_TEST_TYPES) {
-			String testFolder = "test/" + testType;
+			String testFolder = "docroot/WEB-INF/test/" + testType;
 
 			if (_fileUtil.exists(projectDirName + "/" + testFolder)) {
 				addJunitJars = true;
@@ -401,14 +401,6 @@ public class PluginsEnvironmentBuilder {
 					_fileUtil.write(dirName + ".gitignore", gitIgnoresString);
 				}
 			}
-		}
-
-		if (_fileUtil.exists(projectDirName + "/test")) {
-			_fileUtil.write(
-				projectDirName + "/.gitignore", "/test-classes\n/test-results");
-		}
-		else {
-			_fileUtil.delete(projectDirName + "/.gitignore");
 		}
 	}
 

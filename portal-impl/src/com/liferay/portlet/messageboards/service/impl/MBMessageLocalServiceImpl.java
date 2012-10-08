@@ -653,11 +653,15 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 					MessageCreateDateComparator comparator =
 						new MessageCreateDateComparator(true);
 
-					MBMessage lastMessage = mbMessagePersistence.findByT_S_Last(
-						thread.getThreadId(), WorkflowConstants.STATUS_APPROVED,
-						comparator);
+					MBMessage lastMessage =
+						mbMessagePersistence.fetchByT_S_Last(
+							thread.getThreadId(),
+							WorkflowConstants.STATUS_APPROVED, comparator);
 
-					if (message.getMessageId() == lastMessage.getMessageId()) {
+					if ((lastMessage != null) &&
+						(message.getMessageId() ==
+							lastMessage.getMessageId())) {
+
 						MBMessage parentMessage =
 							mbMessagePersistence.findByPrimaryKey(
 								message.getParentMessageId());

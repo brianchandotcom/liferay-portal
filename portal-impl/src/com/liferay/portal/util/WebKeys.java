@@ -14,6 +14,9 @@
 
 package com.liferay.portal.util;
 
+import com.liferay.portal.kernel.resiliency.spi.agent.annotation.Direction;
+import com.liferay.portal.kernel.resiliency.spi.agent.annotation.Distributed;
+import com.liferay.portal.kernel.resiliency.spi.agent.annotation.MatchType;
 import com.liferay.util.bridges.jsf.sun.LiferayConfigureListener;
 
 /**
@@ -202,6 +205,7 @@ public class WebKeys implements com.liferay.portal.kernel.util.WebKeys {
 
 	public static final String JOURNAL_TEMPLATE_ID = "JOURNAL_TEMPLATE_ID";
 
+	@Distributed
 	public static final String LAYOUT_ASSET_ENTRY = "LIFERAY_SHARED_LAYOUT_ASSET_ENTRY";
 
 	public static final String LAYOUT_CONTENT = "LAYOUT_CONTENT";
@@ -348,6 +352,7 @@ public class WebKeys implements com.liferay.portal.kernel.util.WebKeys {
 
 	public static final String PORTLET_STRUTS_EXECUTE = "PORTLET_STRUTS_EXECUTE";
 
+	@Distributed(direction= Direction.Duplex, matchType= MatchType.Postfix)
 	public static final String PORTLET_STRUTS_FORWARD = "PORTLET_STRUTS_FORWARD";
 
 	public static final String PORTLET_STRUTS_PROCESSOR = "PORTLET_STRUTS_PROCESSOR";

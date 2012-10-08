@@ -60,7 +60,6 @@ import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.PortletDisplayFactory;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.upload.UploadServletRequestImpl;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.util.SerializableUtil;
@@ -470,7 +469,7 @@ public class PortletContainerImpl implements PortletContainer {
 					invokerPortletConfigImpl.isCopyRequestParameters() ||
 					!invokerPortletConfigImpl.isWARFile()) {
 
-					uploadServletRequest = new UploadServletRequestImpl(
+					uploadServletRequest = PortalUtil.getUploadServletRequest(
 						request);
 
 					request = uploadServletRequest;

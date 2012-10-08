@@ -30,12 +30,16 @@ public abstract class AbstractIntegrationJUnitTestRunner
 
 		super(clazz);
 
+		initApplicationContext();
+
 		if (System.getProperty("external-properties") == null) {
 			System.setProperty("external-properties", "portal-test.properties");
 		}
 
 		_testContextHandler = new TestContextHandler(clazz);
 	}
+
+	public abstract void initApplicationContext();
 
 	@Override
 	protected Statement withAfterClasses(Statement statement) {

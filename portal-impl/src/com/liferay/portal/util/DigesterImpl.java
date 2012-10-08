@@ -18,9 +18,12 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.Digester;
+import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 
 import java.nio.ByteBuffer;
@@ -41,6 +44,10 @@ public class DigesterImpl implements Digester {
 		return digest(Digester.DEFAULT_ALGORITHM, byteBuffer);
 	}
 
+	public String digest(InputStream inputStream) {
+		return digest(Digester.DEFAULT_ALGORITHM, inputStream);
+	}
+
 	public String digest(String text) {
 		return digest(Digester.DEFAULT_ALGORITHM, text);
 	}
@@ -51,6 +58,15 @@ public class DigesterImpl implements Digester {
 		}
 		else {
 			return digestHex(algorithm, byteBuffer);
+		}
+	}
+
+	public String digest(String algorithm, InputStream inputStream) {
+		if (_BASE_64) {
+			return digestBase64(algorithm, inputStream);
+		}
+		else {
+			return digestHex(algorithm, inputStream);
 		}
 	}
 
@@ -67,12 +83,22 @@ public class DigesterImpl implements Digester {
 		return digestBase64(Digester.DEFAULT_ALGORITHM, byteBuffer);
 	}
 
+	public String digestBase64(InputStream inputStream) {
+		return digestBase64(Digester.DEFAULT_ALGORITHM, inputStream);
+	}
+
 	public String digestBase64(String text) {
 		return digestBase64(Digester.DEFAULT_ALGORITHM, text);
 	}
 
 	public String digestBase64(String algorithm, ByteBuffer byteBuffer) {
 		byte[] bytes = digestRaw(algorithm, byteBuffer);
+
+		return Base64.encode(bytes);
+	}
+
+	public String digestBase64(String algorithm, InputStream inputStream) {
+		byte[] bytes = digestRaw(algorithm, inputStream);
 
 		return Base64.encode(bytes);
 	}
@@ -87,12 +113,22 @@ public class DigesterImpl implements Digester {
 		return digestHex(Digester.DEFAULT_ALGORITHM, byteBuffer);
 	}
 
+	public String digestHex(InputStream inputStream) {
+		return digestHex(Digester.DEFAULT_ALGORITHM, inputStream);
+	}
+
 	public String digestHex(String text) {
 		return digestHex(Digester.DEFAULT_ALGORITHM, text);
 	}
 
 	public String digestHex(String algorithm, ByteBuffer byteBuffer) {
 		byte[] bytes = digestRaw(algorithm, byteBuffer);
+
+		return Hex.encodeHexString(bytes);
+	}
+
+	public String digestHex(String algorithm, InputStream inputStream) {
+		byte[] bytes = digestRaw(algorithm, inputStream);
 
 		return Hex.encodeHexString(bytes);
 	}
@@ -122,6 +158,36 @@ public class DigesterImpl implements Digester {
 		catch (NoSuchAlgorithmException nsae) {
 			_log.error(nsae, nsae);
 		}
+
+		return messageDigest.digest();
+	}
+
+	public byte[] digestRaw(String algorithm, InputStream inputStream) {
+		MessageDigest messageDigest = null;
+
+		try {
+			messageDigest = MessageDigest.getInstance(algorithm);
+
+			byte[] buffer = new byte[StreamUtil.BUFFER_SIZE];
+
+			int readBytes = 0;
+
+			while ((readBytes = inputStream.read(buffer)) != -1) {
+				if (readBytes > 0) {
+					messageDigest.update(buffer, 0, readBytes);
+				}
+			}
+		}
+		catch (IOException ie) {
+			_log.error(ie, ie);
+		}
+		catch (NoSuchAlgorithmException nsae) {
+			_log.error(nsae, nsae);
+		}
+		finally {
+			StreamUtil.cleanUp(inputStream);
+		}
+
 
 		return messageDigest.digest();
 	}

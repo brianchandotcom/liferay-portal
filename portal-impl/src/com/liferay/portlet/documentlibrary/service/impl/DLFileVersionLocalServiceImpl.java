@@ -55,12 +55,22 @@ public class DLFileVersionLocalServiceImpl
 	public List<DLFileVersion> getFileVersions(long fileEntryId, int status)
 		throws SystemException {
 
+		List<DLFileVersion> dlFileVersions = null;
+
 		if (status == WorkflowConstants.STATUS_ANY) {
-			return dlFileVersionPersistence.findByFileEntryId(fileEntryId);
+			dlFileVersions = dlFileVersionPersistence.findByFileEntryId(
+				fileEntryId);
 		}
 		else {
-			return dlFileVersionPersistence.findByF_S(fileEntryId, status);
+			dlFileVersions = dlFileVersionPersistence.findByF_S(
+				fileEntryId, status);
 		}
+
+		dlFileVersions = ListUtil.copy(dlFileVersions);
+
+		Collections.sort(dlFileVersions, new FileVersionVersionComparator());
+
+		return dlFileVersions;
 	}
 
 	public int getFileVersionsCount(long fileEntryId, int status)

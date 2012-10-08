@@ -24,6 +24,7 @@ import java.io.Serializable;
 
 import java.text.DateFormat;
 
+import java.util.Arrays;
 import java.util.Date;
 
 /**
@@ -145,6 +146,67 @@ public class ExpandoColumnConstants {
 	};
 
 	public static final String UNKNOWN_LABEL = "Unknown";
+
+	public static boolean equals(
+		int type, Serializable serializable1, Serializable serializable2) {
+
+		if (type == BOOLEAN_ARRAY) {
+			Boolean[] array1 = (Boolean[])serializable1;
+			Boolean[] array2 = (Boolean[])serializable2;
+
+			return Arrays.equals(array1, array2);
+		}
+		else if (type == DATE_ARRAY) {
+			Date[] array1 = (Date[])serializable1;
+			Date[] array2 = (Date[])serializable2;
+
+			return Arrays.equals(array1, array2);
+		}
+		else if (type == DOUBLE_ARRAY) {
+			double[] array1 = (double[])serializable1;
+			double[] array2 = (double[])serializable2;
+
+			return Arrays.equals(array1, array2);
+		}
+		else if (type == FLOAT_ARRAY) {
+			float[] array1 = (float[])serializable1;
+			float[] array2 = (float[])serializable2;
+
+			return Arrays.equals(array1, array2);
+		}
+		else if (type == INTEGER_ARRAY) {
+			int[] array1 = (int[])serializable1;
+			int[] array2 = (int[])serializable2;
+
+			return Arrays.equals(array1, array2);
+		}
+		else if (type == LONG_ARRAY) {
+			long[] array1 = (long[])serializable1;
+			long[] array2 = (long[])serializable2;
+
+			return Arrays.equals(array1, array2);
+		}
+		else if (type == NUMBER_ARRAY) {
+			Number[] array1 = (Number[])serializable1;
+			Number[] array2 = (Number[])serializable2;
+
+			return Arrays.equals(array1, array2);
+		}
+		else if (type == SHORT_ARRAY) {
+			short[] array1 = (short[])serializable1;
+			short[] array2 = (short[])serializable2;
+
+			return Arrays.equals(array1, array2);
+		}
+		else if (type == STRING_ARRAY) {
+			String[] array1 = (String[])serializable1;
+			String[] array2 = (String[])serializable2;
+
+			return Arrays.equals(array1, array2);
+		}
+
+		return serializable1.equals(serializable2);
+	}
 
 	public static final Serializable getSerializable(int type, String value) {
 		if (type == BOOLEAN) {

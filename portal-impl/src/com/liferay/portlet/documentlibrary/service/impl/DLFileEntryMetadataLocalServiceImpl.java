@@ -48,6 +48,17 @@ public class DLFileEntryMetadataLocalServiceImpl
 		}
 	}
 
+	public void deleteFileEntryMetadataByFileVersion(long fileVersionId)
+		throws PortalException, SystemException {
+
+		List<DLFileEntryMetadata> fileEntryMetadatas =
+			dlFileEntryMetadataPersistence.findByFileVersionId(fileVersionId);
+
+		for (DLFileEntryMetadata fileEntryMetadata : fileEntryMetadatas) {
+			deleteFileEntryMetadata(fileEntryMetadata);
+		}
+	}
+
 	public DLFileEntryMetadata getFileEntryMetadata(long fileEntryMetadataId)
 		throws PortalException, SystemException {
 
@@ -63,11 +74,13 @@ public class DLFileEntryMetadataLocalServiceImpl
 			ddmStructureId, fileVersionId);
 	}
 
+	/**
+	 * @deprecated {@link #getFileVersionFileEntryMetadatasCount(long)}
+	 */
 	public long getFileEntryMetadataCount(long fileEntryId, long fileVersionId)
 		throws SystemException {
 
-		return dlFileEntryMetadataPersistence.countByF_V(
-			fileEntryId, fileVersionId);
+		return getFileVersionFileEntryMetadatasCount(fileVersionId);
 	}
 
 	public List<DLFileEntryMetadata> getFileVersionFileEntryMetadatas(
@@ -75,6 +88,13 @@ public class DLFileEntryMetadataLocalServiceImpl
 		throws SystemException {
 
 		return dlFileEntryMetadataPersistence.findByFileVersionId(
+			fileVersionId);
+	}
+
+	public long getFileVersionFileEntryMetadatasCount(long fileVersionId)
+		throws SystemException {
+
+		return dlFileEntryMetadataPersistence.countByFileVersionId(
 			fileVersionId);
 	}
 

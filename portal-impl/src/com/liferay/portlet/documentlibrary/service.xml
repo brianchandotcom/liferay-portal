@@ -188,6 +188,8 @@
 		<reference package-path="com.liferay.portlet.asset" entity="AssetLink" />
 		<reference package-path="com.liferay.portlet.asset" entity="AssetTag" />
 		<reference package-path="com.liferay.portlet.dynamicdatamapping" entity="DDMStructure" />
+		<reference package-path="com.liferay.portlet.expando" entity="ExpandoRow" />
+		<reference package-path="com.liferay.portlet.expando" entity="ExpandoTable" />
 		<reference package-path="com.liferay.portlet.expando" entity="ExpandoValue" />
 		<reference package-path="com.liferay.portlet.trash" entity="TrashEntry" />
 
@@ -222,10 +224,6 @@
 		</finder>
 		<finder name="D_F" return-type="DLFileEntryMetadata" unique="true">
 			<finder-column name="DDMStructureId" />
-			<finder-column name="fileVersionId" />
-		</finder>
-		<finder name="F_V" return-type="DLFileEntryMetadata">
-			<finder-column name="fileEntryId" />
 			<finder-column name="fileVersionId" />
 		</finder>
 
@@ -419,6 +417,7 @@
 		<column name="fileEntryTypeId" type="long" />
 		<column name="version" type="String" />
 		<column name="size" type="long" />
+		<column name="checksum" type="String" />
 		<column name="status" type="int" />
 		<column name="statusByUserId" type="long" />
 		<column name="statusByUserName" type="String" />

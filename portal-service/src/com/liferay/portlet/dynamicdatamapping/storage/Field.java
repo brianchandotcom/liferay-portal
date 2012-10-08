@@ -41,6 +41,23 @@ public class Field implements Serializable {
 		this(0, name, value);
 	}
 
+	public boolean equals(Object obj) {
+		if (!(obj instanceof Field)) {
+			return false;
+		}
+
+		Field field = (Field)obj;
+
+		if ((_ddmStructureId == field._ddmStructureId) &&
+			_name.equals(field._name) && _value.equals(field._value)) {
+
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
 	public String getDataType() throws PortalException, SystemException {
 		DDMStructure ddmStructure = getDDMStructure();
 

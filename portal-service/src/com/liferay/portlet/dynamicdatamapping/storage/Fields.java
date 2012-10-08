@@ -35,6 +35,16 @@ public class Fields implements Serializable {
 		return _fieldsMap.containsKey(name);
 	}
 
+	public boolean equals(Object obj) {
+		if (!(obj instanceof Fields)) {
+			return false;
+		}
+
+		Fields fields = (Fields)obj;
+
+		return _fieldsMap.equals(fields._fieldsMap);
+	}
+
 	public Field get(String name) {
 		return _fieldsMap.get(name);
 	}

@@ -15,6 +15,7 @@
 package com.liferay.portlet.expando.model.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.ImportExportThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -121,13 +122,7 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 		throws PortalException {
 
 		try {
-			ExpandoTable table = ExpandoTableLocalServiceUtil.fetchDefaultTable(
-				_companyId, _className);
-
-			if (table == null) {
-				table = ExpandoTableLocalServiceUtil.addDefaultTable(
-					_companyId, _className);
-			}
+			ExpandoTable table = getTable();
 
 			if (secure) {
 				ExpandoColumnServiceUtil.addColumn(
@@ -146,6 +141,40 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 				_log.error(e, e);
 			}
 		}
+	}
+
+	public boolean equals(Object obj) {
+		if (!(obj instanceof ExpandoBridgeImpl)) {
+			return false;
+		}
+
+		ExpandoBridgeImpl expandoBridgeImpl = (ExpandoBridgeImpl)obj;
+
+		try {
+			long tableId1 = getTable().getTableId();
+			long tableId2 = expandoBridgeImpl.getTable().getTableId();
+
+			if (tableId1 != tableId2) {
+				return false;
+			}
+		}
+		catch (Exception e) {
+			return false;
+		}
+
+		for (ExpandoColumn column : getAttributeColumns()) {
+			String name = column.getName();
+			int type = column.getType();
+
+			Serializable attribute1 = getAttribute(name);
+			Serializable attribute2 = expandoBridgeImpl.getAttribute(name);
+
+			if (!ExpandoColumnConstants.equals(type, attribute1, attribute2)) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	public Serializable getAttribute(String name) {
@@ -199,21 +228,9 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 	}
 
 	public Enumeration<String> getAttributeNames() {
-		List<ExpandoColumn> columns = new ArrayList<ExpandoColumn>();
-
-		try {
-			columns = ExpandoColumnLocalServiceUtil.getDefaultTableColumns(
-				_companyId, _className);
-		}
-		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
-			}
-		}
-
 		List<String> columnNames = new ArrayList<String>();
 
-		for (ExpandoColumn column : columns) {
+		for (ExpandoColumn column : getAttributeColumns()) {
 			columnNames.add(column.getName());
 		}
 
@@ -252,19 +269,7 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 		Map<String, Serializable> attributes =
 			new HashMap<String, Serializable>();
 
-		List<ExpandoColumn> columns = new ArrayList<ExpandoColumn>();
-
-		try {
-			columns = ExpandoColumnLocalServiceUtil.getDefaultTableColumns(
-				_companyId, _className);
-		}
-		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
-			}
-		}
-
-		for (ExpandoColumn column : columns) {
+		for (ExpandoColumn column : getAttributeColumns()) {
 			attributes.put(
 				column.getName(), getAttribute(column.getName(), secure));
 		}
@@ -541,6 +546,34 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 
 	public void setIndexEnabled(boolean indexEnabled) {
 		_indexEnabled = indexEnabled;
+	}
+
+	protected List<ExpandoColumn> getAttributeColumns() {
+		List<ExpandoColumn> columns = new ArrayList<ExpandoColumn>();
+
+		try {
+			columns = ExpandoColumnLocalServiceUtil.getDefaultTableColumns(
+				_companyId, _className);
+		}
+		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(e, e);
+			}
+		}
+
+		return columns;
+	}
+
+	protected ExpandoTable getTable() throws PortalException, SystemException {
+		ExpandoTable table = ExpandoTableLocalServiceUtil.fetchDefaultTable(
+			_companyId, _className);
+
+		if (table == null) {
+			table = ExpandoTableLocalServiceUtil.addDefaultTable(
+				_companyId, _className);
+		}
+
+		return table;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(ExpandoBridgeImpl.class);

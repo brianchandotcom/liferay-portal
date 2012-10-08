@@ -5,7 +5,7 @@
 
 	<property name="war.file" value="${ant.project.name}" />
 
-	<property name="alloy.file" value="alloy-1.7.0pr1.zip" />
+	<property name="alloy.file" value="alloy-1.7.0pr2.zip" />
 
 	<!--
 	When upgrading CKEditor, make sure to delete

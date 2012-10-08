@@ -94,10 +94,13 @@ public interface DDMStructure extends DDMStructureModel, PersistedModel {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
-	public java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.lang.String>>> getLocalizedFieldsMap();
-
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> getTemplates()
 		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.lang.String>> getTransientFieldsMap(
+		java.lang.String locale)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
 
 	public boolean hasField(java.lang.String fieldName)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -108,9 +111,6 @@ public interface DDMStructure extends DDMStructureModel, PersistedModel {
 		throws com.liferay.portal.LocaleException;
 
 	public void setDocument(com.liferay.portal.kernel.xml.Document document);
-
-	public void setLocalizedFieldsMap(
-		java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.lang.String>>> localizedFieldsMap);
 
 	public void setXsd(java.lang.String xsd);
 }

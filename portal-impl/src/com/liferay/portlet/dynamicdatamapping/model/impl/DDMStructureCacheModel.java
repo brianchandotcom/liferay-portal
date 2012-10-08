@@ -157,7 +157,9 @@ public class DDMStructureCacheModel implements CacheModel<DDMStructure>,
 
 		ddmStructureImpl.setDocument(_document);
 
-		ddmStructureImpl.setLocalizedFieldsMap(_localizedFieldsMap);
+		ddmStructureImpl.setLocalizedFieldsMap1(_localizedFieldsMap1);
+
+		ddmStructureImpl.setLocalizedFieldsMap2(_localizedFieldsMap2);
 
 		return ddmStructureImpl;
 	}
@@ -182,7 +184,8 @@ public class DDMStructureCacheModel implements CacheModel<DDMStructure>,
 		type = objectInput.readInt();
 
 		_document = (com.liferay.portal.kernel.xml.Document)objectInput.readObject();
-		_localizedFieldsMap = (java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.lang.String>>>)objectInput.readObject();
+		_localizedFieldsMap1 = (java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.lang.String>>>)objectInput.readObject();
+		_localizedFieldsMap2 = (java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.lang.String>>>)objectInput.readObject();
 	}
 
 	public void writeExternal(ObjectOutput objectOutput)
@@ -249,7 +252,8 @@ public class DDMStructureCacheModel implements CacheModel<DDMStructure>,
 		objectOutput.writeInt(type);
 
 		objectOutput.writeObject(_document);
-		objectOutput.writeObject(_localizedFieldsMap);
+		objectOutput.writeObject(_localizedFieldsMap1);
+		objectOutput.writeObject(_localizedFieldsMap2);
 	}
 
 	public String uuid;
@@ -269,5 +273,6 @@ public class DDMStructureCacheModel implements CacheModel<DDMStructure>,
 	public String storageType;
 	public int type;
 	public com.liferay.portal.kernel.xml.Document _document;
-	public java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.lang.String>>> _localizedFieldsMap;
+	public java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.lang.String>>> _localizedFieldsMap1;
+	public java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.lang.String>>> _localizedFieldsMap2;
 }

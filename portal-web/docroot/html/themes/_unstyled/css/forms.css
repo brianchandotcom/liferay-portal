@@ -1,30 +1,13 @@
-@mixin input-field-default {
-}
-
-@mixin input-field-focus {
-}
-
-@mixin button-default {
-}
-
-@mixin button-disabled {
-}
-
-@mixin button-hover {
-}
-
-@mixin button-focus {
-}
-
 fieldset {
 }
 
 .aui-fieldset {
+}
 
 .aui-dialog-iframe-popup .aui-fieldset {
 }
 
-.aui-fieldset .aui-field-content, .aui-field-row, .aui-button-holder, .aui-field-wrapper-content {
+.aui-button-holder, .aui-field-row, .aui-field-wrapper-content, .aui-fieldset .aui-field-content {
 }
 
 .aui-field-inline, .aui-field-row {
@@ -36,7 +19,7 @@ fieldset {
 	.aui-field-content {
 	}
 
-	.aui-field-content, .aui-button-content {
+	.aui-button-content, .aui-field-content {
 	}
 }
 
@@ -61,8 +44,7 @@ legend {
 input {
 }
 
-input[type="text"], input[type="password"], input[type="file"], input[type="submit"], input[type="button"], input[type="reset"], select, textarea, .textarea, button, .aui-field-input-text {
-	@include input-field-default;
+button, input[type="button"], input[type="file"], input[type="password"], input[type="reset"], input[type="submit"], input[type="text"], select, textarea, .textarea, .aui-field-input-text {
 }
 
 select {
@@ -71,44 +53,35 @@ select {
 input[type="image"] {
 }
 
-input[type="submit"], input[type="button"], input[type="reset"], button {
-	@include button-default;
-
+button, input[type="button"], input[type="reset"], input[type="submit"] {
 	&:hover {
-		@include button-hover;
 	}
 
 	&:focus {
-		@include button-focus;
 	}
 }
 
 input, textarea {
 	&.focus {
-		@include input-field-focus;
 	}
 }
 
 .lfr-actions.lfr-extended {
 	&, ul {
-		@include button-default;
 	}
 
 	&:focus {
 		&, ul {
-			@include button-focus;
 		}
 	}
 
 	&.disabled, &.disabled:hover {
 		&, ul {
-			@include button-disabled;
 		}
 	}
 
 	&:hover {
 		&, ul {
-			@include button-hover;
 		}
 	}
 }
@@ -117,18 +90,16 @@ input, textarea {
 }
 
 .aui-button-disabled {
-	input[type], button {
-		&, &:hover, &:focus {
-			@include button-disabled;
+	button, input[type] {
+		&, &:focus, &:hover {
 		}
 	}
 }
 
 .aui-buttonitem-disabled {
-	@include button-disabled;
 }
 
-input.aui-form-validator-error, textarea.aui-form-validator-error, select.aui-form-validator-error {
+input.aui-form-validator-error, select.aui-form-validator-error, textarea.aui-form-validator-error {
 }
 
 /* ---------- IE6 chokes on attribute selectors in a chain, so we separate them into their own rule ---------- */
@@ -147,22 +118,19 @@ input.aui-form-validator-error, textarea.aui-form-validator-error, select.aui-fo
 }
 
 .ie6 {
-	input.text, input.password, input.submit, input.file, input.button, button {
-		@include input-field-default;
+	button, input.button, input.file, input.password, input.submit, input.text {
 	}
 
-	input.submit, input.button, button, .aui-button-disabled input.submit, .aui-button-disabled input.button, .aui-button-disabled button {
-		@include button-default;
+	button, input.button, input.submit, .aui-button-disabled button, .aui-button-disabled input.button, .aui-button-disabled input.submit {
 	}
 
 	.aui-button-disabled {
-		input.submit, input.button, button {
+		button, input.button, input.submit {
 		}
 	}
 
 	input, textarea {
 		&.focus {
-			@include input-field-focus;
 		}
 	}
 }

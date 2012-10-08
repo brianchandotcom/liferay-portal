@@ -10,16 +10,14 @@
 }
 
 .results-grid {
+}
 
 .context-pane-content .results-grid {
 }
 
 .results-header {
-
 	th {
-
 		&.sort-column {
-
 			.result-column-name {
 			}
 		}
@@ -31,17 +29,16 @@
 		}
 	}
 
-	th, td {
+	td, th {
 	}
 
 	th.sort-desc .result-column-name {
 	}
 
-	span, a {
+	a, span {
 	}
 
 	a {
-
 		&:hover {
 		}
 	}
@@ -49,13 +46,11 @@
 
 .results-row {
 	td {
-
 		&.sort-column {
 		}
 	}
 
- 	&.selected td, &.selected.hover td {
-
+	&.selected td, &.selected.hover td {
 		& a {
 		}
 	}
@@ -92,21 +87,17 @@
 }
 
 .portlet-boundary.yui3-dd-dragging {
-
 	.portlet {
 	}
 }
 
 .aui-portal-layout-proxy {
-
 	.portlet-topper {
 	}
 }
 
 .aui-proxy {
-
 	&.generic-portlet {
-
 		.portlet-title {
 		}
 	}
@@ -135,7 +126,6 @@
 /* ---------- Tags ---------- */
 
 .aui-tagselector-content {
-
 	.aui-textboxlistentry-holder {
 	}
 }
@@ -163,7 +153,6 @@
 /* ---------- Tag cloud and tag list ---------- */
 
 .tag-items {
-
 	li {
 
 	a {
@@ -171,7 +160,6 @@
 }
 
 .tag-cloud {
-
 	.tag-asset-count {
 	}
 }
@@ -180,7 +168,6 @@
 }
 
 .tag-cloud {
-
 	.tag-asset-count {
 	}
 
@@ -193,7 +180,6 @@
 /* ---------- Underlay ---------- */
 
 .aui-underlay {
-
 	.yui3-widget-hd {
 	}
 
@@ -226,9 +212,6 @@
 .lfr-panel-container {
 }
 
-.lfr-panel-container {
-}
-
 .lfr-panel-content {
 }
 
@@ -239,6 +222,7 @@
 }
 
 .aui-dialog-content {
+}
 
 .aui-panel-hd {
 }
@@ -263,22 +247,18 @@
 
 .lfr-page-templates li {
 	a {
-
 		label {
 		}
 	}
 }
 
 .aui-menu {
-
 	.notice-message {
 	}
 }
 
 .aui-menu-content {
-
 	li {
-
 		.disabled {
 		}
 	}
@@ -294,12 +274,11 @@
 }
 
 .aui-menu-content li, .lfr-menu-list ul li {
-}
+	&.first {
+	}
 
-.aui-menu-content li.first, .lfr-menu-list ul li.first {
-}
-
-.aui-menu-content li.last, .lfr-menu-list ul li.last {
+	&.last {
+	}
 }
 
 .aui-menu-content li a, .lfr-menu-list ul li .taglib-icon, .aui-menu-content li .disabled {
@@ -308,7 +287,7 @@
 .lfr-menu-list ul li.disabled .taglib-icon {
 }
 
-.aui-menu-content li a.aui-focus, .lfr-menu-list ul .taglib-icon.aui-focus, .lfr-menu-expanded li a:focus {
+.aui-menu-content li a.aui-focus, .lfr-menu-expanded li a:focus, .lfr-menu-list ul .taglib-icon.aui-focus {
 }
 
 .aui-menu-content a, .lfr-menu-list li .taglib-icon, .aui-menu-content .disabled, .lfr-actions .lfr-trigger, .lfr-actions .lfr-trigger strong {
@@ -341,7 +320,6 @@
 }
 
 .customizable-layout-column-content {
-
 	&.yui3-widget-content-expanded {
 	}
 }
@@ -370,6 +348,7 @@
 }
 
 .ie7 .aui-paginator-page-link {
+}
 
 .aui-paginator-first-link {
 }
@@ -395,7 +374,6 @@
 /* ---------- Application Column View ---------- */
 
 .lfr-app-column-view {
-
 	.aui-layout-content {
 	}
 
@@ -403,7 +381,6 @@
 	}
 
 	.aui-column-content {
-
 		.lfr-message-response {
 		}
 	}
@@ -412,7 +389,6 @@
 /* ---------- Header row ---------- */
 
 .lfr-header-row {
-
 	.lfr-actions.show-arrow.direction-down .lfr-trigger strong a {
 	}
 
@@ -455,7 +431,6 @@
 	}
 
 	.lfr-header-row .aui-buttonitem-content {
-
 		.aui-buttonitem-label {
 		}
 	}

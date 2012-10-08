@@ -10,7 +10,6 @@ body.portlet {
 }
 
 .portlet-title {
-
 	img {
 	}
 }
@@ -24,7 +23,6 @@ body.portlet {
 }
 
 .portlet-topper-toolbar {
-
 	.nobr {
 	}
 }
@@ -42,18 +40,15 @@ body.portlet {
 }
 
 .portlet-borderless-bar, .portlet-journal-content .icon-actions {
-
 	a {
 	}
 }
 
 .portlet-journal-content .icon-actions {
-
 	.taglib-text {
 	}
 
 	.icon-action a {
-
 		.icon {
 		}
 	}
@@ -77,7 +72,6 @@ body.portlet {
 }
 
 .portlet-borderless-bar {
-
 	a {
 	}
 
@@ -128,7 +122,6 @@ body.portlet {
 /* ---------- Panel Page ---------- */
 
 .lfr-panel-page {
-
 	.portlet-title {
 	}
 
@@ -162,28 +155,28 @@ body.portlet {
 
 /* ---------- Help messages, general additional information, etc. ---------- */
 
-.portlet-msg-info, .lfr-message-info {
+.lfr-message-info, .portlet-msg-info {
 }
 
-.portlet-msg-help, .lfr-message-help {
+.lfr-message-help, .portlet-msg-help {
 }
 
-.portlet-msg-progress, .lfr-message-progress {
+.lfr-message-progress, .portlet-msg-progress {
 }
 
 /* ---------- Error messages ---------- */
 
-.portlet-msg-error, .lfr-message-error {
+.lfr-message-error, .portlet-msg-error {
 }
 
 /* ---------- Warning messages ---------- */
 
-.portlet-msg-alert, .lfr-message-alert {
+.lfr-message-alert, .portlet-msg-alert {
 }
 
 /* ---------- Success messages ---------- */
 
-.portlet-msg-success, .lfr-message-success {
+.lfr-message-success, .portlet-msg-success {
 }
 
 /* ---------- Message labels ---------- */
@@ -197,7 +190,7 @@ body.portlet {
 .portlet-msg-error-label {
 }
 
-.portlet-msg-info-label, .portlet-msg-help-label, .portlet-msg-progress-label {
+.portlet-msg-help-label, .portlet-msg-info-label, .portlet-msg-progress-label {
 }
 
 .portlet-msg-help-label {
@@ -211,11 +204,10 @@ body.portlet {
 
 /* ---------- Liferay Messages ---------- */
 
-.lfr-message-content, .lfr-message-info, .lfr-message-help, .lfr-message-error, .lfr-message-alert, .lfr-message-success {
+.lfr-message-alert, .lfr-message-content, .lfr-message-error, .lfr-message-help, .lfr-message-info, .lfr-message-success {
 }
 
 .lfr-message {
-
 	.lfr-message-control {
 	}
 
@@ -226,7 +218,6 @@ body.portlet {
 	}
 
 	.lfr-message-close-all {
-
 		a {
 		}
 	}
@@ -246,7 +237,7 @@ body.portlet {
 	}
 }
 
-.lfr-message-trigger, .lfr-message-close {
+.lfr-message-close, .lfr-message-trigger {
 }
 
 /* ---------- Sections ---------- */
@@ -254,25 +245,22 @@ body.portlet {
 /* ---------- Table or section header ---------- */
 
 .portlet-section-header {
-}
-
-.portlet-section-header th {
+	th {
+	}
 }
 
 /* ---------- Normal text in a table cell ---------- */
 
 .portlet-section-body {
-}
-
-.portlet-section-body td {
+	td {
+	}
 }
 
 /* ---------- Text in every other row in the cell ---------- */
 
 .portlet-section-alternate {
-}
-
-.portlet-section-alternate td {
+	td {
+	}
 }
 
 .portlet-section-alternate-hover td, .portlet-section-body-hover td {
@@ -459,9 +447,7 @@ body.portlet {
 		}
 
 		li {
-
 			a {
-
 				&:hover {
 				}
 			}
@@ -475,11 +461,8 @@ body.portlet {
 	}
 
 	&.portlet-options {
-
 		.lfr-trigger {
-
 			strong {
-
 				a {
 				}
 			}
@@ -493,7 +476,7 @@ body.portlet {
 /*------ Breadcrumbs taglib ------*/
 
 .breadcrumbs {
-	&:before, &:after {
+	&:after, &:before {
 	}
 
 	&:after {
@@ -515,7 +498,6 @@ body.portlet {
 
 		td {
 			a {
-
 				&:hover {
 				}
 			}
@@ -552,10 +534,12 @@ body.portlet {
 }
 
 .ie6, .ie7 {
-	.portlet-journal-content .icons-container {
-	}
+	.portlet-journal-content {
+		.icons-container {
+		}
 
-	.portlet-journal-content .icon-actions .taglib-text {
+		.icon-actions .taglib-text {
+		}
 	}
 
 	.portlet-borderless-bar .portlet-actions {
@@ -564,7 +548,7 @@ body.portlet {
 	.portlet-title-default {
 	}
 
-	.breadcrumbs-vertical, .breadcrumbs-horizontal li {
+	.breadcrumbs-horizontal li, .breadcrumbs-vertical {
 	}
 
 	.lfr-message .lfr-message-close {
@@ -579,7 +563,6 @@ body.portlet {
 	}
 
 	.portlet-borderless-bar {
-
 		.portlet-actions {
 		}
 	}

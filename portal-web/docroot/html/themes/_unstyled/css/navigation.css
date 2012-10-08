@@ -15,10 +15,12 @@
 	}
 
 	li {
-		a.ancestor {
-		}
+		a {
+			&.ancestor {
+			}
 
-		a.selected {
+			&.selected {
+			}
 		}
 	}
 }
@@ -26,7 +28,6 @@
 /* ---------- Page template selector ---------- */
 
 .aui-form-options {
-
 	input {
 	}
 }
@@ -35,17 +36,15 @@
 }
 
 .aui-form-trigger {
-
 	img {
 	}
 
-	&:hover, &:focus {
+	&:focus, &:hover {
 	}
 }
 
 .aui-trigger-selected {
-
-	&:hover, &:focus {
+	&:focus, &:hover {
 	}
 }
 

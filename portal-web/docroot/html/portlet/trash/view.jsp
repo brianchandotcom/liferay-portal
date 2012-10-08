@@ -39,6 +39,12 @@ portletURL.setParameter("tabs1", tabs1);
 
 <liferay-util:include page="/html/portlet/trash/restore_path.jsp" />
 
+<liferay-ui:error key="trash.delete.error" message="you-do-not-have-permission-to-delete-this-item" />
+<liferay-ui:error key="trash.move.error" message="you-do-not-have-permission-to-move-this-item-to-the-selected-destination" />
+<liferay-ui:error key="trash.restore.error" message="you-do-not-have-permission-to-restore-this-item" />
+<liferay-ui:error key="trash.restore.overwrite.error" message="you-do-not-have-permission-to-replace-an-existing-item-with-the-selected-one" />
+<liferay-ui:error key="trash.restore.rename.error" message="you-do-not-have-permission-to-rename-this-item" />
+
 <c:if test="<%= group.isStagingGroup() %>">
 	<liferay-ui:tabs
 		names="staging,live"

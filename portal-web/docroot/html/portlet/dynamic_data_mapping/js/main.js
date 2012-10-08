@@ -272,10 +272,16 @@ AUI.add(
 							AArray.each(
 								options,
 								function(item, index, collection) {
+									var name = item.name;
+
+									if (!name) {
+										name = A.FormBuilderField.buildFieldName('option');
+									}
+
 									var typeElementOption = instance._createDynamicNode(
 										'dynamic-element',
 										{
-											name: LiferayFormBuilder.normalizeKey(item.label),
+											name: name,
 											type: 'option',
 											value: Liferay.Util.escapeHTML(item.value)
 										}

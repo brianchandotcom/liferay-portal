@@ -67,6 +67,8 @@
 			<forward name="/portal/render_portlet" path="/portal/render_portlet.jsp" />
 		</action>
 
+		<action path="/portal/resiliency" type="com.liferay.portal.resiliency.spi.action.PortalResiliencyAction" />
+
 		<action path="/portal/rest_proxy" type="com.liferay.portal.action.RESTProxyAction" />
 
 		<action path="/portal/session_click" type="com.liferay.portal.action.SessionClickAction" />

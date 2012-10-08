@@ -60,6 +60,10 @@ public class DDLDisplayPortletDataHandlerImpl extends BasePortletDataHandler {
 			PortletPreferences portletPreferences)
 		throws Exception {
 
+		if (portletPreferences == null) {
+			return portletPreferences;
+		}
+
 		portletPreferences.setValue("recordSetId", StringPool.BLANK);
 		portletPreferences.setValue("detailDDMTemplateId", StringPool.BLANK);
 		portletPreferences.setValue("listDDMTemplateId", StringPool.BLANK);

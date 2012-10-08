@@ -110,6 +110,10 @@ public class RSSPortletDataHandlerImpl extends JournalPortletDataHandlerImpl {
 			PortletPreferences portletPreferences)
 		throws Exception {
 
+		if (portletPreferences == null) {
+			return portletPreferences;
+		}
+
 		portletPreferences.setValue(
 			"expandedItemsPerChannel", StringPool.BLANK);
 		portletPreferences.setValue("feedImageAlignment", StringPool.BLANK);

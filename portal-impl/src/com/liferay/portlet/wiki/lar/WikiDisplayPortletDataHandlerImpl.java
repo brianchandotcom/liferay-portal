@@ -107,6 +107,10 @@ public class WikiDisplayPortletDataHandlerImpl extends BasePortletDataHandler {
 			PortletPreferences portletPreferences)
 		throws Exception {
 
+		if (portletPreferences == null) {
+			return portletPreferences;
+		}
+
 		portletPreferences.setValue("title", StringPool.BLANK);
 		portletPreferences.setValue("nodeId", StringPool.BLANK);
 

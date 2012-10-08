@@ -143,6 +143,10 @@ public class JournalContentPortletDataHandlerImpl
 			PortletPreferences portletPreferences)
 		throws Exception {
 
+		if (portletPreferences == null) {
+			return portletPreferences;
+		}
+
 		portletPreferences.setValue("groupId", StringPool.BLANK);
 		portletPreferences.setValue("articleId", StringPool.BLANK);
 

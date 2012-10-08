@@ -29,11 +29,9 @@ public class LiferayIntegrationJUnitTestRunner
 		throws InitializationError {
 
 		super(clazz);
-
-		loadSpringContext();
 	}
 
-	protected void loadSpringContext() {
+	public void initApplicationContext() {
 		InitUtil.initWithSpring();
 	}
 

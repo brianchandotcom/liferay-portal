@@ -34,7 +34,7 @@ public class LiferayPersistenceIntegrationJUnitTestRunner
 	}
 
 	@Override
-	protected void loadSpringContext() {
+	public void initApplicationContext() {
 		List<String> extraConfigLocations = new ArrayList<String>(1);
 
 		extraConfigLocations.add("META-INF/test-persistence-spring.xml");

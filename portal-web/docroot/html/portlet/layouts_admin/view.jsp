@@ -215,7 +215,7 @@ SitesUtil.addPortletBreadcrumbEntries(group, pagesName, redirectURL, request, re
 			function(event) {
 				event.preventDefault();
 
-				var href = event.currentTarget.one('a').get('href');
+				var href = event.currentTarget.one('a').attr('href');
 
 				if (href) {
 					var hash = location.hash;

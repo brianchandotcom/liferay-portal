@@ -45,7 +45,7 @@ String oldName = ParamUtil.getString(request, "oldName");
 
 		<aui:input id="rename" label="keep-both-entries-and-rename-the-entry-from-the-recycle-bin-as" name="<%= Constants.CMD %>" type="radio" value="<%= Constants.RENAME %>" />
 
-		<aui:input cssClass="new-file-name" label="" name="newName" title="keep-both-entries-and-rename-the-entry-from-the-recycle-bin-as" value="<%= EditEntryAction.getNewName(themeDisplay, oldName) %>" />
+		<aui:input cssClass="new-file-name" label="" name="newName" title="keep-both-entries-and-rename-the-entry-from-the-recycle-bin-as" value="<%= TrashUtil.getNewName(themeDisplay, oldName) %>" />
 	</aui:fieldset>
 
 	<aui:button-row>

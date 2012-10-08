@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.trash.model.TrashEntry;
 
 import java.util.Date;
@@ -45,6 +46,8 @@ public interface Trash {
 		String orderByCol, String orderByType);
 
 	public int getMaxAge(Group group) throws PortalException, SystemException;
+
+	public String getNewName(ThemeDisplay themeDisplay, String oldName);
 
 	public String getTrashTime(String title, String separator);
 

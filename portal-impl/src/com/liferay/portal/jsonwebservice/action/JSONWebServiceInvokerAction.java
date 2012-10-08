@@ -162,8 +162,10 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 	}
 
 	private Object _addVariableStatement(
-			Statement variableStatement, Object result)
+			Statement statement, Statement variableStatement, Object result)
 		throws Exception {
+
+		result = _populateFlags(statement, result);
 
 		String name = variableStatement.getName();
 
@@ -177,7 +179,8 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 	}
 
 	private Object _addVariableStatementList(
-			Statement variableStatement, Object result, List<Object> results)
+			Statement statement, Statement variableStatement, Object result,
+			List<Object> results)
 		throws Exception {
 
 		List<Object> list = _convertObjectToList(result);
@@ -185,12 +188,13 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 		for (Object object : list) {
 			if (object instanceof List) {
 				Object value = _addVariableStatementList(
-					variableStatement, object, results);
+					statement, variableStatement, object, results);
 
 				results.add(value);
 			}
 			else {
-				Object value = _addVariableStatement(variableStatement, object);
+				Object value = _addVariableStatement(
+					statement, variableStatement, object);
 
 				results.add(value);
 			}
@@ -227,18 +231,7 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 
 		Object result = jsonWebServiceAction.invoke();
 
-		if (result instanceof List) {
-			result = _populateFlagsList(
-				statement.getName(), result, new ArrayList<Object>());
-
-			result = _filterResultList(
-				statement, result, new ArrayList<Object>());
-		}
-		else {
-			_populateFlags(statement.getName(), result);
-
-			result = _filterResult(statement, result);
-		}
+		result = _filterResult(statement, result);
 
 		List<Statement> variableStatements = statement.getVariableStatements();
 
@@ -246,10 +239,12 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 			for (Statement variableStatement : variableStatements) {
 				if (result instanceof List) {
 					result = _addVariableStatementList(
-						variableStatement, result, new ArrayList<Object>());
+						statement, variableStatement, result,
+						new ArrayList<Object>());
 				}
 				else {
-					result = _addVariableStatement(variableStatement, result);
+					result = _addVariableStatement(
+						statement, variableStatement, result);
 				}
 			}
 		}
@@ -258,6 +253,32 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 	}
 
 	private Object _filterResult(Statement statement, Object result) {
+		if (result instanceof List) {
+			result = _filterResultList(
+				statement, result, new ArrayList<Object>());
+		}
+		else {
+			result = _filterResultObject(statement, result);
+		}
+
+		return result;
+	}
+
+	private Object _filterResultList(
+		Statement statement, Object result, List<Object> results) {
+
+		List<Object> list = _convertObjectToList(result);
+
+		for (Object object : list) {
+			Object value = _filterResultObject(statement, object);
+
+			results.add(value);
+		}
+
+		return results;
+	}
+
+	private Object _filterResultObject(Statement statement, Object result) {
 		if (result == null) {
 			return result;
 		}
@@ -280,20 +301,6 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 		}
 
 		return whitelistMap;
-	}
-
-	private Object _filterResultList(
-		Statement statement, Object result, List<Object> results) {
-
-		List<Object> list = _convertObjectToList(result);
-
-		for (Object object : list) {
-			Object value = _filterResult(statement, object);
-
-			results.add(value);
-		}
-
-		return results;
 	}
 
 	private Statement _parseStatement(
@@ -386,7 +393,40 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 		return statement;
 	}
 
-	private void _populateFlags(String name, Object object) {
+	private Object _populateFlags(Statement statement, Object result) {
+		if (result instanceof List) {
+			result = _populateFlagsList(
+				statement.getName(), result, new ArrayList<Object>());
+		}
+		else {
+			_populateFlagsObject(statement.getName(), result);
+		}
+
+		return result;
+	}
+
+	private List<Object> _populateFlagsList(
+		String name, Object result, List<Object> results) {
+
+		List<Object> list = _convertObjectToList(result);
+
+		for (Object object : list) {
+			if (object instanceof List) {
+				Object value = _populateFlagsList(name, object, results);
+
+				results.add(value);
+			}
+			else {
+				_populateFlagsObject(name, object);
+
+				results.add(object);
+			}
+		}
+
+		return results;
+	}
+
+	private void _populateFlagsObject(String name, Object object) {
 		if (name == null) {
 			return;
 		}
@@ -413,31 +453,8 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 					object, value.substring(name.length()));
 
 				parameterMap.put(flag.getKey(), propertyValue);
-
-				flag.setValue(null);
 			}
 		}
-	}
-
-	private List<Object> _populateFlagsList(
-		String name, Object result, List<Object> results) {
-
-		List<Object> list = _convertObjectToList(result);
-
-		for (Object object : list) {
-			if (object instanceof List) {
-				Object value = _populateFlagsList(name, object, results);
-
-				results.add(value);
-			}
-			else {
-				_populateFlags(name, object);
-
-				results.add(object);
-			}
-		}
-
-		return results;
 	}
 
 	private String _command;

@@ -215,6 +215,7 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 		Assert.assertEquals(
 			"[{\"id\":1},{\"id\":2},{\"id\":3}]", toJSON(invokerResult));
 	}
+
 	@Test
 	public void testListFilteringAndFlags() throws Exception {
 		Map<String, Object> map = new LinkedHashMap<String, Object>();

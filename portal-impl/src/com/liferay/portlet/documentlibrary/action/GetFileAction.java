@@ -172,7 +172,7 @@ public class GetFileAction extends PortletAction {
 		throws Exception {
 
 		if (name.startsWith("DLFE-")) {
-			name = name.substring("DLFE-".length());
+			name = name.substring(5);
 		}
 
 		name = FileUtil.stripExtension(name);

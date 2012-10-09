@@ -223,7 +223,7 @@ public class ExportUsersAction extends PortletAction {
 			return (List<User>)tuple.getObject(0);
 		}
 		else {
-			if (searchTerms.isAdvancedSearch())
+			if (searchTerms.isAdvancedSearch()) {
 				return UserLocalServiceUtil.search(
 					themeDisplay.getCompanyId(), searchTerms.getFirstName(),
 					searchTerms.getMiddleName(), searchTerms.getLastName(),
@@ -231,6 +231,7 @@ public class ExportUsersAction extends PortletAction {
 					searchTerms.getStatus(), params,
 					searchTerms.isAndOperator(), QueryUtil.ALL_POS,
 					QueryUtil.ALL_POS, (OrderByComparator)null);
+			}
 			else {
 				return UserLocalServiceUtil.search(
 					themeDisplay.getCompanyId(), searchTerms.getKeywords(),

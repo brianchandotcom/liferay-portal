@@ -5438,7 +5438,10 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 			searchContext.setQueryConfig(queryConfig);
 
-			searchContext.setSorts(new Sort[] {sort});
+			if (sort != null) {
+				searchContext.setSorts(new Sort[] {sort});
+			}
+
 			searchContext.setStart(start);
 
 			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(

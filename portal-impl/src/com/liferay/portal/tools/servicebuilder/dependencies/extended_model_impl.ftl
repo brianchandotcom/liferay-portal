@@ -8,6 +8,10 @@ package ${packagePath}.model.impl;
  * </p>
  *
  * @author ${author}
+ * @see ${entity.name}Impl
+ * @see ${packagePath}.model.${entity.name}
+ * @see ${packagePath}.model.${entity.name}Model
+ * @generated
  */
 public class ${entity.name}Impl extends ${entity.name}BaseImpl {
 

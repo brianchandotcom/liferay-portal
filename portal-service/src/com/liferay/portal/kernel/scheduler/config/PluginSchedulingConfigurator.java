@@ -14,25 +14,71 @@
 
 package com.liferay.portal.kernel.scheduler.config;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocal;
 import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
+import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
+import com.liferay.portal.kernel.scheduler.SchedulerEntry;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 
 /**
  * @author Shuyang Zhou
+ * @author Tina Tian
  */
 public class PluginSchedulingConfigurator
 	extends AbstractSchedulingConfigurator {
 
-	@Override
-	protected ClassLoader getOperatingClassloader() {
-		ClassLoader classLoader = PortletClassLoaderUtil.getClassLoader();
-
-		if (classLoader == null) {
-			Thread currentThread = Thread.currentThread();
-
-			classLoader = currentThread.getContextClassLoader();
+	public void destroy() {
+		for (SchedulerEntry schedulerEntry : _schedulerEntries) {
+			try {
+				SchedulerEngineHelperUtil.delete(schedulerEntry, _storageType);
+			}
+			catch (Exception e) {
+				_log.error("Unable to unschedule " + schedulerEntry, e);
+			}
 		}
 
-		return classLoader;
+		_schedulerEntries.clear();
 	}
+
+	public void execute() {
+		Thread currentThread = Thread.currentThread();
+
+		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+
+		String servletContextName =
+			PortletClassLoaderUtil.getServletContextName();
+
+		boolean forceSync = ProxyModeThreadLocal.isForceSync();
+
+		ProxyModeThreadLocal.setForceSync(true);
+
+		try {
+			ClassLoader portalClassLoader =
+				PortalClassLoaderUtil.getClassLoader();
+
+			currentThread.setContextClassLoader(portalClassLoader);
+
+			for (SchedulerEntry schedulerEntry : _schedulerEntries) {
+				try {
+					SchedulerEngineHelperUtil.schedule(
+						schedulerEntry, _storageType, servletContextName,
+						_exceptionsMaxSize);
+				}
+				catch (Exception e) {
+					_log.error("Unable to schedule " + schedulerEntry, e);
+				}
+			}
+		}
+		finally {
+			ProxyModeThreadLocal.setForceSync(forceSync);
+
+			currentThread.setContextClassLoader(contextClassLoader);
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		PluginSchedulingConfigurator.class);
 
 }

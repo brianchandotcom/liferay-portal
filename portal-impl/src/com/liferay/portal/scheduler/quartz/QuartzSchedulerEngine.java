@@ -915,6 +915,10 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 		}
 		else {
 			classLoader = PortletClassLoaderUtil.getClassLoader(portletId);
+
+			if (classLoader == null) {
+				classLoader = PortletClassLoaderUtil.getClassLoader();
+			}
 		}
 
 		if (classLoader == null) {

@@ -447,10 +447,13 @@ AUI.add(
 											toCategoryId = instance._getCategoryId(parentNode);
 										}
 
-										var errorKey = Liferay.Language.get('there-is-another-category-with-the-same-name-and-the-same-parent');;
+										var errorKey = STR_EMPTY;
 
 										if (toCategoryId == fromCategoryId) {
-											errorKey = Liferay.Language.get('rearrange-the-order-of-the-categories-is-not-supported');
+											errorKey = Liferay.Language.get('changing-the-order-of-the-categories-is-not-supported');
+										}
+										else {
+											errorkey = Liferay.Language.get('there-is-another-category-with-the-same-name-and-the-same-parent');
 										}
 
 										instance._sendMessage(MESSAGE_TYPE_ERROR, errorKey);

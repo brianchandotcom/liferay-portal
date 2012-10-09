@@ -548,7 +548,7 @@ else if (tabs2.equals("message-updated-email")) {
 
 						var localizedPriorityTable = A.one('#<portlet:namespace />localized-priorities-table');
 
-						if (selLanguageId != 'null') {
+						if ((selLanguageId != '') && (selLanguageId != 'null')) {
 							<portlet:namespace />updateLanguageTemps(selLanguageId);
 
 							localizedPriorityTable.show();

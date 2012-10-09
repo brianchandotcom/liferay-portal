@@ -26,9 +26,7 @@
 		StringBundler sb = new StringBundler(8);
 
 		sb.append(themeDisplay.getPathMain());
-		sb.append("/blogs/find_entry?redirect=");
-		sb.append(HttpUtil.encodeURL(currentURL));
-		sb.append("&noSuchEntryRedirect=");
+		sb.append("/blogs/find_entry?noSuchEntryRedirect=");
 		sb.append(HttpUtil.encodeURL(showBlogEntryURL.toString()));
 		sb.append("&entryId=");
 		sb.append(entry.getEntryId());

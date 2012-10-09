@@ -270,8 +270,15 @@ public class LangBuilder {
 
 						String baseKey = line.substring(0, pos);
 
-						translatedText =
-							properties.getProperty(baseKey) + AUTOMATIC_COPY;
+						String translatedBaseKey = properties.getProperty(
+							baseKey);
+
+						if (Validator.isNotNull(translatedBaseKey)) {
+							translatedText = translatedBaseKey + AUTOMATIC_COPY;
+						}
+						else {
+							translatedText = value + AUTOMATIC_COPY;
+						}
 					}
 					else if (key.equals("lang.dir")) {
 						translatedText = "ltr";

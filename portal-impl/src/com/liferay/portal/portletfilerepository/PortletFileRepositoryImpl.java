@@ -174,6 +174,20 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 		}
 	}
 
+	public void deletePortletFileEntries(
+			long groupId, long folderId, int status)
+		throws PortalException, SystemException {
+
+		List<DLFileEntry> dlFileEntries =
+			DLFileEntryLocalServiceUtil.getFileEntries(
+				groupId, folderId, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				null);
+
+		for (DLFileEntry dlFileEntry : dlFileEntries) {
+			deletePortletFileEntry(dlFileEntry.getFileEntryId());
+		}
+	}
+
 	public void deletePortletFileEntry(long fileEntryId)
 		throws PortalException, SystemException {
 

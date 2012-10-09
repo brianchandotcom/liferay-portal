@@ -53,6 +53,10 @@ public interface PortletFileRepository {
 	public void deletePortletFileEntries(long groupId, long folderId)
 		throws PortalException, SystemException;
 
+	public void deletePortletFileEntries(
+			long groupId, long folderId, int status)
+		throws PortalException, SystemException;
+
 	public void deletePortletFileEntry(long fileEntryId)
 		throws PortalException, SystemException;
 

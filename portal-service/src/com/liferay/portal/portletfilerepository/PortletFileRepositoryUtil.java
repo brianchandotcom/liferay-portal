@@ -72,6 +72,14 @@ public class PortletFileRepositoryUtil {
 		getPortletFileRepository().deletePortletFileEntries(groupId, folderId);
 	}
 
+	public static void deletePortletFileEntries(
+			long groupId, long folderId, int status)
+		throws PortalException, SystemException {
+
+		getPortletFileRepository().deletePortletFileEntries(
+			groupId, folderId, status);
+	}
+
 	public static void deletePortletFileEntry(long fileEntryId)
 		throws PortalException, SystemException {
 

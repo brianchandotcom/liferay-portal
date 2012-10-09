@@ -570,7 +570,7 @@ request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 						<liferay-ui:message key="num-of-posts" />:
 					</dt>
 					<dd>
-						<%= numberFormat.format(MBMessageServiceUtil.getGroupMessagesCount(scopeGroupId, WorkflowConstants.STATUS_APPROVED)) %>
+						<%= numberFormat.format(MBStatsUserLocalServiceUtil.getMessageCountByGroupId(scopeGroupId)) %>
 					</dd>
 					<dt>
 						<liferay-ui:message key="num-of-participants" />:

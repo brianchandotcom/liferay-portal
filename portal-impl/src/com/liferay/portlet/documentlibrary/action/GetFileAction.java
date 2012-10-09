@@ -171,6 +171,12 @@ public class GetFileAction extends PortletAction {
 			HttpServletResponse response)
 		throws Exception {
 
+		if (name.startsWith("DLFE-")) {
+			name = name.substring(5);
+		}
+
+		name = FileUtil.stripExtension(name);
+
 		FileEntry fileEntry = null;
 
 		if (Validator.isNotNull(uuid) && (groupId > 0)) {

@@ -62,7 +62,7 @@
 	<liferay-ui:search-container-column-text
 		href="<%= rowURL %>"
 		name="status"
-		value="<%= LanguageUtil.get(pageContext, WorkflowConstants.toLabel(message.getStatus())) %>"
+		value="<%= LanguageUtil.get(pageContext, WorkflowConstants.toLabel(thread.getStatus())) %>"
 	/>
 </c:if>
 

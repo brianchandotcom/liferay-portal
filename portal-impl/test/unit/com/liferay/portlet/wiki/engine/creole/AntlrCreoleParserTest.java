@@ -38,16 +38,26 @@ import com.liferay.portal.parsers.creole.ast.link.LinkNode;
 import com.liferay.portal.parsers.creole.ast.table.TableDataNode;
 import com.liferay.portal.parsers.creole.ast.table.TableHeaderNode;
 import com.liferay.portal.parsers.creole.ast.table.TableNode;
+import com.liferay.portal.parsers.creole.parser.Creole10Lexer;
+import com.liferay.portal.parsers.creole.parser.Creole10Parser;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 import java.util.List;
+
+import org.antlr.runtime.ANTLRInputStream;
+import org.antlr.runtime.CommonTokenStream;
+import org.antlr.runtime.RecognitionException;
 
 import org.junit.Assert;
 import org.junit.Test;
 
 /**
  * @author Miguel Pastor
+ * @author Manuel de la Peña
  */
-public class AntlrCreoleParserTest extends AbstractWikiParserTests {
+public class AntlrCreoleParserTest {
 
 	@Test
 	public void testParseCorrectlyBoldContentInListItems() {
@@ -853,6 +863,40 @@ public class AntlrCreoleParserTest extends AbstractWikiParserTests {
 		}
 	}
 
+	protected Creole10Parser getCreole10Parser(String fileName)
+		throws IOException {
+
+		Class<?> clazz = getClass();
+
+		InputStream inputStream = clazz.getResourceAsStream(
+			"dependencies/" + fileName);
+
+		ANTLRInputStream antlrInputStream = new ANTLRInputStream(inputStream);
+
+		Creole10Lexer creole10Lexer = new Creole10Lexer(antlrInputStream);
+
+		CommonTokenStream commonTokenStream = new CommonTokenStream(
+			creole10Lexer);
+
+		return new Creole10Parser(commonTokenStream);
+	}
+
+	protected WikiPageNode getWikiPageNode(String fileName) {
+		try {
+			_creole10parser = getCreole10Parser(fileName);
+
+			_creole10parser.wikipage();
+		}
+		catch (IOException ioe) {
+			Assert.fail("File does not exist");
+		}
+		catch (RecognitionException re) {
+			Assert.fail("File could not be parsed");
+		}
+
+		return _creole10parser.getWikiPageNode();
+	}
+
 	protected BaseListNode parseBaseListNode(String fileName) {
 		WikiPageNode wikiPageNode = getWikiPageNode(fileName);
 
@@ -862,5 +906,7 @@ public class AntlrCreoleParserTest extends AbstractWikiParserTests {
 
 		return (BaseListNode) listNode.getChildASTNode(0);
 	}
+
+	protected Creole10Parser _creole10parser;
 
 }

@@ -25,11 +25,6 @@ import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.test.AdviseWith;
 import com.liferay.portal.test.ApsectJMockingNewClassLoaderJUnitTestRunner;
 
-import java.io.DataInput;
-import java.io.DataOutput;
-import java.io.ObjectInput;
-import java.io.ObjectOutput;
-
 import java.lang.reflect.Field;
 
 import java.util.Collections;
@@ -58,7 +53,7 @@ import org.junit.runner.RunWith;
  * @author Shuyang Zhou
  */
 @RunWith(ApsectJMockingNewClassLoaderJUnitTestRunner.class)
-public class ClusterLinkImplTest {
+public class ClusterLinkImplTest extends BaseClusterTest {
 
 	@AdviseWith(adviceClasses = {DisableClusterLinkAdvice.class})
 	@Test
@@ -379,7 +374,7 @@ public class ClusterLinkImplTest {
 
 		assertLogger(
 			logRecords, "Unable to send multicast message " + message,
-			Exception.class);
+			IllegalStateException.class);
 
 		clusterLinkImpl.destroy();
 	}
@@ -412,7 +407,7 @@ public class ClusterLinkImplTest {
 
 		assertLogger(
 			logRecords, "Unable to send multicast message " + message,
-			Exception.class);
+			IllegalStateException.class);
 
 		clusterLinkImpl.destroy();
 	}
@@ -501,7 +496,7 @@ public class ClusterLinkImplTest {
 
 		assertLogger(
 			logRecords, "Unable to send unicast message " + message,
-			Exception.class);
+			IllegalStateException.class);
 
 		clusterLinkImpl.destroy();
 	}
@@ -535,36 +530,9 @@ public class ClusterLinkImplTest {
 
 		assertLogger(
 			logRecords, "Unable to send unicast message " + message,
-			Exception.class);
+			IllegalStateException.class);
 
 		clusterLinkImpl.destroy();
-	}
-
-	@Aspect
-	public static class DisableClusterLinkAdvice {
-
-		@Around(
-			"set(* com.liferay.portal.util.PropsValues.CLUSTER_LINK_ENABLED)")
-		public Object disableClusterLink(
-				ProceedingJoinPoint proceedingJoinPoint)
-			throws Throwable {
-
-			return proceedingJoinPoint.proceed(new Object[]{Boolean.FALSE});
-		}
-
-	}
-
-	@Aspect
-	public static class EnableClusterLinkAdvice {
-
-		@Around(
-			"set(* com.liferay.portal.util.PropsValues.CLUSTER_LINK_ENABLED)")
-		public Object enableClusterLink(ProceedingJoinPoint proceedingJoinPoint)
-			throws Throwable {
-
-			return proceedingJoinPoint.proceed(new Object[]{Boolean.TRUE});
-		}
-
 	}
 
 	@Aspect
@@ -605,31 +573,6 @@ public class ClusterLinkImplTest {
 
 	}
 
-	protected void assertLogger(
-		List<LogRecord> logRecords, String message, Class<?> exceptionClass) {
-
-		if (message == null) {
-			Assert.assertTrue(logRecords.isEmpty());
-
-			return;
-		}
-
-		Assert.assertEquals(1, logRecords.size());
-
-		LogRecord logRecord = logRecords.get(0);
-
-		Assert.assertEquals(message, logRecord.getMessage());
-
-		if (exceptionClass == null) {
-			Assert.assertNull(logRecord.getThrown());
-		}
-		else {
-			Assert.assertNotNull(logRecord.getThrown());
-		}
-
-		logRecords.clear();
-	}
-
 	protected Message createMessage() {
 		Message message = new Message();
 
@@ -639,6 +582,9 @@ public class ClusterLinkImplTest {
 	}
 
 	protected ClusterLinkImpl getClusterLinkImpl() throws Exception {
+		JDKLoggerTestUtil.configureJDKLogger(
+			ClusterBase.class.getName(), Level.FINE);
+
 		ClusterLinkImpl clusterLinkImpl = new ClusterLinkImpl();
 
 		clusterLinkImpl.setClusterForwardMessageListener(
@@ -687,30 +633,6 @@ public class ClusterLinkImplTest {
 		JChannel jChannel = jChannels.get(index);
 
 		return (TestReceiver)jChannel.getReceiver();
-	}
-
-	private class MockAddress implements org.jgroups.Address {
-
-		public int compareTo(org.jgroups.Address jGroupsAddress) {
-			return 0;
-		}
-
-		public void readExternal(ObjectInput objectInput) {
-		}
-
-		public void readFrom(DataInput dataInput) throws Exception {
-		}
-
-		public int size() {
-			return 0;
-		}
-
-		public void writeExternal(ObjectOutput objectOutput) {
-		}
-
-		public void writeTo(DataOutput dataOutput) throws Exception {
-		}
-
 	}
 
 	private class TestReceiver extends BaseReceiver {

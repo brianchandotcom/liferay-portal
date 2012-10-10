@@ -90,6 +90,8 @@ AUI().add(
 
 						closeTool.get('contentBox').addClass('aui-underlay-close');
 
+						closeTool.set('title', Liferay.Language.get('close'));
+
 						instance.set('headerContent', closeTool.get('boundingBox'));
 
 						instance.closeTool = closeTool;

@@ -20,77 +20,76 @@ NumberFormat percentFormat = NumberFormat.getPercentInstance(locale);
 %>
 
 <table border="0" cellpadding="4" cellspacing="0" width="100%">
-<tr class="portlet-section-header results-header" style="font-size: x-small; font-weight: bold;">
-	<td>
-		%
-	</td>
-	<td colspan="4">
-		<liferay-ui:message key="votes" />
-	</td>
-</tr>
+	<tr class="portlet-section-header results-header" style="font-size: x-small; font-weight: bold;">
+		<td>
+			%
+		</td>
+		<td colspan="4">
+			<liferay-ui:message key="votes" />
+		</td>
+	</tr>
 
-<%
-int totalVotes = question.getVotesCount();
+	<%
+	int totalVotes = question.getVotesCount();
 
-for (int i = 0; i < choices.size(); i++) {
-	PollsChoice choice = (PollsChoice)choices.get(i);
+	for (int i = 0; i < choices.size(); i++) {
+		PollsChoice choice = (PollsChoice)choices.get(i);
 
-	choice = choice.toEscapedModel();
+		choice = choice.toEscapedModel();
 
-	int choiceVotes = choice.getVotesCount();
+		double votesPercent = 0.0;
 
-	String className = "portlet-section-body results-row";
-	String classHoverName = "portlet-section-body-hover results-row hover";
+		int choiceVotes = choice.getVotesCount();
+		int votesPixelWidth = 35;
 
-	if (MathUtil.isEven(i)) {
-		className = "portlet-section-alternate results-row alt";
-		classHoverName = "portlet-section-alternate-hover results-row alt hover";
-	}
+		String className = "portlet-section-body results-row";
+		String classHoverName = "portlet-section-body-hover results-row hover";
 
-	double votesPercent = 0.0;
+		if (MathUtil.isEven(i)) {
+			className = "portlet-section-alternate results-row alt";
+			classHoverName = "portlet-section-alternate-hover results-row alt hover";
+		}
 
-	if (totalVotes > 0) {
-		votesPercent = (double)choiceVotes / totalVotes;
-	}
+		if (totalVotes > 0) {
+			votesPercent = (double)choiceVotes / totalVotes;
+		}
 
-	int votesPixelWidth = 35;
+		if (windowState.equals(WindowState.MAXIMIZED)) {
+			votesPixelWidth = 100;
+		}
 
-	if (windowState.equals(WindowState.MAXIMIZED)) {
-		votesPixelWidth = 100;
-	}
+		int votesPercentWidth = (int)Math.floor(votesPercent * 100);
+	%>
 
-	int votesPercentWidth = (int)Math.floor(votesPercent * 100);
-%>
+	<tr class="<%= className %>" onMouseEnter="this.className = '<%= classHoverName %>';" onMouseLeave="this.className = '<%= className %>';" style="font-size: x-small;">
+		<td>
+			<%= percentFormat.format(votesPercent) %>
+		</td>
+		<td>
+			<%= numberFormat.format(choiceVotes) %>
+		</td>
 
-<tr class="<%= className %>" onMouseEnter="this.className = '<%= classHoverName %>';" onMouseLeave="this.className = '<%= className %>';" style="font-size: x-small;">
-	<td>
-		<%= percentFormat.format(votesPercent) %>
-	</td>
-	<td>
-		<%= numberFormat.format(choiceVotes) %>
-	</td>
-
-	<td>
-		<c:if test="<%= votesPercentWidth > 0 %>">
-			<div class="aui-progress-bar aui-progress-bar-horizontal" style="height: 1.4em; width: <%= votesPixelWidth %>px;">
-				<div class="aui-progress-bar-content">
-					<div class="aui-progress-bar-status" style="height: 100%; top: auto; width: <%= votesPercentWidth %>%; "></div>
+		<td>
+			<c:if test="<%= votesPercentWidth > 0 %>">
+				<div class="aui-progress-bar aui-progress-bar-horizontal" style="height: 1.4em; width: <%= votesPixelWidth %>px;">
+					<div class="aui-progress-bar-content">
+						<div class="aui-progress-bar-status" style="height: 100%; top: auto; width: <%= votesPercentWidth %>%; "></div>
+					</div>
 				</div>
-			</div>
-		</c:if>
-	</td>
-	
-	<td>
-		<strong><%= choice.getName() %>.</strong>
-	</td>
-	<td width="99%">
-		<%= choice.getDescription(locale) %>
-	</td>
-</tr>
+			</c:if>
+		</td>
 
-<%
-}
-%>
+		<td>
+			<strong><%= choice.getName() %>.</strong>
+		</td>
+		<td width="99%">
+			<%= choice.getDescription(locale) %>
+		</td>
+	</tr>
+
+	<%
+	}
+	%>
 
 </table>
 
@@ -159,8 +158,6 @@ for (int i = 0; i < choices.size(); i++) {
 
 			ResultRow row = new ResultRow(vote, vote.getVoteId(), i);
 
-			// User
-
 			User user2 = null;
 
 			try {
@@ -176,19 +173,13 @@ for (int i = 0; i < choices.size(); i++) {
 				row.addText(String.valueOf(vote.getUserId()));
 			}
 
-			// Choice
-
 			PollsChoice choice = vote.getChoice();
 
 			choice = choice.toEscapedModel();
 
 			row.addText(choice.getName() + ". " + choice.getDescription(locale));
 
-			// Vote date
-
 			row.addText(dateFormatDateTime.format(vote.getVoteDate()));
-
-			// Add result row
 
 			resultRows.add(row);
 		}

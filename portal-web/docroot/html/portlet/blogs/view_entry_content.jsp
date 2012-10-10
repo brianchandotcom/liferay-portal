@@ -52,6 +52,8 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 				</c:if>
 
 				<div class="entry-date">
+					<span class="aui-helper-hidden-accessible"><liferay-ui:message key="published-date" /></span>
+
 					<%= dateFormatDateTime.format(entry.getDisplayDate()) %>
 				</div>
 			</div>

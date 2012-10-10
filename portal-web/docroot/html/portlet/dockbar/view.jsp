@@ -296,11 +296,11 @@ boolean hasLayoutUpdatePermission = LayoutPermissionUtil.contains(permissionChec
 				%>
 
 				<aui:a cssClass='<%= "user-portrait" + useDialog %>' data-controlPanelCategory="<%= controlPanelCategory %>" href="<%= themeDisplay.getURLMyAccount().toString() %>" title="manage-my-account">
-					<img alt="<%= HtmlUtil.escape(user.getFullName()) %>" src="<%= HtmlUtil.escape(user.getPortraitURL(themeDisplay)) %>" />
-				</aui:a>
+					<img alt="<liferay-ui:message key="manage-my-account" />" src="<%= HtmlUtil.escape(user.getPortraitURL(themeDisplay)) %>" />
 
-				<aui:a cssClass='<%= "user-fullname" + useDialog %>' data-controlPanelCategory="<%= controlPanelCategory %>" href="<%= themeDisplay.getURLMyAccount().toString() %>" title="manage-my-account">
-					<%= HtmlUtil.escape(user.getFullName()) %>
+					<span class="user-fullname">
+						<%= HtmlUtil.escape(user.getFullName()) %>
+					</span>
 				</aui:a>
 
 				<c:if test="<%= themeDisplay.isShowSignOutIcon() %>">

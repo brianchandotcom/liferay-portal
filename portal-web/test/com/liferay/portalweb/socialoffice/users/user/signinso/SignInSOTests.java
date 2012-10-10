@@ -32,9 +32,9 @@ public class SignInSOTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddSOUserTest.class);
 		testSuite.addTestSuite(SelectRegularRolesSOUserTest.class);
 		testSuite.addTestSuite(EditSOUserPasswordTest.class);
-		testSuite.addTestSuite(SOUs_SignOutSOTest.class);
-		testSuite.addTestSuite(SOUs_SignInSOTest.class);
 		testSuite.addTestSuite(SignOutSOTest.class);
+		testSuite.addTestSuite(SOUs_SignInSOTest.class);
+		testSuite.addTestSuite(SOUs_SignOutSOTest.class);
 		testSuite.addTestSuite(SignInSOTest.class);
 		testSuite.addTestSuite(TearDownSOUserTest.class);
 

@@ -28,8 +28,8 @@ import com.liferay.portal.kernel.util.PortalLifecycle;
 public class DefaultSchedulingConfigurator
 	extends AbstractSchedulingConfigurator {
 
-	public void execute() {
-		if (_schedulerEntries.isEmpty()) {
+	public void configure() {
+		if (schedulerEntries.isEmpty()) {
 			return;
 		}
 
@@ -51,10 +51,10 @@ public class DefaultSchedulingConfigurator
 
 		@Override
 		protected void doPortalInit() throws Exception {
-			for (SchedulerEntry schedulerEntry : _schedulerEntries) {
+			for (SchedulerEntry schedulerEntry : schedulerEntries) {
 				try {
 					SchedulerEngineHelperUtil.schedule(
-						schedulerEntry, _storageType, null, _exceptionsMaxSize);
+						schedulerEntry, storageType, null, exceptionsMaxSize);
 				}
 				catch (Exception e) {
 					_log.error("Unable to schedule " + schedulerEntry, e);

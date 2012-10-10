@@ -29,20 +29,7 @@ import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 public class PluginSchedulingConfigurator
 	extends AbstractSchedulingConfigurator {
 
-	public void destroy() {
-		for (SchedulerEntry schedulerEntry : _schedulerEntries) {
-			try {
-				SchedulerEngineHelperUtil.delete(schedulerEntry, _storageType);
-			}
-			catch (Exception e) {
-				_log.error("Unable to unschedule " + schedulerEntry, e);
-			}
-		}
-
-		_schedulerEntries.clear();
-	}
-
-	public void execute() {
+	public void configure() {
 		Thread currentThread = Thread.currentThread();
 
 		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
@@ -60,11 +47,11 @@ public class PluginSchedulingConfigurator
 
 			currentThread.setContextClassLoader(portalClassLoader);
 
-			for (SchedulerEntry schedulerEntry : _schedulerEntries) {
+			for (SchedulerEntry schedulerEntry : schedulerEntries) {
 				try {
 					SchedulerEngineHelperUtil.schedule(
-						schedulerEntry, _storageType, servletContextName,
-						_exceptionsMaxSize);
+						schedulerEntry, storageType, servletContextName,
+						exceptionsMaxSize);
 				}
 				catch (Exception e) {
 					_log.error("Unable to schedule " + schedulerEntry, e);
@@ -76,6 +63,19 @@ public class PluginSchedulingConfigurator
 
 			currentThread.setContextClassLoader(contextClassLoader);
 		}
+	}
+
+	public void destroy() {
+		for (SchedulerEntry schedulerEntry : schedulerEntries) {
+			try {
+				SchedulerEngineHelperUtil.delete(schedulerEntry, storageType);
+			}
+			catch (Exception e) {
+				_log.error("Unable to unschedule " + schedulerEntry, e);
+			}
+		}
+
+		schedulerEntries.clear();
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

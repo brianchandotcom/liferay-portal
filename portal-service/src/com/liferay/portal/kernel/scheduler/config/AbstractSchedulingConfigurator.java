@@ -17,7 +17,7 @@ package com.liferay.portal.kernel.scheduler.config;
 import com.liferay.portal.kernel.scheduler.SchedulerEntry;
 import com.liferay.portal.kernel.scheduler.StorageType;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -28,24 +28,23 @@ public abstract class AbstractSchedulingConfigurator
 	implements SchedulingConfigurator {
 
 	public void afterPropertiesSet() {
-		execute();
+		configure();
 	}
 
 	public void setExceptionsMaxSize(int exceptionsMaxSize) {
-		_exceptionsMaxSize = exceptionsMaxSize;
+		this.exceptionsMaxSize = exceptionsMaxSize;
 	}
 
 	public void setSchedulerEntries(List<SchedulerEntry> schedulerEntries) {
-		_schedulerEntries = schedulerEntries;
+		this.schedulerEntries = schedulerEntries;
 	}
 
 	public void setStorageType(StorageType storageType) {
-		_storageType = storageType;
+		this.storageType = storageType;
 	}
 
-	protected int _exceptionsMaxSize = 0;
-	protected List<SchedulerEntry> _schedulerEntries =
-		new ArrayList<SchedulerEntry>();
-	protected StorageType _storageType = StorageType.MEMORY_CLUSTERED;
+	protected int exceptionsMaxSize = 0;
+	protected List<SchedulerEntry> schedulerEntries = Collections.emptyList();
+	protected StorageType storageType = StorageType.MEMORY_CLUSTERED;
 
 }

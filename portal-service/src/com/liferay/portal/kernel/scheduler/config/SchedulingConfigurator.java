@@ -20,6 +20,6 @@ package com.liferay.portal.kernel.scheduler.config;
  */
 public interface SchedulingConfigurator {
 
-	public void execute();
+	public void configure();
 
 }

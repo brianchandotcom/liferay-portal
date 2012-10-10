@@ -30,7 +30,10 @@ public class SelectRegularRolesSOAdminTest extends BaseTestCase {
 				selenium.selectWindow("null");
 				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
-				selenium.waitForVisible("//li[@id='_145_mySites']/a/span");
+				selenium.clickAt("//div[@id='dockbar']",
+					RuntimeVariables.replace("Dockbar"));
+				selenium.waitForElementPresent(
+					"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
 				assertEquals(RuntimeVariables.replace("Go to"),
 					selenium.getText("//li[@id='_145_mySites']/a/span"));
 				selenium.mouseOver("//li[@id='_145_mySites']/a/span");
@@ -45,7 +48,8 @@ public class SelectRegularRolesSOAdminTest extends BaseTestCase {
 					RuntimeVariables.replace("Search All Users"));
 				selenium.waitForPageToLoad("30000");
 
-				boolean basicVisible = selenium.isVisible("link=\u00ab Basic");
+				boolean basicVisible = selenium.isVisible(
+						"//a[.='\u00ab Basic']");
 
 				if (!basicVisible) {
 					label = 2;
@@ -53,7 +57,7 @@ public class SelectRegularRolesSOAdminTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("link=\u00ab Basic",
+				selenium.clickAt("//a[.='\u00ab Basic']",
 					RuntimeVariables.replace("\u00ab Basic"));
 
 			case 2:
@@ -114,6 +118,17 @@ public class SelectRegularRolesSOAdminTest extends BaseTestCase {
 				assertEquals(RuntimeVariables.replace("Social Office User"),
 					selenium.getText(
 						"//tr[contains(., 'Social Office User')]/td"));
+				selenium.open("/web/guest/home/");
+				selenium.waitForElementPresent(
+					"//li[contains(.,'Dashboard')]/a");
+				assertEquals(RuntimeVariables.replace("Dashboard"),
+					selenium.getText("//li[contains(.,'Dashboard')]/a"));
+				selenium.clickAt("//li[contains(.,'Dashboard')]/a",
+					RuntimeVariables.replace("Dashboard"));
+				selenium.waitForPageToLoad("30000");
+				assertEquals(RuntimeVariables.replace("Dashboard"),
+					selenium.getText(
+						"//nav/ul/li[contains(.,'Dashboard')]/a/span"));
 
 			case 100:
 				label = -1;

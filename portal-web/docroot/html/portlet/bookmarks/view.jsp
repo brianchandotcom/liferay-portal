@@ -72,7 +72,27 @@ request.setAttribute("view.jsp-useAssetEntryQuery", String.valueOf(useAssetEntry
 	<c:when test='<%= topLink.equals("home") %>'>
 		<aui:layout>
 			<c:if test="<%= folder != null %>">
+
+				<%
+				long parentFolderId = folder.getParentFolderId();
+				String parentFolderName = LanguageUtil.get(pageContext, "home");
+
+				if (!folder.isRoot()) {
+					BookmarksFolder parentFolder = BookmarksFolderLocalServiceUtil.getBookmarksFolder(parentFolderId);
+
+					parentFolderId = parentFolder.getFolderId();
+					parentFolderName = parentFolder.getName();
+				}
+				%>
+
+				<portlet:renderURL var="backURL">
+					<portlet:param name="struts_action" value="/bookmarks/view" />
+					<portlet:param name="folderId" value="<%= String.valueOf(parentFolderId) %>" />
+				</portlet:renderURL>
+
 				<liferay-ui:header
+					backLabel="<%= parentFolderName %>"
+					backURL="<%= backURL.toString() %>"
 					localizeTitle="<%= false %>"
 					title="<%= folder.getName() %>"
 				/>

@@ -41,6 +41,12 @@ if (event.getRepeating() && (recurrence != null)) {
 	}
 }
 
+if (Validator.isNull(redirect)) {
+	PortletURL viewURL = renderResponse.createRenderURL();
+	viewURL.setParameter("struts_action", "/calendar/view");
+	redirect = viewURL.toString();
+}
+
 AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.getEntry(CalEvent.class.getName(), event.getEventId());
 
 request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, layoutAssetEntry);

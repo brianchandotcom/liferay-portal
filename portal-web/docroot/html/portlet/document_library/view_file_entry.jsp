@@ -87,6 +87,13 @@ boolean hasImages = ImageProcessorUtil.hasImages(fileVersion);
 boolean hasPDFImages = PDFProcessorUtil.hasImages(fileVersion);
 boolean hasVideo = VideoProcessorUtil.hasVideo(fileVersion);
 
+if (Validator.isNull(redirect)) {
+	PortletURL viewURL = renderResponse.createRenderURL();
+	viewURL.setParameter("struts_action", "/document_library/view");
+	viewURL.setParameter("folderId", String.valueOf(folderId));
+	redirect = viewURL.toString();
+}
+
 AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.fetchEntry(DLFileEntryConstants.getClassName(), assetClassPK);
 
 request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, layoutAssetEntry);

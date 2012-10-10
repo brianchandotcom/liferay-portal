@@ -7,6 +7,7 @@
 		#foreach ($nav_item in $nav_items)
 			#if ($nav_item.isSelected())
 				<li class="selected">
+					<strong>
 			#else
 				<li>
 			#end
@@ -24,6 +25,10 @@
 							</li>
 						#end
 					</ul>
+				#end
+
+				#if ($nav_item.isSelected())
+					</strong>
 				#end
 			</li>
 		#end

@@ -26,7 +26,6 @@ public class SOUs_ReplyMicroblogsContentProfileTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/joebloggs/so/profile");
-		selenium.waitForVisible("//nav/ul/li[contains(.,'Microblogs')]/a/span");
 		selenium.clickAt("//nav/ul/li[contains(.,'Microblogs')]/a/span",
 			RuntimeVariables.replace("Microblogs"));
 		selenium.waitForPageToLoad("30000");
@@ -45,7 +44,7 @@ public class SOUs_ReplyMicroblogsContentProfileTest extends BaseTestCase {
 		selenium.waitForVisible("//textarea");
 		selenium.clickAt("//textarea",
 			RuntimeVariables.replace("Leave a comment..."));
-		selenium.typeKeys("//textarea",
+		selenium.sendKeys("//textarea",
 			RuntimeVariables.replace("Microblogs Post Comment"));
 		selenium.waitForText("//span[@class='microblogs-countdown']", "127");
 		assertEquals(RuntimeVariables.replace("127"),

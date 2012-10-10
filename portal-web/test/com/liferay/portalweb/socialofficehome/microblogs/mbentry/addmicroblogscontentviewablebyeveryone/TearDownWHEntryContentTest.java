@@ -30,8 +30,6 @@ public class TearDownWHEntryContentTest extends BaseTestCase {
 				selenium.selectWindow("null");
 				selenium.selectFrame("relative=top");
 				selenium.open("/user/joebloggs/so/dashboard/");
-				selenium.waitForVisible(
-					"//nav/ul/li[contains(.,'Microblogs')]/a/span");
 				selenium.clickAt("//nav/ul/li[contains(.,'Microblogs')]/a/span",
 					RuntimeVariables.replace("Microblogs"));
 				selenium.waitForPageToLoad("30000");
@@ -50,8 +48,6 @@ public class TearDownWHEntryContentTest extends BaseTestCase {
 					RuntimeVariables.replace("Delete"));
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this post[\\s\\S]$"));
-
-			case 2:
 				Thread.sleep(5000);
 
 				boolean whatsHappeningEntry2Present = selenium.isElementPresent(
@@ -67,8 +63,6 @@ public class TearDownWHEntryContentTest extends BaseTestCase {
 					RuntimeVariables.replace("Delete"));
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this post[\\s\\S]$"));
-
-			case 3:
 				Thread.sleep(5000);
 
 				boolean whatsHappeningEntry3Present = selenium.isElementPresent(
@@ -84,8 +78,6 @@ public class TearDownWHEntryContentTest extends BaseTestCase {
 					RuntimeVariables.replace("Delete"));
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this post[\\s\\S]$"));
-
-			case 4:
 				Thread.sleep(5000);
 
 				boolean whatsHappeningEntry4Present = selenium.isElementPresent(
@@ -101,8 +93,6 @@ public class TearDownWHEntryContentTest extends BaseTestCase {
 					RuntimeVariables.replace("Delete"));
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this post[\\s\\S]$"));
-
-			case 5:
 				Thread.sleep(5000);
 
 				boolean whatsHappeningEntry5Present = selenium.isElementPresent(
@@ -119,6 +109,10 @@ public class TearDownWHEntryContentTest extends BaseTestCase {
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this post[\\s\\S]$"));
 
+			case 2:
+			case 3:
+			case 4:
+			case 5:
 			case 6:
 			case 100:
 				label = -1;

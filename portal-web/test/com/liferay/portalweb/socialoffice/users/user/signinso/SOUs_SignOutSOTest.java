@@ -40,6 +40,10 @@ public class SOUs_SignOutSOTest extends BaseTestCase {
 					continue;
 				}
 
+				selenium.clickAt("//div[@id='dockbar']",
+					RuntimeVariables.replace("Dockbar"));
+				selenium.waitForElementPresent(
+					"//script[contains(@src,'/liferay/dockbar_underlay.js')]");
 				assertTrue(selenium.isVisible("//li[@id='_145_userMenu']"));
 				selenium.mouseOver("//li[@id='_145_userMenu']");
 

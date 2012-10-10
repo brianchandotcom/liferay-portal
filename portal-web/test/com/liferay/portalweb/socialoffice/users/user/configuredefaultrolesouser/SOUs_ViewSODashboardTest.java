@@ -27,9 +27,13 @@ public class SOUs_ViewSODashboardTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("//div[@id='dockbar']",
 			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/liferay/dockbar_underlay.js')]");
 		assertEquals(RuntimeVariables.replace("Dashboard"),
-			selenium.getText("//li[3]/a"));
-		selenium.clickAt("//li[3]/a", RuntimeVariables.replace("Dashboard"));
+			selenium.getText("//li/a[contains(.,'Dashboard')]"));
+		selenium.mouseOver("//li/a[contains(.,'Dashboard')]");
+		selenium.clickAt("//li/a[contains(.,'Dashboard')]",
+			RuntimeVariables.replace("Dashboard"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Social01 Office01 User01"),
 			selenium.getText("//a[@class='profile-name']"));

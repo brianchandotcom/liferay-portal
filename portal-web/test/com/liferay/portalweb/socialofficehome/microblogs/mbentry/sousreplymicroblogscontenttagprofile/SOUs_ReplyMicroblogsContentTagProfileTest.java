@@ -23,79 +23,50 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class SOUs_ReplyMicroblogsContentTagProfileTest extends BaseTestCase {
 	public void testSOUs_ReplyMicroblogsContentTagProfile()
 		throws Exception {
-		int label = 1;
-
-		while (label >= 1) {
-			switch (label) {
-			case 1:
-				selenium.selectWindow("null");
-				selenium.selectFrame("relative=top");
-				selenium.open("/web/joebloggs/so/profile/");
-				selenium.waitForVisible(
-					"//nav/ul/li[contains(.,'Microblogs')]/a/span");
-				selenium.clickAt("//nav/ul/li[contains(.,'Microblogs')]/a/span",
-					RuntimeVariables.replace("Microblogs"));
-				selenium.waitForPageToLoad("30000");
-				assertEquals(RuntimeVariables.replace("Joe Bloggs"),
-					selenium.getText("//div[@class='user-name']/span"));
-				assertEquals(RuntimeVariables.replace("Microblogs Post"),
-					selenium.getText("//div[@class='content']"));
-
-				boolean replyVisible = selenium.isElementPresent(
-						"//span[@class='placeholder-text']");
-
-				if (replyVisible) {
-					label = 2;
-
-					continue;
-				}
-
-				assertEquals(RuntimeVariables.replace("Comment"),
-					selenium.getText("//span[@class='action comment']/a"));
-				selenium.clickAt("//span[@class='action comment']/a",
-					RuntimeVariables.replace("Comment"));
-				selenium.waitForVisible("//span[@class='placeholder-text']");
-
-			case 2:
-				Thread.sleep(5000);
-				assertTrue(selenium.isVisible(
-						"//span[@class='placeholder-text']"));
-				selenium.clickAt("//span[@class='placeholder-text']",
-					RuntimeVariables.replace("Leave a comment..."));
-				selenium.waitForVisible("//textarea");
-				selenium.clickAt("//textarea",
-					RuntimeVariables.replace("Leave a comment..."));
-				selenium.typeKeys("//textarea",
-					RuntimeVariables.replace("Microblogs Post Comment @Joe"));
-				selenium.waitForVisible("//span[@class='user-name']");
-				selenium.clickAt("//span[@class='user-name']",
-					RuntimeVariables.replace("Joe Bloggs"));
-				selenium.waitForText("//span[@class='microblogs-countdown']",
-					"122");
-				assertEquals(RuntimeVariables.replace("122"),
-					selenium.getText("//span[@class='microblogs-countdown']"));
-				selenium.clickAt("//input[@value='Post']",
-					RuntimeVariables.replace("Post"));
-				selenium.waitForVisible("//div[@class='content']");
-				assertEquals(RuntimeVariables.replace("Microblogs Post"),
-					selenium.getText("//div[@class='content']"));
-				selenium.waitForVisible("xPath=(//div[@class='content'])[2]");
-				assertEquals(RuntimeVariables.replace("Joe Bloggs says"),
-					selenium.getText("xPath=(//div[@class='user-name'])[1]"));
-				assertEquals(RuntimeVariables.replace("Microblogs Post"),
-					selenium.getText("xPath=(//div[@class='content'])[1]"));
-				assertEquals(RuntimeVariables.replace(
-						"Social01 Office01 User01 says"),
-					selenium.getText("xPath=(//div[@class='user-name'])[2]"));
-				assertTrue(selenium.isPartialText(
-						"xPath=(//div[@class='content'])[2]",
-						"Microblogs Post Comment"));
-				assertTrue(selenium.isPartialText(
-						"xPath=(//div[@class='content'])[2]", "Joe Bloggs"));
-
-			case 100:
-				label = -1;
-			}
-		}
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
+		selenium.open("/web/joebloggs/so/profile");
+		selenium.clickAt("//nav/ul/li[contains(.,'Microblogs')]/a/span",
+			RuntimeVariables.replace("Microblogs"));
+		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
+			selenium.getText("//div[@class='user-name']/span"));
+		assertEquals(RuntimeVariables.replace("Microblogs Post"),
+			selenium.getText("//div[@class='content']"));
+		assertEquals(RuntimeVariables.replace("Comment"),
+			selenium.getText("//span[@class='action comment']/a"));
+		selenium.clickAt("//span[@class='action comment']/a",
+			RuntimeVariables.replace("Comment"));
+		selenium.waitForVisible("//div[@class='autocomplete textarea']");
+		Thread.sleep(5000);
+		selenium.clickAt("//div[@class='autocomplete textarea']",
+			RuntimeVariables.replace("Leave a comment..."));
+		selenium.waitForVisible("//textarea");
+		selenium.clickAt("//textarea",
+			RuntimeVariables.replace("Leave a comment..."));
+		selenium.sendKeys("//textarea",
+			RuntimeVariables.replace("Microblogs Post Comment @Joe"));
+		selenium.waitForVisible("//span[@class='user-name']");
+		selenium.clickAt("//span[@class='user-name']",
+			RuntimeVariables.replace("Joe Bloggs"));
+		selenium.waitForText("//span[@class='microblogs-countdown']", "122");
+		assertEquals(RuntimeVariables.replace("122"),
+			selenium.getText("//span[@class='microblogs-countdown']"));
+		selenium.clickAt("//input[@value='Post']",
+			RuntimeVariables.replace("Post"));
+		selenium.waitForVisible("//div[@class='content']");
+		assertEquals(RuntimeVariables.replace("Microblogs Post"),
+			selenium.getText("//div[@class='content']"));
+		selenium.waitForVisible("xPath=(//div[@class='content'])[2]");
+		assertEquals(RuntimeVariables.replace("Joe Bloggs says"),
+			selenium.getText("xPath=(//div[@class='user-name'])[1]"));
+		assertEquals(RuntimeVariables.replace("Microblogs Post"),
+			selenium.getText("xPath=(//div[@class='content'])[1]"));
+		assertEquals(RuntimeVariables.replace("Social01 Office01 User01 says"),
+			selenium.getText("xPath=(//div[@class='user-name'])[2]"));
+		assertTrue(selenium.isPartialText(
+				"xPath=(//div[@class='content'])[2]", "Microblogs Post Comment"));
+		assertTrue(selenium.isPartialText(
+				"xPath=(//div[@class='content'])[2]", "Joe Bloggs"));
 	}
 }

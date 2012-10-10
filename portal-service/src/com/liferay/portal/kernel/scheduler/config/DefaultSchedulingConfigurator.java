@@ -14,17 +14,54 @@
 
 package com.liferay.portal.kernel.scheduler.config;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
+import com.liferay.portal.kernel.scheduler.SchedulerEntry;
+import com.liferay.portal.kernel.util.BasePortalLifecycle;
+import com.liferay.portal.kernel.util.PortalLifecycle;
+
 /**
  * @author Shuyang Zhou
+ * @author Tina Tian
  */
 public class DefaultSchedulingConfigurator
 	extends AbstractSchedulingConfigurator {
 
-	@Override
-	protected ClassLoader getOperatingClassloader() {
-		Thread currentThread = Thread.currentThread();
+	public void configure() {
+		if (schedulerEntries.isEmpty()) {
+			return;
+		}
 
-		return currentThread.getContextClassLoader();
+		SchedulingConfiguratorLifecycle schedulingConfiguratorLifecycle =
+			new SchedulingConfiguratorLifecycle();
+
+		schedulingConfiguratorLifecycle.registerPortalLifecycle(
+			PortalLifecycle.METHOD_INIT);
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		DefaultSchedulingConfigurator.class);
+
+	private class SchedulingConfiguratorLifecycle extends BasePortalLifecycle {
+
+		@Override
+		protected void doPortalDestroy() throws Exception {
+		}
+
+		@Override
+		protected void doPortalInit() throws Exception {
+			for (SchedulerEntry schedulerEntry : schedulerEntries) {
+				try {
+					SchedulerEngineHelperUtil.schedule(
+						schedulerEntry, storageType, null, exceptionsMaxSize);
+				}
+				catch (Exception e) {
+					_log.error("Unable to schedule " + schedulerEntry, e);
+				}
+			}
+		}
+
 	}
 
 }

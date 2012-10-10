@@ -14,115 +14,37 @@
 
 package com.liferay.portal.kernel.scheduler.config;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.messaging.MessageBus;
-import com.liferay.portal.kernel.scheduler.SchedulerEngine;
 import com.liferay.portal.kernel.scheduler.SchedulerEntry;
-import com.liferay.portal.kernel.scheduler.Trigger;
+import com.liferay.portal.kernel.scheduler.StorageType;
 
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author Shuyang Zhou
+ * @author Tina Tian
  */
 public abstract class AbstractSchedulingConfigurator
 	implements SchedulingConfigurator {
 
-	public void destroy() {
-		for (Map.Entry<String, List<SchedulerEntry>> schedulerEntries :
-				_schedulerEntries.entrySet()) {
-
-			for (SchedulerEntry schedulerEntry : schedulerEntries.getValue()) {
-				try {
-					destroySchedulerEntry(schedulerEntry);
-				}
-				catch (Exception e) {
-					_log.error("Unable to unschedule " + schedulerEntry, e);
-				}
-			}
-		}
-
-		_schedulerEntries.clear();
+	public void afterPropertiesSet() {
+		configure();
 	}
 
-	public void init() {
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
-		try {
-			ClassLoader operatingClassLoader = getOperatingClassloader();
-
-			currentThread.setContextClassLoader(operatingClassLoader);
-
-			for (Map.Entry<String, List<SchedulerEntry>> schedulerEntries :
-					_schedulerEntries.entrySet()) {
-
-				String destinationName = schedulerEntries.getKey();
-
-				for (SchedulerEntry schedulerEntry :
-						schedulerEntries.getValue()) {
-
-					try {
-						initSchedulerEntry(destinationName, schedulerEntry);
-					}
-					catch (Exception e) {
-						_log.error("Unable to schedule " + schedulerEntry, e);
-					}
-				}
-			}
-		}
-		finally {
-			currentThread.setContextClassLoader(contextClassLoader);
-		}
+	public void setExceptionsMaxSize(int exceptionsMaxSize) {
+		this.exceptionsMaxSize = exceptionsMaxSize;
 	}
 
-	public void setMessageBus(MessageBus messageBus) {
-		_messageBus = messageBus;
+	public void setSchedulerEntries(List<SchedulerEntry> schedulerEntries) {
+		this.schedulerEntries = schedulerEntries;
 	}
 
-	public void setSchedulerEngine(SchedulerEngine schedulerEngine) {
-		_schedulerEngine = schedulerEngine;
+	public void setStorageType(StorageType storageType) {
+		this.storageType = storageType;
 	}
 
-	public void setSchedulerEntries(
-		Map<String, List<SchedulerEntry>> schedulerEntries) {
-
-		_schedulerEntries = schedulerEntries;
-	}
-
-	protected void destroySchedulerEntry(SchedulerEntry schedulerEntry)
-		throws Exception {
-
-		Trigger trigger = schedulerEntry.getTrigger();
-
-		_schedulerEngine.unschedule(
-			trigger.getJobName(), trigger.getGroupName());
-	}
-
-	protected abstract ClassLoader getOperatingClassloader();
-
-	protected void initSchedulerEntry(
-			String destinationName, SchedulerEntry schedulerEntry)
-		throws Exception {
-
-		_messageBus.registerMessageListener(
-			destinationName, schedulerEntry.getEventListener());
-
-		_schedulerEngine.schedule(
-			schedulerEntry.getTrigger(), schedulerEntry.getDescription(),
-			destinationName, null);
-	}
-
-	private static Log _log = LogFactoryUtil.getLog(
-		AbstractSchedulingConfigurator.class);
-
-	private MessageBus _messageBus;
-	private SchedulerEngine _schedulerEngine;
-	private Map<String, List<SchedulerEntry>> _schedulerEntries =
-		new HashMap<String, List<SchedulerEntry>>();
+	protected int exceptionsMaxSize = 0;
+	protected List<SchedulerEntry> schedulerEntries = Collections.emptyList();
+	protected StorageType storageType = StorageType.MEMORY_CLUSTERED;
 
 }

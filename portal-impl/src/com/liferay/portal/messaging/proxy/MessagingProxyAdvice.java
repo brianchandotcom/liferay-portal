@@ -17,6 +17,7 @@ package com.liferay.portal.messaging.proxy;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.proxy.BaseProxyBean;
 import com.liferay.portal.kernel.messaging.proxy.MessageValuesThreadLocal;
+import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocal;
 import com.liferay.portal.kernel.messaging.proxy.ProxyRequest;
 import com.liferay.portal.kernel.messaging.proxy.ProxyResponse;
 import com.liferay.portal.kernel.messaging.sender.SingleDestinationMessageSender;

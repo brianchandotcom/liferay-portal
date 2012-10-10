@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.messaging.proxy;
+package com.liferay.portal.kernel.messaging.proxy;
 
 import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 

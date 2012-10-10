@@ -14,27 +14,12 @@
 
 package com.liferay.portal.kernel.scheduler.config;
 
-import com.liferay.portal.kernel.messaging.MessageBus;
-import com.liferay.portal.kernel.scheduler.SchedulerEngine;
-import com.liferay.portal.kernel.scheduler.SchedulerEntry;
-
-import java.util.List;
-import java.util.Map;
-
 /**
  * @author Shuyang Zhou
+ * @author Tina Tian
  */
 public interface SchedulingConfigurator {
 
-	public void destroy();
-
-	public void init();
-
-	public void setMessageBus(MessageBus messageBus);
-
-	public void setSchedulerEngine(SchedulerEngine schedulerEngine);
-
-	public void setSchedulerEntries(
-		Map<String, List<SchedulerEntry>> schedulerEntries);
+	public void configure();
 
 }

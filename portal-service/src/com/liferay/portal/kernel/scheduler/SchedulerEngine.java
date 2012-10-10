@@ -34,8 +34,6 @@ public interface SchedulerEngine {
 
 	public static final String AUDIT_ACTION = "AUDIT_ACTION";
 
-	public static final String CONTEXT_PATH = "CONTEXT_PATH";
-
 	public static final String DESCRIPTION = "DESCRIPTION";
 
 	public static final int DESCRIPTION_MAX_LENGTH = GetterUtil.getInteger(

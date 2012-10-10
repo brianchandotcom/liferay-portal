@@ -1229,7 +1229,6 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 
 			SchedulerEntry schedulerEntry = new SchedulerEntryImpl();
 
-			schedulerEntry.setContextPath(portletModel.getContextPath());
 			schedulerEntry.setDescription(
 				GetterUtil.getString(
 					schedulerEntryElement.elementText(

@@ -26,7 +26,6 @@ public class EditMicroblogsContentViewableByFollowersTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/user/joebloggs/so/dashboard/");
-		selenium.waitForVisible("//nav/ul/li[contains(.,'Microblogs')]/a/span");
 		selenium.clickAt("//nav/ul/li[contains(.,'Microblogs')]/a/span",
 			RuntimeVariables.replace("Microblogs"));
 		selenium.waitForPageToLoad("30000");
@@ -42,7 +41,7 @@ public class EditMicroblogsContentViewableByFollowersTest extends BaseTestCase {
 			RuntimeVariables.replace("Edit"));
 		selenium.waitForElementPresent("//textarea");
 		selenium.clickAt("//textarea", RuntimeVariables.replace("Text area"));
-		selenium.typeKeys("//textarea", RuntimeVariables.replace("Edit"));
+		selenium.sendKeys("//textarea", RuntimeVariables.replace("Edit"));
 		selenium.waitForText("xPath=(//span[@class='microblogs-countdown'])[2]",
 			"131");
 		assertEquals(RuntimeVariables.replace("131"),

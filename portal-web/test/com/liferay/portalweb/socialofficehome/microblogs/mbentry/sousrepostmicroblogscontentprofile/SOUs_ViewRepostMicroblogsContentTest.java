@@ -32,7 +32,6 @@ public class SOUs_ViewRepostMicroblogsContentTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Reposted From Joe Bloggs: Microblogs Post"),
 			selenium.getText("xPath=(//div[@class='activity-title'])[1]"));
-		selenium.waitForVisible("//nav/ul/li[contains(.,'Microblogs')]/a/span");
 		selenium.clickAt("//nav/ul/li[contains(.,'Microblogs')]/a/span",
 			RuntimeVariables.replace("Microblogs"));
 		selenium.waitForPageToLoad("30000");

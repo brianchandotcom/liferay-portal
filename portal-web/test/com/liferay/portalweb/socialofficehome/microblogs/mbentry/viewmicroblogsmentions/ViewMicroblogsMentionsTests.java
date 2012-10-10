@@ -20,10 +20,13 @@ import com.liferay.portalweb.socialoffice.users.user.addsouser.TearDownSOUserTes
 import com.liferay.portalweb.socialoffice.users.user.editsouserpassword.EditSOUserPasswordTest;
 import com.liferay.portalweb.socialoffice.users.user.selectregularrolessouser.SelectRegularRolesSOUserTest;
 import com.liferay.portalweb.socialoffice.users.user.signinso.SOUs_SignInSOTest;
+import com.liferay.portalweb.socialoffice.users.user.signinso.SOUs_SignOutSOTest;
 import com.liferay.portalweb.socialoffice.users.user.signinso.SignInSOTest;
 import com.liferay.portalweb.socialoffice.users.user.signinso.SignOutSOTest;
 import com.liferay.portalweb.socialofficehome.contactscenter.contacts.sousaddasconnectionccuser.ConfirmNotificationsAddConnectionTest;
 import com.liferay.portalweb.socialofficehome.contactscenter.contacts.sousaddasconnectionccuser.SOUs_AddAsConnectionCCUserTest;
+import com.liferay.portalweb.socialofficehome.microblogs.mbentry.addmicroblogscontentviewablebyeveryone.AddMicroblogsContentViewableByEveryoneTest;
+import com.liferay.portalweb.socialofficehome.microblogs.mbentry.addmicroblogscontentviewablebyeveryone.TearDownWHEntryContentTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -38,19 +41,17 @@ public class ViewMicroblogsMentionsTests extends BaseTestSuite {
 		testSuite.addTestSuite(SelectRegularRolesSOUserTest.class);
 		testSuite.addTestSuite(EditSOUserPasswordTest.class);
 		testSuite.addTestSuite(AddMicroblogsContentViewableByEveryoneTest.class);
-		testSuite.addTestSuite(ViewMicroblogsContentViewableByEveryoneTest.class);
 		testSuite.addTestSuite(SignOutSOTest.class);
 		testSuite.addTestSuite(SOUs_SignInSOTest.class);
-		testSuite.addTestSuite(SOUs_ViewMBContentViewableByEveryoneProfileTest.class);
 		testSuite.addTestSuite(SOUs_AddAsConnectionCCUserTest.class);
-		testSuite.addTestSuite(SignOutSOTest.class);
+		testSuite.addTestSuite(SOUs_SignOutSOTest.class);
 		testSuite.addTestSuite(SignInSOTest.class);
 		testSuite.addTestSuite(ConfirmNotificationsAddConnectionTest.class);
 		testSuite.addTestSuite(SignOutSOTest.class);
 		testSuite.addTestSuite(SOUs_SignInSOTest.class);
 		testSuite.addTestSuite(SOUs_ReplyMicroblogsContentMentionsProfileTest.class);
 		testSuite.addTestSuite(SOUs_ViewReplyMicroblogsContentMentionsTest.class);
-		testSuite.addTestSuite(SignOutSOTest.class);
+		testSuite.addTestSuite(SOUs_SignOutSOTest.class);
 		testSuite.addTestSuite(SignInSOTest.class);
 		testSuite.addTestSuite(ViewMicroblogsMentionsTest.class);
 		testSuite.addTestSuite(TearDownWHEntryContentTest.class);

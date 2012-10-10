@@ -25,7 +25,6 @@ public class DeleteMicroblogsContentTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/user/joebloggs/so/dashboard");
-		selenium.waitForVisible("//nav/ul/li[contains(.,'Microblogs')]/a/span");
 		selenium.clickAt("//nav/ul/li[contains(.,'Microblogs')]/a/span",
 			RuntimeVariables.replace("Microblogs"));
 		selenium.waitForPageToLoad("30000");
@@ -40,8 +39,9 @@ public class DeleteMicroblogsContentTest extends BaseTestCase {
 		assertTrue(selenium.getConfirmation()
 						   .matches("^Are you sure you want to delete this post[\\s\\S]$"));
 		selenium.waitForText("//div[@class='portlet-msg-info']",
-			"You have no microblogs entry.");
-		assertEquals(RuntimeVariables.replace("You have no microblogs entry."),
+			"You do not have any microblog entries.");
+		assertEquals(RuntimeVariables.replace(
+				"You do not have any microblog entries."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
 		assertFalse(selenium.isTextPresent("Microblogs Post"));
 	}

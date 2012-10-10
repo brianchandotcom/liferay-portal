@@ -27,6 +27,10 @@ public class ViewDeleteReplyMicroblogsContentNotificationsTest
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/user/joebloggs/so/dashboard/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
 		selenium.waitForElementPresent("//li[@id='_145_notificationsMenu']");
 		assertEquals(RuntimeVariables.replace("1"),
 			selenium.getText("//span[@class='notification-count']"));
@@ -54,6 +58,10 @@ public class ViewDeleteReplyMicroblogsContentNotificationsTest
 				"xPath=(//div[@class='content'])[2]"));
 		assertFalse(selenium.isTextPresent("1 Comment"));
 		selenium.open("/user/joebloggs/so/dashboard/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
 		selenium.waitForElementPresent("//li[@id='_145_notificationsMenu']");
 		assertEquals(RuntimeVariables.replace("1"),
 			selenium.getText("//span[@class='notification-count']"));
@@ -64,11 +72,15 @@ public class ViewDeleteReplyMicroblogsContentNotificationsTest
 			selenium.getText("//div[@class='title']"));
 		assertEquals(RuntimeVariables.replace("Microblogs Post Comment"),
 			selenium.getText("//div[@class='body']"));
-		assertEquals(RuntimeVariables.replace("Mark as Read"),
+		assertEquals(RuntimeVariables.replace("Mark All as Read"),
 			selenium.getText("//span[@class='dismiss-notifications']/a"));
 		selenium.clickAt("//span[@class='dismiss-notifications']/a",
-			RuntimeVariables.replace("Mark as Read"));
+			RuntimeVariables.replace("Mark All as Read"));
 		selenium.waitForPageToLoad("30000");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
 		selenium.waitForElementPresent("//li[@id='_145_notificationsMenu']");
 		assertEquals(RuntimeVariables.replace("0"),
 			selenium.getText("//span[@class='notification-count']"));

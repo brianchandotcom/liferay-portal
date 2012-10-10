@@ -31,6 +31,10 @@ public class ViewReplyMicroblogsContentNotificationsTest extends BaseTestCase {
 				selenium.selectWindow("null");
 				selenium.selectFrame("relative=top");
 				selenium.open("/user/joebloggs/so/dashboard/");
+				selenium.clickAt("//div[@id='dockbar']",
+					RuntimeVariables.replace("Dockbar"));
+				selenium.waitForElementPresent(
+					"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
 				selenium.waitForElementPresent(
 					"//li[@id='_145_notificationsMenu']");
 				assertEquals(RuntimeVariables.replace("1"),
@@ -76,6 +80,10 @@ public class ViewReplyMicroblogsContentNotificationsTest extends BaseTestCase {
 				assertEquals(RuntimeVariables.replace("Microblogs Post Comment"),
 					selenium.getText("xPath=(//div[@class='content'])[2]"));
 				selenium.open("/user/joebloggs/so/dashboard/");
+				selenium.clickAt("//div[@id='dockbar']",
+					RuntimeVariables.replace("Dockbar"));
+				selenium.waitForElementPresent(
+					"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
 				selenium.waitForElementPresent(
 					"//li[@id='_145_notificationsMenu']");
 				assertEquals(RuntimeVariables.replace("1"),
@@ -87,11 +95,15 @@ public class ViewReplyMicroblogsContentNotificationsTest extends BaseTestCase {
 					selenium.getText("//div[@class='title']"));
 				assertEquals(RuntimeVariables.replace("Microblogs Post Comment"),
 					selenium.getText("//div[@class='body']"));
-				assertEquals(RuntimeVariables.replace("Mark as Read"),
+				assertEquals(RuntimeVariables.replace("Mark All as Read"),
 					selenium.getText("//span[@class='dismiss-notifications']/a"));
 				selenium.clickAt("//span[@class='dismiss-notifications']/a",
-					RuntimeVariables.replace("Mark as Read"));
+					RuntimeVariables.replace("Mark All as Read"));
 				selenium.waitForPageToLoad("30000");
+				selenium.clickAt("//div[@id='dockbar']",
+					RuntimeVariables.replace("Dockbar"));
+				selenium.waitForElementPresent(
+					"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
 				selenium.waitForElementPresent(
 					"//li[@id='_145_notificationsMenu']");
 				assertEquals(RuntimeVariables.replace("0"),

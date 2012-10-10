@@ -26,14 +26,11 @@ public class ViewMicroblogsContent150CharacterTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/user/joebloggs/so/dashboard");
-		assertEquals(RuntimeVariables.replace("Microblogs Status Update"),
-			selenium.getText("//span[@class='portlet-title-default']"));
 		assertTrue(selenium.isElementPresent(
 				"//div[contains(@id,'_2_WAR_microblogsportlet_autocompleteContent')]"));
 		assertEquals(RuntimeVariables.replace(
 				"|||||||||1|||||||||2|||||||||3|||||||||4|||||||||5|||||||||6|||||||||7|||||||||8|||||||||9||||||||10||||||||11||||||||12||||||||13||||||||14||||||||15"),
 			selenium.getText("//div[@class='content']"));
-		selenium.waitForVisible("//nav/ul/li[contains(.,'Microblogs')]/a/span");
 		selenium.clickAt("//nav/ul/li[contains(.,'Microblogs')]/a/span",
 			RuntimeVariables.replace("Microblogs"));
 		selenium.waitForPageToLoad("30000");

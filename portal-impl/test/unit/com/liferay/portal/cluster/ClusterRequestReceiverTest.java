@@ -374,7 +374,7 @@ public class ClusterRequestReceiverTest extends BaseClusterExecutorImplTest {
 
 			assertLogger(
 				logRecords, "Failed to invoke method " + methodHandler,
-				Exception.class);
+				NoSuchMethodException.class);
 		}
 		finally {
 			if (clusterExecutorImpl1 != null) {

@@ -374,7 +374,7 @@ public class ClusterLinkImplTest extends BaseClusterTest {
 
 		assertLogger(
 			logRecords, "Unable to send multicast message " + message,
-			Exception.class);
+			IllegalStateException.class);
 
 		clusterLinkImpl.destroy();
 	}
@@ -407,7 +407,7 @@ public class ClusterLinkImplTest extends BaseClusterTest {
 
 		assertLogger(
 			logRecords, "Unable to send multicast message " + message,
-			Exception.class);
+			IllegalStateException.class);
 
 		clusterLinkImpl.destroy();
 	}
@@ -496,7 +496,7 @@ public class ClusterLinkImplTest extends BaseClusterTest {
 
 		assertLogger(
 			logRecords, "Unable to send unicast message " + message,
-			Exception.class);
+			IllegalStateException.class);
 
 		clusterLinkImpl.destroy();
 	}
@@ -530,7 +530,7 @@ public class ClusterLinkImplTest extends BaseClusterTest {
 
 		assertLogger(
 			logRecords, "Unable to send unicast message " + message,
-			Exception.class);
+			IllegalStateException.class);
 
 		clusterLinkImpl.destroy();
 	}

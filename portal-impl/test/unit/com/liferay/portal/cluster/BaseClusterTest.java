@@ -91,7 +91,8 @@ public class BaseClusterTest {
 			Assert.assertNull(logRecord.getThrown());
 		}
 		else {
-			Assert.assertNotNull(logRecord.getThrown());
+			Assert.assertEquals(
+				exceptionClass, logRecord.getThrown().getClass());
 		}
 
 		logRecords.clear();

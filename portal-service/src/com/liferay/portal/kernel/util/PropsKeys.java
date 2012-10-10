@@ -21,6 +21,8 @@ public interface PropsKeys {
 
 	public static final String ADMIN_DEFAULT_GROUP_NAMES = "admin.default.group.names";
 
+	public static final String ADMIN_DEFAULT_ORGANIZATION_GROUP_NAMES = "admin.default.organization.group.names";
+
 	public static final String ADMIN_DEFAULT_ROLE_NAMES = "admin.default.role.names";
 
 	public static final String ADMIN_DEFAULT_USER_GROUP_NAMES = "admin.default.user.group.names";

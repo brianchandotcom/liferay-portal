@@ -290,6 +290,32 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			}
 		}
 
+		String[] defaultOrganizationGroupNames = PrefsPropsUtil.getStringArray(
+			user.getCompanyId(),
+			PropsKeys.ADMIN_DEFAULT_ORGANIZATION_GROUP_NAMES,
+			StringPool.NEW_LINE,
+			PropsValues.ADMIN_DEFAULT_ORGANIZATION_GROUP_NAMES);
+
+		for (String defaultOrganizationGroupName :
+				defaultOrganizationGroupNames) {
+
+			defaultOrganizationGroupName +=
+				GroupLocalServiceImpl.ORGANIZATION_NAME_SUFFIX;
+
+			try {
+				Group group = groupPersistence.findByC_N(
+					user.getCompanyId(), defaultOrganizationGroupName);
+
+				if (!userPersistence.containsGroup(
+						userId, group.getGroupId())) {
+
+					groupIdsSet.add(group.getGroupId());
+				}
+			}
+			catch (NoSuchGroupException nsge) {
+			}
+		}
+
 		long[] groupIds = ArrayUtil.toArray(
 			groupIdsSet.toArray(new Long[groupIdsSet.size()]));
 

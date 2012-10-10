@@ -126,7 +126,7 @@ public class TemplateResourceLoaderUtil {
 		List<TemplateResourceLoader> templateResourceLoaders) {
 
 		for (TemplateResourceLoader templateResourceLoader :
-			templateResourceLoaders) {
+				templateResourceLoaders) {
 
 			_templateResourceLoaders.put(
 				templateResourceLoader.getName(), templateResourceLoader);

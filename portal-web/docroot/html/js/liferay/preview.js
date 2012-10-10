@@ -248,7 +248,7 @@ AUI.add(
 						var maxOverlayMask = instance._maxOverlayMask;
 
 						if (!maxOverlayMask) {
-							maxOverlayMask = new A.OverlayMask();
+							maxOverlayMask = new A.OverlayMask({visible: true});
 
 							instance._maxOverlayMask = maxOverlayMask;
 						}
@@ -278,7 +278,6 @@ AUI.add(
 									cssClass: 'lfr-preview-file-image-overlay',
 									height: '90%',
 									width: '85%',
-									visible: false,
 									zIndex: 1005
 								}
 							).render();

@@ -24,7 +24,7 @@ import org.junit.Test;
 /**
  * @author Miguel Pastor
  */
-public class IngresDBTest extends DBTest {
+public class IngresDBTest extends TestDB {
 
 	@Test
 	public void testRewordRenameTable() throws IOException {

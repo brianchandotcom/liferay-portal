@@ -24,7 +24,7 @@ import org.junit.Test;
 /**
  * @author Miguel Pastor
  */
-public class HypersonicDBTest extends DBTest {
+public class HypersonicDBTest extends TestDB {
 
 	@Test
 	public void testRewordRenameTable() throws IOException {

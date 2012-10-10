@@ -24,7 +24,7 @@ import org.junit.Test;
 /**
  * @author Miguel Pastor
  */
-public class InformixDBTest extends DBTest {
+public class InformixDBTest extends TestDB {
 
 	@Test
 	public void testRewordRenameTable() throws IOException {

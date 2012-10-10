@@ -24,7 +24,7 @@ import org.junit.Test;
 /**
  * @author Miguel Pastor
  */
-public class SAPDBTest extends DBTest {
+public class SAPDBTest extends TestDB {
 
 	@Test
 	public void testRewordRenameTable() throws IOException {

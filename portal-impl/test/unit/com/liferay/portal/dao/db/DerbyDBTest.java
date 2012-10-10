@@ -24,7 +24,7 @@ import org.junit.Test;
 /**
  * @author Miguel Pastor
  */
-public class DerbyDBTest extends DBTest {
+public class DerbyDBTest extends TestDB {
 
 	@Test
 	public void testRewordRenameTable() throws IOException {

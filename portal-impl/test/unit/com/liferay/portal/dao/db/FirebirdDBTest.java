@@ -24,7 +24,7 @@ import org.junit.Test;
 /**
  * @author Miguel Pastor
  */
-public class FirebirdDBTest extends DBTest {
+public class FirebirdDBTest extends TestDB {
 
 	@Test
 	public void testRewordRenameTable() throws IOException {

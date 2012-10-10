@@ -24,7 +24,7 @@ import org.junit.Test;
 /**
  * @author Miguel Pastor
  */
-public class MySQLDBTest extends DBTest {
+public class MySQLDBTest extends TestDB {
 
 	@Test
 	public void testRewordRenameTable() throws IOException {

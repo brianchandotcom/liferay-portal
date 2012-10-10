@@ -24,7 +24,7 @@ import org.junit.Test;
 /**
  * @author Miguel Pastor
  */
-public class PostgresDBTest extends DBTest {
+public class PostgresDBTest extends TestDB {
 
 	@Test
 	public void testRewordRenameTable() throws IOException {

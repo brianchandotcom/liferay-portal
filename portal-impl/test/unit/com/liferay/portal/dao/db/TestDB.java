@@ -21,7 +21,7 @@ import java.io.IOException;
 /**
  * @author Miguel Pastor
  */
-public abstract class DBTest {
+public abstract class TestDB {
 
 	protected String buildSQL(String query) throws IOException {
 		DB db = getDB();

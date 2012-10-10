@@ -14,20 +14,47 @@
 
 package com.liferay.portlet.documentlibrary.util;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
 
 import java.io.File;
 import java.io.InputStream;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Alexander Chow
  */
 public class DLAppUtil {
+
+	public static long[] filterFolderIds(
+			PermissionChecker permissionChecker, long groupId, long[] folderIds)
+		throws PortalException, SystemException {
+
+		List<Long> viewableFolderIds = new ArrayList<Long>(folderIds.length);
+
+		for (long folderId : folderIds) {
+			if (DLFolderPermission.contains(
+					permissionChecker, groupId, folderId, ActionKeys.VIEW)) {
+
+				viewableFolderIds.add(folderId);
+			}
+		}
+
+		return ArrayUtil.toArray(
+			viewableFolderIds.toArray(new Long[viewableFolderIds.size()]));
+	}
 
 	public static String getExtension(String title, String sourceFileName) {
 		String extension = FileUtil.getExtension(sourceFileName);

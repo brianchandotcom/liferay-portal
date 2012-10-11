@@ -33,20 +33,20 @@ public class AddPortletTest extends BaseTestCase {
 				"More"));
 		selenium.clickAt("//a[@id='_145_addApplication']",
 			RuntimeVariables.replace("More"));
-		selenium.waitForElementPresent("//div[@title='Bookmark']/p/a");
-		selenium.clickAt("//div[@title='Bookmark']/p/a",
+		selenium.waitForElementPresent("//li[@title='Bookmark']/p/a");
+		selenium.clickAt("//li[@title='Bookmark']/p/a",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible("//section");
 		assertTrue(selenium.isVisible("//section"));
-		selenium.waitForElementPresent("//div[@title='GroupWise Calendar']/p/a");
-		selenium.clickAt("//div[@title='GroupWise Calendar']/p/a",
+		selenium.waitForElementPresent("//li[@title='GroupWise Calendar']/p/a");
+		selenium.clickAt("//li[@title='GroupWise Calendar']/p/a",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible("//section");
 		assertTrue(selenium.isVisible("//section"));
 		selenium.waitForVisible("//div[2]/section");
 		assertTrue(selenium.isVisible("//div[2]/section"));
-		selenium.waitForElementPresent("//div[@title='GroupWise Mail']/p/a");
-		selenium.clickAt("//div[@title='GroupWise Mail']/p/a",
+		selenium.waitForElementPresent("//li[@title='GroupWise Mail']/p/a");
+		selenium.clickAt("//li[@title='GroupWise Mail']/p/a",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible("//section");
 		assertTrue(selenium.isVisible("//section"));

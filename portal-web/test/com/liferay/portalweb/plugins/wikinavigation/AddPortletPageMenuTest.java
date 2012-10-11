@@ -33,8 +33,8 @@ public class AddPortletPageMenuTest extends BaseTestCase {
 				"More"));
 		selenium.clickAt("//a[@id='_145_addApplication']",
 			RuntimeVariables.replace("More"));
-		selenium.waitForElementPresent("//div[@title='Page Menu']/p/a");
-		selenium.clickAt("//div[@title='Page Menu']/p/a",
+		selenium.waitForElementPresent("//li[@title='Page Menu']/p/a");
+		selenium.clickAt("//li[@title='Page Menu']/p/a",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible("//section");
 		assertTrue(selenium.isVisible("//section"));

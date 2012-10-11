@@ -32,8 +32,8 @@ public class AddPortletMailTest extends BaseTestCase {
 				"More"));
 		selenium.clickAt("//a[@id='_145_addApplication']",
 			RuntimeVariables.replace("More"));
-		selenium.waitForElementPresent("//div[@title='Mail']/p/a");
-		selenium.clickAt("//div[@title='Mail']/p/a",
+		selenium.waitForElementPresent("//li[@title='Mail']/p/a");
+		selenium.clickAt("//li[@title='Mail']/p/a",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible("//section");
 		assertTrue(selenium.isVisible("//section"));

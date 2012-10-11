@@ -45,7 +45,7 @@ public class AddPortletLCDuplicateTest extends BaseTestCase {
 		selenium.waitForVisible("//input[@id='layout_configuration_content']");
 		selenium.sendKeys("//input[@id='layout_configuration_content']",
 			RuntimeVariables.replace("l"));
-		selenium.waitForVisible("//div[@title='Loan Calculator']");
-		assertFalse(selenium.isVisible("//div[@title='Loan Calculator']/p/a"));
+		selenium.waitForVisible("//li[@title='Loan Calculator']");
+		assertFalse(selenium.isVisible("//li[@title='Loan Calculator']/p/a"));
 	}
 }

@@ -45,8 +45,8 @@ public class AddPortletAPTest extends BaseTestCase {
 		selenium.waitForVisible("//input[@id='layout_configuration_content']");
 		selenium.sendKeys("//input[@id='layout_configuration_content']",
 			RuntimeVariables.replace("a"));
-		selenium.waitForVisible("//div[@title='Asset Publisher']/p/a");
-		selenium.clickAt("//div[@title='Asset Publisher']/p/a",
+		selenium.waitForVisible("//li[@title='Asset Publisher']/p/a");
+		selenium.clickAt("//li[@title='Asset Publisher']/p/a",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible("//section");
 		assertTrue(selenium.isVisible("//section"));

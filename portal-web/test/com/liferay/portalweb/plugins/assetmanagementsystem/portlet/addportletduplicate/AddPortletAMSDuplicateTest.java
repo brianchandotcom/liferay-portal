@@ -45,8 +45,8 @@ public class AddPortletAMSDuplicateTest extends BaseTestCase {
 		selenium.waitForVisible("//input[@id='layout_configuration_content']");
 		selenium.sendKeys("//input[@id='layout_configuration_content']",
 			RuntimeVariables.replace("a"));
-		selenium.waitForVisible("//div[@title='Asset Management System']");
+		selenium.waitForVisible("//li[@title='Asset Management System']");
 		assertFalse(selenium.isVisible(
-				"//div[@title='Asset Management System']/p/a"));
+				"//li[@title='Asset Management System']/p/a"));
 	}
 }

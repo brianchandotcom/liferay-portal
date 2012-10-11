@@ -46,8 +46,8 @@ public class AddPortletDMDTest extends BaseTestCase {
 		selenium.sendKeys("//input[@id='layout_configuration_content']",
 			RuntimeVariables.replace("d"));
 		selenium.waitForVisible(
-			"//div[@title='Documents and Media Display']/p/a");
-		selenium.clickAt("//div[@title='Documents and Media Display']/p/a",
+			"//li[@title='Documents and Media Display']/p/a");
+		selenium.clickAt("//li[@title='Documents and Media Display']/p/a",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible("//section");
 		assertTrue(selenium.isVisible("//section"));

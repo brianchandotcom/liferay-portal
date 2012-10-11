@@ -43,14 +43,10 @@ public class AddPortletQN3Test extends BaseTestCase {
 		selenium.waitForElementPresent(
 			"//script[contains(@src,'/aui/aui-live-search/aui-live-search-min.js')]");
 		selenium.waitForVisible("//input[@id='layout_configuration_content']");
-		selenium.type("//input[@id='layout_configuration_content']",
+		selenium.sendKeys("//input[@id='layout_configuration_content']",
 			RuntimeVariables.replace("q"));
-		selenium.keyDown("//input[@id='layout_configuration_content']",
-			RuntimeVariables.replace("\\13"));
-		selenium.keyUp("//input[@id='layout_configuration_content']",
-			RuntimeVariables.replace("\\13"));
-		selenium.waitForVisible("//div[@title='Quick Note']/p/a");
-		selenium.clickAt("//div[@title='Quick Note']/p/a",
+		selenium.waitForVisible("//li[@title='Quick Note']/p/a");
+		selenium.clickAt("//li[@title='Quick Note']/p/a",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible("//div/div/div/div/div[@class='portlet-body']");
 		assertTrue(selenium.isVisible(

@@ -33,8 +33,8 @@ public class AddPortletYoutube2Test extends BaseTestCase {
 				"More"));
 		selenium.clickAt("//a[@id='_145_addApplication']",
 			RuntimeVariables.replace("More"));
-		selenium.waitForElementPresent("//div[@title='YouTube']/p/a");
-		selenium.clickAt("//div[@title='YouTube']/p/a",
+		selenium.waitForElementPresent("//li[@title='YouTube']/p/a");
+		selenium.clickAt("//li[@title='YouTube']/p/a",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible("//section");
 		assertTrue(selenium.isVisible("//section"));

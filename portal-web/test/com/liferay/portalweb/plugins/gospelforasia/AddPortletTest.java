@@ -46,8 +46,8 @@ public class AddPortletTest extends BaseTestCase {
 		selenium.waitForVisible("//input[@id='layout_configuration_content']");
 		selenium.sendKeys("//input[@id='layout_configuration_content']",
 			RuntimeVariables.replace("g"));
-		selenium.waitForVisible("//div[@title='Gospel for Asia']/p/a");
-		selenium.clickAt("//div[@title='Gospel for Asia']/p/a",
+		selenium.waitForVisible("//li[@title='Gospel for Asia']/p/a");
+		selenium.clickAt("//li[@title='Gospel for Asia']/p/a",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible("//section");
 		assertTrue(selenium.isVisible("//section"));

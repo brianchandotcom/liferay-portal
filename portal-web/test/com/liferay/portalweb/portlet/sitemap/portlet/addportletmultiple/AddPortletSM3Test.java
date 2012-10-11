@@ -45,8 +45,8 @@ public class AddPortletSM3Test extends BaseTestCase {
 		selenium.waitForVisible("//input[@id='layout_configuration_content']");
 		selenium.sendKeys("//input[@id='layout_configuration_content']",
 			RuntimeVariables.replace("s"));
-		selenium.waitForVisible("//div[@title='Site Map']/p/a");
-		selenium.clickAt("//div[@title='Site Map']/p/a",
+		selenium.waitForVisible("//li[@title='Site Map']/p/a");
+		selenium.clickAt("//li[@title='Site Map']/p/a",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible("//div[1]/div/section");
 		assertTrue(selenium.isVisible("//div[1]/div/section"));

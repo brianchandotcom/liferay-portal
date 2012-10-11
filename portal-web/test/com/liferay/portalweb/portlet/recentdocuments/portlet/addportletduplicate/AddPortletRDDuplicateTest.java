@@ -43,13 +43,9 @@ public class AddPortletRDDuplicateTest extends BaseTestCase {
 		selenium.waitForElementPresent(
 			"//script[contains(@src,'/aui/aui-live-search/aui-live-search-min.js')]");
 		selenium.waitForVisible("//input[@id='layout_configuration_content']");
-		selenium.type("//input[@id='layout_configuration_content']",
+		selenium.sendKeys("//input[@id='layout_configuration_content']",
 			RuntimeVariables.replace("r"));
-		selenium.keyDown("//input[@id='layout_configuration_content']",
-			RuntimeVariables.replace("\\13"));
-		selenium.keyUp("//input[@id='layout_configuration_content']",
-			RuntimeVariables.replace("\\13"));
-		selenium.waitForVisible("//div[@title='Recent Downloads']");
-		assertFalse(selenium.isVisible("//div[@title='Recent Downloads']/p/a"));
+		selenium.waitForVisible("//li[@title='Recent Downloads']");
+		assertFalse(selenium.isVisible("//li[@title='Recent Downloads']/p/a"));
 	}
 }

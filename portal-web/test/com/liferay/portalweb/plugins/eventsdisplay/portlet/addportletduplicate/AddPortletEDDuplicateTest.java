@@ -46,7 +46,7 @@ public class AddPortletEDDuplicateTest extends BaseTestCase {
 		selenium.waitForVisible("//input[@id='layout_configuration_content']");
 		selenium.sendKeys("//input[@id='layout_configuration_content']",
 			RuntimeVariables.replace("e"));
-		selenium.waitForElementPresent("//div[@title=\"Events Display\"]");
-		assertFalse(selenium.isVisible("//div[@title=\"Events Display\"]/p/a"));
+		selenium.waitForElementPresent("//li[@title=\"Events Display\"]");
+		assertFalse(selenium.isVisible("//li[@title=\"Events Display\"]/p/a"));
 	}
 }

@@ -42,8 +42,8 @@ public class AddPortletRAPage2ChildPageSiteTest extends BaseTestCase {
 		selenium.waitForVisible("//input[@id='layout_configuration_content']");
 		selenium.sendKeys("//input[@id='layout_configuration_content']",
 			RuntimeVariables.replace("r"));
-		selenium.waitForVisible("//div[@title='Related Assets']/p/a");
-		selenium.clickAt("//div[@title='Related Assets']/p/a",
+		selenium.waitForVisible("//li[@title='Related Assets']/p/a");
+		selenium.clickAt("//li[@title='Related Assets']/p/a",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible("//section");
 		assertTrue(selenium.isVisible("//section"));

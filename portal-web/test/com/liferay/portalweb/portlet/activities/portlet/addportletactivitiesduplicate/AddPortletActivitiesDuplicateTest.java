@@ -45,7 +45,7 @@ public class AddPortletActivitiesDuplicateTest extends BaseTestCase {
 		selenium.waitForVisible("//input[@id='layout_configuration_content']");
 		selenium.sendKeys("//input[@id='layout_configuration_content']",
 			RuntimeVariables.replace("a"));
-		selenium.waitForVisible("//div[@title='Activities']");
-		assertFalse(selenium.isVisible("//div[@title='Activities']/p/a"));
+		selenium.waitForVisible("//li[@title='Activities']");
+		assertFalse(selenium.isVisible("//li[@title='Activities']/p/a"));
 	}
 }

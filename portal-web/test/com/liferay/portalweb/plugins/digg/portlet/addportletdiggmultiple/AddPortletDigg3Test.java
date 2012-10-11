@@ -46,8 +46,8 @@ public class AddPortletDigg3Test extends BaseTestCase {
 		selenium.waitForVisible("//input[@id='layout_configuration_content']");
 		selenium.sendKeys("//input[@id='layout_configuration_content']",
 			RuntimeVariables.replace("d"));
-		selenium.waitForVisible("//div[@title='Digg']/p/a");
-		selenium.clickAt("//div[@title='Digg']/p/a",
+		selenium.waitForVisible("//li[@title='Digg']/p/a");
+		selenium.clickAt("//li[@title='Digg']/p/a",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible("//div[1]/section");
 		assertTrue(selenium.isVisible("//div[1]/section"));

@@ -45,8 +45,8 @@ public class AddPortletIFrame1Test extends BaseTestCase {
 		selenium.waitForVisible("//input[@id='layout_configuration_content']");
 		selenium.sendKeys("//input[@id='layout_configuration_content']",
 			RuntimeVariables.replace("i"));
-		selenium.waitForVisible("//div[@title='IFrame']/p/a");
-		selenium.clickAt("//div[@title='IFrame']/p/a",
+		selenium.waitForVisible("//li[@title='IFrame']/p/a");
+		selenium.clickAt("//li[@title='IFrame']/p/a",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible("//section");
 		assertTrue(selenium.isVisible("//section"));

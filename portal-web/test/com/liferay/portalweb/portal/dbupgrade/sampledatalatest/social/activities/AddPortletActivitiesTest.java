@@ -41,10 +41,10 @@ public class AddPortletActivitiesTest extends BaseTestCase {
 		selenium.clickAt("//a[@id='_145_addApplication']",
 			RuntimeVariables.replace("More"));
 		selenium.waitForVisible("//input[@id='layout_configuration_content']");
-		selenium.typeKeys("//input[@id='layout_configuration_content']",
+		selenium.sendKeys("//input[@id='layout_configuration_content']",
 			RuntimeVariables.replace("a"));
-		selenium.waitForVisible("//div[@title='Activities']/p/a");
-		selenium.clickAt("//div[@title='Activities']/p/a",
+		selenium.waitForVisible("//li[@title='Activities']/p/a");
+		selenium.clickAt("//li[@title='Activities']/p/a",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible("//section");
 		assertTrue(selenium.isVisible("//section"));

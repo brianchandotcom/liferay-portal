@@ -45,8 +45,8 @@ public class AddPortletWCSTest extends BaseTestCase {
 		selenium.waitForVisible("//input[@id='layout_configuration_content']");
 		selenium.sendKeys("//input[@id='layout_configuration_content']",
 			RuntimeVariables.replace("w"));
-		selenium.waitForVisible("//div[@title='Web Content Search']/p/a");
-		selenium.clickAt("//div[@title='Web Content Search']/p/a",
+		selenium.waitForVisible("//li[@title='Web Content Search']/p/a");
+		selenium.clickAt("//li[@title='Web Content Search']/p/a",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible("//section");
 		assertTrue(selenium.isVisible("//section"));

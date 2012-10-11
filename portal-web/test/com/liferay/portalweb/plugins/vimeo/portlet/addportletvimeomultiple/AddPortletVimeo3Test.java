@@ -33,8 +33,8 @@ public class AddPortletVimeo3Test extends BaseTestCase {
 				"More"));
 		selenium.clickAt("//a[@id='_145_addApplication']",
 			RuntimeVariables.replace("More"));
-		selenium.waitForElementPresent("//div[@title='Vimeo']/p/a");
-		selenium.clickAt("//div[@title='Vimeo']/p/a",
+		selenium.waitForElementPresent("//li[@title='Vimeo']/p/a");
+		selenium.clickAt("//li[@title='Vimeo']/p/a",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible("//section");
 		assertTrue(selenium.isVisible("//section"));

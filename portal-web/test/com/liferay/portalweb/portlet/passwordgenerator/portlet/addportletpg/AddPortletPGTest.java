@@ -45,8 +45,8 @@ public class AddPortletPGTest extends BaseTestCase {
 		selenium.waitForVisible("//input[@id='layout_configuration_content']");
 		selenium.sendKeys("//input[@id='layout_configuration_content']",
 			RuntimeVariables.replace("p"));
-		selenium.waitForVisible("//div[@title='Password Generator']/p/a");
-		selenium.clickAt("//div[@title='Password Generator']/p/a",
+		selenium.waitForVisible("//li[@title='Password Generator']/p/a");
+		selenium.clickAt("//li[@title='Password Generator']/p/a",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible("//section");
 		assertTrue(selenium.isVisible("//section"));

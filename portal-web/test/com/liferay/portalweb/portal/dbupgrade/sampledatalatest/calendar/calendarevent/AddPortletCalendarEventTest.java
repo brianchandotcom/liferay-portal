@@ -41,10 +41,10 @@ public class AddPortletCalendarEventTest extends BaseTestCase {
 		selenium.clickAt("//a[@id='_145_addApplication']",
 			RuntimeVariables.replace("More"));
 		selenium.waitForVisible("//input[@id='layout_configuration_content']");
-		selenium.typeKeys("//input[@id='layout_configuration_content']",
+		selenium.sendKeys("//input[@id='layout_configuration_content']",
 			RuntimeVariables.replace("c"));
-		selenium.waitForVisible("//div[@title='Calendar']/p/a");
-		selenium.clickAt("//div[@title='Calendar']/p/a",
+		selenium.waitForVisible("//li[@title='Calendar']/p/a");
+		selenium.clickAt("//li[@title='Calendar']/p/a",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible("//section");
 		assertTrue(selenium.isVisible("//section"));

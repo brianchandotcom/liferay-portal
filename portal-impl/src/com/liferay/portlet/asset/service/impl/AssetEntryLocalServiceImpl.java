@@ -513,46 +513,26 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 			return updateEntry(
 				userId, groupId, className, classPK, entry.getClassUuid(),
 				entry.getClassTypeId(), categoryIds, tagNames,
-				entry.isVisible(), entry.getStartDate(), entry.getEndDate(),
-				entry.getExpirationDate(), entry.getMimeType(),
-				entry.getTitle(), entry.getDescription(), entry.getSummary(),
-				entry.getUrl(), entry.getLayoutUuid(), entry.getHeight(),
-				entry.getWidth(), GetterUtil.getInteger(entry.getPriority()),
-				false);
+				entry.isVisible(), entry.getCreateDate(),
+				entry.getModifiedDate(), entry.getStartDate(),
+				entry.getEndDate(), entry.getExpirationDate(),
+				entry.getMimeType(), entry.getTitle(), entry.getDescription(),
+				entry.getSummary(), entry.getUrl(), entry.getLayoutUuid(),
+				entry.getHeight(), entry.getWidth(),
+				GetterUtil.getInteger(entry.getPriority()), false);
 		}
 
 		return updateEntry(
 			userId, groupId, className, classPK, null, 0, categoryIds, tagNames,
-			true, null, null, null, null, null, null, null, null, null, 0, 0,
-			null, false);
-	}
-
-	/**
-	 * @deprecated {@link #updateEntry(long, long, String, long, String, long,
-	 *             long[], String[], boolean, Date, Date, Date, String, String,
-	 *             String, String, String, String, int, int, Integer, boolean)}
-	 */
-	public AssetEntry updateEntry(
-			long userId, long groupId, String className, long classPK,
-			String classUuid, long classTypeId, long[] categoryIds,
-			String[] tagNames, boolean visible, Date startDate, Date endDate,
-			Date publishDate, Date expirationDate, String mimeType,
-			String title, String description, String summary, String url,
-			String layoutUuid, int height, int width, Integer priority,
-			boolean sync)
-		throws PortalException, SystemException {
-
-		return updateEntry(
-			userId, groupId, className, classPK, classUuid, classTypeId,
-			categoryIds, tagNames, visible, startDate, endDate, expirationDate,
-			mimeType, title, description, summary, url, layoutUuid, height,
-			width, priority, sync);
+			true, null, null, null, null, null, null, null, null, null, null,
+			null, 0, 0, null, false);
 	}
 
 	public AssetEntry updateEntry(
 			long userId, long groupId, String className, long classPK,
 			String classUuid, long classTypeId, long[] categoryIds,
-			String[] tagNames, boolean visible, Date startDate, Date endDate,
+			String[] tagNames, boolean visible, Date createDate,
+			Date modifiedDate, Date startDate, Date endDate,
 			Date expirationDate, String mimeType, String title,
 			String description, String summary, String url, String layoutUuid,
 			int height, int width, Integer priority, boolean sync)
@@ -562,7 +542,6 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 
 		User user = userPersistence.findByPrimaryKey(userId);
 		long classNameId = PortalUtil.getClassNameId(className);
-		Date now = new Date();
 
 		validate(groupId, className, categoryIds, tagNames);
 
@@ -575,6 +554,14 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 			oldVisible = entry.isVisible();
 		}
 
+		if (createDate == null) {
+			createDate = new Date();
+		}
+
+		if (modifiedDate == null) {
+			modifiedDate = new Date();
+		}
+
 		if (entry == null) {
 			long entryId = counterLocalService.increment();
 
@@ -583,10 +570,11 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 			entry.setCompanyId(user.getCompanyId());
 			entry.setUserId(user.getUserId());
 			entry.setUserName(user.getFullName());
-			entry.setCreateDate(now);
+			entry.setCreateDate(createDate);
 			entry.setClassNameId(classNameId);
 			entry.setClassPK(classPK);
 			entry.setClassUuid(classUuid);
+			entry.setModifiedDate(modifiedDate);
 			entry.setVisible(visible);
 			entry.setExpirationDate(expirationDate);
 
@@ -598,7 +586,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 		}
 
 		entry.setGroupId(groupId);
-		entry.setModifiedDate(now);
+		entry.setModifiedDate(modifiedDate);
 		entry.setClassTypeId(classTypeId);
 		entry.setVisible(visible);
 		entry.setStartDate(startDate);
@@ -759,6 +747,50 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 		}
 
 		return entry;
+	}
+
+	/**
+	 * @deprecated {@link #updateEntry(long, long, String, long, String, long,
+	 *             long[], String[], boolean, Date, Date, Date, String, String,
+	 *             String, String, String, String, int, int, Integer, boolean)}
+	 */
+	public AssetEntry updateEntry(
+			long userId, long groupId, String className, long classPK,
+			String classUuid, long classTypeId, long[] categoryIds,
+			String[] tagNames, boolean visible, Date startDate, Date endDate,
+			Date publishDate, Date expirationDate, String mimeType,
+			String title, String description, String summary, String url,
+			String layoutUuid, int height, int width, Integer priority,
+			boolean sync)
+		throws PortalException, SystemException {
+
+		return updateEntry(
+			userId, groupId, className, classPK, classUuid, classTypeId,
+			categoryIds, tagNames, visible, startDate, endDate, expirationDate,
+			mimeType, title, description, summary, url, layoutUuid, height,
+			width, priority, sync);
+	}
+
+	/**
+	 * @deprecated {@link #updateEntry(long, long, String, long, String, long,
+	 *             long[], String[], boolean, Date, Date, Date, Date, Date,
+	 *             String, String, String, String, String, String, int, int,
+	 *             Integer, boolean)}
+	 */
+	public AssetEntry updateEntry(
+			long userId, long groupId, String className, long classPK,
+			String classUuid, long classTypeId, long[] categoryIds,
+			String[] tagNames, boolean visible, Date startDate, Date endDate,
+			Date expirationDate, String mimeType, String title,
+			String description, String summary, String url, String layoutUuid,
+			int height, int width, Integer priority, boolean sync)
+		throws PortalException, SystemException {
+
+		return updateEntry(
+				userId, groupId, className, classPK, classUuid, classTypeId,
+				categoryIds, tagNames, visible, null, null, startDate, endDate,
+				expirationDate, mimeType, title, description, summary, url,
+				layoutUuid, height, width, priority, sync);
 	}
 
 	public AssetEntry updateEntry(

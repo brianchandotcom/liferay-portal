@@ -2412,7 +2412,8 @@ public class JournalArticleLocalServiceImpl
 				userId, article.getGroupId(), JournalArticle.class.getName(),
 				article.getPrimaryKey(), article.getUuid(),
 				getClassTypeId(article), assetCategoryIds, assetTagNames, false,
-				null, null, null, ContentTypes.TEXT_HTML, article.getTitle(),
+				article.getCreateDate(), article.getModifiedDate(), null, null,
+				null, ContentTypes.TEXT_HTML, article.getTitle(),
 				article.getDescription(), article.getDescription(), null,
 				article.getLayoutUuid(), 0, 0, null, false);
 		}
@@ -2425,8 +2426,9 @@ public class JournalArticleLocalServiceImpl
 				userId, article.getGroupId(), JournalArticle.class.getName(),
 				journalArticleResource.getResourcePrimKey(),
 				journalArticleResource.getUuid(), getClassTypeId(article),
-				assetCategoryIds, assetTagNames, visible, null, null, null,
-				ContentTypes.TEXT_HTML, article.getTitle(),
+				assetCategoryIds, assetTagNames, visible,
+				article.getCreateDate(), article.getModifiedDate(), null, null,
+				null, ContentTypes.TEXT_HTML, article.getTitle(),
 				article.getDescription(), article.getDescription(), null,
 				article.getLayoutUuid(), 0, 0, null, false);
 		}
@@ -2528,7 +2530,8 @@ public class JournalArticleLocalServiceImpl
 								JournalArticle.class.getName(),
 								article.getResourcePrimKey(), article.getUuid(),
 								getClassTypeId(article), assetCategoryIds,
-								assetTagNames, false, null, null, null,
+								assetTagNames, false, article.getCreateDate(),
+								article.getModifiedDate(), null, null, null,
 								ContentTypes.TEXT_HTML, article.getTitle(),
 								article.getDescription(),
 								article.getDescription(), null,

@@ -98,7 +98,8 @@ public class VerifyMessageBoards extends VerifyProcess {
 				AssetEntryLocalServiceUtil.updateEntry(
 					thread.getRootMessageUserId(), thread.getGroupId(),
 					MBThread.class.getName(), thread.getThreadId(), null, 0,
-					new long[0], new String[0], false, null, null, null, null,
+					new long[0], new String[0], false, thread.getStatusDate(),
+					thread.getLastPostDate(), null, null, null, null,
 					String.valueOf(thread.getRootMessageId()), null, null, null,
 					null, 0, 0, null, false);
 			}

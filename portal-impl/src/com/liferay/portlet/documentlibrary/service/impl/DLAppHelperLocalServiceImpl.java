@@ -63,7 +63,6 @@ import com.liferay.portlet.trash.util.TrashUtil;
 import java.io.Serializable;
 
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -787,17 +786,14 @@ public class DLAppHelperLocalServiceImpl
 
 		long fileEntryTypeId = getFileEntryTypeId(fileEntry);
 
-		Date createDate = fileEntry.getCreateDate();
-		Date modifiedDate = fileEntry.getModifiedDate();
-
 		if (addDraftAssetEntry) {
 			assetEntry = assetEntryLocalService.updateEntry(
 				userId, fileEntry.getGroupId(),
 				DLFileEntryConstants.getClassName(),
 				fileVersion.getFileVersionId(), fileEntry.getUuid(),
 				fileEntryTypeId, assetCategoryIds, assetTagNames, false,
-				createDate, modifiedDate, null, null, null,
-				fileEntry.getMimeType(), fileEntry.getTitle(),
+				fileEntry.getCreateDate(), fileEntry.getModifiedDate(), null,
+				null, null, fileEntry.getMimeType(), fileEntry.getTitle(),
 				fileEntry.getDescription(), null, null, null, 0, 0, null,
 				false);
 		}
@@ -806,8 +802,9 @@ public class DLAppHelperLocalServiceImpl
 				userId, fileEntry.getGroupId(),
 				DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId(),
 				fileEntry.getUuid(), fileEntryTypeId, assetCategoryIds,
-				assetTagNames, visible, createDate, modifiedDate, null, null,
-				null, fileEntry.getMimeType(), fileEntry.getTitle(),
+				assetTagNames, visible, fileEntry.getCreateDate(),
+				fileEntry.getModifiedDate(), null, null, null,
+				fileEntry.getMimeType(), fileEntry.getTitle(),
 				fileEntry.getDescription(), null, null, null, 0, 0, null,
 				false);
 
@@ -933,17 +930,15 @@ public class DLAppHelperLocalServiceImpl
 							ListUtil.toString(
 								assetLinks, AssetLink.ENTRY_ID2_ACCESSOR), 0L);
 
-						Date createDate = fileEntry.getCreateDate();
-						Date modifiedDate = fileEntry.getModifiedDate();
-
 						AssetEntry assetEntry =
 							assetEntryLocalService.updateEntry(
 								userId, fileEntry.getGroupId(),
 								DLFileEntryConstants.getClassName(),
 								fileEntry.getFileEntryId(), fileEntry.getUuid(),
 								fileEntryTypeId, assetCategoryIds,
-								assetTagNames, true, createDate, modifiedDate,
-								null, null, null, draftAssetEntry.getMimeType(),
+								assetTagNames, true, fileEntry.getCreateDate(),
+								fileEntry.getModifiedDate(), null, null, null,
+								draftAssetEntry.getMimeType(),
 								fileEntry.getTitle(),
 								fileEntry.getDescription(), null, null, null, 0,
 								0, null, false);

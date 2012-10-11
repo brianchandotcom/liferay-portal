@@ -554,10 +554,6 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 			oldVisible = entry.isVisible();
 		}
 
-		if (createDate == null) {
-			createDate = new Date();
-		}
-
 		if (modifiedDate == null) {
 			modifiedDate = new Date();
 		}
@@ -570,11 +566,17 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 			entry.setCompanyId(user.getCompanyId());
 			entry.setUserId(user.getUserId());
 			entry.setUserName(user.getFullName());
+
+			if (createDate == null) {
+				createDate = new Date();
+			}
+
 			entry.setCreateDate(createDate);
+
+			entry.setModifiedDate(modifiedDate);
 			entry.setClassNameId(classNameId);
 			entry.setClassPK(classPK);
 			entry.setClassUuid(classUuid);
-			entry.setModifiedDate(modifiedDate);
 			entry.setVisible(visible);
 			entry.setExpirationDate(expirationDate);
 
@@ -787,10 +789,10 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		return updateEntry(
-				userId, groupId, className, classPK, classUuid, classTypeId,
-				categoryIds, tagNames, visible, null, null, startDate, endDate,
-				expirationDate, mimeType, title, description, summary, url,
-				layoutUuid, height, width, priority, sync);
+			userId, groupId, className, classPK, classUuid, classTypeId,
+			categoryIds, tagNames, visible, null, null, startDate, endDate,
+			expirationDate, mimeType, title, description, summary, url,
+			layoutUuid, height, width, priority, sync);
 	}
 
 	public AssetEntry updateEntry(

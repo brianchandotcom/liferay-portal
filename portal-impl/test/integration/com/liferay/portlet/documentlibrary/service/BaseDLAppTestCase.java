@@ -205,7 +205,9 @@ public abstract class BaseDLAppTestCase {
 		byte[] bytes = null;
 
 		if (Validator.isNotNull(sourceFileName)) {
-			bytes = CONTENT.getBytes();
+			String newContent = CONTENT + "\n" + System.currentTimeMillis();
+
+			bytes = newContent.getBytes();
 		}
 
 		ServiceContext serviceContext = new ServiceContext();

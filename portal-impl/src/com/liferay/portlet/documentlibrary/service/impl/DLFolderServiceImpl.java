@@ -106,7 +106,10 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 
 	public List<Object> getFileEntriesAndFileShortcuts(
 			long groupId, long folderId, int status, int start, int end)
-		throws SystemException {
+		throws PortalException, SystemException {
+
+		DLFolderPermission.check(
+			getPermissionChecker(), groupId, folderId, ActionKeys.VIEW);
 
 		QueryDefinition queryDefinition = new QueryDefinition(
 			status, start, end, null);
@@ -159,7 +162,10 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 	}
 
 	public long[] getFolderIds(long groupId, long folderId)
-		throws SystemException {
+		throws PortalException, SystemException {
+
+		DLFolderPermission.check(
+			getPermissionChecker(), groupId, folderId, ActionKeys.VIEW);
 
 		List<Long> folderIds = getSubfolderIds(groupId, folderId, true);
 
@@ -172,7 +178,10 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 			long groupId, long parentFolderId, int status,
 			boolean includeMountfolders, int start, int end,
 			OrderByComparator obc)
-		throws SystemException {
+		throws PortalException, SystemException {
+
+		DLFolderPermission.check(
+			getPermissionChecker(), groupId, parentFolderId, ActionKeys.VIEW);
 
 		if (includeMountfolders) {
 			return dlFolderPersistence.filterFindByG_P_S(
@@ -187,7 +196,7 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 	public List<DLFolder> getFolders(
 			long groupId, long parentFolderId, int start, int end,
 			OrderByComparator obc)
-		throws SystemException {
+		throws PortalException, SystemException {
 
 		return getFolders(
 			groupId, parentFolderId, WorkflowConstants.STATUS_APPROVED, true,
@@ -198,7 +207,10 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 			long groupId, long folderId, int status,
 			boolean includeMountFolders, int start, int end,
 			OrderByComparator obc)
-		throws SystemException {
+		throws PortalException, SystemException {
+
+		DLFolderPermission.check(
+			getPermissionChecker(), groupId, folderId, ActionKeys.VIEW);
 
 		QueryDefinition queryDefinition = new QueryDefinition(
 			status, start, end, obc);
@@ -210,7 +222,10 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 	public int getFoldersAndFileEntriesAndFileShortcuts(
 			long groupId, long folderId, int status, String[] mimeTypes,
 			boolean includeMountFolders)
-		throws SystemException {
+		throws PortalException, SystemException {
+
+		DLFolderPermission.check(
+			getPermissionChecker(), groupId, folderId, ActionKeys.VIEW);
 
 		QueryDefinition queryDefinition = new QueryDefinition(status);
 
@@ -222,7 +237,10 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 			long groupId, long folderId, int status, String[] mimeTypes,
 			boolean includeMountFolders, int start, int end,
 			OrderByComparator obc)
-		throws SystemException {
+		throws PortalException, SystemException {
+
+		DLFolderPermission.check(
+			getPermissionChecker(), groupId, folderId, ActionKeys.VIEW);
 
 		QueryDefinition queryDefinition = new QueryDefinition(
 			status, start, end, obc);
@@ -278,7 +296,10 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 	public List<DLFolder> getMountFolders(
 			long groupId, long parentFolderId, int start, int end,
 			OrderByComparator obc)
-		throws SystemException {
+		throws PortalException, SystemException {
+
+		DLFolderPermission.check(
+			getPermissionChecker(), groupId, parentFolderId, ActionKeys.VIEW);
 
 		return dlFolderPersistence.filterFindByG_M_P_H(
 			groupId, true, parentFolderId, false, start, end, obc);
@@ -293,7 +314,10 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 
 	public void getSubfolderIds(
 			List<Long> folderIds, long groupId, long folderId)
-		throws SystemException {
+		throws PortalException, SystemException {
+
+		DLFolderPermission.check(
+			getPermissionChecker(), groupId, folderId, ActionKeys.VIEW);
 
 		List<DLFolder> dlFolders = dlFolderPersistence.filterFindByG_P(
 			groupId, folderId);
@@ -308,7 +332,7 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 
 	public List<Long> getSubfolderIds(
 			long groupId, long folderId, boolean recurse)
-		throws SystemException {
+		throws PortalException, SystemException {
 
 		List<Long> folderIds = new ArrayList<Long>();
 

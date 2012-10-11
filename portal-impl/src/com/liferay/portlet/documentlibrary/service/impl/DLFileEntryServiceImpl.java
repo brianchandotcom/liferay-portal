@@ -33,6 +33,7 @@ import com.liferay.portlet.documentlibrary.service.base.DLFileEntryServiceBaseIm
 import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission;
 import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
+import com.liferay.portlet.documentlibrary.util.DLAppUtil;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 
 import java.io.File;
@@ -262,7 +263,10 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 	public List<DLFileEntry> getFileEntries(
 			long groupId, long folderId, int status, int start, int end,
 			OrderByComparator obc)
-		throws SystemException {
+		throws PortalException, SystemException {
+
+		DLFolderPermission.check(
+			getPermissionChecker(), groupId, folderId, ActionKeys.VIEW);
 
 		List<Long> folderIds = new ArrayList<Long>();
 
@@ -278,7 +282,7 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 	public List<DLFileEntry> getFileEntries(
 			long groupId, long folderId, int start, int end,
 			OrderByComparator obc)
-		throws SystemException {
+		throws PortalException, SystemException {
 
 		return getFileEntries(
 			groupId, folderId, WorkflowConstants.STATUS_APPROVED, start, end,
@@ -288,7 +292,10 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 	public List<DLFileEntry> getFileEntries(
 			long groupId, long folderId, long fileEntryTypeId, int start,
 			int end, OrderByComparator obc)
-		throws SystemException {
+		throws PortalException, SystemException {
+
+		DLFolderPermission.check(
+			getPermissionChecker(), groupId, folderId, ActionKeys.VIEW);
 
 		return dlFileEntryPersistence.filterFindByG_F_F(
 			groupId, folderId, fileEntryTypeId, start, end, obc);
@@ -297,7 +304,10 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 	public List<DLFileEntry> getFileEntries(
 			long groupId, long folderId, String[] mimeTypes, int start, int end,
 			OrderByComparator obc)
-		throws SystemException {
+		throws PortalException, SystemException {
+
+		DLFolderPermission.check(
+			getPermissionChecker(), groupId, folderId, ActionKeys.VIEW);
 
 		List<Long> folderIds = new ArrayList<Long>();
 
@@ -421,9 +431,12 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 	public List<DLFileEntry> getGroupFileEntries(
 			long groupId, long userId, long rootFolderId, int start, int end,
 			OrderByComparator obc)
-		throws SystemException {
+		throws PortalException, SystemException {
 
 		long[] folderIds = dlFolderService.getFolderIds(groupId, rootFolderId);
+
+		folderIds = DLAppUtil.filterFolderIds(
+			getPermissionChecker(), groupId, folderIds);
 
 		if (folderIds.length == 0) {
 			return Collections.emptyList();
@@ -441,9 +454,12 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 	public List<DLFileEntry> getGroupFileEntries(
 			long groupId, long userId, long rootFolderId, String[] mimeTypes,
 			int status, int start, int end, OrderByComparator obc)
-		throws SystemException {
+		throws PortalException, SystemException {
 
 		long[] folderIds = dlFolderService.getFolderIds(groupId, rootFolderId);
+
+		folderIds = DLAppUtil.filterFolderIds(
+			getPermissionChecker(), groupId, folderIds);
 
 		if (folderIds.length == 0) {
 			return Collections.emptyList();
@@ -460,7 +476,7 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 
 	public int getGroupFileEntriesCount(
 			long groupId, long userId, long rootFolderId)
-		throws SystemException {
+		throws PortalException, SystemException {
 
 		long[] folderIds = dlFolderService.getFolderIds(groupId, rootFolderId);
 
@@ -479,7 +495,7 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 	public int getGroupFileEntriesCount(
 			long groupId, long userId, long rootFolderId, String[] mimeTypes,
 			int status)
-		throws SystemException {
+		throws PortalException, SystemException {
 
 		long[] folderIds = dlFolderService.getFolderIds(groupId, rootFolderId);
 

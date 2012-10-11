@@ -287,7 +287,7 @@ public class DLFileEntryImpl extends DLFileEntryBaseImpl {
 		return false;
 	}
 
-	public boolean isHidden() {
+	public boolean isInHiddenFolder() {
 		try {
 			long repositoryId = _dlFileVersion.getRepositoryId();
 

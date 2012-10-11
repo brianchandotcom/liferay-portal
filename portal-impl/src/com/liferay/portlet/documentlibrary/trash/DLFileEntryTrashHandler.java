@@ -191,7 +191,7 @@ public class DLFileEntryTrashHandler extends BaseTrashHandler {
 			try {
 				DLFileEntry dlFileEntry = getDLFileEntry(classPK);
 
-				if (dlFileEntry.isHidden()) {
+				if (dlFileEntry.isInHiddenFolder()) {
 					DLAppHelperThreadLocal.setEnabled(false);
 				}
 
@@ -244,7 +244,7 @@ public class DLFileEntryTrashHandler extends BaseTrashHandler {
 
 		DLFileEntry dlFileEntry = getDLFileEntry(classPK);
 
-		if (dlFileEntry.isHidden()) {
+		if (dlFileEntry.isInHiddenFolder()) {
 			return false;
 		}
 

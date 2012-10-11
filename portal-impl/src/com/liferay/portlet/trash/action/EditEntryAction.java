@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.portlet.trash.DuplicateEntryException;
 import com.liferay.portlet.trash.TrashEntryConstants;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.service.TrashEntryLocalServiceUtil;
@@ -70,7 +69,7 @@ public class EditEntryAction extends PortletAction {
 			if (cmd.equals(Constants.CHECK)) {
 				JSONObject jsonObject = ActionUtil.checkEntry(actionRequest);
 
-				writeJSON(actionRequest, actionResponse, jsonObject);				
+				writeJSON(actionRequest, actionResponse, jsonObject);
 
 				return;
 			}

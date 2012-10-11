@@ -821,8 +821,9 @@ public class DLAppHelperLocalServiceImpl
 					DLFileShortcut.class.getName(),
 					dlFileShortcut.getFileShortcutId(),
 					dlFileShortcut.getUuid(), fileEntryTypeId, assetCategoryIds,
-					assetTagNames, true, createDate, modifiedDate, null, null,
-					null, fileEntry.getMimeType(), fileEntry.getTitle(),
+					assetTagNames, true, dlFileShortcut.getCreateDate(),
+					dlFileShortcut.getModifiedDate(), null, null, null,
+					fileEntry.getMimeType(), fileEntry.getTitle(),
 					fileEntry.getDescription(), null, null, null, 0, 0, null,
 					false);
 			}

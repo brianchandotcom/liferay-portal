@@ -367,7 +367,7 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		BlogsEntryPermission.check(
-			getPermissionChecker(), entryId, ActionKeys.UPDATE);
+			getPermissionChecker(), entryId, ActionKeys.DELETE);
 
 		blogsEntryLocalService.restoreEntryFromTrash(getUserId(), entryId);
 	}

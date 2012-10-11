@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.util;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -183,6 +184,152 @@ public class Validator {
 		else {
 			return false;
 		}
+	}
+
+	/**
+	 * Returns <code>true</code> if the boolean arrays are equal.
+	 *
+	 * @param  booleanArray1 the first boolean array
+	 * @param  booleanArray2 the second boolean array
+	 * @return <code>true</code> if the booleans arrays are equal; <code>false
+	 *         </code>otherwise
+	 */
+	public static boolean equalsSorted(
+		boolean[] booleanArray1, boolean[] booleanArray2) {
+
+		Boolean[] booleanObjArray1 = ArrayUtil.toArray(booleanArray1);
+		Boolean[] booleanObjArray2 = ArrayUtil.toArray(booleanArray2);
+
+		Arrays.sort(booleanObjArray1);
+		Arrays.sort(booleanObjArray2);
+
+		return Arrays.equals(booleanObjArray1, booleanObjArray2);
+	}
+
+	/**
+	 * Returns <code>true</code> if the byte arrays are equal.
+	 *
+	 * @param  byteArray1 the first byte array
+	 * @param  byteArray2 the second byte array
+	 * @return <code>true</code> if the byte arrays are equal; <code>false
+	 *         </code>otherwise
+	 */
+	public static boolean equalsSorted(byte[] byteArray1, byte[] byteArray2) {
+		Arrays.sort(byteArray1);
+		Arrays.sort(byteArray2);
+
+		return Arrays.equals(byteArray1, byteArray2);
+	}
+
+	/**
+	 * Returns <code>true</code> if the char arrays are equal.
+	 *
+	 * @param  charArray1 the first char array
+	 * @param  charArray2 the second char array
+	 * @return <code>true</code> if the char arrays are equal; <code>false
+	 *         </code>otherwise
+	 */
+	public static boolean equalsSorted(char[] charArray1, char[] charArray2) {
+		Arrays.sort(charArray1);
+		Arrays.sort(charArray2);
+
+		return Arrays.equals(charArray1, charArray2);
+	}
+
+	/**
+	 * Returns <code>true</code> if the double arrays are equal.
+	 *
+	 * @param  doubleArray1 the first double array
+	 * @param  doubleArray2 the second double array
+	 * @return <code>true</code> if the double arrays are equal; <code>false
+	 *         </code>otherwise
+	 */
+	public static boolean equalsSorted(
+		double[] doubleArray1, double[] doubleArray2) {
+
+		Arrays.sort(doubleArray1);
+		Arrays.sort(doubleArray2);
+
+		return Arrays.equals(doubleArray1, doubleArray2);
+	}
+
+	/**
+	 * Returns <code>true</code> if the float arrays are equal.
+	 *
+	 * @param  floatArray1 the first float array
+	 * @param  floatArray2 the second char array
+	 * @return <code>true</code> if the float arrays are equal; <code>false
+	 *         </code>otherwise
+	 */
+	public static boolean equalsSorted(
+		float[] floatArray1, float[] floatArray2) {
+
+		Arrays.sort(floatArray1);
+		Arrays.sort(floatArray2);
+
+		return Arrays.equals(floatArray1, floatArray2);
+	}
+
+	/**
+	 * Returns <code>true</code> if the int arrays are equal.
+	 *
+	 * @param  intArray1 the first int array
+	 * @param  intArray2 the second int array
+	 * @return <code>true</code> if the int arrays are equal; <code>false</code>
+	 *         otherwise
+	 */
+	public static boolean equalsSorted(int[] intArray1, int[] intArray2) {
+		Arrays.sort(intArray1);
+		Arrays.sort(intArray2);
+
+		return Arrays.equals(intArray1, intArray2);
+	}
+
+	/**
+	 * Returns <code>true</code> if the long arrays are equal.
+	 *
+	 * @param  longArray1 the first long array
+	 * @param  longArray2 the second long array
+	 * @return <code>true</code> if the long arrays are equal; <code>false
+	 *         </code>otherwise
+	 */
+	public static boolean equalsSorted(long[] longArray1, long[] longArray2) {
+		Arrays.sort(longArray1);
+		Arrays.sort(longArray2);
+
+		return Arrays.equals(longArray1, longArray2);
+	}
+
+	/**
+	 * Returns <code>true</code> if the object arrays are equal.
+	 *
+	 * @param  objectArray1 the first object array
+	 * @param  objectArray2 the second object array
+	 * @return <code>true</code> if the object arrays are equal; <code>false
+	 *         </code>otherwise
+	 */
+	public static boolean equalsSorted(Object[] objArray1, Object[] objArray2) {
+		Arrays.sort(objArray1);
+		Arrays.sort(objArray2);
+
+		return Arrays.equals(objArray1, objArray2);
+	}
+
+	/**
+	 * Returns <code>true</code> if the short arrays are equal.
+	 *
+	 * @param  shortArray1 the first short array
+	 * @param  shortArray2 the second short array
+	 * @return <code>true</code> if the short arrays are equal; <code>false
+	 *         </code>otherwise
+	 */
+	public static boolean equalsSorted(
+		short[] shortArray1, short[] shortArray2) {
+
+		Arrays.sort(shortArray1);
+		Arrays.sort(shortArray2);
+
+		return Arrays.equals(shortArray1, shortArray2);
 	}
 
 	/**

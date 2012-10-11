@@ -47,8 +47,8 @@ public class AddPortletBreadcrumbChildPageTest extends BaseTestCase {
 		selenium.waitForVisible("//input[@id='layout_configuration_content']");
 		selenium.sendKeys("//input[@id='layout_configuration_content']",
 			RuntimeVariables.replace("b"));
-		selenium.waitForVisible("//div[@title='Breadcrumb']/p/a");
-		selenium.clickAt("//div[@title='Breadcrumb']/p/a",
+		selenium.waitForVisible("//li[@title='Breadcrumb']/p/a");
+		selenium.clickAt("//li[@title='Breadcrumb']/p/a",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible("//section");
 		assertTrue(selenium.isVisible("//section"));

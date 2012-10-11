@@ -42,10 +42,10 @@ public class AddPortletGMTest extends BaseTestCase {
 		selenium.waitForElementPresent(
 			"//script[contains(@src,'/aui/aui-live-search/aui-live-search-min.js')]");
 		selenium.waitForVisible("//input[@id='layout_configuration_content']");
-		selenium.typeKeys("//input[@id='layout_configuration_content']",
+		selenium.sendKeys("//input[@id='layout_configuration_content']",
 			RuntimeVariables.replace("g"));
-		selenium.waitForVisible("//div[@title='Google Maps']/p/a");
-		selenium.clickAt("//div[@title='Google Maps']/p/a",
+		selenium.waitForVisible("//li[@title='Google Maps']/p/a");
+		selenium.clickAt("//li[@title='Google Maps']/p/a",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible("//section");
 		assertTrue(selenium.isVisible("//section"));

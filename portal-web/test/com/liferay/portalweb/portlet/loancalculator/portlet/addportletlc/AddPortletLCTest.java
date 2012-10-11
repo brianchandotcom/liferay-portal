@@ -45,8 +45,8 @@ public class AddPortletLCTest extends BaseTestCase {
 		selenium.waitForVisible("//input[@id='layout_configuration_content']");
 		selenium.sendKeys("//input[@id='layout_configuration_content']",
 			RuntimeVariables.replace("l"));
-		selenium.waitForVisible("//div[@title='Loan Calculator']/p/a");
-		selenium.clickAt("//div[@title='Loan Calculator']/p/a",
+		selenium.waitForVisible("//li[@title='Loan Calculator']/p/a");
+		selenium.clickAt("//li[@title='Loan Calculator']/p/a",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible("//section");
 		assertTrue(selenium.isVisible("//section"));

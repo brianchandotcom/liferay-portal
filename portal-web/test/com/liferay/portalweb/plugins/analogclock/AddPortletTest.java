@@ -45,8 +45,8 @@ public class AddPortletTest extends BaseTestCase {
 		selenium.waitForVisible("//input[@id='layout_configuration_content']");
 		selenium.sendKeys("//input[@id='layout_configuration_content']",
 			RuntimeVariables.replace("a"));
-		selenium.waitForVisible("//div[@title='Analog Clock']/p/a");
-		selenium.clickAt("//div[@title='Analog Clock']/p/a",
+		selenium.waitForVisible("//li[@title='Analog Clock']/p/a");
+		selenium.clickAt("//li[@title='Analog Clock']/p/a",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible("//section");
 		assertTrue(selenium.isVisible("//section"));

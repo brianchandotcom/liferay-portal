@@ -33,7 +33,7 @@ public class AddPortletScopeLayoutCurrentPageBlogsEntryPage2Test
 		selenium.clickAt("//input[@value='Add Blog Entry']",
 			RuntimeVariables.replace("Add Blog Entry"));
 		selenium.waitForPageToLoad("30000");
-		selenium.type("//input[@id='_33_title']",
+		selenium.sendKeys("//input[@id='_33_title']",
 			RuntimeVariables.replace("Blogs Entry Title"));
 		selenium.waitForElementPresent(
 			"//textarea[@id='_33_editor' and @style='display: none;']");
@@ -43,7 +43,7 @@ public class AddPortletScopeLayoutCurrentPageBlogsEntryPage2Test
 			RuntimeVariables.replace("Source"));
 		selenium.waitForVisible("//a[@class='cke_button_source cke_on']");
 		selenium.waitForVisible("//td[@id='cke_contents__33_editor']/textarea");
-		selenium.type("//td[@id='cke_contents__33_editor']/textarea",
+		selenium.sendKeys("//td[@id='cke_contents__33_editor']/textarea",
 			RuntimeVariables.replace("Blogs Entry Content"));
 		assertEquals(RuntimeVariables.replace("Source"),
 			selenium.getText("//span[.='Source']"));

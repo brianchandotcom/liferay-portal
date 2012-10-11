@@ -34,8 +34,8 @@ public class AddPortletBookingsTest extends BaseTestCase {
 		selenium.clickAt("//a[@id='_145_addApplication']",
 			RuntimeVariables.replace("More"));
 		selenium.waitForElementPresent(
-			"//div[@title='Sample ICEfaces IPC - Bookings']/p/a");
-		selenium.clickAt("//div[@title='Sample ICEfaces IPC - Bookings']/p/a",
+			"//li[@title='Sample ICEfaces IPC - Bookings']/p/a");
+		selenium.clickAt("//li[@title='Sample ICEfaces IPC - Bookings']/p/a",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible("//section");
 		assertTrue(selenium.isVisible("//section"));

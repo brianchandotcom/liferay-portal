@@ -33,8 +33,8 @@ public class AddPortletOpenSocialGadgetTest extends BaseTestCase {
 				"More"));
 		selenium.clickAt("//a[@id='_145_addApplication']",
 			RuntimeVariables.replace("More"));
-		selenium.waitForElementPresent("//div[@title='Hello World!']/p/a");
-		selenium.clickAt("//div[@title='Hello World!']/p/a",
+		selenium.waitForElementPresent("//li[@title='Hello World!']/p/a");
+		selenium.clickAt("//li[@title='Hello World!']/p/a",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForElementPresent("//header/h1/span");
 		assertEquals(RuntimeVariables.replace("Hello World!"),

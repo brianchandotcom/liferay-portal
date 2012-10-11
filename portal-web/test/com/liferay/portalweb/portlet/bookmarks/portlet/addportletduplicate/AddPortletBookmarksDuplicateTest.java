@@ -45,7 +45,7 @@ public class AddPortletBookmarksDuplicateTest extends BaseTestCase {
 		selenium.waitForVisible("//input[@id='layout_configuration_content']");
 		selenium.sendKeys("//input[@id='layout_configuration_content']",
 			RuntimeVariables.replace("b"));
-		selenium.waitForVisible("//div[@title='Bookmarks']");
-		assertFalse(selenium.isVisible("//div[@title='Bookmarks']/p/a"));
+		selenium.waitForVisible("//li[@title='Bookmarks']");
+		assertFalse(selenium.isVisible("//li[@title='Bookmarks']/p/a"));
 	}
 }

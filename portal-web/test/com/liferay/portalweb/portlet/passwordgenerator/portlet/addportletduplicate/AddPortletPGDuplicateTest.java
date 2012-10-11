@@ -45,7 +45,7 @@ public class AddPortletPGDuplicateTest extends BaseTestCase {
 		selenium.waitForVisible("//input[@id='layout_configuration_content']");
 		selenium.sendKeys("//input[@id='layout_configuration_content']",
 			RuntimeVariables.replace("p"));
-		selenium.waitForVisible("//div[@title='Password Generator']");
-		assertFalse(selenium.isVisible("//div[@title='Password Generator']/p/a"));
+		selenium.waitForVisible("//li[@title='Password Generator']");
+		assertFalse(selenium.isVisible("//li[@title='Password Generator']/p/a"));
 	}
 }

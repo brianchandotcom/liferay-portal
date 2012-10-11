@@ -36,8 +36,8 @@ public class AddPortletTest extends BaseTestCase {
 		selenium.clickAt("//a[@id='_145_addApplication']",
 			RuntimeVariables.replace("More"));
 		selenium.waitForElementPresent(
-			"//div[@title='Sample UI Search Container Taglib']/p/a");
-		selenium.clickAt("//div[@title='Sample UI Search Container Taglib']/p/a",
+			"//li[@title='Sample UI Search Container Taglib']/p/a");
+		selenium.clickAt("//li[@title='Sample UI Search Container Taglib']/p/a",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible("//section");
 		assertTrue(selenium.isVisible("//section"));

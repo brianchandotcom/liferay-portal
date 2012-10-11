@@ -41,10 +41,10 @@ public class AddPortletWFTest extends BaseTestCase {
 		selenium.clickAt("//a[@id='_145_addApplication']",
 			RuntimeVariables.replace("More"));
 		selenium.waitForVisible("//input[@id='layout_configuration_content']");
-		selenium.typeKeys("//input[@id='layout_configuration_content']",
+		selenium.sendKeys("//input[@id='layout_configuration_content']",
 			RuntimeVariables.replace("w"));
-		selenium.waitForVisible("//div[@title='Web Form']/p/a");
-		selenium.clickAt("//div[@title='Web Form']/p/a",
+		selenium.waitForVisible("//li[@title='Web Form']/p/a");
+		selenium.clickAt("//li[@title='Web Form']/p/a",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible("//section");
 		assertTrue(selenium.isVisible("//section"));

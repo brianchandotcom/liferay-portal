@@ -32,8 +32,8 @@ public class AddPortletSampleWAPVideoTest extends BaseTestCase {
 				"More"));
 		selenium.clickAt("//a[@id='_145_addApplication']",
 			RuntimeVariables.replace("More"));
-		selenium.waitForElementPresent("//div[@title='Sample WAP Video']/p/a");
-		selenium.clickAt("//div[@title='Sample WAP Video']/p/a",
+		selenium.waitForElementPresent("//li[@title='Sample WAP Video']/p/a");
+		selenium.clickAt("//li[@title='Sample WAP Video']/p/a",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible("//section");
 		assertTrue(selenium.isVisible("//section"));

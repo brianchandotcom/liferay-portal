@@ -35,7 +35,7 @@ public class AddPortletScopeCurrentPageWCWebContentWCDTest extends BaseTestCase 
 		selenium.clickAt("//img[@alt='Add Web Content']",
 			RuntimeVariables.replace("Add Web Content"));
 		selenium.waitForPageToLoad("30000");
-		selenium.type("//input[@id='_15_title_en_US']",
+		selenium.sendKeys("//input[@id='_15_title_en_US']",
 			RuntimeVariables.replace("WC WebContent Title"));
 		selenium.waitForElementPresent(
 			"//textarea[@id='_15__15_structure_el_TextAreaField_content' and @style='display: none;']");
@@ -46,7 +46,7 @@ public class AddPortletScopeCurrentPageWCWebContentWCDTest extends BaseTestCase 
 		selenium.waitForVisible("//a[@class='cke_button_source cke_on']");
 		selenium.waitForVisible(
 			"//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/textarea");
-		selenium.type("//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/textarea",
+		selenium.sendKeys("//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/textarea",
 			RuntimeVariables.replace("WC WebContent Content"));
 		assertEquals(RuntimeVariables.replace("Source"),
 			selenium.getText("//span[.='Source']"));

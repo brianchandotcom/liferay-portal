@@ -41,10 +41,10 @@ public class AddPortletShoppingCouponTest extends BaseTestCase {
 		selenium.clickAt("//a[@id='_145_addApplication']",
 			RuntimeVariables.replace("More"));
 		selenium.waitForVisible("//input[@id='layout_configuration_content']");
-		selenium.typeKeys("//input[@id='layout_configuration_content']",
+		selenium.sendKeys("//input[@id='layout_configuration_content']",
 			RuntimeVariables.replace("s"));
-		selenium.waitForVisible("//div[@title='Shopping']/p/a");
-		selenium.clickAt("//div[@title='Shopping']/p/a",
+		selenium.waitForVisible("//li[@title='Shopping']/p/a");
+		selenium.clickAt("//li[@title='Shopping']/p/a",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible("//section");
 		assertTrue(selenium.isVisible("//section"));

@@ -31,10 +31,10 @@ public class AddPortletTest extends BaseTestCase {
 		selenium.clickAt("_145_addApplication", RuntimeVariables.replace(""));
 		Thread.sleep(5000);
 		selenium.waitForVisible("layout_configuration_content");
-		selenium.typeKeys("layout_configuration_content",
+		selenium.sendKeys("layout_configuration_content",
 			RuntimeVariables.replace("t"));
-		selenium.waitForVisible("//div[@title='Test Workflow']/p/a");
-		selenium.clickAt("//div[@title='Test Workflow']/p/a",
+		selenium.waitForVisible("//li[@title='Test Workflow']/p/a");
+		selenium.clickAt("//li[@title='Test Workflow']/p/a",
 			RuntimeVariables.replace(""));
 		selenium.waitForVisible("//section");
 		assertTrue(selenium.isVisible("//section"));

@@ -33,7 +33,7 @@ public class AddPortletPMDuplicateTest extends BaseTestCase {
 				"More"));
 		selenium.clickAt("//a[@id='_145_addApplication']",
 			RuntimeVariables.replace("More"));
-		selenium.waitForElementPresent("//div[@title='Private Messaging']");
-		assertFalse(selenium.isVisible("//div[@title='Private Messaging']/p/a"));
+		selenium.waitForElementPresent("//li[@title='Private Messaging']");
+		assertFalse(selenium.isVisible("//li[@title='Private Messaging']/p/a"));
 	}
 }

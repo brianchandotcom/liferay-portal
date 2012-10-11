@@ -34,8 +34,8 @@ public class AddPortletTest extends BaseTestCase {
 		selenium.clickAt("//a[@id='_145_addApplication']",
 			RuntimeVariables.replace("More"));
 		selenium.waitForElementPresent(
-			"//div[@title='Today in Christian History']/p/a");
-		selenium.clickAt("//div[@title='Today in Christian History']/p/a",
+			"//li[@title='Today in Christian History']/p/a");
+		selenium.clickAt("//li[@title='Today in Christian History']/p/a",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible("//section");
 		assertTrue(selenium.isVisible("//section"));

@@ -33,9 +33,8 @@ public class AddPortletDLTest extends BaseTestCase {
 				"More"));
 		selenium.clickAt("//a[@id='_145_addApplication']",
 			RuntimeVariables.replace("More"));
-		selenium.waitForElementPresent(
-			"//div[@title='Documents and Media']/p/a");
-		selenium.clickAt("//div[@title='Documents and Media']/p/a",
+		selenium.waitForElementPresent("//li[@title='Documents and Media']/p/a");
+		selenium.clickAt("//li[@title='Documents and Media']/p/a",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForElementPresent("//section");
 		assertTrue(selenium.isElementPresent("//section"));

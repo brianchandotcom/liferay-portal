@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.trash.model.TrashEntry;
 
 import java.util.Date;
@@ -77,6 +78,10 @@ public class TrashUtil {
 		throws PortalException, SystemException {
 
 		return getTrash().getMaxAge(group);
+	}
+
+	public static String getNewName(ThemeDisplay themeDisplay, String oldName) {
+		return getTrash().getNewName(themeDisplay, oldName);
 	}
 
 	public static Trash getTrash() {

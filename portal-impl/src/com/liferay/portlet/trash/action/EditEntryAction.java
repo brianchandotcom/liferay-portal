@@ -21,11 +21,8 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
-import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -36,11 +33,9 @@ import com.liferay.portlet.trash.DuplicateEntryException;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.service.TrashEntryLocalServiceUtil;
 import com.liferay.portlet.trash.service.TrashEntryServiceUtil;
-
-import java.text.Format;
+import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -57,26 +52,9 @@ import org.apache.struts.action.ActionMapping;
 
 /**
  * @author Manuel de la Peña
+ * @author Zsolt Berentey
  */
 public class EditEntryAction extends PortletAction {
-
-	public static String getNewName(ThemeDisplay themeDisplay, String oldName) {
-		Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(
-			themeDisplay.getLocale(), themeDisplay.getTimeZone());
-
-		StringBundler sb = new StringBundler(5);
-
-		sb.append(oldName);
-		sb.append(StringPool.SPACE);
-		sb.append(StringPool.OPEN_PARENTHESIS);
-		sb.append(
-			StringUtil.replace(
-				dateFormatDateTime.format(new Date()), CharPool.SLASH,
-				CharPool.PERIOD));
-		sb.append(StringPool.CLOSE_PARENTHESIS);
-
-		return sb.toString();
-	}
 
 	@Override
 	public void processAction(
@@ -322,7 +300,7 @@ public class EditEntryAction extends PortletAction {
 		if (Validator.isNull(newName)) {
 			String oldName = ParamUtil.getString(actionRequest, "oldName");
 
-			newName = getNewName(themeDisplay, oldName);
+			newName = TrashUtil.getNewName(themeDisplay, oldName);
 		}
 
 		trashHandler.updateTitle(entry.getClassPK(), newName);

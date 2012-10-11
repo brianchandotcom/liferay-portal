@@ -37,7 +37,8 @@ public class WikiNodeTrashHandler extends BaseTrashHandler {
 	public static final String CLASS_NAME = WikiNode.class.getName();
 
 	@Override
-	public void checkDuplicateTrashEntry(TrashEntry trashEntry, String newName)
+	public void checkDuplicateTrashEntry(
+			TrashEntry trashEntry, long containerModelId, String newName)
 		throws PortalException, SystemException {
 
 		WikiNode node = WikiNodeLocalServiceUtil.getNode(

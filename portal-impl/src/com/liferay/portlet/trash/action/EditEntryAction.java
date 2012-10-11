@@ -33,6 +33,7 @@ import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.trash.DuplicateEntryException;
+import com.liferay.portlet.trash.TrashEntryConstants;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.service.TrashEntryLocalServiceUtil;
 import com.liferay.portlet.trash.service.TrashEntryServiceUtil;
@@ -199,7 +200,8 @@ public class EditEntryAction extends PortletAction {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		try {
-			trashHandler.checkDuplicateTrashEntry(entry, newName);
+			trashHandler.checkDuplicateTrashEntry(
+				entry, TrashEntryConstants.DEFAULT_CONTAINER_ID, newName);
 
 			jsonObject.put("success", true);
 		}
@@ -275,7 +277,8 @@ public class EditEntryAction extends PortletAction {
 		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
 			entry.getClassName());
 
-		trashHandler.checkDuplicateTrashEntry(entry, StringPool.BLANK);
+		trashHandler.checkDuplicateTrashEntry(
+			entry, TrashEntryConstants.DEFAULT_CONTAINER_ID, StringPool.BLANK);
 
 		trashHandler.restoreTrashEntry(entry.getClassPK());
 

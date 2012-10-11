@@ -2410,7 +2410,8 @@ public class JournalArticleLocalServiceImpl
 
 		if (addDraftAssetEntry) {
 			assetEntry = assetEntryLocalService.updateEntry(
-				userId, article.getGroupId(), JournalArticle.class.getName(),
+				userId, article.getGroupId(), article.getCreateDate(),
+				article.getModifiedDate(), JournalArticle.class.getName(),
 				article.getPrimaryKey(), article.getUuid(),
 				getClassTypeId(article), assetCategoryIds, assetTagNames, false,
 				null, null, null, ContentTypes.TEXT_HTML, article.getTitle(),
@@ -2423,7 +2424,8 @@ public class JournalArticleLocalServiceImpl
 					article.getResourcePrimKey());
 
 			assetEntry = assetEntryLocalService.updateEntry(
-				userId, article.getGroupId(), JournalArticle.class.getName(),
+				userId, article.getGroupId(), article.getCreateDate(),
+				article.getModifiedDate(), JournalArticle.class.getName(),
 				journalArticleResource.getResourcePrimKey(),
 				journalArticleResource.getUuid(), getClassTypeId(article),
 				assetCategoryIds, assetTagNames, visible, null, null, null,
@@ -2526,6 +2528,8 @@ public class JournalArticleLocalServiceImpl
 						AssetEntry assetEntry =
 							assetEntryLocalService.updateEntry(
 								userId, article.getGroupId(),
+								article.getCreateDate(),
+								article.getModifiedDate(),
 								JournalArticle.class.getName(),
 								article.getResourcePrimKey(), article.getUuid(),
 								getClassTypeId(article), assetCategoryIds,

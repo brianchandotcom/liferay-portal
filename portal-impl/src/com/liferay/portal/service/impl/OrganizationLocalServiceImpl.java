@@ -1534,11 +1534,11 @@ public class OrganizationLocalServiceImpl
 		Group companyGroup = company.getGroup();
 
 		assetEntryLocalService.updateEntry(
-			userId, companyGroup.getGroupId(), Organization.class.getName(),
-			organization.getOrganizationId(), null, 0, assetCategoryIds,
-			assetTagNames, false, null, null, null, null,
-			organization.getName(), StringPool.BLANK, null, null, null, 0, 0,
-			null, false);
+			userId, companyGroup.getGroupId(), null, null,
+			Organization.class.getName(), organization.getOrganizationId(),
+			null, 0, assetCategoryIds, assetTagNames, false, null, null, null,
+			null, organization.getName(), StringPool.BLANK, null, null, null, 0,
+			0, null, false);
 	}
 
 	/**

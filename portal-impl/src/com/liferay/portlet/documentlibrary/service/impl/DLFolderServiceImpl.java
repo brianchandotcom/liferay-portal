@@ -400,6 +400,10 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 		DLFolderPermission.check(
 			getPermissionChecker(), dlFolder, ActionKeys.UPDATE);
 
+		DLFolderPermission.check(
+			getPermissionChecker(), serviceContext.getScopeGroupId(),
+			parentFolderId, ActionKeys.UPDATE);
+
 		boolean hasLock = lockLocalService.hasLock(
 			getUserId(), DLFolder.class.getName(), folderId);
 

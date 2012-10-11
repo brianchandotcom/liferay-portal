@@ -543,6 +543,10 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 		DLFileEntryPermission.check(
 			getPermissionChecker(), fileEntryId, ActionKeys.UPDATE);
 
+		DLFolderPermission.check(
+			getPermissionChecker(), serviceContext.getScopeGroupId(),
+			newFolderId, ActionKeys.UPDATE);
+
 		return dlFileEntryLocalService.moveFileEntry(
 			getUserId(), fileEntryId, newFolderId, serviceContext);
 	}

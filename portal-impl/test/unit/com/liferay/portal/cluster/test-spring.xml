@@ -9,7 +9,7 @@
 	<bean id="portletClassLoader" class="com.liferay.portal.kernel.portlet.PortletClassLoaderUtil" factory-method="getClassLoader" />
 	<bean id="test.bean" class="com.liferay.portal.cluster.TestBean" >
 		<property name="key">
-			<util:constant static-field="com.liferay.portal.cluster.BaseClusterExecutorImplTest.SERIALIZABLE_RETRUN_VALUE" />
+			<util:constant static-field="com.liferay.portal.cluster.BaseClusterExecutorImplTestCase.SERIALIZABLE_RETRUN_VALUE" />
 		</property>
 	</bean>
 </beans>

@@ -164,6 +164,13 @@ public class UserImpl extends UserBaseImpl {
 	public String getDisplayURL(String portalURL, String mainPath)
 		throws PortalException, SystemException {
 
+		return getDisplayURL(portalURL, mainPath, false);
+	}
+
+	public String getDisplayURL(
+			String portalURL, String mainPath, boolean privateLayout)
+		throws PortalException, SystemException {
+
 		if (isDefaultUser()) {
 			return StringPool.BLANK;
 		}
@@ -179,7 +186,13 @@ public class UserImpl extends UserBaseImpl {
 			sb.append(mainPath);
 			sb.append("/my_sites/view?groupId=");
 			sb.append(group.getGroupId());
-			sb.append("&privateLayout=0");
+
+			if (privateLayout) {
+				sb.append("&privateLayout=1");
+			}
+			else {
+				sb.append("&privateLayout=0");
+			}
 
 			return sb.toString();
 		}
@@ -191,7 +204,16 @@ public class UserImpl extends UserBaseImpl {
 		throws PortalException, SystemException {
 
 		return getDisplayURL(
-			themeDisplay.getPortalURL(), themeDisplay.getPathMain());
+			themeDisplay.getPortalURL(), themeDisplay.getPathMain(), false);
+	}
+
+	public String getDisplayURL(
+			ThemeDisplay themeDisplay, boolean privateLayout)
+		throws PortalException, SystemException {
+
+		return getDisplayURL(
+			themeDisplay.getPortalURL(), themeDisplay.getPathMain(),
+			privateLayout);
 	}
 
 	public List<EmailAddress> getEmailAddresses() throws SystemException {

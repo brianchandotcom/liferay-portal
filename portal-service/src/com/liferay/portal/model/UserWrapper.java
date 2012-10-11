@@ -1232,11 +1232,25 @@ public class UserWrapper implements User, ModelWrapper<User> {
 		return _user.getDisplayURL(portalURL, mainPath);
 	}
 
+	public java.lang.String getDisplayURL(java.lang.String portalURL,
+		java.lang.String mainPath, boolean publicLayout)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _user.getDisplayURL(portalURL, mainPath, publicLayout);
+	}
+
 	public java.lang.String getDisplayURL(
 		com.liferay.portal.theme.ThemeDisplay themeDisplay)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _user.getDisplayURL(themeDisplay);
+	}
+
+	public java.lang.String getDisplayURL(
+		com.liferay.portal.theme.ThemeDisplay themeDisplay, boolean publicLayout)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _user.getDisplayURL(themeDisplay, publicLayout);
 	}
 
 	public java.util.List<com.liferay.portal.model.EmailAddress> getEmailAddresses()

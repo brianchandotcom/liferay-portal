@@ -55,8 +55,18 @@ public interface User extends UserModel, PersistedModel {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	public java.lang.String getDisplayURL(java.lang.String portalURL,
+		java.lang.String mainPath, boolean publicLayout)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	public java.lang.String getDisplayURL(
 		com.liferay.portal.theme.ThemeDisplay themeDisplay)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public java.lang.String getDisplayURL(
+		com.liferay.portal.theme.ThemeDisplay themeDisplay, boolean publicLayout)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 

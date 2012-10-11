@@ -316,7 +316,7 @@ public class LayoutSetLocalServiceStagingAdvice
 		}
 
 		if (!LayoutStagingUtil.isBranchingLayoutSet(
-			group, layoutSet.getPrivateLayout())) {
+				group, layoutSet.getPrivateLayout())) {
 
 			return layoutSet;
 		}

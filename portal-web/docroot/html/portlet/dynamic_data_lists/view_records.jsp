@@ -75,7 +75,7 @@ portletURL.setParameter("recordSetId", String.valueOf(recordSet.getRecordSetId()
 		<liferay-ui:search-form
 			page="/html/portlet/dynamic_data_lists/record_search.jsp"
 			searchContainer="<%= searchContainer %>"
-			showAddButton="<%= showAddRecordButton%>"
+			showAddButton="<%= showAddRecordButton %>"
 		/>
 
 		<liferay-ui:search-container-results>

@@ -783,7 +783,7 @@ public class JournalArticleLocalServiceImpl
 		throws PortalException, SystemException {
 
 		for (JournalArticle article :
-			journalArticlePersistence.findByG_F(groupId, folderId)) {
+				journalArticlePersistence.findByG_F(groupId, folderId)) {
 
 			deleteArticle(article, null, null);
 		}

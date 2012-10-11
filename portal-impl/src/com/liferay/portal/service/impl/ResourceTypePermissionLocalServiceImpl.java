@@ -117,7 +117,7 @@ public class ResourceTypePermissionLocalServiceImpl
 				companyId, name, roleId);
 
 		for (ResourceTypePermission resourceTypePermission :
-			resourceTypePermissions) {
+				resourceTypePermissions) {
 
 			long actionIdsLong = resourceTypePermission.getActionIds();
 			long bitwiseValue = resourceAction.getBitwiseValue();

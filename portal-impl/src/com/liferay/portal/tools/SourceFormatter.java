@@ -1758,6 +1758,18 @@ public class SourceFormatter {
 								"line break: " + fileName + " " + lineCount);
 						}
 
+						if (((previousLine.endsWith(StringPool.COLON) &&
+							  previousLine.contains(StringPool.TAB + "for ")) ||
+							 (previousLine.endsWith(
+								 StringPool.OPEN_PARENTHESIS) &&
+							  previousLine.contains(StringPool.TAB + "if "))) &&
+							((previousLineTabCount + 2) != lineTabCount)) {
+
+							_sourceFormatterHelper.printError(
+								fileName,
+								"line break: " + fileName + " " + lineCount);
+						}
+
 						if (previousLine.endsWith(StringPool.PERIOD)) {
 							int x = trimmedLine.indexOf(
 								StringPool.OPEN_PARENTHESIS);
@@ -2107,6 +2119,16 @@ public class SourceFormatter {
 
 			String trimmedLine = StringUtil.trimLeading(line);
 			String trimmedPreviousLine = StringUtil.trimLeading(previousLine);
+
+			if (!trimmedLine.equals("%>") && line.contains("%>") &&
+				!line.contains("--%>") && !line.contains(" %>")) {
+
+				line = StringUtil.replace(line, "%>", " %>");
+			}
+
+			if (line.contains("<%=") && !line.contains("<%= ")) {
+				line = StringUtil.replace(line, "<%=", "<%= ");
+			}
 
 			if (trimmedPreviousLine.equals("%>") && Validator.isNotNull(line) &&
 				!trimmedLine.equals("-->")) {

@@ -30,7 +30,7 @@
 				String styleClass = "taglib-social-bookmark-" + typesArray[i];
 			%>
 
-				<li class="<%= styleClass%>">
+				<li class="<%= styleClass %>">
 					<liferay-ui:social-bookmark contentId="<%= contentId %>" target="<%= target %>" title="<%= title %>" type="<%= typesArray[i] %>" url="<%= url %>" />
 				</li>
 

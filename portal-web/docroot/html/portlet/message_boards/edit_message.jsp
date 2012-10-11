@@ -453,7 +453,7 @@ if (Validator.isNull(redirect)) {
 			<aui:button onClick='<%= renderResponse.getNamespace() + "manageAttachments(" + !attachments + ");" %>' value='<%= ((attachments) ? "remove" : "attach") + "-files" %>' />
 		</c:if>
 
-		<c:if test="<%=themeDisplay.isSignedIn() %>">
+		<c:if test="<%= themeDisplay.isSignedIn() %>">
 			<aui:button name="saveButton" onClick='<%= renderResponse.getNamespace() + "saveMessage(true);" %>' value="<%= saveButtonLabel %>" />
 		</c:if>
 

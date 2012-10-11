@@ -228,7 +228,7 @@ public class JSONWebServiceActionsManagerImpl
 			JSONWebServiceActionConfig jsonWebServiceActionConfig = itr.next();
 
 			if (servletContextPath.equals(
-				jsonWebServiceActionConfig.getServletContextPath())) {
+					jsonWebServiceActionConfig.getServletContextPath())) {
 
 				itr.remove();
 

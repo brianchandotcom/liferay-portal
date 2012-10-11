@@ -325,7 +325,7 @@ public class TrashImpl implements Trash {
 		}
 
 		if (!DLStoreUtil.hasDirectory(
-			companyId, repositoryId, deletedAttachmentsDir)) {
+				companyId, repositoryId, deletedAttachmentsDir)) {
 
 			DLStoreUtil.addDirectory(
 				companyId, repositoryId, deletedAttachmentsDir);

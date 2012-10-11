@@ -51,8 +51,8 @@ public class DDMTemplatePermission {
 		String actionId) {
 
 		if (permissionChecker.hasOwnerPermission(
-			template.getCompanyId(), DDMTemplate.class.getName(),
-			template.getTemplateId(), template.getUserId(), actionId)) {
+				template.getCompanyId(), DDMTemplate.class.getName(),
+				template.getTemplateId(), template.getUserId(), actionId)) {
 
 			return true;
 		}

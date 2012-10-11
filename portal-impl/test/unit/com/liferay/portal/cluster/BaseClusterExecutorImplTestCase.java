@@ -379,8 +379,8 @@ public abstract class BaseClusterExecutorImplTestCase
 
 			try {
 				if (message.getSrc().equals(
-					_clusterExecutorImpl.getLocalClusterNodeAddress().
-						getRealAddress())) {
+						_clusterExecutorImpl.getLocalClusterNodeAddress().
+							getRealAddress())) {
 
 					if (object instanceof ClusterRequest) {
 						_localRequestExchanger.exchange((ClusterRequest)object);

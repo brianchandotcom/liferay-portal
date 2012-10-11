@@ -391,14 +391,24 @@ public class EditServerAction extends PortletAction {
 				return;
 			}
 
+			Set<String> searchEngineIds = new HashSet<String>();
+
+			for (Indexer indexer : indexers) {
+				searchEngineIds.add(indexer.getSearchEngineId());
+			}
+
+			for (String searchEngineId : searchEngineIds) {
+				for (long companyId : companyIds) {
+					SearchEngineUtil.deletePortletDocuments(
+						searchEngineId, companyId, portletId);
+				}
+			}
+
 			for (Indexer indexer : indexers) {
 				for (long companyId : companyIds) {
 					ShardUtil.pushCompanyService(companyId);
 
 					try {
-						SearchEngineUtil.deletePortletDocuments(
-							indexer.getSearchEngineId(), companyId, portletId);
-
 						indexer.reindex(
 							new String[] {String.valueOf(companyId)});
 

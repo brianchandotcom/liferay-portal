@@ -128,7 +128,7 @@ if (type.equals("html")) {
 
 		<div class="central-author">
 			<c:choose>
-				<c:when test="<%= intermediatePages.size() > 1%>">
+				<c:when test="<%= intermediatePages.size() > 1 %>">
 
 					<%
 					StringBundler sb = new StringBundler(intermediatePages.size() * 7);

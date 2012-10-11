@@ -130,7 +130,7 @@ String[][] categorySections = {mainSections};
 	<aui:input name="layoutId" type="hidden" value="<%= layoutId %>" />
 	<aui:input name="<%= PortletDataHandlerKeys.SELECTED_LAYOUTS %>" type="hidden" />
 
-	<c:if test="<%= layoutRevision != null && !incomplete%>">
+	<c:if test="<%= layoutRevision != null && !incomplete %>">
 		<aui:input name="layoutSetBranchId" type="hidden" value="<%= layoutRevision.getLayoutSetBranchId() %>" />
 	</c:if>
 

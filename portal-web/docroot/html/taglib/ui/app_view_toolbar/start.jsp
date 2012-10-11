@@ -24,7 +24,7 @@ String searchJsp = (String)request.getAttribute("liferay-ui:app_view_toolbar:sea
 <div class="app-view-taglib lfr-header-row">
 	<div class="lfr-header-row-content">
 		<c:if test="<%= Validator.isNotNull(searchJsp) %>">
-			<liferay-util:include page="<%= searchJsp%>" />
+			<liferay-util:include page="<%= searchJsp %>" />
 		</c:if>
 
 		<div class="toolbar">

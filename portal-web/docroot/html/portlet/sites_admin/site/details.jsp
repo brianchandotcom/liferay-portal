@@ -84,7 +84,7 @@ if (showPrototypes && (group != null)) {
 		<liferay-ui:message key="the-site-cannot-be-deleted-or-deactivated-because-you-are-accessing-the-site" />
 	</c:if>
 
-	<c:if test="<%=rge.getType() == RequiredGroupException.PARENT_GROUP%>">
+	<c:if test="<%= rge.getType() == RequiredGroupException.PARENT_GROUP %>">
 		<liferay-ui:message key="you-cannot-delete-sites-that-have-subsites" />
 	</c:if>
 

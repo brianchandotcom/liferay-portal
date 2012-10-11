@@ -1,0 +1,90 @@
+<%--
+/**
+ * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+
+<liferay-ui:search-container
+	rowChecker="<%= new RowChecker(renderResponse) %>"
+	searchContainer="<%= new GroupSearch(renderRequest, portletURL) %>"
+>
+	<aui:input name="deleteGroupIds" type="hidden" />
+	<aui:input disabled="<%= true %>" name="sitesRedirect" type="hidden" value="<%= portletURL.toString() %>" />
+
+	<%
+	GroupSearchTerms searchTerms = (GroupSearchTerms)searchContainer.getSearchTerms();
+
+	LinkedHashMap groupParams = new LinkedHashMap();
+
+	groupParams.put("site", Boolean.TRUE);
+
+	if (!permissionChecker.isCompanyAdmin()) {
+		groupParams.put("usersGroups", new Long(user.getUserId()));
+		//groupParams.put("active", Boolean.TRUE);
+	}
+	%>
+
+	<liferay-ui:search-container-results>
+
+		<%
+		if (searchTerms.isAdvancedSearch()) {
+			results = GroupLocalServiceUtil.search(company.getCompanyId(), classNameIds, searchTerms.getName(), searchTerms.getDescription(), groupParams, searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+			total = GroupLocalServiceUtil.searchCount(company.getCompanyId(), classNameIds, searchTerms.getName(), searchTerms.getDescription(), groupParams, searchTerms.isAndOperator());
+		}
+		else {
+			results = GroupLocalServiceUtil.search(company.getCompanyId(), classNameIds, searchTerms.getKeywords(), groupParams, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+			total = GroupLocalServiceUtil.searchCount(company.getCompanyId(), classNameIds, searchTerms.getKeywords(), groupParams);
+		}
+
+		pageContext.setAttribute("results", results);
+		pageContext.setAttribute("total", total);
+		%>
+
+	</liferay-ui:search-container-results>
+
+	<liferay-ui:search-form
+		page="/html/portlet/users_admin/group_search.jsp"
+		searchContainer="<%= searchContainer %>"
+		showAddButton="<%= false %>"
+	/>
+
+	<c:if test="<%= !results.isEmpty() %>">
+		<aui:button onClick='<%= renderResponse.getNamespace() + "deleteSites();" %>' value="delete" />
+	</c:if>
+
+	<liferay-ui:search-container-row
+		className="com.liferay.portal.model.Group"
+		escapedModel="<%= true %>"
+		keyProperty="groupId"
+		modelVar="curGroup"
+		rowIdProperty="friendlyURL"
+		rowVar="row"
+	>
+		<liferay-portlet:renderURL varImpl="rowURL">
+			<portlet:param name="struts_action" value="/sites_admin/view" />
+			<portlet:param name="groupId" value="<%= String.valueOf(curGroup.getGroupId()) %>" />
+			<portlet:param name="sitesListView" value="<%= SiteConstants.LIST_VIEW_TREE %>" />
+		</liferay-portlet:renderURL>
+
+		<%
+		if (!GroupPermissionUtil.contains(permissionChecker, curGroup, ActionKeys.UPDATE)) {
+			rowURL = null;
+		}
+		%>
+
+		<%@ include file="/html/portlet/sites_admin/site_columns.jspf" %>
+	</liferay-ui:search-container-row>
+
+	<liferay-ui:search-iterator />
+</liferay-ui:search-container>

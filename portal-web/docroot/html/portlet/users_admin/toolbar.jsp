@@ -17,18 +17,42 @@
 <%@ include file="/html/portlet/users_admin/init.jsp" %>
 
 <%
-String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view");
+String usersListView = ParamUtil.get(request, "usersListView", UserConstants.LIST_VIEW_TREE);
+String toolbarItem = ParamUtil.getString(request, "toolbarItem", "browse");
 %>
 
 <div class="lfr-portlet-toolbar">
-	<portlet:renderURL var="viewUsersURL">
+	<portlet:renderURL var="viewUsersTreeURL">
 		<portlet:param name="struts_action" value="/users_admin/view" />
 		<portlet:param name="usersListView" value="<%= UserConstants.LIST_VIEW_TREE %>" />
 		<portlet:param name="saveUsersListView" value="<%= Boolean.TRUE.toString() %>" />
+		<portlet:param name="toolbarItem" value="browse" />
 	</portlet:renderURL>
 
-	<span class="lfr-toolbar-button view-button <%= toolbarItem.equals("view-all") ? "current" : StringPool.BLANK %>">
-		<a href="<%= viewUsersURL %>"><liferay-ui:message key="view-all" /></a>
+	<span class="lfr-toolbar-button view-button <%= toolbarItem.equals("browse") ? "current" : StringPool.BLANK %>">
+		<a href="<%= viewUsersTreeURL %>"><liferay-ui:message key="browse" /></a>
+	</span>
+
+	<portlet:renderURL var="viewOrganizationsFlatURL">
+		<portlet:param name="struts_action" value="/users_admin/view" />
+		<portlet:param name="usersListView" value="<%= UserConstants.LIST_VIEW_FLAT_ORGANIZATIONS %>" />
+		<portlet:param name="saveUsersListView" value="<%= Boolean.TRUE.toString() %>" />
+		<portlet:param name="toolbarItem" value="view-all-organizations" />
+	</portlet:renderURL>
+
+	<span class="lfr-toolbar-button view-button <%= toolbarItem.equals("view-all-organizations") ? "current" : StringPool.BLANK %>">
+		<a href="<%= viewOrganizationsFlatURL %>"><liferay-ui:message key="view-organizations" /></a>
+	</span>
+
+	<portlet:renderURL var="viewUsersFlatURL">
+		<portlet:param name="struts_action" value="/users_admin/view" />
+		<portlet:param name="usersListView" value="<%= UserConstants.LIST_VIEW_FLAT_USERS %>" />
+		<portlet:param name="saveUsersListView" value="<%= Boolean.TRUE.toString() %>" />
+		<portlet:param name="toolbarItem" value="view-all-users" />
+	</portlet:renderURL>
+
+	<span class="lfr-toolbar-button view-button <%= toolbarItem.equals("view-all-users") ? "current" : StringPool.BLANK %>">
+		<a href="<%= viewUsersFlatURL %>"><liferay-ui:message key="view-users" /></a>
 	</span>
 
 	<%
@@ -38,6 +62,11 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view");
 
 	<c:if test="<%= hasAddOrganizationPermission || hasAddUserPermission %>">
 		<liferay-ui:icon-menu align="left" cssClass='<%= "lfr-toolbar-button add-button " + (toolbarItem.equals("add") ? "current" : StringPool.BLANK) %>' direction="down" extended="<%= false %>" icon='<%= themeDisplay.getPathThemeImages() + "/common/add.png" %>' message="add" showWhenSingleIcon="<%= true %>">
+			<portlet:renderURL var="viewUsersURL">
+				<portlet:param name="struts_action" value="/users_admin/view" />
+				<portlet:param name="sitesListView" value="<%= usersListView %>" />
+			</portlet:renderURL>
+
 			<c:if test="<%= hasAddUserPermission %>">
 				<portlet:renderURL var="addUserURL">
 					<portlet:param name="struts_action" value="/users_admin/edit_user" />

@@ -83,6 +83,43 @@ public class UpgradeSubscription extends UpgradeProcess {
 		}
 	}
 
+	protected boolean hasSubscription(
+			long companyId, long userId, long classNameId, long classPK)
+		throws Exception {
+
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			ps = con.prepareStatement(
+				"select count(*) from Subscription where companyId = ? and " +
+					"userId = ? and classNameId = ? and classPK = ?");
+
+			ps.setLong(1, companyId);
+			ps.setLong(2, userId);
+			ps.setLong(3, classNameId);
+			ps.setLong(4, classPK);
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				int count = rs.getInt(1);
+
+				if (count > 0) {
+					return true;
+				}
+			}
+
+			return false;
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
+	}
+
 	protected void updateMBMessages(long companyId) throws Exception {
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -113,6 +150,10 @@ public class UpgradeSubscription extends UpgradeProcess {
 				Timestamp modifiedDate = rs.getTimestamp("modifiedDate");
 				long classNameId = rs.getLong("classNameId");
 				long classPK = rs.getLong("classPK");
+
+				if (hasSubscription(companyId, userId, classNameId, classPK)) {
+					continue;
+				}
 
 				long subscriptionId = increment();
 				String frequency = "instant";

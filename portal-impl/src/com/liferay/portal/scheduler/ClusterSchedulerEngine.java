@@ -864,9 +864,13 @@ public class ClusterSchedulerEngine
 				if (StorageType.MEMORY_CLUSTERED ==
 						schedulerResponse.getStorageType()) {
 
+					String groupName =
+						StorageType.MEMORY_CLUSTERED.toString().concat(
+							StringPool.POUND).concat(
+								schedulerResponse.getGroupName());
+
 					_schedulerEngine.delete(
-						schedulerResponse.getJobName(),
-						schedulerResponse.getGroupName());
+						schedulerResponse.getJobName(), groupName);
 				}
 			}
 

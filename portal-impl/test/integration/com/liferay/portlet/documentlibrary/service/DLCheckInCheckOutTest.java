@@ -92,25 +92,33 @@ public class DLCheckInCheckOutTest {
 	public void testCheckIn() throws Exception {
 		ServiceContext serviceContext = new ServiceContext();
 
-		DLAppServiceUtil.checkOutFileEntry(
-			_fileEntry.getFileEntryId(), serviceContext);
+		for (int i = 0; i < 2; i++) {
+			DLAppServiceUtil.checkOutFileEntry(
+				_fileEntry.getFileEntryId(), serviceContext);
 
-		FileVersion fileVersion = _fileEntry.getLatestFileVersion();
+			FileVersion fileVersion = _fileEntry.getLatestFileVersion();
 
-		Assert.assertEquals("PWC", fileVersion.getVersion());
+			Assert.assertEquals("PWC", fileVersion.getVersion());
 
-		getAssetEntry(fileVersion.getFileVersionId(), true);
+			getAssetEntry(fileVersion.getFileVersionId(), true);
 
-		DLAppServiceUtil.checkInFileEntry(
-			_fileEntry.getFileEntryId(), false, StringPool.BLANK,
-			_serviceContext);
+			if (i == 1) {
+				updateFileEntry(_fileEntry.getFileEntryId(), _serviceContext);
+			}
 
-		FileEntry fileEntry = DLAppServiceUtil.getFileEntry(
-			_fileEntry.getFileEntryId());
+			DLAppServiceUtil.checkInFileEntry(
+				_fileEntry.getFileEntryId(), false, StringPool.BLANK,
+				_serviceContext);
 
-		Assert.assertEquals("1.1", fileEntry.getVersion());
+			FileEntry fileEntry = DLAppServiceUtil.getFileEntry(
+				_fileEntry.getFileEntryId());
 
-		getAssetEntry(fileVersion.getFileVersionId(), false);
+			Assert.assertEquals("1." + i, fileEntry.getVersion());
+
+			fileVersion = fileEntry.getFileVersion();
+
+			getAssetEntry(fileVersion.getFileVersionId(), false);
+		}
 	}
 
 	@Test
@@ -223,12 +231,14 @@ public class DLCheckInCheckOutTest {
 			long fileEntryId, ServiceContext serviceContext)
 		throws Exception {
 
+		String newContent = _TEST_CONTENT + "\n" + System.currentTimeMillis();
+
 		InputStream inputStream = new UnsyncByteArrayInputStream(
-			_TEST_CONTENT.getBytes());
+			newContent.getBytes());
 
 		return DLAppServiceUtil.updateFileEntry(
 			fileEntryId, "test1.txt", ContentTypes.TEXT_PLAIN, "test1.txt",
-			null, null, false, inputStream, _TEST_CONTENT.length(),
+			null, null, false, inputStream, newContent.length(),
 			serviceContext);
 	}
 

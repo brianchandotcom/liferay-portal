@@ -429,10 +429,7 @@ AUI.add(
 
 										instance._merge(fromCategoryId, toCategoryId, vocabularyId);
 
-										var dragNode = tree.dragNode;
-										var dropNode = tree.dropNode;
-
-										instance._categoriesTreeView.reinsertChild(dragNode, dropNode);
+										instance._categoriesTreeView.reinsertChild(tree.dragNode, tree.dropNode);
 									},
 									dropFailed: function(event) {
 										var tree = event.tree;
@@ -453,7 +450,7 @@ AUI.add(
 											errorKey = Liferay.Language.get('changing-the-order-of-the-categories-is-not-supported');
 										}
 										else {
-											errorkey = Liferay.Language.get('there-is-another-category-with-the-same-name-and-the-same-parent');
+											errorKey = Liferay.Language.get('there-is-another-category-with-the-same-name-and-the-same-parent');
 										}
 
 										instance._sendMessage(MESSAGE_TYPE_ERROR, errorKey);
@@ -468,10 +465,7 @@ AUI.add(
 
 										instance._merge(fromCategoryId, toCategoryId, vocabularyId);
 
-										var dragNode = tree.dragNode;
-										var dropNode = parentNode;
-
-										instance._categoriesTreeView.reinsertChild(dragNode, dropNode);
+										instance._categoriesTreeView.reinsertChild(tree.dragNode, parentNode);
 									}
 								},
 								type: 'normal'
@@ -2618,41 +2612,45 @@ AUI.add(
 
 				prototype: {
 					reinsertChild: function(dragNode, dropNode) {
+						var instance = this;
+
 						var categoryName = dragNode.get(STR_LABEL);
 
 						dropNode.removeChild(dragNode);
 
 						var children = dropNode.get('children');
 
-						if (children.length > 0) {
-							var result = A.some(
+						if (children.length) {
+							var result;
+
+							var method = 'insertBefore';
+
+							AArray.some(
 								children,
 								function(item, index, collection) {
 									if (item.get(STR_LABEL) > categoryName) {
-										item.insertBefore(dragNode);
-
-										return true;
+										result = item;
 									}
 									else {
-										var nextItem = collection[index];
+										var nextItem = collection[index + 1];
 
-										if (nextItem != 'undefined') {
-											if (nextItem.get(STR_LABEL) > categoryName) {
-												nextItem.insertBefore(dragNode);
+										if (!nextItem) {
+											result = item;
 
-												return true;
-											}
+											method = 'insertAfter';
 										}
-										else {
-											item.insertAfter(dragNode);
-
-											return true;
+										else if (nextItem.get(STR_LABEL) > categoryName) {
+											result = nextItem;
 										}
 									}
 
-									return false;
+									return result;
 								}
 							);
+
+							if (result) {
+								result[method](dragNode);
+							}
 						}
 						else {
 							dropNode.append(dragNode);

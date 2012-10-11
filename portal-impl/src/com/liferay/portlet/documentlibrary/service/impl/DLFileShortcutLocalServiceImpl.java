@@ -278,7 +278,8 @@ public class DLFileShortcutLocalServiceImpl
 			fileShortcut.getToFileEntryId());
 
 		assetEntryLocalService.updateEntry(
-			userId, fileShortcut.getGroupId(), DLFileShortcut.class.getName(),
+			userId, fileShortcut.getGroupId(), fileShortcut.getCreateDate(),
+			fileShortcut.getModifiedDate(), DLFileShortcut.class.getName(),
 			fileShortcut.getFileShortcutId(), fileShortcut.getUuid(), 0,
 			assetCategoryIds, assetTagNames, false, null, null, null,
 			fileEntry.getMimeType(), fileEntry.getTitle(),

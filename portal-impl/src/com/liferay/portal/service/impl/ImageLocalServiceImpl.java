@@ -15,6 +15,7 @@
 package com.liferay.portal.service.impl;
 
 import com.liferay.portal.ImageTypeException;
+import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.image.HookFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -159,7 +160,11 @@ public class ImageLocalServiceImpl extends ImageLocalServiceBaseImpl {
 
 				Hook hook = HookFactory.getInstance();
 
-				hook.deleteImage(image);
+				try {
+					hook.deleteImage(image);
+				}
+				catch (NoSuchModelException nsme) {
+				}
 			}
 
 			return image;

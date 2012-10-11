@@ -2866,7 +2866,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		assetEntryLocalService.updateEntry(
 			userId, companyGroup.getGroupId(), Group.class.getName(),
 			group.getGroupId(), null, 0, assetCategoryIds, assetTagNames, false,
-			null, null, null, null, group.getDescriptiveName(),
+			null, null, null, null, null, null, group.getDescriptiveName(),
 			group.getDescription(), null, null, null, 0, 0, null, false);
 	}
 

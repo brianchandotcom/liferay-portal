@@ -92,6 +92,20 @@ public interface AssetEntryService extends BaseService {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	public com.liferay.portlet.asset.model.AssetEntry updateEntry(
+		long groupId, java.lang.String className, long classPK,
+		java.lang.String classUuid, long classTypeId, long[] categoryIds,
+		java.lang.String[] tagNames, boolean visible,
+		java.util.Date createDate, java.util.Date modifiedDate,
+		java.util.Date startDate, java.util.Date endDate,
+		java.util.Date expirationDate, java.lang.String mimeType,
+		java.lang.String title, java.lang.String description,
+		java.lang.String summary, java.lang.String url,
+		java.lang.String layoutUuid, int height, int width,
+		java.lang.Integer priority, boolean sync)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	/**
 	* @deprecated {@link #updateEntry(long, String, long, String, long, long[],
 	String[], boolean, Date, Date, Date, String, String, String,
@@ -110,6 +124,12 @@ public interface AssetEntryService extends BaseService {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	/**
+	* @deprecated {@link #updateEntry(long, String, long, String, long,
+	long[], String[], boolean, Date, Date, Date, Date, Date,
+	String, String, String, String, String, String, int, int,
+	Integer, boolean)}
+	*/
 	public com.liferay.portlet.asset.model.AssetEntry updateEntry(
 		long groupId, java.lang.String className, long classPK,
 		java.lang.String classUuid, long classTypeId, long[] categoryIds,

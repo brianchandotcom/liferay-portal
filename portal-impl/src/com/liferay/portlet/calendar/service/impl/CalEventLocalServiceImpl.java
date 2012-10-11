@@ -743,9 +743,9 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 		AssetEntry assetEntry = assetEntryLocalService.updateEntry(
 			userId, event.getGroupId(), CalEvent.class.getName(),
 			event.getEventId(), event.getUuid(), 0, assetCategoryIds,
-			assetTagNames, true, null, null, null, ContentTypes.TEXT_HTML,
-			event.getTitle(), event.getDescription(), null, null, null, 0, 0,
-			null, false);
+			assetTagNames, true, event.getCreateDate(), event.getModifiedDate(),
+			null, null, null, ContentTypes.TEXT_HTML, event.getTitle(),
+			event.getDescription(), null, null, null, 0, 0, null, false);
 
 		assetLinkLocalService.updateLinks(
 			userId, assetEntry.getEntryId(), assetLinkEntryIds,

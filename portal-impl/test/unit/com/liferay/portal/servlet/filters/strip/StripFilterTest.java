@@ -220,8 +220,7 @@ public class StripFilterTest extends PowerMockito {
 			charBuffer, stringWriter, "script".toCharArray());
 
 		Assert.assertEquals(
-			"script>/*<![CDATA[*/" + minifiedCode + "/*]]>*/</script>",
-			stringWriter.toString());
+			"script>" + minifiedCode + "</script>", stringWriter.toString());
 		Assert.assertEquals(code.length() + 16, charBuffer.position());
 
 		// Minifier code with trailing spaces
@@ -233,8 +232,7 @@ public class StripFilterTest extends PowerMockito {
 			charBuffer, stringWriter, "script".toCharArray());
 
 		Assert.assertEquals(
-			"script>/*<![CDATA[*/" + minifiedCode + "/*]]>*/</script> ",
-			stringWriter.toString());
+			"script>" + minifiedCode + "</script> ", stringWriter.toString());
 		Assert.assertEquals(code.length() + 20, charBuffer.position());
 
 		verifyStatic(Mockito.times(5));

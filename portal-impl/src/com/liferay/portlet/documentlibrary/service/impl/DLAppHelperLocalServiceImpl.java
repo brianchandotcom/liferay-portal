@@ -416,10 +416,9 @@ public class DLAppHelperLocalServiceImpl
 				serviceContext);
 
 			if (DLAppHelperThreadLocal.isEnabled()) {
-				return new LiferayFileEntry(dlFileEntry);
+				dlFileRankLocalService.enableFileRanks(
+					fileEntry.getFileEntryId());
 			}
-
-			dlFileRankLocalService.enableFileRanks(fileEntry.getFileEntryId());
 
 			return new LiferayFileEntry(dlFileEntry);
 		}
@@ -429,18 +428,17 @@ public class DLAppHelperLocalServiceImpl
 				new HashMap<String, Serializable>(), serviceContext);
 
 			if (DLAppHelperThreadLocal.isEnabled()) {
-				return dlAppService.moveFileEntry(
-					fileEntry.getFileEntryId(), newFolderId, serviceContext);
+
+				// File rank
+
+				dlFileRankLocalService.enableFileRanks(
+					fileEntry.getFileEntryId());
+
+				// File shortcut
+
+				dlFileShortcutLocalService.enableFileShortcuts(
+					fileEntry.getFileEntryId());
 			}
-
-			// File rank
-
-			dlFileRankLocalService.enableFileRanks(fileEntry.getFileEntryId());
-
-			// File shortcut
-
-			dlFileShortcutLocalService.enableFileShortcuts(
-				fileEntry.getFileEntryId());
 
 			// App helper
 
@@ -858,7 +856,7 @@ public class DLAppHelperLocalServiceImpl
 			FileVersion destinationFileVersion, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		if (DLAppHelperThreadLocal.isEnabled()) {
+		if (!DLAppHelperThreadLocal.isEnabled()) {
 			return;
 		}
 

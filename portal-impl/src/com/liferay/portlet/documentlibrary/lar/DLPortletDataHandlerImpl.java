@@ -699,6 +699,14 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 					repositoryEntry.getMappedId(), serviceContext);
 		}
 
+		Map<Long, Long> repositoryEntryIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				RepositoryEntry.class);
+
+		repositoryEntryIds.put(
+			repositoryEntry.getRepositoryEntryId(),
+			importedRepositoryEntry.getRepositoryEntryId());
+
 		portletDataContext.importClassedModel(
 			repositoryEntry, importedRepositoryEntry, _NAMESPACE);
 	}
@@ -1629,6 +1637,8 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 				userId, portletDataContext.getScopeGroupId(), parentFolderId,
 				name, folder.getDescription(), serviceContext);
 		}
+
+		folderIds.put(folder.getFolderId(), importedFolder.getFolderId());
 
 		importFolderFileEntryTypes(
 			portletDataContext, folderElement, importedFolder, serviceContext);

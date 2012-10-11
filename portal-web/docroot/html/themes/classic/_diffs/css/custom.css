@@ -42,7 +42,7 @@ hr, .separator {
 	height: auto;
 	margin-top: 1.4em;
 	position: relative;
-	z-index: 201;
+	z-index: 300;
 }
 
 .site-title .site-name {
@@ -152,7 +152,7 @@ hr, .separator {
 }
 
 #navigation {
-	li .hover .child-menu {
+	li.hover .child-menu {
 		background: #1E2529;
 		display: block;
 		position: absolute;

@@ -2120,6 +2120,16 @@ public class SourceFormatter {
 			String trimmedLine = StringUtil.trimLeading(line);
 			String trimmedPreviousLine = StringUtil.trimLeading(previousLine);
 
+			if (!trimmedLine.equals("%>") && line.contains("%>") &&
+				!line.contains("--%>") && !line.contains(" %>")) {
+
+				line = StringUtil.replace(line, "%>", " %>");
+			}
+
+			if (line.contains("<%=") && !line.contains("<%= ")) {
+				line = StringUtil.replace(line, "<%=", "<%= ");
+			}
+
 			if (trimmedPreviousLine.equals("%>") && Validator.isNotNull(line) &&
 				!trimmedLine.equals("-->")) {
 

@@ -1758,6 +1758,18 @@ public class SourceFormatter {
 								"line break: " + fileName + " " + lineCount);
 						}
 
+						if (((previousLine.endsWith(StringPool.COLON) &&
+							  previousLine.contains(StringPool.TAB + "for ")) ||
+							 (previousLine.endsWith(
+								 StringPool.OPEN_PARENTHESIS) &&
+							  previousLine.contains(StringPool.TAB + "if "))) &&
+							((previousLineTabCount + 2) != lineTabCount)) {
+
+							_sourceFormatterHelper.printError(
+								fileName,
+								"line break: " + fileName + " " + lineCount);
+						}
+
 						if (previousLine.endsWith(StringPool.PERIOD)) {
 							int x = trimmedLine.indexOf(
 								StringPool.OPEN_PARENTHESIS);

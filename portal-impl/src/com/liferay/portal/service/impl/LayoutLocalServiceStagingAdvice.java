@@ -242,7 +242,7 @@ public class LayoutLocalServiceStagingAdvice implements MethodInterceptor {
 		originalLayout.setFriendlyURL(friendlyURL);
 
 		if (iconImage != null) {
-			originalLayout.setIconImage(iconImage.booleanValue());
+			layoutRevision.setIconImage(iconImage.booleanValue());
 
 			if (iconImage.booleanValue()) {
 				long iconImageId = originalLayout.getIconImageId();
@@ -250,7 +250,7 @@ public class LayoutLocalServiceStagingAdvice implements MethodInterceptor {
 				if (iconImageId <= 0) {
 					iconImageId = CounterLocalServiceUtil.increment();
 
-					originalLayout.setIconImageId(iconImageId);
+					layoutRevision.setIconImageId(iconImageId);
 				}
 			}
 		}

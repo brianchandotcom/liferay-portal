@@ -230,6 +230,20 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 		return getFieldProperty(fieldName, "type");
 	}
 
+	@Override
+	public Map<String, Map<String, Map<String, String>>>
+		getLocalizedFieldsMap() {
+
+		return _localizedFieldsMap;
+	}
+
+	@Override
+	public Map<String, Map<String, Map<String, String>>>
+		getLocalizedTransientFieldsMap() {
+
+		return _localizedTransientFieldsMap;
+	}
+
 	public List<DDMTemplate> getTemplates() throws SystemException {
 		return DDMTemplateLocalServiceUtil.getTemplates(getStructureId());
 	}
@@ -285,6 +299,20 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 	@Override
 	public void setDocument(Document document) {
 		_document = document;
+	}
+
+	@Override
+	public void setLocalizedFieldsMap(
+		Map<String, Map<String, Map<String, String>>> localizedFieldsMap) {
+
+		_localizedFieldsMap = localizedFieldsMap;
+	}
+
+	@Override
+	public void setLocalizedTransientFieldsMap(
+		Map<String, Map<String, Map<String, String>>> localizedTransientFieldsMap) {
+
+		_localizedTransientFieldsMap = localizedTransientFieldsMap;
 	}
 
 	@Override

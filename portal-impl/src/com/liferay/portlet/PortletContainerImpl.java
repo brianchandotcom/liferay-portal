@@ -539,7 +539,7 @@ public class PortletContainerImpl implements PortletContainer {
 					actionResponseImpl.getRenderParameterMap();
 
 				for (Map.Entry<String, String[]> entry :
-					renderParameters.entrySet()) {
+						renderParameters.entrySet()) {
 
 					String key = entry.getKey();
 					String[] value = entry.getValue();

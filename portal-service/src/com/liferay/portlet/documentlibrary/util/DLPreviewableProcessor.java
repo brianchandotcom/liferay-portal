@@ -163,7 +163,7 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 		FileVersion sourceFileVersion, FileVersion destinationFileVersion) {
 
 		if (getFileVersionIds().contains(
-			destinationFileVersion.getFileVersionId())) {
+				destinationFileVersion.getFileVersionId())) {
 
 			String processIdentity = Long.toString(
 				destinationFileVersion.getFileVersionId());

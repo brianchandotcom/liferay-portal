@@ -85,7 +85,7 @@ public class LiferayTemplateCache extends TemplateCache {
 		TemplateResource templateResource = null;
 
 		if (templateId.startsWith(
-			TemplateResource.TEMPLATE_RESOURCE_UUID_PREFIX)) {
+				TemplateResource.TEMPLATE_RESOURCE_UUID_PREFIX)) {
 
 			templateResource = TemplateResourceThreadLocal.getTemplateResource(
 				TemplateManager.FREEMARKER);

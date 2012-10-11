@@ -160,7 +160,7 @@ public class HotDeployImpl implements HotDeploy {
 		boolean hasDependencies = true;
 
 		for (String dependentServletContextName :
-			hotDeployEvent.getDependentServletContextNames()) {
+				hotDeployEvent.getDependentServletContextNames()) {
 
 			if (!_deployedServletContextNames.contains(
 					dependentServletContextName)) {

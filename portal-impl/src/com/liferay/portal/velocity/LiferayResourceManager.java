@@ -85,7 +85,7 @@ public class LiferayResourceManager extends ResourceManagerImpl {
 		TemplateResource templateResource = null;
 
 		if (resourceName.startsWith(
-			TemplateResource.TEMPLATE_RESOURCE_UUID_PREFIX)) {
+				TemplateResource.TEMPLATE_RESOURCE_UUID_PREFIX)) {
 
 			templateResource = TemplateResourceThreadLocal.getTemplateResource(
 				TemplateManager.VELOCITY);

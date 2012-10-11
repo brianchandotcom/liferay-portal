@@ -709,7 +709,7 @@ public class PortletBagFactory {
 			}
 
 			for (Element implicitParameterElement :
-				routeElement.elements("implicit-parameter")) {
+					routeElement.elements("implicit-parameter")) {
 
 				String name = implicitParameterElement.attributeValue("name");
 				String value = implicitParameterElement.getText();

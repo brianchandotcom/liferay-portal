@@ -47,6 +47,27 @@ public class ContactServiceWrapper implements ContactService,
 		_contactService.setBeanIdentifier(beanIdentifier);
 	}
 
+	public com.liferay.portal.model.Contact getContact(long contactId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _contactService.getContact(contactId);
+	}
+
+	public java.util.List<com.liferay.portal.model.Contact> getContacts(
+		long classNameId, long classPK, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _contactService.getContacts(classNameId, classPK, start, end,
+			orderByComparator);
+	}
+
+	public int getContactsCount(long classNameId, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _contactService.getContactsCount(classNameId, classPK);
+	}
+
 	/**
 	 * @deprecated Renamed to {@link #getWrappedService}
 	 */

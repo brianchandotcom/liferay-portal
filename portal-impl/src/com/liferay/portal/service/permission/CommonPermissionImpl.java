@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.model.Account;
+import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Contact;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.User;
@@ -53,12 +54,16 @@ public class CommonPermissionImpl implements CommonPermission {
 			User user = UserLocalServiceUtil.getUserByContactId(classPK);
 
 			UserPermissionUtil.check(
-				permissionChecker, user.getUserId(), user.getOrganizationIds(),
-				actionId);
+				permissionChecker, user.getUserId(), actionId);
+		}
+		else if (className.equals(Company.class.getName())) {
 		}
 		else if (className.equals(Organization.class.getName())) {
 			OrganizationPermissionUtil.check(
 				permissionChecker, classPK, actionId);
+		}
+		else if (className.equals(User.class.getName())) {
+			UserPermissionUtil.check(permissionChecker, classPK, actionId);
 		}
 		else {
 			if (_log.isWarnEnabled()) {

@@ -14,6 +14,12 @@
 
 package com.liferay.portal.service.http;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.service.ContactServiceUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * <p>
  * This class provides a SOAP utility for the
@@ -57,4 +63,51 @@ package com.liferay.portal.service.http;
  * @generated
  */
 public class ContactServiceSoap {
+	public static com.liferay.portal.model.ContactSoap getContact(
+		long contactId) throws RemoteException {
+		try {
+			com.liferay.portal.model.Contact returnValue = ContactServiceUtil.getContact(contactId);
+
+			return com.liferay.portal.model.ContactSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.portal.model.ContactSoap[] getContacts(
+		long classNameId, long classPK, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.portal.model.Contact> returnValue = ContactServiceUtil.getContacts(classNameId,
+					classPK, start, end, orderByComparator);
+
+			return com.liferay.portal.model.ContactSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getContactsCount(long classNameId, long classPK)
+		throws RemoteException {
+		try {
+			int returnValue = ContactServiceUtil.getContactsCount(classNameId,
+					classPK);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(ContactServiceSoap.class);
 }

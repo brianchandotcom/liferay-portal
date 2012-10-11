@@ -418,6 +418,32 @@ public class MBThreadLocalServiceUtil {
 		return getService().moveThread(groupId, categoryId, threadId);
 	}
 
+	public static void moveThreadsToTrash(long groupId, long userId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().moveThreadsToTrash(groupId, userId);
+	}
+
+	public static com.liferay.portlet.messageboards.model.MBThread moveThreadToTrash(
+		long userId, long entryId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().moveThreadToTrash(userId, entryId);
+	}
+
+	public static com.liferay.portlet.messageboards.model.MBThread moveThreadToTrash(
+		long userId, com.liferay.portlet.messageboards.model.MBThread thread)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().moveThreadToTrash(userId, thread);
+	}
+
+	public static void restoreThreadFromTrash(long userId, long threadId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().restoreThreadFromTrash(userId, threadId);
+	}
+
 	public static com.liferay.portlet.messageboards.model.MBThread splitThread(
 		long messageId, java.lang.String subject,
 		com.liferay.portal.service.ServiceContext serviceContext)

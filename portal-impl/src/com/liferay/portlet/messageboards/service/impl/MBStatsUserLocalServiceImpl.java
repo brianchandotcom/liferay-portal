@@ -14,19 +14,24 @@
 
 package com.liferay.portlet.messageboards.service.impl;
 
+import com.liferay.portal.kernel.dao.orm.Disjunction;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 import com.liferay.portlet.messageboards.model.MBStatsUser;
+import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.model.impl.MBStatsUserImpl;
 import com.liferay.portlet.messageboards.service.base.MBStatsUserLocalServiceBaseImpl;
 
@@ -101,6 +106,66 @@ public class MBStatsUserLocalServiceImpl
 		}
 	}
 
+	@SuppressWarnings("unchecked")
+	public Date getLasPostDateByUserId(long groupId, long userId)
+		throws SystemException {
+
+		List<MBThread> groupThreads =
+			mbThreadLocalService.getGroupThreads(
+				groupId, WorkflowConstants.STATUS_IN_TRASH, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			MBThread.class, MBStatsUserImpl.TABLE_NAME,
+			PACLClassLoaderUtil.getPortalClassLoader());
+
+		Projection projection = ProjectionFactoryUtil.max("lastPostDate");
+
+		dynamicQuery.setProjection(projection);
+
+		Property property = PropertyFactoryUtil.forName("threadId");
+
+		Disjunction disjunction = RestrictionsFactoryUtil.disjunction();
+
+		for (MBThread groupThread : groupThreads) {
+			disjunction.add(property.ne(groupThread.getThreadId()));
+		}
+
+		dynamicQuery.add(disjunction);
+
+		List<Date> results = mbStatsUserLocalService.dynamicQuery(dynamicQuery);
+
+		if (results.isEmpty()) {
+			return null;
+		}
+
+		return results.get(0);
+	}
+
+	@SuppressWarnings("unchecked")
+	public long getMessageCountByGroupId(long groupId) throws SystemException {
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			MBStatsUser.class, MBStatsUserImpl.TABLE_NAME,
+			PACLClassLoaderUtil.getPortalClassLoader());
+
+		Projection projection = ProjectionFactoryUtil.sum("messageCount");
+
+		dynamicQuery.setProjection(projection);
+
+		Property property = PropertyFactoryUtil.forName("groupId");
+
+		dynamicQuery.add(property.eq(groupId));
+
+		List<Long> results = mbStatsUserLocalService.dynamicQuery(dynamicQuery);
+
+		if (results.isEmpty()) {
+			return 0;
+		}
+
+		return results.get(0);
+	}
+
+	@SuppressWarnings("unchecked")
 	public long getMessageCountByUserId(long userId) throws SystemException {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
 			MBStatsUser.class, MBStatsUserImpl.TABLE_NAME,
@@ -170,14 +235,32 @@ public class MBStatsUserLocalServiceImpl
 	public MBStatsUser updateStatsUser(long groupId, long userId)
 		throws SystemException {
 
-		return updateStatsUser(groupId, userId, null);
+		return updateStatsUser(
+			groupId, userId, getLasPostDateByUserId(groupId, userId));
 	}
 
 	public MBStatsUser updateStatsUser(
 			long groupId, long userId, Date lastPostDate)
 		throws SystemException {
 
-		int messageCount = mbMessagePersistence.countByG_U(groupId, userId);
+		int messageCount = mbMessagePersistence.countByG_U_S(
+			groupId, userId, WorkflowConstants.STATUS_APPROVED);
+
+		List<MBThread> trashedThreads =
+			mbThreadLocalService.getGroupThreads(
+				groupId, WorkflowConstants.STATUS_IN_TRASH, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
+
+		for (MBThread thread : trashedThreads) {
+			messageCount = messageCount - thread.getMessageCount();
+		}
+
+		return updateStatsUser(groupId, userId, messageCount, lastPostDate);
+	}
+
+	public MBStatsUser updateStatsUser(
+			long groupId, long userId, int messageCount, Date lastPostDate)
+		throws SystemException {
 
 		MBStatsUser statsUser = getStatsUser(groupId, userId);
 

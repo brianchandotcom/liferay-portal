@@ -292,6 +292,40 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 			thread.getGroupId(), categoryId, threadId);
 	}
 
+	public MBThread moveThreadToTrash(long threadId)
+		throws PortalException, SystemException {
+
+		if (lockLocalService.isLocked(MBThread.class.getName(), threadId)) {
+			throw new LockedThreadException();
+		}
+
+		List<MBMessage> messages = mbMessagePersistence.findByThreadId(
+			threadId);
+
+		for (MBMessage message : messages) {
+			MBMessagePermission.check(
+				getPermissionChecker(), message.getMessageId(),
+				ActionKeys.DELETE);
+		}
+
+		return mbThreadLocalService.moveThreadToTrash(getUserId(), threadId);
+	}
+
+	public void restoreThreadFromTrash(long threadId)
+		throws PortalException, SystemException {
+
+		List<MBMessage> messages = mbMessagePersistence.findByThreadId(
+			threadId);
+
+		for (MBMessage message : messages) {
+			MBMessagePermission.check(
+				getPermissionChecker(), message.getMessageId(),
+				ActionKeys.DELETE);
+		}
+
+		mbThreadLocalService.restoreThreadFromTrash(getUserId(), threadId);
+	}
+
 	public MBThread splitThread(
 			long messageId, String subject, ServiceContext serviceContext)
 		throws PortalException, SystemException {

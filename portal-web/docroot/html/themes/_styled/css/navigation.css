@@ -27,17 +27,15 @@
 		padding-left: 10px;
 	}
 
-	li {
-		a {
-			&.ancestor {
-				font-weight: bold;
-			}
+	li a {
+		&.ancestor {
+			font-weight: bold;
+		}
 
-			&.selected {
-				color: #000;
-				font-weight: bold;
-				text-decoration: none;
-			}
+		&.selected {
+			color: #000;
+			font-weight: bold;
+			text-decoration: none;
 		}
 	}
 }

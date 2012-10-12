@@ -35,22 +35,7 @@
 		height: 0;
 		visibility: hidden;
 	}
-}
 
-.ie7 .dockbar {
-	zoom: 1;
-}
-
-.ie6 {
-	.dockbar, .lfr-dockbar-pinned .dockbar {
-		height: 10px;
-		left: 0;
-		position: relative;
-		top: 0;
-	}
-}
-
-.dockbar {
 	a {
 		color: #2C2F34;
 		font-weight: bold;
@@ -79,39 +64,31 @@
 	li li {
 		margin-left: 0;
 	}
-}
 
-html > .lfr-dockbar-pinned {
-	padding-top: 3.45em;
-}
+	.menu-button {
+		background: url(../images/arrows/05_down.png) no-repeat 93% 50%;
+		display: inline-block;
+		padding: 5px 20px 5px 5px;
+		text-decoration: none;
 
-.lfr-dockbar-pinned .dockbar {
-	left: 0;
-	position: fixed;
-	right: 0;
-	top: 0;
-}
+		span {
+			background: url() no-repeat 0 50%;
+			padding-left: 20px;
+		}
+	}
 
-.dockbar .pin-dockbar {
-	margin-left: 0;
-}
+	.add-content .menu-button span {
+		background-image: url(../images/common/add.png);
+	}
 
-.ie6 .dockbar .pin-dockbar {
-	display: none;
-}
+	.manage-content .menu-button span {
+		background-image: url(../images/dockbar/settings.png);
+	}
 
-.pin-dockbar img {
-	background: url(../images/dockbar/pin.png) no-repeat 0 0;
-	height: 27px;
-	vertical-align: middle;
-	width: 27px;
-}
+	.my-sites .menu-button span {
+		background-image: url(../images/dockbar/places.png);
+	}
 
-.lfr-dockbar-pinned .pin-dockbar img {
-	background-image: url(../images/dockbar/unpin.png);
-}
-
-.dockbar {
 	.user-portrait {
 		text-decoration: none;
 	}
@@ -129,6 +106,55 @@ html > .lfr-dockbar-pinned {
 			color: #999;
 		}
 	}
+
+	.aui-toolbar {
+		float: left;
+	}
+
+	.user-toolbar {
+		float: right;
+	}
+
+	.toggle-controls a {
+		background-image: url(../images/dockbar/checked.png);
+	}
+}
+
+.toggle-controls a {
+	background: url(../images/dockbar/unchecked.png) no-repeat 0 50%;
+	padding-left: 20px;
+}
+
+.controls-hidden .toggle-controls a {
+	background-image: url(../images/dockbar/unchecked.png);
+}
+
+.pin-dockbar {
+	margin-left: 0;
+
+	img {
+		background: url(../images/dockbar/pin.png) no-repeat 0 0;
+		height: 27px;
+		vertical-align: middle;
+		width: 27px;
+	}
+}
+
+.lfr-dockbar-pinned {
+	.dockbar {
+		left: 0;
+		position: fixed;
+		right: 0;
+		top: 0;
+	}
+
+	.pin-dockbar img {
+		background-image: url(../images/dockbar/unpin.png);
+	}
+}
+
+html > .lfr-dockbar-pinned {
+	padding-top: 3.45em;
 }
 
 /* ---------- Staging Dockbar ---------- */
@@ -202,36 +228,30 @@ html > .lfr-dockbar-pinned {
 	padding-left: 65px;
 }
 
-.staging .staging-details {
-	background-image: url(../images/staging_bar/staging.png);
+.staging {
+	.staging-details {
+		background-image: url(../images/staging_bar/staging.png);
+	}
+
+	.staging-tabview-list {
+		background-color: #FFDBA6;
+	}
 }
 
-.live-view .staging-details {
-	background-image: url(../images/staging_bar/live.png);
-}
+.live-view {
+	.staging-details {
+		background-image: url(../images/staging_bar/live.png);
+	}
 
-.staging .staging-tabview-list {
-	background-color: #FFDBA6;
-}
-
-.live-view .staging-tabview-list {
-	background-color: #C4F0BC;
+	.staging-tabview-list {
+		background-color: #C4F0BC;
+	}
 }
 
 /* ---------- Menus ---------- */
 
 .aui-dockbarmenu-hidden {
 	visibility: hidden;
-}
-
-.dockbar {
-	.aui-toolbar {
-		float: left;
-	}
-
-	.user-toolbar {
-		float: right;
-	}
 }
 
 .aui-underlay {
@@ -323,108 +343,6 @@ html > .lfr-dockbar-pinned {
 	}
 }
 
-.ie7 .my-sites-menu .site-type {
-	float: none;
-}
-
-.my-sites-menu a:hover .site-type {
-	color: #FFF;
-}
-
-.ie7 .my-sites-menu {
-	a {
-		overflow: visible;
-		text-align: left;
-	}
-
-	.site-name {
-		float: none;
-	}
-
-	.site-type {
-		float: none;
-	}
-}
-
-.ie6 {
-	.my-sites-menu {
-		width: 200px;
-
-		a {
-			zoom: 1;
-		}
-	}
-
-	.aui-menu-scroll {
-		height: 300px;
-		overflow-y: auto;
-	}
-}
-
-.dockbar .toggle-controls a {
-	background: url(../images/dockbar/checked.png) no-repeat 0 50%;
-	padding-left: 20px;
-}
-
-.controls-hidden .toggle-controls a {
-	background-image: url(../images/dockbar/unchecked.png);
-}
-
-.toggle-controls a {
-	background-image: url(../images/dockbar/unchecked.png);
-}
-
-.dockbar {
-	.menu-button {
-		background: url(../images/arrows/05_down.png) no-repeat 93% 50%;
-		display: inline-block;
-		padding: 5px 20px 5px 5px;
-		text-decoration: none;
-
-		span {
-			background: url() no-repeat 0 50%;
-			padding-left: 20px;
-		}
-	}
-
-	.add-content .menu-button span {
-		background-image: url(../images/common/add.png);
-	}
-
-	.manage-content .menu-button span {
-		background-image: url(../images/dockbar/settings.png);
-	}
-
-	.my-sites .menu-button span {
-		background-image: url(../images/dockbar/places.png);
-	}
-}
-
-.dockbar-messages-container {
-	left: 50%;
-	margin-left: -150px;
-}
-
-.dockbar-messages {
-	width: 300px;
-}
-
-.showing-messages .dockbar-messages {
-	display: block;
-}
-
-.multiple-messages {
-	.dockbar-message {
-		border-top: 1px solid #CCC;
-		padding: 5px 0;
-	}
-
-	.first {
-		border-top-width: 0;
-		padding-top: 0;
-	}
-}
-
 .add-content-menu {
 	.add-page a {
 		background: url(../images/navigation/add_page.png) no-repeat 3px 50%;
@@ -474,6 +392,80 @@ html > .lfr-dockbar-pinned {
 
 	.settings a {
 		background-image: url(../images/common/configuration.png);
+	}
+}
+
+.dockbar-messages-container {
+	left: 50%;
+	margin-left: -150px;
+}
+
+.dockbar-messages {
+	width: 300px;
+}
+
+.showing-messages .dockbar-messages {
+	display: block;
+}
+
+.multiple-messages {
+	.dockbar-message {
+		border-top: 1px solid #CCC;
+		padding: 5px 0;
+	}
+
+	.first {
+		border-top-width: 0;
+		padding-top: 0;
+	}
+}
+
+.ie7 {
+	.dockbar {
+		zoom: 1;
+	}
+
+	.my-sites-menu {
+		a {
+			overflow: visible;
+			text-align: left;
+		}
+
+		.site-name {
+			float: none;
+		}
+
+		.site-type {
+			float: none;
+		}
+	}
+
+
+}
+
+.ie6 {
+	.dockbar, .lfr-dockbar-pinned .dockbar {
+		height: 10px;
+		left: 0;
+		position: relative;
+		top: 0;
+	}
+
+	.dockbar .pin-dockbar {
+		display: none;
+	}
+
+	.my-sites-menu {
+		width: 200px;
+
+		a {
+			zoom: 1;
+		}
+	}
+
+	.aui-menu-scroll {
+		height: 300px;
+		overflow-y: auto;
 	}
 }
 

@@ -726,7 +726,7 @@ public class DLUtil {
 
 		webDavURL.append(themeDisplay.getPortalURL());
 		webDavURL.append(themeDisplay.getPathContext());
-		webDavURL.append("/api/secure/webdav");
+		webDavURL.append("/webdav");
 
 		if (manualCheckInRequired) {
 			webDavURL.append(MANUAL_CHECK_IN_REQUIRED_PATH);

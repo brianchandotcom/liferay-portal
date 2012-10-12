@@ -20,6 +20,7 @@ import com.liferay.portalweb.socialoffice.users.user.addsouser.TearDownSOUserTes
 import com.liferay.portalweb.socialoffice.users.user.editsouserpassword.EditSOUserPasswordTest;
 import com.liferay.portalweb.socialoffice.users.user.selectregularrolessouser.SelectRegularRolesSOUserTest;
 import com.liferay.portalweb.socialoffice.users.user.signinso.SOUs_SignInSOTest;
+import com.liferay.portalweb.socialoffice.users.user.signinso.SOUs_SignOutSOTest;
 import com.liferay.portalweb.socialoffice.users.user.signinso.SignInSOTest;
 import com.liferay.portalweb.socialoffice.users.user.signinso.SignOutSOTest;
 
@@ -42,7 +43,7 @@ public class AddWHEntryContentViewableByFollowersTests extends BaseTestSuite {
 		testSuite.addTestSuite(SOUs_ViewWHContentViewableByFollowersTest.class);
 		testSuite.addTestSuite(SOUs_AddFollowingCCUserTest.class);
 		testSuite.addTestSuite(SOUs_ViewFollowingWHContentViewableByFollowersTest.class);
-		testSuite.addTestSuite(SignOutSOTest.class);
+		testSuite.addTestSuite(SOUs_SignOutSOTest.class);
 		testSuite.addTestSuite(SignInSOTest.class);
 		testSuite.addTestSuite(TearDownWHEntryContentTest.class);
 		testSuite.addTestSuite(TearDownSOUserTest.class);

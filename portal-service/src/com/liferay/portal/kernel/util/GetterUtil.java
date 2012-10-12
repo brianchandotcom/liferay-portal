@@ -63,6 +63,8 @@ public class GetterUtil {
 
 	public static final String DEFAULT_STRING = StringPool.BLANK;
 
+	public static final String[] DEFAULT_STRING_VALUES = new String[0];
+
 	public static boolean get(Object value, boolean defaultValue) {
 		if (value == null) {
 			return defaultValue;
@@ -889,6 +891,46 @@ public class GetterUtil {
 
 	public static String getString(String value, String defaultValue) {
 		return get(value, defaultValue);
+	}
+
+	public static String[] getStringValues(Object value) {
+		return getStringValues(value, DEFAULT_STRING_VALUES);
+	}
+
+	public static String[] getStringValues(
+		Object value, String[] defaultValue) {
+
+		Class<?> clazz = value.getClass();
+
+		if (clazz.isArray()) {
+			Class<?> componentType = clazz.getComponentType();
+
+			if (componentType.isAssignableFrom(String.class)) {
+				return getStringValues((String[])value, defaultValue);
+			}
+		}
+
+		return defaultValue;
+	}
+
+	public static String[] getStringValues(String[] values) {
+		return getStringValues(values, DEFAULT_STRING_VALUES);
+	}
+
+	public static String[] getStringValues(
+		Object[] values, String[] defaultValue) {
+
+		if (values == null) {
+			return defaultValue;
+		}
+
+		String[] stringValues = new String[values.length];
+
+		for (int i = 0; i < values.length; i++) {
+			stringValues[i] = String.valueOf(values[i]);
+		}
+
+		return stringValues;
 	}
 
 	private static int _parseInt(String value, int defaultValue) {

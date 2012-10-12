@@ -25,7 +25,6 @@ public class AddCategoryTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Shopping Test Page");
 		selenium.clickAt("link=Shopping Test Page",
 			RuntimeVariables.replace("Shopping Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -45,8 +44,11 @@ public class AddCategoryTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals(RuntimeVariables.replace(
-				"Shopping Category Name\nShopping Category Description"),
-			selenium.getText("//td[1]/a"));
+		assertTrue(selenium.isPartialText(
+				"//tr[@class='portlet-section-body results-row last']/td[1]/a",
+				"Shopping Category Name"));
+		assertTrue(selenium.isPartialText(
+				"//tr[@class='portlet-section-body results-row last']/td[1]/a",
+				"Shopping Category Description"));
 	}
 }

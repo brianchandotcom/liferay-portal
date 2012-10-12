@@ -15,9 +15,10 @@
 package com.liferay.portalweb.portlet.shopping.portlet;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.portlet.shopping.portlet.addportletduplicate.AddPortletDuplicateTests;
 import com.liferay.portalweb.portlet.shopping.portlet.addportletshopping.AddPortletShoppingTests;
+import com.liferay.portalweb.portlet.shopping.portlet.addportletshoppingduplicate.AddPortletShoppingDuplicateTests;
 import com.liferay.portalweb.portlet.shopping.portlet.configureportletacceptedcreditcard.ConfigurePortletAcceptedCreditCardTests;
+import com.liferay.portalweb.portlet.shopping.portlet.configureportletdefault.ConfigurePortletDefaultTests;
 import com.liferay.portalweb.portlet.shopping.portlet.configureportletinsuranceflatrate.ConfigurePortletInsuranceFlatRateTests;
 import com.liferay.portalweb.portlet.shopping.portlet.configureportletinsurancepercentage.ConfigurePortletInsurancePercentageTests;
 import com.liferay.portalweb.portlet.shopping.portlet.configureportletshippingflatrate.ConfigurePortletShippingFlatRateTests;
@@ -36,9 +37,10 @@ public class PortletTestPlan extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(AddPortletDuplicateTests.suite());
 		testSuite.addTest(AddPortletShoppingTests.suite());
+		testSuite.addTest(AddPortletShoppingDuplicateTests.suite());
 		testSuite.addTest(ConfigurePortletAcceptedCreditCardTests.suite());
+		testSuite.addTest(ConfigurePortletDefaultTests.suite());
 		testSuite.addTest(ConfigurePortletInsuranceFlatRateTests.suite());
 		testSuite.addTest(ConfigurePortletInsurancePercentageTests.suite());
 		testSuite.addTest(ConfigurePortletShippingFlatRateTests.suite());

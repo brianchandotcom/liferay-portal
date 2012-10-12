@@ -16,6 +16,9 @@ package com.liferay.portalweb.portlet.shopping.item.addtoshoppingcartcategoryite
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
+import com.liferay.portalweb.portlet.shopping.category.addcategory.AddCategoryTest;
+import com.liferay.portalweb.portlet.shopping.category.addcategory.TearDownShoppingCategoryTest;
+import com.liferay.portalweb.portlet.shopping.item.addcategoryitem.AddCategoryItemTest;
 import com.liferay.portalweb.portlet.shopping.portlet.addportletshopping.AddPageShoppingTest;
 import com.liferay.portalweb.portlet.shopping.portlet.addportletshopping.AddPortletShoppingTest;
 
@@ -33,6 +36,7 @@ public class AddToShoppingCartCategoryItemTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddCategoryTest.class);
 		testSuite.addTestSuite(AddCategoryItemTest.class);
 		testSuite.addTestSuite(AddToShoppingCartCategoryItemTest.class);
+		testSuite.addTestSuite(ViewAddToShoppingCartCategoryItemTest.class);
 		testSuite.addTestSuite(TearDownCartTest.class);
 		testSuite.addTestSuite(TearDownShoppingCategoryTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);

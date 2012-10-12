@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Shopping Test Page</td>
-	<td>Shopping Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Shopping Test Page</td>
 	<td>Shopping Test Page</td>
@@ -33,7 +28,16 @@
 	<td>//input[@value='Empty Cart']</td>
 	<td>Empty Cart</td>
 </tr>
-
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-info']</td>
+	<td>Your cart is empty.</td>
+</tr>
 </tbody></table>
 </body>
 </html>

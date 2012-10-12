@@ -16,6 +16,7 @@ package com.liferay.portalweb.portlet.shopping.coupon.addcouponnamespace;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
+import com.liferay.portalweb.portlet.shopping.coupon.addcoupon.TearDownCouponTest;
 import com.liferay.portalweb.portlet.shopping.portlet.addportletshopping.AddPageShoppingTest;
 import com.liferay.portalweb.portlet.shopping.portlet.addportletshopping.AddPortletShoppingTest;
 
@@ -31,6 +32,7 @@ public class AddCouponNameSpaceTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddPageShoppingTest.class);
 		testSuite.addTestSuite(AddPortletShoppingTest.class);
 		testSuite.addTestSuite(AddCouponNameSpaceTest.class);
+		testSuite.addTestSuite(ViewAddCouponNameSpaceTest.class);
 		testSuite.addTestSuite(TearDownCouponTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 

@@ -15,7 +15,7 @@
 package com.liferay.portalweb.portlet.shopping;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.portlet.shopping.archivedsetup.ArchivedSetupTestPlan;
+import com.liferay.portalweb.portlet.shopping.archivesetup.ArchiveSetupTestPlan;
 import com.liferay.portalweb.portlet.shopping.category.CategoryTestPlan;
 import com.liferay.portalweb.portlet.shopping.coupon.CouponTestPlan;
 import com.liferay.portalweb.portlet.shopping.item.ItemTestPlan;
@@ -33,7 +33,7 @@ public class ShoppingTestPlan extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(ArchivedSetupTestPlan.suite());
+		testSuite.addTest(ArchiveSetupTestPlan.suite());
 		testSuite.addTest(CategoryTestPlan.suite());
 		testSuite.addTest(CouponTestPlan.suite());
 		testSuite.addTest(ItemTestPlan.suite());

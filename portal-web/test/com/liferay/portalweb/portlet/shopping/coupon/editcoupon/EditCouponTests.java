@@ -16,6 +16,8 @@ package com.liferay.portalweb.portlet.shopping.coupon.editcoupon;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
+import com.liferay.portalweb.portlet.shopping.coupon.addcoupon.AddCouponTest;
+import com.liferay.portalweb.portlet.shopping.coupon.addcoupon.TearDownCouponTest;
 import com.liferay.portalweb.portlet.shopping.portlet.addportletshopping.AddPageShoppingTest;
 import com.liferay.portalweb.portlet.shopping.portlet.addportletshopping.AddPortletShoppingTest;
 
@@ -32,6 +34,7 @@ public class EditCouponTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddPortletShoppingTest.class);
 		testSuite.addTestSuite(AddCouponTest.class);
 		testSuite.addTestSuite(EditCouponTest.class);
+		testSuite.addTestSuite(ViewEditCouponTest.class);
 		testSuite.addTestSuite(TearDownCouponTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 

@@ -31,12 +31,15 @@ public class AddCategoryItemNameNullTest extends BaseTestCase {
 		selenium.clickAt("link=Categories",
 			RuntimeVariables.replace("Categories"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace(
-				"Shopping Category Name\nShopping Category Description"),
-			selenium.getText("//td[1]/a"));
-		selenium.clickAt("//td[1]/a",
+		assertTrue(selenium.isPartialText(
+				"//tr[@class='portlet-section-body results-row last']/td[1]/a",
+				"Shopping Category Name"));
+		assertTrue(selenium.isPartialText(
+				"//tr[@class='portlet-section-body results-row last']/td[1]/a",
+				"Shopping Category Description"));
+		selenium.clickAt("//tr[@class='portlet-section-body results-row last']/td[1]/a",
 			RuntimeVariables.replace(
-				"Shopping Category Name\nShopping Category Description"));
+				"Shopping Category Name Shopping Category Description"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("//input[@value='Add Item']",
 			RuntimeVariables.replace("Add Item"));

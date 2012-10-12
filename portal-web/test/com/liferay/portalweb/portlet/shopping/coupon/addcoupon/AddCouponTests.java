@@ -31,6 +31,7 @@ public class AddCouponTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddPageShoppingTest.class);
 		testSuite.addTestSuite(AddPortletShoppingTest.class);
 		testSuite.addTestSuite(AddCouponTest.class);
+		testSuite.addTestSuite(ViewAddCouponTest.class);
 		testSuite.addTestSuite(TearDownCouponTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 

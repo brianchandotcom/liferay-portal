@@ -16,6 +16,9 @@ package com.liferay.portalweb.portlet.shopping.item.deletecategoryitem;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
+import com.liferay.portalweb.portlet.shopping.category.addcategory.AddCategoryTest;
+import com.liferay.portalweb.portlet.shopping.category.addcategory.TearDownShoppingCategoryTest;
+import com.liferay.portalweb.portlet.shopping.item.addcategoryitem.AddCategoryItemTest;
 import com.liferay.portalweb.portlet.shopping.portlet.addportletshopping.AddPageShoppingTest;
 import com.liferay.portalweb.portlet.shopping.portlet.addportletshopping.AddPortletShoppingTest;
 
@@ -33,6 +36,7 @@ public class DeleteCategoryItemTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddCategoryTest.class);
 		testSuite.addTestSuite(AddCategoryItemTest.class);
 		testSuite.addTestSuite(DeleteCategoryItemTest.class);
+		testSuite.addTestSuite(ViewDeleteCategoryItemTest.class);
 		testSuite.addTestSuite(TearDownShoppingCategoryTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 

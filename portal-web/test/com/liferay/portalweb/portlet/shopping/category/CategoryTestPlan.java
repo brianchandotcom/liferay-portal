@@ -15,13 +15,13 @@
 package com.liferay.portalweb.portlet.shopping.category;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portlet.shopping.category.addcategories.AddCategoriesTests;
 import com.liferay.portalweb.portlet.shopping.category.addcategory.AddCategoryTests;
-import com.liferay.portalweb.portlet.shopping.category.addcategorymultiple.AddCategoryMultipleTests;
 import com.liferay.portalweb.portlet.shopping.category.addcategorynamedoublebackslash.AddCategoryNameDoubleBackSlashTests;
 import com.liferay.portalweb.portlet.shopping.category.addcategorynamedoubleforwardslash.AddCategoryNameDoubleForwardSlashTests;
 import com.liferay.portalweb.portlet.shopping.category.addcategorynamenull.AddCategoryNameNullTests;
+import com.liferay.portalweb.portlet.shopping.category.addsubcategories.AddSubcategoriesTests;
 import com.liferay.portalweb.portlet.shopping.category.addsubcategory.AddSubcategoryTests;
-import com.liferay.portalweb.portlet.shopping.category.addsubcategorymultiple.AddSubcategoryMultipleTests;
 import com.liferay.portalweb.portlet.shopping.category.deletecategory.DeleteCategoryTests;
 import com.liferay.portalweb.portlet.shopping.category.editcategory.EditCategoryTests;
 
@@ -37,12 +37,12 @@ public class CategoryTestPlan extends BaseTestSuite {
 		TestSuite testSuite = new TestSuite();
 
 		testSuite.addTest(AddCategoryTests.suite());
-		testSuite.addTest(AddCategoryMultipleTests.suite());
+		testSuite.addTest(AddCategoriesTests.suite());
 		testSuite.addTest(AddCategoryNameDoubleBackSlashTests.suite());
 		testSuite.addTest(AddCategoryNameDoubleForwardSlashTests.suite());
 		testSuite.addTest(AddCategoryNameNullTests.suite());
 		testSuite.addTest(AddSubcategoryTests.suite());
-		testSuite.addTest(AddSubcategoryMultipleTests.suite());
+		testSuite.addTest(AddSubcategoriesTests.suite());
 		testSuite.addTest(DeleteCategoryTests.suite());
 		testSuite.addTest(EditCategoryTests.suite());
 

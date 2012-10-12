@@ -14,38 +14,43 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Shopping Test Page</td>
-	<td>Shopping Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Shopping Test Page</td>
 	<td>Shopping Test Page</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[1]/a</td>
+	<td>//tr[@class='portlet-section-body results-row last']/td[1]/a</td>
 	<td>1111</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//td[2]/a</td>
-	<td>Shopping Item Name<br />Shopping Item Description<br />Shopping: Item Properties</td>
+	<td>assertPartialText</td>
+	<td>//tr[@class='portlet-section-body results-row last']/td[2]/a</td>
+	<td>Shopping Item Name</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//tr[@class='portlet-section-body results-row last']/td[2]/a</td>
+	<td>Shopping Item Description</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//tr[@class='portlet-section-body results-row last']/td[2]/a</td>
+	<td>Shopping: Item Properties</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[3]/a</td>
+	<td>//tr[@class='portlet-section-body results-row last']/td[3]/a</td>
 	<td>1</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[4]/a</td>
+	<td>//tr[@class='portlet-section-body results-row last']/td[4]/a</td>
 	<td>$9.99</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//td[2]/a</td>
+	<td>//tr[@class='portlet-section-body results-row last']/td[2]/a</td>
 	<td>Shopping Item Name</td>
 </tr>
 <tr>
@@ -55,33 +60,43 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//strong</td>
+	<td>//td[@class='lfr-top']/strong</td>
 	<td>1111</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//span/strong</td>
+	<td>//td[@class='lfr-top']/span/strong</td>
 	<td>Shopping Item Name</td>
 </tr>
 <tr>
 	<td>assertPartialText</td>
-	<td>//td[3]</td>
+	<td>xPath=(//td[@class='lfr-top'])[2]</td>
 	<td>Shopping Item Description</td>
 </tr>
 <tr>
 	<td>assertPartialText</td>
-	<td>//td[3]</td>
+	<td>xPath=(//td[@class='lfr-top'])[2]</td>
 	<td>Shopping: Item Properties</td>
 </tr>
 <tr>
 	<td>assertPartialText</td>
-	<td>//td[3]</td>
-	<td>Price for 1 to 1 Items: \$9.99</td>
+	<td>xPath=(//td[@class='lfr-top'])[2]</td>
+	<td>Availability:</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//div[@class='portlet-msg-success']</td>
 	<td>In Stock</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>xPath=(//td[@class='lfr-top'])[2]</td>
+	<td>Price for 1 to 1 Items</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>xPath=(//td[@class='lfr-top'])[2]</td>
+	<td>9.99</td>
 </tr>
 </tbody></table>
 </body>

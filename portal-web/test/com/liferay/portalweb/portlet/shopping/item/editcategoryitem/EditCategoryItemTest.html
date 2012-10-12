@@ -14,53 +14,63 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Shopping Test Page</td>
-	<td>Shopping Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Shopping Test Page</td>
 	<td>Shopping Test Page</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//td[1]/a</td>
-	<td>Shopping Category Name<br />Shopping Category Description</td>
+	<td>assertPartialText</td>
+	<td>//tr[@class='portlet-section-body results-row last']/td[1]/a</td>
+	<td>Shopping Category Name</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//tr[@class='portlet-section-body results-row last']/td[1]/a</td>
+	<td>Shopping Category Description</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//td[1]/a</td>
-	<td>Shopping Category Name<br />Shopping Category Description</td>
+	<td>//tr[@class='portlet-section-body results-row last']/td[1]/a</td>
+	<td>Shopping Category Name Shopping Category Description</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//tr[@class='portlet-section-body results-row last']/td[2]/a</td>
+	<td>Shopping Category Item Name</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//tr[@class='portlet-section-body results-row last']/td[2]/a</td>
+	<td>Shopping Category Item Description</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//tr[@class='portlet-section-body results-row last']/td[2]/a</td>
+	<td>Shopping: Category Item Properties</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[2]/a</td>
-	<td>Shopping Category Item Name<br />Shopping Category Item Description<br />Shopping: Category Item Properties</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//td[5]/span/ul/li/strong/a</td>
+	<td>//span[@title='Actions']/ul/li/strong/a</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//td[5]/span/ul/li/strong/a</td>
+	<td>//span[@title='Actions']/ul/li/strong/a</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]</td>
 	<td>Edit</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]</td>
 	<td>Edit</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]</td>
 	<td>Edit</td>
 </tr>
 <tr>
@@ -89,16 +99,20 @@
 	<td>Your request completed successfully.</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//td[2]/a</td>
-	<td>Shopping Category Item Name Edit<br />Shopping Category Item Description Edit<br />Shopping: Category Item Properties Edit</td>
+	<td>assertPartialText</td>
+	<td>//tr[@class='portlet-section-body results-row last']/td[2]/a</td>
+	<td>Shopping Category Item Name Edit</td>
 </tr>
 <tr>
-	<td>assertTextNotPresent</td>
-	<td>Shopping Category Item Name<br />Shopping Category Item Description<br />Shopping: Category Item Properties</td>
-	<td></td>
+	<td>assertPartialText</td>
+	<td>//tr[@class='portlet-section-body results-row last']/td[2]/a</td>
+	<td>Shopping Category Item Description Edit</td>
 </tr>
-
+<tr>
+	<td>assertPartialText</td>
+	<td>//tr[@class='portlet-section-body results-row last']/td[2]/a</td>
+	<td>Shopping: Category Item Properties Edit</td>
+</tr>
 </tbody></table>
 </body>
 </html>

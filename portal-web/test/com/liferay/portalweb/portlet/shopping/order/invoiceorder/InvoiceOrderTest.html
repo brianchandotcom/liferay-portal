@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Shopping Test Page</td>
-	<td>Shopping Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Shopping Test Page</td>
 	<td>Shopping Test Page</td>
@@ -30,23 +25,23 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[3]/td[5]</td>
+	<td>//tr[@class='portlet-section-body results-row last']/td[5]</td>
 	<td>Joe Bloggs</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[4]/a</td>
+	<td>//tr[@class='portlet-section-body results-row last']/td[4]/a</td>
 	<td>Checkout</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//td[4]/a</td>
+	<td>//tr[@class='portlet-section-body results-row last']/td[4]/a</td>
 	<td>Checkout</td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
+	<td>assertPartialText</td>
+	<td>//form[@id='_34_fm']</td>
 	<td>Shopping Category Item Comments</td>
-	<td></td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -55,12 +50,12 @@
 </tr>
 <tr>
 	<td>waitForPopUp</td>
-	<td></td>
+	<td>Shopping</td>
 	<td>30000</td>
 </tr>
 <tr>
 	<td>selectWindow</td>
-	<td>name=undefined</td>
+	<td>title=Shopping</td>
 	<td></td>
 </tr>
 <tr>
@@ -83,7 +78,6 @@
 	<td>null</td>
 	<td></td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

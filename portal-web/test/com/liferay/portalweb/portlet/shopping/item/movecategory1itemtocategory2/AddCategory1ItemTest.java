@@ -25,19 +25,21 @@ public class AddCategory1ItemTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Shopping Test Page");
 		selenium.clickAt("link=Shopping Test Page",
 			RuntimeVariables.replace("Shopping Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Categories",
 			RuntimeVariables.replace("Categories"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace(
-				"Shopping Category1 Name\nShopping Category1 Description"),
-			selenium.getText("//td[1]/a"));
-		selenium.clickAt("//td[1]/a",
+		assertTrue(selenium.isPartialText(
+				"//tr[@class='portlet-section-body results-row last']/td[1]/a",
+				"Shopping Category1 Name"));
+		assertTrue(selenium.isPartialText(
+				"//tr[@class='portlet-section-body results-row last']/td[1]/a",
+				"Shopping Category1 Description"));
+		selenium.clickAt("//tr[@class='portlet-section-body results-row last']/td[1]/a",
 			RuntimeVariables.replace(
-				"Shopping Category1 Name\nShopping Category1 Description"));
+				"Shopping Category1 Name Shopping Category1 Description"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("//input[@value='Add Item']",
 			RuntimeVariables.replace("Add Item"));
@@ -69,8 +71,14 @@ public class AddCategory1ItemTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals(RuntimeVariables.replace(
-				"Shopping Category1 Item Name\nShopping Category1 Item Description\nShopping: Category1 Item Properties"),
-			selenium.getText("//td[2]/a"));
+		assertTrue(selenium.isPartialText(
+				"//tr[@class='portlet-section-body results-row last']/td[2]/a",
+				"Shopping Category1 Item"));
+		assertTrue(selenium.isPartialText(
+				"//tr[@class='portlet-section-body results-row last']/td[2]/a",
+				"Shopping Category1 Item Description"));
+		assertTrue(selenium.isPartialText(
+				"//tr[@class='portlet-section-body results-row last']/td[2]/a",
+				"Shopping: Category1 Item Properties"));
 	}
 }

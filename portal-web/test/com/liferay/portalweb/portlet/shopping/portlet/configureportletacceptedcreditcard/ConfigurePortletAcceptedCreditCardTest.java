@@ -26,38 +26,55 @@ public class ConfigurePortletAcceptedCreditCardTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Shopping Test Page");
 		selenium.clickAt("link=Shopping Test Page",
 			RuntimeVariables.replace("Shopping Test Page"));
 		selenium.waitForPageToLoad("30000");
 		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Options"),
-			selenium.getText("//strong/a"));
-		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
+			selenium.getText("//span[@title='Options']/ul/li/strong/a"));
+		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
+			RuntimeVariables.replace("Options"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]");
 		assertEquals(RuntimeVariables.replace("Configuration"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]",
+			RuntimeVariables.replace("Configuration"));
+		selenium.waitForElementPresent(
+			"//iframe[contains(@id,'configurationIframeDialog')]");
+		selenium.selectFrame(
+			"//iframe[contains(@id,'configurationIframeDialog')]");
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/liferay/navigation_interaction.js')]");
+		selenium.clickAt("link=Payment Settings",
+			RuntimeVariables.replace("Payment Settings"));
+		Thread.sleep(5000);
 		selenium.waitForVisible("//select[@id='_86_current_cc_types']");
-		selenium.addSelection("//select[@id='_86_current_cc_types']",
-			RuntimeVariables.replace("MasterCard"));
-		selenium.waitForVisible("//div[2]/div/span/span/button[1]");
-		selenium.clickAt("//div[2]/div/span/span/button[1]",
-			RuntimeVariables.replace("Right Arrow"));
-		selenium.waitForPartialText("//select[@id='_86_available_cc_types']",
-			"MasterCard");
 		assertTrue(selenium.isPartialText(
-				"//select[@id='_86_available_cc_types']", "MasterCard"));
+				"//select[@id='_86_current_cc_types']", "American Express"));
 		selenium.addSelection("//select[@id='_86_current_cc_types']",
 			RuntimeVariables.replace("American Express"));
-		selenium.clickAt("//div[2]/div/span/span/button[1]",
+		selenium.waitForVisible(
+			"//button[@title='Move selected items from Current to Available.']");
+		selenium.clickAt("//button[@title='Move selected items from Current to Available.']",
 			RuntimeVariables.replace("Right Arrow"));
 		selenium.waitForPartialText("//select[@id='_86_available_cc_types']",
 			"American Express");
 		assertTrue(selenium.isPartialText(
 				"//select[@id='_86_available_cc_types']", "American Express"));
+		assertTrue(selenium.isPartialText(
+				"//select[@id='_86_current_cc_types']", "MasterCard"));
+		selenium.addSelection("//select[@id='_86_current_cc_types']",
+			RuntimeVariables.replace("MasterCard"));
+		selenium.waitForVisible(
+			"//button[@title='Move selected items from Current to Available.']");
+		selenium.clickAt("//button[@title='Move selected items from Current to Available.']",
+			RuntimeVariables.replace("Right Arrow"));
+		selenium.waitForPartialText("//select[@id='_86_available_cc_types']",
+			"MasterCard");
+		assertTrue(selenium.isPartialText(
+				"//select[@id='_86_available_cc_types']", "MasterCard"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
@@ -72,5 +89,6 @@ public class ConfigurePortletAcceptedCreditCardTest extends BaseTestCase {
 				"//select[@id='_86_available_cc_types']", "MasterCard"));
 		assertTrue(selenium.isPartialText(
 				"//select[@id='_86_available_cc_types']", "American Express"));
+		selenium.selectFrame("relative=top");
 	}
 }

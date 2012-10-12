@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Shopping Test Page</td>
-	<td>Shopping Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Shopping Test Page</td>
 	<td>Shopping Test Page</td>
@@ -29,14 +24,19 @@
 	<td>Categories</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//td[1]/a</td>
-	<td>Shopping Category1 Name<br />Shopping Category1 Description</td>
+	<td>assertPartialText</td>
+	<td>//tr[@class='portlet-section-body results-row last']/td[1]/a</td>
+	<td>Shopping Category1 Name</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//tr[@class='portlet-section-body results-row last']/td[1]/a</td>
+	<td>Shopping Category1 Description</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//td[1]/a</td>
-	<td>Shopping Category1 Name<br />Shopping Category1 Description</td>
+	<td>//tr[@class='portlet-section-body results-row last']/td[1]/a</td>
+	<td>Shopping Category1 Name Shopping Category1 Description</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -109,9 +109,19 @@
 	<td>Your request completed successfully.</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//td[2]/a</td>
-	<td>Shopping Category1 Item Name<br />Shopping Category1 Item Description<br />Shopping: Category1 Item Properties</td>
+	<td>assertPartialText</td>
+	<td>//tr[@class='portlet-section-body results-row last']/td[2]/a</td>
+	<td>Shopping Category1 Item</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//tr[@class='portlet-section-body results-row last']/td[2]/a</td>
+	<td>Shopping Category1 Item Description</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//tr[@class='portlet-section-body results-row last']/td[2]/a</td>
+	<td>Shopping: Category1 Item Properties</td>
 </tr>
 </tbody></table>
 </body>

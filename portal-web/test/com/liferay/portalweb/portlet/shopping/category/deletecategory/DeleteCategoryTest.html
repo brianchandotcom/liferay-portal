@@ -14,43 +14,43 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Shopping Test Page</td>
-	<td>Shopping Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Shopping Test Page</td>
 	<td>Shopping Test Page</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//td[1]/a</td>
-	<td>Shopping Category Name<br />Shopping Category Description</td>
+	<td>assertPartialText</td>
+	<td>//tr[@class='portlet-section-body results-row last']/td[1]/a</td>
+	<td>Shopping Category Name</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//tr[@class='portlet-section-body results-row last']/td[1]/a</td>
+	<td>Shopping Category Description</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[4]/span/ul/li/strong/a</td>
+	<td>//span[@title='Actions']/ul/li/strong/a</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//td[4]/span/ul/li/strong/a</td>
+	<td>//span[@title='Actions']/ul/li/strong/a</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]</td>
 	<td>Delete</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]</td>
 	<td>Delete</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]</td>
 	<td>Delete</td>
 </tr>
 <tr>
@@ -65,10 +65,14 @@
 </tr>
 <tr>
 	<td>assertTextNotPresent</td>
-	<td>Category Test<br />This is a category test.</td>
+	<td>Shopping Category Name</td>
 	<td></td>
 </tr>
-
+<tr>
+	<td>assertTextNotPresent</td>
+	<td>Shopping Category Description</td>
+	<td></td>
+</tr>
 </tbody></table>
 </body>
 </html>

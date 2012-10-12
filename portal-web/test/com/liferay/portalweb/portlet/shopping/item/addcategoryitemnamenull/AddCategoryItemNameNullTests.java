@@ -16,6 +16,8 @@ package com.liferay.portalweb.portlet.shopping.item.addcategoryitemnamenull;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
+import com.liferay.portalweb.portlet.shopping.category.addcategory.AddCategoryTest;
+import com.liferay.portalweb.portlet.shopping.category.addcategory.TearDownShoppingCategoryTest;
 import com.liferay.portalweb.portlet.shopping.portlet.addportletshopping.AddPageShoppingTest;
 import com.liferay.portalweb.portlet.shopping.portlet.addportletshopping.AddPortletShoppingTest;
 
@@ -32,6 +34,7 @@ public class AddCategoryItemNameNullTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddPortletShoppingTest.class);
 		testSuite.addTestSuite(AddCategoryTest.class);
 		testSuite.addTestSuite(AddCategoryItemNameNullTest.class);
+		testSuite.addTestSuite(ViewAddCategoryItemNameNullTest.class);
 		testSuite.addTestSuite(TearDownShoppingCategoryTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 

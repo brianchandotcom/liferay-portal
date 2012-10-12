@@ -25,23 +25,26 @@ public class InvoiceOrderTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Shopping Test Page");
 		selenium.clickAt("link=Shopping Test Page",
 			RuntimeVariables.replace("Shopping Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Orders", RuntimeVariables.replace("Orders"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
-			selenium.getText("//tr[3]/td[5]"));
+			selenium.getText(
+				"//tr[@class='portlet-section-body results-row last']/td[5]"));
 		assertEquals(RuntimeVariables.replace("Checkout"),
-			selenium.getText("//td[4]/a"));
-		selenium.clickAt("//td[4]/a", RuntimeVariables.replace("Checkout"));
+			selenium.getText(
+				"//tr[@class='portlet-section-body results-row last']/td[4]/a"));
+		selenium.clickAt("//tr[@class='portlet-section-body results-row last']/td[4]/a",
+			RuntimeVariables.replace("Checkout"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isTextPresent("Shopping Category Item Comments"));
+		assertTrue(selenium.isPartialText("//form[@id='_34_fm']",
+				"Shopping Category Item Comments"));
 		selenium.clickAt("//input[@value='Invoice']",
 			RuntimeVariables.replace("Invoice"));
-		selenium.waitForPopUp("", RuntimeVariables.replace("30000"));
-		selenium.selectWindow("name=undefined");
+		selenium.waitForPopUp("Shopping", RuntimeVariables.replace("30000"));
+		selenium.selectWindow("title=Shopping");
 		selenium.waitForText("//form[@id='_34_fm']/span/strong", "Invoice");
 		assertEquals(RuntimeVariables.replace("Invoice"),
 			selenium.getText("//form[@id='_34_fm']/span/strong"));

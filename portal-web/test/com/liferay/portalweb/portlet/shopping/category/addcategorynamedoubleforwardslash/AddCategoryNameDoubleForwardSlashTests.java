@@ -16,6 +16,7 @@ package com.liferay.portalweb.portlet.shopping.category.addcategorynamedoublefor
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
+import com.liferay.portalweb.portlet.shopping.category.addcategory.TearDownShoppingCategoryTest;
 import com.liferay.portalweb.portlet.shopping.portlet.addportletshopping.AddPageShoppingTest;
 import com.liferay.portalweb.portlet.shopping.portlet.addportletshopping.AddPortletShoppingTest;
 
@@ -31,6 +32,7 @@ public class AddCategoryNameDoubleForwardSlashTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddPageShoppingTest.class);
 		testSuite.addTestSuite(AddPortletShoppingTest.class);
 		testSuite.addTestSuite(AddCategoryNameDoubleForwardSlashTest.class);
+		testSuite.addTestSuite(ViewAddCategoryNameDoubleForwardSlashTest.class);
 		testSuite.addTestSuite(TearDownShoppingCategoryTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 

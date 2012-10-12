@@ -58,8 +58,14 @@ public class AddShoppingItemTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals(RuntimeVariables.replace(
-				"Shopping Item Name\nShopping Item Description\nShopping: Item Properties"),
-			selenium.getText("//td[2]/a"));
+		assertTrue(selenium.isPartialText(
+				"//tr[@class='portlet-section-body results-row last']/td[2]/a",
+				"Shopping Item Name"));
+		assertTrue(selenium.isPartialText(
+				"//tr[@class='portlet-section-body results-row last']/td[2]/a",
+				"Shopping Item Description"));
+		assertTrue(selenium.isPartialText(
+				"//tr[@class='portlet-section-body results-row last']/td[2]/a",
+				"Shopping: Item Properties"));
 	}
 }

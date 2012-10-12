@@ -3,7 +3,7 @@
 article, aside, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary {
 }
 
-body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input, textarea, p, blockquote, th, td {
+body, blockquote, div, dl, dt, dd, fieldset, form, h1, h2, h3, h4, h5, h6, input, li, ol, p, pre, ul, td, textarea, th {
 }
 
 table {
@@ -25,27 +25,25 @@ abbr, acronym {
 }
 
 html {
-}
-
-html.aui-dialog-iframe-root-node {
+	&.aui-dialog-iframe-root-node {
+	}
 }
 
 body {
+	&.portal-popup {
+	}
+
+	&.aui-dialog-iframe-popup {
+	}
+
+	&.portal-iframe {
+	}
 }
 
-body.portal-popup {
+blockquote, dl, ol, ul {
 }
 
-body.aui-dialog-iframe-popup {
-}
-
-body.portal-iframe {
-}
-
-blockquote, ul, ol, dl {
-}
-
-ol, ul, dl {
+dl, ol, ul {
 }
 
 ol {
@@ -75,12 +73,11 @@ p {
 /* ---------- Links ---------- */
 
 a {
-}
+	&:hover {
+	}
 
-a:hover {
-}
-
-a:visited {
+	&:visited {
+	}
 }
 
 /* ---------- Headers ---------- */
@@ -103,21 +100,27 @@ h4, h5, h6 {
 h1, h2, h3, h4, h5, h6, strong {
 }
 
+/* ---------- Logo ---------- */
+
+.logo {
+}
+
 /* ---------- HTML Editor ---------- */
 
 body.html-editor {
 }
 
-.html-editor.portlet-message-boards blockquote {
-}
+.html-editor.portlet-message-boards {
+	blockquote {
+		&:after {
+		}
 
-.html-editor.portlet-message-boards blockquote:after {
-}
+		cite {
+		}
+	}
 
-.html-editor.portlet-message-boards blockquote cite {
-}
-
-.html-editor.portlet-message-boards pre {
+	pre {
+	}
 }
 
 /* ---------- Text formatting ---------- */
@@ -153,9 +156,8 @@ code, pre {
 /* ---------- Portal add content ---------- */
 
 .portal-add-content {
-}
-
-.portal-add-content a {
+	a {
+	}
 }
 
 /* ---------- Loading animation ---------- */

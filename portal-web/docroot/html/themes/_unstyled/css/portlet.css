@@ -10,21 +10,21 @@ body.portlet {
 }
 
 .portlet-title {
+	img {
+	}
 }
 
 .portlet-title-text {
 }
 
-.portlet-title img {
+.panel-page-content, .panel-page-body {
+	.portlet-title-text {
+	}
 }
 
 .portlet-topper-toolbar {
-}
-
-.portlet-topper-toolbar .nobr {
-}
-
-.ie6 .portlet-topper-toolbar .icon {
+	.nobr {
+	}
 }
 
 .portlet-content, .portlet-minimized .portlet-content-container {
@@ -39,80 +39,94 @@ body.portlet {
 .portlet-nested-portlets .portlet-boundary {
 }
 
+.portlet-borderless-bar, .portlet-journal-content .icon-actions {
+	a {
+	}
+}
+
+.portlet-journal-content .icon-actions {
+	.taglib-text {
+	}
+
+	.icon-action a {
+		.icon {
+		}
+	}
+
+	.icon-action-add a {
+	}
+
+	.icon-action-edit a {
+	}
+
+	.icon-action-edit-template a {
+	}
+
+	.icon-action-configuration a {
+	}
+}
+
 /* ---------- Borderless portlet ---------- */
 
 .portlet-borderless-container {
 }
 
-.ie6 .portlet-borderless-container {
-}
-
 .portlet-borderless-bar {
+	a {
+	}
+
+	.portlet-actions {
+	}
+
+	.portlet-title-default, .portlet-actions {
+	}
+
+	.portlet-action-separator {
+	}
+
+	.portlet-back a {
+	}
+
+	.portlet-close a {
+	}
+
+	.portlet-options li.lfr-trigger strong a {
+	}
 }
 
-.portlet-borderless-bar .portlet-actions {
+.lfr-configurator-visibility {
+	.portlet-borderless-bar {
+	}
+
+	&.portlet-journal-content .icon-actions {
+	}
 }
 
-.ie6 .portlet-borderless-bar .portlet-actions, .ie7 .portlet-borderless-bar .portlet-actions {
+.portlet-borderless-container:hover .portlet-borderless-bar, .portlet-journal-content:hover .icon-actions {
 }
 
-.portlet-borderless-container:hover .portlet-borderless-bar {
-}
-
-.portlet-borderless-container:hover .portlet-borderless-bar .portlet-actions {
-}
-
-.ie .portlet-borderless-bar {
-}
-
-.ie .portlet-borderless-container:hover .portlet-borderless-bar {
-}
-
-.ie6 .portlet-borderless-bar {
-}
-
-.ie6 .portlet-borderless-bar .portlet-actions {
-}
-
-.portlet-borderless-bar .portlet-action-separator {
-}
-
-.portlet-borderless-bar a {
+.portlet-borderless-container:hover .portlet-borderless-bar .portlet-actions, .portlet-journal-content:hover .icon-actions .taglib-text {
 }
 
 .portlet-title-default {
 }
 
-.ie6 .portlet-title-default, .ie7 .portlet-title-default {
-}
+.portlet-draggable {
+	.portlet-topper {
+	}
 
-.portlet-draggable .portlet-topper {
-}
-
-.portlet-draggable .portlet-title-default {
-}
-
-.portlet-borderless-bar .portlet-back a {
-}
-
-.portlet-borderless-bar .portlet-close a {
-}
-
-.portlet-borderless-bar .portlet-options li.lfr-trigger strong a {
-}
-
-.portlet-borderless-bar .portlet-title-default, .portlet-borderless-bar .portlet-actions {
+	.portlet-title-default {
+	}
 }
 
 /* ---------- Panel Page ---------- */
 
 .lfr-panel-page {
-}
+	.portlet-title {
+	}
 
-.lfr-panel-page .portlet-title {
-}
-
-.lfr-panel-page .lfr-add-content h2 span {
+	.lfr-add-content h2 span {
+	}
 }
 
 /* ---------- Standard styles defined in the JSR 168 ---------- */
@@ -131,6 +145,9 @@ body.portlet {
 
 /* ---------- Messages ---------- */
 
+.portlet-msg {
+}
+
 /* ---------- Status of the current operation ---------- */
 
 .portlet-msg-status {
@@ -138,42 +155,89 @@ body.portlet {
 
 /* ---------- Help messages, general additional information, etc. ---------- */
 
-.portlet-msg-info {
+.lfr-message-info, .portlet-msg-info {
 }
 
-.portlet-msg-info.pending {
+.lfr-message-help, .portlet-msg-help {
+}
+
+.lfr-message-progress, .portlet-msg-progress {
 }
 
 /* ---------- Error messages ---------- */
 
-.portlet-msg-error {
+.lfr-message-error, .portlet-msg-error {
 }
 
 /* ---------- Warning messages ---------- */
 
-.portlet-msg-alert {
+.lfr-message-alert, .portlet-msg-alert {
 }
 
 /* ---------- Success messages ---------- */
 
-.portlet-msg-success {
+.lfr-message-success, .portlet-msg-success {
 }
 
 /* ---------- Message labels ---------- */
 
-.portlet-msg-info-label, .portlet-msg-error-label, .portlet-msg-alert-label, .portlet-msg-success-label {
-}
-
-.portlet-msg-info-label {
-}
-
-.portlet-msg-error-label {
+.portlet-msg-alert-label, .portlet-msg-error-label, .portlet-msg-info-label, .portlet-msg-progress-label, .portlet-msg-success-label {
 }
 
 .portlet-msg-alert-label {
 }
 
+.portlet-msg-error-label {
+}
+
+.portlet-msg-help-label, .portlet-msg-info-label, .portlet-msg-progress-label {
+}
+
+.portlet-msg-help-label {
+}
+
+.portlet-msg-progress-label {
+}
+
 .portlet-msg-success-label {
+}
+
+/* ---------- Liferay Messages ---------- */
+
+.lfr-message-alert, .lfr-message-content, .lfr-message-error, .lfr-message-help, .lfr-message-info, .lfr-message-success {
+}
+
+.lfr-message {
+	.lfr-message-control {
+	}
+
+	.lfr-message-controls {
+	}
+
+	.lfr-message-close {
+	}
+
+	.lfr-message-close-all {
+		a {
+		}
+	}
+
+	.lfr-message-controls-hover .lfr-message-close-all {
+	}
+
+	&.pending {
+	}
+}
+
+.lfr-message-dismissible.lfr-message-hover {
+	.lfr-message-content {
+	}
+
+	.lfr-message-controls {
+	}
+}
+
+.lfr-message-close, .lfr-message-trigger {
 }
 
 /* ---------- Sections ---------- */
@@ -181,25 +245,22 @@ body.portlet {
 /* ---------- Table or section header ---------- */
 
 .portlet-section-header {
-}
-
-.portlet-section-header th {
+	th {
+	}
 }
 
 /* ---------- Normal text in a table cell ---------- */
 
 .portlet-section-body {
-}
-
-.portlet-section-body td {
+	td {
+	}
 }
 
 /* ---------- Text in every other row in the cell ---------- */
 
 .portlet-section-alternate {
-}
-
-.portlet-section-alternate td {
+	td {
+	}
 }
 
 .portlet-section-alternate-hover td, .portlet-section-body-hover td {
@@ -213,10 +274,12 @@ body.portlet {
 
 /* ---------- Text in a selected cell range ---------- */
 
-.portlet-section-selected, .portlet-section-selected a {
-}
+.portlet-section-selected {
+	&, a {
+	}
 
-.portlet-section-selected a:hover, .portlet-section-selected a:focus {
+	a:hover, a:focus {
+	}
 }
 
 /* ---------- Text of a subheading ---------- */
@@ -320,7 +383,12 @@ body.portlet {
 
 /* ---------- Miscellaneous portlet styles ---------- */
 
-.restricted, .restricted td {
+.restricted {
+	&, & td {
+	}
+
+	* {
+	}
 }
 
 .alt.restricted td {
@@ -329,78 +397,77 @@ body.portlet {
 .hover.restricted td {
 }
 
-.restricted * {
-}
-
-.restricted td.col-1, .alt.restricted td.col-1 {
+.restricted, .alt.restricted {
+	td.col-1 {
+	}
 }
 
 /* ---------- Permissions ---------- */
 
-.results-row.lfr-role .col-1, .results-row.hover.lfr-role .col-1 {
-}
+.results-row, .results-row.hover {
+	&.lfr-role .col-1 {
+	}
 
-.results-row.lfr-role-guest .col-1, .results-row.hover.lfr-role-guest .col-1 {
-}
+	&.lfr-role-guest .col-1 {
+	}
 
-.results-row.lfr-role-regular .col-1, .results-row.hover.lfr-role-regular .col-1 {
-}
+	&.lfr-role-regular .col-1 {
+	}
 
-.results-row.lfr-role-site .col-1, .results-row.hover.lfr-role-site .col-1 {
-}
+	&.lfr-role-site .col-1 {
+	}
 
-.results-row.lfr-role-organization .col-1, .results-row.hover.lfr-role-organization .col-1 {
-}
+	&.lfr-role-organization .col-1 {
+	}
 
-.results-row.lfr-role-team .col-1, .results-row.hover.lfr-role-team .col-1 {
+	&.lfr-role-team .col-1 {
+	}
 }
 
 /* ---------- Miscellaneous component styles ---------- */
 
 /* ---------- Add content dialog ---------- */
 
-.lfr-portlet-item, .lfr-portlet-item p a {
+.lfr-portlet-item {
+	&, & p a {
+	}
 }
 
 /* ---------- Actions button ---------- */
 
 .lfr-actions {
-}
+	&.lfr-extended, &.lfr-extended ul {
+	}
 
-.lfr-actions.lfr-extended, .lfr-actions.lfr-extended ul {
-}
+	ul {
+	}
 
-.lfr-actions ul {
-}
+	.lfr-trigger {
+		&, & strong {
+		}
 
-.lfr-actions .lfr-trigger, .lfr-actions .lfr-trigger, .lfr-actions .lfr-trigger strong {
-}
+		li {
+			a {
+				&:hover {
+				}
+			}
 
-.lfr-actions .lfr-trigger li {
-}
+			img {
+			}
 
-.lfr-actions .lfr-trigger li a {
-}
+			&.last {
+			}
+		}
+	}
 
-.lfr-actions .lfr-trigger li a:hover {
-}
-
-.lfr-actions .lfr-trigger li a img {
-}
-
-.lfr-actions .lfr-trigger li.last {
-}
-
-.lfr-actions.portlet-options {
-}
-
-.lfr-actions.portlet-options .lfr-trigger {
-}
-
-.lfr-actions.portlet-options .lfr-trigger strong {
-}
-
-.lfr-actions.portlet-options .lfr-trigger strong a {
+	&.portlet-options {
+		.lfr-trigger {
+			strong {
+				a {
+				}
+			}
+		}
+	}
 }
 
 .visible.portlet-options .lfr-trigger strong a {
@@ -408,14 +475,12 @@ body.portlet {
 
 /*------ Breadcrumbs taglib ------*/
 
-.breadcrumbs:before,
-.breadcrumbs:after {
-}
+.breadcrumbs {
+	&:after, &:before {
+	}
 
-.breadcrumbs:after {
-}
-
-.ie6 .breadcrumbs {
+	&:after {
+	}
 }
 
 .breadcrumbs-vertical {
@@ -424,34 +489,84 @@ body.portlet {
 .breadcrumbs-horizontal li {
 }
 
-.ie6 .breadcrumbs-vertical, .ie7 .breadcrumbs-vertical, .ie6 .breadcrumbs-horizontal li, .ie7 .breadcrumbs-horizontal li {
-}
-
 /* ---------- Calendar taglib ---------- */
 
-.taglib-calendar tr.portlet-section-header th, .taglib-calendar tr td {
+.taglib-calendar {
+	tr {
+		&.portlet-section-header th, & td {
+		}
+
+		td {
+			a {
+				&:hover {
+				}
+			}
+
+			&.calendar-inactive {
+			}
+		}
+
+		th {
+		}
+	}
+
+	table td {
+	}
+
+	.calendar-current-day {
+		&, & a {
+		}
+
+		a {
+		}
+	}
 }
 
-.taglib-calendar tr td a {
+.ie {
+	.portlet-borderless-bar, .portlet-journal-content .icon-actions {
+	}
+
+	.portlet-borderless-container:hover .portlet-borderless-bar, .portlet-journal-content .icon-actions:hover {
+	}
+
+	.taglib-calendar tr td.first a {
+	}
 }
 
-.taglib-calendar table td {
+.ie6, .ie7 {
+	.portlet-journal-content {
+		.icons-container {
+		}
+
+		.icon-actions .taglib-text {
+		}
+	}
+
+	.portlet-borderless-bar .portlet-actions {
+	}
+
+	.portlet-title-default {
+	}
+
+	.breadcrumbs-horizontal li, .breadcrumbs-vertical {
+	}
+
+	.lfr-message .lfr-message-close {
+	}
 }
 
-.taglib-calendar tr td a:hover {
-}
+.ie6 {
+	.portlet-topper-toolbar .icon {
+	}
 
-.taglib-calendar .calendar-current-day, .taglib-calendar .calendar-current-day a {
-}
+	.portlet-borderless-container {
+	}
 
-.taglib-calendar .calendar-current-day a {
-}
+	.portlet-borderless-bar {
+		.portlet-actions {
+		}
+	}
 
-.taglib-calendar tr td.calendar-inactive {
-}
-
-.taglib-calendar tr th {
-}
-
-.ie .taglib-calendar tr td.first a {
+	.breadcrumbs {
+	}
 }

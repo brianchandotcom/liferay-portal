@@ -7,40 +7,42 @@
 .dockbar, .staging-bar {
 }
 
-.dockbar-ready .dockbar, .staging-ready .staging-bar, .live-view .staging-bar {
+.dockbar-ready .dockbar, .live-view .staging-bar, .staging .staging-bar {
 }
 
-.dockbar-ready .portlet-dockbar, .staging-ready .portlet-staging-bar, .portal-popup .portlet-dockbar, .portal-popup .portlet-staging-bar {
+.dockbar-ready .portlet-dockbar, .portal-popup .portlet-dockbar, .portal-popup .portlet-staging-bar, .staging-ready .portlet-staging-bar {
 }
 
 .dockbar {
-}
-
-.dockbar:after {
+	&:after {
+	}
 }
 
 .ie7 .dockbar {
 }
 
-.ie6 .dockbar, .ie6 .lfr-dockbar-pinned .dockbar {
+.ie6 {
+	.dockbar, .lfr-dockbar-pinned .dockbar {
+	}
 }
 
-.dockbar a {
-}
+.dockbar {
+	a {
+	}
 
-.dockbar .menu-button-active {
-}
+	.menu-button-active {
+		a {
+		}
+	}
 
-.dockbar .menu-button-active a {
-}
+	.user-avatar .sign-out {
+	}
 
-.dockbar .user-avatar .sign-out {
-}
+	ul {
+	}
 
-.dockbar ul {
-}
-
-.dockbar li li {
+	li li {
+	}
 }
 
 html > .lfr-dockbar-pinned {
@@ -61,16 +63,17 @@ html > .lfr-dockbar-pinned {
 .lfr-dockbar-pinned .pin-dockbar img {
 }
 
-.dockbar .user-portrait {
-}
+.dockbar {
+	.user-portrait {
+	}
 
-.dockbar .user-avatar img {
-}
+	.user-avatar img {
+	}
 
-.dockbar .impersonating-user {
-}
-
-.dockbar .impersonating-user .user-links a {
+	.impersonating-user {
+		.user-links a {
+		}
+	}
 }
 
 /* ---------- Staging Dockbar ---------- */
@@ -79,18 +82,30 @@ html > .lfr-dockbar-pinned {
 }
 
 .layout-revision-container {
+	.aproximate-date {
+	}
 
-	.current-version {	}
+	.current-version {
+	}
 
-	.current-version-pointer img {	}
+	.current-version-pointer {
+		 img {
+		}
+	}
 
-	.layout-variation-name {	}
+	.layout-variation-name {
+	}
 
-	.layout-revision-current {	}
+	.layout-revision-current {
+	}
 
-	.real-date {	}
+	.real-date {
+	}
 
-	.taglib-workflow-status .workflow-status {	}
+	.taglib-workflow-status .workflow-status {
+		.workflow-status-ready-for-publication {
+		}
+	}
 }
 
 .layout-revision-container-root {
@@ -116,16 +131,20 @@ html > .lfr-dockbar-pinned {
 .aui-dockbarmenu-hidden {
 }
 
-.dockbar .aui-toolbar {
+.dockbar {
+	.aui-toolbar {
+	}
+
+	.user-toolbar {
+	}
 }
 
-.dockbar .user-toolbar {
-}
+.aui-underlay {
+	.portal-add-content {
+	}
 
-.aui-underlay .portal-add-content {
-}
-
-.aui-underlay .portal-add-content .portlet-dd-placeholder {
+	.portal-add-content .portlet-dd-placeholder {
+	}
 }
 
 .add-application .yui3-widget-bd, .dockbar-messages .yui3-widget-bd {
@@ -141,37 +160,34 @@ html > .lfr-dockbar-pinned {
 }
 
 .my-sites-menu {
-}
+	ul {
+	}
 
-.my-sites-menu ul {
-}
+	li, ul {
+	}
 
-.my-sites-menu ul, .my-sites-menu li {
-}
+	a {
+	}
 
-.my-sites-menu a {
-}
+	.control-panel a {
+	}
 
-.my-sites-menu .control-panel a {
-}
+	.current-site {
+		a {
+		}
 
-.my-sites-menu .current-site {
-}
+		.site-type {
+		}
 
-.my-sites-menu .current-site a {
-}
+		a:hover .site-type, .current-site a:hover {
+		}
+	}
 
-.my-sites-menu .current-site .site-type {
-}
+	.site-name {
+	}
 
-.my-sites-menu .current-site a:hover, .my-sites-menu a:hover .site-type {
-}
-
-.my-sites-menu .site-name {
-}
-
-.my-sites-menu .site-type {
-}
+	.site-type {
+	}
 
 .ie7 .my-sites-menu .site-type {
 }
@@ -179,19 +195,27 @@ html > .lfr-dockbar-pinned {
 .my-sites-menu a:hover .site-type {
 }
 
-.ie7 .my-sites-menu a {
+.ie7 {
+	.my-sites-menu {
+		a {
+		}
+
+		.site-name {
+		}
+
+		.site-type {
+		}
+	}
 }
 
-.ie7 .my-sites-menu .site-name {
-}
+.ie6 {
+	.my-sites-menu {
+		a {
+		}
+	}
 
-.ie7 .my-sites-menu .site-type {
-}
-
-.ie6 .my-sites-menu {
-}
-
-.ie6 .my-sites-menu a {
+	.aui-menu-scroll {
+	}
 }
 
 .dockbar .toggle-controls a {
@@ -203,19 +227,20 @@ html > .lfr-dockbar-pinned {
 .toggle-controls a {
 }
 
-.dockbar .menu-button {
-}
+.dockbar {
+	.menu-button {
+		span {
+		}
+	}
 
-.dockbar .menu-button span {
-}
+	.add-content .menu-button span {
+	}
 
-.dockbar .add-content .menu-button span {
-}
+	.manage-content .menu-button span {
+	}
 
-.dockbar .manage-content .menu-button span {
-}
-
-.dockbar .my-sites .menu-button span {
+	.my-sites .menu-button span {
+	}
 }
 
 .dockbar-messages-container {
@@ -227,43 +252,49 @@ html > .lfr-dockbar-pinned {
 .showing-messages .dockbar-messages {
 }
 
-.multiple-messages .dockbar-message {
+.multiple-messages {
+	.dockbar-message {
+	}
+
+	.first {
+	}
 }
 
-.multiple-messages .first {
+.add-content-menu {
+	.add-page a {
+	}
+
+	.add-application a {
+	}
+
+	a.lfr-portlet-used {
+	}
 }
 
-.add-content-menu .add-page a {
-}
+.manage-content-menu {
+	li a, li .disabled {
+	}
 
-.add-content-menu .add-application a {
-}
+	.manage-page a {
+	}
 
-.add-content-menu a.lfr-portlet-used {
-}
+	.manage-site-content a {
+	}
 
-.manage-content-menu li a, .manage-content-menu li .disabled {
-}
+	.manage-site-memberships a {
+	}
 
-.manage-content-menu .manage-page a {
-}
+	.manage-page-customization a, .manage-page-customization .disabled {
+	}
 
-.manage-content-menu .manage-site-content a {
-}
+	.page-layout a {
+	}
 
-.manage-content-menu .manage-site-memberships a {
-}
+	.sitemap a {
+	}
 
-.manage-content-menu .manage-page-customization a, .manage-content-menu .manage-page-customization .disabled {
-}
-
-.manage-content-menu .page-layout a {
-}
-
-.manage-content-menu .sitemap a {
-}
-
-.manage-content-menu .settings a {
+	.settings a {
+	}
 }
 
 /* ---------- Customization Bar ---------- */
@@ -274,11 +305,15 @@ html > .lfr-dockbar-pinned {
 .controls-hidden .page-customization-bar {
 }
 
-.page-customization-bar .customized-icon {
-}
+.page-customization-bar {
+	.customized-icon {
+	}
 
-.page-customization-bar .page-customization-actions {
-}
+	.page-customization-actions {
+		a {
+		}
+	}
 
-.page-customization-bar .page-customization-actions a {
+	.reset-prototype {
+	}
 }

@@ -31,11 +31,11 @@
 
 	th {
 		background: #D9D9D9 url(../images/application/subheader_bg.png) 0 0 repeat-x;
-		border: 1px solid #ccc;
+		border: 1px solid #CCC;
 
 		&.sort-column {
 			background: #EBEBEB url(../images/application/state_active_bg.png) 0 0 repeat-x;
-			border: 1px solid #ccc;
+			border: 1px solid #CCC;
 			color: #1F1E1E;
 
 			.result-column-name {
@@ -55,7 +55,7 @@
 		}
 	}
 
-	th, td {
+	td, th {
 		color: #7B7C7F;
 		padding: 5px 10px;
 		word-wrap: break-word;
@@ -68,7 +68,7 @@
 		padding-right: 15px;
 	}
 
-	span, a {
+	a, span {
 		display: block;
 	}
 
@@ -95,7 +95,7 @@
 		}
 	}
 
- 	&.selected td, &.selected.hover td {
+	&.selected td, &.selected.hover td {
 		background-color: #00A2EA;
 		border-color: #00A2EA #00A2EA #D7D7D7;
 		color: #FFF;
@@ -151,7 +151,7 @@
 	opacity: .6;
 
 	.portlet {
-		border: 2px dashed #ccc;
+		border: 2px dashed #CCC;
 	}
 }
 
@@ -221,13 +221,13 @@
 	padding: 0;
 
 	.aui-textboxlistentry-holder {
-		background: #fff;
+		background: #FFF;
 		border: 1px solid;
 		border-color: #BFBFBF #DEDEDE #DEDEDE #BFBFBF;
 		margin-bottom: 5px;
+		overflow: visible;
 		padding: 5px;
 		position: relative;
-		overflow: visible;
 	}
 }
 
@@ -362,10 +362,6 @@
 /* ---------- Misc. ---------- */
 
 .lfr-panel-container {
-	background: transparent;
-}
-
-.lfr-panel-container {
 	background: #FFF;
 }
 
@@ -482,14 +478,14 @@
 	display: block;
 	margin: 0;
 	padding: 0;
-}
 
-.aui-menu-content li.first, .lfr-menu-list ul li.first {
-	border-top-width: 0;
-}
+	&.first {
+		border-top-width: 0;
+	}
 
-.aui-menu-content li.last, .lfr-menu-list ul li.last {
-	border-bottom-width: 0;
+	&.last {
+		border-bottom-width: 0;
+	}
 }
 
 .aui-menu-content li a, .lfr-menu-list ul li .taglib-icon, .aui-menu-content li .disabled {
@@ -503,7 +499,7 @@
 	color: #666;
 }
 
-.aui-menu-content li a.aui-focus, .lfr-menu-list ul .taglib-icon.aui-focus, .lfr-menu-expanded li a:focus {
+.aui-menu-content li a.aui-focus, .lfr-menu-expanded li a:focus, .lfr-menu-list ul .taglib-icon.aui-focus {
 	background-color: #5B677D;
 	color: #FFF;
 	text-shadow: -1px -1px #2C2F34;
@@ -615,8 +611,8 @@
 }
 
 .aui-paginator-page-link {
-	text-indent: 0;
 	height: auto;
+	text-indent: 0;
 }
 
 .ie7 .aui-paginator-page-link {
@@ -644,8 +640,8 @@
 }
 
 .aui-paginator-current-page-report, .aui-paginator-total {
-	font-size: 0.9em;
 	color: #555;
+	font-size: 0.9em;
 }
 
 .aui-paginator-current-page-report {

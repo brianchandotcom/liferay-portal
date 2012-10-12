@@ -3,22 +3,10 @@
 .portlet-layout {
 }
 
-.ie6 div.portlet-layout, .ie7 div.portlet-layout {
-}
-
 .portlet-column {
 }
 
-.ie6 div.portlet-column, .ie7 div.portlet-column {
-}
-
-.ie6 div.aui-column-last, .ie7 div.aui-column-last {
-}
-
 .portlet-column-content {
-}
-
-.ie6 .portlet-column-content, .ie7 .portlet-column-content {
 }
 
 .portlet-column-content-only, .ltr .portlet-column-content-first, .rtl .portlet-column-content-last {
@@ -33,4 +21,20 @@
 }
 
 #main-content.dragging .portlet-column {
+}
+
+.ie6, .ie7 {
+	div {
+		&.portlet-layout {
+		}
+
+		&.portlet-column {
+		}
+
+		&.aui-column-last {
+		}
+	}
+
+	.portlet-column-content {
+	}
 }

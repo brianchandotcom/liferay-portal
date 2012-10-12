@@ -1,66 +1,51 @@
-/* ---------- Main navigation ---------- */
-
-#navigation {
-}
-
-#navigation ul {
-}
-
-#navigation ul:after {
-}
-
-.ie #navigation ul {
-}
-
-.ie6 #navigation, .ie6 #navigation ul {
-}
-
-#navigation li {
-}
-
-#navigation .child-menu {
-}
-
 /* ---------- Add/remove page ---------- */
 
-.js .delete-tab {
+.modify-pages {
+	li {
+	}
+
+	.delete-tab {
+	}
 }
 
 /*------ Navigation portlet ------*/
 
-.nav-menu li a.ancestor {
-}
+.nav-menu {
+	ul {
+	}
 
-.nav-menu li a.selected {
-}
+	li {
+		a {
+			&.ancestor {
+			}
 
-.nav-menu ul {
+			&.selected {
+			}
+		}
+	}
 }
 
 /* ---------- Page template selector ---------- */
 
 .aui-form-options {
-}
-
-.aui-form-options input {
+	input {
+	}
 }
 
 .aui-form-triggers {
 }
 
 .aui-form-trigger {
-}
+	img {
+	}
 
-.aui-form-trigger img {
-}
-
-.aui-form-trigger:hover, .aui-form-trigger:focus {
+	&:focus, &:hover {
+	}
 }
 
 .aui-trigger-selected {
-}
-
-.aui-trigger-selected:hover, .aui-trigger-selected:focus {
+	&:focus, &:hover {
+	}
 }
 
 .aui-options-trigger img {

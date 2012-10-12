@@ -42,7 +42,7 @@ hr, .separator {
 	height: auto;
 	margin-top: 1.4em;
 	position: relative;
-	z-index: 300;
+	z-index: 210;
 }
 
 .site-title .site-name {

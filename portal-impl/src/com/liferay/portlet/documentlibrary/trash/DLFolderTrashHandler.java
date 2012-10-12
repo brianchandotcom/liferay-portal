@@ -20,9 +20,11 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.trash.BaseTrashHandler;
+import com.liferay.portal.kernel.trash.TrashActionKeys;
 import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.repository.liferayrepository.LiferayRepository;
+import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.RepositoryServiceUtil;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
@@ -156,14 +158,18 @@ public class DLFolderTrashHandler extends BaseTrashHandler {
 	}
 
 	@Override
-	public boolean hasPermission(
-			PermissionChecker permissionChecker, long classPK, String actionId)
+	public boolean hasTrashPermission(
+			PermissionChecker permissionChecker, long groupId, long classPK,
+			String trashActionId)
 		throws PortalException, SystemException {
 
-		DLFolder dlFolder = getDLFolder(classPK);
+		if (trashActionId.equals(TrashActionKeys.MOVE)) {
+			return DLFolderPermission.contains(
+				permissionChecker, groupId, classPK, ActionKeys.ADD_FOLDER);
+		}
 
-		return DLFolderPermission.contains(
-			permissionChecker, dlFolder, actionId);
+		return super.hasTrashPermission(
+			permissionChecker, groupId, classPK, trashActionId);
 	}
 
 	public boolean isInTrash(long classPK)
@@ -219,6 +225,17 @@ public class DLFolderTrashHandler extends BaseTrashHandler {
 		Folder folder = repository.getFolder(classPK);
 
 		return (DLFolder)folder.getModel();
+	}
+
+	@Override
+	protected boolean hasPermission(
+			PermissionChecker permissionChecker, long classPK, String actionId)
+		throws PortalException, SystemException {
+
+		DLFolder dlFolder = getDLFolder(classPK);
+
+		return DLFolderPermission.contains(
+			permissionChecker, dlFolder, actionId);
 	}
 
 }

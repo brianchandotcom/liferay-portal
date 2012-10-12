@@ -17,13 +17,16 @@ package com.liferay.portlet.documentlibrary.trash;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.trash.BaseTrashHandler;
+import com.liferay.portal.kernel.trash.TrashActionKeys;
 import com.liferay.portal.kernel.trash.TrashRenderer;
+import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileShortcutLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.permission.DLFileShortcutPermission;
+import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 
 import javax.portlet.PortletRequest;
@@ -118,12 +121,18 @@ public class DLFileShortcutTrashHandler extends BaseTrashHandler {
 	}
 
 	@Override
-	public boolean hasPermission(
-			PermissionChecker permissionChecker, long classPK, String actionId)
+	public boolean hasTrashPermission(
+			PermissionChecker permissionChecker, long groupId, long classPK,
+			String trashActionId)
 		throws PortalException, SystemException {
 
-		return DLFileShortcutPermission.contains(
-			permissionChecker, classPK, actionId);
+		if (trashActionId.equals(TrashActionKeys.MOVE)) {
+			return DLFolderPermission.contains(
+				permissionChecker, groupId, classPK, ActionKeys.ADD_SHORTCUT);
+		}
+
+		return super.hasTrashPermission(
+			permissionChecker, groupId, classPK, trashActionId);
 	}
 
 	public boolean isInTrash(long classPK)
@@ -153,6 +162,15 @@ public class DLFileShortcutTrashHandler extends BaseTrashHandler {
 		for (long classPK : classPKs) {
 			DLAppServiceUtil.restoreFileShortcutFromTrash(classPK);
 		}
+	}
+
+	@Override
+	protected boolean hasPermission(
+			PermissionChecker permissionChecker, long classPK, String actionId)
+		throws PortalException, SystemException {
+
+		return DLFileShortcutPermission.contains(
+			permissionChecker, classPK, actionId);
 	}
 
 }

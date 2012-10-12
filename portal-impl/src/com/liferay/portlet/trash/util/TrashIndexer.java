@@ -106,8 +106,8 @@ public class TrashIndexer extends BaseIndexer {
 		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
 			entryClassName);
 
-		return trashHandler.hasPermission(
-			permissionChecker, entryClassPK, actionId);
+		return trashHandler.hasTrashPermission(
+			permissionChecker, 0, entryClassPK, actionId);
 	}
 
 	@Override

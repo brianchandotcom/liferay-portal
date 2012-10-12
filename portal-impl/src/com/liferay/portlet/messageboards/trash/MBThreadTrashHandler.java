@@ -99,8 +99,14 @@ public class MBThreadTrashHandler extends BaseTrashHandler {
 		return CLASS_NAME;
 	}
 
-	@Override
-	public boolean hasPermission(
+	public boolean isInTrash(long classPK) {
+		return false;
+	}
+
+	public void restoreTrashEntries(long[] classPKs) {
+	}
+
+	protected boolean hasPermission(
 			PermissionChecker permissionChecker, long classPK, String actionId)
 		throws PortalException, SystemException {
 
@@ -108,13 +114,6 @@ public class MBThreadTrashHandler extends BaseTrashHandler {
 
 		return MBMessagePermission.contains(
 			permissionChecker, thread.getRootMessageId(), actionId);
-	}
-
-	public boolean isInTrash(long classPK) {
-		return false;
-	}
-
-	public void restoreTrashEntries(long[] classPKs) {
 	}
 
 }

@@ -64,15 +64,6 @@ public class BlogsEntryTrashHandler extends BaseTrashHandler {
 		return CLASS_NAME;
 	}
 
-	@Override
-	public boolean hasPermission(
-			PermissionChecker permissionChecker, long classPK, String actionId)
-		throws PortalException, SystemException {
-
-		return BlogsEntryPermission.contains(
-			permissionChecker, classPK, actionId);
-	}
-
 	public boolean isInTrash(long classPK)
 		throws PortalException, SystemException {
 
@@ -95,6 +86,14 @@ public class BlogsEntryTrashHandler extends BaseTrashHandler {
 		for (long classPK : classPKs) {
 			BlogsEntryServiceUtil.restoreEntryFromTrash(classPK);
 		}
+	}
+
+	protected boolean hasPermission(
+			PermissionChecker permissionChecker, long classPK, String actionId)
+		throws PortalException, SystemException {
+
+		return BlogsEntryPermission.contains(
+			permissionChecker, classPK, actionId);
 	}
 
 }

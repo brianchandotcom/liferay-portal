@@ -39,29 +39,22 @@ for (String analyticsType : analyticsTypes) {
 
 	<c:choose>
 		<c:when test='<%= analyticsType.equals("google") %>'>
-			<aui:field-wrapper helpMessage="set-the-google-analytics-id-that-will-be-used-for-this-set-of-pages" label="google-analytics-id">
 
-				<%
-				String googleAnalyticsId = PropertiesParamUtil.getString(groupTypeSettings, request, "googleAnalyticsId");
-				%>
+			<%
+			String googleAnalyticsId = PropertiesParamUtil.getString(groupTypeSettings, request, "googleAnalyticsId");
+			%>
 
-				<input name="<portlet:namespace />googleAnalyticsId" size="30" type="text" value="<%= HtmlUtil.escape(googleAnalyticsId) %>" />
-			</aui:field-wrapper>
+			<aui:input helpMessage="set-the-google-analytics-id-that-will-be-used-for-this-set-of-pages" label="google-analytics-id" name="googleAnalyticsId" size="30" type="text" value="<%= googleAnalyticsId %>" />
 		</c:when>
 		<c:otherwise>
 
 			<%
 			String analyticsName = TextFormatter.format(analyticsType, TextFormatter.J);
+
+			String analyticsScript = PropertiesParamUtil.getString(groupTypeSettings, request, SitesUtil.ANALYTICS_PREFIX + analyticsType);
 			%>
 
-			<aui:field-wrapper helpMessage='<%= LanguageUtil.format(pageContext, "set-the-script-for-x-that-will-be-used-for-this-set-of-pages", analyticsName) %>' label="<%= analyticsName %>">
-
-				<%
-				String analyticsScript = PropertiesParamUtil.getString(groupTypeSettings, request, SitesUtil.ANALYTICS_PREFIX + analyticsType);
-				%>
-
-				<textarea cols="60" name="<portlet:namespace /><%= SitesUtil.ANALYTICS_PREFIX + analyticsType %>" rows="15" wrap="soft"><%= analyticsScript %></textarea>
-			</aui:field-wrapper>
+			<aui:input cols="60" helpMessage='<%= LanguageUtil.format(pageContext, "set-the-script-for-x-that-will-be-used-for-this-set-of-pages", analyticsName) %>' label="<%= analyticsName %>" name="<%= SitesUtil.ANALYTICS_PREFIX + analyticsType %>" rows="15" type="textarea" value="<%= analyticsScript %>" wrap="soft" />
 		</c:otherwise>
 	</c:choose>
 

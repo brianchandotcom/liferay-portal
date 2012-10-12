@@ -84,13 +84,16 @@ AUI().add(
 
 						Underlay.superclass.renderUI.apply(instance, arguments);
 
-						var closeTool = new A.ButtonItem('close');
+						var closeTool = new A.ButtonItem(
+							{
+								icon: 'close',
+								title: Liferay.Language.get('close')
+							}
+						);
 
 						closeTool.render(instance.get('boundingBox'));
 
 						closeTool.get('contentBox').addClass('aui-underlay-close');
-
-						closeTool.set('title', Liferay.Language.get('close'));
 
 						instance.set('headerContent', closeTool.get('boundingBox'));
 

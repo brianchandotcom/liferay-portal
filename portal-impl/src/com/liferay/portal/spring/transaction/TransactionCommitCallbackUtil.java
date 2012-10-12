@@ -30,17 +30,31 @@ class TransactionCommitCallbackUtil {
 		List<List<Callable<?>>> callbackListList =
 			_callbackListListThreadLocal.get();
 
-		int index = callbackListList.size() - 1;
+		if (callbackListList.isEmpty()) {
 
-		List<Callable<?>> callableList = callbackListList.get(index);
+			// Not within a tx boundary, should only happen during
+			// upgrade/verify process
 
-		if (callableList == Collections.EMPTY_LIST) {
-			callableList = new ArrayList<Callable<?>>();
-
-			callbackListList.set(index, callableList);
+			try {
+				callable.call();
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
 		}
+		else {
+			int index = callbackListList.size() - 1;
 
-		callableList.add(callable);
+			List<Callable<?>> callableList = callbackListList.get(index);
+
+			if (callableList == Collections.EMPTY_LIST) {
+				callableList = new ArrayList<Callable<?>>();
+
+				callbackListList.set(index, callableList);
+			}
+
+			callableList.add(callable);
+		}
 	}
 
 	protected static List<Callable<?>> popCallbackList() {

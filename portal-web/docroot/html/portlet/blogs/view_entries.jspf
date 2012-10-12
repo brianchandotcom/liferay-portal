@@ -107,36 +107,16 @@ else {
 
 ResourceURL rssURL = liferayPortletResponse.createResourceURL();
 
-rssURL.setCacheability(ResourceURL.FULL);
 rssURL.setParameter("struts_action", "/blogs/rss");
-
-if ((rssDelta != SearchContainer.DEFAULT_DELTA) || !rssFormatType.equals(RSSUtil.TYPE_DEFAULT) || (rssFormatVersion != RSSUtil.VERSION_DEFAULT) || !rssDisplayStyle.equals(RSSUtil.DISPLAY_STYLE_FULL_CONTENT)) {
-	if (rssDelta != SearchContainer.DEFAULT_DELTA) {
-		rssURL.setParameter("max", String.valueOf(rssDelta));
-	}
-
-	if (!rssFormatType.equals(RSSUtil.TYPE_DEFAULT)) {
-		rssURL.setParameter("type", rssFormatType);
-	}
-
-	if (rssFormatVersion != RSSUtil.VERSION_DEFAULT) {
-		rssURL.setParameter("version", String.valueOf(rssFormatVersion));
-	}
-
-	if (!rssDisplayStyle.equals(RSSUtil.DISPLAY_STYLE_FULL_CONTENT)) {
-		rssURL.setParameter("displayStyle", rssDisplayStyle);
-	}
-}
 %>
 
 <div class="subscribe">
-	<c:if test="<%= PortalUtil.isRSSFeedsEnabled() %>">
-		<liferay-ui:icon
-			image="rss"
-			label="<%= true %>"
-			method="get"
-			target="_blank"
-			url="<%= rssURL.toString() %>"
+	<c:if test="<%= enableRSS %>">
+		<liferay-ui:rss
+			baseResourceURL="<%= rssURL %>"
+			delta="<%= rssDelta %>"
+			displayStyle="<%= rssDisplayStyle %>"
+			format="<%= rssFormat %>"
 		/>
 	</c:if>
 

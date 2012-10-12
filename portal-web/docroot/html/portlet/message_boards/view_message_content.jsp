@@ -175,6 +175,24 @@ MBThreadFlag threadFlag = MBThreadFlagLocalServiceUtil.getThreadFlag(themeDispla
 				</td>
 			</c:if>
 
+			<c:if test="<%= enableRSS %>">
+				<td>
+
+					<%
+					rssURL.setParameter("p_l_id", String.valueOf(plid));
+					rssURL.setParameter("mbCategoryId", StringPool.BLANK);
+					rssURL.setParameter("threadId", String.valueOf(message.getThreadId()));
+					%>
+
+					<liferay-ui:rss
+						baseResourceURL="<%= rssURL %>"
+						delta="<%= rssDelta %>"
+						displayStyle="<%= rssDisplayStyle %>"
+						format="<%= rssFormat %>"
+					/>
+				</td>
+			</c:if>
+
 			<c:if test="<%= MBMessagePermission.contains(permissionChecker, message, ActionKeys.SUBSCRIBE) %>">
 				<td>
 					<c:choose>

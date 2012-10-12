@@ -1,0 +1,85 @@
+<%--
+/**
+ * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<%@ include file="/html/taglib/init.jsp" %>
+
+<%@ page import="com.liferay.util.RSSUtil" %>
+
+<%
+int delta = GetterUtil.getInteger((String)request.getAttribute("liferay-ui:rss-settings:delta"));
+String displayStyle = (String)request.getAttribute("liferay-ui:rss-settings:displayStyle");
+boolean enabled = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:rss-settings:enabled"));
+String enabledField = GetterUtil.get((String)request.getAttribute("liferay-ui:rss-settings:enabledField"), "enableRss");
+String[] format = (String[])request.getAttribute("liferay-ui:rss-settings:format");
+String name = (String)request.getAttribute("liferay-ui:rss-settings:name");
+String nameField = (String)request.getAttribute("liferay-ui:rss-settings:nameField");
+%>
+
+<aui:fieldset>
+	<aui:input label="enable-rss-subscription" name='<%= "preferences--" + enabledField + "--" %>' type="checkbox" value="<%= enabled %>" />
+
+	<div class="taglib-rss-settings-options" id="<portlet:namespace />rssOptions">
+		<c:if test="<%= Validator.isNotNull(nameField) %>">
+			<aui:input label="rss-feed-name" name='<%= "preferences--" + nameField + "--" %>' type="text" value="<%= name %>" />
+		</c:if>
+
+		<aui:select label="maximum-items-to-display" name="preferences--rssDelta--">
+			<aui:option label="1" selected="<%= delta == 1 %>" />
+			<aui:option label="2" selected="<%= delta == 2 %>" />
+			<aui:option label="3" selected="<%= delta == 3 %>" />
+			<aui:option label="4" selected="<%= delta == 4 %>" />
+			<aui:option label="5" selected="<%= delta == 5 %>" />
+			<aui:option label="10" selected="<%= delta == 10 %>" />
+			<aui:option label="15" selected="<%= delta == 15 %>" />
+			<aui:option label="20" selected="<%= delta == 20 %>" />
+			<aui:option label="25" selected="<%= delta == 25 %>" />
+			<aui:option label="30" selected="<%= delta == 30 %>" />
+			<aui:option label="40" selected="<%= delta == 40 %>" />
+			<aui:option label="50" selected="<%= delta == 50 %>" />
+			<aui:option label="60" selected="<%= delta == 60 %>" />
+			<aui:option label="70" selected="<%= delta == 70 %>" />
+			<aui:option label="80" selected="<%= delta == 80 %>" />
+			<aui:option label="90" selected="<%= delta == 90 %>" />
+			<aui:option label="100" selected="<%= delta == 100 %>" />
+		</aui:select>
+
+		<aui:select label="display-style" name="preferences--rssDisplayStyle--">
+			<aui:option label="<%= RSSUtil.DISPLAY_STYLE_ABSTRACT %>" selected="<%= displayStyle.equals(RSSUtil.DISPLAY_STYLE_ABSTRACT) %>" />
+			<aui:option label="<%= RSSUtil.DISPLAY_STYLE_FULL_CONTENT%>" selected="<%= displayStyle.equals(RSSUtil.DISPLAY_STYLE_FULL_CONTENT) %>" />
+			<aui:option label="<%= RSSUtil.DISPLAY_STYLE_TITLE %>" selected="<%= displayStyle.equals(RSSUtil.DISPLAY_STYLE_TITLE) %>" />
+		</aui:select>
+
+		<aui:field-wrapper label="format">
+
+			<%
+			for (String feedFormat : RSSUtil.FEED_FORMATS) {
+			%>
+
+				<aui:field-wrapper cssClass="taglib-rss-settings-field-wrapper" inlineField="<%= true %>" inlineLabel="right" label="<%= feedFormat %>">
+					<input <%= ArrayUtil.contains(format, feedFormat) ? "checked": "" %> name="<portlet:namespace />preferences--rssFormat--" type="checkbox" value="<%= feedFormat %>" />
+				</aui:field-wrapper>
+
+			<%
+			}
+			%>
+
+		</aui:field-wrapper>
+	</div>
+</aui:fieldset>
+
+<aui:script>
+	Liferay.Util.toggleBoxes('<portlet:namespace /><%= enabledField %>Checkbox','<portlet:namespace />rssOptions');
+</aui:script>

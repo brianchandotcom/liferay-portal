@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.activities.action;
 
+import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -56,53 +57,18 @@ import javax.portlet.ResourceResponse;
  */
 public class RSSAction extends com.liferay.portal.struts.RSSAction {
 
-	protected List<SocialActivity> getActivities(PortletRequest portletRequest)
+	protected String exportToRSS(
+			String title, String type, double version,
+			ThemeDisplay themeDisplay, List<SocialActivity> activities)
 		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		Group group = GroupLocalServiceUtil.getGroup(
-			themeDisplay.getScopeGroupId());
-
-		int start = 0;
-		int end = 10;
-
-		if (group.isOrganization()) {
-			return SocialActivityLocalServiceUtil.getOrganizationActivities(
-				group.getOrganizationId(), start, end);
-		}
-		else if (group.isRegularSite()) {
-			return SocialActivityLocalServiceUtil.getGroupActivities(
-				group.getGroupId(), start, end);
-		}
-		else if (group.isUser()) {
-			return SocialActivityLocalServiceUtil.getUserActivities(
-				group.getClassPK(), start, end);
-		}
-
-		return Collections.emptyList();
-	}
-
-	@Override
-	protected byte[] getRSS(
-			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
 
 		SyndFeed syndFeed = new SyndFeedImpl();
 
-		String description = ParamUtil.getString(resourceRequest, "feedTitle");
-
-		syndFeed.setDescription(description);
+		syndFeed.setDescription(title);
 
 		List<SyndEntry> syndEntries = new ArrayList<SyndEntry>();
 
 		syndFeed.setEntries(syndEntries);
-
-		List<SocialActivity> activities = getActivities(resourceRequest);
 
 		for (SocialActivity activity : activities) {
 			SocialActivityFeedEntry activityFeedEntry =
@@ -117,7 +83,7 @@ public class RSSAction extends com.liferay.portal.struts.RSSAction {
 
 			SyndContent syndContent = new SyndContentImpl();
 
-			syndContent.setType(RSSUtil.FEED_TYPE_DEFAULT);
+			syndContent.setType(RSSUtil.ENTRY_TYPE_DEFAULT);
 			syndContent.setValue(activityFeedEntry.getBody());
 
 			syndEntry.setDescription(syndContent);
@@ -133,7 +99,7 @@ public class RSSAction extends com.liferay.portal.struts.RSSAction {
 			syndEntries.add(syndEntry);
 		}
 
-		syndFeed.setFeedType(RSSUtil.FEED_TYPE_DEFAULT);
+		syndFeed.setFeedType(RSSUtil.getFeedType(type, version));
 
 		List<SyndLink> syndLinks = new ArrayList<SyndLink>();
 
@@ -159,17 +125,67 @@ public class RSSAction extends com.liferay.portal.struts.RSSAction {
 		alternateSyndLink.setRel("alternate");
 
 		syndFeed.setPublishedDate(new Date());
-		syndFeed.setTitle(description);
+		syndFeed.setTitle(title);
 		syndFeed.setUri(link);
 
-		String rss = StringPool.BLANK;
-
 		try {
-			rss = RSSUtil.export(syndFeed);
+			return RSSUtil.export(syndFeed);
 		}
 		catch (FeedException fe) {
 			throw new SystemException(fe);
 		}
+	}
+
+	protected List<SocialActivity> getActivities(
+			PortletRequest portletRequest, int max)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Group group = GroupLocalServiceUtil.getGroup(
+			themeDisplay.getScopeGroupId());
+
+		int start = 0;
+
+		if (group.isOrganization()) {
+			return SocialActivityLocalServiceUtil.getOrganizationActivities(
+				group.getOrganizationId(), start, max);
+		}
+		else if (group.isRegularSite()) {
+			return SocialActivityLocalServiceUtil.getGroupActivities(
+				group.getGroupId(), start, max);
+		}
+		else if (group.isUser()) {
+			return SocialActivityLocalServiceUtil.getUserActivities(
+				group.getClassPK(), start, max);
+		}
+
+		return Collections.emptyList();
+	}
+
+	@Override
+	protected byte[] getRSS(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		int max = ParamUtil.getInteger(
+			resourceRequest, "max", SearchContainer.DEFAULT_DELTA);
+
+		String title = ParamUtil.getString(resourceRequest, "feedTitle");
+
+		String type = ParamUtil.getString(
+			resourceRequest, "type", RSSUtil.TYPE_DEFAULT);
+
+		double version = ParamUtil.getDouble(
+			resourceRequest, "version", RSSUtil.VERSION_DEFAULT);
+
+		String rss = exportToRSS(
+			title, type, version, themeDisplay,
+			getActivities(resourceRequest, max));
 
 		return rss.getBytes(StringPool.UTF8);
 	}

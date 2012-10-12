@@ -19,7 +19,8 @@
 <%@ page import="com.liferay.portlet.blogs.model.BlogsEntry" %><%@
 page import="com.liferay.portlet.blogs.service.BlogsEntryServiceUtil" %><%@
 page import="com.liferay.portlet.blogs.service.permission.BlogsEntryPermission" %><%@
-page import="com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil" %>
+page import="com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil" %><%@
+page import="com.liferay.util.RSSUtil" %>
 
 <%
 PortletPreferences preferences = renderRequest.getPreferences();
@@ -35,6 +36,9 @@ long organizationId = GetterUtil.getLong(preferences.getValue("organizationId", 
 String displayStyle = preferences.getValue("displayStyle", "abstract");
 int max = GetterUtil.getInteger(preferences.getValue("max", "20"));
 boolean enableRssSubscription = !PortalUtil.isRSSFeedsEnabled() ? false : GetterUtil.getBoolean(preferences.getValue("enableRssSubscription", null), true);
+int rssDelta = GetterUtil.getInteger(preferences.getValue("rssDelta", StringPool.BLANK), SearchContainer.DEFAULT_DELTA);
+String rssDisplayStyle = preferences.getValue("rssDisplayStyle", RSSUtil.DISPLAY_STYLE_FULL_CONTENT);
+String rssFormat[] = StringUtil.split(preferences.getValue("rssFormat", RSSUtil.FEED_FORMAT_DEFAULT));
 boolean showTags = GetterUtil.getBoolean(preferences.getValue("showTags", null), true);
 
 if (organizationId == 0) {

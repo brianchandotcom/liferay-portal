@@ -1,0 +1,12 @@
+.taglib-rss-settings-field-wrapper {
+	margin-right: 15px;
+	overflow: visible;
+
+	.aui-field-label-inline-label {
+		font-weight:normal;
+	}
+}
+
+.taglib-rss-settings-options {
+	margin-left: 2em;
+}

@@ -20,20 +20,19 @@
 <%@ page import="com.liferay.portlet.social.model.SocialActivityFeedEntry" %>
 <%@ page import="com.liferay.portlet.social.service.SocialActivityInterpreterLocalServiceUtil" %>
 <%@ page import="com.liferay.portlet.social.service.SocialActivityLocalServiceUtil" %>
-<%@ page import="com.liferay.util.RSSUtil" %>
-
-<%@ page import="com.sun.syndication.feed.synd.SyndContent" %>
-<%@ page import="com.sun.syndication.feed.synd.SyndEntry" %>
-<%@ page import="com.sun.syndication.feed.synd.SyndFeed" %>
 
 <%
 String className = (String)request.getAttribute("liferay-ui:social-activities:className");
 long classPK = GetterUtil.getLong((String)request.getAttribute("liferay-ui:social-activities:classPK"));
 List<SocialActivity> activities = (List<SocialActivity>)request.getAttribute("liferay-ui:social-activities:activities");
+
+int feedDelta = GetterUtil.getInteger((String)request.getAttribute("liferay-ui:social-activities:feedDelta"), SearchContainer.DEFAULT_DELTA);
+String feedDisplayStyle = (String)request.getAttribute("liferay-ui:social-activities:feedDisplayStyle");
 boolean feedEnabled = !PortalUtil.isRSSFeedsEnabled() ? false : GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:social-activities:feedEnabled"));
-String feedTitle = (String)request.getAttribute("liferay-ui:social-activities:feedTitle");
+String[] feedFormat = (String[])request.getAttribute("liferay-ui:social-activities:feedFormat");
 String feedLink = (String)request.getAttribute("liferay-ui:social-activities:feedLink");
 String feedLinkMessage = (String)request.getAttribute("liferay-ui:social-activities:feedLinkMessage");
+String feedTitle = (String)request.getAttribute("liferay-ui:social-activities:feedTitle");
 
 if (activities == null) {
 	activities = SocialActivityLocalServiceUtil.getActivities(0, className, classPK, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
@@ -124,13 +123,13 @@ Format timeFormatDate = FastDateFormatFactoryUtil.getTime(locale, timeZone);
 <c:if test="<%= feedEnabled && !activities.isEmpty() %>">
 	<div class="separator"><!-- --></div>
 
-	<liferay-ui:icon
-		image="rss"
-		label="<%= true %>"
-		message="<%= feedLinkMessage %>"
-		method="get"
-		target="_blank"
-		url="<%= feedLink %>"
+	<liferay-ui:rss
+		baseURL="<%= feedLink %>"
+		delta="<%= feedDelta %>"
+		displayStyle="<%= feedDisplayStyle %>"
+		format="<%= feedFormat %>"
+		label="<%= feedLinkMessage %>"
+		name="<%= feedTitle %>"
 	/>
 </c:if>
 

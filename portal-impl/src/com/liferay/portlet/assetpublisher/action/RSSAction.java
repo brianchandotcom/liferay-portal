@@ -14,13 +14,17 @@
 
 package com.liferay.portlet.assetpublisher.action;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.theme.PortletDisplay;
@@ -336,18 +340,29 @@ public class RSSAction extends com.liferay.portal.struts.RSSAction {
 			return new byte[0];
 		}
 
-		String rssName = preferences.getValue("rssName", null);
-		String rssFormat = preferences.getValue("rssFormat", "atom10");
-		String rssDisplayStyle = preferences.getValue(
-			"rssDisplayStyle", RSSUtil.DISPLAY_STYLE_ABSTRACT);
 		String assetLinkBehavior = preferences.getValue(
 			"assetLinkBehavior", "showFullContent");
+		String rssDisplayStyle = preferences.getValue(
+			"rssDisplayStyle", RSSUtil.DISPLAY_STYLE_ABSTRACT);
+		String rssFormat[] = StringUtil.split(
+			preferences.getValue("rssFormat", RSSUtil.FEED_FORMAT_DEFAULT));
+		String rssName = preferences.getValue("rssName", null);
+
+		String type = ParamUtil.getString(
+			portletRequest, "type", RSSUtil.TYPE_DEFAULT);
+		double version = ParamUtil.getDouble(
+			portletRequest, "version", RSSUtil.VERSION_DEFAULT);
+
+		String format = RSSUtil.getFormat(type, version);
+
+		if (!ArrayUtil.contains(rssFormat, format)) {
+			throw new PortalException();
+		}
 
 		String rss = exportToRSS(
-			portletRequest, portletResponse, rssName, null,
-			RSSUtil.getFormatType(rssFormat),
-			RSSUtil.getFormatVersion(rssFormat), rssDisplayStyle,
-			assetLinkBehavior, getAssetEntries(portletRequest, preferences));
+			portletRequest, portletResponse, rssName, null, type, version,
+			rssDisplayStyle, assetLinkBehavior,
+			getAssetEntries(portletRequest, preferences));
 
 		return rss.getBytes(StringPool.UTF8);
 	}

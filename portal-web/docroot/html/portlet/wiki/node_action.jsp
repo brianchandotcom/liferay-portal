@@ -64,11 +64,12 @@ WikiNode node = (WikiNode)row.getObject();
 		/>
 	</c:if>
 
-	<c:if test="<%= PortalUtil.isRSSFeedsEnabled() %>">
-		<liferay-ui:icon
-			image="rss"
-			target="_blank"
-			url='<%= themeDisplay.getPathMain() + "/wiki/rss?p_l_id=" + plid + "&nodeId=" + node.getNodeId() + rssURLParams %>'
+	<c:if test="<%= enableRSS %>">>
+		<liferay-ui:rss
+			baseURL='<%= themeDisplay.getPathMain() + "/wiki/rss?p_l_id=" + plid + "&nodeId=" + node.getNodeId() %>'
+			delta="<%= rssDelta %>"
+			displayStyle="<%= rssDisplayStyle %>"
+			format="<%= rssFormat %>"
 		/>
 	</c:if>
 

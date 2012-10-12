@@ -39,12 +39,20 @@ public class SocialActivitiesTag extends IncludeTag {
 		_classPK = classPK;
 	}
 
-	public void setDisplayRSSFeed(boolean displayRSSFeed) {
-		_displayRSSFeed = displayRSSFeed;
+	public void setFeedDelta(int feedDelta) {
+		_feedDelta = feedDelta;
+	}
+
+	public void setFeedDisplayStyle(String feedDisplayStyle) {
+		_feedDisplayStyle = feedDisplayStyle;
 	}
 
 	public void setFeedEnabled(boolean feedEnabled) {
 		_feedEnabled = feedEnabled;
+	}
+
+	public void setFeedFormat(String[] feedFormat) {
+		_feedFormat = feedFormat;
 	}
 
 	public void setFeedLink(String feedLink) {
@@ -64,8 +72,10 @@ public class SocialActivitiesTag extends IncludeTag {
 		_activities = null;
 		_className = StringPool.BLANK;
 		_classPK = 0;
-		_displayRSSFeed = false;
+		_feedDelta = 0;
+		_feedDisplayStyle = StringPool.BLANK;
 		_feedEnabled = false;
+		_feedFormat = new String[] {StringPool.BLANK};
 		_feedLink = StringPool.BLANK;
 		_feedLinkMessage = StringPool.BLANK;
 		_feedTitle = null;
@@ -85,11 +95,15 @@ public class SocialActivitiesTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-ui:social-activities:classPK", String.valueOf(_classPK));
 		request.setAttribute(
-			"liferay-ui:social-activities:displayRSSFeed",
-			String.valueOf(_displayRSSFeed));
+			"liferay-ui:social-activities:feedDelta",
+			String.valueOf(_feedDelta));
+		request.setAttribute(
+			"liferay-ui:social-activities:feedDisplayStyle",_feedDisplayStyle);
 		request.setAttribute(
 			"liferay-ui:social-activities:feedEnabled",
 			String.valueOf(_feedEnabled));
+		request.setAttribute(
+			"liferay-ui:social-activities:feedFormat", _feedFormat);
 		request.setAttribute(
 			"liferay-ui:social-activities:feedLink", _feedLink);
 		request.setAttribute(
@@ -104,8 +118,10 @@ public class SocialActivitiesTag extends IncludeTag {
 	private List<SocialActivity> _activities;
 	private String _className = StringPool.BLANK;
 	private long _classPK;
-	private boolean _displayRSSFeed;
+	private int _feedDelta;
+	private String _feedDisplayStyle = StringPool.BLANK;;
 	private boolean _feedEnabled;
+	private String[] _feedFormat;
 	private String _feedLink = StringPool.BLANK;
 	private String _feedLinkMessage = StringPool.BLANK;
 	private String _feedTitle;

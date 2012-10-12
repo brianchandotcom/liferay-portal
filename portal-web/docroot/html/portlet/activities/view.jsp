@@ -36,14 +36,15 @@ ResourceURL rssURL = liferayPortletResponse.createResourceURL();
 rssURL.setCacheability(ResourceURL.FULL);
 rssURL.setParameter("struts_action", "/activities/rss");
 
-String taglibFeedTitle = LanguageUtil.format(pageContext, "subscribe-to-x's-activities", group.getDescriptiveName(locale));
 String taglibFeedLinkMessage = LanguageUtil.format(pageContext, "subscribe-to-x's-activities", group.getDescriptiveName(locale));
 %>
 
 <liferay-ui:social-activities
 	activities="<%= activities %>"
-	feedEnabled="<%= true %>"
+	feedDelta="<%= rssDelta %>"
+	feedDisplayStyle="<%= rssDisplayStyle %>"
+	feedEnabled="<%= enableRSS %>"
+	feedFormat="<%= rssFormat %>"
 	feedLink="<%= rssURL.toString() %>"
 	feedLinkMessage="<%= HtmlUtil.escape(taglibFeedLinkMessage) %>"
-	feedTitle="<%= HtmlUtil.escape(taglibFeedTitle) %>"
 />

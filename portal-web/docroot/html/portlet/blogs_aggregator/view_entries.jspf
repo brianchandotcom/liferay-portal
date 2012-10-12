@@ -63,13 +63,13 @@
 	}
 	%>
 
-	<liferay-ui:icon
-		image="rss"
-		label="<%= true %>"
-		method="get"
-		target="_blank"
-		url='<%= themeDisplay.getPathMain() + "/blogs_aggregator/rss?p_l_id=" + plid + rssURLParams %>'
+	<liferay-ui:rss
+		baseURL='<%= themeDisplay.getPathMain() + "/blogs_aggregator/rss?p_l_id=" + plid + rssURLParams %>'
+		delta="<%= rssDelta %>"
+		displayStyle="<%= rssDisplayStyle %>"
+		format="<%= rssFormat %>"
 	/>
+
 </c:if>
 
 <c:if test="<%= !results.isEmpty() %>">

@@ -139,23 +139,19 @@ contextObjects.put(PortletDisplayTemplateConstants.ASSET_PUBLISHER_HELPER, Asset
 </c:if>
 
 <c:if test="<%= enableRSS %>">
-	<portlet:resourceURL var="rssURL">
-		<portlet:param name="struts_action" value="/asset_publisher/rss" />
-	</portlet:resourceURL>
+
+	<%
+	ResourceURL rssURL = liferayPortletResponse.createResourceURL();
+
+	rssURL.setParameter("struts_action", "/asset_publisher/rss");
+	%>
 
 	<div class="subscribe">
-		<liferay-ui:icon
-			image="rss"
-			label="<%= true %>"
-			method="get"
-			target="_blank"
-			url="<%= rssURL %>"
+		<liferay-ui:rss
+			baseResourceURL="<%= rssURL %>"
+			format="<%= rssFormat %>"
 		/>
 	</div>
-
-	<liferay-util:html-top>
-		<link href="<%= HtmlUtil.escape(rssURL) %>" rel="alternate" title="RSS" type="application/rss+xml" />
-	</liferay-util:html-top>
 </c:if>
 
 <%!

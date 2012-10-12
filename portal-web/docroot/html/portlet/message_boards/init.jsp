@@ -103,9 +103,6 @@ Locale[] locales = LanguageUtil.getAvailableLocales();
 
 String[] priorities = LocalizationUtil.getPreferencesValues(preferences, "priorities", currentLanguageId);
 
-int rssDelta = GetterUtil.getInteger(preferences.getValue("rssDelta", StringPool.BLANK), SearchContainer.DEFAULT_DELTA);
-String rssDisplayStyle = preferences.getValue("rssDisplayStyle", RSSUtil.DISPLAY_STYLE_FULL_CONTENT);
-String rssFormat = preferences.getValue("rssFormat", "atom10");
 boolean allowAnonymousPosting = MBUtil.isAllowAnonymousPosting(preferences);
 boolean subscribeByDefault = GetterUtil.getBoolean(preferences.getValue("subscribeByDefault", null), PropsValues.MESSAGE_BOARDS_SUBSCRIBE_BY_DEFAULT);
 String messageFormat = MBUtil.getMessageFormat(preferences);
@@ -114,32 +111,15 @@ boolean enableRatings = GetterUtil.getBoolean(preferences.getValue("enableRating
 boolean threadAsQuestionByDefault = GetterUtil.getBoolean(preferences.getValue("threadAsQuestionByDefault", null));
 String recentPostsDateOffset = preferences.getValue("recentPostsDateOffset", "7");
 
-String rssFormatType = RSSUtil.getFormatType(rssFormat);
-double rssFormatVersion = RSSUtil.getFormatVersion(rssFormat);
+boolean enableRSS = !PortalUtil.isRSSFeedsEnabled() ? false : GetterUtil.getBoolean(preferences.getValue("enableRss", null), true);
+int rssDelta = GetterUtil.getInteger(preferences.getValue("rssDelta", StringPool.BLANK), SearchContainer.DEFAULT_DELTA);
+String rssDisplayStyle = preferences.getValue("rssDisplayStyle", RSSUtil.DISPLAY_STYLE_FULL_CONTENT);
+String rssFormat[] = StringUtil.split(preferences.getValue("rssFormat", RSSUtil.FEED_FORMAT_DEFAULT));
 
 ResourceURL rssURL = liferayPortletResponse.createResourceURL();
 
 rssURL.setCacheability(ResourceURL.FULL);
 rssURL.setParameter("struts_action", "/message_boards/rss");
-
-if ((rssDelta != SearchContainer.DEFAULT_DELTA) || !rssFormatType.equals(RSSUtil.TYPE_DEFAULT) || (rssFormatVersion != RSSUtil.VERSION_DEFAULT) || !rssDisplayStyle.equals(RSSUtil.DISPLAY_STYLE_FULL_CONTENT)) {
-	if (rssDelta != SearchContainer.DEFAULT_DELTA) {
-		rssURL.setParameter("max", String.valueOf(rssDelta));
-	}
-
-	if (!rssFormatType.equals(RSSUtil.TYPE_DEFAULT)) {
-		rssURL.setParameter("type", rssFormatType);
-	}
-
-	if (rssFormatVersion != RSSUtil.VERSION_DEFAULT) {
-		rssURL.setParameter("version", String.valueOf(rssFormatVersion));
-	}
-
-	if (!rssDisplayStyle.equals(RSSUtil.DISPLAY_STYLE_FULL_CONTENT)) {
-		rssURL.setParameter("displayStyle", rssDisplayStyle);
-	}
-}
-
 rssURL.setParameter("p_l_id", String.valueOf(plid));
 rssURL.setParameter("mbCategoryId", String.valueOf(scopeGroupId));
 

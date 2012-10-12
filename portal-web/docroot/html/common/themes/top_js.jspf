@@ -405,48 +405,45 @@ UnicodeProperties groupTypeSettings = group.getTypeSettingsProperties();
 for (String analyticsType : analyticsTypes) {
 %>
 
-<c:choose>
-	<c:when test='<%= analyticsType.equals("google") %>'>
+	<c:choose>
+		<c:when test='<%= analyticsType.equals("google") %>'>
 
-		<%
-		String googleAnalyticsId = groupTypeSettings.getProperty("googleAnalyticsId");
-		%>
+			<%
+			String googleAnalyticsId = groupTypeSettings.getProperty("googleAnalyticsId");
+			%>
 
-		<c:if test="<%= Validator.isNotNull(googleAnalyticsId) %>">
-			<script type="text/javascript">
-				var _gaq = _gaq || [];
+			<c:if test="<%= Validator.isNotNull(googleAnalyticsId) %>">
+				<script type="text/javascript">
+					var _gaq = _gaq || [];
 
-				_gaq.push(['_setAccount', '<%= googleAnalyticsId %>']);
-				_gaq.push(['_trackPageview']);
+					_gaq.push(['_setAccount', '<%= googleAnalyticsId %>']);
+					_gaq.push(['_trackPageview']);
 
-				(function() {
-					var ga = document.createElement('script');
+					(function() {
+						var ga = document.createElement('script');
 
-					ga.async = true;
-					ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-					ga.type = 'text/javascript';
+						ga.async = true;
+						ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+						ga.type = 'text/javascript';
 
-					var s = document.getElementsByTagName('script')[0];
+						var s = document.getElementsByTagName('script')[0];
 
-					s.parentNode.insertBefore(ga, s);
-				})();
-			</script>
-		</c:if>
-	</c:when>
-	<c:otherwise>
+						s.parentNode.insertBefore(ga, s);
+					})();
+				</script>
+			</c:if>
+		</c:when>
+		<c:otherwise>
 
-		<%
-		String analyticsScript = groupTypeSettings.getProperty(SitesUtil.ANALYTICS_PREFIX + analyticsType);
-		%>
+			<%
+			String analyticsScript = groupTypeSettings.getProperty(SitesUtil.ANALYTICS_PREFIX + analyticsType);
+			%>
 
-		<c:if test="<%= Validator.isNotNull(analyticsScript) %>">
-
-			<%= analyticsScript %>
-
-		</c:if>
-
-	</c:otherwise>
-</c:choose>
+			<c:if test="<%= Validator.isNotNull(analyticsScript) %>">
+				<%= analyticsScript %>
+			</c:if>
+		</c:otherwise>
+	</c:choose>
 
 <%
 }

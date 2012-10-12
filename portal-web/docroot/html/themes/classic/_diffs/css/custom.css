@@ -91,7 +91,8 @@ hr, .separator {
 
 #skip-to-content:focus {
 	clip: rect(auto auto auto auto);
-	right: 0;
+	margin-top: 35px;
+	right: 5px;
 	z-index: 200;
 }
 

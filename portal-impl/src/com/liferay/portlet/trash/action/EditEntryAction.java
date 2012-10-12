@@ -83,7 +83,7 @@ public class EditEntryAction extends PortletAction {
 			else if (cmd.equals(Constants.OVERRIDE)) {
 				entries = restoreOverride(actionRequest);
 			}
-			else if (cmd.equals("checkEntry")) {
+			else if (cmd.equals(Constants.CHECK_ENTRY)) {
 				checkEntry(actionRequest, actionResponse);
 
 				return;

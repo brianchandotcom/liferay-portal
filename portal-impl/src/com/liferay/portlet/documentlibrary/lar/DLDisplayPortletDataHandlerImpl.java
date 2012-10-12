@@ -95,6 +95,10 @@ public class DLDisplayPortletDataHandlerImpl extends BasePortletDataHandler {
 			PortletPreferences portletPreferences)
 		throws Exception {
 
+		if (portletPreferences == null) {
+			return portletPreferences;
+		}
+
 		portletPreferences.setValue("rootFolderId", StringPool.BLANK);
 		portletPreferences.setValue("showFoldersSearch", StringPool.BLANK);
 		portletPreferences.setValue("showSubfolders", StringPool.BLANK);

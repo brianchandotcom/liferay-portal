@@ -73,6 +73,10 @@ public class PollsDisplayPortletDataHandlerImpl extends BasePortletDataHandler {
 			PortletPreferences portletPreferences)
 		throws Exception {
 
+		if (portletPreferences == null) {
+			return portletPreferences;
+		}
+
 		portletPreferences.setValue("questionId", StringPool.BLANK);
 
 		return portletPreferences;

@@ -48,6 +48,7 @@ import com.liferay.portlet.messageboards.model.MBThreadFlag;
 import com.liferay.portlet.messageboards.service.MBBanLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
+import com.liferay.portlet.messageboards.service.MBStatsUserLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBThreadFlagLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBThreadLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.persistence.MBBanUtil;
@@ -121,7 +122,13 @@ public class MBPortletDataHandlerImpl extends BasePortletDataHandler {
 		if (!portletDataContext.addPrimaryKey(
 				MBPortletDataHandlerImpl.class, "deleteData")) {
 
+			MBBanLocalServiceUtil.deleteBansByGroupId(
+				portletDataContext.getScopeGroupId());
+
 			MBCategoryLocalServiceUtil.deleteCategories(
+				portletDataContext.getScopeGroupId());
+
+			MBStatsUserLocalServiceUtil.deleteStatsUsersByGroupId(
 				portletDataContext.getScopeGroupId());
 
 			MBThreadLocalServiceUtil.deleteThreads(

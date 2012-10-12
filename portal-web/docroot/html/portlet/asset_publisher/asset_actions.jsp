@@ -38,7 +38,7 @@ if (showEditURL && assetRenderer.hasEditPermission(permissionChecker)) {
 
 	redirectURL.setWindowState(LiferayWindowState.POP_UP);
 
-	editPortletURL = assetRenderer.getURLEdit(liferayPortletRequest, liferayPortletResponse, LiferayWindowState.POP_UP, redirectURL);
+	editPortletURL = assetRenderer.getURLEdit(liferayPortletRequest, liferayPortletResponse, LiferayWindowState.POP_UP.toString(), redirectURL);
 }
 %>
 

@@ -97,8 +97,8 @@ public abstract class BaseAssetRenderer implements AssetRenderer {
 
 	public PortletURL getURLEdit(
 			LiferayPortletRequest liferayPortletRequest,
-			LiferayPortletResponse liferayPortletResponse,
-			WindowState windowState, PortletURL redirectURL)
+			LiferayPortletResponse liferayPortletResponse, String windowState,
+			PortletURL redirectURL)
 		throws Exception {
 
 		LiferayPortletURL editPortletURL =
@@ -146,7 +146,7 @@ public abstract class BaseAssetRenderer implements AssetRenderer {
 
 		editPortletURL.setPortletMode(PortletMode.VIEW);
 		editPortletURL.setRefererPlid(themeDisplay.getPlid());
-		editPortletURL.setWindowState(windowState);
+		editPortletURL.setWindowState(new WindowState(windowState));
 
 		return editPortletURL;
 	}

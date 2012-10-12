@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+
+<root>
+	<template>
+		<template-key><![CDATA[wiki-social-ftl]]></template-key>
+		<name><![CDATA[Social]]></name>
+		<description><![CDATA[Displays social bookmarks and ratings for wiki pages and their child pages.]]></description>
+		<language><![CDATA[ftl]]></language>
+		<script-file>com/liferay/portlet/wiki/dependencies/portlet_display_template_social.ftl</script-file>
+	</template>
+</root>

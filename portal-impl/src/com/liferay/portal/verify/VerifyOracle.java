@@ -82,7 +82,7 @@ public class VerifyOracle extends VerifyProcess {
 							sb.append(columnName);
 							sb.append(" for table ");
 							sb.append(tableName);
-							sb.append("because it contains values that are ");
+							sb.append(" because it contains values that are ");
 							sb.append("larger than the new column length");
 
 							_log.warn(sb.toString());

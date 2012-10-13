@@ -61,8 +61,6 @@
 		<preferences-unique-per-layout>false</preferences-unique-per-layout>
 		<preferences-owned-by-group>true</preferences-owned-by-group>
 		<use-default-template>false</use-default-template>
-		<show-portlet-access-denied>true</show-portlet-access-denied>
-		<show-portlet-inactive>true</show-portlet-inactive>
 		<scopeable>true</scopeable>
 		<private-request-attributes>false</private-request-attributes>
 		<private-session-attributes>false</private-session-attributes>

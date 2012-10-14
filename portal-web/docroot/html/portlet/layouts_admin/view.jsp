@@ -219,6 +219,7 @@ SitesUtil.addPortletBreadcrumbEntries(group, pagesName, redirectURL, request, re
 
 				if (link) {
 					var href = link.attr('href');
+
 					var hash = location.hash;
 
 					var prefix = '#_LFR_FN_<portlet:namespace />';

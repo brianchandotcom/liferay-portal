@@ -90,12 +90,19 @@
 	}
 
 	.user-portrait {
-		text-decoration: none;
-	}
+		&, &:hover span {
+			text-decoration: none;
+		}
 
-	.user-avatar img {
-		vertical-align: middle;
-		width: 25px;
+		img {
+			text-decoration: none;
+			vertical-align: middle;
+			width: 25px;
+		}
+
+		span {
+			text-decoration: underline;
+		}
 	}
 
 	.impersonating-user {

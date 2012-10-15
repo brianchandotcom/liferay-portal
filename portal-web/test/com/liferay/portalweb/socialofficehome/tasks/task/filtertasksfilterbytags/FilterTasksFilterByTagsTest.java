@@ -25,7 +25,6 @@ public class FilterTasksFilterByTagsTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/user/joebloggs/so/dashboard/");
-		selenium.waitForVisible("//nav/ul/li[contains(.,'Tasks')]/a/span");
 		selenium.clickAt("//nav/ul/li[contains(.,'Tasks')]/a/span",
 			RuntimeVariables.replace("Tasks"));
 		selenium.waitForPageToLoad("30000");
@@ -70,10 +69,10 @@ public class FilterTasksFilterByTagsTest extends BaseTestCase {
 				"Site: Liferay"));
 		assertEquals(RuntimeVariables.replace("Task Description"),
 			selenium.getText("//tr[4]/td[1]/div[1]/a"));
-		assertEquals(RuntimeVariables.replace("tag2"),
-			selenium.getText("//span/a[contains(.,'tag2')]"));
-		selenium.clickAt("//span/a[contains(.,'tag2')]",
-			RuntimeVariables.replace("tag2"));
+		assertEquals(RuntimeVariables.replace("tag1"),
+			selenium.getText("//span/a[contains(.,'tag1')]"));
+		selenium.clickAt("//span/a[contains(.,'tag1')]",
+			RuntimeVariables.replace("tag1"));
 		selenium.waitForText("//td[1]/div[1]/a", "Task Description");
 		assertEquals(RuntimeVariables.replace("Task Description"),
 			selenium.getText("//td[1]/div[1]/a"));

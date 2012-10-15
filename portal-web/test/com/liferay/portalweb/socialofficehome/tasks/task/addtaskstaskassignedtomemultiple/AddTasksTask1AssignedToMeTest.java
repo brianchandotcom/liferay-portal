@@ -30,8 +30,6 @@ public class AddTasksTask1AssignedToMeTest extends BaseTestCase {
 				selenium.selectWindow("null");
 				selenium.selectFrame("relative=top");
 				selenium.open("/user/joebloggs/so/dashboard/");
-				selenium.waitForVisible(
-					"//nav/ul/li[contains(.,'Tasks')]/a/span");
 				selenium.clickAt("//nav/ul/li[contains(.,'Tasks')]/a/span",
 					RuntimeVariables.replace("Tasks"));
 				selenium.waitForPageToLoad("30000");

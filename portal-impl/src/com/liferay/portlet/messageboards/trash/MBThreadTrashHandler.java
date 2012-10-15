@@ -46,6 +46,7 @@ public class MBThreadTrashHandler extends BaseTrashHandler {
 	 *
 	 * @param  group the group
 	 * @param  date the date from which attachments will be deleted
+	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override

@@ -22,7 +22,8 @@ import java.util.Arrays;
 
 /**
  * @author     Brian Wing Shun Chan
- * @deprecated
+ * @deprecated As of 6.0.5, replaced by {@link
+ *             com.liferay.kernel.util.MethodHandler}
  */
 public class MethodWrapper implements Serializable {
 
@@ -55,7 +56,7 @@ public class MethodWrapper implements Serializable {
 	}
 
 	/**
-	 * @deprecated Use <code>getArguments</code>.
+	 * @deprecated Replaced by {@link #getArguments()}.
 	 */
 	public Object[] getArgs() {
 		return getArguments();

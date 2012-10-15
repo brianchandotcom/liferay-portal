@@ -47,10 +47,11 @@ public class ShardIterativelyAdvice implements MethodInterceptor {
 
 			try {
 				methodInvocation.proceed();
-				CacheRegistryUtil.clear();
 			}
 			finally {
 				_shardAdvice.popCompanyService();
+
+				CacheRegistryUtil.clear();
 			}
 		}
 

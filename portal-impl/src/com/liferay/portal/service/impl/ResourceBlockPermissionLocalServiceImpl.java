@@ -64,14 +64,6 @@ public class ResourceBlockPermissionLocalServiceImpl
 		}
 	}
 
-	public int getResourceBlockPermissionsCount(
-			long resourceBlockId, long roleId)
-		throws SystemException {
-
-		return resourceBlockPermissionPersistence.countByR_R(
-			resourceBlockId, roleId);
-	}
-
 	public void deleteResourceBlockPermissions(long resourceBlockId)
 		throws SystemException {
 
@@ -137,6 +129,14 @@ public class ResourceBlockPermissionLocalServiceImpl
 		}
 
 		return resourceBlockPermissionContainer;
+	}
+
+	public int getResourceBlockPermissionsCount(
+			long resourceBlockId, long roleId)
+		throws SystemException {
+
+		return resourceBlockPermissionPersistence.countByR_R(
+			resourceBlockId, roleId);
 	}
 
 	public void updateResourceBlockPermission(

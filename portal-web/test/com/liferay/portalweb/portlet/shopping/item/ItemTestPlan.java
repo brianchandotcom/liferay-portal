@@ -41,8 +41,8 @@ public class ItemTestPlan extends BaseTestSuite {
 		TestSuite testSuite = new TestSuite();
 
 		testSuite.addTest(AddCategoryItemTests.suite());
-		testSuite.addTest(AddCategoryItemsTests.suite());
 		testSuite.addTest(AddCategoryItemNameNullTests.suite());
+		testSuite.addTest(AddCategoryItemsTests.suite());
 		testSuite.addTest(AddCategoryItemSKUNullTests.suite());
 		testSuite.addTest(AddToShoppingCartCategoryItemTests.suite());
 		testSuite.addTest(AddToShoppingCartCategoryItemsTests.suite());

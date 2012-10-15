@@ -36,13 +36,13 @@ public class CategoryTestPlan extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(AddCategoryTests.suite());
 		testSuite.addTest(AddCategoriesTests.suite());
+		testSuite.addTest(AddCategoryTests.suite());
 		testSuite.addTest(AddCategoryNameDoubleBackSlashTests.suite());
 		testSuite.addTest(AddCategoryNameDoubleForwardSlashTests.suite());
 		testSuite.addTest(AddCategoryNameNullTests.suite());
-		testSuite.addTest(AddSubcategoryTests.suite());
 		testSuite.addTest(AddSubcategoriesTests.suite());
+		testSuite.addTest(AddSubcategoryTests.suite());
 		testSuite.addTest(DeleteCategoryTests.suite());
 		testSuite.addTest(EditCategoryTests.suite());
 

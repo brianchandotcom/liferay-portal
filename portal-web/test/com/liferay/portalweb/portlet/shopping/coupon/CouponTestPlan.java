@@ -37,9 +37,9 @@ public class CouponTestPlan extends BaseTestSuite {
 
 		testSuite.addTest(AddCouponTests.suite());
 		testSuite.addTest(AddCouponCodeNumberTests.suite());
-		testSuite.addTest(AddCouponsTests.suite());
 		testSuite.addTest(AddCouponNameNullTests.suite());
 		testSuite.addTest(AddCouponNameSpaceTests.suite());
+		testSuite.addTest(AddCouponsTests.suite());
 		testSuite.addTest(DeleteCouponTests.suite());
 		testSuite.addTest(EditCouponTests.suite());
 		testSuite.addTest(SearchCouponCodeTests.suite());

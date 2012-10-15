@@ -29,14 +29,24 @@
 	<td>Add Coupon</td>
 </tr>
 <tr>
-	<td>assertNotChecked</td>
+	<td>storeChecked</td>
 	<td>//input[@id='_34_autoCodeCheckbox']</td>
-	<td>Autogenerate Code</td>
+	<td>autogenerateCodeChecked</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${autogenerateCodeChecked}</td>
+	<td>AutogenerateCodeChecked</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>//input[@id='_34_autoCodeCheckbox']</td>
 	<td>Autogenerate Code</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>AutogenerateCodeChecked</td>
+	<td></td>
 </tr>
 <tr>
 	<td>assertChecked</td>

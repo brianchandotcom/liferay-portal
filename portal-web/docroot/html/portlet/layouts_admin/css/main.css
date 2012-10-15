@@ -533,3 +533,13 @@
 		width: 30%;
 	}
 }
+
+.ie7 {
+	.edit-layout-form, .edit-layoutset-form {
+	
+		.layout-description textarea {
+			width: 100%;
+			max-width: 350px;
+		}
+	}
+}

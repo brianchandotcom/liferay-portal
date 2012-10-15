@@ -17,6 +17,8 @@
 <%@ include file="/html/portlet/sites_admin/init.jsp" %>
 
 <%
+String[] analyticsTypes = PropsValues.SITES_FORM_ANALYTICS;
+
 Group liveGroup = (Group)request.getAttribute("site.liveGroup");
 
 UnicodeProperties groupTypeSettings = null;
@@ -31,13 +33,31 @@ else {
 
 <liferay-ui:error-marker key="errorSection" value="analytics" />
 
-<liferay-ui:message key="set-the-google-analytics-id-that-will-be-used-for-this-set-of-pages" />
+<%
+for (String analyticsType : analyticsTypes) {
+%>
 
-<aui:field-wrapper label="google-analytics-id">
+	<c:choose>
+		<c:when test='<%= analyticsType.equals("google") %>'>
 
-	<%
-	String googleAnalyticsId = PropertiesParamUtil.getString(groupTypeSettings, request, "googleAnalyticsId");
-	%>
+			<%
+			String googleAnalyticsId = PropertiesParamUtil.getString(groupTypeSettings, request, "googleAnalyticsId");
+			%>
 
-	<input name="<portlet:namespace />googleAnalyticsId" size="30" type="text" value="<%= HtmlUtil.escape(googleAnalyticsId) %>" />
-</aui:field-wrapper>
+			<aui:input helpMessage="set-the-google-analytics-id-that-will-be-used-for-this-set-of-pages" label="google-analytics-id" name="googleAnalyticsId" size="30" type="text" value="<%= googleAnalyticsId %>" />
+		</c:when>
+		<c:otherwise>
+
+			<%
+			String analyticsName = TextFormatter.format(analyticsType, TextFormatter.J);
+
+			String analyticsScript = PropertiesParamUtil.getString(groupTypeSettings, request, SitesUtil.ANALYTICS_PREFIX + analyticsType);
+			%>
+
+			<aui:input cols="60" helpMessage='<%= LanguageUtil.format(pageContext, "set-the-script-for-x-that-will-be-used-for-this-set-of-pages", analyticsName) %>' label="<%= analyticsName %>" name="<%= SitesUtil.ANALYTICS_PREFIX + analyticsType %>" rows="15" type="textarea" value="<%= analyticsScript %>" wrap="soft" />
+		</c:otherwise>
+	</c:choose>
+
+<%
+}
+%>

@@ -61,8 +61,7 @@ page import="com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupInstanceS
 page import="com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupLocalServiceUtil" %><%@
 page import="com.liferay.portlet.mobiledevicerules.service.permission.MDRPermissionUtil" %><%@
 page import="com.liferay.portlet.mobiledevicerules.service.permission.MDRRuleGroupInstancePermissionUtil" %><%@
-page import="com.liferay.portlet.mobiledevicerules.util.RuleGroupInstancePriorityComparator" %><%@
-page import="com.liferay.portlet.sites.util.SitesUtil" %>
+page import="com.liferay.portlet.mobiledevicerules.util.RuleGroupInstancePriorityComparator" %>
 
 <%
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);

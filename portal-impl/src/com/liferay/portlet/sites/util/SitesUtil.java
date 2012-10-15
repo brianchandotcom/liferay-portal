@@ -112,6 +112,8 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class SitesUtil {
 
+	public static final String ANALYTICS_PREFIX = "analytics_";
+
 	public static void addPortletBreadcrumbEntries(
 			Group group, String pagesName, PortletURL redirectURL,
 			HttpServletRequest request, RenderResponse renderResponse)

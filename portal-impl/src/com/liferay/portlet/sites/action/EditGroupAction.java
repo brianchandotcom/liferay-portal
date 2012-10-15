@@ -67,6 +67,7 @@ import com.liferay.portal.service.TeamLocalServiceUtil;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.asset.AssetCategoryException;
 import com.liferay.portlet.asset.AssetTagException;
@@ -478,12 +479,27 @@ public class EditGroupAction extends PortletAction {
 				getTeams(actionRequest), Team.TEAM_ID_ACCESSOR,
 				StringPool.COMMA));
 
-		String googleAnalyticsId = ParamUtil.getString(
-			actionRequest, "googleAnalyticsId",
-			typeSettingsProperties.getProperty("googleAnalyticsId"));
+		String[] analyticsTypes = PropsValues.SITES_FORM_ANALYTICS;
 
-		typeSettingsProperties.setProperty(
-			"googleAnalyticsId", googleAnalyticsId);
+		for (String analyticsType : analyticsTypes) {
+			if (analyticsType.equals("google")) {
+				String googleAnalyticsId = ParamUtil.getString(
+					actionRequest, "googleAnalyticsId",
+					typeSettingsProperties.getProperty("googleAnalyticsId"));
+
+				typeSettingsProperties.setProperty(
+					"googleAnalyticsId", googleAnalyticsId);
+			}
+			else {
+				String analyticsScript = ParamUtil.getString(
+					actionRequest, SitesUtil.ANALYTICS_PREFIX + analyticsType,
+					typeSettingsProperties.getProperty(analyticsType));
+
+				typeSettingsProperties.setProperty(
+					SitesUtil.ANALYTICS_PREFIX + analyticsType,
+					analyticsScript);
+			}
+		}
 
 		String publicRobots = ParamUtil.getString(
 			actionRequest, "publicRobots",

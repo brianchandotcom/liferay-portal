@@ -2073,6 +2073,8 @@ public interface PropsKeys {
 
 	public static final String SITES_FORM_ADD_SEO = "sites.form.add.seo";
 
+	public static final String SITES_FORM_ANALYTICS = "sites.form.analytics";
+
 	public static final String SITES_FORM_UPDATE_ADVANCED = "sites.form.update.advanced";
 
 	public static final String SITES_FORM_UPDATE_MAIN = "sites.form.update.main";

@@ -1521,6 +1521,8 @@ public class PropsValues {
 
 	public static String[] SITES_FORM_ADD_SEO = PropsUtil.getArray(PropsKeys.SITES_FORM_ADD_SEO);
 
+	public static String[] SITES_FORM_ANALYTICS = PropsUtil.getArray(PropsKeys.SITES_FORM_ANALYTICS);
+
 	public static String[] SITES_FORM_UPDATE_ADVANCED = PropsUtil.getArray(PropsKeys.SITES_FORM_UPDATE_ADVANCED);
 
 	public static String[] SITES_FORM_UPDATE_MAIN = PropsUtil.getArray(PropsKeys.SITES_FORM_UPDATE_MAIN);

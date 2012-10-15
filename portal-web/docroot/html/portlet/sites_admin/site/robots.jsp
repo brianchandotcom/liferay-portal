@@ -47,7 +47,7 @@ String privateRobots = ParamUtil.getString(request, "robots", defaultPrivateRobo
 <aui:fieldset label="public-pages">
 	<c:choose>
 		<c:when test="<%= Validator.isNotNull(publicVirtualHostName) %>">
-			<textarea cols="60" name="<portlet:namespace />publicRobots" rows="15"><%= HtmlUtil.escape(publicRobots) %></textarea>
+			<aui:input cols="60" name="publicRobots" rows="15" type="textarea" value="<%= publicRobots %>" />
 		</c:when>
 		<c:otherwise>
 			<div class="portlet-msg-info">
@@ -60,7 +60,7 @@ String privateRobots = ParamUtil.getString(request, "robots", defaultPrivateRobo
 <aui:fieldset label="private-pages">
 	<c:choose>
 		<c:when test="<%= Validator.isNotNull(privateLayoutSet.getVirtualHostname()) %>">
-			<textarea cols="60" name="<portlet:namespace />privateRobots" rows="15"><%= HtmlUtil.escape(privateRobots) %></textarea>
+			<aui:input cols="60" name="privateRobots" rows="15" type="textarea" value="<%= privateRobots %>" />
 		</c:when>
 		<c:otherwise>
 			<div class="portlet-msg-info">

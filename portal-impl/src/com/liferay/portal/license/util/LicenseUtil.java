@@ -202,19 +202,46 @@ public class LicenseUtil {
 			_macAddresses = new HashSet<String>();
 
 			try {
-				Process process = null;
 
+				String osName = System.getProperty("os.name");
+
+				if (osName == null) {
+					return null;
+				}
+
+				String osNameLowerCase = osName.toLowerCase();
+
+				Process process = null;
 				Runtime runtime = Runtime.getRuntime();
 
-				File ifconfigFile = new File("/sbin/ifconfig");
+				Pattern macAddressPattern = _macAddressPattern1;
 
-				if (ifconfigFile.exists()) {
-					process = runtime.exec(
-						new String[] {"/sbin/ifconfig", "-a"}, null);
+				if (osNameLowerCase.startsWith("win")) {
+					process = runtime.exec(new String[] {
+						"ipconfig", "/all"
+					}, null);
 				}
 				else {
-					process = runtime.exec(
-						new String[] {"ipconfig", "/all"}, null);
+					String executable = null;
+					String arguments = null;
+
+					if (osNameLowerCase.contains("aix")) {
+						macAddressPattern = _macAddressPattern2;
+						executable = "netstat";
+						arguments = "-ina";
+					}
+					else {
+						executable = "ifconfig";
+						arguments = "-a";
+					}
+
+					File sbinExecutable = new File("/sbin", executable);
+
+					if (sbinExecutable.exists()) {
+						executable = "/sbin/".concat(executable);
+					}
+
+					process = runtime.exec(new String[] {executable, arguments});
 				}
 
 				BufferedReader bufferedReader = new BufferedReader(
@@ -223,19 +250,44 @@ public class LicenseUtil {
 				String line = null;
 
 				while ((line = bufferedReader.readLine()) != null) {
-					Matcher matcher = _macAddressPattern.matcher(line);
+					Matcher matcher = macAddressPattern.matcher(line);
 
-					if (matcher.find()) {
-						String macAddress = matcher.group(1);
-
-						if (Validator.isNotNull(macAddress)) {
-							macAddress = macAddress.toLowerCase();
-							macAddress = StringUtil.replace(
-								macAddress, "-", ":");
-
-							_macAddresses.add(macAddress);
-						}
+					if (!matcher.find()) {
+						continue;
 					}
+
+					String macAddress = matcher.group(1);
+
+					if (Validator.isNull(macAddress)) {
+						continue;
+					}
+
+					macAddress = macAddress.toLowerCase();
+
+					if (macAddressPattern == _macAddressPattern1) {
+						macAddress = macAddress.replace('-', ':');
+					}
+					else if (macAddressPattern == _macAddressPattern2) {
+						macAddress = macAddress.replace('.', ':');
+
+						StringBuilder sb = new StringBuilder(17);
+						sb.append(macAddress);
+
+						for (int i = 1; i < 5; ++i) {
+							int pos = (i * 3) - 1;
+							if (sb.charAt(pos) != ':') {
+								sb.insert((i - 1) * 3, '0');
+							}
+						}
+
+						if (sb.length() < 17) {
+							sb.insert(15, '0');
+						}
+
+						macAddress = sb.toString();
+					}
+
+					_macAddresses.add(macAddress);
 				}
 
 				bufferedReader.close();
@@ -670,8 +722,13 @@ public class LicenseUtil {
 	private static String _hostName;
 	private static Set<String> _ipAddresses;
 	private static Set<String> _macAddresses;
-	private static Pattern _macAddressPattern = Pattern.compile(
-		"\\s((\\p{XDigit}{1,2}(-|:)){5}(\\p{XDigit}{1,2}))(?:\\s|$)");
+
+	private static Pattern _macAddressPattern1 = Pattern.compile(
+		"\\s((\\p{XDigit}{2}(-|:)){5}(\\p{XDigit}{2}))(?:\\s|$)");
+
+	private static Pattern _macAddressPattern2 = Pattern.compile(
+		"\\s((\\p{XDigit}{1,2}(\\.)){5}(\\p{XDigit}{1,2}))(?:\\s|$)");
+
 	private static MethodKey _registerOrderMethodKey = new MethodKey(
 		LicenseUtil.class.getName(), "registerOrder", String.class,
 		String.class, int.class);

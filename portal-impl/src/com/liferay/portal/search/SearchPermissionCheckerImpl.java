@@ -190,8 +190,8 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 
 			for (long resourceBlockId : resourceBlockIds) {
 				for (int i = 0; i < roleIdsArray.length; i++) {
-					int count =
-						ResourceBlockPermissionLocalServiceUtil.countByR_R(
+					int count = ResourceBlockPermissionLocalServiceUtil.
+						getResourceBlockPermissionsCount(
 							resourceBlockId, roleIdsArray[i]);
 
 					hasResourcePermissions[i] = (count > 0);

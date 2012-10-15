@@ -64,8 +64,9 @@ public class ResourceBlockPermissionLocalServiceImpl
 		}
 	}
 
-	public int countByR_R(long resourceBlockId, long roleId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public int getResourceBlockPermissionsCount(
+			long resourceBlockId, long roleId)
+		throws SystemException {
 
 		return resourceBlockPermissionPersistence.countByR_R(
 			resourceBlockId, roleId);

@@ -334,8 +334,8 @@ public class Validator {
 	/**
 	 * Returns <code>true</code> if the object arrays are equal.
 	 *
-	 * @param  objectArray1 the first object array
-	 * @param  objectArray2 the second object array
+	 * @param  objArray1 the first object array
+	 * @param  objArray2 the second object array
 	 * @return <code>true</code> if the object arrays are equal; <code>false
 	 *         </code>otherwise
 	 */

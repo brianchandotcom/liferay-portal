@@ -20,6 +20,7 @@ import com.liferay.portalweb.socialoffice.users.user.addsouser.TearDownSOUserTes
 import com.liferay.portalweb.socialoffice.users.user.editsouserpassword.EditSOUserPasswordTest;
 import com.liferay.portalweb.socialoffice.users.user.selectregularrolessouser.SelectRegularRolesSOUserTest;
 import com.liferay.portalweb.socialoffice.users.user.signinso.SOUs_SignInSOTest;
+import com.liferay.portalweb.socialoffice.users.user.signinso.SOUs_SignOutSOTest;
 import com.liferay.portalweb.socialoffice.users.user.signinso.SignInSOTest;
 import com.liferay.portalweb.socialoffice.users.user.signinso.SignOutSOTest;
 import com.liferay.portalweb.socialofficehome.contactscenter.contacts.sousfollowccuser.SOUs_FollowCCUserTest;
@@ -43,7 +44,7 @@ public class SOUs_UnfollowCCUserTests extends BaseTestSuite {
 		testSuite.addTestSuite(SOUs_ViewFollowCCUserTest.class);
 		testSuite.addTestSuite(SOUs_UnfollowCCUserTest.class);
 		testSuite.addTestSuite(SOUs_ViewUnfollowCCUserTest.class);
-		testSuite.addTestSuite(SignOutSOTest.class);
+		testSuite.addTestSuite(SOUs_SignOutSOTest.class);
 		testSuite.addTestSuite(SignInSOTest.class);
 		testSuite.addTestSuite(ViewUnfollowCCUserTest.class);
 		testSuite.addTestSuite(TearDownSOUserTest.class);

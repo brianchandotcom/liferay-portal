@@ -14,6 +14,7 @@
 
 package com.liferay.portal.dao.shard.advice;
 
+import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.shard.ShardUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -49,6 +50,8 @@ public class ShardIterativelyAdvice implements MethodInterceptor {
 			}
 			finally {
 				_shardAdvice.popCompanyService();
+
+				CacheRegistryUtil.clear();
 			}
 		}
 

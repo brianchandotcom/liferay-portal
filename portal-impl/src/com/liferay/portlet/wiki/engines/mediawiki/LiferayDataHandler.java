@@ -93,7 +93,6 @@ public class LiferayDataHandler extends DummyDataHandler {
 			return page.getTitle();
 		}
 		catch (Exception e) {
-			_log.error(e, e);
 		}
 
 		return null;

@@ -215,9 +215,11 @@ SitesUtil.addPortletBreadcrumbEntries(group, pagesName, redirectURL, request, re
 			function(event) {
 				event.preventDefault();
 
-				var href = event.currentTarget.one('a').attr('href');
+				var link = event.currentTarget.ancestor().one('a');
 
-				if (href) {
+				if (link) {
+					var href = link.attr('href');
+
 					var hash = location.hash;
 
 					var prefix = '#_LFR_FN_<portlet:namespace />';
@@ -243,7 +245,7 @@ SitesUtil.addPortletBreadcrumbEntries(group, pagesName, redirectURL, request, re
 					layoutsContainer.io.start();
 				}
 			},
-			'.aui-tree-node-content'
+			'.aui-tree-label, .aui-tree-icon'
 		);
 	</aui:script>
 </c:if>

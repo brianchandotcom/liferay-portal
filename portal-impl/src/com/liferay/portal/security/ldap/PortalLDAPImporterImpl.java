@@ -278,6 +278,8 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 					String.valueOf(companyId), emailAddress, screenName
 				});
 
+			LDAPSettingsUtil.validateLDAPFilter(filter, true);
+
 			if (_log.isDebugEnabled()) {
 				_log.debug("Search filter after transformation " + filter);
 			}

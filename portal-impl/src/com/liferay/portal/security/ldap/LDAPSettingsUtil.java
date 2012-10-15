@@ -25,7 +25,9 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 
+import java.util.ArrayList;
 import java.util.Properties;
+import java.util.StringTokenizer;
 
 /**
  * @author Edward Han
@@ -33,6 +35,198 @@ import java.util.Properties;
  * @author Brian Wing Shun Chan
  */
 public class LDAPSettingsUtil {
+
+	public static boolean validateLDAPFilter(
+			String filter, boolean throwException)
+		throws SystemException {
+		
+		boolean retVal = validateLDAPFilter(filter);
+		if ((retVal == false) && (throwException == true)) {
+			throw new SystemException();
+		}
+		return retVal;
+	}
+
+	public static boolean validateLDAPFilter(String filter) {
+
+		String s = null;
+		boolean retVal = true;
+		if (filter != null) {
+			s = new String(filter);
+			s = s.trim();
+			if (s.equals("") || s.equals("*")) {
+				s = null;  
+			}
+			else {
+				//insert spaces for the tokenizer
+				s = s.replaceAll("\\(", " \\( ");
+				s = s.replaceAll("\\)", " \\) ");
+				s = s.replaceAll("~=", " ~= ");
+				s = s.replaceAll("<=", " <= ");
+				s = s.replaceAll(">=", " >= ");
+				s = s.replaceAll("=", "= ");
+				ArrayList<Integer> items = new ArrayList<Integer>();
+				for (int j = 0; j < s.length(); j++) {
+					if ((s.charAt(j) == '=') && (j>0)) {
+
+						if (!(s.charAt(j-1) == '~') &&
+							!(s.charAt(j-1) == '<') &&
+							!(s.charAt(j-1) == '>')) {
+
+							items.add(new Integer(j));
+						}
+					}
+				}
+
+				if (items.size() > 0) { 
+					int offset = 0;
+					for (int j = 0; j < items.size(); j++) {
+						s = s.substring(0,(Integer)(items.get(j)) + offset) + " "
+							+ s.substring((Integer)(items.get(j)) + offset);
+						offset++;
+					}
+				}
+
+				//multiple whitespace is eliminated and replaced with a single whitespace
+				s = s.replaceAll("\\s+", " ");
+				s = s.trim();
+			}
+		}
+
+		// Must have an opening and closing parenthesis with nothing outside of them
+		if (retVal == true) {
+			if (s != null) {
+				if ( !(s.startsWith("(")) || ( !(s.endsWith(")")))) {
+					retVal = false; 
+				}
+			}
+		}
+
+		// Balance left and right parenthesis
+		if (retVal == true) {
+			if (s != null) {
+				int i = 0;
+				for (int j = 0; j < s.length(); j++) {
+					if (s.charAt(j) == '(') {
+						i++;
+					}
+					else if (s.charAt(j) == ')') {
+						i--; 
+					}
+
+					if (i < 0) {
+						retVal = false;
+					} 
+				}
+
+				if (i != 0) {
+					retVal = false;
+				}
+			}
+		}
+
+		// Cannot have two or more "filtertype" fields in sequence
+		String[] filtertype =  {"=", "~=", "<=", ">="};
+
+		if (retVal == true) {
+			if (s != null) {
+				int i = 0;
+				StringTokenizer st = new StringTokenizer(s);
+				while (st.hasMoreTokens()) {
+					String t = st.nextToken();
+					if ((t.equals(filtertype[0])) ||
+						(t.equals(filtertype[1])) ||
+						(t.equals(filtertype[2])) ||
+						(t.equals(filtertype[3]))) {
+
+						i++;
+					}
+					else {
+						i = 0;
+					}
+
+					if (i > 1) {
+						retVal = false;
+					}
+				}
+			}
+		}
+
+		// Cannot have a "filtertype" after an opening parenthesis
+
+		if (retVal == true) {
+			if (s != null) {
+				int i = 0;
+				StringTokenizer st = new StringTokenizer(s);
+				while (st.hasMoreTokens()) {
+					String t = st.nextToken();
+					if (t.equals("(")) {
+						i++;
+					}
+					else {
+
+						if (i > 0) {
+							if ((t.equals(filtertype[0])) ||
+								(t.equals(filtertype[1])) ||
+								(t.equals(filtertype[2])) ||
+								(t.equals(filtertype[3]))) {
+
+								retVal = false;
+							}
+						}
+						i = 0;
+					}
+				}
+			}
+		}
+
+		// Cannot have a "attribute" without a "filtertype" or "extensible"
+		//<item> ::= <simple> | <present> | <substring>
+		//<simple> ::= <attr> <filtertype> <value> 
+		//<present> ::= <attr> '=*'
+		//<substring> ::= <attr> '=' <initial> <any> <final>
+	
+		if (retVal == true) {
+			if (s != null) {
+				int j = 0;
+				int k = 0;
+				StringTokenizer st = new StringTokenizer(s);
+				while (st.hasMoreTokens()) {
+					String t = st.nextToken();
+					if (t.equals("(")) {
+						j = 0;
+						k = 0;
+					}
+					else if (t.equals(")")) {
+						if ((k == 0) && (j == 0)) {
+							retVal = false;
+						}
+
+						k++;
+					}
+					else if ((t.equals(filtertype[0])) ||
+						(t.equals(filtertype[1])) ||
+						(t.equals(filtertype[2])) ||
+						(t.equals(filtertype[3]))) {
+							j++;
+					}
+					else {
+						if (j == 0) {
+
+							if ((t.toUpperCase().equals("NULL")) ||
+								(t.toUpperCase().equals("NUL"))) {
+
+								retVal = false;
+							}
+						}
+					}
+				}
+			}
+		}
+
+		return retVal;
+	}
+
 
 	public static String getAuthSearchFilter(
 			long ldapServerId, long companyId, String emailAddress,
@@ -56,6 +250,8 @@ public class LDAPSettingsUtil {
 			new String[] {
 				String.valueOf(companyId), emailAddress, screenName, userId
 			});
+
+		validateLDAPFilter(filter, true);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Search filter after transformation " + filter);

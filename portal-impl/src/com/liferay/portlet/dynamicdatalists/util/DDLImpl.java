@@ -34,8 +34,13 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.model.Group;
+import com.liferay.portal.model.PortletConstants;
+import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.dynamicdatalists.NoSuchRecordException;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
@@ -64,6 +69,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.portlet.PortletPreferences;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -339,6 +345,25 @@ public class DDLImpl implements DDL {
 			template.getScript(), template.getLanguage());
 	}
 
+	public boolean isEditable(
+			HttpServletRequest request, String portletId, long groupId)
+		throws Exception {
+
+		boolean defaultValue = ParamUtil.getBoolean(request, "editable", true);
+
+		return isEditable(portletId, groupId, defaultValue);
+	}
+
+	public boolean isEditable(
+			PortletPreferences preferences, String portletId, long groupId)
+		throws Exception {
+
+		boolean defaultValue = GetterUtil.getBoolean(
+			preferences.getValue("editable", Boolean.TRUE.toString()));
+
+		return isEditable(portletId, groupId, defaultValue);
+	}
+
 	public void sendRecordFileUpload(
 			HttpServletRequest request, HttpServletResponse response,
 			DDLRecord record, String fieldName)
@@ -368,6 +393,17 @@ public class DDLImpl implements DDL {
 			serviceContext, "majorVersion");
 
 		DDLRecord record = DDLRecordLocalServiceUtil.fetchRecord(recordId);
+
+		long scopeGroupId = serviceContext.getScopeGroupId();
+		String portletId = serviceContext.getPortletId();
+
+		PortletPreferences preferences =
+			PortletPreferencesLocalServiceUtil.getPreferences(
+				serviceContext.getPortletPreferencesIds());
+
+		if (!isEditable(preferences, portletId, scopeGroupId)) {
+			return record;
+		}
 
 		DDLRecordSet recordSet = DDLRecordSetLocalServiceUtil.getDDLRecordSet(
 			recordSetId);
@@ -450,6 +486,27 @@ public class DDLImpl implements DDL {
 				LocaleUtil.getDefault(), "is-temporarily-unavailable",
 				"content");
 		}
+	}
+
+	protected boolean isEditable(
+			String portletId, long groupId, boolean defaultValue)
+		throws Exception {
+
+		boolean editable = defaultValue;
+
+		String rootPortletId = PortletConstants.getRootPortletId(portletId);
+
+		if (rootPortletId.equals(PortletKeys.DYNAMIC_DATA_LISTS)) {
+			editable = true;
+		}
+
+		Group group = GroupLocalServiceUtil.fetchGroup(groupId);
+
+		if ((group == null) || group.isInStagingPortlet(portletId)) {
+			editable = false;
+		}
+
+		return editable;
 	}
 
 	protected void uploadRecordFieldFiles(

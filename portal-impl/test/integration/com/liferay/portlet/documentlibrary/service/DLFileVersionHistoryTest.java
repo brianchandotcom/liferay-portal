@@ -25,12 +25,12 @@ import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portlet.documentlibrary.InvalidFileVersionException;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
-
-import java.util.List;
-
+import com.liferay.portlet.documentlibrary.service.persistence.DLAppServiceDataTestUtil;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import java.util.List;
 
 /**
  * @author Alexander Chow
@@ -118,19 +118,21 @@ public class DLFileVersionHistoryTest extends BaseDLAppTestCase {
 	protected void deleteVersion(boolean versioned, boolean leaveCheckedOut)
 		throws Exception {
 
-		_fileEntry = addFileEntry(false, _VERSION_1_0);
+		_fileEntry = DLAppServiceDataTestUtil.addFileEntry(false, _VERSION_1_0);
 
 		long fileEntryId = _fileEntry.getFileEntryId();
 
 		if (versioned) {
-			updateFileEntry(fileEntryId, null, _VERSION_1_1);
+			DLAppServiceDataTestUtil.updateFileEntry(
+				fileEntryId, null, _VERSION_1_1);
 		}
 
 		if (leaveCheckedOut) {
 			DLAppServiceUtil.checkOutFileEntry(
 				fileEntryId, new ServiceContext());
 
-			updateFileEntry(fileEntryId, null, _VERSION_PWC);
+			DLAppServiceDataTestUtil.updateFileEntry(
+				fileEntryId, null, _VERSION_PWC);
 		}
 
 		if (versioned && leaveCheckedOut) {
@@ -212,19 +214,21 @@ public class DLFileVersionHistoryTest extends BaseDLAppTestCase {
 	protected void revertVersion(boolean versioned, boolean leaveCheckedOut)
 		throws Exception {
 
-		_fileEntry = addFileEntry(false, _VERSION_1_0);
+		_fileEntry = DLAppServiceDataTestUtil.addFileEntry(false, _VERSION_1_0);
 
 		long fileEntryId = _fileEntry.getFileEntryId();
 
 		if (versioned) {
-			updateFileEntry(fileEntryId, null, _VERSION_1_1);
+			DLAppServiceDataTestUtil.updateFileEntry(
+				fileEntryId, null, _VERSION_1_1);
 		}
 
 		if (leaveCheckedOut) {
 			DLAppServiceUtil.checkOutFileEntry(
 				fileEntryId, new ServiceContext());
 
-			updateFileEntry(fileEntryId, null, _VERSION_PWC);
+			DLAppServiceDataTestUtil.updateFileEntry(
+				fileEntryId, null, _VERSION_PWC);
 		}
 
 		if (versioned && leaveCheckedOut) {

@@ -15,6 +15,7 @@
 package com.liferay.portlet.social.service;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
+import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
@@ -22,15 +23,14 @@ import com.liferay.portlet.social.model.SocialActivityCounter;
 import com.liferay.portlet.social.model.SocialActivityCounterConstants;
 import com.liferay.portlet.social.model.SocialActivityLimit;
 import com.liferay.portlet.social.util.SocialCounterPeriodUtil;
-
-import java.util.List;
-
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import java.util.List;
 
 /**
  * @author Zsolt Berentey
@@ -56,11 +56,11 @@ public class SocialActivityCounterLocalServiceTest
 
 	@Before
 	public void beforeTest() throws Exception {
-		addGroup();
+		ServiceTestUtil.addGroup();
 
-		addUsers();
+		SocialActivityServiceDataTestUtil.addUsers();
 
-		addAsset();
+		SocialActivityServiceDataTestUtil.addAsset();
 
 		SocialActivitySettingLocalServiceUtil.updateActivitySetting(
 			_group.getGroupId(), TEST_MODEL, true);
@@ -69,44 +69,48 @@ public class SocialActivityCounterLocalServiceTest
 	@Test
 	public void testAddActivity() throws Exception {
 		SocialActivityCounterLocalServiceUtil.addActivityCounters(
-			addActivity(_creatorUser, 1));
+			SocialActivityServiceDataTestUtil.addActivity(_creatorUser, 1));
 
-		SocialActivityCounter contribution = getActivityCounter(
-			SocialActivityCounterConstants.NAME_CONTRIBUTION, _creatorUser);
+		SocialActivityCounter contribution =
+			SocialActivityServiceDataTestUtil.getActivityCounter(
+				SocialActivityCounterConstants.NAME_CONTRIBUTION, _creatorUser);
 
 		Assert.assertNull(contribution);
 
-		SocialActivityCounter participation = getActivityCounter(
-			SocialActivityCounterConstants.NAME_PARTICIPATION, _creatorUser);
+		SocialActivityCounter participation =
+			SocialActivityServiceDataTestUtil.getActivityCounter(
+				SocialActivityCounterConstants.NAME_PARTICIPATION,
+				_creatorUser);
 
 		Assert.assertEquals(2, participation.getCurrentValue());
 
 		SocialActivityCounterLocalServiceUtil.addActivityCounters(
-			addActivity(_actorUser, 2));
+			SocialActivityServiceDataTestUtil.addActivity(_actorUser, 2));
 
-		contribution = getActivityCounter(
+		contribution = SocialActivityServiceDataTestUtil.getActivityCounter(
 			SocialActivityCounterConstants.NAME_CONTRIBUTION, _creatorUser);
 
 		Assert.assertNotNull(contribution);
 		Assert.assertEquals(1, contribution.getCurrentValue());
 
-		participation = getActivityCounter(
+		participation = SocialActivityServiceDataTestUtil.getActivityCounter(
 			SocialActivityCounterConstants.NAME_PARTICIPATION, _actorUser);
 
 		Assert.assertNotNull(participation);
 		Assert.assertEquals(1, participation.getCurrentValue());
 
-		SocialActivityLimit activityLimit =  getActivityLimit(
-			_actorUser, _assetEntry, 2,
-			SocialActivityCounterConstants.NAME_PARTICIPATION);
+		SocialActivityLimit activityLimit =
+			SocialActivityServiceDataTestUtil.getActivityLimit(
+				_actorUser, _assetEntry, 2,
+				SocialActivityCounterConstants.NAME_PARTICIPATION);
 
 		Assert.assertNotNull(activityLimit);
 		Assert.assertEquals(1, activityLimit.getCount());
 
 		SocialActivityCounterLocalServiceUtil.addActivityCounters(
-			addActivity(_actorUser, 2));
+			SocialActivityServiceDataTestUtil.addActivity(_actorUser, 2));
 
-		activityLimit =  getActivityLimit(
+		activityLimit =  SocialActivityServiceDataTestUtil.getActivityLimit(
 			_actorUser, _assetEntry, 2,
 			SocialActivityCounterConstants.NAME_PARTICIPATION);
 
@@ -117,13 +121,14 @@ public class SocialActivityCounterLocalServiceTest
 	@Test
 	public void testToggleActivities() throws Exception {
 		SocialActivityCounterLocalServiceUtil.addActivityCounters(
-			addActivity(_creatorUser, 1));
+			SocialActivityServiceDataTestUtil.addActivity(_creatorUser, 1));
 
 		SocialActivityCounterLocalServiceUtil.addActivityCounters(
-			addActivity(_actorUser, 2));
+			SocialActivityServiceDataTestUtil.addActivity(_actorUser, 2));
 
-		SocialActivityCounter contribution = getActivityCounter(
-			SocialActivityCounterConstants.NAME_CONTRIBUTION, _creatorUser);
+		SocialActivityCounter contribution =
+			SocialActivityServiceDataTestUtil.getActivityCounter(
+				SocialActivityCounterConstants.NAME_CONTRIBUTION, _creatorUser);
 
 		Assert.assertNotNull(contribution);
 		Assert.assertEquals(1, contribution.getCurrentValue());
@@ -138,14 +143,15 @@ public class SocialActivityCounterLocalServiceTest
 		SocialActivityCounterLocalServiceUtil.disableActivityCounters(
 			_assetEntry.getClassName(), _assetEntry.getClassPK());
 
-		contribution = getActivityCounter(
+		contribution = SocialActivityServiceDataTestUtil.getActivityCounter(
 			SocialActivityCounterConstants.NAME_CONTRIBUTION, _creatorUser);
 
 		Assert.assertNotNull(contribution);
 		Assert.assertEquals(0, contribution.getCurrentValue());
 
-		SocialActivityCounter counter = getActivityCounter(
-			"asset.test.2", _assetEntry);
+		SocialActivityCounter counter =
+			SocialActivityServiceDataTestUtil.getActivityCounter(
+				"asset.test.2", _assetEntry);
 
 		Assert.assertNotNull(counter);
 		Assert.assertEquals(false, counter.isActive());
@@ -160,13 +166,14 @@ public class SocialActivityCounterLocalServiceTest
 		SocialActivityCounterLocalServiceUtil.enableActivityCounters(
 			_assetEntry.getClassName(), _assetEntry.getClassPK());
 
-		contribution = getActivityCounter(
+		contribution = SocialActivityServiceDataTestUtil.getActivityCounter(
 			SocialActivityCounterConstants.NAME_CONTRIBUTION, _creatorUser);
 
 		Assert.assertNotNull(contribution);
 		Assert.assertEquals(1, contribution.getCurrentValue());
 
-		counter = getActivityCounter("asset.test.2", _assetEntry);
+		counter = SocialActivityServiceDataTestUtil.getActivityCounter(
+			"asset.test.2", _assetEntry);
 
 		Assert.assertNotNull(counter);
 		Assert.assertEquals(true, counter.isActive());

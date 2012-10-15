@@ -38,15 +38,14 @@ import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portal.webdav.methods.Method;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
-
-import java.util.HashMap;
-import java.util.Map;
-
+import com.liferay.portlet.documentlibrary.service.persistence.DLAppServiceDataTestUtil;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
 import org.springframework.mock.web.MockHttpServletResponse;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Eduardo Garcia
@@ -95,7 +94,8 @@ public class WebServerTrashTest extends BaseWebServerTestCase {
 
 	@Test
 	public void testRequestFileInTrash() throws Exception {
-		FileEntry fileEntry = addFileEntry(false, "Test Trash.txt");
+		FileEntry fileEntry = DLAppServiceDataTestUtil.addFileEntry(
+			false, "Test Trash.txt");
 
 		MockHttpServletResponse mockHttpServletResponse =  testRequestFile(
 			fileEntry, _user, false);

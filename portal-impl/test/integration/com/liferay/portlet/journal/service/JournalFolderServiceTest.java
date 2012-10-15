@@ -17,22 +17,14 @@ package com.liferay.portlet.journal.service;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
-import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.GroupLocalServiceUtil;
-import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
-import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalFolder;
-
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -59,9 +51,10 @@ public class JournalFolderServiceTest {
 	public void testContent() throws Exception {
 		Group group = ServiceTestUtil.addGroup();
 
-		JournalFolder folder = _addFolder(group.getGroupId(), 0, "Test Folder");
+		JournalFolder folder = JournalServiceDataTestUtil.addFolder(
+			group.getGroupId(), 0, "Test Folder");
 
-		JournalArticle article = _addArticle(
+		JournalArticle article = JournalServiceDataTestUtil.addArticle(
 			group.getGroupId(), folder.getFolderId(), "Test Article",
 			"This is a test article.");
 
@@ -76,10 +69,11 @@ public class JournalFolderServiceTest {
 	public void testSubfolders() throws Exception {
 		Group group = ServiceTestUtil.addGroup();
 
-		JournalFolder folder1 = _addFolder(group.getGroupId(), 0, "Test 1");
-		JournalFolder folder11 = _addFolder(
+		JournalFolder folder1 = JournalServiceDataTestUtil.addFolder(
+			group.getGroupId(), 0, "Test 1");
+		JournalFolder folder11 = JournalServiceDataTestUtil.addFolder(
 			group.getGroupId(), folder1.getFolderId(), "Test 1.1");
-		JournalFolder folder111 = _addFolder(
+		JournalFolder folder111 = JournalServiceDataTestUtil.addFolder(
 			group.getGroupId(), folder11.getFolderId(), "Test 1.1.1");
 
 		Assert.assertTrue(folder1.isRoot());
@@ -91,55 +85,6 @@ public class JournalFolderServiceTest {
 
 		Assert.assertEquals(
 			folder11.getFolderId(), folder111.getParentFolderId());
-	}
-
-	protected JournalArticle _addArticle(
-			long groupId, long folderId, String name, String content)
-		throws Exception {
-
-		Map<Locale, String> titleMap = new HashMap<Locale, String>();
-
-		Locale englishLocale = new Locale("en", "US");
-
-		titleMap.put(englishLocale, name);
-
-		Map<Locale, String> descriptionMap = new HashMap<Locale, String>();
-
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext();
-
-		StringBundler sb = new StringBundler();
-
-		sb.append("<?xml version=\"1.0\"?><root available-locales=");
-		sb.append("\"en_US\" default-locale=\"en_US\">");
-		sb.append("<static-content language-id=\"en_US\"><![CDATA[<p>");
-		sb.append(content);
-		sb.append("</p>]]>");
-		sb.append("</static-content></root>");
-
-		return JournalArticleLocalServiceUtil.addArticle(
-			TestPropsValues.getUserId(), groupId, folderId, 0, 0,
-			StringPool.BLANK, true, 1, titleMap, descriptionMap, sb.toString(),
-			"general", null, null, null, 1, 1, 1965, 0, 0, 0, 0, 0, 0, 0, true,
-			0, 0, 0, 0, 0, true, false, false, null, null, null, null,
-			serviceContext);
-	}
-
-	protected JournalFolder _addFolder(
-			long groupId, long parentFolderId, String name)
-		throws Exception {
-
-		JournalFolder folder = JournalFolderLocalServiceUtil.fetchFolder(
-			groupId, name);
-
-		if (folder != null) {
-			return folder;
-		}
-
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext();
-
-		return JournalFolderLocalServiceUtil.addFolder(
-			TestPropsValues.getUserId(), groupId, parentFolderId, name,
-			"This is a test folder.", serviceContext);
 	}
 
 }

@@ -43,18 +43,17 @@ import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
-
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.InputStream;
-
-import java.util.List;
-
+import com.liferay.portlet.documentlibrary.service.persistence.DLAppServiceDataTestUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.InputStream;
+import java.util.List;
 
 /**
  * @author Alexander Chow
@@ -384,7 +383,8 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 	public void testVersionLabel() throws Exception {
 		String fileName = "TestVersion.txt";
 
-		FileEntry fileEntry = addFileEntry(false, fileName);
+		FileEntry fileEntry = DLAppServiceDataTestUtil.addFileEntry(
+			false, fileName);
 
 		Assert.assertEquals(
 			"Version label incorrect after add", "1.0", fileEntry.getVersion());
@@ -404,7 +404,8 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 	}
 
 	protected FileEntry addFileEntry(boolean rootFolder) throws Exception {
-		_fileEntry = addFileEntry(rootFolder, "Title.txt");
+		_fileEntry = DLAppServiceDataTestUtil.addFileEntry(
+			rootFolder, "Title.txt");
 
 		return _fileEntry;
 	}
@@ -484,7 +485,8 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 			long fileEntryId, String fileName, boolean majorVersion)
 		throws Exception {
 
-		return updateFileEntry(fileEntryId, fileName, fileName, majorVersion);
+		return DLAppServiceDataTestUtil.updateFileEntry(
+			fileEntryId, fileName, fileName, majorVersion);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(DLAppServiceTest.class);
@@ -509,7 +511,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 		@Override
 		protected void doRun() throws Exception {
 			try {
-				FileEntry fileEntry = addFileEntry(
+				FileEntry fileEntry = DLAppServiceDataTestUtil.addFileEntry(
 					false, "Test-" + _index + ".txt");
 
 				_fileEntryIds[_index] = fileEntry.getFileEntryId();

@@ -34,23 +34,23 @@ import org.junit.runner.RunWith;
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 @Transactional
-public class BookmarksEntryServiceTest extends BaseBookmarksServiceTestCase {
+public class BookmarksEntryServiceTest {
 
 	@Test
 	public void testAddEntry() throws Exception {
-		addEntry();
+		BookmarksServiceDataTestUtil.addEntry();
 	}
 
 	@Test
 	public void testDeleteEntry() throws Exception {
-		BookmarksEntry entry = addEntry();
+		BookmarksEntry entry = BookmarksServiceDataTestUtil.addEntry();
 
 		BookmarksEntryServiceUtil.deleteEntry(entry.getEntryId());
 	}
 
 	@Test
 	public void testGetEntry() throws Exception {
-		BookmarksEntry entry = addEntry();
+		BookmarksEntry entry = BookmarksServiceDataTestUtil.addEntry();
 
 		BookmarksEntryServiceUtil.getEntry(entry.getEntryId());
 	}

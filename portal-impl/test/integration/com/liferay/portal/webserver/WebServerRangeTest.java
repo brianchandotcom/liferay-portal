@@ -26,18 +26,16 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.webdav.methods.Method;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletResponse;
-
+import com.liferay.portlet.documentlibrary.service.persistence.DLAppServiceDataTestUtil;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
 import org.springframework.mock.web.MockHttpServletResponse;
+
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Alexander Chow
@@ -169,7 +167,7 @@ public class WebServerRangeTest extends BaseWebServerTestCase {
 
 		String fileName = "Test Range.txt";
 
-		FileEntry fileEntry = addFileEntry(
+		FileEntry fileEntry = DLAppServiceDataTestUtil.addFileEntry(
 			parentFolder.getFolderId(), fileName, fileName,
 			_SAMPLE_DATA.getBytes());
 

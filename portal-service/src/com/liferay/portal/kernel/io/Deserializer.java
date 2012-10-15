@@ -26,6 +26,10 @@ import java.io.Serializable;
 import java.nio.ByteBuffer;
 
 /**
+ * Deserializes data in a ClassLoader-aware manner using {@link
+ * com.liferay.portal.kernel.io.BigEndianCodec}. This class is the counterpart
+ * of {@link com.liferay.portal.kernel.io.Serializer} for deserialization.
+ *
  * @author Shuyang Zhou
  * @see    Serializer
  */
@@ -207,7 +211,12 @@ public class Deserializer {
 	}
 
 	/**
-	 * This method is final so that JIT can inline it.
+	 * Detects a buffer underflow throwing an {@link
+	 * java.lang.IllegalStateException} if the input data is shorter than the
+	 * reserved space. This method is final so JIT can perform an inline
+	 * expansion.
+	 *
+	 * @param availableBytes number of bytes available in input buffer
 	 */
 	protected final void detectBufferUnderflow(int availableBytes) {
 		if ((index + availableBytes) > limit) {

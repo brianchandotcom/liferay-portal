@@ -15,6 +15,8 @@
 package com.liferay.portal.kernel.io;
 
 /**
+ * Encodes/decodes primitive types to/from big-endian byte sequences.
+ *
  * @author Shuyang Zhou
  */
 public class BigEndianCodec {

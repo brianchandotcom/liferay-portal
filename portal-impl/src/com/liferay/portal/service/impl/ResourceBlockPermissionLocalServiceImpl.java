@@ -131,6 +131,14 @@ public class ResourceBlockPermissionLocalServiceImpl
 		return resourceBlockPermissionContainer;
 	}
 
+	public int getResourceBlockPermissionsCount(
+			long resourceBlockId, long roleId)
+		throws SystemException {
+
+		return resourceBlockPermissionPersistence.countByR_R(
+			resourceBlockId, roleId);
+	}
+
 	public void updateResourceBlockPermission(
 			long resourceBlockId, long roleId, long actionIdsLong, int operator)
 		throws SystemException {

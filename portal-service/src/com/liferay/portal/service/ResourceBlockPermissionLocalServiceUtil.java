@@ -302,6 +302,12 @@ public class ResourceBlockPermissionLocalServiceUtil {
 		return getService().getResourceBlockPermissionsContainer(resourceBlockId);
 	}
 
+	public static int getResourceBlockPermissionsCount(long resourceBlockId,
+		long roleId) throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getResourceBlockPermissionsCount(resourceBlockId, roleId);
+	}
+
 	public static void updateResourceBlockPermission(long resourceBlockId,
 		long roleId, long actionIdsLong, int operator)
 		throws com.liferay.portal.kernel.exception.SystemException {

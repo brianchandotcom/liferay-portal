@@ -291,6 +291,12 @@ public class ResourceBlockPermissionLocalServiceWrapper
 		return _resourceBlockPermissionLocalService.getResourceBlockPermissionsContainer(resourceBlockId);
 	}
 
+	public int getResourceBlockPermissionsCount(long resourceBlockId,
+		long roleId) throws com.liferay.portal.kernel.exception.SystemException {
+		return _resourceBlockPermissionLocalService.getResourceBlockPermissionsCount(resourceBlockId,
+			roleId);
+	}
+
 	public void updateResourceBlockPermission(long resourceBlockId,
 		long roleId, long actionIdsLong, int operator)
 		throws com.liferay.portal.kernel.exception.SystemException {

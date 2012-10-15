@@ -20,6 +20,18 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
+ * Maps servlet context names to/from the ServletContext's ClassLoader.
+ *
+ * <ul>
+ * <li>
+ * For an unknown context names are mapped to the PortalClassLoader.
+ * </li>
+ * <li>
+ * For an unknown ClassLoaders are mapped to the ROOT context name
+ * {@link com.liferay.portal.kernel.util.StringPool#BLANK}
+ * </li>
+ * </ul>
+ *
  * @author Shuyang Zhou
  */
 public class ClassLoaderPool {

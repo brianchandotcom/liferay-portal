@@ -245,9 +245,6 @@ public interface ResourceBlockPermissionLocalService extends BaseLocalService,
 		com.liferay.portal.model.ResourceBlockPermissionsContainer resourceBlockPermissionsContainer)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
-	public int countByR_R(long resourceBlockId, long roleId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
 	public void deleteResourceBlockPermissions(long resourceBlockId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
@@ -262,6 +259,10 @@ public interface ResourceBlockPermissionLocalService extends BaseLocalService,
 	public com.liferay.portal.model.ResourceBlockPermissionsContainer getResourceBlockPermissionsContainer(
 		long resourceBlockId)
 		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getResourceBlockPermissionsCount(long resourceBlockId,
+		long roleId) throws com.liferay.portal.kernel.exception.SystemException;
 
 	public void updateResourceBlockPermission(long resourceBlockId,
 		long roleId, long actionIdsLong, int operator)

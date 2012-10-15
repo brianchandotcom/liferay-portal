@@ -271,12 +271,6 @@ public class ResourceBlockPermissionLocalServiceWrapper
 			resourceBlockPermissionsContainer);
 	}
 
-	public int countByR_R(long resourceBlockId, long roleId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _resourceBlockPermissionLocalService.countByR_R(resourceBlockId,
-			roleId);
-	}
-
 	public void deleteResourceBlockPermissions(long resourceBlockId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_resourceBlockPermissionLocalService.deleteResourceBlockPermissions(resourceBlockId);
@@ -295,6 +289,12 @@ public class ResourceBlockPermissionLocalServiceWrapper
 		long resourceBlockId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _resourceBlockPermissionLocalService.getResourceBlockPermissionsContainer(resourceBlockId);
+	}
+
+	public int getResourceBlockPermissionsCount(long resourceBlockId,
+		long roleId) throws com.liferay.portal.kernel.exception.SystemException {
+		return _resourceBlockPermissionLocalService.getResourceBlockPermissionsCount(resourceBlockId,
+			roleId);
 	}
 
 	public void updateResourceBlockPermission(long resourceBlockId,

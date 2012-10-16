@@ -19,6 +19,7 @@ import com.liferay.portalweb.socialofficehome.privatemessaging.message.addpmmess
 import com.liferay.portalweb.socialofficehome.privatemessaging.message.addpmmessageapostrophequotation.AddPMMessageApostropheQuotationTests;
 import com.liferay.portalweb.socialofficehome.privatemessaging.message.addpmmessageattachment.AddPMMessageAttachmentTests;
 import com.liferay.portalweb.socialofficehome.privatemessaging.message.addpmmessagemultiple.AddPMMessageMultipleTests;
+import com.liferay.portalweb.socialofficehome.privatemessaging.message.addpmmessagenonuser.AddPMMessageNonUserTests;
 import com.liferay.portalweb.socialofficehome.privatemessaging.message.backtomessagespmmessagedetails.BackToMessagesPMMessageDetailsTests;
 import com.liferay.portalweb.socialofficehome.privatemessaging.message.deletepmmessage.DeletePMMessageTests;
 import com.liferay.portalweb.socialofficehome.privatemessaging.message.deletepmmessageall.DeletePMMessageAllTests;
@@ -50,6 +51,7 @@ public class MessageTestPlan extends BaseTestSuite {
 		testSuite.addTest(AddPMMessageApostropheQuotationTests.suite());
 		testSuite.addTest(AddPMMessageAttachmentTests.suite());
 		testSuite.addTest(AddPMMessageMultipleTests.suite());
+		testSuite.addTest(AddPMMessageNonUserTests.suite());
 		testSuite.addTest(BackToMessagesPMMessageDetailsTests.suite());
 		testSuite.addTest(DeletePMMessageTests.suite());
 		testSuite.addTest(DeletePMMessageAllTests.suite());

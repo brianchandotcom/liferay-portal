@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
@@ -182,6 +183,36 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 		}
 	}
 
+	protected void checkTitles() throws Exception {
+		List<DLFileEntry> dlFileEntries =
+			DLFileEntryLocalServiceUtil.getFileEntries(_INVALID_TITLES);
+
+		for (DLFileEntry dlFileEntry : dlFileEntries) {
+			String title = dlFileEntry.getTitle();
+
+			String newTitle = title.replace(StringPool.SLASH, StringPool.BLANK);
+
+			newTitle = newTitle.replace(
+				StringPool.BACK_SLASH, StringPool.UNDERLINE);
+
+			dlFileEntry.setTitle(newTitle);
+
+			DLFileEntryLocalServiceUtil.updateDLFileEntry(dlFileEntry);
+
+			DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
+
+			dlFileVersion.setTitle(newTitle);
+
+			DLFileVersionLocalServiceUtil.updateDLFileVersion(dlFileVersion);
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Invalid document title " + title + " renamed to " +
+						newTitle);
+			}
+		}
+	}
+
 	protected void copyDLFileEntry(DLFileEntry dlFileEntry)
 		throws PortalException, SystemException {
 
@@ -228,6 +259,7 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 
 		checkDLFileEntryType();
 		checkMimeTypes();
+		checkTitles();
 		removeOrphanedDLFileEntries();
 		updateAssets();
 	}
@@ -296,6 +328,10 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 			_log.debug("Assets verified for file entries");
 		}
 	}
+
+	private static final String[] _INVALID_TITLES = new String[] {
+		"%/%", "%\\\\%"
+	};
 
 	private static Log _log = LogFactoryUtil.getLog(
 		VerifyDocumentLibrary.class);

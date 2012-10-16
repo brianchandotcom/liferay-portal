@@ -143,6 +143,16 @@
 				))
 		]]>
 	</sql>
+	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryFinder.findByTitle">
+		<![CDATA[
+			SELECT
+				{DLFileEntry.*}
+			FROM
+				DLFileEntry
+			WHERE
+				(title LIKE ? [$AND_OR_NULL_CHECK$])
+		]]>
+	</sql>
 	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryFinder.findByG_F">
 		<![CDATA[
 			SELECT

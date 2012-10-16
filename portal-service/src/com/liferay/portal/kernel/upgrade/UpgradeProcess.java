@@ -20,25 +20,21 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.upgrade.util.RunSQLProcess;
 import com.liferay.portal.kernel.upgrade.util.UpgradeTable;
 import com.liferay.portal.kernel.upgrade.util.UpgradeTableFactoryUtil;
-
-import java.io.IOException;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
-
-import javax.naming.NamingException;
 
 /**
  * @author Brian Wing Shun Chan
  * @author Alexander Chow
  */
-public abstract class UpgradeProcess {
+public abstract class UpgradeProcess extends RunSQLProcess  {
 
 	public UpgradeProcess() {
 	}
@@ -109,34 +105,6 @@ public abstract class UpgradeProcess {
 		DB db = DBFactoryUtil.getDB();
 
 		return db.isSupportsUpdateWithInnerJoin();
-	}
-
-	public void runSQL(String template) throws IOException, SQLException {
-		DB db = DBFactoryUtil.getDB();
-
-		db.runSQL(template);
-	}
-
-	public void runSQL(String[] templates) throws IOException, SQLException {
-		DB db = DBFactoryUtil.getDB();
-
-		db.runSQL(templates);
-	}
-
-	public void runSQLTemplate(String path)
-		throws IOException, NamingException, SQLException {
-
-		DB db = DBFactoryUtil.getDB();
-
-		db.runSQLTemplate(path);
-	}
-
-	public void runSQLTemplate(String path, boolean failOnError)
-		throws IOException, NamingException, SQLException {
-
-		DB db = DBFactoryUtil.getDB();
-
-		db.runSQLTemplate(path, failOnError);
 	}
 
 	public boolean tableHasColumn(String tableName, String columnName)

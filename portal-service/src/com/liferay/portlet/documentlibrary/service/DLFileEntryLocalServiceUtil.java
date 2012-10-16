@@ -530,6 +530,12 @@ public class DLFileEntryLocalServiceUtil {
 		return getService().getFileEntries(groupId, folderId, start, end, obc);
 	}
 
+	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getFileEntries(
+		long folderId, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getFileEntries(folderId, name);
+	}
+
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getFileEntriesByMimeType(
 		java.lang.String mimeType)
 		throws com.liferay.portal.kernel.exception.SystemException {

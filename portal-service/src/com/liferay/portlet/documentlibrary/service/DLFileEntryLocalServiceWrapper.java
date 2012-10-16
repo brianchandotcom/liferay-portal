@@ -523,6 +523,12 @@ public class DLFileEntryLocalServiceWrapper implements DLFileEntryLocalService,
 			start, end, obc);
 	}
 
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getFileEntries(
+		long folderId, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _dlFileEntryLocalService.getFileEntries(folderId, name);
+	}
+
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getFileEntriesByMimeType(
 		java.lang.String mimeType)
 		throws com.liferay.portal.kernel.exception.SystemException {

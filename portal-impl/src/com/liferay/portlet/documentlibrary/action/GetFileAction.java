@@ -47,6 +47,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.util.List;
+
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
@@ -198,6 +200,19 @@ public class GetFileAction extends PortletAction {
 				DLFileEntry dlFileEntry =
 					DLFileEntryLocalServiceUtil.fetchFileEntryByName(
 						groupId, folderId, name);
+
+				if (dlFileEntry == null) {
+
+					// LPS-30374
+
+					List<DLFileEntry> dlFileEntries =
+						DLFileEntryLocalServiceUtil.getFileEntries(
+							folderId, name);
+
+					if (!dlFileEntries.isEmpty()) {
+						dlFileEntry = dlFileEntries.get(0);
+					}
+				}
 
 				if (dlFileEntry != null) {
 					fileEntry = new LiferayFileEntry(dlFileEntry);

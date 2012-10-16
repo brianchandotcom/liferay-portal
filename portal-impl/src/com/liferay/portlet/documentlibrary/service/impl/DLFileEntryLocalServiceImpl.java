@@ -942,6 +942,12 @@ public class DLFileEntryLocalServiceImpl
 			groupId, folderId, start, end, obc);
 	}
 
+	public List<DLFileEntry> getFileEntries(long folderId, String name)
+		throws SystemException {
+
+		return dlFileEntryPersistence.findByF_N(folderId, name);
+	}
+
 	public List<DLFileEntry> getFileEntriesByMimeType(String mimeType)
 		throws SystemException {
 

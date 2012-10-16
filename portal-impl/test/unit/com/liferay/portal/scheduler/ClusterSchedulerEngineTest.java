@@ -1297,6 +1297,8 @@ public class ClusterSchedulerEngineTest {
 			Iterator<Map.Entry<String, SchedulerResponse>> iterator =
 				set.iterator();
 
+			boolean isRemoved = false;
+
 			while (iterator.hasNext()) {
 				Map.Entry<String, SchedulerResponse> entry = iterator.next();
 
@@ -1305,8 +1307,12 @@ public class ClusterSchedulerEngineTest {
 				if (key.contains(groupName)) {
 					iterator.remove();
 
-					return;
+					isRemoved = true;
 				}
+			}
+
+			if (isRemoved) {
+				return;
 			}
 
 			throw new SchedulerException("No jobs in group " + groupName);

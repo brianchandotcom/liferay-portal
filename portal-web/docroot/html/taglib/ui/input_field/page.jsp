@@ -71,13 +71,7 @@ if (hints != null) {
 			<%
 			Calendar now = CalendarFactoryUtil.getCalendar(timeZone, locale);
 
-			String timeFormatPattern = ((SimpleDateFormat)(DateFormat.getTimeInstance(DateFormat.SHORT, locale))).toPattern();
-
-			boolean timeFormatAmPm = true;
-
-			if (!timeFormatPattern.contains("a")) {
-				timeFormatAmPm = false;
-			}
+			boolean timeFormatAmPm = DateUtil.isFormatAmPm(locale);
 
 			boolean checkDefaultDelta = false;
 

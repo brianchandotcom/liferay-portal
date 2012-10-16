@@ -133,9 +133,7 @@ ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.
 									year = valueDate.get(Calendar.YEAR);
 								}
 
-								String timeFormatPattern = ((SimpleDateFormat)(DateFormat.getTimeInstance(DateFormat.SHORT, locale))).toPattern();
-
-								boolean timeFormatAmPm = timeFormatPattern.contains("a");
+								boolean timeFormatAmPm = DateUtil.isFormatAmPm(locale);
 
 								int amPm = ParamUtil.getInteger(request, fieldParam + "AmPm", -1);
 

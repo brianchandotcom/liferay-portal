@@ -33,13 +33,7 @@ boolean disabled = GetterUtil.getBoolean((String)request.getAttribute("liferay-u
 NumberFormat numberFormat = NumberFormat.getInstance(locale);
 numberFormat.setMinimumIntegerDigits(2);
 
-String timeFormatPattern = ((SimpleDateFormat)(DateFormat.getTimeInstance(DateFormat.SHORT, locale))).toPattern();
-
-boolean timeFormatAmPm = true;
-
-if (!timeFormatPattern.contains("a")) {
-	timeFormatAmPm = false;
-}
+boolean timeFormatAmPm = DateUtil.isFormatAmPm(locale);
 %>
 
 <div class="lfr-input-time <%= cssClass %>">

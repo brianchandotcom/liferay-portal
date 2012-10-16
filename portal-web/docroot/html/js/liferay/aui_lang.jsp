@@ -22,6 +22,7 @@
 <%@ page import="com.liferay.portal.kernel.servlet.HttpHeaders" %>
 <%@ page import="com.liferay.portal.kernel.util.CalendarUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.ContentTypes" %>
+<%@ page import="com.liferay.portal.kernel.util.DateUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.LocaleUtil" %>
 <%@ page import="com.liferay.util.JS" %>
 
@@ -39,14 +40,6 @@ response.addHeader(HttpHeaders.CONTENT_TYPE, ContentTypes.TEXT_JAVASCRIPT);
 String languageId = LanguageUtil.getLanguageId(request);
 
 Locale locale = LocaleUtil.fromLanguageId(languageId);
-
-String timeFormatPattern = ((SimpleDateFormat)(DateFormat.getTimeInstance(DateFormat.SHORT, locale))).toPattern();
-
-boolean timeFormatAmPm = true;
-
-if (!timeFormatPattern.contains("a")) {
-	timeFormatAmPm = false;
-}
 
 String dateFormatPattern = ((SimpleDateFormat)(DateFormat.getDateInstance(DateFormat.SHORT, locale))).toPattern();
 
@@ -92,7 +85,7 @@ AUI.add(
 				</c:choose>
 
 				<c:choose>
-				 	<c:when test="<%= timeFormatAmPm %>">
+				 	<c:when test="<%= DateUtil.isFormatAmPm(locale) %>">
 						p: ['AM', 'PM'],
 						P: ['am', 'pm'],
 						r: '%I:%M:%S %p',

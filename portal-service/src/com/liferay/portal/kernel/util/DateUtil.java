@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.util;
 import java.text.DateFormat;
 import java.text.Format;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -236,6 +237,20 @@ public class DateUtil {
 
 		return DateFormatFactoryUtil.getSimpleDateFormat(
 			pattern, TimeZoneUtil.getTimeZone(StringPool.UTC));
+	}
+
+	public static boolean isFormatAmPm(Locale locale) {
+		SimpleDateFormat simpleDataFormat =
+			(SimpleDateFormat)DateFormat.getTimeInstance(
+				DateFormat.SHORT, locale);
+
+		String timeFormatPattern = simpleDataFormat.toPattern();
+
+		if (timeFormatPattern.contains("a")) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public static Date newDate() {

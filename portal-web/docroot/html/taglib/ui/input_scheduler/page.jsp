@@ -22,6 +22,12 @@
 
 	<%
 	Calendar cal = CalendarFactoryUtil.getCalendar(timeZone, locale);
+
+	int hour = cal.get(Calendar.HOUR_OF_DAY);
+
+	if (DateUtil.isFormatAmPm(locale)) {
+		hour = cal.get(Calendar.HOUR);
+	}
 	%>
 
 	<aui:field-wrapper label="start-date">
@@ -45,7 +51,7 @@
 				amPmParam="schedulerStartDateAmPm"
 				amPmValue="<%= cal.get(Calendar.AM_PM) %>"
 				hourParam="schedulerStartDateHour"
-				hourValue="<%= cal.get(Calendar.HOUR) %>"
+				hourValue="<%= hour %>"
 				minuteInterval="<%= 1 %>"
 				minuteParam="schedulerStartDateMinute"
 				minuteValue="<%= cal.get(Calendar.MINUTE) %>"
@@ -80,7 +86,7 @@
 				amPmParam="schedulerEndDateAmPm"
 				amPmValue="<%= cal.get(Calendar.AM_PM) %>"
 				hourParam="schedulerEndDateHour"
-				hourValue="<%= cal.get(Calendar.HOUR) %>"
+				hourValue="<%= hour %>"
 				minuteInterval="<%= 1 %>"
 				minuteParam="schedulerEndDateMinute"
 				minuteValue="<%= cal.get(Calendar.MINUTE) %>"

@@ -90,6 +90,10 @@ public class DateUtil_IW {
 		return DateUtil.getUTCFormat(text);
 	}
 
+	public boolean isFormatAmPm(java.util.Locale locale) {
+		return DateUtil.isFormatAmPm(locale);
+	}
+
 	public java.util.Date newDate() {
 		return DateUtil.newDate();
 	}

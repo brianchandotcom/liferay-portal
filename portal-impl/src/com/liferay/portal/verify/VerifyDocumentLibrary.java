@@ -194,10 +194,7 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 		Criterion criterion1 = RestrictionsFactoryUtil.like("title", "%/%");
 		Criterion criterion2 = RestrictionsFactoryUtil.like("title", "%\\\\%");
 
-		Criterion criterion = RestrictionsFactoryUtil.or(
-			criterion1, criterion2);
-
-		dynamicQuery.add(criterion);
+		dynamicQuery.add(RestrictionsFactoryUtil.or(criterion1, criterion2));
 
 		List<DLFileEntry> dlFileEntries =
 			DLFileEntryLocalServiceUtil.dynamicQuery(dynamicQuery);

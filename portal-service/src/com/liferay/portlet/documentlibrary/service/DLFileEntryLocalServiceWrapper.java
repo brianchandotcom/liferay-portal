@@ -449,12 +449,6 @@ public class DLFileEntryLocalServiceWrapper implements DLFileEntryLocalService,
 			name);
 	}
 
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> fetchFileEntryByName(
-		long folderId, java.lang.String name)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _dlFileEntryLocalService.fetchFileEntryByName(folderId, name);
-	}
-
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getExtraSettingsFileEntries(
 		int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -527,6 +521,12 @@ public class DLFileEntryLocalServiceWrapper implements DLFileEntryLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _dlFileEntryLocalService.getFileEntries(groupId, folderId,
 			start, end, obc);
+	}
+
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getFileEntries(
+		long folderId, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _dlFileEntryLocalService.getFileEntries(folderId, name);
 	}
 
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getFileEntriesByMimeType(

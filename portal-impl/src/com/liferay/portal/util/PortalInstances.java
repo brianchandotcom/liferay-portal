@@ -34,8 +34,6 @@ import com.liferay.portal.model.PortletCategory;
 import com.liferay.portal.model.VirtualHost;
 import com.liferay.portal.search.lucene.LuceneHelperUtil;
 import com.liferay.portal.security.auth.CompanyThreadLocal;
-import com.liferay.portal.security.ldap.LDAPSettingsUtil;
-import com.liferay.portal.security.ldap.PortalLDAPImporterUtil;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetLocalServiceUtil;
@@ -440,17 +438,6 @@ public class PortalInstances {
 			catch (Exception e) {
 				_log.error(e, e);
 			}
-		}
-
-		// LDAP Import
-
-		try {
-			if (LDAPSettingsUtil.isImportOnStartup(companyId)) {
-				PortalLDAPImporterUtil.importFromLDAP(companyId);
-			}
-		}
-		catch (Exception e) {
-			_log.error(e, e);
 		}
 
 		// Process application startup events

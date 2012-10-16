@@ -148,6 +148,10 @@
 		<finder name="MimeType" return-type="Collection" db-index="false" >
 			<finder-column name="mimeType" />
 		</finder>
+		<finder name="F_N" return-type="Collection">
+			<finder-column name="folderId" />
+			<finder-column name="name" />
+		</finder>
 		<finder name="G_U" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="userId" />

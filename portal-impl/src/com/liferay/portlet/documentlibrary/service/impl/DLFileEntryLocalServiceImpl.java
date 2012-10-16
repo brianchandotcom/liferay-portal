@@ -948,6 +948,12 @@ public class DLFileEntryLocalServiceImpl
 		return dlFileEntryPersistence.findByF_N(folderId, name);
 	}
 
+	public List<DLFileEntry> getFileEntries(String[] titles)
+		throws SystemException {
+
+		return dlFileEntryFinder.findByTitle(titles);
+	}
+
 	public List<DLFileEntry> getFileEntriesByMimeType(String mimeType)
 		throws SystemException {
 

@@ -73,6 +73,9 @@ public class DLFileEntryFinderImpl
 	public static final String FIND_BY_ORPHANED_FILE_ENTRIES =
 		DLFileEntryFinder.class.getName() + ".findByOrphanedFileEntries";
 
+	public static final String FIND_BY_TITLE =
+		DLFileEntryFinder.class.getName() + ".findByTitle";
+
 	public static final String FIND_BY_G_F =
 		DLFileEntryFinder.class.getName() + ".findByG_F";
 
@@ -373,6 +376,39 @@ public class DLFileEntryFinderImpl
 			SQLQuery q = session.createSQLQuery(sql);
 
 			q.addEntity("DLFileEntry", DLFileEntryImpl.class);
+
+			return q.list(true);
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	public List<DLFileEntry> findByTitle(String[] titles)
+		throws SystemException {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(FIND_BY_TITLE);
+
+			sql = CustomSQLUtil.replaceKeywords(
+				sql, "title", StringPool.LIKE, true, titles);
+
+			sql = CustomSQLUtil.replaceAndOperator(sql, true);
+
+			SQLQuery q = session.createSQLQuery(sql);
+
+			q.addEntity("DLFileEntry", DLFileEntryImpl.class);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(titles, 2);
 
 			return q.list(true);
 		}

@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
@@ -36,6 +37,7 @@ import com.liferay.portlet.documentlibrary.service.DLAppHelperLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryFinderUtil;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.documentlibrary.util.comparator.FileVersionVersionComparator;
@@ -182,6 +184,35 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 		}
 	}
 
+	protected void checkTitles() throws Exception {
+		List<DLFileEntry> dlFileEntries = DLFileEntryFinderUtil.findByTitle(
+			_INVALID_TITLES);
+
+		for (DLFileEntry dlFileEntry : dlFileEntries) {
+			String oldTitle = dlFileEntry.getTitle();
+
+			String title = oldTitle.replace(StringPool.SLASH, StringPool.BLANK);
+
+			title = title.replace(StringPool.BACK_SLASH, StringPool.UNDERLINE);
+
+			dlFileEntry.setTitle(title);
+
+			DLFileEntryLocalServiceUtil.updateDLFileEntry(dlFileEntry);
+
+			DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
+
+			dlFileVersion.setTitle(title);
+
+			DLFileVersionLocalServiceUtil.updateDLFileVersion(dlFileVersion);
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Invalid document title " + oldTitle + " renamed to " +
+						title);
+			}
+		}
+	}
+
 	protected void copyDLFileEntry(DLFileEntry dlFileEntry)
 		throws PortalException, SystemException {
 
@@ -228,6 +259,7 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 
 		checkDLFileEntryType();
 		checkMimeTypes();
+		checkTitles();
 		removeOrphanedDLFileEntries();
 		updateAssets();
 	}
@@ -296,6 +328,10 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 			_log.debug("Assets verified for file entries");
 		}
 	}
+
+	private static final String[] _INVALID_TITLES = new String[] {
+		"%/%", "%\\\\%"
+	};
 
 	private static Log _log = LogFactoryUtil.getLog(
 		VerifyDocumentLibrary.class);

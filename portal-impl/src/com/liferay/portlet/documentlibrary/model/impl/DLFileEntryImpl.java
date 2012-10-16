@@ -24,7 +24,9 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.Lock;
+import com.liferay.portal.model.Repository;
 import com.liferay.portal.service.LockLocalServiceUtil;
+import com.liferay.portal.service.RepositoryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
@@ -278,6 +280,25 @@ public class DLFileEntryImpl extends DLFileEntryBaseImpl {
 		try {
 			return DLFileEntryServiceUtil.isFileEntryCheckedOut(
 				getFileEntryId());
+		}
+		catch (Exception e) {
+		}
+
+		return false;
+	}
+
+	public boolean isInHiddenFolder() {
+		try {
+			long repositoryId = _dlFileVersion.getRepositoryId();
+
+			Repository repository = RepositoryLocalServiceUtil.getRepository(
+				repositoryId);
+
+			long dlFolderId = repository.getDlFolderId();
+
+			DLFolder dlFolder = DLFolderLocalServiceUtil.getFolder(dlFolderId);
+
+			return dlFolder.isHidden();
 		}
 		catch (Exception e) {
 		}

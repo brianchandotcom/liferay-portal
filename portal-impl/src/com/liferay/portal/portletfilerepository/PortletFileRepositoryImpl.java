@@ -37,9 +37,11 @@ import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.util.DLAppHelperThreadLocal;
 
 import java.io.File;
@@ -166,8 +168,21 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 		throws PortalException, SystemException {
 
 		List<DLFileEntry> dlFileEntries =
+			DLFileEntryLocalServiceUtil.getFileEntries(groupId, folderId);
+
+		for (DLFileEntry dlFileEntry : dlFileEntries) {
+			deletePortletFileEntry(dlFileEntry.getFileEntryId());
+		}
+	}
+
+	public void deletePortletFileEntries(
+			long groupId, long folderId, int status)
+		throws PortalException, SystemException {
+
+		List<DLFileEntry> dlFileEntries =
 			DLFileEntryLocalServiceUtil.getFileEntries(
-				groupId, folderId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+				groupId, folderId, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				null);
 
 		for (DLFileEntry dlFileEntry : dlFileEntries) {
 			deletePortletFileEntry(dlFileEntry.getFileEntryId());
@@ -199,31 +214,10 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 		deletePortletFileEntry(fileEntry.getFileEntryId());
 	}
 
-	public long getFolder(
-			long userId, long repositoryId, long parentFolderId,
-			String folderName, ServiceContext serviceContext)
-		throws PortalException, SystemException {
-
-		Folder folder = null;
-
-		try {
-			folder = DLAppLocalServiceUtil.getFolder(
-				repositoryId, parentFolderId, folderName);
-		}
-		catch (NoSuchFolderException nsfe) {
-			folder = DLAppLocalServiceUtil.addFolder(
-				userId, repositoryId, parentFolderId, folderName,
-				StringPool.BLANK, serviceContext);
-		}
-
-		return folder.getFolderId();
-	}
-
 	public List<DLFileEntry> getPortletFileEntries(long groupId, long folderId)
 		throws SystemException {
 
-		return DLFileEntryLocalServiceUtil.getFileEntries(
-			groupId, folderId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+		return DLFileEntryLocalServiceUtil.getFileEntries(groupId, folderId);
 	}
 
 	public List<DLFileEntry> getPortletFileEntries(
@@ -259,6 +253,46 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 			groupId, folderId, status);
 	}
 
+	public DLFileEntry getPortletFileEntry(long fileEntryId)
+		throws PortalException, SystemException {
+
+		return DLFileEntryLocalServiceUtil.getFileEntry(fileEntryId);
+	}
+
+	public DLFileEntry getPortletFileEntry(
+			long groupId, long folderId, String fileName)
+		throws PortalException, SystemException {
+
+		return DLFileEntryLocalServiceUtil.getFileEntry(
+			groupId, folderId, fileName);
+	}
+
+	public DLFolder getPortletFolder(long folderId)
+		throws PortalException, SystemException {
+
+		return DLFolderLocalServiceUtil.getFolder(folderId);
+	}
+
+	public DLFolder getPortletFolder(
+			long userId, long repositoryId, long parentFolderId,
+			String folderName, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		Folder folder = null;
+
+		try {
+			folder = DLAppLocalServiceUtil.getFolder(
+				repositoryId, parentFolderId, folderName);
+		}
+		catch (NoSuchFolderException nsfe) {
+			folder = DLAppLocalServiceUtil.addFolder(
+				userId, repositoryId, parentFolderId, folderName,
+				StringPool.BLANK, serviceContext);
+		}
+
+		return (DLFolder)folder.getModel();
+	}
+
 	public long getPortletRepository(
 			long groupId, String portletId, ServiceContext serviceContext)
 		throws PortalException, SystemException {
@@ -285,32 +319,6 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 			serviceContext);
 	}
 
-	public void movePortletFileEntryFromTrash(long userId, long fileEntryId)
-		throws PortalException, SystemException {
-
-		boolean dlAppHelperEnabled = DLAppHelperThreadLocal.isEnabled();
-
-		try {
-			DLAppHelperThreadLocal.setEnabled(false);
-
-			DLAppLocalServiceUtil.restoreFileEntryFromTrash(
-				userId, fileEntryId);
-		}
-		finally {
-			DLAppHelperThreadLocal.setEnabled(dlAppHelperEnabled);
-		}
-	}
-
-	public void movePortletFileEntryFromTrash(
-			long groupId, long userId, long folderId, String fileName)
-		throws PortalException, SystemException {
-
-		FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(
-			groupId, folderId, fileName);
-
-		movePortletFileEntryFromTrash(userId, fileEntry.getFileEntryId());
-	}
-
 	public void movePortletFileEntryToTrash(long userId, long fileEntryId)
 		throws PortalException, SystemException {
 
@@ -334,6 +342,32 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 			groupId, folderId, fileName);
 
 		movePortletFileEntryToTrash(userId, fileEntry.getFileEntryId());
+	}
+
+	public void restorePortletFileEntryFromTrash(long userId, long fileEntryId)
+		throws PortalException, SystemException {
+
+		boolean dlAppHelperEnabled = DLAppHelperThreadLocal.isEnabled();
+
+		try {
+			DLAppHelperThreadLocal.setEnabled(false);
+
+			DLAppLocalServiceUtil.restoreFileEntryFromTrash(
+				userId, fileEntryId);
+		}
+		finally {
+			DLAppHelperThreadLocal.setEnabled(dlAppHelperEnabled);
+		}
+	}
+
+	public void restorePortletFileEntryFromTrash(
+			long groupId, long userId, long folderId, String fileName)
+		throws PortalException, SystemException {
+
+		FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(
+			groupId, folderId, fileName);
+
+		restorePortletFileEntryFromTrash(userId, fileEntry.getFileEntryId());
 	}
 
 }

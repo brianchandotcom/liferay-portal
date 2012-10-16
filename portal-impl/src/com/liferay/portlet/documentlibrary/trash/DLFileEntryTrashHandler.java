@@ -35,6 +35,7 @@ import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission;
 import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
+import com.liferay.portlet.documentlibrary.util.DLAppHelperThreadLocal;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.trash.DuplicateEntryException;
 import com.liferay.portlet.trash.TrashEntryConstants;
@@ -185,7 +186,20 @@ public class DLFileEntryTrashHandler extends BaseTrashHandler {
 		throws PortalException, SystemException {
 
 		for (long classPK : classPKs) {
-			DLAppServiceUtil.restoreFileEntryFromTrash(classPK);
+			boolean dlAppHelperEnabled = DLAppHelperThreadLocal.isEnabled();
+
+			try {
+				DLFileEntry dlFileEntry = getDLFileEntry(classPK);
+
+				if (dlFileEntry.isInHiddenFolder()) {
+					DLAppHelperThreadLocal.setEnabled(false);
+				}
+
+				DLAppServiceUtil.restoreFileEntryFromTrash(classPK);
+			}
+			finally {
+				DLAppHelperThreadLocal.setEnabled(dlAppHelperEnabled);
+			}
 		}
 	}
 
@@ -227,6 +241,12 @@ public class DLFileEntryTrashHandler extends BaseTrashHandler {
 	protected boolean hasPermission(
 			PermissionChecker permissionChecker, long classPK, String actionId)
 		throws PortalException, SystemException {
+
+		DLFileEntry dlFileEntry = getDLFileEntry(classPK);
+
+		if (dlFileEntry.isInHiddenFolder()) {
+			return false;
+		}
 
 		return DLFileEntryPermission.contains(
 			permissionChecker, classPK, actionId);

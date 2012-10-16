@@ -81,7 +81,7 @@ for (int i = 0; i < results.size(); i++) {
 
 	// Name
 
-	row.addText(HtmlUtil.escape(curRole.getTitle(locale)), rowURL);
+	row.addText(curRole.getTitle(locale), rowURL);
 
 	// Type
 

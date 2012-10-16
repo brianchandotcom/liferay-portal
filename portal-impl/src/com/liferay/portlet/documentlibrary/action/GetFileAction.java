@@ -202,12 +202,15 @@ public class GetFileAction extends PortletAction {
 						groupId, folderId, name);
 
 				if (dlFileEntry == null) {
-					List<DLFileEntry> results =
-						DLFileEntryLocalServiceUtil.fetchFileEntryByName(
+
+					// LPS-30374
+
+					List<DLFileEntry> dlFileEntries =
+						DLFileEntryLocalServiceUtil.getFileEntries(
 							folderId, name);
 
-					if (!results.isEmpty()) {
-						dlFileEntry = results.get(0);
+					if (!dlFileEntries.isEmpty()) {
+						dlFileEntry = dlFileEntries.get(0);
 					}
 				}
 

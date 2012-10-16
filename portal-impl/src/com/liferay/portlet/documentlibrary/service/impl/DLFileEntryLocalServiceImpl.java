@@ -840,12 +840,6 @@ public class DLFileEntryLocalServiceImpl
 		return dlFileEntryPersistence.fetchByG_F_N(groupId, folderId, name);
 	}
 
-	public List<DLFileEntry> fetchFileEntryByName(long folderId, String name)
-		throws SystemException {
-
-		return dlFileEntryPersistence.findByF_N(folderId, name);
-	}
-
 	public List<DLFileEntry> getExtraSettingsFileEntries(int start, int end)
 		throws SystemException {
 
@@ -946,6 +940,12 @@ public class DLFileEntryLocalServiceImpl
 
 		return dlFileEntryPersistence.findByG_F(
 			groupId, folderId, start, end, obc);
+	}
+
+	public List<DLFileEntry> getFileEntries(long folderId, String name)
+		throws SystemException {
+
+		return dlFileEntryPersistence.findByF_N(folderId, name);
 	}
 
 	public List<DLFileEntry> getFileEntriesByMimeType(String mimeType)

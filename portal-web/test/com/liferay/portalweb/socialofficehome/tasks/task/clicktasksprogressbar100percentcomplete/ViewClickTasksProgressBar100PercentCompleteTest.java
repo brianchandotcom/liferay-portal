@@ -32,8 +32,6 @@ public class ViewClickTasksProgressBar100PercentCompleteTest
 				selenium.selectWindow("null");
 				selenium.selectFrame("relative=top");
 				selenium.open("/user/joebloggs/so/dashboard/");
-				selenium.waitForVisible(
-					"//nav/ul/li[contains(.,'Tasks')]/a/span");
 				selenium.clickAt("//nav/ul/li[contains(.,'Tasks')]/a/span",
 					RuntimeVariables.replace("Tasks"));
 				selenium.waitForPageToLoad("30000");
@@ -62,9 +60,8 @@ public class ViewClickTasksProgressBar100PercentCompleteTest
 				selenium.waitForVisible("//td[1]/div[1]/a");
 				assertEquals(RuntimeVariables.replace("Task Description"),
 					selenium.getText("//td[1]/div[1]/a"));
+				selenium.mouseOver("//div[3]/a[5]");
 				selenium.waitForElementPresent("//div[@style='width: 100%;']");
-				assertTrue(selenium.isElementPresent(
-						"//div[@style='width: 100%;']"));
 
 			case 100:
 				label = -1;

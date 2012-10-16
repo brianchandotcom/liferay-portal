@@ -30,8 +30,6 @@ public class AddTasksTaskAssignedToMeTagTest extends BaseTestCase {
 				selenium.selectWindow("null");
 				selenium.selectFrame("relative=top");
 				selenium.open("/user/joebloggs/so/dashboard/");
-				selenium.waitForVisible(
-					"//nav/ul/li[contains(.,'Tasks')]/a/span");
 				selenium.clickAt("//nav/ul/li[contains(.,'Tasks')]/a/span",
 					RuntimeVariables.replace("Tasks"));
 				selenium.waitForPageToLoad("30000");
@@ -69,6 +67,7 @@ public class AddTasksTaskAssignedToMeTagTest extends BaseTestCase {
 				selenium.waitForVisible("//input[@title='Add Tags']");
 				selenium.type("//input[@title='Add Tags']",
 					RuntimeVariables.replace("Tag1"));
+				selenium.waitForVisible("//button[@id='add']");
 				selenium.clickAt("//button[@id='add']",
 					RuntimeVariables.replace("Add"));
 				selenium.waitForVisible("//li[contains(.,'Tag1')]/span/span");

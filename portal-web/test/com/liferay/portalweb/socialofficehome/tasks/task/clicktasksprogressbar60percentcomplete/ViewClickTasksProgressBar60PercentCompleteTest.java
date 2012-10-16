@@ -26,7 +26,6 @@ public class ViewClickTasksProgressBar60PercentCompleteTest extends BaseTestCase
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/user/joebloggs/so/dashboard/");
-		selenium.waitForVisible("//nav/ul/li[contains(.,'Tasks')]/a/span");
 		selenium.clickAt("//nav/ul/li[contains(.,'Tasks')]/a/span",
 			RuntimeVariables.replace("Tasks"));
 		selenium.waitForPageToLoad("30000");
@@ -37,8 +36,8 @@ public class ViewClickTasksProgressBar60PercentCompleteTest extends BaseTestCase
 		selenium.clickAt("link=Assigned to Me",
 			RuntimeVariables.replace("Assigned to Me"));
 		selenium.waitForPageToLoad("30000");
+		selenium.mouseOver("//div[3]/a[3]");
 		selenium.waitForElementPresent("//div[@style='width: 60%;']");
-		assertTrue(selenium.isElementPresent("//div[@style='width: 60%;']"));
 		assertEquals(RuntimeVariables.replace("Task Description"),
 			selenium.getText("link=Task Description"));
 		selenium.clickAt("link=Task Description",

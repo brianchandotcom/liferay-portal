@@ -26,7 +26,6 @@ public class ViewTasksTaskAssignedToMeMultipleTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/user/joebloggs/so/dashboard/");
-		selenium.waitForVisible("//nav/ul/li[contains(.,'Tasks')]/a/span");
 		selenium.clickAt("//nav/ul/li[contains(.,'Tasks')]/a/span",
 			RuntimeVariables.replace("Tasks"));
 		selenium.waitForPageToLoad("30000");
@@ -51,7 +50,6 @@ public class ViewTasksTaskAssignedToMeMultipleTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Normal"),
 			selenium.getText("//div[@class='task-data normal']"));
 		selenium.open("/user/joebloggs/so/dashboard/");
-		selenium.waitForVisible("//nav/ul/li[contains(.,'Tasks')]/a/span");
 		selenium.clickAt("//nav/ul/li[contains(.,'Tasks')]/a/span",
 			RuntimeVariables.replace("Tasks"));
 		selenium.waitForPageToLoad("30000");
@@ -76,7 +74,6 @@ public class ViewTasksTaskAssignedToMeMultipleTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Normal"),
 			selenium.getText("//div[@class='task-data normal']"));
 		selenium.open("/user/joebloggs/so/dashboard/");
-		selenium.waitForVisible("//nav/ul/li[contains(.,'Tasks')]/a/span");
 		selenium.clickAt("//nav/ul/li[contains(.,'Tasks')]/a/span",
 			RuntimeVariables.replace("Tasks"));
 		selenium.waitForPageToLoad("30000");

@@ -26,7 +26,6 @@ public class EditTasksTaskAssignedToMeCommentTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/user/joebloggs/so/dashboard/");
-		selenium.waitForVisible("//nav/ul/li[contains(.,'Tasks')]/a/span");
 		selenium.clickAt("//nav/ul/li[contains(.,'Tasks')]/a/span",
 			RuntimeVariables.replace("Tasks"));
 		selenium.waitForPageToLoad("30000");
@@ -55,7 +54,7 @@ public class EditTasksTaskAssignedToMeCommentTest extends BaseTestCase {
 		selenium.clickAt("link=Edit", RuntimeVariables.replace("Edit"));
 		assertEquals("Task Comment",
 			selenium.getValue("//textarea[@class='comment-form']"));
-		selenium.typeKeys("//textarea[@class='comment-form']",
+		selenium.sendKeys("//textarea[@class='comment-form']",
 			RuntimeVariables.replace(" Edit"));
 		selenium.click("//input[@value='Post']");
 		selenium.waitForText("//div[@class='comment-body']/span",

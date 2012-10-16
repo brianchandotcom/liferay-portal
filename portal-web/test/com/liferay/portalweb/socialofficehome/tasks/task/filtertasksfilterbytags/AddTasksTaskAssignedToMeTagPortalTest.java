@@ -31,7 +31,6 @@ public class AddTasksTaskAssignedToMeTagPortalTest extends BaseTestCase {
 				selenium.selectWindow("null");
 				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
-				selenium.waitForVisible("link=Tasks Test Page");
 				selenium.clickAt("link=Tasks Test Page",
 					RuntimeVariables.replace("Tasks Test Page"));
 				selenium.waitForPageToLoad("30000");

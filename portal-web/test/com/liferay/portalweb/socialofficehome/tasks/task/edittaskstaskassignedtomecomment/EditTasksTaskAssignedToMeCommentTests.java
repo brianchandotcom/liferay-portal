@@ -15,6 +15,9 @@
 package com.liferay.portalweb.socialofficehome.tasks.task.edittaskstaskassignedtomecomment;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.socialofficehome.tasks.task.addtaskstaskassignedtome.AddTasksTaskAssignedToMeTest;
+import com.liferay.portalweb.socialofficehome.tasks.task.addtaskstaskassignedtome.TearDownTasksTaskTest;
+import com.liferay.portalweb.socialofficehome.tasks.task.addtaskstaskassignedtomecomment.AddTasksTaskAssignedToMeCommentTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

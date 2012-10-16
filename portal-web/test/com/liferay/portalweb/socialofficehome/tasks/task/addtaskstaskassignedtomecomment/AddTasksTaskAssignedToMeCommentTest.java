@@ -25,7 +25,6 @@ public class AddTasksTaskAssignedToMeCommentTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/user/joebloggs/so/dashboard/");
-		selenium.waitForVisible("//nav/ul/li[contains(.,'Tasks')]/a/span");
 		selenium.clickAt("//nav/ul/li[contains(.,'Tasks')]/a/span",
 			RuntimeVariables.replace("Tasks"));
 		selenium.waitForPageToLoad("30000");
@@ -50,7 +49,7 @@ public class AddTasksTaskAssignedToMeCommentTest extends BaseTestCase {
 		selenium.clickAt("//a/span[contains(.,'Add Comment')]",
 			RuntimeVariables.replace("Add Comment"));
 		selenium.waitForVisible("//textarea[@class='comment-form']");
-		selenium.typeKeys("//textarea[@class='comment-form']",
+		selenium.sendKeys("//textarea[@class='comment-form']",
 			RuntimeVariables.replace("Task Comment"));
 		selenium.clickAt("//input[@value='Post']",
 			RuntimeVariables.replace("Post"));

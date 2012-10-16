@@ -16,6 +16,11 @@ package com.liferay.portalweb.socialofficehome.tasks.task.filtertasksfilterbypla
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
+import com.liferay.portalweb.socialofficehome.tasks.task.addtaskstaskassignedtome.TearDownTasksTaskTest;
+import com.liferay.portalweb.socialofficehome.tasks.task.addtaskstaskassignedtometag.AddTasksTaskAssignedToMeTagTest;
+import com.liferay.portalweb.socialofficehome.tasks.task.filtertasksfilterbytags.AddPageTasksTest;
+import com.liferay.portalweb.socialofficehome.tasks.task.filtertasksfilterbytags.AddPortletTasksTest;
+import com.liferay.portalweb.socialofficehome.tasks.task.filtertasksfilterbytags.AddTasksTaskAssignedToMeTagPortalTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

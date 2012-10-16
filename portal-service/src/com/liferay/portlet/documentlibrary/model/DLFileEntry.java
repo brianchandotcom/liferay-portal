@@ -86,6 +86,8 @@ public interface DLFileEntry extends DLFileEntryModel, PersistedModel {
 
 	public boolean isCheckedOut();
 
+	public boolean isInHiddenFolder();
+
 	public boolean isInTrashFolder();
 
 	public void setExtraSettings(java.lang.String extraSettings);

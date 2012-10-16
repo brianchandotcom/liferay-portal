@@ -954,6 +954,10 @@ public class DLFileEntryWrapper implements DLFileEntry,
 		return _dlFileEntry.isCheckedOut();
 	}
 
+	public boolean isInHiddenFolder() {
+		return _dlFileEntry.isInHiddenFolder();
+	}
+
 	public boolean isInTrashFolder() {
 		return _dlFileEntry.isInTrashFolder();
 	}

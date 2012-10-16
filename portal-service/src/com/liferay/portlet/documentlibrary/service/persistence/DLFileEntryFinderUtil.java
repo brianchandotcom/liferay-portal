@@ -90,6 +90,12 @@ public class DLFileEntryFinderUtil {
 		return getFinder().findByOrphanedFileEntries();
 	}
 
+	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> findByTitle(
+		java.lang.String[] titles)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder().findByTitle(titles);
+	}
+
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> findByG_F(
 		long groupId, java.util.List<java.lang.Long> folderIds,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)

@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Shopping Test Page</td>
-	<td>Shopping Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Shopping Test Page</td>
 	<td>Shopping Test Page</td>
@@ -34,14 +29,24 @@
 	<td>Add Coupon</td>
 </tr>
 <tr>
-	<td>assertNotChecked</td>
+	<td>storeChecked</td>
 	<td>//input[@id='_34_autoCodeCheckbox']</td>
-	<td>Autogenerate Code</td>
+	<td>autogenerateCodeChecked</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${autogenerateCodeChecked}</td>
+	<td>AutogenerateCodeChecked</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>//input[@id='_34_autoCodeCheckbox']</td>
 	<td>Autogenerate Code</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>AutogenerateCodeChecked</td>
+	<td></td>
 </tr>
 <tr>
 	<td>assertChecked</td>
@@ -78,7 +83,6 @@
 	<td>xPath=(//div[@class='portlet-msg-error'])[2]</td>
 	<td>Please enter a valid name.</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

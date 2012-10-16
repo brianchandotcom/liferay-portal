@@ -25,30 +25,38 @@ public class EditCategoryItemTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Shopping Test Page");
 		selenium.clickAt("link=Shopping Test Page",
 			RuntimeVariables.replace("Shopping Test Page"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace(
-				"Shopping Category Name\nShopping Category Description"),
-			selenium.getText("//td[1]/a"));
-		selenium.clickAt("//td[1]/a",
+		assertTrue(selenium.isPartialText(
+				"//tr[@class='portlet-section-body results-row last']/td[1]/a",
+				"Shopping Category Name"));
+		assertTrue(selenium.isPartialText(
+				"//tr[@class='portlet-section-body results-row last']/td[1]/a",
+				"Shopping Category Description"));
+		selenium.clickAt("//tr[@class='portlet-section-body results-row last']/td[1]/a",
 			RuntimeVariables.replace(
-				"Shopping Category Name\nShopping Category Description"));
+				"Shopping Category Name Shopping Category Description"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace(
-				"Shopping Category Item Name\nShopping Category Item Description\nShopping: Category Item Properties"),
-			selenium.getText("//td[2]/a"));
+		assertTrue(selenium.isPartialText(
+				"//tr[@class='portlet-section-body results-row last']/td[2]/a",
+				"Shopping Category Item Name"));
+		assertTrue(selenium.isPartialText(
+				"//tr[@class='portlet-section-body results-row last']/td[2]/a",
+				"Shopping Category Item Description"));
+		assertTrue(selenium.isPartialText(
+				"//tr[@class='portlet-section-body results-row last']/td[2]/a",
+				"Shopping: Category Item Properties"));
 		assertEquals(RuntimeVariables.replace("Actions"),
-			selenium.getText("//td[5]/span/ul/li/strong/a"));
-		selenium.clickAt("//td[5]/span/ul/li/strong/a",
+			selenium.getText("//span[@title='Actions']/ul/li/strong/a"));
+		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]");
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a",
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]",
 			RuntimeVariables.replace("Edit"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_34_name']",
@@ -63,10 +71,14 @@ public class EditCategoryItemTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals(RuntimeVariables.replace(
-				"Shopping Category Item Name Edit\nShopping Category Item Description Edit\nShopping: Category Item Properties Edit"),
-			selenium.getText("//td[2]/a"));
-		assertFalse(selenium.isTextPresent(
-				"Shopping Category Item Name\nShopping Category Item Description\nShopping: Category Item Properties"));
+		assertTrue(selenium.isPartialText(
+				"//tr[@class='portlet-section-body results-row last']/td[2]/a",
+				"Shopping Category Item Name Edit"));
+		assertTrue(selenium.isPartialText(
+				"//tr[@class='portlet-section-body results-row last']/td[2]/a",
+				"Shopping Category Item Description Edit"));
+		assertTrue(selenium.isPartialText(
+				"//tr[@class='portlet-section-body results-row last']/td[2]/a",
+				"Shopping: Category Item Properties Edit"));
 	}
 }

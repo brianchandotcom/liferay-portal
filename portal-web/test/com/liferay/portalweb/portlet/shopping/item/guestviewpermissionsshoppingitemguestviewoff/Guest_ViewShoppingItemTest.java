@@ -25,33 +25,47 @@ public class Guest_ViewShoppingItemTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Shopping Test Page");
 		selenium.clickAt("link=Shopping Test Page",
 			RuntimeVariables.replace("Shopping Test Page"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("1111"),
-			selenium.getText("//td[1]/a"));
-		assertEquals(RuntimeVariables.replace(
-				"Shopping Item Name\nShopping Item Description\nShopping: Item Properties"),
-			selenium.getText("//td[2]/a"));
+			selenium.getText(
+				"//tr[@class='portlet-section-body results-row last']/td[1]/a"));
+		assertTrue(selenium.isPartialText(
+				"//tr[@class='portlet-section-body results-row last']/td[2]/a",
+				"Shopping Item Name"));
+		assertTrue(selenium.isPartialText(
+				"//tr[@class='portlet-section-body results-row last']/td[2]/a",
+				"Shopping Item Description"));
+		assertTrue(selenium.isPartialText(
+				"//tr[@class='portlet-section-body results-row last']/td[2]/a",
+				"Shopping: Item Properties"));
 		assertEquals(RuntimeVariables.replace("1"),
-			selenium.getText("//td[3]/a"));
+			selenium.getText(
+				"//tr[@class='portlet-section-body results-row last']/td[3]/a"));
 		assertEquals(RuntimeVariables.replace("$9.99"),
-			selenium.getText("//td[4]/a"));
-		selenium.clickAt("//td[2]/a",
+			selenium.getText(
+				"//tr[@class='portlet-section-body results-row last']/td[4]/a"));
+		selenium.clickAt("//tr[@class='portlet-section-body results-row last']/td[2]/a",
 			RuntimeVariables.replace("Shopping Item Name"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Item"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace("1111"),
-			selenium.getText("//strong"));
+			selenium.getText("//td[@class='lfr-top']/strong"));
 		assertEquals(RuntimeVariables.replace("Shopping Item Name"),
-			selenium.getText("//span/strong"));
-		assertTrue(selenium.isPartialText("//td[3]", "Shopping Item Description"));
-		assertTrue(selenium.isPartialText("//td[3]", "Shopping: Item Properties"));
-		assertTrue(selenium.isPartialText("//td[3]",
-				"Price for 1 to 1 Items: \\$9.99"));
+			selenium.getText("//td[@class='lfr-top']/span/strong"));
+		assertTrue(selenium.isPartialText("xPath=(//td[@class='lfr-top'])[2]",
+				"Shopping Item Description"));
+		assertTrue(selenium.isPartialText("xPath=(//td[@class='lfr-top'])[2]",
+				"Shopping: Item Properties"));
+		assertTrue(selenium.isPartialText("xPath=(//td[@class='lfr-top'])[2]",
+				"Availability:"));
 		assertEquals(RuntimeVariables.replace("In Stock"),
 			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertTrue(selenium.isPartialText("xPath=(//td[@class='lfr-top'])[2]",
+				"Price for 1 to 1 Items"));
+		assertTrue(selenium.isPartialText("xPath=(//td[@class='lfr-top'])[2]",
+				"9.99"));
 	}
 }

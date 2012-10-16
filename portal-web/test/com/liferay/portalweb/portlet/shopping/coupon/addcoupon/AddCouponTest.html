@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Shopping Test Page</td>
-	<td>Shopping Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Shopping Test Page</td>
 	<td>Shopping Test Page</td>
@@ -34,14 +29,24 @@
 	<td>Add Coupon</td>
 </tr>
 <tr>
-	<td>assertNotChecked</td>
+	<td>storeChecked</td>
 	<td>//input[@id='_34_autoCodeCheckbox']</td>
-	<td>Autogenerate Code</td>
+	<td>autogenerateCodeChecked</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${autogenerateCodeChecked}</td>
+	<td>AutogenerateCodeChecked</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>//input[@id='_34_autoCodeCheckbox']</td>
 	<td>Autogenerate Code</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>AutogenerateCodeChecked</td>
+	<td></td>
 </tr>
 <tr>
 	<td>assertChecked</td>
@@ -74,11 +79,15 @@
 	<td>Your request completed successfully.</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//td[3]/a</td>
-	<td>Shopping Coupon Name<br />Shopping Coupon Description</td>
+	<td>assertPartialText</td>
+	<td>//tr[@class='portlet-section-body results-row last']/td[3]/a</td>
+	<td>Shopping Coupon Name</td>
 </tr>
-
+<tr>
+	<td>assertPartialText</td>
+	<td>//tr[@class='portlet-section-body results-row last']/td[3]/a</td>
+	<td>Shopping Coupon Description</td>
+</tr>
 </tbody></table>
 </body>
 </html>

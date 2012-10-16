@@ -16,14 +16,13 @@ package com.liferay.portalweb.portlet.shopping.item;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portlet.shopping.item.addcategoryitem.AddCategoryItemTests;
-import com.liferay.portalweb.portlet.shopping.item.addcategoryitemmultiple.AddCategoryItemMultipleTests;
 import com.liferay.portalweb.portlet.shopping.item.addcategoryitemnamenull.AddCategoryItemNameNullTests;
+import com.liferay.portalweb.portlet.shopping.item.addcategoryitems.AddCategoryItemsTests;
 import com.liferay.portalweb.portlet.shopping.item.addcategoryitemskunull.AddCategoryItemSKUNullTests;
 import com.liferay.portalweb.portlet.shopping.item.addtoshoppingcartcategoryitem.AddToShoppingCartCategoryItemTests;
-import com.liferay.portalweb.portlet.shopping.item.addtoshoppingcartcategoryitemmultiple.AddToShoppingCartCategoryItemMultipleTests;
+import com.liferay.portalweb.portlet.shopping.item.addtoshoppingcartcategoryitems.AddToShoppingCartCategoryItemsTests;
 import com.liferay.portalweb.portlet.shopping.item.deletecategoryitem.DeleteCategoryItemTests;
 import com.liferay.portalweb.portlet.shopping.item.editcategoryitem.EditCategoryItemTests;
-import com.liferay.portalweb.portlet.shopping.item.emptycartcategoryitem.EmptyCartCategoryItemTests;
 import com.liferay.portalweb.portlet.shopping.item.guestviewpermissionsshoppingitemguestviewoff.Guest_ViewPermissionsShoppingItemGuestViewOffTests;
 import com.liferay.portalweb.portlet.shopping.item.movecategory1itemtocategory2.MoveCategory1ItemToCategory2Tests;
 import com.liferay.portalweb.portlet.shopping.item.searchcategoryitem.SearchCategoryItemTests;
@@ -42,14 +41,13 @@ public class ItemTestPlan extends BaseTestSuite {
 		TestSuite testSuite = new TestSuite();
 
 		testSuite.addTest(AddCategoryItemTests.suite());
-		testSuite.addTest(AddCategoryItemMultipleTests.suite());
 		testSuite.addTest(AddCategoryItemNameNullTests.suite());
+		testSuite.addTest(AddCategoryItemsTests.suite());
 		testSuite.addTest(AddCategoryItemSKUNullTests.suite());
 		testSuite.addTest(AddToShoppingCartCategoryItemTests.suite());
-		testSuite.addTest(AddToShoppingCartCategoryItemMultipleTests.suite());
+		testSuite.addTest(AddToShoppingCartCategoryItemsTests.suite());
 		testSuite.addTest(DeleteCategoryItemTests.suite());
 		testSuite.addTest(EditCategoryItemTests.suite());
-		testSuite.addTest(EmptyCartCategoryItemTests.suite());
 		testSuite.addTest(
 			Guest_ViewPermissionsShoppingItemGuestViewOffTests.suite());
 		testSuite.addTest(MoveCategory1ItemToCategory2Tests.suite());

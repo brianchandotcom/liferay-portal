@@ -31,7 +31,8 @@ public class ConfigurePortletAcceptedCreditCardTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddPageShoppingTest.class);
 		testSuite.addTestSuite(AddPortletShoppingTest.class);
 		testSuite.addTestSuite(ConfigurePortletAcceptedCreditCardTest.class);
-		testSuite.addTestSuite(TearDownConfigurationTest.class);
+		testSuite.addTestSuite(ViewConfigurePortletAcceptedCreditCardTest.class);
+		testSuite.addTestSuite(TearDownConfigurePortletAcceptedCreditCardTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;

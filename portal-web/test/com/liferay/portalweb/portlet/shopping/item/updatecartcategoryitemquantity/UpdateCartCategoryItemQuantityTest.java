@@ -25,16 +25,30 @@ public class UpdateCartCategoryItemQuantityTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Shopping Test Page");
 		selenium.clickAt("link=Shopping Test Page",
 			RuntimeVariables.replace("Shopping Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Cart", RuntimeVariables.replace("Cart"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace(
-				"Shopping Category Item Name\nShopping Category Item Description\n\nAvailability: In Stock\n\n\nPrice for 1 to 1 Items:$9.99"),
-			selenium.getText("//td[2]/a"));
-		selenium.select("//select", RuntimeVariables.replace("10"));
+		assertTrue(selenium.isPartialText(
+				"//tr[@class='portlet-section-body results-row last']/td[2]",
+				"Shopping Category Item Name"));
+		assertTrue(selenium.isPartialText(
+				"//tr[@class='portlet-section-body results-row last']/td[2]",
+				"Shopping Category Item Description"));
+		assertTrue(selenium.isPartialText(
+				"//tr[@class='portlet-section-body results-row last']/td[2]",
+				"Availability:"));
+		assertEquals(RuntimeVariables.replace("In Stock"),
+			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertTrue(selenium.isPartialText(
+				"//tr[@class='portlet-section-body results-row last']/td[2]",
+				"Price for 1 to 1 Items"));
+		assertTrue(selenium.isPartialText(
+				"//tr[@class='portlet-section-body results-row last']/td[2]",
+				"9.99"));
+		selenium.select("//tr[@class='portlet-section-body results-row last']/td[3]/select",
+			RuntimeVariables.replace("10"));
 		selenium.clickAt("//input[@value='Update Cart']",
 			RuntimeVariables.replace("Update Cart"));
 		selenium.waitForPageToLoad("30000");
@@ -42,8 +56,9 @@ public class UpdateCartCategoryItemQuantityTest extends BaseTestCase {
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("Subtotal $99.90"),
-			selenium.getText("//fieldset/div/div[1]/div"));
-		selenium.select("//select", RuntimeVariables.replace("5"));
+			selenium.getText("//div[@class='aui-fieldset-content ']/div[1]/div"));
+		selenium.select("//tr[@class='portlet-section-body results-row last']/td[3]/select",
+			RuntimeVariables.replace("5"));
 		selenium.clickAt("//input[@value='Update Cart']",
 			RuntimeVariables.replace("Update Cart"));
 		selenium.waitForPageToLoad("30000");
@@ -51,8 +66,9 @@ public class UpdateCartCategoryItemQuantityTest extends BaseTestCase {
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("Subtotal $49.95"),
-			selenium.getText("//fieldset/div/div[1]/div"));
-		selenium.select("//select", RuntimeVariables.replace("1"));
+			selenium.getText("//div[@class='aui-fieldset-content ']/div[1]/div"));
+		selenium.select("//tr[@class='portlet-section-body results-row last']/td[3]/select",
+			RuntimeVariables.replace("1"));
 		selenium.clickAt("//input[@value='Update Cart']",
 			RuntimeVariables.replace("Update Cart"));
 		selenium.waitForPageToLoad("30000");
@@ -60,6 +76,6 @@ public class UpdateCartCategoryItemQuantityTest extends BaseTestCase {
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("Subtotal $9.99"),
-			selenium.getText("//fieldset/div/div[1]/div"));
+			selenium.getText("//div[@class='aui-fieldset-content ']/div[1]/div"));
 	}
 }

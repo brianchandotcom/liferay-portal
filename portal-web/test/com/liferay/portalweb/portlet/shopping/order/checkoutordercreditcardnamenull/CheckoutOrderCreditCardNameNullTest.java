@@ -30,15 +30,28 @@ public class CheckoutOrderCreditCardNameNullTest extends BaseTestCase {
 				selenium.selectWindow("null");
 				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
-				selenium.waitForVisible("link=Shopping Test Page");
 				selenium.clickAt("link=Shopping Test Page",
 					RuntimeVariables.replace("Shopping Test Page"));
 				selenium.waitForPageToLoad("30000");
 				selenium.clickAt("link=Cart", RuntimeVariables.replace("Cart"));
 				selenium.waitForPageToLoad("30000");
-				assertEquals(RuntimeVariables.replace(
-						"Shopping Category Item Name\nShopping Category Item Description\n\nAvailability: In Stock\n\n\nPrice for 1 to 1 Items:$9.99"),
-					selenium.getText("//td[2]/a"));
+				assertTrue(selenium.isPartialText(
+						"//tr[@class='portlet-section-body results-row last']/td[2]",
+						"Shopping Category Item Name"));
+				assertTrue(selenium.isPartialText(
+						"//tr[@class='portlet-section-body results-row last']/td[2]",
+						"Shopping Category Item Description"));
+				assertTrue(selenium.isPartialText(
+						"//tr[@class='portlet-section-body results-row last']/td[2]",
+						"Availability:"));
+				assertEquals(RuntimeVariables.replace("In Stock"),
+					selenium.getText("//div[@class='portlet-msg-success']"));
+				assertTrue(selenium.isPartialText(
+						"//tr[@class='portlet-section-body results-row last']/td[2]",
+						"Price for 1 to 1 Items"));
+				assertTrue(selenium.isPartialText(
+						"//tr[@class='portlet-section-body results-row last']/td[2]",
+						"9.99"));
 				selenium.clickAt("//input[@value='Checkout']",
 					RuntimeVariables.replace("Checkout"));
 				selenium.waitForPageToLoad("30000");

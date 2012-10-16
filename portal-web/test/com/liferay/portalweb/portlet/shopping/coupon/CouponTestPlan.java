@@ -17,12 +17,12 @@ package com.liferay.portalweb.portlet.shopping.coupon;
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portlet.shopping.coupon.addcoupon.AddCouponTests;
 import com.liferay.portalweb.portlet.shopping.coupon.addcouponcodenumber.AddCouponCodeNumberTests;
-import com.liferay.portalweb.portlet.shopping.coupon.addcouponmultiple.AddCouponMultipleTests;
 import com.liferay.portalweb.portlet.shopping.coupon.addcouponnamenull.AddCouponNameNullTests;
 import com.liferay.portalweb.portlet.shopping.coupon.addcouponnamespace.AddCouponNameSpaceTests;
+import com.liferay.portalweb.portlet.shopping.coupon.addcoupons.AddCouponsTests;
 import com.liferay.portalweb.portlet.shopping.coupon.deletecoupon.DeleteCouponTests;
 import com.liferay.portalweb.portlet.shopping.coupon.editcoupon.EditCouponTests;
-import com.liferay.portalweb.portlet.shopping.coupon.searchcoupon.SearchCouponTests;
+import com.liferay.portalweb.portlet.shopping.coupon.searchcouponcode.SearchCouponCodeTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -37,12 +37,12 @@ public class CouponTestPlan extends BaseTestSuite {
 
 		testSuite.addTest(AddCouponTests.suite());
 		testSuite.addTest(AddCouponCodeNumberTests.suite());
-		testSuite.addTest(AddCouponMultipleTests.suite());
 		testSuite.addTest(AddCouponNameNullTests.suite());
 		testSuite.addTest(AddCouponNameSpaceTests.suite());
+		testSuite.addTest(AddCouponsTests.suite());
 		testSuite.addTest(DeleteCouponTests.suite());
 		testSuite.addTest(EditCouponTests.suite());
-		testSuite.addTest(SearchCouponTests.suite());
+		testSuite.addTest(SearchCouponCodeTests.suite());
 
 		return testSuite;
 	}

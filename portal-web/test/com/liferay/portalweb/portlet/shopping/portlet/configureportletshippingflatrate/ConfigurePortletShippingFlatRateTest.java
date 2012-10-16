@@ -26,33 +26,30 @@ public class ConfigurePortletShippingFlatRateTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Shopping Test Page");
-		selenium.clickAt("link=Shopping Test Page",
-			RuntimeVariables.replace("Shopping Test Page"));
-		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Cart", RuntimeVariables.replace("Cart"));
-		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Shipping $0.00"),
-			selenium.getText("//fieldset/div/div[2]/div"));
-		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Shopping Test Page");
 		selenium.clickAt("link=Shopping Test Page",
 			RuntimeVariables.replace("Shopping Test Page"));
 		selenium.waitForPageToLoad("30000");
 		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Options"),
-			selenium.getText("//strong/a"));
-		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
+			selenium.getText("//span[@title='Options']/ul/li/strong/a"));
+		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
+			RuntimeVariables.replace("Options"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]");
 		assertEquals(RuntimeVariables.replace("Configuration"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
-		selenium.waitForVisible("link=Shipping Calculation");
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]",
+			RuntimeVariables.replace("Configuration"));
+		selenium.waitForElementPresent(
+			"//iframe[contains(@id,'configurationIframeDialog')]");
+		selenium.selectFrame(
+			"//iframe[contains(@id,'configurationIframeDialog')]");
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/liferay/navigation_interaction.js')]");
 		selenium.clickAt("link=Shipping Calculation",
 			RuntimeVariables.replace("Shipping Calculation"));
-		selenium.waitForPageToLoad("30000");
+		selenium.waitForVisible("//select[@id='_86_shippingFormula']");
 		selenium.select("//select[@id='_86_shippingFormula']",
 			RuntimeVariables.replace("Flat Amount"));
 		selenium.type("//input[@id='_86_shipping0']",
@@ -71,14 +68,15 @@ public class ConfigurePortletShippingFlatRateTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"You have successfully updated the setup."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Shopping Test Page");
 		selenium.clickAt("link=Shopping Test Page",
 			RuntimeVariables.replace("Shopping Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Cart", RuntimeVariables.replace("Cart"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Shipping $2.49"),
-			selenium.getText("//fieldset/div/div[2]/div"));
+			selenium.getText(
+				"//fieldset[@class='aui-fieldset ']/div/div[2]/div"));
 	}
 }

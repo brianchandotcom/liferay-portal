@@ -16,6 +16,12 @@ package com.liferay.portalweb.portlet.shopping.order.checkoutordercreditcardnumb
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
+import com.liferay.portalweb.portlet.shopping.category.addcategory.AddCategoryTest;
+import com.liferay.portalweb.portlet.shopping.category.addcategory.TearDownShoppingCategoryTest;
+import com.liferay.portalweb.portlet.shopping.item.addcategoryitem.AddCategoryItemTest;
+import com.liferay.portalweb.portlet.shopping.item.addtoshoppingcartcategoryitem.AddToShoppingCartCategoryItemTest;
+import com.liferay.portalweb.portlet.shopping.item.addtoshoppingcartcategoryitem.TearDownCartTest;
+import com.liferay.portalweb.portlet.shopping.order.checkoutorder.TearDownCheckoutOrderTest;
 import com.liferay.portalweb.portlet.shopping.portlet.addportletshopping.AddPageShoppingTest;
 import com.liferay.portalweb.portlet.shopping.portlet.addportletshopping.AddPortletShoppingTest;
 
@@ -35,6 +41,8 @@ public class CheckoutOrderCreditCardNumberInvalidMasterCardTests
 		testSuite.addTestSuite(AddCategoryItemTest.class);
 		testSuite.addTestSuite(AddToShoppingCartCategoryItemTest.class);
 		testSuite.addTestSuite(CheckoutOrderCreditCardNumberInvalidMasterCardTest.class);
+		testSuite.addTestSuite(ViewCheckoutOrderCreditCardNumberInvalidMasterCardTest.class);
+		testSuite.addTestSuite(TearDownCheckoutOrderTest.class);
 		testSuite.addTestSuite(TearDownCartTest.class);
 		testSuite.addTestSuite(TearDownShoppingCategoryTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);

@@ -25,7 +25,6 @@ public class TearDownCartTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Shopping Test Page");
 		selenium.clickAt("link=Shopping Test Page",
 			RuntimeVariables.replace("Shopping Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -34,5 +33,10 @@ public class TearDownCartTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Empty Cart']",
 			RuntimeVariables.replace("Empty Cart"));
 		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace(
+				"Your request completed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertEquals(RuntimeVariables.replace("Your cart is empty."),
+			selenium.getText("//div[@class='portlet-msg-info']"));
 	}
 }

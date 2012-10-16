@@ -16,6 +16,7 @@ package com.liferay.portalweb.portlet.shopping.portlet.addportletshopping;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
+import com.liferay.portalweb.portlet.shopping.portlet.configureportletdefault.ConfigurePortletDefaultTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -28,6 +29,7 @@ public class AddPortletShoppingTests extends BaseTestSuite {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddPageShoppingTest.class);
 		testSuite.addTestSuite(AddPortletShoppingTest.class);
+		testSuite.addTestSuite(ConfigurePortletDefaultTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;

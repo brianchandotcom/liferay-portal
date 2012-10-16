@@ -25,38 +25,36 @@ public class SearchCategoryItemTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Shopping Test Page");
 		selenium.clickAt("link=Shopping Test Page",
 			RuntimeVariables.replace("Shopping Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Categories",
 			RuntimeVariables.replace("Categories"));
 		selenium.waitForPageToLoad("30000");
-		selenium.type("//input[@id='_34_keywords1']",
+		selenium.type("//input[@name='_34_keywords']",
 			RuntimeVariables.replace("Shopping Category Item Name"));
 		selenium.click(RuntimeVariables.replace(
 				"//input[@value='Search Categories']"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace(
-				"Shopping Category Item Name\nShopping Category Item Description\nShopping: Category Item Properties"),
-			selenium.getText("//td[2]/a"));
-		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Shopping Test Page");
-		selenium.clickAt("link=Shopping Test Page",
-			RuntimeVariables.replace("Shopping Test Page"));
-		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Categories",
-			RuntimeVariables.replace("Categories"));
-		selenium.waitForPageToLoad("30000");
-		selenium.type("//input[@id='_34_keywords1']",
+		assertTrue(selenium.isPartialText(
+				"//tr[@class='portlet-section-body results-row last']/td[2]/a",
+				"Shopping Category Item Name"));
+		assertTrue(selenium.isPartialText(
+				"//tr[@class='portlet-section-body results-row last']/td[2]/a",
+				"Shopping Category Item Description"));
+		assertTrue(selenium.isPartialText(
+				"//tr[@class='portlet-section-body results-row last']/td[2]/a",
+				"Shopping: Category Item Properties"));
+		selenium.type("//input[@name='_34_keywords']",
 			RuntimeVariables.replace("Shopping1 Category1 Item1 Name1"));
-		selenium.clickAt("//input[@value='Search Categories']",
+		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search Categories"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"No entries were found that matched the keywords: Shopping1 Category1 Item1 Name1."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
-		assertFalse(selenium.isTextPresent(
-				"Shopping Category Item Name\nShopping Category Item Description\nShopping: Category Item Properties"));
+		assertFalse(selenium.isTextPresent("Shopping Category Item Name"));
+		assertFalse(selenium.isTextPresent("Shopping Category Item Description"));
+		assertFalse(selenium.isTextPresent("Shopping: Category Item Properties"));
 	}
 }

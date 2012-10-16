@@ -16,6 +16,9 @@ package com.liferay.portalweb.portlet.shopping.item.movecategory1itemtocategory2
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
+import com.liferay.portalweb.portlet.shopping.category.addcategory.AddCategory1Test;
+import com.liferay.portalweb.portlet.shopping.category.addcategory.AddCategory2Test;
+import com.liferay.portalweb.portlet.shopping.category.addcategory.TearDownShoppingCategoryTest;
 import com.liferay.portalweb.portlet.shopping.portlet.addportletshopping.AddPageShoppingTest;
 import com.liferay.portalweb.portlet.shopping.portlet.addportletshopping.AddPortletShoppingTest;
 
@@ -34,6 +37,7 @@ public class MoveCategory1ItemToCategory2Tests extends BaseTestSuite {
 		testSuite.addTestSuite(AddCategory1ItemTest.class);
 		testSuite.addTestSuite(AddCategory2Test.class);
 		testSuite.addTestSuite(MoveCategory1ItemToCategory2Test.class);
+		testSuite.addTestSuite(ViewMoveCategory1ItemToCategory2Test.class);
 		testSuite.addTestSuite(TearDownShoppingCategoryTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 

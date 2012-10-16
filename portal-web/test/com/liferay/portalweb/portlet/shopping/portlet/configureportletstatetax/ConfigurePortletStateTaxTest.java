@@ -22,100 +22,39 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ConfigurePortletStateTaxTest extends BaseTestCase {
 	public void testConfigurePortletStateTax() throws Exception {
-		int label = 1;
-
-		while (label >= 1) {
-			switch (label) {
-			case 1:
-				selenium.selectWindow("null");
-				selenium.selectFrame("relative=top");
-				selenium.open("/web/guest/home/");
-				selenium.waitForVisible("link=Shopping Test Page");
-				selenium.clickAt("link=Shopping Test Page",
-					RuntimeVariables.replace("Shopping Test Page"));
-				selenium.waitForPageToLoad("30000");
-				Thread.sleep(5000);
-				assertEquals(RuntimeVariables.replace("Options"),
-					selenium.getText("//strong/a"));
-				selenium.clickAt("//strong/a",
-					RuntimeVariables.replace("Options"));
-				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
-				assertEquals(RuntimeVariables.replace("Configuration"),
-					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-				selenium.click(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
-				Thread.sleep(5000);
-				selenium.waitForVisible("//input[@id='_86_taxRate']");
-				selenium.type("//input[@id='_86_taxRate']",
-					RuntimeVariables.replace("7.250%"));
-				selenium.clickAt("//input[@value='Save']",
-					RuntimeVariables.replace("Save"));
-				selenium.waitForPageToLoad("30000");
-				assertEquals(RuntimeVariables.replace(
-						"You have successfully updated the setup."),
-					selenium.getText("//div[@class='portlet-msg-success']"));
-				selenium.open("/web/guest/home/");
-				selenium.waitForVisible("link=Shopping Test Page");
-				selenium.clickAt("link=Shopping Test Page",
-					RuntimeVariables.replace("Shopping Test Page"));
-				selenium.waitForPageToLoad("30000");
-				selenium.clickAt("link=Cart", RuntimeVariables.replace("Cart"));
-				selenium.waitForPageToLoad("30000");
-				assertEquals(RuntimeVariables.replace(
-						"Shopping Category Item Name\nShopping Category Item Description\n\nAvailability: In Stock\n\n\nPrice for 1 to 1 Items:$9.99"),
-					selenium.getText("//td[2]/a"));
-				selenium.clickAt("//input[@value='Checkout']",
-					RuntimeVariables.replace("Checkout"));
-				selenium.waitForPageToLoad("30000");
-				selenium.type("//input[@id='_34_billingStreet']",
-					RuntimeVariables.replace("1234 Sesame Street"));
-				selenium.type("//input[@id='_34_billingCity']",
-					RuntimeVariables.replace("Gotham City"));
-				selenium.select("//select[@id='_34_billingStateSel']",
-					RuntimeVariables.replace("California"));
-				selenium.type("//input[@id='_34_billingZip']",
-					RuntimeVariables.replace("90028"));
-				selenium.type("//input[@id='_34_billingCountry']",
-					RuntimeVariables.replace("USA"));
-				selenium.type("//input[@id='_34_billingPhone']",
-					RuntimeVariables.replace("626-589-1453"));
-
-				boolean sameAsBillingChecked = selenium.isChecked(
-						"_34_shipToBillingCheckbox");
-
-				if (sameAsBillingChecked) {
-					label = 2;
-
-					continue;
-				}
-
-				selenium.clickAt("//input[@id='_34_shipToBillingCheckbox']",
-					RuntimeVariables.replace(""));
-
-			case 2:
-				assertTrue(selenium.isChecked(
-						"//input[@id='_34_shipToBillingCheckbox']"));
-				selenium.select("//select[@id='_34_ccType']",
-					RuntimeVariables.replace("Visa"));
-				selenium.type("//input[@id='_34_ccNumber']",
-					RuntimeVariables.replace("4111111111111111"));
-				selenium.select("//select[@id='_34_ccExpYear']",
-					RuntimeVariables.replace("2014"));
-				selenium.type("//textarea[@id='_34_comments']",
-					RuntimeVariables.replace("Shopping Category Item Comments"));
-				selenium.clickAt("//input[@value='Continue']",
-					RuntimeVariables.replace("Continue"));
-				selenium.waitForPageToLoad("30000");
-				assertEquals(RuntimeVariables.replace("$0.72"),
-					selenium.getText("//table[3]/tbody/tr[2]/td[2]"));
-				assertEquals(RuntimeVariables.replace("$10.71"),
-					selenium.getText("//table[3]/tbody/tr[4]/td[2]"));
-
-			case 100:
-				label = -1;
-			}
-		}
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
+		selenium.open("/web/guest/home/");
+		selenium.clickAt("link=Shopping Test Page",
+			RuntimeVariables.replace("Shopping Test Page"));
+		selenium.waitForPageToLoad("30000");
+		Thread.sleep(5000);
+		assertEquals(RuntimeVariables.replace("Options"),
+			selenium.getText("//span[@title='Options']/ul/li/strong/a"));
+		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
+			RuntimeVariables.replace("Options"));
+		selenium.waitForVisible(
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]");
+		assertEquals(RuntimeVariables.replace("Configuration"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]",
+			RuntimeVariables.replace("Configuration"));
+		selenium.waitForElementPresent(
+			"//iframe[contains(@id,'configurationIframeDialog')]");
+		selenium.selectFrame(
+			"//iframe[contains(@id,'configurationIframeDialog')]");
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/liferay/navigation_interaction.js')]");
+		selenium.waitForVisible("//input[@id='_86_taxRate']");
+		selenium.type("//input[@id='_86_taxRate']",
+			RuntimeVariables.replace("7.250%"));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
+		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace(
+				"You have successfully updated the setup."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
+		selenium.selectFrame("relative=top");
 	}
 }

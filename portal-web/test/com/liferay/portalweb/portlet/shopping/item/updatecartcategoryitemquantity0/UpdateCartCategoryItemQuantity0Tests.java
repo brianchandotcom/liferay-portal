@@ -16,6 +16,11 @@ package com.liferay.portalweb.portlet.shopping.item.updatecartcategoryitemquanti
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
+import com.liferay.portalweb.portlet.shopping.category.addcategory.AddCategoryTest;
+import com.liferay.portalweb.portlet.shopping.category.addcategory.TearDownShoppingCategoryTest;
+import com.liferay.portalweb.portlet.shopping.item.addcategoryitem.AddCategoryItemTest;
+import com.liferay.portalweb.portlet.shopping.item.addtoshoppingcartcategoryitem.AddToShoppingCartCategoryItemTest;
+import com.liferay.portalweb.portlet.shopping.item.addtoshoppingcartcategoryitem.TearDownCartTest;
 import com.liferay.portalweb.portlet.shopping.portlet.addportletshopping.AddPageShoppingTest;
 import com.liferay.portalweb.portlet.shopping.portlet.addportletshopping.AddPortletShoppingTest;
 

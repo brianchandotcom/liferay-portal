@@ -15,6 +15,9 @@
 package com.liferay.portal.kernel.templateparser;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
+import com.liferay.portal.kernel.mobile.device.Device;
+import com.liferay.portal.kernel.mobile.device.UnknownDevice;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -25,6 +28,7 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
+import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 
 import java.io.IOException;
@@ -158,21 +162,49 @@ public abstract class BaseTemplateParser implements TemplateParser {
 	}
 
 	protected Company getCompany() throws Exception {
-		return _themeDisplay.getCompany();
+		if (_themeDisplay != null) {
+			return _themeDisplay.getCompany();
+		}
+
+		return CompanyLocalServiceUtil.getCompany(getCompanyId());
+	}
+
+	protected long getCompanyGroupId() {
+		if (_themeDisplay != null) {
+			return _themeDisplay.getCompanyGroupId();
+		}
+
+		return GetterUtil.getLong(_tokens.get("company_group_id"));
 	}
 
 	protected long getCompanyId() {
-		return _themeDisplay.getCompanyId();
+		if (_themeDisplay != null) {
+			return _themeDisplay.getCompanyId();
+		}
+
+		return GetterUtil.getLong(_tokens.get("company_id"));
+	}
+
+	protected Device getDevice() {
+		if (_themeDisplay != null) {
+			return _themeDisplay.getDevice();
+		}
+
+		return UnknownDevice.getInstance();
 	}
 
 	protected long getGroupId() {
-		return _themeDisplay.getScopeGroupId();
+		if (_themeDisplay != null) {
+			return _themeDisplay.getScopeGroupId();
+		}
+
+		return GetterUtil.getLong(_tokens.get("group_id"));
 	}
 
 	protected abstract TemplateContext getTemplateContext() throws Exception;
 
 	protected String getTemplateId() {
-		long companyGroupId = _themeDisplay.getCompanyGroupId();
+		long companyGroupId = getCompanyGroupId();
 
 		String templateId = null;
 
@@ -262,7 +294,7 @@ public abstract class BaseTemplateParser implements TemplateParser {
 
 		templateContext.put("company", getCompany());
 		templateContext.put("companyId", getCompanyId());
-		templateContext.put("device", _themeDisplay.getDevice());
+		templateContext.put("device", getDevice());
 		templateContext.put("groupId", getGroupId());
 
 		Locale locale = LocaleUtil.fromLanguageId(_languageId);

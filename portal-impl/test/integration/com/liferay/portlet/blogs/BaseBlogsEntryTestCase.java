@@ -6,10 +6,7 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.model.Group;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
@@ -18,10 +15,6 @@ import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.blogs.model.BlogsEntry;
-import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
-import com.liferay.portlet.blogs.service.BlogsEntryServiceUtil;
-
-import java.io.InputStream;
 
 /**
  * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
@@ -41,45 +34,6 @@ import java.io.InputStream;
  * @author Zsolt Berentey
  */
 public class BaseBlogsEntryTestCase {
-
-	protected BlogsEntry addBlogsEntry(Group group, boolean approved)
-		throws Exception {
-
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext();
-
-		serviceContext.setScopeGroupId(group.getGroupId());
-		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
-
-		String title = "Title";
-		String description = "Description";
-		String content = "Content";
-		int displayDateMonth = 1;
-		int displayDateDay = 1;
-		int displayDateYear = 2012;
-		int displayDateHour = 12;
-		int displayDateMinute = 0;
-		boolean allowPingbacks = true;
-		boolean allowTrackbacks = true;
-		String[] trackbacks = new String[0];
-		boolean smallImage = false;
-		String smallImageURL = StringPool.BLANK;
-		String smallImageFileName = StringPool.BLANK;
-		InputStream smallImageInputStream = null;
-
-		BlogsEntry blogsEntry = BlogsEntryServiceUtil.addEntry(
-			title, description, content, displayDateMonth, displayDateDay,
-			displayDateYear, displayDateHour, displayDateMinute, allowPingbacks,
-			allowTrackbacks, trackbacks, smallImage, smallImageURL,
-			smallImageFileName, smallImageInputStream, serviceContext);
-
-		if (approved) {
-			BlogsEntryLocalServiceUtil.updateStatus(
-				getUserId(), blogsEntry.getEntryId(),
-				WorkflowConstants.STATUS_APPROVED, serviceContext);
-		}
-
-		return blogsEntry;
-	}
 
 	protected AssetEntry fetchAssetEntry(long blogsEntryId) throws Exception {
 		return AssetEntryLocalServiceUtil.fetchEntry(

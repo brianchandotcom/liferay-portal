@@ -23,9 +23,9 @@ import com.liferay.portlet.bookmarks.model.BookmarksFolderConstants;
 /**
  * @author Brian Wing Shun Chan
  */
-public class BaseBookmarksServiceTestCase {
+public class BookmarksServiceDataTestUtil {
 
-	protected BookmarksEntry addEntry() throws Exception {
+	public static BookmarksEntry addEntry() throws Exception {
 		BookmarksFolder folder = addFolder();
 
 		String name = "Test Entry";
@@ -42,13 +42,15 @@ public class BaseBookmarksServiceTestCase {
 			serviceContext);
 	}
 
-	protected BookmarksFolder addFolder() throws Exception {
+	public static BookmarksFolder addFolder() throws Exception {
 		long parentFolderId = BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 
 		return addFolder(parentFolderId);
 	}
 
-	protected BookmarksFolder addFolder(long parentFolderId) throws Exception {
+	public static BookmarksFolder addFolder(long parentFolderId)
+		throws Exception {
+
 		String name = "Test Folder";
 		String description = "This is a test folder.";
 

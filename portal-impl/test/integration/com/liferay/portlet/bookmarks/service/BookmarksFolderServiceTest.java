@@ -45,30 +45,30 @@ import org.junit.runner.RunWith;
  */
 @ExecutionTestListeners(listeners = {EnvironmentExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
-public class BookmarksFolderServiceTest extends BaseBookmarksServiceTestCase {
+public class BookmarksFolderServiceTest {
 
 	@Test
 	public void testAddFolder() throws Exception {
-		addFolder();
+		BookmarksServiceDataTestUtil.addFolder();
 	}
 
 	@Test
 	public void testAddSubfolder() throws Exception {
-		BookmarksFolder folder = addFolder();
+		BookmarksFolder folder = BookmarksServiceDataTestUtil.addFolder();
 
-		addFolder(folder.getFolderId());
+		BookmarksServiceDataTestUtil.addFolder(folder.getFolderId());
 	}
 
 	@Test
 	public void testDeleteFolder() throws Exception {
-		BookmarksFolder folder = addFolder();
+		BookmarksFolder folder = BookmarksServiceDataTestUtil.addFolder();
 
 		BookmarksFolderServiceUtil.deleteFolder(folder.getFolderId());
 	}
 
 	@Test
 	public void testGetFolder() throws Exception {
-		BookmarksFolder folder = addFolder();
+		BookmarksFolder folder = BookmarksServiceDataTestUtil.addFolder();
 
 		BookmarksFolderServiceUtil.getFolder(folder.getFolderId());
 	}
@@ -83,7 +83,7 @@ public class BookmarksFolderServiceTest extends BaseBookmarksServiceTestCase {
 
 		LuceneHelperUtil.startup(TestPropsValues.getCompanyId());
 
-		BookmarksEntry entry = addEntry();
+		BookmarksEntry entry = BookmarksServiceDataTestUtil.addEntry();
 
 		Thread.sleep(1000 * TestPropsValues.JUNIT_DELAY_FACTOR);
 
@@ -144,10 +144,10 @@ public class BookmarksFolderServiceTest extends BaseBookmarksServiceTestCase {
 
 		Assert.assertEquals(query.toString(), 0, hits.getLength());
 
-		addEntry();
-		addEntry();
-		addEntry();
-		addEntry();
+		BookmarksServiceDataTestUtil.addEntry();
+		BookmarksServiceDataTestUtil.addEntry();
+		BookmarksServiceDataTestUtil.addEntry();
+		BookmarksServiceDataTestUtil.addEntry();
 
 		Thread.sleep(1000 * TestPropsValues.JUNIT_DELAY_FACTOR);
 

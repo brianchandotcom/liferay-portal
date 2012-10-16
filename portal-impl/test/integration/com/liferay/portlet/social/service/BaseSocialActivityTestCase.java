@@ -18,16 +18,10 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.GroupLocalServiceUtil;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
-import com.liferay.portlet.social.model.SocialActivity;
-import com.liferay.portlet.social.model.SocialActivityCounter;
-import com.liferay.portlet.social.model.SocialActivityCounterConstants;
-import com.liferay.portlet.social.model.SocialActivityLimit;
-import com.liferay.portlet.social.model.impl.SocialActivityImpl;
 import com.liferay.portlet.social.util.SocialConfigurationUtil;
 
 import java.io.InputStream;
@@ -75,96 +69,6 @@ public class BaseSocialActivityTestCase {
 
 			_group = null;
 		}
-	}
-
-	protected static void addAsset() throws Exception {
-		if (_assetEntry != null) {
-			AssetEntryLocalServiceUtil.deleteEntry(_assetEntry);
-		}
-
-		_assetEntry = AssetEntryLocalServiceUtil.updateEntry(
-			_creatorUser.getUserId(), _group.getGroupId(), TEST_MODEL, 1, null,
-			null);
-	}
-
-	protected static void addGroup() throws Exception {
-		_group = ServiceTestUtil.addGroup();
-	}
-
-	protected static void addUsers() throws Exception {
-		if (_actorUser != null) {
-			UserLocalServiceUtil.deleteUser(_actorUser);
-		}
-
-		_actorUser = ServiceTestUtil.addUser(
-			"actor", false, new long[] {_group.getGroupId()});
-
-		if (_creatorUser != null) {
-			UserLocalServiceUtil.deleteUser(_creatorUser);
-		}
-
-		_creatorUser = ServiceTestUtil.addUser(
-			"creator", false, new long[] {_group.getGroupId()});
-	}
-
-	protected SocialActivity addActivity(User user, int type) {
-		SocialActivity activity = new SocialActivityImpl();
-
-		activity.setAssetEntry(_assetEntry);
-		activity.setClassNameId(_assetEntry.getClassNameId());
-		activity.setClassPK(_assetEntry.getClassPK());
-		activity.setCompanyId(_group.getCompanyId());
-		activity.setGroupId(_group.getGroupId());
-		activity.setType(type);
-		activity.setUserId(user.getUserId());
-		activity.setUserUuid(user.getUuid());
-
-		return activity;
-	}
-
-	protected SocialActivityCounter getActivityCounter(
-			String name, Object owner)
-		throws Exception {
-
-		long classNameId = 0;
-		long classPk = 0;
-		int ownerType = SocialActivityCounterConstants.TYPE_ACTOR;
-
-		if (owner instanceof User) {
-			classNameId = _userClassNameId;
-			classPk = ((User)owner).getUserId();
-		}
-		else if (owner instanceof AssetEntry) {
-			classNameId = ((AssetEntry)owner).getClassNameId();
-			classPk = ((AssetEntry)owner).getClassPK();
-			ownerType = SocialActivityCounterConstants.TYPE_ASSET;
-		}
-
-		if (name.equals(SocialActivityCounterConstants.NAME_CONTRIBUTION)) {
-			ownerType = SocialActivityCounterConstants.TYPE_CREATOR;
-		}
-
-		return
-			SocialActivityCounterLocalServiceUtil.fetchLatestActivityCounter(
-				_group.getGroupId(), classNameId, classPk, name, ownerType);
-	}
-
-	protected SocialActivityLimit getActivityLimit(
-			User user, AssetEntry assetEntry, int activityType,
-			String activityCounterName)
-		throws Exception {
-
-		long classPK = assetEntry.getClassPK();
-
-		if (activityCounterName.equals(
-				SocialActivityCounterConstants.NAME_PARTICIPATION)) {
-
-			classPK = 0;
-		}
-
-		return SocialActivityLimitLocalServiceUtil.fetchActivityLimit(
-			_group.getGroupId(), user.getUserId(), _assetEntry.getClassNameId(),
-			classPK, activityType, activityCounterName);
 	}
 
 	protected static final String TEST_MODEL = "test-model";

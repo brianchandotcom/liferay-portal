@@ -58,7 +58,7 @@ public class BlogsEntryStatusTransitionTest extends BaseBlogsEntryTestCase {
 
 		group = ServiceTestUtil.addGroup();
 
-		blogsEntry = addBlogsEntry(group, false);
+		blogsEntry = BlogsServiceDataTestUtil.addBlogsEntry(group, false);
 	}
 
 	@After

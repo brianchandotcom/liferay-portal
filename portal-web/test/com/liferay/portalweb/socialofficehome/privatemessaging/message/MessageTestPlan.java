@@ -16,6 +16,7 @@ package com.liferay.portalweb.socialofficehome.privatemessaging.message;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.socialofficehome.privatemessaging.message.addpmmessage.AddPMMessageTests;
+import com.liferay.portalweb.socialofficehome.privatemessaging.message.addpmmessageapostrophequotation.AddPMMessageApostropheQuotationTests;
 import com.liferay.portalweb.socialofficehome.privatemessaging.message.addpmmessageattachment.AddPMMessageAttachmentTests;
 import com.liferay.portalweb.socialofficehome.privatemessaging.message.addpmmessagemultiple.AddPMMessageMultipleTests;
 import com.liferay.portalweb.socialofficehome.privatemessaging.message.backtomessagespmmessagedetails.BackToMessagesPMMessageDetailsTests;
@@ -46,6 +47,7 @@ public class MessageTestPlan extends BaseTestSuite {
 		TestSuite testSuite = new TestSuite();
 
 		testSuite.addTest(AddPMMessageTests.suite());
+		testSuite.addTest(AddPMMessageApostropheQuotationTests.suite());
 		testSuite.addTest(AddPMMessageAttachmentTests.suite());
 		testSuite.addTest(AddPMMessageMultipleTests.suite());
 		testSuite.addTest(BackToMessagesPMMessageDetailsTests.suite());

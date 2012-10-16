@@ -28,16 +28,14 @@ import java.nio.ByteBuffer;
 import java.util.Arrays;
 
 /**
- * Serializes data in a ClassLoader-aware manner using {@link
- * com.liferay.portal.kernel.io.BigEndianCodec}, a compact primary type format
- * comparable to {@link java.io.ObjectOutputStream}.
+ * Serializes data in a ClassLoader-aware manner.
  *
  * <p>
- * For primitive types, the Serializer performs better than {@link
- * java.io.ObjectOutputStream} and {@link java.io.DataOutputStream} because of
- * the compact format (no block header) it uses and its simple call stack.
- * BigEndianCodec is comparable to an OutputStream wrapper on top of {@link
- * java.io.Bits}.
+ * The Serializer can perform better than {@link java.io.ObjectOutputStream} and
+ * {@link java.io.DataOutputStream}, with respect to encoding primary types,
+ * because it uses a more compact format (containing no BlockHeader) and simpler
+ * call stack involving {@link BigEndianCodec}, as compared to using an
+ * OutputStream wrapper on top of {@link java.io.Bits}.
  * </p>
  *
  * <p>
@@ -54,8 +52,8 @@ import java.util.Arrays;
  * <p>
  * UTF encoding uses more CPU cycles to detect the unicode range for each char
  * and the resulting output is variable length, which increases the memory
- * burden when preparing to decode the buffer. Whereas, encoding each char to
- * two bytes allows for better CPU/memory performance. Although inefficient with
+ * burden when preparing the decoding buffer. Whereas, encoding each char to two
+ * bytes allows for better CPU/memory performance. Although inefficient with
  * compression rates in comparison to UTF encoding, the char to two byte
  * approach significantly simplifies the encoder's logic and the output length
  * is predictably based on the length of the String, so the decoder can manage
@@ -75,19 +73,20 @@ import java.util.Arrays;
  * also with one byte type headers. Objects are serialized by a new
  * ObjectOutputStream, so no reference handler can be used across Object
  * serialization. This is done intentionally to isolate each object. The
- * Serializer is highly optimized for serializing primary types, but is not good
- * as good as ObjectOutputStream for serializing complex objects.
+ * Serializer is highly optimized for serializing primary types, but is not as
+ * good as ObjectOutputStream for serializing complex objects.
  * </p>
  *
  * <p>
- * At the beginning of object serialization, the Serializer maps servlet context
- * names to/from the ServletContext's ClassLoader (see {@link
- * com.liferay.portal.kernel.util.ClassLoaderPool}), so the {@link
- * com.liferay.portal.kernel.io.Deserializer} can determine the right
- * ClassLoader to deserialize each Object. ObjectOutputStream and
- * ObjectInputStream lack this important feature, making Serializer and
- * Deserializer better choices for ClassLoader-aware Object
- * serialization/deserialization, especially when a plugins are involved.
+ * On object serialization, the Serializer uses the {@link
+ * com.liferay.portal.kernel.util.ClassLoaderPool} to look up the servlet
+ * context name corresponding to the object's ClassLoader. The servlet context
+ * name is written to the serialization stream. On object deserialization, the
+ * {@link Deserializer} uses the ClassLoaderPool to look up the ClassLoader
+ * corresponding to the servlet context name read from the deserialization
+ * stream. ObjectOutputStream and ObjectInputStream lack these features, making
+ * Serializer and Deserializer better choices for ClassLoader-aware Object
+ * serialization/deserialization, especially when plugins are involved.
  * </p>
  *
  * @author Shuyang Zhou
@@ -348,11 +347,14 @@ public class Serializer {
 	 * Technically, we should soften each pooled buffer individually to achieve
 	 * the best garbage collection (GC) interaction. However, that increases
 	 * complexity of pooled buffer access and also burdens the GC's {@link
-	 * java.lang.ref.SoftReference} process, hurting performance. This method
-	 * softens the localized {@link BufferQueue} for threads that do serializing
-	 * often. Furthermore, its BufferQueue stays valid for threads that do
-	 * serializing occasionally. After this method completes, its BufferQueue is
-	 * released by the GC.
+	 * java.lang.ref.SoftReference} process, hurting performance.
+	 * </p>
+	 *
+	 * <p>
+	 * Here, the entire ThreadLocal BufferQueue is softened. For threads that do
+	 * serializing often, its BufferQueue will most likely stay valid. For
+	 * threads that do serializing only occasionally, its BufferQueue will most
+	 * likely be released by GC.
 	 * </p>
 	 */
 	protected static final ThreadLocal<BufferQueue> bufferQueueThreadLocal =

@@ -26,9 +26,8 @@ import java.io.Serializable;
 import java.nio.ByteBuffer;
 
 /**
- * Deserializes data in a ClassLoader-aware manner using {@link
- * com.liferay.portal.kernel.io.BigEndianCodec}. This class is the counterpart
- * of {@link com.liferay.portal.kernel.io.Serializer} for deserialization.
+ * Deserializes data in a ClassLoader-aware manner. This class is the
+ * counterpart of {@link Serializer} for deserialization.
  *
  * @author Shuyang Zhou
  * @see    Serializer

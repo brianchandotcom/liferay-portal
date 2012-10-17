@@ -25,18 +25,19 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Base64;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
+import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.util.Encryptor;
 
@@ -204,95 +205,39 @@ public class LicenseUtil {
 
 		Set<String> macAddresses = new HashSet<String>();
 
-		try {
-			String osName = System.getProperty("os.name");
+		String osName = System.getProperty("os.name");
 
-			if (osName == null) {
-				return null;
-			}
+		String executable = null;
+		String arguments = null;
 
-			Process process = null;
-
-			Runtime runtime = Runtime.getRuntime();
-
-			Pattern macAddressPattern = _macAddressPattern1;
-
-			if (StringUtil.startsWith(osName, "win")) {
-				process = runtime.exec(new String[] {"ipconfig", "/all"}, null);
+		if (StringUtil.startsWith(osName, "win")) {
+			executable = "ipconfig";
+			arguments = "/all";
+		}
+		else {
+			if (StringUtil.startsWith(osName, "aix")) {
+				executable = "netstat";
+				arguments = "-ina";
 			}
 			else {
-				String executable = null;
-				String arguments = null;
-
-				if (StringUtil.startsWith(osName, "aix")) {
-					macAddressPattern = _macAddressPattern2;
-
-					executable = "netstat";
-					arguments = "-ina";
-				}
-				else {
-					executable = "ifconfig";
-					arguments = "-a";
-				}
-
-				File sbinDir = new File("/sbin", executable);
-
-				if (sbinDir.exists()) {
-					executable = "/sbin/".concat(executable);
-				}
-
-				process = runtime.exec(new String[] {executable, arguments});
+				executable = "ifconfig";
+				arguments = "-a";
 			}
 
-			BufferedReader bufferedReader = new BufferedReader(
-				new InputStreamReader(process.getInputStream()), 128);
+			File sbinDir = new File("/sbin", executable);
 
-			String line = null;
-
-			while ((line = bufferedReader.readLine()) != null) {
-				Matcher matcher = macAddressPattern.matcher(line);
-
-				if (!matcher.find()) {
-					continue;
-				}
-
-				String macAddress = matcher.group(1);
-
-				if (Validator.isNull(macAddress)) {
-					continue;
-				}
-
-				macAddress = macAddress.toLowerCase();
-
-				if (macAddressPattern == _macAddressPattern1) {
-					macAddress = macAddress.replace('-', ':');
-				}
-				else if (macAddressPattern == _macAddressPattern2) {
-					macAddress = macAddress.replace('.', ':');
-
-					StringBuilder sb = new StringBuilder(17);
-
-					sb.append(macAddress);
-
-					for (int i = 1; i < 5; ++i) {
-						int pos = (i * 3) - 1;
-
-						if (sb.charAt(pos) != ':') {
-							sb.insert((i - 1) * 3, '0');
-						}
-					}
-
-					if (sb.length() < 17) {
-						sb.insert(15, '0');
-					}
-
-					macAddress = sb.toString();
-				}
-
-				macAddresses.add(macAddress);
+			if (sbinDir.exists()) {
+				executable = "/sbin/".concat(executable);
 			}
+		}
 
-			bufferedReader.close();
+		try {
+			Runtime runtime = Runtime.getRuntime();
+
+			Process process = runtime.exec(
+				new String[] {executable, arguments});
+
+			macAddresses = getMacAddresses(osName, process.getInputStream());
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -301,6 +246,59 @@ public class LicenseUtil {
 		_macAddresses = macAddresses;
 
 		return new HashSet<String>(macAddresses);
+	}
+
+	public static Set<String> getMacAddresses(
+			String osName, InputStream processInputStream)
+		throws Exception {
+
+		Pattern macAddressPattern = _macAddressPattern1;
+
+		if (StringUtil.startsWith(osName, "aix")) {
+			macAddressPattern = _macAddressPattern2;
+		}
+
+		Set<String> macAddresses = new HashSet<String>();
+
+		String processOutput = StringUtil.read(processInputStream);
+
+		String[] lines = StringUtil.split(processOutput, CharPool.NEW_LINE);
+
+		for (String line : lines) {
+			Matcher matcher = macAddressPattern.matcher(line);
+
+			if (!matcher.find()) {
+				continue;
+			}
+
+			String macAddress = matcher.group(1);
+
+			macAddress = macAddress.toLowerCase();
+			macAddress = macAddress.replace(CharPool.DASH, CharPool.COLON);
+			macAddress = macAddress.replace(CharPool.PERIOD, CharPool.COLON);
+
+			StringBuilder sb = new StringBuilder(17);
+
+			sb.append(macAddress);
+
+			for (int i = 1; i < 5; ++i) {
+				int pos = (i * 3) - 1;
+
+				if (sb.charAt(pos) != CharPool.COLON) {
+					sb.insert((i - 1) * 3, CharPool.NUMBER_0);
+				}
+			}
+
+			if (sb.length() < 17) {
+				sb.insert(15, CharPool.NUMBER_0);
+			}
+
+			macAddress = sb.toString();
+
+			macAddresses.add(macAddress);
+		}
+
+		return macAddresses;
 	}
 
 	public static byte[] getServerIdBytes() throws Exception {
@@ -639,7 +637,7 @@ public class LicenseUtil {
 	private static void _initKeys() {
 		ClassLoader classLoader = PACLClassLoaderUtil.getPortalClassLoader();
 
-		if (_encryptedSymmetricKey != null) {
+		if ((classLoader == null) || (_encryptedSymmetricKey != null)) {
 			return;
 		}
 

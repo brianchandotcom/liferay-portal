@@ -367,13 +367,13 @@
 .aui-tree-pages {
 	.aui-tree-icon {
 		background: transparent url() no-repeat 50% 50%;
-		cursor: pointer;
+		cursor: move;
 		height: 18px;
 		width: 18px;
 	}
 
 	.aui-tree-node-selected {
-		.aui-tree-label a, .aui-tree-icon {
+		.aui-tree-label a {
 			cursor: move;
 		}
 	}

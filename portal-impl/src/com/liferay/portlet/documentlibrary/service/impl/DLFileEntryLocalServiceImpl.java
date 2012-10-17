@@ -513,8 +513,7 @@ public class DLFileEntryLocalServiceImpl
 					dlFileVersion.getSize(), WorkflowConstants.STATUS_DRAFT,
 					serviceContext);
 
-				// LPS-28886 Copy ExpandoRow modified date to keep file version
-				// when there's no modifications
+				// See LPS-28886
 
 				copyExpandoRowModifiedDate(
 					dlFileEntry.getCompanyId(), oldDLFileVersionId,

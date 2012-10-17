@@ -55,12 +55,12 @@ if (Validator.isNull(ParamUtil.getString(request, "userMappingScreenName")) ||
 	return;
 }
 
-String userFilter = ParamUtil.getString(request, "importUserSearchFilter");
-boolean passed = LDAPSettingsUtil.validateLDAPFilter(userFilter);
-if (passed == false) {
+String filter = ParamUtil.getString(request, "importUserSearchFilter");
+
+if (!LDAPSettingsUtil.validateFilter(filter)) {
 %>
 
-	<liferay-ui:message key="ldap-filter-has-invalid-syntax" />
+	<liferay-ui:message key="the-user-import-search-filter-has-invalid-syntax" />
 
 <%
 	return;

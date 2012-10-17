@@ -18,10 +18,12 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.log.LogUtil;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 
@@ -35,110 +37,63 @@ import java.util.regex.Pattern;
  */
 public class LDAPSettingsUtil {
 
-	public static boolean validateLDAPFilter(String filter) {
+	public static boolean validateFilter(String filter) {
+		if (Validator.isNull(filter) || filter.equals(StringPool.STAR)) {
+			return true;
+		}
 
-		/* Rules here are based upon:
-		 * [1] http://www.ietf.org/rfc/rfc2251.txt
-		 * [2] http://www.ietf.org/rfc/rfc2252.txt
-		 * [3] http://www.ietf.org/rfc/rfc2253.txt
-		 * [4] http://www.ietf.org/rfc/rfc2254.txt
-		 * [5] http://www.ietf.org/rfc/rfc4515.txt
-		 */
-		String s = null;
-		boolean retVal = true;
-		if (filter != null) {
-			s = new String(filter);
-			s = s.trim();
+		filter = StringUtil.replace(filter, StringPool.SPACE, StringPool.BLANK);
 
-			/* There are two special values which
-		     * may be used: an empty list with no attributes, and the attribute
-		     * description string "*".  Both of these signify that all user
-		     * attributes are to be returned.
-		     */
-			if (s.equals("") || s.equals("*")) {
-				s = null;
+		if (!filter.startsWith(StringPool.OPEN_PARENTHESIS) ||
+			!filter.endsWith(StringPool.CLOSE_PARENTHESIS)) {
+
+			return false;
+		}
+
+		int count = 0;
+
+		for (int i = 0; i < filter.length(); i++) {
+			char c = filter.charAt(i);
+
+			if (c == CharPool.CLOSE_PARENTHESIS) {
+				count--;
 			}
-			else {
-				//Whitespace is removed
-				s = s.replaceAll("\\s+", "");
-				s = s.trim();
+			else if (c == CharPool.OPEN_PARENTHESIS) {
+				count++;
+			}
+
+			if (count < 0) {
+				return false;
 			}
 		}
 
-		// Must have an opening and closing parenthesis
-
-		if (retVal == true) {
-			if (s != null) {
-				if ( !(s.startsWith("(")) || ( !(s.endsWith(")")))) {
-					retVal = false;
-				}
-			}
+		if (count > 0) {
+			return false;
 		}
 
-		// Balance left and right parenthesis
+		// Cannot have two filter types in a sequence
 
-		if (retVal == true) {
-			if (s != null) {
-				int i = 0;
-				for (int j = 0; j < s.length(); j++) {
-					if (s.charAt(j) == '(') {
-						i++;
-					}
-					else if (s.charAt(j) == ')') {
-						i--;
-					}
-
-					if (i < 0) {
-						retVal = false;
-					}
-				}
-
-				if (i != 0) {
-					retVal = false;
-				}
-			}
+		if (Pattern.matches(".*[~<>]*=[~<>]*=.*", filter)) {
+			return false;
 		}
 
-		// Cannot have two "filtertypes" in sequence
+		// Cannot have a filter type after an opening parenthesis
 
-		if (retVal == true) {
-			if (s != null) {
-				boolean b = Pattern.matches(".*[~<>]*=[~<>]*=.*", s);
-				retVal = !b;
-			}
+		if (Pattern.matches("\\([~<>]*=.*", filter)) {
+			return false;
 		}
 
-		// Cannot have a "filtertype" after an opening parenthesis
+		// Cannot have an attribute without a filter type or extensible
 
-		if (retVal == true) {
-			if (s != null) {
-				boolean b = Pattern.matches("\\([~<>]*=.*", s);
-				retVal = !b;
-			}
+		if (Pattern.matches("\\([^~<>=]*\\)", filter)) {
+			return false;
 		}
 
-		// Cannot have a "attribute" without a "filtertype" or "extensible"
-
-		//<item> ::= <simple> | <present> | <substring>
-		//<simple> ::= <attr> <filtertype> <value>
-		//<present> ::= <attr> '=*'
-		//<substring> ::= <attr> '=' <initial> <any> <final>
-
-		if (retVal == true) {
-			if (s != null) {
-				boolean b = Pattern.matches("\\([^~<>=]*\\)", s);
-				retVal = !b;
-			}
+		if (Pattern.matches(".*[^~<>=]*[~<>]*=\\)", filter)) {
+			return false;
 		}
 
-		if (retVal == true) {
-			if (s != null) {
-				boolean b = Pattern.matches(".*[^~<>=]*[~<>]*=\\)", s);
-				retVal = !b;
-			}
-		}
-
-		return retVal;
+		return true;
 	}
 
 	public static String getAuthSearchFilter(
@@ -164,8 +119,8 @@ public class LDAPSettingsUtil {
 				String.valueOf(companyId), emailAddress, screenName, userId
 			});
 
-		if (false == validateLDAPFilter(filter)) {
-			throw new SystemException("Invalid LDAP AuthSearch Filter Syntax");
+		if (!validateFilter(filter)) {
+			throw new SystemException("Invalid filter syntax");
 		}
 
 		if (_log.isDebugEnabled()) {

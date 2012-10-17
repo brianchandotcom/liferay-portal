@@ -205,9 +205,11 @@ public class EditLDAPServerAction extends PortletAction {
 		validateLDAPServerName(
 			themeDisplay.getCompanyId(), ldapServerId, properties);
 
-		String filter = ParamUtil.getString(actionRequest, "importUserSearchFilter");
-		if (false == LDAPSettingsUtil.validateLDAPFilter(filter)) {
-			throw new SystemException("Invalid LDAP UserSearch Filter Syntax");
+		String filter = ParamUtil.getString(
+			actionRequest, "importUserSearchFilter");
+
+		if (!LDAPSettingsUtil.validateFilter(filter)) {
+			throw new SystemException("Invalid filter syntax");
 		}
 
 		if (ldapServerId <= 0) {

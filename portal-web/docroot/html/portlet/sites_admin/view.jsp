@@ -65,7 +65,7 @@ String portletURLString = portletURL.toString();
 			<liferay-ui:message key="you-cannot-delete-this-site-because-you-are-currently-accessing-this-site" />
 		</c:if>
 
-		<c:if test="<%= rge.getType() == RequiredGroupException.PARENT_GROUP%>">
+		<c:if test="<%= rge.getType() == RequiredGroupException.PARENT_GROUP %>">
 			<liferay-ui:message key="you-cannot-delete-sites-that-have-subsites" />
 		</c:if>
 

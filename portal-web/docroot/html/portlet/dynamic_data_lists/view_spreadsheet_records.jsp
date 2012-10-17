@@ -58,11 +58,11 @@ DDMStructure ddmStructure = recordSet.getDDMStructure();
 
 <aui:script use="liferay-portlet-dynamic-data-lists">
 	var structure = <%= DDMXSDUtil.getJSONArray(ddmStructure.getXsd()) %>;
-	var columnset = Liferay.SpreadSheet.buildDataTableColumnset(<%= DDLUtil.getRecordSetJSONArray(recordSet) %>, structure, <%= editable %>);
+	var columns = Liferay.SpreadSheet.buildDataTableColumns(<%= DDLUtil.getRecordSetJSONArray(recordSet) %>, structure, <%= editable %>);
 
-	var ignoreEmptyRecordsNumericSort = function(recA, recB, field, desc) {
-		var a = recA.getValue(field);
-		var b = recB.getValue(field);
+	var ignoreEmptyRecordsNumericSort = function(recA, recB, desc, field) {
+		var a = recA.get(field);
+		var b = recB.get(field);
 
 		return A.ArraySort.compareIgnoreWhiteSpace(
 			a,
@@ -86,9 +86,9 @@ DDMStructure ddmStructure = recordSet.getDDMStructure();
 		);
 	};
 
-	var ignoreEmptyRecordsStringSort = function(recA, recB, field, desc) {
-		var a = recA.getValue(field);
-		var b = recB.getValue(field);
+	var ignoreEmptyRecordsStringSort = function(recA, recB, desc, field) {
+		var a = recA.get(field);
+		var b = recB.get(field);
 
 		return A.ArraySort.compareIgnoreWhiteSpace(a, b, desc);
 	};
@@ -100,18 +100,20 @@ DDMStructure ddmStructure = recordSet.getDDMStructure();
 	};
 
 	var keys = A.Array.map(
-		columnset,
+		columns,
 		function(item, index, collection) {
+			var key = item.key;
+
 			if (!item.sortFn) {
 				if (numericData[item.dataType]) {
-					item.sortFn = ignoreEmptyRecordsNumericSort;
+					item.sortFn = A.rbind(ignoreEmptyRecordsNumericSort, item, key);
 				}
 				else {
-					item.sortFn = ignoreEmptyRecordsStringSort;
+					item.sortFn = A.rbind(ignoreEmptyRecordsStringSort, item, key);
 				}
 			}
 
-			return item.key;
+			return key;
 		}
 	);
 
@@ -133,37 +135,35 @@ DDMStructure ddmStructure = recordSet.getDDMStructure();
 		}
 	);
 
-	var recordset = Liferay.SpreadSheet.buildEmptyRecords(<%= Math.max(recordSet.getMinDisplayRows(), records.size()) %>, keys);
+	var data = Liferay.SpreadSheet.buildEmptyRecords(<%= Math.max(recordSet.getMinDisplayRows(), records.size()) %>, keys);
 
 	A.Array.each(
 		records,
 		function(item, index, collection) {
-			recordset.splice(item.displayIndex, 0, item);
+			data.splice(item.displayIndex, 0, item);
 		}
 	);
 
 	var spreadSheet = new Liferay.SpreadSheet(
 		{
 			boundingBox: '#<portlet:namespace />dataTable',
-			columnset: columnset,
+			columns: columns,
 			contentBox: '#<portlet:namespace />dataTableContent',
+			data: data,
 			editEvent: 'dblclick',
-			recordset: recordset,
+			plugins: [
+				{
+					fn: A.Plugin.DataTableHighlight,
+					cfg: {
+						highlightRange: false
+					}
+				}
+			],
 			recordsetId: <%= recordSet.getRecordSetId() %>,
-			structure: structure
+			structure: structure,
+			width: '100%'
 		}
-	).plug(
-		A.Plugin.DataTableScroll,
-		{
-			height: 700,
-			width: 900
-		}
-	).plug(
-		A.Plugin.DataTableSelection,
-		{
-			selectEvent: 'mousedown'
-		}
-	).plug(A.Plugin.DataTableSort);
+	);
 
 	spreadSheet.render('#<portlet:namespace />spreadsheet');
 
@@ -177,11 +177,11 @@ DDMStructure ddmStructure = recordSet.getDDMStructure();
 			function(event) {
 				var numberOfRecords = parseInt(numberOfRecordsNode.val(), 10) || 0;
 
-				var recordset = spreadSheet.get('recordset');
+				var data = spreadSheet.get('data');
 
 				spreadSheet.addEmptyRows(numberOfRecords);
 
-				spreadSheet.updateMinDisplayRows(recordset.getLength());
+				spreadSheet.updateMinDisplayRows(data.size());
 			}
 		);
 	</c:if>

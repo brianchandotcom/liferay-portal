@@ -80,7 +80,7 @@ public class DLStoreImpl implements DLStore {
 
 		validate(fileName, validateFileExtension, bytes);
 
-		if (!PropsValues.DL_STORE_ANTIVIRUS_ENABLED) {
+		if (PropsValues.DL_STORE_ANTIVIRUS_ENABLED) {
 			AntivirusScannerUtil.scan(bytes);
 		}
 
@@ -450,7 +450,7 @@ public class DLStoreImpl implements DLStore {
 			fileName, fileExtension, sourceFileName, validateFileExtension,
 			file);
 
-		if (!PropsValues.DL_STORE_ANTIVIRUS_ENABLED) {
+		if (PropsValues.DL_STORE_ANTIVIRUS_ENABLED) {
 			AntivirusScannerUtil.scan(file);
 		}
 

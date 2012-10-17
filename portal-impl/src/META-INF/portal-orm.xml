@@ -2289,6 +2289,7 @@
 			</basic>
 			<basic name="language" />
 			<basic name="script" />
+			<basic name="cacheable" />
 			<transient name="className" />
 			<transient name="descriptionCurrentLanguageId" />
 			<transient name="descriptionMap" />

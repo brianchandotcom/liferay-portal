@@ -38,7 +38,7 @@ public class DDMTemplateCacheModel implements CacheModel<DDMTemplate>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(35);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -74,6 +74,8 @@ public class DDMTemplateCacheModel implements CacheModel<DDMTemplate>,
 		sb.append(language);
 		sb.append(", script=");
 		sb.append(script);
+		sb.append(", cacheable=");
+		sb.append(cacheable);
 		sb.append("}");
 
 		return sb.toString();
@@ -167,6 +169,8 @@ public class DDMTemplateCacheModel implements CacheModel<DDMTemplate>,
 			ddmTemplateImpl.setScript(script);
 		}
 
+		ddmTemplateImpl.setCacheable(cacheable);
+
 		ddmTemplateImpl.resetOriginalValues();
 
 		return ddmTemplateImpl;
@@ -190,6 +194,7 @@ public class DDMTemplateCacheModel implements CacheModel<DDMTemplate>,
 		mode = objectInput.readUTF();
 		language = objectInput.readUTF();
 		script = objectInput.readUTF();
+		cacheable = objectInput.readBoolean();
 	}
 
 	public void writeExternal(ObjectOutput objectOutput)
@@ -266,6 +271,8 @@ public class DDMTemplateCacheModel implements CacheModel<DDMTemplate>,
 		else {
 			objectOutput.writeUTF(script);
 		}
+
+		objectOutput.writeBoolean(cacheable);
 	}
 
 	public String uuid;
@@ -285,4 +292,5 @@ public class DDMTemplateCacheModel implements CacheModel<DDMTemplate>,
 	public String mode;
 	public String language;
 	public String script;
+	public boolean cacheable;
 }

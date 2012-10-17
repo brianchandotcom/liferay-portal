@@ -45,7 +45,8 @@ public class DDMTemplateLocalServiceImpl
 			long userId, long groupId, long classNameId, long classPK,
 			String templateKey, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, String type, String mode,
-			String language, String script, ServiceContext serviceContext)
+			String language, String script, boolean cacheable,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		// Template
@@ -79,6 +80,7 @@ public class DDMTemplateLocalServiceImpl
 		template.setMode(mode);
 		template.setLanguage(language);
 		template.setScript(script);
+		template.setCacheable(cacheable);
 
 		ddmTemplatePersistence.update(template, false);
 
@@ -139,7 +141,8 @@ public class DDMTemplateLocalServiceImpl
 				newClassPK, null, oldTemplate.getNameMap(),
 				oldTemplate.getDescriptionMap(), oldTemplate.getType(),
 				oldTemplate.getMode(), oldTemplate.getLanguage(),
-				oldTemplate.getScript(), serviceContext);
+				oldTemplate.getScript(), oldTemplate.isCacheable(),
+				serviceContext);
 
 			newTemplates.add(newTemplate);
 		}
@@ -321,7 +324,8 @@ public class DDMTemplateLocalServiceImpl
 	public DDMTemplate updateTemplate(
 			long templateId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, String type, String mode,
-			String language, String script, ServiceContext serviceContext)
+			String language, String script, boolean cacheable,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		validate(nameMap, script);
@@ -336,6 +340,7 @@ public class DDMTemplateLocalServiceImpl
 		template.setMode(mode);
 		template.setLanguage(language);
 		template.setScript(script);
+		template.setCacheable(cacheable);
 
 		ddmTemplatePersistence.update(template, false);
 

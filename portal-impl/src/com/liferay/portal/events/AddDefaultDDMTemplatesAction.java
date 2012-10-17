@@ -30,6 +30,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
+import com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.util.ContentUtil;
 
@@ -56,7 +57,8 @@ public class AddDefaultDDMTemplatesAction extends SimpleAction {
 	protected void addDDMTemplate(
 			long userId, long groupId, long classNameId, String templateKey,
 			String name, String description, String language,
-			String scriptFileName, ServiceContext serviceContext)
+			String scriptFileName, boolean cacheable,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		DDMTemplate ddmTemplate = DDMTemplateLocalServiceUtil.fetchTemplate(
@@ -80,7 +82,8 @@ public class AddDefaultDDMTemplatesAction extends SimpleAction {
 
 		DDMTemplateLocalServiceUtil.addTemplate(
 			userId, groupId, classNameId, 0, templateKey, nameMap,
-			descriptionMap, "list", null, language, script, serviceContext);
+			descriptionMap, DDMTemplateConstants.TEMPLATE_TYPE_LIST, null,
+			language, script, cacheable, serviceContext);
 	}
 
 	protected void addDDMTemplates(
@@ -117,10 +120,13 @@ public class AddDefaultDDMTemplatesAction extends SimpleAction {
 				String language = templateElement.elementText("language");
 				String scriptFileName = templateElement.elementText(
 					"script-file");
+				boolean cacheable = GetterUtil.getBoolean(
+					templateElement.elementText("cacheable"));
 
 				addDDMTemplate(
 					userId, groupId, classNameId, templateKey, name,
-					description, language, scriptFileName, serviceContext);
+					description, language, scriptFileName, cacheable,
+					serviceContext);
 			}
 		}
 	}

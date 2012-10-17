@@ -179,7 +179,7 @@ public class DDMWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 					template.getTemplateId(), template.getNameMap(),
 					template.getDescriptionMap(), template.getType(),
 					template.getMode(), template.getLanguage(), script,
-					new ServiceContext());
+					template.isCacheable(), new ServiceContext());
 
 				return HttpServletResponse.SC_CREATED;
 			}

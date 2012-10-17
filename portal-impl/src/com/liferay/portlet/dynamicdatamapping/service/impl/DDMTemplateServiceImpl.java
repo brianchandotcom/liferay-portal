@@ -41,7 +41,7 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 			long groupId, long classNameId, long classPK, String templateKey,
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
 			String type, String mode, String language, String script,
-			ServiceContext serviceContext)
+			boolean cacheable, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		String ddmResource = ParamUtil.getString(serviceContext, "ddmResource");
@@ -64,7 +64,8 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 
 		return ddmTemplateLocalService.addTemplate(
 			getUserId(), groupId, classNameId, classPK, templateKey, nameMap,
-			descriptionMap, type, mode, language, script, serviceContext);
+			descriptionMap, type, mode, language, script, cacheable,
+			serviceContext);
 	}
 
 	public List<DDMTemplate> copyTemplates(
@@ -224,7 +225,8 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	public DDMTemplate updateTemplate(
 			long templateId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, String type, String mode,
-			String language, String script, ServiceContext serviceContext)
+			String language, String script, boolean cacheable,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		DDMTemplatePermission.check(
@@ -232,7 +234,7 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 
 		return ddmTemplateLocalService.updateTemplate(
 			templateId, nameMap, descriptionMap, type, mode, language, script,
-			serviceContext);
+			cacheable, serviceContext);
 	}
 
 	private static final String _DDL_CLASS_NAME =

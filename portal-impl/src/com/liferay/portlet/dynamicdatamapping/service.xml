@@ -161,6 +161,7 @@
 		<column name="mode" type="String" />
 		<column name="language" type="String" />
 		<column name="script" type="String" />
+		<column name="cacheable" type="boolean" />
 
 		<!-- Finder methods -->
 

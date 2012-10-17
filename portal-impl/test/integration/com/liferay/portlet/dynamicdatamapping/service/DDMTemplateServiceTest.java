@@ -223,7 +223,7 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 			template.getTemplateId(), template.getNameMap(),
 			template.getDescriptionMap(), template.getType(),
 			template.getMode(), template.getLanguage(), template.getScript(),
-			ServiceTestUtil.getServiceContext());
+			template.isCacheable(), ServiceTestUtil.getServiceContext());
 	}
 
 	private long _classNameId = PortalUtil.getClassNameId(AssetEntry.class);

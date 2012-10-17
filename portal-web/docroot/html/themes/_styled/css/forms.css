@@ -1,3 +1,5 @@
+@import "compass";
+
 @mixin input-field-default {
 	background-image: url(../images/forms/input_shadow.png);
 	background-repeat: no-repeat;
@@ -29,7 +31,7 @@
 	background: #D4D4D4 url(../images/portlet/header_bg.png) repeat-x 0 0;
 	border-color: #C8C9CA #9E9E9E #9E9E9E #C8C9CA;
 	color: #555;
-	opacity: 0.5;
+	@include opacity(0.5);
 }
 
 @mixin button-hover {
@@ -201,8 +203,7 @@ input.aui-form-validator-error, select.aui-form-validator-error, textarea.aui-fo
 	}
 
 	.aui-button-disabled input {
-		-ms-filter: alpha(opacity=50);
-		filter: alpha(opacity=50);
+		@include opacity(0.5);
 	}
 }
 

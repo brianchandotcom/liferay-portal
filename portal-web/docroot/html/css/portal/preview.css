@@ -1,3 +1,5 @@
+@import "compass";
+
 .lfr-preview-file {
 	position: relative;
 }
@@ -43,7 +45,7 @@
 
 .lfr-preview-file-toolbar {
 	display: block;
-	opacity: 0.5;
+	@include opacity(0.5);
 
 	.aui-toolbar-item {
 		border-width: 0;
@@ -60,7 +62,7 @@
 }
 
 .lfr-preview-file-image-current-column:hover .lfr-preview-file-toolbar {
-	opacity: 1;
+	@include opacity(1);
 }
 
 .lfr-preview-file-actions .aui-toolbar {
@@ -73,11 +75,11 @@
 .lfr-preview-file-info {
 	display: inline-block;
 	margin-top: 0.5em;
-	opacity: 0.5;
 	padding: 3px 15px;
+	@include opacity(0.5);
 
 	&:hover {
-		opacity: 1;
+		@include opacity(1);
 	}
 }
 
@@ -165,28 +167,6 @@
 
 	.lfr-preview-file-image-container {
 		width: 100%;
-	}
-}
-
-.ie7, .ie8 {
-	.lfr-preview-file-toolbar {
-		-ms-filter: alpha(opacity=50);
-		filter: alpha(opacity=50);
-	}
-
-	.lfr-preview-file-image-current-column:hover .lfr-preview-file-toolbar {
-		-ms-filter: alpha(opacity=100);
-		filter: alpha(opacity=100);
-	}
-
-	.lfr-preview-file-info {
-		-ms-filter: alpha(opacity=50);
-		filter: alpha(opacity=50);
-
-		&:hover {
-			-ms-filter: alpha(opacity=100);
-			filter: alpha(opacity=100);
-		}
 	}
 }
 

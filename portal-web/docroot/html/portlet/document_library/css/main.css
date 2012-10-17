@@ -1,3 +1,5 @@
+@import "compass";
+
 .portlet-document-library, .portlet-document-library-display {
 	.file-entry-list-description {
 		font-style: italic;
@@ -82,7 +84,7 @@
 			background-color: #FDD;
 			background-image: url(@theme_image_path@/messages/error.png);
 			font-weight: normal;
-			opacity: 0.6;
+			@include opacity(0.6);
 
 			.error-message {
 				position: absolute;

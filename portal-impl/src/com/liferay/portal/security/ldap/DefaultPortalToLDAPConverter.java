@@ -230,6 +230,9 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 		addAttributeMapping(
 			userMappings.getProperty(UserConverterKeys.PORTRAIT),
 			getUserPortrait(user), attributes);
+		addAttributeMapping(
+			userMappings.getProperty(UserConverterKeys.STATUS),
+			String.valueOf(user.getStatus()), attributes);
 
 		return attributes;
 	}

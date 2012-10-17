@@ -206,6 +206,13 @@ public class DefaultLDAPToPortalConverter implements LDAPToPortalConverter {
 		user.setPasswordUnencrypted(password);
 		user.setScreenName(screenName);
 
+		String status = LDAPUtil.getAttributeString(
+			attributes, userMappings, UserConverterKeys.STATUS);
+
+		if (Validator.isNotNull(status)) {
+			user.setStatus(Integer.valueOf(status));
+		}
+
 		ldapUser.setUser(user);
 
 		Map<String, String[]> userExpandoAttributes = getExpandoAttributes(

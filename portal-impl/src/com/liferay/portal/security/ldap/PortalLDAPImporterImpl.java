@@ -1248,6 +1248,9 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 			}
 		}
 
+		user = UserLocalServiceUtil.updateStatus(
+			user.getUserId(), ldapUser.getStatus());
+
 		return user;
 	}
 

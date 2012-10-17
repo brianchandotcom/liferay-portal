@@ -93,6 +93,7 @@ import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.model.ExpandoColumnConstants;
 import com.liferay.portlet.expando.model.ExpandoRow;
 import com.liferay.portlet.expando.model.ExpandoTable;
+import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
 import com.liferay.portlet.trash.model.TrashVersion;
 
 import java.awt.image.RenderedImage;
@@ -451,6 +452,18 @@ public class DLFileEntryLocalServiceImpl
 		User user = userPersistence.findByPrimaryKey(userId);
 
 		serviceContext.setCompanyId(user.getCompanyId());
+
+		DLFileVersion dlFileVersion =
+			dlFileVersionLocalService.getLatestFileVersion(fileEntryId, false);
+
+		long dlFileVersionId = dlFileVersion.getFileVersionId();
+
+		ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(
+			serviceContext.getCompanyId(), DLFileEntry.class.getName(),
+			dlFileVersionId);
+
+		serviceContext.setExpandoBridgeAttributes(
+			expandoBridge.getAttributes());
 		serviceContext.setUserId(userId);
 
 		boolean manualCheckinRequired = GetterUtil.getBoolean(
@@ -459,11 +472,6 @@ public class DLFileEntryLocalServiceImpl
 		dlFileEntry.setManualCheckInRequired(manualCheckinRequired);
 
 		dlFileEntryPersistence.update(dlFileEntry, false);
-
-		DLFileVersion dlFileVersion =
-			dlFileVersionLocalService.getLatestFileVersion(fileEntryId, false);
-
-		long dlFileVersionId = dlFileVersion.getFileVersionId();
 
 		String version = dlFileVersion.getVersion();
 
@@ -492,6 +500,8 @@ public class DLFileEntryLocalServiceImpl
 					WorkflowConstants.STATUS_DRAFT, new Date(), serviceContext);
 			}
 			else {
+				long oldDLFileVersionId = dlFileVersion.getFileVersionId();
+
 				dlFileVersion = addFileVersion(
 					user, dlFileEntry, new Date(), dlFileVersion.getExtension(),
 					dlFileVersion.getMimeType(), dlFileVersion.getTitle(),
@@ -502,6 +512,13 @@ public class DLFileEntryLocalServiceImpl
 					DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION,
 					dlFileVersion.getSize(), WorkflowConstants.STATUS_DRAFT,
 					serviceContext);
+
+				// LPS-28886 Copy ExpandoRow modified date to keep file version
+				// when there's no modifications
+
+				copyExpandoRowModifiedDate(
+					dlFileEntry.getCompanyId(), oldDLFileVersionId,
+					dlFileVersion.getFileVersionId());
 			}
 
 			try {
@@ -1665,6 +1682,44 @@ public class DLFileEntryLocalServiceImpl
 				type, value);
 
 			expandoBridge.setAttribute(key, serializable);
+		}
+	}
+
+	protected void copyExpandoRowModifiedDate(
+			long companyId, long srcFileVersionId, long destFileVersionId)
+		throws PortalException, SystemException {
+
+		ExpandoTable expandoTable = null;
+
+		try {
+			expandoTable = expandoTableLocalService.getDefaultTable(
+				companyId, DLFileEntry.class.getName());
+		}
+		catch (NoSuchTableException nste) {
+			return;
+		}
+
+		Date srcModifiedDate = null;
+
+		try {
+			ExpandoRow srcExpandoRow = expandoRowLocalService.getRow(
+				expandoTable.getTableId(), srcFileVersionId);
+
+			srcModifiedDate = srcExpandoRow.getModifiedDate();
+		}
+		catch (NoSuchRowException nsre) {
+			return;
+		}
+
+		try {
+			ExpandoRow destExpandoRow = expandoRowLocalService.getRow(
+				expandoTable.getTableId(), destFileVersionId);
+
+			destExpandoRow.setModifiedDate(srcModifiedDate);
+
+			expandoRowLocalService.updateExpandoRow(destExpandoRow);
+		}
+		catch (NoSuchRowException nsre) {
 		}
 	}
 

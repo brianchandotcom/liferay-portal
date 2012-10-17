@@ -1551,10 +1551,12 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 				_log.warn(
 					"When LDAP password policy is enabled, it's possible " +
 						"that portal generated passwords will not match the " +
-						"LDAP policy! Using RegExpToolkit to generate new " +
-						"password.");
+							"LDAP policy! Using RegExpToolkit to generate " +
+								"new password.");
 
-				password = new RegExpToolkit().generate(null);
+				RegExpToolkit regExpToolkit = new RegExpToolkit();
+
+				password = regExpToolkit.generate(null);
 			}
 			else {
 				PasswordPolicy passwordPolicy =
@@ -3422,11 +3424,12 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 					_log.warn(
 						"When LDAP password policy is enabled, it's possible " +
 							"that portal generated passwords will not match " +
-							"the LDAP policy! Using RegExpToolkit to " +
-							"generate new password.");
+								"the LDAP policy! Using RegExpToolkit to " +
+									"generate new password.");
 
-					newPassword = new RegExpToolkit().generate(null);
+					RegExpToolkit regExpToolkit = new RegExpToolkit();
 
+					newPassword = regExpToolkit.generate(null);
 				}
 				else {
 					newPassword = PwdToolkitUtil.generate(passwordPolicy);

@@ -443,7 +443,7 @@ AUI.add(
 										var toCategoryId = instance._getCategoryId(tree.dropNode);
 										var fromCategoryId = instance._getCategoryId(dragParentNode);
 
-										if (instance.dropAction != 'append') {
+										if (tree.instance.dropAction != 'append') {
 											toCategoryId = instance._getCategoryId(parentNode);
 										}
 

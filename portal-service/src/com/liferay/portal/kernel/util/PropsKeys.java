@@ -1561,6 +1561,8 @@ public interface PropsKeys {
 
 	public static final String MY_SITES_SHOW_USER_PUBLIC_SITES_WITH_NO_LAYOUTS = "my.sites.show.user.public.sites.with.no.layouts";
 
+	public static final String NAVIGATION_DISPLAY_STYLE_DEFAULT = "navigation.display.style.default";
+
 	public static final String NAVIGATION_DISPLAY_STYLE_OPTIONS = "navigation.display.style.options";
 
 	public static final String NESTED_PORTLETS_LAYOUT_TEMPLATE_DEFAULT = "nested.portlets.layout.template.default";

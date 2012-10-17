@@ -15,6 +15,10 @@
 package com.liferay.portal.verify;
 
 import com.liferay.counter.service.CounterLocalServiceUtil;
+import com.liferay.portal.kernel.dao.orm.Criterion;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -25,6 +29,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
@@ -182,6 +187,44 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 		}
 	}
 
+	protected void checkTitles() throws Exception {
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			DLFileEntry.class);
+
+		Criterion criterion1 = RestrictionsFactoryUtil.like("title", "%/%");
+		Criterion criterion2 = RestrictionsFactoryUtil.like("title", "%\\\\%");
+
+		dynamicQuery.add(RestrictionsFactoryUtil.or(criterion1, criterion2));
+
+		List<DLFileEntry> dlFileEntries =
+			DLFileEntryLocalServiceUtil.dynamicQuery(dynamicQuery);
+
+		for (DLFileEntry dlFileEntry : dlFileEntries) {
+			String title = dlFileEntry.getTitle();
+
+			String newTitle = title.replace(StringPool.SLASH, StringPool.BLANK);
+
+			newTitle = newTitle.replace(
+				StringPool.BACK_SLASH, StringPool.UNDERLINE);
+
+			dlFileEntry.setTitle(newTitle);
+
+			DLFileEntryLocalServiceUtil.updateDLFileEntry(dlFileEntry);
+
+			DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
+
+			dlFileVersion.setTitle(newTitle);
+
+			DLFileVersionLocalServiceUtil.updateDLFileVersion(dlFileVersion);
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Invalid document title " + title + "renamed to " +
+						newTitle);
+			}
+		}
+	}
+
 	protected void copyDLFileEntry(DLFileEntry dlFileEntry)
 		throws PortalException, SystemException {
 
@@ -228,6 +271,7 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 
 		checkDLFileEntryType();
 		checkMimeTypes();
+		checkTitles();
 		removeOrphanedDLFileEntries();
 		updateAssets();
 	}

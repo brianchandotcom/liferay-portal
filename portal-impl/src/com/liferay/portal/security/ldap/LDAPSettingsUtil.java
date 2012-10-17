@@ -18,14 +18,17 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.log.LogUtil;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.Properties;
+import java.util.regex.Pattern;
 
 /**
  * @author Edward Han
@@ -56,6 +59,10 @@ public class LDAPSettingsUtil {
 			new String[] {
 				String.valueOf(companyId), emailAddress, screenName, userId
 			});
+
+		if (!validateFilter(filter)) {
+			throw new SystemException("Invalid filter syntax");
+		}
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Search filter after transformation " + filter);
@@ -208,6 +215,65 @@ public class LDAPSettingsUtil {
 		else {
 			return false;
 		}
+	}
+
+	public static boolean validateFilter(String filter) {
+		if (Validator.isNull(filter) || filter.equals(StringPool.STAR)) {
+			return true;
+		}
+
+		filter = StringUtil.replace(filter, StringPool.SPACE, StringPool.BLANK);
+
+		if (!filter.startsWith(StringPool.OPEN_PARENTHESIS) ||
+			!filter.endsWith(StringPool.CLOSE_PARENTHESIS)) {
+
+			return false;
+		}
+
+		int count = 0;
+
+		for (int i = 0; i < filter.length(); i++) {
+			char c = filter.charAt(i);
+
+			if (c == CharPool.CLOSE_PARENTHESIS) {
+				count--;
+			}
+			else if (c == CharPool.OPEN_PARENTHESIS) {
+				count++;
+			}
+
+			if (count < 0) {
+				return false;
+			}
+		}
+
+		if (count > 0) {
+			return false;
+		}
+
+		// Cannot have two filter types in a sequence
+
+		if (Pattern.matches(".*[~<>]*=[~<>]*=.*", filter)) {
+			return false;
+		}
+
+		// Cannot have a filter type after an opening parenthesis
+
+		if (Pattern.matches("\\([~<>]*=.*", filter)) {
+			return false;
+		}
+
+		// Cannot have an attribute without a filter type or extensible
+
+		if (Pattern.matches("\\([^~<>=]*\\)", filter)) {
+			return false;
+		}
+
+		if (Pattern.matches(".*[^~<>=]*[~<>]*=\\)", filter)) {
+			return false;
+		}
+
+		return true;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(LDAPSettingsUtil.class);

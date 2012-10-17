@@ -103,7 +103,7 @@ List<LayoutRevision> rootLayoutRevisions = LayoutRevisionLocalServiceUtil.getChi
 							buffer.append("\" /></div>");
 						}
 
-						buffer.append("<span class=\"aproximate-date\">");
+						buffer.append("<span class=\"approximate-date\">");
 						buffer.append(LanguageUtil.format(pageContext, "x-ago", LanguageUtil.getTimeDescription(pageContext, timeAgo, true)));
 						buffer.append("</span><span class=\"real-date\">");
 						buffer.append(dateFormatDateTime.format(curLayoutRevision.getCreateDate()));

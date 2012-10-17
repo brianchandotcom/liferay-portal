@@ -159,6 +159,10 @@ public class LDAPUser {
 		return _contact.getSmsSn();
 	}
 
+	public int getStatus() {
+		return _user.getStatus();
+	}
+
 	public int getSuffixId() {
 		return _contact.getSuffixId();
 	}
@@ -367,6 +371,10 @@ public class LDAPUser {
 
 	public void setSmsSn(String smsSn) {
 		_contact.setSmsSn(smsSn);
+	}
+
+	public void setStatus(int status) {
+		_user.setStatus(status);
 	}
 
 	public void setSuffixId(int suffixId) {

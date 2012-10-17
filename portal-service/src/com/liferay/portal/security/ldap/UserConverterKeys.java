@@ -39,6 +39,8 @@ public interface UserConverterKeys {
 
 	public static final String SCREEN_NAME = "screenName";
 
+	public static final String STATUS = "status";
+
 	public static final String UUID = "uuid";
 
 }

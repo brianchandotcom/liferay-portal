@@ -15,6 +15,7 @@
 package com.liferay.portlet.portalsettings.action;
 
 import com.liferay.counter.service.CounterLocalServiceUtil;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.ldap.DuplicateLDAPServerNameException;
 import com.liferay.portal.kernel.ldap.LDAPServerNameException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -203,6 +204,13 @@ public class EditLDAPServerAction extends PortletAction {
 
 		validateLDAPServerName(
 			themeDisplay.getCompanyId(), ldapServerId, properties);
+
+		String filter = ParamUtil.getString(
+			actionRequest, "importUserSearchFilter");
+
+		if (!LDAPSettingsUtil.validateFilter(filter)) {
+			throw new SystemException("Invalid filter syntax");
+		}
 
 		if (ldapServerId <= 0) {
 			properties = addLDAPServer(themeDisplay.getCompanyId(), properties);

@@ -132,14 +132,15 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 		// Indexer
 
-		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+		Indexer mbThreadIndexer = IndexerRegistryUtil.nullSafeGetIndexer(
 			MBThread.class);
 
-		indexer.delete(thread);
+		mbThreadIndexer.delete(thread);
 
-		indexer = IndexerRegistryUtil.nullSafeGetIndexer(MBMessage.class);
+		Indexer mbMessageIndexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			MBMessage.class);
 
-		indexer.delete(thread);
+		mbMessageIndexer.delete(thread);
 
 		// Attachments
 
@@ -1022,6 +1023,8 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 			}
 		}
 
+		// Index
+
 		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 			MBMessage.class);
 
@@ -1030,9 +1033,6 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 	protected void restoreThreadMessagesFromTrash(MBThread thread)
 		throws PortalException, SystemException {
-
-		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-			MBMessage.class);
 
 		List<MBMessage> messages = mbMessageLocalService.getThreadMessages(
 			thread.getThreadId(), WorkflowConstants.STATUS_ANY);
@@ -1047,7 +1047,12 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 				// Indexer
 
-				indexer.reindex(message);
+				Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+					MBMessage.class);
+
+				if (!message.isDiscussion()) {
+					indexer.reindex(message);
+				}
 			}
 
 			// Social

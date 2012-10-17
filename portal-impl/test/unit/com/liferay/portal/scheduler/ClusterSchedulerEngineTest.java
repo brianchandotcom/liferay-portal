@@ -106,6 +106,8 @@ public class ClusterSchedulerEngineTest {
 		if (_clusterSchedulerEngine != null) {
 			_clusterSchedulerEngine.shutdown();
 		}
+
+		ClusterExecutorUtil.destroy();
 	}
 
 	@Test
@@ -812,10 +814,6 @@ public class ClusterSchedulerEngineTest {
 		MockLockLocalService.setLock(
 			clusterSchedulerEngine.getSerializedString(masterAddress));
 
-		clusterSchedulerEngine.initialize();
-
-		clusterSchedulerEngine.start();
-
 		SchedulerEngineHelperImpl schedulerEngineHelperImpl =
 			new SchedulerEngineHelperImpl();
 
@@ -826,6 +824,10 @@ public class ClusterSchedulerEngineTest {
 
 		schedulerEngineHelperUtil.setSchedulerEngineHelper(
 			schedulerEngineHelperImpl);
+
+		clusterSchedulerEngine.initialize();
+
+		clusterSchedulerEngine.start();
 
 		return clusterSchedulerEngine;
 	}
@@ -1057,6 +1059,7 @@ public class ClusterSchedulerEngineTest {
 		}
 
 		public void destroy() {
+			_addresses.clear();
 		}
 
 		public FutureClusterResponses execute(ClusterRequest clusterRequest) {

@@ -53,7 +53,7 @@ public class ViewPortletAPOrderByColumnRatingsTest extends BaseTestCase {
 			selenium.getText(
 				"//div[@id='assetPublisherOrderingAndGroupingPanel']/div/div/span"));
 		selenium.waitForVisible("//select[contains(@id,'orderByColumn')]");
-		assertEquals("Ratings Ratings",
+		assertEquals("Ratings",
 			selenium.getSelectedLabel("//select[contains(@id,'orderByColumn')]"));
 		selenium.selectFrame("relative=top");
 	}

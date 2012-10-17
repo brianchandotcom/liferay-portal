@@ -48,11 +48,11 @@ public class AddPortletAP3Test extends BaseTestCase {
 		selenium.waitForVisible("//li[@title='Asset Publisher']/p/a");
 		selenium.clickAt("//li[@title='Asset Publisher']/p/a",
 			RuntimeVariables.replace("Add"));
-		selenium.waitForVisible("//div[1]/div/section");
-		assertTrue(selenium.isVisible("//div[1]/div/section"));
-		selenium.waitForVisible("//div[2]/div/section");
-		assertTrue(selenium.isVisible("//div[2]/div/section"));
-		selenium.waitForVisible("//div[3]/div/section");
-		assertTrue(selenium.isVisible("//div[3]/div/section"));
+		selenium.waitForVisible("//div/div[1]/section");
+		assertTrue(selenium.isVisible("//div/div[1]/section"));
+		selenium.waitForVisible("//div/div[2]/section");
+		assertTrue(selenium.isVisible("//div/div[2]/section"));
+		selenium.waitForVisible("//div/div[3]/section");
+		assertTrue(selenium.isVisible("//div/div[3]/section"));
 	}
 }

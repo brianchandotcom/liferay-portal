@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 
-import java.util.ArrayList;
 import java.util.Properties;
 import java.util.regex.Pattern;
 
@@ -35,18 +34,6 @@ import java.util.regex.Pattern;
  * @author Brian Wing Shun Chan
  */
 public class LDAPSettingsUtil {
-
-	public static boolean validateLDAPFilter(
-			String filter, boolean throwException)
-		throws SystemException {
-
-		boolean retVal = validateLDAPFilter(filter);
-		if ((retVal == false) && (throwException == true)) {
-			throw new SystemException();
-		}
-
-		return retVal;
-	}
 
 	public static boolean validateLDAPFilter(String filter) {
 
@@ -72,39 +59,8 @@ public class LDAPSettingsUtil {
 				s = null;
 			}
 			else {
-				//insert spaces
-				s = s.replaceAll("\\(", " \\( ");
-				s = s.replaceAll("\\)", " \\) ");
-				s = s.replaceAll("~=", " ~= ");
-				s = s.replaceAll("<=", " <= ");
-				s = s.replaceAll(">=", " >= ");
-				s = s.replaceAll("=", "= ");
-				ArrayList<Integer> items = new ArrayList<Integer>();
-				for (int j = 0; j < s.length(); j++) {
-					if ((s.charAt(j) == '=') && (j>0)) {
-
-						if (!(s.charAt(j-1) == '~') &&
-							!(s.charAt(j-1) == '<') &&
-							!(s.charAt(j-1) == '>')) {
-
-							items.add(new Integer(j));
-						}
-					}
-				}
-
-				if (items.size() > 0) {
-					int offset = 0;
-					for (int j = 0; j < items.size(); j++) {
-						s = s.substring(0, (Integer)(items.get(j)) + offset) +
-							" " +
-							s.substring((Integer)(items.get(j)) + offset);
-
-						offset++;
-					}
-				}
-
-				//Multiple whitespace is replaced with a single whitespace
-				s = s.replaceAll("\\s+", " ");
+				//Whitespace is removed
+				s = s.replaceAll("\\s+", "");
 				s = s.trim();
 			}
 		}
@@ -143,9 +99,11 @@ public class LDAPSettingsUtil {
 			}
 		}
 
+		// Cannot have two "filtertypes" in sequence
+
 		if (retVal == true) {
 			if (s != null) {
-				boolean b = Pattern.matches(".*[~<>]*= [~<>]*=.*", s);
+				boolean b = Pattern.matches(".*[~<>]*=[~<>]*=.*", s);
 				retVal = !b;
 			}
 		}
@@ -154,7 +112,7 @@ public class LDAPSettingsUtil {
 
 		if (retVal == true) {
 			if (s != null) {
-				boolean b = Pattern.matches("\\( [~<>]*=.*", s);
+				boolean b = Pattern.matches("\\([~<>]*=.*", s);
 				retVal = !b;
 			}
 		}
@@ -168,14 +126,14 @@ public class LDAPSettingsUtil {
 
 		if (retVal == true) {
 			if (s != null) {
-				boolean b = Pattern.matches("\\( [^~<>= ]* \\)", s);
+				boolean b = Pattern.matches("\\([^~<>=]*\\)", s);
 				retVal = !b;
 			}
 		}
 
 		if (retVal == true) {
 			if (s != null) {
-				boolean b = Pattern.matches(".*[^~<>= ]* [~<>]*= \\)", s);
+				boolean b = Pattern.matches(".*[^~<>=]*[~<>]*=\\)", s);
 				retVal = !b;
 			}
 		}
@@ -206,7 +164,9 @@ public class LDAPSettingsUtil {
 				String.valueOf(companyId), emailAddress, screenName, userId
 			});
 
-		validateLDAPFilter(filter, true);
+		if (false == validateLDAPFilter(filter)) {
+			throw new SystemException("Invalid LDAP AuthSearch Filter Syntax");
+		}
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Search filter after transformation " + filter);

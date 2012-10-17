@@ -278,7 +278,9 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 					String.valueOf(companyId), emailAddress, screenName
 				});
 
-			LDAPSettingsUtil.validateLDAPFilter(filter, true);
+			if (false == LDAPSettingsUtil.validateLDAPFilter(filter)) {
+				throw new SystemException("Invalid LDAP AuthSearch Filter Syntax");
+			}
 
 			if (_log.isDebugEnabled()) {
 				_log.debug("Search filter after transformation " + filter);

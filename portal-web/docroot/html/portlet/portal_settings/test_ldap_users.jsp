@@ -56,7 +56,7 @@ if (Validator.isNull(ParamUtil.getString(request, "userMappingScreenName")) ||
 }
 
 String userFilter = ParamUtil.getString(request, "importUserSearchFilter");
-boolean passed = LDAPSettingsUtil.validateLDAPFilter(userFilter, false);
+boolean passed = LDAPSettingsUtil.validateLDAPFilter(userFilter);
 if (passed == false) {
 %>
 

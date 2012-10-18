@@ -683,10 +683,12 @@ public class LayoutImpl extends LayoutBaseImpl {
 		friendlyURL = friendlyURL.toLowerCase();
 
 		for (String keyword : _friendlyURLKeywords) {
-			if (friendlyURL.startsWith(keyword) ||
-				keyword.equals(friendlyURL + StringPool.SLASH)) {
-
+			if (friendlyURL.startsWith(keyword)) {
 				return keyword;
+			}
+
+			if (keyword.equals(friendlyURL + StringPool.SLASH)) {
+				return friendlyURL;
 			}
 		}
 

@@ -1036,6 +1036,10 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 	protected void populateExpandoAttributes(
 		ExpandoBridge expandoBridge, Map<String, String[]> expandoAttributes) {
 
+		if (expandoAttributes.isEmpty()) {
+			return;
+		}
+
 		Map<String, Serializable> serializedExpandoAttributes =
 			new HashMap<String, Serializable>();
 
@@ -1064,7 +1068,13 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 				expandoBridge.getClassPK(), serializedExpandoAttributes);
 		}
 		catch (Exception e) {
-			_log.error(e, e);
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to populate expando attributes");
+			}
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(e, e);
+			}
 		}
 	}
 

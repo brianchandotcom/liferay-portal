@@ -45,14 +45,15 @@ public class ActivateStagingTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace("Actions"),
 					selenium.getText(
-						"//span[@title='Actions']/ul/li/strong/a/span"));
-				selenium.click("//span[@title='Actions']/ul/li/strong/a/span");
+						"xPath=(//span[@title='Actions']/ul/li/strong/a/span)[2]"));
+				selenium.click(
+					"xPath=(//span[@title='Actions']/ul/li/strong/a/span)[2]");
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a");
+					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit Settings')]");
 				assertEquals(RuntimeVariables.replace("Edit Settings"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
-				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a",
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit Settings')]"));
+				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit Settings')]",
 					RuntimeVariables.replace("Edit Settings"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.isPartialText(

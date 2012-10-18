@@ -41,7 +41,6 @@ public class Administrator_PublishToLiveStagedBlogsEntryTest
 				selenium.clickAt("//li[2]/span/a",
 					RuntimeVariables.replace("Staging"));
 				selenium.waitForPageToLoad("30000");
-				selenium.waitForVisible("link=Blogs Test Page");
 				selenium.clickAt("link=Blogs Test Page",
 					RuntimeVariables.replace("Blogs Test Page"));
 				selenium.waitForPageToLoad("30000");

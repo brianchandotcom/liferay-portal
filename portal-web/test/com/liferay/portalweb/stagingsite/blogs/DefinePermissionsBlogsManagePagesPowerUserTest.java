@@ -53,9 +53,9 @@ public class DefinePermissionsBlogsManagePagesPowerUserTest extends BaseTestCase
 		selenium.waitForPageToLoad("30000");
 		selenium.select("//select[@id='_128_add-permissions']",
 			RuntimeVariables.replace("Blogs"));
-		selenium.waitForText("//tr[3]/td[2]", "Add Entry");
+		selenium.waitForText("//tr[4]/td[2]", "Add Entry");
 		assertEquals(RuntimeVariables.replace("Add Entry"),
-			selenium.getText("//tr[3]/td[2]"));
+			selenium.getText("//tr[4]/td[2]"));
 		assertTrue(selenium.isPartialText(
 				"//span[@id='_128_groupHTMLcom.liferay.portlet.blogsADD_ENTRY']",
 				"User Personal Site"));

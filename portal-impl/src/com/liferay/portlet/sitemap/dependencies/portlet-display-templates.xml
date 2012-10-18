@@ -2,10 +2,10 @@
 
 <root>
 	<template>
-		<template-key><![CDATA[site-map-multi-column-layout-ftl]]></template-key>
-		<name><![CDATA[Multi Column Layout]]></name>
-		<description><![CDATA[Displays a column for each top level page. Each column includes the name of a top level page with the page's immediate children listed underneath.]]></description>
-		<language><![CDATA[ftl]]></language>
+		<template-key>site-map-multi-column-layout-ftl</template-key>
+		<name>Multi Column Layout</name>
+		<description>Displays a column for each top level page. Each column includes the name of a top level page with the page's immediate children listed underneath.</description>
+		<language>ftl</language>
 		<script-file>com/liferay/portlet/sitemap/dependencies/portlet_display_template_multi_column_layout.ftl</script-file>
 		<cacheable>false</cacheable>
 	</template>

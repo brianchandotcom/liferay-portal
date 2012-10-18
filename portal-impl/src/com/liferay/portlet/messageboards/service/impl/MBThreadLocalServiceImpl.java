@@ -132,10 +132,15 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 		// Indexer
 
-		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+		Indexer mbThreadIndexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			MBThread.class);
+
+		mbThreadIndexer.delete(thread);
+
+		Indexer mbMessageIndexer = IndexerRegistryUtil.nullSafeGetIndexer(
 			MBMessage.class);
 
-		indexer.delete(thread);
+		mbMessageIndexer.delete(thread);
 
 		// Attachments
 
@@ -627,6 +632,13 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 		mbStatsUserLocalService.updateStatsUser(thread.getGroupId(), userId);
 
+		// Indexer
+
+		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			MBThread.class);
+
+		indexer.reindex(thread);
+
 		// Social
 
 		socialActivityLocalService.addActivity(
@@ -691,6 +703,13 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		// Stats
 
 		mbStatsUserLocalService.updateStatsUser(thread.getGroupId(), userId);
+
+		// Indexer
+
+		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			MBThread.class);
+
+		indexer.delete(thread);
 
 		// Trash
 
@@ -987,15 +1006,6 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 			socialActivityCounterLocalService.disableActivityCounters(
 				MBMessage.class.getName(), message.getMessageId());
 
-			// Index
-
-			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-				MBMessage.class);
-
-			if (!message.isDiscussion()) {
-				indexer.delete(message);
-			}
-
 			// Workflow
 
 			if (message.getStatus() == WorkflowConstants.STATUS_PENDING) {
@@ -1012,6 +1022,13 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 					workflowInstanceLink.getWorkflowInstanceLinkId());
 			}
 		}
+
+		// Index
+
+		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			MBMessage.class);
+
+		indexer.delete(thread);
 	}
 
 	protected void restoreThreadMessagesFromTrash(MBThread thread)
@@ -1021,27 +1038,27 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 			thread.getThreadId(), WorkflowConstants.STATUS_ANY);
 
 		for (MBMessage message : messages) {
-
-			// Asset
-
 			if (message.getStatus() == WorkflowConstants.STATUS_APPROVED) {
+
+				// Asset
+
 				assetEntryLocalService.updateVisible(
 					MBMessage.class.getName(), message.getMessageId(), true);
+
+				// Indexer
+
+				Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+					MBMessage.class);
+
+				if (!message.isDiscussion()) {
+					indexer.reindex(message);
+				}
 			}
 
 			// Social
 
 			socialActivityCounterLocalService.disableActivityCounters(
 				MBMessage.class.getName(), message.getMessageId());
-
-			// Index
-
-			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-				MBMessage.class);
-
-			if (!message.isDiscussion()) {
-				indexer.reindex(message);
-			}
 		}
 	}
 

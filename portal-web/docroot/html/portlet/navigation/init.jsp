@@ -26,7 +26,7 @@ if (Validator.isNotNull(portletResource)) {
 }
 
 String bulletStyle = PrefsParamUtil.getString(preferences, renderRequest, "bulletStyle", GetterUtil.getString(themeDisplay.getThemeSetting("bullet-style"), "dots"));
-String displayStyle = PrefsParamUtil.getString(preferences, renderRequest, "displayStyle", "relative-with-breadcrumb");
+String displayStyle = PrefsParamUtil.getString(preferences, renderRequest, "displayStyle", PrefsPropsUtil.getString(PropsKeys.NAVIGATION_DISPLAY_STYLE_DEFAULT));
 String headerType = PrefsParamUtil.getString(preferences, renderRequest, "headerType", "root-layout");
 String includedLayouts = PrefsParamUtil.getString(preferences, renderRequest, "includedLayouts", "current");
 boolean nestedChildren = PrefsParamUtil.getBoolean(preferences, renderRequest, "nestedChildren", true);

@@ -51,6 +51,7 @@ import javax.portlet.PortletPreferences;
 /**
  * @author Alexander Chow
  * @author Shinn Lok
+ * @author James Lefeu
  */
 public class VerifyJournal extends VerifyProcess {
 
@@ -182,12 +183,18 @@ public class VerifyJournal extends VerifyProcess {
 
 		Set<String> portletIds = new HashSet<String>();
 
-		for (JournalContentSearch contentSearch : contentSearches) {
-			portletIds.add(contentSearch.getPortletId());
-		}
+		String indexName = createIndex("PortletPreferences", "portletId");
+		try {
+			for (JournalContentSearch contentSearch : contentSearches) {
+				portletIds.add(contentSearch.getPortletId());
+			}
 
-		for (String portletId : portletIds) {
-			verifyContentSearch(portletId);
+			for (String portletId : portletIds) {
+				verifyContentSearch(portletId);
+			}
+		}
+		finally {
+			dropIndex("PortletPreferences", indexName);
 		}
 	}
 

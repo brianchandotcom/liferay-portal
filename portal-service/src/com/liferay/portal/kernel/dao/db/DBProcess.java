@@ -26,6 +26,15 @@ import javax.naming.NamingException;
  */
 public interface DBProcess {
 
+	public String createIndex(String tableName, String columnName)
+		throws IOException, SQLException;
+
+	public String createIndex(String tableName, String[] columnNames)
+		throws IOException, SQLException;
+
+	public void dropIndex(String tableName, String indexName)
+		throws IOException, SQLException;
+
 	public void runSQL(String template) throws IOException, SQLException;
 
 	public void runSQL(String[] templates) throws IOException, SQLException;

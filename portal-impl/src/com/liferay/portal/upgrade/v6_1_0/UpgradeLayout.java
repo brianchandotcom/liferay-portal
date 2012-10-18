@@ -33,6 +33,7 @@ import java.util.Locale;
 /**
  * @author Jorge Ferrer
  * @author Julio Camarero
+ * @author James Lefeu
  */
 public class UpgradeLayout extends UpgradeProcess {
 
@@ -42,6 +43,7 @@ public class UpgradeLayout extends UpgradeProcess {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
+		String indexName = createIndex("Layout", "plid");
 		try {
 			con = DataAccess.getUpgradeOptimizedConnection();
 
@@ -61,6 +63,7 @@ public class UpgradeLayout extends UpgradeProcess {
 		}
 		finally {
 			DataAccess.cleanUp(con, ps, rs);
+			dropIndex("Layout", indexName);
 		}
 	}
 

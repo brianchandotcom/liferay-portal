@@ -24,6 +24,7 @@ import java.util.List;
 /**
  * @author Brian Wing Shun Chan
  * @author Kenneth Chang
+ * @author James Lefeu
  */
 public class VerifyLayout extends VerifyProcess {
 
@@ -46,17 +47,29 @@ public class VerifyLayout extends VerifyProcess {
 	}
 
 	protected void verifyUuid() throws Exception {
-		verifyUuid("AssetEntry");
-		verifyUuid("JournalArticle");
+		String assetEntryIndexName = createIndex("AssetEntry", "layoutUuid");
+		String journalArticleIndexName = createIndex(
+			"JournalArticle", "layoutUuid");
+		String layoutIndexName = createIndex(
+			"Layout", "sourcePrototypeLayoutUuid");
+		try {
+			verifyUuid("AssetEntry");
+			verifyUuid("JournalArticle");
 
-		StringBundler sb = new StringBundler(4);
+			StringBundler sb = new StringBundler(4);
 
-		sb.append("update Layout set uuid_ = sourcePrototypeLayoutUuid where ");
-		sb.append("sourcePrototypeLayoutUuid is not null and ");
-		sb.append("sourcePrototypeLayoutUuid != '' and ");
-		sb.append("uuid_ != sourcePrototypeLayoutUuid");
+			sb.append("update Layout set uuid_ = sourcePrototypeLayoutUuid where ");
+			sb.append("sourcePrototypeLayoutUuid is not null and ");
+			sb.append("sourcePrototypeLayoutUuid != '' and ");
+			sb.append("uuid_ != sourcePrototypeLayoutUuid");
 
-		runSQL(sb.toString());
+			runSQL(sb.toString());
+		}
+		finally {
+			dropIndex("AssetEntry", assetEntryIndexName);
+			dropIndex("JournalArticle", journalArticleIndexName);
+			dropIndex("Layout", layoutIndexName);
+		}
 	}
 
 	protected void verifyUuid(String tableName) throws Exception {

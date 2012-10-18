@@ -297,7 +297,7 @@ AUI.add(
 							{
 								on: {
 									request: function(event) {
-										var term = event.request;
+										var term = decodeURIComponent(event.request);
 										var key = term;
 
 										if (term == '*') {

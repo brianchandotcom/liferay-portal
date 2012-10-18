@@ -132,7 +132,7 @@ public class EditGroupAction extends PortletAction {
 				updateActive(actionRequest, cmd);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
-				deleteGroup(actionRequest);
+				deleteGroups(actionRequest);
 			}
 
 			if (Validator.isNotNull(closeRedirect)) {
@@ -211,15 +211,27 @@ public class EditGroupAction extends PortletAction {
 			getForward(renderRequest, "portlet.sites_admin.edit_site"));
 	}
 
-	protected void deleteGroup(ActionRequest actionRequest) throws Exception {
+	protected void deleteGroups(ActionRequest actionRequest) throws Exception {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		long[] deleteGroupIds = null;
+
 		long groupId = ParamUtil.getLong(actionRequest, "groupId");
 
-		GroupServiceUtil.deleteGroup(groupId);
+		if (groupId > 0) {
+			deleteGroupIds = new long[] {groupId};
+		}
+		else {
+			deleteGroupIds = StringUtil.split(
+				ParamUtil.getString(actionRequest, "deleteGroupIds"), 0L);
+		}
 
-		LiveUsers.deleteGroup(themeDisplay.getCompanyId(), groupId);
+		for (long deleteGroupId : deleteGroupIds) {
+			GroupServiceUtil.deleteGroup(deleteGroupId);
+
+			LiveUsers.deleteGroup(themeDisplay.getCompanyId(), deleteGroupId);
+		}
 	}
 
 	protected long getRefererGroupId(ThemeDisplay themeDisplay)

@@ -999,7 +999,7 @@ public class PortletImporter {
 			portletDataContext, portletId, portletPreferences,
 			portletDataElement);
 
-		if (xml != null) {
+		if (Validator.isNotNull(xml)) {
 			PortletPreferencesLocalServiceUtil.updatePreferences(
 				ownerId, ownerType, plid, portletId, xml);
 		}

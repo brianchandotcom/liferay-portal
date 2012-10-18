@@ -371,17 +371,18 @@ public class PortletExporter {
 				entry.getKey(), CharPool.POUND);
 
 			String className = assetCategoryEntryParts[0];
-			long classPK = GetterUtil.getLong(assetCategoryEntryParts[1]);
+			String classPK = assetCategoryEntryParts[1];
 
 			Element assetElement = assetsElement.addElement("asset");
 
 			assetElement.addAttribute("class-name", className);
-			assetElement.addAttribute("class-pk", String.valueOf(classPK));
+			assetElement.addAttribute("class-pk", classPK);
 			assetElement.addAttribute(
 				"category-uuids", StringUtil.merge(entry.getValue()));
 
 			List<AssetCategory> assetCategories =
-				AssetCategoryLocalServiceUtil.getCategories(className, classPK);
+				AssetCategoryLocalServiceUtil.getCategories(
+					className, GetterUtil.getLong(classPK));
 
 			for (AssetCategory assestCategory : assetCategories) {
 				exportAssetCategory(
@@ -552,17 +553,17 @@ public class PortletExporter {
 				entry.getKey(), CharPool.POUND);
 
 			String className = assetTagNameParts[0];
-			long classPK = GetterUtil.getLong(assetTagNameParts[1]);
+			String classPK = assetTagNameParts[1];
 
 			Element assetElement = rootElement.addElement("asset");
 
 			assetElement.addAttribute("class-name", className);
-			assetElement.addAttribute("class-pk", String.valueOf(classPK));
+			assetElement.addAttribute("class-pk", classPK);
 			assetElement.addAttribute(
 				"tags", StringUtil.merge(entry.getValue()));
 
 			List<AssetTag> assetTags = AssetTagLocalServiceUtil.getTags(
-				className, classPK);
+				className, GetterUtil.getLong(classPK));
 
 			for (AssetTag assetTag : assetTags) {
 				exportAssetTag(portletDataContext, assetTag, rootElement);

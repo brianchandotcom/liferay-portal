@@ -34,11 +34,6 @@
 	<td>Staging</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Blogs Test Page</td>
-	<td>Blogs Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Blogs Test Page</td>
 	<td>Blogs Test Page</td>
@@ -99,8 +94,8 @@
 	<td>Plus</td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isVisible('_88_PORTLET_DATA_33Checkbox'))</td>
+	<td>storeVisible</td>
+	<td>//input[@id='_88_PORTLET_DATA_33Checkbox']</td>
 	<td>blogsVisible</td>
 </tr>
 <tr>
@@ -129,8 +124,8 @@
 	<td>All</td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isChecked('_88_PORTLET_DATA_33Checkbox'))</td>
+	<td>storeChecked</td>
+	<td>//input[@id='_88_PORTLET_DATA_33Checkbox']</td>
 	<td>blogsChecked</td>
 </tr>
 <tr>
@@ -139,17 +134,7 @@
 	<td>BlogsChecked</td>
 </tr>
 <tr>
-	<td>assertNotChecked</td>
-	<td>//input[@id='_88_PORTLET_DATA_33Checkbox']</td>
-	<td>Blogs</td>
-</tr>
-<tr>
 	<td>clickAt</td>
-	<td>//input[@id='_88_PORTLET_DATA_33Checkbox']</td>
-	<td>Blogs</td>
-</tr>
-<tr>
-	<td>assertChecked</td>
 	<td>//input[@id='_88_PORTLET_DATA_33Checkbox']</td>
 	<td>Blogs</td>
 </tr>
@@ -157,6 +142,11 @@
 	<td>label</td>
 	<td>BlogsChecked</td>
 	<td></td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@id='_88_PORTLET_DATA_33Checkbox']</td>
+	<td>Blogs</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -169,7 +159,7 @@
 	<td>Publish</td>
 </tr>
 <tr>
-	<td>assertConfirmation</td>
+	<td>waitForConfirmation</td>
 	<td>Are you sure you want to publish these pages?</td>
 	<td></td>
 </tr>

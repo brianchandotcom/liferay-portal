@@ -14,7 +14,27 @@
 	<td></td>
 </tr>
 <tr>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
 	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
+	<td>AUI Editable Min</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>mouseOver</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
 	<td>link=Control Panel</td>
 	<td>Control Panel</td>
 </tr>
@@ -40,12 +60,12 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[contains(.,'Organization User')]/td[1]/a</td>
+	<td>//tr/td[1]/a[contains(.,'Organization User')]</td>
 	<td>Organization User</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//tr[contains(.,'Organization User')]/td[1]/a</td>
+	<td>//tr/td[1]/a[contains(.,'Organization User')]</td>
 	<td>Organization User</td>
 </tr>
 <tr>
@@ -60,12 +80,12 @@
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//tr[3]/td[2]</td>
+	<td>//tr[4]/td[2]</td>
 	<td>Add Entry</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[3]/td[2]</td>
+	<td>//tr[4]/td[2]</td>
 	<td>Add Entry</td>
 </tr>
 <tr>

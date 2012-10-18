@@ -15,6 +15,7 @@
 package com.liferay.portalweb.stagingorganization.blogs;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.controlpanel.sites.site.addsite.TearDownSiteTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -61,7 +62,7 @@ public class BlogsTests extends BaseTestSuite {
 		testSuite.addTestSuite(TearDownBlogsEntryOrganizationSiteTest.class);
 		testSuite.addTestSuite(TearDownUserTest.class);
 		testSuite.addTestSuite(TearDownPermissionsTest.class);
-		testSuite.addTestSuite(TearDownSitesTest.class);
+		testSuite.addTestSuite(TearDownSiteTest.class);
 		testSuite.addTestSuite(TearDownOrganizationTest.class);
 
 		return testSuite;

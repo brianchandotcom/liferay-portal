@@ -14,7 +14,27 @@
 	<td></td>
 </tr>
 <tr>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
 	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
+	<td>AUI Editable Min</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>mouseOver</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
 	<td>link=Control Panel</td>
 	<td>Control Panel</td>
 </tr>
@@ -39,8 +59,8 @@
 	<td>Search</td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('//td[4]/span/ul/li/strong/a'))</td>
+	<td>storeElementPresent</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
 	<td>organization1Present</td>
 </tr>
 <tr>
@@ -50,28 +70,38 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[4]/span/ul/li/strong/a</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//td[4]/span/ul/li/strong/a</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Assign Users')]</td>
 	<td>Assign Users</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Assign Users')]</td>
 	<td>Assign Users</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a</td>
+	<td>clickAtAndWait</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Assign Users')]</td>
 	<td>Assign Users</td>
+</tr>
+<tr>
+	<td>storeVisible</td>
+	<td>//input[@name='_125_allRowIds']</td>
+	<td>user1Visible</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${user1Visible}</td>
+	<td>User1NotVisible</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -82,6 +112,11 @@
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Update Associations']</td>
 	<td>Update Associations</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>User1NotVisible</td>
+	<td></td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -99,8 +134,8 @@
 	<td>Organization Entry 1</td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('//td[4]/span/ul/li/strong/a'))</td>
+	<td>storeElementPresent</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
 	<td>suborganization1Present</td>
 </tr>
 <tr>
@@ -120,7 +155,7 @@
 </tr>
 <tr>
 	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete this?</td>
+	<td>Are you sure you want to permanently delete the selected users?</td>
 	<td></td>
 </tr>
 <tr>
@@ -160,7 +195,7 @@
 </tr>
 <tr>
 	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete this?</td>
+	<td>Are you sure you want to delete this? It will be deleted immediately.</td>
 	<td></td>
 </tr>
 <tr>
@@ -174,8 +209,8 @@
 	<td>Search</td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('//td[4]/span/ul/li/strong/a'))</td>
+	<td>storeElementPresent</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
 	<td>organization2Present</td>
 </tr>
 <tr>
@@ -185,28 +220,38 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[4]/span/ul/li/strong/a</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//td[4]/span/ul/li/strong/a</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Assign Users')]</td>
 	<td>Assign Users</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Assign Users')]</td>
 	<td>Assign Users</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a</td>
+	<td>clickAtAndWait</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Assign Users')]</td>
 	<td>Assign Users</td>
+</tr>
+<tr>
+	<td>storeVisible</td>
+	<td>//input[@name='_125_allRowIds']</td>
+	<td>user2Visible</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${user2Visible}</td>
+	<td>User2NotVisible</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -217,6 +262,11 @@
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Update Associations']</td>
 	<td>Update Associations</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>User2NotVisible</td>
+	<td></td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -234,8 +284,8 @@
 	<td>Organization Entry 2</td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('//td[4]/span/ul/li/strong/a'))</td>
+	<td>storeElementPresent</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
 	<td>suborganization2Present</td>
 </tr>
 <tr>
@@ -255,7 +305,7 @@
 </tr>
 <tr>
 	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete this?</td>
+	<td>Are you sure you want to permanently delete the selected users?</td>
 	<td></td>
 </tr>
 <tr>
@@ -290,7 +340,7 @@
 </tr>
 <tr>
 	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete this?</td>
+	<td>Are you sure you want to delete this? It will be deleted immediately.</td>
 	<td></td>
 </tr>
 <tr>
@@ -304,8 +354,8 @@
 	<td>Search</td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('//td[4]/span/ul/li/strong/a'))</td>
+	<td>storeElementPresent</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
 	<td>organization3Present</td>
 </tr>
 <tr>
@@ -315,28 +365,38 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[4]/span/ul/li/strong/a</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//td[4]/span/ul/li/strong/a</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Assign Users')]</td>
 	<td>Assign Users</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Assign Users')]</td>
 	<td>Assign Users</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a</td>
+	<td>clickAtAndWait</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Assign Users')]</td>
 	<td>Assign Users</td>
+</tr>
+<tr>
+	<td>storeVisible</td>
+	<td>//input[@name='_125_allRowIds']</td>
+	<td>user3Visible</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${user3Visible}</td>
+	<td>User3NotVisible</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -347,6 +407,11 @@
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Update Associations']</td>
 	<td>Update Associations</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>User3NotVisible</td>
+	<td></td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -364,8 +429,8 @@
 	<td>Organization Entry 3</td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('//td[4]/span/ul/li/strong/a'))</td>
+	<td>storeElementPresent</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
 	<td>suborganization3Present</td>
 </tr>
 <tr>
@@ -385,7 +450,7 @@
 </tr>
 <tr>
 	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete this?</td>
+	<td>Are you sure you want to permanently delete the selected users?</td>
 	<td></td>
 </tr>
 <tr>
@@ -420,7 +485,7 @@
 </tr>
 <tr>
 	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete this?</td>
+	<td>Are you sure you want to delete this? It will be deleted immediately.</td>
 	<td></td>
 </tr>
 <tr>
@@ -434,8 +499,8 @@
 	<td>Search</td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('//td[4]/span/ul/li/strong/a'))</td>
+	<td>storeElementPresent</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
 	<td>organization4Present</td>
 </tr>
 <tr>
@@ -445,28 +510,38 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[4]/span/ul/li/strong/a</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//td[4]/span/ul/li/strong/a</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Assign Users')]</td>
 	<td>Assign Users</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Assign Users')]</td>
 	<td>Assign Users</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a</td>
+	<td>clickAtAndWait</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Assign Users')]</td>
 	<td>Assign Users</td>
+</tr>
+<tr>
+	<td>storeVisible</td>
+	<td>//input[@name='_125_allRowIds']</td>
+	<td>user4Visible</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${user4Visible}</td>
+	<td>User4NotVisible</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -477,6 +552,11 @@
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Update Associations']</td>
 	<td>Update Associations</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>User4NotVisible</td>
+	<td></td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -494,8 +574,8 @@
 	<td>Organization Entry 4</td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('//td[4]/span/ul/li/strong/a'))</td>
+	<td>storeElementPresent</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
 	<td>suborganization4Present</td>
 </tr>
 <tr>
@@ -515,7 +595,7 @@
 </tr>
 <tr>
 	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete this?</td>
+	<td>Are you sure you want to permanently delete the selected users?</td>
 	<td></td>
 </tr>
 <tr>
@@ -550,7 +630,7 @@
 </tr>
 <tr>
 	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete this?</td>
+	<td>Are you sure you want to delete this? It will be deleted immediately.</td>
 	<td></td>
 </tr>
 <tr>
@@ -564,8 +644,8 @@
 	<td>Search</td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('//td[4]/span/ul/li/strong/a'))</td>
+	<td>storeElementPresent</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
 	<td>organization5Present</td>
 </tr>
 <tr>
@@ -575,28 +655,38 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[4]/span/ul/li/strong/a</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//td[4]/span/ul/li/strong/a</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Assign Users')]</td>
 	<td>Assign Users</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Assign Users')]</td>
 	<td>Assign Users</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a</td>
+	<td>clickAtAndWait</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Assign Users')]</td>
 	<td>Assign Users</td>
+</tr>
+<tr>
+	<td>storeVisible</td>
+	<td>//input[@name='_125_allRowIds']</td>
+	<td>user5Visible</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${user5Visible}</td>
+	<td>User5NotVisible</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -607,6 +697,11 @@
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Update Associations']</td>
 	<td>Update Associations</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>User5NotVisible</td>
+	<td></td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -624,8 +719,8 @@
 	<td>Organization Entry 5</td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('//td[4]/span/ul/li/strong/a'))</td>
+	<td>storeElementPresent</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
 	<td>suborganization5Present</td>
 </tr>
 <tr>
@@ -645,7 +740,7 @@
 </tr>
 <tr>
 	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete this?</td>
+	<td>Are you sure you want to permanently delete the selected users?</td>
 	<td></td>
 </tr>
 <tr>

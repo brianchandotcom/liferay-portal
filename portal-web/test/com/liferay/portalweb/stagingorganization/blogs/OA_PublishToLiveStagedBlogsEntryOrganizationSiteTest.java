@@ -41,7 +41,6 @@ public class OA_PublishToLiveStagedBlogsEntryOrganizationSiteTest
 				selenium.clickAt("//li[2]/span/a",
 					RuntimeVariables.replace("Staging"));
 				selenium.waitForPageToLoad("30000");
-				selenium.waitForVisible("link=Blogs Test Page");
 				selenium.clickAt("link=Blogs Test Page",
 					RuntimeVariables.replace("Blogs Test Page"));
 				selenium.waitForPageToLoad("30000");
@@ -67,7 +66,7 @@ public class OA_PublishToLiveStagedBlogsEntryOrganizationSiteTest
 				selenium.waitForVisible("//div[2]/div[1]/a");
 
 				boolean blogsVisible = selenium.isVisible(
-						"_88_PORTLET_DATA_33Checkbox");
+						"//input[@id='_88_PORTLET_DATA_33Checkbox']");
 
 				if (blogsVisible) {
 					label = 2;
@@ -84,7 +83,7 @@ public class OA_PublishToLiveStagedBlogsEntryOrganizationSiteTest
 					RuntimeVariables.replace("All"));
 
 				boolean blogsChecked = selenium.isChecked(
-						"_88_PORTLET_DATA_33Checkbox");
+						"//input[@id='_88_PORTLET_DATA_33Checkbox']");
 
 				if (blogsChecked) {
 					label = 3;
@@ -92,19 +91,17 @@ public class OA_PublishToLiveStagedBlogsEntryOrganizationSiteTest
 					continue;
 				}
 
-				assertFalse(selenium.isChecked(
-						"//input[@id='_88_PORTLET_DATA_33Checkbox']"));
 				selenium.clickAt("//input[@id='_88_PORTLET_DATA_33Checkbox']",
 					RuntimeVariables.replace("Blogs"));
-				assertTrue(selenium.isChecked(
-						"//input[@id='_88_PORTLET_DATA_33Checkbox']"));
 
 			case 3:
+				assertTrue(selenium.isChecked(
+						"//input[@id='_88_PORTLET_DATA_33Checkbox']"));
 				selenium.waitForVisible("//input[@value='Publish']");
 				selenium.clickAt("//input[@value='Publish']",
 					RuntimeVariables.replace("Publish"));
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to publish these pages[\\s\\S]$"));
+				selenium.waitForConfirmation(
+					"Are you sure you want to publish these pages?");
 				selenium.waitForVisible("//div[@class='portlet-msg-success']");
 				assertEquals(RuntimeVariables.replace(
 						"Your request completed successfully."),

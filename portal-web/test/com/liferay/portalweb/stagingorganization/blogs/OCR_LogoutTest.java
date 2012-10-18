@@ -25,7 +25,6 @@ public class OCR_LogoutTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent("link=Sign Out");
 		selenium.click(RuntimeVariables.replace("link=Sign Out"));
 		selenium.waitForPageToLoad("30000");
 		selenium.waitForElementPresent("//input[@id='_58_login']");

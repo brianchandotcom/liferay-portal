@@ -24,7 +24,7 @@ public class LogoutTest extends BaseTestCase {
 	public void testLogout() throws Exception {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
-		selenium.waitForElementPresent("link=Sign Out");
+		selenium.open("/web/guest/home/");
 		selenium.click(RuntimeVariables.replace("link=Sign Out"));
 		selenium.waitForPageToLoad("30000");
 		selenium.waitForElementPresent("//input[@id='_58_login']");

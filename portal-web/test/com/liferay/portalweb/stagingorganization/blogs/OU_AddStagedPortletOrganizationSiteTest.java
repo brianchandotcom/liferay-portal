@@ -39,17 +39,28 @@ public class OU_AddStagedPortletOrganizationSiteTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"You are viewing the staged version of Selenium. You can make changes here and publish them to Live afterwards to make them public."),
 			selenium.getText("//span[@class='staging-live-help']"));
-		selenium.waitForVisible("link=Blogs Test Page");
 		selenium.clickAt("link=Blogs Test Page",
 			RuntimeVariables.replace("Blogs Test Page"));
 		selenium.waitForPageToLoad("30000");
-		Thread.sleep(5000);
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/liferay/dockbar_underlay.js')]");
+		assertEquals(RuntimeVariables.replace("Add"),
+			selenium.getText("//li[@id='_145_addContent']/a/span"));
+		selenium.mouseOver("//li[@id='_145_addContent']/a/span");
+		selenium.waitForVisible("//a[@id='_145_addApplication']");
 		assertTrue(selenium.isPartialText("//a[@id='_145_addApplication']",
 				"More"));
 		selenium.clickAt("//a[@id='_145_addApplication']",
 			RuntimeVariables.replace("More"));
-		selenium.waitForElementPresent("//div[@title='Blogs']/p/a");
-		selenium.clickAt("//div[@title='Blogs']/p/a",
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-live-search/aui-live-search-min.js')]");
+		selenium.waitForVisible("//input[@id='layout_configuration_content']");
+		selenium.sendKeys("//input[@id='layout_configuration_content']",
+			RuntimeVariables.replace("b"));
+		selenium.waitForVisible("//li[@title='Blogs']/p/a");
+		selenium.clickAt("//li[@title='Blogs']/p/a",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible("//section");
 		assertTrue(selenium.isVisible("//section"));

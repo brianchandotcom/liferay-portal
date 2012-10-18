@@ -19,6 +19,8 @@ package com.liferay.portal.kernel.util;
  */
 public interface PropsKeys {
 
+	public static final String ADMIN_ANALYTICS_TYPES = "admin.analytics.types";
+
 	public static final String ADMIN_DEFAULT_GROUP_NAMES = "admin.default.group.names";
 
 	public static final String ADMIN_DEFAULT_ORGANIZATION_GROUP_NAMES = "admin.default.organization.group.names";
@@ -2072,8 +2074,6 @@ public interface PropsKeys {
 	public static final String SITES_FORM_ADD_MISCELLANEOUS = "sites.form.add.miscellaneous";
 
 	public static final String SITES_FORM_ADD_SEO = "sites.form.add.seo";
-
-	public static final String SITES_FORM_ANALYTICS = "sites.form.analytics";
 
 	public static final String SITES_FORM_UPDATE_ADVANCED = "sites.form.update.advanced";
 

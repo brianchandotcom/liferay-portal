@@ -32,7 +32,9 @@ else {
 <liferay-ui:error-marker key="errorSection" value="analytics" />
 
 <%
-for (String analyticsType : PropsValues.SITES_FORM_ANALYTICS) {
+String[] analyticsTypes = PrefsPropsUtil.getStringArray(company.getCompanyId(), PropsKeys.ADMIN_ANALYTICS_TYPES, StringPool.NEW_LINE);
+
+for (String analyticsType : analyticsTypes) {
 %>
 
 	<c:choose>

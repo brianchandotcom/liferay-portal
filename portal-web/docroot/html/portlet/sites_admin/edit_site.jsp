@@ -84,7 +84,9 @@ if (group != null) {
 	miscellaneousSections = PropsValues.SITES_FORM_UPDATE_MISCELLANEOUS;
 }
 
-if ((PropsValues.SITES_FORM_ANALYTICS.length == 0) && ArrayUtil.contains(advancedSections, "analytics")) {
+String[] analyticsTypes = PrefsPropsUtil.getStringArray(company.getCompanyId(), PropsKeys.ADMIN_ANALYTICS_TYPES, StringPool.NEW_LINE);
+
+if ((analyticsTypes.length == 0) && ArrayUtil.contains(advancedSections, "analytics")) {
 	advancedSections = ArrayUtil.remove(advancedSections, "analytics");
 }
 

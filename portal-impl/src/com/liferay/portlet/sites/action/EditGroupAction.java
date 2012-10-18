@@ -67,7 +67,6 @@ import com.liferay.portal.service.TeamLocalServiceUtil;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.asset.AssetCategoryException;
 import com.liferay.portlet.asset.AssetTagException;
@@ -479,7 +478,11 @@ public class EditGroupAction extends PortletAction {
 				getTeams(actionRequest), Team.TEAM_ID_ACCESSOR,
 				StringPool.COMMA));
 
-		for (String analyticsType : PropsValues.SITES_FORM_ANALYTICS) {
+		String[] analyticsTypes = PrefsPropsUtil.getStringArray(
+			themeDisplay.getCompanyId(), PropsKeys.ADMIN_ANALYTICS_TYPES,
+			StringPool.NEW_LINE);
+
+		for (String analyticsType : analyticsTypes) {
 			if (analyticsType.equals("google")) {
 				String googleAnalyticsId = ParamUtil.getString(
 					actionRequest, "googleAnalyticsId",

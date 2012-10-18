@@ -153,7 +153,7 @@ if (Validator.isNotNull(structureAvailableFields)) {
 					</c:if>
 				</c:if>
 
-				<c:if test='<%= type.equals("detail") %>'>
+				<c:if test="<%= type.equals(DDMTemplateConstants.TEMPLATE_TYPE_DETAIL) %>">
 					<aui:select helpMessage="only-allow-deleting-required-fields-in-edit-mode" label="mode" name="mode">
 						<aui:option label="create" />
 						<aui:option label="edit" />
@@ -172,7 +172,7 @@ if (Validator.isNotNull(structureAvailableFields)) {
 		</liferay-ui:panel-container>
 
 		<c:choose>
-			<c:when test='<%= type.equals("detail") %>'>
+			<c:when test="<%= type.equals(DDMTemplateConstants.TEMPLATE_TYPE_DETAIL) %>">
 				<%@ include file="/html/portlet/dynamic_data_mapping/edit_template_detail.jspf" %>
 			</c:when>
 			<c:otherwise>

@@ -1618,6 +1618,7 @@
 		<field name="script" type="String">
 			<hint-collection name="CLOB" />
 		</field>
+		<field name="cacheable" type="boolean" />
 	</model>
 	<model name="com.liferay.portlet.expando.model.ExpandoColumn">
 		<field name="columnId" type="long" />

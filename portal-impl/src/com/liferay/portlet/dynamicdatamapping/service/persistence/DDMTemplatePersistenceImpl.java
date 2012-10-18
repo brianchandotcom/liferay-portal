@@ -859,6 +859,7 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 		ddmTemplateImpl.setMode(ddmTemplate.getMode());
 		ddmTemplateImpl.setLanguage(ddmTemplate.getLanguage());
 		ddmTemplateImpl.setScript(ddmTemplate.getScript());
+		ddmTemplateImpl.setCacheable(ddmTemplate.isCacheable());
 
 		return ddmTemplateImpl;
 	}

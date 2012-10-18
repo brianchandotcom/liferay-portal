@@ -103,10 +103,22 @@ public class BaseDDMServiceTestCase {
 			String type, String mode, String language, String script)
 		throws Exception {
 
+		return addTemplate(
+			classNameId, classPK, templateKey, name, type, mode, language,
+			script, false);
+	}
+
+	protected DDMTemplate addTemplate(
+			long classNameId, long classPK, String templateKey, String name,
+			String type, String mode, String language, String script,
+			boolean cacheable)
+		throws Exception {
+
 		return DDMTemplateLocalServiceUtil.addTemplate(
 			TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
 			classNameId, classPK, templateKey, getDefaultLocaleMap(name), null,
-			type, mode, language, script, ServiceTestUtil.getServiceContext());
+			type, mode, language, script, cacheable,
+			ServiceTestUtil.getServiceContext());
 	}
 
 	protected Map<Locale, String> getDefaultLocaleMap(String defaultValue) {

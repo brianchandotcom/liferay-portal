@@ -75,7 +75,7 @@ public class DDMTemplateServiceSoap {
 		java.lang.String[] descriptionMapLanguageIds,
 		java.lang.String[] descriptionMapValues, java.lang.String type,
 		java.lang.String mode, java.lang.String language,
-		java.lang.String script,
+		java.lang.String script, boolean cacheable,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -87,7 +87,7 @@ public class DDMTemplateServiceSoap {
 			com.liferay.portlet.dynamicdatamapping.model.DDMTemplate returnValue =
 				DDMTemplateServiceUtil.addTemplate(groupId, classNameId,
 					classPK, templateKey, nameMap, descriptionMap, type, mode,
-					language, script, serviceContext);
+					language, script, cacheable, serviceContext);
 
 			return com.liferay.portlet.dynamicdatamapping.model.DDMTemplateSoap.toSoapModel(returnValue);
 		}
@@ -382,7 +382,7 @@ public class DDMTemplateServiceSoap {
 		java.lang.String[] descriptionMapLanguageIds,
 		java.lang.String[] descriptionMapValues, java.lang.String type,
 		java.lang.String mode, java.lang.String language,
-		java.lang.String script,
+		java.lang.String script, boolean cacheable,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -393,7 +393,8 @@ public class DDMTemplateServiceSoap {
 
 			com.liferay.portlet.dynamicdatamapping.model.DDMTemplate returnValue =
 				DDMTemplateServiceUtil.updateTemplate(templateId, nameMap,
-					descriptionMap, type, mode, language, script, serviceContext);
+					descriptionMap, type, mode, language, script, cacheable,
+					serviceContext);
 
 			return com.liferay.portlet.dynamicdatamapping.model.DDMTemplateSoap.toSoapModel(returnValue);
 		}

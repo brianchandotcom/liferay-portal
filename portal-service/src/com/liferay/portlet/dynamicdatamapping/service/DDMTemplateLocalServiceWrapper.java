@@ -285,13 +285,13 @@ public class DDMTemplateLocalServiceWrapper implements DDMTemplateLocalService,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String type, java.lang.String mode,
-		java.lang.String language, java.lang.String script,
+		java.lang.String language, java.lang.String script, boolean cacheable,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _ddmTemplateLocalService.addTemplate(userId, groupId,
 			classNameId, classPK, templateKey, nameMap, descriptionMap, type,
-			mode, language, script, serviceContext);
+			mode, language, script, cacheable, serviceContext);
 	}
 
 	public void addTemplateResources(
@@ -480,12 +480,13 @@ public class DDMTemplateLocalServiceWrapper implements DDMTemplateLocalService,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String type, java.lang.String mode,
-		java.lang.String language, java.lang.String script,
+		java.lang.String language, java.lang.String script, boolean cacheable,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _ddmTemplateLocalService.updateTemplate(templateId, nameMap,
-			descriptionMap, type, mode, language, script, serviceContext);
+			descriptionMap, type, mode, language, script, cacheable,
+			serviceContext);
 	}
 
 	/**

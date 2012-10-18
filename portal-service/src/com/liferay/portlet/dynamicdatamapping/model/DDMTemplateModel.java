@@ -507,6 +507,27 @@ public interface DDMTemplateModel extends AttachedModel, BaseModel<DDMTemplate>,
 	 */
 	public void setScript(String script);
 
+	/**
+	 * Returns the cacheable of this d d m template.
+	 *
+	 * @return the cacheable of this d d m template
+	 */
+	public boolean getCacheable();
+
+	/**
+	 * Returns <code>true</code> if this d d m template is cacheable.
+	 *
+	 * @return <code>true</code> if this d d m template is cacheable; <code>false</code> otherwise
+	 */
+	public boolean isCacheable();
+
+	/**
+	 * Sets whether this d d m template is cacheable.
+	 *
+	 * @param cacheable the cacheable of this d d m template
+	 */
+	public void setCacheable(boolean cacheable);
+
 	public boolean isNew();
 
 	public void setNew(boolean n);

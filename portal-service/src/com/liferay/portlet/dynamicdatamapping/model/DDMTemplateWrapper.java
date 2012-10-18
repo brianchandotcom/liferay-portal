@@ -63,6 +63,7 @@ public class DDMTemplateWrapper implements DDMTemplate,
 		attributes.put("mode", getMode());
 		attributes.put("language", getLanguage());
 		attributes.put("script", getScript());
+		attributes.put("cacheable", getCacheable());
 
 		return attributes;
 	}
@@ -168,6 +169,12 @@ public class DDMTemplateWrapper implements DDMTemplate,
 
 		if (script != null) {
 			setScript(script);
+		}
+
+		Boolean cacheable = (Boolean)attributes.get("cacheable");
+
+		if (cacheable != null) {
+			setCacheable(cacheable);
 		}
 	}
 
@@ -744,6 +751,33 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	*/
 	public void setScript(java.lang.String script) {
 		_ddmTemplate.setScript(script);
+	}
+
+	/**
+	* Returns the cacheable of this d d m template.
+	*
+	* @return the cacheable of this d d m template
+	*/
+	public boolean getCacheable() {
+		return _ddmTemplate.getCacheable();
+	}
+
+	/**
+	* Returns <code>true</code> if this d d m template is cacheable.
+	*
+	* @return <code>true</code> if this d d m template is cacheable; <code>false</code> otherwise
+	*/
+	public boolean isCacheable() {
+		return _ddmTemplate.isCacheable();
+	}
+
+	/**
+	* Sets whether this d d m template is cacheable.
+	*
+	* @param cacheable the cacheable of this d d m template
+	*/
+	public void setCacheable(boolean cacheable) {
+		_ddmTemplate.setCacheable(cacheable);
 	}
 
 	public boolean isNew() {

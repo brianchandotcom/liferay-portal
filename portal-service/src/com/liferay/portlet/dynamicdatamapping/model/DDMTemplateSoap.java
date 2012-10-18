@@ -48,6 +48,7 @@ public class DDMTemplateSoap implements Serializable {
 		soapModel.setMode(model.getMode());
 		soapModel.setLanguage(model.getLanguage());
 		soapModel.setScript(model.getScript());
+		soapModel.setCacheable(model.getCacheable());
 
 		return soapModel;
 	}
@@ -236,6 +237,18 @@ public class DDMTemplateSoap implements Serializable {
 		_script = script;
 	}
 
+	public boolean getCacheable() {
+		return _cacheable;
+	}
+
+	public boolean isCacheable() {
+		return _cacheable;
+	}
+
+	public void setCacheable(boolean cacheable) {
+		_cacheable = cacheable;
+	}
+
 	private String _uuid;
 	private long _templateId;
 	private long _groupId;
@@ -253,4 +266,5 @@ public class DDMTemplateSoap implements Serializable {
 	private String _mode;
 	private String _language;
 	private String _script;
+	private boolean _cacheable;
 }

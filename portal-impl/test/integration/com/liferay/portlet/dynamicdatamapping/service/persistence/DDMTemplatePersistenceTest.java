@@ -142,6 +142,8 @@ public class DDMTemplatePersistenceTest {
 
 		newDDMTemplate.setScript(ServiceTestUtil.randomString());
 
+		newDDMTemplate.setCacheable(ServiceTestUtil.randomBoolean());
+
 		_persistence.update(newDDMTemplate, false);
 
 		DDMTemplate existingDDMTemplate = _persistence.findByPrimaryKey(newDDMTemplate.getPrimaryKey());
@@ -182,6 +184,8 @@ public class DDMTemplatePersistenceTest {
 			newDDMTemplate.getLanguage());
 		Assert.assertEquals(existingDDMTemplate.getScript(),
 			newDDMTemplate.getScript());
+		Assert.assertEquals(existingDDMTemplate.getCacheable(),
+			newDDMTemplate.getCacheable());
 	}
 
 	@Test
@@ -357,6 +361,8 @@ public class DDMTemplatePersistenceTest {
 		ddmTemplate.setLanguage(ServiceTestUtil.randomString());
 
 		ddmTemplate.setScript(ServiceTestUtil.randomString());
+
+		ddmTemplate.setCacheable(ServiceTestUtil.randomBoolean());
 
 		_persistence.update(ddmTemplate, false);
 

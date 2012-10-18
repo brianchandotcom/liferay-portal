@@ -86,9 +86,10 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 			{ "type_", Types.VARCHAR },
 			{ "mode_", Types.VARCHAR },
 			{ "language", Types.VARCHAR },
-			{ "script", Types.CLOB }
+			{ "script", Types.CLOB },
+			{ "cacheable", Types.BOOLEAN }
 		};
-	public static final String TABLE_SQL_CREATE = "create table DDMTemplate (uuid_ VARCHAR(75) null,templateId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,templateKey VARCHAR(75) null,name STRING null,description STRING null,type_ VARCHAR(75) null,mode_ VARCHAR(75) null,language VARCHAR(75) null,script TEXT null)";
+	public static final String TABLE_SQL_CREATE = "create table DDMTemplate (uuid_ VARCHAR(75) null,templateId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,templateKey VARCHAR(75) null,name STRING null,description STRING null,type_ VARCHAR(75) null,mode_ VARCHAR(75) null,language VARCHAR(75) null,script TEXT null,cacheable BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table DDMTemplate";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
@@ -142,6 +143,7 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 		model.setMode(soapModel.getMode());
 		model.setLanguage(soapModel.getLanguage());
 		model.setScript(soapModel.getScript());
+		model.setCacheable(soapModel.getCacheable());
 
 		return model;
 	}
@@ -217,6 +219,7 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 		attributes.put("mode", getMode());
 		attributes.put("language", getLanguage());
 		attributes.put("script", getScript());
+		attributes.put("cacheable", getCacheable());
 
 		return attributes;
 	}
@@ -323,6 +326,12 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 
 		if (script != null) {
 			setScript(script);
+		}
+
+		Boolean cacheable = (Boolean)attributes.get("cacheable");
+
+		if (cacheable != null) {
+			setCacheable(cacheable);
 		}
 	}
 
@@ -792,6 +801,19 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 		_script = script;
 	}
 
+	@JSON
+	public boolean getCacheable() {
+		return _cacheable;
+	}
+
+	public boolean isCacheable() {
+		return _cacheable;
+	}
+
+	public void setCacheable(boolean cacheable) {
+		_cacheable = cacheable;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -850,6 +872,7 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 		ddmTemplateImpl.setMode(getMode());
 		ddmTemplateImpl.setLanguage(getLanguage());
 		ddmTemplateImpl.setScript(getScript());
+		ddmTemplateImpl.setCacheable(getCacheable());
 
 		ddmTemplateImpl.resetOriginalValues();
 
@@ -1039,12 +1062,14 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 			ddmTemplateCacheModel.script = null;
 		}
 
+		ddmTemplateCacheModel.cacheable = getCacheable();
+
 		return ddmTemplateCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(35);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -1080,13 +1105,15 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 		sb.append(getLanguage());
 		sb.append(", script=");
 		sb.append(getScript());
+		sb.append(", cacheable=");
+		sb.append(getCacheable());
 		sb.append("}");
 
 		return sb.toString();
 	}
 
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(55);
+		StringBundler sb = new StringBundler(58);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portlet.dynamicdatamapping.model.DDMTemplate");
@@ -1160,6 +1187,10 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 			"<column><column-name>script</column-name><column-value><![CDATA[");
 		sb.append(getScript());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>cacheable</column-name><column-value><![CDATA[");
+		sb.append(getCacheable());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -1203,6 +1234,7 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 	private String _language;
 	private String _originalLanguage;
 	private String _script;
+	private boolean _cacheable;
 	private long _columnBitmask;
 	private DDMTemplate _escapedModelProxy;
 }

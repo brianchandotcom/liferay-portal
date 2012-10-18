@@ -225,7 +225,8 @@ public class DDMPortletDataHandlerImpl extends BasePortletDataHandler {
 					existingTemplate.getTemplateId(), template.getNameMap(),
 					template.getDescriptionMap(), template.getType(),
 					template.getMode(), template.getLanguage(),
-					template.getScript(), serviceContext);
+					template.getScript(), template.isCacheable(),
+					serviceContext);
 			}
 		}
 		else {
@@ -271,14 +272,14 @@ public class DDMPortletDataHandlerImpl extends BasePortletDataHandler {
 				template.getTemplateKey(), template.getNameMap(),
 				template.getDescriptionMap(), template.getType(),
 				template.getMode(), template.getLanguage(),
-				template.getScript(), serviceContext);
+				template.getScript(), template.getCacheable(), serviceContext);
 		}
 		catch (TemplateDuplicateTemplateKeyException tdtke) {
 			newTemplate = DDMTemplateLocalServiceUtil.addTemplate(
 				userId, groupId, template.getClassNameId(), classPK, null,
 				template.getNameMap(), template.getDescriptionMap(),
 				template.getType(), template.getMode(), template.getLanguage(),
-				template.getScript(), serviceContext);
+				template.getScript(), template.getCacheable(), serviceContext);
 
 			if (_log.isWarnEnabled()) {
 				_log.warn(

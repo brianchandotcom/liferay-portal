@@ -229,6 +229,9 @@ public class EditTemplateAction extends PortletAction {
 			script = scriptContent;
 		}
 
+		boolean cacheable = ParamUtil.getBoolean(
+			uploadPortletRequest, "cacheable");
+
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DDMTemplate.class.getName(), actionRequest);
 
@@ -237,12 +240,12 @@ public class EditTemplateAction extends PortletAction {
 		if (templateId <= 0) {
 			template = DDMTemplateServiceUtil.addTemplate(
 				groupId, classNameId, classPK, null, nameMap, descriptionMap,
-				type, mode, language, script, serviceContext);
+				type, mode, language, script, cacheable, serviceContext);
 		}
 		else {
 			template = DDMTemplateServiceUtil.updateTemplate(
 				templateId, nameMap, descriptionMap, type, mode, language,
-				script, serviceContext);
+				script, cacheable, serviceContext);
 		}
 
 		String portletResource = ParamUtil.getString(

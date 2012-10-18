@@ -1194,6 +1194,13 @@ public class PortletImporter {
 						portletDataContext, companyId, ownerId, ownerType, plid,
 						portletId, xml);
 				}
+				else if (rootPotletId.equals(
+							PortletKeys.TAGS_CATEGORIES_NAVIGATION)) {
+
+					xml = updateAssetCategoriesNavigationPortletPreferences(
+						portletDataContext, companyId, ownerId, ownerType, plid,
+						portletId, xml);
+				}
 
 				updatePortletPreferences(
 					portletDataContext, ownerId, ownerType, plid, portletId,
@@ -1741,103 +1748,6 @@ public class PortletImporter {
 		jxPreferences.setValues(key, newValues);
 	}
 
-	protected void updateAssetPublisherClassPKs(
-			PortletDataContext portletDataContext,
-			javax.portlet.PortletPreferences jxPreferences, String key,
-			Class<?> clazz, long companyGroupId)
-		throws Exception {
-
-		String[] oldValues = jxPreferences.getValues(key, null);
-
-		if (oldValues == null) {
-			return;
-		}
-
-		Map<Long, Long> primaryKeysMap =
-			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(clazz);
-
-		String[] newValues = new String[oldValues.length];
-
-		for (int i = 0; i < oldValues.length; i++) {
-			String oldValue = oldValues[i];
-
-			String newValue = oldValue;
-
-			String[] uuids = StringUtil.split(oldValue);
-
-			for (String uuid : uuids) {
-				Long newPrimaryKey = null;
-
-				if (Validator.isNumber(uuid)) {
-					long oldPrimaryKey = GetterUtil.getLong(uuid);
-
-					newPrimaryKey = MapUtil.getLong(
-						primaryKeysMap, oldPrimaryKey, oldPrimaryKey);
-				}
-				else {
-					String className = clazz.getName();
-
-					if (className.equals(AssetCategory.class.getName())) {
-						AssetCategory category =
-							AssetCategoryUtil.fetchByUUID_G(
-								uuid, portletDataContext.getScopeGroupId());
-
-						if (category == null) {
-							category =
-								AssetCategoryUtil.fetchByUUID_G(
-									uuid, companyGroupId);
-						}
-
-						if (category != null) {
-							newPrimaryKey = category.getCategoryId();
-						}
-					}
-					else if (className.equals(
-								JournalStructure.class.getName())) {
-
-						JournalStructure structure =
-							JournalStructureUtil.fetchByUUID_G(
-								uuid, portletDataContext.getScopeGroupId());
-
-						if (structure == null) {
-							structure = JournalStructureUtil.fetchByUUID_G(
-								uuid, companyGroupId);
-						}
-
-						if (structure != null) {
-							newPrimaryKey = structure.getId();
-						}
-					}
-				}
-
-				if (Validator.isNull(newPrimaryKey)) {
-					if (_log.isWarnEnabled()) {
-						StringBundler sb = new StringBundler(8);
-
-						sb.append("Unable to get primary key for ");
-						sb.append(clazz);
-						sb.append(" with UUID ");
-						sb.append(uuid);
-						sb.append(" in company group ");
-						sb.append(companyGroupId);
-						sb.append(" or in group ");
-						sb.append(portletDataContext.getScopeGroupId());
-
-						_log.warn(sb.toString());
-					}
-				}
-				else {
-					newValue = StringUtil.replace(
-						newValue, uuid, newPrimaryKey.toString());
-				}
-			}
-
-			newValues[i] = newValue;
-		}
-
-		jxPreferences.setValues(key, newValues);
-	}
-
 	protected void updateAssetPublisherGlobalScopeId(
 			javax.portlet.PortletPreferences jxPreferences, String key,
 			long groupId)
@@ -1890,7 +1800,7 @@ public class PortletImporter {
 					"classTypeIdsJournalArticleAssetRendererFactory") ||
 				name.equals("classTypeIds")) {
 
-				updateAssetPublisherClassPKs(
+				updatePreferencesClassPKs(
 					portletDataContext, jxPreferences, name,
 					JournalStructure.class, companyGroup.getGroupId());
 			}
@@ -1908,9 +1818,37 @@ public class PortletImporter {
 
 				String index = name.substring(9, name.length());
 
-				updateAssetPublisherClassPKs(
+				updatePreferencesClassPKs(
 					portletDataContext, jxPreferences, "queryValues" + index,
 					AssetCategory.class, companyGroup.getGroupId());
+			}
+		}
+
+		return PortletPreferencesFactoryUtil.toXML(jxPreferences);
+	}
+
+	protected String updateAssetCategoriesNavigationPortletPreferences(
+			PortletDataContext portletDataContext, long companyId, long ownerId,
+			int ownerType, long plid, String portletId, String xml)
+		throws Exception {
+
+		Company company = CompanyLocalServiceUtil.getCompanyById(companyId);
+
+		Group companyGroup = company.getGroup();
+
+		javax.portlet.PortletPreferences jxPreferences =
+			PortletPreferencesFactoryUtil.fromXML(
+				companyId, ownerId, ownerType, plid, portletId, xml);
+
+		Enumeration<String> enu = jxPreferences.getNames();
+
+		while (enu.hasMoreElements()) {
+			String name = enu.nextElement();
+
+			if (name.equals("assetVocabularyIds")) {
+				updatePreferencesClassPKs(
+					portletDataContext, jxPreferences, name,
+					AssetVocabulary.class, companyGroup.getGroupId());
 			}
 		}
 
@@ -1985,6 +1923,118 @@ public class PortletImporter {
 			PortletPreferencesLocalServiceUtil.updatePreferences(
 				ownerId, ownerType, plid, portletId, portletPreferences);
 		}
+	}
+
+	protected void updatePreferencesClassPKs(
+			PortletDataContext portletDataContext,
+			javax.portlet.PortletPreferences jxPreferences, String key,
+			Class<?> clazz, long companyGroupId)
+		throws Exception {
+
+		String[] oldValues = jxPreferences.getValues(key, null);
+
+		if (oldValues == null) {
+			return;
+		}
+
+		Map<Long, Long> primaryKeysMap =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(clazz);
+
+		String[] newValues = new String[oldValues.length];
+
+		for (int i = 0; i < oldValues.length; i++) {
+			String oldValue = oldValues[i];
+
+			String newValue = oldValue;
+
+			String[] uuids = StringUtil.split(oldValue);
+
+			for (String uuid : uuids) {
+				Long newPrimaryKey = null;
+
+				if (Validator.isNumber(uuid)) {
+					long oldPrimaryKey = GetterUtil.getLong(uuid);
+
+					newPrimaryKey = MapUtil.getLong(
+						primaryKeysMap, oldPrimaryKey, oldPrimaryKey);
+				}
+				else {
+					String className = clazz.getName();
+
+					if (className.equals(AssetCategory.class.getName())) {
+						AssetCategory category =
+							AssetCategoryUtil.fetchByUUID_G(
+								uuid, portletDataContext.getScopeGroupId());
+
+						if (category == null) {
+							category = AssetCategoryUtil.fetchByUUID_G(
+									uuid, companyGroupId);
+						}
+
+						if (category != null) {
+							newPrimaryKey = category.getCategoryId();
+						}
+					}
+					else if (className.equals(
+							AssetVocabulary.class.getName())) {
+
+						AssetVocabulary vocabulary =
+							AssetVocabularyUtil.fetchByUUID_G(
+								uuid, portletDataContext.getScopeGroupId());
+
+						if (vocabulary == null) {
+							vocabulary = AssetVocabularyUtil.fetchByUUID_G(
+								uuid, companyGroupId);
+						}
+
+						if (vocabulary != null) {
+							newPrimaryKey = vocabulary.getVocabularyId();
+						}
+					}
+					else if (className.equals(
+							JournalStructure.class.getName())) {
+
+						JournalStructure structure =
+							JournalStructureUtil.fetchByUUID_G(
+								uuid, portletDataContext.getScopeGroupId());
+
+						if (structure == null) {
+							structure = JournalStructureUtil.fetchByUUID_G(
+								uuid, companyGroupId);
+						}
+
+						if (structure != null) {
+							newPrimaryKey = structure.getId();
+						}
+					}
+				}
+
+				if (Validator.isNull(newPrimaryKey)) {
+					if (_log.isWarnEnabled()) {
+						StringBundler sb = new StringBundler(8);
+
+						sb.append("Unable to get primary key for ");
+						sb.append(clazz);
+						sb.append(" with UUID ");
+						sb.append(uuid);
+						sb.append(" in company group ");
+						sb.append(companyGroupId);
+						sb.append(" or in group ");
+						sb.append(portletDataContext.getScopeGroupId());
+
+						_log.warn(sb.toString());
+					}
+				}
+				else {
+					newValue = StringUtil.replace(
+						newValue, uuid, newPrimaryKey.toString());
+				}
+			}
+
+			newValues[i] = newValue;
+		}
+
+		jxPreferences.setValues(key, newValues);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(PortletImporter.class);

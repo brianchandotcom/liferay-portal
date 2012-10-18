@@ -97,7 +97,7 @@ public abstract class BaseTrashHandler implements TrashHandler {
 	 * @throws SystemException
 	 */
 	public List<ContainerModel> getContainerModels(
-			long trashEntryId, long parentContainerModelId, int start, int end)
+			long classPK, long parentContainerModelId, int start, int end)
 		throws PortalException, SystemException {
 
 		return null;
@@ -108,7 +108,7 @@ public abstract class BaseTrashHandler implements TrashHandler {
 	 * @throws SystemException
 	 */
 	public int getContainerModelsCount(
-			long trashEntryId, long parentContainerModelId)
+			long classPK, long parentContainerModelId)
 		throws PortalException, SystemException {
 
 		return 0;
@@ -199,7 +199,7 @@ public abstract class BaseTrashHandler implements TrashHandler {
 		return true;
 	}
 
-	public void moveTrashEntry(
+	public TrashEntry moveTrashEntry(
 			long classPK, long containerModelId, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 

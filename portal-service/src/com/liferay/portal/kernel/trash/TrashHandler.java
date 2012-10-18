@@ -60,10 +60,10 @@ public interface TrashHandler {
 	public String getContainerModelName();
 
 	public List<ContainerModel> getContainerModels(
-			long trashEntryId, long containerModelId, int start, int end)
+			long classPK, long containerModelId, int start, int end)
 		throws PortalException, SystemException;
 
-	public int getContainerModelsCount(long trashEntryId, long containerModelId)
+	public int getContainerModelsCount(long classPK, long containerModelId)
 		throws PortalException, SystemException;
 
 	public String getDeleteMessage();
@@ -92,7 +92,7 @@ public interface TrashHandler {
 	public boolean isRestorable(long classPK)
 		throws PortalException, SystemException;
 
-	public void moveTrashEntry(
+	public TrashEntry moveTrashEntry(
 			long classPK, long containerModelId, ServiceContext serviceContext)
 		throws PortalException, SystemException;
 

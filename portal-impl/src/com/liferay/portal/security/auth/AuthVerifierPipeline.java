@@ -141,6 +141,8 @@ public class AuthVerifierPipeline {
 						authVerifierClassName);
 
 				authVerifierConfiguration.setAuthVerifier(authVerifier);
+				authVerifierConfiguration
+					.setAuthVerifierClassName(authVerifierClassName);
 
 				Properties properties = PropsUtil.getProperties(
 					getAuthVerifierPropertyName(authVerifierClassName), true);
@@ -185,9 +187,8 @@ public class AuthVerifierPipeline {
 		Map<String, Object> settings = accessControlContext.getSettings();
 
 		String authVerifierSettingsKey =
-			PropsKeys.AUTH_VERIFIER +
-				authVerifierConfiguration.getAuthVerifier().
-					getClass().getSimpleName() + StringPool.PERIOD;
+			getAuthVerifierPropertyName(
+				authVerifierConfiguration.getAuthVerifierClassName());
 
 		boolean merge = false;
 
@@ -258,6 +259,10 @@ public class AuthVerifierPipeline {
 
 		if (authVerifierConfiguration.getAuthVerifier() == null) {
 			throw new IllegalArgumentException("Auth verifier is null");
+		}
+
+		if (authVerifierConfiguration.getAuthVerifierClassName() == null) {
+			throw new IllegalArgumentException("Class name is null");
 		}
 
 		if (authVerifierConfiguration.getProperties() == null) {

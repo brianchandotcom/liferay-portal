@@ -52,6 +52,7 @@ public class DigestAuthenticationAuthVerifier implements AuthVerifier {
 			if (userId == 0) {
 
 				// backward compatibility
+
 				boolean forcedDigestAuth =
 					GetterUtil.getBoolean(
 						accessControlContext.getSettings().get("digest_auth"));

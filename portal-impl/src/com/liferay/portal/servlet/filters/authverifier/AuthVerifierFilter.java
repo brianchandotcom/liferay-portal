@@ -94,8 +94,11 @@ public class AuthVerifierFilter extends BasePortalFilter {
 		}
 
 		if (_filterConfiguration.containsKey("hosts.allowed")) {
-			_hostsAllowed.addAll(ListUtil.fromArray(StringUtil.split(
-				(String) _filterConfiguration.get("hosts.allowed"))));
+			String[] hostsAllowedArray =
+				StringUtil.split(
+					(String) _filterConfiguration.get("hosts.allowed"));
+
+			_hostsAllowed.addAll(ListUtil.fromArray(hostsAllowedArray));
 
 			_filterConfiguration.remove("hosts.allowed");
 		}

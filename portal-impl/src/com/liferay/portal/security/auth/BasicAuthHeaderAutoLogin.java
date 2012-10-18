@@ -159,7 +159,9 @@ public class BasicAuthHeaderAutoLogin implements AuthVerifier, AutoLogin {
 				authVerifierResult.setState(AuthVerifierResult.State.SUCCESS);
 				authVerifierResult.setUserId(Long.valueOf(credentials[0]));
 			}
+
 			// backward compatibility
+
 			else {
 				boolean forcedBasicAuth =
 					GetterUtil.getBoolean(

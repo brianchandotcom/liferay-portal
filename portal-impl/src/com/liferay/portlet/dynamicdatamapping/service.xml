@@ -91,7 +91,8 @@
 		<finder name="GroupId" return-type="Collection">
 			<finder-column name="groupId" arrayable-operator="OR" />
 		</finder>
-		<finder name="ClassNameId" return-type="Collection">
+		<finder name="C_C" return-type="Collection">
+			<finder-column name="companyId" />
 			<finder-column name="classNameId" />
 		</finder>
 		<finder name="G_S" return-type="DDMStructure" unique="true">

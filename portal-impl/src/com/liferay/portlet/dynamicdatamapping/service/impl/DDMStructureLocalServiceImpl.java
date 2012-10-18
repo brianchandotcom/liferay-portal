@@ -242,26 +242,28 @@ public class DDMStructureLocalServiceImpl
 		return ddmStructurePersistence.fetchByG_S(groupId, structureKey);
 	}
 
-	public List<DDMStructure> getClassStructures(long classNameId)
+	public List<DDMStructure> getClassStructures(
+			long companyId, long classNameId)
 		throws SystemException {
 
-		return ddmStructurePersistence.findByClassNameId(classNameId);
+		return ddmStructurePersistence.findByC_C(companyId, classNameId);
 	}
 
 	public List<DDMStructure> getClassStructures(
-			long classNameId, int start, int end)
+			long companyId, long classNameId, int start, int end)
 		throws SystemException {
 
-		return ddmStructurePersistence.findByClassNameId(
-			classNameId, start, end);
+		return ddmStructurePersistence.findByC_C(
+			companyId, classNameId, start, end);
 	}
 
 	public List<DDMStructure> getClassStructures(
-			long classNameId, OrderByComparator orderByComparator)
+			long companyId, long classNameId,
+			OrderByComparator orderByComparator)
 		throws SystemException {
 
-		return ddmStructurePersistence.findByClassNameId(
-			classNameId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+		return ddmStructurePersistence.findByC_C(
+			companyId, classNameId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			orderByComparator);
 	}
 

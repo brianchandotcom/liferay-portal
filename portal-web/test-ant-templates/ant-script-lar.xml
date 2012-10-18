@@ -4,6 +4,8 @@
 	<import file="../../build-test.xml" />
 
 	<target name="test-${test.ant.script.command}-geronimo-mysql-firefox">
+		<antcall target="clean-up-test-properties" />
+
 		<antcall target="prepare-mysql">
 			${test.ant.script.file.properties}
 		</antcall>
@@ -33,6 +35,8 @@
 	</target>
 
 	<target name="test-${test.ant.script.command}-glassfish-mysql-firefox">
+		<antcall target="clean-up-test-properties" />
+
 		<antcall target="prepare-mysql">
 			${test.ant.script.file.properties}
 		</antcall>
@@ -62,6 +66,8 @@
 	</target>
 
 	<target name="test-${test.ant.script.command}-jboss-mysql-firefox">
+		<antcall target="clean-up-test-properties" />
+
 		<antcall target="prepare-mysql">
 			${test.ant.script.file.properties}
 		</antcall>
@@ -91,6 +97,8 @@
 	</target>
 
 	<target name="test-${test.ant.script.command}-jetty-mysql-firefox">
+		<antcall target="clean-up-test-properties" />
+
 		<antcall target="prepare-mysql">
 			${test.ant.script.file.properties}
 		</antcall>
@@ -120,6 +128,8 @@
 	</target>
 
 	<target name="test-${test.ant.script.command}-jonas-mysql-firefox">
+		<antcall target="clean-up-test-properties" />
+
 		<antcall target="prepare-mysql">
 			${test.ant.script.file.properties}
 		</antcall>
@@ -149,6 +159,8 @@
 	</target>
 
 	<target name="test-${test.ant.script.command}-tomcat-db2-firefox">
+		<antcall target="clean-up-test-properties" />
+
 		<antcall target="prepare-vm-server">
 			<param name="build.war" value="false" />
 			<param name="skip.prepare-bundle" value="true" />
@@ -189,6 +201,8 @@
 	</target>
 
 	<target name="test-${test.ant.script.command}-tomcat-hsql-firefox">
+		<antcall target="clean-up-test-properties" />
+
 		<antcall target="prepare-hsql">
 			${test.ant.script.file.properties}
 		</antcall>
@@ -218,6 +232,8 @@
 	</target>
 
 	<target name="test-${test.ant.script.command}-tomcat-mysql-firefox">
+		<antcall target="clean-up-test-properties" />
+
 		<antcall target="prepare-mysql">
 			${test.ant.script.file.properties}
 		</antcall>
@@ -247,6 +263,8 @@
 	</target>
 
 	<target name="test-${test.ant.script.command}-tomcat-mysql-google-chrome">
+		<antcall target="clean-up-test-properties" />
+
 		<antcall target="prepare-mysql">
 			${test.ant.script.file.properties}
 		</antcall>
@@ -278,6 +296,8 @@
 	</target>
 
 	<target name="test-${test.ant.script.command}-tomcat-mysql-internet-explorer">
+		<antcall target="clean-up-test-properties" />
+
 		<antcall target="prepare-mysql">
 			${test.ant.script.file.properties}
 		</antcall>
@@ -309,6 +329,8 @@
 	</target>
 
 	<target name="test-${test.ant.script.command}-tomcat-oracle-10-firefox">
+		<antcall target="clean-up-test-properties" />
+
 		<antcall target="prepare-vm-server">
 			<param name="build.war" value="false" />
 			<param name="skip.prepare-bundle" value="true" />
@@ -349,6 +371,8 @@
 	</target>
 
 	<target name="test-${test.ant.script.command}-tomcat-oracle-11-firefox">
+		<antcall target="clean-up-test-properties" />
+
 		<antcall target="prepare-vm-server">
 			<param name="build.war" value="false" />
 			<param name="skip.prepare-bundle" value="true" />
@@ -389,6 +413,8 @@
 	</target>
 
 	<target name="test-${test.ant.script.command}-tomcat-postgresql-8.4-firefox">
+		<antcall target="clean-up-test-properties" />
+
 		<antcall target="prepare-vm-server">
 			<param name="build.war" value="false" />
 			<param name="skip.prepare-bundle" value="true" />
@@ -429,6 +455,8 @@
 	</target>
 
 	<target name="test-${test.ant.script.command}-tomcat-postgresql-9.0-firefox">
+		<antcall target="clean-up-test-properties" />
+
 		<antcall target="prepare-vm-server">
 			<param name="build.war" value="false" />
 			<param name="skip.prepare-bundle" value="true" />
@@ -469,6 +497,8 @@
 	</target>
 
 	<target name="test-${test.ant.script.command}-tomcat-sql-server-2005-firefox">
+		<antcall target="clean-up-test-properties" />
+
 		<antcall target="prepare-vm-server">
 			<param name="build.war" value="false" />
 			<param name="skip.prepare-bundle" value="true" />
@@ -505,6 +535,8 @@
 	</target>
 
 	<target name="test-${test.ant.script.command}-tomcat-sql-server-2008-firefox">
+		<antcall target="clean-up-test-properties" />
+
 		<antcall target="prepare-vm-server">
 			<param name="build.war" value="false" />
 			<param name="skip.prepare-bundle" value="true" />
@@ -545,6 +577,8 @@
 	</target>
 
 	<target name="test-${test.ant.script.command}-tomcat-sybase-firefox">
+		<antcall target="clean-up-test-properties" />
+
 		<antcall target="prepare-vm-server">
 			<param name="build.war" value="false" />
 			<param name="skip.prepare-bundle" value="true" />
@@ -585,6 +619,8 @@
 	</target>
 
 	<target name="test-${test.ant.script.command}-weblogic-10.3-mysql-firefox">
+		<antcall target="clean-up-test-properties" />
+
 		<antcall target="prepare-mysql">
 			${test.ant.script.file.properties}
 		</antcall>
@@ -602,6 +638,8 @@
 	</target>
 
 	<target name="test-${test.ant.script.command}-websphere-6.1-mysql-firefox">
+		<antcall target="clean-up-test-properties" />
+
 		<antcall target="prepare-mysql">
 			${test.ant.script.file.properties}
 		</antcall>
@@ -619,6 +657,8 @@
 	</target>
 
 	<target name="test-${test.ant.script.command}-websphere-7.0-mysql-firefox">
+		<antcall target="clean-up-test-properties" />
+
 		<antcall target="prepare-mysql">
 			${test.ant.script.file.properties}
 		</antcall>
@@ -636,6 +676,8 @@
 	</target>
 
 	<target name="test-${test.ant.script.command}-websphere-8.0-mysql-firefox">
+		<antcall target="clean-up-test-properties" />
+
 		<antcall target="prepare-mysql">
 			${test.ant.script.file.properties}
 		</antcall>

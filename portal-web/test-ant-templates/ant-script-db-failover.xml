@@ -4,6 +4,8 @@
 	<import file="../../build-test-db-failover.xml" />
 
 	<target name="test-${test.ant.script.command}-tomcat-mysql-firefox">
+		<antcall target="clean-up-test-properties" />
+
 		<antcall target="prepare-mysql">
 			<param name="custom.properties" value="counter.increment=5" />
 		</antcall>

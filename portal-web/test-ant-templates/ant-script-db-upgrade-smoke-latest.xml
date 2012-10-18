@@ -4,6 +4,8 @@
 	<import file="../../build-test-db-upgrade.xml" />
 
 	<target name="test-db-upgrade-smoke-latest-tomcat-db2-firefox">
+		<antcall target="clean-up-test-properties" />
+
 		<antcall target="prepare-vm-server">
 			<param name="build.war" value="false" />
 			<param name="skip.prepare-bundle" value="true" />
@@ -30,6 +32,8 @@ create database lportal;</echo>
 	</target>
 
 	<target name="test-db-upgrade-smoke-latest-tomcat-mysql-firefox">
+		<antcall target="clean-up-test-properties" />
+
 		<echo file="create-mysql.sql">drop database if exists lportal;
 create database lportal character set utf8;</echo>
 
@@ -45,6 +49,8 @@ create database lportal character set utf8;</echo>
 	</target>
 
 	<target name="test-db-upgrade-smoke-latest-tomcat-oracle-firefox">
+		<antcall target="clean-up-test-properties" />
+
 		<antcall target="prepare-vm-server">
 			<param name="build.war" value="false" />
 			<param name="skip.prepare-bundle" value="true" />
@@ -73,6 +79,8 @@ exit;]]></echo>
 	</target>
 
 	<target name="test-db-upgrade-smoke-latest-tomcat-postgresql-firefox">
+		<antcall target="clean-up-test-properties" />
+
 		<antcall target="prepare-vm-server">
 			<param name="build.war" value="false" />
 			<param name="skip.prepare-bundle" value="true" />
@@ -99,6 +107,8 @@ create database lportal encoding = 'UNICODE';</echo>
 	</target>
 
 	<target name="test-db-upgrade-smoke-latest-tomcat-sql-server-firefox">
+		<antcall target="clean-up-test-properties" />
+
 		<antcall target="prepare-vm-server">
 			<param name="build.war" value="false" />
 			<param name="skip.prepare-bundle" value="true" />
@@ -125,6 +135,8 @@ create database lportal;</echo>
 	</target>
 
 	<target name="test-db-upgrade-smoke-latest-tomcat-sybase-firefox">
+		<antcall target="clean-up-test-properties" />
+
 		<antcall target="prepare-vm-server">
 			<param name="skip.prepare-bundle" value="true" />
 			<param name="vm.vmdk.suffix" value="sybase-15.0.2" />

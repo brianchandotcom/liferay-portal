@@ -4,6 +4,8 @@
 	<import file="../../build-test-cluster.xml" />
 
 	<target name="test-${test.ant.script.command}-tomcat-mysql-firefox">
+		<antcall target="clean-up-test-properties" />
+
 		<antcall target="prepare-mysql" />
 
 		<antcall target="run-cluster-tomcat">

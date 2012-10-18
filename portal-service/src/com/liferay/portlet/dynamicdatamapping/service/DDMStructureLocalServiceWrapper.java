@@ -360,24 +360,25 @@ public class DDMStructureLocalServiceWrapper implements DDMStructureLocalService
 	}
 
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getClassStructures(
-		long classNameId)
+		long companyId, long classNameId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _ddmStructureLocalService.getClassStructures(classNameId);
+		return _ddmStructureLocalService.getClassStructures(companyId,
+			classNameId);
 	}
 
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getClassStructures(
-		long classNameId, int start, int end)
+		long companyId, long classNameId, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _ddmStructureLocalService.getClassStructures(classNameId, start,
-			end);
+		return _ddmStructureLocalService.getClassStructures(companyId,
+			classNameId, start, end);
 	}
 
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getClassStructures(
-		long classNameId,
+		long companyId, long classNameId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _ddmStructureLocalService.getClassStructures(classNameId,
-			orderByComparator);
+		return _ddmStructureLocalService.getClassStructures(companyId,
+			classNameId, orderByComparator);
 	}
 
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getDLFileEntryTypeStructures(

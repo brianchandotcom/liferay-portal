@@ -847,44 +847,47 @@ public class DDMStructureUtil {
 	}
 
 	/**
-	* Returns all the d d m structures where classNameId = &#63;.
+	* Returns all the d d m structures where companyId = &#63; and classNameId = &#63;.
 	*
+	* @param companyId the company ID
 	* @param classNameId the class name ID
 	* @return the matching d d m structures
 	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> findByClassNameId(
-		long classNameId)
+	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> findByC_C(
+		long companyId, long classNameId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findByClassNameId(classNameId);
+		return getPersistence().findByC_C(companyId, classNameId);
 	}
 
 	/**
-	* Returns a range of all the d d m structures where classNameId = &#63;.
+	* Returns a range of all the d d m structures where companyId = &#63; and classNameId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	* </p>
 	*
+	* @param companyId the company ID
 	* @param classNameId the class name ID
 	* @param start the lower bound of the range of d d m structures
 	* @param end the upper bound of the range of d d m structures (not inclusive)
 	* @return the range of matching d d m structures
 	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> findByClassNameId(
-		long classNameId, int start, int end)
+	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> findByC_C(
+		long companyId, long classNameId, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findByClassNameId(classNameId, start, end);
+		return getPersistence().findByC_C(companyId, classNameId, start, end);
 	}
 
 	/**
-	* Returns an ordered range of all the d d m structures where classNameId = &#63;.
+	* Returns an ordered range of all the d d m structures where companyId = &#63; and classNameId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
 	* </p>
 	*
+	* @param companyId the company ID
 	* @param classNameId the class name ID
 	* @param start the lower bound of the range of d d m structures
 	* @param end the upper bound of the range of d d m structures (not inclusive)
@@ -892,99 +895,105 @@ public class DDMStructureUtil {
 	* @return the ordered range of matching d d m structures
 	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> findByClassNameId(
-		long classNameId, int start, int end,
+	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> findByC_C(
+		long companyId, long classNameId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence()
-				   .findByClassNameId(classNameId, start, end, orderByComparator);
+				   .findByC_C(companyId, classNameId, start, end,
+			orderByComparator);
 	}
 
 	/**
-	* Returns the first d d m structure in the ordered set where classNameId = &#63;.
+	* Returns the first d d m structure in the ordered set where companyId = &#63; and classNameId = &#63;.
 	*
+	* @param companyId the company ID
 	* @param classNameId the class name ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d m structure
 	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureException if a matching d d m structure could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructure findByClassNameId_First(
-		long classNameId,
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructure findByC_C_First(
+		long companyId, long classNameId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.dynamicdatamapping.NoSuchStructureException {
 		return getPersistence()
-				   .findByClassNameId_First(classNameId, orderByComparator);
+				   .findByC_C_First(companyId, classNameId, orderByComparator);
 	}
 
 	/**
-	* Returns the first d d m structure in the ordered set where classNameId = &#63;.
+	* Returns the first d d m structure in the ordered set where companyId = &#63; and classNameId = &#63;.
 	*
+	* @param companyId the company ID
 	* @param classNameId the class name ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d m structure, or <code>null</code> if a matching d d m structure could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructure fetchByClassNameId_First(
-		long classNameId,
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructure fetchByC_C_First(
+		long companyId, long classNameId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence()
-				   .fetchByClassNameId_First(classNameId, orderByComparator);
+				   .fetchByC_C_First(companyId, classNameId, orderByComparator);
 	}
 
 	/**
-	* Returns the last d d m structure in the ordered set where classNameId = &#63;.
+	* Returns the last d d m structure in the ordered set where companyId = &#63; and classNameId = &#63;.
 	*
+	* @param companyId the company ID
 	* @param classNameId the class name ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d d m structure
 	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureException if a matching d d m structure could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructure findByClassNameId_Last(
-		long classNameId,
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructure findByC_C_Last(
+		long companyId, long classNameId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.dynamicdatamapping.NoSuchStructureException {
 		return getPersistence()
-				   .findByClassNameId_Last(classNameId, orderByComparator);
+				   .findByC_C_Last(companyId, classNameId, orderByComparator);
 	}
 
 	/**
-	* Returns the last d d m structure in the ordered set where classNameId = &#63;.
+	* Returns the last d d m structure in the ordered set where companyId = &#63; and classNameId = &#63;.
 	*
+	* @param companyId the company ID
 	* @param classNameId the class name ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d d m structure, or <code>null</code> if a matching d d m structure could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructure fetchByClassNameId_Last(
-		long classNameId,
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructure fetchByC_C_Last(
+		long companyId, long classNameId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence()
-				   .fetchByClassNameId_Last(classNameId, orderByComparator);
+				   .fetchByC_C_Last(companyId, classNameId, orderByComparator);
 	}
 
 	/**
-	* Returns the d d m structures before and after the current d d m structure in the ordered set where classNameId = &#63;.
+	* Returns the d d m structures before and after the current d d m structure in the ordered set where companyId = &#63; and classNameId = &#63;.
 	*
 	* @param structureId the primary key of the current d d m structure
+	* @param companyId the company ID
 	* @param classNameId the class name ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next d d m structure
 	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureException if a d d m structure with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructure[] findByClassNameId_PrevAndNext(
-		long structureId, long classNameId,
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructure[] findByC_C_PrevAndNext(
+		long structureId, long companyId, long classNameId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.dynamicdatamapping.NoSuchStructureException {
 		return getPersistence()
-				   .findByClassNameId_PrevAndNext(structureId, classNameId,
+				   .findByC_C_PrevAndNext(structureId, companyId, classNameId,
 			orderByComparator);
 	}
 
@@ -1387,14 +1396,15 @@ public class DDMStructureUtil {
 	}
 
 	/**
-	* Removes all the d d m structures where classNameId = &#63; from the database.
+	* Removes all the d d m structures where companyId = &#63; and classNameId = &#63; from the database.
 	*
+	* @param companyId the company ID
 	* @param classNameId the class name ID
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByClassNameId(long classNameId)
+	public static void removeByC_C(long companyId, long classNameId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByClassNameId(classNameId);
+		getPersistence().removeByC_C(companyId, classNameId);
 	}
 
 	/**
@@ -1523,15 +1533,16 @@ public class DDMStructureUtil {
 	}
 
 	/**
-	* Returns the number of d d m structures where classNameId = &#63;.
+	* Returns the number of d d m structures where companyId = &#63; and classNameId = &#63;.
 	*
+	* @param companyId the company ID
 	* @param classNameId the class name ID
 	* @return the number of matching d d m structures
 	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByClassNameId(long classNameId)
+	public static int countByC_C(long companyId, long classNameId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByClassNameId(classNameId);
+		return getPersistence().countByC_C(companyId, classNameId);
 	}
 
 	/**

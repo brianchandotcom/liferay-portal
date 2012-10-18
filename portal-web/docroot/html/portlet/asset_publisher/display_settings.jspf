@@ -23,7 +23,7 @@
 
 		<liferay-ui:ddm-template-menu
 			classNameId="<%= PortalUtil.getClassNameId(portletDisplayTemplateHandler.getClassName()) %>"
-			displayStyles="<%= Arrays.asList(PropsValues.ASSET_PUBLISHER_DISPLAY_STYLES) %>"
+			displayStyles="<%= Arrays.asList(PropsValues.ASSET_PUBLISHER_DISPLAY_STYLE_OPTIONS) %>"
 			label="display-template"
 			preferenceValue="<%= displayStyle %>"
 		/>

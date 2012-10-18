@@ -24,13 +24,13 @@ import com.liferay.portal.kernel.util.PropsUtil;
 public class MBCategoryConstants {
 
 	public static final String DEFAULT_DISPLAY_STYLE = PropsUtil.get(
-		PropsKeys.MESSAGE_BOARDS_CATEGORY_DISPLAY_STYLES_DEFAULT);
+		PropsKeys.MESSAGE_BOARDS_CATEGORY_DISPLAY_STYLE_DEFAULT);
 
 	public static final long DEFAULT_PARENT_CATEGORY_ID = 0;
 
 	public static final long DISCUSSION_CATEGORY_ID = -1;
 
 	public static final String[] DISPLAY_STYLES = PropsUtil.getArray(
-		PropsKeys.MESSAGE_BOARDS_CATEGORY_DISPLAY_STYLES);
+		PropsKeys.MESSAGE_BOARDS_CATEGORY_DISPLAY_STYLE_OPTIONS);
 
 }

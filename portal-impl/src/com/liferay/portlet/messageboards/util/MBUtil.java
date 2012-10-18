@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.messageboards.util;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -43,8 +44,10 @@ import com.liferay.portal.service.UserGroupRoleLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
+import com.liferay.portlet.PortletURLFactoryUtil;
 import com.liferay.portlet.messageboards.model.MBBan;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
@@ -72,6 +75,7 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
 import javax.portlet.PortletPreferences;
+import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderResponse;
 
@@ -234,6 +238,42 @@ public class MBUtil {
 		}
 	}
 
+	public static String getAbsolutePath(
+			PortletRequest portletRequest, long mbCategoryId)
+		throws PortalException, SystemException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		if (mbCategoryId == MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
+			return themeDisplay.translate("home");
+		}
+
+		MBCategory mbCategory = MBCategoryLocalServiceUtil.fetchMBCategory(
+			mbCategoryId);
+
+		List<MBCategory> mbCategories = mbCategory.getAncestors();
+
+		StringBundler sb = new StringBundler((mbCategories.size() * 4) + 6);
+
+		sb.append(themeDisplay.translate("home"));
+		sb.append(StringPool.SPACE);
+
+		for (int i = mbCategories.size(); i >= 0; i--) {
+			MBCategory curCategory = mbCategories.get(i);
+
+			sb.append(StringPool.RAQUO);
+			sb.append(StringPool.SPACE);
+			sb.append(curCategory.getName());
+		}
+
+		sb.append(StringPool.RAQUO);
+		sb.append(StringPool.SPACE);
+		sb.append(mbCategory.getName());
+
+		return sb.toString();
+	}
+
 	public static long getCategoryId(
 		HttpServletRequest request, MBCategory category) {
 
@@ -260,6 +300,24 @@ public class MBUtil {
 		categoryId = ParamUtil.getLong(request, "mbCategoryId", categoryId);
 
 		return categoryId;
+	}
+
+	public static String getMBControlPanelLink(
+			PortletRequest portletRequest, long mbCategoryId)
+		throws PortalException, SystemException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			com.liferay.portal.kernel.util.WebKeys.THEME_DISPLAY);
+
+		PortletURL portletURL = PortletURLFactoryUtil.create(
+			portletRequest, PortletKeys.MESSAGE_BOARDS_ADMIN,
+			PortalUtil.getControlPanelPlid(themeDisplay.getCompanyId()),
+			PortletRequest.RENDER_PHASE);
+
+		portletURL.setParameter("struts_action", "/message_boards_admin/view");
+		portletURL.setParameter("mbCategoryId", String.valueOf(mbCategoryId));
+
+		return portletURL.toString();
 	}
 
 	public static String getEmailFromAddress(

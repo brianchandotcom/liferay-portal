@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.model.Group;
@@ -48,6 +49,7 @@ import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.portal.util.InitUtil;
 import com.liferay.portal.util.PortalInstances;
+import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
@@ -224,7 +226,7 @@ public class ServiceTestUtil {
 	}
 
 	public static void destroyServices() {
-		FileUtil.delete(PropsValues.LIFERAY_HOME + "/data");
+		_deleteDLDirectories();
 	}
 
 	public static SearchContext getSearchContext() throws Exception {
@@ -275,9 +277,7 @@ public class ServiceTestUtil {
 	public static void initServices() {
 		InitUtil.initWithSpring();
 
-		FileUtil.delete(PropsValues.LIFERAY_HOME + "/data");
-
-		FileUtil.mkdirs(PropsValues.LUCENE_DIR);
+		_deleteDLDirectories();
 
 		// JCR
 
@@ -452,6 +452,13 @@ public class ServiceTestUtil {
 					modelName, modelActions);
 			}
 		}
+	}
+
+	private static void _deleteDLDirectories() {
+		FileUtil.deltree(PropsValues.DL_STORE_FILE_SYSTEM_ROOT_DIR);
+
+		FileUtil.deltree(
+			PropsUtil.get(PropsKeys.JCR_JACKRABBIT_REPOSITORY_ROOT));
 	}
 
 	private static Random _random = new Random();

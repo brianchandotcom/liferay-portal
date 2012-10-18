@@ -1036,37 +1036,39 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 	protected void populateExpandoAttributes(
 		ExpandoBridge expandoBridge, Map<String, String[]> expandoAttributes) {
 
+		if (expandoAttributes.isEmpty()) {
+			return;
+		}
+
 		Map<String, Serializable> serializedExpandoAttributes =
 			new HashMap<String, Serializable>();
 
-		if (!serializedExpandoAttributes.isEmpty()) {
-			for (Map.Entry<String, String[]> expandoAttribute :
-					expandoAttributes.entrySet()) {
+		for (Map.Entry<String, String[]> expandoAttribute :
+				expandoAttributes.entrySet()) {
 
-				String name = expandoAttribute.getKey();
+			String name = expandoAttribute.getKey();
 
-				if (!expandoBridge.hasAttribute(name)) {
-					continue;
-				}
-
-				int type = expandoBridge.getAttributeType(name);
-
-				Serializable value =
-					ExpandoConverterUtil.getAttributeFromStringArray(
-						type, expandoAttribute.getValue());
-
-				serializedExpandoAttributes.put(name, value);
+			if (!expandoBridge.hasAttribute(name)) {
+				continue;
 			}
 
-			try {
-				ExpandoValueLocalServiceUtil.addValues(
-					expandoBridge.getCompanyId(), expandoBridge.getClassName(),
-					ExpandoTableConstants.DEFAULT_TABLE_NAME,
-					expandoBridge.getClassPK(), serializedExpandoAttributes);
-			}
-			catch (Exception e) {
-				_log.error(e, e);
-			}
+			int type = expandoBridge.getAttributeType(name);
+
+			Serializable value =
+				ExpandoConverterUtil.getAttributeFromStringArray(
+					type, expandoAttribute.getValue());
+
+			serializedExpandoAttributes.put(name, value);
+		}
+
+		try {
+			ExpandoValueLocalServiceUtil.addValues(
+				expandoBridge.getCompanyId(), expandoBridge.getClassName(),
+				ExpandoTableConstants.DEFAULT_TABLE_NAME,
+				expandoBridge.getClassPK(), serializedExpandoAttributes);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
 		}
 	}
 

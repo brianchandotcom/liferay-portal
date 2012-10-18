@@ -552,21 +552,21 @@ public class PortletExporter {
 				entry.getKey(), CharPool.POUND);
 
 			String className = assetTagNameParts[0];
-			String classPK = assetTagNameParts[1];
+			long classPK = GetterUtil.getLong(assetTagNameParts[1]);
 
 			Element assetElement = rootElement.addElement("asset");
 
 			assetElement.addAttribute("class-name", className);
-			assetElement.addAttribute("class-pk", classPK);
+			assetElement.addAttribute("class-pk", String.valueOf(classPK));
 			assetElement.addAttribute(
 				"tags", StringUtil.merge(entry.getValue()));
-		}
 
-		List<AssetTag> assetTags = AssetTagLocalServiceUtil.getGroupTags(
-			portletDataContext.getScopeGroupId());
+			List<AssetTag> assetTags = AssetTagLocalServiceUtil.getTags(
+				className, classPK);
 
-		for (AssetTag assetTag : assetTags) {
-			exportAssetTag(portletDataContext, assetTag, rootElement);
+			for (AssetTag assetTag : assetTags) {
+				exportAssetTag(portletDataContext, assetTag, rootElement);
+			}
 		}
 
 		portletDataContext.addZipEntry(

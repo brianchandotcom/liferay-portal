@@ -107,7 +107,7 @@ public interface PropsKeys {
 
 	public static final String ASSET_PUBLISHER_DISPLAY_STYLE_DEFAULT = "asset.publisher.display.style.default";
 
-	public static final String ASSET_PUBLISHER_DISPLAY_STYLE_OPTIONS = "asset.publisher.display.style.options";
+	public static final String ASSET_PUBLISHER_DISPLAY_STYLES = "asset.publisher.display.styles";
 
 	public static final String ASSET_PUBLISHER_DISPLAY_TEMPLATES_HELP = "asset.publisher.display.templates.help";
 
@@ -1441,9 +1441,9 @@ public interface PropsKeys {
 
 	public static final String MESSAGE_BOARDS_ANONYMOUS_POSTING_ENABLED = "message.boards.anonymous.posting.enabled";
 
-	public static final String MESSAGE_BOARDS_CATEGORY_DISPLAY_STYLE_DEFAULT = "message.boards.category.display.style.default";
+	public static final String MESSAGE_BOARDS_CATEGORY_DISPLAY_STYLES_DEFAULT = "message.boards.category.display.styles.default";
 
-	public static final String MESSAGE_BOARDS_CATEGORY_DISPLAY_STYLE_OPTIONS = "message.boards.category.display.style.options";
+	public static final String MESSAGE_BOARDS_CATEGORY_DISPLAY_STYLES = "message.boards.category.display.styles";
 
 	public static final String MESSAGE_BOARDS_EMAIL_BULK = "message.boards.email.bulk";
 

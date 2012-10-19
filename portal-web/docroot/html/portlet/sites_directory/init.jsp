@@ -26,7 +26,7 @@ if (Validator.isNotNull(portletResource)) {
 }
 
 String bulletStyle = PrefsParamUtil.getString(preferences, renderRequest, "bulletStyle", GetterUtil.getString(themeDisplay.getThemeSetting("bullet-style"), "dots"));
-String displayStyle = PrefsParamUtil.getString(preferences, renderRequest, "displayStyle", "descriptive");
+String displayStyle = PrefsParamUtil.getString(preferences, renderRequest, "displayStyle", PropsValues.SITES_DIRECTORY_DISPLAY_STYLE_DEFAULT);
 String headerType = PrefsParamUtil.getString(preferences, renderRequest, "headerType", "none");
 String includedGroups = PrefsParamUtil.getString(preferences, renderRequest, "includedGroups", "current");
 int rootGroupLevel = PrefsParamUtil.getInteger(preferences, renderRequest, "rootGroupLevel", 1);

@@ -143,6 +143,7 @@ public class RawMetadataProcessorImpl
 
 		List<DDMStructure> ddmStructures =
 			DDMStructureLocalServiceUtil.getClassStructures(
+				fileVersion.getCompanyId(),
 				PortalUtil.getClassNameId(DLFileEntry.class), QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS);
 

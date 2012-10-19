@@ -584,7 +584,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 
 						<%
 							try {
-											List<DDMStructure> ddmStructures = DDMStructureLocalServiceUtil.getClassStructures(PortalUtil.getClassNameId(DLFileEntry.class), new StructureStructureKeyComparator(true));
+											List<DDMStructure> ddmStructures = DDMStructureLocalServiceUtil.getClassStructures(company.getCompanyId(), PortalUtil.getClassNameId(DLFileEntry.class), new StructureStructureKeyComparator(true));
 
 											for (DDMStructure ddmStructure : ddmStructures) {
 												Fields fields = null;

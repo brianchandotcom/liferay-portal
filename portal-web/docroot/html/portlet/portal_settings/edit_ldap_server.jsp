@@ -220,29 +220,29 @@ for (int i = 0 ; i < groupMappingArray.length ; i++) {
 
 		<h4><liferay-ui:message key="user-mapping" /></h4>
 
-		<aui:input cssClass="lfr-input-text-container" label="email-address" name="userMappingEmailAddress" type="text" value="<%= userMappingEmailAddress %>" />
-
-		<aui:input cssClass="lfr-input-text-container" label="first-name" name="userMappingFirstName" type="text" value="<%= userMappingFirstName %>" />
-
-		<aui:input cssClass="lfr-input-text-container" helpMessage="ldap-full-name-attribute-help" label="full-name" name="userMappingFullName" type="text" value="<%= userMappingFullName %>" />
-
-		<aui:input cssClass="lfr-input-text-container" label="group" name="userMappingGroup" type="text" value="<%= userMappingGroup %>" />
-
-		<aui:input cssClass="lfr-input-text-container" label="job-title" name="userMappingJobTitle" type="text" value="<%= userMappingJobTitle %>" />
-
-		<aui:input cssClass="lfr-input-text-container" label="last-name" name="userMappingLastName" type="text" value="<%= userMappingLastName %>" />
-
-		<aui:input cssClass="lfr-input-text-container" label="middle-name" name="userMappingMiddleName" type="text" value="<%= userMappingMiddleName %>" />
-
-		<aui:input cssClass="lfr-input-text-container" label="password" name="userMappingPassword" type="text" value="<%= userMappingPassword %>" />
-
-		<aui:input cssClass="lfr-input-text-container" label="portrait" name="userMappingPortrait" type="text" value="<%= userMappingPortrait %>" />
+		<aui:input cssClass="lfr-input-text-container" label="uuid" name="userMappingUuid" type="text" value="<%= userMappingUuid %>" />
 
 		<aui:input cssClass="lfr-input-text-container" label="screen-name" name="userMappingScreenName" type="text" value="<%= userMappingScreenName %>" />
 
+		<aui:input cssClass="lfr-input-text-container" label="email-address" name="userMappingEmailAddress" type="text" value="<%= userMappingEmailAddress %>" />
+
+		<aui:input cssClass="lfr-input-text-container" label="password" name="userMappingPassword" type="text" value="<%= userMappingPassword %>" />
+
+		<aui:input cssClass="lfr-input-text-container" label="first-name" name="userMappingFirstName" type="text" value="<%= userMappingFirstName %>" />
+
+		<aui:input cssClass="lfr-input-text-container" label="middle-name" name="userMappingMiddleName" type="text" value="<%= userMappingMiddleName %>" />
+
+		<aui:input cssClass="lfr-input-text-container" label="last-name" name="userMappingLastName" type="text" value="<%= userMappingLastName %>" />
+
+		<aui:input cssClass="lfr-input-text-container" helpMessage="ldap-full-name-attribute-help" label="full-name" name="userMappingFullName" type="text" value="<%= userMappingFullName %>" />
+
+		<aui:input cssClass="lfr-input-text-container" label="job-title" name="userMappingJobTitle" type="text" value="<%= userMappingJobTitle %>" />
+
 		<aui:input cssClass="lfr-input-text-container" label="status" name="userMappingStatus" type="text" value="<%= userMappingStatus %>" />
 
-		<aui:input cssClass="lfr-input-text-container" label="uuid" name="userMappingUuid" type="text" value="<%= userMappingUuid %>" />
+		<aui:input cssClass="lfr-input-text-container" label="group" name="userMappingGroup" type="text" value="<%= userMappingGroup %>" />
+
+		<aui:input cssClass="lfr-input-text-container" label="portrait" name="userMappingPortrait" type="text" value="<%= userMappingPortrait %>" />
 
 		<aui:input name='<%= "settings--" + PropsKeys.LDAP_USER_MAPPINGS + postfix + "--" %>' type="hidden" />
 
@@ -269,9 +269,9 @@ for (int i = 0 ; i < groupMappingArray.length ; i++) {
 
 		<h4><liferay-ui:message key="group-mapping" /></h4>
 
-		<aui:input cssClass="lfr-input-text-container" label="description" name="groupMappingDescription" type="text" value="<%= groupMappingDescription %>" />
-
 		<aui:input cssClass="lfr-input-text-container" label="group-name" name="groupMappingGroupName" type="text" value="<%= groupMappingGroupName %>" />
+
+		<aui:input cssClass="lfr-input-text-container" label="description" name="groupMappingDescription" type="text" value="<%= groupMappingDescription %>" />
 
 		<aui:input cssClass="lfr-input-text-container" label="user" name="groupMappingUser" type="text" value="<%= groupMappingUser %>" />
 

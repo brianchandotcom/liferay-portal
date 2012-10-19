@@ -97,10 +97,6 @@ public class BookmarksPortletDataHandlerImpl extends BasePortletDataHandler {
 
 			BookmarksFolderLocalServiceUtil.deleteFolders(
 				portletDataContext.getScopeGroupId());
-
-			BookmarksEntryLocalServiceUtil.deleteEntries(
-				portletDataContext.getScopeGroupId(),
-				BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 		}
 
 		return null;

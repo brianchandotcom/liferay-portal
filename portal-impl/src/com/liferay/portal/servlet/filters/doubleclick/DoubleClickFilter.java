@@ -17,6 +17,7 @@ package com.liferay.portal.servlet.filters.doubleclick;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.TransientValue;
 import com.liferay.portal.servlet.filters.BasePortalFilter;
 
 import javax.servlet.FilterChain;
@@ -57,15 +58,21 @@ public class DoubleClickFilter extends BasePortalFilter {
 			DoubleClickController doubleClickController = null;
 
 			synchronized (session) {
-				doubleClickController =
-					(DoubleClickController)session.getAttribute(
+				TransientValue<DoubleClickController> transientValue =
+					(TransientValue<DoubleClickController>)session.getAttribute(
 						_CONTROLLER_KEY);
+
+				if (transientValue != null) {
+					doubleClickController = transientValue.getValue();
+				}
 
 				if (doubleClickController == null) {
 					doubleClickController = new DoubleClickController();
 
-					session.setAttribute(
-						_CONTROLLER_KEY, doubleClickController);
+					transientValue = new TransientValue<DoubleClickController>(
+						doubleClickController);
+
+					session.setAttribute(_CONTROLLER_KEY, transientValue);
 				}
 			}
 

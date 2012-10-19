@@ -414,7 +414,7 @@ public class UpgradeImageGallery extends UpgradeProcess {
 			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
-				"select actionId, bitwiseValue from resourceaction " +
+				"select actionId, bitwiseValue from ResourceAction " +
 					"where name = ?");
 
 			ps.setString(1, resourceName);
@@ -449,8 +449,11 @@ public class UpgradeImageGallery extends UpgradeProcess {
 		for (String actionName : actionNames) {
 			Long actionIdBitwiseValue = actionIdValues.get(actionName);
 
-			bitwiseValue |=
-				(actionIdBitwiseValue != null)?actionIdBitwiseValue:0;
+			if (actionIdBitwiseValue == null) {
+				continue;
+			}
+
+			bitwiseValue |= actionIdBitwiseValue;
 		}
 
 		return bitwiseValue;
@@ -989,12 +992,12 @@ public class UpgradeImageGallery extends UpgradeProcess {
 		throws Exception {
 
 		Map<String, Long> igActionIdValues = getActionValuesByResource(
-				igResourceName);
+			igResourceName);
 
 		if (igActionIdValues.isEmpty()) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Do not exist resource actions for " + igResourceName +
+					"Resource actions do not exist for " + igResourceName +
 						". Please check the permissions for those objects");
 			}
 
@@ -1002,26 +1005,31 @@ public class UpgradeImageGallery extends UpgradeProcess {
 		}
 
 		Map<String, Long> dlActionIdValues = getActionValuesByResource(
-				dlResourceName);
+			dlResourceName);
 
 		if (dlActionIdValues.isEmpty()) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Do not exist resource actions for " + dlResourceName +
+					"Resource actions do not exist for " + dlResourceName +
 						". Please check the permissions for those objects");
 			}
 
 			return;
 		}
 
-		double igActionIdsCombinations = 
-				Math.pow(2, (double)igActionIdValues.size());
+		double igActionIdsCombinations = Math.pow(
+			2, igActionIdValues.size());
 
-		for (int igActionIds=0; igActionIds<igActionIdsCombinations;
-				igActionIds++)
-		{
+		// The size of igActionIdValues is based on the number of actions
+		// defined in resource actions which was 7 and 4 for IGFolder and
+		// IGImage respectively, which means the loop will execute at most
+		// 2^7 (128) times. If we were to check before update, we'd still have
+		// to perform 128 queries, so we may as well just update 128 times even
+		// if no candidates exist for a give value.
+
+		for (int i = 0; i < igActionIdsCombinations; i++) {
 			List<String> igActionNames = getResourceActionNames(
-				igActionIdValues, igActionIds);
+				igActionIdValues, i);
 
 			if (igResourceName.equals(_IG_FOLDER_CLASS_NAME)) {
 				Collections.replaceAll(
@@ -1033,7 +1041,7 @@ public class UpgradeImageGallery extends UpgradeProcess {
 			runSQL(
 				"update ResourcePermission set name = '" + dlResourceName +
 					"', actionIds = " + dlActionIds + " where name = '" +
-					igResourceName + "'" + " and actionIds = " + igActionIds);
+						igResourceName + "'" + " and actionIds = " + i);
 		}
 	}
 

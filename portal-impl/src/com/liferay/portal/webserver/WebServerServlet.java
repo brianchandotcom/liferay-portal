@@ -597,9 +597,20 @@ public class WebServerServlet extends HttpServlet {
 			return null;
 		}
 
-		if ((image.getHeight() > PropsValues.USERS_IMAGE_MAX_HEIGHT) ||
+		boolean resizeUserPortraitImage = false;
+
+		if ((PropsValues.USERS_IMAGE_MAX_HEIGHT > 0) &&
+			(image.getHeight() > PropsValues.USERS_IMAGE_MAX_HEIGHT)) {
+
+			resizeUserPortraitImage = true;
+		}
+		else if ((PropsValues.USERS_IMAGE_MAX_WIDTH > 0) &&
 			(image.getWidth() > PropsValues.USERS_IMAGE_MAX_WIDTH)) {
 
+			resizeUserPortraitImage = true;
+		}
+
+		if (resizeUserPortraitImage) {
 			User user = UserLocalServiceUtil.getUserByPortraitId(imageId);
 
 			UserLocalServiceUtil.updatePortrait(

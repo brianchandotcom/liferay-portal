@@ -367,18 +367,48 @@ public class DDMStructureLocalServiceUtil {
 		return getService().fetchStructure(groupId, structureKey);
 	}
 
+	/**
+	* @deprecated {@link #getClassStructures(long, long)}
+	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getClassStructures(
 		long classNameId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getClassStructures(classNameId);
 	}
 
+	/**
+	* @deprecated {@link #getClassStructures(long, long, int, int)}
+	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getClassStructures(
 		long classNameId, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getClassStructures(classNameId, start, end);
 	}
 
+	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getClassStructures(
+		long companyId, long classNameId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getClassStructures(companyId, classNameId);
+	}
+
+	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getClassStructures(
+		long companyId, long classNameId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getClassStructures(companyId, classNameId, start, end);
+	}
+
+	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getClassStructures(
+		long companyId, long classNameId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getClassStructures(companyId, classNameId, orderByComparator);
+	}
+
+	/**
+	* @deprecated {@link #getClassStructures(long, long, OrderByComparator)}
+	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getClassStructures(
 		long classNameId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)

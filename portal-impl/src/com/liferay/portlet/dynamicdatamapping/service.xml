@@ -94,6 +94,10 @@
 		<finder name="ClassNameId" return-type="Collection">
 			<finder-column name="classNameId" />
 		</finder>
+		<finder name="C_C" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="classNameId" />
+		</finder>
 		<finder name="G_S" return-type="DDMStructure" unique="true">
 			<finder-column name="groupId" />
 			<finder-column name="structureKey" />

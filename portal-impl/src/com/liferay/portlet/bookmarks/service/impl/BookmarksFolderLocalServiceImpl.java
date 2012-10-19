@@ -134,6 +134,9 @@ public class BookmarksFolderLocalServiceImpl
 		for (BookmarksFolder folder : folders) {
 			deleteFolder(folder);
 		}
+
+		bookmarksEntryLocalService.deleteEntries(
+			groupId, BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 	}
 
 	public List<BookmarksFolder> getCompanyFolders(

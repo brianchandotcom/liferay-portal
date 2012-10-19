@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portlet.wiki.PageContentException;
 import com.liferay.portlet.wiki.engines.WikiEngine;
+import com.liferay.portlet.wiki.engines.mediawiki.matchers.DirectURLMatcher;
 import com.liferay.portlet.wiki.engines.mediawiki.matchers.EditURLMatcher;
 import com.liferay.portlet.wiki.engines.mediawiki.matchers.ImageTagMatcher;
 import com.liferay.portlet.wiki.engines.mediawiki.matchers.ImageURLMatcher;
@@ -49,12 +50,9 @@ public class MediaWikiEngine implements WikiEngine {
 			String attachmentURLPrefix)
 		throws PageContentException {
 
-		String html = parsePage(page, new ParserOutput());
-
-		html = postParsePage(
-			html, viewPageURL, editPageURL, attachmentURLPrefix);
-
-		return html;
+		return parsePage(
+			page, new ParserOutput(), viewPageURL, editPageURL,
+			attachmentURLPrefix);
 	}
 
 	public Map<String, Boolean> getOutgoingLinks(WikiPage page)
@@ -156,7 +154,9 @@ public class MediaWikiEngine implements WikiEngine {
 		return parserOutput;
 	}
 
-	protected String parsePage(WikiPage page, ParserOutput parserOutput)
+	protected String parsePage(
+			WikiPage page, ParserOutput parserOutput, PortletURL viewPageURL,
+			PortletURL editPageURL, String attachmentURLPrefix)
 		throws PageContentException {
 
 		ParserInput parserInput = getParserInput(
@@ -177,24 +177,28 @@ public class MediaWikiEngine implements WikiEngine {
 			throw new PageContentException(pe);
 		}
 
-		return content;
-	}
+		// Post parse
 
-	protected String postParsePage(
-		String content, PortletURL viewPageURL, PortletURL editPageURL,
-		String attachmentURLPrefix) {
+		if (attachmentURLPrefix != null) {
+			DirectURLMatcher attachmentURLMatcher =
+				new DirectURLMatcher(page, attachmentURLPrefix);
+
+			String result = attachmentURLMatcher.replaceMatches(content);
+
+			if (result != null) {
+				content = result;
+			}
+
+			ImageURLMatcher imageURLMatcher = new ImageURLMatcher(
+				attachmentURLPrefix);
+
+			content = imageURLMatcher.replaceMatches(content);
+		}
 
 		if (editPageURL != null) {
 			EditURLMatcher editURLMatcher = new EditURLMatcher(editPageURL);
 
 			content = editURLMatcher.replaceMatches(content);
-		}
-
-		if (attachmentURLPrefix != null) {
-			ImageURLMatcher imageURLMatcher = new ImageURLMatcher(
-				attachmentURLPrefix);
-
-			content = imageURLMatcher.replaceMatches(content);
 		}
 
 		if (viewPageURL != null) {

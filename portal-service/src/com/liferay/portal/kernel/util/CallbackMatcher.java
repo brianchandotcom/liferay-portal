@@ -39,6 +39,10 @@ public class CallbackMatcher {
 
 			String replacement = callback.foundMatch(matchResult);
 
+			if (replacement == null) {
+				return null;
+			}
+
 			int matchStart = offset + matchResult.start();
 			int matchEnd = offset + matchResult.end();
 

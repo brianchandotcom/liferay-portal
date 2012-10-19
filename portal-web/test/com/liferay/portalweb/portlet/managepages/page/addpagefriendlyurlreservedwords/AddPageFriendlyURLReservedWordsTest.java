@@ -115,7 +115,7 @@ public class AddPageFriendlyURLReservedWordsTest extends BaseTestCase {
 					selenium.getText(
 						"xPath=(//div[@class='portlet-msg-error'])[1]"));
 				assertEquals(RuntimeVariables.replace(
-						"Please enter a friendly URL that does not conflict with the keyword delegate."),
+						"Please enter a friendly URL that does not conflict with the keyword /delegate."),
 					selenium.getText(
 						"xPath=(//div[@class='portlet-msg-error'])[2]"));
 				selenium.type("//span[2]/input[@id='_88_friendlyURL']",

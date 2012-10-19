@@ -15,6 +15,8 @@
 package com.liferay.portal.tools.servicebuilder;
 
 import com.liferay.portal.freemarker.FreeMarkerUtil;
+import com.liferay.portal.kernel.dao.db.SBIndex;
+import com.liferay.portal.kernel.dao.db.SBIndexFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
@@ -107,6 +109,7 @@ import org.dom4j.DocumentException;
  * @author Raymond Augé
  * @author Prashant Dighe
  * @author Shuyang Zhou
+ * @author James Lefeu
  */
 public class ServiceBuilder {
 
@@ -2806,9 +2809,7 @@ public class ServiceBuilder {
 		writeFile(ejbFile, content);
 	}
 
-	private void _createServiceFactory(Entity entity, int sessionType)
-		throws Exception {
-
+	private void _createServiceFactory(Entity entity, int sessionType) {
 		File ejbFile = new File(
 			_serviceOutputPath + "/service/" + entity.getName() +
 				_getSessionTypeName(sessionType) + "ServiceFactory.java");
@@ -2877,7 +2878,7 @@ public class ServiceBuilder {
 		}
 	}
 
-	private void _createServiceJson(Entity entity) throws Exception {
+	private void _createServiceJson(Entity entity) {
 		File ejbFile = new File(
 			_outputPath + "/service/http/" + entity.getName() +
 				"ServiceJSON.java");
@@ -2889,7 +2890,7 @@ public class ServiceBuilder {
 		}
 	}
 
-	private void _createServiceJsonSerializer(Entity entity) throws Exception {
+	private void _createServiceJsonSerializer(Entity entity) {
 		File ejbFile = new File(
 			_serviceOutputPath + "/service/http/" + entity.getName() +
 				"JSONSerializer.java");
@@ -3267,49 +3268,25 @@ public class ServiceBuilder {
 				EntityFinder finder = finderList.get(j);
 
 				if (finder.isDBIndex()) {
-					StringBundler sb = new StringBundler();
-
-					sb.append(entity.getTable() + " (");
-
 					List<EntityColumn> finderColsList = finder.getColumns();
+					List<String> finderColsNames = new ArrayList<String>();
 
 					for (int k = 0; k < finderColsList.size(); k++) {
 						EntityColumn col = finderColsList.get(k);
 
-						sb.append(col.getDBName());
-
-						if ((k + 1) != finderColsList.size()) {
-							sb.append(", ");
-						}
+						finderColsNames.add(col.getDBName());
 					}
 
-					sb.append(");");
+					SBIndex index = SBIndexFactoryUtil.create(
+						entity.getTable(), finderColsNames, finder.isUnique());
 
-					String indexSpec = sb.toString();
-
-					String indexHash = StringUtil.toHexString(
-						indexSpec.hashCode()).toUpperCase();
-
-					String indexName = "IX_" + indexHash;
-
-					sb.setIndex(0);
-
-					sb.append("create ");
-
-					if (finder.isUnique()) {
-						sb.append("unique ");
-					}
-
-					sb.append("index " + indexName + " on ");
-					sb.append(indexSpec);
-
-					indexSQLs.put(indexSpec, sb.toString());
+					indexSQLs.put(index.getIndexSpec(), index.getSQL());
 
 					String finderName =
 						entity.getTable() + StringPool.PERIOD +
 							finder.getName();
 
-					indexProps.put(finderName, indexName);
+					indexProps.put(finderName, index.getIndexName());
 				}
 			}
 		}

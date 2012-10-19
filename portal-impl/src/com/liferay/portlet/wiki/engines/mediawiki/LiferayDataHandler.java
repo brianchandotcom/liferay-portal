@@ -64,25 +64,6 @@ public class LiferayDataHandler extends DummyDataHandler {
 	}
 
 	@Override
-	public Integer lookupTopicId(String virtualWiki, String topicName) {
-		long nodeId = getNodeId(virtualWiki);
-
-		try {
-			int pagesCount = WikiPageLocalServiceUtil.getPagesCount(
-				nodeId, topicName, true);
-
-			if (pagesCount > 0) {
-				return 1;
-			}
-		}
-		catch (SystemException se) {
-			_log.error(se, se);
-		}
-
-		return null;
-	}
-
-	@Override
 	public String lookupTopicName(String virtualWiki, String topicName) {
 		long nodeId = getNodeId(virtualWiki);
 

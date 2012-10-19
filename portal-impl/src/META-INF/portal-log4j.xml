@@ -294,6 +294,10 @@
 		<priority value="WARN" />
 	</category>
 
+	<category name="com.liferay.portal.kernel.dao.db.BaseDBProcess">
+		<priority value="INFO" />
+	</category>
+
 	<category name="com.liferay.portal.kernel.dao.orm.QueryUtil">
 		<priority value="WARN" />
 	</category>

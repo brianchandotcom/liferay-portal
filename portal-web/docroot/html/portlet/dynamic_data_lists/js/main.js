@@ -9,8 +9,6 @@ AUI.add(
 
 		var EMPTY_FN = A.Lang.emptyFn;
 
-		var STR_COMMA = ',';
-
 		var STR_EMPTY = '';
 
 		var DLFileEntryCellEditor = A.Component.create(
@@ -206,9 +204,7 @@ AUI.add(
 							}
 						);
 
-						var emptyRows = SpreadSheet.buildEmptyRecords(num, keys);
-
-						data.add(emptyRows);
+						data.add(SpreadSheet.buildEmptyRecords(num, keys));
 					},
 
 					updateMinDisplayRows: function(minDisplayRows, callback) {
@@ -283,7 +279,9 @@ AUI.add(
 						SpreadSheet.superclass._onEditCell.apply(instance, arguments);
 
 						var activeCell = instance.get('activeCell');
+
 						var alignNode = event.alignNode || activeCell;
+
 						var column = instance.getColumn(alignNode);
 						var record = instance.getRecord(alignNode);
 
@@ -294,23 +292,30 @@ AUI.add(
 						var editor = instance.getEditor(record, column);
 
 						if (editor) {
-							editor.set('data', data);
-							editor.set('record', record);
-							editor.set('recordsetId', recordsetId);
-							editor.set('structure', structure);
+							editor.setAttrs(
+								{
+									data: data,
+									record: record,
+									recordsetId: recordsetId,
+									structure: structure
+								}
+							);
 						}
 					},
 
 					_onRecordUpdate: function(event) {
 						var instance = this;
 
-						if (!event.changed.hasOwnProperty('recordId')) {
+						if (!A.Object.owns(event.changed, 'recordId')) {
 							var data = instance.get('data');
 							var recordsetId = instance.get('recordsetId');
 
 							var record = event.target;
+
 							var recordId = record.get('recordId');
+
 							var fieldsMap = instance._normalizeRecordData(record);
+
 							var recordIndex = data.indexOf(record);
 
 							if (recordId > 0) {
@@ -335,26 +340,28 @@ AUI.add(
 						var instance = this;
 
 						data.sort = function (options) {
-							if (!this.comparator) {
-								return this;
-							}
+							if (this.comparator) {
+								options = options || {};
 
-							var facade;
-							var models = this._items.concat();
+								var models = this._items.concat();
 
-							options || (options = {});
+								A.ArraySort.stableSort(models, A.bind(this._sort, this));
 
-							A.ArraySort.stableSort(models, A.bind(this._sort, this));
+								var facade = A.merge(
+									options,
+									{
+										models: models,
+										src: 'sort'
+									}
+								);
 
-							facade = A.merge(
-								options,
-								{
-									models: models,
-									src: 'sort'
+								if (options.silent) {
+									this._defResetFn(facade);
 								}
-							);
-
-							options.silent ? this._defResetFn(facade) : this.fire('reset', facade);
+								else {
+									this.fire('reset', facade);
+								}
+							}
 
 							return this;
 						};
@@ -392,7 +399,6 @@ AUI.add(
 						columns,
 						function(item, index, collection) {
 							var dataType = item.dataType;
-							var label = item.label;
 							var name = item.name;
 							var type = item.type;
 

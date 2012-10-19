@@ -27,7 +27,6 @@
 		var activeCell = spreadSheet.get('activeCell');
 
 		var activeColumn = spreadSheet.getColumn(activeCell);
-
 		var activeRecord = spreadSheet.getRecord(activeCell);
 
 		return !A.Array.some(
@@ -196,7 +195,9 @@
 
 					var data = instance.get('data');
 					var record = instance.get('record');
+
 					var displayIndex = data.indexOf(record);
+
 					var recordId = record.get('recordId');
 					var recordsetId = instance.get('recordsetId');
 

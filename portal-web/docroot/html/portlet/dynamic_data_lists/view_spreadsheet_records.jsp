@@ -177,11 +177,9 @@ DDMStructure ddmStructure = recordSet.getDDMStructure();
 			function(event) {
 				var numberOfRecords = parseInt(numberOfRecordsNode.val(), 10) || 0;
 
-				var data = spreadSheet.get('data');
-
 				spreadSheet.addEmptyRows(numberOfRecords);
 
-				spreadSheet.updateMinDisplayRows(data.size());
+				spreadSheet.updateMinDisplayRows(spreadSheet.get('data').size());
 			}
 		);
 	</c:if>

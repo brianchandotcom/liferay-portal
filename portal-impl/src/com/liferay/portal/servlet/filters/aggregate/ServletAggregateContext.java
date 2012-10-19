@@ -114,7 +114,8 @@ public class ServletAggregateContext implements AggregateContext {
 			}
 		}
 
-		return sb.toString();
+		return StringUtil.replace(
+			sb.toString(), StringPool.DOUBLE_SLASH, StringPool.SLASH);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

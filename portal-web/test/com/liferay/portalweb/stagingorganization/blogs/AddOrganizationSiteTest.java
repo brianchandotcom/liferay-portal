@@ -25,14 +25,21 @@ public class AddOrganizationSiteTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent("link=Control Panel");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
+		selenium.waitForVisible("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Users and Organizations",
 			RuntimeVariables.replace("Users and Organizations"));
 		selenium.waitForPageToLoad("30000");
-		selenium.type("//input[@id='_125_keywords']",
+		selenium.type("//input[@name='_125_keywords']",
 			RuntimeVariables.replace("Selenium"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
@@ -41,11 +48,11 @@ public class AddOrganizationSiteTest extends BaseTestCase {
 			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
 		selenium.click("//span[@title='Actions']/ul/li/strong/a/span");
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]");
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a",
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]",
 			RuntimeVariables.replace("Edit"));
 		selenium.waitForVisible("//a[@id='_125_organizationSiteLink']");
 		assertTrue(selenium.isPartialText(
@@ -56,9 +63,19 @@ public class AddOrganizationSiteTest extends BaseTestCase {
 		selenium.clickAt("//input[@id='_125_siteCheckbox']",
 			RuntimeVariables.replace("Create Site"));
 		assertTrue(selenium.isChecked("//input[@id='_125_siteCheckbox']"));
-		selenium.waitForVisible("_125_publicLayoutSetPrototypeId");
-		selenium.select("_125_publicLayoutSetPrototypeId",
+		selenium.waitForVisible(
+			"//select[@id='_125_publicLayoutSetPrototypeId']");
+		selenium.select("//select[@id='_125_publicLayoutSetPrototypeId']",
 			RuntimeVariables.replace("Community Site"));
+		selenium.waitForVisible(
+			"//input[@id='_125_publicLayoutSetPrototypeLinkEnabledCheckbox']");
+		assertTrue(selenium.isChecked(
+				"//input[@id='_125_publicLayoutSetPrototypeLinkEnabledCheckbox']"));
+		selenium.clickAt("//input[@id='_125_publicLayoutSetPrototypeLinkEnabledCheckbox']",
+			RuntimeVariables.replace(
+				"Enable propagation of changes from the site template Community Site."));
+		assertFalse(selenium.isChecked(
+				"//input[@id='_125_publicLayoutSetPrototypeLinkEnabledCheckbox']"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");

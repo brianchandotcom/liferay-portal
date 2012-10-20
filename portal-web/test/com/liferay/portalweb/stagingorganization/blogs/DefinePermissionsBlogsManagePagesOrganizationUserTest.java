@@ -27,7 +27,14 @@ public class DefinePermissionsBlogsManagePagesOrganizationUserTest
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent("link=Control Panel");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
+		selenium.waitForVisible("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
@@ -39,8 +46,8 @@ public class DefinePermissionsBlogsManagePagesOrganizationUserTest
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Organization User"),
-			selenium.getText("//tr[contains(.,'Organization User')]/td[1]/a"));
-		selenium.clickAt("//tr[contains(.,'Organization User')]/td[1]/a",
+			selenium.getText("//tr/td[1]/a[contains(.,'Organization User')]"));
+		selenium.clickAt("//tr/td[1]/a[contains(.,'Organization User')]",
 			RuntimeVariables.replace("Organization User"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Define Permissions",
@@ -48,9 +55,9 @@ public class DefinePermissionsBlogsManagePagesOrganizationUserTest
 		selenium.waitForPageToLoad("30000");
 		selenium.select("//select[@id='_128_add-permissions']",
 			RuntimeVariables.replace("Blogs"));
-		selenium.waitForText("//tr[3]/td[2]", "Add Entry");
+		selenium.waitForText("//tr[4]/td[2]", "Add Entry");
 		assertEquals(RuntimeVariables.replace("Add Entry"),
-			selenium.getText("//tr[3]/td[2]"));
+			selenium.getText("//tr[4]/td[2]"));
 		assertFalse(selenium.isChecked(
 				"//input[@value='com.liferay.portlet.blogsADD_ENTRY']"));
 		selenium.check("//input[@value='com.liferay.portlet.blogsADD_ENTRY']");

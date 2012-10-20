@@ -46,7 +46,6 @@ public class OA_PublishToLiveStagedPageOrganizationSiteTest extends BaseTestCase
 				assertEquals(RuntimeVariables.replace(
 						"You are viewing the staged version of Selenium. You can make changes here and publish them to Live afterwards to make them public."),
 					selenium.getText("//span[@class='staging-live-help']"));
-				selenium.waitForVisible("link=Blogs Test Page");
 				selenium.clickAt("link=Blogs Test Page",
 					RuntimeVariables.replace("Blogs Test Page"));
 				selenium.waitForPageToLoad("30000");
@@ -55,17 +54,17 @@ public class OA_PublishToLiveStagedPageOrganizationSiteTest extends BaseTestCase
 				selenium.clickAt("//strong/a",
 					RuntimeVariables.replace("Staging"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a");
+					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Publish to Live Now')]");
 				assertEquals(RuntimeVariables.replace("Publish to Live Now"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
-				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a",
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Publish to Live Now')]"));
+				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Publish to Live Now')]",
 					RuntimeVariables.replace("Publish to Live Now"));
 				Thread.sleep(5000);
 				selenium.waitForVisible("//div[2]/div[1]/a");
 
 				boolean blogsVisible = selenium.isVisible(
-						"_88_PORTLET_DATA_33Checkbox");
+						"//input[@id='_88_PORTLET_DATA_33Checkbox']");
 
 				if (blogsVisible) {
 					label = 2;
@@ -82,7 +81,7 @@ public class OA_PublishToLiveStagedPageOrganizationSiteTest extends BaseTestCase
 					RuntimeVariables.replace("All"));
 
 				boolean blogsChecked = selenium.isChecked(
-						"_88_PORTLET_DATA_33Checkbox");
+						"//input[@id='_88_PORTLET_DATA_33Checkbox']");
 
 				if (blogsChecked) {
 					label = 3;
@@ -90,19 +89,17 @@ public class OA_PublishToLiveStagedPageOrganizationSiteTest extends BaseTestCase
 					continue;
 				}
 
-				assertFalse(selenium.isChecked(
-						"//input[@id='_88_PORTLET_DATA_33Checkbox']"));
 				selenium.clickAt("//input[@id='_88_PORTLET_DATA_33Checkbox']",
 					RuntimeVariables.replace("Blogs"));
-				assertTrue(selenium.isChecked(
-						"//input[@id='_88_PORTLET_DATA_33Checkbox']"));
 
 			case 3:
+				assertTrue(selenium.isChecked(
+						"//input[@id='_88_PORTLET_DATA_33Checkbox']"));
 				selenium.waitForVisible("//input[@value='Publish']");
 				selenium.clickAt("//input[@value='Publish']",
 					RuntimeVariables.replace("Publish"));
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to publish these pages[\\s\\S]$"));
+				selenium.waitForConfirmation(
+					"Are you sure you want to publish these pages?");
 				selenium.waitForVisible("//div[@class='portlet-msg-success']");
 				assertEquals(RuntimeVariables.replace(
 						"Your request completed successfully."),

@@ -14,7 +14,27 @@
 	<td></td>
 </tr>
 <tr>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
 	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
+	<td>AUI Editable Min</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>mouseOver</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
 	<td>link=Control Panel</td>
 	<td>Control Panel</td>
 </tr>
@@ -30,7 +50,7 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>//input[@id='_134_name']</td>
+	<td>//input[@name='_134_keywords']</td>
 	<td>Selenium</td>
 </tr>
 <tr>
@@ -50,53 +70,18 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit Settings')]</td>
 	<td>Edit Settings</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit Settings')]</td>
 	<td>Edit Settings</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit Settings')]</td>
 	<td>Edit Settings</td>
-</tr>
-<tr>
-	<td>assertPartialText</td>
-	<td>//a[@id='_165_detailsLink']</td>
-	<td>Details</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//a[@id='_165_detailsLink']</td>
-	<td>Details</td>
-</tr>
-<tr>
-	<td>assertChecked</td>
-	<td>//input[@id='_165_publicLayoutSetPrototypeLinkEnabledCheckbox']</td>
-	<td>Enable propagation of changes from the site template Community Site.</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//input[@id='_165_publicLayoutSetPrototypeLinkEnabledCheckbox']</td>
-	<td>Enable propagation of changes from the site template Community Site.</td>
-</tr>
-<tr>
-	<td>assertNotChecked</td>
-	<td>//input[@id='_165_publicLayoutSetPrototypeLinkEnabledCheckbox']</td>
-	<td>Enable propagation of changes from the site template Community Site.</td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>//input[@value='Save']</td>
-	<td>Save</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='portlet-msg-success']</td>
-	<td>Your request completed successfully.</td>
 </tr>
 <tr>
 	<td>assertPartialText</td>
@@ -433,7 +418,6 @@
 	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

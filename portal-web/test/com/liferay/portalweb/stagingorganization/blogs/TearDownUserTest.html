@@ -14,7 +14,27 @@
 	<td></td>
 </tr>
 <tr>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
 	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
+	<td>AUI Editable Min</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>mouseOver</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
 	<td>link=Control Panel</td>
 	<td>Control Panel</td>
 </tr>
@@ -105,12 +125,12 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr/td[contains(.,'Selenium')]/a/strong</td>
+	<td>//tr/td/a/strong[contains(.,'Selenium')]</td>
 	<td>Selenium</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//tr/td[contains(.,'Selenium')]/a/strong</td>
+	<td>//tr/td/a/strong[contains(.,'Selenium')]</td>
 	<td>Selenium</td>
 </tr>
 <tr>
@@ -169,13 +189,18 @@
 	<td>Users and Organizations</td>
 </tr>
 <tr>
+	<td>waitForVisible</td>
+	<td>link=Search All Users</td>
+	<td>Search All Users</td>
+</tr>
+<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Search All Users</td>
 	<td>Search All Users</td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isVisible('link=Advanced »'))</td>
+	<td>storeVisible</td>
+	<td>//a[.='Advanced »']</td>
 	<td>advancedVisible</td>
 </tr>
 <tr>
@@ -185,7 +210,7 @@
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>link=Advanced »</td>
+	<td>//a[.='Advanced »']</td>
 	<td>Advanced</td>
 </tr>
 <tr>
@@ -205,7 +230,7 @@
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//input[@value='Search']</td>
+	<td>xPath=(//input[@value='Search'])[2]</td>
 	<td>Search</td>
 </tr>
 <tr>
@@ -259,8 +284,8 @@
 	<td>No users were found.</td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isVisible('link=« Basic'))</td>
+	<td>storeVisible</td>
+	<td>//a[.='« Basic']</td>
 	<td>basicVisible</td>
 </tr>
 <tr>
@@ -270,7 +295,7 @@
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>link=« Basic</td>
+	<td>//a[.='« Basic']</td>
 	<td>Basic</td>
 </tr>
 <tr>

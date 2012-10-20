@@ -14,6 +14,8 @@
 
 package com.liferay.portal.upgrade.v6_1_0;
 
+import com.liferay.portal.kernel.dao.db.IndexMetadata;
+import com.liferay.portal.kernel.dao.db.IndexMetadataFactoryUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -28,13 +30,26 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 /**
  * @author Jorge Ferrer
  * @author Julio Camarero
+ * @author James Lefeu
  */
 public class UpgradeLayout extends UpgradeProcess {
+
+	@Override
+	protected List<IndexMetadata> doGetIndexMetadatas() {
+		List<IndexMetadata> indexMetadatas = new ArrayList<IndexMetadata>();
+
+		indexMetadatas.add(IndexMetadataFactoryUtil.create(
+			"Layout", new String[] {"plid"}));
+
+		return indexMetadatas;
+	}
 
 	@Override
 	protected void doUpgrade() throws Exception {
@@ -65,9 +80,8 @@ public class UpgradeLayout extends UpgradeProcess {
 	}
 
 	protected void updateJavaScript(
-			UnicodeProperties typeSettingsProperties, String javaScript1,
-			String javaScript2, String javaScript3)
-		throws Exception {
+		UnicodeProperties typeSettingsProperties, String javaScript1,
+		String javaScript2, String javaScript3) {
 
 		StringBundler sb = new StringBundler(6);
 

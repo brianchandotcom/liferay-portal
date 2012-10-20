@@ -87,6 +87,7 @@ public class SourceFormatter {
 						_formatDDLStructuresXML();
 						_formatFriendlyURLRoutesXML();
 						_formatFTL();
+						_formatPortalPropertiesForPlugins();
 						_formatPortletXML();
 						_formatServiceXML();
 						_formatSH();
@@ -2342,6 +2343,89 @@ public class SourceFormatter {
 		}
 
 		return content;
+	}
+
+	private static void _formatPortalPropertiesForPlugins() throws IOException {
+		String basedir = "./";
+
+		if (_fileUtil.exists(basedir + "portal-impl")) {
+			return;
+		}
+
+		ClassLoader classLoader = SourceFormatter.class.getClassLoader();
+
+		InputStream inputStream = classLoader.getResourceAsStream(
+			"portal.properties");
+
+		if (inputStream == null) {
+			return;
+		}
+
+		String portalPortalProperties = new String(
+			_fileUtil.getBytes(inputStream));
+
+		DirectoryScanner directoryScanner = new DirectoryScanner();
+
+		directoryScanner.setBasedir(basedir);
+		directoryScanner.setIncludes(
+			new String[] {
+				"**\\portal.properties", "**\\portal-ext.properties"
+			}
+		);
+
+		List<String> fileNames = _sourceFormatterHelper.scanForFiles(
+			directoryScanner);
+
+		for (String fileName : fileNames) {
+			File file = new File(basedir + fileName);
+
+			String content = _fileUtil.read(file);
+
+			_formatPortalPropertiesForPlugins(
+				fileName, content, portalPortalProperties);
+		}
+	}
+
+	private static void _formatPortalPropertiesForPlugins(
+			String fileName, String content, String portalPortalProperties)
+		throws IOException {
+
+		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
+			new UnsyncStringReader(content));
+
+		int lineCount = 0;
+
+		String line = null;
+
+		int previousPos = -1;
+
+		while ((line = unsyncBufferedReader.readLine()) != null) {
+			lineCount++;
+
+			int pos = line.indexOf(StringPool.EQUAL);
+
+			if (pos == -1) {
+				continue;
+			}
+
+			String property = line.substring(0, pos + 1);
+
+			property = property.trim();
+
+			pos = portalPortalProperties.indexOf(
+				StringPool.FOUR_SPACES + property);
+
+			if (pos == -1) {
+				continue;
+			}
+
+			if (pos < previousPos) {
+				_sourceFormatterHelper.printError(
+					fileName, "sort " + fileName + " " + lineCount);
+			}
+
+			previousPos = pos;
+		}
 	}
 
 	private static void _formatPortletXML()

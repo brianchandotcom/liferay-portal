@@ -26,7 +26,7 @@ public interface ZipWriter {
 
 	public void addEntry(String name, byte[] bytes) throws IOException;
 
-	public void addEntry(String name, InputStream inpuStream)
+	public void addEntry(String name, InputStream inputStream)
 		throws IOException;
 
 	public void addEntry(String name, String s) throws IOException;

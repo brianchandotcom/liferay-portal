@@ -79,14 +79,14 @@ public class ZipWriterImpl implements ZipWriter {
 		}
 	}
 
-	public void addEntry(String name, InputStream inpuStream)
+	public void addEntry(String name, InputStream inputStream)
 		throws IOException {
 
 		if (name.startsWith(StringPool.SLASH)) {
 			name = name.substring(1);
 		}
 
-		if (inpuStream == null) {
+		if (inputStream == null) {
 			return;
 		}
 
@@ -100,7 +100,7 @@ public class ZipWriterImpl implements ZipWriter {
 			new File(getPath() + StringPool.SLASH + name));
 
 		try {
-			File.cat(inpuStream, outputStream);
+			File.cat(inputStream, outputStream);
 		}
 		finally {
 			outputStream.close();

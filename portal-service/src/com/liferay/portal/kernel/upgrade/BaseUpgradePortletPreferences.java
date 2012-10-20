@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.upgrade;
 
+import com.liferay.portal.kernel.dao.db.IndexMetadata;
+import com.liferay.portal.kernel.dao.db.IndexMetadataFactoryUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -24,9 +26,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author Jorge Ferrer
  * @author Brian Wing Shun Chan
+ * @author James Lefeu
  */
 public abstract class BaseUpgradePortletPreferences extends UpgradeProcess {
 
@@ -36,6 +42,16 @@ public abstract class BaseUpgradePortletPreferences extends UpgradeProcess {
 		runSQL(
 			"delete from PortletPreferences where portletPreferencesId = " +
 				portletPreferencesId);
+	}
+
+	@Override
+	protected List<IndexMetadata> doGetIndexMetadatas() {
+		List<IndexMetadata> indexMetadatas = new ArrayList<IndexMetadata>();
+
+		indexMetadatas.add(IndexMetadataFactoryUtil.create(
+			"PortletPreferences", new String[] {"portletPreferencesId"}));
+
+		return indexMetadatas;
 	}
 
 	@Override

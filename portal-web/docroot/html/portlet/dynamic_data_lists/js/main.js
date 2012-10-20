@@ -5,13 +5,9 @@ AUI.add(
 
 		var Lang = A.Lang;
 
-		var getObjectKeys = A.Object.keys;
-
 		var JSON = A.JSON;
 
 		var EMPTY_FN = A.Lang.emptyFn;
-
-		var STR_COMMA = ',';
 
 		var STR_EMPTY = '';
 
@@ -169,7 +165,7 @@ AUI.add(
 					'long': 'digits'
 				},
 
-				EXTENDS: A.DataTable.Base,
+				EXTENDS: A.DataTable,
 
 				NAME: A.DataTable.Base.NAME,
 
@@ -189,24 +185,26 @@ AUI.add(
 					initializer: function() {
 						var instance = this;
 
-						var recordset = instance.get('recordset');
+						instance._setDataStableSort(instance.get('data'));
 
-						recordset.on('update', instance._onRecordUpdate, instance);
+						instance.on('dataChange', instance._onDataChange);
+						instance.on('model:change', instance._onRecordUpdate);
 					},
 
 					addEmptyRows: function(num) {
 						var instance = this;
 
-						var columnset = instance.get('columnset');
-						var recordset = instance.get('recordset');
+						var columns = instance.get('columns');
+						var data = instance.get('data');
 
-						var emptyRows = SpreadSheet.buildEmptyRecords(num, getObjectKeys(columnset.keyHash));
+						var keys = AArray.map(
+							columns,
+							function(item, index, collection) {
+								return item.key;
+							}
+						);
 
-						recordset.add(emptyRows);
-
-						instance._uiSetRecordset(recordset);
-
-						instance._fixPluginsUI();
+						data.add(SpreadSheet.buildEmptyRecords(num, keys));
 					},
 
 					updateMinDisplayRows: function(minDisplayRows, callback) {
@@ -232,58 +230,31 @@ AUI.add(
 						);
 					},
 
-					_editCell: function(event) {
+					_normalizeRecordData: function(record) {
 						var instance = this;
 
-						SpreadSheet.superclass._editCell.apply(instance, arguments);
-
-						var column = event.column;
-						var record = event.record;
-
-						var recordset = instance.get('recordset');
-						var recordsetId = instance.get('recordsetId');
-						var structure = instance.get('structure');
-
-						var editor = instance.getCellEditor(record, column);
-
-						if (editor) {
-							editor.set('record', record);
-							editor.set('recordset', recordset);
-							editor.set('recordsetId', recordsetId);
-							editor.set('structure', structure);
-						}
-					},
-
-					_normalizeRecordData: function(data) {
-						var instance = this;
-
-						var recordset = instance.get('recordset');
 						var structure = instance.get('structure');
 
 						var normalized = {};
 
 						A.each(
-							data,
+							structure,
 							function(item, index, collection) {
-								var field = SpreadSheet.findStructureFieldByAttribute(structure, 'name', index);
+								var type = item.type;
+								var value = record.get(item.name);
 
-								if (field !== null) {
-									var type = field.type;
-
-									if ((type === 'radio') || (type === 'select')) {
-										if (!Lang.isArray(item)) {
-											item = AArray(item);
-										}
-
-										item = JSON.stringify(item);
+								if ((type === 'radio') || (type === 'select')) {
+									if (!Lang.isArray(value)) {
+										value = AArray(value);
 									}
+
+									value = JSON.stringify(value);
 								}
 
-								normalized[index] = instance._normalizeValue(item);
+								normalized[item.name] = instance._normalizeValue(value);
 							}
 						);
 
-						delete normalized.classPK;
 						delete normalized.displayIndex;
 						delete normalized.recordId;
 
@@ -296,37 +267,104 @@ AUI.add(
 						return String(value);
 					},
 
+					_onDataChange: function(event) {
+						var instance = this;
+
+						instance._setDataStableSort(event.newVal);
+					},
+
+					_onEditCell: function(event) {
+						var instance = this;
+
+						SpreadSheet.superclass._onEditCell.apply(instance, arguments);
+
+						var activeCell = instance.get('activeCell');
+
+						var alignNode = event.alignNode || activeCell;
+
+						var column = instance.getColumn(alignNode);
+						var record = instance.getRecord(alignNode);
+
+						var data = instance.get('data');
+						var recordsetId = instance.get('recordsetId');
+						var structure = instance.get('structure');
+
+						var editor = instance.getEditor(record, column);
+
+						if (editor) {
+							editor.setAttrs(
+								{
+									data: data,
+									record: record,
+									recordsetId: recordsetId,
+									structure: structure
+								}
+							);
+						}
+					},
+
 					_onRecordUpdate: function(event) {
 						var instance = this;
 
-						var recordsetId = instance.get('recordsetId');
+						if (!A.Object.owns(event.changed, 'recordId')) {
+							var data = instance.get('data');
+							var recordsetId = instance.get('recordsetId');
 
-						var recordIndex = event.index;
+							var record = event.target;
 
-						AArray.each(
-							event.updated,
-							function(item, index, collection) {
-								var data = item.get('data');
+							var recordId = record.get('recordId');
 
-								var fieldsMap = instance._normalizeRecordData(data);
+							var fieldsMap = instance._normalizeRecordData(record);
 
-								if (data.classPK > 0) {
-									SpreadSheet.updateRecord(data.classPK, recordIndex, fieldsMap, true);
+							var recordIndex = data.indexOf(record);
+
+							if (recordId > 0) {
+								SpreadSheet.updateRecord(recordId, recordIndex, fieldsMap, true);
+							}
+							else {
+								SpreadSheet.addRecord(
+									recordsetId,
+									recordIndex,
+									fieldsMap,
+									function(json) {
+										if (json.recordId > 0) {
+											record.set('recordId', json.recordId);
+										}
+									}
+								);
+							}
+						}
+					},
+
+					_setDataStableSort: function(data) {
+						var instance = this;
+
+						data.sort = function (options) {
+							if (this.comparator) {
+								options = options || {};
+
+								var models = this._items.concat();
+
+								A.ArraySort.stableSort(models, A.bind(this._sort, this));
+
+								var facade = A.merge(
+									options,
+									{
+										models: models,
+										src: 'sort'
+									}
+								);
+
+								if (options.silent) {
+									this._defResetFn(facade);
 								}
 								else {
-									SpreadSheet.addRecord(
-										recordsetId,
-										recordIndex,
-										fieldsMap,
-										function(json) {
-											if (json.recordId > 0) {
-												data.classPK = json.recordId;
-											}
-										}
-									);
+									this.fire('reset', facade);
 								}
 							}
-						);
+
+							return this;
+						};
 					}
 				},
 
@@ -354,14 +392,13 @@ AUI.add(
 					);
 				},
 
-				buildDataTableColumnset: function(columnset, structure, editable) {
+				buildDataTableColumns: function(columns, structure, editable) {
 					var instance = this;
 
 					AArray.each(
-						columnset,
+						columns,
 						function(item, index, collection) {
 							var dataType = item.dataType;
-							var label = item.label;
 							var name = item.name;
 							var type = item.type;
 
@@ -394,7 +431,7 @@ AUI.add(
 								};
 
 								item.formatter = function(obj) {
-									var data = obj.record.get('data');
+									var data = obj.data;
 
 									var value = data[name];
 
@@ -422,7 +459,7 @@ AUI.add(
 								};
 
 								item.formatter = function(obj) {
-									var data = obj.record.get('data');
+									var data = obj.data;
 
 									var value = data[name];
 
@@ -437,7 +474,7 @@ AUI.add(
 							}
 							else if (type === 'ddm-documentlibrary') {
 								item.formatter = function(obj) {
-									var data = obj.record.get('data');
+									var data = obj.data;
 
 									var label = STR_EMPTY;
 									var value = data[name];
@@ -455,7 +492,7 @@ AUI.add(
 							}
 							else if (type === 'ddm-fileupload') {
 								item.formatter = function(obj) {
-									var data = obj.record.get('data');
+									var data = obj.data;
 
 									var label = STR_EMPTY;
 									var value = data[name];
@@ -485,7 +522,7 @@ AUI.add(
 								var options = instance.getCellEditorOptions(structureField.options);
 
 								item.formatter = function(obj) {
-									var data = obj.record.get('data');
+									var data = obj.data;
 
 									var label = [];
 									var value = data[name];
@@ -526,7 +563,7 @@ AUI.add(
 						}
 					);
 
-					return columnset;
+					return columns;
 				},
 
 				buildEmptyRecords: function(num, keys) {
@@ -694,6 +731,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-arraysort', 'aui-datatable', 'aui-dialog', 'json', 'liferay-portlet-url']
+		requires: ['aui-arraysort', 'aui-datatable', 'datatable-sort', 'aui-dialog', 'json', 'liferay-portlet-url']
 	}
 );

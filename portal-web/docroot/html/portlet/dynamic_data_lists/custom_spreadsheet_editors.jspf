@@ -24,19 +24,18 @@
 	DEFAULTS_FORM_VALIDATOR.RULES.requiredFields = function(value) {
 		var spreadSheet = window.<portlet:namespace />spreadSheet;
 
-		var activeColumn = spreadSheet.selection.getActiveColumn();
+		var activeCell = spreadSheet.get('activeCell');
 
-		var activeColumnKey = activeColumn.get('key');
-
-		var activeRecord = spreadSheet.selection.getActiveRecord();
+		var activeColumn = spreadSheet.getColumn(activeCell);
+		var activeRecord = spreadSheet.getRecord(activeCell);
 
 		return !A.Array.some(
 			window.<portlet:namespace />structure,
 			function(item, index, collection) {
 				var fieldName = item.name;
-				var fieldValue = activeRecord.getValue(fieldName);
+				var fieldValue = activeRecord.get(fieldName);
 
-				return !fieldValue && (activeColumnKey !== fieldName) && (item.required === 'true');
+				return !fieldValue && (activeColumn.key !== fieldName) && (item.required === 'true');
 			}
 		);
 	};
@@ -46,11 +45,11 @@
 	var FileUploadCellEditor = A.Component.create(
 		{
 			ATTRS: {
-				record: {
+				data: {
 					value: null
 				},
 
-				recordset: {
+				record: {
 					value: null
 				},
 
@@ -77,11 +76,10 @@
 
 					var fieldName = instance.get('elementName');
 					var record = instance.get('record');
-					var recordset = instance.get('recordset');
 
 					instance.set('value', STR_EMPTY);
 
-					recordset.updateRecordDataByKey(record, fieldName, STR_EMPTY);
+					record.set(fieldName, STR_EMPTY);
 
 					instance.hide();
 				},
@@ -95,17 +93,16 @@
 				uploadFile: function(callback) {
 					var instance = this;
 
+					var data = instance.get('data');
 					var elementName = instance.get('elementName');
 					var record = instance.get('record');
-					var recordData = record.get('data');
-					var recordset = instance.get('recordset');
 
 					var portletURL = Liferay.PortletURL.createResourceURL();
 
 					portletURL.setParameter('ddmStructureId', <%= ddmStructure.getStructureId() %>);
 					portletURL.setParameter('fieldName', elementName);
 					portletURL.setParameter('groupId', themeDisplay.getScopeGroupId());
-					portletURL.setParameter('recordId', recordData.classPK);
+					portletURL.setParameter('recordId', record.get('recordId'));
 					portletURL.setParameter('struts_action', '/dynamic_data_list_display/edit_record_file');
 
 					portletURL.setPortletId('<%= PortletKeys.DYNAMIC_DATA_LIST_DISPLAY %>');
@@ -196,10 +193,12 @@
 				_onSubmit: function(event) {
 					var instance = this;
 
+					var data = instance.get('data');
 					var record = instance.get('record');
-					var recordData = record.get('data');
-					var recordset = instance.get('recordset');
-					var displayIndex = recordset.getRecordIndex(record);
+
+					var displayIndex = data.indexOf(record);
+
+					var recordId = record.get('recordId');
 					var recordsetId = instance.get('recordsetId');
 
 					var validator = event.validator;
@@ -208,7 +207,7 @@
 						validator.formEvent.halt();
 					}
 
-					if (!recordData.classPK) {
+					if (!recordId) {
 						SpreadSheet.addRecord(
 							recordsetId,
 							displayIndex,
@@ -221,7 +220,13 @@
 								}
 								else {
 									if (response.recordId > 0) {
-										recordData.classPK = response.recordId;
+										record.set(
+											'recordId',
+											response.recordId,
+											{
+												silent: true
+											}
+										);
 
 										instance.uploadFile(instance._handleSaveEvent);
 									}

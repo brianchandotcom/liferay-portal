@@ -215,7 +215,11 @@ SitesUtil.addPortletBreadcrumbEntries(group, pagesName, redirectURL, request, re
 			function(event) {
 				event.preventDefault();
 
-				var link = event.currentTarget.ancestor().one('a');
+				if (event.target.test('.aui-tree-hitarea')) {
+					return;
+				}
+
+				var link = event.currentTarget.one('a');
 
 				if (link) {
 					var href = link.attr('href');
@@ -245,7 +249,7 @@ SitesUtil.addPortletBreadcrumbEntries(group, pagesName, redirectURL, request, re
 					layoutsContainer.io.start();
 				}
 			},
-			'.aui-tree-icon, .aui-tree-label'
+			'.aui-tree-node-content'
 		);
 	</aui:script>
 </c:if>

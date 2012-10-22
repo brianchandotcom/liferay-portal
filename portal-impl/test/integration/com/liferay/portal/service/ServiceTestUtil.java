@@ -230,11 +230,16 @@ public class ServiceTestUtil {
 		_deleteDLDirectories();
 	}
 
+	@Deprecated
 	public static SearchContext getSearchContext() throws Exception {
+		return getSearchContext(TestPropsValues.getGroupId());
+	}
+
+	public static SearchContext getSearchContext(long groupId) throws Exception {
 		SearchContext searchContext = new SearchContext();
 
 		searchContext.setCompanyId(TestPropsValues.getCompanyId());
-		searchContext.setGroupIds(new long[] {TestPropsValues.getGroupId()});
+		searchContext.setGroupIds(new long[] {groupId});
 		searchContext.setUserId(TestPropsValues.getUserId());
 
 		return searchContext;

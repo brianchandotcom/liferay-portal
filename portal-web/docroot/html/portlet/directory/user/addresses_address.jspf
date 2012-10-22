@@ -14,25 +14,26 @@
  */
 --%>
 
-<%@ include file="/html/portlet/directory/user/search_columns_user_name.jspf" %>
+<em class="mailing-name"><%= mailingName %></em>
 
-<liferay-ui:search-container-column-text
-	href="<%= rowURL %>"
-	name="screen-name"
-	orderable="<%= true %>"
-	property="screenName"
-/>
+<c:if test="<%= Validator.isNotNull(street1) %>">
+	<%= HtmlUtil.escape(street1) %><br />
+</c:if>
 
-<liferay-ui:search-container-column-text
-	href="<%= rowURL %>"
-	name="job-title"
-	orderable="<%= true %>"
-	value="<%= user2.getJobTitle() %>"
-/>
+<c:if test="<%= Validator.isNotNull(street2) %>">
+	<%= HtmlUtil.escape(street2) %><br />
+</c:if>
 
-<liferay-ui:search-container-column-text
-	href="<%= rowURL %>"
-	name="organizations"
->
-	<liferay-ui:write bean="<%= user2 %>" property="organizations" />
-</liferay-ui:search-container-column-text>
+<c:if test="<%= Validator.isNotNull(street3) %>">
+	<%= HtmlUtil.escape(street3) %><br />
+</c:if>
+
+<c:if test="<%= Validator.isNotNull(zipCode) %>">
+	<%= zipCode %>,
+</c:if>
+
+<c:if test="<%= Validator.isNotNull(city) %>">
+	<%= HtmlUtil.escape(city) %>
+</c:if>
+
+<c:if test="<%= address.isMailing() %>">(<liferay-ui:message key="mailing" />)</c:if>

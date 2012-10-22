@@ -119,15 +119,7 @@ boolean male = ParamUtil.getBoolean(request, "male", true);
 
 	<aui:fieldset>
 		<aui:column>
-			<aui:input model="<%= User.class %>" name="firstName" />
-
-			<aui:input model="<%= User.class %>" name="middleName" />
-
-			<aui:input model="<%= User.class %>" name="lastName">
-				<c:if test="<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.USERS_LAST_NAME_REQUIRED, PropsValues.USERS_LAST_NAME_REQUIRED) %>">
-					<aui:validator name="required" />
-				</c:if>
-			</aui:input>
+			<%@ include file="/html/portlet/login/create_account_user_name.jspf" %>
 
 			<c:if test="<%= !PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.USERS_SCREEN_NAME_ALWAYS_AUTOGENERATE) %>">
 				<aui:input model="<%= User.class %>" name="screenName" />

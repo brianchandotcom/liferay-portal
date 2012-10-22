@@ -14,25 +14,19 @@
  */
 --%>
 
-<%@ include file="/html/portlet/directory/user/search_columns_user_name.jspf" %>
+<aui:select label="question" name="reminderQueryQuestion">
 
-<liferay-ui:search-container-column-text
-	href="<%= rowURL %>"
-	name="screen-name"
-	orderable="<%= true %>"
-	property="screenName"
-/>
+	<%
+	for (String question : user.getReminderQueryQuestions()) {
+	%>
 
-<liferay-ui:search-container-column-text
-	href="<%= rowURL %>"
-	name="job-title"
-	orderable="<%= true %>"
-	value="<%= user2.getJobTitle() %>"
-/>
+		<aui:option label="<%= question %>" />
 
-<liferay-ui:search-container-column-text
-	href="<%= rowURL %>"
-	name="organizations"
->
-	<liferay-ui:write bean="<%= user2 %>" property="organizations" />
-</liferay-ui:search-container-column-text>
+	<%
+	}
+	%>
+
+	<c:if test="<%= PropsValues.USERS_REMINDER_QUERIES_CUSTOM_QUESTION_ENABLED %>">
+		<aui:option label="<%= UsersAdminUtil.CUSTOM_QUESTION %>" />
+	</c:if>
+</aui:select>

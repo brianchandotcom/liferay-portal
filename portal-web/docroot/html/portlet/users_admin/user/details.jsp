@@ -40,8 +40,6 @@ boolean deletePortrait = ParamUtil.getBoolean(request, "deletePortrait");
 <h3><liferay-ui:message key="details" /></h3>
 
 <aui:fieldset column="<%= true %>" cssClass="aui-w50">
-	<aui:select bean="<%= selContact %>" label="title[person]" listType="<%= ListTypeConstants.CONTACT_PREFIX %>" listTypeFieldName="prefixId" model="<%= Contact.class %>" name="prefixId" showEmptyOption="<%= true %>" />
-
 	<liferay-ui:success key="verificationEmailSent" message="your-email-verification-code-has-been-sent-and-the-new-email-address-will-be-applied-to-your-account-once-it-has-been-verified" />
 
 	<liferay-ui:error exception="<%= DuplicateUserScreenNameException.class %>" message="the-screen-name-you-requested-is-already-taken" />
@@ -107,22 +105,7 @@ boolean deletePortrait = ParamUtil.getBoolean(request, "deletePortrait");
 		</c:otherwise>
 	</c:choose>
 
-	<liferay-ui:error exception="<%= ContactFirstNameException.class %>" message="please-enter-a-valid-first-name" />
-	<liferay-ui:error exception="<%= ContactFullNameException.class %>" message="please-enter-a-valid-first-middle-and-last-name" />
-
-	<aui:input name="firstName" />
-
-	<aui:input name="middleName" />
-
-	<liferay-ui:error exception="<%= ContactLastNameException.class %>" message="please-enter-a-valid-last-name" />
-
-	<aui:input name="lastName">
-		<c:if test="<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.USERS_LAST_NAME_REQUIRED, PropsValues.USERS_LAST_NAME_REQUIRED) %>">
-			<aui:validator name="required" />
-		</c:if>
-	</aui:input>
-
-	<aui:select bean="<%= selContact %>" label="suffix" listType="<%= ListTypeConstants.CONTACT_SUFFIX %>" listTypeFieldName="suffixId" model="<%= Contact.class %>" name="suffixId" showEmptyOption="<%= true %>" />
+	<%@ include file="/html/portlet/users_admin/user/details_user_name.jspf" %>
 </aui:fieldset>
 
 <aui:fieldset column="<%= true %>" cssClass="aui-w50">

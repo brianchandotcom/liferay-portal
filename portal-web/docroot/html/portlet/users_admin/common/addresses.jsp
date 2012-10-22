@@ -91,31 +91,7 @@ else {
 
 		<div class="lfr-form-row">
 			<div class="row-fields">
-				<aui:column columnWidth="50">
-					<aui:input name='<%= "addressId" + addressesIndex %>' type="hidden" value="<%= address.getAddressId() %>" />
-
-					<aui:input fieldParam='<%= "addressStreet1_" + addressesIndex %>' id='<%= "addressStreet1_" + addressesIndex %>' name="street1" />
-
-					<aui:input fieldParam='<%= "addressStreet2_" + addressesIndex %>' id='<%= "addressStreet2_" + addressesIndex %>' name="street2" />
-
-					<aui:input fieldParam='<%= "addressStreet3_" + addressesIndex %>' id='<%= "addressStreet3_" + addressesIndex %>' name="street3" />
-
-					<aui:select label="country" name='<%= "addressCountryId" + addressesIndex %>' />
-
-					<aui:select label="region" name='<%= "addressRegionId" + addressesIndex %>' />
-				</aui:column>
-
-				<aui:column columnWidth="50">
-					<aui:select label="type" listType="<%= className + ListTypeConstants.ADDRESS %>" name='<%= "addressTypeId" + addressesIndex %>' />
-
-					<aui:input fieldParam='<%= "addressZip" + addressesIndex %>' id='<%= "addressZip" + addressesIndex %>' label="postal-code" name="zip" />
-
-					<aui:input fieldParam='<%= "addressCity" + addressesIndex %>' id='<%= "addressCity" + addressesIndex %>' name="city" />
-
-					<aui:input checked="<%= address.isPrimary() %>" cssClass="primary-ctrl" id='<%= "addressPrimary" + addressesIndex %>' label="primary" name="addressPrimary" type="radio" value="<%= addressesIndex %>" />
-
-					<aui:input cssClass="mailing-ctrl" fieldParam='<%= "addressMailing" + addressesIndex %>' id='<%= "addressMailing" + addressesIndex %>' name="mailing" />
-				</aui:column>
+				<%@ include file="/html/portlet/users_admin/common/addresses_address.jspf" %>
 			</div>
 		</div>
 

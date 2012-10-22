@@ -14,20 +14,16 @@
 
 package com.liferay.portal.verify;
 
-import com.liferay.portal.kernel.dao.db.IndexMetadata;
-import com.liferay.portal.kernel.dao.db.IndexMetadataFactoryUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  * @author Kenneth Chang
- * @author James Lefeu
  */
 public class VerifyLayout extends VerifyProcess {
 
@@ -47,20 +43,6 @@ public class VerifyLayout extends VerifyProcess {
 			LayoutLocalServiceUtil.updateFriendlyURL(
 				layout.getPlid(), friendlyURL);
 		}
-	}
-
-	@Override
-	protected List<IndexMetadata> doGetIndexMetadatas() {
-		List<IndexMetadata> indexMetadatas = new ArrayList<IndexMetadata>();
-
-		indexMetadatas.add(IndexMetadataFactoryUtil.create(
-			"AssetEntry", new String[] {"layoutUuid"}));
-		indexMetadatas.add(IndexMetadataFactoryUtil.create(
-			"JournalArticle", new String[] {"layoutUuid"}));
-		indexMetadatas.add(IndexMetadataFactoryUtil.create(
-			"Layout", new String[] {"sourcePrototypeLayoutUuid"}));
-
-		return indexMetadatas;
 	}
 
 	protected void verifyUuid() throws Exception {

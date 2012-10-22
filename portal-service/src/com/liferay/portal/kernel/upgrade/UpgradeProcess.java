@@ -17,25 +17,18 @@ package com.liferay.portal.kernel.upgrade;
 import com.liferay.portal.kernel.dao.db.BaseDBProcess;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
-import com.liferay.portal.kernel.dao.db.IndexMetadata;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.util.UpgradeTable;
 import com.liferay.portal.kernel.upgrade.util.UpgradeTableFactoryUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
-
-import java.util.Collections;
-import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
@@ -181,13 +174,11 @@ public abstract class UpgradeProcess extends BaseDBProcess {
 				_log.info("Upgrading " + getClass().getName());
 			}
 
-			List<IndexMetadata> indexMetadatas = getIndexMetadatas();
-
-			indexMetadatas = addIndexes(getIndexMetadatas());
+			addTemporaryIndexes();
 
 			doUpgrade();
 
-			dropIndexes(indexMetadatas);
+			dropTemporaryIndexes();
 		}
 		catch (Exception e) {
 			throw new UpgradeException(e);
@@ -211,19 +202,7 @@ public abstract class UpgradeProcess extends BaseDBProcess {
 		upgradeProcess.upgrade();
 	}
 
-	protected List<IndexMetadata> doGetIndexMetadatas() {
-		return Collections.emptyList();
-	}
-
 	protected void doUpgrade() throws Exception {
-	}
-
-	protected List<IndexMetadata> getIndexMetadatas() {
-		if (!GetterUtil.getBoolean(PropsUtil.get(PropsKeys.INDEX_ON_UPGRADE))) {
-			return Collections.emptyList();
-		}
-
-		return doGetIndexMetadatas();
 	}
 
 	protected void upgradeTable(String tableName, Object[][] tableColumns)

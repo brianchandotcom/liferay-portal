@@ -87,7 +87,7 @@ public class SourceFormatter {
 						_formatDDLStructuresXML();
 						_formatFriendlyURLRoutesXML();
 						_formatFTL();
-						_formatPortalPropertiesForPlugins();
+						_formatPortalProperties();
 						_formatPortletXML();
 						_formatServiceXML();
 						_formatSH();
@@ -2345,33 +2345,50 @@ public class SourceFormatter {
 		return content;
 	}
 
-	private static void _formatPortalPropertiesForPlugins() throws IOException {
+	private static void _formatPortalProperties() throws IOException {
 		String basedir = "./";
 
+		String portalPortalProperties = null;
+
 		if (_fileUtil.exists(basedir + "portal-impl")) {
-			return;
+			File portalPortalPropertiesFile = new File(
+				basedir + "portal-impl/src/portal.properties");
+
+			portalPortalProperties = _fileUtil.read(portalPortalPropertiesFile);
 		}
+		else {
+			ClassLoader classLoader = SourceFormatter.class.getClassLoader();
 
-		ClassLoader classLoader = SourceFormatter.class.getClassLoader();
+			InputStream inputStream = classLoader.getResourceAsStream(
+				"portal.properties");
 
-		InputStream inputStream = classLoader.getResourceAsStream(
-			"portal.properties");
+			if (inputStream == null) {
+				return;
+			}
 
-		if (inputStream == null) {
-			return;
+			portalPortalProperties = new String(
+				_fileUtil.getBytes(inputStream));
 		}
-
-		String portalPortalProperties = new String(
-			_fileUtil.getBytes(inputStream));
 
 		DirectoryScanner directoryScanner = new DirectoryScanner();
 
 		directoryScanner.setBasedir(basedir);
-		directoryScanner.setIncludes(
-			new String[] {
-				"**\\portal.properties", "**\\portal-ext.properties"
-			}
-		);
+
+		if (_fileUtil.exists(basedir + "portal-impl")) {
+			directoryScanner.setIncludes(
+				new String[] {
+					"**\\portal-ext.properties",
+					"**\\portal-legacy-*.properties",
+				}
+			);
+		}
+		else {
+			directoryScanner.setIncludes(
+				new String[] {
+					"**\\portal.properties", "**\\portal-ext.properties"
+				}
+			);
+		}
 
 		List<String> fileNames = _sourceFormatterHelper.scanForFiles(
 			directoryScanner);
@@ -2381,12 +2398,11 @@ public class SourceFormatter {
 
 			String content = _fileUtil.read(file);
 
-			_formatPortalPropertiesForPlugins(
-				fileName, content, portalPortalProperties);
+			_formatPortalProperties(fileName, content, portalPortalProperties);
 		}
 	}
 
-	private static void _formatPortalPropertiesForPlugins(
+	private static void _formatPortalProperties(
 			String fileName, String content, String portalPortalProperties)
 		throws IOException {
 

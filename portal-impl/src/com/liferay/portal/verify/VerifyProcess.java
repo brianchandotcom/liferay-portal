@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.ReleaseConstants;
 import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
-import com.liferay.portal.util.PropsValues;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -60,13 +59,11 @@ public abstract class VerifyProcess extends BaseDBProcess {
 				_log.info("Verifying " + getClass().getName());
 			}
 
-			List<IndexMetadata> indexMetadatas = getIndexMetadatas();
-
-			indexMetadatas = addIndexes(getIndexMetadatas());
+			addTemporaryIndexes();
 
 			doVerify();
 
-			dropIndexes(indexMetadatas);
+			dropTemporaryIndexes();
 		}
 		catch (Exception e) {
 			throw new VerifyException(e);
@@ -112,14 +109,6 @@ public abstract class VerifyProcess extends BaseDBProcess {
 		finally {
 			DataAccess.cleanUp(con, ps, rs);
 		}
-	}
-
-	protected List<IndexMetadata> getIndexMetadatas() {
-		if (!PropsValues.INDEX_ON_UPGRADE) {
-			return Collections.emptyList();
-		}
-
-		return doGetIndexMetadatas();
 	}
 
 	protected Set<String> getPortalTableNames() throws Exception {

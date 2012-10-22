@@ -18,8 +18,6 @@ import java.io.IOException;
 
 import java.sql.SQLException;
 
-import java.util.List;
-
 import javax.naming.NamingException;
 
 /**
@@ -29,13 +27,16 @@ import javax.naming.NamingException;
  */
 public interface DBProcess {
 
-	public IndexMetadata addIndex(IndexMetadata indexMetadata);
+	public void addPermanentIndex(
+			boolean unique, String tableName, String... columnNames)
+		throws IOException, SQLException;
 
-	public List<IndexMetadata> addIndexes(List<IndexMetadata> indexMetadatas);
+	public void addTemporaryIndexes() throws IOException, SQLException;
 
-	public void dropIndex(IndexMetadata indexMetadata);
+	public void dropTemporaryIndexes() throws IOException, SQLException;
 
-	public void dropIndexes(List<IndexMetadata> indexMetadatas);
+	public void requestTemporaryIndex(
+		boolean unique, String tableName, String... columnNames);
 
 	public void runSQL(String template) throws IOException, SQLException;
 

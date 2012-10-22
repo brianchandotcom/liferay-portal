@@ -25,6 +25,10 @@ public class AuthVerifierConfiguration {
 		return _authVerifier;
 	}
 
+	public String getAuthVerifierClassName() {
+		return _authVerifierClassName;
+	}
+
 	public Properties getProperties() {
 		return _properties;
 	}
@@ -33,11 +37,16 @@ public class AuthVerifierConfiguration {
 		_authVerifier = authVerifier;
 	}
 
+	public void setAuthVerifierClassName(String authVerifierClassName) {
+		this._authVerifierClassName = authVerifierClassName;
+	}
+
 	public void setProperties(Properties properties) {
 		_properties = properties;
 	}
 
 	private AuthVerifier _authVerifier;
+	private String _authVerifierClassName;
 	private Properties _properties;
 
 }

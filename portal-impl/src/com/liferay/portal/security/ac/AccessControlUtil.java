@@ -21,6 +21,8 @@ import com.liferay.portal.security.auth.AccessControlContext;
 import com.liferay.portal.security.auth.AuthException;
 import com.liferay.portal.security.auth.AuthVerifierResult;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -44,9 +46,11 @@ public class AccessControlUtil {
 	}
 
 	public static void initAccessControlContext(
-		HttpServletRequest request, HttpServletResponse response) {
+		HttpServletRequest request, HttpServletResponse response,
+		Map<String, Object> initConfiguration) {
 
-		getAccessControl().initAccessControlContext(request, response);
+		getAccessControl().initAccessControlContext(
+			request, response, initConfiguration);
 	}
 
 	public static void initContextUser(long userId) throws AuthException {

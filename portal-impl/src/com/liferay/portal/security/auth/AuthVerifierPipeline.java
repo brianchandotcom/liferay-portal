@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -29,6 +30,7 @@ import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -103,12 +105,17 @@ public class AuthVerifierPipeline {
 		List<AuthVerifierConfiguration> authVerifierConfigurations =
 			new ArrayList<AuthVerifierConfiguration>();
 
+		int length = request.getContextPath().length();
+
+		String requestURI = request.getRequestURI().substring(length);
+
 		for (AuthVerifierConfiguration authVerifierConfiguration :
 				_authVerifierConfigurations) {
 
-			if (_isMatchingRequestURI(
-					authVerifierConfiguration, request.getRequestURI())) {
+			authVerifierConfiguration = _mergeAuthVerifierConfiguration(
+				authVerifierConfiguration, accessControlContext);
 
+			if (_isMatchingRequestURI(authVerifierConfiguration, requestURI)) {
 				authVerifierConfigurations.add(authVerifierConfiguration);
 			}
 		}
@@ -129,9 +136,12 @@ public class AuthVerifierPipeline {
 
 				AuthVerifier authVerifier =
 					(AuthVerifier)InstanceFactory.newInstance(
+						PortalClassLoaderUtil.getClassLoader(),
 						authVerifierClassName);
 
 				authVerifierConfiguration.setAuthVerifier(authVerifier);
+				authVerifierConfiguration.setAuthVerifierClassName(
+					authVerifierClassName);
 
 				Properties properties = PropsUtil.getProperties(
 					getAuthVerifierPropertyName(authVerifierClassName), true);
@@ -169,6 +179,60 @@ public class AuthVerifierPipeline {
 		return Wildcard.matchOne(requestURI, urls) > -1;
 	}
 
+	private AuthVerifierConfiguration _mergeAuthVerifierConfiguration(
+		AuthVerifierConfiguration authVerifierConfiguration,
+		AccessControlContext accessControlContext) {
+
+		Map<String, Object> settings = accessControlContext.getSettings();
+
+		String authVerifierSettingsKey = getAuthVerifierPropertyName(
+			authVerifierConfiguration.getAuthVerifierClassName());
+
+		boolean merge = false;
+
+		Iterator<String> itr = settings.keySet().iterator();
+
+		while (itr.hasNext() && !merge) {
+			String settingsKey = itr.next();
+
+			if (settingsKey.startsWith(authVerifierSettingsKey)) {
+				if (settings.get(settingsKey) instanceof String) {
+					merge = true;
+				}
+			}
+		}
+
+		if (!merge) {
+			return authVerifierConfiguration;
+		}
+
+		AuthVerifierConfiguration result = new AuthVerifierConfiguration();
+
+		result.setAuthVerifier(authVerifierConfiguration.getAuthVerifier());
+
+		Properties mergedProperties = new Properties(
+			authVerifierConfiguration.getProperties());
+
+		for (String settingsKey : settings.keySet()) {
+			if (settingsKey.startsWith(authVerifierSettingsKey)) {
+				Object settingsValue = settings.get(settingsKey);
+
+				if (settingsValue instanceof String) {
+					String propertiesKey = settingsKey.substring(
+						authVerifierSettingsKey.length());
+
+					mergedProperties.setProperty(
+						propertiesKey, (String) settingsValue);
+				}
+
+			}
+		}
+
+		result.setProperties(mergedProperties);
+
+		return result;
+	}
+
 	private Map<String, Object> _mergeSettings(
 		Properties properties, Map<String, Object> settings) {
 
@@ -194,6 +258,10 @@ public class AuthVerifierPipeline {
 
 		if (authVerifierConfiguration.getAuthVerifier() == null) {
 			throw new IllegalArgumentException("Auth verifier is null");
+		}
+
+		if (authVerifierConfiguration.getAuthVerifierClassName() == null) {
+			throw new IllegalArgumentException("Class name is null");
 		}
 
 		if (authVerifierConfiguration.getProperties() == null) {

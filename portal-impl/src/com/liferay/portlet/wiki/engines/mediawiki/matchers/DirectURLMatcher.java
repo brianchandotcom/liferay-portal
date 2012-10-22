@@ -23,11 +23,14 @@ import com.liferay.portlet.wiki.model.WikiPage;
 
 import java.util.regex.MatchResult;
 
+/**
+ * @author Kenneth Chang
+ */
 public class DirectURLMatcher extends CallbackMatcher {
 
 	public DirectURLMatcher(WikiPage page, String attachmentURLPrefix) {
-		_attachmentURLPrefix = attachmentURLPrefix;
 		_page = page;
+		_attachmentURLPrefix = attachmentURLPrefix;
 
 		setRegex(_REGEX);
 	}
@@ -47,6 +50,7 @@ public class DirectURLMatcher extends CallbackMatcher {
 		public String foundMatch(MatchResult matchResult) {
 			String fileName = matchResult.group(1);
 			String title = matchResult.group(2);
+
 			String url = _attachmentURLPrefix + HttpUtil.encodeURL(fileName);
 
 			try {

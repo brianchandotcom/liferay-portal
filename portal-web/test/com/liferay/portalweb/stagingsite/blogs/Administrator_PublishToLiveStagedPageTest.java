@@ -46,7 +46,6 @@ public class Administrator_PublishToLiveStagedPageTest extends BaseTestCase {
 				assertEquals(RuntimeVariables.replace(
 						"You are viewing the staged version of Liferay. You can make changes here and publish them to Live afterwards to make them public."),
 					selenium.getText("//span[@class='staging-live-help']"));
-				selenium.waitForVisible("link=Blogs Test Page");
 				selenium.clickAt("link=Blogs Test Page",
 					RuntimeVariables.replace("Blogs Test Page"));
 				selenium.waitForPageToLoad("30000");

@@ -30,7 +30,6 @@ public class Administrator_LoginTest extends BaseTestCase {
 				selenium.selectWindow("null");
 				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
-				selenium.waitForVisible("//input[@id='_58_login']");
 				selenium.type("//input[@id='_58_login']",
 					RuntimeVariables.replace("administrator@selenium.com"));
 				selenium.type("//input[@id='_58_password']",

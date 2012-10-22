@@ -55,17 +55,17 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'User')]</td>
 	<td>User</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'User')]</td>
 	<td>User</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'User')]</td>
 	<td>User</td>
 </tr>
 <tr>
@@ -129,11 +129,6 @@
 	<td>Save</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>//div[@class='portlet-msg-success']</td>
-	<td>Your request completed successfully.</td>
-</tr>
-<tr>
 	<td>assertText</td>
 	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
@@ -194,11 +189,6 @@
 	<td>Save</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>//div[@class='portlet-msg-success']</td>
-	<td>Your request completed successfully.</td>
-</tr>
-<tr>
 	<td>assertText</td>
 	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
@@ -235,7 +225,7 @@
 </tr>
 <tr>
 	<td>selectWindow</td>
-	<td>name=role</td>
+	<td>title=Users and Organizations</td>
 	<td></td>
 </tr>
 <tr>
@@ -289,11 +279,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Sign Out</td>
-	<td>Sign Out</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Sign Out</td>
 	<td>Sign Out</td>
@@ -307,11 +292,6 @@
 	<td>open</td>
 	<td>/web/guest/home/</td>
 	<td></td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//input[@id='_58_login']</td>
-	<td>email address</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -424,11 +404,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Sign Out</td>
-	<td>Sign Out</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Sign Out</td>
 	<td>Sign Out</td>
@@ -442,11 +417,6 @@
 	<td>open</td>
 	<td>/web/guest/home/</td>
 	<td></td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//input[@id='_58_login']</td>
-	<td>email address</td>
 </tr>
 <tr>
 	<td>type</td>

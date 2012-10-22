@@ -39,8 +39,10 @@ public class DeactivateStagingTest extends BaseTestCase {
 		selenium.clickAt("link=Sites", RuntimeVariables.replace("Sites"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Actions"),
-			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
-		selenium.click("//span[@title='Actions']/ul/li/strong/a/span");
+			selenium.getText(
+				"xPath=(//span[@title='Actions']/ul/li/strong/a/span)[2]"));
+		selenium.click(
+			"xPath=(//span[@title='Actions']/ul/li/strong/a/span)[2]");
 		selenium.waitForVisible(
 			"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a");
 		assertEquals(RuntimeVariables.replace("Edit Settings"),

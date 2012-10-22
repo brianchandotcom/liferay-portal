@@ -63,8 +63,8 @@ public class PU_AddStagedPortletTest extends BaseTestCase {
 			RuntimeVariables.replace("\\13"));
 		selenium.keyUp("//input[@id='layout_configuration_content']",
 			RuntimeVariables.replace("\\13"));
-		selenium.waitForVisible("//div[@title='Blogs']/p/a");
-		selenium.clickAt("//div[@title='Blogs']/p/a",
+		selenium.waitForVisible("//li[@title='Blogs']/p/a");
+		selenium.clickAt("//li[@title='Blogs']/p/a",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible("//section");
 		assertTrue(selenium.isVisible("//section"));

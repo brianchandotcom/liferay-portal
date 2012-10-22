@@ -240,11 +240,16 @@ public class ServiceTestUtil {
 		return searchContext;
 	}
 
+	@Deprecated
 	public static ServiceContext getServiceContext() throws Exception {
+		return getServiceContext(TestPropsValues.getGroupId());
+	}
+
+	public static ServiceContext getServiceContext(long groupId) throws Exception {
 		ServiceContext serviceContext = new ServiceContext();
 
 		serviceContext.setCompanyId(TestPropsValues.getCompanyId());
-		serviceContext.setScopeGroupId(TestPropsValues.getGroupId());
+		serviceContext.setScopeGroupId(groupId);
 		serviceContext.setUserId(TestPropsValues.getUserId());
 
 		return serviceContext;

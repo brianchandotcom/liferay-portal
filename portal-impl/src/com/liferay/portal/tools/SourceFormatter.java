@@ -73,6 +73,8 @@ public class SourceFormatter {
 				GetterUtil.getString(
 					System.getProperty("source.formatter.excludes")));
 
+			_isPortalInstance = _isPortalInstance();
+
 			_sourceFormatterHelper = new SourceFormatterHelper(false);
 
 			_sourceFormatterHelper.init();
@@ -1159,8 +1161,6 @@ public class SourceFormatter {
 	}
 
 	private static void _formatJava() throws IOException {
-		String basedir = "./";
-
 		String copyright = _getCopyright();
 		String oldCopyright = _getOldCopyright();
 
@@ -1168,7 +1168,7 @@ public class SourceFormatter {
 
 		Collection<String> fileNames = null;
 
-		if (_fileUtil.exists(basedir + "portal-impl")) {
+		if (_isPortalInstance) {
 			fileNames = _getPortalJavaFiles();
 
 			_javaTermAlphabetizeExclusionsProperties =
@@ -2350,7 +2350,7 @@ public class SourceFormatter {
 
 		String portalPortalProperties = null;
 
-		if (_fileUtil.exists(basedir + "portal-impl")) {
+		if (_isPortalInstance) {
 			File portalPortalPropertiesFile = new File(
 				basedir + "portal-impl/src/portal.properties");
 
@@ -2374,7 +2374,7 @@ public class SourceFormatter {
 
 		directoryScanner.setBasedir(basedir);
 
-		if (_fileUtil.exists(basedir + "portal-impl")) {
+		if (_isPortalInstance) {
 			directoryScanner.setIncludes(
 				new String[] {
 					"**\\portal-ext.properties",
@@ -2449,7 +2449,7 @@ public class SourceFormatter {
 
 		String basedir = "./";
 
-		if (_fileUtil.exists(basedir + "portal-impl")) {
+		if (_isPortalInstance) {
 			File file = new File(
 				basedir + "portal-web/docroot/WEB-INF/portlet-custom.xml");
 
@@ -2727,7 +2727,7 @@ public class SourceFormatter {
 
 		String basedir = "./";
 
-		if (!_fileUtil.exists(basedir + "portal-impl")) {
+		if (!_isPortalInstance) {
 			return;
 		}
 
@@ -2837,7 +2837,7 @@ public class SourceFormatter {
 
 		String basedir = "./";
 
-		if (!_fileUtil.exists(basedir + "portal-impl")) {
+		if (!_isPortalInstance) {
 			return;
 		}
 
@@ -2882,7 +2882,7 @@ public class SourceFormatter {
 	private static void _formatWebXML() throws IOException {
 		String basedir = "./";
 
-		if (_fileUtil.exists(basedir + "portal-impl")) {
+		if (_isPortalInstance) {
 			Properties properties = new Properties();
 
 			String propertiesContent = _fileUtil.read(
@@ -3887,6 +3887,17 @@ public class SourceFormatter {
 		return false;
 	}
 
+	private static boolean _isPortalInstance() {
+		String basedir = "./";
+
+		if (_fileUtil.exists(basedir + "portal-impl")) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
 	private static boolean _isValidJavaParameter(String javaParameter) {
 		int quoteCount = StringUtil.count(javaParameter, StringPool.QUOTE);
 
@@ -4396,6 +4407,7 @@ public class SourceFormatter {
 
 	private static String[] _excludes;
 	private static FileImpl _fileUtil = FileImpl.getInstance();
+	private static boolean _isPortalInstance;
 	private static Pattern _javaImportPattern = Pattern.compile(
 		"(^[ \t]*import\\s+.*;\n+)+", Pattern.MULTILINE);
 	private static Properties _javaTermAlphabetizeExclusionsProperties;

@@ -76,8 +76,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 			com.liferay.portlet.messageboards.NoSuchMessageException;
 
 	public com.liferay.portlet.messageboards.model.MBMessage updateImpl(
-		com.liferay.portlet.messageboards.model.MBMessage mbMessage,
-		boolean merge)
+		com.liferay.portlet.messageboards.model.MBMessage mbMessage)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

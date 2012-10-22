@@ -1687,7 +1687,7 @@ public class PortletImporter {
 
 						oldScopeGroup.setLiveGroupId(scopeGroup.getGroupId());
 
-						GroupLocalServiceUtil.updateGroup(oldScopeGroup, true);
+						GroupLocalServiceUtil.updateGroup(oldScopeGroup);
 					}
 					catch (NoSuchLayoutException nsle) {
 						if (_log.isWarnEnabled()) {

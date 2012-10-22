@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
-import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
@@ -444,7 +443,12 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, dlFileVersion);
+			if (dlFileVersion.isCachedModel()) {
+				dlFileVersion = (DLFileVersion)session.get(DLFileVersionImpl.class,
+						dlFileVersion.getPrimaryKeyObj());
+			}
+
+			session.delete(dlFileVersion);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -460,8 +464,8 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 
 	@Override
 	public DLFileVersion updateImpl(
-		com.liferay.portlet.documentlibrary.model.DLFileVersion dlFileVersion,
-		boolean merge) throws SystemException {
+		com.liferay.portlet.documentlibrary.model.DLFileVersion dlFileVersion)
+		throws SystemException {
 		dlFileVersion = toUnwrappedModel(dlFileVersion);
 
 		boolean isNew = dlFileVersion.isNew();
@@ -479,9 +483,14 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, dlFileVersion, merge);
+			if (dlFileVersion.isNew()) {
+				session.save(dlFileVersion);
 
-			dlFileVersion.setNew(false);
+				dlFileVersion.setNew(false);
+			}
+			else {
+				session.merge(dlFileVersion);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

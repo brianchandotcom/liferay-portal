@@ -247,21 +247,6 @@ public class RepositoryEntryLocalServiceWrapper
 	}
 
 	/**
-	* Updates the repository entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param repositoryEntry the repository entry
-	* @param merge whether to merge the repository entry with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	* @return the repository entry that was updated
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.RepositoryEntry updateRepositoryEntry(
-		com.liferay.portal.model.RepositoryEntry repositoryEntry, boolean merge)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _repositoryEntryLocalService.updateRepositoryEntry(repositoryEntry,
-			merge);
-	}
-
-	/**
 	* Returns the Spring bean ID for this bean.
 	*
 	* @return the Spring bean ID for this bean

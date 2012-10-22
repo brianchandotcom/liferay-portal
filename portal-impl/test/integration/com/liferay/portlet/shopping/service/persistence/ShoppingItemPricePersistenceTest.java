@@ -125,7 +125,7 @@ public class ShoppingItemPricePersistenceTest {
 
 		newShoppingItemPrice.setStatus(ServiceTestUtil.nextInt());
 
-		_persistence.update(newShoppingItemPrice, false);
+		_persistence.update(newShoppingItemPrice);
 
 		ShoppingItemPrice existingShoppingItemPrice = _persistence.findByPrimaryKey(newShoppingItemPrice.getPrimaryKey());
 
@@ -287,7 +287,7 @@ public class ShoppingItemPricePersistenceTest {
 
 		shoppingItemPrice.setStatus(ServiceTestUtil.nextInt());
 
-		_persistence.update(shoppingItemPrice, false);
+		_persistence.update(shoppingItemPrice);
 
 		return shoppingItemPrice;
 	}

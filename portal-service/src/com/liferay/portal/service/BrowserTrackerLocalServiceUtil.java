@@ -235,20 +235,6 @@ public class BrowserTrackerLocalServiceUtil {
 	}
 
 	/**
-	* Updates the browser tracker in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param browserTracker the browser tracker
-	* @param merge whether to merge the browser tracker with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	* @return the browser tracker that was updated
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portal.model.BrowserTracker updateBrowserTracker(
-		com.liferay.portal.model.BrowserTracker browserTracker, boolean merge)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().updateBrowserTracker(browserTracker, merge);
-	}
-
-	/**
 	* Returns the Spring bean ID for this bean.
 	*
 	* @return the Spring bean ID for this bean

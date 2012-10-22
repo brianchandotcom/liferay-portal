@@ -94,21 +94,20 @@ public class PortalPreferencesUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static PortalPreferences update(
-		PortalPreferences portalPreferences, boolean merge)
+	public static PortalPreferences update(PortalPreferences portalPreferences)
 		throws SystemException {
-		return getPersistence().update(portalPreferences, merge);
+		return getPersistence().update(portalPreferences);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
 	public static PortalPreferences update(
-		PortalPreferences portalPreferences, boolean merge,
-		ServiceContext serviceContext) throws SystemException {
-		return getPersistence().update(portalPreferences, merge, serviceContext);
+		PortalPreferences portalPreferences, ServiceContext serviceContext)
+		throws SystemException {
+		return getPersistence().update(portalPreferences, serviceContext);
 	}
 
 	/**
@@ -158,10 +157,9 @@ public class PortalPreferencesUtil {
 	}
 
 	public static com.liferay.portal.model.PortalPreferences updateImpl(
-		com.liferay.portal.model.PortalPreferences portalPreferences,
-		boolean merge)
+		com.liferay.portal.model.PortalPreferences portalPreferences)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(portalPreferences, merge);
+		return getPersistence().updateImpl(portalPreferences);
 	}
 
 	/**

@@ -140,7 +140,7 @@ public class MBThreadPersistenceTest {
 
 		newMBThread.setStatusDate(ServiceTestUtil.nextDate());
 
-		_persistence.update(newMBThread, false);
+		_persistence.update(newMBThread);
 
 		MBThread existingMBThread = _persistence.findByPrimaryKey(newMBThread.getPrimaryKey());
 
@@ -343,7 +343,7 @@ public class MBThreadPersistenceTest {
 
 		mbThread.setStatusDate(ServiceTestUtil.nextDate());
 
-		_persistence.update(mbThread, false);
+		_persistence.update(mbThread);
 
 		return mbThread;
 	}

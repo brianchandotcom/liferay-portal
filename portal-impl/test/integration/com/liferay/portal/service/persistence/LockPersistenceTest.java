@@ -129,7 +129,7 @@ public class LockPersistenceTest {
 
 		newLock.setExpirationDate(ServiceTestUtil.nextDate());
 
-		_persistence.update(newLock, false);
+		_persistence.update(newLock);
 
 		Lock existingLock = _persistence.findByPrimaryKey(newLock.getPrimaryKey());
 
@@ -314,7 +314,7 @@ public class LockPersistenceTest {
 
 		lock.setExpirationDate(ServiceTestUtil.nextDate());
 
-		_persistence.update(lock, false);
+		_persistence.update(lock);
 
 		return lock;
 	}

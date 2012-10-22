@@ -117,7 +117,7 @@ public class AnnouncementsFlagPersistenceTest {
 
 		newAnnouncementsFlag.setValue(ServiceTestUtil.nextInt());
 
-		_persistence.update(newAnnouncementsFlag, false);
+		_persistence.update(newAnnouncementsFlag);
 
 		AnnouncementsFlag existingAnnouncementsFlag = _persistence.findByPrimaryKey(newAnnouncementsFlag.getPrimaryKey());
 
@@ -280,7 +280,7 @@ public class AnnouncementsFlagPersistenceTest {
 
 		announcementsFlag.setValue(ServiceTestUtil.nextInt());
 
-		_persistence.update(announcementsFlag, false);
+		_persistence.update(announcementsFlag);
 
 		return announcementsFlag;
 	}

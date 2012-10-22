@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
-import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
@@ -370,7 +369,12 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, assetLink);
+			if (assetLink.isCachedModel()) {
+				assetLink = (AssetLink)session.get(AssetLinkImpl.class,
+						assetLink.getPrimaryKeyObj());
+			}
+
+			session.delete(assetLink);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -386,7 +390,7 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 
 	@Override
 	public AssetLink updateImpl(
-		com.liferay.portlet.asset.model.AssetLink assetLink, boolean merge)
+		com.liferay.portlet.asset.model.AssetLink assetLink)
 		throws SystemException {
 		assetLink = toUnwrappedModel(assetLink);
 
@@ -399,9 +403,14 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, assetLink, merge);
+			if (assetLink.isNew()) {
+				session.save(assetLink);
 
-			assetLink.setNew(false);
+				assetLink.setNew(false);
+			}
+			else {
+				session.merge(assetLink);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

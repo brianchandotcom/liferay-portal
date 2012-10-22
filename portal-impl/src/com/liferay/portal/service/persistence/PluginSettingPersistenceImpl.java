@@ -303,7 +303,12 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, pluginSetting);
+			if (pluginSetting.isCachedModel()) {
+				pluginSetting = (PluginSetting)session.get(PluginSettingImpl.class,
+						pluginSetting.getPrimaryKeyObj());
+			}
+
+			session.delete(pluginSetting);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -319,7 +324,7 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 
 	@Override
 	public PluginSetting updateImpl(
-		com.liferay.portal.model.PluginSetting pluginSetting, boolean merge)
+		com.liferay.portal.model.PluginSetting pluginSetting)
 		throws SystemException {
 		pluginSetting = toUnwrappedModel(pluginSetting);
 
@@ -332,9 +337,14 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, pluginSetting, merge);
+			if (pluginSetting.isNew()) {
+				session.save(pluginSetting);
 
-			pluginSetting.setNew(false);
+				pluginSetting.setNew(false);
+			}
+			else {
+				session.merge(pluginSetting);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

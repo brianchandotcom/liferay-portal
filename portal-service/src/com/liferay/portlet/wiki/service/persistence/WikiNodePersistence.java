@@ -73,7 +73,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 			com.liferay.portlet.wiki.NoSuchNodeException;
 
 	public com.liferay.portlet.wiki.model.WikiNode updateImpl(
-		com.liferay.portlet.wiki.model.WikiNode wikiNode, boolean merge)
+		com.liferay.portlet.wiki.model.WikiNode wikiNode)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

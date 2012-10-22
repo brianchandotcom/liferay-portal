@@ -345,7 +345,12 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, phone);
+			if (phone.isCachedModel()) {
+				phone = (Phone)session.get(PhoneImpl.class,
+						phone.getPrimaryKeyObj());
+			}
+
+			session.delete(phone);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -360,7 +365,7 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 	}
 
 	@Override
-	public Phone updateImpl(com.liferay.portal.model.Phone phone, boolean merge)
+	public Phone updateImpl(com.liferay.portal.model.Phone phone)
 		throws SystemException {
 		phone = toUnwrappedModel(phone);
 
@@ -373,9 +378,14 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, phone, merge);
+			if (phone.isNew()) {
+				session.save(phone);
 
-			phone.setNew(false);
+				phone.setNew(false);
+			}
+			else {
+				session.merge(phone);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

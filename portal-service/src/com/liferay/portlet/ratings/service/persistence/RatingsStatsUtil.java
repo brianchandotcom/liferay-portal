@@ -95,19 +95,19 @@ public class RatingsStatsUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static RatingsStats update(RatingsStats ratingsStats, boolean merge)
+	public static RatingsStats update(RatingsStats ratingsStats)
 		throws SystemException {
-		return getPersistence().update(ratingsStats, merge);
+		return getPersistence().update(ratingsStats);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
-	public static RatingsStats update(RatingsStats ratingsStats, boolean merge,
+	public static RatingsStats update(RatingsStats ratingsStats,
 		ServiceContext serviceContext) throws SystemException {
-		return getPersistence().update(ratingsStats, merge, serviceContext);
+		return getPersistence().update(ratingsStats, serviceContext);
 	}
 
 	/**
@@ -157,10 +157,9 @@ public class RatingsStatsUtil {
 	}
 
 	public static com.liferay.portlet.ratings.model.RatingsStats updateImpl(
-		com.liferay.portlet.ratings.model.RatingsStats ratingsStats,
-		boolean merge)
+		com.liferay.portlet.ratings.model.RatingsStats ratingsStats)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(ratingsStats, merge);
+		return getPersistence().updateImpl(ratingsStats);
 	}
 
 	/**

@@ -87,8 +87,7 @@ public abstract class AnnouncementsDeliveryLocalServiceBaseImpl
 		AnnouncementsDelivery announcementsDelivery) throws SystemException {
 		announcementsDelivery.setNew(true);
 
-		return announcementsDeliveryPersistence.update(announcementsDelivery,
-			false);
+		return announcementsDeliveryPersistence.update(announcementsDelivery);
 	}
 
 	/**
@@ -261,25 +260,7 @@ public abstract class AnnouncementsDeliveryLocalServiceBaseImpl
 	@Indexable(type = IndexableType.REINDEX)
 	public AnnouncementsDelivery updateAnnouncementsDelivery(
 		AnnouncementsDelivery announcementsDelivery) throws SystemException {
-		return updateAnnouncementsDelivery(announcementsDelivery, true);
-	}
-
-	/**
-	 * Updates the announcements delivery in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param announcementsDelivery the announcements delivery
-	 * @param merge whether to merge the announcements delivery with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	 * @return the announcements delivery that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public AnnouncementsDelivery updateAnnouncementsDelivery(
-		AnnouncementsDelivery announcementsDelivery, boolean merge)
-		throws SystemException {
-		announcementsDelivery.setNew(false);
-
-		return announcementsDeliveryPersistence.update(announcementsDelivery,
-			merge);
+		return announcementsDeliveryPersistence.update(announcementsDelivery);
 	}
 
 	/**

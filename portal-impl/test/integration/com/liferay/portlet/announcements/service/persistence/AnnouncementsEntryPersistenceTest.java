@@ -139,7 +139,7 @@ public class AnnouncementsEntryPersistenceTest {
 
 		newAnnouncementsEntry.setAlert(ServiceTestUtil.randomBoolean());
 
-		_persistence.update(newAnnouncementsEntry, false);
+		_persistence.update(newAnnouncementsEntry);
 
 		AnnouncementsEntry existingAnnouncementsEntry = _persistence.findByPrimaryKey(newAnnouncementsEntry.getPrimaryKey());
 
@@ -333,7 +333,7 @@ public class AnnouncementsEntryPersistenceTest {
 
 		announcementsEntry.setAlert(ServiceTestUtil.randomBoolean());
 
-		_persistence.update(announcementsEntry, false);
+		_persistence.update(announcementsEntry);
 
 		return announcementsEntry;
 	}

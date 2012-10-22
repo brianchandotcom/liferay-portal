@@ -324,7 +324,12 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, region);
+			if (region.isCachedModel()) {
+				region = (Region)session.get(RegionImpl.class,
+						region.getPrimaryKeyObj());
+			}
+
+			session.delete(region);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -339,8 +344,8 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 	}
 
 	@Override
-	public Region updateImpl(com.liferay.portal.model.Region region,
-		boolean merge) throws SystemException {
+	public Region updateImpl(com.liferay.portal.model.Region region)
+		throws SystemException {
 		region = toUnwrappedModel(region);
 
 		boolean isNew = region.isNew();
@@ -352,9 +357,14 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, region, merge);
+			if (region.isNew()) {
+				session.save(region);
 
-			region.setNew(false);
+				region.setNew(false);
+			}
+			else {
+				session.merge(region);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

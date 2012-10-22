@@ -88,7 +88,7 @@ public abstract class BlogsStatsUserLocalServiceBaseImpl
 		throws SystemException {
 		blogsStatsUser.setNew(true);
 
-		return blogsStatsUserPersistence.update(blogsStatsUser, false);
+		return blogsStatsUserPersistence.update(blogsStatsUser);
 	}
 
 	/**
@@ -261,23 +261,7 @@ public abstract class BlogsStatsUserLocalServiceBaseImpl
 	@Indexable(type = IndexableType.REINDEX)
 	public BlogsStatsUser updateBlogsStatsUser(BlogsStatsUser blogsStatsUser)
 		throws SystemException {
-		return updateBlogsStatsUser(blogsStatsUser, true);
-	}
-
-	/**
-	 * Updates the blogs stats user in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param blogsStatsUser the blogs stats user
-	 * @param merge whether to merge the blogs stats user with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	 * @return the blogs stats user that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public BlogsStatsUser updateBlogsStatsUser(BlogsStatsUser blogsStatsUser,
-		boolean merge) throws SystemException {
-		blogsStatsUser.setNew(false);
-
-		return blogsStatsUserPersistence.update(blogsStatsUser, merge);
+		return blogsStatsUserPersistence.update(blogsStatsUser);
 	}
 
 	/**

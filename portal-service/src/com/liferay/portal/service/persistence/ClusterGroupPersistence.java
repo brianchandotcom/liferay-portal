@@ -71,7 +71,7 @@ public interface ClusterGroupPersistence extends BasePersistence<ClusterGroup> {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portal.model.ClusterGroup updateImpl(
-		com.liferay.portal.model.ClusterGroup clusterGroup, boolean merge)
+		com.liferay.portal.model.ClusterGroup clusterGroup)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

@@ -107,7 +107,7 @@ public abstract class AssetCategoryLocalServiceBaseImpl
 		throws SystemException {
 		assetCategory.setNew(true);
 
-		return assetCategoryPersistence.update(assetCategory, false);
+		return assetCategoryPersistence.update(assetCategory);
 	}
 
 	/**
@@ -294,23 +294,7 @@ public abstract class AssetCategoryLocalServiceBaseImpl
 	@Indexable(type = IndexableType.REINDEX)
 	public AssetCategory updateAssetCategory(AssetCategory assetCategory)
 		throws SystemException {
-		return updateAssetCategory(assetCategory, true);
-	}
-
-	/**
-	 * Updates the asset category in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param assetCategory the asset category
-	 * @param merge whether to merge the asset category with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	 * @return the asset category that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public AssetCategory updateAssetCategory(AssetCategory assetCategory,
-		boolean merge) throws SystemException {
-		assetCategory.setNew(false);
-
-		return assetCategoryPersistence.update(assetCategory, merge);
+		return assetCategoryPersistence.update(assetCategory);
 	}
 
 	/**

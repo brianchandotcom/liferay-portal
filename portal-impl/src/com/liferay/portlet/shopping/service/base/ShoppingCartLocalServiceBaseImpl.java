@@ -100,7 +100,7 @@ public abstract class ShoppingCartLocalServiceBaseImpl
 		throws SystemException {
 		shoppingCart.setNew(true);
 
-		return shoppingCartPersistence.update(shoppingCart, false);
+		return shoppingCartPersistence.update(shoppingCart);
 	}
 
 	/**
@@ -273,23 +273,7 @@ public abstract class ShoppingCartLocalServiceBaseImpl
 	@Indexable(type = IndexableType.REINDEX)
 	public ShoppingCart updateShoppingCart(ShoppingCart shoppingCart)
 		throws SystemException {
-		return updateShoppingCart(shoppingCart, true);
-	}
-
-	/**
-	 * Updates the shopping cart in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param shoppingCart the shopping cart
-	 * @param merge whether to merge the shopping cart with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	 * @return the shopping cart that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public ShoppingCart updateShoppingCart(ShoppingCart shoppingCart,
-		boolean merge) throws SystemException {
-		shoppingCart.setNew(false);
-
-		return shoppingCartPersistence.update(shoppingCart, merge);
+		return shoppingCartPersistence.update(shoppingCart);
 	}
 
 	/**

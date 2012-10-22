@@ -95,22 +95,20 @@ public class AssetCategoryPropertyUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
 	public static AssetCategoryProperty update(
-		AssetCategoryProperty assetCategoryProperty, boolean merge)
-		throws SystemException {
-		return getPersistence().update(assetCategoryProperty, merge);
+		AssetCategoryProperty assetCategoryProperty) throws SystemException {
+		return getPersistence().update(assetCategoryProperty);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
 	public static AssetCategoryProperty update(
-		AssetCategoryProperty assetCategoryProperty, boolean merge,
+		AssetCategoryProperty assetCategoryProperty,
 		ServiceContext serviceContext) throws SystemException {
-		return getPersistence()
-				   .update(assetCategoryProperty, merge, serviceContext);
+		return getPersistence().update(assetCategoryProperty, serviceContext);
 	}
 
 	/**
@@ -160,10 +158,9 @@ public class AssetCategoryPropertyUtil {
 	}
 
 	public static com.liferay.portlet.asset.model.AssetCategoryProperty updateImpl(
-		com.liferay.portlet.asset.model.AssetCategoryProperty assetCategoryProperty,
-		boolean merge)
+		com.liferay.portlet.asset.model.AssetCategoryProperty assetCategoryProperty)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(assetCategoryProperty, merge);
+		return getPersistence().updateImpl(assetCategoryProperty);
 	}
 
 	/**

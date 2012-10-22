@@ -73,7 +73,7 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 			com.liferay.portlet.asset.NoSuchTagException;
 
 	public com.liferay.portlet.asset.model.AssetTag updateImpl(
-		com.liferay.portlet.asset.model.AssetTag assetTag, boolean merge)
+		com.liferay.portlet.asset.model.AssetTag assetTag)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

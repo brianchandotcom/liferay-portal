@@ -74,7 +74,7 @@ public interface JournalFeedPersistence extends BasePersistence<JournalFeed> {
 			com.liferay.portlet.journal.NoSuchFeedException;
 
 	public com.liferay.portlet.journal.model.JournalFeed updateImpl(
-		com.liferay.portlet.journal.model.JournalFeed journalFeed, boolean merge)
+		com.liferay.portlet.journal.model.JournalFeed journalFeed)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

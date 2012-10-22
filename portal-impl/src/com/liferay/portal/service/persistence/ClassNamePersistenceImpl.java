@@ -259,7 +259,12 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, className);
+			if (className.isCachedModel()) {
+				className = (ClassName)session.get(ClassNameImpl.class,
+						className.getPrimaryKeyObj());
+			}
+
+			session.delete(className);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -274,8 +279,8 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 	}
 
 	@Override
-	public ClassName updateImpl(com.liferay.portal.model.ClassName className,
-		boolean merge) throws SystemException {
+	public ClassName updateImpl(com.liferay.portal.model.ClassName className)
+		throws SystemException {
 		className = toUnwrappedModel(className);
 
 		boolean isNew = className.isNew();
@@ -287,9 +292,14 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, className, merge);
+			if (className.isNew()) {
+				session.save(className);
 
-			className.setNew(false);
+				className.setNew(false);
+			}
+			else {
+				session.merge(className);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

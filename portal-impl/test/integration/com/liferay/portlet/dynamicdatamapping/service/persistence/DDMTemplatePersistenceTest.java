@@ -144,7 +144,7 @@ public class DDMTemplatePersistenceTest {
 
 		newDDMTemplate.setCacheable(ServiceTestUtil.randomBoolean());
 
-		_persistence.update(newDDMTemplate, false);
+		_persistence.update(newDDMTemplate);
 
 		DDMTemplate existingDDMTemplate = _persistence.findByPrimaryKey(newDDMTemplate.getPrimaryKey());
 
@@ -364,7 +364,7 @@ public class DDMTemplatePersistenceTest {
 
 		ddmTemplate.setCacheable(ServiceTestUtil.randomBoolean());
 
-		_persistence.update(ddmTemplate, false);
+		_persistence.update(ddmTemplate);
 
 		return ddmTemplate;
 	}

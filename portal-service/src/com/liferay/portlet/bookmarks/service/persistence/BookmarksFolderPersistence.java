@@ -76,8 +76,7 @@ public interface BookmarksFolderPersistence extends BasePersistence<BookmarksFol
 			com.liferay.portlet.bookmarks.NoSuchFolderException;
 
 	public com.liferay.portlet.bookmarks.model.BookmarksFolder updateImpl(
-		com.liferay.portlet.bookmarks.model.BookmarksFolder bookmarksFolder,
-		boolean merge)
+		com.liferay.portlet.bookmarks.model.BookmarksFolder bookmarksFolder)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

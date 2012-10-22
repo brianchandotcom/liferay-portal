@@ -115,8 +115,7 @@ public abstract class JournalContentSearchLocalServiceBaseImpl
 		JournalContentSearch journalContentSearch) throws SystemException {
 		journalContentSearch.setNew(true);
 
-		return journalContentSearchPersistence.update(journalContentSearch,
-			false);
+		return journalContentSearchPersistence.update(journalContentSearch);
 	}
 
 	/**
@@ -289,25 +288,7 @@ public abstract class JournalContentSearchLocalServiceBaseImpl
 	@Indexable(type = IndexableType.REINDEX)
 	public JournalContentSearch updateJournalContentSearch(
 		JournalContentSearch journalContentSearch) throws SystemException {
-		return updateJournalContentSearch(journalContentSearch, true);
-	}
-
-	/**
-	 * Updates the journal content search in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param journalContentSearch the journal content search
-	 * @param merge whether to merge the journal content search with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	 * @return the journal content search that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public JournalContentSearch updateJournalContentSearch(
-		JournalContentSearch journalContentSearch, boolean merge)
-		throws SystemException {
-		journalContentSearch.setNew(false);
-
-		return journalContentSearchPersistence.update(journalContentSearch,
-			merge);
+		return journalContentSearchPersistence.update(journalContentSearch);
 	}
 
 	/**

@@ -74,8 +74,7 @@ public interface JournalTemplatePersistence extends BasePersistence<JournalTempl
 			com.liferay.portlet.journal.NoSuchTemplateException;
 
 	public com.liferay.portlet.journal.model.JournalTemplate updateImpl(
-		com.liferay.portlet.journal.model.JournalTemplate journalTemplate,
-		boolean merge)
+		com.liferay.portlet.journal.model.JournalTemplate journalTemplate)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

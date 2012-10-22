@@ -94,19 +94,19 @@ public class ServiceComponentUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static ServiceComponent update(ServiceComponent serviceComponent,
-		boolean merge) throws SystemException {
-		return getPersistence().update(serviceComponent, merge);
+	public static ServiceComponent update(ServiceComponent serviceComponent)
+		throws SystemException {
+		return getPersistence().update(serviceComponent);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
 	public static ServiceComponent update(ServiceComponent serviceComponent,
-		boolean merge, ServiceContext serviceContext) throws SystemException {
-		return getPersistence().update(serviceComponent, merge, serviceContext);
+		ServiceContext serviceContext) throws SystemException {
+		return getPersistence().update(serviceComponent, serviceContext);
 	}
 
 	/**
@@ -156,10 +156,9 @@ public class ServiceComponentUtil {
 	}
 
 	public static com.liferay.portal.model.ServiceComponent updateImpl(
-		com.liferay.portal.model.ServiceComponent serviceComponent,
-		boolean merge)
+		com.liferay.portal.model.ServiceComponent serviceComponent)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(serviceComponent, merge);
+		return getPersistence().updateImpl(serviceComponent);
 	}
 
 	/**

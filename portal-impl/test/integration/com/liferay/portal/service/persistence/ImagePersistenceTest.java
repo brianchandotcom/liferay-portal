@@ -118,7 +118,7 @@ public class ImagePersistenceTest {
 
 		newImage.setSize(ServiceTestUtil.nextInt());
 
-		_persistence.update(newImage, false);
+		_persistence.update(newImage);
 
 		Image existingImage = _persistence.findByPrimaryKey(newImage.getPrimaryKey());
 
@@ -262,7 +262,7 @@ public class ImagePersistenceTest {
 
 		image.setSize(ServiceTestUtil.nextInt());
 
-		_persistence.update(image, false);
+		_persistence.update(image);
 
 		return image;
 	}

@@ -95,19 +95,19 @@ public class WikiPageResourceUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static WikiPageResource update(WikiPageResource wikiPageResource,
-		boolean merge) throws SystemException {
-		return getPersistence().update(wikiPageResource, merge);
+	public static WikiPageResource update(WikiPageResource wikiPageResource)
+		throws SystemException {
+		return getPersistence().update(wikiPageResource);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
 	public static WikiPageResource update(WikiPageResource wikiPageResource,
-		boolean merge, ServiceContext serviceContext) throws SystemException {
-		return getPersistence().update(wikiPageResource, merge, serviceContext);
+		ServiceContext serviceContext) throws SystemException {
+		return getPersistence().update(wikiPageResource, serviceContext);
 	}
 
 	/**
@@ -157,10 +157,9 @@ public class WikiPageResourceUtil {
 	}
 
 	public static com.liferay.portlet.wiki.model.WikiPageResource updateImpl(
-		com.liferay.portlet.wiki.model.WikiPageResource wikiPageResource,
-		boolean merge)
+		com.liferay.portlet.wiki.model.WikiPageResource wikiPageResource)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(wikiPageResource, merge);
+		return getPersistence().updateImpl(wikiPageResource);
 	}
 
 	/**

@@ -94,19 +94,19 @@ public class SubscriptionUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static Subscription update(Subscription subscription, boolean merge)
+	public static Subscription update(Subscription subscription)
 		throws SystemException {
-		return getPersistence().update(subscription, merge);
+		return getPersistence().update(subscription);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
-	public static Subscription update(Subscription subscription, boolean merge,
+	public static Subscription update(Subscription subscription,
 		ServiceContext serviceContext) throws SystemException {
-		return getPersistence().update(subscription, merge, serviceContext);
+		return getPersistence().update(subscription, serviceContext);
 	}
 
 	/**
@@ -156,9 +156,9 @@ public class SubscriptionUtil {
 	}
 
 	public static com.liferay.portal.model.Subscription updateImpl(
-		com.liferay.portal.model.Subscription subscription, boolean merge)
+		com.liferay.portal.model.Subscription subscription)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(subscription, merge);
+		return getPersistence().updateImpl(subscription);
 	}
 
 	/**

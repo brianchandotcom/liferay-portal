@@ -95,19 +95,19 @@ public class DLFileVersionUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static DLFileVersion update(DLFileVersion dlFileVersion,
-		boolean merge) throws SystemException {
-		return getPersistence().update(dlFileVersion, merge);
+	public static DLFileVersion update(DLFileVersion dlFileVersion)
+		throws SystemException {
+		return getPersistence().update(dlFileVersion);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
 	public static DLFileVersion update(DLFileVersion dlFileVersion,
-		boolean merge, ServiceContext serviceContext) throws SystemException {
-		return getPersistence().update(dlFileVersion, merge, serviceContext);
+		ServiceContext serviceContext) throws SystemException {
+		return getPersistence().update(dlFileVersion, serviceContext);
 	}
 
 	/**
@@ -157,10 +157,9 @@ public class DLFileVersionUtil {
 	}
 
 	public static com.liferay.portlet.documentlibrary.model.DLFileVersion updateImpl(
-		com.liferay.portlet.documentlibrary.model.DLFileVersion dlFileVersion,
-		boolean merge)
+		com.liferay.portlet.documentlibrary.model.DLFileVersion dlFileVersion)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(dlFileVersion, merge);
+		return getPersistence().updateImpl(dlFileVersion);
 	}
 
 	/**

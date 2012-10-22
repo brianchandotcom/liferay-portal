@@ -134,7 +134,7 @@ public class GroupPersistenceTest {
 
 		newGroup.setActive(ServiceTestUtil.randomBoolean());
 
-		_persistence.update(newGroup, false);
+		_persistence.update(newGroup);
 
 		Group existingGroup = _persistence.findByPrimaryKey(newGroup.getPrimaryKey());
 
@@ -355,7 +355,7 @@ public class GroupPersistenceTest {
 
 		group.setActive(ServiceTestUtil.randomBoolean());
 
-		_persistence.update(group, false);
+		_persistence.update(group);
 
 		return group;
 	}

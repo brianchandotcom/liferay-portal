@@ -115,7 +115,7 @@ public abstract class JournalTemplateLocalServiceBaseImpl
 		throws SystemException {
 		journalTemplate.setNew(true);
 
-		return journalTemplatePersistence.update(journalTemplate, false);
+		return journalTemplatePersistence.update(journalTemplate);
 	}
 
 	/**
@@ -302,24 +302,7 @@ public abstract class JournalTemplateLocalServiceBaseImpl
 	@Indexable(type = IndexableType.REINDEX)
 	public JournalTemplate updateJournalTemplate(
 		JournalTemplate journalTemplate) throws SystemException {
-		return updateJournalTemplate(journalTemplate, true);
-	}
-
-	/**
-	 * Updates the journal template in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param journalTemplate the journal template
-	 * @param merge whether to merge the journal template with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	 * @return the journal template that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public JournalTemplate updateJournalTemplate(
-		JournalTemplate journalTemplate, boolean merge)
-		throws SystemException {
-		journalTemplate.setNew(false);
-
-		return journalTemplatePersistence.update(journalTemplate, merge);
+		return journalTemplatePersistence.update(journalTemplate);
 	}
 
 	/**

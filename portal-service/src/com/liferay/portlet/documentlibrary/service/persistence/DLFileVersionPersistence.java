@@ -76,8 +76,7 @@ public interface DLFileVersionPersistence extends BasePersistence<DLFileVersion>
 			com.liferay.portlet.documentlibrary.NoSuchFileVersionException;
 
 	public com.liferay.portlet.documentlibrary.model.DLFileVersion updateImpl(
-		com.liferay.portlet.documentlibrary.model.DLFileVersion dlFileVersion,
-		boolean merge)
+		com.liferay.portlet.documentlibrary.model.DLFileVersion dlFileVersion)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

@@ -125,7 +125,7 @@ public class TeamPersistenceTest {
 
 		newTeam.setDescription(ServiceTestUtil.randomString());
 
-		_persistence.update(newTeam, false);
+		_persistence.update(newTeam);
 
 		Team existingTeam = _persistence.findByPrimaryKey(newTeam.getPrimaryKey());
 
@@ -295,7 +295,7 @@ public class TeamPersistenceTest {
 
 		team.setDescription(ServiceTestUtil.randomString());
 
-		_persistence.update(team, false);
+		_persistence.update(team);
 
 		return team;
 	}

@@ -74,7 +74,7 @@ public interface PollsChoicePersistence extends BasePersistence<PollsChoice> {
 			com.liferay.portlet.polls.NoSuchChoiceException;
 
 	public com.liferay.portlet.polls.model.PollsChoice updateImpl(
-		com.liferay.portlet.polls.model.PollsChoice pollsChoice, boolean merge)
+		com.liferay.portlet.polls.model.PollsChoice pollsChoice)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

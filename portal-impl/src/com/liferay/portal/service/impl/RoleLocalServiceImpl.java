@@ -151,7 +151,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 		role.setDescriptionMap(descriptionMap);
 		role.setType(type);
 
-		rolePersistence.update(role, false);
+		rolePersistence.update(role);
 
 		// Resources
 
@@ -1186,7 +1186,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 		role.setDescriptionMap(descriptionMap);
 		role.setSubtype(subtype);
 
-		rolePersistence.update(role, false);
+		rolePersistence.update(role);
 
 		return role;
 	}
@@ -1210,7 +1210,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 			if (!descriptionMap.equals(role.getDescriptionMap())) {
 				role.setDescriptionMap(descriptionMap);
 
-				roleLocalService.updateRole(role, false);
+				roleLocalService.updateRole(role);
 			}
 		}
 		catch (NoSuchRoleException nsre) {

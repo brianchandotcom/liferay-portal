@@ -45,7 +45,6 @@ import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
-import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.CompanyPersistence;
 import com.liferay.portal.service.persistence.GroupPersistence;
 import com.liferay.portal.service.persistence.LockPersistence;
@@ -873,7 +872,12 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, mbMessage);
+			if (mbMessage.isCachedModel()) {
+				mbMessage = (MBMessage)session.get(MBMessageImpl.class,
+						mbMessage.getPrimaryKeyObj());
+			}
+
+			session.delete(mbMessage);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -889,8 +893,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 	@Override
 	public MBMessage updateImpl(
-		com.liferay.portlet.messageboards.model.MBMessage mbMessage,
-		boolean merge) throws SystemException {
+		com.liferay.portlet.messageboards.model.MBMessage mbMessage)
+		throws SystemException {
 		mbMessage = toUnwrappedModel(mbMessage);
 
 		boolean isNew = mbMessage.isNew();
@@ -933,9 +937,14 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, mbMessage, merge);
+			if (mbMessage.isNew()) {
+				session.save(mbMessage);
 
-			mbMessage.setNew(false);
+				mbMessage.setNew(false);
+			}
+			else {
+				session.merge(mbMessage);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

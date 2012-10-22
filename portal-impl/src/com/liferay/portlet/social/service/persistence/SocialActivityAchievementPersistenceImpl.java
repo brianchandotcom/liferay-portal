@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
-import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.GroupPersistence;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
@@ -412,7 +411,12 @@ public class SocialActivityAchievementPersistenceImpl
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, socialActivityAchievement);
+			if (socialActivityAchievement.isCachedModel()) {
+				socialActivityAchievement = (SocialActivityAchievement)session.get(SocialActivityAchievementImpl.class,
+						socialActivityAchievement.getPrimaryKeyObj());
+			}
+
+			session.delete(socialActivityAchievement);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -428,8 +432,8 @@ public class SocialActivityAchievementPersistenceImpl
 
 	@Override
 	public SocialActivityAchievement updateImpl(
-		com.liferay.portlet.social.model.SocialActivityAchievement socialActivityAchievement,
-		boolean merge) throws SystemException {
+		com.liferay.portlet.social.model.SocialActivityAchievement socialActivityAchievement)
+		throws SystemException {
 		socialActivityAchievement = toUnwrappedModel(socialActivityAchievement);
 
 		boolean isNew = socialActivityAchievement.isNew();
@@ -441,9 +445,14 @@ public class SocialActivityAchievementPersistenceImpl
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, socialActivityAchievement, merge);
+			if (socialActivityAchievement.isNew()) {
+				session.save(socialActivityAchievement);
 
-			socialActivityAchievement.setNew(false);
+				socialActivityAchievement.setNew(false);
+			}
+			else {
+				session.merge(socialActivityAchievement);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

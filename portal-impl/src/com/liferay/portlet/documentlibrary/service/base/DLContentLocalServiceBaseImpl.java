@@ -110,7 +110,7 @@ public abstract class DLContentLocalServiceBaseImpl extends BaseLocalServiceImpl
 		throws SystemException {
 		dlContent.setNew(true);
 
-		return dlContentPersistence.update(dlContent, false);
+		return dlContentPersistence.update(dlContent);
 	}
 
 	/**
@@ -282,23 +282,7 @@ public abstract class DLContentLocalServiceBaseImpl extends BaseLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	public DLContent updateDLContent(DLContent dlContent)
 		throws SystemException {
-		return updateDLContent(dlContent, true);
-	}
-
-	/**
-	 * Updates the document library content in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param dlContent the document library content
-	 * @param merge whether to merge the document library content with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	 * @return the document library content that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public DLContent updateDLContent(DLContent dlContent, boolean merge)
-		throws SystemException {
-		dlContent.setNew(false);
-
-		return dlContentPersistence.update(dlContent, merge);
+		return dlContentPersistence.update(dlContent);
 	}
 
 	public DLContentDataBlobModel getDataBlobModel(Serializable primaryKey)

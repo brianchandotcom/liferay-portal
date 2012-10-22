@@ -2263,7 +2263,7 @@ public class CMISRepository extends BaseCmisRepository {
 			repositoryEntry.setRepositoryId(getRepositoryId());
 			repositoryEntry.setMappedId(rootFolderId);
 
-			RepositoryEntryUtil.update(repositoryEntry, false);
+			RepositoryEntryUtil.update(repositoryEntry);
 		}
 
 		return repositoryEntry.getMappedId();
@@ -2301,7 +2301,7 @@ public class CMISRepository extends BaseCmisRepository {
 		if (!mappedId.equals(repositoryEntry.getMappedId())) {
 			repositoryEntry.setMappedId(mappedId);
 
-			RepositoryEntryUtil.update(repositoryEntry, false);
+			RepositoryEntryUtil.update(repositoryEntry);
 		}
 	}
 

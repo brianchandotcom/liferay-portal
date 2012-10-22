@@ -185,7 +185,7 @@ public class UserPersistenceTest {
 
 		newUser.setStatus(ServiceTestUtil.nextInt());
 
-		_persistence.update(newUser, false);
+		_persistence.update(newUser);
 
 		User existingUser = _persistence.findByPrimaryKey(newUser.getPrimaryKey());
 
@@ -503,7 +503,7 @@ public class UserPersistenceTest {
 
 		user.setStatus(ServiceTestUtil.nextInt());
 
-		_persistence.update(user, false);
+		_persistence.update(user);
 
 		return user;
 	}

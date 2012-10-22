@@ -121,7 +121,7 @@ public class SocialActivityAchievementPersistenceTest {
 
 		newSocialActivityAchievement.setFirstInGroup(ServiceTestUtil.randomBoolean());
 
-		_persistence.update(newSocialActivityAchievement, false);
+		_persistence.update(newSocialActivityAchievement);
 
 		SocialActivityAchievement existingSocialActivityAchievement = _persistence.findByPrimaryKey(newSocialActivityAchievement.getPrimaryKey());
 
@@ -300,7 +300,7 @@ public class SocialActivityAchievementPersistenceTest {
 
 		socialActivityAchievement.setFirstInGroup(ServiceTestUtil.randomBoolean());
 
-		_persistence.update(socialActivityAchievement, false);
+		_persistence.update(socialActivityAchievement);
 
 		return socialActivityAchievement;
 	}

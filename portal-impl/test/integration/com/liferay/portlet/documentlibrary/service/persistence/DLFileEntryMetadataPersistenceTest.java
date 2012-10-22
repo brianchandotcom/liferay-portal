@@ -120,7 +120,7 @@ public class DLFileEntryMetadataPersistenceTest {
 
 		newDLFileEntryMetadata.setFileVersionId(ServiceTestUtil.nextLong());
 
-		_persistence.update(newDLFileEntryMetadata, false);
+		_persistence.update(newDLFileEntryMetadata);
 
 		DLFileEntryMetadata existingDLFileEntryMetadata = _persistence.findByPrimaryKey(newDLFileEntryMetadata.getPrimaryKey());
 
@@ -291,7 +291,7 @@ public class DLFileEntryMetadataPersistenceTest {
 
 		dlFileEntryMetadata.setFileVersionId(ServiceTestUtil.nextLong());
 
-		_persistence.update(dlFileEntryMetadata, false);
+		_persistence.update(dlFileEntryMetadata);
 
 		return dlFileEntryMetadata;
 	}

@@ -115,7 +115,7 @@ public class ExpandoTablePersistenceTest {
 
 		newExpandoTable.setName(ServiceTestUtil.randomString());
 
-		_persistence.update(newExpandoTable, false);
+		_persistence.update(newExpandoTable);
 
 		ExpandoTable existingExpandoTable = _persistence.findByPrimaryKey(newExpandoTable.getPrimaryKey());
 
@@ -273,7 +273,7 @@ public class ExpandoTablePersistenceTest {
 
 		expandoTable.setName(ServiceTestUtil.randomString());
 
-		_persistence.update(expandoTable, false);
+		_persistence.update(expandoTable);
 
 		return expandoTable;
 	}

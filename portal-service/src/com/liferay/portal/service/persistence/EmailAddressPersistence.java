@@ -71,7 +71,7 @@ public interface EmailAddressPersistence extends BasePersistence<EmailAddress> {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portal.model.EmailAddress updateImpl(
-		com.liferay.portal.model.EmailAddress emailAddress, boolean merge)
+		com.liferay.portal.model.EmailAddress emailAddress)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

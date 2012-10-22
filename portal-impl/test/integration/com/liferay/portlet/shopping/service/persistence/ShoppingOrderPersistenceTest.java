@@ -211,7 +211,7 @@ public class ShoppingOrderPersistenceTest {
 
 		newShoppingOrder.setSendShippingEmail(ServiceTestUtil.randomBoolean());
 
-		_persistence.update(newShoppingOrder, false);
+		_persistence.update(newShoppingOrder);
 
 		ShoppingOrder existingShoppingOrder = _persistence.findByPrimaryKey(newShoppingOrder.getPrimaryKey());
 
@@ -559,7 +559,7 @@ public class ShoppingOrderPersistenceTest {
 
 		shoppingOrder.setSendShippingEmail(ServiceTestUtil.randomBoolean());
 
-		_persistence.update(shoppingOrder, false);
+		_persistence.update(shoppingOrder);
 
 		return shoppingOrder;
 	}

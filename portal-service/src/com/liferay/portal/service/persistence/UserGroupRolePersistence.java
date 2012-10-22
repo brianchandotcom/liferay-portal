@@ -74,7 +74,7 @@ public interface UserGroupRolePersistence extends BasePersistence<UserGroupRole>
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portal.model.UserGroupRole updateImpl(
-		com.liferay.portal.model.UserGroupRole userGroupRole, boolean merge)
+		com.liferay.portal.model.UserGroupRole userGroupRole)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

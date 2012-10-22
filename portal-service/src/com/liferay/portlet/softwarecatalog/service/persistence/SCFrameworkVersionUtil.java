@@ -95,21 +95,20 @@ public class SCFrameworkVersionUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
 	public static SCFrameworkVersion update(
-		SCFrameworkVersion scFrameworkVersion, boolean merge)
-		throws SystemException {
-		return getPersistence().update(scFrameworkVersion, merge);
+		SCFrameworkVersion scFrameworkVersion) throws SystemException {
+		return getPersistence().update(scFrameworkVersion);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
 	public static SCFrameworkVersion update(
-		SCFrameworkVersion scFrameworkVersion, boolean merge,
-		ServiceContext serviceContext) throws SystemException {
-		return getPersistence().update(scFrameworkVersion, merge, serviceContext);
+		SCFrameworkVersion scFrameworkVersion, ServiceContext serviceContext)
+		throws SystemException {
+		return getPersistence().update(scFrameworkVersion, serviceContext);
 	}
 
 	/**
@@ -159,10 +158,9 @@ public class SCFrameworkVersionUtil {
 	}
 
 	public static com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion updateImpl(
-		com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion scFrameworkVersion,
-		boolean merge)
+		com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion scFrameworkVersion)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(scFrameworkVersion, merge);
+		return getPersistence().updateImpl(scFrameworkVersion);
 	}
 
 	/**

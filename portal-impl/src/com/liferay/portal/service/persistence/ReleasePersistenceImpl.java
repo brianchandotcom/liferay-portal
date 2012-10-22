@@ -257,7 +257,12 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, release);
+			if (release.isCachedModel()) {
+				release = (Release)session.get(ReleaseImpl.class,
+						release.getPrimaryKeyObj());
+			}
+
+			session.delete(release);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -272,8 +277,8 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 	}
 
 	@Override
-	public Release updateImpl(com.liferay.portal.model.Release release,
-		boolean merge) throws SystemException {
+	public Release updateImpl(com.liferay.portal.model.Release release)
+		throws SystemException {
 		release = toUnwrappedModel(release);
 
 		boolean isNew = release.isNew();
@@ -285,9 +290,14 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, release, merge);
+			if (release.isNew()) {
+				session.save(release);
 
-			release.setNew(false);
+				release.setNew(false);
+			}
+			else {
+				session.merge(release);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

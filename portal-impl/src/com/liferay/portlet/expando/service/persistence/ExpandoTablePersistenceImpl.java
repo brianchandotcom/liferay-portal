@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
-import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
@@ -299,7 +298,12 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, expandoTable);
+			if (expandoTable.isCachedModel()) {
+				expandoTable = (ExpandoTable)session.get(ExpandoTableImpl.class,
+						expandoTable.getPrimaryKeyObj());
+			}
+
+			session.delete(expandoTable);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -315,8 +319,8 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 
 	@Override
 	public ExpandoTable updateImpl(
-		com.liferay.portlet.expando.model.ExpandoTable expandoTable,
-		boolean merge) throws SystemException {
+		com.liferay.portlet.expando.model.ExpandoTable expandoTable)
+		throws SystemException {
 		expandoTable = toUnwrappedModel(expandoTable);
 
 		boolean isNew = expandoTable.isNew();
@@ -328,9 +332,14 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, expandoTable, merge);
+			if (expandoTable.isNew()) {
+				session.save(expandoTable);
 
-			expandoTable.setNew(false);
+				expandoTable.setNew(false);
+			}
+			else {
+				session.merge(expandoTable);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

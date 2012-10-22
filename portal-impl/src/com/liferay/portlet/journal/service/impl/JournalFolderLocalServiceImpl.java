@@ -70,7 +70,7 @@ public class JournalFolderLocalServiceImpl
 		folder.setDescription(description);
 		folder.setExpandoBridgeAttributes(serviceContext);
 
-		journalFolderPersistence.update(folder, false);
+		journalFolderPersistence.update(folder);
 
 		// Resources
 
@@ -249,7 +249,7 @@ public class JournalFolderLocalServiceImpl
 		folder.setParentFolderId(parentFolderId);
 		folder.setExpandoBridgeAttributes(serviceContext);
 
-		journalFolderPersistence.update(folder, false);
+		journalFolderPersistence.update(folder);
 
 		return folder;
 	}
@@ -282,7 +282,7 @@ public class JournalFolderLocalServiceImpl
 		folder.setDescription(description);
 		folder.setExpandoBridgeAttributes(serviceContext);
 
-		journalFolderPersistence.update(folder, false);
+		journalFolderPersistence.update(folder);
 
 		return folder;
 	}
@@ -354,7 +354,7 @@ public class JournalFolderLocalServiceImpl
 		for (JournalArticle article : articles) {
 			article.setFolderId(toFolderId);
 
-			journalArticlePersistence.update(article, false);
+			journalArticlePersistence.update(article);
 
 			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 				JournalArticle.class);

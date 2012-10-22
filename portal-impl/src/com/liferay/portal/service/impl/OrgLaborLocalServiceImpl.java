@@ -57,7 +57,7 @@ public class OrgLaborLocalServiceImpl extends OrgLaborLocalServiceBaseImpl {
 		orgLabor.setSatOpen(satOpen);
 		orgLabor.setSatClose(satClose);
 
-		orgLaborPersistence.update(orgLabor, false);
+		orgLaborPersistence.update(orgLabor);
 
 		return orgLabor;
 	}
@@ -95,7 +95,7 @@ public class OrgLaborLocalServiceImpl extends OrgLaborLocalServiceBaseImpl {
 		orgLabor.setSatOpen(satOpen);
 		orgLabor.setSatClose(satClose);
 
-		orgLaborPersistence.update(orgLabor, false);
+		orgLaborPersistence.update(orgLabor);
 
 		return orgLabor;
 	}

@@ -76,8 +76,7 @@ public interface SocialActivityLimitPersistence extends BasePersistence<SocialAc
 			com.liferay.portlet.social.NoSuchActivityLimitException;
 
 	public com.liferay.portlet.social.model.SocialActivityLimit updateImpl(
-		com.liferay.portlet.social.model.SocialActivityLimit socialActivityLimit,
-		boolean merge)
+		com.liferay.portlet.social.model.SocialActivityLimit socialActivityLimit)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

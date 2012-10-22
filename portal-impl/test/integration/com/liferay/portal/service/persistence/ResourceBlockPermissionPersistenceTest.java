@@ -113,7 +113,7 @@ public class ResourceBlockPermissionPersistenceTest {
 
 		newResourceBlockPermission.setActionIds(ServiceTestUtil.nextLong());
 
-		_persistence.update(newResourceBlockPermission, false);
+		_persistence.update(newResourceBlockPermission);
 
 		ResourceBlockPermission existingResourceBlockPermission = _persistence.findByPrimaryKey(newResourceBlockPermission.getPrimaryKey());
 
@@ -280,7 +280,7 @@ public class ResourceBlockPermissionPersistenceTest {
 
 		resourceBlockPermission.setActionIds(ServiceTestUtil.nextLong());
 
-		_persistence.update(resourceBlockPermission, false);
+		_persistence.update(resourceBlockPermission);
 
 		return resourceBlockPermission;
 	}

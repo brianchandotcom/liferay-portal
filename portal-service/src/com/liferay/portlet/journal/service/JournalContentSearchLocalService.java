@@ -217,19 +217,6 @@ public interface JournalContentSearchLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Updates the journal content search in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param journalContentSearch the journal content search
-	* @param merge whether to merge the journal content search with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	* @return the journal content search that was updated
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portlet.journal.model.JournalContentSearch updateJournalContentSearch(
-		com.liferay.portlet.journal.model.JournalContentSearch journalContentSearch,
-		boolean merge)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
 	* Returns the Spring bean ID for this bean.
 	*
 	* @return the Spring bean ID for this bean

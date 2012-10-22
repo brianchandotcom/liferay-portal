@@ -72,7 +72,7 @@ public class PortletPreferencesLocalServiceImpl
 		portletPreferences.setPreferences(defaultPreferences);
 
 		try {
-			portletPreferencesPersistence.update(portletPreferences, false);
+			portletPreferencesPersistence.update(portletPreferences);
 		}
 		catch (SystemException se) {
 			if (_log.isWarnEnabled()) {
@@ -313,7 +313,7 @@ public class PortletPreferencesLocalServiceImpl
 
 		portletPreferences.setPreferences(xml);
 
-		portletPreferencesPersistence.update(portletPreferences, false);
+		portletPreferencesPersistence.update(portletPreferences);
 
 		return portletPreferences;
 	}

@@ -55,7 +55,7 @@ public class MBThreadFlagLocalServiceImpl
 			threadFlag.setThreadId(threadId);
 
 			try {
-				mbThreadFlagPersistence.update(threadFlag, false);
+				mbThreadFlagPersistence.update(threadFlag);
 			}
 			catch (SystemException se) {
 				if (_log.isWarnEnabled()) {
@@ -78,7 +78,7 @@ public class MBThreadFlagLocalServiceImpl
 
 			threadFlag.setModifiedDate(thread.getLastPostDate());
 
-			mbThreadFlagPersistence.update(threadFlag, false);
+			mbThreadFlagPersistence.update(threadFlag);
 		}
 	}
 

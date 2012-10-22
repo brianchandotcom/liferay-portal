@@ -61,7 +61,7 @@ public class CMISRepositoryUtil {
 
 				repository.setTypeSettingsProperties(typeSettingsProperties);
 
-				RepositoryUtil.update(repository, false);
+				RepositoryUtil.update(repository);
 			}
 			catch (Exception e) {
 				throw new RepositoryException(e);

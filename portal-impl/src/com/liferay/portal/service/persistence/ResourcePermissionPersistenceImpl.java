@@ -577,7 +577,12 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, resourcePermission);
+			if (resourcePermission.isCachedModel()) {
+				resourcePermission = (ResourcePermission)session.get(ResourcePermissionImpl.class,
+						resourcePermission.getPrimaryKeyObj());
+			}
+
+			session.delete(resourcePermission);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -593,8 +598,8 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 
 	@Override
 	public ResourcePermission updateImpl(
-		com.liferay.portal.model.ResourcePermission resourcePermission,
-		boolean merge) throws SystemException {
+		com.liferay.portal.model.ResourcePermission resourcePermission)
+		throws SystemException {
 		resourcePermission = toUnwrappedModel(resourcePermission);
 
 		boolean isNew = resourcePermission.isNew();
@@ -606,9 +611,14 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, resourcePermission, merge);
+			if (resourcePermission.isNew()) {
+				session.save(resourcePermission);
 
-			resourcePermission.setNew(false);
+				resourcePermission.setNew(false);
+			}
+			else {
+				session.merge(resourcePermission);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

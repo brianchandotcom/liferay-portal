@@ -74,8 +74,7 @@ public interface JournalArticlePersistence extends BasePersistence<JournalArticl
 			com.liferay.portlet.journal.NoSuchArticleException;
 
 	public com.liferay.portlet.journal.model.JournalArticle updateImpl(
-		com.liferay.portlet.journal.model.JournalArticle journalArticle,
-		boolean merge)
+		com.liferay.portlet.journal.model.JournalArticle journalArticle)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

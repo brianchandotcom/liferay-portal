@@ -71,7 +71,7 @@ public interface PortletItemPersistence extends BasePersistence<PortletItem> {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portal.model.PortletItem updateImpl(
-		com.liferay.portal.model.PortletItem portletItem, boolean merge)
+		com.liferay.portal.model.PortletItem portletItem)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

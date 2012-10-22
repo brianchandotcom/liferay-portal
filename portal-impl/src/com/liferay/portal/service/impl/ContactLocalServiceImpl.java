@@ -84,7 +84,7 @@ public class ContactLocalServiceImpl extends ContactLocalServiceBaseImpl {
 		contact.setYmSn(ymSn);
 		contact.setJobTitle(jobTitle);
 
-		contactPersistence.update(contact, false);
+		contactPersistence.update(contact);
 
 		return contact;
 	}
@@ -188,7 +188,7 @@ public class ContactLocalServiceImpl extends ContactLocalServiceBaseImpl {
 		contact.setYmSn(ymSn);
 		contact.setJobTitle(jobTitle);
 
-		contactPersistence.update(contact, false);
+		contactPersistence.update(contact);
 
 		return contact;
 	}

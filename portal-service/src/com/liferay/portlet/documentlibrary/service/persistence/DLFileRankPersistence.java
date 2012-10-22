@@ -76,8 +76,7 @@ public interface DLFileRankPersistence extends BasePersistence<DLFileRank> {
 			com.liferay.portlet.documentlibrary.NoSuchFileRankException;
 
 	public com.liferay.portlet.documentlibrary.model.DLFileRank updateImpl(
-		com.liferay.portlet.documentlibrary.model.DLFileRank dlFileRank,
-		boolean merge)
+		com.liferay.portlet.documentlibrary.model.DLFileRank dlFileRank)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

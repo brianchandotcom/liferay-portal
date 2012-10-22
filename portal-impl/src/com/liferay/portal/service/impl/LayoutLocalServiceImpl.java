@@ -258,7 +258,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 				0, PropsValues.LAYOUT_DEFAULT_TEMPLATE_ID, false);
 		}
 
-		layoutPersistence.update(layout, false);
+		layoutPersistence.update(layout);
 
 		if (Validator.isNotNull(layoutPrototypeUuid) &&
 			!layoutPrototypeLinkEnabled) {
@@ -1565,7 +1565,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 			layout.setPriority(priority++);
 
-			layoutPersistence.update(layout, false);
+			layoutPersistence.update(layout);
 		}
 
 		layoutSetLocalService.updatePageCount(groupId, privateLayout);
@@ -1599,7 +1599,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		layout.setModifiedDate(now);
 		layout.setFriendlyURL(friendlyURL);
 
-		layoutPersistence.update(layout, false);
+		layoutPersistence.update(layout);
 
 		return layout;
 	}
@@ -1738,7 +1738,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			layout.setLayoutPrototypeLinkEnabled(layoutPrototypeLinkEnabled);
 		}
 
-		layoutPersistence.update(layout, false);
+		layoutPersistence.update(layout);
 
 		// Icon
 
@@ -1798,7 +1798,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		layout.setModifiedDate(now);
 		layout.setTypeSettings(typeSettingsProperties.toString());
 
-		layoutPersistence.update(layout, false);
+		layoutPersistence.update(layout);
 
 		return layout;
 	}
@@ -1839,7 +1839,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			layout.setCss(css);
 		}
 
-		layoutPersistence.update(layout, false);
+		layoutPersistence.update(layout);
 
 		return layout;
 	}
@@ -1865,7 +1865,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		layout.setModifiedDate(now);
 		layout.setName(name, LocaleUtil.fromLanguageId(languageId));
 
-		layoutPersistence.update(layout, false);
+		layoutPersistence.update(layout);
 
 		return layout;
 	}
@@ -1957,7 +1957,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		layout.setModifiedDate(now);
 		layout.setParentLayoutId(parentLayoutId);
 
-		layoutPersistence.update(layout, false);
+		layoutPersistence.update(layout);
 
 		return layout;
 	}
@@ -2012,7 +2012,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		layout.setModifiedDate(now);
 		layout.setParentLayoutId(parentLayoutId);
 
-		layoutPersistence.update(layout, false);
+		layoutPersistence.update(layout);
 
 		return layout;
 	}
@@ -2039,7 +2039,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 			layout.setPriority(nextPriority);
 
-			layoutPersistence.update(layout, false);
+			layoutPersistence.update(layout);
 		}
 	}
 
@@ -2071,7 +2071,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		layout.setPriority(nextPriority);
 
-		layoutPersistence.update(layout, false);
+		layoutPersistence.update(layout);
 
 		List<Layout> layouts = layoutPersistence.findByG_P_P(
 			layout.getGroupId(), layout.isPrivateLayout(),
@@ -2098,7 +2098,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 			curLayout.setPriority(curNextPriority);
 
-			layoutPersistence.update(curLayout, false);
+			layoutPersistence.update(curLayout);
 
 			if (curLayout.equals(layout)) {
 				layout = curLayout;

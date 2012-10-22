@@ -41,7 +41,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
-import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.ImagePersistence;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
@@ -344,7 +343,12 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, shoppingItem);
+			if (shoppingItem.isCachedModel()) {
+				shoppingItem = (ShoppingItem)session.get(ShoppingItemImpl.class,
+						shoppingItem.getPrimaryKeyObj());
+			}
+
+			session.delete(shoppingItem);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -360,8 +364,8 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 
 	@Override
 	public ShoppingItem updateImpl(
-		com.liferay.portlet.shopping.model.ShoppingItem shoppingItem,
-		boolean merge) throws SystemException {
+		com.liferay.portlet.shopping.model.ShoppingItem shoppingItem)
+		throws SystemException {
 		shoppingItem = toUnwrappedModel(shoppingItem);
 
 		boolean isNew = shoppingItem.isNew();
@@ -373,9 +377,14 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, shoppingItem, merge);
+			if (shoppingItem.isNew()) {
+				session.save(shoppingItem);
 
-			shoppingItem.setNew(false);
+				shoppingItem.setNew(false);
+			}
+			else {
+				session.merge(shoppingItem);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

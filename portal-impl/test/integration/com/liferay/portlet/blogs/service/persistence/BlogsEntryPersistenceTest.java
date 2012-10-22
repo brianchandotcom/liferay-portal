@@ -154,7 +154,7 @@ public class BlogsEntryPersistenceTest {
 
 		newBlogsEntry.setStatusDate(ServiceTestUtil.nextDate());
 
-		_persistence.update(newBlogsEntry, false);
+		_persistence.update(newBlogsEntry);
 
 		BlogsEntry existingBlogsEntry = _persistence.findByPrimaryKey(newBlogsEntry.getPrimaryKey());
 
@@ -396,7 +396,7 @@ public class BlogsEntryPersistenceTest {
 
 		blogsEntry.setStatusDate(ServiceTestUtil.nextDate());
 
-		_persistence.update(blogsEntry, false);
+		_persistence.update(blogsEntry);
 
 		return blogsEntry;
 	}

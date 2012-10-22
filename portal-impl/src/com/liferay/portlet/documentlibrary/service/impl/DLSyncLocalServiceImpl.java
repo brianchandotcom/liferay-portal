@@ -76,7 +76,7 @@ public class DLSyncLocalServiceImpl extends DLSyncLocalServiceBaseImpl {
 		dlSync.setName(name);
 		dlSync.setVersion(version);
 
-		dlSyncPersistence.update(dlSync, false);
+		dlSyncPersistence.update(dlSync);
 
 		return dlSync;
 	}
@@ -123,7 +123,7 @@ public class DLSyncLocalServiceImpl extends DLSyncLocalServiceBaseImpl {
 		dlSync.setEvent(event);
 		dlSync.setVersion(version);
 
-		dlSyncPersistence.update(dlSync, false);
+		dlSyncPersistence.update(dlSync);
 
 		return dlSync;
 	}

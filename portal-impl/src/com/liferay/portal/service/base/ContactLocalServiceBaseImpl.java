@@ -247,7 +247,7 @@ public abstract class ContactLocalServiceBaseImpl extends BaseLocalServiceImpl
 	public Contact addContact(Contact contact) throws SystemException {
 		contact.setNew(true);
 
-		return contactPersistence.update(contact, false);
+		return contactPersistence.update(contact);
 	}
 
 	/**
@@ -416,23 +416,7 @@ public abstract class ContactLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public Contact updateContact(Contact contact) throws SystemException {
-		return updateContact(contact, true);
-	}
-
-	/**
-	 * Updates the contact in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param contact the contact
-	 * @param merge whether to merge the contact with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	 * @return the contact that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public Contact updateContact(Contact contact, boolean merge)
-		throws SystemException {
-		contact.setNew(false);
-
-		return contactPersistence.update(contact, merge);
+		return contactPersistence.update(contact);
 	}
 
 	/**

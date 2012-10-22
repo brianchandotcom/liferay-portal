@@ -74,8 +74,7 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 			com.liferay.portlet.journal.NoSuchFolderException;
 
 	public com.liferay.portlet.journal.model.JournalFolder updateImpl(
-		com.liferay.portlet.journal.model.JournalFolder journalFolder,
-		boolean merge)
+		com.liferay.portlet.journal.model.JournalFolder journalFolder)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

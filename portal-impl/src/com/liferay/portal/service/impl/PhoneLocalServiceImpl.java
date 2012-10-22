@@ -65,7 +65,7 @@ public class PhoneLocalServiceImpl extends PhoneLocalServiceBaseImpl {
 		phone.setTypeId(typeId);
 		phone.setPrimary(primary);
 
-		phonePersistence.update(phone, false);
+		phonePersistence.update(phone);
 
 		return phone;
 	}
@@ -110,7 +110,7 @@ public class PhoneLocalServiceImpl extends PhoneLocalServiceBaseImpl {
 		phone.setTypeId(typeId);
 		phone.setPrimary(primary);
 
-		phonePersistence.update(phone, false);
+		phonePersistence.update(phone);
 
 		return phone;
 	}
@@ -131,7 +131,7 @@ public class PhoneLocalServiceImpl extends PhoneLocalServiceBaseImpl {
 				if ((phoneId <= 0) || (phone.getPhoneId() != phoneId)) {
 					phone.setPrimary(false);
 
-					phonePersistence.update(phone, false);
+					phonePersistence.update(phone);
 				}
 			}
 		}

@@ -261,7 +261,7 @@ public class JournalArticleLocalServiceImpl
 			article.setStatus(WorkflowConstants.STATUS_EXPIRED);
 		}
 
-		journalArticlePersistence.update(article, false);
+		journalArticlePersistence.update(article);
 
 		// Resources
 
@@ -424,7 +424,7 @@ public class JournalArticleLocalServiceImpl
 
 		article.setResourcePrimKey(resourcePrimKey);
 
-		journalArticlePersistence.update(article, false);
+		journalArticlePersistence.update(article);
 
 		return article;
 	}
@@ -456,13 +456,13 @@ public class JournalArticleLocalServiceImpl
 						article.getExpirationDate());
 					currentArticle.setStatus(WorkflowConstants.STATUS_EXPIRED);
 
-					journalArticlePersistence.update(currentArticle, false);
+					journalArticlePersistence.update(currentArticle);
 				}
 			}
 			else {
 				article.setStatus(WorkflowConstants.STATUS_EXPIRED);
 
-				journalArticlePersistence.update(article, false);
+				journalArticlePersistence.update(article);
 			}
 
 			updatePreviousApprovedArticle(article);
@@ -521,7 +521,7 @@ public class JournalArticleLocalServiceImpl
 
 			article.setContent(content);
 
-			journalArticlePersistence.update(article, false);
+			journalArticlePersistence.update(article);
 		}
 	}
 
@@ -605,7 +605,7 @@ public class JournalArticleLocalServiceImpl
 		newArticle.setSmallImageURL(oldArticle.getSmallImageURL());
 		newArticle.setStatus(oldArticle.getStatus());
 
-		journalArticlePersistence.update(newArticle, false);
+		journalArticlePersistence.update(newArticle);
 
 		// Resources
 
@@ -798,7 +798,7 @@ public class JournalArticleLocalServiceImpl
 		for (JournalArticle article : articles) {
 			article.setLayoutUuid(StringPool.BLANK);
 
-			journalArticlePersistence.update(article, false);
+			journalArticlePersistence.update(article);
 		}
 	}
 
@@ -1663,7 +1663,7 @@ public class JournalArticleLocalServiceImpl
 		for (JournalArticle article : articles) {
 			article.setFolderId(newFolderId);
 
-			journalArticlePersistence.update(article, false);
+			journalArticlePersistence.update(article);
 		}
 	}
 
@@ -1700,7 +1700,7 @@ public class JournalArticleLocalServiceImpl
 
 		article.setContent(content);
 
-		journalArticlePersistence.update(article, false);
+		journalArticlePersistence.update(article);
 
 		return article;
 	}
@@ -2189,7 +2189,7 @@ public class JournalArticleLocalServiceImpl
 			article.setStatus(WorkflowConstants.STATUS_EXPIRED);
 		}
 
-		journalArticlePersistence.update(article, false);
+		journalArticlePersistence.update(article);
 
 		// Asset
 
@@ -2376,7 +2376,7 @@ public class JournalArticleLocalServiceImpl
 
 		article.setContent(content);
 
-		journalArticlePersistence.update(article, false);
+		journalArticlePersistence.update(article);
 
 		return article;
 	}
@@ -2448,7 +2448,7 @@ public class JournalArticleLocalServiceImpl
 
 		article.setContent(content);
 
-		journalArticlePersistence.update(article, false);
+		journalArticlePersistence.update(article);
 
 		return article;
 	}
@@ -2488,7 +2488,7 @@ public class JournalArticleLocalServiceImpl
 		article.setStatusByUserName(user.getFullName());
 		article.setStatusDate(serviceContext.getModifiedDate(now));
 
-		journalArticlePersistence.update(article, false);
+		journalArticlePersistence.update(article);
 
 		if (hasModifiedLatestApprovedVersion(
 				article.getGroupId(), article.getArticleId(),
@@ -2656,7 +2656,7 @@ public class JournalArticleLocalServiceImpl
 		for (JournalArticle article : articles) {
 			article.setTemplateId(newTemplateId);
 
-			journalArticlePersistence.update(article, false);
+			journalArticlePersistence.update(article);
 		}
 	}
 
@@ -3472,7 +3472,7 @@ public class JournalArticleLocalServiceImpl
 			assetEntry.setModifiedDate(
 				previousApprovedArticle.getModifiedDate());
 
-			assetEntryPersistence.update(assetEntry, false);
+			assetEntryPersistence.update(assetEntry);
 
 			if (article.isIndexable()) {
 				Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
@@ -3494,7 +3494,7 @@ public class JournalArticleLocalServiceImpl
 			if (!article.getUrlTitle().equals(urlTitle)) {
 				article.setUrlTitle(urlTitle);
 
-				journalArticlePersistence.update(article, false);
+				journalArticlePersistence.update(article);
 			}
 		}
 	}

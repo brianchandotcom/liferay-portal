@@ -71,7 +71,7 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portal.model.UserGroup updateImpl(
-		com.liferay.portal.model.UserGroup userGroup, boolean merge)
+		com.liferay.portal.model.UserGroup userGroup)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

@@ -74,7 +74,7 @@ public interface DLSyncPersistence extends BasePersistence<DLSync> {
 			com.liferay.portlet.documentlibrary.NoSuchSyncException;
 
 	public com.liferay.portlet.documentlibrary.model.DLSync updateImpl(
-		com.liferay.portlet.documentlibrary.model.DLSync dlSync, boolean merge)
+		com.liferay.portlet.documentlibrary.model.DLSync dlSync)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

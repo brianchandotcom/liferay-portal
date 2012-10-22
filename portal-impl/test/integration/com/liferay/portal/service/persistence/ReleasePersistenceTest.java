@@ -125,7 +125,7 @@ public class ReleasePersistenceTest {
 
 		newRelease.setTestString(ServiceTestUtil.randomString());
 
-		_persistence.update(newRelease, false);
+		_persistence.update(newRelease);
 
 		Release existingRelease = _persistence.findByPrimaryKey(newRelease.getPrimaryKey());
 
@@ -301,7 +301,7 @@ public class ReleasePersistenceTest {
 
 		release.setTestString(ServiceTestUtil.randomString());
 
-		_persistence.update(release, false);
+		_persistence.update(release);
 
 		return release;
 	}

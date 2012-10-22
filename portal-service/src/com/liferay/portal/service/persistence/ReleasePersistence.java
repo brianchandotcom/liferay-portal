@@ -71,7 +71,7 @@ public interface ReleasePersistence extends BasePersistence<Release> {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portal.model.Release updateImpl(
-		com.liferay.portal.model.Release release, boolean merge)
+		com.liferay.portal.model.Release release)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

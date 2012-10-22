@@ -76,7 +76,7 @@ public abstract class CounterLocalServiceBaseImpl extends BaseLocalServiceImpl
 	public Counter addCounter(Counter counter) throws SystemException {
 		counter.setNew(true);
 
-		return counterPersistence.update(counter, false);
+		return counterPersistence.update(counter);
 	}
 
 	/**
@@ -245,23 +245,7 @@ public abstract class CounterLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public Counter updateCounter(Counter counter) throws SystemException {
-		return updateCounter(counter, true);
-	}
-
-	/**
-	 * Updates the counter in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param counter the counter
-	 * @param merge whether to merge the counter with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	 * @return the counter that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public Counter updateCounter(Counter counter, boolean merge)
-		throws SystemException {
-		counter.setNew(false);
-
-		return counterPersistence.update(counter, merge);
+		return counterPersistence.update(counter);
 	}
 
 	/**

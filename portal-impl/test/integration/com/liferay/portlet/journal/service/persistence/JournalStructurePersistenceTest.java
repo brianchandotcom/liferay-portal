@@ -134,7 +134,7 @@ public class JournalStructurePersistenceTest {
 
 		newJournalStructure.setXsd(ServiceTestUtil.randomString());
 
-		_persistence.update(newJournalStructure, false);
+		_persistence.update(newJournalStructure);
 
 		JournalStructure existingJournalStructure = _persistence.findByPrimaryKey(newJournalStructure.getPrimaryKey());
 
@@ -333,7 +333,7 @@ public class JournalStructurePersistenceTest {
 
 		journalStructure.setXsd(ServiceTestUtil.randomString());
 
-		_persistence.update(journalStructure, false);
+		_persistence.update(journalStructure);
 
 		return journalStructure;
 	}

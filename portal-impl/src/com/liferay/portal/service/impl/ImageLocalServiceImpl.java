@@ -313,7 +313,7 @@ public class ImageLocalServiceImpl extends ImageLocalServiceBaseImpl {
 
 		hook.updateImage(image, type, bytes);
 
-		imagePersistence.update(image, false);
+		imagePersistence.update(image);
 
 		WebServerServletTokenUtil.resetToken(imageId);
 

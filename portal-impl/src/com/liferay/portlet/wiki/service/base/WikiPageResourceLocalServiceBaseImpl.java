@@ -86,7 +86,7 @@ public abstract class WikiPageResourceLocalServiceBaseImpl
 		WikiPageResource wikiPageResource) throws SystemException {
 		wikiPageResource.setNew(true);
 
-		return wikiPageResourcePersistence.update(wikiPageResource, false);
+		return wikiPageResourcePersistence.update(wikiPageResource);
 	}
 
 	/**
@@ -259,24 +259,7 @@ public abstract class WikiPageResourceLocalServiceBaseImpl
 	@Indexable(type = IndexableType.REINDEX)
 	public WikiPageResource updateWikiPageResource(
 		WikiPageResource wikiPageResource) throws SystemException {
-		return updateWikiPageResource(wikiPageResource, true);
-	}
-
-	/**
-	 * Updates the wiki page resource in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param wikiPageResource the wiki page resource
-	 * @param merge whether to merge the wiki page resource with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	 * @return the wiki page resource that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public WikiPageResource updateWikiPageResource(
-		WikiPageResource wikiPageResource, boolean merge)
-		throws SystemException {
-		wikiPageResource.setNew(false);
-
-		return wikiPageResourcePersistence.update(wikiPageResource, merge);
+		return wikiPageResourcePersistence.update(wikiPageResource);
 	}
 
 	/**

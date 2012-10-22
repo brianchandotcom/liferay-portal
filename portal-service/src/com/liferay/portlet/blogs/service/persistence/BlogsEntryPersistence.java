@@ -74,7 +74,7 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 			com.liferay.portlet.blogs.NoSuchEntryException;
 
 	public com.liferay.portlet.blogs.model.BlogsEntry updateImpl(
-		com.liferay.portlet.blogs.model.BlogsEntry blogsEntry, boolean merge)
+		com.liferay.portlet.blogs.model.BlogsEntry blogsEntry)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

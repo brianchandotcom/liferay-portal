@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
-import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.LayoutPersistence;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
@@ -361,7 +360,12 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, dlFileRank);
+			if (dlFileRank.isCachedModel()) {
+				dlFileRank = (DLFileRank)session.get(DLFileRankImpl.class,
+						dlFileRank.getPrimaryKeyObj());
+			}
+
+			session.delete(dlFileRank);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -377,8 +381,8 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 
 	@Override
 	public DLFileRank updateImpl(
-		com.liferay.portlet.documentlibrary.model.DLFileRank dlFileRank,
-		boolean merge) throws SystemException {
+		com.liferay.portlet.documentlibrary.model.DLFileRank dlFileRank)
+		throws SystemException {
 		dlFileRank = toUnwrappedModel(dlFileRank);
 
 		boolean isNew = dlFileRank.isNew();
@@ -390,9 +394,14 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, dlFileRank, merge);
+			if (dlFileRank.isNew()) {
+				session.save(dlFileRank);
 
-			dlFileRank.setNew(false);
+				dlFileRank.setNew(false);
+			}
+			else {
+				session.merge(dlFileRank);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

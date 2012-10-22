@@ -136,7 +136,7 @@ public abstract class BlogsEntryLocalServiceBaseImpl
 		throws SystemException {
 		blogsEntry.setNew(true);
 
-		return blogsEntryPersistence.update(blogsEntry, false);
+		return blogsEntryPersistence.update(blogsEntry);
 	}
 
 	/**
@@ -322,23 +322,7 @@ public abstract class BlogsEntryLocalServiceBaseImpl
 	@Indexable(type = IndexableType.REINDEX)
 	public BlogsEntry updateBlogsEntry(BlogsEntry blogsEntry)
 		throws SystemException {
-		return updateBlogsEntry(blogsEntry, true);
-	}
-
-	/**
-	 * Updates the blogs entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param blogsEntry the blogs entry
-	 * @param merge whether to merge the blogs entry with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	 * @return the blogs entry that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public BlogsEntry updateBlogsEntry(BlogsEntry blogsEntry, boolean merge)
-		throws SystemException {
-		blogsEntry.setNew(false);
-
-		return blogsEntryPersistence.update(blogsEntry, merge);
+		return blogsEntryPersistence.update(blogsEntry);
 	}
 
 	/**

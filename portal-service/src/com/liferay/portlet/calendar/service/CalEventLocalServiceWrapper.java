@@ -245,20 +245,6 @@ public class CalEventLocalServiceWrapper implements CalEventLocalService,
 	}
 
 	/**
-	* Updates the cal event in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param calEvent the cal event
-	* @param merge whether to merge the cal event with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	* @return the cal event that was updated
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portlet.calendar.model.CalEvent updateCalEvent(
-		com.liferay.portlet.calendar.model.CalEvent calEvent, boolean merge)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _calEventLocalService.updateCalEvent(calEvent, merge);
-	}
-
-	/**
 	* Returns the Spring bean ID for this bean.
 	*
 	* @return the Spring bean ID for this bean

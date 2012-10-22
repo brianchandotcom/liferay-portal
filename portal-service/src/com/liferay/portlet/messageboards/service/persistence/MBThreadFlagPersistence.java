@@ -76,8 +76,7 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 			com.liferay.portlet.messageboards.NoSuchThreadFlagException;
 
 	public com.liferay.portlet.messageboards.model.MBThreadFlag updateImpl(
-		com.liferay.portlet.messageboards.model.MBThreadFlag mbThreadFlag,
-		boolean merge)
+		com.liferay.portlet.messageboards.model.MBThreadFlag mbThreadFlag)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

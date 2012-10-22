@@ -91,7 +91,7 @@ public abstract class DDMStorageLinkLocalServiceBaseImpl
 		throws SystemException {
 		ddmStorageLink.setNew(true);
 
-		return ddmStorageLinkPersistence.update(ddmStorageLink, false);
+		return ddmStorageLinkPersistence.update(ddmStorageLink);
 	}
 
 	/**
@@ -264,23 +264,7 @@ public abstract class DDMStorageLinkLocalServiceBaseImpl
 	@Indexable(type = IndexableType.REINDEX)
 	public DDMStorageLink updateDDMStorageLink(DDMStorageLink ddmStorageLink)
 		throws SystemException {
-		return updateDDMStorageLink(ddmStorageLink, true);
-	}
-
-	/**
-	 * Updates the d d m storage link in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param ddmStorageLink the d d m storage link
-	 * @param merge whether to merge the d d m storage link with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	 * @return the d d m storage link that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public DDMStorageLink updateDDMStorageLink(DDMStorageLink ddmStorageLink,
-		boolean merge) throws SystemException {
-		ddmStorageLink.setNew(false);
-
-		return ddmStorageLinkPersistence.update(ddmStorageLink, merge);
+		return ddmStorageLinkPersistence.update(ddmStorageLink);
 	}
 
 	/**

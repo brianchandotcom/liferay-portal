@@ -125,7 +125,7 @@ public class SocialActivityLimitPersistenceTest {
 
 		newSocialActivityLimit.setValue(ServiceTestUtil.randomString());
 
-		_persistence.update(newSocialActivityLimit, false);
+		_persistence.update(newSocialActivityLimit);
 
 		SocialActivityLimit existingSocialActivityLimit = _persistence.findByPrimaryKey(newSocialActivityLimit.getPrimaryKey());
 
@@ -313,7 +313,7 @@ public class SocialActivityLimitPersistenceTest {
 
 		socialActivityLimit.setValue(ServiceTestUtil.randomString());
 
-		_persistence.update(socialActivityLimit, false);
+		_persistence.update(socialActivityLimit);
 
 		return socialActivityLimit;
 	}

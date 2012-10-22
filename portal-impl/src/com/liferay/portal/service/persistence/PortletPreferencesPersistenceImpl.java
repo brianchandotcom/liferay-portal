@@ -385,7 +385,12 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, portletPreferences);
+			if (portletPreferences.isCachedModel()) {
+				portletPreferences = (PortletPreferences)session.get(PortletPreferencesImpl.class,
+						portletPreferences.getPrimaryKeyObj());
+			}
+
+			session.delete(portletPreferences);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -401,8 +406,8 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 
 	@Override
 	public PortletPreferences updateImpl(
-		com.liferay.portal.model.PortletPreferences portletPreferences,
-		boolean merge) throws SystemException {
+		com.liferay.portal.model.PortletPreferences portletPreferences)
+		throws SystemException {
 		portletPreferences = toUnwrappedModel(portletPreferences);
 
 		boolean isNew = portletPreferences.isNew();
@@ -414,9 +419,14 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, portletPreferences, merge);
+			if (portletPreferences.isNew()) {
+				session.save(portletPreferences);
 
-			portletPreferences.setNew(false);
+				portletPreferences.setNew(false);
+			}
+			else {
+				session.merge(portletPreferences);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

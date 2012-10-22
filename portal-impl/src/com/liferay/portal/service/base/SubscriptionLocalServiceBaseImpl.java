@@ -261,7 +261,7 @@ public abstract class SubscriptionLocalServiceBaseImpl
 		throws SystemException {
 		subscription.setNew(true);
 
-		return subscriptionPersistence.update(subscription, false);
+		return subscriptionPersistence.update(subscription);
 	}
 
 	/**
@@ -435,23 +435,7 @@ public abstract class SubscriptionLocalServiceBaseImpl
 	@Indexable(type = IndexableType.REINDEX)
 	public Subscription updateSubscription(Subscription subscription)
 		throws SystemException {
-		return updateSubscription(subscription, true);
-	}
-
-	/**
-	 * Updates the subscription in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param subscription the subscription
-	 * @param merge whether to merge the subscription with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	 * @return the subscription that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public Subscription updateSubscription(Subscription subscription,
-		boolean merge) throws SystemException {
-		subscription.setNew(false);
-
-		return subscriptionPersistence.update(subscription, merge);
+		return subscriptionPersistence.update(subscription);
 	}
 
 	/**

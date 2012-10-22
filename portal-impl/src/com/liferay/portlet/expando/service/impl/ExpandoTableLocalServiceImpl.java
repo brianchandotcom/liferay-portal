@@ -61,7 +61,7 @@ public class ExpandoTableLocalServiceImpl
 		table.setClassNameId(classNameId);
 		table.setName(name);
 
-		expandoTablePersistence.update(table, false);
+		expandoTablePersistence.update(table);
 
 		return table;
 	}
@@ -278,7 +278,7 @@ public class ExpandoTableLocalServiceImpl
 
 		table.setName(name);
 
-		return expandoTablePersistence.update(table, false);
+		return expandoTablePersistence.update(table);
 	}
 
 	protected void validate(

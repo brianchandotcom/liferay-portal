@@ -167,7 +167,7 @@ public class LayoutSetLocalServiceStagingAdvice
 			layoutSetPrototypeLinkEnabled);
 		layoutSetBranch.setLayoutSetPrototypeUuid(layoutSetPrototypeUuid);
 
-		layoutSetBranchPersistence.update(layoutSetBranch, false);
+		layoutSetBranchPersistence.update(layoutSetBranch);
 	}
 
 	public LayoutSet updateLogo(
@@ -205,7 +205,7 @@ public class LayoutSetLocalServiceStagingAdvice
 			layoutSet.setLogoId(0);
 		}
 
-		layoutSetBranchPersistence.update(layoutSetBranch, false);
+		layoutSetBranchPersistence.update(layoutSetBranch);
 
 		if (logo) {
 			imageLocalService.updateImage(
@@ -257,7 +257,7 @@ public class LayoutSetLocalServiceStagingAdvice
 			layoutSetBranch.setCss(css);
 		}
 
-		layoutSetBranchPersistence.update(layoutSetBranch, false);
+		layoutSetBranchPersistence.update(layoutSetBranch);
 
 		return layoutSet;
 	}
@@ -282,7 +282,7 @@ public class LayoutSetLocalServiceStagingAdvice
 		layoutSetBranch.setModifiedDate(new Date());
 		layoutSetBranch.setSettings(settings);
 
-		layoutSetBranchPersistence.update(layoutSetBranch, false);
+		layoutSetBranchPersistence.update(layoutSetBranch);
 
 		return layoutSet;
 	}

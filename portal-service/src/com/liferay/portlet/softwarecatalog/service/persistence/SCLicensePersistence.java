@@ -76,8 +76,7 @@ public interface SCLicensePersistence extends BasePersistence<SCLicense> {
 			com.liferay.portlet.softwarecatalog.NoSuchLicenseException;
 
 	public com.liferay.portlet.softwarecatalog.model.SCLicense updateImpl(
-		com.liferay.portlet.softwarecatalog.model.SCLicense scLicense,
-		boolean merge)
+		com.liferay.portlet.softwarecatalog.model.SCLicense scLicense)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

@@ -137,7 +137,7 @@ public class OrgLaborPersistenceTest {
 
 		newOrgLabor.setSatClose(ServiceTestUtil.nextInt());
 
-		_persistence.update(newOrgLabor, false);
+		_persistence.update(newOrgLabor);
 
 		OrgLabor existingOrgLabor = _persistence.findByPrimaryKey(newOrgLabor.getPrimaryKey());
 
@@ -326,7 +326,7 @@ public class OrgLaborPersistenceTest {
 
 		orgLabor.setSatClose(ServiceTestUtil.nextInt());
 
-		_persistence.update(orgLabor, false);
+		_persistence.update(orgLabor);
 
 		return orgLabor;
 	}

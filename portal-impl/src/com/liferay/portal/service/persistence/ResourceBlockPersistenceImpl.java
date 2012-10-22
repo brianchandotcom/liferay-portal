@@ -336,7 +336,12 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, resourceBlock);
+			if (resourceBlock.isCachedModel()) {
+				resourceBlock = (ResourceBlock)session.get(ResourceBlockImpl.class,
+						resourceBlock.getPrimaryKeyObj());
+			}
+
+			session.delete(resourceBlock);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -352,7 +357,7 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 
 	@Override
 	public ResourceBlock updateImpl(
-		com.liferay.portal.model.ResourceBlock resourceBlock, boolean merge)
+		com.liferay.portal.model.ResourceBlock resourceBlock)
 		throws SystemException {
 		resourceBlock = toUnwrappedModel(resourceBlock);
 
@@ -365,9 +370,14 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, resourceBlock, merge);
+			if (resourceBlock.isNew()) {
+				session.save(resourceBlock);
 
-			resourceBlock.setNew(false);
+				resourceBlock.setNew(false);
+			}
+			else {
+				session.merge(resourceBlock);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

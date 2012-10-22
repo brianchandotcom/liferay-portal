@@ -95,19 +95,18 @@ public class WikiNodeUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static WikiNode update(WikiNode wikiNode, boolean merge)
-		throws SystemException {
-		return getPersistence().update(wikiNode, merge);
+	public static WikiNode update(WikiNode wikiNode) throws SystemException {
+		return getPersistence().update(wikiNode);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
-	public static WikiNode update(WikiNode wikiNode, boolean merge,
+	public static WikiNode update(WikiNode wikiNode,
 		ServiceContext serviceContext) throws SystemException {
-		return getPersistence().update(wikiNode, merge, serviceContext);
+		return getPersistence().update(wikiNode, serviceContext);
 	}
 
 	/**
@@ -155,9 +154,9 @@ public class WikiNodeUtil {
 	}
 
 	public static com.liferay.portlet.wiki.model.WikiNode updateImpl(
-		com.liferay.portlet.wiki.model.WikiNode wikiNode, boolean merge)
+		com.liferay.portlet.wiki.model.WikiNode wikiNode)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(wikiNode, merge);
+		return getPersistence().updateImpl(wikiNode);
 	}
 
 	/**

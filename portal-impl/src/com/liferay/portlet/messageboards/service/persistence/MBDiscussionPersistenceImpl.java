@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
-import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
@@ -304,7 +303,12 @@ public class MBDiscussionPersistenceImpl extends BasePersistenceImpl<MBDiscussio
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, mbDiscussion);
+			if (mbDiscussion.isCachedModel()) {
+				mbDiscussion = (MBDiscussion)session.get(MBDiscussionImpl.class,
+						mbDiscussion.getPrimaryKeyObj());
+			}
+
+			session.delete(mbDiscussion);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -320,8 +324,8 @@ public class MBDiscussionPersistenceImpl extends BasePersistenceImpl<MBDiscussio
 
 	@Override
 	public MBDiscussion updateImpl(
-		com.liferay.portlet.messageboards.model.MBDiscussion mbDiscussion,
-		boolean merge) throws SystemException {
+		com.liferay.portlet.messageboards.model.MBDiscussion mbDiscussion)
+		throws SystemException {
 		mbDiscussion = toUnwrappedModel(mbDiscussion);
 
 		boolean isNew = mbDiscussion.isNew();
@@ -333,9 +337,14 @@ public class MBDiscussionPersistenceImpl extends BasePersistenceImpl<MBDiscussio
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, mbDiscussion, merge);
+			if (mbDiscussion.isNew()) {
+				session.save(mbDiscussion);
 
-			mbDiscussion.setNew(false);
+				mbDiscussion.setNew(false);
+			}
+			else {
+				session.merge(mbDiscussion);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

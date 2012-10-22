@@ -231,22 +231,6 @@ public class PortletPreferencesLocalServiceWrapper
 	}
 
 	/**
-	* Updates the portlet preferences in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param portletPreferences the portlet preferences
-	* @param merge whether to merge the portlet preferences with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	* @return the portlet preferences that was updated
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.PortletPreferences updatePortletPreferences(
-		com.liferay.portal.model.PortletPreferences portletPreferences,
-		boolean merge)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _portletPreferencesLocalService.updatePortletPreferences(portletPreferences,
-			merge);
-	}
-
-	/**
 	* Returns the Spring bean ID for this bean.
 	*
 	* @return the Spring bean ID for this bean

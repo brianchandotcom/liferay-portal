@@ -94,19 +94,19 @@ public class PasswordPolicyUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static PasswordPolicy update(PasswordPolicy passwordPolicy,
-		boolean merge) throws SystemException {
-		return getPersistence().update(passwordPolicy, merge);
+	public static PasswordPolicy update(PasswordPolicy passwordPolicy)
+		throws SystemException {
+		return getPersistence().update(passwordPolicy);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
 	public static PasswordPolicy update(PasswordPolicy passwordPolicy,
-		boolean merge, ServiceContext serviceContext) throws SystemException {
-		return getPersistence().update(passwordPolicy, merge, serviceContext);
+		ServiceContext serviceContext) throws SystemException {
+		return getPersistence().update(passwordPolicy, serviceContext);
 	}
 
 	/**
@@ -156,9 +156,9 @@ public class PasswordPolicyUtil {
 	}
 
 	public static com.liferay.portal.model.PasswordPolicy updateImpl(
-		com.liferay.portal.model.PasswordPolicy passwordPolicy, boolean merge)
+		com.liferay.portal.model.PasswordPolicy passwordPolicy)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(passwordPolicy, merge);
+		return getPersistence().updateImpl(passwordPolicy);
 	}
 
 	/**

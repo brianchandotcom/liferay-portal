@@ -116,7 +116,7 @@ public class DDMStorageLinkPersistenceTest {
 
 		newDDMStorageLink.setStructureId(ServiceTestUtil.nextLong());
 
-		_persistence.update(newDDMStorageLink, false);
+		_persistence.update(newDDMStorageLink);
 
 		DDMStorageLink existingDDMStorageLink = _persistence.findByPrimaryKey(newDDMStorageLink.getPrimaryKey());
 
@@ -276,7 +276,7 @@ public class DDMStorageLinkPersistenceTest {
 
 		ddmStorageLink.setStructureId(ServiceTestUtil.nextLong());
 
-		_persistence.update(ddmStorageLink, false);
+		_persistence.update(ddmStorageLink);
 
 		return ddmStorageLink;
 	}

@@ -161,7 +161,7 @@ public class MBMessagePersistenceTest {
 
 		newMBMessage.setStatusDate(ServiceTestUtil.nextDate());
 
-		_persistence.update(newMBMessage, false);
+		_persistence.update(newMBMessage);
 
 		MBMessage existingMBMessage = _persistence.findByPrimaryKey(newMBMessage.getPrimaryKey());
 
@@ -406,7 +406,7 @@ public class MBMessagePersistenceTest {
 
 		mbMessage.setStatusDate(ServiceTestUtil.nextDate());
 
-		_persistence.update(mbMessage, false);
+		_persistence.update(mbMessage);
 
 		return mbMessage;
 	}

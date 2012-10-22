@@ -106,7 +106,7 @@ public class SCProductEntryLocalServiceImpl
 		productEntry.setRepoGroupId(repoGroupId);
 		productEntry.setRepoArtifactId(repoArtifactId);
 
-		scProductEntryPersistence.update(productEntry, false);
+		scProductEntryPersistence.update(productEntry);
 
 		// Resources
 
@@ -422,7 +422,7 @@ public class SCProductEntryLocalServiceImpl
 		productEntry.setRepoGroupId(repoGroupId);
 		productEntry.setRepoArtifactId(repoArtifactId);
 
-		scProductEntryPersistence.update(productEntry, false);
+		scProductEntryPersistence.update(productEntry);
 
 		// Licenses
 
@@ -616,7 +616,7 @@ public class SCProductEntryLocalServiceImpl
 					counterLocalService.increment());
 				productScreenshot.setPriority(priority);
 
-				scProductScreenshotPersistence.update(productScreenshot, false);
+				scProductScreenshotPersistence.update(productScreenshot);
 			}
 
 			imageLocalService.updateImage(

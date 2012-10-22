@@ -294,7 +294,12 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, contact);
+			if (contact.isCachedModel()) {
+				contact = (Contact)session.get(ContactImpl.class,
+						contact.getPrimaryKeyObj());
+			}
+
+			session.delete(contact);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -309,8 +314,8 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 	}
 
 	@Override
-	public Contact updateImpl(com.liferay.portal.model.Contact contact,
-		boolean merge) throws SystemException {
+	public Contact updateImpl(com.liferay.portal.model.Contact contact)
+		throws SystemException {
 		contact = toUnwrappedModel(contact);
 
 		boolean isNew = contact.isNew();
@@ -322,9 +327,14 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, contact, merge);
+			if (contact.isNew()) {
+				session.save(contact);
 
-			contact.setNew(false);
+				contact.setNew(false);
+			}
+			else {
+				session.merge(contact);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

@@ -249,7 +249,7 @@ public abstract class LayoutRevisionLocalServiceBaseImpl
 		throws SystemException {
 		layoutRevision.setNew(true);
 
-		return layoutRevisionPersistence.update(layoutRevision, false);
+		return layoutRevisionPersistence.update(layoutRevision);
 	}
 
 	/**
@@ -423,23 +423,7 @@ public abstract class LayoutRevisionLocalServiceBaseImpl
 	@Indexable(type = IndexableType.REINDEX)
 	public LayoutRevision updateLayoutRevision(LayoutRevision layoutRevision)
 		throws SystemException {
-		return updateLayoutRevision(layoutRevision, true);
-	}
-
-	/**
-	 * Updates the layout revision in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param layoutRevision the layout revision
-	 * @param merge whether to merge the layout revision with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	 * @return the layout revision that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public LayoutRevision updateLayoutRevision(LayoutRevision layoutRevision,
-		boolean merge) throws SystemException {
-		layoutRevision.setNew(false);
-
-		return layoutRevisionPersistence.update(layoutRevision, merge);
+		return layoutRevisionPersistence.update(layoutRevision);
 	}
 
 	/**

@@ -251,21 +251,6 @@ public class JournalFolderLocalServiceUtil {
 	}
 
 	/**
-	* Updates the journal folder in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param journalFolder the journal folder
-	* @param merge whether to merge the journal folder with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	* @return the journal folder that was updated
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portlet.journal.model.JournalFolder updateJournalFolder(
-		com.liferay.portlet.journal.model.JournalFolder journalFolder,
-		boolean merge)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().updateJournalFolder(journalFolder, merge);
-	}
-
-	/**
 	* Returns the Spring bean ID for this bean.
 	*
 	* @return the Spring bean ID for this bean

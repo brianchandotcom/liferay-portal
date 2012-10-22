@@ -285,7 +285,7 @@ public abstract class UserLocalServiceBaseImpl extends BaseLocalServiceImpl
 	public User addUser(User user) throws SystemException {
 		user.setNew(true);
 
-		return userPersistence.update(user, false);
+		return userPersistence.update(user);
 	}
 
 	/**
@@ -452,22 +452,7 @@ public abstract class UserLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public User updateUser(User user) throws SystemException {
-		return updateUser(user, true);
-	}
-
-	/**
-	 * Updates the user in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param user the user
-	 * @param merge whether to merge the user with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	 * @return the user that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public User updateUser(User user, boolean merge) throws SystemException {
-		user.setNew(false);
-
-		return userPersistence.update(user, merge);
+		return userPersistence.update(user);
 	}
 
 	/**

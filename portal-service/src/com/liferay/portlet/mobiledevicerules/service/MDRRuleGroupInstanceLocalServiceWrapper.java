@@ -250,22 +250,6 @@ public class MDRRuleGroupInstanceLocalServiceWrapper
 	}
 
 	/**
-	* Updates the m d r rule group instance in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param mdrRuleGroupInstance the m d r rule group instance
-	* @param merge whether to merge the m d r rule group instance with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	* @return the m d r rule group instance that was updated
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance updateMDRRuleGroupInstance(
-		com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance mdrRuleGroupInstance,
-		boolean merge)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _mdrRuleGroupInstanceLocalService.updateMDRRuleGroupInstance(mdrRuleGroupInstance,
-			merge);
-	}
-
-	/**
 	* Returns the Spring bean ID for this bean.
 	*
 	* @return the Spring bean ID for this bean

@@ -97,7 +97,7 @@ public abstract class SocialRelationLocalServiceBaseImpl
 		throws SystemException {
 		socialRelation.setNew(true);
 
-		return socialRelationPersistence.update(socialRelation, false);
+		return socialRelationPersistence.update(socialRelation);
 	}
 
 	/**
@@ -270,23 +270,7 @@ public abstract class SocialRelationLocalServiceBaseImpl
 	@Indexable(type = IndexableType.REINDEX)
 	public SocialRelation updateSocialRelation(SocialRelation socialRelation)
 		throws SystemException {
-		return updateSocialRelation(socialRelation, true);
-	}
-
-	/**
-	 * Updates the social relation in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param socialRelation the social relation
-	 * @param merge whether to merge the social relation with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	 * @return the social relation that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public SocialRelation updateSocialRelation(SocialRelation socialRelation,
-		boolean merge) throws SystemException {
-		socialRelation.setNew(false);
-
-		return socialRelationPersistence.update(socialRelation, merge);
+		return socialRelationPersistence.update(socialRelation);
 	}
 
 	/**

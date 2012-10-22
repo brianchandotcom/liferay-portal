@@ -76,8 +76,7 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 			com.liferay.portlet.messageboards.NoSuchMailingListException;
 
 	public com.liferay.portlet.messageboards.model.MBMailingList updateImpl(
-		com.liferay.portlet.messageboards.model.MBMailingList mbMailingList,
-		boolean merge)
+		com.liferay.portlet.messageboards.model.MBMailingList mbMailingList)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

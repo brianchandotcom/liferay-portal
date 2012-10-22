@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
-import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.GroupPersistence;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
@@ -391,7 +390,12 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, assetVocabulary);
+			if (assetVocabulary.isCachedModel()) {
+				assetVocabulary = (AssetVocabulary)session.get(AssetVocabularyImpl.class,
+						assetVocabulary.getPrimaryKeyObj());
+			}
+
+			session.delete(assetVocabulary);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -407,8 +411,8 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 
 	@Override
 	public AssetVocabulary updateImpl(
-		com.liferay.portlet.asset.model.AssetVocabulary assetVocabulary,
-		boolean merge) throws SystemException {
+		com.liferay.portlet.asset.model.AssetVocabulary assetVocabulary)
+		throws SystemException {
 		assetVocabulary = toUnwrappedModel(assetVocabulary);
 
 		boolean isNew = assetVocabulary.isNew();
@@ -426,9 +430,14 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, assetVocabulary, merge);
+			if (assetVocabulary.isNew()) {
+				session.save(assetVocabulary);
 
-			assetVocabulary.setNew(false);
+				assetVocabulary.setNew(false);
+			}
+			else {
+				session.merge(assetVocabulary);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

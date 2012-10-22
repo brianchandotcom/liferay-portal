@@ -74,7 +74,7 @@ public interface LayoutPrototypePersistence extends BasePersistence<LayoutProtot
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portal.model.LayoutPrototype updateImpl(
-		com.liferay.portal.model.LayoutPrototype layoutPrototype, boolean merge)
+		com.liferay.portal.model.LayoutPrototype layoutPrototype)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

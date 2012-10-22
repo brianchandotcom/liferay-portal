@@ -76,7 +76,7 @@ public interface MBThreadPersistence extends BasePersistence<MBThread> {
 			com.liferay.portlet.messageboards.NoSuchThreadException;
 
 	public com.liferay.portlet.messageboards.model.MBThread updateImpl(
-		com.liferay.portlet.messageboards.model.MBThread mbThread, boolean merge)
+		com.liferay.portlet.messageboards.model.MBThread mbThread)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

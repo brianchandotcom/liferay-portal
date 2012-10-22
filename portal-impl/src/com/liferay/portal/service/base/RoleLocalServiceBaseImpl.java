@@ -247,7 +247,7 @@ public abstract class RoleLocalServiceBaseImpl extends BaseLocalServiceImpl
 	public Role addRole(Role role) throws SystemException {
 		role.setNew(true);
 
-		return rolePersistence.update(role, false);
+		return rolePersistence.update(role);
 	}
 
 	/**
@@ -414,22 +414,7 @@ public abstract class RoleLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public Role updateRole(Role role) throws SystemException {
-		return updateRole(role, true);
-	}
-
-	/**
-	 * Updates the role in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param role the role
-	 * @param merge whether to merge the role with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	 * @return the role that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public Role updateRole(Role role, boolean merge) throws SystemException {
-		role.setNew(false);
-
-		return rolePersistence.update(role, merge);
+		return rolePersistence.update(role);
 	}
 
 	/**

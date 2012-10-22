@@ -128,7 +128,7 @@ public class OrganizationPersistenceTest {
 
 		newOrganization.setComments(ServiceTestUtil.randomString());
 
-		_persistence.update(newOrganization, false);
+		_persistence.update(newOrganization);
 
 		Organization existingOrganization = _persistence.findByPrimaryKey(newOrganization.getPrimaryKey());
 
@@ -315,7 +315,7 @@ public class OrganizationPersistenceTest {
 
 		organization.setComments(ServiceTestUtil.randomString());
 
-		_persistence.update(organization, false);
+		_persistence.update(organization);
 
 		return organization;
 	}

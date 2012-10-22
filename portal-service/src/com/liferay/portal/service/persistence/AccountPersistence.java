@@ -71,7 +71,7 @@ public interface AccountPersistence extends BasePersistence<Account> {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portal.model.Account updateImpl(
-		com.liferay.portal.model.Account account, boolean merge)
+		com.liferay.portal.model.Account account)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

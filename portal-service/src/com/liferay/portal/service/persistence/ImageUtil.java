@@ -93,19 +93,18 @@ public class ImageUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static Image update(Image image, boolean merge)
-		throws SystemException {
-		return getPersistence().update(image, merge);
+	public static Image update(Image image) throws SystemException {
+		return getPersistence().update(image);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
-	public static Image update(Image image, boolean merge,
-		ServiceContext serviceContext) throws SystemException {
-		return getPersistence().update(image, merge, serviceContext);
+	public static Image update(Image image, ServiceContext serviceContext)
+		throws SystemException {
+		return getPersistence().update(image, serviceContext);
 	}
 
 	/**
@@ -152,9 +151,9 @@ public class ImageUtil {
 	}
 
 	public static com.liferay.portal.model.Image updateImpl(
-		com.liferay.portal.model.Image image, boolean merge)
+		com.liferay.portal.model.Image image)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(image, merge);
+		return getPersistence().updateImpl(image);
 	}
 
 	/**

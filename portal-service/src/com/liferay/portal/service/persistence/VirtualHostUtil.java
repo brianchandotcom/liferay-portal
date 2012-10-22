@@ -94,19 +94,19 @@ public class VirtualHostUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static VirtualHost update(VirtualHost virtualHost, boolean merge)
+	public static VirtualHost update(VirtualHost virtualHost)
 		throws SystemException {
-		return getPersistence().update(virtualHost, merge);
+		return getPersistence().update(virtualHost);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
-	public static VirtualHost update(VirtualHost virtualHost, boolean merge,
+	public static VirtualHost update(VirtualHost virtualHost,
 		ServiceContext serviceContext) throws SystemException {
-		return getPersistence().update(virtualHost, merge, serviceContext);
+		return getPersistence().update(virtualHost, serviceContext);
 	}
 
 	/**
@@ -156,9 +156,9 @@ public class VirtualHostUtil {
 	}
 
 	public static com.liferay.portal.model.VirtualHost updateImpl(
-		com.liferay.portal.model.VirtualHost virtualHost, boolean merge)
+		com.liferay.portal.model.VirtualHost virtualHost)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(virtualHost, merge);
+		return getPersistence().updateImpl(virtualHost);
 	}
 
 	/**

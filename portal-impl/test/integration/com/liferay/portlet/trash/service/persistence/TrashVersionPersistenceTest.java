@@ -114,7 +114,7 @@ public class TrashVersionPersistenceTest {
 
 		newTrashVersion.setStatus(ServiceTestUtil.nextInt());
 
-		_persistence.update(newTrashVersion, false);
+		_persistence.update(newTrashVersion);
 
 		TrashVersion existingTrashVersion = _persistence.findByPrimaryKey(newTrashVersion.getPrimaryKey());
 
@@ -255,7 +255,7 @@ public class TrashVersionPersistenceTest {
 
 		trashVersion.setStatus(ServiceTestUtil.nextInt());
 
-		_persistence.update(trashVersion, false);
+		_persistence.update(trashVersion);
 
 		return trashVersion;
 	}

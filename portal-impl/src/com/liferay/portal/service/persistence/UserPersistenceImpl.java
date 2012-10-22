@@ -567,7 +567,11 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, user);
+			if (user.isCachedModel()) {
+				user = (User)session.get(UserImpl.class, user.getPrimaryKeyObj());
+			}
+
+			session.delete(user);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -582,7 +586,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	}
 
 	@Override
-	public User updateImpl(com.liferay.portal.model.User user, boolean merge)
+	public User updateImpl(com.liferay.portal.model.User user)
 		throws SystemException {
 		user = toUnwrappedModel(user);
 
@@ -601,9 +605,14 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, user, merge);
+			if (user.isNew()) {
+				session.save(user);
 
-			user.setNew(false);
+				user.setNew(false);
+			}
+			else {
+				session.merge(user);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

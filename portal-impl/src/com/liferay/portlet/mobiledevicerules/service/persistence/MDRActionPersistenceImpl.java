@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
-import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
@@ -331,7 +330,12 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, mdrAction);
+			if (mdrAction.isCachedModel()) {
+				mdrAction = (MDRAction)session.get(MDRActionImpl.class,
+						mdrAction.getPrimaryKeyObj());
+			}
+
+			session.delete(mdrAction);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -347,8 +351,8 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 
 	@Override
 	public MDRAction updateImpl(
-		com.liferay.portlet.mobiledevicerules.model.MDRAction mdrAction,
-		boolean merge) throws SystemException {
+		com.liferay.portlet.mobiledevicerules.model.MDRAction mdrAction)
+		throws SystemException {
 		mdrAction = toUnwrappedModel(mdrAction);
 
 		boolean isNew = mdrAction.isNew();
@@ -366,9 +370,14 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, mdrAction, merge);
+			if (mdrAction.isNew()) {
+				session.save(mdrAction);
 
-			mdrAction.setNew(false);
+				mdrAction.setNew(false);
+			}
+			else {
+				session.merge(mdrAction);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

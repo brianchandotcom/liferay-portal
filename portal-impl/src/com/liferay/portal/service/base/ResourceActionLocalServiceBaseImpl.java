@@ -249,7 +249,7 @@ public abstract class ResourceActionLocalServiceBaseImpl
 		throws SystemException {
 		resourceAction.setNew(true);
 
-		return resourceActionPersistence.update(resourceAction, false);
+		return resourceActionPersistence.update(resourceAction);
 	}
 
 	/**
@@ -422,23 +422,7 @@ public abstract class ResourceActionLocalServiceBaseImpl
 	@Indexable(type = IndexableType.REINDEX)
 	public ResourceAction updateResourceAction(ResourceAction resourceAction)
 		throws SystemException {
-		return updateResourceAction(resourceAction, true);
-	}
-
-	/**
-	 * Updates the resource action in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param resourceAction the resource action
-	 * @param merge whether to merge the resource action with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	 * @return the resource action that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public ResourceAction updateResourceAction(ResourceAction resourceAction,
-		boolean merge) throws SystemException {
-		resourceAction.setNew(false);
-
-		return resourceActionPersistence.update(resourceAction, merge);
+		return resourceActionPersistence.update(resourceAction);
 	}
 
 	/**

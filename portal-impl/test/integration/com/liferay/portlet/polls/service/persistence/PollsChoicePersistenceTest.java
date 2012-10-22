@@ -117,7 +117,7 @@ public class PollsChoicePersistenceTest {
 
 		newPollsChoice.setDescription(ServiceTestUtil.randomString());
 
-		_persistence.update(newPollsChoice, false);
+		_persistence.update(newPollsChoice);
 
 		PollsChoice existingPollsChoice = _persistence.findByPrimaryKey(newPollsChoice.getPrimaryKey());
 
@@ -277,7 +277,7 @@ public class PollsChoicePersistenceTest {
 
 		pollsChoice.setDescription(ServiceTestUtil.randomString());
 
-		_persistence.update(pollsChoice, false);
+		_persistence.update(pollsChoice);
 
 		return pollsChoice;
 	}

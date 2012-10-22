@@ -122,7 +122,7 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 		userGroup.setAddedByLDAPImport(
 			LDAPUserGroupTransactionThreadLocal.isOriginatesFromLDAP());
 
-		userGroupPersistence.update(userGroup, false);
+		userGroupPersistence.update(userGroup);
 
 		// Group
 
@@ -618,7 +618,7 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 		userGroup.setName(name);
 		userGroup.setDescription(description);
 
-		userGroupPersistence.update(userGroup, false);
+		userGroupPersistence.update(userGroup);
 
 		return userGroup;
 	}

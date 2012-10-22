@@ -59,7 +59,7 @@ public class WebsiteLocalServiceImpl extends WebsiteLocalServiceBaseImpl {
 		website.setTypeId(typeId);
 		website.setPrimary(primary);
 
-		websitePersistence.update(website, false);
+		websitePersistence.update(website);
 
 		return website;
 	}
@@ -103,7 +103,7 @@ public class WebsiteLocalServiceImpl extends WebsiteLocalServiceBaseImpl {
 		website.setTypeId(typeId);
 		website.setPrimary(primary);
 
-		websitePersistence.update(website, false);
+		websitePersistence.update(website);
 
 		return website;
 	}
@@ -124,7 +124,7 @@ public class WebsiteLocalServiceImpl extends WebsiteLocalServiceBaseImpl {
 				if ((websiteId <= 0) || (website.getWebsiteId() != websiteId)) {
 					website.setPrimary(false);
 
-					websitePersistence.update(website, false);
+					websitePersistence.update(website);
 				}
 			}
 		}

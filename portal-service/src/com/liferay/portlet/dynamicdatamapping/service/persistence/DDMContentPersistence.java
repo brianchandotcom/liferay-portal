@@ -76,8 +76,7 @@ public interface DDMContentPersistence extends BasePersistence<DDMContent> {
 			com.liferay.portlet.dynamicdatamapping.NoSuchContentException;
 
 	public com.liferay.portlet.dynamicdatamapping.model.DDMContent updateImpl(
-		com.liferay.portlet.dynamicdatamapping.model.DDMContent ddmContent,
-		boolean merge)
+		com.liferay.portlet.dynamicdatamapping.model.DDMContent ddmContent)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

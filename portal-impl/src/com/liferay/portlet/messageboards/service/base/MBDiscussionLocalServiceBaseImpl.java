@@ -100,7 +100,7 @@ public abstract class MBDiscussionLocalServiceBaseImpl
 		throws SystemException {
 		mbDiscussion.setNew(true);
 
-		return mbDiscussionPersistence.update(mbDiscussion, false);
+		return mbDiscussionPersistence.update(mbDiscussion);
 	}
 
 	/**
@@ -273,23 +273,7 @@ public abstract class MBDiscussionLocalServiceBaseImpl
 	@Indexable(type = IndexableType.REINDEX)
 	public MBDiscussion updateMBDiscussion(MBDiscussion mbDiscussion)
 		throws SystemException {
-		return updateMBDiscussion(mbDiscussion, true);
-	}
-
-	/**
-	 * Updates the message boards discussion in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param mbDiscussion the message boards discussion
-	 * @param merge whether to merge the message boards discussion with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	 * @return the message boards discussion that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public MBDiscussion updateMBDiscussion(MBDiscussion mbDiscussion,
-		boolean merge) throws SystemException {
-		mbDiscussion.setNew(false);
-
-		return mbDiscussionPersistence.update(mbDiscussion, merge);
+		return mbDiscussionPersistence.update(mbDiscussion);
 	}
 
 	/**

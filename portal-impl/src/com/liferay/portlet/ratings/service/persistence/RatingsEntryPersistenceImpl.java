@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
-import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
@@ -325,7 +324,12 @@ public class RatingsEntryPersistenceImpl extends BasePersistenceImpl<RatingsEntr
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, ratingsEntry);
+			if (ratingsEntry.isCachedModel()) {
+				ratingsEntry = (RatingsEntry)session.get(RatingsEntryImpl.class,
+						ratingsEntry.getPrimaryKeyObj());
+			}
+
+			session.delete(ratingsEntry);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -341,8 +345,8 @@ public class RatingsEntryPersistenceImpl extends BasePersistenceImpl<RatingsEntr
 
 	@Override
 	public RatingsEntry updateImpl(
-		com.liferay.portlet.ratings.model.RatingsEntry ratingsEntry,
-		boolean merge) throws SystemException {
+		com.liferay.portlet.ratings.model.RatingsEntry ratingsEntry)
+		throws SystemException {
 		ratingsEntry = toUnwrappedModel(ratingsEntry);
 
 		boolean isNew = ratingsEntry.isNew();
@@ -354,9 +358,14 @@ public class RatingsEntryPersistenceImpl extends BasePersistenceImpl<RatingsEntr
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, ratingsEntry, merge);
+			if (ratingsEntry.isNew()) {
+				session.save(ratingsEntry);
 
-			ratingsEntry.setNew(false);
+				ratingsEntry.setNew(false);
+			}
+			else {
+				session.merge(ratingsEntry);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

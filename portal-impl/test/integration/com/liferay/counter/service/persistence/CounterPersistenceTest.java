@@ -108,7 +108,7 @@ public class CounterPersistenceTest {
 
 		newCounter.setCurrentId(ServiceTestUtil.nextLong());
 
-		_persistence.update(newCounter, false);
+		_persistence.update(newCounter);
 
 		Counter existingCounter = _persistence.findByPrimaryKey(newCounter.getPrimaryKey());
 
@@ -235,7 +235,7 @@ public class CounterPersistenceTest {
 
 		counter.setCurrentId(ServiceTestUtil.nextLong());
 
-		_persistence.update(counter, false);
+		_persistence.update(counter);
 
 		return counter;
 	}

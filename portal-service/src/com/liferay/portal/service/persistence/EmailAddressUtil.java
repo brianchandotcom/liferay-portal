@@ -94,19 +94,19 @@ public class EmailAddressUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static EmailAddress update(EmailAddress emailAddress, boolean merge)
+	public static EmailAddress update(EmailAddress emailAddress)
 		throws SystemException {
-		return getPersistence().update(emailAddress, merge);
+		return getPersistence().update(emailAddress);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
-	public static EmailAddress update(EmailAddress emailAddress, boolean merge,
+	public static EmailAddress update(EmailAddress emailAddress,
 		ServiceContext serviceContext) throws SystemException {
-		return getPersistence().update(emailAddress, merge, serviceContext);
+		return getPersistence().update(emailAddress, serviceContext);
 	}
 
 	/**
@@ -156,9 +156,9 @@ public class EmailAddressUtil {
 	}
 
 	public static com.liferay.portal.model.EmailAddress updateImpl(
-		com.liferay.portal.model.EmailAddress emailAddress, boolean merge)
+		com.liferay.portal.model.EmailAddress emailAddress)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(emailAddress, merge);
+		return getPersistence().updateImpl(emailAddress);
 	}
 
 	/**

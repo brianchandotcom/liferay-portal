@@ -264,7 +264,7 @@ public abstract class LayoutLocalServiceBaseImpl extends BaseLocalServiceImpl
 	public Layout addLayout(Layout layout) throws SystemException {
 		layout.setNew(true);
 
-		return layoutPersistence.update(layout, false);
+		return layoutPersistence.update(layout);
 	}
 
 	/**
@@ -446,23 +446,7 @@ public abstract class LayoutLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public Layout updateLayout(Layout layout) throws SystemException {
-		return updateLayout(layout, true);
-	}
-
-	/**
-	 * Updates the layout in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param layout the layout
-	 * @param merge whether to merge the layout with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	 * @return the layout that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public Layout updateLayout(Layout layout, boolean merge)
-		throws SystemException {
-		layout.setNew(false);
-
-		return layoutPersistence.update(layout, merge);
+		return layoutPersistence.update(layout);
 	}
 
 	/**

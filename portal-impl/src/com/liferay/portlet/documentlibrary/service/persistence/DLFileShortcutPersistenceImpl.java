@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
-import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
@@ -428,7 +427,12 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, dlFileShortcut);
+			if (dlFileShortcut.isCachedModel()) {
+				dlFileShortcut = (DLFileShortcut)session.get(DLFileShortcutImpl.class,
+						dlFileShortcut.getPrimaryKeyObj());
+			}
+
+			session.delete(dlFileShortcut);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -444,8 +448,8 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 
 	@Override
 	public DLFileShortcut updateImpl(
-		com.liferay.portlet.documentlibrary.model.DLFileShortcut dlFileShortcut,
-		boolean merge) throws SystemException {
+		com.liferay.portlet.documentlibrary.model.DLFileShortcut dlFileShortcut)
+		throws SystemException {
 		dlFileShortcut = toUnwrappedModel(dlFileShortcut);
 
 		boolean isNew = dlFileShortcut.isNew();
@@ -463,9 +467,14 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, dlFileShortcut, merge);
+			if (dlFileShortcut.isNew()) {
+				session.save(dlFileShortcut);
 
-			dlFileShortcut.setNew(false);
+				dlFileShortcut.setNew(false);
+			}
+			else {
+				session.merge(dlFileShortcut);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

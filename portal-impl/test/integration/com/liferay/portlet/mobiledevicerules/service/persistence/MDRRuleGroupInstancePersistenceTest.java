@@ -132,7 +132,7 @@ public class MDRRuleGroupInstancePersistenceTest {
 
 		newMDRRuleGroupInstance.setPriority(ServiceTestUtil.nextInt());
 
-		_persistence.update(newMDRRuleGroupInstance, false);
+		_persistence.update(newMDRRuleGroupInstance);
 
 		MDRRuleGroupInstance existingMDRRuleGroupInstance = _persistence.findByPrimaryKey(newMDRRuleGroupInstance.getPrimaryKey());
 
@@ -336,7 +336,7 @@ public class MDRRuleGroupInstancePersistenceTest {
 
 		mdrRuleGroupInstance.setPriority(ServiceTestUtil.nextInt());
 
-		_persistence.update(mdrRuleGroupInstance, false);
+		_persistence.update(mdrRuleGroupInstance);
 
 		return mdrRuleGroupInstance;
 	}

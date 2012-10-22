@@ -138,7 +138,7 @@ public class MBCategoryPersistenceTest {
 
 		newMBCategory.setLastPostDate(ServiceTestUtil.nextDate());
 
-		_persistence.update(newMBCategory, false);
+		_persistence.update(newMBCategory);
 
 		MBCategory existingMBCategory = _persistence.findByPrimaryKey(newMBCategory.getPrimaryKey());
 
@@ -341,7 +341,7 @@ public class MBCategoryPersistenceTest {
 
 		mbCategory.setLastPostDate(ServiceTestUtil.nextDate());
 
-		_persistence.update(mbCategory, false);
+		_persistence.update(mbCategory);
 
 		return mbCategory;
 	}

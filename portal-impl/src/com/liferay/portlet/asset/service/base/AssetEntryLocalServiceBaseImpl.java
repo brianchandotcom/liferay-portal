@@ -154,7 +154,7 @@ public abstract class AssetEntryLocalServiceBaseImpl
 		throws SystemException {
 		assetEntry.setNew(true);
 
-		return assetEntryPersistence.update(assetEntry, false);
+		return assetEntryPersistence.update(assetEntry);
 	}
 
 	/**
@@ -326,23 +326,7 @@ public abstract class AssetEntryLocalServiceBaseImpl
 	@Indexable(type = IndexableType.REINDEX)
 	public AssetEntry updateAssetEntry(AssetEntry assetEntry)
 		throws SystemException {
-		return updateAssetEntry(assetEntry, true);
-	}
-
-	/**
-	 * Updates the asset entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param assetEntry the asset entry
-	 * @param merge whether to merge the asset entry with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	 * @return the asset entry that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public AssetEntry updateAssetEntry(AssetEntry assetEntry, boolean merge)
-		throws SystemException {
-		assetEntry.setNew(false);
-
-		return assetEntryPersistence.update(assetEntry, merge);
+		return assetEntryPersistence.update(assetEntry);
 	}
 
 	/**

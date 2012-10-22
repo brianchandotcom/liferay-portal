@@ -76,8 +76,7 @@ public interface ShoppingCategoryPersistence extends BasePersistence<ShoppingCat
 			com.liferay.portlet.shopping.NoSuchCategoryException;
 
 	public com.liferay.portlet.shopping.model.ShoppingCategory updateImpl(
-		com.liferay.portlet.shopping.model.ShoppingCategory shoppingCategory,
-		boolean merge)
+		com.liferay.portlet.shopping.model.ShoppingCategory shoppingCategory)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

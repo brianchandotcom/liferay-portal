@@ -128,7 +128,7 @@ public class DLFileEntryTypePersistenceTest {
 
 		newDLFileEntryType.setDescription(ServiceTestUtil.randomString());
 
-		_persistence.update(newDLFileEntryType, false);
+		_persistence.update(newDLFileEntryType);
 
 		DLFileEntryType existingDLFileEntryType = _persistence.findByPrimaryKey(newDLFileEntryType.getPrimaryKey());
 
@@ -319,7 +319,7 @@ public class DLFileEntryTypePersistenceTest {
 
 		dlFileEntryType.setDescription(ServiceTestUtil.randomString());
 
-		_persistence.update(dlFileEntryType, false);
+		_persistence.update(dlFileEntryType);
 
 		return dlFileEntryType;
 	}

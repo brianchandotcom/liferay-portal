@@ -119,7 +119,7 @@ public class RatingsStatsPersistenceTest {
 
 		newRatingsStats.setAverageScore(ServiceTestUtil.nextDouble());
 
-		_persistence.update(newRatingsStats, false);
+		_persistence.update(newRatingsStats);
 
 		RatingsStats existingRatingsStats = _persistence.findByPrimaryKey(newRatingsStats.getPrimaryKey());
 
@@ -282,7 +282,7 @@ public class RatingsStatsPersistenceTest {
 
 		ratingsStats.setAverageScore(ServiceTestUtil.nextDouble());
 
-		_persistence.update(ratingsStats, false);
+		_persistence.update(ratingsStats);
 
 		return ratingsStats;
 	}

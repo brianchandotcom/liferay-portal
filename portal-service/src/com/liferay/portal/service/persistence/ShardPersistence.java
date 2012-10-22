@@ -71,7 +71,7 @@ public interface ShardPersistence extends BasePersistence<Shard> {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portal.model.Shard updateImpl(
-		com.liferay.portal.model.Shard shard, boolean merge)
+		com.liferay.portal.model.Shard shard)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

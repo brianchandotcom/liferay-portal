@@ -95,19 +95,19 @@ public class DDLRecordUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static DDLRecord update(DDLRecord ddlRecord, boolean merge)
+	public static DDLRecord update(DDLRecord ddlRecord)
 		throws SystemException {
-		return getPersistence().update(ddlRecord, merge);
+		return getPersistence().update(ddlRecord);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
-	public static DDLRecord update(DDLRecord ddlRecord, boolean merge,
+	public static DDLRecord update(DDLRecord ddlRecord,
 		ServiceContext serviceContext) throws SystemException {
-		return getPersistence().update(ddlRecord, merge, serviceContext);
+		return getPersistence().update(ddlRecord, serviceContext);
 	}
 
 	/**
@@ -157,10 +157,9 @@ public class DDLRecordUtil {
 	}
 
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecord updateImpl(
-		com.liferay.portlet.dynamicdatalists.model.DDLRecord ddlRecord,
-		boolean merge)
+		com.liferay.portlet.dynamicdatalists.model.DDLRecord ddlRecord)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(ddlRecord, merge);
+		return getPersistence().updateImpl(ddlRecord);
 	}
 
 	/**

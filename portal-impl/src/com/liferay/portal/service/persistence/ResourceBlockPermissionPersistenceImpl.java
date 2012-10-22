@@ -298,7 +298,12 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, resourceBlockPermission);
+			if (resourceBlockPermission.isCachedModel()) {
+				resourceBlockPermission = (ResourceBlockPermission)session.get(ResourceBlockPermissionImpl.class,
+						resourceBlockPermission.getPrimaryKeyObj());
+			}
+
+			session.delete(resourceBlockPermission);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -314,8 +319,8 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 
 	@Override
 	public ResourceBlockPermission updateImpl(
-		com.liferay.portal.model.ResourceBlockPermission resourceBlockPermission,
-		boolean merge) throws SystemException {
+		com.liferay.portal.model.ResourceBlockPermission resourceBlockPermission)
+		throws SystemException {
 		resourceBlockPermission = toUnwrappedModel(resourceBlockPermission);
 
 		boolean isNew = resourceBlockPermission.isNew();
@@ -327,9 +332,14 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, resourceBlockPermission, merge);
+			if (resourceBlockPermission.isNew()) {
+				session.save(resourceBlockPermission);
 
-			resourceBlockPermission.setNew(false);
+				resourceBlockPermission.setNew(false);
+			}
+			else {
+				session.merge(resourceBlockPermission);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

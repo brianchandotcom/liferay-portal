@@ -76,8 +76,7 @@ public interface DLFolderPersistence extends BasePersistence<DLFolder> {
 			com.liferay.portlet.documentlibrary.NoSuchFolderException;
 
 	public com.liferay.portlet.documentlibrary.model.DLFolder updateImpl(
-		com.liferay.portlet.documentlibrary.model.DLFolder dlFolder,
-		boolean merge)
+		com.liferay.portlet.documentlibrary.model.DLFolder dlFolder)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

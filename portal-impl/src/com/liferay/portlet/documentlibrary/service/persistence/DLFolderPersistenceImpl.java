@@ -45,7 +45,6 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
-import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.GroupPersistence;
 import com.liferay.portal.service.persistence.LockPersistence;
 import com.liferay.portal.service.persistence.UserPersistence;
@@ -570,7 +569,12 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, dlFolder);
+			if (dlFolder.isCachedModel()) {
+				dlFolder = (DLFolder)session.get(DLFolderImpl.class,
+						dlFolder.getPrimaryKeyObj());
+			}
+
+			session.delete(dlFolder);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -586,8 +590,8 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 
 	@Override
 	public DLFolder updateImpl(
-		com.liferay.portlet.documentlibrary.model.DLFolder dlFolder,
-		boolean merge) throws SystemException {
+		com.liferay.portlet.documentlibrary.model.DLFolder dlFolder)
+		throws SystemException {
 		dlFolder = toUnwrappedModel(dlFolder);
 
 		boolean isNew = dlFolder.isNew();
@@ -605,9 +609,14 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, dlFolder, merge);
+			if (dlFolder.isNew()) {
+				session.save(dlFolder);
 
-			dlFolder.setNew(false);
+				dlFolder.setNew(false);
+			}
+			else {
+				session.merge(dlFolder);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

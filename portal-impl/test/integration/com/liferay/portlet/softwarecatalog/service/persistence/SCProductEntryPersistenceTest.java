@@ -140,7 +140,7 @@ public class SCProductEntryPersistenceTest {
 
 		newSCProductEntry.setRepoArtifactId(ServiceTestUtil.randomString());
 
-		_persistence.update(newSCProductEntry, false);
+		_persistence.update(newSCProductEntry);
 
 		SCProductEntry existingSCProductEntry = _persistence.findByPrimaryKey(newSCProductEntry.getPrimaryKey());
 
@@ -350,7 +350,7 @@ public class SCProductEntryPersistenceTest {
 
 		scProductEntry.setRepoArtifactId(ServiceTestUtil.randomString());
 
-		_persistence.update(scProductEntry, false);
+		_persistence.update(scProductEntry);
 
 		return scProductEntry;
 	}

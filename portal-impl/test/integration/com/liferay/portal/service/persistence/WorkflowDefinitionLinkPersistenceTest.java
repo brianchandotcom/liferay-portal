@@ -130,7 +130,7 @@ public class WorkflowDefinitionLinkPersistenceTest {
 
 		newWorkflowDefinitionLink.setWorkflowDefinitionVersion(ServiceTestUtil.nextInt());
 
-		_persistence.update(newWorkflowDefinitionLink, false);
+		_persistence.update(newWorkflowDefinitionLink);
 
 		WorkflowDefinitionLink existingWorkflowDefinitionLink = _persistence.findByPrimaryKey(newWorkflowDefinitionLink.getPrimaryKey());
 
@@ -336,7 +336,7 @@ public class WorkflowDefinitionLinkPersistenceTest {
 
 		workflowDefinitionLink.setWorkflowDefinitionVersion(ServiceTestUtil.nextInt());
 
-		_persistence.update(workflowDefinitionLink, false);
+		_persistence.update(workflowDefinitionLink);
 
 		return workflowDefinitionLink;
 	}

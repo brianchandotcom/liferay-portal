@@ -74,7 +74,7 @@ public interface ExpandoRowPersistence extends BasePersistence<ExpandoRow> {
 			com.liferay.portlet.expando.NoSuchRowException;
 
 	public com.liferay.portlet.expando.model.ExpandoRow updateImpl(
-		com.liferay.portlet.expando.model.ExpandoRow expandoRow, boolean merge)
+		com.liferay.portlet.expando.model.ExpandoRow expandoRow)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

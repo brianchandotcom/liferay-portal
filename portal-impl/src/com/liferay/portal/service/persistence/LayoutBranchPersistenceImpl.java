@@ -347,7 +347,12 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, layoutBranch);
+			if (layoutBranch.isCachedModel()) {
+				layoutBranch = (LayoutBranch)session.get(LayoutBranchImpl.class,
+						layoutBranch.getPrimaryKeyObj());
+			}
+
+			session.delete(layoutBranch);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -363,7 +368,7 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 
 	@Override
 	public LayoutBranch updateImpl(
-		com.liferay.portal.model.LayoutBranch layoutBranch, boolean merge)
+		com.liferay.portal.model.LayoutBranch layoutBranch)
 		throws SystemException {
 		layoutBranch = toUnwrappedModel(layoutBranch);
 
@@ -376,9 +381,14 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, layoutBranch, merge);
+			if (layoutBranch.isNew()) {
+				session.save(layoutBranch);
 
-			layoutBranch.setNew(false);
+				layoutBranch.setNew(false);
+			}
+			else {
+				session.merge(layoutBranch);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

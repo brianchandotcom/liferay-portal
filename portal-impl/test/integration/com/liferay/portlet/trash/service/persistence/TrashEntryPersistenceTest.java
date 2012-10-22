@@ -127,7 +127,7 @@ public class TrashEntryPersistenceTest {
 
 		newTrashEntry.setStatus(ServiceTestUtil.nextInt());
 
-		_persistence.update(newTrashEntry, false);
+		_persistence.update(newTrashEntry);
 
 		TrashEntry existingTrashEntry = _persistence.findByPrimaryKey(newTrashEntry.getPrimaryKey());
 
@@ -307,7 +307,7 @@ public class TrashEntryPersistenceTest {
 
 		trashEntry.setStatus(ServiceTestUtil.nextInt());
 
-		_persistence.update(trashEntry, false);
+		_persistence.update(trashEntry);
 
 		return trashEntry;
 	}

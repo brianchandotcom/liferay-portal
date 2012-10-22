@@ -95,19 +95,19 @@ public class BlogsStatsUserUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static BlogsStatsUser update(BlogsStatsUser blogsStatsUser,
-		boolean merge) throws SystemException {
-		return getPersistence().update(blogsStatsUser, merge);
+	public static BlogsStatsUser update(BlogsStatsUser blogsStatsUser)
+		throws SystemException {
+		return getPersistence().update(blogsStatsUser);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
 	public static BlogsStatsUser update(BlogsStatsUser blogsStatsUser,
-		boolean merge, ServiceContext serviceContext) throws SystemException {
-		return getPersistence().update(blogsStatsUser, merge, serviceContext);
+		ServiceContext serviceContext) throws SystemException {
+		return getPersistence().update(blogsStatsUser, serviceContext);
 	}
 
 	/**
@@ -157,10 +157,9 @@ public class BlogsStatsUserUtil {
 	}
 
 	public static com.liferay.portlet.blogs.model.BlogsStatsUser updateImpl(
-		com.liferay.portlet.blogs.model.BlogsStatsUser blogsStatsUser,
-		boolean merge)
+		com.liferay.portlet.blogs.model.BlogsStatsUser blogsStatsUser)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(blogsStatsUser, merge);
+		return getPersistence().updateImpl(blogsStatsUser);
 	}
 
 	/**

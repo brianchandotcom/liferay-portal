@@ -130,7 +130,7 @@ public class JournalFolderPersistenceTest {
 
 		newJournalFolder.setDescription(ServiceTestUtil.randomString());
 
-		_persistence.update(newJournalFolder, false);
+		_persistence.update(newJournalFolder);
 
 		JournalFolder existingJournalFolder = _persistence.findByPrimaryKey(newJournalFolder.getPrimaryKey());
 
@@ -330,7 +330,7 @@ public class JournalFolderPersistenceTest {
 
 		journalFolder.setDescription(ServiceTestUtil.randomString());
 
-		_persistence.update(journalFolder, false);
+		_persistence.update(journalFolder);
 
 		return journalFolder;
 	}

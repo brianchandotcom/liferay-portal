@@ -109,7 +109,7 @@ public class ListTypePersistenceTest {
 
 		newListType.setType(ServiceTestUtil.randomString());
 
-		_persistence.update(newListType, false);
+		_persistence.update(newListType);
 
 		ListType existingListType = _persistence.findByPrimaryKey(newListType.getPrimaryKey());
 
@@ -240,7 +240,7 @@ public class ListTypePersistenceTest {
 
 		listType.setType(ServiceTestUtil.randomString());
 
-		_persistence.update(listType, false);
+		_persistence.update(listType);
 
 		return listType;
 	}

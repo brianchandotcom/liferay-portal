@@ -94,22 +94,20 @@ public class UserNotificationEventUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
 	public static UserNotificationEvent update(
-		UserNotificationEvent userNotificationEvent, boolean merge)
-		throws SystemException {
-		return getPersistence().update(userNotificationEvent, merge);
+		UserNotificationEvent userNotificationEvent) throws SystemException {
+		return getPersistence().update(userNotificationEvent);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
 	public static UserNotificationEvent update(
-		UserNotificationEvent userNotificationEvent, boolean merge,
+		UserNotificationEvent userNotificationEvent,
 		ServiceContext serviceContext) throws SystemException {
-		return getPersistence()
-				   .update(userNotificationEvent, merge, serviceContext);
+		return getPersistence().update(userNotificationEvent, serviceContext);
 	}
 
 	/**
@@ -159,10 +157,9 @@ public class UserNotificationEventUtil {
 	}
 
 	public static com.liferay.portal.model.UserNotificationEvent updateImpl(
-		com.liferay.portal.model.UserNotificationEvent userNotificationEvent,
-		boolean merge)
+		com.liferay.portal.model.UserNotificationEvent userNotificationEvent)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(userNotificationEvent, merge);
+		return getPersistence().updateImpl(userNotificationEvent);
 	}
 
 	/**

@@ -557,7 +557,12 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, layout);
+			if (layout.isCachedModel()) {
+				layout = (Layout)session.get(LayoutImpl.class,
+						layout.getPrimaryKeyObj());
+			}
+
+			session.delete(layout);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -572,8 +577,8 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	}
 
 	@Override
-	public Layout updateImpl(com.liferay.portal.model.Layout layout,
-		boolean merge) throws SystemException {
+	public Layout updateImpl(com.liferay.portal.model.Layout layout)
+		throws SystemException {
 		layout = toUnwrappedModel(layout);
 
 		boolean isNew = layout.isNew();
@@ -591,9 +596,14 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, layout, merge);
+			if (layout.isNew()) {
+				session.save(layout);
 
-			layout.setNew(false);
+				layout.setNew(false);
+			}
+			else {
+				session.merge(layout);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

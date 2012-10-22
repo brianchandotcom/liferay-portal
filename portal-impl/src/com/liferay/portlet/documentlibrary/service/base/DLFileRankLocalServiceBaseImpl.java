@@ -113,7 +113,7 @@ public abstract class DLFileRankLocalServiceBaseImpl
 		throws SystemException {
 		dlFileRank.setNew(true);
 
-		return dlFileRankPersistence.update(dlFileRank, false);
+		return dlFileRankPersistence.update(dlFileRank);
 	}
 
 	/**
@@ -286,23 +286,7 @@ public abstract class DLFileRankLocalServiceBaseImpl
 	@Indexable(type = IndexableType.REINDEX)
 	public DLFileRank updateDLFileRank(DLFileRank dlFileRank)
 		throws SystemException {
-		return updateDLFileRank(dlFileRank, true);
-	}
-
-	/**
-	 * Updates the document library file rank in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param dlFileRank the document library file rank
-	 * @param merge whether to merge the document library file rank with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	 * @return the document library file rank that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public DLFileRank updateDLFileRank(DLFileRank dlFileRank, boolean merge)
-		throws SystemException {
-		dlFileRank.setNew(false);
-
-		return dlFileRankPersistence.update(dlFileRank, merge);
+		return dlFileRankPersistence.update(dlFileRank);
 	}
 
 	/**

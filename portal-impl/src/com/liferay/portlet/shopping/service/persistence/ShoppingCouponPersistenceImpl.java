@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
-import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
@@ -286,7 +285,12 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, shoppingCoupon);
+			if (shoppingCoupon.isCachedModel()) {
+				shoppingCoupon = (ShoppingCoupon)session.get(ShoppingCouponImpl.class,
+						shoppingCoupon.getPrimaryKeyObj());
+			}
+
+			session.delete(shoppingCoupon);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -302,8 +306,8 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 
 	@Override
 	public ShoppingCoupon updateImpl(
-		com.liferay.portlet.shopping.model.ShoppingCoupon shoppingCoupon,
-		boolean merge) throws SystemException {
+		com.liferay.portlet.shopping.model.ShoppingCoupon shoppingCoupon)
+		throws SystemException {
 		shoppingCoupon = toUnwrappedModel(shoppingCoupon);
 
 		boolean isNew = shoppingCoupon.isNew();
@@ -315,9 +319,14 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, shoppingCoupon, merge);
+			if (shoppingCoupon.isNew()) {
+				session.save(shoppingCoupon);
 
-			shoppingCoupon.setNew(false);
+				shoppingCoupon.setNew(false);
+			}
+			else {
+				session.merge(shoppingCoupon);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

@@ -72,7 +72,7 @@ public class MembershipRequestLocalServiceImpl
 		membershipRequest.setStatusId(
 			MembershipRequestConstants.STATUS_PENDING);
 
-		membershipRequestPersistence.update(membershipRequest, false);
+		membershipRequestPersistence.update(membershipRequest);
 
 		notifyGroupAdministrators(membershipRequest, serviceContext);
 
@@ -169,7 +169,7 @@ public class MembershipRequestLocalServiceImpl
 
 		membershipRequest.setStatusId(statusId);
 
-		membershipRequestPersistence.update(membershipRequest, false);
+		membershipRequestPersistence.update(membershipRequest);
 
 		if ((statusId == MembershipRequestConstants.STATUS_APPROVED) &&
 			addUserToGroup) {

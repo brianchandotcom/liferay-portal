@@ -94,19 +94,19 @@ public class ResourceBlockUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static ResourceBlock update(ResourceBlock resourceBlock,
-		boolean merge) throws SystemException {
-		return getPersistence().update(resourceBlock, merge);
+	public static ResourceBlock update(ResourceBlock resourceBlock)
+		throws SystemException {
+		return getPersistence().update(resourceBlock);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
 	public static ResourceBlock update(ResourceBlock resourceBlock,
-		boolean merge, ServiceContext serviceContext) throws SystemException {
-		return getPersistence().update(resourceBlock, merge, serviceContext);
+		ServiceContext serviceContext) throws SystemException {
+		return getPersistence().update(resourceBlock, serviceContext);
 	}
 
 	/**
@@ -156,9 +156,9 @@ public class ResourceBlockUtil {
 	}
 
 	public static com.liferay.portal.model.ResourceBlock updateImpl(
-		com.liferay.portal.model.ResourceBlock resourceBlock, boolean merge)
+		com.liferay.portal.model.ResourceBlock resourceBlock)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(resourceBlock, merge);
+		return getPersistence().updateImpl(resourceBlock);
 	}
 
 	/**

@@ -74,7 +74,7 @@ public interface TrashEntryPersistence extends BasePersistence<TrashEntry> {
 			com.liferay.portlet.trash.NoSuchEntryException;
 
 	public com.liferay.portlet.trash.model.TrashEntry updateImpl(
-		com.liferay.portlet.trash.model.TrashEntry trashEntry, boolean merge)
+		com.liferay.portlet.trash.model.TrashEntry trashEntry)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

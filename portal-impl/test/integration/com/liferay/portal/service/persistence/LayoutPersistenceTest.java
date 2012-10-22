@@ -165,7 +165,7 @@ public class LayoutPersistenceTest {
 
 		newLayout.setSourcePrototypeLayoutUuid(ServiceTestUtil.randomString());
 
-		_persistence.update(newLayout, false);
+		_persistence.update(newLayout);
 
 		Layout existingLayout = _persistence.findByPrimaryKey(newLayout.getPrimaryKey());
 
@@ -437,7 +437,7 @@ public class LayoutPersistenceTest {
 
 		layout.setSourcePrototypeLayoutUuid(ServiceTestUtil.randomString());
 
-		_persistence.update(layout, false);
+		_persistence.update(layout);
 
 		return layout;
 	}

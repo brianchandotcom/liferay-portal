@@ -71,7 +71,7 @@ public interface VirtualHostPersistence extends BasePersistence<VirtualHost> {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portal.model.VirtualHost updateImpl(
-		com.liferay.portal.model.VirtualHost virtualHost, boolean merge)
+		com.liferay.portal.model.VirtualHost virtualHost)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

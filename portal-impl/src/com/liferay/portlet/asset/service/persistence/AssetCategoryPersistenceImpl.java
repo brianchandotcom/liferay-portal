@@ -45,7 +45,6 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
-import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
@@ -547,7 +546,12 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, assetCategory);
+			if (assetCategory.isCachedModel()) {
+				assetCategory = (AssetCategory)session.get(AssetCategoryImpl.class,
+						assetCategory.getPrimaryKeyObj());
+			}
+
+			session.delete(assetCategory);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -563,8 +567,8 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 
 	@Override
 	public AssetCategory updateImpl(
-		com.liferay.portlet.asset.model.AssetCategory assetCategory,
-		boolean merge) throws SystemException {
+		com.liferay.portlet.asset.model.AssetCategory assetCategory)
+		throws SystemException {
 		assetCategory = toUnwrappedModel(assetCategory);
 
 		boolean isNew = assetCategory.isNew();
@@ -594,9 +598,14 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, assetCategory, merge);
+			if (assetCategory.isNew()) {
+				session.save(assetCategory);
 
-			assetCategory.setNew(false);
+				assetCategory.setNew(false);
+			}
+			else {
+				session.merge(assetCategory);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

@@ -107,7 +107,7 @@ public abstract class BookmarksEntryLocalServiceBaseImpl
 		throws SystemException {
 		bookmarksEntry.setNew(true);
 
-		return bookmarksEntryPersistence.update(bookmarksEntry, false);
+		return bookmarksEntryPersistence.update(bookmarksEntry);
 	}
 
 	/**
@@ -294,23 +294,7 @@ public abstract class BookmarksEntryLocalServiceBaseImpl
 	@Indexable(type = IndexableType.REINDEX)
 	public BookmarksEntry updateBookmarksEntry(BookmarksEntry bookmarksEntry)
 		throws SystemException {
-		return updateBookmarksEntry(bookmarksEntry, true);
-	}
-
-	/**
-	 * Updates the bookmarks entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param bookmarksEntry the bookmarks entry
-	 * @param merge whether to merge the bookmarks entry with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	 * @return the bookmarks entry that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public BookmarksEntry updateBookmarksEntry(BookmarksEntry bookmarksEntry,
-		boolean merge) throws SystemException {
-		bookmarksEntry.setNew(false);
-
-		return bookmarksEntryPersistence.update(bookmarksEntry, merge);
+		return bookmarksEntryPersistence.update(bookmarksEntry);
 	}
 
 	/**

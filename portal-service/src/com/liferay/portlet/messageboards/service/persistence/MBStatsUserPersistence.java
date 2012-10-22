@@ -76,8 +76,7 @@ public interface MBStatsUserPersistence extends BasePersistence<MBStatsUser> {
 			com.liferay.portlet.messageboards.NoSuchStatsUserException;
 
 	public com.liferay.portlet.messageboards.model.MBStatsUser updateImpl(
-		com.liferay.portlet.messageboards.model.MBStatsUser mbStatsUser,
-		boolean merge)
+		com.liferay.portlet.messageboards.model.MBStatsUser mbStatsUser)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

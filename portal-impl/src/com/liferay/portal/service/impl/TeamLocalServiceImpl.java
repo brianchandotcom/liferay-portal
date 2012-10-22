@@ -62,7 +62,7 @@ public class TeamLocalServiceImpl extends TeamLocalServiceBaseImpl {
 		team.setName(name);
 		team.setDescription(description);
 
-		teamPersistence.update(team, false);
+		teamPersistence.update(team);
 
 		// Resources
 
@@ -184,7 +184,7 @@ public class TeamLocalServiceImpl extends TeamLocalServiceBaseImpl {
 		team.setName(name);
 		team.setDescription(description);
 
-		teamPersistence.update(team, false);
+		teamPersistence.update(team);
 
 		return team;
 	}

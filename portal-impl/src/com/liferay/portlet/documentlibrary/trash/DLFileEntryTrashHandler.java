@@ -211,13 +211,13 @@ public class DLFileEntryTrashHandler extends BaseTrashHandler {
 
 		dlFileEntry.setTitle(name);
 
-		DLFileEntryLocalServiceUtil.updateDLFileEntry(dlFileEntry, false);
+		DLFileEntryLocalServiceUtil.updateDLFileEntry(dlFileEntry);
 
 		DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
 
 		dlFileVersion.setTitle(name);
 
-		DLFileVersionLocalServiceUtil.updateDLFileVersion(dlFileVersion, false);
+		DLFileVersionLocalServiceUtil.updateDLFileVersion(dlFileVersion);
 	}
 
 	protected DLFileEntry getDLFileEntry(long classPK)

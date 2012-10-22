@@ -100,7 +100,7 @@ public class AssetCategoryLocalServiceImpl
 		category.setDescriptionMap(descriptionMap);
 		category.setVocabularyId(vocabularyId);
 
-		assetCategoryPersistence.update(category, false);
+		assetCategoryPersistence.update(category);
 
 		// Resources
 
@@ -351,8 +351,7 @@ public class AssetCategoryLocalServiceImpl
 			if (toCategoryProperty == null) {
 				fromCategoryProperty.setCategoryId(toCategoryId);
 
-				assetCategoryPropertyPersistence.update(
-					fromCategoryProperty, false);
+				assetCategoryPropertyPersistence.update(fromCategoryProperty);
 			}
 		}
 
@@ -385,7 +384,7 @@ public class AssetCategoryLocalServiceImpl
 		category.setModifiedDate(new Date());
 		category.setParentCategoryId(parentCategoryId);
 
-		assetCategoryPersistence.update(category, false);
+		assetCategoryPersistence.update(category);
 
 		return category;
 	}
@@ -451,7 +450,7 @@ public class AssetCategoryLocalServiceImpl
 		category.setTitleMap(titleMap);
 		category.setDescriptionMap(descriptionMap);
 
-		assetCategoryPersistence.update(category, false);
+		assetCategoryPersistence.update(category);
 
 		// Properties
 
@@ -521,7 +520,7 @@ public class AssetCategoryLocalServiceImpl
 				childCategory.setVocabularyId(vocabularyId);
 				childCategory.setModifiedDate(new Date());
 
-				assetCategoryPersistence.update(childCategory, false);
+				assetCategoryPersistence.update(childCategory);
 
 				updateChildrenVocabularyId (childCategory, vocabularyId);
 			}

@@ -101,7 +101,7 @@ public class SocialRequestLocalServiceImpl
 		request.setReceiverUserId(receiverUserId);
 		request.setStatus(SocialRequestConstants.STATUS_PENDING);
 
-		socialRequestPersistence.update(request, false);
+		socialRequestPersistence.update(request);
 
 		return request;
 	}
@@ -426,7 +426,7 @@ public class SocialRequestLocalServiceImpl
 		request.setModifiedDate(System.currentTimeMillis());
 		request.setStatus(status);
 
-		socialRequestPersistence.update(request, false);
+		socialRequestPersistence.update(request);
 
 		if (status == SocialRequestConstants.STATUS_CONFIRM) {
 			socialRequestInterpreterLocalService.processConfirmation(

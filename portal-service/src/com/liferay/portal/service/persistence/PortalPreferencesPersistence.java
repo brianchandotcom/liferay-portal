@@ -74,8 +74,7 @@ public interface PortalPreferencesPersistence extends BasePersistence<PortalPref
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portal.model.PortalPreferences updateImpl(
-		com.liferay.portal.model.PortalPreferences portalPreferences,
-		boolean merge)
+		com.liferay.portal.model.PortalPreferences portalPreferences)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

@@ -249,7 +249,7 @@ public abstract class EmailAddressLocalServiceBaseImpl
 		throws SystemException {
 		emailAddress.setNew(true);
 
-		return emailAddressPersistence.update(emailAddress, false);
+		return emailAddressPersistence.update(emailAddress);
 	}
 
 	/**
@@ -422,23 +422,7 @@ public abstract class EmailAddressLocalServiceBaseImpl
 	@Indexable(type = IndexableType.REINDEX)
 	public EmailAddress updateEmailAddress(EmailAddress emailAddress)
 		throws SystemException {
-		return updateEmailAddress(emailAddress, true);
-	}
-
-	/**
-	 * Updates the email address in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param emailAddress the email address
-	 * @param merge whether to merge the email address with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	 * @return the email address that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public EmailAddress updateEmailAddress(EmailAddress emailAddress,
-		boolean merge) throws SystemException {
-		emailAddress.setNew(false);
-
-		return emailAddressPersistence.update(emailAddress, merge);
+		return emailAddressPersistence.update(emailAddress);
 	}
 
 	/**

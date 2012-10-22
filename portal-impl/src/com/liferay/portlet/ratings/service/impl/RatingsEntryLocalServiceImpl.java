@@ -79,7 +79,7 @@ public class RatingsEntryLocalServiceImpl
 		stats.setTotalScore(totalScore);
 		stats.setAverageScore(averageScore);
 
-		ratingsStatsPersistence.update(stats, false);
+		ratingsStatsPersistence.update(stats);
 	}
 
 	public RatingsEntry fetchEntry(long userId, String className, long classPK)
@@ -159,7 +159,7 @@ public class RatingsEntryLocalServiceImpl
 			entry.setModifiedDate(serviceContext.getModifiedDate(now));
 			entry.setScore(score);
 
-			ratingsEntryPersistence.update(entry, false);
+			ratingsEntryPersistence.update(entry);
 
 			// Stats
 
@@ -170,7 +170,7 @@ public class RatingsEntryLocalServiceImpl
 			stats.setAverageScore(
 				stats.getTotalScore() / stats.getTotalEntries());
 
-			ratingsStatsPersistence.update(stats, false);
+			ratingsStatsPersistence.update(stats);
 		}
 		else {
 			newEntry = true;
@@ -190,7 +190,7 @@ public class RatingsEntryLocalServiceImpl
 			entry.setClassPK(classPK);
 			entry.setScore(score);
 
-			ratingsEntryPersistence.update(entry, false);
+			ratingsEntryPersistence.update(entry);
 
 			// Stats
 
@@ -202,7 +202,7 @@ public class RatingsEntryLocalServiceImpl
 			stats.setAverageScore(
 				stats.getTotalScore() / stats.getTotalEntries());
 
-			ratingsStatsPersistence.update(stats, false);
+			ratingsStatsPersistence.update(stats);
 		}
 
 		// Blogs entry
@@ -234,7 +234,7 @@ public class RatingsEntryLocalServiceImpl
 			blogsStatsUser.setRatingsTotalScore(ratingsTotalScore);
 			blogsStatsUser.setRatingsAverageScore(ratingsAverageScore);
 
-			blogsStatsUserPersistence.update(blogsStatsUser, false);
+			blogsStatsUserPersistence.update(blogsStatsUser);
 		}
 
 		// Social

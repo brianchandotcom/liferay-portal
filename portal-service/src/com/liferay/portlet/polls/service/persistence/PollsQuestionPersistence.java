@@ -74,8 +74,7 @@ public interface PollsQuestionPersistence extends BasePersistence<PollsQuestion>
 			com.liferay.portlet.polls.NoSuchQuestionException;
 
 	public com.liferay.portlet.polls.model.PollsQuestion updateImpl(
-		com.liferay.portlet.polls.model.PollsQuestion pollsQuestion,
-		boolean merge)
+		com.liferay.portlet.polls.model.PollsQuestion pollsQuestion)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

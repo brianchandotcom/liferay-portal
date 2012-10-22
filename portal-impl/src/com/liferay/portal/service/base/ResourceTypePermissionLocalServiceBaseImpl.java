@@ -250,8 +250,7 @@ public abstract class ResourceTypePermissionLocalServiceBaseImpl
 		throws SystemException {
 		resourceTypePermission.setNew(true);
 
-		return resourceTypePermissionPersistence.update(resourceTypePermission,
-			false);
+		return resourceTypePermissionPersistence.update(resourceTypePermission);
 	}
 
 	/**
@@ -427,25 +426,7 @@ public abstract class ResourceTypePermissionLocalServiceBaseImpl
 	public ResourceTypePermission updateResourceTypePermission(
 		ResourceTypePermission resourceTypePermission)
 		throws SystemException {
-		return updateResourceTypePermission(resourceTypePermission, true);
-	}
-
-	/**
-	 * Updates the resource type permission in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param resourceTypePermission the resource type permission
-	 * @param merge whether to merge the resource type permission with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	 * @return the resource type permission that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public ResourceTypePermission updateResourceTypePermission(
-		ResourceTypePermission resourceTypePermission, boolean merge)
-		throws SystemException {
-		resourceTypePermission.setNew(false);
-
-		return resourceTypePermissionPersistence.update(resourceTypePermission,
-			merge);
+		return resourceTypePermissionPersistence.update(resourceTypePermission);
 	}
 
 	/**

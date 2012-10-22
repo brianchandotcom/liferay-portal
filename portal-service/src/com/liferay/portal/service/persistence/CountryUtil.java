@@ -94,19 +94,18 @@ public class CountryUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static Country update(Country country, boolean merge)
-		throws SystemException {
-		return getPersistence().update(country, merge);
+	public static Country update(Country country) throws SystemException {
+		return getPersistence().update(country);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
-	public static Country update(Country country, boolean merge,
-		ServiceContext serviceContext) throws SystemException {
-		return getPersistence().update(country, merge, serviceContext);
+	public static Country update(Country country, ServiceContext serviceContext)
+		throws SystemException {
+		return getPersistence().update(country, serviceContext);
 	}
 
 	/**
@@ -153,9 +152,9 @@ public class CountryUtil {
 	}
 
 	public static com.liferay.portal.model.Country updateImpl(
-		com.liferay.portal.model.Country country, boolean merge)
+		com.liferay.portal.model.Country country)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(country, merge);
+		return getPersistence().updateImpl(country);
 	}
 
 	/**

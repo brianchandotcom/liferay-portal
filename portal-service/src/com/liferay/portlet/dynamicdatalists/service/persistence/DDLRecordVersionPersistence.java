@@ -76,8 +76,7 @@ public interface DDLRecordVersionPersistence extends BasePersistence<DDLRecordVe
 			com.liferay.portlet.dynamicdatalists.NoSuchRecordVersionException;
 
 	public com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion updateImpl(
-		com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion ddlRecordVersion,
-		boolean merge)
+		com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion ddlRecordVersion)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

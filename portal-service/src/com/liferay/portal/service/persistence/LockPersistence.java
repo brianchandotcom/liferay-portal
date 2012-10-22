@@ -70,7 +70,7 @@ public interface LockPersistence extends BasePersistence<Lock> {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portal.model.Lock updateImpl(
-		com.liferay.portal.model.Lock lock, boolean merge)
+		com.liferay.portal.model.Lock lock)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

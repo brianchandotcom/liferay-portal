@@ -257,7 +257,12 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, ticket);
+			if (ticket.isCachedModel()) {
+				ticket = (Ticket)session.get(TicketImpl.class,
+						ticket.getPrimaryKeyObj());
+			}
+
+			session.delete(ticket);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -272,8 +277,8 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 	}
 
 	@Override
-	public Ticket updateImpl(com.liferay.portal.model.Ticket ticket,
-		boolean merge) throws SystemException {
+	public Ticket updateImpl(com.liferay.portal.model.Ticket ticket)
+		throws SystemException {
 		ticket = toUnwrappedModel(ticket);
 
 		boolean isNew = ticket.isNew();
@@ -285,9 +290,14 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, ticket, merge);
+			if (ticket.isNew()) {
+				session.save(ticket);
 
-			ticket.setNew(false);
+				ticket.setNew(false);
+			}
+			else {
+				session.merge(ticket);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

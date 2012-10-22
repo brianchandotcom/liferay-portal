@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
-import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.GroupPersistence;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
@@ -366,7 +365,12 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, blogsStatsUser);
+			if (blogsStatsUser.isCachedModel()) {
+				blogsStatsUser = (BlogsStatsUser)session.get(BlogsStatsUserImpl.class,
+						blogsStatsUser.getPrimaryKeyObj());
+			}
+
+			session.delete(blogsStatsUser);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -382,8 +386,8 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 
 	@Override
 	public BlogsStatsUser updateImpl(
-		com.liferay.portlet.blogs.model.BlogsStatsUser blogsStatsUser,
-		boolean merge) throws SystemException {
+		com.liferay.portlet.blogs.model.BlogsStatsUser blogsStatsUser)
+		throws SystemException {
 		blogsStatsUser = toUnwrappedModel(blogsStatsUser);
 
 		boolean isNew = blogsStatsUser.isNew();
@@ -395,9 +399,14 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, blogsStatsUser, merge);
+			if (blogsStatsUser.isNew()) {
+				session.save(blogsStatsUser);
 
-			blogsStatsUser.setNew(false);
+				blogsStatsUser.setNew(false);
+			}
+			else {
+				session.merge(blogsStatsUser);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

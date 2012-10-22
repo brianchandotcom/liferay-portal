@@ -95,22 +95,20 @@ public class SocialActivitySettingUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
 	public static SocialActivitySetting update(
-		SocialActivitySetting socialActivitySetting, boolean merge)
-		throws SystemException {
-		return getPersistence().update(socialActivitySetting, merge);
+		SocialActivitySetting socialActivitySetting) throws SystemException {
+		return getPersistence().update(socialActivitySetting);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
 	public static SocialActivitySetting update(
-		SocialActivitySetting socialActivitySetting, boolean merge,
+		SocialActivitySetting socialActivitySetting,
 		ServiceContext serviceContext) throws SystemException {
-		return getPersistence()
-				   .update(socialActivitySetting, merge, serviceContext);
+		return getPersistence().update(socialActivitySetting, serviceContext);
 	}
 
 	/**
@@ -160,10 +158,9 @@ public class SocialActivitySettingUtil {
 	}
 
 	public static com.liferay.portlet.social.model.SocialActivitySetting updateImpl(
-		com.liferay.portlet.social.model.SocialActivitySetting socialActivitySetting,
-		boolean merge)
+		com.liferay.portlet.social.model.SocialActivitySetting socialActivitySetting)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(socialActivitySetting, merge);
+		return getPersistence().updateImpl(socialActivitySetting);
 	}
 
 	/**

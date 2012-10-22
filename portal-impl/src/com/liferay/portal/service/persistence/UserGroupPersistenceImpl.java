@@ -346,7 +346,12 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, userGroup);
+			if (userGroup.isCachedModel()) {
+				userGroup = (UserGroup)session.get(UserGroupImpl.class,
+						userGroup.getPrimaryKeyObj());
+			}
+
+			session.delete(userGroup);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -361,8 +366,8 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	}
 
 	@Override
-	public UserGroup updateImpl(com.liferay.portal.model.UserGroup userGroup,
-		boolean merge) throws SystemException {
+	public UserGroup updateImpl(com.liferay.portal.model.UserGroup userGroup)
+		throws SystemException {
 		userGroup = toUnwrappedModel(userGroup);
 
 		boolean isNew = userGroup.isNew();
@@ -374,9 +379,14 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, userGroup, merge);
+			if (userGroup.isNew()) {
+				session.save(userGroup);
 
-			userGroup.setNew(false);
+				userGroup.setNew(false);
+			}
+			else {
+				session.merge(userGroup);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

@@ -124,7 +124,7 @@ public class MembershipRequestPersistenceTest {
 
 		newMembershipRequest.setStatusId(ServiceTestUtil.nextInt());
 
-		_persistence.update(newMembershipRequest, false);
+		_persistence.update(newMembershipRequest);
 
 		MembershipRequest existingMembershipRequest = _persistence.findByPrimaryKey(newMembershipRequest.getPrimaryKey());
 
@@ -291,7 +291,7 @@ public class MembershipRequestPersistenceTest {
 
 		membershipRequest.setStatusId(ServiceTestUtil.nextInt());
 
-		_persistence.update(membershipRequest, false);
+		_persistence.update(membershipRequest);
 
 		return membershipRequest;
 	}

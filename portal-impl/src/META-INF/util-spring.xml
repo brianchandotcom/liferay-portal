@@ -671,11 +671,6 @@
 			<bean class="com.liferay.portal.service.permission.UserPermissionImpl" />
 		</property>
 	</bean>
-	<bean id="com.liferay.portal.service.persistence.BatchSessionUtil" class="com.liferay.portal.service.persistence.BatchSessionUtil">
-		<property name="batchSession">
-			<bean class="com.liferay.portal.service.persistence.BatchSessionImpl" />
-		</property>
-	</bean>
 	<bean id="com.liferay.portal.servlet.ThreadLocalFacadeServletRequestWrapperUtil" class="com.liferay.portal.servlet.ThreadLocalFacadeServletRequestWrapperUtil">
 		<property name="stopperClassNames">
 			<set>

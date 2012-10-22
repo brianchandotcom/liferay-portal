@@ -101,7 +101,7 @@ public class LayoutRevisionLocalServiceImpl
 		layoutRevision.setStatus(WorkflowConstants.STATUS_DRAFT);
 		layoutRevision.setStatusDate(serviceContext.getModifiedDate(now));
 
-		layoutRevisionPersistence.update(layoutRevision, false);
+		layoutRevisionPersistence.update(layoutRevision);
 
 		_layoutRevisionId.set(layoutRevision.getLayoutRevisionId());
 
@@ -144,7 +144,7 @@ public class LayoutRevisionLocalServiceImpl
 				curLayoutRevision.setParentLayoutRevisionId(
 					layoutRevision.getParentLayoutRevisionId());
 
-				layoutRevisionPersistence.update(curLayoutRevision, false);
+				layoutRevisionPersistence.update(curLayoutRevision);
 			}
 		}
 
@@ -391,7 +391,7 @@ public class LayoutRevisionLocalServiceImpl
 			layoutRevision.setStatus(WorkflowConstants.STATUS_DRAFT);
 			layoutRevision.setStatusDate(serviceContext.getModifiedDate(now));
 
-			layoutRevisionPersistence.update(layoutRevision, false);
+			layoutRevisionPersistence.update(layoutRevision);
 
 			_layoutRevisionId.set(layoutRevision.getLayoutRevisionId());
 
@@ -430,7 +430,7 @@ public class LayoutRevisionLocalServiceImpl
 			layoutRevision.setWapColorSchemeId(wapColorSchemeId);
 			layoutRevision.setCss(css);
 
-			layoutRevisionPersistence.update(layoutRevision, false);
+			layoutRevisionPersistence.update(layoutRevision);
 
 			_layoutRevisionId.set(layoutRevision.getLayoutRevisionId());
 		}
@@ -481,7 +481,7 @@ public class LayoutRevisionLocalServiceImpl
 
 					curLayoutRevision.setHead(false);
 
-					layoutRevisionPersistence.update(curLayoutRevision, false);
+					layoutRevisionPersistence.update(curLayoutRevision);
 				}
 			}
 		}
@@ -500,14 +500,14 @@ public class LayoutRevisionLocalServiceImpl
 
 					curLayoutRevision.setHead(true);
 
-					layoutRevisionPersistence.update(curLayoutRevision, false);
+					layoutRevisionPersistence.update(curLayoutRevision);
 
 					break;
 				}
 			}
 		}
 
-		layoutRevisionPersistence.update(layoutRevision, false);
+		layoutRevisionPersistence.update(layoutRevision);
 
 		return layoutRevision;
 	}
@@ -594,7 +594,7 @@ public class LayoutRevisionLocalServiceImpl
 		layoutRevision.setParentLayoutRevisionId(parentLayoutRevisionId);
 		layoutRevision.setMajor(true);
 
-		layoutRevisionPersistence.update(layoutRevision, false);
+		layoutRevisionPersistence.update(layoutRevision);
 
 		return layoutRevision;
 	}

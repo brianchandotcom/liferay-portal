@@ -102,8 +102,7 @@ public abstract class SocialActivityAchievementLocalServiceBaseImpl
 		throws SystemException {
 		socialActivityAchievement.setNew(true);
 
-		return socialActivityAchievementPersistence.update(socialActivityAchievement,
-			false);
+		return socialActivityAchievementPersistence.update(socialActivityAchievement);
 	}
 
 	/**
@@ -279,25 +278,7 @@ public abstract class SocialActivityAchievementLocalServiceBaseImpl
 	public SocialActivityAchievement updateSocialActivityAchievement(
 		SocialActivityAchievement socialActivityAchievement)
 		throws SystemException {
-		return updateSocialActivityAchievement(socialActivityAchievement, true);
-	}
-
-	/**
-	 * Updates the social activity achievement in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param socialActivityAchievement the social activity achievement
-	 * @param merge whether to merge the social activity achievement with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	 * @return the social activity achievement that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public SocialActivityAchievement updateSocialActivityAchievement(
-		SocialActivityAchievement socialActivityAchievement, boolean merge)
-		throws SystemException {
-		socialActivityAchievement.setNew(false);
-
-		return socialActivityAchievementPersistence.update(socialActivityAchievement,
-			merge);
+		return socialActivityAchievementPersistence.update(socialActivityAchievement);
 	}
 
 	/**

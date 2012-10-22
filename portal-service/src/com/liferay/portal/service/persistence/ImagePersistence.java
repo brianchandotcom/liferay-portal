@@ -71,7 +71,7 @@ public interface ImagePersistence extends BasePersistence<Image> {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portal.model.Image updateImpl(
-		com.liferay.portal.model.Image image, boolean merge)
+		com.liferay.portal.model.Image image)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

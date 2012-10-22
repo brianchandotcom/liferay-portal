@@ -120,7 +120,7 @@ public abstract class DLFileShortcutLocalServiceBaseImpl
 		throws SystemException {
 		dlFileShortcut.setNew(true);
 
-		return dlFileShortcutPersistence.update(dlFileShortcut, false);
+		return dlFileShortcutPersistence.update(dlFileShortcut);
 	}
 
 	/**
@@ -307,23 +307,7 @@ public abstract class DLFileShortcutLocalServiceBaseImpl
 	@Indexable(type = IndexableType.REINDEX)
 	public DLFileShortcut updateDLFileShortcut(DLFileShortcut dlFileShortcut)
 		throws SystemException {
-		return updateDLFileShortcut(dlFileShortcut, true);
-	}
-
-	/**
-	 * Updates the document library file shortcut in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param dlFileShortcut the document library file shortcut
-	 * @param merge whether to merge the document library file shortcut with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	 * @return the document library file shortcut that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public DLFileShortcut updateDLFileShortcut(DLFileShortcut dlFileShortcut,
-		boolean merge) throws SystemException {
-		dlFileShortcut.setNew(false);
-
-		return dlFileShortcutPersistence.update(dlFileShortcut, merge);
+		return dlFileShortcutPersistence.update(dlFileShortcut);
 	}
 
 	/**

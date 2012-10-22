@@ -297,7 +297,12 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, userTracker);
+			if (userTracker.isCachedModel()) {
+				userTracker = (UserTracker)session.get(UserTrackerImpl.class,
+						userTracker.getPrimaryKeyObj());
+			}
+
+			session.delete(userTracker);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -313,7 +318,7 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 
 	@Override
 	public UserTracker updateImpl(
-		com.liferay.portal.model.UserTracker userTracker, boolean merge)
+		com.liferay.portal.model.UserTracker userTracker)
 		throws SystemException {
 		userTracker = toUnwrappedModel(userTracker);
 
@@ -326,9 +331,14 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, userTracker, merge);
+			if (userTracker.isNew()) {
+				session.save(userTracker);
 
-			userTracker.setNew(false);
+				userTracker.setNew(false);
+			}
+			else {
+				session.merge(userTracker);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

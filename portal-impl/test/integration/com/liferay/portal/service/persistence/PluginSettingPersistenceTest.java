@@ -118,7 +118,7 @@ public class PluginSettingPersistenceTest {
 
 		newPluginSetting.setActive(ServiceTestUtil.randomBoolean());
 
-		_persistence.update(newPluginSetting, false);
+		_persistence.update(newPluginSetting);
 
 		PluginSetting existingPluginSetting = _persistence.findByPrimaryKey(newPluginSetting.getPrimaryKey());
 
@@ -288,7 +288,7 @@ public class PluginSettingPersistenceTest {
 
 		pluginSetting.setActive(ServiceTestUtil.randomBoolean());
 
-		_persistence.update(pluginSetting, false);
+		_persistence.update(pluginSetting);
 
 		return pluginSetting;
 	}

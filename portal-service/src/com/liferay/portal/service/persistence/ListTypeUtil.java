@@ -94,19 +94,18 @@ public class ListTypeUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static ListType update(ListType listType, boolean merge)
-		throws SystemException {
-		return getPersistence().update(listType, merge);
+	public static ListType update(ListType listType) throws SystemException {
+		return getPersistence().update(listType);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
-	public static ListType update(ListType listType, boolean merge,
+	public static ListType update(ListType listType,
 		ServiceContext serviceContext) throws SystemException {
-		return getPersistence().update(listType, merge, serviceContext);
+		return getPersistence().update(listType, serviceContext);
 	}
 
 	/**
@@ -153,9 +152,9 @@ public class ListTypeUtil {
 	}
 
 	public static com.liferay.portal.model.ListType updateImpl(
-		com.liferay.portal.model.ListType listType, boolean merge)
+		com.liferay.portal.model.ListType listType)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(listType, merge);
+		return getPersistence().updateImpl(listType);
 	}
 
 	/**

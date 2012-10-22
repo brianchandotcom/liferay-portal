@@ -161,7 +161,7 @@ public class AssetEntryPersistenceTest {
 
 		newAssetEntry.setViewCount(ServiceTestUtil.nextInt());
 
-		_persistence.update(newAssetEntry, false);
+		_persistence.update(newAssetEntry);
 
 		AssetEntry existingAssetEntry = _persistence.findByPrimaryKey(newAssetEntry.getPrimaryKey());
 
@@ -415,7 +415,7 @@ public class AssetEntryPersistenceTest {
 
 		assetEntry.setViewCount(ServiceTestUtil.nextInt());
 
-		_persistence.update(assetEntry, false);
+		_persistence.update(assetEntry);
 
 		return assetEntry;
 	}

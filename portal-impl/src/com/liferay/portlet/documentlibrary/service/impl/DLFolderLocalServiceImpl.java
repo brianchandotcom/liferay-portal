@@ -89,7 +89,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		dlFolder.setOverrideFileEntryTypes(false);
 		dlFolder.setExpandoBridgeAttributes(serviceContext);
 
-		dlFolderPersistence.update(dlFolder, false);
+		dlFolderPersistence.update(dlFolder);
 
 		// Resources
 
@@ -119,7 +119,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 
 			parentDLFolder.setLastPostDate(now);
 
-			dlFolderPersistence.update(parentDLFolder, false);
+			dlFolderPersistence.update(parentDLFolder);
 		}
 
 		// App helper
@@ -478,7 +478,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		dlFolder.setParentFolderId(parentFolderId);
 		dlFolder.setExpandoBridgeAttributes(serviceContext);
 
-		dlFolderPersistence.update(dlFolder, false);
+		dlFolderPersistence.update(dlFolder);
 
 		dlAppHelperLocalService.moveFolder(new LiferayFolder(dlFolder));
 
@@ -575,7 +575,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		dlFolder.setOverrideFileEntryTypes(overrideFileEntryTypes);
 		dlFolder.setDefaultFileEntryTypeId(defaultFileEntryTypeId);
 
-		dlFolderPersistence.update(dlFolder, false);
+		dlFolderPersistence.update(dlFolder);
 
 		// File entry types
 
@@ -600,7 +600,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 
 		dlFolder.setLastPostDate(lastPostDate);
 
-		dlFolderPersistence.update(dlFolder, false);
+		dlFolderPersistence.update(dlFolder);
 	}
 
 	public DLFolder updateStatus(
@@ -626,7 +626,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		dlFolder.setStatusByUserName(user.getFullName());
 		dlFolder.setStatusDate(new Date());
 
-		dlFolderPersistence.update(dlFolder, false);
+		dlFolderPersistence.update(dlFolder);
 
 		// Folders, file entries, and file shortcuts
 

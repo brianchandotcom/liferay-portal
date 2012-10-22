@@ -94,22 +94,21 @@ public class WorkflowDefinitionLinkUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
 	public static WorkflowDefinitionLink update(
-		WorkflowDefinitionLink workflowDefinitionLink, boolean merge)
+		WorkflowDefinitionLink workflowDefinitionLink)
 		throws SystemException {
-		return getPersistence().update(workflowDefinitionLink, merge);
+		return getPersistence().update(workflowDefinitionLink);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
 	public static WorkflowDefinitionLink update(
-		WorkflowDefinitionLink workflowDefinitionLink, boolean merge,
+		WorkflowDefinitionLink workflowDefinitionLink,
 		ServiceContext serviceContext) throws SystemException {
-		return getPersistence()
-				   .update(workflowDefinitionLink, merge, serviceContext);
+		return getPersistence().update(workflowDefinitionLink, serviceContext);
 	}
 
 	/**
@@ -159,10 +158,9 @@ public class WorkflowDefinitionLinkUtil {
 	}
 
 	public static com.liferay.portal.model.WorkflowDefinitionLink updateImpl(
-		com.liferay.portal.model.WorkflowDefinitionLink workflowDefinitionLink,
-		boolean merge)
+		com.liferay.portal.model.WorkflowDefinitionLink workflowDefinitionLink)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(workflowDefinitionLink, merge);
+		return getPersistence().updateImpl(workflowDefinitionLink);
 	}
 
 	/**

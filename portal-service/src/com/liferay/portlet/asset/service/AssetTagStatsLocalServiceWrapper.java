@@ -231,22 +231,6 @@ public class AssetTagStatsLocalServiceWrapper
 	}
 
 	/**
-	* Updates the asset tag stats in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param assetTagStats the asset tag stats
-	* @param merge whether to merge the asset tag stats with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	* @return the asset tag stats that was updated
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portlet.asset.model.AssetTagStats updateAssetTagStats(
-		com.liferay.portlet.asset.model.AssetTagStats assetTagStats,
-		boolean merge)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _assetTagStatsLocalService.updateAssetTagStats(assetTagStats,
-			merge);
-	}
-
-	/**
 	* Returns the Spring bean ID for this bean.
 	*
 	* @return the Spring bean ID for this bean

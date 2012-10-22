@@ -45,7 +45,6 @@ import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
-import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.CompanyPersistence;
 import com.liferay.portal.service.persistence.GroupPersistence;
 import com.liferay.portal.service.persistence.ImagePersistence;
@@ -733,7 +732,12 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, blogsEntry);
+			if (blogsEntry.isCachedModel()) {
+				blogsEntry = (BlogsEntry)session.get(BlogsEntryImpl.class,
+						blogsEntry.getPrimaryKeyObj());
+			}
+
+			session.delete(blogsEntry);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -749,7 +753,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 
 	@Override
 	public BlogsEntry updateImpl(
-		com.liferay.portlet.blogs.model.BlogsEntry blogsEntry, boolean merge)
+		com.liferay.portlet.blogs.model.BlogsEntry blogsEntry)
 		throws SystemException {
 		blogsEntry = toUnwrappedModel(blogsEntry);
 
@@ -799,9 +803,14 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, blogsEntry, merge);
+			if (blogsEntry.isNew()) {
+				session.save(blogsEntry);
 
-			blogsEntry.setNew(false);
+				blogsEntry.setNew(false);
+			}
+			else {
+				session.merge(blogsEntry);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

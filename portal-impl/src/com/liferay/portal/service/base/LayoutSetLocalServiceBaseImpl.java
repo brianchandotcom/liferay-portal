@@ -248,7 +248,7 @@ public abstract class LayoutSetLocalServiceBaseImpl extends BaseLocalServiceImpl
 		throws SystemException {
 		layoutSet.setNew(true);
 
-		return layoutSetPersistence.update(layoutSet, false);
+		return layoutSetPersistence.update(layoutSet);
 	}
 
 	/**
@@ -420,23 +420,7 @@ public abstract class LayoutSetLocalServiceBaseImpl extends BaseLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	public LayoutSet updateLayoutSet(LayoutSet layoutSet)
 		throws SystemException {
-		return updateLayoutSet(layoutSet, true);
-	}
-
-	/**
-	 * Updates the layout set in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param layoutSet the layout set
-	 * @param merge whether to merge the layout set with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	 * @return the layout set that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public LayoutSet updateLayoutSet(LayoutSet layoutSet, boolean merge)
-		throws SystemException {
-		layoutSet.setNew(false);
-
-		return layoutSetPersistence.update(layoutSet, merge);
+		return layoutSetPersistence.update(layoutSet);
 	}
 
 	/**

@@ -95,19 +95,18 @@ public class CounterUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static Counter update(Counter counter, boolean merge)
-		throws SystemException {
-		return getPersistence().update(counter, merge);
+	public static Counter update(Counter counter) throws SystemException {
+		return getPersistence().update(counter);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
-	public static Counter update(Counter counter, boolean merge,
-		ServiceContext serviceContext) throws SystemException {
-		return getPersistence().update(counter, merge, serviceContext);
+	public static Counter update(Counter counter, ServiceContext serviceContext)
+		throws SystemException {
+		return getPersistence().update(counter, serviceContext);
 	}
 
 	/**
@@ -156,9 +155,9 @@ public class CounterUtil {
 	}
 
 	public static com.liferay.counter.model.Counter updateImpl(
-		com.liferay.counter.model.Counter counter, boolean merge)
+		com.liferay.counter.model.Counter counter)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(counter, merge);
+		return getPersistence().updateImpl(counter);
 	}
 
 	/**

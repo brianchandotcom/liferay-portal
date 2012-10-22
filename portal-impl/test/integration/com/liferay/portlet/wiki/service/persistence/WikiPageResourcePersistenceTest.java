@@ -115,7 +115,7 @@ public class WikiPageResourcePersistenceTest {
 
 		newWikiPageResource.setTitle(ServiceTestUtil.randomString());
 
-		_persistence.update(newWikiPageResource, false);
+		_persistence.update(newWikiPageResource);
 
 		WikiPageResource existingWikiPageResource = _persistence.findByPrimaryKey(newWikiPageResource.getPrimaryKey());
 
@@ -274,7 +274,7 @@ public class WikiPageResourcePersistenceTest {
 
 		wikiPageResource.setTitle(ServiceTestUtil.randomString());
 
-		_persistence.update(wikiPageResource, false);
+		_persistence.update(wikiPageResource);
 
 		return wikiPageResource;
 	}

@@ -375,7 +375,12 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, address);
+			if (address.isCachedModel()) {
+				address = (Address)session.get(AddressImpl.class,
+						address.getPrimaryKeyObj());
+			}
+
+			session.delete(address);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -390,8 +395,8 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 	}
 
 	@Override
-	public Address updateImpl(com.liferay.portal.model.Address address,
-		boolean merge) throws SystemException {
+	public Address updateImpl(com.liferay.portal.model.Address address)
+		throws SystemException {
 		address = toUnwrappedModel(address);
 
 		boolean isNew = address.isNew();
@@ -403,9 +408,14 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, address, merge);
+			if (address.isNew()) {
+				session.save(address);
 
-			address.setNew(false);
+				address.setNew(false);
+			}
+			else {
+				session.merge(address);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

@@ -235,21 +235,6 @@ public class SocialActivityLocalServiceUtil {
 	}
 
 	/**
-	* Updates the social activity in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param socialActivity the social activity
-	* @param merge whether to merge the social activity with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	* @return the social activity that was updated
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portlet.social.model.SocialActivity updateSocialActivity(
-		com.liferay.portlet.social.model.SocialActivity socialActivity,
-		boolean merge)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().updateSocialActivity(socialActivity, merge);
-	}
-
-	/**
 	* Returns the Spring bean ID for this bean.
 	*
 	* @return the Spring bean ID for this bean

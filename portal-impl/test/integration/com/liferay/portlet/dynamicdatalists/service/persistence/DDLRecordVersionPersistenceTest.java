@@ -138,7 +138,7 @@ public class DDLRecordVersionPersistenceTest {
 
 		newDDLRecordVersion.setStatusDate(ServiceTestUtil.nextDate());
 
-		_persistence.update(newDDLRecordVersion, false);
+		_persistence.update(newDDLRecordVersion);
 
 		DDLRecordVersion existingDDLRecordVersion = _persistence.findByPrimaryKey(newDDLRecordVersion.getPrimaryKey());
 
@@ -343,7 +343,7 @@ public class DDLRecordVersionPersistenceTest {
 
 		ddlRecordVersion.setStatusDate(ServiceTestUtil.nextDate());
 
-		_persistence.update(ddlRecordVersion, false);
+		_persistence.update(ddlRecordVersion);
 
 		return ddlRecordVersion;
 	}

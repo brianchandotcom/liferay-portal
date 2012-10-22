@@ -817,7 +817,7 @@ public class LayoutImporter {
 					"article-id",
 					MapUtil.getString(articleIds, articleId, articleId));
 
-				LayoutUtil.update(layout, false);
+				LayoutUtil.update(layout);
 			}
 		}
 
@@ -1293,7 +1293,7 @@ public class LayoutImporter {
 
 		importedLayout.setExpandoBridgeAttributes(serviceContext);
 
-		LayoutUtil.update(importedLayout, false);
+		LayoutUtil.update(importedLayout);
 
 		portletDataContext.setPlid(importedLayout.getPlid());
 		portletDataContext.setOldPlid(layout.getPlid());

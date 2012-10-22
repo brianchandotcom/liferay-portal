@@ -94,19 +94,19 @@ public class WebDAVPropsUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static WebDAVProps update(WebDAVProps webDAVProps, boolean merge)
+	public static WebDAVProps update(WebDAVProps webDAVProps)
 		throws SystemException {
-		return getPersistence().update(webDAVProps, merge);
+		return getPersistence().update(webDAVProps);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
-	public static WebDAVProps update(WebDAVProps webDAVProps, boolean merge,
+	public static WebDAVProps update(WebDAVProps webDAVProps,
 		ServiceContext serviceContext) throws SystemException {
-		return getPersistence().update(webDAVProps, merge, serviceContext);
+		return getPersistence().update(webDAVProps, serviceContext);
 	}
 
 	/**
@@ -156,9 +156,9 @@ public class WebDAVPropsUtil {
 	}
 
 	public static com.liferay.portal.model.WebDAVProps updateImpl(
-		com.liferay.portal.model.WebDAVProps webDAVProps, boolean merge)
+		com.liferay.portal.model.WebDAVProps webDAVProps)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(webDAVProps, merge);
+		return getPersistence().updateImpl(webDAVProps);
 	}
 
 	/**

@@ -95,22 +95,20 @@ public class SCProductScreenshotUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
 	public static SCProductScreenshot update(
-		SCProductScreenshot scProductScreenshot, boolean merge)
-		throws SystemException {
-		return getPersistence().update(scProductScreenshot, merge);
+		SCProductScreenshot scProductScreenshot) throws SystemException {
+		return getPersistence().update(scProductScreenshot);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
 	public static SCProductScreenshot update(
-		SCProductScreenshot scProductScreenshot, boolean merge,
-		ServiceContext serviceContext) throws SystemException {
-		return getPersistence()
-				   .update(scProductScreenshot, merge, serviceContext);
+		SCProductScreenshot scProductScreenshot, ServiceContext serviceContext)
+		throws SystemException {
+		return getPersistence().update(scProductScreenshot, serviceContext);
 	}
 
 	/**
@@ -160,10 +158,9 @@ public class SCProductScreenshotUtil {
 	}
 
 	public static com.liferay.portlet.softwarecatalog.model.SCProductScreenshot updateImpl(
-		com.liferay.portlet.softwarecatalog.model.SCProductScreenshot scProductScreenshot,
-		boolean merge)
+		com.liferay.portlet.softwarecatalog.model.SCProductScreenshot scProductScreenshot)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(scProductScreenshot, merge);
+		return getPersistence().updateImpl(scProductScreenshot);
 	}
 
 	/**

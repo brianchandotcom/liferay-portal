@@ -243,7 +243,7 @@ public class JournalContentSearchLocalServiceImpl
 			contentSearch.setArticleId(articleId);
 		}
 
-		journalContentSearchPersistence.update(contentSearch, false);
+		journalContentSearchPersistence.update(contentSearch);
 
 		return contentSearch;
 	}

@@ -265,7 +265,12 @@ public class WebDAVPropsPersistenceImpl extends BasePersistenceImpl<WebDAVProps>
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, webDAVProps);
+			if (webDAVProps.isCachedModel()) {
+				webDAVProps = (WebDAVProps)session.get(WebDAVPropsImpl.class,
+						webDAVProps.getPrimaryKeyObj());
+			}
+
+			session.delete(webDAVProps);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -281,7 +286,7 @@ public class WebDAVPropsPersistenceImpl extends BasePersistenceImpl<WebDAVProps>
 
 	@Override
 	public WebDAVProps updateImpl(
-		com.liferay.portal.model.WebDAVProps webDAVProps, boolean merge)
+		com.liferay.portal.model.WebDAVProps webDAVProps)
 		throws SystemException {
 		webDAVProps = toUnwrappedModel(webDAVProps);
 
@@ -294,9 +299,14 @@ public class WebDAVPropsPersistenceImpl extends BasePersistenceImpl<WebDAVProps>
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, webDAVProps, merge);
+			if (webDAVProps.isNew()) {
+				session.save(webDAVProps);
 
-			webDAVProps.setNew(false);
+				webDAVProps.setNew(false);
+			}
+			else {
+				session.merge(webDAVProps);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

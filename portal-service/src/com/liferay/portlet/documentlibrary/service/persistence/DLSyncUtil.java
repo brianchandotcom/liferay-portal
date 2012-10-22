@@ -94,19 +94,18 @@ public class DLSyncUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static DLSync update(DLSync dlSync, boolean merge)
-		throws SystemException {
-		return getPersistence().update(dlSync, merge);
+	public static DLSync update(DLSync dlSync) throws SystemException {
+		return getPersistence().update(dlSync);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
-	public static DLSync update(DLSync dlSync, boolean merge,
-		ServiceContext serviceContext) throws SystemException {
-		return getPersistence().update(dlSync, merge, serviceContext);
+	public static DLSync update(DLSync dlSync, ServiceContext serviceContext)
+		throws SystemException {
+		return getPersistence().update(dlSync, serviceContext);
 	}
 
 	/**
@@ -156,9 +155,9 @@ public class DLSyncUtil {
 	}
 
 	public static com.liferay.portlet.documentlibrary.model.DLSync updateImpl(
-		com.liferay.portlet.documentlibrary.model.DLSync dlSync, boolean merge)
+		com.liferay.portlet.documentlibrary.model.DLSync dlSync)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(dlSync, merge);
+		return getPersistence().updateImpl(dlSync);
 	}
 
 	/**

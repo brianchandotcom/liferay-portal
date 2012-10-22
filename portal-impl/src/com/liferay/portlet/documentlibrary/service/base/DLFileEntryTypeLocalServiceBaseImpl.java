@@ -117,7 +117,7 @@ public abstract class DLFileEntryTypeLocalServiceBaseImpl
 		throws SystemException {
 		dlFileEntryType.setNew(true);
 
-		return dlFileEntryTypePersistence.update(dlFileEntryType, false);
+		return dlFileEntryTypePersistence.update(dlFileEntryType);
 	}
 
 	/**
@@ -304,24 +304,7 @@ public abstract class DLFileEntryTypeLocalServiceBaseImpl
 	@Indexable(type = IndexableType.REINDEX)
 	public DLFileEntryType updateDLFileEntryType(
 		DLFileEntryType dlFileEntryType) throws SystemException {
-		return updateDLFileEntryType(dlFileEntryType, true);
-	}
-
-	/**
-	 * Updates the document library file entry type in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param dlFileEntryType the document library file entry type
-	 * @param merge whether to merge the document library file entry type with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	 * @return the document library file entry type that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public DLFileEntryType updateDLFileEntryType(
-		DLFileEntryType dlFileEntryType, boolean merge)
-		throws SystemException {
-		dlFileEntryType.setNew(false);
-
-		return dlFileEntryTypePersistence.update(dlFileEntryType, merge);
+		return dlFileEntryTypePersistence.update(dlFileEntryType);
 	}
 
 	/**

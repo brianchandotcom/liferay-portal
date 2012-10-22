@@ -72,7 +72,7 @@ public class UserNotificationEventLocalServiceImpl
 		userNotificationEvent.setPayload(payload);
 		userNotificationEvent.setArchived(archived);
 
-		userNotificationEventPersistence.update(userNotificationEvent, false);
+		userNotificationEventPersistence.update(userNotificationEvent);
 
 		return userNotificationEvent;
 	}
@@ -166,7 +166,7 @@ public class UserNotificationEventLocalServiceImpl
 
 		userNotificationEvent.setArchived(archive);
 
-		userNotificationEventPersistence.update(userNotificationEvent, false);
+		userNotificationEventPersistence.update(userNotificationEvent);
 
 		return userNotificationEvent;
 	}

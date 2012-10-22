@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
-import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
@@ -278,7 +277,12 @@ public class TrashVersionPersistenceImpl extends BasePersistenceImpl<TrashVersio
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, trashVersion);
+			if (trashVersion.isCachedModel()) {
+				trashVersion = (TrashVersion)session.get(TrashVersionImpl.class,
+						trashVersion.getPrimaryKeyObj());
+			}
+
+			session.delete(trashVersion);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -294,7 +298,7 @@ public class TrashVersionPersistenceImpl extends BasePersistenceImpl<TrashVersio
 
 	@Override
 	public TrashVersion updateImpl(
-		com.liferay.portlet.trash.model.TrashVersion trashVersion, boolean merge)
+		com.liferay.portlet.trash.model.TrashVersion trashVersion)
 		throws SystemException {
 		trashVersion = toUnwrappedModel(trashVersion);
 
@@ -307,9 +311,14 @@ public class TrashVersionPersistenceImpl extends BasePersistenceImpl<TrashVersio
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, trashVersion, merge);
+			if (trashVersion.isNew()) {
+				session.save(trashVersion);
 
-			trashVersion.setNew(false);
+				trashVersion.setNew(false);
+			}
+			else {
+				session.merge(trashVersion);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

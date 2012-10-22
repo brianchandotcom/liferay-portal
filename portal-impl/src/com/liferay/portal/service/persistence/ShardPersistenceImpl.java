@@ -278,7 +278,12 @@ public class ShardPersistenceImpl extends BasePersistenceImpl<Shard>
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, shard);
+			if (shard.isCachedModel()) {
+				shard = (Shard)session.get(ShardImpl.class,
+						shard.getPrimaryKeyObj());
+			}
+
+			session.delete(shard);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -293,7 +298,7 @@ public class ShardPersistenceImpl extends BasePersistenceImpl<Shard>
 	}
 
 	@Override
-	public Shard updateImpl(com.liferay.portal.model.Shard shard, boolean merge)
+	public Shard updateImpl(com.liferay.portal.model.Shard shard)
 		throws SystemException {
 		shard = toUnwrappedModel(shard);
 
@@ -306,9 +311,14 @@ public class ShardPersistenceImpl extends BasePersistenceImpl<Shard>
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, shard, merge);
+			if (shard.isNew()) {
+				session.save(shard);
 
-			shard.setNew(false);
+				shard.setNew(false);
+			}
+			else {
+				session.merge(shard);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

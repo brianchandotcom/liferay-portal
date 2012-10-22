@@ -95,19 +95,19 @@ public class DLFileRankUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static DLFileRank update(DLFileRank dlFileRank, boolean merge)
+	public static DLFileRank update(DLFileRank dlFileRank)
 		throws SystemException {
-		return getPersistence().update(dlFileRank, merge);
+		return getPersistence().update(dlFileRank);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
-	public static DLFileRank update(DLFileRank dlFileRank, boolean merge,
+	public static DLFileRank update(DLFileRank dlFileRank,
 		ServiceContext serviceContext) throws SystemException {
-		return getPersistence().update(dlFileRank, merge, serviceContext);
+		return getPersistence().update(dlFileRank, serviceContext);
 	}
 
 	/**
@@ -157,10 +157,9 @@ public class DLFileRankUtil {
 	}
 
 	public static com.liferay.portlet.documentlibrary.model.DLFileRank updateImpl(
-		com.liferay.portlet.documentlibrary.model.DLFileRank dlFileRank,
-		boolean merge)
+		com.liferay.portlet.documentlibrary.model.DLFileRank dlFileRank)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(dlFileRank, merge);
+		return getPersistence().updateImpl(dlFileRank);
 	}
 
 	/**

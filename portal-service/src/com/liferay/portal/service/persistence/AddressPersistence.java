@@ -71,7 +71,7 @@ public interface AddressPersistence extends BasePersistence<Address> {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portal.model.Address updateImpl(
-		com.liferay.portal.model.Address address, boolean merge)
+		com.liferay.portal.model.Address address)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

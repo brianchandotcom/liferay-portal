@@ -69,7 +69,7 @@ public class AssetTagPropertyLocalServiceImpl
 		tagProperty.setKey(key);
 		tagProperty.setValue(value);
 
-		assetTagPropertyPersistence.update(tagProperty, false);
+		assetTagPropertyPersistence.update(tagProperty);
 
 		return tagProperty;
 	}
@@ -221,7 +221,7 @@ public class AssetTagPropertyLocalServiceImpl
 		tagProperty.setKey(key);
 		tagProperty.setValue(value);
 
-		assetTagPropertyPersistence.update(tagProperty, false);
+		assetTagPropertyPersistence.update(tagProperty);
 
 		return tagProperty;
 	}

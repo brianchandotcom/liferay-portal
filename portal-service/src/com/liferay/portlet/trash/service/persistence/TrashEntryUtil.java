@@ -95,19 +95,19 @@ public class TrashEntryUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static TrashEntry update(TrashEntry trashEntry, boolean merge)
+	public static TrashEntry update(TrashEntry trashEntry)
 		throws SystemException {
-		return getPersistence().update(trashEntry, merge);
+		return getPersistence().update(trashEntry);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
-	public static TrashEntry update(TrashEntry trashEntry, boolean merge,
+	public static TrashEntry update(TrashEntry trashEntry,
 		ServiceContext serviceContext) throws SystemException {
-		return getPersistence().update(trashEntry, merge, serviceContext);
+		return getPersistence().update(trashEntry, serviceContext);
 	}
 
 	/**
@@ -157,9 +157,9 @@ public class TrashEntryUtil {
 	}
 
 	public static com.liferay.portlet.trash.model.TrashEntry updateImpl(
-		com.liferay.portlet.trash.model.TrashEntry trashEntry, boolean merge)
+		com.liferay.portlet.trash.model.TrashEntry trashEntry)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(trashEntry, merge);
+		return getPersistence().updateImpl(trashEntry);
 	}
 
 	/**

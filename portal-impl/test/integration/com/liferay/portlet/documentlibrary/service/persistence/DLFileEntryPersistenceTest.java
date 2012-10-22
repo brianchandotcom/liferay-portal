@@ -162,7 +162,7 @@ public class DLFileEntryPersistenceTest {
 
 		newDLFileEntry.setManualCheckInRequired(ServiceTestUtil.randomBoolean());
 
-		_persistence.update(newDLFileEntry, false);
+		_persistence.update(newDLFileEntry);
 
 		DLFileEntry existingDLFileEntry = _persistence.findByPrimaryKey(newDLFileEntry.getPrimaryKey());
 
@@ -428,7 +428,7 @@ public class DLFileEntryPersistenceTest {
 
 		dlFileEntry.setManualCheckInRequired(ServiceTestUtil.randomBoolean());
 
-		_persistence.update(dlFileEntry, false);
+		_persistence.update(dlFileEntry);
 
 		return dlFileEntry;
 	}

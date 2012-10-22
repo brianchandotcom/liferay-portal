@@ -91,7 +91,7 @@ public abstract class DDMContentLocalServiceBaseImpl
 		throws SystemException {
 		ddmContent.setNew(true);
 
-		return ddmContentPersistence.update(ddmContent, false);
+		return ddmContentPersistence.update(ddmContent);
 	}
 
 	/**
@@ -277,23 +277,7 @@ public abstract class DDMContentLocalServiceBaseImpl
 	@Indexable(type = IndexableType.REINDEX)
 	public DDMContent updateDDMContent(DDMContent ddmContent)
 		throws SystemException {
-		return updateDDMContent(ddmContent, true);
-	}
-
-	/**
-	 * Updates the d d m content in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param ddmContent the d d m content
-	 * @param merge whether to merge the d d m content with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	 * @return the d d m content that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public DDMContent updateDDMContent(DDMContent ddmContent, boolean merge)
-		throws SystemException {
-		ddmContent.setNew(false);
-
-		return ddmContentPersistence.update(ddmContent, merge);
+		return ddmContentPersistence.update(ddmContent);
 	}
 
 	/**

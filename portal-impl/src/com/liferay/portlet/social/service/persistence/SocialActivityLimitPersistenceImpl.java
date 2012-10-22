@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
-import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.GroupPersistence;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
@@ -341,7 +340,12 @@ public class SocialActivityLimitPersistenceImpl extends BasePersistenceImpl<Soci
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, socialActivityLimit);
+			if (socialActivityLimit.isCachedModel()) {
+				socialActivityLimit = (SocialActivityLimit)session.get(SocialActivityLimitImpl.class,
+						socialActivityLimit.getPrimaryKeyObj());
+			}
+
+			session.delete(socialActivityLimit);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -357,8 +361,8 @@ public class SocialActivityLimitPersistenceImpl extends BasePersistenceImpl<Soci
 
 	@Override
 	public SocialActivityLimit updateImpl(
-		com.liferay.portlet.social.model.SocialActivityLimit socialActivityLimit,
-		boolean merge) throws SystemException {
+		com.liferay.portlet.social.model.SocialActivityLimit socialActivityLimit)
+		throws SystemException {
 		socialActivityLimit = toUnwrappedModel(socialActivityLimit);
 
 		boolean isNew = socialActivityLimit.isNew();
@@ -370,9 +374,14 @@ public class SocialActivityLimitPersistenceImpl extends BasePersistenceImpl<Soci
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, socialActivityLimit, merge);
+			if (socialActivityLimit.isNew()) {
+				session.save(socialActivityLimit);
 
-			socialActivityLimit.setNew(false);
+				socialActivityLimit.setNew(false);
+			}
+			else {
+				session.merge(socialActivityLimit);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

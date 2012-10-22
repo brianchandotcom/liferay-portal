@@ -138,7 +138,7 @@ public class EditMessageAttachmentsAction extends PortletAction {
 
 		message.setAttachments(true);
 
-		MBMessageLocalServiceUtil.updateMBMessage(message, false);
+		MBMessageLocalServiceUtil.updateMBMessage(message);
 	}
 
 }

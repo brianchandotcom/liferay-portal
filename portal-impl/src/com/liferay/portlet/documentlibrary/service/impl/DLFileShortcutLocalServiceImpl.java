@@ -69,7 +69,7 @@ public class DLFileShortcutLocalServiceImpl
 		fileShortcut.setStatusByUserName(user.getFullName());
 		fileShortcut.setStatusDate(now);
 
-		dlFileShortcutPersistence.update(fileShortcut, false);
+		dlFileShortcutPersistence.update(fileShortcut);
 
 		// Resources
 
@@ -93,7 +93,7 @@ public class DLFileShortcutLocalServiceImpl
 
 			dlFolder.setLastPostDate(fileShortcut.getModifiedDate());
 
-			dlFolderPersistence.update(dlFolder, false);
+			dlFolderPersistence.update(dlFolder);
 		}
 
 		// Asset
@@ -231,7 +231,7 @@ public class DLFileShortcutLocalServiceImpl
 		for (DLFileShortcut fileShortcut : fileShortcuts) {
 			fileShortcut.setActive(false);
 
-			dlFileShortcutPersistence.update(fileShortcut, false);
+			dlFileShortcutPersistence.update(fileShortcut);
 		}
 	}
 
@@ -242,7 +242,7 @@ public class DLFileShortcutLocalServiceImpl
 		for (DLFileShortcut fileShortcut : fileShortcuts) {
 			fileShortcut.setActive(true);
 
-			dlFileShortcutPersistence.update(fileShortcut, false);
+			dlFileShortcutPersistence.update(fileShortcut);
 		}
 	}
 
@@ -305,7 +305,7 @@ public class DLFileShortcutLocalServiceImpl
 		fileShortcut.setFolderId(folderId);
 		fileShortcut.setToFileEntryId(toFileEntryId);
 
-		dlFileShortcutPersistence.update(fileShortcut, false);
+		dlFileShortcutPersistence.update(fileShortcut);
 
 		// Folder
 
@@ -314,7 +314,7 @@ public class DLFileShortcutLocalServiceImpl
 
 			dlFolder.setLastPostDate(fileShortcut.getModifiedDate());
 
-			dlFolderPersistence.update(dlFolder, false);
+			dlFolderPersistence.update(dlFolder);
 		}
 
 		// Asset
@@ -340,7 +340,7 @@ public class DLFileShortcutLocalServiceImpl
 		for (DLFileShortcut fileShortcut : fileShortcuts) {
 			fileShortcut.setToFileEntryId(newToFileEntryId);
 
-			dlFileShortcutPersistence.update(fileShortcut, false);
+			dlFileShortcutPersistence.update(fileShortcut);
 		}
 	}
 
@@ -359,7 +359,7 @@ public class DLFileShortcutLocalServiceImpl
 		fileShortcut.setStatusByUserName(user.getFullName());
 		fileShortcut.setStatusDate(serviceContext.getModifiedDate(new Date()));
 
-		dlFileShortcutPersistence.update(fileShortcut, false);
+		dlFileShortcutPersistence.update(fileShortcut);
 	}
 
 	protected void copyAssetTags(

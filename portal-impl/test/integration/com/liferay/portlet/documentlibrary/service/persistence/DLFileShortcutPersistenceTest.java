@@ -140,7 +140,7 @@ public class DLFileShortcutPersistenceTest {
 
 		newDLFileShortcut.setStatusDate(ServiceTestUtil.nextDate());
 
-		_persistence.update(newDLFileShortcut, false);
+		_persistence.update(newDLFileShortcut);
 
 		DLFileShortcut existingDLFileShortcut = _persistence.findByPrimaryKey(newDLFileShortcut.getPrimaryKey());
 
@@ -350,7 +350,7 @@ public class DLFileShortcutPersistenceTest {
 
 		dlFileShortcut.setStatusDate(ServiceTestUtil.nextDate());
 
-		_persistence.update(dlFileShortcut, false);
+		_persistence.update(dlFileShortcut);
 
 		return dlFileShortcut;
 	}

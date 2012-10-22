@@ -62,7 +62,7 @@ public class MDRRuleGroupLocalServiceImpl
 		ruleGroup.setNameMap(nameMap);
 		ruleGroup.setDescriptionMap(descriptionMap);
 
-		return updateMDRRuleGroup(ruleGroup, false);
+		return updateMDRRuleGroup(ruleGroup);
 	}
 
 	public MDRRuleGroup copyRuleGroup(
@@ -218,7 +218,7 @@ public class MDRRuleGroupLocalServiceImpl
 		ruleGroup.setNameMap(nameMap);
 		ruleGroup.setDescriptionMap(descriptionMap);
 
-		mdrRuleGroupPersistence.update(ruleGroup, false);
+		mdrRuleGroupPersistence.update(ruleGroup);
 
 		return ruleGroup;
 	}

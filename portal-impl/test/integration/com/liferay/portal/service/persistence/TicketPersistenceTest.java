@@ -125,7 +125,7 @@ public class TicketPersistenceTest {
 
 		newTicket.setExpirationDate(ServiceTestUtil.nextDate());
 
-		_persistence.update(newTicket, false);
+		_persistence.update(newTicket);
 
 		Ticket existingTicket = _persistence.findByPrimaryKey(newTicket.getPrimaryKey());
 
@@ -297,7 +297,7 @@ public class TicketPersistenceTest {
 
 		ticket.setExpirationDate(ServiceTestUtil.nextDate());
 
-		_persistence.update(ticket, false);
+		_persistence.update(ticket);
 
 		return ticket;
 	}

@@ -97,8 +97,7 @@ public abstract class MDRRuleGroupInstanceLocalServiceBaseImpl
 		MDRRuleGroupInstance mdrRuleGroupInstance) throws SystemException {
 		mdrRuleGroupInstance.setNew(true);
 
-		return mdrRuleGroupInstancePersistence.update(mdrRuleGroupInstance,
-			false);
+		return mdrRuleGroupInstancePersistence.update(mdrRuleGroupInstance);
 	}
 
 	/**
@@ -286,25 +285,7 @@ public abstract class MDRRuleGroupInstanceLocalServiceBaseImpl
 	@Indexable(type = IndexableType.REINDEX)
 	public MDRRuleGroupInstance updateMDRRuleGroupInstance(
 		MDRRuleGroupInstance mdrRuleGroupInstance) throws SystemException {
-		return updateMDRRuleGroupInstance(mdrRuleGroupInstance, true);
-	}
-
-	/**
-	 * Updates the m d r rule group instance in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param mdrRuleGroupInstance the m d r rule group instance
-	 * @param merge whether to merge the m d r rule group instance with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	 * @return the m d r rule group instance that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public MDRRuleGroupInstance updateMDRRuleGroupInstance(
-		MDRRuleGroupInstance mdrRuleGroupInstance, boolean merge)
-		throws SystemException {
-		mdrRuleGroupInstance.setNew(false);
-
-		return mdrRuleGroupInstancePersistence.update(mdrRuleGroupInstance,
-			merge);
+		return mdrRuleGroupInstancePersistence.update(mdrRuleGroupInstance);
 	}
 
 	/**

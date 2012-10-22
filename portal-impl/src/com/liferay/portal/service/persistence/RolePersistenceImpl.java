@@ -391,7 +391,11 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, role);
+			if (role.isCachedModel()) {
+				role = (Role)session.get(RoleImpl.class, role.getPrimaryKeyObj());
+			}
+
+			session.delete(role);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -406,7 +410,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	}
 
 	@Override
-	public Role updateImpl(com.liferay.portal.model.Role role, boolean merge)
+	public Role updateImpl(com.liferay.portal.model.Role role)
 		throws SystemException {
 		role = toUnwrappedModel(role);
 
@@ -419,9 +423,14 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, role, merge);
+			if (role.isNew()) {
+				session.save(role);
 
-			role.setNew(false);
+				role.setNew(false);
+			}
+			else {
+				session.merge(role);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

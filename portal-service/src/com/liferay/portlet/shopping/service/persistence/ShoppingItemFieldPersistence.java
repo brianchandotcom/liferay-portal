@@ -76,8 +76,7 @@ public interface ShoppingItemFieldPersistence extends BasePersistence<ShoppingIt
 			com.liferay.portlet.shopping.NoSuchItemFieldException;
 
 	public com.liferay.portlet.shopping.model.ShoppingItemField updateImpl(
-		com.liferay.portlet.shopping.model.ShoppingItemField shoppingItemField,
-		boolean merge)
+		com.liferay.portlet.shopping.model.ShoppingItemField shoppingItemField)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

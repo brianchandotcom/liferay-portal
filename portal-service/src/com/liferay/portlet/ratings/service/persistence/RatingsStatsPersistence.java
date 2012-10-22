@@ -74,8 +74,7 @@ public interface RatingsStatsPersistence extends BasePersistence<RatingsStats> {
 			com.liferay.portlet.ratings.NoSuchStatsException;
 
 	public com.liferay.portlet.ratings.model.RatingsStats updateImpl(
-		com.liferay.portlet.ratings.model.RatingsStats ratingsStats,
-		boolean merge)
+		com.liferay.portlet.ratings.model.RatingsStats ratingsStats)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

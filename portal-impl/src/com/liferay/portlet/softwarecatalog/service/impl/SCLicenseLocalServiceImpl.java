@@ -47,7 +47,7 @@ public class SCLicenseLocalServiceImpl extends SCLicenseLocalServiceBaseImpl {
 		license.setActive(active);
 		license.setRecommended(recommended);
 
-		scLicensePersistence.update(license, false);
+		scLicensePersistence.update(license);
 
 		return license;
 	}
@@ -128,7 +128,7 @@ public class SCLicenseLocalServiceImpl extends SCLicenseLocalServiceBaseImpl {
 		license.setActive(active);
 		license.setRecommended(recommended);
 
-		scLicensePersistence.update(license, false);
+		scLicensePersistence.update(license);
 
 		return license;
 	}

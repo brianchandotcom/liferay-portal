@@ -95,19 +95,19 @@ public class DDMStructureLinkUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static DDMStructureLink update(DDMStructureLink ddmStructureLink,
-		boolean merge) throws SystemException {
-		return getPersistence().update(ddmStructureLink, merge);
+	public static DDMStructureLink update(DDMStructureLink ddmStructureLink)
+		throws SystemException {
+		return getPersistence().update(ddmStructureLink);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
 	public static DDMStructureLink update(DDMStructureLink ddmStructureLink,
-		boolean merge, ServiceContext serviceContext) throws SystemException {
-		return getPersistence().update(ddmStructureLink, merge, serviceContext);
+		ServiceContext serviceContext) throws SystemException {
+		return getPersistence().update(ddmStructureLink, serviceContext);
 	}
 
 	/**
@@ -157,10 +157,9 @@ public class DDMStructureLinkUtil {
 	}
 
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink updateImpl(
-		com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink ddmStructureLink,
-		boolean merge)
+		com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink ddmStructureLink)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(ddmStructureLink, merge);
+		return getPersistence().updateImpl(ddmStructureLink);
 	}
 
 	/**

@@ -71,7 +71,7 @@ public interface UserIdMapperPersistence extends BasePersistence<UserIdMapper> {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portal.model.UserIdMapper updateImpl(
-		com.liferay.portal.model.UserIdMapper userIdMapper, boolean merge)
+		com.liferay.portal.model.UserIdMapper userIdMapper)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

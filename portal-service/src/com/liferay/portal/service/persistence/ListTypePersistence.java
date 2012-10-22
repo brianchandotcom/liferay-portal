@@ -71,7 +71,7 @@ public interface ListTypePersistence extends BasePersistence<ListType> {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portal.model.ListType updateImpl(
-		com.liferay.portal.model.ListType listType, boolean merge)
+		com.liferay.portal.model.ListType listType)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

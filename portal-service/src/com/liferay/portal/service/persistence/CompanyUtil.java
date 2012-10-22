@@ -94,19 +94,18 @@ public class CompanyUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static Company update(Company company, boolean merge)
-		throws SystemException {
-		return getPersistence().update(company, merge);
+	public static Company update(Company company) throws SystemException {
+		return getPersistence().update(company);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
-	public static Company update(Company company, boolean merge,
-		ServiceContext serviceContext) throws SystemException {
-		return getPersistence().update(company, merge, serviceContext);
+	public static Company update(Company company, ServiceContext serviceContext)
+		throws SystemException {
+		return getPersistence().update(company, serviceContext);
 	}
 
 	/**
@@ -153,9 +152,9 @@ public class CompanyUtil {
 	}
 
 	public static com.liferay.portal.model.Company updateImpl(
-		com.liferay.portal.model.Company company, boolean merge)
+		com.liferay.portal.model.Company company)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(company, merge);
+		return getPersistence().updateImpl(company);
 	}
 
 	/**

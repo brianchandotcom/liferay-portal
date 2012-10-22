@@ -73,7 +73,7 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 			com.liferay.portlet.wiki.NoSuchPageException;
 
 	public com.liferay.portlet.wiki.model.WikiPage updateImpl(
-		com.liferay.portlet.wiki.model.WikiPage wikiPage, boolean merge)
+		com.liferay.portlet.wiki.model.WikiPage wikiPage)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

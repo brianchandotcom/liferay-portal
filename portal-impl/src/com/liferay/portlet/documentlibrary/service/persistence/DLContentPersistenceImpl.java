@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
-import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
@@ -350,7 +349,12 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, dlContent);
+			if (dlContent.isCachedModel()) {
+				dlContent = (DLContent)session.get(DLContentImpl.class,
+						dlContent.getPrimaryKeyObj());
+			}
+
+			session.delete(dlContent);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -366,8 +370,8 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 
 	@Override
 	public DLContent updateImpl(
-		com.liferay.portlet.documentlibrary.model.DLContent dlContent,
-		boolean merge) throws SystemException {
+		com.liferay.portlet.documentlibrary.model.DLContent dlContent)
+		throws SystemException {
 		dlContent = toUnwrappedModel(dlContent);
 
 		boolean isNew = dlContent.isNew();
@@ -379,9 +383,14 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, dlContent, merge);
+			if (dlContent.isNew()) {
+				session.save(dlContent);
 
-			dlContent.setNew(false);
+				dlContent.setNew(false);
+			}
+			else {
+				session.merge(dlContent);
+			}
 
 			session.flush();
 			session.clear();

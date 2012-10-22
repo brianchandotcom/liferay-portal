@@ -99,7 +99,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		thread.setStatusByUserName(message.getStatusByUserName());
 		thread.setStatusDate(message.getStatusDate());
 
-		mbThreadPersistence.update(thread, false);
+		mbThreadPersistence.update(thread);
 
 		// Asset
 
@@ -216,7 +216,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 			category.setMessageCount(
 				category.getMessageCount() - thread.getMessageCount());
 
-			mbCategoryPersistence.update(category, false);
+			mbCategoryPersistence.update(category);
 		}
 
 		// Thread Asset
@@ -484,7 +484,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 		thread.setViewCount(thread.getViewCount() + increment);
 
-		mbThreadPersistence.update(thread, false);
+		mbThreadPersistence.update(thread);
 
 		return thread;
 	}
@@ -516,7 +516,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		for (MBMessage message : messages) {
 			message.setCategoryId(categoryId);
 
-			mbMessagePersistence.update(message, false);
+			mbMessagePersistence.update(message);
 
 			// Indexer
 
@@ -532,7 +532,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 		thread.setCategoryId(categoryId);
 
-		mbThreadPersistence.update(thread, false);
+		mbThreadPersistence.update(thread);
 
 		// Category
 
@@ -541,7 +541,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 			oldCategory.setMessageCount(
 				oldCategory.getMessageCount() - thread.getMessageCount());
 
-			mbCategoryPersistence.update(oldCategory, false);
+			mbCategoryPersistence.update(oldCategory);
 		}
 
 		if ((category != null) && (categoryId != oldCategoryId)) {
@@ -549,7 +549,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 			category.setMessageCount(
 				category.getMessageCount() + thread.getMessageCount());
 
-			mbCategoryPersistence.update(category, false);
+			mbCategoryPersistence.update(category);
 		}
 
 		return thread;
@@ -594,7 +594,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 			rootMessage.setStatus(WorkflowConstants.STATUS_DRAFT);
 
-			mbMessagePersistence.update(rootMessage, false);
+			mbMessagePersistence.update(rootMessage);
 		}
 
 		thread.setStatus(WorkflowConstants.STATUS_IN_TRASH);
@@ -602,7 +602,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		thread.setStatusByUserName(user.getFullName());
 		thread.setStatusDate(now);
 
-		mbThreadPersistence.update(thread, false);
+		mbThreadPersistence.update(thread);
 
 		// Messages
 
@@ -620,7 +620,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 			category.setMessageCount(
 				category.getMessageCount() - thread.getMessageCount());
 
-			mbCategoryPersistence.update(category, false);
+			mbCategoryPersistence.update(category);
 		}
 
 		// Stats
@@ -667,7 +667,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		thread.setStatusByUserName(user.getFullName());
 		thread.setStatusDate(now);
 
-		mbThreadPersistence.update(thread, false);
+		mbThreadPersistence.update(thread);
 
 		// Messages
 
@@ -685,7 +685,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 			category.setMessageCount(
 				category.getMessageCount() + thread.getMessageCount());
 
-			mbCategoryPersistence.update(category, false);
+			mbCategoryPersistence.update(category);
 		}
 
 		// Stats
@@ -759,7 +759,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 				curMessage.setSubject(curSubject);
 
-				mbMessagePersistence.update(curMessage, false);
+				mbMessagePersistence.update(curMessage);
 			}
 
 			message.setSubject(subject);
@@ -770,7 +770,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		message.setParentMessageId(0);
 		message.setAttachmentsDir(null);
 
-		mbMessagePersistence.update(message, false);
+		mbMessagePersistence.update(message);
 
 		// Attachments
 
@@ -796,13 +796,13 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 		thread.setMessageCount(messagesMoved);
 
-		mbThreadPersistence.update(thread, false);
+		mbThreadPersistence.update(thread);
 
 		// Update old thread
 
 		oldThread.setMessageCount(oldThread.getMessageCount() - messagesMoved);
 
-		mbThreadPersistence.update(oldThread, false);
+		mbThreadPersistence.update(oldThread);
 
 		// Category
 
@@ -813,7 +813,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 			category.setThreadCount(category.getThreadCount() + 1);
 
-			mbCategoryPersistence.update(category, false);
+			mbCategoryPersistence.update(category);
 		}
 
 		return thread;
@@ -830,7 +830,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 		thread.setQuestion(question);
 
-		mbThreadPersistence.update(thread, false);
+		mbThreadPersistence.update(thread);
 
 		if (!question) {
 			MBMessage message = mbMessagePersistence.findByPrimaryKey(
@@ -850,7 +850,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 		thread.setViewCount(viewCount);
 
-		mbThreadPersistence.update(thread, false);
+		mbThreadPersistence.update(thread);
 
 		return thread;
 	}
@@ -947,7 +947,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 			message.setRootMessageId(parentMessage.getRootMessageId());
 			message.setAttachmentsDir(null);
 
-			mbMessagePersistence.update(message, false);
+			mbMessagePersistence.update(message);
 
 			moveAttachmentsFromOldThread(message, oldAttachmentsDir);
 
@@ -1001,7 +1001,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 			if (message.getStatus() == WorkflowConstants.STATUS_PENDING) {
 				message.setStatus(WorkflowConstants.STATUS_DRAFT);
 
-				mbMessagePersistence.update(message, false);
+				mbMessagePersistence.update(message);
 
 				WorkflowInstanceLink workflowInstanceLink =
 					workflowInstanceLinkLocalService.getWorkflowInstanceLink(

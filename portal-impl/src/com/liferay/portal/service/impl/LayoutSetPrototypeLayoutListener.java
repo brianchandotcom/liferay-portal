@@ -63,7 +63,7 @@ public class LayoutSetPrototypeLayoutListener
 
 			layoutSetPrototype.setModifiedDate(modifiedDate);
 
-			LayoutSetPrototypeUtil.update(layoutSetPrototype, false);
+			LayoutSetPrototypeUtil.update(layoutSetPrototype);
 
 			LayoutSet layoutSet = layoutSetPrototype.getLayoutSet();
 
@@ -74,7 +74,7 @@ public class LayoutSetPrototypeLayoutListener
 
 			settingsProperties.remove("merge-fail-count");
 
-			LayoutSetLocalServiceUtil.updateLayoutSet(layoutSet, false);
+			LayoutSetLocalServiceUtil.updateLayoutSet(layoutSet);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

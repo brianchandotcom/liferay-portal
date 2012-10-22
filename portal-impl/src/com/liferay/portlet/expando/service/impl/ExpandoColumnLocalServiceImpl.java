@@ -67,7 +67,7 @@ public class ExpandoColumnLocalServiceImpl
 		column.setType(type);
 		column.setDefaultData(value.getData());
 
-		expandoColumnPersistence.update(column, false);
+		expandoColumnPersistence.update(column);
 
 		// Resources
 
@@ -378,7 +378,7 @@ public class ExpandoColumnLocalServiceImpl
 		column.setType(type);
 		column.setDefaultData(value.getData());
 
-		expandoColumnPersistence.update(column, false);
+		expandoColumnPersistence.update(column);
 
 		return column;
 	}
@@ -391,7 +391,7 @@ public class ExpandoColumnLocalServiceImpl
 
 		column.setTypeSettings(typeSettings);
 
-		expandoColumnPersistence.update(column, false);
+		expandoColumnPersistence.update(column);
 
 		return column;
 	}

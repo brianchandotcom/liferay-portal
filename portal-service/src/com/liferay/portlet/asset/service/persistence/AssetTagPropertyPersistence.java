@@ -76,8 +76,7 @@ public interface AssetTagPropertyPersistence extends BasePersistence<AssetTagPro
 			com.liferay.portlet.asset.NoSuchTagPropertyException;
 
 	public com.liferay.portlet.asset.model.AssetTagProperty updateImpl(
-		com.liferay.portlet.asset.model.AssetTagProperty assetTagProperty,
-		boolean merge)
+		com.liferay.portlet.asset.model.AssetTagProperty assetTagProperty)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

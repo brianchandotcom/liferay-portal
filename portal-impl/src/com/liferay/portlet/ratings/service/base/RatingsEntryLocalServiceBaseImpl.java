@@ -98,7 +98,7 @@ public abstract class RatingsEntryLocalServiceBaseImpl
 		throws SystemException {
 		ratingsEntry.setNew(true);
 
-		return ratingsEntryPersistence.update(ratingsEntry, false);
+		return ratingsEntryPersistence.update(ratingsEntry);
 	}
 
 	/**
@@ -271,23 +271,7 @@ public abstract class RatingsEntryLocalServiceBaseImpl
 	@Indexable(type = IndexableType.REINDEX)
 	public RatingsEntry updateRatingsEntry(RatingsEntry ratingsEntry)
 		throws SystemException {
-		return updateRatingsEntry(ratingsEntry, true);
-	}
-
-	/**
-	 * Updates the ratings entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param ratingsEntry the ratings entry
-	 * @param merge whether to merge the ratings entry with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	 * @return the ratings entry that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public RatingsEntry updateRatingsEntry(RatingsEntry ratingsEntry,
-		boolean merge) throws SystemException {
-		ratingsEntry.setNew(false);
-
-		return ratingsEntryPersistence.update(ratingsEntry, merge);
+		return ratingsEntryPersistence.update(ratingsEntry);
 	}
 
 	/**

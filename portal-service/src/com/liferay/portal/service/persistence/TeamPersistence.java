@@ -70,7 +70,7 @@ public interface TeamPersistence extends BasePersistence<Team> {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portal.model.Team updateImpl(
-		com.liferay.portal.model.Team team, boolean merge)
+		com.liferay.portal.model.Team team)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

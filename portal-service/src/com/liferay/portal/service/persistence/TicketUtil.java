@@ -93,19 +93,18 @@ public class TicketUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static Ticket update(Ticket ticket, boolean merge)
-		throws SystemException {
-		return getPersistence().update(ticket, merge);
+	public static Ticket update(Ticket ticket) throws SystemException {
+		return getPersistence().update(ticket);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
-	public static Ticket update(Ticket ticket, boolean merge,
-		ServiceContext serviceContext) throws SystemException {
-		return getPersistence().update(ticket, merge, serviceContext);
+	public static Ticket update(Ticket ticket, ServiceContext serviceContext)
+		throws SystemException {
+		return getPersistence().update(ticket, serviceContext);
 	}
 
 	/**
@@ -152,9 +151,9 @@ public class TicketUtil {
 	}
 
 	public static com.liferay.portal.model.Ticket updateImpl(
-		com.liferay.portal.model.Ticket ticket, boolean merge)
+		com.liferay.portal.model.Ticket ticket)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(ticket, merge);
+		return getPersistence().updateImpl(ticket);
 	}
 
 	/**

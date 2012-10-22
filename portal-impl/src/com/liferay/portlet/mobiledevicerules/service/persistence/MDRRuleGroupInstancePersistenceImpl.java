@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
-import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.LayoutPersistence;
 import com.liferay.portal.service.persistence.LayoutSetPersistence;
 import com.liferay.portal.service.persistence.UserPersistence;
@@ -447,7 +446,12 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, mdrRuleGroupInstance);
+			if (mdrRuleGroupInstance.isCachedModel()) {
+				mdrRuleGroupInstance = (MDRRuleGroupInstance)session.get(MDRRuleGroupInstanceImpl.class,
+						mdrRuleGroupInstance.getPrimaryKeyObj());
+			}
+
+			session.delete(mdrRuleGroupInstance);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -463,8 +467,8 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 
 	@Override
 	public MDRRuleGroupInstance updateImpl(
-		com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance mdrRuleGroupInstance,
-		boolean merge) throws SystemException {
+		com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance mdrRuleGroupInstance)
+		throws SystemException {
 		mdrRuleGroupInstance = toUnwrappedModel(mdrRuleGroupInstance);
 
 		boolean isNew = mdrRuleGroupInstance.isNew();
@@ -482,9 +486,14 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, mdrRuleGroupInstance, merge);
+			if (mdrRuleGroupInstance.isNew()) {
+				session.save(mdrRuleGroupInstance);
 
-			mdrRuleGroupInstance.setNew(false);
+				mdrRuleGroupInstance.setNew(false);
+			}
+			else {
+				session.merge(mdrRuleGroupInstance);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

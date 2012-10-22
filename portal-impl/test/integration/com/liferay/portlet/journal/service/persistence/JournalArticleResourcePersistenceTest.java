@@ -115,7 +115,7 @@ public class JournalArticleResourcePersistenceTest {
 
 		newJournalArticleResource.setArticleId(ServiceTestUtil.randomString());
 
-		_persistence.update(newJournalArticleResource, false);
+		_persistence.update(newJournalArticleResource);
 
 		JournalArticleResource existingJournalArticleResource = _persistence.findByPrimaryKey(newJournalArticleResource.getPrimaryKey());
 
@@ -284,7 +284,7 @@ public class JournalArticleResourcePersistenceTest {
 
 		journalArticleResource.setArticleId(ServiceTestUtil.randomString());
 
-		_persistence.update(journalArticleResource, false);
+		_persistence.update(journalArticleResource);
 
 		return journalArticleResource;
 	}

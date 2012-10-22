@@ -126,7 +126,7 @@ public class LayoutBranchPersistenceTest {
 
 		newLayoutBranch.setMaster(ServiceTestUtil.randomBoolean());
 
-		_persistence.update(newLayoutBranch, false);
+		_persistence.update(newLayoutBranch);
 
 		LayoutBranch existingLayoutBranch = _persistence.findByPrimaryKey(newLayoutBranch.getPrimaryKey());
 
@@ -318,7 +318,7 @@ public class LayoutBranchPersistenceTest {
 
 		layoutBranch.setMaster(ServiceTestUtil.randomBoolean());
 
-		_persistence.update(layoutBranch, false);
+		_persistence.update(layoutBranch);
 
 		return layoutBranch;
 	}

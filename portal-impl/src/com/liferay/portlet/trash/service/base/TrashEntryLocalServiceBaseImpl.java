@@ -85,7 +85,7 @@ public abstract class TrashEntryLocalServiceBaseImpl
 		throws SystemException {
 		trashEntry.setNew(true);
 
-		return trashEntryPersistence.update(trashEntry, false);
+		return trashEntryPersistence.update(trashEntry);
 	}
 
 	/**
@@ -257,23 +257,7 @@ public abstract class TrashEntryLocalServiceBaseImpl
 	@Indexable(type = IndexableType.REINDEX)
 	public TrashEntry updateTrashEntry(TrashEntry trashEntry)
 		throws SystemException {
-		return updateTrashEntry(trashEntry, true);
-	}
-
-	/**
-	 * Updates the trash entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param trashEntry the trash entry
-	 * @param merge whether to merge the trash entry with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	 * @return the trash entry that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public TrashEntry updateTrashEntry(TrashEntry trashEntry, boolean merge)
-		throws SystemException {
-		trashEntry.setNew(false);
-
-		return trashEntryPersistence.update(trashEntry, merge);
+		return trashEntryPersistence.update(trashEntry);
 	}
 
 	/**

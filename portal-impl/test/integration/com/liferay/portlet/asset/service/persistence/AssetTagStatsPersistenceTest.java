@@ -114,7 +114,7 @@ public class AssetTagStatsPersistenceTest {
 
 		newAssetTagStats.setAssetCount(ServiceTestUtil.nextInt());
 
-		_persistence.update(newAssetTagStats, false);
+		_persistence.update(newAssetTagStats);
 
 		AssetTagStats existingAssetTagStats = _persistence.findByPrimaryKey(newAssetTagStats.getPrimaryKey());
 
@@ -269,7 +269,7 @@ public class AssetTagStatsPersistenceTest {
 
 		assetTagStats.setAssetCount(ServiceTestUtil.nextInt());
 
-		_persistence.update(assetTagStats, false);
+		_persistence.update(assetTagStats);
 
 		return assetTagStats;
 	}

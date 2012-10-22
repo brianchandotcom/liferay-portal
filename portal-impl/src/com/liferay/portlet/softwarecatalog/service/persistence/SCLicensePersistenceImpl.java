@@ -43,7 +43,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
-import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
@@ -297,7 +296,12 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, scLicense);
+			if (scLicense.isCachedModel()) {
+				scLicense = (SCLicense)session.get(SCLicenseImpl.class,
+						scLicense.getPrimaryKeyObj());
+			}
+
+			session.delete(scLicense);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -313,8 +317,8 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 
 	@Override
 	public SCLicense updateImpl(
-		com.liferay.portlet.softwarecatalog.model.SCLicense scLicense,
-		boolean merge) throws SystemException {
+		com.liferay.portlet.softwarecatalog.model.SCLicense scLicense)
+		throws SystemException {
 		scLicense = toUnwrappedModel(scLicense);
 
 		boolean isNew = scLicense.isNew();
@@ -326,9 +330,14 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, scLicense, merge);
+			if (scLicense.isNew()) {
+				session.save(scLicense);
 
-			scLicense.setNew(false);
+				scLicense.setNew(false);
+			}
+			else {
+				session.merge(scLicense);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

@@ -230,20 +230,6 @@ public class OrganizationLocalServiceWrapper implements OrganizationLocalService
 	}
 
 	/**
-	* Updates the organization in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param organization the organization
-	* @param merge whether to merge the organization with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	* @return the organization that was updated
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.Organization updateOrganization(
-		com.liferay.portal.model.Organization organization, boolean merge)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _organizationLocalService.updateOrganization(organization, merge);
-	}
-
-	/**
 	* Returns the Spring bean ID for this bean.
 	*
 	* @return the Spring bean ID for this bean

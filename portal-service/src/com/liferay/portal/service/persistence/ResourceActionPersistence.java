@@ -72,7 +72,7 @@ public interface ResourceActionPersistence extends BasePersistence<ResourceActio
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portal.model.ResourceAction updateImpl(
-		com.liferay.portal.model.ResourceAction resourceAction, boolean merge)
+		com.liferay.portal.model.ResourceAction resourceAction)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

@@ -76,8 +76,7 @@ public interface DLFileEntryPersistence extends BasePersistence<DLFileEntry> {
 			com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 
 	public com.liferay.portlet.documentlibrary.model.DLFileEntry updateImpl(
-		com.liferay.portlet.documentlibrary.model.DLFileEntry dlFileEntry,
-		boolean merge)
+		com.liferay.portlet.documentlibrary.model.DLFileEntry dlFileEntry)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

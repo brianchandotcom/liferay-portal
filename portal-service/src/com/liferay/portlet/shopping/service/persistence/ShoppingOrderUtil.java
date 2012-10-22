@@ -95,19 +95,19 @@ public class ShoppingOrderUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static ShoppingOrder update(ShoppingOrder shoppingOrder,
-		boolean merge) throws SystemException {
-		return getPersistence().update(shoppingOrder, merge);
+	public static ShoppingOrder update(ShoppingOrder shoppingOrder)
+		throws SystemException {
+		return getPersistence().update(shoppingOrder);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
 	public static ShoppingOrder update(ShoppingOrder shoppingOrder,
-		boolean merge, ServiceContext serviceContext) throws SystemException {
-		return getPersistence().update(shoppingOrder, merge, serviceContext);
+		ServiceContext serviceContext) throws SystemException {
+		return getPersistence().update(shoppingOrder, serviceContext);
 	}
 
 	/**
@@ -157,10 +157,9 @@ public class ShoppingOrderUtil {
 	}
 
 	public static com.liferay.portlet.shopping.model.ShoppingOrder updateImpl(
-		com.liferay.portlet.shopping.model.ShoppingOrder shoppingOrder,
-		boolean merge)
+		com.liferay.portlet.shopping.model.ShoppingOrder shoppingOrder)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(shoppingOrder, merge);
+		return getPersistence().updateImpl(shoppingOrder);
 	}
 
 	/**

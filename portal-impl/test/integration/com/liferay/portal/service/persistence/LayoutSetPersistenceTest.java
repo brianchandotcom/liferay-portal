@@ -140,7 +140,7 @@ public class LayoutSetPersistenceTest {
 
 		newLayoutSet.setLayoutSetPrototypeLinkEnabled(ServiceTestUtil.randomBoolean());
 
-		_persistence.update(newLayoutSet, false);
+		_persistence.update(newLayoutSet);
 
 		LayoutSet existingLayoutSet = _persistence.findByPrimaryKey(newLayoutSet.getPrimaryKey());
 
@@ -347,7 +347,7 @@ public class LayoutSetPersistenceTest {
 
 		layoutSet.setLayoutSetPrototypeLinkEnabled(ServiceTestUtil.randomBoolean());
 
-		_persistence.update(layoutSet, false);
+		_persistence.update(layoutSet);
 
 		return layoutSet;
 	}

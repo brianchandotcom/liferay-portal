@@ -116,7 +116,7 @@ public class RegionPersistenceTest {
 
 		newRegion.setActive(ServiceTestUtil.randomBoolean());
 
-		_persistence.update(newRegion, false);
+		_persistence.update(newRegion);
 
 		Region existingRegion = _persistence.findByPrimaryKey(newRegion.getPrimaryKey());
 
@@ -274,7 +274,7 @@ public class RegionPersistenceTest {
 
 		region.setActive(ServiceTestUtil.randomBoolean());
 
-		_persistence.update(region, false);
+		_persistence.update(region);
 
 		return region;
 	}

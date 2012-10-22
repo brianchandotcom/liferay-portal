@@ -72,7 +72,7 @@ public interface PluginSettingPersistence extends BasePersistence<PluginSetting>
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portal.model.PluginSetting updateImpl(
-		com.liferay.portal.model.PluginSetting pluginSetting, boolean merge)
+		com.liferay.portal.model.PluginSetting pluginSetting)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

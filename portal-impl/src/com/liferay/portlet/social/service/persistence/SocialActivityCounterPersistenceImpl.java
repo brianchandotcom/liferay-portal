@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
-import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.GroupPersistence;
 import com.liferay.portal.service.persistence.LockPersistence;
 import com.liferay.portal.service.persistence.UserPersistence;
@@ -399,7 +398,12 @@ public class SocialActivityCounterPersistenceImpl extends BasePersistenceImpl<So
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, socialActivityCounter);
+			if (socialActivityCounter.isCachedModel()) {
+				socialActivityCounter = (SocialActivityCounter)session.get(SocialActivityCounterImpl.class,
+						socialActivityCounter.getPrimaryKeyObj());
+			}
+
+			session.delete(socialActivityCounter);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -415,8 +419,8 @@ public class SocialActivityCounterPersistenceImpl extends BasePersistenceImpl<So
 
 	@Override
 	public SocialActivityCounter updateImpl(
-		com.liferay.portlet.social.model.SocialActivityCounter socialActivityCounter,
-		boolean merge) throws SystemException {
+		com.liferay.portlet.social.model.SocialActivityCounter socialActivityCounter)
+		throws SystemException {
 		socialActivityCounter = toUnwrappedModel(socialActivityCounter);
 
 		boolean isNew = socialActivityCounter.isNew();
@@ -428,9 +432,14 @@ public class SocialActivityCounterPersistenceImpl extends BasePersistenceImpl<So
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, socialActivityCounter, merge);
+			if (socialActivityCounter.isNew()) {
+				session.save(socialActivityCounter);
 
-			socialActivityCounter.setNew(false);
+				socialActivityCounter.setNew(false);
+			}
+			else {
+				session.merge(socialActivityCounter);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

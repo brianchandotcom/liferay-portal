@@ -150,7 +150,7 @@ public class ResourceActionLocalServiceImpl
 			resourceAction.setActionId(actionId);
 			resourceAction.setBitwiseValue(bitwiseValue);
 
-			resourceActionPersistence.update(resourceAction, false);
+			resourceActionPersistence.update(resourceAction);
 
 			_resourceActions.put(key, resourceAction);
 

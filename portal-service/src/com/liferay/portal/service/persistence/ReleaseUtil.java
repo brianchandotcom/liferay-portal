@@ -94,19 +94,18 @@ public class ReleaseUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static Release update(Release release, boolean merge)
-		throws SystemException {
-		return getPersistence().update(release, merge);
+	public static Release update(Release release) throws SystemException {
+		return getPersistence().update(release);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
-	public static Release update(Release release, boolean merge,
-		ServiceContext serviceContext) throws SystemException {
-		return getPersistence().update(release, merge, serviceContext);
+	public static Release update(Release release, ServiceContext serviceContext)
+		throws SystemException {
+		return getPersistence().update(release, serviceContext);
 	}
 
 	/**
@@ -153,9 +152,9 @@ public class ReleaseUtil {
 	}
 
 	public static com.liferay.portal.model.Release updateImpl(
-		com.liferay.portal.model.Release release, boolean merge)
+		com.liferay.portal.model.Release release)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(release, merge);
+		return getPersistence().updateImpl(release);
 	}
 
 	/**

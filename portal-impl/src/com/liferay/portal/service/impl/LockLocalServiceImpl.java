@@ -165,7 +165,7 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 			lock.setExpirationDate(new Date(now.getTime() + expirationTime));
 		}
 
-		lockPersistence.update(lock, false);
+		lockPersistence.update(lock);
 
 		return lock;
 	}
@@ -197,9 +197,11 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 			lock.setKey(key);
 			lock.setOwner(updatedOwner);
 
-			lockPersistence.update(lock, false);
+			lockPersistence.update(lock);
 
 			lock.setNew(true);
+
+			lockPersistence.flush();
 		}
 		else if (Validator.equals(lock.getOwner(), expectedOwner)) {
 			lock.setCreateDate(new Date());
@@ -207,9 +209,11 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 			lock.setKey(key);
 			lock.setOwner(updatedOwner);
 
-			lockPersistence.update(lock, false);
+			lockPersistence.update(lock);
 
 			lock.setNew(true);
+
+			lockPersistence.flush();
 		}
 
 		return lock;
@@ -248,7 +252,7 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 					new Date(now.getTime() + expirationTime));
 			}
 
-			lockPersistence.update(lock, false);
+			lockPersistence.update(lock);
 
 			return lock;
 		}
@@ -285,6 +289,7 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 
 		if (Validator.equals(lock.getOwner(), owner)) {
 			lockPersistence.remove(lock);
+			lockPersistence.flush();
 		}
 	}
 

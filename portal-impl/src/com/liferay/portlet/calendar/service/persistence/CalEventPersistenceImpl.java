@@ -45,7 +45,6 @@ import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
-import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.CompanyPersistence;
 import com.liferay.portal.service.persistence.GroupPersistence;
 import com.liferay.portal.service.persistence.PortletPreferencesPersistence;
@@ -455,7 +454,12 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, calEvent);
+			if (calEvent.isCachedModel()) {
+				calEvent = (CalEvent)session.get(CalEventImpl.class,
+						calEvent.getPrimaryKeyObj());
+			}
+
+			session.delete(calEvent);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -471,7 +475,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 
 	@Override
 	public CalEvent updateImpl(
-		com.liferay.portlet.calendar.model.CalEvent calEvent, boolean merge)
+		com.liferay.portlet.calendar.model.CalEvent calEvent)
 		throws SystemException {
 		calEvent = toUnwrappedModel(calEvent);
 
@@ -521,9 +525,14 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, calEvent, merge);
+			if (calEvent.isNew()) {
+				session.save(calEvent);
 
-			calEvent.setNew(false);
+				calEvent.setNew(false);
+			}
+			else {
+				session.merge(calEvent);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

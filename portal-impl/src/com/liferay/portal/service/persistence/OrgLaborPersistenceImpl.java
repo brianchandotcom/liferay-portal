@@ -256,7 +256,12 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, orgLabor);
+			if (orgLabor.isCachedModel()) {
+				orgLabor = (OrgLabor)session.get(OrgLaborImpl.class,
+						orgLabor.getPrimaryKeyObj());
+			}
+
+			session.delete(orgLabor);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -271,8 +276,8 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 	}
 
 	@Override
-	public OrgLabor updateImpl(com.liferay.portal.model.OrgLabor orgLabor,
-		boolean merge) throws SystemException {
+	public OrgLabor updateImpl(com.liferay.portal.model.OrgLabor orgLabor)
+		throws SystemException {
 		orgLabor = toUnwrappedModel(orgLabor);
 
 		boolean isNew = orgLabor.isNew();
@@ -284,9 +289,14 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, orgLabor, merge);
+			if (orgLabor.isNew()) {
+				session.save(orgLabor);
 
-			orgLabor.setNew(false);
+				orgLabor.setNew(false);
+			}
+			else {
+				session.merge(orgLabor);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

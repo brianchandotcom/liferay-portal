@@ -217,19 +217,6 @@ public interface ShoppingItemPriceLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Updates the shopping item price in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param shoppingItemPrice the shopping item price
-	* @param merge whether to merge the shopping item price with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	* @return the shopping item price that was updated
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portlet.shopping.model.ShoppingItemPrice updateShoppingItemPrice(
-		com.liferay.portlet.shopping.model.ShoppingItemPrice shoppingItemPrice,
-		boolean merge)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
 	* Returns the Spring bean ID for this bean.
 	*
 	* @return the Spring bean ID for this bean

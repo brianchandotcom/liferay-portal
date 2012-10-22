@@ -91,7 +91,7 @@ public abstract class DDMTemplateLocalServiceBaseImpl
 		throws SystemException {
 		ddmTemplate.setNew(true);
 
-		return ddmTemplatePersistence.update(ddmTemplate, false);
+		return ddmTemplatePersistence.update(ddmTemplate);
 	}
 
 	/**
@@ -278,23 +278,7 @@ public abstract class DDMTemplateLocalServiceBaseImpl
 	@Indexable(type = IndexableType.REINDEX)
 	public DDMTemplate updateDDMTemplate(DDMTemplate ddmTemplate)
 		throws SystemException {
-		return updateDDMTemplate(ddmTemplate, true);
-	}
-
-	/**
-	 * Updates the d d m template in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param ddmTemplate the d d m template
-	 * @param merge whether to merge the d d m template with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	 * @return the d d m template that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public DDMTemplate updateDDMTemplate(DDMTemplate ddmTemplate, boolean merge)
-		throws SystemException {
-		ddmTemplate.setNew(false);
-
-		return ddmTemplatePersistence.update(ddmTemplate, merge);
+		return ddmTemplatePersistence.update(ddmTemplate);
 	}
 
 	/**

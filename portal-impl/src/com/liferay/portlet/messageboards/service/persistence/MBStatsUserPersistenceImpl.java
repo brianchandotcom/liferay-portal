@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
-import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.GroupPersistence;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
@@ -326,7 +325,12 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, mbStatsUser);
+			if (mbStatsUser.isCachedModel()) {
+				mbStatsUser = (MBStatsUser)session.get(MBStatsUserImpl.class,
+						mbStatsUser.getPrimaryKeyObj());
+			}
+
+			session.delete(mbStatsUser);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -342,8 +346,8 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 
 	@Override
 	public MBStatsUser updateImpl(
-		com.liferay.portlet.messageboards.model.MBStatsUser mbStatsUser,
-		boolean merge) throws SystemException {
+		com.liferay.portlet.messageboards.model.MBStatsUser mbStatsUser)
+		throws SystemException {
 		mbStatsUser = toUnwrappedModel(mbStatsUser);
 
 		boolean isNew = mbStatsUser.isNew();
@@ -355,9 +359,14 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, mbStatsUser, merge);
+			if (mbStatsUser.isNew()) {
+				session.save(mbStatsUser);
 
-			mbStatsUser.setNew(false);
+				mbStatsUser.setNew(false);
+			}
+			else {
+				session.merge(mbStatsUser);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

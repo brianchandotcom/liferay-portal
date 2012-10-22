@@ -57,7 +57,6 @@ import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
-import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
 import java.io.Serializable;
@@ -485,7 +484,12 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, ${entity.varName});
+			if (${entity.varName}.isCachedModel()) {
+				${entity.varName} = (${entity.name})session.get(
+					${entity.name}Impl.class, ${entity.varName}.getPrimaryKeyObj());
+			}
+
+			session.delete(${entity.varName});
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -500,7 +504,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 	}
 
 	@Override
-	public ${entity.name} updateImpl(${packagePath}.model.${entity.name} ${entity.varName}, boolean merge) throws SystemException {
+	public ${entity.name} updateImpl(${packagePath}.model.${entity.name} ${entity.varName}) throws SystemException {
 		${entity.varName} = toUnwrappedModel(${entity.varName});
 
 		boolean isNew = ${entity.varName}.isNew();
@@ -617,9 +621,14 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, ${entity.varName}, merge);
+			if (${entity.varName}.isNew()) {
+				session.save(${entity.varName});
 
-			${entity.varName}.setNew(false);
+				${entity.varName}.setNew(false);
+			}
+			else {
+				session.merge(${entity.varName});
+			}
 
 			<#if entity.hasLazyBlobColumn()>
 				session.flush();

@@ -95,22 +95,20 @@ public class JournalContentSearchUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
 	public static JournalContentSearch update(
-		JournalContentSearch journalContentSearch, boolean merge)
-		throws SystemException {
-		return getPersistence().update(journalContentSearch, merge);
+		JournalContentSearch journalContentSearch) throws SystemException {
+		return getPersistence().update(journalContentSearch);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
 	public static JournalContentSearch update(
-		JournalContentSearch journalContentSearch, boolean merge,
-		ServiceContext serviceContext) throws SystemException {
-		return getPersistence()
-				   .update(journalContentSearch, merge, serviceContext);
+		JournalContentSearch journalContentSearch, ServiceContext serviceContext)
+		throws SystemException {
+		return getPersistence().update(journalContentSearch, serviceContext);
 	}
 
 	/**
@@ -160,10 +158,9 @@ public class JournalContentSearchUtil {
 	}
 
 	public static com.liferay.portlet.journal.model.JournalContentSearch updateImpl(
-		com.liferay.portlet.journal.model.JournalContentSearch journalContentSearch,
-		boolean merge)
+		com.liferay.portlet.journal.model.JournalContentSearch journalContentSearch)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(journalContentSearch, merge);
+		return getPersistence().updateImpl(journalContentSearch);
 	}
 
 	/**

@@ -231,22 +231,6 @@ public class ShoppingCouponLocalServiceWrapper
 	}
 
 	/**
-	* Updates the shopping coupon in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param shoppingCoupon the shopping coupon
-	* @param merge whether to merge the shopping coupon with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	* @return the shopping coupon that was updated
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portlet.shopping.model.ShoppingCoupon updateShoppingCoupon(
-		com.liferay.portlet.shopping.model.ShoppingCoupon shoppingCoupon,
-		boolean merge)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _shoppingCouponLocalService.updateShoppingCoupon(shoppingCoupon,
-			merge);
-	}
-
-	/**
 	* Returns the Spring bean ID for this bean.
 	*
 	* @return the Spring bean ID for this bean

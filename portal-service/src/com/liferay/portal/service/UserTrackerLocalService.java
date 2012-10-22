@@ -215,18 +215,6 @@ public interface UserTrackerLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Updates the user tracker in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param userTracker the user tracker
-	* @param merge whether to merge the user tracker with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	* @return the user tracker that was updated
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.UserTracker updateUserTracker(
-		com.liferay.portal.model.UserTracker userTracker, boolean merge)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
 	* Returns the Spring bean ID for this bean.
 	*
 	* @return the Spring bean ID for this bean

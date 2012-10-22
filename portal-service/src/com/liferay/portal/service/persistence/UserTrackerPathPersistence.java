@@ -74,7 +74,7 @@ public interface UserTrackerPathPersistence extends BasePersistence<UserTrackerP
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portal.model.UserTrackerPath updateImpl(
-		com.liferay.portal.model.UserTrackerPath userTrackerPath, boolean merge)
+		com.liferay.portal.model.UserTrackerPath userTrackerPath)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

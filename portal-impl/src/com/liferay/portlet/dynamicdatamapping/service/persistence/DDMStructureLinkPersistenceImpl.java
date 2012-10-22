@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
-import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
@@ -310,7 +309,12 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, ddmStructureLink);
+			if (ddmStructureLink.isCachedModel()) {
+				ddmStructureLink = (DDMStructureLink)session.get(DDMStructureLinkImpl.class,
+						ddmStructureLink.getPrimaryKeyObj());
+			}
+
+			session.delete(ddmStructureLink);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -326,8 +330,8 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 
 	@Override
 	public DDMStructureLink updateImpl(
-		com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink ddmStructureLink,
-		boolean merge) throws SystemException {
+		com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink ddmStructureLink)
+		throws SystemException {
 		ddmStructureLink = toUnwrappedModel(ddmStructureLink);
 
 		boolean isNew = ddmStructureLink.isNew();
@@ -339,9 +343,14 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, ddmStructureLink, merge);
+			if (ddmStructureLink.isNew()) {
+				session.save(ddmStructureLink);
 
-			ddmStructureLink.setNew(false);
+				ddmStructureLink.setNew(false);
+			}
+			else {
+				session.merge(ddmStructureLink);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

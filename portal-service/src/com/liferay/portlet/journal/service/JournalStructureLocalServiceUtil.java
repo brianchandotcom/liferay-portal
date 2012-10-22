@@ -250,21 +250,6 @@ public class JournalStructureLocalServiceUtil {
 	}
 
 	/**
-	* Updates the journal structure in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param journalStructure the journal structure
-	* @param merge whether to merge the journal structure with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	* @return the journal structure that was updated
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portlet.journal.model.JournalStructure updateJournalStructure(
-		com.liferay.portlet.journal.model.JournalStructure journalStructure,
-		boolean merge)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().updateJournalStructure(journalStructure, merge);
-	}
-
-	/**
 	* Returns the Spring bean ID for this bean.
 	*
 	* @return the Spring bean ID for this bean

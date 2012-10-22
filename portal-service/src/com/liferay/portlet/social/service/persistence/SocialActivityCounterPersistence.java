@@ -76,8 +76,7 @@ public interface SocialActivityCounterPersistence extends BasePersistence<Social
 			com.liferay.portlet.social.NoSuchActivityCounterException;
 
 	public com.liferay.portlet.social.model.SocialActivityCounter updateImpl(
-		com.liferay.portlet.social.model.SocialActivityCounter socialActivityCounter,
-		boolean merge)
+		com.liferay.portlet.social.model.SocialActivityCounter socialActivityCounter)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

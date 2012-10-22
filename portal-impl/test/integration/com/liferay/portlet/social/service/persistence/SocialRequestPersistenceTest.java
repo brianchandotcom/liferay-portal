@@ -133,7 +133,7 @@ public class SocialRequestPersistenceTest {
 
 		newSocialRequest.setStatus(ServiceTestUtil.nextInt());
 
-		_persistence.update(newSocialRequest, false);
+		_persistence.update(newSocialRequest);
 
 		SocialRequest existingSocialRequest = _persistence.findByPrimaryKey(newSocialRequest.getPrimaryKey());
 
@@ -336,7 +336,7 @@ public class SocialRequestPersistenceTest {
 
 		socialRequest.setStatus(ServiceTestUtil.nextInt());
 
-		_persistence.update(socialRequest, false);
+		_persistence.update(socialRequest);
 
 		return socialRequest;
 	}

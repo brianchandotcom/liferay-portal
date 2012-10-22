@@ -114,7 +114,7 @@ public class DDMStructureLinkPersistenceTest {
 
 		newDDMStructureLink.setStructureId(ServiceTestUtil.nextLong());
 
-		_persistence.update(newDDMStructureLink, false);
+		_persistence.update(newDDMStructureLink);
 
 		DDMStructureLink existingDDMStructureLink = _persistence.findByPrimaryKey(newDDMStructureLink.getPrimaryKey());
 
@@ -270,7 +270,7 @@ public class DDMStructureLinkPersistenceTest {
 
 		ddmStructureLink.setStructureId(ServiceTestUtil.nextLong());
 
-		_persistence.update(ddmStructureLink, false);
+		_persistence.update(ddmStructureLink);
 
 		return ddmStructureLink;
 	}

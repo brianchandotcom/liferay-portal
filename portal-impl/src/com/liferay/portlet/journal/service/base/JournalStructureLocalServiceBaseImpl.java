@@ -112,7 +112,7 @@ public abstract class JournalStructureLocalServiceBaseImpl
 		JournalStructure journalStructure) throws SystemException {
 		journalStructure.setNew(true);
 
-		return journalStructurePersistence.update(journalStructure, false);
+		return journalStructurePersistence.update(journalStructure);
 	}
 
 	/**
@@ -299,24 +299,7 @@ public abstract class JournalStructureLocalServiceBaseImpl
 	@Indexable(type = IndexableType.REINDEX)
 	public JournalStructure updateJournalStructure(
 		JournalStructure journalStructure) throws SystemException {
-		return updateJournalStructure(journalStructure, true);
-	}
-
-	/**
-	 * Updates the journal structure in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param journalStructure the journal structure
-	 * @param merge whether to merge the journal structure with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	 * @return the journal structure that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public JournalStructure updateJournalStructure(
-		JournalStructure journalStructure, boolean merge)
-		throws SystemException {
-		journalStructure.setNew(false);
-
-		return journalStructurePersistence.update(journalStructure, merge);
+		return journalStructurePersistence.update(journalStructure);
 	}
 
 	/**

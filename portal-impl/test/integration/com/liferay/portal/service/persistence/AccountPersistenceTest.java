@@ -136,7 +136,7 @@ public class AccountPersistenceTest {
 
 		newAccount.setSize(ServiceTestUtil.randomString());
 
-		_persistence.update(newAccount, false);
+		_persistence.update(newAccount);
 
 		Account existingAccount = _persistence.findByPrimaryKey(newAccount.getPrimaryKey());
 
@@ -319,7 +319,7 @@ public class AccountPersistenceTest {
 
 		account.setSize(ServiceTestUtil.randomString());
 
-		_persistence.update(account, false);
+		_persistence.update(account);
 
 		return account;
 	}

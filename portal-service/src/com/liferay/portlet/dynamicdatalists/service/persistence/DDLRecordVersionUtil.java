@@ -95,19 +95,19 @@ public class DDLRecordVersionUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static DDLRecordVersion update(DDLRecordVersion ddlRecordVersion,
-		boolean merge) throws SystemException {
-		return getPersistence().update(ddlRecordVersion, merge);
+	public static DDLRecordVersion update(DDLRecordVersion ddlRecordVersion)
+		throws SystemException {
+		return getPersistence().update(ddlRecordVersion);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
 	public static DDLRecordVersion update(DDLRecordVersion ddlRecordVersion,
-		boolean merge, ServiceContext serviceContext) throws SystemException {
-		return getPersistence().update(ddlRecordVersion, merge, serviceContext);
+		ServiceContext serviceContext) throws SystemException {
+		return getPersistence().update(ddlRecordVersion, serviceContext);
 	}
 
 	/**
@@ -157,10 +157,9 @@ public class DDLRecordVersionUtil {
 	}
 
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion updateImpl(
-		com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion ddlRecordVersion,
-		boolean merge)
+		com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion ddlRecordVersion)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(ddlRecordVersion, merge);
+		return getPersistence().updateImpl(ddlRecordVersion);
 	}
 
 	/**

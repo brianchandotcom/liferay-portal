@@ -70,7 +70,7 @@ public interface UserPersistence extends BasePersistence<User> {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portal.model.User updateImpl(
-		com.liferay.portal.model.User user, boolean merge)
+		com.liferay.portal.model.User user)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

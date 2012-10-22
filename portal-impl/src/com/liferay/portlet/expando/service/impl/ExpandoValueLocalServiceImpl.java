@@ -821,7 +821,7 @@ public class ExpandoValueLocalServiceImpl
 			row.setTableId(tableId);
 			row.setClassPK(classPK);
 
-			expandoRowPersistence.update(row, false);
+			expandoRowPersistence.update(row);
 		}
 
 		boolean rowModified = false;
@@ -854,7 +854,7 @@ public class ExpandoValueLocalServiceImpl
 
 				value.setData(dataString);
 
-				expandoValuePersistence.update(value, false);
+				expandoValuePersistence.update(value);
 
 				rowModified = true;
 			}
@@ -863,7 +863,7 @@ public class ExpandoValueLocalServiceImpl
 		if (rowModified) {
 			row.setModifiedDate(new Date());
 
-			expandoRowPersistence.update(row, false);
+			expandoRowPersistence.update(row);
 		}
 	}
 
@@ -2006,7 +2006,7 @@ public class ExpandoValueLocalServiceImpl
 			row.setTableId(tableId);
 			row.setClassPK(classPK);
 
-			expandoRowPersistence.update(row, false);
+			expandoRowPersistence.update(row);
 		}
 
 		ExpandoValue value = expandoValuePersistence.fetchByC_R(
@@ -2028,11 +2028,11 @@ public class ExpandoValueLocalServiceImpl
 		if (value.isNew() || !Validator.equals(value.getData(), data)) {
 			value.setData(data);
 
-			expandoValuePersistence.update(value, false);
+			expandoValuePersistence.update(value);
 
 			row.setModifiedDate(new Date());
 
-			expandoRowPersistence.update(row, false);
+			expandoRowPersistence.update(row);
 		}
 
 		return value;

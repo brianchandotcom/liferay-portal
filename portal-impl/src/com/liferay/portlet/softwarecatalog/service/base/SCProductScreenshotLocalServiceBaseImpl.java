@@ -94,7 +94,7 @@ public abstract class SCProductScreenshotLocalServiceBaseImpl
 		SCProductScreenshot scProductScreenshot) throws SystemException {
 		scProductScreenshot.setNew(true);
 
-		return scProductScreenshotPersistence.update(scProductScreenshot, false);
+		return scProductScreenshotPersistence.update(scProductScreenshot);
 	}
 
 	/**
@@ -268,24 +268,7 @@ public abstract class SCProductScreenshotLocalServiceBaseImpl
 	@Indexable(type = IndexableType.REINDEX)
 	public SCProductScreenshot updateSCProductScreenshot(
 		SCProductScreenshot scProductScreenshot) throws SystemException {
-		return updateSCProductScreenshot(scProductScreenshot, true);
-	}
-
-	/**
-	 * Updates the s c product screenshot in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param scProductScreenshot the s c product screenshot
-	 * @param merge whether to merge the s c product screenshot with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	 * @return the s c product screenshot that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public SCProductScreenshot updateSCProductScreenshot(
-		SCProductScreenshot scProductScreenshot, boolean merge)
-		throws SystemException {
-		scProductScreenshot.setNew(false);
-
-		return scProductScreenshotPersistence.update(scProductScreenshot, merge);
+		return scProductScreenshotPersistence.update(scProductScreenshot);
 	}
 
 	/**

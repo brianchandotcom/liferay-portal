@@ -74,8 +74,7 @@ public interface ExpandoTablePersistence extends BasePersistence<ExpandoTable> {
 			com.liferay.portlet.expando.NoSuchTableException;
 
 	public com.liferay.portlet.expando.model.ExpandoTable updateImpl(
-		com.liferay.portlet.expando.model.ExpandoTable expandoTable,
-		boolean merge)
+		com.liferay.portlet.expando.model.ExpandoTable expandoTable)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

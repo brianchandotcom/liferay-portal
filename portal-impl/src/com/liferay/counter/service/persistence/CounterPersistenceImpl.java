@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
-import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
@@ -236,7 +235,12 @@ public class CounterPersistenceImpl extends BasePersistenceImpl<Counter>
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, counter);
+			if (counter.isCachedModel()) {
+				counter = (Counter)session.get(CounterImpl.class,
+						counter.getPrimaryKeyObj());
+			}
+
+			session.delete(counter);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -251,8 +255,8 @@ public class CounterPersistenceImpl extends BasePersistenceImpl<Counter>
 	}
 
 	@Override
-	public Counter updateImpl(com.liferay.counter.model.Counter counter,
-		boolean merge) throws SystemException {
+	public Counter updateImpl(com.liferay.counter.model.Counter counter)
+		throws SystemException {
 		counter = toUnwrappedModel(counter);
 
 		boolean isNew = counter.isNew();
@@ -262,9 +266,14 @@ public class CounterPersistenceImpl extends BasePersistenceImpl<Counter>
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, counter, merge);
+			if (counter.isNew()) {
+				session.save(counter);
 
-			counter.setNew(false);
+				counter.setNew(false);
+			}
+			else {
+				session.merge(counter);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

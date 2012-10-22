@@ -132,7 +132,7 @@ public class SCProductVersionPersistenceTest {
 
 		newSCProductVersion.setRepoStoreArtifact(ServiceTestUtil.randomBoolean());
 
-		_persistence.update(newSCProductVersion, false);
+		_persistence.update(newSCProductVersion);
 
 		SCProductVersion existingSCProductVersion = _persistence.findByPrimaryKey(newSCProductVersion.getPrimaryKey());
 
@@ -323,7 +323,7 @@ public class SCProductVersionPersistenceTest {
 
 		scProductVersion.setRepoStoreArtifact(ServiceTestUtil.randomBoolean());
 
-		_persistence.update(scProductVersion, false);
+		_persistence.update(scProductVersion);
 
 		return scProductVersion;
 	}

@@ -74,8 +74,7 @@ public interface ExpandoValuePersistence extends BasePersistence<ExpandoValue> {
 			com.liferay.portlet.expando.NoSuchValueException;
 
 	public com.liferay.portlet.expando.model.ExpandoValue updateImpl(
-		com.liferay.portlet.expando.model.ExpandoValue expandoValue,
-		boolean merge)
+		com.liferay.portlet.expando.model.ExpandoValue expandoValue)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

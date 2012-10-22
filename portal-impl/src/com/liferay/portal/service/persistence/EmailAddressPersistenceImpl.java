@@ -348,7 +348,12 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, emailAddress);
+			if (emailAddress.isCachedModel()) {
+				emailAddress = (EmailAddress)session.get(EmailAddressImpl.class,
+						emailAddress.getPrimaryKeyObj());
+			}
+
+			session.delete(emailAddress);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -364,7 +369,7 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 
 	@Override
 	public EmailAddress updateImpl(
-		com.liferay.portal.model.EmailAddress emailAddress, boolean merge)
+		com.liferay.portal.model.EmailAddress emailAddress)
 		throws SystemException {
 		emailAddress = toUnwrappedModel(emailAddress);
 
@@ -377,9 +382,14 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, emailAddress, merge);
+			if (emailAddress.isNew()) {
+				session.save(emailAddress);
 
-			emailAddress.setNew(false);
+				emailAddress.setNew(false);
+			}
+			else {
+				session.merge(emailAddress);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

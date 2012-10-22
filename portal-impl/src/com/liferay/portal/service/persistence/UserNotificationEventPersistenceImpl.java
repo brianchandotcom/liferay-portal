@@ -333,7 +333,12 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, userNotificationEvent);
+			if (userNotificationEvent.isCachedModel()) {
+				userNotificationEvent = (UserNotificationEvent)session.get(UserNotificationEventImpl.class,
+						userNotificationEvent.getPrimaryKeyObj());
+			}
+
+			session.delete(userNotificationEvent);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -349,8 +354,8 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 
 	@Override
 	public UserNotificationEvent updateImpl(
-		com.liferay.portal.model.UserNotificationEvent userNotificationEvent,
-		boolean merge) throws SystemException {
+		com.liferay.portal.model.UserNotificationEvent userNotificationEvent)
+		throws SystemException {
 		userNotificationEvent = toUnwrappedModel(userNotificationEvent);
 
 		boolean isNew = userNotificationEvent.isNew();
@@ -368,9 +373,14 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, userNotificationEvent, merge);
+			if (userNotificationEvent.isNew()) {
+				session.save(userNotificationEvent);
 
-			userNotificationEvent.setNew(false);
+				userNotificationEvent.setNew(false);
+			}
+			else {
+				session.merge(userNotificationEvent);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

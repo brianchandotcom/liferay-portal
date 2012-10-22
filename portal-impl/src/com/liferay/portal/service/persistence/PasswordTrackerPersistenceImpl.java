@@ -262,7 +262,12 @@ public class PasswordTrackerPersistenceImpl extends BasePersistenceImpl<Password
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, passwordTracker);
+			if (passwordTracker.isCachedModel()) {
+				passwordTracker = (PasswordTracker)session.get(PasswordTrackerImpl.class,
+						passwordTracker.getPrimaryKeyObj());
+			}
+
+			session.delete(passwordTracker);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -278,7 +283,7 @@ public class PasswordTrackerPersistenceImpl extends BasePersistenceImpl<Password
 
 	@Override
 	public PasswordTracker updateImpl(
-		com.liferay.portal.model.PasswordTracker passwordTracker, boolean merge)
+		com.liferay.portal.model.PasswordTracker passwordTracker)
 		throws SystemException {
 		passwordTracker = toUnwrappedModel(passwordTracker);
 
@@ -291,9 +296,14 @@ public class PasswordTrackerPersistenceImpl extends BasePersistenceImpl<Password
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, passwordTracker, merge);
+			if (passwordTracker.isNew()) {
+				session.save(passwordTracker);
 
-			passwordTracker.setNew(false);
+				passwordTracker.setNew(false);
+			}
+			else {
+				session.merge(passwordTracker);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

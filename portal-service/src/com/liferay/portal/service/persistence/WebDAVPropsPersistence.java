@@ -71,7 +71,7 @@ public interface WebDAVPropsPersistence extends BasePersistence<WebDAVProps> {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portal.model.WebDAVProps updateImpl(
-		com.liferay.portal.model.WebDAVProps webDAVProps, boolean merge)
+		com.liferay.portal.model.WebDAVProps webDAVProps)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

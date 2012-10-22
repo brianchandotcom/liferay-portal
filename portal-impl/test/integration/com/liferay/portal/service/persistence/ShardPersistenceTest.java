@@ -114,7 +114,7 @@ public class ShardPersistenceTest {
 
 		newShard.setName(ServiceTestUtil.randomString());
 
-		_persistence.update(newShard, false);
+		_persistence.update(newShard);
 
 		Shard existingShard = _persistence.findByPrimaryKey(newShard.getPrimaryKey());
 
@@ -269,7 +269,7 @@ public class ShardPersistenceTest {
 
 		shard.setName(ServiceTestUtil.randomString());
 
-		_persistence.update(shard, false);
+		_persistence.update(shard);
 
 		return shard;
 	}

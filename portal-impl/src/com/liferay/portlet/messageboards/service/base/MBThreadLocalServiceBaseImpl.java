@@ -121,7 +121,7 @@ public abstract class MBThreadLocalServiceBaseImpl extends BaseLocalServiceImpl
 	public MBThread addMBThread(MBThread mbThread) throws SystemException {
 		mbThread.setNew(true);
 
-		return mbThreadPersistence.update(mbThread, false);
+		return mbThreadPersistence.update(mbThread);
 	}
 
 	/**
@@ -290,23 +290,7 @@ public abstract class MBThreadLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public MBThread updateMBThread(MBThread mbThread) throws SystemException {
-		return updateMBThread(mbThread, true);
-	}
-
-	/**
-	 * Updates the message boards thread in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param mbThread the message boards thread
-	 * @param merge whether to merge the message boards thread with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	 * @return the message boards thread that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public MBThread updateMBThread(MBThread mbThread, boolean merge)
-		throws SystemException {
-		mbThread.setNew(false);
-
-		return mbThreadPersistence.update(mbThread, merge);
+		return mbThreadPersistence.update(mbThread);
 	}
 
 	/**

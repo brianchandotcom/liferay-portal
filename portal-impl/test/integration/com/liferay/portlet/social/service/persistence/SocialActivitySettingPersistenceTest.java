@@ -121,7 +121,7 @@ public class SocialActivitySettingPersistenceTest {
 
 		newSocialActivitySetting.setValue(ServiceTestUtil.randomString());
 
-		_persistence.update(newSocialActivitySetting, false);
+		_persistence.update(newSocialActivitySetting);
 
 		SocialActivitySetting existingSocialActivitySetting = _persistence.findByPrimaryKey(newSocialActivitySetting.getPrimaryKey());
 
@@ -300,7 +300,7 @@ public class SocialActivitySettingPersistenceTest {
 
 		socialActivitySetting.setValue(ServiceTestUtil.randomString());
 
-		_persistence.update(socialActivitySetting, false);
+		_persistence.update(socialActivitySetting);
 
 		return socialActivitySetting;
 	}

@@ -124,7 +124,7 @@ public class JournalArticleImagePersistenceTest {
 
 		newJournalArticleImage.setTempImage(ServiceTestUtil.randomBoolean());
 
-		_persistence.update(newJournalArticleImage, false);
+		_persistence.update(newJournalArticleImage);
 
 		JournalArticleImage existingJournalArticleImage = _persistence.findByPrimaryKey(newJournalArticleImage.getPrimaryKey());
 
@@ -311,7 +311,7 @@ public class JournalArticleImagePersistenceTest {
 
 		journalArticleImage.setTempImage(ServiceTestUtil.randomBoolean());
 
-		_persistence.update(journalArticleImage, false);
+		_persistence.update(journalArticleImage);
 
 		return journalArticleImage;
 	}

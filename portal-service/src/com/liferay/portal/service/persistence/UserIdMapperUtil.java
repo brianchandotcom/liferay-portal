@@ -94,19 +94,19 @@ public class UserIdMapperUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static UserIdMapper update(UserIdMapper userIdMapper, boolean merge)
+	public static UserIdMapper update(UserIdMapper userIdMapper)
 		throws SystemException {
-		return getPersistence().update(userIdMapper, merge);
+		return getPersistence().update(userIdMapper);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
-	public static UserIdMapper update(UserIdMapper userIdMapper, boolean merge,
+	public static UserIdMapper update(UserIdMapper userIdMapper,
 		ServiceContext serviceContext) throws SystemException {
-		return getPersistence().update(userIdMapper, merge, serviceContext);
+		return getPersistence().update(userIdMapper, serviceContext);
 	}
 
 	/**
@@ -156,9 +156,9 @@ public class UserIdMapperUtil {
 	}
 
 	public static com.liferay.portal.model.UserIdMapper updateImpl(
-		com.liferay.portal.model.UserIdMapper userIdMapper, boolean merge)
+		com.liferay.portal.model.UserIdMapper userIdMapper)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(userIdMapper, merge);
+		return getPersistence().updateImpl(userIdMapper);
 	}
 
 	/**

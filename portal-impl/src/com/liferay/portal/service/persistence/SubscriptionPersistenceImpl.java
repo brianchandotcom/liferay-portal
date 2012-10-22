@@ -343,7 +343,12 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, subscription);
+			if (subscription.isCachedModel()) {
+				subscription = (Subscription)session.get(SubscriptionImpl.class,
+						subscription.getPrimaryKeyObj());
+			}
+
+			session.delete(subscription);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -359,7 +364,7 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 
 	@Override
 	public Subscription updateImpl(
-		com.liferay.portal.model.Subscription subscription, boolean merge)
+		com.liferay.portal.model.Subscription subscription)
 		throws SystemException {
 		subscription = toUnwrappedModel(subscription);
 
@@ -372,9 +377,14 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, subscription, merge);
+			if (subscription.isNew()) {
+				session.save(subscription);
 
-			subscription.setNew(false);
+				subscription.setNew(false);
+			}
+			else {
+				session.merge(subscription);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

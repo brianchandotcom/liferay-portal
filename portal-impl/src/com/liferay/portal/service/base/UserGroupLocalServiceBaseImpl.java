@@ -248,7 +248,7 @@ public abstract class UserGroupLocalServiceBaseImpl extends BaseLocalServiceImpl
 		throws SystemException {
 		userGroup.setNew(true);
 
-		return userGroupPersistence.update(userGroup, false);
+		return userGroupPersistence.update(userGroup);
 	}
 
 	/**
@@ -421,23 +421,7 @@ public abstract class UserGroupLocalServiceBaseImpl extends BaseLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	public UserGroup updateUserGroup(UserGroup userGroup)
 		throws SystemException {
-		return updateUserGroup(userGroup, true);
-	}
-
-	/**
-	 * Updates the user group in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param userGroup the user group
-	 * @param merge whether to merge the user group with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	 * @return the user group that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public UserGroup updateUserGroup(UserGroup userGroup, boolean merge)
-		throws SystemException {
-		userGroup.setNew(false);
-
-		return userGroupPersistence.update(userGroup, merge);
+		return userGroupPersistence.update(userGroup);
 	}
 
 	/**

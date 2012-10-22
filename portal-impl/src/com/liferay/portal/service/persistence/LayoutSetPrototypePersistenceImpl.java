@@ -334,7 +334,12 @@ public class LayoutSetPrototypePersistenceImpl extends BasePersistenceImpl<Layou
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, layoutSetPrototype);
+			if (layoutSetPrototype.isCachedModel()) {
+				layoutSetPrototype = (LayoutSetPrototype)session.get(LayoutSetPrototypeImpl.class,
+						layoutSetPrototype.getPrimaryKeyObj());
+			}
+
+			session.delete(layoutSetPrototype);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -350,8 +355,8 @@ public class LayoutSetPrototypePersistenceImpl extends BasePersistenceImpl<Layou
 
 	@Override
 	public LayoutSetPrototype updateImpl(
-		com.liferay.portal.model.LayoutSetPrototype layoutSetPrototype,
-		boolean merge) throws SystemException {
+		com.liferay.portal.model.LayoutSetPrototype layoutSetPrototype)
+		throws SystemException {
 		layoutSetPrototype = toUnwrappedModel(layoutSetPrototype);
 
 		boolean isNew = layoutSetPrototype.isNew();
@@ -369,9 +374,14 @@ public class LayoutSetPrototypePersistenceImpl extends BasePersistenceImpl<Layou
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, layoutSetPrototype, merge);
+			if (layoutSetPrototype.isNew()) {
+				session.save(layoutSetPrototype);
 
-			layoutSetPrototype.setNew(false);
+				layoutSetPrototype.setNew(false);
+			}
+			else {
+				session.merge(layoutSetPrototype);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

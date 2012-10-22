@@ -124,7 +124,7 @@ public class SubscriptionPersistenceTest {
 
 		newSubscription.setFrequency(ServiceTestUtil.randomString());
 
-		_persistence.update(newSubscription, false);
+		_persistence.update(newSubscription);
 
 		Subscription existingSubscription = _persistence.findByPrimaryKey(newSubscription.getPrimaryKey());
 
@@ -308,7 +308,7 @@ public class SubscriptionPersistenceTest {
 
 		subscription.setFrequency(ServiceTestUtil.randomString());
 
-		_persistence.update(subscription, false);
+		_persistence.update(subscription);
 
 		return subscription;
 	}

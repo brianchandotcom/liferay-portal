@@ -250,8 +250,7 @@ public abstract class WorkflowDefinitionLinkLocalServiceBaseImpl
 		throws SystemException {
 		workflowDefinitionLink.setNew(true);
 
-		return workflowDefinitionLinkPersistence.update(workflowDefinitionLink,
-			false);
+		return workflowDefinitionLinkPersistence.update(workflowDefinitionLink);
 	}
 
 	/**
@@ -427,25 +426,7 @@ public abstract class WorkflowDefinitionLinkLocalServiceBaseImpl
 	public WorkflowDefinitionLink updateWorkflowDefinitionLink(
 		WorkflowDefinitionLink workflowDefinitionLink)
 		throws SystemException {
-		return updateWorkflowDefinitionLink(workflowDefinitionLink, true);
-	}
-
-	/**
-	 * Updates the workflow definition link in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param workflowDefinitionLink the workflow definition link
-	 * @param merge whether to merge the workflow definition link with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	 * @return the workflow definition link that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public WorkflowDefinitionLink updateWorkflowDefinitionLink(
-		WorkflowDefinitionLink workflowDefinitionLink, boolean merge)
-		throws SystemException {
-		workflowDefinitionLink.setNew(false);
-
-		return workflowDefinitionLinkPersistence.update(workflowDefinitionLink,
-			merge);
+		return workflowDefinitionLinkPersistence.update(workflowDefinitionLink);
 	}
 
 	/**

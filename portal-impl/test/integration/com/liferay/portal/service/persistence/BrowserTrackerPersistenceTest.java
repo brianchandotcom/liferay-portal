@@ -111,7 +111,7 @@ public class BrowserTrackerPersistenceTest {
 
 		newBrowserTracker.setBrowserKey(ServiceTestUtil.nextLong());
 
-		_persistence.update(newBrowserTracker, false);
+		_persistence.update(newBrowserTracker);
 
 		BrowserTracker existingBrowserTracker = _persistence.findByPrimaryKey(newBrowserTracker.getPrimaryKey());
 
@@ -263,7 +263,7 @@ public class BrowserTrackerPersistenceTest {
 
 		browserTracker.setBrowserKey(ServiceTestUtil.nextLong());
 
-		_persistence.update(browserTracker, false);
+		_persistence.update(browserTracker);
 
 		return browserTracker;
 	}

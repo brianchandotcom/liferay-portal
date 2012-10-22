@@ -76,8 +76,7 @@ public interface MDRActionPersistence extends BasePersistence<MDRAction> {
 			com.liferay.portlet.mobiledevicerules.NoSuchActionException;
 
 	public com.liferay.portlet.mobiledevicerules.model.MDRAction updateImpl(
-		com.liferay.portlet.mobiledevicerules.model.MDRAction mdrAction,
-		boolean merge)
+		com.liferay.portlet.mobiledevicerules.model.MDRAction mdrAction)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

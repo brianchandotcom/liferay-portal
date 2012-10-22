@@ -155,7 +155,7 @@ public class WikiPagePersistenceTest {
 
 		newWikiPage.setStatusDate(ServiceTestUtil.nextDate());
 
-		_persistence.update(newWikiPage, false);
+		_persistence.update(newWikiPage);
 
 		WikiPage existingWikiPage = _persistence.findByPrimaryKey(newWikiPage.getPrimaryKey());
 
@@ -402,7 +402,7 @@ public class WikiPagePersistenceTest {
 
 		wikiPage.setStatusDate(ServiceTestUtil.nextDate());
 
-		_persistence.update(wikiPage, false);
+		_persistence.update(wikiPage);
 
 		return wikiPage;
 	}

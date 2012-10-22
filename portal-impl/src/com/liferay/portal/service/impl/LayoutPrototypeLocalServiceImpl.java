@@ -57,7 +57,7 @@ public class LayoutPrototypeLocalServiceImpl
 		layoutPrototype.setDescription(description);
 		layoutPrototype.setActive(active);
 
-		layoutPrototypePersistence.update(layoutPrototype, false);
+		layoutPrototypePersistence.update(layoutPrototype);
 
 		// Resources
 
@@ -192,7 +192,7 @@ public class LayoutPrototypeLocalServiceImpl
 		layoutPrototype.setDescription(description);
 		layoutPrototype.setActive(active);
 
-		layoutPrototypePersistence.update(layoutPrototype, false);
+		layoutPrototypePersistence.update(layoutPrototype);
 
 		// Group
 
@@ -201,7 +201,7 @@ public class LayoutPrototypeLocalServiceImpl
 
 		group.setName(layoutPrototype.getName(LocaleUtil.getDefault()));
 
-		groupPersistence.update(group, false);
+		groupPersistence.update(group);
 
 		return layoutPrototype;
 	}

@@ -94,19 +94,18 @@ public class AddressUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static Address update(Address address, boolean merge)
-		throws SystemException {
-		return getPersistence().update(address, merge);
+	public static Address update(Address address) throws SystemException {
+		return getPersistence().update(address);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
-	public static Address update(Address address, boolean merge,
-		ServiceContext serviceContext) throws SystemException {
-		return getPersistence().update(address, merge, serviceContext);
+	public static Address update(Address address, ServiceContext serviceContext)
+		throws SystemException {
+		return getPersistence().update(address, serviceContext);
 	}
 
 	/**
@@ -153,9 +152,9 @@ public class AddressUtil {
 	}
 
 	public static com.liferay.portal.model.Address updateImpl(
-		com.liferay.portal.model.Address address, boolean merge)
+		com.liferay.portal.model.Address address)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(address, merge);
+		return getPersistence().updateImpl(address);
 	}
 
 	/**

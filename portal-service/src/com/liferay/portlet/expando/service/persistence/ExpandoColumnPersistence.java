@@ -74,8 +74,7 @@ public interface ExpandoColumnPersistence extends BasePersistence<ExpandoColumn>
 			com.liferay.portlet.expando.NoSuchColumnException;
 
 	public com.liferay.portlet.expando.model.ExpandoColumn updateImpl(
-		com.liferay.portlet.expando.model.ExpandoColumn expandoColumn,
-		boolean merge)
+		com.liferay.portlet.expando.model.ExpandoColumn expandoColumn)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

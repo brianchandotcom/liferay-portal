@@ -322,7 +322,12 @@ public class PasswordPolicyRelPersistenceImpl extends BasePersistenceImpl<Passwo
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, passwordPolicyRel);
+			if (passwordPolicyRel.isCachedModel()) {
+				passwordPolicyRel = (PasswordPolicyRel)session.get(PasswordPolicyRelImpl.class,
+						passwordPolicyRel.getPrimaryKeyObj());
+			}
+
+			session.delete(passwordPolicyRel);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -338,8 +343,8 @@ public class PasswordPolicyRelPersistenceImpl extends BasePersistenceImpl<Passwo
 
 	@Override
 	public PasswordPolicyRel updateImpl(
-		com.liferay.portal.model.PasswordPolicyRel passwordPolicyRel,
-		boolean merge) throws SystemException {
+		com.liferay.portal.model.PasswordPolicyRel passwordPolicyRel)
+		throws SystemException {
 		passwordPolicyRel = toUnwrappedModel(passwordPolicyRel);
 
 		boolean isNew = passwordPolicyRel.isNew();
@@ -351,9 +356,14 @@ public class PasswordPolicyRelPersistenceImpl extends BasePersistenceImpl<Passwo
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, passwordPolicyRel, merge);
+			if (passwordPolicyRel.isNew()) {
+				session.save(passwordPolicyRel);
 
-			passwordPolicyRel.setNew(false);
+				passwordPolicyRel.setNew(false);
+			}
+			else {
+				session.merge(passwordPolicyRel);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

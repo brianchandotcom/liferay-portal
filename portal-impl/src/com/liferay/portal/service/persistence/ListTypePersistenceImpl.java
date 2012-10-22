@@ -255,7 +255,12 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, listType);
+			if (listType.isCachedModel()) {
+				listType = (ListType)session.get(ListTypeImpl.class,
+						listType.getPrimaryKeyObj());
+			}
+
+			session.delete(listType);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -270,8 +275,8 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 	}
 
 	@Override
-	public ListType updateImpl(com.liferay.portal.model.ListType listType,
-		boolean merge) throws SystemException {
+	public ListType updateImpl(com.liferay.portal.model.ListType listType)
+		throws SystemException {
 		listType = toUnwrappedModel(listType);
 
 		boolean isNew = listType.isNew();
@@ -283,9 +288,14 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, listType, merge);
+			if (listType.isNew()) {
+				session.save(listType);
 
-			listType.setNew(false);
+				listType.setNew(false);
+			}
+			else {
+				session.merge(listType);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

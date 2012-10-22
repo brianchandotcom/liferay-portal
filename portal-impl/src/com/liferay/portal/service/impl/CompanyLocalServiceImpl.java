@@ -129,7 +129,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		company.setMaxUsers(maxUsers);
 		company.setActive(active);
 
-		companyPersistence.update(company, false);
+		companyPersistence.update(company);
 
 		// Virtual host
 
@@ -207,7 +207,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			company.setMx(mx);
 			company.setActive(true);
 
-			companyPersistence.update(company, false);
+			companyPersistence.update(company);
 
 			// Shard
 
@@ -283,7 +283,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			if (!defaultUser.isAgreedToTermsOfUse()) {
 				defaultUser.setAgreedToTermsOfUse(true);
 
-				userPersistence.update(defaultUser, false);
+				userPersistence.update(defaultUser);
 			}
 		}
 		catch (NoSuchUserException nsue) {
@@ -328,7 +328,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			defaultUser.setAgreedToTermsOfUse(true);
 			defaultUser.setStatus(WorkflowConstants.STATUS_APPROVED);
 
-			userPersistence.update(defaultUser, false);
+			userPersistence.update(defaultUser);
 
 			// Contact
 
@@ -352,7 +352,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			defaultContact.setMale(true);
 			defaultContact.setBirthday(now);
 
-			contactPersistence.update(defaultContact, false);
+			contactPersistence.update(defaultContact);
 		}
 
 		// System roles
@@ -423,7 +423,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 				throw new SystemException(ee);
 			}
 
-			companyPersistence.update(company, false);
+			companyPersistence.update(company);
 		}
 	}
 
@@ -445,7 +445,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		if (logoId > 0) {
 			company.setLogoId(0);
 
-			companyPersistence.update(company, false);
+			companyPersistence.update(company);
 
 			imageLocalService.deleteImage(logoId);
 		}
@@ -814,7 +814,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		company.setMaxUsers(maxUsers);
 		company.setActive(active);
 
-		companyPersistence.update(company, false);
+		companyPersistence.update(company);
 
 		// Virtual host
 
@@ -872,7 +872,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 		company.setHomeURL(homeURL);
 
-		companyPersistence.update(company, false);
+		companyPersistence.update(company);
 
 		// Account
 
@@ -905,7 +905,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		user.setLanguageId(languageId);
 		user.setTimeZoneId(timeZoneId);
 
-		userPersistence.update(user, false);
+		userPersistence.update(user);
 	}
 
 	/**
@@ -1108,7 +1108,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 			company.setLogoId(logoId);
 
-			company = companyPersistence.update(company, false);
+			company = companyPersistence.update(company);
 		}
 
 		return company;
@@ -1137,7 +1137,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 			company.setAccountId(accountId);
 
-			companyPersistence.update(company, false);
+			companyPersistence.update(company);
 		}
 
 		account.setModifiedDate(now);
@@ -1151,7 +1151,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		account.setType(type);
 		account.setSize(size);
 
-		accountPersistence.update(account, false);
+		accountPersistence.update(account);
 	}
 
 	protected void updateVirtualHost(long companyId, String virtualHostname)

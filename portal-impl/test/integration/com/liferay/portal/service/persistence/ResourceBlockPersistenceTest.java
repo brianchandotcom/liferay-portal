@@ -118,7 +118,7 @@ public class ResourceBlockPersistenceTest {
 
 		newResourceBlock.setReferenceCount(ServiceTestUtil.nextLong());
 
-		_persistence.update(newResourceBlock, false);
+		_persistence.update(newResourceBlock);
 
 		ResourceBlock existingResourceBlock = _persistence.findByPrimaryKey(newResourceBlock.getPrimaryKey());
 
@@ -290,7 +290,7 @@ public class ResourceBlockPersistenceTest {
 
 		resourceBlock.setReferenceCount(ServiceTestUtil.nextLong());
 
-		_persistence.update(resourceBlock, false);
+		_persistence.update(resourceBlock);
 
 		return resourceBlock;
 	}

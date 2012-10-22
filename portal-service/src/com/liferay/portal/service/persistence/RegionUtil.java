@@ -93,19 +93,18 @@ public class RegionUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static Region update(Region region, boolean merge)
-		throws SystemException {
-		return getPersistence().update(region, merge);
+	public static Region update(Region region) throws SystemException {
+		return getPersistence().update(region);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
-	public static Region update(Region region, boolean merge,
-		ServiceContext serviceContext) throws SystemException {
-		return getPersistence().update(region, merge, serviceContext);
+	public static Region update(Region region, ServiceContext serviceContext)
+		throws SystemException {
+		return getPersistence().update(region, serviceContext);
 	}
 
 	/**
@@ -152,9 +151,9 @@ public class RegionUtil {
 	}
 
 	public static com.liferay.portal.model.Region updateImpl(
-		com.liferay.portal.model.Region region, boolean merge)
+		com.liferay.portal.model.Region region)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(region, merge);
+		return getPersistence().updateImpl(region);
 	}
 
 	/**

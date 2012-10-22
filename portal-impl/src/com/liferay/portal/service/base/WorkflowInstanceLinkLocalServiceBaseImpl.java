@@ -249,8 +249,7 @@ public abstract class WorkflowInstanceLinkLocalServiceBaseImpl
 		WorkflowInstanceLink workflowInstanceLink) throws SystemException {
 		workflowInstanceLink.setNew(true);
 
-		return workflowInstanceLinkPersistence.update(workflowInstanceLink,
-			false);
+		return workflowInstanceLinkPersistence.update(workflowInstanceLink);
 	}
 
 	/**
@@ -426,25 +425,7 @@ public abstract class WorkflowInstanceLinkLocalServiceBaseImpl
 	@Indexable(type = IndexableType.REINDEX)
 	public WorkflowInstanceLink updateWorkflowInstanceLink(
 		WorkflowInstanceLink workflowInstanceLink) throws SystemException {
-		return updateWorkflowInstanceLink(workflowInstanceLink, true);
-	}
-
-	/**
-	 * Updates the workflow instance link in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param workflowInstanceLink the workflow instance link
-	 * @param merge whether to merge the workflow instance link with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	 * @return the workflow instance link that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public WorkflowInstanceLink updateWorkflowInstanceLink(
-		WorkflowInstanceLink workflowInstanceLink, boolean merge)
-		throws SystemException {
-		workflowInstanceLink.setNew(false);
-
-		return workflowInstanceLinkPersistence.update(workflowInstanceLink,
-			merge);
+		return workflowInstanceLinkPersistence.update(workflowInstanceLink);
 	}
 
 	/**

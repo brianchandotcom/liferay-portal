@@ -67,7 +67,7 @@ public class VirtualHostLocalServiceImpl
 
 		virtualHost.setHostname(hostname);
 
-		virtualHostPersistence.update(virtualHost, false);
+		virtualHostPersistence.update(virtualHost);
 
 		return virtualHost;
 	}

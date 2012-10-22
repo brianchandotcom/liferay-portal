@@ -249,7 +249,7 @@ public abstract class LayoutBranchLocalServiceBaseImpl
 		throws SystemException {
 		layoutBranch.setNew(true);
 
-		return layoutBranchPersistence.update(layoutBranch, false);
+		return layoutBranchPersistence.update(layoutBranch);
 	}
 
 	/**
@@ -422,23 +422,7 @@ public abstract class LayoutBranchLocalServiceBaseImpl
 	@Indexable(type = IndexableType.REINDEX)
 	public LayoutBranch updateLayoutBranch(LayoutBranch layoutBranch)
 		throws SystemException {
-		return updateLayoutBranch(layoutBranch, true);
-	}
-
-	/**
-	 * Updates the layout branch in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param layoutBranch the layout branch
-	 * @param merge whether to merge the layout branch with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	 * @return the layout branch that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public LayoutBranch updateLayoutBranch(LayoutBranch layoutBranch,
-		boolean merge) throws SystemException {
-		layoutBranch.setNew(false);
-
-		return layoutBranchPersistence.update(layoutBranch, merge);
+		return layoutBranchPersistence.update(layoutBranch);
 	}
 
 	/**

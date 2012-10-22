@@ -231,22 +231,6 @@ public class SocialRelationLocalServiceWrapper
 	}
 
 	/**
-	* Updates the social relation in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param socialRelation the social relation
-	* @param merge whether to merge the social relation with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	* @return the social relation that was updated
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portlet.social.model.SocialRelation updateSocialRelation(
-		com.liferay.portlet.social.model.SocialRelation socialRelation,
-		boolean merge)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _socialRelationLocalService.updateSocialRelation(socialRelation,
-			merge);
-	}
-
-	/**
 	* Returns the Spring bean ID for this bean.
 	*
 	* @return the Spring bean ID for this bean

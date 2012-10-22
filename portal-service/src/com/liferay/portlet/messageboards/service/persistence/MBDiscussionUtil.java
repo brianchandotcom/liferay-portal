@@ -95,19 +95,19 @@ public class MBDiscussionUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static MBDiscussion update(MBDiscussion mbDiscussion, boolean merge)
+	public static MBDiscussion update(MBDiscussion mbDiscussion)
 		throws SystemException {
-		return getPersistence().update(mbDiscussion, merge);
+		return getPersistence().update(mbDiscussion);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
-	public static MBDiscussion update(MBDiscussion mbDiscussion, boolean merge,
+	public static MBDiscussion update(MBDiscussion mbDiscussion,
 		ServiceContext serviceContext) throws SystemException {
-		return getPersistence().update(mbDiscussion, merge, serviceContext);
+		return getPersistence().update(mbDiscussion, serviceContext);
 	}
 
 	/**
@@ -157,10 +157,9 @@ public class MBDiscussionUtil {
 	}
 
 	public static com.liferay.portlet.messageboards.model.MBDiscussion updateImpl(
-		com.liferay.portlet.messageboards.model.MBDiscussion mbDiscussion,
-		boolean merge)
+		com.liferay.portlet.messageboards.model.MBDiscussion mbDiscussion)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(mbDiscussion, merge);
+		return getPersistence().updateImpl(mbDiscussion);
 	}
 
 	/**

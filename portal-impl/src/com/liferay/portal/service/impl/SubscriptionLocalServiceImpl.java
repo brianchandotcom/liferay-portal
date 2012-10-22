@@ -77,7 +77,7 @@ public class SubscriptionLocalServiceImpl
 			subscription.setClassPK(classPK);
 			subscription.setFrequency(frequency);
 
-			subscriptionPersistence.update(subscription, false);
+			subscriptionPersistence.update(subscription);
 		}
 
 		if (groupId > 0) {

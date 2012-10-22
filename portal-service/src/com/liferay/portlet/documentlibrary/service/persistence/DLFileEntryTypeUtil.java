@@ -95,19 +95,19 @@ public class DLFileEntryTypeUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static DLFileEntryType update(DLFileEntryType dlFileEntryType,
-		boolean merge) throws SystemException {
-		return getPersistence().update(dlFileEntryType, merge);
+	public static DLFileEntryType update(DLFileEntryType dlFileEntryType)
+		throws SystemException {
+		return getPersistence().update(dlFileEntryType);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
 	public static DLFileEntryType update(DLFileEntryType dlFileEntryType,
-		boolean merge, ServiceContext serviceContext) throws SystemException {
-		return getPersistence().update(dlFileEntryType, merge, serviceContext);
+		ServiceContext serviceContext) throws SystemException {
+		return getPersistence().update(dlFileEntryType, serviceContext);
 	}
 
 	/**
@@ -157,10 +157,9 @@ public class DLFileEntryTypeUtil {
 	}
 
 	public static com.liferay.portlet.documentlibrary.model.DLFileEntryType updateImpl(
-		com.liferay.portlet.documentlibrary.model.DLFileEntryType dlFileEntryType,
-		boolean merge)
+		com.liferay.portlet.documentlibrary.model.DLFileEntryType dlFileEntryType)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(dlFileEntryType, merge);
+		return getPersistence().updateImpl(dlFileEntryType);
 	}
 
 	/**

@@ -136,7 +136,7 @@ public class DLContentPersistenceTest {
 
 		newDLContent.setSize(ServiceTestUtil.nextLong());
 
-		_persistence.update(newDLContent, false);
+		_persistence.update(newDLContent);
 
 		DLContent existingDLContent = _persistence.findByPrimaryKey(newDLContent.getPrimaryKey());
 
@@ -321,7 +321,7 @@ public class DLContentPersistenceTest {
 
 		dlContent.setSize(ServiceTestUtil.nextLong());
 
-		_persistence.update(dlContent, false);
+		_persistence.update(dlContent);
 
 		return dlContent;
 	}

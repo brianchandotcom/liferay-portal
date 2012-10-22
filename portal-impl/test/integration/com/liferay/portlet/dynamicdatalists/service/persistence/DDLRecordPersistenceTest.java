@@ -136,7 +136,7 @@ public class DDLRecordPersistenceTest {
 
 		newDDLRecord.setDisplayIndex(ServiceTestUtil.nextInt());
 
-		_persistence.update(newDDLRecord, false);
+		_persistence.update(newDDLRecord);
 
 		DDLRecord existingDDLRecord = _persistence.findByPrimaryKey(newDDLRecord.getPrimaryKey());
 
@@ -333,7 +333,7 @@ public class DDLRecordPersistenceTest {
 
 		ddlRecord.setDisplayIndex(ServiceTestUtil.nextInt());
 
-		_persistence.update(ddlRecord, false);
+		_persistence.update(ddlRecord);
 
 		return ddlRecord;
 	}

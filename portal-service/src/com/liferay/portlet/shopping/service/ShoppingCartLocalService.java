@@ -216,19 +216,6 @@ public interface ShoppingCartLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Updates the shopping cart in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param shoppingCart the shopping cart
-	* @param merge whether to merge the shopping cart with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	* @return the shopping cart that was updated
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portlet.shopping.model.ShoppingCart updateShoppingCart(
-		com.liferay.portlet.shopping.model.ShoppingCart shoppingCart,
-		boolean merge)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
 	* Returns the Spring bean ID for this bean.
 	*
 	* @return the Spring bean ID for this bean

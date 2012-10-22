@@ -90,7 +90,7 @@ public abstract class SCLicenseLocalServiceBaseImpl extends BaseLocalServiceImpl
 		throws SystemException {
 		scLicense.setNew(true);
 
-		return scLicensePersistence.update(scLicense, false);
+		return scLicensePersistence.update(scLicense);
 	}
 
 	/**
@@ -262,23 +262,7 @@ public abstract class SCLicenseLocalServiceBaseImpl extends BaseLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	public SCLicense updateSCLicense(SCLicense scLicense)
 		throws SystemException {
-		return updateSCLicense(scLicense, true);
-	}
-
-	/**
-	 * Updates the s c license in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param scLicense the s c license
-	 * @param merge whether to merge the s c license with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	 * @return the s c license that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public SCLicense updateSCLicense(SCLicense scLicense, boolean merge)
-		throws SystemException {
-		scLicense.setNew(false);
-
-		return scLicensePersistence.update(scLicense, merge);
+		return scLicensePersistence.update(scLicense);
 	}
 
 	/**

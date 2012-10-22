@@ -118,7 +118,7 @@ public class PortletPreferencesPersistenceTest {
 
 		newPortletPreferences.setPreferences(ServiceTestUtil.randomString());
 
-		_persistence.update(newPortletPreferences, false);
+		_persistence.update(newPortletPreferences);
 
 		PortletPreferences existingPortletPreferences = _persistence.findByPrimaryKey(newPortletPreferences.getPrimaryKey());
 
@@ -291,7 +291,7 @@ public class PortletPreferencesPersistenceTest {
 
 		portletPreferences.setPreferences(ServiceTestUtil.randomString());
 
-		_persistence.update(portletPreferences, false);
+		_persistence.update(portletPreferences);
 
 		return portletPreferences;
 	}

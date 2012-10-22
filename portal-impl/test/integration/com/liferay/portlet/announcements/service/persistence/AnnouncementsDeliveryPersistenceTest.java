@@ -121,7 +121,7 @@ public class AnnouncementsDeliveryPersistenceTest {
 
 		newAnnouncementsDelivery.setWebsite(ServiceTestUtil.randomBoolean());
 
-		_persistence.update(newAnnouncementsDelivery, false);
+		_persistence.update(newAnnouncementsDelivery);
 
 		AnnouncementsDelivery existingAnnouncementsDelivery = _persistence.findByPrimaryKey(newAnnouncementsDelivery.getPrimaryKey());
 
@@ -293,7 +293,7 @@ public class AnnouncementsDeliveryPersistenceTest {
 
 		announcementsDelivery.setWebsite(ServiceTestUtil.randomBoolean());
 
-		_persistence.update(announcementsDelivery, false);
+		_persistence.update(announcementsDelivery);
 
 		return announcementsDelivery;
 	}

@@ -249,7 +249,7 @@ public abstract class LayoutPrototypeLocalServiceBaseImpl
 		throws SystemException {
 		layoutPrototype.setNew(true);
 
-		return layoutPrototypePersistence.update(layoutPrototype, false);
+		return layoutPrototypePersistence.update(layoutPrototype);
 	}
 
 	/**
@@ -424,24 +424,7 @@ public abstract class LayoutPrototypeLocalServiceBaseImpl
 	@Indexable(type = IndexableType.REINDEX)
 	public LayoutPrototype updateLayoutPrototype(
 		LayoutPrototype layoutPrototype) throws SystemException {
-		return updateLayoutPrototype(layoutPrototype, true);
-	}
-
-	/**
-	 * Updates the layout prototype in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param layoutPrototype the layout prototype
-	 * @param merge whether to merge the layout prototype with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	 * @return the layout prototype that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public LayoutPrototype updateLayoutPrototype(
-		LayoutPrototype layoutPrototype, boolean merge)
-		throws SystemException {
-		layoutPrototype.setNew(false);
-
-		return layoutPrototypePersistence.update(layoutPrototype, merge);
+		return layoutPrototypePersistence.update(layoutPrototype);
 	}
 
 	/**

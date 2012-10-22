@@ -130,7 +130,7 @@ public class DDMContentPersistenceTest {
 
 		newDDMContent.setXml(ServiceTestUtil.randomString());
 
-		_persistence.update(newDDMContent, false);
+		_persistence.update(newDDMContent);
 
 		DDMContent existingDDMContent = _persistence.findByPrimaryKey(newDDMContent.getPrimaryKey());
 
@@ -315,7 +315,7 @@ public class DDMContentPersistenceTest {
 
 		ddmContent.setXml(ServiceTestUtil.randomString());
 
-		_persistence.update(ddmContent, false);
+		_persistence.update(ddmContent);
 
 		return ddmContent;
 	}

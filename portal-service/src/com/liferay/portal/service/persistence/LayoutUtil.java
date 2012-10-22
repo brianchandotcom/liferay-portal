@@ -93,19 +93,18 @@ public class LayoutUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static Layout update(Layout layout, boolean merge)
-		throws SystemException {
-		return getPersistence().update(layout, merge);
+	public static Layout update(Layout layout) throws SystemException {
+		return getPersistence().update(layout);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
-	public static Layout update(Layout layout, boolean merge,
-		ServiceContext serviceContext) throws SystemException {
-		return getPersistence().update(layout, merge, serviceContext);
+	public static Layout update(Layout layout, ServiceContext serviceContext)
+		throws SystemException {
+		return getPersistence().update(layout, serviceContext);
 	}
 
 	/**
@@ -152,9 +151,9 @@ public class LayoutUtil {
 	}
 
 	public static com.liferay.portal.model.Layout updateImpl(
-		com.liferay.portal.model.Layout layout, boolean merge)
+		com.liferay.portal.model.Layout layout)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(layout, merge);
+		return getPersistence().updateImpl(layout);
 	}
 
 	/**

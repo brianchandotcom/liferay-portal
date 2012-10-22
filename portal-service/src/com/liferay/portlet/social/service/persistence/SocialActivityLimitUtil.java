@@ -95,22 +95,20 @@ public class SocialActivityLimitUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
 	public static SocialActivityLimit update(
-		SocialActivityLimit socialActivityLimit, boolean merge)
-		throws SystemException {
-		return getPersistence().update(socialActivityLimit, merge);
+		SocialActivityLimit socialActivityLimit) throws SystemException {
+		return getPersistence().update(socialActivityLimit);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
 	public static SocialActivityLimit update(
-		SocialActivityLimit socialActivityLimit, boolean merge,
-		ServiceContext serviceContext) throws SystemException {
-		return getPersistence()
-				   .update(socialActivityLimit, merge, serviceContext);
+		SocialActivityLimit socialActivityLimit, ServiceContext serviceContext)
+		throws SystemException {
+		return getPersistence().update(socialActivityLimit, serviceContext);
 	}
 
 	/**
@@ -160,10 +158,9 @@ public class SocialActivityLimitUtil {
 	}
 
 	public static com.liferay.portlet.social.model.SocialActivityLimit updateImpl(
-		com.liferay.portlet.social.model.SocialActivityLimit socialActivityLimit,
-		boolean merge)
+		com.liferay.portlet.social.model.SocialActivityLimit socialActivityLimit)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(socialActivityLimit, merge);
+		return getPersistence().updateImpl(socialActivityLimit);
 	}
 
 	/**

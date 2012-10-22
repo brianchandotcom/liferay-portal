@@ -128,7 +128,7 @@ public class SocialActivityPersistenceTest {
 
 		newSocialActivity.setReceiverUserId(ServiceTestUtil.nextLong());
 
-		_persistence.update(newSocialActivity, false);
+		_persistence.update(newSocialActivity);
 
 		SocialActivity existingSocialActivity = _persistence.findByPrimaryKey(newSocialActivity.getPrimaryKey());
 
@@ -324,7 +324,7 @@ public class SocialActivityPersistenceTest {
 
 		socialActivity.setReceiverUserId(ServiceTestUtil.nextLong());
 
-		_persistence.update(socialActivity, false);
+		_persistence.update(socialActivity);
 
 		return socialActivity;
 	}

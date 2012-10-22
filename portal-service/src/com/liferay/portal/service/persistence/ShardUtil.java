@@ -93,19 +93,18 @@ public class ShardUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static Shard update(Shard shard, boolean merge)
-		throws SystemException {
-		return getPersistence().update(shard, merge);
+	public static Shard update(Shard shard) throws SystemException {
+		return getPersistence().update(shard);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
-	public static Shard update(Shard shard, boolean merge,
-		ServiceContext serviceContext) throws SystemException {
-		return getPersistence().update(shard, merge, serviceContext);
+	public static Shard update(Shard shard, ServiceContext serviceContext)
+		throws SystemException {
+		return getPersistence().update(shard, serviceContext);
 	}
 
 	/**
@@ -152,9 +151,9 @@ public class ShardUtil {
 	}
 
 	public static com.liferay.portal.model.Shard updateImpl(
-		com.liferay.portal.model.Shard shard, boolean merge)
+		com.liferay.portal.model.Shard shard)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(shard, merge);
+		return getPersistence().updateImpl(shard);
 	}
 
 	/**

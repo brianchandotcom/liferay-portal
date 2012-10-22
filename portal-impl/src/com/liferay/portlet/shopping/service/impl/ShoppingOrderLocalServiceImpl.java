@@ -134,7 +134,7 @@ public class ShoppingOrderLocalServiceImpl
 		order.setSendOrderEmail(true);
 		order.setSendShippingEmail(true);
 
-		shoppingOrderPersistence.update(order, false);
+		shoppingOrderPersistence.update(order);
 
 		// Message boards
 
@@ -165,7 +165,7 @@ public class ShoppingOrderLocalServiceImpl
 		order.setPpReceiverEmail(ppReceiverEmail);
 		order.setPpPayerEmail(ppPayerEmail);
 
-		shoppingOrderPersistence.update(order, false);
+		shoppingOrderPersistence.update(order);
 
 		// Inventory
 
@@ -214,7 +214,7 @@ public class ShoppingOrderLocalServiceImpl
 					}
 				}
 
-				shoppingItemPersistence.update(item, false);
+				shoppingItemPersistence.update(item);
 			}
 		}
 
@@ -322,7 +322,7 @@ public class ShoppingOrderLocalServiceImpl
 		order.setModifiedDate(now);
 		order.setPpPaymentStatus(ShoppingOrderConstants.STATUS_CHECKOUT);
 
-		shoppingOrderPersistence.update(order, false);
+		shoppingOrderPersistence.update(order);
 
 		boolean requiresShipping = false;
 
@@ -352,7 +352,7 @@ public class ShoppingOrderLocalServiceImpl
 					count.intValue());
 			orderItem.setQuantity(count.intValue());
 
-			shoppingOrderItemPersistence.update(orderItem, false);
+			shoppingOrderItemPersistence.update(orderItem);
 		}
 
 		order.setModifiedDate(new Date());
@@ -372,7 +372,7 @@ public class ShoppingOrderLocalServiceImpl
 		order.setSendOrderEmail(true);
 		order.setSendShippingEmail(true);
 
-		shoppingOrderPersistence.update(order, false);
+		shoppingOrderPersistence.update(order);
 
 		return order;
 	}
@@ -509,12 +509,12 @@ public class ShoppingOrderLocalServiceImpl
 		if (emailType.equals("confirmation") && order.isSendOrderEmail()) {
 			order.setSendOrderEmail(false);
 
-			shoppingOrderPersistence.update(order, false);
+			shoppingOrderPersistence.update(order);
 		}
 		else if (emailType.equals("shipping") && order.isSendShippingEmail()) {
 			order.setSendShippingEmail(false);
 
-			shoppingOrderPersistence.update(order, false);
+			shoppingOrderPersistence.update(order);
 		}
 	}
 
@@ -559,7 +559,7 @@ public class ShoppingOrderLocalServiceImpl
 		order.setPpReceiverEmail(ppReceiverEmail);
 		order.setPpPayerEmail(ppPayerEmail);
 
-		shoppingOrderPersistence.update(order, false);
+		shoppingOrderPersistence.update(order);
 
 		return order;
 	}
@@ -638,7 +638,7 @@ public class ShoppingOrderLocalServiceImpl
 		order.setCcVerNumber(ccVerNumber);
 		order.setComments(comments);
 
-		shoppingOrderPersistence.update(order, false);
+		shoppingOrderPersistence.update(order);
 
 		return order;
 	}

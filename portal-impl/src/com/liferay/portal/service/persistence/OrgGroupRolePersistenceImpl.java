@@ -275,7 +275,12 @@ public class OrgGroupRolePersistenceImpl extends BasePersistenceImpl<OrgGroupRol
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, orgGroupRole);
+			if (orgGroupRole.isCachedModel()) {
+				orgGroupRole = (OrgGroupRole)session.get(OrgGroupRoleImpl.class,
+						orgGroupRole.getPrimaryKeyObj());
+			}
+
+			session.delete(orgGroupRole);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -291,7 +296,7 @@ public class OrgGroupRolePersistenceImpl extends BasePersistenceImpl<OrgGroupRol
 
 	@Override
 	public OrgGroupRole updateImpl(
-		com.liferay.portal.model.OrgGroupRole orgGroupRole, boolean merge)
+		com.liferay.portal.model.OrgGroupRole orgGroupRole)
 		throws SystemException {
 		orgGroupRole = toUnwrappedModel(orgGroupRole);
 
@@ -304,9 +309,14 @@ public class OrgGroupRolePersistenceImpl extends BasePersistenceImpl<OrgGroupRol
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, orgGroupRole, merge);
+			if (orgGroupRole.isNew()) {
+				session.save(orgGroupRole);
 
-			orgGroupRole.setNew(false);
+				orgGroupRole.setNew(false);
+			}
+			else {
+				session.merge(orgGroupRole);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

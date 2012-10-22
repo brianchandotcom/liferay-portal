@@ -94,21 +94,20 @@ public class PortletPreferencesUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
 	public static PortletPreferences update(
-		PortletPreferences portletPreferences, boolean merge)
-		throws SystemException {
-		return getPersistence().update(portletPreferences, merge);
+		PortletPreferences portletPreferences) throws SystemException {
+		return getPersistence().update(portletPreferences);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
 	public static PortletPreferences update(
-		PortletPreferences portletPreferences, boolean merge,
-		ServiceContext serviceContext) throws SystemException {
-		return getPersistence().update(portletPreferences, merge, serviceContext);
+		PortletPreferences portletPreferences, ServiceContext serviceContext)
+		throws SystemException {
+		return getPersistence().update(portletPreferences, serviceContext);
 	}
 
 	/**
@@ -158,10 +157,9 @@ public class PortletPreferencesUtil {
 	}
 
 	public static com.liferay.portal.model.PortletPreferences updateImpl(
-		com.liferay.portal.model.PortletPreferences portletPreferences,
-		boolean merge)
+		com.liferay.portal.model.PortletPreferences portletPreferences)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(portletPreferences, merge);
+		return getPersistence().updateImpl(portletPreferences);
 	}
 
 	/**

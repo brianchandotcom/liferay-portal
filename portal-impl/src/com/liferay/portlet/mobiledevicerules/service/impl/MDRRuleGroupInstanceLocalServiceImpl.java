@@ -65,7 +65,7 @@ public class MDRRuleGroupInstanceLocalServiceImpl
 		ruleGroupInstance.setRuleGroupId(ruleGroupId);
 		ruleGroupInstance.setPriority(priority);
 
-		return updateMDRRuleGroupInstance(ruleGroupInstance, false);
+		return updateMDRRuleGroupInstance(ruleGroupInstance);
 	}
 
 	public MDRRuleGroupInstance addRuleGroupInstance(
@@ -227,7 +227,7 @@ public class MDRRuleGroupInstanceLocalServiceImpl
 
 		ruleGroupInstance.setPriority(priority);
 
-		mdrRuleGroupInstancePersistence.update(ruleGroupInstance, false);
+		mdrRuleGroupInstancePersistence.update(ruleGroupInstance);
 
 		return ruleGroupInstance;
 	}

@@ -134,7 +134,7 @@ public class MDRRulePersistenceTest {
 
 		newMDRRule.setTypeSettings(ServiceTestUtil.randomString());
 
-		_persistence.update(newMDRRule, false);
+		_persistence.update(newMDRRule);
 
 		MDRRule existingMDRRule = _persistence.findByPrimaryKey(newMDRRule.getPrimaryKey());
 
@@ -322,7 +322,7 @@ public class MDRRulePersistenceTest {
 
 		mdrRule.setTypeSettings(ServiceTestUtil.randomString());
 
-		_persistence.update(mdrRule, false);
+		_persistence.update(mdrRule);
 
 		return mdrRule;
 	}

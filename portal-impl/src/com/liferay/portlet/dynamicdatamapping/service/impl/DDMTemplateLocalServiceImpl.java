@@ -82,7 +82,7 @@ public class DDMTemplateLocalServiceImpl
 		template.setScript(script);
 		template.setCacheable(cacheable);
 
-		ddmTemplatePersistence.update(template, false);
+		ddmTemplatePersistence.update(template);
 
 		// Resources
 
@@ -342,7 +342,7 @@ public class DDMTemplateLocalServiceImpl
 		template.setScript(script);
 		template.setCacheable(cacheable);
 
-		ddmTemplatePersistence.update(template, false);
+		ddmTemplatePersistence.update(template);
 
 		return template;
 	}

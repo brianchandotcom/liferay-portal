@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
-import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.GroupPersistence;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
@@ -384,7 +383,12 @@ public class SocialActivitySettingPersistenceImpl extends BasePersistenceImpl<So
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, socialActivitySetting);
+			if (socialActivitySetting.isCachedModel()) {
+				socialActivitySetting = (SocialActivitySetting)session.get(SocialActivitySettingImpl.class,
+						socialActivitySetting.getPrimaryKeyObj());
+			}
+
+			session.delete(socialActivitySetting);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -400,8 +404,8 @@ public class SocialActivitySettingPersistenceImpl extends BasePersistenceImpl<So
 
 	@Override
 	public SocialActivitySetting updateImpl(
-		com.liferay.portlet.social.model.SocialActivitySetting socialActivitySetting,
-		boolean merge) throws SystemException {
+		com.liferay.portlet.social.model.SocialActivitySetting socialActivitySetting)
+		throws SystemException {
 		socialActivitySetting = toUnwrappedModel(socialActivitySetting);
 
 		boolean isNew = socialActivitySetting.isNew();
@@ -413,9 +417,14 @@ public class SocialActivitySettingPersistenceImpl extends BasePersistenceImpl<So
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, socialActivitySetting, merge);
+			if (socialActivitySetting.isNew()) {
+				session.save(socialActivitySetting);
 
-			socialActivitySetting.setNew(false);
+				socialActivitySetting.setNew(false);
+			}
+			else {
+				session.merge(socialActivitySetting);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

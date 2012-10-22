@@ -94,22 +94,20 @@ public class WorkflowInstanceLinkUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
 	public static WorkflowInstanceLink update(
-		WorkflowInstanceLink workflowInstanceLink, boolean merge)
-		throws SystemException {
-		return getPersistence().update(workflowInstanceLink, merge);
+		WorkflowInstanceLink workflowInstanceLink) throws SystemException {
+		return getPersistence().update(workflowInstanceLink);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
 	public static WorkflowInstanceLink update(
-		WorkflowInstanceLink workflowInstanceLink, boolean merge,
-		ServiceContext serviceContext) throws SystemException {
-		return getPersistence()
-				   .update(workflowInstanceLink, merge, serviceContext);
+		WorkflowInstanceLink workflowInstanceLink, ServiceContext serviceContext)
+		throws SystemException {
+		return getPersistence().update(workflowInstanceLink, serviceContext);
 	}
 
 	/**
@@ -159,10 +157,9 @@ public class WorkflowInstanceLinkUtil {
 	}
 
 	public static com.liferay.portal.model.WorkflowInstanceLink updateImpl(
-		com.liferay.portal.model.WorkflowInstanceLink workflowInstanceLink,
-		boolean merge)
+		com.liferay.portal.model.WorkflowInstanceLink workflowInstanceLink)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(workflowInstanceLink, merge);
+		return getPersistence().updateImpl(workflowInstanceLink);
 	}
 
 	/**

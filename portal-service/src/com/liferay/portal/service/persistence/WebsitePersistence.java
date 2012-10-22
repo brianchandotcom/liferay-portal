@@ -71,7 +71,7 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portal.model.Website updateImpl(
-		com.liferay.portal.model.Website website, boolean merge)
+		com.liferay.portal.model.Website website)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

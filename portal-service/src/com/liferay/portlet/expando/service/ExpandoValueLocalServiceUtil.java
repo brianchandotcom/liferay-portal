@@ -235,21 +235,6 @@ public class ExpandoValueLocalServiceUtil {
 	}
 
 	/**
-	* Updates the expando value in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param expandoValue the expando value
-	* @param merge whether to merge the expando value with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	* @return the expando value that was updated
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portlet.expando.model.ExpandoValue updateExpandoValue(
-		com.liferay.portlet.expando.model.ExpandoValue expandoValue,
-		boolean merge)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().updateExpandoValue(expandoValue, merge);
-	}
-
-	/**
 	* Returns the Spring bean ID for this bean.
 	*
 	* @return the Spring bean ID for this bean

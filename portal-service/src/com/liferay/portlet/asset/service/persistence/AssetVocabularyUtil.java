@@ -95,19 +95,19 @@ public class AssetVocabularyUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static AssetVocabulary update(AssetVocabulary assetVocabulary,
-		boolean merge) throws SystemException {
-		return getPersistence().update(assetVocabulary, merge);
+	public static AssetVocabulary update(AssetVocabulary assetVocabulary)
+		throws SystemException {
+		return getPersistence().update(assetVocabulary);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
 	public static AssetVocabulary update(AssetVocabulary assetVocabulary,
-		boolean merge, ServiceContext serviceContext) throws SystemException {
-		return getPersistence().update(assetVocabulary, merge, serviceContext);
+		ServiceContext serviceContext) throws SystemException {
+		return getPersistence().update(assetVocabulary, serviceContext);
 	}
 
 	/**
@@ -157,10 +157,9 @@ public class AssetVocabularyUtil {
 	}
 
 	public static com.liferay.portlet.asset.model.AssetVocabulary updateImpl(
-		com.liferay.portlet.asset.model.AssetVocabulary assetVocabulary,
-		boolean merge)
+		com.liferay.portlet.asset.model.AssetVocabulary assetVocabulary)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(assetVocabulary, merge);
+		return getPersistence().updateImpl(assetVocabulary);
 	}
 
 	/**

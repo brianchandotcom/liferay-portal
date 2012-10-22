@@ -95,19 +95,19 @@ public class DLContentUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static DLContent update(DLContent dlContent, boolean merge)
+	public static DLContent update(DLContent dlContent)
 		throws SystemException {
-		return getPersistence().update(dlContent, merge);
+		return getPersistence().update(dlContent);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
-	public static DLContent update(DLContent dlContent, boolean merge,
+	public static DLContent update(DLContent dlContent,
 		ServiceContext serviceContext) throws SystemException {
-		return getPersistence().update(dlContent, merge, serviceContext);
+		return getPersistence().update(dlContent, serviceContext);
 	}
 
 	/**
@@ -157,10 +157,9 @@ public class DLContentUtil {
 	}
 
 	public static com.liferay.portlet.documentlibrary.model.DLContent updateImpl(
-		com.liferay.portlet.documentlibrary.model.DLContent dlContent,
-		boolean merge)
+		com.liferay.portlet.documentlibrary.model.DLContent dlContent)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(dlContent, merge);
+		return getPersistence().updateImpl(dlContent);
 	}
 
 	/**

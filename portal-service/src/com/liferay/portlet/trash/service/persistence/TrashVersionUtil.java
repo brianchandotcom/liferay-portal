@@ -95,19 +95,19 @@ public class TrashVersionUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static TrashVersion update(TrashVersion trashVersion, boolean merge)
+	public static TrashVersion update(TrashVersion trashVersion)
 		throws SystemException {
-		return getPersistence().update(trashVersion, merge);
+		return getPersistence().update(trashVersion);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
-	public static TrashVersion update(TrashVersion trashVersion, boolean merge,
+	public static TrashVersion update(TrashVersion trashVersion,
 		ServiceContext serviceContext) throws SystemException {
-		return getPersistence().update(trashVersion, merge, serviceContext);
+		return getPersistence().update(trashVersion, serviceContext);
 	}
 
 	/**
@@ -157,9 +157,9 @@ public class TrashVersionUtil {
 	}
 
 	public static com.liferay.portlet.trash.model.TrashVersion updateImpl(
-		com.liferay.portlet.trash.model.TrashVersion trashVersion, boolean merge)
+		com.liferay.portlet.trash.model.TrashVersion trashVersion)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(trashVersion, merge);
+		return getPersistence().updateImpl(trashVersion);
 	}
 
 	/**

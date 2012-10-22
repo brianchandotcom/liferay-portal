@@ -76,8 +76,7 @@ public interface SCFrameworkVersionPersistence extends BasePersistence<SCFramewo
 			com.liferay.portlet.softwarecatalog.NoSuchFrameworkVersionException;
 
 	public com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion updateImpl(
-		com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion scFrameworkVersion,
-		boolean merge)
+		com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion scFrameworkVersion)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

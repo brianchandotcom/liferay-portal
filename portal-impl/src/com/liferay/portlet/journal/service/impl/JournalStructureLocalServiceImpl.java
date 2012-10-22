@@ -112,7 +112,7 @@ public class JournalStructureLocalServiceImpl
 		structure.setDescriptionMap(descriptionMap);
 		structure.setXsd(xsd);
 
-		journalStructurePersistence.update(structure, false);
+		journalStructurePersistence.update(structure);
 
 		// Resources
 
@@ -197,7 +197,7 @@ public class JournalStructureLocalServiceImpl
 
 			structure.setXsd(xsd);
 
-			journalStructurePersistence.update(structure, false);
+			journalStructurePersistence.update(structure);
 		}
 	}
 
@@ -245,7 +245,7 @@ public class JournalStructureLocalServiceImpl
 		newStructure.setDescriptionMap(oldStructure.getDescriptionMap());
 		newStructure.setXsd(oldStructure.getXsd());
 
-		journalStructurePersistence.update(newStructure, false);
+		journalStructurePersistence.update(newStructure);
 
 		// Resources
 
@@ -511,7 +511,7 @@ public class JournalStructureLocalServiceImpl
 		structure.setDescriptionMap(descriptionMap);
 		structure.setXsd(xsd);
 
-		journalStructurePersistence.update(structure, false);
+		journalStructurePersistence.update(structure);
 
 		// Expando
 

@@ -121,7 +121,7 @@ public class UserNotificationEventPersistenceTest {
 
 		newUserNotificationEvent.setArchived(ServiceTestUtil.randomBoolean());
 
-		_persistence.update(newUserNotificationEvent, false);
+		_persistence.update(newUserNotificationEvent);
 
 		UserNotificationEvent existingUserNotificationEvent = _persistence.findByPrimaryKey(newUserNotificationEvent.getPrimaryKey());
 
@@ -286,7 +286,7 @@ public class UserNotificationEventPersistenceTest {
 
 		userNotificationEvent.setArchived(ServiceTestUtil.randomBoolean());
 
-		_persistence.update(userNotificationEvent, false);
+		_persistence.update(userNotificationEvent);
 
 		return userNotificationEvent;
 	}

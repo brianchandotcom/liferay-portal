@@ -118,7 +118,7 @@ public class UserGroupPersistenceTest {
 
 		newUserGroup.setAddedByLDAPImport(ServiceTestUtil.randomBoolean());
 
-		_persistence.update(newUserGroup, false);
+		_persistence.update(newUserGroup);
 
 		UserGroup existingUserGroup = _persistence.findByPrimaryKey(newUserGroup.getPrimaryKey());
 
@@ -281,7 +281,7 @@ public class UserGroupPersistenceTest {
 
 		userGroup.setAddedByLDAPImport(ServiceTestUtil.randomBoolean());
 
-		_persistence.update(userGroup, false);
+		_persistence.update(userGroup);
 
 		return userGroup;
 	}

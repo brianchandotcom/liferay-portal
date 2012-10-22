@@ -235,21 +235,6 @@ public class MBDiscussionLocalServiceUtil {
 	}
 
 	/**
-	* Updates the message boards discussion in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param mbDiscussion the message boards discussion
-	* @param merge whether to merge the message boards discussion with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	* @return the message boards discussion that was updated
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portlet.messageboards.model.MBDiscussion updateMBDiscussion(
-		com.liferay.portlet.messageboards.model.MBDiscussion mbDiscussion,
-		boolean merge)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().updateMBDiscussion(mbDiscussion, merge);
-	}
-
-	/**
 	* Returns the Spring bean ID for this bean.
 	*
 	* @return the Spring bean ID for this bean

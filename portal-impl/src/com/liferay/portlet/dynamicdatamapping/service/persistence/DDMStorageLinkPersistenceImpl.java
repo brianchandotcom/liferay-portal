@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
-import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
@@ -313,7 +312,12 @@ public class DDMStorageLinkPersistenceImpl extends BasePersistenceImpl<DDMStorag
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, ddmStorageLink);
+			if (ddmStorageLink.isCachedModel()) {
+				ddmStorageLink = (DDMStorageLink)session.get(DDMStorageLinkImpl.class,
+						ddmStorageLink.getPrimaryKeyObj());
+			}
+
+			session.delete(ddmStorageLink);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -329,8 +333,8 @@ public class DDMStorageLinkPersistenceImpl extends BasePersistenceImpl<DDMStorag
 
 	@Override
 	public DDMStorageLink updateImpl(
-		com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink ddmStorageLink,
-		boolean merge) throws SystemException {
+		com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink ddmStorageLink)
+		throws SystemException {
 		ddmStorageLink = toUnwrappedModel(ddmStorageLink);
 
 		boolean isNew = ddmStorageLink.isNew();
@@ -348,9 +352,14 @@ public class DDMStorageLinkPersistenceImpl extends BasePersistenceImpl<DDMStorag
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, ddmStorageLink, merge);
+			if (ddmStorageLink.isNew()) {
+				session.save(ddmStorageLink);
 
-			ddmStorageLink.setNew(false);
+				ddmStorageLink.setNew(false);
+			}
+			else {
+				session.merge(ddmStorageLink);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

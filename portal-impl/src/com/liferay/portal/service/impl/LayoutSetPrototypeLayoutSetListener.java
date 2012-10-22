@@ -68,7 +68,7 @@ public class LayoutSetPrototypeLayoutSetListener
 
 			settingsProperties.remove("merge-fail-count");
 
-			LayoutSetPrototypeUtil.update(layoutSetPrototype, false);
+			LayoutSetPrototypeUtil.update(layoutSetPrototype);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

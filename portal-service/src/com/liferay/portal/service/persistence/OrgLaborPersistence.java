@@ -71,7 +71,7 @@ public interface OrgLaborPersistence extends BasePersistence<OrgLabor> {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portal.model.OrgLabor updateImpl(
-		com.liferay.portal.model.OrgLabor orgLabor, boolean merge)
+		com.liferay.portal.model.OrgLabor orgLabor)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

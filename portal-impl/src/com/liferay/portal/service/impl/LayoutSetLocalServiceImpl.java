@@ -118,7 +118,7 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 			layoutSet.setSettings(StringPool.BLANK);
 		}
 
-		layoutSetPersistence.update(layoutSet, false);
+		layoutSetPersistence.update(layoutSet);
 
 		return layoutSet;
 	}
@@ -167,7 +167,7 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 
 			newLayoutSet.setLogoId(layoutSet.getLogoId());
 
-			layoutSetPersistence.update(newLayoutSet, false);
+			layoutSetPersistence.update(newLayoutSet);
 		}
 
 		// Counter
@@ -298,7 +298,7 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 			layoutSetPrototypeLinkEnabled);
 		layoutSet.setLayoutSetPrototypeUuid(layoutSetPrototypeUuid);
 
-		layoutSetPersistence.update(layoutSet, false);
+		layoutSetPersistence.update(layoutSet);
 	}
 
 	public LayoutSet updateLogo(
@@ -371,7 +371,7 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 			imageLocalService.deleteImage(layoutSet.getLogoId());
 		}
 
-		return layoutSetPersistence.update(layoutSet, false);
+		return layoutSetPersistence.update(layoutSet);
 	}
 
 	public LayoutSet updateLookAndFeel(
@@ -403,7 +403,7 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 			layoutSet.setCss(css);
 		}
 
-		layoutSetPersistence.update(layoutSet, false);
+		layoutSetPersistence.update(layoutSet);
 
 		if (PrefsPropsUtil.getBoolean(
 				PropsKeys.THEME_SYNC_ON_GROUP,
@@ -421,7 +421,7 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 				otherLayoutSet.setColorSchemeId(colorSchemeId);
 			}
 
-			layoutSetPersistence.update(otherLayoutSet, false);
+			layoutSetPersistence.update(otherLayoutSet);
 		}
 
 		return layoutSet;
@@ -448,7 +448,7 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 		layoutSet.setModifiedDate(new Date());
 		layoutSet.setPageCount(pageCount);
 
-		layoutSetPersistence.update(layoutSet, false);
+		layoutSetPersistence.update(layoutSet);
 
 		return layoutSet;
 	}
@@ -463,7 +463,7 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 		layoutSet.setModifiedDate(new Date());
 		layoutSet.setSettings(settings);
 
-		layoutSetPersistence.update(layoutSet, false);
+		layoutSetPersistence.update(layoutSet);
 
 		return layoutSet;
 	}

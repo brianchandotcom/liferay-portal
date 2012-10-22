@@ -249,7 +249,12 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, image);
+			if (image.isCachedModel()) {
+				image = (Image)session.get(ImageImpl.class,
+						image.getPrimaryKeyObj());
+			}
+
+			session.delete(image);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -264,7 +269,7 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 	}
 
 	@Override
-	public Image updateImpl(com.liferay.portal.model.Image image, boolean merge)
+	public Image updateImpl(com.liferay.portal.model.Image image)
 		throws SystemException {
 		image = toUnwrappedModel(image);
 
@@ -275,9 +280,14 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, image, merge);
+			if (image.isNew()) {
+				session.save(image);
 
-			image.setNew(false);
+				image.setNew(false);
+			}
+			else {
+				session.merge(image);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

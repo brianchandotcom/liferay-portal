@@ -251,21 +251,6 @@ public class DDLRecordSetLocalServiceUtil {
 	}
 
 	/**
-	* Updates the d d l record set in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param ddlRecordSet the d d l record set
-	* @param merge whether to merge the d d l record set with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	* @return the d d l record set that was updated
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portlet.dynamicdatalists.model.DDLRecordSet updateDDLRecordSet(
-		com.liferay.portlet.dynamicdatalists.model.DDLRecordSet ddlRecordSet,
-		boolean merge)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().updateDDLRecordSet(ddlRecordSet, merge);
-	}
-
-	/**
 	* Returns the Spring bean ID for this bean.
 	*
 	* @return the Spring bean ID for this bean

@@ -95,19 +95,19 @@ public class MBMailingListUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static MBMailingList update(MBMailingList mbMailingList,
-		boolean merge) throws SystemException {
-		return getPersistence().update(mbMailingList, merge);
+	public static MBMailingList update(MBMailingList mbMailingList)
+		throws SystemException {
+		return getPersistence().update(mbMailingList);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
 	public static MBMailingList update(MBMailingList mbMailingList,
-		boolean merge, ServiceContext serviceContext) throws SystemException {
-		return getPersistence().update(mbMailingList, merge, serviceContext);
+		ServiceContext serviceContext) throws SystemException {
+		return getPersistence().update(mbMailingList, serviceContext);
 	}
 
 	/**
@@ -157,10 +157,9 @@ public class MBMailingListUtil {
 	}
 
 	public static com.liferay.portlet.messageboards.model.MBMailingList updateImpl(
-		com.liferay.portlet.messageboards.model.MBMailingList mbMailingList,
-		boolean merge)
+		com.liferay.portlet.messageboards.model.MBMailingList mbMailingList)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(mbMailingList, merge);
+		return getPersistence().updateImpl(mbMailingList);
 	}
 
 	/**

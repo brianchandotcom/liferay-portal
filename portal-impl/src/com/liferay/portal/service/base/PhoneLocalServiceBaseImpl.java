@@ -247,7 +247,7 @@ public abstract class PhoneLocalServiceBaseImpl extends BaseLocalServiceImpl
 	public Phone addPhone(Phone phone) throws SystemException {
 		phone.setNew(true);
 
-		return phonePersistence.update(phone, false);
+		return phonePersistence.update(phone);
 	}
 
 	/**
@@ -414,23 +414,7 @@ public abstract class PhoneLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public Phone updatePhone(Phone phone) throws SystemException {
-		return updatePhone(phone, true);
-	}
-
-	/**
-	 * Updates the phone in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param phone the phone
-	 * @param merge whether to merge the phone with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	 * @return the phone that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public Phone updatePhone(Phone phone, boolean merge)
-		throws SystemException {
-		phone.setNew(false);
-
-		return phonePersistence.update(phone, merge);
+		return phonePersistence.update(phone);
 	}
 
 	/**

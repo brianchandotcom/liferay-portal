@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.model.Group;
+import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.BaseJsonClientTestCase;
@@ -44,6 +46,8 @@ public class DLAppServiceJsonTest extends BaseJsonClientTestCase {
 
 	@Before
 	public void setUp() throws Exception {
+		_group = ServiceTestUtil.addGroup();
+
 		String name = "Test Folder";
 		String description = "This is a test folder.";
 
@@ -52,7 +56,7 @@ public class DLAppServiceJsonTest extends BaseJsonClientTestCase {
 		MultipartEntity multipartEntity = getMultipartEntity(
 			new String[] {"repositoryId", "parentFolderId", "name"},
 			new Object[] {
-				TestPropsValues.getGroupId(),
+				_group.getGroupId(),
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, name
 			});
 
@@ -67,7 +71,7 @@ public class DLAppServiceJsonTest extends BaseJsonClientTestCase {
 				"repositoryId", "parentFolderId", "name", "description"
 			},
 			new Object[] {
-				TestPropsValues.getGroupId(),
+				_group.getGroupId(),
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, name, description
 			});
 
@@ -134,7 +138,7 @@ public class DLAppServiceJsonTest extends BaseJsonClientTestCase {
 		checkException(responseContent);
 
 		String uuid = parseResponseContent(responseContent, "uuid", true);
-		String groupId = String.valueOf(TestPropsValues.getGroupId());
+		String groupId = String.valueOf(_group.getGroupId());
 
 		String url = StringUtil.replace(
 			_URL_GET_FILE_ENTRY_BY_UUID_AND_GROUP_ID,
@@ -148,7 +152,7 @@ public class DLAppServiceJsonTest extends BaseJsonClientTestCase {
 	}
 
 	protected String addFileEntry(String title) throws Exception {
-		long repositoryId = TestPropsValues.getGroupId();
+		long repositoryId = _group.getGroupId();
 		long folderId = _folderId;
 		String mimeType = ContentTypes.TEXT_PLAIN;
 		String description = StringPool.BLANK;
@@ -199,5 +203,7 @@ public class DLAppServiceJsonTest extends BaseJsonClientTestCase {
 	private static final String _UUID = "[$UUID$]";
 
 	private long _folderId;
+
+	private Group _group;
 
 }

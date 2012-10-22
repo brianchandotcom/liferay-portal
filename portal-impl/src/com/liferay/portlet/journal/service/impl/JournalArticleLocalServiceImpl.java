@@ -566,6 +566,7 @@ public class JournalArticleLocalServiceImpl
 
 			if (journalArticlePersistence.countByG_A(
 					groupId, newArticleId) > 0) {
+
 				throw new DuplicateArticleIdException();
 			}
 		}
@@ -3625,7 +3626,7 @@ public class JournalArticleLocalServiceImpl
 		if (!autoArticleId) {
 			validate(articleId);
 		}
-		
+
 		JournalArticle article = journalArticlePersistence.fetchByG_A_V(
 			groupId, articleId, version);
 

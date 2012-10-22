@@ -115,3 +115,25 @@ CKEDITOR.config.toolbar_liferayArticle = [
 	['Link', 'Unlink', 'Anchor'],
 	['Image', 'Flash', 'Table', '-', 'Smiley', 'SpecialChar', 'LiferayPageBreak']
 ];
+
+CKEDITOR.on(
+	'dialogDefinition',
+	function(event) {
+		var dialogDefinition = event.data.definition;
+
+		dialogDefinition.onShow = function() {
+			if (window.top != window.self) {
+				var editorElement = this.getParentEditor().container;
+
+				var documentPosition = editorElement.getDocumentPosition();
+
+				var dialogSize = this.getSize();
+
+				var x = documentPosition.x + ((editorElement.getSize('width', true) - dialogSize.width) / 2);
+				var y = documentPosition.y + ((editorElement.getSize('height', true) - dialogSize.height) / 2);
+
+				this.move(x, y, false);
+			}
+		}
+	}
+);

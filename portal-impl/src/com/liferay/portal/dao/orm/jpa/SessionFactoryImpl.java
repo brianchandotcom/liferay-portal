@@ -37,6 +37,10 @@ public class SessionFactoryImpl implements SessionFactory {
 		}
 	}
 
+	public Session getCurrentSession() {
+		return _session;
+	}
+
 	public Dialect getDialect() throws ORMException {
 		return new DialectImpl();
 	}

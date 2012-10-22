@@ -127,7 +127,7 @@ import javax.sql.DataSource;
 		public ${entity.name} add${entity.name}(${entity.name} ${entity.varName}) throws ${stringUtil.merge(serviceBaseExceptions)} {
 			${entity.varName}.setNew(true);
 
-			return ${entity.varName}Persistence.update(${entity.varName}, false);
+			return ${entity.varName}Persistence.update(${entity.varName});
 		}
 
 		/**
@@ -344,28 +344,7 @@ import javax.sql.DataSource;
 		 */
 		@Indexable(type = IndexableType.REINDEX)
 		public ${entity.name} update${entity.name}(${entity.name} ${entity.varName}) throws ${stringUtil.merge(serviceBaseExceptions)} {
-			return update${entity.name}(${entity.varName}, true);
-		}
-
-		/**
-		 * Updates the ${entity.humanName} in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-		 *
-		 * @param ${entity.varName} the ${entity.humanName}
-		 * @param merge whether to merge the ${entity.humanName} with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-		 * @return the ${entity.humanName} that was updated
-		<#list serviceBaseExceptions as exception>
-		<#if exception == "SystemException">
-		 * @throws SystemException if a system exception occurred
-		<#else>
-		 * @throws ${exception}
-		</#if>
-		</#list>
-		 */
-		@Indexable(type = IndexableType.REINDEX)
-		public ${entity.name} update${entity.name}(${entity.name} ${entity.varName}, boolean merge) throws ${stringUtil.merge(serviceBaseExceptions)} {
-			${entity.varName}.setNew(false);
-
-			return ${entity.varName}Persistence.update(${entity.varName}, merge);
+			return ${entity.varName}Persistence.update(${entity.varName});
 		}
 
 		<#list entity.blobList as column>

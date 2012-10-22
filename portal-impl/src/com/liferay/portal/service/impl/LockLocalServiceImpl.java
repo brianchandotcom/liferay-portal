@@ -200,6 +200,8 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 			lockPersistence.update(lock, false);
 
 			lock.setNew(true);
+
+			lockPersistence.flush();
 		}
 		else if (Validator.equals(lock.getOwner(), expectedOwner)) {
 			lock.setCreateDate(new Date());
@@ -210,6 +212,8 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 			lockPersistence.update(lock, false);
 
 			lock.setNew(true);
+
+			lockPersistence.flush();
 		}
 
 		return lock;
@@ -285,6 +289,7 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 
 		if (Validator.equals(lock.getOwner(), owner)) {
 			lockPersistence.remove(lock);
+			lockPersistence.flush();
 		}
 	}
 

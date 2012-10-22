@@ -795,12 +795,23 @@ public class ResourceBlockLocalServiceImpl
 					resourceBlock = addResourceBlock(
 						companyId, groupId, name, permissionsHash,
 						resourceBlockPermissionsContainer);
+
+					// On success, manually flush to enforce database row lock
+
+					resourceBlockPersistence.flush();
 				}
 				catch (SystemException se) {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
 							"Unable to add a new resource block. Retrying");
 					}
+
+					// On failure, cancel all pending persistent entities
+
+					Session session =
+						resourceBlockPersistence.getCurrentSession();
+
+					session.clear();
 
 					continue;
 				}

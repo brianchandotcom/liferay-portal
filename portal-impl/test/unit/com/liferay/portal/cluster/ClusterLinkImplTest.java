@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.test.AdviseWith;
-import com.liferay.portal.test.ApsectJMockingNewClassLoaderJUnitTestRunner;
+import com.liferay.portal.test.AspectJMockingNewClassLoaderJUnitTestRunner;
 
 import java.lang.reflect.Field;
 
@@ -52,7 +52,7 @@ import org.junit.runner.RunWith;
  * @author Tina Tian
  * @author Shuyang Zhou
  */
-@RunWith(ApsectJMockingNewClassLoaderJUnitTestRunner.class)
+@RunWith(AspectJMockingNewClassLoaderJUnitTestRunner.class)
 public class ClusterLinkImplTest extends BaseClusterTestCase {
 
 	@AdviseWith(adviceClasses = {DisableClusterLinkAdvice.class})

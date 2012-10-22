@@ -15,7 +15,8 @@
 package com.liferay.portalweb.stagingsite.blogs;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.portal.logout.LogoutTest;
+import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignInTest;
+import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignOutTest;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
 import com.liferay.portalweb.portlet.blogs.blogsentry.addblogsentry.TearDownBlogsEntryTest;
 
@@ -34,30 +35,30 @@ public class BlogsTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddUserAdministratorTest.class);
 		testSuite.addTestSuite(ActivateStagingTest.class);
 		testSuite.addTestSuite(ConfigureBlogsEntrySingleApproverTest.class);
-		testSuite.addTestSuite(LogoutTest.class);
+		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(PU_LoginTest.class);
 		testSuite.addTestSuite(PU_AddStagedPageTest.class);
 		testSuite.addTestSuite(PU_AddStagedPortletTest.class);
-		testSuite.addTestSuite(PU_LogoutTest.class);
+		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(Guest_AssertNoPagePrePublishTest.class);
 		testSuite.addTestSuite(Administrator_LoginTest.class);
 		testSuite.addTestSuite(Administrator_PublishToLiveStagedPageTest.class);
-		testSuite.addTestSuite(Administrator_LogoutTest.class);
+		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(Guest_AssertPagePresentTest.class);
 		testSuite.addTestSuite(PU_LoginTest.class);
 		testSuite.addTestSuite(PU_AddStagedBlogsEntryTest.class);
-		testSuite.addTestSuite(PU_LogoutTest.class);
+		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(Guest_AssertNoBlogsEntryPreApprovalTest.class);
 		testSuite.addTestSuite(PCR_LoginTest.class);
 		testSuite.addTestSuite(PCR_AssignToMeStagedBlogsEntryActionsTest.class);
 		testSuite.addTestSuite(PCR_ApproveStagedBlogsEntryActionsTest.class);
-		testSuite.addTestSuite(PCR_LogoutTest.class);
+		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(Guest_AssertNoBlogsEntryPrePublishTest.class);
 		testSuite.addTestSuite(Administrator_LoginTest.class);
 		testSuite.addTestSuite(Administrator_PublishToLiveStagedBlogsEntryTest.class);
-		testSuite.addTestSuite(Administrator_LogoutTest.class);
+		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(Guest_AssertBlogsEntryTest.class);
-		testSuite.addTestSuite(LoginTest.class);
+		testSuite.addTestSuite(SignInTest.class);
 		testSuite.addTestSuite(DeactivateStagingTest.class);
 		testSuite.addTestSuite(TearDownWorkflowConfigurationTest.class);
 		testSuite.addTestSuite(TearDownBlogsEntryTest.class);

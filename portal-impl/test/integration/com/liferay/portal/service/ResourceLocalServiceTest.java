@@ -104,7 +104,8 @@ public class ResourceLocalServiceTest {
 				ResourceLocalServiceUtil.getResource(
 					TestPropsValues.getCompanyId(), Layout.class.getName(),
 					ResourceConstants.SCOPE_INDIVIDUAL,
-					String.valueOf(TestPropsValues.getPlid()));
+					String.valueOf(
+						TestPropsValues.getPlid(_group.getGroupId())));
 			}
 			catch (NoSuchResourceException nsre) {
 				boolean addGroupPermission = true;
@@ -113,8 +114,8 @@ public class ResourceLocalServiceTest {
 				ResourceLocalServiceUtil.addResources(
 					TestPropsValues.getCompanyId(),
 					_group.getGroupId(), 0, Layout.class.getName(),
-					TestPropsValues.getPlid(), false, addGroupPermission,
-					addGuestPermission);
+					TestPropsValues.getPlid(_group.getGroupId()), false,
+					addGroupPermission, addGuestPermission);
 			}
 		}
 

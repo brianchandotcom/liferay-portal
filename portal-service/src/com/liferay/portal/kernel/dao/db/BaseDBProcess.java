@@ -15,8 +15,9 @@
 package com.liferay.portal.kernel.dao.db;
 
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 
 import java.io.IOException;
 
@@ -24,8 +25,9 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.naming.NamingException;
 
@@ -39,80 +41,73 @@ public abstract class BaseDBProcess implements DBProcess {
 	public BaseDBProcess() {
 	}
 
-	public IndexMetadata addIndex(IndexMetadata indexMetadata) {
-		List<IndexMetadata> indexMetadatas = new ArrayList<IndexMetadata>();
+	public void addPermanentIndex(
+			boolean unique, String tableName, String... columnNames)
+		throws IOException, SQLException {
 
-		indexMetadatas.add(indexMetadata);
+		IndexMetadata indexMetadata =
+			IndexMetadataFactoryUtil.createIndexMetadata(
+				unique, tableName, columnNames);
 
-		List<IndexMetadata> selIndexMetadatas = addIndexes(indexMetadatas);
-
-		if (selIndexMetadatas.isEmpty()) {
-			return null;
-		}
-
-		return selIndexMetadatas.get(0);
-	}
-
-	public List<IndexMetadata> addIndexes(List<IndexMetadata> indexMetadatas) {
-		if (indexMetadatas.isEmpty()) {
-			return Collections.emptyList();
-		}
-
-		List<String> indexNames = new ArrayList<String>();
+		Set<String> existingIndexNames = new HashSet<String>();
 
 		for (Index index : getIndexes()) {
 			String indexName = index.getIndexName();
 
-			indexNames.add(indexName.toUpperCase());
+			existingIndexNames.add(indexName.toUpperCase());
 		}
 
-		List<IndexMetadata> selIndexMetadatas = new ArrayList<IndexMetadata>();
+		if (existingIndexNames.contains(indexMetadata.getIndexName())) {
+			return;
+		}
 
-		for (IndexMetadata indexMetadata : indexMetadatas) {
-			if (indexNames.contains(indexMetadata.getIndexName())) {
+		runSQL(indexMetadata.getCreateSQL());
+	}
+
+	public void addTemporaryIndexes() throws IOException, SQLException {
+		if (_requestedTemporaryIndexMetadatas.isEmpty()) {
+			return;
+		}
+
+		Set<String> existingIndexNames = new HashSet<String>();
+
+		for (Index index : getIndexes()) {
+			String indexName = index.getIndexName();
+
+			existingIndexNames.add(indexName.toUpperCase());
+		}
+
+		for (IndexMetadata indexMetadata : _requestedTemporaryIndexMetadatas) {
+			if (existingIndexNames.contains(indexMetadata.getIndexName())) {
 				continue;
 			}
 
-			if (_log.isInfoEnabled()) {
-				_log.info(indexMetadata.getIndexSQLCreate());
-			}
+			runSQL(indexMetadata.getCreateSQL());
 
-			try {
-				runSQL(indexMetadata.getIndexSQLCreate());
-			}
-			catch (Exception e) {
-				_log.error(e, e);
-
-				continue;
-			}
-
-			selIndexMetadatas.add(indexMetadata);
+			_utilizedTemporaryIndexMetadatas.add(indexMetadata);
 		}
-
-		return selIndexMetadatas;
 	}
 
-	public void dropIndex(IndexMetadata indexMetadata) {
-		List<IndexMetadata> indexMetadatas = new ArrayList<IndexMetadata>();
+	public void dropTemporaryIndexes() throws IOException, SQLException {
+		for (IndexMetadata indexMetadata : _utilizedTemporaryIndexMetadatas) {
+			runSQL(indexMetadata.getDropSQL());
+		}
 
-		indexMetadatas.add(indexMetadata);
-
-		dropIndexes(indexMetadatas);
+		_utilizedTemporaryIndexMetadatas.clear();
 	}
 
-	public void dropIndexes(List<IndexMetadata> indexMetadatas) {
-		for (IndexMetadata indexMetadata : indexMetadatas) {
-			if (_log.isInfoEnabled()) {
-				_log.info(indexMetadata.getIndexSQLDrop());
-			}
+	public void requestTemporaryIndex(
+		boolean unique, String tableName, String... columnNames) {
 
-			try {
-				runSQL(indexMetadata.getIndexSQLDrop());
-			}
-			catch (Exception e) {
-				_log.error(e, e);
-			}
+		if (!_INDEX_ON_UPGRADE) {
+			return;
 		}
+
+		IndexMetadata indexMetadata =
+			IndexMetadataFactoryUtil.createIndexMetadata(
+				unique, tableName, columnNames);
+
+		_requestedTemporaryIndexMetadatas.add(indexMetadata);
 	}
 
 	public void runSQL(String template) throws IOException, SQLException {
@@ -143,7 +138,7 @@ public abstract class BaseDBProcess implements DBProcess {
 		db.runSQLTemplate(path, failOnError);
 	}
 
-	protected List<Index> getIndexes() {
+	protected List<Index> getIndexes() throws SQLException {
 		DB db = DBFactoryUtil.getDB();
 
 		Connection con = null;
@@ -153,16 +148,17 @@ public abstract class BaseDBProcess implements DBProcess {
 
 			return db.getIndexes(con);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
 		finally {
 			DataAccess.cleanUp(con);
 		}
-
-		return Collections.emptyList();
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(BaseDBProcess.class);
+	private static final boolean _INDEX_ON_UPGRADE = GetterUtil.getBoolean(
+		PropsUtil.get(PropsKeys.INDEX_ON_UPGRADE));
+
+	private List<IndexMetadata> _requestedTemporaryIndexMetadatas =
+		new ArrayList<IndexMetadata>();
+	private List<IndexMetadata> _utilizedTemporaryIndexMetadatas =
+		new ArrayList<IndexMetadata>();
 
 }

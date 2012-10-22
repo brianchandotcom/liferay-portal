@@ -14,8 +14,6 @@
 
 package com.liferay.portal.upgrade.v6_1_0;
 
-import com.liferay.portal.kernel.dao.db.IndexMetadata;
-import com.liferay.portal.kernel.dao.db.IndexMetadataFactoryUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.CamelCaseUpgradePortletPreferences;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -95,10 +93,7 @@ public class UpgradePortletPreferences
 		updatePortletPreferencesOwner();
 		upgrade(UpgradeCommunityProperties.class);
 
-		IndexMetadata indexMetadata = IndexMetadataFactoryUtil.create(
-			"PortalPreferences", new String[] {"ownerId", "ownerType"});
-
-		addIndex(indexMetadata);
+		addPermanentIndex(false, "PortalPreferences", "ownerId", "ownerType");
 	}
 
 	protected long getOwnerId(long plid) throws Exception {

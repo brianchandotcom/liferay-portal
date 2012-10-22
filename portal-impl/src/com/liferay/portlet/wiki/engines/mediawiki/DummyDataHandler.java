@@ -208,10 +208,6 @@ public class DummyDataHandler implements DataHandler {
 		return 0;
 	}
 
-	public Integer lookupTopicId(String virtualWiki, String topicName) {
-		return null;
-	}
-
 	public List<String> lookupTopicLinkOrphans(
 		String virtualWiki, int namespaceId) {
 

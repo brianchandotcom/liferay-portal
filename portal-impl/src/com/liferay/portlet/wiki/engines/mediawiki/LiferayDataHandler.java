@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.wiki.engines.mediawiki;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -61,25 +60,6 @@ public class LiferayDataHandler extends DummyDataHandler {
 		topic.setTopicType(TopicType.IMAGE);
 
 		return topic;
-	}
-
-	@Override
-	public Integer lookupTopicId(String virtualWiki, String topicName) {
-		long nodeId = getNodeId(virtualWiki);
-
-		try {
-			int pagesCount = WikiPageLocalServiceUtil.getPagesCount(
-				nodeId, topicName, true);
-
-			if (pagesCount > 0) {
-				return 1;
-			}
-		}
-		catch (SystemException se) {
-			_log.error(se, se);
-		}
-
-		return null;
 	}
 
 	@Override

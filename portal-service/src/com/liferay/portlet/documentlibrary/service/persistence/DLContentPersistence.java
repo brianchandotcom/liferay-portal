@@ -76,8 +76,7 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 			com.liferay.portlet.documentlibrary.NoSuchContentException;
 
 	public com.liferay.portlet.documentlibrary.model.DLContent updateImpl(
-		com.liferay.portlet.documentlibrary.model.DLContent dlContent,
-		boolean merge)
+		com.liferay.portlet.documentlibrary.model.DLContent dlContent)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

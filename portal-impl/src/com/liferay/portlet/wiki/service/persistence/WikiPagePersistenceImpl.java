@@ -42,7 +42,6 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
-import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.CompanyPersistence;
 import com.liferay.portal.service.persistence.GroupPersistence;
 import com.liferay.portal.service.persistence.PortletPreferencesPersistence;
@@ -730,7 +729,12 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, wikiPage);
+			if (wikiPage.isCachedModel()) {
+				wikiPage = (WikiPage)session.get(WikiPageImpl.class,
+						wikiPage.getPrimaryKeyObj());
+			}
+
+			session.delete(wikiPage);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -745,8 +749,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	}
 
 	@Override
-	public WikiPage updateImpl(
-		com.liferay.portlet.wiki.model.WikiPage wikiPage, boolean merge)
+	public WikiPage updateImpl(com.liferay.portlet.wiki.model.WikiPage wikiPage)
 		throws SystemException {
 		wikiPage = toUnwrappedModel(wikiPage);
 
@@ -790,9 +793,14 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, wikiPage, merge);
+			if (wikiPage.isNew()) {
+				session.save(wikiPage);
 
-			wikiPage.setNew(false);
+				wikiPage.setNew(false);
+			}
+			else {
+				session.merge(wikiPage);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

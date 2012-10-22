@@ -74,8 +74,7 @@ public interface WorkflowInstanceLinkPersistence extends BasePersistence<Workflo
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portal.model.WorkflowInstanceLink updateImpl(
-		com.liferay.portal.model.WorkflowInstanceLink workflowInstanceLink,
-		boolean merge)
+		com.liferay.portal.model.WorkflowInstanceLink workflowInstanceLink)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

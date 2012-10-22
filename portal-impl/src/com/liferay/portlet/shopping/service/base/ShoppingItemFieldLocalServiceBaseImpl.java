@@ -100,7 +100,7 @@ public abstract class ShoppingItemFieldLocalServiceBaseImpl
 		ShoppingItemField shoppingItemField) throws SystemException {
 		shoppingItemField.setNew(true);
 
-		return shoppingItemFieldPersistence.update(shoppingItemField, false);
+		return shoppingItemFieldPersistence.update(shoppingItemField);
 	}
 
 	/**
@@ -273,24 +273,7 @@ public abstract class ShoppingItemFieldLocalServiceBaseImpl
 	@Indexable(type = IndexableType.REINDEX)
 	public ShoppingItemField updateShoppingItemField(
 		ShoppingItemField shoppingItemField) throws SystemException {
-		return updateShoppingItemField(shoppingItemField, true);
-	}
-
-	/**
-	 * Updates the shopping item field in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param shoppingItemField the shopping item field
-	 * @param merge whether to merge the shopping item field with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	 * @return the shopping item field that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public ShoppingItemField updateShoppingItemField(
-		ShoppingItemField shoppingItemField, boolean merge)
-		throws SystemException {
-		shoppingItemField.setNew(false);
-
-		return shoppingItemFieldPersistence.update(shoppingItemField, merge);
+		return shoppingItemFieldPersistence.update(shoppingItemField);
 	}
 
 	/**

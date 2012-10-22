@@ -132,7 +132,7 @@ public class PollsQuestionPersistenceTest {
 
 		newPollsQuestion.setLastVoteDate(ServiceTestUtil.nextDate());
 
-		_persistence.update(newPollsQuestion, false);
+		_persistence.update(newPollsQuestion);
 
 		PollsQuestion existingPollsQuestion = _persistence.findByPrimaryKey(newPollsQuestion.getPrimaryKey());
 
@@ -324,7 +324,7 @@ public class PollsQuestionPersistenceTest {
 
 		pollsQuestion.setLastVoteDate(ServiceTestUtil.nextDate());
 
-		_persistence.update(pollsQuestion, false);
+		_persistence.update(pollsQuestion);
 
 		return pollsQuestion;
 	}

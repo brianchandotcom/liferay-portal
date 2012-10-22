@@ -71,7 +71,7 @@ public interface RegionPersistence extends BasePersistence<Region> {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portal.model.Region updateImpl(
-		com.liferay.portal.model.Region region, boolean merge)
+		com.liferay.portal.model.Region region)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

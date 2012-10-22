@@ -160,7 +160,7 @@ public class MBMailingListPersistenceTest {
 
 		newMBMailingList.setActive(ServiceTestUtil.randomBoolean());
 
-		_persistence.update(newMBMailingList, false);
+		_persistence.update(newMBMailingList);
 
 		MBMailingList existingMBMailingList = _persistence.findByPrimaryKey(newMBMailingList.getPrimaryKey());
 
@@ -414,7 +414,7 @@ public class MBMailingListPersistenceTest {
 
 		mbMailingList.setActive(ServiceTestUtil.randomBoolean());
 
-		_persistence.update(mbMailingList, false);
+		_persistence.update(mbMailingList);
 
 		return mbMailingList;
 	}

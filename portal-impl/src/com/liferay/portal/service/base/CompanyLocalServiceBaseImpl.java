@@ -247,7 +247,7 @@ public abstract class CompanyLocalServiceBaseImpl extends BaseLocalServiceImpl
 	public Company addCompany(Company company) throws SystemException {
 		company.setNew(true);
 
-		return companyPersistence.update(company, false);
+		return companyPersistence.update(company);
 	}
 
 	/**
@@ -416,23 +416,7 @@ public abstract class CompanyLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public Company updateCompany(Company company) throws SystemException {
-		return updateCompany(company, true);
-	}
-
-	/**
-	 * Updates the company in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param company the company
-	 * @param merge whether to merge the company with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	 * @return the company that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public Company updateCompany(Company company, boolean merge)
-		throws SystemException {
-		company.setNew(false);
-
-		return companyPersistence.update(company, merge);
+		return companyPersistence.update(company);
 	}
 
 	/**

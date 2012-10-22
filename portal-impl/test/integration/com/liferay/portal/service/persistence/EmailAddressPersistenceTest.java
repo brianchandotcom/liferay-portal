@@ -126,7 +126,7 @@ public class EmailAddressPersistenceTest {
 
 		newEmailAddress.setPrimary(ServiceTestUtil.randomBoolean());
 
-		_persistence.update(newEmailAddress, false);
+		_persistence.update(newEmailAddress);
 
 		EmailAddress existingEmailAddress = _persistence.findByPrimaryKey(newEmailAddress.getPrimaryKey());
 
@@ -296,7 +296,7 @@ public class EmailAddressPersistenceTest {
 
 		emailAddress.setPrimary(ServiceTestUtil.randomBoolean());
 
-		_persistence.update(emailAddress, false);
+		_persistence.update(emailAddress);
 
 		return emailAddress;
 	}

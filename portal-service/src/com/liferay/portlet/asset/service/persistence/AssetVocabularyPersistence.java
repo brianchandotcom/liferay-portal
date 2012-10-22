@@ -76,8 +76,7 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 			com.liferay.portlet.asset.NoSuchVocabularyException;
 
 	public com.liferay.portlet.asset.model.AssetVocabulary updateImpl(
-		com.liferay.portlet.asset.model.AssetVocabulary assetVocabulary,
-		boolean merge)
+		com.liferay.portlet.asset.model.AssetVocabulary assetVocabulary)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

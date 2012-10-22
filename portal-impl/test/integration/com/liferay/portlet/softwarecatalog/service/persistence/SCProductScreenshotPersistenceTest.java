@@ -120,7 +120,7 @@ public class SCProductScreenshotPersistenceTest {
 
 		newSCProductScreenshot.setPriority(ServiceTestUtil.nextInt());
 
-		_persistence.update(newSCProductScreenshot, false);
+		_persistence.update(newSCProductScreenshot);
 
 		SCProductScreenshot existingSCProductScreenshot = _persistence.findByPrimaryKey(newSCProductScreenshot.getPrimaryKey());
 
@@ -297,7 +297,7 @@ public class SCProductScreenshotPersistenceTest {
 
 		scProductScreenshot.setPriority(ServiceTestUtil.nextInt());
 
-		_persistence.update(scProductScreenshot, false);
+		_persistence.update(scProductScreenshot);
 
 		return scProductScreenshot;
 	}

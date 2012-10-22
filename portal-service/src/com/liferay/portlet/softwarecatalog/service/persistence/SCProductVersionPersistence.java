@@ -76,8 +76,7 @@ public interface SCProductVersionPersistence extends BasePersistence<SCProductVe
 			com.liferay.portlet.softwarecatalog.NoSuchProductVersionException;
 
 	public com.liferay.portlet.softwarecatalog.model.SCProductVersion updateImpl(
-		com.liferay.portlet.softwarecatalog.model.SCProductVersion scProductVersion,
-		boolean merge)
+		com.liferay.portlet.softwarecatalog.model.SCProductVersion scProductVersion)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

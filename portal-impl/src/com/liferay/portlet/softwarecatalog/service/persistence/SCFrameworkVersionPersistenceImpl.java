@@ -43,7 +43,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
-import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
@@ -327,7 +326,12 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, scFrameworkVersion);
+			if (scFrameworkVersion.isCachedModel()) {
+				scFrameworkVersion = (SCFrameworkVersion)session.get(SCFrameworkVersionImpl.class,
+						scFrameworkVersion.getPrimaryKeyObj());
+			}
+
+			session.delete(scFrameworkVersion);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -343,8 +347,8 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 
 	@Override
 	public SCFrameworkVersion updateImpl(
-		com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion scFrameworkVersion,
-		boolean merge) throws SystemException {
+		com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion scFrameworkVersion)
+		throws SystemException {
 		scFrameworkVersion = toUnwrappedModel(scFrameworkVersion);
 
 		boolean isNew = scFrameworkVersion.isNew();
@@ -356,9 +360,14 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, scFrameworkVersion, merge);
+			if (scFrameworkVersion.isNew()) {
+				session.save(scFrameworkVersion);
 
-			scFrameworkVersion.setNew(false);
+				scFrameworkVersion.setNew(false);
+			}
+			else {
+				session.merge(scFrameworkVersion);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
-import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
@@ -292,7 +291,12 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, expandoColumn);
+			if (expandoColumn.isCachedModel()) {
+				expandoColumn = (ExpandoColumn)session.get(ExpandoColumnImpl.class,
+						expandoColumn.getPrimaryKeyObj());
+			}
+
+			session.delete(expandoColumn);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -308,8 +312,8 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 
 	@Override
 	public ExpandoColumn updateImpl(
-		com.liferay.portlet.expando.model.ExpandoColumn expandoColumn,
-		boolean merge) throws SystemException {
+		com.liferay.portlet.expando.model.ExpandoColumn expandoColumn)
+		throws SystemException {
 		expandoColumn = toUnwrappedModel(expandoColumn);
 
 		boolean isNew = expandoColumn.isNew();
@@ -321,9 +325,14 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, expandoColumn, merge);
+			if (expandoColumn.isNew()) {
+				session.save(expandoColumn);
 
-			expandoColumn.setNew(false);
+				expandoColumn.setNew(false);
+			}
+			else {
+				session.merge(expandoColumn);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

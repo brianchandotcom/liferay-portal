@@ -73,7 +73,7 @@ public interface OrgGroupRolePersistence extends BasePersistence<OrgGroupRole> {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portal.model.OrgGroupRole updateImpl(
-		com.liferay.portal.model.OrgGroupRole orgGroupRole, boolean merge)
+		com.liferay.portal.model.OrgGroupRole orgGroupRole)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

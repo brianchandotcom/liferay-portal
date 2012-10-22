@@ -235,21 +235,6 @@ public class ShoppingCategoryLocalServiceUtil {
 	}
 
 	/**
-	* Updates the shopping category in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param shoppingCategory the shopping category
-	* @param merge whether to merge the shopping category with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	* @return the shopping category that was updated
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portlet.shopping.model.ShoppingCategory updateShoppingCategory(
-		com.liferay.portlet.shopping.model.ShoppingCategory shoppingCategory,
-		boolean merge)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().updateShoppingCategory(shoppingCategory, merge);
-	}
-
-	/**
 	* Returns the Spring bean ID for this bean.
 	*
 	* @return the Spring bean ID for this bean

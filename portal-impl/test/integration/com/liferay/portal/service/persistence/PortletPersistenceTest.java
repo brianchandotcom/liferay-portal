@@ -116,7 +116,7 @@ public class PortletPersistenceTest {
 
 		newPortlet.setActive(ServiceTestUtil.randomBoolean());
 
-		_persistence.update(newPortlet, false);
+		_persistence.update(newPortlet);
 
 		Portlet existingPortlet = _persistence.findByPrimaryKey(newPortlet.getPrimaryKey());
 
@@ -271,7 +271,7 @@ public class PortletPersistenceTest {
 
 		portlet.setActive(ServiceTestUtil.randomBoolean());
 
-		_persistence.update(portlet, false);
+		_persistence.update(portlet);
 
 		return portlet;
 	}

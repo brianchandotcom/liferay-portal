@@ -72,7 +72,7 @@ public interface ResourceBlockPersistence extends BasePersistence<ResourceBlock>
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portal.model.ResourceBlock updateImpl(
-		com.liferay.portal.model.ResourceBlock resourceBlock, boolean merge)
+		com.liferay.portal.model.ResourceBlock resourceBlock)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

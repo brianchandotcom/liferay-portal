@@ -144,7 +144,7 @@ public class JournalTemplatePersistenceTest {
 
 		newJournalTemplate.setSmallImageURL(ServiceTestUtil.randomString());
 
-		_persistence.update(newJournalTemplate, false);
+		_persistence.update(newJournalTemplate);
 
 		JournalTemplate existingJournalTemplate = _persistence.findByPrimaryKey(newJournalTemplate.getPrimaryKey());
 
@@ -366,7 +366,7 @@ public class JournalTemplatePersistenceTest {
 
 		journalTemplate.setSmallImageURL(ServiceTestUtil.randomString());
 
-		_persistence.update(journalTemplate, false);
+		_persistence.update(journalTemplate);
 
 		return journalTemplate;
 	}

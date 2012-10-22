@@ -71,7 +71,7 @@ public interface CompanyPersistence extends BasePersistence<Company> {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portal.model.Company updateImpl(
-		com.liferay.portal.model.Company company, boolean merge)
+		com.liferay.portal.model.Company company)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

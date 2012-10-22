@@ -111,7 +111,7 @@ public class ClusterGroupPersistenceTest {
 
 		newClusterGroup.setWholeCluster(ServiceTestUtil.randomBoolean());
 
-		_persistence.update(newClusterGroup, false);
+		_persistence.update(newClusterGroup);
 
 		ClusterGroup existingClusterGroup = _persistence.findByPrimaryKey(newClusterGroup.getPrimaryKey());
 
@@ -251,7 +251,7 @@ public class ClusterGroupPersistenceTest {
 
 		clusterGroup.setWholeCluster(ServiceTestUtil.randomBoolean());
 
-		_persistence.update(clusterGroup, false);
+		_persistence.update(clusterGroup);
 
 		return clusterGroup;
 	}

@@ -247,7 +247,7 @@ public abstract class TicketLocalServiceBaseImpl extends BaseLocalServiceImpl
 	public Ticket addTicket(Ticket ticket) throws SystemException {
 		ticket.setNew(true);
 
-		return ticketPersistence.update(ticket, false);
+		return ticketPersistence.update(ticket);
 	}
 
 	/**
@@ -416,23 +416,7 @@ public abstract class TicketLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public Ticket updateTicket(Ticket ticket) throws SystemException {
-		return updateTicket(ticket, true);
-	}
-
-	/**
-	 * Updates the ticket in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param ticket the ticket
-	 * @param merge whether to merge the ticket with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	 * @return the ticket that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public Ticket updateTicket(Ticket ticket, boolean merge)
-		throws SystemException {
-		ticket.setNew(false);
-
-		return ticketPersistence.update(ticket, merge);
+		return ticketPersistence.update(ticket);
 	}
 
 	/**

@@ -73,7 +73,7 @@ public interface PollsVotePersistence extends BasePersistence<PollsVote> {
 			com.liferay.portlet.polls.NoSuchVoteException;
 
 	public com.liferay.portlet.polls.model.PollsVote updateImpl(
-		com.liferay.portlet.polls.model.PollsVote pollsVote, boolean merge)
+		com.liferay.portlet.polls.model.PollsVote pollsVote)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

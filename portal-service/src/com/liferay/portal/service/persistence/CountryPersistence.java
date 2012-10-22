@@ -71,7 +71,7 @@ public interface CountryPersistence extends BasePersistence<Country> {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portal.model.Country updateImpl(
-		com.liferay.portal.model.Country country, boolean merge)
+		com.liferay.portal.model.Country country)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

@@ -247,21 +247,6 @@ public class DDMTemplateLocalServiceWrapper implements DDMTemplateLocalService,
 	}
 
 	/**
-	* Updates the d d m template in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param ddmTemplate the d d m template
-	* @param merge whether to merge the d d m template with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	* @return the d d m template that was updated
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate updateDDMTemplate(
-		com.liferay.portlet.dynamicdatamapping.model.DDMTemplate ddmTemplate,
-		boolean merge)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _ddmTemplateLocalService.updateDDMTemplate(ddmTemplate, merge);
-	}
-
-	/**
 	* Returns the Spring bean ID for this bean.
 	*
 	* @return the Spring bean ID for this bean

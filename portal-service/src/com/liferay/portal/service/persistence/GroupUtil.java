@@ -93,19 +93,18 @@ public class GroupUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static Group update(Group group, boolean merge)
-		throws SystemException {
-		return getPersistence().update(group, merge);
+	public static Group update(Group group) throws SystemException {
+		return getPersistence().update(group);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
-	public static Group update(Group group, boolean merge,
-		ServiceContext serviceContext) throws SystemException {
-		return getPersistence().update(group, merge, serviceContext);
+	public static Group update(Group group, ServiceContext serviceContext)
+		throws SystemException {
+		return getPersistence().update(group, serviceContext);
 	}
 
 	/**
@@ -152,9 +151,9 @@ public class GroupUtil {
 	}
 
 	public static com.liferay.portal.model.Group updateImpl(
-		com.liferay.portal.model.Group group, boolean merge)
+		com.liferay.portal.model.Group group)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(group, merge);
+		return getPersistence().updateImpl(group);
 	}
 
 	/**

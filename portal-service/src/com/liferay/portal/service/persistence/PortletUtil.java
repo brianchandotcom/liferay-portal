@@ -94,19 +94,18 @@ public class PortletUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static Portlet update(Portlet portlet, boolean merge)
-		throws SystemException {
-		return getPersistence().update(portlet, merge);
+	public static Portlet update(Portlet portlet) throws SystemException {
+		return getPersistence().update(portlet);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
-	public static Portlet update(Portlet portlet, boolean merge,
-		ServiceContext serviceContext) throws SystemException {
-		return getPersistence().update(portlet, merge, serviceContext);
+	public static Portlet update(Portlet portlet, ServiceContext serviceContext)
+		throws SystemException {
+		return getPersistence().update(portlet, serviceContext);
 	}
 
 	/**
@@ -153,9 +152,9 @@ public class PortletUtil {
 	}
 
 	public static com.liferay.portal.model.Portlet updateImpl(
-		com.liferay.portal.model.Portlet portlet, boolean merge)
+		com.liferay.portal.model.Portlet portlet)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(portlet, merge);
+		return getPersistence().updateImpl(portlet);
 	}
 
 	/**

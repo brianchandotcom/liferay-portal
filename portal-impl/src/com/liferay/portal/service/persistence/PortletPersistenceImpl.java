@@ -286,7 +286,12 @@ public class PortletPersistenceImpl extends BasePersistenceImpl<Portlet>
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, portlet);
+			if (portlet.isCachedModel()) {
+				portlet = (Portlet)session.get(PortletImpl.class,
+						portlet.getPrimaryKeyObj());
+			}
+
+			session.delete(portlet);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -301,8 +306,8 @@ public class PortletPersistenceImpl extends BasePersistenceImpl<Portlet>
 	}
 
 	@Override
-	public Portlet updateImpl(com.liferay.portal.model.Portlet portlet,
-		boolean merge) throws SystemException {
+	public Portlet updateImpl(com.liferay.portal.model.Portlet portlet)
+		throws SystemException {
 		portlet = toUnwrappedModel(portlet);
 
 		boolean isNew = portlet.isNew();
@@ -314,9 +319,14 @@ public class PortletPersistenceImpl extends BasePersistenceImpl<Portlet>
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, portlet, merge);
+			if (portlet.isNew()) {
+				session.save(portlet);
 
-			portlet.setNew(false);
+				portlet.setNew(false);
+			}
+			else {
+				session.merge(portlet);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

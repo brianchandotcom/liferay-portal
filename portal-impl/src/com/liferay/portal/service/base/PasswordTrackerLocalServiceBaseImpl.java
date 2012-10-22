@@ -249,7 +249,7 @@ public abstract class PasswordTrackerLocalServiceBaseImpl
 		throws SystemException {
 		passwordTracker.setNew(true);
 
-		return passwordTrackerPersistence.update(passwordTracker, false);
+		return passwordTrackerPersistence.update(passwordTracker);
 	}
 
 	/**
@@ -422,24 +422,7 @@ public abstract class PasswordTrackerLocalServiceBaseImpl
 	@Indexable(type = IndexableType.REINDEX)
 	public PasswordTracker updatePasswordTracker(
 		PasswordTracker passwordTracker) throws SystemException {
-		return updatePasswordTracker(passwordTracker, true);
-	}
-
-	/**
-	 * Updates the password tracker in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param passwordTracker the password tracker
-	 * @param merge whether to merge the password tracker with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	 * @return the password tracker that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public PasswordTracker updatePasswordTracker(
-		PasswordTracker passwordTracker, boolean merge)
-		throws SystemException {
-		passwordTracker.setNew(false);
-
-		return passwordTrackerPersistence.update(passwordTracker, merge);
+		return passwordTrackerPersistence.update(passwordTracker);
 	}
 
 	/**

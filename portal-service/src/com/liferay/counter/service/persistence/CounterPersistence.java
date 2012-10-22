@@ -73,7 +73,7 @@ public interface CounterPersistence extends BasePersistence<Counter> {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.counter.model.Counter updateImpl(
-		com.liferay.counter.model.Counter counter, boolean merge)
+		com.liferay.counter.model.Counter counter)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

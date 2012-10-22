@@ -95,19 +95,19 @@ public class SocialRelationUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static SocialRelation update(SocialRelation socialRelation,
-		boolean merge) throws SystemException {
-		return getPersistence().update(socialRelation, merge);
+	public static SocialRelation update(SocialRelation socialRelation)
+		throws SystemException {
+		return getPersistence().update(socialRelation);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
 	public static SocialRelation update(SocialRelation socialRelation,
-		boolean merge, ServiceContext serviceContext) throws SystemException {
-		return getPersistence().update(socialRelation, merge, serviceContext);
+		ServiceContext serviceContext) throws SystemException {
+		return getPersistence().update(socialRelation, serviceContext);
 	}
 
 	/**
@@ -157,10 +157,9 @@ public class SocialRelationUtil {
 	}
 
 	public static com.liferay.portlet.social.model.SocialRelation updateImpl(
-		com.liferay.portlet.social.model.SocialRelation socialRelation,
-		boolean merge)
+		com.liferay.portlet.social.model.SocialRelation socialRelation)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(socialRelation, merge);
+		return getPersistence().updateImpl(socialRelation);
 	}
 
 	/**

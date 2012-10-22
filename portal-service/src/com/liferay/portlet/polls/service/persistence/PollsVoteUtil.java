@@ -95,19 +95,19 @@ public class PollsVoteUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static PollsVote update(PollsVote pollsVote, boolean merge)
+	public static PollsVote update(PollsVote pollsVote)
 		throws SystemException {
-		return getPersistence().update(pollsVote, merge);
+		return getPersistence().update(pollsVote);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
-	public static PollsVote update(PollsVote pollsVote, boolean merge,
+	public static PollsVote update(PollsVote pollsVote,
 		ServiceContext serviceContext) throws SystemException {
-		return getPersistence().update(pollsVote, merge, serviceContext);
+		return getPersistence().update(pollsVote, serviceContext);
 	}
 
 	/**
@@ -155,9 +155,9 @@ public class PollsVoteUtil {
 	}
 
 	public static com.liferay.portlet.polls.model.PollsVote updateImpl(
-		com.liferay.portlet.polls.model.PollsVote pollsVote, boolean merge)
+		com.liferay.portlet.polls.model.PollsVote pollsVote)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(pollsVote, merge);
+		return getPersistence().updateImpl(pollsVote);
 	}
 
 	/**

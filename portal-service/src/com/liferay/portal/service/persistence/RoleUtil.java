@@ -93,19 +93,18 @@ public class RoleUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static Role update(Role role, boolean merge)
-		throws SystemException {
-		return getPersistence().update(role, merge);
+	public static Role update(Role role) throws SystemException {
+		return getPersistence().update(role);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
-	public static Role update(Role role, boolean merge,
-		ServiceContext serviceContext) throws SystemException {
-		return getPersistence().update(role, merge, serviceContext);
+	public static Role update(Role role, ServiceContext serviceContext)
+		throws SystemException {
+		return getPersistence().update(role, serviceContext);
 	}
 
 	/**
@@ -152,9 +151,9 @@ public class RoleUtil {
 	}
 
 	public static com.liferay.portal.model.Role updateImpl(
-		com.liferay.portal.model.Role role, boolean merge)
+		com.liferay.portal.model.Role role)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(role, merge);
+		return getPersistence().updateImpl(role);
 	}
 
 	/**

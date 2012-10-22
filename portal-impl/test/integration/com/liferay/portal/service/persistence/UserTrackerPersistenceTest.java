@@ -120,7 +120,7 @@ public class UserTrackerPersistenceTest {
 
 		newUserTracker.setUserAgent(ServiceTestUtil.randomString());
 
-		_persistence.update(newUserTracker, false);
+		_persistence.update(newUserTracker);
 
 		UserTracker existingUserTracker = _persistence.findByPrimaryKey(newUserTracker.getPrimaryKey());
 
@@ -277,7 +277,7 @@ public class UserTrackerPersistenceTest {
 
 		userTracker.setUserAgent(ServiceTestUtil.randomString());
 
-		_persistence.update(userTracker, false);
+		_persistence.update(userTracker);
 
 		return userTracker;
 	}

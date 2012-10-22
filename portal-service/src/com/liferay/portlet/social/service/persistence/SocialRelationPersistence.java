@@ -76,8 +76,7 @@ public interface SocialRelationPersistence extends BasePersistence<SocialRelatio
 			com.liferay.portlet.social.NoSuchRelationException;
 
 	public com.liferay.portlet.social.model.SocialRelation updateImpl(
-		com.liferay.portlet.social.model.SocialRelation socialRelation,
-		boolean merge)
+		com.liferay.portlet.social.model.SocialRelation socialRelation)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

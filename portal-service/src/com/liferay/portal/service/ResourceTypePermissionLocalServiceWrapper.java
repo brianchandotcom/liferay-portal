@@ -231,22 +231,6 @@ public class ResourceTypePermissionLocalServiceWrapper
 	}
 
 	/**
-	* Updates the resource type permission in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param resourceTypePermission the resource type permission
-	* @param merge whether to merge the resource type permission with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	* @return the resource type permission that was updated
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.ResourceTypePermission updateResourceTypePermission(
-		com.liferay.portal.model.ResourceTypePermission resourceTypePermission,
-		boolean merge)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _resourceTypePermissionLocalService.updateResourceTypePermission(resourceTypePermission,
-			merge);
-	}
-
-	/**
 	* Returns the Spring bean ID for this bean.
 	*
 	* @return the Spring bean ID for this bean

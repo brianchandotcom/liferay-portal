@@ -133,7 +133,7 @@ public class DLSyncPersistenceTest {
 
 		newDLSync.setVersion(ServiceTestUtil.randomString());
 
-		_persistence.update(newDLSync, false);
+		_persistence.update(newDLSync);
 
 		DLSync existingDLSync = _persistence.findByPrimaryKey(newDLSync.getPrimaryKey());
 
@@ -318,7 +318,7 @@ public class DLSyncPersistenceTest {
 
 		dlSync.setVersion(ServiceTestUtil.randomString());
 
-		_persistence.update(dlSync, false);
+		_persistence.update(dlSync);
 
 		return dlSync;
 	}

@@ -132,7 +132,7 @@ public class BookmarksFolderPersistenceTest {
 
 		newBookmarksFolder.setDescription(ServiceTestUtil.randomString());
 
-		_persistence.update(newBookmarksFolder, false);
+		_persistence.update(newBookmarksFolder);
 
 		BookmarksFolder existingBookmarksFolder = _persistence.findByPrimaryKey(newBookmarksFolder.getPrimaryKey());
 
@@ -322,7 +322,7 @@ public class BookmarksFolderPersistenceTest {
 
 		bookmarksFolder.setDescription(ServiceTestUtil.randomString());
 
-		_persistence.update(bookmarksFolder, false);
+		_persistence.update(bookmarksFolder);
 
 		return bookmarksFolder;
 	}

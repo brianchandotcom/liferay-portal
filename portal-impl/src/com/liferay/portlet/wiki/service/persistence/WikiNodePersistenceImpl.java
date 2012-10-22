@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
-import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.GroupPersistence;
 import com.liferay.portal.service.persistence.SubscriptionPersistence;
 import com.liferay.portal.service.persistence.UserPersistence;
@@ -406,7 +405,12 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, wikiNode);
+			if (wikiNode.isCachedModel()) {
+				wikiNode = (WikiNode)session.get(WikiNodeImpl.class,
+						wikiNode.getPrimaryKeyObj());
+			}
+
+			session.delete(wikiNode);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -421,8 +425,7 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 	}
 
 	@Override
-	public WikiNode updateImpl(
-		com.liferay.portlet.wiki.model.WikiNode wikiNode, boolean merge)
+	public WikiNode updateImpl(com.liferay.portlet.wiki.model.WikiNode wikiNode)
 		throws SystemException {
 		wikiNode = toUnwrappedModel(wikiNode);
 
@@ -441,9 +444,14 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, wikiNode, merge);
+			if (wikiNode.isNew()) {
+				session.save(wikiNode);
 
-			wikiNode.setNew(false);
+				wikiNode.setNew(false);
+			}
+			else {
+				session.merge(wikiNode);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

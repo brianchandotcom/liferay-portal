@@ -76,8 +76,7 @@ public interface AnnouncementsFlagPersistence extends BasePersistence<Announceme
 			com.liferay.portlet.announcements.NoSuchFlagException;
 
 	public com.liferay.portlet.announcements.model.AnnouncementsFlag updateImpl(
-		com.liferay.portlet.announcements.model.AnnouncementsFlag announcementsFlag,
-		boolean merge)
+		com.liferay.portlet.announcements.model.AnnouncementsFlag announcementsFlag)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

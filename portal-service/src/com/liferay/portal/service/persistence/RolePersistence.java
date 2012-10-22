@@ -70,7 +70,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portal.model.Role updateImpl(
-		com.liferay.portal.model.Role role, boolean merge)
+		com.liferay.portal.model.Role role)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

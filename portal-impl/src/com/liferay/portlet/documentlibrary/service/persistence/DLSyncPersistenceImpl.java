@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
-import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.RepositoryPersistence;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
@@ -278,7 +277,12 @@ public class DLSyncPersistenceImpl extends BasePersistenceImpl<DLSync>
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, dlSync);
+			if (dlSync.isCachedModel()) {
+				dlSync = (DLSync)session.get(DLSyncImpl.class,
+						dlSync.getPrimaryKeyObj());
+			}
+
+			session.delete(dlSync);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -294,7 +298,7 @@ public class DLSyncPersistenceImpl extends BasePersistenceImpl<DLSync>
 
 	@Override
 	public DLSync updateImpl(
-		com.liferay.portlet.documentlibrary.model.DLSync dlSync, boolean merge)
+		com.liferay.portlet.documentlibrary.model.DLSync dlSync)
 		throws SystemException {
 		dlSync = toUnwrappedModel(dlSync);
 
@@ -307,9 +311,14 @@ public class DLSyncPersistenceImpl extends BasePersistenceImpl<DLSync>
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, dlSync, merge);
+			if (dlSync.isNew()) {
+				session.save(dlSync);
 
-			dlSync.setNew(false);
+				dlSync.setNew(false);
+			}
+			else {
+				session.merge(dlSync);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

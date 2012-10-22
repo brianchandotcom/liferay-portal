@@ -207,7 +207,7 @@ public class DLFolderTrashHandler extends BaseTrashHandler {
 
 		dlFolder.setName(name);
 
-		DLFolderLocalServiceUtil.updateDLFolder(dlFolder, false);
+		DLFolderLocalServiceUtil.updateDLFolder(dlFolder);
 	}
 
 	protected DLFolder getDLFolder(long classPK)

@@ -257,7 +257,7 @@ public abstract class OrganizationLocalServiceBaseImpl
 		throws SystemException {
 		organization.setNew(true);
 
-		return organizationPersistence.update(organization, false);
+		return organizationPersistence.update(organization);
 	}
 
 	/**
@@ -431,23 +431,7 @@ public abstract class OrganizationLocalServiceBaseImpl
 	@Indexable(type = IndexableType.REINDEX)
 	public Organization updateOrganization(Organization organization)
 		throws SystemException {
-		return updateOrganization(organization, true);
-	}
-
-	/**
-	 * Updates the organization in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param organization the organization
-	 * @param merge whether to merge the organization with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	 * @return the organization that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public Organization updateOrganization(Organization organization,
-		boolean merge) throws SystemException {
-		organization.setNew(false);
-
-		return organizationPersistence.update(organization, merge);
+		return organizationPersistence.update(organization);
 	}
 
 	/**

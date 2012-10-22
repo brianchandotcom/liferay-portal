@@ -74,7 +74,7 @@ public interface TrashVersionPersistence extends BasePersistence<TrashVersion> {
 			com.liferay.portlet.trash.NoSuchVersionException;
 
 	public com.liferay.portlet.trash.model.TrashVersion updateImpl(
-		com.liferay.portlet.trash.model.TrashVersion trashVersion, boolean merge)
+		com.liferay.portlet.trash.model.TrashVersion trashVersion)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

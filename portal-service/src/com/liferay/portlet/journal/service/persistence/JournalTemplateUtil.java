@@ -95,19 +95,19 @@ public class JournalTemplateUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static JournalTemplate update(JournalTemplate journalTemplate,
-		boolean merge) throws SystemException {
-		return getPersistence().update(journalTemplate, merge);
+	public static JournalTemplate update(JournalTemplate journalTemplate)
+		throws SystemException {
+		return getPersistence().update(journalTemplate);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
 	public static JournalTemplate update(JournalTemplate journalTemplate,
-		boolean merge, ServiceContext serviceContext) throws SystemException {
-		return getPersistence().update(journalTemplate, merge, serviceContext);
+		ServiceContext serviceContext) throws SystemException {
+		return getPersistence().update(journalTemplate, serviceContext);
 	}
 
 	/**
@@ -157,10 +157,9 @@ public class JournalTemplateUtil {
 	}
 
 	public static com.liferay.portlet.journal.model.JournalTemplate updateImpl(
-		com.liferay.portlet.journal.model.JournalTemplate journalTemplate,
-		boolean merge)
+		com.liferay.portlet.journal.model.JournalTemplate journalTemplate)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(journalTemplate, merge);
+		return getPersistence().updateImpl(journalTemplate);
 	}
 
 	/**

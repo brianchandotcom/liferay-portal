@@ -94,19 +94,19 @@ public class ResourceActionUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static ResourceAction update(ResourceAction resourceAction,
-		boolean merge) throws SystemException {
-		return getPersistence().update(resourceAction, merge);
+	public static ResourceAction update(ResourceAction resourceAction)
+		throws SystemException {
+		return getPersistence().update(resourceAction);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
 	public static ResourceAction update(ResourceAction resourceAction,
-		boolean merge, ServiceContext serviceContext) throws SystemException {
-		return getPersistence().update(resourceAction, merge, serviceContext);
+		ServiceContext serviceContext) throws SystemException {
+		return getPersistence().update(resourceAction, serviceContext);
 	}
 
 	/**
@@ -156,9 +156,9 @@ public class ResourceActionUtil {
 	}
 
 	public static com.liferay.portal.model.ResourceAction updateImpl(
-		com.liferay.portal.model.ResourceAction resourceAction, boolean merge)
+		com.liferay.portal.model.ResourceAction resourceAction)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(resourceAction, merge);
+		return getPersistence().updateImpl(resourceAction);
 	}
 
 	/**

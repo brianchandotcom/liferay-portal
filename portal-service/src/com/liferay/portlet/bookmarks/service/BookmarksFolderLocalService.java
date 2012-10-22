@@ -232,19 +232,6 @@ public interface BookmarksFolderLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Updates the bookmarks folder in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param bookmarksFolder the bookmarks folder
-	* @param merge whether to merge the bookmarks folder with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	* @return the bookmarks folder that was updated
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portlet.bookmarks.model.BookmarksFolder updateBookmarksFolder(
-		com.liferay.portlet.bookmarks.model.BookmarksFolder bookmarksFolder,
-		boolean merge)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
 	* Returns the Spring bean ID for this bean.
 	*
 	* @return the Spring bean ID for this bean

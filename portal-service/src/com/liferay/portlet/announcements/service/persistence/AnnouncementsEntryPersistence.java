@@ -76,8 +76,7 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 			com.liferay.portlet.announcements.NoSuchEntryException;
 
 	public com.liferay.portlet.announcements.model.AnnouncementsEntry updateImpl(
-		com.liferay.portlet.announcements.model.AnnouncementsEntry announcementsEntry,
-		boolean merge)
+		com.liferay.portlet.announcements.model.AnnouncementsEntry announcementsEntry)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

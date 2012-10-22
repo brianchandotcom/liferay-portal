@@ -126,7 +126,7 @@ public abstract class DLFolderLocalServiceBaseImpl extends BaseLocalServiceImpl
 	public DLFolder addDLFolder(DLFolder dlFolder) throws SystemException {
 		dlFolder.setNew(true);
 
-		return dlFolderPersistence.update(dlFolder, false);
+		return dlFolderPersistence.update(dlFolder);
 	}
 
 	/**
@@ -309,23 +309,7 @@ public abstract class DLFolderLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public DLFolder updateDLFolder(DLFolder dlFolder) throws SystemException {
-		return updateDLFolder(dlFolder, true);
-	}
-
-	/**
-	 * Updates the document library folder in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param dlFolder the document library folder
-	 * @param merge whether to merge the document library folder with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	 * @return the document library folder that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public DLFolder updateDLFolder(DLFolder dlFolder, boolean merge)
-		throws SystemException {
-		dlFolder.setNew(false);
-
-		return dlFolderPersistence.update(dlFolder, merge);
+		return dlFolderPersistence.update(dlFolder);
 	}
 
 	/**

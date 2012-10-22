@@ -94,19 +94,19 @@ public class OrganizationUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static Organization update(Organization organization, boolean merge)
+	public static Organization update(Organization organization)
 		throws SystemException {
-		return getPersistence().update(organization, merge);
+		return getPersistence().update(organization);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
-	public static Organization update(Organization organization, boolean merge,
+	public static Organization update(Organization organization,
 		ServiceContext serviceContext) throws SystemException {
-		return getPersistence().update(organization, merge, serviceContext);
+		return getPersistence().update(organization, serviceContext);
 	}
 
 	/**
@@ -156,9 +156,9 @@ public class OrganizationUtil {
 	}
 
 	public static com.liferay.portal.model.Organization updateImpl(
-		com.liferay.portal.model.Organization organization, boolean merge)
+		com.liferay.portal.model.Organization organization)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(organization, merge);
+		return getPersistence().updateImpl(organization);
 	}
 
 	/**

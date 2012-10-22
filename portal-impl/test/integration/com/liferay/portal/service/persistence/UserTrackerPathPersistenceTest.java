@@ -112,7 +112,7 @@ public class UserTrackerPathPersistenceTest {
 
 		newUserTrackerPath.setPathDate(ServiceTestUtil.nextDate());
 
-		_persistence.update(newUserTrackerPath, false);
+		_persistence.update(newUserTrackerPath);
 
 		UserTrackerPath existingUserTrackerPath = _persistence.findByPrimaryKey(newUserTrackerPath.getPrimaryKey());
 
@@ -253,7 +253,7 @@ public class UserTrackerPathPersistenceTest {
 
 		userTrackerPath.setPathDate(ServiceTestUtil.nextDate());
 
-		_persistence.update(userTrackerPath, false);
+		_persistence.update(userTrackerPath);
 
 		return userTrackerPath;
 	}

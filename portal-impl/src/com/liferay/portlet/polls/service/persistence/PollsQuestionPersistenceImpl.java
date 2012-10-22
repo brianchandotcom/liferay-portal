@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
-import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
@@ -340,7 +339,12 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, pollsQuestion);
+			if (pollsQuestion.isCachedModel()) {
+				pollsQuestion = (PollsQuestion)session.get(PollsQuestionImpl.class,
+						pollsQuestion.getPrimaryKeyObj());
+			}
+
+			session.delete(pollsQuestion);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -356,8 +360,8 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 
 	@Override
 	public PollsQuestion updateImpl(
-		com.liferay.portlet.polls.model.PollsQuestion pollsQuestion,
-		boolean merge) throws SystemException {
+		com.liferay.portlet.polls.model.PollsQuestion pollsQuestion)
+		throws SystemException {
 		pollsQuestion = toUnwrappedModel(pollsQuestion);
 
 		boolean isNew = pollsQuestion.isNew();
@@ -375,9 +379,14 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, pollsQuestion, merge);
+			if (pollsQuestion.isNew()) {
+				session.save(pollsQuestion);
 
-			pollsQuestion.setNew(false);
+				pollsQuestion.setNew(false);
+			}
+			else {
+				session.merge(pollsQuestion);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

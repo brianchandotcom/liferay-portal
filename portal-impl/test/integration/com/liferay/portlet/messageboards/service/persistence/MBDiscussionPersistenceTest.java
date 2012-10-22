@@ -114,7 +114,7 @@ public class MBDiscussionPersistenceTest {
 
 		newMBDiscussion.setThreadId(ServiceTestUtil.nextLong());
 
-		_persistence.update(newMBDiscussion, false);
+		_persistence.update(newMBDiscussion);
 
 		MBDiscussion existingMBDiscussion = _persistence.findByPrimaryKey(newMBDiscussion.getPrimaryKey());
 
@@ -275,7 +275,7 @@ public class MBDiscussionPersistenceTest {
 
 		mbDiscussion.setThreadId(ServiceTestUtil.nextLong());
 
-		_persistence.update(mbDiscussion, false);
+		_persistence.update(mbDiscussion);
 
 		return mbDiscussion;
 	}

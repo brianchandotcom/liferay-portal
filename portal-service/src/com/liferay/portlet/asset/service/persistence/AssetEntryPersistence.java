@@ -74,7 +74,7 @@ public interface AssetEntryPersistence extends BasePersistence<AssetEntry> {
 			com.liferay.portlet.asset.NoSuchEntryException;
 
 	public com.liferay.portlet.asset.model.AssetEntry updateImpl(
-		com.liferay.portlet.asset.model.AssetEntry assetEntry, boolean merge)
+		com.liferay.portlet.asset.model.AssetEntry assetEntry)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

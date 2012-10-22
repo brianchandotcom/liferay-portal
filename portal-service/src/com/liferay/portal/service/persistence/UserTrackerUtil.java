@@ -94,19 +94,19 @@ public class UserTrackerUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static UserTracker update(UserTracker userTracker, boolean merge)
+	public static UserTracker update(UserTracker userTracker)
 		throws SystemException {
-		return getPersistence().update(userTracker, merge);
+		return getPersistence().update(userTracker);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
-	public static UserTracker update(UserTracker userTracker, boolean merge,
+	public static UserTracker update(UserTracker userTracker,
 		ServiceContext serviceContext) throws SystemException {
-		return getPersistence().update(userTracker, merge, serviceContext);
+		return getPersistence().update(userTracker, serviceContext);
 	}
 
 	/**
@@ -156,9 +156,9 @@ public class UserTrackerUtil {
 	}
 
 	public static com.liferay.portal.model.UserTracker updateImpl(
-		com.liferay.portal.model.UserTracker userTracker, boolean merge)
+		com.liferay.portal.model.UserTracker userTracker)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(userTracker, merge);
+		return getPersistence().updateImpl(userTracker);
 	}
 
 	/**

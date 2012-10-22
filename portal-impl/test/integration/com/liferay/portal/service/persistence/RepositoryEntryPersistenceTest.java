@@ -118,7 +118,7 @@ public class RepositoryEntryPersistenceTest {
 
 		newRepositoryEntry.setManualCheckInRequired(ServiceTestUtil.randomBoolean());
 
-		_persistence.update(newRepositoryEntry, false);
+		_persistence.update(newRepositoryEntry);
 
 		RepositoryEntry existingRepositoryEntry = _persistence.findByPrimaryKey(newRepositoryEntry.getPrimaryKey());
 
@@ -291,7 +291,7 @@ public class RepositoryEntryPersistenceTest {
 
 		repositoryEntry.setManualCheckInRequired(ServiceTestUtil.randomBoolean());
 
-		_persistence.update(repositoryEntry, false);
+		_persistence.update(repositoryEntry);
 
 		return repositoryEntry;
 	}

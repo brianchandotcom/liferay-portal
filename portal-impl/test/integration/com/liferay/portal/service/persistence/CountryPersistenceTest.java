@@ -122,7 +122,7 @@ public class CountryPersistenceTest {
 
 		newCountry.setActive(ServiceTestUtil.randomBoolean());
 
-		_persistence.update(newCountry, false);
+		_persistence.update(newCountry);
 
 		Country existingCountry = _persistence.findByPrimaryKey(newCountry.getPrimaryKey());
 
@@ -291,7 +291,7 @@ public class CountryPersistenceTest {
 
 		country.setActive(ServiceTestUtil.randomBoolean());
 
-		_persistence.update(country, false);
+		_persistence.update(country);
 
 		return country;
 	}

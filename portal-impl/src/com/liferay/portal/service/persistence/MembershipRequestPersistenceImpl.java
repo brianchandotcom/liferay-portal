@@ -333,7 +333,12 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, membershipRequest);
+			if (membershipRequest.isCachedModel()) {
+				membershipRequest = (MembershipRequest)session.get(MembershipRequestImpl.class,
+						membershipRequest.getPrimaryKeyObj());
+			}
+
+			session.delete(membershipRequest);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -349,8 +354,8 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 
 	@Override
 	public MembershipRequest updateImpl(
-		com.liferay.portal.model.MembershipRequest membershipRequest,
-		boolean merge) throws SystemException {
+		com.liferay.portal.model.MembershipRequest membershipRequest)
+		throws SystemException {
 		membershipRequest = toUnwrappedModel(membershipRequest);
 
 		boolean isNew = membershipRequest.isNew();
@@ -362,9 +367,14 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, membershipRequest, merge);
+			if (membershipRequest.isNew()) {
+				session.save(membershipRequest);
 
-			membershipRequest.setNew(false);
+				membershipRequest.setNew(false);
+			}
+			else {
+				session.merge(membershipRequest);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

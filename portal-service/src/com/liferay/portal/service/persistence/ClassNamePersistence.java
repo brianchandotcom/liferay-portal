@@ -71,7 +71,7 @@ public interface ClassNamePersistence extends BasePersistence<ClassName> {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portal.model.ClassName updateImpl(
-		com.liferay.portal.model.ClassName className, boolean merge)
+		com.liferay.portal.model.ClassName className)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

@@ -154,7 +154,7 @@ public class CalEventPersistenceTest {
 
 		newCalEvent.setSecondReminder(ServiceTestUtil.nextInt());
 
-		_persistence.update(newCalEvent, false);
+		_persistence.update(newCalEvent);
 
 		CalEvent existingCalEvent = _persistence.findByPrimaryKey(newCalEvent.getPrimaryKey());
 
@@ -387,7 +387,7 @@ public class CalEventPersistenceTest {
 
 		calEvent.setSecondReminder(ServiceTestUtil.nextInt());
 
-		_persistence.update(calEvent, false);
+		_persistence.update(calEvent);
 
 		return calEvent;
 	}

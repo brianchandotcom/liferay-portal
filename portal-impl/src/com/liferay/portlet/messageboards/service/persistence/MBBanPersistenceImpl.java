@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
-import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
@@ -322,7 +321,12 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, mbBan);
+			if (mbBan.isCachedModel()) {
+				mbBan = (MBBan)session.get(MBBanImpl.class,
+						mbBan.getPrimaryKeyObj());
+			}
+
+			session.delete(mbBan);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -337,8 +341,7 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 	}
 
 	@Override
-	public MBBan updateImpl(
-		com.liferay.portlet.messageboards.model.MBBan mbBan, boolean merge)
+	public MBBan updateImpl(com.liferay.portlet.messageboards.model.MBBan mbBan)
 		throws SystemException {
 		mbBan = toUnwrappedModel(mbBan);
 
@@ -351,9 +354,14 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, mbBan, merge);
+			if (mbBan.isNew()) {
+				session.save(mbBan);
 
-			mbBan.setNew(false);
+				mbBan.setNew(false);
+			}
+			else {
+				session.merge(mbBan);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

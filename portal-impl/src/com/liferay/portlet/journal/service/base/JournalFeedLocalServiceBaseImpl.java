@@ -106,7 +106,7 @@ public abstract class JournalFeedLocalServiceBaseImpl
 		throws SystemException {
 		journalFeed.setNew(true);
 
-		return journalFeedPersistence.update(journalFeed, false);
+		return journalFeedPersistence.update(journalFeed);
 	}
 
 	/**
@@ -292,23 +292,7 @@ public abstract class JournalFeedLocalServiceBaseImpl
 	@Indexable(type = IndexableType.REINDEX)
 	public JournalFeed updateJournalFeed(JournalFeed journalFeed)
 		throws SystemException {
-		return updateJournalFeed(journalFeed, true);
-	}
-
-	/**
-	 * Updates the journal feed in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param journalFeed the journal feed
-	 * @param merge whether to merge the journal feed with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	 * @return the journal feed that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public JournalFeed updateJournalFeed(JournalFeed journalFeed, boolean merge)
-		throws SystemException {
-		journalFeed.setNew(false);
-
-		return journalFeedPersistence.update(journalFeed, merge);
+		return journalFeedPersistence.update(journalFeed);
 	}
 
 	/**

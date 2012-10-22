@@ -126,7 +126,7 @@ public class BlogsStatsUserPersistenceTest {
 
 		newBlogsStatsUser.setRatingsAverageScore(ServiceTestUtil.nextDouble());
 
-		_persistence.update(newBlogsStatsUser, false);
+		_persistence.update(newBlogsStatsUser);
 
 		BlogsStatsUser existingBlogsStatsUser = _persistence.findByPrimaryKey(newBlogsStatsUser.getPrimaryKey());
 
@@ -302,7 +302,7 @@ public class BlogsStatsUserPersistenceTest {
 
 		blogsStatsUser.setRatingsAverageScore(ServiceTestUtil.nextDouble());
 
-		_persistence.update(blogsStatsUser, false);
+		_persistence.update(blogsStatsUser);
 
 		return blogsStatsUser;
 	}

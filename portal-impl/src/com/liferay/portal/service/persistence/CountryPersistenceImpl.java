@@ -306,7 +306,12 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, country);
+			if (country.isCachedModel()) {
+				country = (Country)session.get(CountryImpl.class,
+						country.getPrimaryKeyObj());
+			}
+
+			session.delete(country);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -321,8 +326,8 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 	}
 
 	@Override
-	public Country updateImpl(com.liferay.portal.model.Country country,
-		boolean merge) throws SystemException {
+	public Country updateImpl(com.liferay.portal.model.Country country)
+		throws SystemException {
 		country = toUnwrappedModel(country);
 
 		boolean isNew = country.isNew();
@@ -334,9 +339,14 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, country, merge);
+			if (country.isNew()) {
+				session.save(country);
 
-			country.setNew(false);
+				country.setNew(false);
+			}
+			else {
+				session.merge(country);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

@@ -95,19 +95,18 @@ public class CalEventUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static CalEvent update(CalEvent calEvent, boolean merge)
-		throws SystemException {
-		return getPersistence().update(calEvent, merge);
+	public static CalEvent update(CalEvent calEvent) throws SystemException {
+		return getPersistence().update(calEvent);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
-	public static CalEvent update(CalEvent calEvent, boolean merge,
+	public static CalEvent update(CalEvent calEvent,
 		ServiceContext serviceContext) throws SystemException {
-		return getPersistence().update(calEvent, merge, serviceContext);
+		return getPersistence().update(calEvent, serviceContext);
 	}
 
 	/**
@@ -157,9 +156,9 @@ public class CalEventUtil {
 	}
 
 	public static com.liferay.portlet.calendar.model.CalEvent updateImpl(
-		com.liferay.portlet.calendar.model.CalEvent calEvent, boolean merge)
+		com.liferay.portlet.calendar.model.CalEvent calEvent)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(calEvent, merge);
+		return getPersistence().updateImpl(calEvent);
 	}
 
 	/**

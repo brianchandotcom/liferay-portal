@@ -43,7 +43,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
-import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
@@ -308,7 +307,12 @@ public class SCProductVersionPersistenceImpl extends BasePersistenceImpl<SCProdu
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, scProductVersion);
+			if (scProductVersion.isCachedModel()) {
+				scProductVersion = (SCProductVersion)session.get(SCProductVersionImpl.class,
+						scProductVersion.getPrimaryKeyObj());
+			}
+
+			session.delete(scProductVersion);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -324,8 +328,8 @@ public class SCProductVersionPersistenceImpl extends BasePersistenceImpl<SCProdu
 
 	@Override
 	public SCProductVersion updateImpl(
-		com.liferay.portlet.softwarecatalog.model.SCProductVersion scProductVersion,
-		boolean merge) throws SystemException {
+		com.liferay.portlet.softwarecatalog.model.SCProductVersion scProductVersion)
+		throws SystemException {
 		scProductVersion = toUnwrappedModel(scProductVersion);
 
 		boolean isNew = scProductVersion.isNew();
@@ -337,9 +341,14 @@ public class SCProductVersionPersistenceImpl extends BasePersistenceImpl<SCProdu
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, scProductVersion, merge);
+			if (scProductVersion.isNew()) {
+				session.save(scProductVersion);
 
-			scProductVersion.setNew(false);
+				scProductVersion.setNew(false);
+			}
+			else {
+				session.merge(scProductVersion);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

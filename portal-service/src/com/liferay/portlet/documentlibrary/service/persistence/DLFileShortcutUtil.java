@@ -95,19 +95,19 @@ public class DLFileShortcutUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static DLFileShortcut update(DLFileShortcut dlFileShortcut,
-		boolean merge) throws SystemException {
-		return getPersistence().update(dlFileShortcut, merge);
+	public static DLFileShortcut update(DLFileShortcut dlFileShortcut)
+		throws SystemException {
+		return getPersistence().update(dlFileShortcut);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
 	public static DLFileShortcut update(DLFileShortcut dlFileShortcut,
-		boolean merge, ServiceContext serviceContext) throws SystemException {
-		return getPersistence().update(dlFileShortcut, merge, serviceContext);
+		ServiceContext serviceContext) throws SystemException {
+		return getPersistence().update(dlFileShortcut, serviceContext);
 	}
 
 	/**
@@ -157,10 +157,9 @@ public class DLFileShortcutUtil {
 	}
 
 	public static com.liferay.portlet.documentlibrary.model.DLFileShortcut updateImpl(
-		com.liferay.portlet.documentlibrary.model.DLFileShortcut dlFileShortcut,
-		boolean merge)
+		com.liferay.portlet.documentlibrary.model.DLFileShortcut dlFileShortcut)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(dlFileShortcut, merge);
+		return getPersistence().updateImpl(dlFileShortcut);
 	}
 
 	/**

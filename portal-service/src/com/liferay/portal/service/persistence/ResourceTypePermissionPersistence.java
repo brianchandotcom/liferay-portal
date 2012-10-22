@@ -74,8 +74,7 @@ public interface ResourceTypePermissionPersistence extends BasePersistence<Resou
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portal.model.ResourceTypePermission updateImpl(
-		com.liferay.portal.model.ResourceTypePermission resourceTypePermission,
-		boolean merge)
+		com.liferay.portal.model.ResourceTypePermission resourceTypePermission)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

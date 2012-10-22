@@ -249,7 +249,7 @@ public abstract class UserTrackerPathLocalServiceBaseImpl
 		throws SystemException {
 		userTrackerPath.setNew(true);
 
-		return userTrackerPathPersistence.update(userTrackerPath, false);
+		return userTrackerPathPersistence.update(userTrackerPath);
 	}
 
 	/**
@@ -422,24 +422,7 @@ public abstract class UserTrackerPathLocalServiceBaseImpl
 	@Indexable(type = IndexableType.REINDEX)
 	public UserTrackerPath updateUserTrackerPath(
 		UserTrackerPath userTrackerPath) throws SystemException {
-		return updateUserTrackerPath(userTrackerPath, true);
-	}
-
-	/**
-	 * Updates the user tracker path in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param userTrackerPath the user tracker path
-	 * @param merge whether to merge the user tracker path with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	 * @return the user tracker path that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public UserTrackerPath updateUserTrackerPath(
-		UserTrackerPath userTrackerPath, boolean merge)
-		throws SystemException {
-		userTrackerPath.setNew(false);
-
-		return userTrackerPathPersistence.update(userTrackerPath, merge);
+		return userTrackerPathPersistence.update(userTrackerPath);
 	}
 
 	/**

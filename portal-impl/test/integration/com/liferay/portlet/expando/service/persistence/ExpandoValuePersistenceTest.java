@@ -122,7 +122,7 @@ public class ExpandoValuePersistenceTest {
 
 		newExpandoValue.setData(ServiceTestUtil.randomString());
 
-		_persistence.update(newExpandoValue, false);
+		_persistence.update(newExpandoValue);
 
 		ExpandoValue existingExpandoValue = _persistence.findByPrimaryKey(newExpandoValue.getPrimaryKey());
 
@@ -300,7 +300,7 @@ public class ExpandoValuePersistenceTest {
 
 		expandoValue.setData(ServiceTestUtil.randomString());
 
-		_persistence.update(expandoValue, false);
+		_persistence.update(expandoValue);
 
 		return expandoValue;
 	}

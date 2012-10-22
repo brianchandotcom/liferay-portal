@@ -95,19 +95,19 @@ public class JournalFolderUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static JournalFolder update(JournalFolder journalFolder,
-		boolean merge) throws SystemException {
-		return getPersistence().update(journalFolder, merge);
+	public static JournalFolder update(JournalFolder journalFolder)
+		throws SystemException {
+		return getPersistence().update(journalFolder);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
 	public static JournalFolder update(JournalFolder journalFolder,
-		boolean merge, ServiceContext serviceContext) throws SystemException {
-		return getPersistence().update(journalFolder, merge, serviceContext);
+		ServiceContext serviceContext) throws SystemException {
+		return getPersistence().update(journalFolder, serviceContext);
 	}
 
 	/**
@@ -157,10 +157,9 @@ public class JournalFolderUtil {
 	}
 
 	public static com.liferay.portlet.journal.model.JournalFolder updateImpl(
-		com.liferay.portlet.journal.model.JournalFolder journalFolder,
-		boolean merge)
+		com.liferay.portlet.journal.model.JournalFolder journalFolder)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(journalFolder, merge);
+		return getPersistence().updateImpl(journalFolder);
 	}
 
 	/**

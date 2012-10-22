@@ -95,19 +95,19 @@ public class DDMStorageLinkUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static DDMStorageLink update(DDMStorageLink ddmStorageLink,
-		boolean merge) throws SystemException {
-		return getPersistence().update(ddmStorageLink, merge);
+	public static DDMStorageLink update(DDMStorageLink ddmStorageLink)
+		throws SystemException {
+		return getPersistence().update(ddmStorageLink);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
 	public static DDMStorageLink update(DDMStorageLink ddmStorageLink,
-		boolean merge, ServiceContext serviceContext) throws SystemException {
-		return getPersistence().update(ddmStorageLink, merge, serviceContext);
+		ServiceContext serviceContext) throws SystemException {
+		return getPersistence().update(ddmStorageLink, serviceContext);
 	}
 
 	/**
@@ -157,10 +157,9 @@ public class DDMStorageLinkUtil {
 	}
 
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink updateImpl(
-		com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink ddmStorageLink,
-		boolean merge)
+		com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink ddmStorageLink)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(ddmStorageLink, merge);
+		return getPersistence().updateImpl(ddmStorageLink);
 	}
 
 	/**

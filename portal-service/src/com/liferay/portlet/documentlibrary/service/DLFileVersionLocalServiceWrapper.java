@@ -248,22 +248,6 @@ public class DLFileVersionLocalServiceWrapper
 	}
 
 	/**
-	* Updates the document library file version in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param dlFileVersion the document library file version
-	* @param merge whether to merge the document library file version with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	* @return the document library file version that was updated
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portlet.documentlibrary.model.DLFileVersion updateDLFileVersion(
-		com.liferay.portlet.documentlibrary.model.DLFileVersion dlFileVersion,
-		boolean merge)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _dlFileVersionLocalService.updateDLFileVersion(dlFileVersion,
-			merge);
-	}
-
-	/**
 	* Returns the Spring bean ID for this bean.
 	*
 	* @return the Spring bean ID for this bean

@@ -138,7 +138,7 @@ public class MDRActionPersistenceTest {
 
 		newMDRAction.setTypeSettings(ServiceTestUtil.randomString());
 
-		_persistence.update(newMDRAction, false);
+		_persistence.update(newMDRAction);
 
 		MDRAction existingMDRAction = _persistence.findByPrimaryKey(newMDRAction.getPrimaryKey());
 
@@ -337,7 +337,7 @@ public class MDRActionPersistenceTest {
 
 		mdrAction.setTypeSettings(ServiceTestUtil.randomString());
 
-		_persistence.update(mdrAction, false);
+		_persistence.update(mdrAction);
 
 		return mdrAction;
 	}

@@ -76,8 +76,7 @@ public interface WikiPageResourcePersistence extends BasePersistence<WikiPageRes
 			com.liferay.portlet.wiki.NoSuchPageResourceException;
 
 	public com.liferay.portlet.wiki.model.WikiPageResource updateImpl(
-		com.liferay.portlet.wiki.model.WikiPageResource wikiPageResource,
-		boolean merge)
+		com.liferay.portlet.wiki.model.WikiPageResource wikiPageResource)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

@@ -112,7 +112,7 @@ public class PasswordTrackerPersistenceTest {
 
 		newPasswordTracker.setPassword(ServiceTestUtil.randomString());
 
-		_persistence.update(newPasswordTracker, false);
+		_persistence.update(newPasswordTracker);
 
 		PasswordTracker existingPasswordTracker = _persistence.findByPrimaryKey(newPasswordTracker.getPrimaryKey());
 
@@ -253,7 +253,7 @@ public class PasswordTrackerPersistenceTest {
 
 		passwordTracker.setPassword(ServiceTestUtil.randomString());
 
-		_persistence.update(passwordTracker, false);
+		_persistence.update(passwordTracker);
 
 		return passwordTracker;
 	}

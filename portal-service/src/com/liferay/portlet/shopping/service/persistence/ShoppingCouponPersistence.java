@@ -76,8 +76,7 @@ public interface ShoppingCouponPersistence extends BasePersistence<ShoppingCoupo
 			com.liferay.portlet.shopping.NoSuchCouponException;
 
 	public com.liferay.portlet.shopping.model.ShoppingCoupon updateImpl(
-		com.liferay.portlet.shopping.model.ShoppingCoupon shoppingCoupon,
-		boolean merge)
+		com.liferay.portlet.shopping.model.ShoppingCoupon shoppingCoupon)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

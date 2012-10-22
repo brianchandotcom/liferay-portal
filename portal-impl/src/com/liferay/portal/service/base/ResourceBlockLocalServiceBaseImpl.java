@@ -249,7 +249,7 @@ public abstract class ResourceBlockLocalServiceBaseImpl
 		throws SystemException {
 		resourceBlock.setNew(true);
 
-		return resourceBlockPersistence.update(resourceBlock, false);
+		return resourceBlockPersistence.update(resourceBlock);
 	}
 
 	/**
@@ -422,23 +422,7 @@ public abstract class ResourceBlockLocalServiceBaseImpl
 	@Indexable(type = IndexableType.REINDEX)
 	public ResourceBlock updateResourceBlock(ResourceBlock resourceBlock)
 		throws SystemException {
-		return updateResourceBlock(resourceBlock, true);
-	}
-
-	/**
-	 * Updates the resource block in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param resourceBlock the resource block
-	 * @param merge whether to merge the resource block with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	 * @return the resource block that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public ResourceBlock updateResourceBlock(ResourceBlock resourceBlock,
-		boolean merge) throws SystemException {
-		resourceBlock.setNew(false);
-
-		return resourceBlockPersistence.update(resourceBlock, merge);
+		return resourceBlockPersistence.update(resourceBlock);
 	}
 
 	/**

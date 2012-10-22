@@ -108,7 +108,7 @@ public abstract class AnnouncementsEntryLocalServiceBaseImpl
 		AnnouncementsEntry announcementsEntry) throws SystemException {
 		announcementsEntry.setNew(true);
 
-		return announcementsEntryPersistence.update(announcementsEntry, false);
+		return announcementsEntryPersistence.update(announcementsEntry);
 	}
 
 	/**
@@ -281,24 +281,7 @@ public abstract class AnnouncementsEntryLocalServiceBaseImpl
 	@Indexable(type = IndexableType.REINDEX)
 	public AnnouncementsEntry updateAnnouncementsEntry(
 		AnnouncementsEntry announcementsEntry) throws SystemException {
-		return updateAnnouncementsEntry(announcementsEntry, true);
-	}
-
-	/**
-	 * Updates the announcements entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param announcementsEntry the announcements entry
-	 * @param merge whether to merge the announcements entry with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	 * @return the announcements entry that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public AnnouncementsEntry updateAnnouncementsEntry(
-		AnnouncementsEntry announcementsEntry, boolean merge)
-		throws SystemException {
-		announcementsEntry.setNew(false);
-
-		return announcementsEntryPersistence.update(announcementsEntry, merge);
+		return announcementsEntryPersistence.update(announcementsEntry);
 	}
 
 	/**

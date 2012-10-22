@@ -340,7 +340,11 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, lock);
+			if (lock.isCachedModel()) {
+				lock = (Lock)session.get(LockImpl.class, lock.getPrimaryKeyObj());
+			}
+
+			session.delete(lock);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -355,7 +359,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 	}
 
 	@Override
-	public Lock updateImpl(com.liferay.portal.model.Lock lock, boolean merge)
+	public Lock updateImpl(com.liferay.portal.model.Lock lock)
 		throws SystemException {
 		lock = toUnwrappedModel(lock);
 
@@ -374,9 +378,14 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, lock, merge);
+			if (lock.isNew()) {
+				session.save(lock);
 
-			lock.setNew(false);
+				lock.setNew(false);
+			}
+			else {
+				session.merge(lock);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

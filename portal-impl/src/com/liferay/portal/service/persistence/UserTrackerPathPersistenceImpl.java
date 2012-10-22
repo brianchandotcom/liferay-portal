@@ -263,7 +263,12 @@ public class UserTrackerPathPersistenceImpl extends BasePersistenceImpl<UserTrac
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, userTrackerPath);
+			if (userTrackerPath.isCachedModel()) {
+				userTrackerPath = (UserTrackerPath)session.get(UserTrackerPathImpl.class,
+						userTrackerPath.getPrimaryKeyObj());
+			}
+
+			session.delete(userTrackerPath);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -279,7 +284,7 @@ public class UserTrackerPathPersistenceImpl extends BasePersistenceImpl<UserTrac
 
 	@Override
 	public UserTrackerPath updateImpl(
-		com.liferay.portal.model.UserTrackerPath userTrackerPath, boolean merge)
+		com.liferay.portal.model.UserTrackerPath userTrackerPath)
 		throws SystemException {
 		userTrackerPath = toUnwrappedModel(userTrackerPath);
 
@@ -292,9 +297,14 @@ public class UserTrackerPathPersistenceImpl extends BasePersistenceImpl<UserTrac
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, userTrackerPath, merge);
+			if (userTrackerPath.isNew()) {
+				session.save(userTrackerPath);
 
-			userTrackerPath.setNew(false);
+				userTrackerPath.setNew(false);
+			}
+			else {
+				session.merge(userTrackerPath);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

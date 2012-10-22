@@ -71,7 +71,7 @@ public interface TicketPersistence extends BasePersistence<Ticket> {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portal.model.Ticket updateImpl(
-		com.liferay.portal.model.Ticket ticket, boolean merge)
+		com.liferay.portal.model.Ticket ticket)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

@@ -168,7 +168,7 @@ public class LayoutRevisionPersistenceTest {
 
 		newLayoutRevision.setStatusDate(ServiceTestUtil.nextDate());
 
-		_persistence.update(newLayoutRevision, false);
+		_persistence.update(newLayoutRevision);
 
 		LayoutRevision existingLayoutRevision = _persistence.findByPrimaryKey(newLayoutRevision.getPrimaryKey());
 
@@ -439,7 +439,7 @@ public class LayoutRevisionPersistenceTest {
 
 		layoutRevision.setStatusDate(ServiceTestUtil.nextDate());
 
-		_persistence.update(layoutRevision, false);
+		_persistence.update(layoutRevision);
 
 		return layoutRevision;
 	}

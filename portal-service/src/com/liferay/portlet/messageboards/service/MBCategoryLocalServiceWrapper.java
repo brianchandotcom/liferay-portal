@@ -247,21 +247,6 @@ public class MBCategoryLocalServiceWrapper implements MBCategoryLocalService,
 	}
 
 	/**
-	* Updates the message boards category in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param mbCategory the message boards category
-	* @param merge whether to merge the message boards category with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	* @return the message boards category that was updated
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portlet.messageboards.model.MBCategory updateMBCategory(
-		com.liferay.portlet.messageboards.model.MBCategory mbCategory,
-		boolean merge)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _mbCategoryLocalService.updateMBCategory(mbCategory, merge);
-	}
-
-	/**
 	* Returns the Spring bean ID for this bean.
 	*
 	* @return the Spring bean ID for this bean

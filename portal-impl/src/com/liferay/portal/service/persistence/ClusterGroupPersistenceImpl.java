@@ -235,7 +235,12 @@ public class ClusterGroupPersistenceImpl extends BasePersistenceImpl<ClusterGrou
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, clusterGroup);
+			if (clusterGroup.isCachedModel()) {
+				clusterGroup = (ClusterGroup)session.get(ClusterGroupImpl.class,
+						clusterGroup.getPrimaryKeyObj());
+			}
+
+			session.delete(clusterGroup);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -251,7 +256,7 @@ public class ClusterGroupPersistenceImpl extends BasePersistenceImpl<ClusterGrou
 
 	@Override
 	public ClusterGroup updateImpl(
-		com.liferay.portal.model.ClusterGroup clusterGroup, boolean merge)
+		com.liferay.portal.model.ClusterGroup clusterGroup)
 		throws SystemException {
 		clusterGroup = toUnwrappedModel(clusterGroup);
 
@@ -262,9 +267,14 @@ public class ClusterGroupPersistenceImpl extends BasePersistenceImpl<ClusterGrou
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, clusterGroup, merge);
+			if (clusterGroup.isNew()) {
+				session.save(clusterGroup);
 
-			clusterGroup.setNew(false);
+				clusterGroup.setNew(false);
+			}
+			else {
+				session.merge(clusterGroup);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

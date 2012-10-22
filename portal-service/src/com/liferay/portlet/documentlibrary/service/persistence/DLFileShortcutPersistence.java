@@ -76,8 +76,7 @@ public interface DLFileShortcutPersistence extends BasePersistence<DLFileShortcu
 			com.liferay.portlet.documentlibrary.NoSuchFileShortcutException;
 
 	public com.liferay.portlet.documentlibrary.model.DLFileShortcut updateImpl(
-		com.liferay.portlet.documentlibrary.model.DLFileShortcut dlFileShortcut,
-		boolean merge)
+		com.liferay.portlet.documentlibrary.model.DLFileShortcut dlFileShortcut)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

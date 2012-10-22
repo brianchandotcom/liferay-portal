@@ -104,7 +104,7 @@ public abstract class MBStatsUserLocalServiceBaseImpl
 		throws SystemException {
 		mbStatsUser.setNew(true);
 
-		return mbStatsUserPersistence.update(mbStatsUser, false);
+		return mbStatsUserPersistence.update(mbStatsUser);
 	}
 
 	/**
@@ -277,23 +277,7 @@ public abstract class MBStatsUserLocalServiceBaseImpl
 	@Indexable(type = IndexableType.REINDEX)
 	public MBStatsUser updateMBStatsUser(MBStatsUser mbStatsUser)
 		throws SystemException {
-		return updateMBStatsUser(mbStatsUser, true);
-	}
-
-	/**
-	 * Updates the message boards stats user in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param mbStatsUser the message boards stats user
-	 * @param merge whether to merge the message boards stats user with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	 * @return the message boards stats user that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public MBStatsUser updateMBStatsUser(MBStatsUser mbStatsUser, boolean merge)
-		throws SystemException {
-		mbStatsUser.setNew(false);
-
-		return mbStatsUserPersistence.update(mbStatsUser, merge);
+		return mbStatsUserPersistence.update(mbStatsUser);
 	}
 
 	/**

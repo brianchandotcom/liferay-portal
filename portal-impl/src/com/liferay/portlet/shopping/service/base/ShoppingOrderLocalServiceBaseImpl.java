@@ -111,7 +111,7 @@ public abstract class ShoppingOrderLocalServiceBaseImpl
 		throws SystemException {
 		shoppingOrder.setNew(true);
 
-		return shoppingOrderPersistence.update(shoppingOrder, false);
+		return shoppingOrderPersistence.update(shoppingOrder);
 	}
 
 	/**
@@ -284,23 +284,7 @@ public abstract class ShoppingOrderLocalServiceBaseImpl
 	@Indexable(type = IndexableType.REINDEX)
 	public ShoppingOrder updateShoppingOrder(ShoppingOrder shoppingOrder)
 		throws SystemException {
-		return updateShoppingOrder(shoppingOrder, true);
-	}
-
-	/**
-	 * Updates the shopping order in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param shoppingOrder the shopping order
-	 * @param merge whether to merge the shopping order with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	 * @return the shopping order that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public ShoppingOrder updateShoppingOrder(ShoppingOrder shoppingOrder,
-		boolean merge) throws SystemException {
-		shoppingOrder.setNew(false);
-
-		return shoppingOrderPersistence.update(shoppingOrder, merge);
+		return shoppingOrderPersistence.update(shoppingOrder);
 	}
 
 	/**

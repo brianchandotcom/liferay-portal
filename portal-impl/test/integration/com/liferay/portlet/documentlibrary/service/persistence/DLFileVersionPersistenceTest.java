@@ -158,7 +158,7 @@ public class DLFileVersionPersistenceTest {
 
 		newDLFileVersion.setStatusDate(ServiceTestUtil.nextDate());
 
-		_persistence.update(newDLFileVersion, false);
+		_persistence.update(newDLFileVersion);
 
 		DLFileVersion existingDLFileVersion = _persistence.findByPrimaryKey(newDLFileVersion.getPrimaryKey());
 
@@ -410,7 +410,7 @@ public class DLFileVersionPersistenceTest {
 
 		dlFileVersion.setStatusDate(ServiceTestUtil.nextDate());
 
-		_persistence.update(dlFileVersion, false);
+		_persistence.update(dlFileVersion);
 
 		return dlFileVersion;
 	}

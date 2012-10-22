@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
-import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
@@ -368,7 +367,12 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, dlFileEntryMetadata);
+			if (dlFileEntryMetadata.isCachedModel()) {
+				dlFileEntryMetadata = (DLFileEntryMetadata)session.get(DLFileEntryMetadataImpl.class,
+						dlFileEntryMetadata.getPrimaryKeyObj());
+			}
+
+			session.delete(dlFileEntryMetadata);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -384,8 +388,8 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 
 	@Override
 	public DLFileEntryMetadata updateImpl(
-		com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata dlFileEntryMetadata,
-		boolean merge) throws SystemException {
+		com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata dlFileEntryMetadata)
+		throws SystemException {
 		dlFileEntryMetadata = toUnwrappedModel(dlFileEntryMetadata);
 
 		boolean isNew = dlFileEntryMetadata.isNew();
@@ -403,9 +407,14 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, dlFileEntryMetadata, merge);
+			if (dlFileEntryMetadata.isNew()) {
+				session.save(dlFileEntryMetadata);
 
-			dlFileEntryMetadata.setNew(false);
+				dlFileEntryMetadata.setNew(false);
+			}
+			else {
+				session.merge(dlFileEntryMetadata);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

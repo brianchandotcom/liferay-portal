@@ -95,19 +95,19 @@ public class SCLicenseUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static SCLicense update(SCLicense scLicense, boolean merge)
+	public static SCLicense update(SCLicense scLicense)
 		throws SystemException {
-		return getPersistence().update(scLicense, merge);
+		return getPersistence().update(scLicense);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
-	public static SCLicense update(SCLicense scLicense, boolean merge,
+	public static SCLicense update(SCLicense scLicense,
 		ServiceContext serviceContext) throws SystemException {
-		return getPersistence().update(scLicense, merge, serviceContext);
+		return getPersistence().update(scLicense, serviceContext);
 	}
 
 	/**
@@ -157,10 +157,9 @@ public class SCLicenseUtil {
 	}
 
 	public static com.liferay.portlet.softwarecatalog.model.SCLicense updateImpl(
-		com.liferay.portlet.softwarecatalog.model.SCLicense scLicense,
-		boolean merge)
+		com.liferay.portlet.softwarecatalog.model.SCLicense scLicense)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(scLicense, merge);
+		return getPersistence().updateImpl(scLicense);
 	}
 
 	/**

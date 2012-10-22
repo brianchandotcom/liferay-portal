@@ -44,7 +44,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
-import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.GroupPersistence;
 import com.liferay.portal.service.persistence.ImagePersistence;
 import com.liferay.portal.service.persistence.SubscriptionPersistence;
@@ -362,7 +361,12 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, scProductEntry);
+			if (scProductEntry.isCachedModel()) {
+				scProductEntry = (SCProductEntry)session.get(SCProductEntryImpl.class,
+						scProductEntry.getPrimaryKeyObj());
+			}
+
+			session.delete(scProductEntry);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -378,8 +382,8 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 
 	@Override
 	public SCProductEntry updateImpl(
-		com.liferay.portlet.softwarecatalog.model.SCProductEntry scProductEntry,
-		boolean merge) throws SystemException {
+		com.liferay.portlet.softwarecatalog.model.SCProductEntry scProductEntry)
+		throws SystemException {
 		scProductEntry = toUnwrappedModel(scProductEntry);
 
 		boolean isNew = scProductEntry.isNew();
@@ -391,9 +395,14 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, scProductEntry, merge);
+			if (scProductEntry.isNew()) {
+				session.save(scProductEntry);
 
-			scProductEntry.setNew(false);
+				scProductEntry.setNew(false);
+			}
+			else {
+				session.merge(scProductEntry);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

@@ -93,7 +93,7 @@ public abstract class WikiNodeLocalServiceBaseImpl extends BaseLocalServiceImpl
 	public WikiNode addWikiNode(WikiNode wikiNode) throws SystemException {
 		wikiNode.setNew(true);
 
-		return wikiNodePersistence.update(wikiNode, false);
+		return wikiNodePersistence.update(wikiNode);
 	}
 
 	/**
@@ -276,23 +276,7 @@ public abstract class WikiNodeLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public WikiNode updateWikiNode(WikiNode wikiNode) throws SystemException {
-		return updateWikiNode(wikiNode, true);
-	}
-
-	/**
-	 * Updates the wiki node in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param wikiNode the wiki node
-	 * @param merge whether to merge the wiki node with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	 * @return the wiki node that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public WikiNode updateWikiNode(WikiNode wikiNode, boolean merge)
-		throws SystemException {
-		wikiNode.setNew(false);
-
-		return wikiNodePersistence.update(wikiNode, merge);
+		return wikiNodePersistence.update(wikiNode);
 	}
 
 	/**

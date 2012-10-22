@@ -94,21 +94,20 @@ public class LayoutSetPrototypeUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
 	public static LayoutSetPrototype update(
-		LayoutSetPrototype layoutSetPrototype, boolean merge)
-		throws SystemException {
-		return getPersistence().update(layoutSetPrototype, merge);
+		LayoutSetPrototype layoutSetPrototype) throws SystemException {
+		return getPersistence().update(layoutSetPrototype);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
 	public static LayoutSetPrototype update(
-		LayoutSetPrototype layoutSetPrototype, boolean merge,
-		ServiceContext serviceContext) throws SystemException {
-		return getPersistence().update(layoutSetPrototype, merge, serviceContext);
+		LayoutSetPrototype layoutSetPrototype, ServiceContext serviceContext)
+		throws SystemException {
+		return getPersistence().update(layoutSetPrototype, serviceContext);
 	}
 
 	/**
@@ -158,10 +157,9 @@ public class LayoutSetPrototypeUtil {
 	}
 
 	public static com.liferay.portal.model.LayoutSetPrototype updateImpl(
-		com.liferay.portal.model.LayoutSetPrototype layoutSetPrototype,
-		boolean merge)
+		com.liferay.portal.model.LayoutSetPrototype layoutSetPrototype)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(layoutSetPrototype, merge);
+		return getPersistence().updateImpl(layoutSetPrototype);
 	}
 
 	/**

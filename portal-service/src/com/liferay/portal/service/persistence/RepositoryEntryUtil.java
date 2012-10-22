@@ -94,19 +94,19 @@ public class RepositoryEntryUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static RepositoryEntry update(RepositoryEntry repositoryEntry,
-		boolean merge) throws SystemException {
-		return getPersistence().update(repositoryEntry, merge);
+	public static RepositoryEntry update(RepositoryEntry repositoryEntry)
+		throws SystemException {
+		return getPersistence().update(repositoryEntry);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
 	public static RepositoryEntry update(RepositoryEntry repositoryEntry,
-		boolean merge, ServiceContext serviceContext) throws SystemException {
-		return getPersistence().update(repositoryEntry, merge, serviceContext);
+		ServiceContext serviceContext) throws SystemException {
+		return getPersistence().update(repositoryEntry, serviceContext);
 	}
 
 	/**
@@ -156,9 +156,9 @@ public class RepositoryEntryUtil {
 	}
 
 	public static com.liferay.portal.model.RepositoryEntry updateImpl(
-		com.liferay.portal.model.RepositoryEntry repositoryEntry, boolean merge)
+		com.liferay.portal.model.RepositoryEntry repositoryEntry)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(repositoryEntry, merge);
+		return getPersistence().updateImpl(repositoryEntry);
 	}
 
 	/**

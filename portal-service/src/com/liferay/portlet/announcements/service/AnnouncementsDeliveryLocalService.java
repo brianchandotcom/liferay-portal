@@ -217,19 +217,6 @@ public interface AnnouncementsDeliveryLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Updates the announcements delivery in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param announcementsDelivery the announcements delivery
-	* @param merge whether to merge the announcements delivery with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	* @return the announcements delivery that was updated
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portlet.announcements.model.AnnouncementsDelivery updateAnnouncementsDelivery(
-		com.liferay.portlet.announcements.model.AnnouncementsDelivery announcementsDelivery,
-		boolean merge)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
 	* Returns the Spring bean ID for this bean.
 	*
 	* @return the Spring bean ID for this bean

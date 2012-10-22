@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
-import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.ImagePersistence;
 import com.liferay.portal.service.persistence.LockPersistence;
 import com.liferay.portal.service.persistence.UserPersistence;
@@ -571,7 +570,12 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, dlFileEntry);
+			if (dlFileEntry.isCachedModel()) {
+				dlFileEntry = (DLFileEntry)session.get(DLFileEntryImpl.class,
+						dlFileEntry.getPrimaryKeyObj());
+			}
+
+			session.delete(dlFileEntry);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -587,8 +591,8 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 
 	@Override
 	public DLFileEntry updateImpl(
-		com.liferay.portlet.documentlibrary.model.DLFileEntry dlFileEntry,
-		boolean merge) throws SystemException {
+		com.liferay.portlet.documentlibrary.model.DLFileEntry dlFileEntry)
+		throws SystemException {
 		dlFileEntry = toUnwrappedModel(dlFileEntry);
 
 		boolean isNew = dlFileEntry.isNew();
@@ -606,9 +610,14 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, dlFileEntry, merge);
+			if (dlFileEntry.isNew()) {
+				session.save(dlFileEntry);
 
-			dlFileEntry.setNew(false);
+				dlFileEntry.setNew(false);
+			}
+			else {
+				session.merge(dlFileEntry);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

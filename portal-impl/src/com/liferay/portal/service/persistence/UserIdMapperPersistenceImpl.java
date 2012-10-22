@@ -311,7 +311,12 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, userIdMapper);
+			if (userIdMapper.isCachedModel()) {
+				userIdMapper = (UserIdMapper)session.get(UserIdMapperImpl.class,
+						userIdMapper.getPrimaryKeyObj());
+			}
+
+			session.delete(userIdMapper);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -327,7 +332,7 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 
 	@Override
 	public UserIdMapper updateImpl(
-		com.liferay.portal.model.UserIdMapper userIdMapper, boolean merge)
+		com.liferay.portal.model.UserIdMapper userIdMapper)
 		throws SystemException {
 		userIdMapper = toUnwrappedModel(userIdMapper);
 
@@ -340,9 +345,14 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, userIdMapper, merge);
+			if (userIdMapper.isNew()) {
+				session.save(userIdMapper);
 
-			userIdMapper.setNew(false);
+				userIdMapper.setNew(false);
+			}
+			else {
+				session.merge(userIdMapper);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

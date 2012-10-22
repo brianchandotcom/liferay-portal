@@ -87,7 +87,7 @@ public abstract class PollsChoiceLocalServiceBaseImpl
 		throws SystemException {
 		pollsChoice.setNew(true);
 
-		return pollsChoicePersistence.update(pollsChoice, false);
+		return pollsChoicePersistence.update(pollsChoice);
 	}
 
 	/**
@@ -260,23 +260,7 @@ public abstract class PollsChoiceLocalServiceBaseImpl
 	@Indexable(type = IndexableType.REINDEX)
 	public PollsChoice updatePollsChoice(PollsChoice pollsChoice)
 		throws SystemException {
-		return updatePollsChoice(pollsChoice, true);
-	}
-
-	/**
-	 * Updates the polls choice in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param pollsChoice the polls choice
-	 * @param merge whether to merge the polls choice with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	 * @return the polls choice that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public PollsChoice updatePollsChoice(PollsChoice pollsChoice, boolean merge)
-		throws SystemException {
-		pollsChoice.setNew(false);
-
-		return pollsChoicePersistence.update(pollsChoice, merge);
+		return pollsChoicePersistence.update(pollsChoice);
 	}
 
 	/**

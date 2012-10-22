@@ -114,7 +114,7 @@ public class ResourceActionPersistenceTest {
 
 		newResourceAction.setBitwiseValue(ServiceTestUtil.nextLong());
 
-		_persistence.update(newResourceAction, false);
+		_persistence.update(newResourceAction);
 
 		ResourceAction existingResourceAction = _persistence.findByPrimaryKey(newResourceAction.getPrimaryKey());
 
@@ -274,7 +274,7 @@ public class ResourceActionPersistenceTest {
 
 		resourceAction.setBitwiseValue(ServiceTestUtil.nextLong());
 
-		_persistence.update(resourceAction, false);
+		_persistence.update(resourceAction);
 
 		return resourceAction;
 	}

@@ -247,7 +247,7 @@ public abstract class LockLocalServiceBaseImpl extends BaseLocalServiceImpl
 	public Lock addLock(Lock lock) throws SystemException {
 		lock.setNew(true);
 
-		return lockPersistence.update(lock, false);
+		return lockPersistence.update(lock);
 	}
 
 	/**
@@ -413,22 +413,7 @@ public abstract class LockLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public Lock updateLock(Lock lock) throws SystemException {
-		return updateLock(lock, true);
-	}
-
-	/**
-	 * Updates the lock in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param lock the lock
-	 * @param merge whether to merge the lock with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	 * @return the lock that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public Lock updateLock(Lock lock, boolean merge) throws SystemException {
-		lock.setNew(false);
-
-		return lockPersistence.update(lock, merge);
+		return lockPersistence.update(lock);
 	}
 
 	/**

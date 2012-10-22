@@ -138,7 +138,7 @@ public class WikiNodePersistenceTest {
 
 		newWikiNode.setStatusDate(ServiceTestUtil.nextDate());
 
-		_persistence.update(newWikiNode, false);
+		_persistence.update(newWikiNode);
 
 		WikiNode existingWikiNode = _persistence.findByPrimaryKey(newWikiNode.getPrimaryKey());
 
@@ -346,7 +346,7 @@ public class WikiNodePersistenceTest {
 
 		wikiNode.setStatusDate(ServiceTestUtil.nextDate());
 
-		_persistence.update(wikiNode, false);
+		_persistence.update(wikiNode);
 
 		return wikiNode;
 	}

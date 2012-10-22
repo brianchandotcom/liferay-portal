@@ -127,7 +127,7 @@ public class PortletItemPersistenceTest {
 
 		newPortletItem.setClassNameId(ServiceTestUtil.nextLong());
 
-		_persistence.update(newPortletItem, false);
+		_persistence.update(newPortletItem);
 
 		PortletItem existingPortletItem = _persistence.findByPrimaryKey(newPortletItem.getPrimaryKey());
 
@@ -317,7 +317,7 @@ public class PortletItemPersistenceTest {
 
 		portletItem.setClassNameId(ServiceTestUtil.nextLong());
 
-		_persistence.update(portletItem, false);
+		_persistence.update(portletItem);
 
 		return portletItem;
 	}

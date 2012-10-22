@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
-import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
@@ -317,7 +316,12 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, ddlRecordVersion);
+			if (ddlRecordVersion.isCachedModel()) {
+				ddlRecordVersion = (DDLRecordVersion)session.get(DDLRecordVersionImpl.class,
+						ddlRecordVersion.getPrimaryKeyObj());
+			}
+
+			session.delete(ddlRecordVersion);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -333,8 +337,8 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 
 	@Override
 	public DDLRecordVersion updateImpl(
-		com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion ddlRecordVersion,
-		boolean merge) throws SystemException {
+		com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion ddlRecordVersion)
+		throws SystemException {
 		ddlRecordVersion = toUnwrappedModel(ddlRecordVersion);
 
 		boolean isNew = ddlRecordVersion.isNew();
@@ -346,9 +350,14 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, ddlRecordVersion, merge);
+			if (ddlRecordVersion.isNew()) {
+				session.save(ddlRecordVersion);
 
-			ddlRecordVersion.setNew(false);
+				ddlRecordVersion.setNew(false);
+			}
+			else {
+				session.merge(ddlRecordVersion);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

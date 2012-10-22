@@ -100,7 +100,7 @@ public abstract class MBThreadFlagLocalServiceBaseImpl
 		throws SystemException {
 		mbThreadFlag.setNew(true);
 
-		return mbThreadFlagPersistence.update(mbThreadFlag, false);
+		return mbThreadFlagPersistence.update(mbThreadFlag);
 	}
 
 	/**
@@ -273,23 +273,7 @@ public abstract class MBThreadFlagLocalServiceBaseImpl
 	@Indexable(type = IndexableType.REINDEX)
 	public MBThreadFlag updateMBThreadFlag(MBThreadFlag mbThreadFlag)
 		throws SystemException {
-		return updateMBThreadFlag(mbThreadFlag, true);
-	}
-
-	/**
-	 * Updates the message boards thread flag in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param mbThreadFlag the message boards thread flag
-	 * @param merge whether to merge the message boards thread flag with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	 * @return the message boards thread flag that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public MBThreadFlag updateMBThreadFlag(MBThreadFlag mbThreadFlag,
-		boolean merge) throws SystemException {
-		mbThreadFlag.setNew(false);
-
-		return mbThreadFlagPersistence.update(mbThreadFlag, merge);
+		return mbThreadFlagPersistence.update(mbThreadFlag);
 	}
 
 	/**

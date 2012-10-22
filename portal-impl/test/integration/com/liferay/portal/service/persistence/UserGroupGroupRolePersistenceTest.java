@@ -107,7 +107,7 @@ public class UserGroupGroupRolePersistenceTest {
 
 		UserGroupGroupRole newUserGroupGroupRole = _persistence.create(pk);
 
-		_persistence.update(newUserGroupGroupRole, false);
+		_persistence.update(newUserGroupGroupRole);
 
 		UserGroupGroupRole existingUserGroupGroupRole = _persistence.findByPrimaryKey(newUserGroupGroupRole.getPrimaryKey());
 
@@ -251,7 +251,7 @@ public class UserGroupGroupRolePersistenceTest {
 
 		UserGroupGroupRole userGroupGroupRole = _persistence.create(pk);
 
-		_persistence.update(userGroupGroupRole, false);
+		_persistence.update(userGroupGroupRole);
 
 		return userGroupGroupRole;
 	}

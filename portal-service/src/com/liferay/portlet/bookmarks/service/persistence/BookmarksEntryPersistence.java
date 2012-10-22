@@ -76,8 +76,7 @@ public interface BookmarksEntryPersistence extends BasePersistence<BookmarksEntr
 			com.liferay.portlet.bookmarks.NoSuchEntryException;
 
 	public com.liferay.portlet.bookmarks.model.BookmarksEntry updateImpl(
-		com.liferay.portlet.bookmarks.model.BookmarksEntry bookmarksEntry,
-		boolean merge)
+		com.liferay.portlet.bookmarks.model.BookmarksEntry bookmarksEntry)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

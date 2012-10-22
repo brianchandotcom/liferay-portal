@@ -129,7 +129,7 @@ public class ShoppingCartPersistenceTest {
 
 		newShoppingCart.setInsure(ServiceTestUtil.randomBoolean());
 
-		_persistence.update(newShoppingCart, false);
+		_persistence.update(newShoppingCart);
 
 		ShoppingCart existingShoppingCart = _persistence.findByPrimaryKey(newShoppingCart.getPrimaryKey());
 
@@ -314,7 +314,7 @@ public class ShoppingCartPersistenceTest {
 
 		shoppingCart.setInsure(ServiceTestUtil.randomBoolean());
 
-		_persistence.update(shoppingCart, false);
+		_persistence.update(shoppingCart);
 
 		return shoppingCart;
 	}

@@ -95,19 +95,19 @@ public class MBCategoryUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static MBCategory update(MBCategory mbCategory, boolean merge)
+	public static MBCategory update(MBCategory mbCategory)
 		throws SystemException {
-		return getPersistence().update(mbCategory, merge);
+		return getPersistence().update(mbCategory);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
-	public static MBCategory update(MBCategory mbCategory, boolean merge,
+	public static MBCategory update(MBCategory mbCategory,
 		ServiceContext serviceContext) throws SystemException {
-		return getPersistence().update(mbCategory, merge, serviceContext);
+		return getPersistence().update(mbCategory, serviceContext);
 	}
 
 	/**
@@ -157,10 +157,9 @@ public class MBCategoryUtil {
 	}
 
 	public static com.liferay.portlet.messageboards.model.MBCategory updateImpl(
-		com.liferay.portlet.messageboards.model.MBCategory mbCategory,
-		boolean merge)
+		com.liferay.portlet.messageboards.model.MBCategory mbCategory)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(mbCategory, merge);
+		return getPersistence().updateImpl(mbCategory);
 	}
 
 	/**

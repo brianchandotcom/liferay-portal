@@ -76,8 +76,7 @@ public interface AnnouncementsDeliveryPersistence extends BasePersistence<Announ
 			com.liferay.portlet.announcements.NoSuchDeliveryException;
 
 	public com.liferay.portlet.announcements.model.AnnouncementsDelivery updateImpl(
-		com.liferay.portlet.announcements.model.AnnouncementsDelivery announcementsDelivery,
-		boolean merge)
+		com.liferay.portlet.announcements.model.AnnouncementsDelivery announcementsDelivery)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

@@ -126,7 +126,7 @@ public class RatingsEntryPersistenceTest {
 
 		newRatingsEntry.setScore(ServiceTestUtil.nextDouble());
 
-		_persistence.update(newRatingsEntry, false);
+		_persistence.update(newRatingsEntry);
 
 		RatingsEntry existingRatingsEntry = _persistence.findByPrimaryKey(newRatingsEntry.getPrimaryKey());
 
@@ -305,7 +305,7 @@ public class RatingsEntryPersistenceTest {
 
 		ratingsEntry.setScore(ServiceTestUtil.nextDouble());
 
-		_persistence.update(ratingsEntry, false);
+		_persistence.update(ratingsEntry);
 
 		return ratingsEntry;
 	}

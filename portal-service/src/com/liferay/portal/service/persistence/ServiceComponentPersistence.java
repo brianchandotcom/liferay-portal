@@ -74,8 +74,7 @@ public interface ServiceComponentPersistence extends BasePersistence<ServiceComp
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portal.model.ServiceComponent updateImpl(
-		com.liferay.portal.model.ServiceComponent serviceComponent,
-		boolean merge)
+		com.liferay.portal.model.ServiceComponent serviceComponent)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

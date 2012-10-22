@@ -126,7 +126,7 @@ public class WebsitePersistenceTest {
 
 		newWebsite.setPrimary(ServiceTestUtil.randomBoolean());
 
-		_persistence.update(newWebsite, false);
+		_persistence.update(newWebsite);
 
 		Website existingWebsite = _persistence.findByPrimaryKey(newWebsite.getPrimaryKey());
 
@@ -290,7 +290,7 @@ public class WebsitePersistenceTest {
 
 		website.setPrimary(ServiceTestUtil.randomBoolean());
 
-		_persistence.update(website, false);
+		_persistence.update(website);
 
 		return website;
 	}

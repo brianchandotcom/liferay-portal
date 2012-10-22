@@ -95,19 +95,19 @@ public class SCProductEntryUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static SCProductEntry update(SCProductEntry scProductEntry,
-		boolean merge) throws SystemException {
-		return getPersistence().update(scProductEntry, merge);
+	public static SCProductEntry update(SCProductEntry scProductEntry)
+		throws SystemException {
+		return getPersistence().update(scProductEntry);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
 	public static SCProductEntry update(SCProductEntry scProductEntry,
-		boolean merge, ServiceContext serviceContext) throws SystemException {
-		return getPersistence().update(scProductEntry, merge, serviceContext);
+		ServiceContext serviceContext) throws SystemException {
+		return getPersistence().update(scProductEntry, serviceContext);
 	}
 
 	/**
@@ -157,10 +157,9 @@ public class SCProductEntryUtil {
 	}
 
 	public static com.liferay.portlet.softwarecatalog.model.SCProductEntry updateImpl(
-		com.liferay.portlet.softwarecatalog.model.SCProductEntry scProductEntry,
-		boolean merge)
+		com.liferay.portlet.softwarecatalog.model.SCProductEntry scProductEntry)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(scProductEntry, merge);
+		return getPersistence().updateImpl(scProductEntry);
 	}
 
 	/**

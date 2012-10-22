@@ -128,7 +128,7 @@ public class MDRRuleGroupPersistenceTest {
 
 		newMDRRuleGroup.setDescription(ServiceTestUtil.randomString());
 
-		_persistence.update(newMDRRuleGroup, false);
+		_persistence.update(newMDRRuleGroup);
 
 		MDRRuleGroup existingMDRRuleGroup = _persistence.findByPrimaryKey(newMDRRuleGroup.getPrimaryKey());
 
@@ -310,7 +310,7 @@ public class MDRRuleGroupPersistenceTest {
 
 		mdrRuleGroup.setDescription(ServiceTestUtil.randomString());
 
-		_persistence.update(mdrRuleGroup, false);
+		_persistence.update(mdrRuleGroup);
 
 		return mdrRuleGroup;
 	}

@@ -95,19 +95,19 @@ public class DDLRecordSetUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static DDLRecordSet update(DDLRecordSet ddlRecordSet, boolean merge)
+	public static DDLRecordSet update(DDLRecordSet ddlRecordSet)
 		throws SystemException {
-		return getPersistence().update(ddlRecordSet, merge);
+		return getPersistence().update(ddlRecordSet);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
-	public static DDLRecordSet update(DDLRecordSet ddlRecordSet, boolean merge,
+	public static DDLRecordSet update(DDLRecordSet ddlRecordSet,
 		ServiceContext serviceContext) throws SystemException {
-		return getPersistence().update(ddlRecordSet, merge, serviceContext);
+		return getPersistence().update(ddlRecordSet, serviceContext);
 	}
 
 	/**
@@ -157,10 +157,9 @@ public class DDLRecordSetUtil {
 	}
 
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecordSet updateImpl(
-		com.liferay.portlet.dynamicdatalists.model.DDLRecordSet ddlRecordSet,
-		boolean merge)
+		com.liferay.portlet.dynamicdatalists.model.DDLRecordSet ddlRecordSet)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(ddlRecordSet, merge);
+		return getPersistence().updateImpl(ddlRecordSet);
 	}
 
 	/**

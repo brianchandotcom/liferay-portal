@@ -76,8 +76,7 @@ public interface MDRRuleGroupPersistence extends BasePersistence<MDRRuleGroup> {
 			com.liferay.portlet.mobiledevicerules.NoSuchRuleGroupException;
 
 	public com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup updateImpl(
-		com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup mdrRuleGroup,
-		boolean merge)
+		com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup mdrRuleGroup)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

@@ -247,7 +247,7 @@ public abstract class WebsiteLocalServiceBaseImpl extends BaseLocalServiceImpl
 	public Website addWebsite(Website website) throws SystemException {
 		website.setNew(true);
 
-		return websitePersistence.update(website, false);
+		return websitePersistence.update(website);
 	}
 
 	/**
@@ -416,23 +416,7 @@ public abstract class WebsiteLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public Website updateWebsite(Website website) throws SystemException {
-		return updateWebsite(website, true);
-	}
-
-	/**
-	 * Updates the website in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param website the website
-	 * @param merge whether to merge the website with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	 * @return the website that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public Website updateWebsite(Website website, boolean merge)
-		throws SystemException {
-		website.setNew(false);
-
-		return websitePersistence.update(website, merge);
+		return websitePersistence.update(website);
 	}
 
 	/**

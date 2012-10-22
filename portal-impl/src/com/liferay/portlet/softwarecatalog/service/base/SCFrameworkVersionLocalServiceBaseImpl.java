@@ -91,7 +91,7 @@ public abstract class SCFrameworkVersionLocalServiceBaseImpl
 		SCFrameworkVersion scFrameworkVersion) throws SystemException {
 		scFrameworkVersion.setNew(true);
 
-		return scFrameworkVersionPersistence.update(scFrameworkVersion, false);
+		return scFrameworkVersionPersistence.update(scFrameworkVersion);
 	}
 
 	/**
@@ -264,24 +264,7 @@ public abstract class SCFrameworkVersionLocalServiceBaseImpl
 	@Indexable(type = IndexableType.REINDEX)
 	public SCFrameworkVersion updateSCFrameworkVersion(
 		SCFrameworkVersion scFrameworkVersion) throws SystemException {
-		return updateSCFrameworkVersion(scFrameworkVersion, true);
-	}
-
-	/**
-	 * Updates the s c framework version in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param scFrameworkVersion the s c framework version
-	 * @param merge whether to merge the s c framework version with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	 * @return the s c framework version that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public SCFrameworkVersion updateSCFrameworkVersion(
-		SCFrameworkVersion scFrameworkVersion, boolean merge)
-		throws SystemException {
-		scFrameworkVersion.setNew(false);
-
-		return scFrameworkVersionPersistence.update(scFrameworkVersion, merge);
+		return scFrameworkVersionPersistence.update(scFrameworkVersion);
 	}
 
 	/**

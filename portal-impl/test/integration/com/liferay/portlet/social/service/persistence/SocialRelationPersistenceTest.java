@@ -120,7 +120,7 @@ public class SocialRelationPersistenceTest {
 
 		newSocialRelation.setType(ServiceTestUtil.nextInt());
 
-		_persistence.update(newSocialRelation, false);
+		_persistence.update(newSocialRelation);
 
 		SocialRelation existingSocialRelation = _persistence.findByPrimaryKey(newSocialRelation.getPrimaryKey());
 
@@ -289,7 +289,7 @@ public class SocialRelationPersistenceTest {
 
 		socialRelation.setType(ServiceTestUtil.nextInt());
 
-		_persistence.update(socialRelation, false);
+		_persistence.update(socialRelation);
 
 		return socialRelation;
 	}

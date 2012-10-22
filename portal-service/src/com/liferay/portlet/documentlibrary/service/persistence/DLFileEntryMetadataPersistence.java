@@ -76,8 +76,7 @@ public interface DLFileEntryMetadataPersistence extends BasePersistence<DLFileEn
 			com.liferay.portlet.documentlibrary.NoSuchFileEntryMetadataException;
 
 	public com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata updateImpl(
-		com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata dlFileEntryMetadata,
-		boolean merge)
+		com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata dlFileEntryMetadata)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

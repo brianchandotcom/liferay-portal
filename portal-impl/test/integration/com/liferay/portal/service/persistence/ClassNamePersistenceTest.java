@@ -110,7 +110,7 @@ public class ClassNamePersistenceTest {
 
 		newClassName.setValue(ServiceTestUtil.randomString());
 
-		_persistence.update(newClassName, false);
+		_persistence.update(newClassName);
 
 		ClassName existingClassName = _persistence.findByPrimaryKey(newClassName.getPrimaryKey());
 
@@ -256,7 +256,7 @@ public class ClassNamePersistenceTest {
 
 		className.setValue(ServiceTestUtil.randomString());
 
-		_persistence.update(className, false);
+		_persistence.update(className);
 
 		return className;
 	}

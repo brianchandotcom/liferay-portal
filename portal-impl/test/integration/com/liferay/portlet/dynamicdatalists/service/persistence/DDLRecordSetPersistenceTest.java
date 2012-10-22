@@ -136,7 +136,7 @@ public class DDLRecordSetPersistenceTest {
 
 		newDDLRecordSet.setScope(ServiceTestUtil.nextInt());
 
-		_persistence.update(newDDLRecordSet, false);
+		_persistence.update(newDDLRecordSet);
 
 		DDLRecordSet existingDDLRecordSet = _persistence.findByPrimaryKey(newDDLRecordSet.getPrimaryKey());
 
@@ -340,7 +340,7 @@ public class DDLRecordSetPersistenceTest {
 
 		ddlRecordSet.setScope(ServiceTestUtil.nextInt());
 
-		_persistence.update(ddlRecordSet, false);
+		_persistence.update(ddlRecordSet);
 
 		return ddlRecordSet;
 	}

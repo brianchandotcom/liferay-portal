@@ -342,7 +342,12 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, workflowDefinitionLink);
+			if (workflowDefinitionLink.isCachedModel()) {
+				workflowDefinitionLink = (WorkflowDefinitionLink)session.get(WorkflowDefinitionLinkImpl.class,
+						workflowDefinitionLink.getPrimaryKeyObj());
+			}
+
+			session.delete(workflowDefinitionLink);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -358,8 +363,8 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 
 	@Override
 	public WorkflowDefinitionLink updateImpl(
-		com.liferay.portal.model.WorkflowDefinitionLink workflowDefinitionLink,
-		boolean merge) throws SystemException {
+		com.liferay.portal.model.WorkflowDefinitionLink workflowDefinitionLink)
+		throws SystemException {
 		workflowDefinitionLink = toUnwrappedModel(workflowDefinitionLink);
 
 		boolean isNew = workflowDefinitionLink.isNew();
@@ -371,9 +376,14 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, workflowDefinitionLink, merge);
+			if (workflowDefinitionLink.isNew()) {
+				session.save(workflowDefinitionLink);
 
-			workflowDefinitionLink.setNew(false);
+				workflowDefinitionLink.setNew(false);
+			}
+			else {
+				session.merge(workflowDefinitionLink);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

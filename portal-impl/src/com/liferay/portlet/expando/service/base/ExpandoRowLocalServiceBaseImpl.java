@@ -87,7 +87,7 @@ public abstract class ExpandoRowLocalServiceBaseImpl
 		throws SystemException {
 		expandoRow.setNew(true);
 
-		return expandoRowPersistence.update(expandoRow, false);
+		return expandoRowPersistence.update(expandoRow);
 	}
 
 	/**
@@ -259,23 +259,7 @@ public abstract class ExpandoRowLocalServiceBaseImpl
 	@Indexable(type = IndexableType.REINDEX)
 	public ExpandoRow updateExpandoRow(ExpandoRow expandoRow)
 		throws SystemException {
-		return updateExpandoRow(expandoRow, true);
-	}
-
-	/**
-	 * Updates the expando row in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param expandoRow the expando row
-	 * @param merge whether to merge the expando row with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	 * @return the expando row that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public ExpandoRow updateExpandoRow(ExpandoRow expandoRow, boolean merge)
-		throws SystemException {
-		expandoRow.setNew(false);
-
-		return expandoRowPersistence.update(expandoRow, merge);
+		return expandoRowPersistence.update(expandoRow);
 	}
 
 	/**

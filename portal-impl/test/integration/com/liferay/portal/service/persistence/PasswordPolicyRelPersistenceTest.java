@@ -113,7 +113,7 @@ public class PasswordPolicyRelPersistenceTest {
 
 		newPasswordPolicyRel.setClassPK(ServiceTestUtil.nextLong());
 
-		_persistence.update(newPasswordPolicyRel, false);
+		_persistence.update(newPasswordPolicyRel);
 
 		PasswordPolicyRel existingPasswordPolicyRel = _persistence.findByPrimaryKey(newPasswordPolicyRel.getPrimaryKey());
 
@@ -279,7 +279,7 @@ public class PasswordPolicyRelPersistenceTest {
 
 		passwordPolicyRel.setClassPK(ServiceTestUtil.nextLong());
 
-		_persistence.update(passwordPolicyRel, false);
+		_persistence.update(passwordPolicyRel);
 
 		return passwordPolicyRel;
 	}

@@ -44,7 +44,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
-import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
@@ -301,7 +300,12 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, assetTag);
+			if (assetTag.isCachedModel()) {
+				assetTag = (AssetTag)session.get(AssetTagImpl.class,
+						assetTag.getPrimaryKeyObj());
+			}
+
+			session.delete(assetTag);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -317,7 +321,7 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 
 	@Override
 	public AssetTag updateImpl(
-		com.liferay.portlet.asset.model.AssetTag assetTag, boolean merge)
+		com.liferay.portlet.asset.model.AssetTag assetTag)
 		throws SystemException {
 		assetTag = toUnwrappedModel(assetTag);
 
@@ -330,9 +334,14 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, assetTag, merge);
+			if (assetTag.isNew()) {
+				session.save(assetTag);
 
-			assetTag.setNew(false);
+				assetTag.setNew(false);
+			}
+			else {
+				session.merge(assetTag);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

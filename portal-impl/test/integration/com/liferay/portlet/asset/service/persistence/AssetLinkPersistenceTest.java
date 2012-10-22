@@ -125,7 +125,7 @@ public class AssetLinkPersistenceTest {
 
 		newAssetLink.setWeight(ServiceTestUtil.nextInt());
 
-		_persistence.update(newAssetLink, false);
+		_persistence.update(newAssetLink);
 
 		AssetLink existingAssetLink = _persistence.findByPrimaryKey(newAssetLink.getPrimaryKey());
 
@@ -302,7 +302,7 @@ public class AssetLinkPersistenceTest {
 
 		assetLink.setWeight(ServiceTestUtil.nextInt());
 
-		_persistence.update(assetLink, false);
+		_persistence.update(assetLink);
 
 		return assetLink;
 	}

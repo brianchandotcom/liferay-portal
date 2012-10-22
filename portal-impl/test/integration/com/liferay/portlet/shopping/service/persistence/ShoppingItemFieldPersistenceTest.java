@@ -114,7 +114,7 @@ public class ShoppingItemFieldPersistenceTest {
 
 		newShoppingItemField.setDescription(ServiceTestUtil.randomString());
 
-		_persistence.update(newShoppingItemField, false);
+		_persistence.update(newShoppingItemField);
 
 		ShoppingItemField existingShoppingItemField = _persistence.findByPrimaryKey(newShoppingItemField.getPrimaryKey());
 
@@ -256,7 +256,7 @@ public class ShoppingItemFieldPersistenceTest {
 
 		shoppingItemField.setDescription(ServiceTestUtil.randomString());
 
-		_persistence.update(shoppingItemField, false);
+		_persistence.update(shoppingItemField);
 
 		return shoppingItemField;
 	}

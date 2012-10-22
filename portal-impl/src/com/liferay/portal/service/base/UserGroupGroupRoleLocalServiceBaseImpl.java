@@ -250,7 +250,7 @@ public abstract class UserGroupGroupRoleLocalServiceBaseImpl
 		UserGroupGroupRole userGroupGroupRole) throws SystemException {
 		userGroupGroupRole.setNew(true);
 
-		return userGroupGroupRolePersistence.update(userGroupGroupRole, false);
+		return userGroupGroupRolePersistence.update(userGroupGroupRole);
 	}
 
 	/**
@@ -426,24 +426,7 @@ public abstract class UserGroupGroupRoleLocalServiceBaseImpl
 	@Indexable(type = IndexableType.REINDEX)
 	public UserGroupGroupRole updateUserGroupGroupRole(
 		UserGroupGroupRole userGroupGroupRole) throws SystemException {
-		return updateUserGroupGroupRole(userGroupGroupRole, true);
-	}
-
-	/**
-	 * Updates the user group group role in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param userGroupGroupRole the user group group role
-	 * @param merge whether to merge the user group group role with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	 * @return the user group group role that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public UserGroupGroupRole updateUserGroupGroupRole(
-		UserGroupGroupRole userGroupGroupRole, boolean merge)
-		throws SystemException {
-		userGroupGroupRole.setNew(false);
-
-		return userGroupGroupRolePersistence.update(userGroupGroupRole, merge);
+		return userGroupGroupRolePersistence.update(userGroupGroupRole);
 	}
 
 	/**

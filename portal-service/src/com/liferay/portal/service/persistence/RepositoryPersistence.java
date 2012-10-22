@@ -71,7 +71,7 @@ public interface RepositoryPersistence extends BasePersistence<Repository> {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portal.model.Repository updateImpl(
-		com.liferay.portal.model.Repository repository, boolean merge)
+		com.liferay.portal.model.Repository repository)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

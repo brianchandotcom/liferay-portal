@@ -94,19 +94,19 @@ public class PasswordTrackerUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static PasswordTracker update(PasswordTracker passwordTracker,
-		boolean merge) throws SystemException {
-		return getPersistence().update(passwordTracker, merge);
+	public static PasswordTracker update(PasswordTracker passwordTracker)
+		throws SystemException {
+		return getPersistence().update(passwordTracker);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
 	public static PasswordTracker update(PasswordTracker passwordTracker,
-		boolean merge, ServiceContext serviceContext) throws SystemException {
-		return getPersistence().update(passwordTracker, merge, serviceContext);
+		ServiceContext serviceContext) throws SystemException {
+		return getPersistence().update(passwordTracker, serviceContext);
 	}
 
 	/**
@@ -156,9 +156,9 @@ public class PasswordTrackerUtil {
 	}
 
 	public static com.liferay.portal.model.PasswordTracker updateImpl(
-		com.liferay.portal.model.PasswordTracker passwordTracker, boolean merge)
+		com.liferay.portal.model.PasswordTracker passwordTracker)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(passwordTracker, merge);
+		return getPersistence().updateImpl(passwordTracker);
 	}
 
 	/**

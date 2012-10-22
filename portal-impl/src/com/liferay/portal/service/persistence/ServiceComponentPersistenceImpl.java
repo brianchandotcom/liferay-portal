@@ -293,7 +293,12 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, serviceComponent);
+			if (serviceComponent.isCachedModel()) {
+				serviceComponent = (ServiceComponent)session.get(ServiceComponentImpl.class,
+						serviceComponent.getPrimaryKeyObj());
+			}
+
+			session.delete(serviceComponent);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -309,8 +314,8 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 
 	@Override
 	public ServiceComponent updateImpl(
-		com.liferay.portal.model.ServiceComponent serviceComponent,
-		boolean merge) throws SystemException {
+		com.liferay.portal.model.ServiceComponent serviceComponent)
+		throws SystemException {
 		serviceComponent = toUnwrappedModel(serviceComponent);
 
 		boolean isNew = serviceComponent.isNew();
@@ -322,9 +327,14 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, serviceComponent, merge);
+			if (serviceComponent.isNew()) {
+				session.save(serviceComponent);
 
-			serviceComponent.setNew(false);
+				serviceComponent.setNew(false);
+			}
+			else {
+				session.merge(serviceComponent);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

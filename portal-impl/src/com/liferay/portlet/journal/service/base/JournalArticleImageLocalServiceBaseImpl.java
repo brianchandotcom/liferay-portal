@@ -106,7 +106,7 @@ public abstract class JournalArticleImageLocalServiceBaseImpl
 		JournalArticleImage journalArticleImage) throws SystemException {
 		journalArticleImage.setNew(true);
 
-		return journalArticleImagePersistence.update(journalArticleImage, false);
+		return journalArticleImagePersistence.update(journalArticleImage);
 	}
 
 	/**
@@ -279,24 +279,7 @@ public abstract class JournalArticleImageLocalServiceBaseImpl
 	@Indexable(type = IndexableType.REINDEX)
 	public JournalArticleImage updateJournalArticleImage(
 		JournalArticleImage journalArticleImage) throws SystemException {
-		return updateJournalArticleImage(journalArticleImage, true);
-	}
-
-	/**
-	 * Updates the journal article image in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param journalArticleImage the journal article image
-	 * @param merge whether to merge the journal article image with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	 * @return the journal article image that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public JournalArticleImage updateJournalArticleImage(
-		JournalArticleImage journalArticleImage, boolean merge)
-		throws SystemException {
-		journalArticleImage.setNew(false);
-
-		return journalArticleImagePersistence.update(journalArticleImage, merge);
+		return journalArticleImagePersistence.update(journalArticleImage);
 	}
 
 	/**

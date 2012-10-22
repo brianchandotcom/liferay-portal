@@ -101,7 +101,7 @@ public abstract class SocialActivityLimitLocalServiceBaseImpl
 		SocialActivityLimit socialActivityLimit) throws SystemException {
 		socialActivityLimit.setNew(true);
 
-		return socialActivityLimitPersistence.update(socialActivityLimit, false);
+		return socialActivityLimitPersistence.update(socialActivityLimit);
 	}
 
 	/**
@@ -274,24 +274,7 @@ public abstract class SocialActivityLimitLocalServiceBaseImpl
 	@Indexable(type = IndexableType.REINDEX)
 	public SocialActivityLimit updateSocialActivityLimit(
 		SocialActivityLimit socialActivityLimit) throws SystemException {
-		return updateSocialActivityLimit(socialActivityLimit, true);
-	}
-
-	/**
-	 * Updates the social activity limit in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param socialActivityLimit the social activity limit
-	 * @param merge whether to merge the social activity limit with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	 * @return the social activity limit that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public SocialActivityLimit updateSocialActivityLimit(
-		SocialActivityLimit socialActivityLimit, boolean merge)
-		throws SystemException {
-		socialActivityLimit.setNew(false);
-
-		return socialActivityLimitPersistence.update(socialActivityLimit, merge);
+		return socialActivityLimitPersistence.update(socialActivityLimit);
 	}
 
 	/**

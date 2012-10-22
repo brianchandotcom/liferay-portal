@@ -250,20 +250,6 @@ public class WikiNodeLocalServiceUtil {
 	}
 
 	/**
-	* Updates the wiki node in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param wikiNode the wiki node
-	* @param merge whether to merge the wiki node with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	* @return the wiki node that was updated
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portlet.wiki.model.WikiNode updateWikiNode(
-		com.liferay.portlet.wiki.model.WikiNode wikiNode, boolean merge)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().updateWikiNode(wikiNode, merge);
-	}
-
-	/**
 	* Returns the Spring bean ID for this bean.
 	*
 	* @return the Spring bean ID for this bean

@@ -73,7 +73,7 @@ public interface AssetLinkPersistence extends BasePersistence<AssetLink> {
 			com.liferay.portlet.asset.NoSuchLinkException;
 
 	public com.liferay.portlet.asset.model.AssetLink updateImpl(
-		com.liferay.portlet.asset.model.AssetLink assetLink, boolean merge)
+		com.liferay.portlet.asset.model.AssetLink assetLink)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

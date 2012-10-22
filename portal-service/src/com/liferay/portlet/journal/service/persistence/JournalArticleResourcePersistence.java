@@ -76,8 +76,7 @@ public interface JournalArticleResourcePersistence extends BasePersistence<Journ
 			com.liferay.portlet.journal.NoSuchArticleResourceException;
 
 	public com.liferay.portlet.journal.model.JournalArticleResource updateImpl(
-		com.liferay.portlet.journal.model.JournalArticleResource journalArticleResource,
-		boolean merge)
+		com.liferay.portlet.journal.model.JournalArticleResource journalArticleResource)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

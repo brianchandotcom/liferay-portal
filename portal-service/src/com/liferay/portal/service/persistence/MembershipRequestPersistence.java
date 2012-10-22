@@ -74,8 +74,7 @@ public interface MembershipRequestPersistence extends BasePersistence<Membership
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portal.model.MembershipRequest updateImpl(
-		com.liferay.portal.model.MembershipRequest membershipRequest,
-		boolean merge)
+		com.liferay.portal.model.MembershipRequest membershipRequest)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

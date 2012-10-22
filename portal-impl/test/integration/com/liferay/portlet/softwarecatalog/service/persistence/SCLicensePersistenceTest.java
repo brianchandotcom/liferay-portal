@@ -116,7 +116,7 @@ public class SCLicensePersistenceTest {
 
 		newSCLicense.setRecommended(ServiceTestUtil.randomBoolean());
 
-		_persistence.update(newSCLicense, false);
+		_persistence.update(newSCLicense);
 
 		SCLicense existingSCLicense = _persistence.findByPrimaryKey(newSCLicense.getPrimaryKey());
 
@@ -259,7 +259,7 @@ public class SCLicensePersistenceTest {
 
 		scLicense.setRecommended(ServiceTestUtil.randomBoolean());
 
-		_persistence.update(scLicense, false);
+		_persistence.update(scLicense);
 
 		return scLicense;
 	}

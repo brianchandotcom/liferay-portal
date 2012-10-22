@@ -89,7 +89,7 @@ public abstract class MDRActionLocalServiceBaseImpl extends BaseLocalServiceImpl
 		throws SystemException {
 		mdrAction.setNew(true);
 
-		return mdrActionPersistence.update(mdrAction, false);
+		return mdrActionPersistence.update(mdrAction);
 	}
 
 	/**
@@ -275,23 +275,7 @@ public abstract class MDRActionLocalServiceBaseImpl extends BaseLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	public MDRAction updateMDRAction(MDRAction mdrAction)
 		throws SystemException {
-		return updateMDRAction(mdrAction, true);
-	}
-
-	/**
-	 * Updates the m d r action in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param mdrAction the m d r action
-	 * @param merge whether to merge the m d r action with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	 * @return the m d r action that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public MDRAction updateMDRAction(MDRAction mdrAction, boolean merge)
-		throws SystemException {
-		mdrAction.setNew(false);
-
-		return mdrActionPersistence.update(mdrAction, merge);
+		return mdrActionPersistence.update(mdrAction);
 	}
 
 	/**

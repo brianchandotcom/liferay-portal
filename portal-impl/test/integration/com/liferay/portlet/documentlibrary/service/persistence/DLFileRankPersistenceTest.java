@@ -121,7 +121,7 @@ public class DLFileRankPersistenceTest {
 
 		newDLFileRank.setActive(ServiceTestUtil.randomBoolean());
 
-		_persistence.update(newDLFileRank, false);
+		_persistence.update(newDLFileRank);
 
 		DLFileRank existingDLFileRank = _persistence.findByPrimaryKey(newDLFileRank.getPrimaryKey());
 
@@ -291,7 +291,7 @@ public class DLFileRankPersistenceTest {
 
 		dlFileRank.setActive(ServiceTestUtil.randomBoolean());
 
-		_persistence.update(dlFileRank, false);
+		_persistence.update(dlFileRank);
 
 		return dlFileRank;
 	}

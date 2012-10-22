@@ -127,7 +127,7 @@ public class SCFrameworkVersionPersistenceTest {
 
 		newSCFrameworkVersion.setPriority(ServiceTestUtil.nextInt());
 
-		_persistence.update(newSCFrameworkVersion, false);
+		_persistence.update(newSCFrameworkVersion);
 
 		SCFrameworkVersion existingSCFrameworkVersion = _persistence.findByPrimaryKey(newSCFrameworkVersion.getPrimaryKey());
 
@@ -298,7 +298,7 @@ public class SCFrameworkVersionPersistenceTest {
 
 		scFrameworkVersion.setPriority(ServiceTestUtil.nextInt());
 
-		_persistence.update(scFrameworkVersion, false);
+		_persistence.update(scFrameworkVersion);
 
 		return scFrameworkVersion;
 	}

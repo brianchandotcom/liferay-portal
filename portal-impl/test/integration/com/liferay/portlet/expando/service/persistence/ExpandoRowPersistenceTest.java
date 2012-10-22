@@ -117,7 +117,7 @@ public class ExpandoRowPersistenceTest {
 
 		newExpandoRow.setClassPK(ServiceTestUtil.nextLong());
 
-		_persistence.update(newExpandoRow, false);
+		_persistence.update(newExpandoRow);
 
 		ExpandoRow existingExpandoRow = _persistence.findByPrimaryKey(newExpandoRow.getPrimaryKey());
 
@@ -277,7 +277,7 @@ public class ExpandoRowPersistenceTest {
 
 		expandoRow.setClassPK(ServiceTestUtil.nextLong());
 
-		_persistence.update(expandoRow, false);
+		_persistence.update(expandoRow);
 
 		return expandoRow;
 	}

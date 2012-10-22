@@ -76,8 +76,7 @@ public interface JournalArticleImagePersistence extends BasePersistence<JournalA
 			com.liferay.portlet.journal.NoSuchArticleImageException;
 
 	public com.liferay.portlet.journal.model.JournalArticleImage updateImpl(
-		com.liferay.portlet.journal.model.JournalArticleImage journalArticleImage,
-		boolean merge)
+		com.liferay.portlet.journal.model.JournalArticleImage journalArticleImage)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

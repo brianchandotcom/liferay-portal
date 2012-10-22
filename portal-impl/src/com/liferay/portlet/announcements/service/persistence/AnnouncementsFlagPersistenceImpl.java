@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
-import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
@@ -303,7 +302,12 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, announcementsFlag);
+			if (announcementsFlag.isCachedModel()) {
+				announcementsFlag = (AnnouncementsFlag)session.get(AnnouncementsFlagImpl.class,
+						announcementsFlag.getPrimaryKeyObj());
+			}
+
+			session.delete(announcementsFlag);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -319,8 +323,8 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 
 	@Override
 	public AnnouncementsFlag updateImpl(
-		com.liferay.portlet.announcements.model.AnnouncementsFlag announcementsFlag,
-		boolean merge) throws SystemException {
+		com.liferay.portlet.announcements.model.AnnouncementsFlag announcementsFlag)
+		throws SystemException {
 		announcementsFlag = toUnwrappedModel(announcementsFlag);
 
 		boolean isNew = announcementsFlag.isNew();
@@ -332,9 +336,14 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, announcementsFlag, merge);
+			if (announcementsFlag.isNew()) {
+				session.save(announcementsFlag);
 
-			announcementsFlag.setNew(false);
+				announcementsFlag.setNew(false);
+			}
+			else {
+				session.merge(announcementsFlag);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

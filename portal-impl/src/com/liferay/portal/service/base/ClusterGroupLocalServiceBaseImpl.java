@@ -249,7 +249,7 @@ public abstract class ClusterGroupLocalServiceBaseImpl
 		throws SystemException {
 		clusterGroup.setNew(true);
 
-		return clusterGroupPersistence.update(clusterGroup, false);
+		return clusterGroupPersistence.update(clusterGroup);
 	}
 
 	/**
@@ -422,23 +422,7 @@ public abstract class ClusterGroupLocalServiceBaseImpl
 	@Indexable(type = IndexableType.REINDEX)
 	public ClusterGroup updateClusterGroup(ClusterGroup clusterGroup)
 		throws SystemException {
-		return updateClusterGroup(clusterGroup, true);
-	}
-
-	/**
-	 * Updates the cluster group in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param clusterGroup the cluster group
-	 * @param merge whether to merge the cluster group with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	 * @return the cluster group that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public ClusterGroup updateClusterGroup(ClusterGroup clusterGroup,
-		boolean merge) throws SystemException {
-		clusterGroup.setNew(false);
-
-		return clusterGroupPersistence.update(clusterGroup, merge);
+		return clusterGroupPersistence.update(clusterGroup);
 	}
 
 	/**

@@ -175,7 +175,7 @@ public class JournalArticlePersistenceTest {
 
 		newJournalArticle.setStatusDate(ServiceTestUtil.nextDate());
 
-		_persistence.update(newJournalArticle, false);
+		_persistence.update(newJournalArticle);
 
 		JournalArticle existingJournalArticle = _persistence.findByPrimaryKey(newJournalArticle.getPrimaryKey());
 
@@ -468,7 +468,7 @@ public class JournalArticlePersistenceTest {
 
 		journalArticle.setStatusDate(ServiceTestUtil.nextDate());
 
-		_persistence.update(journalArticle, false);
+		_persistence.update(journalArticle);
 
 		return journalArticle;
 	}

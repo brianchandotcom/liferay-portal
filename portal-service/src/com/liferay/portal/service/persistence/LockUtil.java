@@ -93,19 +93,18 @@ public class LockUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static Lock update(Lock lock, boolean merge)
-		throws SystemException {
-		return getPersistence().update(lock, merge);
+	public static Lock update(Lock lock) throws SystemException {
+		return getPersistence().update(lock);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
-	public static Lock update(Lock lock, boolean merge,
-		ServiceContext serviceContext) throws SystemException {
-		return getPersistence().update(lock, merge, serviceContext);
+	public static Lock update(Lock lock, ServiceContext serviceContext)
+		throws SystemException {
+		return getPersistence().update(lock, serviceContext);
 	}
 
 	/**
@@ -152,9 +151,9 @@ public class LockUtil {
 	}
 
 	public static com.liferay.portal.model.Lock updateImpl(
-		com.liferay.portal.model.Lock lock, boolean merge)
+		com.liferay.portal.model.Lock lock)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(lock, merge);
+		return getPersistence().updateImpl(lock);
 	}
 
 	/**

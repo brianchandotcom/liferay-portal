@@ -76,8 +76,7 @@ public interface SocialActivityAchievementPersistence extends BasePersistence<So
 			com.liferay.portlet.social.NoSuchActivityAchievementException;
 
 	public com.liferay.portlet.social.model.SocialActivityAchievement updateImpl(
-		com.liferay.portlet.social.model.SocialActivityAchievement socialActivityAchievement,
-		boolean merge)
+		com.liferay.portlet.social.model.SocialActivityAchievement socialActivityAchievement)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

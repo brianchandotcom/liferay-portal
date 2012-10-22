@@ -93,19 +93,18 @@ public class PhoneUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static Phone update(Phone phone, boolean merge)
-		throws SystemException {
-		return getPersistence().update(phone, merge);
+	public static Phone update(Phone phone) throws SystemException {
+		return getPersistence().update(phone);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
-	public static Phone update(Phone phone, boolean merge,
-		ServiceContext serviceContext) throws SystemException {
-		return getPersistence().update(phone, merge, serviceContext);
+	public static Phone update(Phone phone, ServiceContext serviceContext)
+		throws SystemException {
+		return getPersistence().update(phone, serviceContext);
 	}
 
 	/**
@@ -152,9 +151,9 @@ public class PhoneUtil {
 	}
 
 	public static com.liferay.portal.model.Phone updateImpl(
-		com.liferay.portal.model.Phone phone, boolean merge)
+		com.liferay.portal.model.Phone phone)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(phone, merge);
+		return getPersistence().updateImpl(phone);
 	}
 
 	/**

@@ -94,19 +94,19 @@ public class ClusterGroupUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static ClusterGroup update(ClusterGroup clusterGroup, boolean merge)
+	public static ClusterGroup update(ClusterGroup clusterGroup)
 		throws SystemException {
-		return getPersistence().update(clusterGroup, merge);
+		return getPersistence().update(clusterGroup);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
-	public static ClusterGroup update(ClusterGroup clusterGroup, boolean merge,
+	public static ClusterGroup update(ClusterGroup clusterGroup,
 		ServiceContext serviceContext) throws SystemException {
-		return getPersistence().update(clusterGroup, merge, serviceContext);
+		return getPersistence().update(clusterGroup, serviceContext);
 	}
 
 	/**
@@ -156,9 +156,9 @@ public class ClusterGroupUtil {
 	}
 
 	public static com.liferay.portal.model.ClusterGroup updateImpl(
-		com.liferay.portal.model.ClusterGroup clusterGroup, boolean merge)
+		com.liferay.portal.model.ClusterGroup clusterGroup)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(clusterGroup, merge);
+		return getPersistence().updateImpl(clusterGroup);
 	}
 
 	/**

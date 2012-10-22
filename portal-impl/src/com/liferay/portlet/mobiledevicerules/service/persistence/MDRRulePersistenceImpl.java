@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
-import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
@@ -325,7 +324,12 @@ public class MDRRulePersistenceImpl extends BasePersistenceImpl<MDRRule>
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, mdrRule);
+			if (mdrRule.isCachedModel()) {
+				mdrRule = (MDRRule)session.get(MDRRuleImpl.class,
+						mdrRule.getPrimaryKeyObj());
+			}
+
+			session.delete(mdrRule);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -341,8 +345,8 @@ public class MDRRulePersistenceImpl extends BasePersistenceImpl<MDRRule>
 
 	@Override
 	public MDRRule updateImpl(
-		com.liferay.portlet.mobiledevicerules.model.MDRRule mdrRule,
-		boolean merge) throws SystemException {
+		com.liferay.portlet.mobiledevicerules.model.MDRRule mdrRule)
+		throws SystemException {
 		mdrRule = toUnwrappedModel(mdrRule);
 
 		boolean isNew = mdrRule.isNew();
@@ -360,9 +364,14 @@ public class MDRRulePersistenceImpl extends BasePersistenceImpl<MDRRule>
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, mdrRule, merge);
+			if (mdrRule.isNew()) {
+				session.save(mdrRule);
 
-			mdrRule.setNew(false);
+				mdrRule.setNew(false);
+			}
+			else {
+				session.merge(mdrRule);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

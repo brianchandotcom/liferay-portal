@@ -126,7 +126,7 @@ public class ShoppingOrderItemPersistenceTest {
 
 		newShoppingOrderItem.setShippedDate(ServiceTestUtil.nextDate());
 
-		_persistence.update(newShoppingOrderItem, false);
+		_persistence.update(newShoppingOrderItem);
 
 		ShoppingOrderItem existingShoppingOrderItem = _persistence.findByPrimaryKey(newShoppingOrderItem.getPrimaryKey());
 
@@ -289,7 +289,7 @@ public class ShoppingOrderItemPersistenceTest {
 
 		shoppingOrderItem.setShippedDate(ServiceTestUtil.nextDate());
 
-		_persistence.update(shoppingOrderItem, false);
+		_persistence.update(shoppingOrderItem);
 
 		return shoppingOrderItem;
 	}

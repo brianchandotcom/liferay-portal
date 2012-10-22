@@ -95,19 +95,19 @@ public class AssetTagPropertyUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static AssetTagProperty update(AssetTagProperty assetTagProperty,
-		boolean merge) throws SystemException {
-		return getPersistence().update(assetTagProperty, merge);
+	public static AssetTagProperty update(AssetTagProperty assetTagProperty)
+		throws SystemException {
+		return getPersistence().update(assetTagProperty);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
 	public static AssetTagProperty update(AssetTagProperty assetTagProperty,
-		boolean merge, ServiceContext serviceContext) throws SystemException {
-		return getPersistence().update(assetTagProperty, merge, serviceContext);
+		ServiceContext serviceContext) throws SystemException {
+		return getPersistence().update(assetTagProperty, serviceContext);
 	}
 
 	/**
@@ -157,10 +157,9 @@ public class AssetTagPropertyUtil {
 	}
 
 	public static com.liferay.portlet.asset.model.AssetTagProperty updateImpl(
-		com.liferay.portlet.asset.model.AssetTagProperty assetTagProperty,
-		boolean merge)
+		com.liferay.portlet.asset.model.AssetTagProperty assetTagProperty)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(assetTagProperty, merge);
+		return getPersistence().updateImpl(assetTagProperty);
 	}
 
 	/**

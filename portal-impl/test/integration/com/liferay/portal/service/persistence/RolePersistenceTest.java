@@ -124,7 +124,7 @@ public class RolePersistenceTest {
 
 		newRole.setSubtype(ServiceTestUtil.randomString());
 
-		_persistence.update(newRole, false);
+		_persistence.update(newRole);
 
 		Role existingRole = _persistence.findByPrimaryKey(newRole.getPrimaryKey());
 
@@ -299,7 +299,7 @@ public class RolePersistenceTest {
 
 		role.setSubtype(ServiceTestUtil.randomString());
 
-		_persistence.update(role, false);
+		_persistence.update(role);
 
 		return role;
 	}

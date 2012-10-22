@@ -76,8 +76,7 @@ public interface SCProductScreenshotPersistence extends BasePersistence<SCProduc
 			com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException;
 
 	public com.liferay.portlet.softwarecatalog.model.SCProductScreenshot updateImpl(
-		com.liferay.portlet.softwarecatalog.model.SCProductScreenshot scProductScreenshot,
-		boolean merge)
+		com.liferay.portlet.softwarecatalog.model.SCProductScreenshot scProductScreenshot)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

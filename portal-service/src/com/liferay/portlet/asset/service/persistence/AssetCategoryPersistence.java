@@ -74,8 +74,7 @@ public interface AssetCategoryPersistence extends BasePersistence<AssetCategory>
 			com.liferay.portlet.asset.NoSuchCategoryException;
 
 	public com.liferay.portlet.asset.model.AssetCategory updateImpl(
-		com.liferay.portlet.asset.model.AssetCategory assetCategory,
-		boolean merge)
+		com.liferay.portlet.asset.model.AssetCategory assetCategory)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

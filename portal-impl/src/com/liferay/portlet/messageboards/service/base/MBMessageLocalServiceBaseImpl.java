@@ -147,7 +147,7 @@ public abstract class MBMessageLocalServiceBaseImpl extends BaseLocalServiceImpl
 		throws SystemException {
 		mbMessage.setNew(true);
 
-		return mbMessagePersistence.update(mbMessage, false);
+		return mbMessagePersistence.update(mbMessage);
 	}
 
 	/**
@@ -333,23 +333,7 @@ public abstract class MBMessageLocalServiceBaseImpl extends BaseLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	public MBMessage updateMBMessage(MBMessage mbMessage)
 		throws SystemException {
-		return updateMBMessage(mbMessage, true);
-	}
-
-	/**
-	 * Updates the message-boards message in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param mbMessage the message-boards message
-	 * @param merge whether to merge the message-boards message with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	 * @return the message-boards message that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public MBMessage updateMBMessage(MBMessage mbMessage, boolean merge)
-		throws SystemException {
-		mbMessage.setNew(false);
-
-		return mbMessagePersistence.update(mbMessage, merge);
+		return mbMessagePersistence.update(mbMessage);
 	}
 
 	/**

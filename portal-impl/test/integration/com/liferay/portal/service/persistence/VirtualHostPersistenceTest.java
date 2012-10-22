@@ -114,7 +114,7 @@ public class VirtualHostPersistenceTest {
 
 		newVirtualHost.setHostname(ServiceTestUtil.randomString());
 
-		_persistence.update(newVirtualHost, false);
+		_persistence.update(newVirtualHost);
 
 		VirtualHost existingVirtualHost = _persistence.findByPrimaryKey(newVirtualHost.getPrimaryKey());
 
@@ -276,7 +276,7 @@ public class VirtualHostPersistenceTest {
 
 		virtualHost.setHostname(ServiceTestUtil.randomString());
 
-		_persistence.update(virtualHost, false);
+		_persistence.update(virtualHost);
 
 		return virtualHost;
 	}

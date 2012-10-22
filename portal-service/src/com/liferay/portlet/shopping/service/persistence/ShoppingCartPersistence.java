@@ -74,8 +74,7 @@ public interface ShoppingCartPersistence extends BasePersistence<ShoppingCart> {
 			com.liferay.portlet.shopping.NoSuchCartException;
 
 	public com.liferay.portlet.shopping.model.ShoppingCart updateImpl(
-		com.liferay.portlet.shopping.model.ShoppingCart shoppingCart,
-		boolean merge)
+		com.liferay.portlet.shopping.model.ShoppingCart shoppingCart)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

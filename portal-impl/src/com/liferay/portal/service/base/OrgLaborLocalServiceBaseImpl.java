@@ -247,7 +247,7 @@ public abstract class OrgLaborLocalServiceBaseImpl extends BaseLocalServiceImpl
 	public OrgLabor addOrgLabor(OrgLabor orgLabor) throws SystemException {
 		orgLabor.setNew(true);
 
-		return orgLaborPersistence.update(orgLabor, false);
+		return orgLaborPersistence.update(orgLabor);
 	}
 
 	/**
@@ -416,23 +416,7 @@ public abstract class OrgLaborLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public OrgLabor updateOrgLabor(OrgLabor orgLabor) throws SystemException {
-		return updateOrgLabor(orgLabor, true);
-	}
-
-	/**
-	 * Updates the org labor in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param orgLabor the org labor
-	 * @param merge whether to merge the org labor with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	 * @return the org labor that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public OrgLabor updateOrgLabor(OrgLabor orgLabor, boolean merge)
-		throws SystemException {
-		orgLabor.setNew(false);
-
-		return orgLaborPersistence.update(orgLabor, merge);
+		return orgLaborPersistence.update(orgLabor);
 	}
 
 	/**

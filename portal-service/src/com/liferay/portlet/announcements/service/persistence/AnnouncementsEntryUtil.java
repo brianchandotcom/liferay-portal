@@ -95,21 +95,20 @@ public class AnnouncementsEntryUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
 	public static AnnouncementsEntry update(
-		AnnouncementsEntry announcementsEntry, boolean merge)
-		throws SystemException {
-		return getPersistence().update(announcementsEntry, merge);
+		AnnouncementsEntry announcementsEntry) throws SystemException {
+		return getPersistence().update(announcementsEntry);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
 	public static AnnouncementsEntry update(
-		AnnouncementsEntry announcementsEntry, boolean merge,
-		ServiceContext serviceContext) throws SystemException {
-		return getPersistence().update(announcementsEntry, merge, serviceContext);
+		AnnouncementsEntry announcementsEntry, ServiceContext serviceContext)
+		throws SystemException {
+		return getPersistence().update(announcementsEntry, serviceContext);
 	}
 
 	/**
@@ -159,10 +158,9 @@ public class AnnouncementsEntryUtil {
 	}
 
 	public static com.liferay.portlet.announcements.model.AnnouncementsEntry updateImpl(
-		com.liferay.portlet.announcements.model.AnnouncementsEntry announcementsEntry,
-		boolean merge)
+		com.liferay.portlet.announcements.model.AnnouncementsEntry announcementsEntry)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(announcementsEntry, merge);
+		return getPersistence().updateImpl(announcementsEntry);
 	}
 
 	/**

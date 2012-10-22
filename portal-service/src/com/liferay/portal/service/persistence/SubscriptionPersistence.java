@@ -71,7 +71,7 @@ public interface SubscriptionPersistence extends BasePersistence<Subscription> {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portal.model.Subscription updateImpl(
-		com.liferay.portal.model.Subscription subscription, boolean merge)
+		com.liferay.portal.model.Subscription subscription)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

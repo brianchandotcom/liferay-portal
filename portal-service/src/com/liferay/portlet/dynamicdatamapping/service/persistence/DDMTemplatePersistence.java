@@ -76,8 +76,7 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 			com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
 
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate updateImpl(
-		com.liferay.portlet.dynamicdatamapping.model.DDMTemplate ddmTemplate,
-		boolean merge)
+		com.liferay.portlet.dynamicdatamapping.model.DDMTemplate ddmTemplate)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

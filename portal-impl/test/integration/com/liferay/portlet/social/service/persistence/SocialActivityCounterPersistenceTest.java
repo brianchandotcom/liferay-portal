@@ -133,7 +133,7 @@ public class SocialActivityCounterPersistenceTest {
 
 		newSocialActivityCounter.setActive(ServiceTestUtil.randomBoolean());
 
-		_persistence.update(newSocialActivityCounter, false);
+		_persistence.update(newSocialActivityCounter);
 
 		SocialActivityCounter existingSocialActivityCounter = _persistence.findByPrimaryKey(newSocialActivityCounter.getPrimaryKey());
 
@@ -354,7 +354,7 @@ public class SocialActivityCounterPersistenceTest {
 
 		socialActivityCounter.setActive(ServiceTestUtil.randomBoolean());
 
-		_persistence.update(socialActivityCounter, false);
+		_persistence.update(socialActivityCounter);
 
 		return socialActivityCounter;
 	}

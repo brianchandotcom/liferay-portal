@@ -110,7 +110,7 @@ public abstract class JournalFolderLocalServiceBaseImpl
 		throws SystemException {
 		journalFolder.setNew(true);
 
-		return journalFolderPersistence.update(journalFolder, false);
+		return journalFolderPersistence.update(journalFolder);
 	}
 
 	/**
@@ -297,23 +297,7 @@ public abstract class JournalFolderLocalServiceBaseImpl
 	@Indexable(type = IndexableType.REINDEX)
 	public JournalFolder updateJournalFolder(JournalFolder journalFolder)
 		throws SystemException {
-		return updateJournalFolder(journalFolder, true);
-	}
-
-	/**
-	 * Updates the journal folder in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param journalFolder the journal folder
-	 * @param merge whether to merge the journal folder with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	 * @return the journal folder that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public JournalFolder updateJournalFolder(JournalFolder journalFolder,
-		boolean merge) throws SystemException {
-		journalFolder.setNew(false);
-
-		return journalFolderPersistence.update(journalFolder, merge);
+		return journalFolderPersistence.update(journalFolder);
 	}
 
 	/**

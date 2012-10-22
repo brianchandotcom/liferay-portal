@@ -140,7 +140,7 @@ public class DDMStructurePersistenceTest {
 
 		newDDMStructure.setType(ServiceTestUtil.nextInt());
 
-		_persistence.update(newDDMStructure, false);
+		_persistence.update(newDDMStructure);
 
 		DDMStructure existingDDMStructure = _persistence.findByPrimaryKey(newDDMStructure.getPrimaryKey());
 
@@ -352,7 +352,7 @@ public class DDMStructurePersistenceTest {
 
 		ddmStructure.setType(ServiceTestUtil.nextInt());
 
-		_persistence.update(ddmStructure, false);
+		_persistence.update(ddmStructure);
 
 		return ddmStructure;
 	}

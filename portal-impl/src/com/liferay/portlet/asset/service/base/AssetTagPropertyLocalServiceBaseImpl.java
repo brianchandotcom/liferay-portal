@@ -107,7 +107,7 @@ public abstract class AssetTagPropertyLocalServiceBaseImpl
 		AssetTagProperty assetTagProperty) throws SystemException {
 		assetTagProperty.setNew(true);
 
-		return assetTagPropertyPersistence.update(assetTagProperty, false);
+		return assetTagPropertyPersistence.update(assetTagProperty);
 	}
 
 	/**
@@ -280,24 +280,7 @@ public abstract class AssetTagPropertyLocalServiceBaseImpl
 	@Indexable(type = IndexableType.REINDEX)
 	public AssetTagProperty updateAssetTagProperty(
 		AssetTagProperty assetTagProperty) throws SystemException {
-		return updateAssetTagProperty(assetTagProperty, true);
-	}
-
-	/**
-	 * Updates the asset tag property in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param assetTagProperty the asset tag property
-	 * @param merge whether to merge the asset tag property with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	 * @return the asset tag property that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public AssetTagProperty updateAssetTagProperty(
-		AssetTagProperty assetTagProperty, boolean merge)
-		throws SystemException {
-		assetTagProperty.setNew(false);
-
-		return assetTagPropertyPersistence.update(assetTagProperty, merge);
+		return assetTagPropertyPersistence.update(assetTagProperty);
 	}
 
 	/**

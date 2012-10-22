@@ -145,7 +145,7 @@ public class ShoppingCouponPersistenceTest {
 
 		newShoppingCoupon.setDiscountType(ServiceTestUtil.randomString());
 
-		_persistence.update(newShoppingCoupon, false);
+		_persistence.update(newShoppingCoupon);
 
 		ShoppingCoupon existingShoppingCoupon = _persistence.findByPrimaryKey(newShoppingCoupon.getPrimaryKey());
 
@@ -359,7 +359,7 @@ public class ShoppingCouponPersistenceTest {
 
 		shoppingCoupon.setDiscountType(ServiceTestUtil.randomString());
 
-		_persistence.update(shoppingCoupon, false);
+		_persistence.update(shoppingCoupon);
 
 		return shoppingCoupon;
 	}

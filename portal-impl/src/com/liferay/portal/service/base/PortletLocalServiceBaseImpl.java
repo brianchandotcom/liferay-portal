@@ -247,7 +247,7 @@ public abstract class PortletLocalServiceBaseImpl extends BaseLocalServiceImpl
 	public Portlet addPortlet(Portlet portlet) throws SystemException {
 		portlet.setNew(true);
 
-		return portletPersistence.update(portlet, false);
+		return portletPersistence.update(portlet);
 	}
 
 	/**
@@ -415,23 +415,7 @@ public abstract class PortletLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public Portlet updatePortlet(Portlet portlet) throws SystemException {
-		return updatePortlet(portlet, true);
-	}
-
-	/**
-	 * Updates the portlet in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param portlet the portlet
-	 * @param merge whether to merge the portlet with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	 * @return the portlet that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public Portlet updatePortlet(Portlet portlet, boolean merge)
-		throws SystemException {
-		portlet.setNew(false);
-
-		return portletPersistence.update(portlet, merge);
+		return portletPersistence.update(portlet);
 	}
 
 	/**

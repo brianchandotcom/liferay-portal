@@ -305,7 +305,11 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, team);
+			if (team.isCachedModel()) {
+				team = (Team)session.get(TeamImpl.class, team.getPrimaryKeyObj());
+			}
+
+			session.delete(team);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -320,7 +324,7 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 	}
 
 	@Override
-	public Team updateImpl(com.liferay.portal.model.Team team, boolean merge)
+	public Team updateImpl(com.liferay.portal.model.Team team)
 		throws SystemException {
 		team = toUnwrappedModel(team);
 
@@ -333,9 +337,14 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, team, merge);
+			if (team.isNew()) {
+				session.save(team);
 
-			team.setNew(false);
+				team.setNew(false);
+			}
+			else {
+				session.merge(team);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

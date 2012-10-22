@@ -87,7 +87,7 @@ public abstract class ExpandoColumnLocalServiceBaseImpl
 		throws SystemException {
 		expandoColumn.setNew(true);
 
-		return expandoColumnPersistence.update(expandoColumn, false);
+		return expandoColumnPersistence.update(expandoColumn);
 	}
 
 	/**
@@ -260,23 +260,7 @@ public abstract class ExpandoColumnLocalServiceBaseImpl
 	@Indexable(type = IndexableType.REINDEX)
 	public ExpandoColumn updateExpandoColumn(ExpandoColumn expandoColumn)
 		throws SystemException {
-		return updateExpandoColumn(expandoColumn, true);
-	}
-
-	/**
-	 * Updates the expando column in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param expandoColumn the expando column
-	 * @param merge whether to merge the expando column with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	 * @return the expando column that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public ExpandoColumn updateExpandoColumn(ExpandoColumn expandoColumn,
-		boolean merge) throws SystemException {
-		expandoColumn.setNew(false);
-
-		return expandoColumnPersistence.update(expandoColumn, merge);
+		return expandoColumnPersistence.update(expandoColumn);
 	}
 
 	/**

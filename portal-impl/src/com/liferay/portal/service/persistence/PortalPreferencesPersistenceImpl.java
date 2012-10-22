@@ -270,7 +270,12 @@ public class PortalPreferencesPersistenceImpl extends BasePersistenceImpl<Portal
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, portalPreferences);
+			if (portalPreferences.isCachedModel()) {
+				portalPreferences = (PortalPreferences)session.get(PortalPreferencesImpl.class,
+						portalPreferences.getPrimaryKeyObj());
+			}
+
+			session.delete(portalPreferences);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -286,8 +291,8 @@ public class PortalPreferencesPersistenceImpl extends BasePersistenceImpl<Portal
 
 	@Override
 	public PortalPreferences updateImpl(
-		com.liferay.portal.model.PortalPreferences portalPreferences,
-		boolean merge) throws SystemException {
+		com.liferay.portal.model.PortalPreferences portalPreferences)
+		throws SystemException {
 		portalPreferences = toUnwrappedModel(portalPreferences);
 
 		boolean isNew = portalPreferences.isNew();
@@ -299,9 +304,14 @@ public class PortalPreferencesPersistenceImpl extends BasePersistenceImpl<Portal
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, portalPreferences, merge);
+			if (portalPreferences.isNew()) {
+				session.save(portalPreferences);
 
-			portalPreferences.setNew(false);
+				portalPreferences.setNew(false);
+			}
+			else {
+				session.merge(portalPreferences);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

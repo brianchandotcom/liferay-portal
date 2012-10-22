@@ -76,8 +76,7 @@ public interface SCProductEntryPersistence extends BasePersistence<SCProductEntr
 			com.liferay.portlet.softwarecatalog.NoSuchProductEntryException;
 
 	public com.liferay.portlet.softwarecatalog.model.SCProductEntry updateImpl(
-		com.liferay.portlet.softwarecatalog.model.SCProductEntry scProductEntry,
-		boolean merge)
+		com.liferay.portlet.softwarecatalog.model.SCProductEntry scProductEntry)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

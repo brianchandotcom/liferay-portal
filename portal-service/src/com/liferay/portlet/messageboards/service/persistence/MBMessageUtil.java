@@ -95,19 +95,19 @@ public class MBMessageUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static MBMessage update(MBMessage mbMessage, boolean merge)
+	public static MBMessage update(MBMessage mbMessage)
 		throws SystemException {
-		return getPersistence().update(mbMessage, merge);
+		return getPersistence().update(mbMessage);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
-	public static MBMessage update(MBMessage mbMessage, boolean merge,
+	public static MBMessage update(MBMessage mbMessage,
 		ServiceContext serviceContext) throws SystemException {
-		return getPersistence().update(mbMessage, merge, serviceContext);
+		return getPersistence().update(mbMessage, serviceContext);
 	}
 
 	/**
@@ -157,10 +157,9 @@ public class MBMessageUtil {
 	}
 
 	public static com.liferay.portlet.messageboards.model.MBMessage updateImpl(
-		com.liferay.portlet.messageboards.model.MBMessage mbMessage,
-		boolean merge)
+		com.liferay.portlet.messageboards.model.MBMessage mbMessage)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(mbMessage, merge);
+		return getPersistence().updateImpl(mbMessage);
 	}
 
 	/**

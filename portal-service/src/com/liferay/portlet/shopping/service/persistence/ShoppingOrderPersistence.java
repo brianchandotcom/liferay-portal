@@ -74,8 +74,7 @@ public interface ShoppingOrderPersistence extends BasePersistence<ShoppingOrder>
 			com.liferay.portlet.shopping.NoSuchOrderException;
 
 	public com.liferay.portlet.shopping.model.ShoppingOrder updateImpl(
-		com.liferay.portlet.shopping.model.ShoppingOrder shoppingOrder,
-		boolean merge)
+		com.liferay.portlet.shopping.model.ShoppingOrder shoppingOrder)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

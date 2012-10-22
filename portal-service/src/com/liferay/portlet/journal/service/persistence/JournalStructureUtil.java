@@ -95,19 +95,19 @@ public class JournalStructureUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static JournalStructure update(JournalStructure journalStructure,
-		boolean merge) throws SystemException {
-		return getPersistence().update(journalStructure, merge);
+	public static JournalStructure update(JournalStructure journalStructure)
+		throws SystemException {
+		return getPersistence().update(journalStructure);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
 	public static JournalStructure update(JournalStructure journalStructure,
-		boolean merge, ServiceContext serviceContext) throws SystemException {
-		return getPersistence().update(journalStructure, merge, serviceContext);
+		ServiceContext serviceContext) throws SystemException {
+		return getPersistence().update(journalStructure, serviceContext);
 	}
 
 	/**
@@ -157,10 +157,9 @@ public class JournalStructureUtil {
 	}
 
 	public static com.liferay.portlet.journal.model.JournalStructure updateImpl(
-		com.liferay.portlet.journal.model.JournalStructure journalStructure,
-		boolean merge)
+		com.liferay.portlet.journal.model.JournalStructure journalStructure)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(journalStructure, merge);
+		return getPersistence().updateImpl(journalStructure);
 	}
 
 	/**

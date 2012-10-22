@@ -231,20 +231,6 @@ public class ReleaseLocalServiceUtil {
 	}
 
 	/**
-	* Updates the release in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param release the release
-	* @param merge whether to merge the release with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	* @return the release that was updated
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portal.model.Release updateRelease(
-		com.liferay.portal.model.Release release, boolean merge)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().updateRelease(release, merge);
-	}
-
-	/**
 	* Returns the Spring bean ID for this bean.
 	*
 	* @return the Spring bean ID for this bean

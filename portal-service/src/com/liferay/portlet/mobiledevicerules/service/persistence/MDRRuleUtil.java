@@ -95,19 +95,18 @@ public class MDRRuleUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static MDRRule update(MDRRule mdrRule, boolean merge)
-		throws SystemException {
-		return getPersistence().update(mdrRule, merge);
+	public static MDRRule update(MDRRule mdrRule) throws SystemException {
+		return getPersistence().update(mdrRule);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
-	public static MDRRule update(MDRRule mdrRule, boolean merge,
-		ServiceContext serviceContext) throws SystemException {
-		return getPersistence().update(mdrRule, merge, serviceContext);
+	public static MDRRule update(MDRRule mdrRule, ServiceContext serviceContext)
+		throws SystemException {
+		return getPersistence().update(mdrRule, serviceContext);
 	}
 
 	/**
@@ -157,10 +156,9 @@ public class MDRRuleUtil {
 	}
 
 	public static com.liferay.portlet.mobiledevicerules.model.MDRRule updateImpl(
-		com.liferay.portlet.mobiledevicerules.model.MDRRule mdrRule,
-		boolean merge)
+		com.liferay.portlet.mobiledevicerules.model.MDRRule mdrRule)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(mdrRule, merge);
+		return getPersistence().updateImpl(mdrRule);
 	}
 
 	/**

@@ -249,7 +249,7 @@ public abstract class UserTrackerLocalServiceBaseImpl
 		throws SystemException {
 		userTracker.setNew(true);
 
-		return userTrackerPersistence.update(userTracker, false);
+		return userTrackerPersistence.update(userTracker);
 	}
 
 	/**
@@ -422,23 +422,7 @@ public abstract class UserTrackerLocalServiceBaseImpl
 	@Indexable(type = IndexableType.REINDEX)
 	public UserTracker updateUserTracker(UserTracker userTracker)
 		throws SystemException {
-		return updateUserTracker(userTracker, true);
-	}
-
-	/**
-	 * Updates the user tracker in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param userTracker the user tracker
-	 * @param merge whether to merge the user tracker with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	 * @return the user tracker that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public UserTracker updateUserTracker(UserTracker userTracker, boolean merge)
-		throws SystemException {
-		userTracker.setNew(false);
-
-		return userTrackerPersistence.update(userTracker, merge);
+		return userTrackerPersistence.update(userTracker);
 	}
 
 	/**

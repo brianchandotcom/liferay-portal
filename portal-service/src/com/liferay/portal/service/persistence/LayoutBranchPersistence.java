@@ -71,7 +71,7 @@ public interface LayoutBranchPersistence extends BasePersistence<LayoutBranch> {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portal.model.LayoutBranch updateImpl(
-		com.liferay.portal.model.LayoutBranch layoutBranch, boolean merge)
+		com.liferay.portal.model.LayoutBranch layoutBranch)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

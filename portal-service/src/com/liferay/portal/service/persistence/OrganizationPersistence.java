@@ -71,7 +71,7 @@ public interface OrganizationPersistence extends BasePersistence<Organization> {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portal.model.Organization updateImpl(
-		com.liferay.portal.model.Organization organization, boolean merge)
+		com.liferay.portal.model.Organization organization)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

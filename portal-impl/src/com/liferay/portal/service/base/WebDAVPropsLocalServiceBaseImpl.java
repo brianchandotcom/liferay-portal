@@ -249,7 +249,7 @@ public abstract class WebDAVPropsLocalServiceBaseImpl
 		throws SystemException {
 		webDAVProps.setNew(true);
 
-		return webDAVPropsPersistence.update(webDAVProps, false);
+		return webDAVPropsPersistence.update(webDAVProps);
 	}
 
 	/**
@@ -422,23 +422,7 @@ public abstract class WebDAVPropsLocalServiceBaseImpl
 	@Indexable(type = IndexableType.REINDEX)
 	public WebDAVProps updateWebDAVProps(WebDAVProps webDAVProps)
 		throws SystemException {
-		return updateWebDAVProps(webDAVProps, true);
-	}
-
-	/**
-	 * Updates the web d a v props in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param webDAVProps the web d a v props
-	 * @param merge whether to merge the web d a v props with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	 * @return the web d a v props that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public WebDAVProps updateWebDAVProps(WebDAVProps webDAVProps, boolean merge)
-		throws SystemException {
-		webDAVProps.setNew(false);
-
-		return webDAVPropsPersistence.update(webDAVProps, merge);
+		return webDAVPropsPersistence.update(webDAVProps);
 	}
 
 	/**

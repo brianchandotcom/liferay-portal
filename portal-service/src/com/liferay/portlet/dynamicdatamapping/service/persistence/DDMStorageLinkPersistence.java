@@ -76,8 +76,7 @@ public interface DDMStorageLinkPersistence extends BasePersistence<DDMStorageLin
 			com.liferay.portlet.dynamicdatamapping.NoSuchStorageLinkException;
 
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink updateImpl(
-		com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink ddmStorageLink,
-		boolean merge)
+		com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink ddmStorageLink)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

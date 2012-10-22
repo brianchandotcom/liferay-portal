@@ -249,8 +249,7 @@ public abstract class UserNotificationEventLocalServiceBaseImpl
 		UserNotificationEvent userNotificationEvent) throws SystemException {
 		userNotificationEvent.setNew(true);
 
-		return userNotificationEventPersistence.update(userNotificationEvent,
-			false);
+		return userNotificationEventPersistence.update(userNotificationEvent);
 	}
 
 	/**
@@ -424,25 +423,7 @@ public abstract class UserNotificationEventLocalServiceBaseImpl
 	@Indexable(type = IndexableType.REINDEX)
 	public UserNotificationEvent updateUserNotificationEvent(
 		UserNotificationEvent userNotificationEvent) throws SystemException {
-		return updateUserNotificationEvent(userNotificationEvent, true);
-	}
-
-	/**
-	 * Updates the user notification event in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param userNotificationEvent the user notification event
-	 * @param merge whether to merge the user notification event with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	 * @return the user notification event that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public UserNotificationEvent updateUserNotificationEvent(
-		UserNotificationEvent userNotificationEvent, boolean merge)
-		throws SystemException {
-		userNotificationEvent.setNew(false);
-
-		return userNotificationEventPersistence.update(userNotificationEvent,
-			merge);
+		return userNotificationEventPersistence.update(userNotificationEvent);
 	}
 
 	/**

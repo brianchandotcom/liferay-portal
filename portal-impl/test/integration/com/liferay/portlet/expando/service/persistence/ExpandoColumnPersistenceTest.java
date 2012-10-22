@@ -118,7 +118,7 @@ public class ExpandoColumnPersistenceTest {
 
 		newExpandoColumn.setTypeSettings(ServiceTestUtil.randomString());
 
-		_persistence.update(newExpandoColumn, false);
+		_persistence.update(newExpandoColumn);
 
 		ExpandoColumn existingExpandoColumn = _persistence.findByPrimaryKey(newExpandoColumn.getPrimaryKey());
 
@@ -267,7 +267,7 @@ public class ExpandoColumnPersistenceTest {
 
 		expandoColumn.setTypeSettings(ServiceTestUtil.randomString());
 
-		_persistence.update(expandoColumn, false);
+		_persistence.update(expandoColumn);
 
 		return expandoColumn;
 	}

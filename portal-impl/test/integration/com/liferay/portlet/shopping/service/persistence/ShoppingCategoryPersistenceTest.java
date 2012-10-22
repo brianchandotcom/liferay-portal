@@ -125,7 +125,7 @@ public class ShoppingCategoryPersistenceTest {
 
 		newShoppingCategory.setDescription(ServiceTestUtil.randomString());
 
-		_persistence.update(newShoppingCategory, false);
+		_persistence.update(newShoppingCategory);
 
 		ShoppingCategory existingShoppingCategory = _persistence.findByPrimaryKey(newShoppingCategory.getPrimaryKey());
 
@@ -288,7 +288,7 @@ public class ShoppingCategoryPersistenceTest {
 
 		shoppingCategory.setDescription(ServiceTestUtil.randomString());
 
-		_persistence.update(shoppingCategory, false);
+		_persistence.update(shoppingCategory);
 
 		return shoppingCategory;
 	}

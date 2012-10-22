@@ -74,8 +74,7 @@ public interface RatingsEntryPersistence extends BasePersistence<RatingsEntry> {
 			com.liferay.portlet.ratings.NoSuchEntryException;
 
 	public com.liferay.portlet.ratings.model.RatingsEntry updateImpl(
-		com.liferay.portlet.ratings.model.RatingsEntry ratingsEntry,
-		boolean merge)
+		com.liferay.portlet.ratings.model.RatingsEntry ratingsEntry)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

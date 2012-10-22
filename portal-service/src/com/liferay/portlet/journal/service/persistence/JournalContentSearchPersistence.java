@@ -76,8 +76,7 @@ public interface JournalContentSearchPersistence extends BasePersistence<Journal
 			com.liferay.portlet.journal.NoSuchContentSearchException;
 
 	public com.liferay.portlet.journal.model.JournalContentSearch updateImpl(
-		com.liferay.portlet.journal.model.JournalContentSearch journalContentSearch,
-		boolean merge)
+		com.liferay.portlet.journal.model.JournalContentSearch journalContentSearch)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

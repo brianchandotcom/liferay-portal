@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
-import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
@@ -300,7 +299,12 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, wikiPageResource);
+			if (wikiPageResource.isCachedModel()) {
+				wikiPageResource = (WikiPageResource)session.get(WikiPageResourceImpl.class,
+						wikiPageResource.getPrimaryKeyObj());
+			}
+
+			session.delete(wikiPageResource);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -316,8 +320,8 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 
 	@Override
 	public WikiPageResource updateImpl(
-		com.liferay.portlet.wiki.model.WikiPageResource wikiPageResource,
-		boolean merge) throws SystemException {
+		com.liferay.portlet.wiki.model.WikiPageResource wikiPageResource)
+		throws SystemException {
 		wikiPageResource = toUnwrappedModel(wikiPageResource);
 
 		boolean isNew = wikiPageResource.isNew();
@@ -335,9 +339,14 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, wikiPageResource, merge);
+			if (wikiPageResource.isNew()) {
+				session.save(wikiPageResource);
 
-			wikiPageResource.setNew(false);
+				wikiPageResource.setNew(false);
+			}
+			else {
+				session.merge(wikiPageResource);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

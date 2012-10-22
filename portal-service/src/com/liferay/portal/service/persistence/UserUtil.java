@@ -93,19 +93,18 @@ public class UserUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static User update(User user, boolean merge)
-		throws SystemException {
-		return getPersistence().update(user, merge);
+	public static User update(User user) throws SystemException {
+		return getPersistence().update(user);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
-	public static User update(User user, boolean merge,
-		ServiceContext serviceContext) throws SystemException {
-		return getPersistence().update(user, merge, serviceContext);
+	public static User update(User user, ServiceContext serviceContext)
+		throws SystemException {
+		return getPersistence().update(user, serviceContext);
 	}
 
 	/**
@@ -152,9 +151,9 @@ public class UserUtil {
 	}
 
 	public static com.liferay.portal.model.User updateImpl(
-		com.liferay.portal.model.User user, boolean merge)
+		com.liferay.portal.model.User user)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(user, merge);
+		return getPersistence().updateImpl(user);
 	}
 
 	/**

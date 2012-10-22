@@ -249,7 +249,7 @@ public abstract class PluginSettingLocalServiceBaseImpl
 		throws SystemException {
 		pluginSetting.setNew(true);
 
-		return pluginSettingPersistence.update(pluginSetting, false);
+		return pluginSettingPersistence.update(pluginSetting);
 	}
 
 	/**
@@ -422,23 +422,7 @@ public abstract class PluginSettingLocalServiceBaseImpl
 	@Indexable(type = IndexableType.REINDEX)
 	public PluginSetting updatePluginSetting(PluginSetting pluginSetting)
 		throws SystemException {
-		return updatePluginSetting(pluginSetting, true);
-	}
-
-	/**
-	 * Updates the plugin setting in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param pluginSetting the plugin setting
-	 * @param merge whether to merge the plugin setting with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	 * @return the plugin setting that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public PluginSetting updatePluginSetting(PluginSetting pluginSetting,
-		boolean merge) throws SystemException {
-		pluginSetting.setNew(false);
-
-		return pluginSettingPersistence.update(pluginSetting, merge);
+		return pluginSettingPersistence.update(pluginSetting);
 	}
 
 	/**

@@ -95,7 +95,7 @@ public abstract class DDMStructureLocalServiceBaseImpl
 		throws SystemException {
 		ddmStructure.setNew(true);
 
-		return ddmStructurePersistence.update(ddmStructure, false);
+		return ddmStructurePersistence.update(ddmStructure);
 	}
 
 	/**
@@ -282,23 +282,7 @@ public abstract class DDMStructureLocalServiceBaseImpl
 	@Indexable(type = IndexableType.REINDEX)
 	public DDMStructure updateDDMStructure(DDMStructure ddmStructure)
 		throws SystemException {
-		return updateDDMStructure(ddmStructure, true);
-	}
-
-	/**
-	 * Updates the d d m structure in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param ddmStructure the d d m structure
-	 * @param merge whether to merge the d d m structure with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	 * @return the d d m structure that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public DDMStructure updateDDMStructure(DDMStructure ddmStructure,
-		boolean merge) throws SystemException {
-		ddmStructure.setNew(false);
-
-		return ddmStructurePersistence.update(ddmStructure, merge);
+		return ddmStructurePersistence.update(ddmStructure);
 	}
 
 	/**

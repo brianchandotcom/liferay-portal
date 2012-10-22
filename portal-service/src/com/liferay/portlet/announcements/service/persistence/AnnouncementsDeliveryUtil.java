@@ -95,22 +95,20 @@ public class AnnouncementsDeliveryUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
 	public static AnnouncementsDelivery update(
-		AnnouncementsDelivery announcementsDelivery, boolean merge)
-		throws SystemException {
-		return getPersistence().update(announcementsDelivery, merge);
+		AnnouncementsDelivery announcementsDelivery) throws SystemException {
+		return getPersistence().update(announcementsDelivery);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
 	public static AnnouncementsDelivery update(
-		AnnouncementsDelivery announcementsDelivery, boolean merge,
+		AnnouncementsDelivery announcementsDelivery,
 		ServiceContext serviceContext) throws SystemException {
-		return getPersistence()
-				   .update(announcementsDelivery, merge, serviceContext);
+		return getPersistence().update(announcementsDelivery, serviceContext);
 	}
 
 	/**
@@ -160,10 +158,9 @@ public class AnnouncementsDeliveryUtil {
 	}
 
 	public static com.liferay.portlet.announcements.model.AnnouncementsDelivery updateImpl(
-		com.liferay.portlet.announcements.model.AnnouncementsDelivery announcementsDelivery,
-		boolean merge)
+		com.liferay.portlet.announcements.model.AnnouncementsDelivery announcementsDelivery)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(announcementsDelivery, merge);
+		return getPersistence().updateImpl(announcementsDelivery);
 	}
 
 	/**

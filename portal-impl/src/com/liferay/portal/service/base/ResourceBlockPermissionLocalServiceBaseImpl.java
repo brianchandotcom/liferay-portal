@@ -250,8 +250,7 @@ public abstract class ResourceBlockPermissionLocalServiceBaseImpl
 		throws SystemException {
 		resourceBlockPermission.setNew(true);
 
-		return resourceBlockPermissionPersistence.update(resourceBlockPermission,
-			false);
+		return resourceBlockPermissionPersistence.update(resourceBlockPermission);
 	}
 
 	/**
@@ -427,25 +426,7 @@ public abstract class ResourceBlockPermissionLocalServiceBaseImpl
 	public ResourceBlockPermission updateResourceBlockPermission(
 		ResourceBlockPermission resourceBlockPermission)
 		throws SystemException {
-		return updateResourceBlockPermission(resourceBlockPermission, true);
-	}
-
-	/**
-	 * Updates the resource block permission in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param resourceBlockPermission the resource block permission
-	 * @param merge whether to merge the resource block permission with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	 * @return the resource block permission that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public ResourceBlockPermission updateResourceBlockPermission(
-		ResourceBlockPermission resourceBlockPermission, boolean merge)
-		throws SystemException {
-		resourceBlockPermission.setNew(false);
-
-		return resourceBlockPermissionPersistence.update(resourceBlockPermission,
-			merge);
+		return resourceBlockPermissionPersistence.update(resourceBlockPermission);
 	}
 
 	/**

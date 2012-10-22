@@ -269,7 +269,7 @@ public abstract class RepositoryLocalServiceBaseImpl
 		throws SystemException {
 		repository.setNew(true);
 
-		return repositoryPersistence.update(repository, false);
+		return repositoryPersistence.update(repository);
 	}
 
 	/**
@@ -456,23 +456,7 @@ public abstract class RepositoryLocalServiceBaseImpl
 	@Indexable(type = IndexableType.REINDEX)
 	public Repository updateRepository(Repository repository)
 		throws SystemException {
-		return updateRepository(repository, true);
-	}
-
-	/**
-	 * Updates the repository in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param repository the repository
-	 * @param merge whether to merge the repository with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	 * @return the repository that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public Repository updateRepository(Repository repository, boolean merge)
-		throws SystemException {
-		repository.setNew(false);
-
-		return repositoryPersistence.update(repository, merge);
+		return repositoryPersistence.update(repository);
 	}
 
 	/**

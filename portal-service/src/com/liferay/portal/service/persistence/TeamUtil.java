@@ -93,19 +93,18 @@ public class TeamUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static Team update(Team team, boolean merge)
-		throws SystemException {
-		return getPersistence().update(team, merge);
+	public static Team update(Team team) throws SystemException {
+		return getPersistence().update(team);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
-	public static Team update(Team team, boolean merge,
-		ServiceContext serviceContext) throws SystemException {
-		return getPersistence().update(team, merge, serviceContext);
+	public static Team update(Team team, ServiceContext serviceContext)
+		throws SystemException {
+		return getPersistence().update(team, serviceContext);
 	}
 
 	/**
@@ -152,9 +151,9 @@ public class TeamUtil {
 	}
 
 	public static com.liferay.portal.model.Team updateImpl(
-		com.liferay.portal.model.Team team, boolean merge)
+		com.liferay.portal.model.Team team)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(team, merge);
+		return getPersistence().updateImpl(team);
 	}
 
 	/**

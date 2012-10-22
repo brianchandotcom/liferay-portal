@@ -104,8 +104,7 @@ public abstract class JournalArticleResourceLocalServiceBaseImpl
 		throws SystemException {
 		journalArticleResource.setNew(true);
 
-		return journalArticleResourcePersistence.update(journalArticleResource,
-			false);
+		return journalArticleResourcePersistence.update(journalArticleResource);
 	}
 
 	/**
@@ -295,25 +294,7 @@ public abstract class JournalArticleResourceLocalServiceBaseImpl
 	public JournalArticleResource updateJournalArticleResource(
 		JournalArticleResource journalArticleResource)
 		throws SystemException {
-		return updateJournalArticleResource(journalArticleResource, true);
-	}
-
-	/**
-	 * Updates the journal article resource in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param journalArticleResource the journal article resource
-	 * @param merge whether to merge the journal article resource with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	 * @return the journal article resource that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public JournalArticleResource updateJournalArticleResource(
-		JournalArticleResource journalArticleResource, boolean merge)
-		throws SystemException {
-		journalArticleResource.setNew(false);
-
-		return journalArticleResourcePersistence.update(journalArticleResource,
-			merge);
+		return journalArticleResourcePersistence.update(journalArticleResource);
 	}
 
 	/**

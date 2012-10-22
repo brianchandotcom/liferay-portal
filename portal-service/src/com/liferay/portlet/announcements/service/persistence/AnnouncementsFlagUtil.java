@@ -95,21 +95,20 @@ public class AnnouncementsFlagUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static AnnouncementsFlag update(
-		AnnouncementsFlag announcementsFlag, boolean merge)
+	public static AnnouncementsFlag update(AnnouncementsFlag announcementsFlag)
 		throws SystemException {
-		return getPersistence().update(announcementsFlag, merge);
+		return getPersistence().update(announcementsFlag);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
 	public static AnnouncementsFlag update(
-		AnnouncementsFlag announcementsFlag, boolean merge,
-		ServiceContext serviceContext) throws SystemException {
-		return getPersistence().update(announcementsFlag, merge, serviceContext);
+		AnnouncementsFlag announcementsFlag, ServiceContext serviceContext)
+		throws SystemException {
+		return getPersistence().update(announcementsFlag, serviceContext);
 	}
 
 	/**
@@ -159,10 +158,9 @@ public class AnnouncementsFlagUtil {
 	}
 
 	public static com.liferay.portlet.announcements.model.AnnouncementsFlag updateImpl(
-		com.liferay.portlet.announcements.model.AnnouncementsFlag announcementsFlag,
-		boolean merge)
+		com.liferay.portlet.announcements.model.AnnouncementsFlag announcementsFlag)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(announcementsFlag, merge);
+		return getPersistence().updateImpl(announcementsFlag);
 	}
 
 	/**

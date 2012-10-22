@@ -107,7 +107,7 @@ public class OrgGroupRolePersistenceTest {
 
 		OrgGroupRole newOrgGroupRole = _persistence.create(pk);
 
-		_persistence.update(newOrgGroupRole, false);
+		_persistence.update(newOrgGroupRole);
 
 		OrgGroupRole existingOrgGroupRole = _persistence.findByPrimaryKey(newOrgGroupRole.getPrimaryKey());
 
@@ -250,7 +250,7 @@ public class OrgGroupRolePersistenceTest {
 
 		OrgGroupRole orgGroupRole = _persistence.create(pk);
 
-		_persistence.update(orgGroupRole, false);
+		_persistence.update(orgGroupRole);
 
 		return orgGroupRole;
 	}

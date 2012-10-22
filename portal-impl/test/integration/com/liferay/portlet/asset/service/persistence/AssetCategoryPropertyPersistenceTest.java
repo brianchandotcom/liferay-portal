@@ -126,7 +126,7 @@ public class AssetCategoryPropertyPersistenceTest {
 
 		newAssetCategoryProperty.setValue(ServiceTestUtil.randomString());
 
-		_persistence.update(newAssetCategoryProperty, false);
+		_persistence.update(newAssetCategoryProperty);
 
 		AssetCategoryProperty existingAssetCategoryProperty = _persistence.findByPrimaryKey(newAssetCategoryProperty.getPrimaryKey());
 
@@ -311,7 +311,7 @@ public class AssetCategoryPropertyPersistenceTest {
 
 		assetCategoryProperty.setValue(ServiceTestUtil.randomString());
 
-		_persistence.update(assetCategoryProperty, false);
+		_persistence.update(assetCategoryProperty);
 
 		return assetCategoryProperty;
 	}

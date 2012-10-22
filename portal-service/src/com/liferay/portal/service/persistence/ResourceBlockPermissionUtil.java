@@ -95,22 +95,21 @@ public class ResourceBlockPermissionUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
 	public static ResourceBlockPermission update(
-		ResourceBlockPermission resourceBlockPermission, boolean merge)
+		ResourceBlockPermission resourceBlockPermission)
 		throws SystemException {
-		return getPersistence().update(resourceBlockPermission, merge);
+		return getPersistence().update(resourceBlockPermission);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
 	public static ResourceBlockPermission update(
-		ResourceBlockPermission resourceBlockPermission, boolean merge,
+		ResourceBlockPermission resourceBlockPermission,
 		ServiceContext serviceContext) throws SystemException {
-		return getPersistence()
-				   .update(resourceBlockPermission, merge, serviceContext);
+		return getPersistence().update(resourceBlockPermission, serviceContext);
 	}
 
 	/**
@@ -160,10 +159,9 @@ public class ResourceBlockPermissionUtil {
 	}
 
 	public static com.liferay.portal.model.ResourceBlockPermission updateImpl(
-		com.liferay.portal.model.ResourceBlockPermission resourceBlockPermission,
-		boolean merge)
+		com.liferay.portal.model.ResourceBlockPermission resourceBlockPermission)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(resourceBlockPermission, merge);
+		return getPersistence().updateImpl(resourceBlockPermission);
 	}
 
 	/**

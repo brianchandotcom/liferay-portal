@@ -95,19 +95,19 @@ public class SCProductVersionUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static SCProductVersion update(SCProductVersion scProductVersion,
-		boolean merge) throws SystemException {
-		return getPersistence().update(scProductVersion, merge);
+	public static SCProductVersion update(SCProductVersion scProductVersion)
+		throws SystemException {
+		return getPersistence().update(scProductVersion);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
 	public static SCProductVersion update(SCProductVersion scProductVersion,
-		boolean merge, ServiceContext serviceContext) throws SystemException {
-		return getPersistence().update(scProductVersion, merge, serviceContext);
+		ServiceContext serviceContext) throws SystemException {
+		return getPersistence().update(scProductVersion, serviceContext);
 	}
 
 	/**
@@ -157,10 +157,9 @@ public class SCProductVersionUtil {
 	}
 
 	public static com.liferay.portlet.softwarecatalog.model.SCProductVersion updateImpl(
-		com.liferay.portlet.softwarecatalog.model.SCProductVersion scProductVersion,
-		boolean merge)
+		com.liferay.portlet.softwarecatalog.model.SCProductVersion scProductVersion)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(scProductVersion, merge);
+		return getPersistence().updateImpl(scProductVersion);
 	}
 
 	/**

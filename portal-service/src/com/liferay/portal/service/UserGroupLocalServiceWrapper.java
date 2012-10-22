@@ -226,20 +226,6 @@ public class UserGroupLocalServiceWrapper implements UserGroupLocalService,
 	}
 
 	/**
-	* Updates the user group in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param userGroup the user group
-	* @param merge whether to merge the user group with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	* @return the user group that was updated
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.UserGroup updateUserGroup(
-		com.liferay.portal.model.UserGroup userGroup, boolean merge)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _userGroupLocalService.updateUserGroup(userGroup, merge);
-	}
-
-	/**
 	* Returns the Spring bean ID for this bean.
 	*
 	* @return the Spring bean ID for this bean

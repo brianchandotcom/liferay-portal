@@ -149,7 +149,7 @@ public class LayoutSetBranchPersistenceTest {
 
 		newLayoutSetBranch.setLayoutSetPrototypeLinkEnabled(ServiceTestUtil.randomBoolean());
 
-		_persistence.update(newLayoutSetBranch, false);
+		_persistence.update(newLayoutSetBranch);
 
 		LayoutSetBranch existingLayoutSetBranch = _persistence.findByPrimaryKey(newLayoutSetBranch.getPrimaryKey());
 
@@ -380,7 +380,7 @@ public class LayoutSetBranchPersistenceTest {
 
 		layoutSetBranch.setLayoutSetPrototypeLinkEnabled(ServiceTestUtil.randomBoolean());
 
-		_persistence.update(layoutSetBranch, false);
+		_persistence.update(layoutSetBranch);
 
 		return layoutSetBranch;
 	}

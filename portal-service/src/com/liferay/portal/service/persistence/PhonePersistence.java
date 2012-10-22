@@ -71,7 +71,7 @@ public interface PhonePersistence extends BasePersistence<Phone> {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portal.model.Phone updateImpl(
-		com.liferay.portal.model.Phone phone, boolean merge)
+		com.liferay.portal.model.Phone phone)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

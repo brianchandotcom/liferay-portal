@@ -342,7 +342,12 @@ public class RepositoryEntryPersistenceImpl extends BasePersistenceImpl<Reposito
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, repositoryEntry);
+			if (repositoryEntry.isCachedModel()) {
+				repositoryEntry = (RepositoryEntry)session.get(RepositoryEntryImpl.class,
+						repositoryEntry.getPrimaryKeyObj());
+			}
+
+			session.delete(repositoryEntry);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -358,7 +363,7 @@ public class RepositoryEntryPersistenceImpl extends BasePersistenceImpl<Reposito
 
 	@Override
 	public RepositoryEntry updateImpl(
-		com.liferay.portal.model.RepositoryEntry repositoryEntry, boolean merge)
+		com.liferay.portal.model.RepositoryEntry repositoryEntry)
 		throws SystemException {
 		repositoryEntry = toUnwrappedModel(repositoryEntry);
 
@@ -377,9 +382,14 @@ public class RepositoryEntryPersistenceImpl extends BasePersistenceImpl<Reposito
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, repositoryEntry, merge);
+			if (repositoryEntry.isNew()) {
+				session.save(repositoryEntry);
 
-			repositoryEntry.setNew(false);
+				repositoryEntry.setNew(false);
+			}
+			else {
+				session.merge(repositoryEntry);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

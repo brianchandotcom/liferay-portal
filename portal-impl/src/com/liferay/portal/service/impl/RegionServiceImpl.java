@@ -57,7 +57,7 @@ public class RegionServiceImpl extends RegionServiceBaseImpl {
 		region.setName(name);
 		region.setActive(active);
 
-		regionPersistence.update(region, false);
+		regionPersistence.update(region);
 
 		return region;
 	}

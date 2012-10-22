@@ -76,8 +76,7 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 			com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
 
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure updateImpl(
-		com.liferay.portlet.dynamicdatamapping.model.DDMStructure ddmStructure,
-		boolean merge)
+		com.liferay.portlet.dynamicdatamapping.model.DDMStructure ddmStructure)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

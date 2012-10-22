@@ -94,19 +94,19 @@ public class PluginSettingUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static PluginSetting update(PluginSetting pluginSetting,
-		boolean merge) throws SystemException {
-		return getPersistence().update(pluginSetting, merge);
+	public static PluginSetting update(PluginSetting pluginSetting)
+		throws SystemException {
+		return getPersistence().update(pluginSetting);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
 	public static PluginSetting update(PluginSetting pluginSetting,
-		boolean merge, ServiceContext serviceContext) throws SystemException {
-		return getPersistence().update(pluginSetting, merge, serviceContext);
+		ServiceContext serviceContext) throws SystemException {
+		return getPersistence().update(pluginSetting, serviceContext);
 	}
 
 	/**
@@ -156,9 +156,9 @@ public class PluginSettingUtil {
 	}
 
 	public static com.liferay.portal.model.PluginSetting updateImpl(
-		com.liferay.portal.model.PluginSetting pluginSetting, boolean merge)
+		com.liferay.portal.model.PluginSetting pluginSetting)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(pluginSetting, merge);
+		return getPersistence().updateImpl(pluginSetting);
 	}
 
 	/**

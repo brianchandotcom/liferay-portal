@@ -113,7 +113,7 @@ public class PortalPreferencesPersistenceTest {
 
 		newPortalPreferences.setPreferences(ServiceTestUtil.randomString());
 
-		_persistence.update(newPortalPreferences, false);
+		_persistence.update(newPortalPreferences);
 
 		PortalPreferences existingPortalPreferences = _persistence.findByPrimaryKey(newPortalPreferences.getPrimaryKey());
 
@@ -272,7 +272,7 @@ public class PortalPreferencesPersistenceTest {
 
 		portalPreferences.setPreferences(ServiceTestUtil.randomString());
 
-		_persistence.update(portalPreferences, false);
+		_persistence.update(portalPreferences);
 
 		return portalPreferences;
 	}

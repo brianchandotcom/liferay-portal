@@ -74,8 +74,7 @@ public interface SocialRequestPersistence extends BasePersistence<SocialRequest>
 			com.liferay.portlet.social.NoSuchRequestException;
 
 	public com.liferay.portlet.social.model.SocialRequest updateImpl(
-		com.liferay.portlet.social.model.SocialRequest socialRequest,
-		boolean merge)
+		com.liferay.portlet.social.model.SocialRequest socialRequest)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

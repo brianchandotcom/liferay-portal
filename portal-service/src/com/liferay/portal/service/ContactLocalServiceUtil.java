@@ -231,20 +231,6 @@ public class ContactLocalServiceUtil {
 	}
 
 	/**
-	* Updates the contact in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param contact the contact
-	* @param merge whether to merge the contact with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	* @return the contact that was updated
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portal.model.Contact updateContact(
-		com.liferay.portal.model.Contact contact, boolean merge)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().updateContact(contact, merge);
-	}
-
-	/**
 	* Returns the Spring bean ID for this bean.
 	*
 	* @return the Spring bean ID for this bean

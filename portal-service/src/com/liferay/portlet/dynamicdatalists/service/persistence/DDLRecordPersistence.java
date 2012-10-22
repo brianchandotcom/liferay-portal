@@ -76,8 +76,7 @@ public interface DDLRecordPersistence extends BasePersistence<DDLRecord> {
 			com.liferay.portlet.dynamicdatalists.NoSuchRecordException;
 
 	public com.liferay.portlet.dynamicdatalists.model.DDLRecord updateImpl(
-		com.liferay.portlet.dynamicdatalists.model.DDLRecord ddlRecord,
-		boolean merge)
+		com.liferay.portlet.dynamicdatalists.model.DDLRecord ddlRecord)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

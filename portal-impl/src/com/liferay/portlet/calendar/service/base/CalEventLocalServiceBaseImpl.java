@@ -115,7 +115,7 @@ public abstract class CalEventLocalServiceBaseImpl extends BaseLocalServiceImpl
 	public CalEvent addCalEvent(CalEvent calEvent) throws SystemException {
 		calEvent.setNew(true);
 
-		return calEventPersistence.update(calEvent, false);
+		return calEventPersistence.update(calEvent);
 	}
 
 	/**
@@ -298,23 +298,7 @@ public abstract class CalEventLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public CalEvent updateCalEvent(CalEvent calEvent) throws SystemException {
-		return updateCalEvent(calEvent, true);
-	}
-
-	/**
-	 * Updates the cal event in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param calEvent the cal event
-	 * @param merge whether to merge the cal event with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	 * @return the cal event that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public CalEvent updateCalEvent(CalEvent calEvent, boolean merge)
-		throws SystemException {
-		calEvent.setNew(false);
-
-		return calEventPersistence.update(calEvent, merge);
+		return calEventPersistence.update(calEvent);
 	}
 
 	/**

@@ -306,7 +306,12 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, company);
+			if (company.isCachedModel()) {
+				company = (Company)session.get(CompanyImpl.class,
+						company.getPrimaryKeyObj());
+			}
+
+			session.delete(company);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -321,8 +326,8 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 	}
 
 	@Override
-	public Company updateImpl(com.liferay.portal.model.Company company,
-		boolean merge) throws SystemException {
+	public Company updateImpl(com.liferay.portal.model.Company company)
+		throws SystemException {
 		company = toUnwrappedModel(company);
 
 		boolean isNew = company.isNew();
@@ -334,9 +339,14 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, company, merge);
+			if (company.isNew()) {
+				session.save(company);
 
-			company.setNew(false);
+				company.setNew(false);
+			}
+			else {
+				session.merge(company);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

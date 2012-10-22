@@ -93,7 +93,7 @@ public abstract class BookmarksFolderLocalServiceBaseImpl
 		throws SystemException {
 		bookmarksFolder.setNew(true);
 
-		return bookmarksFolderPersistence.update(bookmarksFolder, false);
+		return bookmarksFolderPersistence.update(bookmarksFolder);
 	}
 
 	/**
@@ -280,24 +280,7 @@ public abstract class BookmarksFolderLocalServiceBaseImpl
 	@Indexable(type = IndexableType.REINDEX)
 	public BookmarksFolder updateBookmarksFolder(
 		BookmarksFolder bookmarksFolder) throws SystemException {
-		return updateBookmarksFolder(bookmarksFolder, true);
-	}
-
-	/**
-	 * Updates the bookmarks folder in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param bookmarksFolder the bookmarks folder
-	 * @param merge whether to merge the bookmarks folder with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	 * @return the bookmarks folder that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public BookmarksFolder updateBookmarksFolder(
-		BookmarksFolder bookmarksFolder, boolean merge)
-		throws SystemException {
-		bookmarksFolder.setNew(false);
-
-		return bookmarksFolderPersistence.update(bookmarksFolder, merge);
+		return bookmarksFolderPersistence.update(bookmarksFolder);
 	}
 
 	/**

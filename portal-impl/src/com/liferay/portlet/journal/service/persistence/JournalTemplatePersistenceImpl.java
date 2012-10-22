@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
-import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.GroupPersistence;
 import com.liferay.portal.service.persistence.ImagePersistence;
 import com.liferay.portal.service.persistence.UserPersistence;
@@ -453,7 +452,12 @@ public class JournalTemplatePersistenceImpl extends BasePersistenceImpl<JournalT
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, journalTemplate);
+			if (journalTemplate.isCachedModel()) {
+				journalTemplate = (JournalTemplate)session.get(JournalTemplateImpl.class,
+						journalTemplate.getPrimaryKeyObj());
+			}
+
+			session.delete(journalTemplate);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -469,8 +473,8 @@ public class JournalTemplatePersistenceImpl extends BasePersistenceImpl<JournalT
 
 	@Override
 	public JournalTemplate updateImpl(
-		com.liferay.portlet.journal.model.JournalTemplate journalTemplate,
-		boolean merge) throws SystemException {
+		com.liferay.portlet.journal.model.JournalTemplate journalTemplate)
+		throws SystemException {
 		journalTemplate = toUnwrappedModel(journalTemplate);
 
 		boolean isNew = journalTemplate.isNew();
@@ -488,9 +492,14 @@ public class JournalTemplatePersistenceImpl extends BasePersistenceImpl<JournalT
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, journalTemplate, merge);
+			if (journalTemplate.isNew()) {
+				session.save(journalTemplate);
 
-			journalTemplate.setNew(false);
+				journalTemplate.setNew(false);
+			}
+			else {
+				session.merge(journalTemplate);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

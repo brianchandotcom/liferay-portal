@@ -72,7 +72,7 @@ public interface PasswordPolicyPersistence extends BasePersistence<PasswordPolic
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portal.model.PasswordPolicy updateImpl(
-		com.liferay.portal.model.PasswordPolicy passwordPolicy, boolean merge)
+		com.liferay.portal.model.PasswordPolicy passwordPolicy)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

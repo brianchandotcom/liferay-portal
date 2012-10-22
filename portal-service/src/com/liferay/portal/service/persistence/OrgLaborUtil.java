@@ -94,19 +94,18 @@ public class OrgLaborUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static OrgLabor update(OrgLabor orgLabor, boolean merge)
-		throws SystemException {
-		return getPersistence().update(orgLabor, merge);
+	public static OrgLabor update(OrgLabor orgLabor) throws SystemException {
+		return getPersistence().update(orgLabor);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
-	public static OrgLabor update(OrgLabor orgLabor, boolean merge,
+	public static OrgLabor update(OrgLabor orgLabor,
 		ServiceContext serviceContext) throws SystemException {
-		return getPersistence().update(orgLabor, merge, serviceContext);
+		return getPersistence().update(orgLabor, serviceContext);
 	}
 
 	/**
@@ -153,9 +152,9 @@ public class OrgLaborUtil {
 	}
 
 	public static com.liferay.portal.model.OrgLabor updateImpl(
-		com.liferay.portal.model.OrgLabor orgLabor, boolean merge)
+		com.liferay.portal.model.OrgLabor orgLabor)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(orgLabor, merge);
+		return getPersistence().updateImpl(orgLabor);
 	}
 
 	/**

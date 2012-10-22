@@ -95,19 +95,18 @@ public class DLFolderUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static DLFolder update(DLFolder dlFolder, boolean merge)
-		throws SystemException {
-		return getPersistence().update(dlFolder, merge);
+	public static DLFolder update(DLFolder dlFolder) throws SystemException {
+		return getPersistence().update(dlFolder);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
-	public static DLFolder update(DLFolder dlFolder, boolean merge,
+	public static DLFolder update(DLFolder dlFolder,
 		ServiceContext serviceContext) throws SystemException {
-		return getPersistence().update(dlFolder, merge, serviceContext);
+		return getPersistence().update(dlFolder, serviceContext);
 	}
 
 	/**
@@ -157,10 +156,9 @@ public class DLFolderUtil {
 	}
 
 	public static com.liferay.portlet.documentlibrary.model.DLFolder updateImpl(
-		com.liferay.portlet.documentlibrary.model.DLFolder dlFolder,
-		boolean merge)
+		com.liferay.portlet.documentlibrary.model.DLFolder dlFolder)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(dlFolder, merge);
+		return getPersistence().updateImpl(dlFolder);
 	}
 
 	/**

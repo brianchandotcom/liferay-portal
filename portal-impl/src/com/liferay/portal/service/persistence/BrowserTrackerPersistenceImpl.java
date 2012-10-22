@@ -262,7 +262,12 @@ public class BrowserTrackerPersistenceImpl extends BasePersistenceImpl<BrowserTr
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, browserTracker);
+			if (browserTracker.isCachedModel()) {
+				browserTracker = (BrowserTracker)session.get(BrowserTrackerImpl.class,
+						browserTracker.getPrimaryKeyObj());
+			}
+
+			session.delete(browserTracker);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -278,7 +283,7 @@ public class BrowserTrackerPersistenceImpl extends BasePersistenceImpl<BrowserTr
 
 	@Override
 	public BrowserTracker updateImpl(
-		com.liferay.portal.model.BrowserTracker browserTracker, boolean merge)
+		com.liferay.portal.model.BrowserTracker browserTracker)
 		throws SystemException {
 		browserTracker = toUnwrappedModel(browserTracker);
 
@@ -291,9 +296,14 @@ public class BrowserTrackerPersistenceImpl extends BasePersistenceImpl<BrowserTr
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, browserTracker, merge);
+			if (browserTracker.isNew()) {
+				session.save(browserTracker);
 
-			browserTracker.setNew(false);
+				browserTracker.setNew(false);
+			}
+			else {
+				session.merge(browserTracker);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

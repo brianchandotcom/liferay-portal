@@ -95,22 +95,20 @@ public class DLFileEntryMetadataUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
 	public static DLFileEntryMetadata update(
-		DLFileEntryMetadata dlFileEntryMetadata, boolean merge)
-		throws SystemException {
-		return getPersistence().update(dlFileEntryMetadata, merge);
+		DLFileEntryMetadata dlFileEntryMetadata) throws SystemException {
+		return getPersistence().update(dlFileEntryMetadata);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
 	public static DLFileEntryMetadata update(
-		DLFileEntryMetadata dlFileEntryMetadata, boolean merge,
-		ServiceContext serviceContext) throws SystemException {
-		return getPersistence()
-				   .update(dlFileEntryMetadata, merge, serviceContext);
+		DLFileEntryMetadata dlFileEntryMetadata, ServiceContext serviceContext)
+		throws SystemException {
+		return getPersistence().update(dlFileEntryMetadata, serviceContext);
 	}
 
 	/**
@@ -160,10 +158,9 @@ public class DLFileEntryMetadataUtil {
 	}
 
 	public static com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata updateImpl(
-		com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata dlFileEntryMetadata,
-		boolean merge)
+		com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata dlFileEntryMetadata)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(dlFileEntryMetadata, merge);
+		return getPersistence().updateImpl(dlFileEntryMetadata);
 	}
 
 	/**

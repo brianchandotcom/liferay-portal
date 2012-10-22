@@ -233,22 +233,6 @@ public class AssetCategoryPropertyLocalServiceWrapper
 	}
 
 	/**
-	* Updates the asset category property in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param assetCategoryProperty the asset category property
-	* @param merge whether to merge the asset category property with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	* @return the asset category property that was updated
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portlet.asset.model.AssetCategoryProperty updateAssetCategoryProperty(
-		com.liferay.portlet.asset.model.AssetCategoryProperty assetCategoryProperty,
-		boolean merge)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _assetCategoryPropertyLocalService.updateAssetCategoryProperty(assetCategoryProperty,
-			merge);
-	}
-
-	/**
 	* Returns the Spring bean ID for this bean.
 	*
 	* @return the Spring bean ID for this bean

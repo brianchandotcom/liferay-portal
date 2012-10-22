@@ -246,21 +246,6 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 	}
 
 	/**
-	* Updates the document library folder in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param dlFolder the document library folder
-	* @param merge whether to merge the document library folder with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	* @return the document library folder that was updated
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portlet.documentlibrary.model.DLFolder updateDLFolder(
-		com.liferay.portlet.documentlibrary.model.DLFolder dlFolder,
-		boolean merge)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _dlFolderLocalService.updateDLFolder(dlFolder, merge);
-	}
-
-	/**
 	* Returns the Spring bean ID for this bean.
 	*
 	* @return the Spring bean ID for this bean

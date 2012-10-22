@@ -95,19 +95,19 @@ public class DDMTemplateUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static DDMTemplate update(DDMTemplate ddmTemplate, boolean merge)
+	public static DDMTemplate update(DDMTemplate ddmTemplate)
 		throws SystemException {
-		return getPersistence().update(ddmTemplate, merge);
+		return getPersistence().update(ddmTemplate);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
-	public static DDMTemplate update(DDMTemplate ddmTemplate, boolean merge,
+	public static DDMTemplate update(DDMTemplate ddmTemplate,
 		ServiceContext serviceContext) throws SystemException {
-		return getPersistence().update(ddmTemplate, merge, serviceContext);
+		return getPersistence().update(ddmTemplate, serviceContext);
 	}
 
 	/**
@@ -157,10 +157,9 @@ public class DDMTemplateUtil {
 	}
 
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate updateImpl(
-		com.liferay.portlet.dynamicdatamapping.model.DDMTemplate ddmTemplate,
-		boolean merge)
+		com.liferay.portlet.dynamicdatamapping.model.DDMTemplate ddmTemplate)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(ddmTemplate, merge);
+		return getPersistence().updateImpl(ddmTemplate);
 	}
 
 	/**

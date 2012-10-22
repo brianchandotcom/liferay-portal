@@ -71,7 +71,7 @@ public interface LayoutSetPersistence extends BasePersistence<LayoutSet> {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portal.model.LayoutSet updateImpl(
-		com.liferay.portal.model.LayoutSet layoutSet, boolean merge)
+		com.liferay.portal.model.LayoutSet layoutSet)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

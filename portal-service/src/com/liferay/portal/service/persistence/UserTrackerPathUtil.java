@@ -94,19 +94,19 @@ public class UserTrackerPathUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static UserTrackerPath update(UserTrackerPath userTrackerPath,
-		boolean merge) throws SystemException {
-		return getPersistence().update(userTrackerPath, merge);
+	public static UserTrackerPath update(UserTrackerPath userTrackerPath)
+		throws SystemException {
+		return getPersistence().update(userTrackerPath);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
 	public static UserTrackerPath update(UserTrackerPath userTrackerPath,
-		boolean merge, ServiceContext serviceContext) throws SystemException {
-		return getPersistence().update(userTrackerPath, merge, serviceContext);
+		ServiceContext serviceContext) throws SystemException {
+		return getPersistence().update(userTrackerPath, serviceContext);
 	}
 
 	/**
@@ -156,9 +156,9 @@ public class UserTrackerPathUtil {
 	}
 
 	public static com.liferay.portal.model.UserTrackerPath updateImpl(
-		com.liferay.portal.model.UserTrackerPath userTrackerPath, boolean merge)
+		com.liferay.portal.model.UserTrackerPath userTrackerPath)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(userTrackerPath, merge);
+		return getPersistence().updateImpl(userTrackerPath);
 	}
 
 	/**

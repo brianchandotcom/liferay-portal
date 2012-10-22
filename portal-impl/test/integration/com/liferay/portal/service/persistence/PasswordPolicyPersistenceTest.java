@@ -171,7 +171,7 @@ public class PasswordPolicyPersistenceTest {
 
 		newPasswordPolicy.setResetTicketMaxAge(ServiceTestUtil.nextLong());
 
-		_persistence.update(newPasswordPolicy, false);
+		_persistence.update(newPasswordPolicy);
 
 		PasswordPolicy existingPasswordPolicy = _persistence.findByPrimaryKey(newPasswordPolicy.getPrimaryKey());
 
@@ -449,7 +449,7 @@ public class PasswordPolicyPersistenceTest {
 
 		passwordPolicy.setResetTicketMaxAge(ServiceTestUtil.nextLong());
 
-		_persistence.update(passwordPolicy, false);
+		_persistence.update(passwordPolicy);
 
 		return passwordPolicy;
 	}

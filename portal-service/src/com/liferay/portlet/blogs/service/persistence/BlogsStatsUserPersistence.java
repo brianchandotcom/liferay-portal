@@ -76,8 +76,7 @@ public interface BlogsStatsUserPersistence extends BasePersistence<BlogsStatsUse
 			com.liferay.portlet.blogs.NoSuchStatsUserException;
 
 	public com.liferay.portlet.blogs.model.BlogsStatsUser updateImpl(
-		com.liferay.portlet.blogs.model.BlogsStatsUser blogsStatsUser,
-		boolean merge)
+		com.liferay.portlet.blogs.model.BlogsStatsUser blogsStatsUser)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

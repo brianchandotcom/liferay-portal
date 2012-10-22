@@ -155,7 +155,7 @@ public class JournalFeedPersistenceTest {
 
 		newJournalFeed.setFeedVersion(ServiceTestUtil.nextDouble());
 
-		_persistence.update(newJournalFeed, false);
+		_persistence.update(newJournalFeed);
 
 		JournalFeed existingJournalFeed = _persistence.findByPrimaryKey(newJournalFeed.getPrimaryKey());
 
@@ -392,7 +392,7 @@ public class JournalFeedPersistenceTest {
 
 		journalFeed.setFeedVersion(ServiceTestUtil.nextDouble());
 
-		_persistence.update(journalFeed, false);
+		_persistence.update(journalFeed);
 
 		return journalFeed;
 	}

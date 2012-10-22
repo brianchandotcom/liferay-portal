@@ -74,7 +74,7 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 			com.liferay.portlet.calendar.NoSuchEventException;
 
 	public com.liferay.portlet.calendar.model.CalEvent updateImpl(
-		com.liferay.portlet.calendar.model.CalEvent calEvent, boolean merge)
+		com.liferay.portlet.calendar.model.CalEvent calEvent)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

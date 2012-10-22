@@ -94,21 +94,20 @@ public class MembershipRequestUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static MembershipRequest update(
-		MembershipRequest membershipRequest, boolean merge)
+	public static MembershipRequest update(MembershipRequest membershipRequest)
 		throws SystemException {
-		return getPersistence().update(membershipRequest, merge);
+		return getPersistence().update(membershipRequest);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
 	public static MembershipRequest update(
-		MembershipRequest membershipRequest, boolean merge,
-		ServiceContext serviceContext) throws SystemException {
-		return getPersistence().update(membershipRequest, merge, serviceContext);
+		MembershipRequest membershipRequest, ServiceContext serviceContext)
+		throws SystemException {
+		return getPersistence().update(membershipRequest, serviceContext);
 	}
 
 	/**
@@ -158,10 +157,9 @@ public class MembershipRequestUtil {
 	}
 
 	public static com.liferay.portal.model.MembershipRequest updateImpl(
-		com.liferay.portal.model.MembershipRequest membershipRequest,
-		boolean merge)
+		com.liferay.portal.model.MembershipRequest membershipRequest)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(membershipRequest, merge);
+		return getPersistence().updateImpl(membershipRequest);
 	}
 
 	/**

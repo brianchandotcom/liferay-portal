@@ -126,7 +126,7 @@ public class AssetTagPropertyPersistenceTest {
 
 		newAssetTagProperty.setValue(ServiceTestUtil.randomString());
 
-		_persistence.update(newAssetTagProperty, false);
+		_persistence.update(newAssetTagProperty);
 
 		AssetTagProperty existingAssetTagProperty = _persistence.findByPrimaryKey(newAssetTagProperty.getPrimaryKey());
 
@@ -307,7 +307,7 @@ public class AssetTagPropertyPersistenceTest {
 
 		assetTagProperty.setValue(ServiceTestUtil.randomString());
 
-		_persistence.update(assetTagProperty, false);
+		_persistence.update(assetTagProperty);
 
 		return assetTagProperty;
 	}

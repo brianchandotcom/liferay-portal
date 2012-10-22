@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
-import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.GroupPersistence;
 import com.liferay.portal.service.persistence.LayoutPersistence;
 import com.liferay.portal.service.persistence.PortletPreferencesPersistence;
@@ -475,7 +474,12 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, journalContentSearch);
+			if (journalContentSearch.isCachedModel()) {
+				journalContentSearch = (JournalContentSearch)session.get(JournalContentSearchImpl.class,
+						journalContentSearch.getPrimaryKeyObj());
+			}
+
+			session.delete(journalContentSearch);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -491,8 +495,8 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 
 	@Override
 	public JournalContentSearch updateImpl(
-		com.liferay.portlet.journal.model.JournalContentSearch journalContentSearch,
-		boolean merge) throws SystemException {
+		com.liferay.portlet.journal.model.JournalContentSearch journalContentSearch)
+		throws SystemException {
 		journalContentSearch = toUnwrappedModel(journalContentSearch);
 
 		boolean isNew = journalContentSearch.isNew();
@@ -504,9 +508,14 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, journalContentSearch, merge);
+			if (journalContentSearch.isNew()) {
+				session.save(journalContentSearch);
 
-			journalContentSearch.setNew(false);
+				journalContentSearch.setNew(false);
+			}
+			else {
+				session.merge(journalContentSearch);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

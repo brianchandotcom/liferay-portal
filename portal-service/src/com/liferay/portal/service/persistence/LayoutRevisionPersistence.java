@@ -72,7 +72,7 @@ public interface LayoutRevisionPersistence extends BasePersistence<LayoutRevisio
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portal.model.LayoutRevision updateImpl(
-		com.liferay.portal.model.LayoutRevision layoutRevision, boolean merge)
+		com.liferay.portal.model.LayoutRevision layoutRevision)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

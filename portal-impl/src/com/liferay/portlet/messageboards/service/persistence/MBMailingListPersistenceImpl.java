@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
-import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
@@ -360,7 +359,12 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, mbMailingList);
+			if (mbMailingList.isCachedModel()) {
+				mbMailingList = (MBMailingList)session.get(MBMailingListImpl.class,
+						mbMailingList.getPrimaryKeyObj());
+			}
+
+			session.delete(mbMailingList);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -376,8 +380,8 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 
 	@Override
 	public MBMailingList updateImpl(
-		com.liferay.portlet.messageboards.model.MBMailingList mbMailingList,
-		boolean merge) throws SystemException {
+		com.liferay.portlet.messageboards.model.MBMailingList mbMailingList)
+		throws SystemException {
 		mbMailingList = toUnwrappedModel(mbMailingList);
 
 		boolean isNew = mbMailingList.isNew();
@@ -395,9 +399,14 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, mbMailingList, merge);
+			if (mbMailingList.isNew()) {
+				session.save(mbMailingList);
 
-			mbMailingList.setNew(false);
+				mbMailingList.setNew(false);
+			}
+			else {
+				session.merge(mbMailingList);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

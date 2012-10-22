@@ -95,19 +95,18 @@ public class MBThreadUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static MBThread update(MBThread mbThread, boolean merge)
-		throws SystemException {
-		return getPersistence().update(mbThread, merge);
+	public static MBThread update(MBThread mbThread) throws SystemException {
+		return getPersistence().update(mbThread);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
-	public static MBThread update(MBThread mbThread, boolean merge,
+	public static MBThread update(MBThread mbThread,
 		ServiceContext serviceContext) throws SystemException {
-		return getPersistence().update(mbThread, merge, serviceContext);
+		return getPersistence().update(mbThread, serviceContext);
 	}
 
 	/**
@@ -157,9 +156,9 @@ public class MBThreadUtil {
 	}
 
 	public static com.liferay.portlet.messageboards.model.MBThread updateImpl(
-		com.liferay.portlet.messageboards.model.MBThread mbThread, boolean merge)
+		com.liferay.portlet.messageboards.model.MBThread mbThread)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(mbThread, merge);
+		return getPersistence().updateImpl(mbThread);
 	}
 
 	/**

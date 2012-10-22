@@ -230,21 +230,6 @@ public class RatingsEntryLocalServiceWrapper implements RatingsEntryLocalService
 	}
 
 	/**
-	* Updates the ratings entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param ratingsEntry the ratings entry
-	* @param merge whether to merge the ratings entry with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	* @return the ratings entry that was updated
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portlet.ratings.model.RatingsEntry updateRatingsEntry(
-		com.liferay.portlet.ratings.model.RatingsEntry ratingsEntry,
-		boolean merge)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _ratingsEntryLocalService.updateRatingsEntry(ratingsEntry, merge);
-	}
-
-	/**
 	* Returns the Spring bean ID for this bean.
 	*
 	* @return the Spring bean ID for this bean

@@ -113,7 +113,7 @@ public abstract class MBCategoryLocalServiceBaseImpl
 		throws SystemException {
 		mbCategory.setNew(true);
 
-		return mbCategoryPersistence.update(mbCategory, false);
+		return mbCategoryPersistence.update(mbCategory);
 	}
 
 	/**
@@ -300,23 +300,7 @@ public abstract class MBCategoryLocalServiceBaseImpl
 	@Indexable(type = IndexableType.REINDEX)
 	public MBCategory updateMBCategory(MBCategory mbCategory)
 		throws SystemException {
-		return updateMBCategory(mbCategory, true);
-	}
-
-	/**
-	 * Updates the message boards category in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param mbCategory the message boards category
-	 * @param merge whether to merge the message boards category with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	 * @return the message boards category that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public MBCategory updateMBCategory(MBCategory mbCategory, boolean merge)
-		throws SystemException {
-		mbCategory.setNew(false);
-
-		return mbCategoryPersistence.update(mbCategory, merge);
+		return mbCategoryPersistence.update(mbCategory);
 	}
 
 	/**

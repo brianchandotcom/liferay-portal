@@ -125,7 +125,7 @@ public class PollsVotePersistenceTest {
 
 		newPollsVote.setVoteDate(ServiceTestUtil.nextDate());
 
-		_persistence.update(newPollsVote, false);
+		_persistence.update(newPollsVote);
 
 		PollsVote existingPollsVote = _persistence.findByPrimaryKey(newPollsVote.getPrimaryKey());
 
@@ -303,7 +303,7 @@ public class PollsVotePersistenceTest {
 
 		pollsVote.setVoteDate(ServiceTestUtil.nextDate());
 
-		_persistence.update(pollsVote, false);
+		_persistence.update(pollsVote);
 
 		return pollsVote;
 	}

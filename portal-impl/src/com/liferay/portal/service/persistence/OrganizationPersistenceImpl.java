@@ -359,7 +359,12 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, organization);
+			if (organization.isCachedModel()) {
+				organization = (Organization)session.get(OrganizationImpl.class,
+						organization.getPrimaryKeyObj());
+			}
+
+			session.delete(organization);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -375,7 +380,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 
 	@Override
 	public Organization updateImpl(
-		com.liferay.portal.model.Organization organization, boolean merge)
+		com.liferay.portal.model.Organization organization)
 		throws SystemException {
 		organization = toUnwrappedModel(organization);
 
@@ -388,9 +393,14 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, organization, merge);
+			if (organization.isNew()) {
+				session.save(organization);
 
-			organization.setNew(false);
+				organization.setNew(false);
+			}
+			else {
+				session.merge(organization);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

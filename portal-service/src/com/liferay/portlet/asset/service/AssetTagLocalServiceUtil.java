@@ -234,20 +234,6 @@ public class AssetTagLocalServiceUtil {
 	}
 
 	/**
-	* Updates the asset tag in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param assetTag the asset tag
-	* @param merge whether to merge the asset tag with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	* @return the asset tag that was updated
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portlet.asset.model.AssetTag updateAssetTag(
-		com.liferay.portlet.asset.model.AssetTag assetTag, boolean merge)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().updateAssetTag(assetTag, merge);
-	}
-
-	/**
 	* Returns the Spring bean ID for this bean.
 	*
 	* @return the Spring bean ID for this bean

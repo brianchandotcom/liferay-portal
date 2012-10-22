@@ -95,19 +95,19 @@ public class DLFileEntryUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static DLFileEntry update(DLFileEntry dlFileEntry, boolean merge)
+	public static DLFileEntry update(DLFileEntry dlFileEntry)
 		throws SystemException {
-		return getPersistence().update(dlFileEntry, merge);
+		return getPersistence().update(dlFileEntry);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
-	public static DLFileEntry update(DLFileEntry dlFileEntry, boolean merge,
+	public static DLFileEntry update(DLFileEntry dlFileEntry,
 		ServiceContext serviceContext) throws SystemException {
-		return getPersistence().update(dlFileEntry, merge, serviceContext);
+		return getPersistence().update(dlFileEntry, serviceContext);
 	}
 
 	/**
@@ -157,10 +157,9 @@ public class DLFileEntryUtil {
 	}
 
 	public static com.liferay.portlet.documentlibrary.model.DLFileEntry updateImpl(
-		com.liferay.portlet.documentlibrary.model.DLFileEntry dlFileEntry,
-		boolean merge)
+		com.liferay.portlet.documentlibrary.model.DLFileEntry dlFileEntry)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(dlFileEntry, merge);
+		return getPersistence().updateImpl(dlFileEntry);
 	}
 
 	/**
@@ -1012,6 +1011,155 @@ public class DLFileEntryUtil {
 			com.liferay.portlet.documentlibrary.NoSuchFileEntryException {
 		return getPersistence()
 				   .findByMimeType_PrevAndNext(fileEntryId, mimeType,
+			orderByComparator);
+	}
+
+	/**
+	* Returns all the document library file entries where folderId = &#63; and name = &#63;.
+	*
+	* @param folderId the folder ID
+	* @param name the name
+	* @return the matching document library file entries
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> findByF_N(
+		long folderId, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByF_N(folderId, name);
+	}
+
+	/**
+	* Returns a range of all the document library file entries where folderId = &#63; and name = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param folderId the folder ID
+	* @param name the name
+	* @param start the lower bound of the range of document library file entries
+	* @param end the upper bound of the range of document library file entries (not inclusive)
+	* @return the range of matching document library file entries
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> findByF_N(
+		long folderId, java.lang.String name, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByF_N(folderId, name, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the document library file entries where folderId = &#63; and name = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param folderId the folder ID
+	* @param name the name
+	* @param start the lower bound of the range of document library file entries
+	* @param end the upper bound of the range of document library file entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching document library file entries
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> findByF_N(
+		long folderId, java.lang.String name, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByF_N(folderId, name, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns the first document library file entry in the ordered set where folderId = &#63; and name = &#63;.
+	*
+	* @param folderId the folder ID
+	* @param name the name
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching document library file entry
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException if a matching document library file entry could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.documentlibrary.model.DLFileEntry findByF_N_First(
+		long folderId, java.lang.String name,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.documentlibrary.NoSuchFileEntryException {
+		return getPersistence()
+				   .findByF_N_First(folderId, name, orderByComparator);
+	}
+
+	/**
+	* Returns the first document library file entry in the ordered set where folderId = &#63; and name = &#63;.
+	*
+	* @param folderId the folder ID
+	* @param name the name
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching document library file entry, or <code>null</code> if a matching document library file entry could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.documentlibrary.model.DLFileEntry fetchByF_N_First(
+		long folderId, java.lang.String name,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByF_N_First(folderId, name, orderByComparator);
+	}
+
+	/**
+	* Returns the last document library file entry in the ordered set where folderId = &#63; and name = &#63;.
+	*
+	* @param folderId the folder ID
+	* @param name the name
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching document library file entry
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException if a matching document library file entry could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.documentlibrary.model.DLFileEntry findByF_N_Last(
+		long folderId, java.lang.String name,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.documentlibrary.NoSuchFileEntryException {
+		return getPersistence().findByF_N_Last(folderId, name, orderByComparator);
+	}
+
+	/**
+	* Returns the last document library file entry in the ordered set where folderId = &#63; and name = &#63;.
+	*
+	* @param folderId the folder ID
+	* @param name the name
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching document library file entry, or <code>null</code> if a matching document library file entry could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.documentlibrary.model.DLFileEntry fetchByF_N_Last(
+		long folderId, java.lang.String name,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByF_N_Last(folderId, name, orderByComparator);
+	}
+
+	/**
+	* Returns the document library file entries before and after the current document library file entry in the ordered set where folderId = &#63; and name = &#63;.
+	*
+	* @param fileEntryId the primary key of the current document library file entry
+	* @param folderId the folder ID
+	* @param name the name
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next document library file entry
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException if a document library file entry with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.documentlibrary.model.DLFileEntry[] findByF_N_PrevAndNext(
+		long fileEntryId, long folderId, java.lang.String name,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.documentlibrary.NoSuchFileEntryException {
+		return getPersistence()
+				   .findByF_N_PrevAndNext(fileEntryId, folderId, name,
 			orderByComparator);
 	}
 
@@ -2571,6 +2719,18 @@ public class DLFileEntryUtil {
 	}
 
 	/**
+	* Removes all the document library file entries where folderId = &#63; and name = &#63; from the database.
+	*
+	* @param folderId the folder ID
+	* @param name the name
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByF_N(long folderId, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByF_N(folderId, name);
+	}
+
+	/**
 	* Removes all the document library file entries where groupId = &#63; and userId = &#63; from the database.
 	*
 	* @param groupId the group ID
@@ -2747,6 +2907,19 @@ public class DLFileEntryUtil {
 	public static int countByMimeType(java.lang.String mimeType)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence().countByMimeType(mimeType);
+	}
+
+	/**
+	* Returns the number of document library file entries where folderId = &#63; and name = &#63;.
+	*
+	* @param folderId the folder ID
+	* @param name the name
+	* @return the number of matching document library file entries
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByF_N(long folderId, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByF_N(folderId, name);
 	}
 
 	/**

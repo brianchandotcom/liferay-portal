@@ -94,19 +94,18 @@ public class MBBanUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static MBBan update(MBBan mbBan, boolean merge)
-		throws SystemException {
-		return getPersistence().update(mbBan, merge);
+	public static MBBan update(MBBan mbBan) throws SystemException {
+		return getPersistence().update(mbBan);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
-	public static MBBan update(MBBan mbBan, boolean merge,
-		ServiceContext serviceContext) throws SystemException {
-		return getPersistence().update(mbBan, merge, serviceContext);
+	public static MBBan update(MBBan mbBan, ServiceContext serviceContext)
+		throws SystemException {
+		return getPersistence().update(mbBan, serviceContext);
 	}
 
 	/**
@@ -156,9 +155,9 @@ public class MBBanUtil {
 	}
 
 	public static com.liferay.portlet.messageboards.model.MBBan updateImpl(
-		com.liferay.portlet.messageboards.model.MBBan mbBan, boolean merge)
+		com.liferay.portlet.messageboards.model.MBBan mbBan)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(mbBan, merge);
+		return getPersistence().updateImpl(mbBan);
 	}
 
 	/**

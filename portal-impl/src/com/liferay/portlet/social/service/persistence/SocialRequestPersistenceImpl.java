@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
-import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
@@ -529,7 +528,12 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, socialRequest);
+			if (socialRequest.isCachedModel()) {
+				socialRequest = (SocialRequest)session.get(SocialRequestImpl.class,
+						socialRequest.getPrimaryKeyObj());
+			}
+
+			session.delete(socialRequest);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -545,8 +549,8 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 
 	@Override
 	public SocialRequest updateImpl(
-		com.liferay.portlet.social.model.SocialRequest socialRequest,
-		boolean merge) throws SystemException {
+		com.liferay.portlet.social.model.SocialRequest socialRequest)
+		throws SystemException {
 		socialRequest = toUnwrappedModel(socialRequest);
 
 		boolean isNew = socialRequest.isNew();
@@ -564,9 +568,14 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, socialRequest, merge);
+			if (socialRequest.isNew()) {
+				session.save(socialRequest);
 
-			socialRequest.setNew(false);
+				socialRequest.setNew(false);
+			}
+			else {
+				session.merge(socialRequest);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

@@ -72,7 +72,7 @@ public interface BrowserTrackerPersistence extends BasePersistence<BrowserTracke
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portal.model.BrowserTracker updateImpl(
-		com.liferay.portal.model.BrowserTracker browserTracker, boolean merge)
+		com.liferay.portal.model.BrowserTracker browserTracker)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

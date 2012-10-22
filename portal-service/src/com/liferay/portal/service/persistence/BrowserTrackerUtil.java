@@ -94,19 +94,19 @@ public class BrowserTrackerUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static BrowserTracker update(BrowserTracker browserTracker,
-		boolean merge) throws SystemException {
-		return getPersistence().update(browserTracker, merge);
+	public static BrowserTracker update(BrowserTracker browserTracker)
+		throws SystemException {
+		return getPersistence().update(browserTracker);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
 	public static BrowserTracker update(BrowserTracker browserTracker,
-		boolean merge, ServiceContext serviceContext) throws SystemException {
-		return getPersistence().update(browserTracker, merge, serviceContext);
+		ServiceContext serviceContext) throws SystemException {
+		return getPersistence().update(browserTracker, serviceContext);
 	}
 
 	/**
@@ -156,9 +156,9 @@ public class BrowserTrackerUtil {
 	}
 
 	public static com.liferay.portal.model.BrowserTracker updateImpl(
-		com.liferay.portal.model.BrowserTracker browserTracker, boolean merge)
+		com.liferay.portal.model.BrowserTracker browserTracker)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(browserTracker, merge);
+		return getPersistence().updateImpl(browserTracker);
 	}
 
 	/**

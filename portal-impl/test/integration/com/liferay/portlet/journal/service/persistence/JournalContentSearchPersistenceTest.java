@@ -121,7 +121,7 @@ public class JournalContentSearchPersistenceTest {
 
 		newJournalContentSearch.setArticleId(ServiceTestUtil.randomString());
 
-		_persistence.update(newJournalContentSearch, false);
+		_persistence.update(newJournalContentSearch);
 
 		JournalContentSearch existingJournalContentSearch = _persistence.findByPrimaryKey(newJournalContentSearch.getPrimaryKey());
 
@@ -303,7 +303,7 @@ public class JournalContentSearchPersistenceTest {
 
 		journalContentSearch.setArticleId(ServiceTestUtil.randomString());
 
-		_persistence.update(journalContentSearch, false);
+		_persistence.update(journalContentSearch);
 
 		return journalContentSearch;
 	}

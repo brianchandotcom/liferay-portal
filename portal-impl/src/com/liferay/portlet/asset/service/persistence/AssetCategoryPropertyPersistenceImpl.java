@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
-import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
@@ -344,7 +343,12 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, assetCategoryProperty);
+			if (assetCategoryProperty.isCachedModel()) {
+				assetCategoryProperty = (AssetCategoryProperty)session.get(AssetCategoryPropertyImpl.class,
+						assetCategoryProperty.getPrimaryKeyObj());
+			}
+
+			session.delete(assetCategoryProperty);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -360,8 +364,8 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 
 	@Override
 	public AssetCategoryProperty updateImpl(
-		com.liferay.portlet.asset.model.AssetCategoryProperty assetCategoryProperty,
-		boolean merge) throws SystemException {
+		com.liferay.portlet.asset.model.AssetCategoryProperty assetCategoryProperty)
+		throws SystemException {
 		assetCategoryProperty = toUnwrappedModel(assetCategoryProperty);
 
 		boolean isNew = assetCategoryProperty.isNew();
@@ -373,9 +377,14 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, assetCategoryProperty, merge);
+			if (assetCategoryProperty.isNew()) {
+				session.save(assetCategoryProperty);
 
-			assetCategoryProperty.setNew(false);
+				assetCategoryProperty.setNew(false);
+			}
+			else {
+				session.merge(assetCategoryProperty);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

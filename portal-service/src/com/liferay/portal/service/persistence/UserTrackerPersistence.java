@@ -71,7 +71,7 @@ public interface UserTrackerPersistence extends BasePersistence<UserTracker> {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portal.model.UserTracker updateImpl(
-		com.liferay.portal.model.UserTracker userTracker, boolean merge)
+		com.liferay.portal.model.UserTracker userTracker)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

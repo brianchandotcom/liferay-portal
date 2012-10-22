@@ -120,7 +120,7 @@ public class WebDAVPropsPersistenceTest {
 
 		newWebDAVProps.setProps(ServiceTestUtil.randomString());
 
-		_persistence.update(newWebDAVProps, false);
+		_persistence.update(newWebDAVProps);
 
 		WebDAVProps existingWebDAVProps = _persistence.findByPrimaryKey(newWebDAVProps.getPrimaryKey());
 
@@ -292,7 +292,7 @@ public class WebDAVPropsPersistenceTest {
 
 		webDAVProps.setProps(ServiceTestUtil.randomString());
 
-		_persistence.update(webDAVProps, false);
+		_persistence.update(webDAVProps);
 
 		return webDAVProps;
 	}

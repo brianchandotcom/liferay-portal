@@ -235,21 +235,6 @@ public class RatingsStatsLocalServiceUtil {
 	}
 
 	/**
-	* Updates the ratings stats in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param ratingsStats the ratings stats
-	* @param merge whether to merge the ratings stats with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	* @return the ratings stats that was updated
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portlet.ratings.model.RatingsStats updateRatingsStats(
-		com.liferay.portlet.ratings.model.RatingsStats ratingsStats,
-		boolean merge)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().updateRatingsStats(ratingsStats, merge);
-	}
-
-	/**
 	* Returns the Spring bean ID for this bean.
 	*
 	* @return the Spring bean ID for this bean

@@ -94,19 +94,18 @@ public class ContactUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static Contact update(Contact contact, boolean merge)
-		throws SystemException {
-		return getPersistence().update(contact, merge);
+	public static Contact update(Contact contact) throws SystemException {
+		return getPersistence().update(contact);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
-	public static Contact update(Contact contact, boolean merge,
-		ServiceContext serviceContext) throws SystemException {
-		return getPersistence().update(contact, merge, serviceContext);
+	public static Contact update(Contact contact, ServiceContext serviceContext)
+		throws SystemException {
+		return getPersistence().update(contact, serviceContext);
 	}
 
 	/**
@@ -153,9 +152,9 @@ public class ContactUtil {
 	}
 
 	public static com.liferay.portal.model.Contact updateImpl(
-		com.liferay.portal.model.Contact contact, boolean merge)
+		com.liferay.portal.model.Contact contact)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(contact, merge);
+		return getPersistence().updateImpl(contact);
 	}
 
 	/**

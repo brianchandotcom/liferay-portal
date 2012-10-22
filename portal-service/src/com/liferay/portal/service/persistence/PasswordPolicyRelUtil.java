@@ -94,21 +94,20 @@ public class PasswordPolicyRelUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static PasswordPolicyRel update(
-		PasswordPolicyRel passwordPolicyRel, boolean merge)
+	public static PasswordPolicyRel update(PasswordPolicyRel passwordPolicyRel)
 		throws SystemException {
-		return getPersistence().update(passwordPolicyRel, merge);
+		return getPersistence().update(passwordPolicyRel);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
 	public static PasswordPolicyRel update(
-		PasswordPolicyRel passwordPolicyRel, boolean merge,
-		ServiceContext serviceContext) throws SystemException {
-		return getPersistence().update(passwordPolicyRel, merge, serviceContext);
+		PasswordPolicyRel passwordPolicyRel, ServiceContext serviceContext)
+		throws SystemException {
+		return getPersistence().update(passwordPolicyRel, serviceContext);
 	}
 
 	/**
@@ -158,10 +157,9 @@ public class PasswordPolicyRelUtil {
 	}
 
 	public static com.liferay.portal.model.PasswordPolicyRel updateImpl(
-		com.liferay.portal.model.PasswordPolicyRel passwordPolicyRel,
-		boolean merge)
+		com.liferay.portal.model.PasswordPolicyRel passwordPolicyRel)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(passwordPolicyRel, merge);
+		return getPersistence().updateImpl(passwordPolicyRel);
 	}
 
 	/**

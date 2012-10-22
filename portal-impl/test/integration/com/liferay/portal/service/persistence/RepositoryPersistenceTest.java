@@ -135,7 +135,7 @@ public class RepositoryPersistenceTest {
 
 		newRepository.setDlFolderId(ServiceTestUtil.nextLong());
 
-		_persistence.update(newRepository, false);
+		_persistence.update(newRepository);
 
 		Repository existingRepository = _persistence.findByPrimaryKey(newRepository.getPrimaryKey());
 
@@ -345,7 +345,7 @@ public class RepositoryPersistenceTest {
 
 		repository.setDlFolderId(ServiceTestUtil.nextLong());
 
-		_persistence.update(repository, false);
+		_persistence.update(repository);
 
 		return repository;
 	}

@@ -150,7 +150,7 @@ public class DLFolderPersistenceTest {
 
 		newDLFolder.setStatusDate(ServiceTestUtil.nextDate());
 
-		_persistence.update(newDLFolder, false);
+		_persistence.update(newDLFolder);
 
 		DLFolder existingDLFolder = _persistence.findByPrimaryKey(newDLFolder.getPrimaryKey());
 
@@ -387,7 +387,7 @@ public class DLFolderPersistenceTest {
 
 		dlFolder.setStatusDate(ServiceTestUtil.nextDate());
 
-		_persistence.update(dlFolder, false);
+		_persistence.update(dlFolder);
 
 		return dlFolder;
 	}

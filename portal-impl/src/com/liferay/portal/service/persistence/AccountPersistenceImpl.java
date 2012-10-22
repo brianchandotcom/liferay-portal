@@ -233,7 +233,12 @@ public class AccountPersistenceImpl extends BasePersistenceImpl<Account>
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, account);
+			if (account.isCachedModel()) {
+				account = (Account)session.get(AccountImpl.class,
+						account.getPrimaryKeyObj());
+			}
+
+			session.delete(account);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -248,8 +253,8 @@ public class AccountPersistenceImpl extends BasePersistenceImpl<Account>
 	}
 
 	@Override
-	public Account updateImpl(com.liferay.portal.model.Account account,
-		boolean merge) throws SystemException {
+	public Account updateImpl(com.liferay.portal.model.Account account)
+		throws SystemException {
 		account = toUnwrappedModel(account);
 
 		boolean isNew = account.isNew();
@@ -259,9 +264,14 @@ public class AccountPersistenceImpl extends BasePersistenceImpl<Account>
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, account, merge);
+			if (account.isNew()) {
+				session.save(account);
 
-			account.setNew(false);
+				account.setNew(false);
+			}
+			else {
+				session.merge(account);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

@@ -74,8 +74,7 @@ public interface JournalStructurePersistence extends BasePersistence<JournalStru
 			com.liferay.portlet.journal.NoSuchStructureException;
 
 	public com.liferay.portlet.journal.model.JournalStructure updateImpl(
-		com.liferay.portlet.journal.model.JournalStructure journalStructure,
-		boolean merge)
+		com.liferay.portlet.journal.model.JournalStructure journalStructure)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

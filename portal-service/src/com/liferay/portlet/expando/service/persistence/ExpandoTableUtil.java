@@ -95,19 +95,19 @@ public class ExpandoTableUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static ExpandoTable update(ExpandoTable expandoTable, boolean merge)
+	public static ExpandoTable update(ExpandoTable expandoTable)
 		throws SystemException {
-		return getPersistence().update(expandoTable, merge);
+		return getPersistence().update(expandoTable);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
-	public static ExpandoTable update(ExpandoTable expandoTable, boolean merge,
+	public static ExpandoTable update(ExpandoTable expandoTable,
 		ServiceContext serviceContext) throws SystemException {
-		return getPersistence().update(expandoTable, merge, serviceContext);
+		return getPersistence().update(expandoTable, serviceContext);
 	}
 
 	/**
@@ -157,10 +157,9 @@ public class ExpandoTableUtil {
 	}
 
 	public static com.liferay.portlet.expando.model.ExpandoTable updateImpl(
-		com.liferay.portlet.expando.model.ExpandoTable expandoTable,
-		boolean merge)
+		com.liferay.portlet.expando.model.ExpandoTable expandoTable)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(expandoTable, merge);
+		return getPersistence().updateImpl(expandoTable);
 	}
 
 	/**

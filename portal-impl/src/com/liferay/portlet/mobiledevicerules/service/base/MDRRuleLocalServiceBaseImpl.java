@@ -88,7 +88,7 @@ public abstract class MDRRuleLocalServiceBaseImpl extends BaseLocalServiceImpl
 	public MDRRule addMDRRule(MDRRule mdrRule) throws SystemException {
 		mdrRule.setNew(true);
 
-		return mdrRulePersistence.update(mdrRule, false);
+		return mdrRulePersistence.update(mdrRule);
 	}
 
 	/**
@@ -271,23 +271,7 @@ public abstract class MDRRuleLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public MDRRule updateMDRRule(MDRRule mdrRule) throws SystemException {
-		return updateMDRRule(mdrRule, true);
-	}
-
-	/**
-	 * Updates the m d r rule in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param mdrRule the m d r rule
-	 * @param merge whether to merge the m d r rule with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	 * @return the m d r rule that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public MDRRule updateMDRRule(MDRRule mdrRule, boolean merge)
-		throws SystemException {
-		mdrRule.setNew(false);
-
-		return mdrRulePersistence.update(mdrRule, merge);
+		return mdrRulePersistence.update(mdrRule);
 	}
 
 	/**

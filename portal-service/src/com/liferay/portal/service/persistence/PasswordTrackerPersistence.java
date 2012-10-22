@@ -74,7 +74,7 @@ public interface PasswordTrackerPersistence extends BasePersistence<PasswordTrac
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portal.model.PasswordTracker updateImpl(
-		com.liferay.portal.model.PasswordTracker passwordTracker, boolean merge)
+		com.liferay.portal.model.PasswordTracker passwordTracker)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

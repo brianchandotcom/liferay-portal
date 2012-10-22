@@ -138,7 +138,7 @@ public class BookmarksEntryPersistenceTest {
 
 		newBookmarksEntry.setPriority(ServiceTestUtil.nextInt());
 
-		_persistence.update(newBookmarksEntry, false);
+		_persistence.update(newBookmarksEntry);
 
 		BookmarksEntry existingBookmarksEntry = _persistence.findByPrimaryKey(newBookmarksEntry.getPrimaryKey());
 
@@ -340,7 +340,7 @@ public class BookmarksEntryPersistenceTest {
 
 		bookmarksEntry.setPriority(ServiceTestUtil.nextInt());
 
-		_persistence.update(bookmarksEntry, false);
+		_persistence.update(bookmarksEntry);
 
 		return bookmarksEntry;
 	}

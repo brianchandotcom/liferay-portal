@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
-import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
@@ -287,7 +286,12 @@ public class ExpandoRowPersistenceImpl extends BasePersistenceImpl<ExpandoRow>
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, expandoRow);
+			if (expandoRow.isCachedModel()) {
+				expandoRow = (ExpandoRow)session.get(ExpandoRowImpl.class,
+						expandoRow.getPrimaryKeyObj());
+			}
+
+			session.delete(expandoRow);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -303,7 +307,7 @@ public class ExpandoRowPersistenceImpl extends BasePersistenceImpl<ExpandoRow>
 
 	@Override
 	public ExpandoRow updateImpl(
-		com.liferay.portlet.expando.model.ExpandoRow expandoRow, boolean merge)
+		com.liferay.portlet.expando.model.ExpandoRow expandoRow)
 		throws SystemException {
 		expandoRow = toUnwrappedModel(expandoRow);
 
@@ -316,9 +320,14 @@ public class ExpandoRowPersistenceImpl extends BasePersistenceImpl<ExpandoRow>
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, expandoRow, merge);
+			if (expandoRow.isNew()) {
+				session.save(expandoRow);
 
-			expandoRow.setNew(false);
+				expandoRow.setNew(false);
+			}
+			else {
+				session.merge(expandoRow);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

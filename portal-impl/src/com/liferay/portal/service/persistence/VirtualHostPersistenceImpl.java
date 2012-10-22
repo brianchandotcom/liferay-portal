@@ -281,7 +281,12 @@ public class VirtualHostPersistenceImpl extends BasePersistenceImpl<VirtualHost>
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, virtualHost);
+			if (virtualHost.isCachedModel()) {
+				virtualHost = (VirtualHost)session.get(VirtualHostImpl.class,
+						virtualHost.getPrimaryKeyObj());
+			}
+
+			session.delete(virtualHost);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -297,7 +302,7 @@ public class VirtualHostPersistenceImpl extends BasePersistenceImpl<VirtualHost>
 
 	@Override
 	public VirtualHost updateImpl(
-		com.liferay.portal.model.VirtualHost virtualHost, boolean merge)
+		com.liferay.portal.model.VirtualHost virtualHost)
 		throws SystemException {
 		virtualHost = toUnwrappedModel(virtualHost);
 
@@ -310,9 +315,14 @@ public class VirtualHostPersistenceImpl extends BasePersistenceImpl<VirtualHost>
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, virtualHost, merge);
+			if (virtualHost.isNew()) {
+				session.save(virtualHost);
 
-			virtualHost.setNew(false);
+				virtualHost.setNew(false);
+			}
+			else {
+				session.merge(virtualHost);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

@@ -115,7 +115,7 @@ public class MBThreadFlagPersistenceTest {
 
 		newMBThreadFlag.setThreadId(ServiceTestUtil.nextLong());
 
-		_persistence.update(newMBThreadFlag, false);
+		_persistence.update(newMBThreadFlag);
 
 		MBThreadFlag existingMBThreadFlag = _persistence.findByPrimaryKey(newMBThreadFlag.getPrimaryKey());
 
@@ -274,7 +274,7 @@ public class MBThreadFlagPersistenceTest {
 
 		mbThreadFlag.setThreadId(ServiceTestUtil.nextLong());
 
-		_persistence.update(mbThreadFlag, false);
+		_persistence.update(mbThreadFlag);
 
 		return mbThreadFlag;
 	}

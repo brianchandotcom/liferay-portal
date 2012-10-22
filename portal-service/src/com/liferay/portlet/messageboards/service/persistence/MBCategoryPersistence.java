@@ -76,8 +76,7 @@ public interface MBCategoryPersistence extends BasePersistence<MBCategory> {
 			com.liferay.portlet.messageboards.NoSuchCategoryException;
 
 	public com.liferay.portlet.messageboards.model.MBCategory updateImpl(
-		com.liferay.portlet.messageboards.model.MBCategory mbCategory,
-		boolean merge)
+		com.liferay.portlet.messageboards.model.MBCategory mbCategory)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

@@ -252,7 +252,7 @@ public abstract class ImageLocalServiceBaseImpl extends BaseLocalServiceImpl
 	public Image addImage(Image image) throws SystemException {
 		image.setNew(true);
 
-		return imagePersistence.update(image, false);
+		return imagePersistence.update(image);
 	}
 
 	/**
@@ -419,23 +419,7 @@ public abstract class ImageLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public Image updateImage(Image image) throws SystemException {
-		return updateImage(image, true);
-	}
-
-	/**
-	 * Updates the image in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param image the image
-	 * @param merge whether to merge the image with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	 * @return the image that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public Image updateImage(Image image, boolean merge)
-		throws SystemException {
-		image.setNew(false);
-
-		return imagePersistence.update(image, merge);
+		return imagePersistence.update(image);
 	}
 
 	/**

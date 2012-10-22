@@ -177,7 +177,7 @@ public class ShoppingItemPersistenceTest {
 
 		newShoppingItem.setLargeImageURL(ServiceTestUtil.randomString());
 
-		_persistence.update(newShoppingItem, false);
+		_persistence.update(newShoppingItem);
 
 		ShoppingItem existingShoppingItem = _persistence.findByPrimaryKey(newShoppingItem.getPrimaryKey());
 
@@ -464,7 +464,7 @@ public class ShoppingItemPersistenceTest {
 
 		shoppingItem.setLargeImageURL(ServiceTestUtil.randomString());
 
-		_persistence.update(shoppingItem, false);
+		_persistence.update(shoppingItem);
 
 		return shoppingItem;
 	}

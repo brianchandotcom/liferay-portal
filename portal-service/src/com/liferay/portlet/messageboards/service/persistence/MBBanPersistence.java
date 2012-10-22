@@ -73,7 +73,7 @@ public interface MBBanPersistence extends BasePersistence<MBBan> {
 			com.liferay.portlet.messageboards.NoSuchBanException;
 
 	public com.liferay.portlet.messageboards.model.MBBan updateImpl(
-		com.liferay.portlet.messageboards.model.MBBan mbBan, boolean merge)
+		com.liferay.portlet.messageboards.model.MBBan mbBan)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

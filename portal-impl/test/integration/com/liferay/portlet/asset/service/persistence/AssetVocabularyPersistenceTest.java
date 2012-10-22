@@ -132,7 +132,7 @@ public class AssetVocabularyPersistenceTest {
 
 		newAssetVocabulary.setSettings(ServiceTestUtil.randomString());
 
-		_persistence.update(newAssetVocabulary, false);
+		_persistence.update(newAssetVocabulary);
 
 		AssetVocabulary existingAssetVocabulary = _persistence.findByPrimaryKey(newAssetVocabulary.getPrimaryKey());
 
@@ -331,7 +331,7 @@ public class AssetVocabularyPersistenceTest {
 
 		assetVocabulary.setSettings(ServiceTestUtil.randomString());
 
-		_persistence.update(assetVocabulary, false);
+		_persistence.update(assetVocabulary);
 
 		return assetVocabulary;
 	}

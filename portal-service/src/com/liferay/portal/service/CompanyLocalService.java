@@ -211,18 +211,6 @@ public interface CompanyLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Updates the company in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param company the company
-	* @param merge whether to merge the company with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	* @return the company that was updated
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.Company updateCompany(
-		com.liferay.portal.model.Company company, boolean merge)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
 	* Returns the Spring bean ID for this bean.
 	*
 	* @return the Spring bean ID for this bean

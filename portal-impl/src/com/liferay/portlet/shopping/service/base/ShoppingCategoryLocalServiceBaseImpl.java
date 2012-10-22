@@ -100,7 +100,7 @@ public abstract class ShoppingCategoryLocalServiceBaseImpl
 		ShoppingCategory shoppingCategory) throws SystemException {
 		shoppingCategory.setNew(true);
 
-		return shoppingCategoryPersistence.update(shoppingCategory, false);
+		return shoppingCategoryPersistence.update(shoppingCategory);
 	}
 
 	/**
@@ -273,24 +273,7 @@ public abstract class ShoppingCategoryLocalServiceBaseImpl
 	@Indexable(type = IndexableType.REINDEX)
 	public ShoppingCategory updateShoppingCategory(
 		ShoppingCategory shoppingCategory) throws SystemException {
-		return updateShoppingCategory(shoppingCategory, true);
-	}
-
-	/**
-	 * Updates the shopping category in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param shoppingCategory the shopping category
-	 * @param merge whether to merge the shopping category with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	 * @return the shopping category that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public ShoppingCategory updateShoppingCategory(
-		ShoppingCategory shoppingCategory, boolean merge)
-		throws SystemException {
-		shoppingCategory.setNew(false);
-
-		return shoppingCategoryPersistence.update(shoppingCategory, merge);
+		return shoppingCategoryPersistence.update(shoppingCategory);
 	}
 
 	/**

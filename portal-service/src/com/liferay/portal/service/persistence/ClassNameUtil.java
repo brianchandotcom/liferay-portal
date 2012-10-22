@@ -94,19 +94,19 @@ public class ClassNameUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static ClassName update(ClassName className, boolean merge)
+	public static ClassName update(ClassName className)
 		throws SystemException {
-		return getPersistence().update(className, merge);
+		return getPersistence().update(className);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
-	public static ClassName update(ClassName className, boolean merge,
+	public static ClassName update(ClassName className,
 		ServiceContext serviceContext) throws SystemException {
-		return getPersistence().update(className, merge, serviceContext);
+		return getPersistence().update(className, serviceContext);
 	}
 
 	/**
@@ -153,9 +153,9 @@ public class ClassNameUtil {
 	}
 
 	public static com.liferay.portal.model.ClassName updateImpl(
-		com.liferay.portal.model.ClassName className, boolean merge)
+		com.liferay.portal.model.ClassName className)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(className, merge);
+		return getPersistence().updateImpl(className);
 	}
 
 	/**

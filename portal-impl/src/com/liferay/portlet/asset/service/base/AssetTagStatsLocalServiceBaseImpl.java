@@ -107,7 +107,7 @@ public abstract class AssetTagStatsLocalServiceBaseImpl
 		throws SystemException {
 		assetTagStats.setNew(true);
 
-		return assetTagStatsPersistence.update(assetTagStats, false);
+		return assetTagStatsPersistence.update(assetTagStats);
 	}
 
 	/**
@@ -280,23 +280,7 @@ public abstract class AssetTagStatsLocalServiceBaseImpl
 	@Indexable(type = IndexableType.REINDEX)
 	public AssetTagStats updateAssetTagStats(AssetTagStats assetTagStats)
 		throws SystemException {
-		return updateAssetTagStats(assetTagStats, true);
-	}
-
-	/**
-	 * Updates the asset tag stats in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param assetTagStats the asset tag stats
-	 * @param merge whether to merge the asset tag stats with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	 * @return the asset tag stats that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public AssetTagStats updateAssetTagStats(AssetTagStats assetTagStats,
-		boolean merge) throws SystemException {
-		assetTagStats.setNew(false);
-
-		return assetTagStatsPersistence.update(assetTagStats, merge);
+		return assetTagStatsPersistence.update(assetTagStats);
 	}
 
 	/**

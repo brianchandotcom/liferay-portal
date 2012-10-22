@@ -126,7 +126,7 @@ public class CompanyPersistenceTest {
 
 		newCompany.setActive(ServiceTestUtil.randomBoolean());
 
-		_persistence.update(newCompany, false);
+		_persistence.update(newCompany);
 
 		Company existingCompany = _persistence.findByPrimaryKey(newCompany.getPrimaryKey());
 
@@ -304,7 +304,7 @@ public class CompanyPersistenceTest {
 
 		company.setActive(ServiceTestUtil.randomBoolean());
 
-		_persistence.update(company, false);
+		_persistence.update(company);
 
 		return company;
 	}

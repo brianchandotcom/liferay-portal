@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
-import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.PortletPreferencesPersistence;
 import com.liferay.portal.service.persistence.SubscriptionPersistence;
 import com.liferay.portal.service.persistence.UserPersistence;
@@ -418,7 +417,12 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, bookmarksEntry);
+			if (bookmarksEntry.isCachedModel()) {
+				bookmarksEntry = (BookmarksEntry)session.get(BookmarksEntryImpl.class,
+						bookmarksEntry.getPrimaryKeyObj());
+			}
+
+			session.delete(bookmarksEntry);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -434,8 +438,8 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 
 	@Override
 	public BookmarksEntry updateImpl(
-		com.liferay.portlet.bookmarks.model.BookmarksEntry bookmarksEntry,
-		boolean merge) throws SystemException {
+		com.liferay.portlet.bookmarks.model.BookmarksEntry bookmarksEntry)
+		throws SystemException {
 		bookmarksEntry = toUnwrappedModel(bookmarksEntry);
 
 		boolean isNew = bookmarksEntry.isNew();
@@ -453,9 +457,14 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, bookmarksEntry, merge);
+			if (bookmarksEntry.isNew()) {
+				session.save(bookmarksEntry);
 
-			bookmarksEntry.setNew(false);
+				bookmarksEntry.setNew(false);
+			}
+			else {
+				session.merge(bookmarksEntry);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

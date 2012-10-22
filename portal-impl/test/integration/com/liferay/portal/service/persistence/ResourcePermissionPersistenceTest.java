@@ -122,7 +122,7 @@ public class ResourcePermissionPersistenceTest {
 
 		newResourcePermission.setActionIds(ServiceTestUtil.nextLong());
 
-		_persistence.update(newResourcePermission, false);
+		_persistence.update(newResourcePermission);
 
 		ResourcePermission existingResourcePermission = _persistence.findByPrimaryKey(newResourcePermission.getPrimaryKey());
 
@@ -310,7 +310,7 @@ public class ResourcePermissionPersistenceTest {
 
 		resourcePermission.setActionIds(ServiceTestUtil.nextLong());
 
-		_persistence.update(resourcePermission, false);
+		_persistence.update(resourcePermission);
 
 		return resourcePermission;
 	}

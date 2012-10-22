@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
-import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.GroupPersistence;
 import com.liferay.portal.service.persistence.SubscriptionPersistence;
 import com.liferay.portal.service.persistence.UserPersistence;
@@ -379,7 +378,12 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, mbCategory);
+			if (mbCategory.isCachedModel()) {
+				mbCategory = (MBCategory)session.get(MBCategoryImpl.class,
+						mbCategory.getPrimaryKeyObj());
+			}
+
+			session.delete(mbCategory);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -395,8 +399,8 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 
 	@Override
 	public MBCategory updateImpl(
-		com.liferay.portlet.messageboards.model.MBCategory mbCategory,
-		boolean merge) throws SystemException {
+		com.liferay.portlet.messageboards.model.MBCategory mbCategory)
+		throws SystemException {
 		mbCategory = toUnwrappedModel(mbCategory);
 
 		boolean isNew = mbCategory.isNew();
@@ -414,9 +418,14 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, mbCategory, merge);
+			if (mbCategory.isNew()) {
+				session.save(mbCategory);
 
-			mbCategory.setNew(false);
+				mbCategory.setNew(false);
+			}
+			else {
+				session.merge(mbCategory);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

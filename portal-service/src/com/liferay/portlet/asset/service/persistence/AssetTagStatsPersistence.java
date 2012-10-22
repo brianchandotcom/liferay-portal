@@ -74,8 +74,7 @@ public interface AssetTagStatsPersistence extends BasePersistence<AssetTagStats>
 			com.liferay.portlet.asset.NoSuchTagStatsException;
 
 	public com.liferay.portlet.asset.model.AssetTagStats updateImpl(
-		com.liferay.portlet.asset.model.AssetTagStats assetTagStats,
-		boolean merge)
+		com.liferay.portlet.asset.model.AssetTagStats assetTagStats)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

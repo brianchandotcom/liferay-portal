@@ -107,8 +107,7 @@ public abstract class AssetCategoryPropertyLocalServiceBaseImpl
 		AssetCategoryProperty assetCategoryProperty) throws SystemException {
 		assetCategoryProperty.setNew(true);
 
-		return assetCategoryPropertyPersistence.update(assetCategoryProperty,
-			false);
+		return assetCategoryPropertyPersistence.update(assetCategoryProperty);
 	}
 
 	/**
@@ -282,25 +281,7 @@ public abstract class AssetCategoryPropertyLocalServiceBaseImpl
 	@Indexable(type = IndexableType.REINDEX)
 	public AssetCategoryProperty updateAssetCategoryProperty(
 		AssetCategoryProperty assetCategoryProperty) throws SystemException {
-		return updateAssetCategoryProperty(assetCategoryProperty, true);
-	}
-
-	/**
-	 * Updates the asset category property in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param assetCategoryProperty the asset category property
-	 * @param merge whether to merge the asset category property with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	 * @return the asset category property that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public AssetCategoryProperty updateAssetCategoryProperty(
-		AssetCategoryProperty assetCategoryProperty, boolean merge)
-		throws SystemException {
-		assetCategoryProperty.setNew(false);
-
-		return assetCategoryPropertyPersistence.update(assetCategoryProperty,
-			merge);
+		return assetCategoryPropertyPersistence.update(assetCategoryProperty);
 	}
 
 	/**

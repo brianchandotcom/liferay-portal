@@ -248,22 +248,6 @@ public class PollsQuestionLocalServiceWrapper
 	}
 
 	/**
-	* Updates the polls question in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param pollsQuestion the polls question
-	* @param merge whether to merge the polls question with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	* @return the polls question that was updated
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portlet.polls.model.PollsQuestion updatePollsQuestion(
-		com.liferay.portlet.polls.model.PollsQuestion pollsQuestion,
-		boolean merge)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _pollsQuestionLocalService.updatePollsQuestion(pollsQuestion,
-			merge);
-	}
-
-	/**
 	* Returns the Spring bean ID for this bean.
 	*
 	* @return the Spring bean ID for this bean

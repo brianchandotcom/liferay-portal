@@ -346,7 +346,12 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, website);
+			if (website.isCachedModel()) {
+				website = (Website)session.get(WebsiteImpl.class,
+						website.getPrimaryKeyObj());
+			}
+
+			session.delete(website);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -361,8 +366,8 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 	}
 
 	@Override
-	public Website updateImpl(com.liferay.portal.model.Website website,
-		boolean merge) throws SystemException {
+	public Website updateImpl(com.liferay.portal.model.Website website)
+		throws SystemException {
 		website = toUnwrappedModel(website);
 
 		boolean isNew = website.isNew();
@@ -374,9 +379,14 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, website, merge);
+			if (website.isNew()) {
+				session.save(website);
 
-			website.setNew(false);
+				website.setNew(false);
+			}
+			else {
+				session.merge(website);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

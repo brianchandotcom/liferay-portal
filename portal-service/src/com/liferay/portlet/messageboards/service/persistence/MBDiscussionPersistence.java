@@ -76,8 +76,7 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 			com.liferay.portlet.messageboards.NoSuchDiscussionException;
 
 	public com.liferay.portlet.messageboards.model.MBDiscussion updateImpl(
-		com.liferay.portlet.messageboards.model.MBDiscussion mbDiscussion,
-		boolean merge)
+		com.liferay.portlet.messageboards.model.MBDiscussion mbDiscussion)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

@@ -96,22 +96,21 @@ public class SocialActivityAchievementUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
 	public static SocialActivityAchievement update(
-		SocialActivityAchievement socialActivityAchievement, boolean merge)
+		SocialActivityAchievement socialActivityAchievement)
 		throws SystemException {
-		return getPersistence().update(socialActivityAchievement, merge);
+		return getPersistence().update(socialActivityAchievement);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
 	public static SocialActivityAchievement update(
-		SocialActivityAchievement socialActivityAchievement, boolean merge,
+		SocialActivityAchievement socialActivityAchievement,
 		ServiceContext serviceContext) throws SystemException {
-		return getPersistence()
-				   .update(socialActivityAchievement, merge, serviceContext);
+		return getPersistence().update(socialActivityAchievement, serviceContext);
 	}
 
 	/**
@@ -161,10 +160,9 @@ public class SocialActivityAchievementUtil {
 	}
 
 	public static com.liferay.portlet.social.model.SocialActivityAchievement updateImpl(
-		com.liferay.portlet.social.model.SocialActivityAchievement socialActivityAchievement,
-		boolean merge)
+		com.liferay.portlet.social.model.SocialActivityAchievement socialActivityAchievement)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(socialActivityAchievement, merge);
+		return getPersistence().updateImpl(socialActivityAchievement);
 	}
 
 	/**

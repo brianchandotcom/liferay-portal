@@ -123,7 +123,7 @@ public class MBBanPersistenceTest {
 
 		newMBBan.setBanUserId(ServiceTestUtil.nextLong());
 
-		_persistence.update(newMBBan, false);
+		_persistence.update(newMBBan);
 
 		MBBan existingMBBan = _persistence.findByPrimaryKey(newMBBan.getPrimaryKey());
 
@@ -291,7 +291,7 @@ public class MBBanPersistenceTest {
 
 		mbBan.setBanUserId(ServiceTestUtil.nextLong());
 
-		_persistence.update(mbBan, false);
+		_persistence.update(mbBan);
 
 		return mbBan;
 	}

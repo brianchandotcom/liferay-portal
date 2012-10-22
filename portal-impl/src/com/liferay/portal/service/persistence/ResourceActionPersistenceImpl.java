@@ -284,7 +284,12 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 		try {
 			session = openSession();
 
-			BatchSessionUtil.delete(session, resourceAction);
+			if (resourceAction.isCachedModel()) {
+				resourceAction = (ResourceAction)session.get(ResourceActionImpl.class,
+						resourceAction.getPrimaryKeyObj());
+			}
+
+			session.delete(resourceAction);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -300,7 +305,7 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 
 	@Override
 	public ResourceAction updateImpl(
-		com.liferay.portal.model.ResourceAction resourceAction, boolean merge)
+		com.liferay.portal.model.ResourceAction resourceAction)
 		throws SystemException {
 		resourceAction = toUnwrappedModel(resourceAction);
 
@@ -313,9 +318,14 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 		try {
 			session = openSession();
 
-			BatchSessionUtil.update(session, resourceAction, merge);
+			if (resourceAction.isNew()) {
+				session.save(resourceAction);
 
-			resourceAction.setNew(false);
+				resourceAction.setNew(false);
+			}
+			else {
+				session.merge(resourceAction);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);

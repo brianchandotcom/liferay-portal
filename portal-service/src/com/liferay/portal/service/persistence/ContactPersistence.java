@@ -71,7 +71,7 @@ public interface ContactPersistence extends BasePersistence<Contact> {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portal.model.Contact updateImpl(
-		com.liferay.portal.model.Contact contact, boolean merge)
+		com.liferay.portal.model.Contact contact)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

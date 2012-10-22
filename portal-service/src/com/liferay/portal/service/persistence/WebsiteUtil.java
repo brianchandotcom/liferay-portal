@@ -94,19 +94,18 @@ public class WebsiteUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static Website update(Website website, boolean merge)
-		throws SystemException {
-		return getPersistence().update(website, merge);
+	public static Website update(Website website) throws SystemException {
+		return getPersistence().update(website);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
-	public static Website update(Website website, boolean merge,
-		ServiceContext serviceContext) throws SystemException {
-		return getPersistence().update(website, merge, serviceContext);
+	public static Website update(Website website, ServiceContext serviceContext)
+		throws SystemException {
+		return getPersistence().update(website, serviceContext);
 	}
 
 	/**
@@ -153,9 +152,9 @@ public class WebsiteUtil {
 	}
 
 	public static com.liferay.portal.model.Website updateImpl(
-		com.liferay.portal.model.Website website, boolean merge)
+		com.liferay.portal.model.Website website)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(website, merge);
+		return getPersistence().updateImpl(website);
 	}
 
 	/**

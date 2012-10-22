@@ -95,19 +95,19 @@ public class BookmarksFolderUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static BookmarksFolder update(BookmarksFolder bookmarksFolder,
-		boolean merge) throws SystemException {
-		return getPersistence().update(bookmarksFolder, merge);
+	public static BookmarksFolder update(BookmarksFolder bookmarksFolder)
+		throws SystemException {
+		return getPersistence().update(bookmarksFolder);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
 	public static BookmarksFolder update(BookmarksFolder bookmarksFolder,
-		boolean merge, ServiceContext serviceContext) throws SystemException {
-		return getPersistence().update(bookmarksFolder, merge, serviceContext);
+		ServiceContext serviceContext) throws SystemException {
+		return getPersistence().update(bookmarksFolder, serviceContext);
 	}
 
 	/**
@@ -157,10 +157,9 @@ public class BookmarksFolderUtil {
 	}
 
 	public static com.liferay.portlet.bookmarks.model.BookmarksFolder updateImpl(
-		com.liferay.portlet.bookmarks.model.BookmarksFolder bookmarksFolder,
-		boolean merge)
+		com.liferay.portlet.bookmarks.model.BookmarksFolder bookmarksFolder)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(bookmarksFolder, merge);
+		return getPersistence().updateImpl(bookmarksFolder);
 	}
 
 	/**

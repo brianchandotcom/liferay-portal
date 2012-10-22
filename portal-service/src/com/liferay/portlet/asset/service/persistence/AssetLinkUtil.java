@@ -95,19 +95,19 @@ public class AssetLinkUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static AssetLink update(AssetLink assetLink, boolean merge)
+	public static AssetLink update(AssetLink assetLink)
 		throws SystemException {
-		return getPersistence().update(assetLink, merge);
+		return getPersistence().update(assetLink);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
-	public static AssetLink update(AssetLink assetLink, boolean merge,
+	public static AssetLink update(AssetLink assetLink,
 		ServiceContext serviceContext) throws SystemException {
-		return getPersistence().update(assetLink, merge, serviceContext);
+		return getPersistence().update(assetLink, serviceContext);
 	}
 
 	/**
@@ -155,9 +155,9 @@ public class AssetLinkUtil {
 	}
 
 	public static com.liferay.portlet.asset.model.AssetLink updateImpl(
-		com.liferay.portlet.asset.model.AssetLink assetLink, boolean merge)
+		com.liferay.portlet.asset.model.AssetLink assetLink)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(assetLink, merge);
+		return getPersistence().updateImpl(assetLink);
 	}
 
 	/**

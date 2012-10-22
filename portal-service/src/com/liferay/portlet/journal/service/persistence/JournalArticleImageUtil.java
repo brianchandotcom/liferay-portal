@@ -95,22 +95,20 @@ public class JournalArticleImageUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
 	public static JournalArticleImage update(
-		JournalArticleImage journalArticleImage, boolean merge)
-		throws SystemException {
-		return getPersistence().update(journalArticleImage, merge);
+		JournalArticleImage journalArticleImage) throws SystemException {
+		return getPersistence().update(journalArticleImage);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
 	public static JournalArticleImage update(
-		JournalArticleImage journalArticleImage, boolean merge,
-		ServiceContext serviceContext) throws SystemException {
-		return getPersistence()
-				   .update(journalArticleImage, merge, serviceContext);
+		JournalArticleImage journalArticleImage, ServiceContext serviceContext)
+		throws SystemException {
+		return getPersistence().update(journalArticleImage, serviceContext);
 	}
 
 	/**
@@ -160,10 +158,9 @@ public class JournalArticleImageUtil {
 	}
 
 	public static com.liferay.portlet.journal.model.JournalArticleImage updateImpl(
-		com.liferay.portlet.journal.model.JournalArticleImage journalArticleImage,
-		boolean merge)
+		com.liferay.portlet.journal.model.JournalArticleImage journalArticleImage)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(journalArticleImage, merge);
+		return getPersistence().updateImpl(journalArticleImage);
 	}
 
 	/**

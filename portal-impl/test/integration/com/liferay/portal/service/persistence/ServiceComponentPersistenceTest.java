@@ -116,7 +116,7 @@ public class ServiceComponentPersistenceTest {
 
 		newServiceComponent.setData(ServiceTestUtil.randomString());
 
-		_persistence.update(newServiceComponent, false);
+		_persistence.update(newServiceComponent);
 
 		ServiceComponent existingServiceComponent = _persistence.findByPrimaryKey(newServiceComponent.getPrimaryKey());
 
@@ -279,7 +279,7 @@ public class ServiceComponentPersistenceTest {
 
 		serviceComponent.setData(ServiceTestUtil.randomString());
 
-		_persistence.update(serviceComponent, false);
+		_persistence.update(serviceComponent);
 
 		return serviceComponent;
 	}

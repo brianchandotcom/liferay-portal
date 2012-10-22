@@ -94,19 +94,19 @@ public class UserGroupUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static UserGroup update(UserGroup userGroup, boolean merge)
+	public static UserGroup update(UserGroup userGroup)
 		throws SystemException {
-		return getPersistence().update(userGroup, merge);
+		return getPersistence().update(userGroup);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
-	public static UserGroup update(UserGroup userGroup, boolean merge,
+	public static UserGroup update(UserGroup userGroup,
 		ServiceContext serviceContext) throws SystemException {
-		return getPersistence().update(userGroup, merge, serviceContext);
+		return getPersistence().update(userGroup, serviceContext);
 	}
 
 	/**
@@ -153,9 +153,9 @@ public class UserGroupUtil {
 	}
 
 	public static com.liferay.portal.model.UserGroup updateImpl(
-		com.liferay.portal.model.UserGroup userGroup, boolean merge)
+		com.liferay.portal.model.UserGroup userGroup)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(userGroup, merge);
+		return getPersistence().updateImpl(userGroup);
 	}
 
 	/**

@@ -94,19 +94,19 @@ public class OrgGroupRoleUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static OrgGroupRole update(OrgGroupRole orgGroupRole, boolean merge)
+	public static OrgGroupRole update(OrgGroupRole orgGroupRole)
 		throws SystemException {
-		return getPersistence().update(orgGroupRole, merge);
+		return getPersistence().update(orgGroupRole);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, boolean, ServiceContext)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
-	public static OrgGroupRole update(OrgGroupRole orgGroupRole, boolean merge,
+	public static OrgGroupRole update(OrgGroupRole orgGroupRole,
 		ServiceContext serviceContext) throws SystemException {
-		return getPersistence().update(orgGroupRole, merge, serviceContext);
+		return getPersistence().update(orgGroupRole, serviceContext);
 	}
 
 	/**
@@ -156,9 +156,9 @@ public class OrgGroupRoleUtil {
 	}
 
 	public static com.liferay.portal.model.OrgGroupRole updateImpl(
-		com.liferay.portal.model.OrgGroupRole orgGroupRole, boolean merge)
+		com.liferay.portal.model.OrgGroupRole orgGroupRole)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(orgGroupRole, merge);
+		return getPersistence().updateImpl(orgGroupRole);
 	}
 
 	/**

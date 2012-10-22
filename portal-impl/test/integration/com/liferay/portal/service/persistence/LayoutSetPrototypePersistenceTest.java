@@ -122,7 +122,7 @@ public class LayoutSetPrototypePersistenceTest {
 
 		newLayoutSetPrototype.setActive(ServiceTestUtil.randomBoolean());
 
-		_persistence.update(newLayoutSetPrototype, false);
+		_persistence.update(newLayoutSetPrototype);
 
 		LayoutSetPrototype existingLayoutSetPrototype = _persistence.findByPrimaryKey(newLayoutSetPrototype.getPrimaryKey());
 
@@ -286,7 +286,7 @@ public class LayoutSetPrototypePersistenceTest {
 
 		layoutSetPrototype.setActive(ServiceTestUtil.randomBoolean());
 
-		_persistence.update(layoutSetPrototype, false);
+		_persistence.update(layoutSetPrototype);
 
 		return layoutSetPrototype;
 	}

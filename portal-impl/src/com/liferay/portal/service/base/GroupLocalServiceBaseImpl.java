@@ -329,7 +329,7 @@ public abstract class GroupLocalServiceBaseImpl extends BaseLocalServiceImpl
 	public Group addGroup(Group group) throws SystemException {
 		group.setNew(true);
 
-		return groupPersistence.update(group, false);
+		return groupPersistence.update(group);
 	}
 
 	/**
@@ -498,23 +498,7 @@ public abstract class GroupLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public Group updateGroup(Group group) throws SystemException {
-		return updateGroup(group, true);
-	}
-
-	/**
-	 * Updates the group in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param group the group
-	 * @param merge whether to merge the group with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	 * @return the group that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public Group updateGroup(Group group, boolean merge)
-		throws SystemException {
-		group.setNew(false);
-
-		return groupPersistence.update(group, merge);
+		return groupPersistence.update(group);
 	}
 
 	/**

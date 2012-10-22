@@ -249,7 +249,7 @@ public abstract class UserIdMapperLocalServiceBaseImpl
 		throws SystemException {
 		userIdMapper.setNew(true);
 
-		return userIdMapperPersistence.update(userIdMapper, false);
+		return userIdMapperPersistence.update(userIdMapper);
 	}
 
 	/**
@@ -422,23 +422,7 @@ public abstract class UserIdMapperLocalServiceBaseImpl
 	@Indexable(type = IndexableType.REINDEX)
 	public UserIdMapper updateUserIdMapper(UserIdMapper userIdMapper)
 		throws SystemException {
-		return updateUserIdMapper(userIdMapper, true);
-	}
-
-	/**
-	 * Updates the user ID mapper in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param userIdMapper the user ID mapper
-	 * @param merge whether to merge the user ID mapper with the current session. See {@link com.liferay.portal.service.persistence.BatchSession#update(com.liferay.portal.kernel.dao.orm.Session, com.liferay.portal.model.BaseModel, boolean)} for an explanation.
-	 * @return the user ID mapper that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public UserIdMapper updateUserIdMapper(UserIdMapper userIdMapper,
-		boolean merge) throws SystemException {
-		userIdMapper.setNew(false);
-
-		return userIdMapperPersistence.update(userIdMapper, merge);
+		return userIdMapperPersistence.update(userIdMapper);
 	}
 
 	/**

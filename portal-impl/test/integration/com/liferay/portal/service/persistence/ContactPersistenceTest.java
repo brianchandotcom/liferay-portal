@@ -170,7 +170,7 @@ public class ContactPersistenceTest {
 
 		newContact.setHoursOfOperation(ServiceTestUtil.randomString());
 
-		_persistence.update(newContact, false);
+		_persistence.update(newContact);
 
 		Contact existingContact = _persistence.findByPrimaryKey(newContact.getPrimaryKey());
 
@@ -419,7 +419,7 @@ public class ContactPersistenceTest {
 
 		contact.setHoursOfOperation(ServiceTestUtil.randomString());
 
-		_persistence.update(contact, false);
+		_persistence.update(contact);
 
 		return contact;
 	}

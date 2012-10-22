@@ -18,13 +18,24 @@ import java.io.IOException;
 
 import java.sql.SQLException;
 
+import java.util.List;
+
 import javax.naming.NamingException;
 
 /**
  * @author Hugo Huijser
  * @author Brian Wing Shun Chan
+ * @author Peter Shin
  */
 public interface DBProcess {
+
+	public IndexMetadata addIndex(IndexMetadata indexMetadata);
+
+	public List<IndexMetadata> addIndexes(List<IndexMetadata> indexMetadatas);
+
+	public void dropIndex(IndexMetadata indexMetadata);
+
+	public void dropIndexes(List<IndexMetadata> indexMetadatas);
 
 	public void runSQL(String template) throws IOException, SQLException;
 

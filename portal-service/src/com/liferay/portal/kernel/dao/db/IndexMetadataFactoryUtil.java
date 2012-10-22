@@ -18,16 +18,18 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
-import java.util.List;
-
 /**
  * @author James Lefeu
  * @auther Peter Shin
  */
 public class IndexMetadataFactoryUtil {
 
+	public static IndexMetadata create(String tableName, String[] columnNames) {
+		return create(tableName, columnNames, false);
+	}
+
 	public static IndexMetadata create(
-		String tableName, List<String> columnNames, boolean unique) {
+		String tableName, String[] columnNames, boolean unique) {
 
 		String specification = getSpecification(tableName, columnNames);
 
@@ -47,10 +49,20 @@ public class IndexMetadataFactoryUtil {
 		sb.append(" on ");
 		sb.append(specification);
 
-		String sql = sb.toString();
+		String indexSQLCreate = sb.toString();
+
+		sb.setIndex(0);
+
+		sb.append("drop index ");
+		sb.append(indexName);
+		sb.append(" on ");
+		sb.append(tableName);
+
+		String indexSQLDrop = sb.toString();
 
 		return new IndexMetadata(
-			indexName, tableName, unique, specification, sql);
+			indexName, tableName, unique, specification, indexSQLCreate,
+			indexSQLDrop);
 	}
 
 	protected static String getIndexName(String specification) {
@@ -63,7 +75,7 @@ public class IndexMetadataFactoryUtil {
 	}
 
 	protected static String getSpecification(
-		String tableName, List<String> columnNames) {
+		String tableName, String[] columnNames) {
 
 		StringBundler sb = new StringBundler(6);
 
@@ -71,7 +83,7 @@ public class IndexMetadataFactoryUtil {
 		sb.append(StringPool.SPACE);
 		sb.append(StringPool.OPEN_PARENTHESIS);
 
-		if ((columnNames != null) && !columnNames.isEmpty()) {
+		if ((columnNames != null) && (columnNames.length > 0)) {
 			sb.append(
 				StringUtil.merge(columnNames, StringPool.COMMA_AND_SPACE));
 		}

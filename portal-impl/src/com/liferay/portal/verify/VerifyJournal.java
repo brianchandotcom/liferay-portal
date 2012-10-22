@@ -16,6 +16,8 @@ package com.liferay.portal.verify;
 
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
+import com.liferay.portal.kernel.dao.db.IndexMetadata;
+import com.liferay.portal.kernel.dao.db.IndexMetadataFactoryUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -42,6 +44,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -51,12 +54,23 @@ import javax.portlet.PortletPreferences;
 /**
  * @author Alexander Chow
  * @author Shinn Lok
+ * @author James Lefeu
  */
 public class VerifyJournal extends VerifyProcess {
 
 	public static final long DEFAULT_GROUP_ID = 14;
 
 	public static final int NUM_OF_ARTICLES = 5;
+
+	@Override
+	protected List<IndexMetadata> doGetIndexMetadatas() {
+		List<IndexMetadata> indexMetadatas = new ArrayList<IndexMetadata>();
+
+		indexMetadatas.add(IndexMetadataFactoryUtil.create(
+			"PortletPreferences", new String[] {"portletId"}));
+
+		return indexMetadatas;
+	}
 
 	@Override
 	protected void doVerify() throws Exception {

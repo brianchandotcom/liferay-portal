@@ -68,6 +68,7 @@ public class TestPropsValues {
 		return _companyId;
 	}
 
+	@Deprecated
 	public static long getGroupId() throws Exception {
 		if (_groupId > 0) {
 			return _groupId;

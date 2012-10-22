@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -153,9 +154,8 @@ public class AuthVerifierFilter extends BasePortalFilter {
 
 			AccessControlUtil.initContextUser(userId);
 
-			Map<String, Object> settings = accessControlContext.getSettings();
-
-			String authType = (String)settings.get(
+			String authType = MapUtil.getString(
+				accessControlContext.getSettings(),
 				AuthVerifierPipeline.AUTH_TYPE);
 
 			ProtectedServletRequest protectedServletRequest =

@@ -17,7 +17,7 @@ package com.liferay.portal.security.auth;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
-import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.servlet.filters.secure.NonceUtil;
 import com.liferay.portal.util.Portal;
@@ -53,9 +53,8 @@ public class DigestAuthenticationAuthVerifier implements AuthVerifier {
 
 				// backward compatibility
 
-				boolean forcedDigestAuth =
-					GetterUtil.getBoolean(
-						accessControlContext.getSettings().get("digest_auth"));
+				boolean forcedDigestAuth = MapUtil.getBoolean(
+					accessControlContext.getSettings(), "digest_auth");
 
 				if (forcedDigestAuth) {
 					HttpServletResponse response =

@@ -54,7 +54,10 @@ public class AccessControlImpl implements AccessControl {
 
 		accessControlContext.setRequest(request);
 		accessControlContext.setResponse(response);
-		accessControlContext.getSettings().putAll(initConfiguration);
+
+		Map<String, Object> settings = accessControlContext.getSettings();
+
+		settings.putAll(initConfiguration);
 
 		AccessControlUtil.setAccessControlContext(accessControlContext);
 	}
@@ -92,10 +95,9 @@ public class AccessControlImpl implements AccessControl {
 			authVerifierResult.getSettings();
 
 		if (authVerifierResultSettings != null) {
-			Map<String, Object> accessControlContextSettings =
-				accessControlContext.getSettings();
+			Map<String, Object> settings = accessControlContext.getSettings();
 
-			accessControlContextSettings.putAll(authVerifierResultSettings);
+			settings.putAll(authVerifierResultSettings);
 		}
 
 		accessControlContext.setAuthVerifierResult(authVerifierResult);

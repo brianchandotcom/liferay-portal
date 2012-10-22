@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.util.Portal;
 import com.liferay.portlet.login.util.LoginUtil;
 
@@ -163,9 +164,8 @@ public class BasicAuthHeaderAutoLogin implements AuthVerifier, AutoLogin {
 			// backward compatibility
 
 			else {
-				boolean forcedBasicAuth =
-					GetterUtil.getBoolean(
-						accessControlContext.getSettings().get("basic_auth"));
+				boolean forcedBasicAuth = MapUtil.getBoolean(
+					accessControlContext.getSettings(), "basic_auth");
 
 				if (forcedBasicAuth) {
 					HttpServletResponse response =

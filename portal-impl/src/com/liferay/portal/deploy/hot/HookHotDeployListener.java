@@ -1027,8 +1027,8 @@ public class HookHotDeployListener
 				portletClassLoader, AuthVerifier.class, authVerifierClassName);
 
 			authVerifierConfiguration.setAuthVerifier(authVerifier);
-			authVerifierConfiguration
-				.setAuthVerifierClassName(authVerifierClassName);
+			authVerifierConfiguration.setAuthVerifierClassName(
+				authVerifierClassName);
 
 			Properties properties = PropertiesUtil.getProperties(
 				portalProperties,

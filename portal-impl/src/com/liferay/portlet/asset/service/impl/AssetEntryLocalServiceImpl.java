@@ -337,7 +337,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 
 		entry.setViewCount(entry.getViewCount() + increment);
 
-		assetEntryPersistence.update(entry, false);
+		assetEntryPersistence.update(entry);
 
 		return entry;
 	}
@@ -624,7 +624,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 			if (entry.isVisible()) {
 				boolean isNew = entry.isNew();
 
-				assetEntryPersistence.updateImpl(entry, false);
+				assetEntryPersistence.updateImpl(entry);
 
 				if (isNew) {
 					for (AssetTag tag : tags) {
@@ -659,7 +659,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 		// Update entry after tags so that entry listeners have access to the
 		// saved categories and tags
 
-		assetEntryPersistence.update(entry, false);
+		assetEntryPersistence.update(entry);
 
 		// Synchronize
 
@@ -673,7 +673,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 
 			blogsEntry.setTitle(title);
 
-			blogsEntryPersistence.update(blogsEntry, false);
+			blogsEntryPersistence.update(blogsEntry);
 		}
 		else if (className.equals(BookmarksEntry.class.getName())) {
 			BookmarksEntry bookmarksEntry =
@@ -683,7 +683,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 			bookmarksEntry.setDescription(description);
 			bookmarksEntry.setUrl(url);
 
-			bookmarksEntryPersistence.update(bookmarksEntry, false);
+			bookmarksEntryPersistence.update(bookmarksEntry);
 		}
 		else if (className.equals(DLFileEntry.class.getName())) {
 			DLFileEntry dlFileEntry = dlFileEntryPersistence.findByPrimaryKey(
@@ -692,7 +692,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 			dlFileEntry.setTitle(title);
 			dlFileEntry.setDescription(description);
 
-			dlFileEntryPersistence.update(dlFileEntry, false);
+			dlFileEntryPersistence.update(dlFileEntry);
 		}
 		else if (className.equals(JournalArticle.class.getName())) {
 			JournalArticle journalArticle =
@@ -701,7 +701,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 			journalArticle.setTitle(title);
 			journalArticle.setDescription(description);
 
-			journalArticlePersistence.update(journalArticle, false);
+			journalArticlePersistence.update(journalArticle);
 		}
 		else if (className.equals(MBMessage.class.getName())) {
 			MBMessage mbMessage = mbMessagePersistence.findByPrimaryKey(
@@ -709,14 +709,14 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 
 			mbMessage.setSubject(title);
 
-			mbMessagePersistence.update(mbMessage, false);
+			mbMessagePersistence.update(mbMessage);
 		}
 		else if (className.equals(WikiPage.class.getName())) {
 			WikiPage wikiPage = wikiPagePersistence.findByPrimaryKey(classPK);
 
 			wikiPage.setTitle(title);
 
-			wikiPagePersistence.update(wikiPage, false);
+			wikiPagePersistence.update(wikiPage);
 		}
 
 		return entry;
@@ -808,7 +808,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 
 		updateVisible(entry, visible);
 
-		assetEntryPersistence.update(entry, false);
+		assetEntryPersistence.update(entry);
 
 		return entry;
 	}
@@ -828,7 +828,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 
 		updateVisible(entry, visible);
 
-		assetEntryPersistence.update(entry, false);
+		assetEntryPersistence.update(entry);
 
 		return entry;
 	}
@@ -844,7 +844,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 
 		updateVisible(entry, visible);
 
-		assetEntryPersistence.update(entry, false);
+		assetEntryPersistence.update(entry);
 
 		return entry;
 	}

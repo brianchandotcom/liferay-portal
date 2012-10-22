@@ -177,7 +177,7 @@ public class ResourceBlockLocalServiceImpl
 		resourceBlock.setPermissionsHash(permissionsHash);
 		resourceBlock.setReferenceCount(1);
 
-		updateResourceBlock(resourceBlock, false);
+		updateResourceBlock(resourceBlock);
 
 		resourceBlockPermissionLocalService.addResourceBlockPermissions(
 			resourceBlockId, resourceBlockPermissionsContainer);

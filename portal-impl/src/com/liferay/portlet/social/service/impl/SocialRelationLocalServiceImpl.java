@@ -97,7 +97,7 @@ public class SocialRelationLocalServiceImpl
 			relation.setUserId2(userId2);
 			relation.setType(type);
 
-			socialRelationPersistence.update(relation, false);
+			socialRelationPersistence.update(relation);
 		}
 
 		if (SocialRelationConstants.isTypeBi(type)) {
@@ -116,7 +116,7 @@ public class SocialRelationLocalServiceImpl
 				biRelation.setUserId2(userId1);
 				biRelation.setType(type);
 
-				socialRelationPersistence.update(biRelation, false);
+				socialRelationPersistence.update(biRelation);
 			}
 		}
 

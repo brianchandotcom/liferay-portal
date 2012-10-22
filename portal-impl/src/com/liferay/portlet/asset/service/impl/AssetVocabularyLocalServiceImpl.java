@@ -104,7 +104,7 @@ public class AssetVocabularyLocalServiceImpl
 		vocabulary.setDescriptionMap(descriptionMap);
 		vocabulary.setSettings(settings);
 
-		assetVocabularyPersistence.update(vocabulary, false);
+		assetVocabularyPersistence.update(vocabulary);
 
 		// Resources
 
@@ -353,7 +353,7 @@ public class AssetVocabularyLocalServiceImpl
 		vocabulary.setDescriptionMap(descriptionMap);
 		vocabulary.setSettings(settings);
 
-		assetVocabularyPersistence.update(vocabulary, false);
+		assetVocabularyPersistence.update(vocabulary);
 
 		return vocabulary;
 	}

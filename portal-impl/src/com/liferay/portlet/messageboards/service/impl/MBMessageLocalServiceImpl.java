@@ -296,7 +296,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 			thread.setPriority(priority);
 
-			mbThreadPersistence.update(thread, false);
+			mbThreadPersistence.update(thread);
 
 			updatePriorities(thread.getThreadId(), priority);
 		}
@@ -322,7 +322,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			message.setClassPK(classPK);
 		}
 
-		mbMessagePersistence.update(message, false);
+		mbMessagePersistence.update(message);
 
 		// Attachments
 
@@ -587,7 +587,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 				category.setThreadCount(category.getThreadCount() - 1);
 				category.setMessageCount(category.getMessageCount() - 1);
 
-				mbCategoryPersistence.update(category, false);
+				mbCategoryPersistence.update(category);
 			}
 		}
 		else {
@@ -612,7 +612,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 					childMessage.setParentMessageId(
 						MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID);
 
-					mbMessagePersistence.update(childMessage, false);
+					mbMessagePersistence.update(childMessage);
 
 					List<MBMessage> repliesMessages =
 						mbMessagePersistence.findByThreadReplies(
@@ -622,13 +622,13 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 						repliesMessage.setRootMessageId(
 							childMessage.getMessageId());
 
-						mbMessagePersistence.update(repliesMessage, false);
+						mbMessagePersistence.update(repliesMessage);
 					}
 
 					thread.setRootMessageId(childMessage.getMessageId());
 					thread.setRootMessageUserId(childMessage.getUserId());
 
-					mbThreadPersistence.update(thread, false);
+					mbThreadPersistence.update(thread);
 				}
 			}
 
@@ -646,7 +646,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 						childMessage.setParentMessageId(
 							message.getParentMessageId());
 
-						mbMessagePersistence.update(childMessage, false);
+						mbMessagePersistence.update(childMessage);
 					}
 				}
 				else {
@@ -681,7 +681,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 				thread.setMessageCount(messageCount - 1);
 			}
 
-			mbThreadPersistence.update(thread, false);
+			mbThreadPersistence.update(thread);
 
 			// Category
 
@@ -696,7 +696,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 				category.setMessageCount(category.getMessageCount() - 1);
 
-				mbCategoryPersistence.update(category, false);
+				mbCategoryPersistence.update(category);
 			}
 		}
 
@@ -1345,7 +1345,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		if (message.isAnswer() != answer) {
 			message.setAnswer(answer);
 
-			mbMessagePersistence.update(message, false);
+			mbMessagePersistence.update(message);
 		}
 
 		if (cascade) {
@@ -1503,7 +1503,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			}
 		}
 
-		mbMessagePersistence.update(message, false);
+		mbMessagePersistence.update(message);
 
 		// Thread
 
@@ -1515,7 +1515,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 			thread.setPriority(priority);
 
-			mbThreadPersistence.update(thread, false);
+			mbThreadPersistence.update(thread);
 
 			updatePriorities(thread.getThreadId(), priority);
 		}
@@ -1550,7 +1550,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		message.setBody(body);
 
-		mbMessagePersistence.update(message, false);
+		mbMessagePersistence.update(message);
 
 		return message;
 	}
@@ -1574,7 +1574,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		message.setStatusByUserName(user.getFullName());
 		message.setStatusDate(serviceContext.getModifiedDate(now));
 
-		mbMessagePersistence.update(message, false);
+		mbMessagePersistence.update(message);
 
 		// Thread
 
@@ -1614,7 +1614,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 					category.setThreadCount(category.getThreadCount() + 1);
 
-					mbCategoryPersistence.update(category, false);
+					mbCategoryPersistence.update(category);
 				}
 
 				thread.setMessageCount(thread.getMessageCount() + 1);
@@ -1635,7 +1635,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 					category.setLastPostDate(
 						serviceContext.getModifiedDate(now));
 
-					mbCategoryPersistence.update(category, false);
+					mbCategoryPersistence.update(category);
 
 				}
 
@@ -1760,7 +1760,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 				category.setThreadCount(category.getThreadCount() - 1);
 
-				mbCategoryPersistence.update(category, false);
+				mbCategoryPersistence.update(category);
 			}
 
 			thread.setMessageCount(thread.getMessageCount() - 1);
@@ -1770,7 +1770,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			if (category != null) {
 				category.setMessageCount(category.getMessageCount() - 1);
 
-				mbCategoryPersistence.update(category, false);
+				mbCategoryPersistence.update(category);
 			}
 
 			// Asset
@@ -1787,7 +1787,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		}
 
 		if (status != oldStatus) {
-			mbThreadPersistence.update(thread, false);
+			mbThreadPersistence.update(thread);
 		}
 
 		// Statistics
@@ -1809,7 +1809,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		for (MBMessage message : messages) {
 			message.setUserName(userName);
 
-			mbMessagePersistence.update(message, false);
+			mbMessagePersistence.update(message);
 		}
 	}
 
@@ -2234,7 +2234,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			if (message.getPriority() != priority) {
 				message.setPriority(priority);
 
-				mbMessagePersistence.update(message, false);
+				mbMessagePersistence.update(message);
 			}
 		}
 	}

@@ -94,7 +94,7 @@ public class BookmarksEntryLocalServiceImpl
 		entry.setDescription(description);
 		entry.setExpandoBridgeAttributes(serviceContext);
 
-		bookmarksEntryPersistence.update(entry, false);
+		bookmarksEntryPersistence.update(entry);
 
 		// Resources
 
@@ -265,7 +265,7 @@ public class BookmarksEntryLocalServiceImpl
 
 		entry.setVisits(entry.getVisits() + 1);
 
-		bookmarksEntryPersistence.update(entry, false);
+		bookmarksEntryPersistence.update(entry);
 
 		assetEntryLocalService.incrementViewCounter(
 			userId, BookmarksEntry.class.getName(), entryId, 1);
@@ -333,7 +333,7 @@ public class BookmarksEntryLocalServiceImpl
 		entry.setDescription(description);
 		entry.setExpandoBridgeAttributes(serviceContext);
 
-		bookmarksEntryPersistence.update(entry, false);
+		bookmarksEntryPersistence.update(entry);
 
 		// Asset
 

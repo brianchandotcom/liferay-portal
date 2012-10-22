@@ -96,7 +96,7 @@ public class DLFileEntryTypeLocalServiceImpl
 		dlFileEntryType.setName(name);
 		dlFileEntryType.setDescription(description);
 
-		dlFileEntryTypePersistence.update(dlFileEntryType, false);
+		dlFileEntryTypePersistence.update(dlFileEntryType);
 
 		dlFileEntryTypePersistence.addDDMStructures(
 			fileEntryTypeId, ddmStructureIds);
@@ -348,7 +348,7 @@ public class DLFileEntryTypeLocalServiceImpl
 		dlFileEntryType.setName(name);
 		dlFileEntryType.setDescription(description);
 
-		dlFileEntryTypePersistence.update(dlFileEntryType, false);
+		dlFileEntryTypePersistence.update(dlFileEntryType);
 
 		dlFileEntryTypePersistence.setDDMStructures(
 			fileEntryTypeId, ddmStructureIds);

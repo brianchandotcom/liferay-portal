@@ -44,7 +44,7 @@ public class ShardLocalServiceImpl extends ShardLocalServiceBaseImpl {
 		shard.setClassPK(classPK);
 		shard.setName(name);
 
-		shardPersistence.update(shard, false);
+		shardPersistence.update(shard);
 
 		return shard;
 	}

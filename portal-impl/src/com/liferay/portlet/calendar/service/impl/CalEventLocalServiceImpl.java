@@ -209,7 +209,7 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 		event.setSecondReminder(secondReminder);
 		event.setExpandoBridgeAttributes(serviceContext);
 
-		calEventPersistence.update(event, false);
+		calEventPersistence.update(event);
 
 		// Resources
 
@@ -665,7 +665,7 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 
 						event.setRecurrenceObj(recurrence);
 
-						event = calEventPersistence.update(event, false);
+						event = calEventPersistence.update(event);
 
 						recurrence = event.getRecurrenceObj();
 					}
@@ -822,7 +822,7 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 		event.setSecondReminder(secondReminder);
 		event.setExpandoBridgeAttributes(serviceContext);
 
-		calEventPersistence.update(event, false);
+		calEventPersistence.update(event);
 
 		// Asset
 

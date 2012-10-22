@@ -115,7 +115,7 @@ public class ShoppingCouponLocalServiceImpl
 		coupon.setDiscount(discount);
 		coupon.setDiscountType(discountType);
 
-		shoppingCouponPersistence.update(coupon, false);
+		shoppingCouponPersistence.update(coupon);
 
 		return coupon;
 	}
@@ -224,7 +224,7 @@ public class ShoppingCouponLocalServiceImpl
 		coupon.setDiscount(discount);
 		coupon.setDiscountType(discountType);
 
-		shoppingCouponPersistence.update(coupon, false);
+		shoppingCouponPersistence.update(coupon);
 
 		return coupon;
 	}

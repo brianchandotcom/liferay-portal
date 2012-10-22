@@ -55,7 +55,7 @@ public class MBStatsUserLocalServiceImpl
 		statsUser.setUserId(userId);
 
 		try {
-			mbStatsUserPersistence.update(statsUser, false);
+			mbStatsUserPersistence.update(statsUser);
 		}
 		catch (SystemException se) {
 			if (_log.isWarnEnabled()) {
@@ -265,7 +265,7 @@ public class MBStatsUserLocalServiceImpl
 			statsUser.setLastPostDate(lastPostDate);
 		}
 
-		mbStatsUserPersistence.update(statsUser, false);
+		mbStatsUserPersistence.update(statsUser);
 
 		return statsUser;
 	}

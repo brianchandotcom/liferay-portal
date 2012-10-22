@@ -46,7 +46,7 @@ public class ClassNameLocalServiceImpl
 
 			className.setValue(value);
 
-			classNamePersistence.update(className, false);
+			classNamePersistence.update(className);
 		}
 
 		return className;

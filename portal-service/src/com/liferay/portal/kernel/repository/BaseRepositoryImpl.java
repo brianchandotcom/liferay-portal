@@ -227,7 +227,7 @@ public abstract class BaseRepositoryImpl implements BaseRepository {
 			repositoryEntry.setRepositoryId(getRepositoryId());
 			repositoryEntry.setMappedId(objectId);
 
-			RepositoryEntryUtil.update(repositoryEntry, false);
+			RepositoryEntryUtil.update(repositoryEntry);
 
 			newRepositoryEntry = true;
 		}
@@ -426,7 +426,7 @@ public abstract class BaseRepositoryImpl implements BaseRepository {
 
 		repositoryEntry.setManualCheckInRequired(false);
 
-		RepositoryEntryUtil.update(repositoryEntry, false);
+		RepositoryEntryUtil.update(repositoryEntry);
 	}
 
 	protected void setManualCheckInRequired(
@@ -445,7 +445,7 @@ public abstract class BaseRepositoryImpl implements BaseRepository {
 
 		repositoryEntry.setManualCheckInRequired(manualCheckInRequired);
 
-		RepositoryEntryUtil.update(repositoryEntry, false);
+		RepositoryEntryUtil.update(repositoryEntry);
 	}
 
 	protected AssetEntryLocalService assetEntryLocalService;

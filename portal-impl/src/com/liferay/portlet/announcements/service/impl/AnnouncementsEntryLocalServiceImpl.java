@@ -109,7 +109,7 @@ public class AnnouncementsEntryLocalServiceImpl
 		entry.setPriority(priority);
 		entry.setAlert(alert);
 
-		announcementsEntryPersistence.update(entry, false);
+		announcementsEntryPersistence.update(entry);
 
 		// Resources
 
@@ -328,7 +328,7 @@ public class AnnouncementsEntryLocalServiceImpl
 		entry.setExpirationDate(expirationDate);
 		entry.setPriority(priority);
 
-		announcementsEntryPersistence.update(entry, false);
+		announcementsEntryPersistence.update(entry);
 
 		// Flags
 

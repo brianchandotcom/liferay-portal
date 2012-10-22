@@ -97,7 +97,7 @@ public class PasswordPolicyLocalServiceImpl
 		passwordPolicy.setResetFailureCount(resetFailureCount);
 		passwordPolicy.setResetTicketMaxAge(resetTicketMaxAge);
 
-		passwordPolicyPersistence.update(passwordPolicy, false);
+		passwordPolicyPersistence.update(passwordPolicy);
 
 		// Resources
 
@@ -340,7 +340,7 @@ public class PasswordPolicyLocalServiceImpl
 		passwordPolicy.setResetFailureCount(resetFailureCount);
 		passwordPolicy.setResetTicketMaxAge(resetTicketMaxAge);
 
-		passwordPolicyPersistence.update(passwordPolicy, false);
+		passwordPolicyPersistence.update(passwordPolicy);
 
 		return passwordPolicy;
 	}

@@ -287,7 +287,7 @@ public class PortletExportImportTest extends BaseExportImportTestCase {
 
 		_layoutSetPrototypeJournalArticle.setContent(xmlContent);
 
-		return JournalArticleUtil.update(journalArticle, true);
+		return JournalArticleUtil.update(journalArticle);
 	}
 
 	protected PortletPreferences updatePortletPreferences(

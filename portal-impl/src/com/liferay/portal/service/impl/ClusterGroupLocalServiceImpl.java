@@ -40,7 +40,7 @@ public class ClusterGroupLocalServiceImpl
 		clusterGroup.setName(name);
 		clusterGroup.setClusterNodeIds(StringUtil.merge(clusterNodeIds));
 
-		return clusterGroupPersistence.update(clusterGroup, false);
+		return clusterGroupPersistence.update(clusterGroup);
 	}
 
 	public ClusterGroup addWholeClusterGroup(String name)
@@ -54,7 +54,7 @@ public class ClusterGroupLocalServiceImpl
 		clusterGroup.setName(name);
 		clusterGroup.setWholeCluster(true);
 
-		return clusterGroupPersistence.update(clusterGroup, false);
+		return clusterGroupPersistence.update(clusterGroup);
 	}
 
 }

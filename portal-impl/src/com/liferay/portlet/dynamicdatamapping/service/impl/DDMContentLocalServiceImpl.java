@@ -70,7 +70,7 @@ public class DDMContentLocalServiceImpl extends DDMContentLocalServiceBaseImpl {
 		content.setDescription(description);
 		content.setXml(xml);
 
-		ddmContentPersistence.update(content, false);
+		ddmContentPersistence.update(content);
 
 		return content;
 	}
@@ -133,7 +133,7 @@ public class DDMContentLocalServiceImpl extends DDMContentLocalServiceBaseImpl {
 		content.setDescription(description);
 		content.setXml(xml);
 
-		ddmContentPersistence.update(content, false);
+		ddmContentPersistence.update(content);
 
 		return content;
 	}

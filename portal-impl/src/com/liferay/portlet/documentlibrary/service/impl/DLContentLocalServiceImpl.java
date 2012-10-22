@@ -60,7 +60,7 @@ public class DLContentLocalServiceImpl extends DLContentLocalServiceBaseImpl {
 
 		dlContent.setSize(bytes.length);
 
-		dlContentPersistence.update(dlContent, false);
+		dlContentPersistence.update(dlContent);
 
 		return dlContent;
 	}
@@ -86,7 +86,7 @@ public class DLContentLocalServiceImpl extends DLContentLocalServiceBaseImpl {
 
 			dlContent.setSize(size);
 
-			dlContentPersistence.update(dlContent, false);
+			dlContentPersistence.update(dlContent);
 
 			return dlContent;
 		}
@@ -200,7 +200,7 @@ public class DLContentLocalServiceImpl extends DLContentLocalServiceBaseImpl {
 			dLContent.setRepositoryId(newRepositoryId);
 			dLContent.setPath(newPath);
 
-			dlContentPersistence.update(dLContent, false);
+			dlContentPersistence.update(dLContent);
 		}
 	}
 

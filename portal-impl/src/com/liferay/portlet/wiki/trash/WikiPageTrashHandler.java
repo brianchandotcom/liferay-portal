@@ -249,7 +249,7 @@ public class WikiPageTrashHandler extends BaseTrashHandler {
 
 		page.setTitle(name);
 
-		WikiPageLocalServiceUtil.updateWikiPage(page, false);
+		WikiPageLocalServiceUtil.updateWikiPage(page);
 
 		WikiPageResource pageResource =
 			WikiPageResourceLocalServiceUtil.getPageResource(
@@ -257,8 +257,7 @@ public class WikiPageTrashHandler extends BaseTrashHandler {
 
 		pageResource.setTitle(name);
 
-		WikiPageResourceLocalServiceUtil.updateWikiPageResource(
-			pageResource, false);
+		WikiPageResourceLocalServiceUtil.updateWikiPageResource(pageResource);
 	}
 
 	@Override

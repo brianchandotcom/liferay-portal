@@ -79,7 +79,7 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 		category.setDescription(description);
 		category.setDisplayStyle(displayStyle);
 
-		mbCategoryPersistence.update(category, false);
+		mbCategoryPersistence.update(category);
 
 		// Resources
 
@@ -415,7 +415,7 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 		category.setDescription(description);
 		category.setDisplayStyle(displayStyle);
 
-		mbCategoryPersistence.update(category, false);
+		mbCategoryPersistence.update(category);
 
 		// Mailing list
 
@@ -533,7 +533,7 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 
 			thread.setCategoryId(toCategoryId);
 
-			mbThreadPersistence.update(thread, false);
+			mbThreadPersistence.update(thread);
 
 			List<MBMessage> messages = mbMessagePersistence.findByThreadId(
 				thread.getThreadId());
@@ -544,7 +544,7 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 
 				message.setCategoryId(toCategoryId);
 
-				mbMessagePersistence.update(message, false);
+				mbMessagePersistence.update(message);
 
 				// Indexer
 
@@ -563,7 +563,7 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 		toCategory.setMessageCount(
 			fromCategory.getMessageCount() + toCategory.getMessageCount());
 
-		mbCategoryPersistence.update(toCategory, false);
+		mbCategoryPersistence.update(toCategory);
 
 		deleteCategory(fromCategory);
 	}

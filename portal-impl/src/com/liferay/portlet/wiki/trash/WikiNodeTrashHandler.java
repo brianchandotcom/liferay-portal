@@ -145,7 +145,7 @@ public class WikiNodeTrashHandler extends BaseTrashHandler {
 
 		node.setName(name);
 
-		WikiNodeLocalServiceUtil.updateWikiNode(node, false);
+		WikiNodeLocalServiceUtil.updateWikiNode(node);
 	}
 
 	@Override

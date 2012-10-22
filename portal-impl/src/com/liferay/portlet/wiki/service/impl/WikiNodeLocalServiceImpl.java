@@ -92,7 +92,7 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 		node.setDescription(description);
 
 		try {
-			wikiNodePersistence.update(node, false);
+			wikiNodePersistence.update(node);
 		}
 		catch (SystemException se) {
 			if (_log.isWarnEnabled()) {
@@ -346,7 +346,7 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 
 		node.setName(TrashUtil.appendTrashNamespace(node.getName()));
 
-		wikiNodePersistence.update(node, false);
+		wikiNodePersistence.update(node);
 
 		return updateStatus(
 			userId, node, WorkflowConstants.STATUS_IN_TRASH,
@@ -360,7 +360,7 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 
 		node.setName(name);
 
-		wikiNodePersistence.update(node, false);
+		wikiNodePersistence.update(node);
 
 		TrashEntry trashEntry = trashEntryLocalService.getEntry(
 			WikiNode.class.getName(), node.getNodeId());
@@ -398,7 +398,7 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 		node.setName(name);
 		node.setDescription(description);
 
-		wikiNodePersistence.update(node, false);
+		wikiNodePersistence.update(node);
 
 		return node;
 	}
@@ -421,7 +421,7 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 		node.setStatusByUserName(user.getFullName());
 		node.setStatusDate(now);
 
-		wikiNodePersistence.update(node, false);
+		wikiNodePersistence.update(node);
 
 		// Pages
 

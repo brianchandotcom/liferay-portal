@@ -63,7 +63,7 @@ public class SocialActivityAchievementLocalServiceImpl
 
 		activityAchievement.setName(achievement.getName());
 
-		socialActivityAchievementPersistence.update(activityAchievement, false);
+		socialActivityAchievementPersistence.update(activityAchievement);
 
 		socialActivityCounterLocalService.incrementUserAchievementCounter(
 			userId, groupId);

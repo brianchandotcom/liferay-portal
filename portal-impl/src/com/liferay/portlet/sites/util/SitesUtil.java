@@ -203,14 +203,14 @@ public class SitesUtil {
 			"last-merge-time",
 			String.valueOf(targetLayout.getModifiedDate().getTime()));
 
-		LayoutLocalServiceUtil.updateLayout(targetLayout, false);
+		LayoutLocalServiceUtil.updateLayout(targetLayout);
 
 		UnicodeProperties prototypeTypeSettingsProperties =
 			layoutPrototypeLayout.getTypeSettingsProperties();
 
 		prototypeTypeSettingsProperties.setProperty("merge-fail-count", "0");
 
-		LayoutLocalServiceUtil.updateLayout(layoutPrototypeLayout, false);
+		LayoutLocalServiceUtil.updateLayout(layoutPrototypeLayout);
 	}
 
 	public static void copyLayout(
@@ -928,7 +928,7 @@ public class SitesUtil {
 
 			// Invoke updateImpl so that we do not trigger the listeners
 
-			LayoutUtil.updateImpl(layoutPrototypeLayout, false);
+			LayoutUtil.updateImpl(layoutPrototypeLayout);
 		}
 		finally {
 			LockLocalServiceUtil.unlock(
@@ -1057,7 +1057,7 @@ public class SitesUtil {
 			settingsProperties.setProperty(
 				"last-merge-time", String.valueOf(System.currentTimeMillis()));
 
-			LayoutSetLocalServiceUtil.updateLayoutSet(layoutSet, false);
+			LayoutSetLocalServiceUtil.updateLayoutSet(layoutSet);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -1067,7 +1067,7 @@ public class SitesUtil {
 
 			// Invoke updateImpl so that we do not trigger the listeners
 
-			LayoutSetUtil.updateImpl(layoutSetPrototypeLayoutSet, false);
+			LayoutSetUtil.updateImpl(layoutSetPrototypeLayoutSet);
 		}
 		finally {
 			LockLocalServiceUtil.unlock(
@@ -1081,7 +1081,7 @@ public class SitesUtil {
 
 		layout.setModifiedDate(null);
 
-		LayoutLocalServiceUtil.updateLayout(layout, false);
+		LayoutLocalServiceUtil.updateLayout(layout);
 
 		LayoutSet layoutSet = layout.getLayoutSet();
 		UnicodeProperties settingsProperties =
@@ -1092,7 +1092,7 @@ public class SitesUtil {
 		settingsProperties.setProperty(
 			"last-reset-time", String.valueOf(System.currentTimeMillis()));
 
-		LayoutSetLocalServiceUtil.updateLayoutSet(layoutSet, false);
+		LayoutSetLocalServiceUtil.updateLayoutSet(layoutSet);
 	}
 
 	public static void updateLayoutScopes(

@@ -316,7 +316,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			group.setExpandoBridgeAttributes(serviceContext);
 		}
 
-		groupPersistence.update(group, false);
+		groupPersistence.update(group);
 
 		// Layout sets
 
@@ -725,7 +725,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 			group.setSite(false);
 
-			groupPersistence.update(group, false);
+			groupPersistence.update(group);
 		}
 		else {
 			groupPersistence.remove(group);
@@ -2875,7 +2875,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 		group.setFriendlyURL(friendlyURL);
 
-		groupPersistence.update(group, false);
+		groupPersistence.update(group);
 
 		return group;
 	}
@@ -2954,7 +2954,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			group.setExpandoBridgeAttributes(serviceContext);
 		}
 
-		groupPersistence.update(group, false);
+		groupPersistence.update(group);
 
 		// Asset
 
@@ -3003,7 +3003,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 		group.setTypeSettings(typeSettings);
 
-		groupPersistence.update(group, false);
+		groupPersistence.update(group);
 
 		return group;
 	}
@@ -3029,7 +3029,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 		group.setSite(site);
 
-		groupPersistence.update(group, false);
+		groupPersistence.update(group);
 
 		return group;
 	}

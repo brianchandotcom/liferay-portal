@@ -38,7 +38,7 @@ public class MBDiscussionLocalServiceImpl
 		discussion.setClassPK(classPK);
 		discussion.setThreadId(threadId);
 
-		mbDiscussionPersistence.update(discussion, false);
+		mbDiscussionPersistence.update(discussion);
 
 		return discussion;
 	}

@@ -6212,7 +6212,7 @@ public class PortalImpl implements Portal {
 
 		ticket.setExpirationDate(expirationDate);
 
-		TicketLocalServiceUtil.updateTicket(ticket, false);
+		TicketLocalServiceUtil.updateTicket(ticket);
 
 		return true;
 	}

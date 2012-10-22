@@ -158,7 +158,7 @@ public class BlogsStatsUserLocalServiceImpl
 			statsUser.setGroupId(groupId);
 			statsUser.setUserId(userId);
 
-			blogsStatsUserPersistence.update(statsUser, false);
+			blogsStatsUserPersistence.update(statsUser);
 		}
 
 		return statsUser;
@@ -217,7 +217,7 @@ public class BlogsStatsUserLocalServiceImpl
 			statsUser.setLastPostDate(lastDisplayDate);
 		}
 
-		blogsStatsUserPersistence.update(statsUser, false);
+		blogsStatsUserPersistence.update(statsUser);
 	}
 
 }

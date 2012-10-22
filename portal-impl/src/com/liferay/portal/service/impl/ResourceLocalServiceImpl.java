@@ -741,7 +741,7 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 		for (ResourcePermission resourcePermission : resourcePermissions) {
 			resourcePermission.setPrimKey(newPrimKey);
 
-			resourcePermissionPersistence.update(resourcePermission, false);
+			resourcePermissionPersistence.update(resourcePermission);
 		}
 	}
 

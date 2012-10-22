@@ -62,7 +62,7 @@ public class MBBanLocalServiceImpl extends MBBanLocalServiceBaseImpl {
 
 		ban.setModifiedDate(serviceContext.getModifiedDate(now));
 
-		mbBanPersistence.update(ban, false);
+		mbBanPersistence.update(ban);
 
 		return ban;
 	}

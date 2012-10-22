@@ -89,7 +89,7 @@ public class PortletPreferencesListener
 
 				layout.setModifiedDate(new Date());
 
-				LayoutLocalServiceUtil.updateLayout(layout, true);
+				LayoutLocalServiceUtil.updateLayout(layout);
 			}
 		}
 		catch (Exception e) {

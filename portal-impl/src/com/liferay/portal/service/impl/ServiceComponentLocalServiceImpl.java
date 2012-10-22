@@ -167,7 +167,7 @@ public class ServiceComponentLocalServiceImpl
 
 			serviceComponent.setData(dataXML);
 
-			serviceComponentPersistence.update(serviceComponent, false);
+			serviceComponentPersistence.update(serviceComponent);
 
 			serviceComponentLocalService.upgradeDB(
 				classLoader, buildNamespace, buildNumber, buildAutoUpgrade,

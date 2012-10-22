@@ -86,7 +86,7 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 				user, groupId, repositoryId, parentFolderId, name, description,
 				hidden, serviceContext));
 
-		repositoryPersistence.update(repository, false);
+		repositoryPersistence.update(repository);
 
 		if (classNameId != getDefaultClassNameId()) {
 			try {
@@ -354,7 +354,7 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 		repository.setName(name);
 		repository.setDescription(description);
 
-		repositoryPersistence.update(repository, false);
+		repositoryPersistence.update(repository);
 
 		DLFolder dlFolder = dlFolderPersistence.findByPrimaryKey(
 			repository.getDlFolderId());
@@ -363,7 +363,7 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 		dlFolder.setName(name);
 		dlFolder.setDescription(description);
 
-		dlFolderPersistence.update(dlFolder, false);
+		dlFolderPersistence.update(dlFolder);
 	}
 
 	protected BaseRepository createRepositoryImpl(long repositoryEntryId)

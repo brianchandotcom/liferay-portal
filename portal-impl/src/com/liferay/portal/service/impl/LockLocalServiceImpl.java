@@ -165,7 +165,7 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 			lock.setExpirationDate(new Date(now.getTime() + expirationTime));
 		}
 
-		lockPersistence.update(lock, false);
+		lockPersistence.update(lock);
 
 		return lock;
 	}
@@ -197,7 +197,7 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 			lock.setKey(key);
 			lock.setOwner(updatedOwner);
 
-			lockPersistence.update(lock, false);
+			lockPersistence.update(lock);
 
 			lock.setNew(true);
 
@@ -209,7 +209,7 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 			lock.setKey(key);
 			lock.setOwner(updatedOwner);
 
-			lockPersistence.update(lock, false);
+			lockPersistence.update(lock);
 
 			lock.setNew(true);
 
@@ -252,7 +252,7 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 					new Date(now.getTime() + expirationTime));
 			}
 
-			lockPersistence.update(lock, false);
+			lockPersistence.update(lock);
 
 			return lock;
 		}

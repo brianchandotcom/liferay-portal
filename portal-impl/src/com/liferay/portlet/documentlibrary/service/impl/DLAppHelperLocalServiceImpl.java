@@ -459,7 +459,7 @@ public class DLAppHelperLocalServiceImpl
 		dlFileEntry.setTitle(
 			TrashUtil.appendTrashNamespace(dlFileEntry.getTitle()));
 
-		dlFileEntryPersistence.update(dlFileEntry, false);
+		dlFileEntryPersistence.update(dlFileEntry);
 
 		List<DLFileVersion> dlFileVersions =
 			dlFileVersionLocalService.getFileVersions(
@@ -611,7 +611,7 @@ public class DLAppHelperLocalServiceImpl
 
 		dlFolder.setName(TrashUtil.appendTrashNamespace(dlFolder.getName()));
 
-		dlFolderPersistence.update(dlFolder, false);
+		dlFolderPersistence.update(dlFolder);
 
 		// File rank
 
@@ -630,7 +630,7 @@ public class DLAppHelperLocalServiceImpl
 		dlFileEntry.setTitle(
 			TrashUtil.stripTrashNamespace(dlFileEntry.getTitle()));
 
-		dlFileEntryPersistence.update(dlFileEntry, false);
+		dlFileEntryPersistence.update(dlFileEntry);
 
 		FileVersion fileVersion = new LiferayFileVersion(
 			dlFileEntry.getLatestFileVersion(true));
@@ -1127,7 +1127,7 @@ public class DLAppHelperLocalServiceImpl
 
 						dlFileVersion.setStatus(WorkflowConstants.STATUS_DRAFT);
 
-						dlFileVersionPersistence.update(dlFileVersion, false);
+						dlFileVersionPersistence.update(dlFileVersion);
 
 						workflowInstanceLinkLocalService.
 							deleteWorkflowInstanceLink(

@@ -113,7 +113,7 @@ public class DDMStructureLocalServiceImpl
 		structure.setStorageType(storageType);
 		structure.setType(type);
 
-		ddmStructurePersistence.update(structure, false);
+		ddmStructurePersistence.update(structure);
 
 		// Resources
 
@@ -511,7 +511,7 @@ public class DDMStructureLocalServiceImpl
 		structure.setDescriptionMap(descriptionMap);
 		structure.setXsd(xsd);
 
-		ddmStructurePersistence.update(structure, false);
+		ddmStructurePersistence.update(structure);
 
 		syncStructureTemplatesFields(structure);
 
@@ -558,7 +558,7 @@ public class DDMStructureLocalServiceImpl
 
 			template.setScript(script);
 
-			ddmTemplatePersistence.update(template, false);
+			ddmTemplatePersistence.update(template);
 		}
 	}
 

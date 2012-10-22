@@ -795,7 +795,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		user.setStatus(WorkflowConstants.STATUS_DRAFT);
 		user.setExpandoBridgeAttributes(serviceContext);
 
-		userPersistence.update(user, false, serviceContext);
+		userPersistence.update(user, serviceContext);
 
 		// Resources
 
@@ -844,7 +844,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		contact.setBirthday(birthday);
 		contact.setJobTitle(jobTitle);
 
-		contactPersistence.update(contact, false, serviceContext);
+		contactPersistence.update(contact, serviceContext);
 
 		// Group
 
@@ -1349,7 +1349,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 					user.setLastFailedLoginDate(null);
 					user.setFailedLoginAttempts(0);
 
-					userPersistence.update(user, false);
+					userPersistence.update(user);
 				}
 			}
 
@@ -1367,7 +1367,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 					user.setLockout(false);
 					user.setLockoutDate(null);
 
-					userPersistence.update(user, false);
+					userPersistence.update(user);
 				}
 			}
 
@@ -1392,7 +1392,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		user.setLastFailedLoginDate(now);
 		user.setFailedLoginAttempts(++failedLoginAttempts);
 
-		userPersistence.update(user, false);
+		userPersistence.update(user);
 	}
 
 	/**
@@ -1474,12 +1474,12 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			if (graceLoginCount < passwordPolicy.getGraceLimit()) {
 				user.setGraceLoginCount(++graceLoginCount);
 
-				userPersistence.update(user, false);
+				userPersistence.update(user);
 			}
 			else {
 				user.setDigest(StringPool.BLANK);
 
-				userPersistence.update(user, false);
+				userPersistence.update(user);
 
 				throw new PasswordExpiredException();
 			}
@@ -1493,7 +1493,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			if (user.getLastLoginDate() == null) {
 				user.setPasswordReset(true);
 
-				userPersistence.update(user, false);
+				userPersistence.update(user);
 			}
 		}
 	}
@@ -1556,8 +1556,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			user.setPasswordEncrypted(true);
 			user.setPasswordUnencrypted(password);
 
-			userPersistence.update(user, false);
-
+			userPersistence.update(user);
 		}
 
 		if (user.hasCompanyMx()) {
@@ -1631,7 +1630,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			if (isPasswordExpired(user)) {
 				user.setPasswordReset(true);
 
-				userPersistence.update(user, false);
+				userPersistence.update(user);
 			}
 
 			return new KeyValuePair(name, password);
@@ -1659,7 +1658,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		if (portraitId > 0) {
 			user.setPortraitId(0);
 
-			userPersistence.update(user, false);
+			userPersistence.update(user);
 
 			imageLocalService.deleteImage(portraitId);
 		}
@@ -2907,7 +2906,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			if (user.getPasswordModifiedDate() == null) {
 				user.setPasswordModifiedDate(now);
 
-				userLocalService.updateUser(user, false);
+				userLocalService.updateUser(user);
 			}
 
 			long passwordStartTime = user.getPasswordModifiedDate().getTime();
@@ -2949,7 +2948,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			if (user.getPasswordModifiedDate() == null) {
 				user.setPasswordModifiedDate(now);
 
-				userLocalService.updateUser(user, false);
+				userLocalService.updateUser(user);
 			}
 
 			long timeModified = user.getPasswordModifiedDate().getTime();
@@ -3420,7 +3419,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 				user.setPasswordModified(true);
 				user.setPasswordModifiedDate(new Date());
 
-				userPersistence.update(user, false);
+				userPersistence.update(user);
 
 				user.setPasswordModified(false);
 			}
@@ -3732,7 +3731,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		user.setAgreedToTermsOfUse(agreedToTermsOfUse);
 
-		userPersistence.update(user, false);
+		userPersistence.update(user);
 
 		return user;
 	}
@@ -3784,7 +3783,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		user.setCreateDate(createDate);
 
-		userPersistence.update(user, false);
+		userPersistence.update(user);
 
 		return user;
 	}
@@ -3816,13 +3815,13 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			user, password, user.getFirstName(), user.getMiddleName(),
 			user.getLastName(), emailAddress1);
 
-		userPersistence.update(user, false);
+		userPersistence.update(user);
 
 		Contact contact = user.getContact();
 
 		contact.setEmailAddress(user.getEmailAddress());
 
-		contactPersistence.update(contact, false);
+		contactPersistence.update(contact);
 
 		return user;
 	}
@@ -3861,13 +3860,13 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 				user, password, user.getFirstName(), user.getMiddleName(),
 				user.getLastName(), emailAddress1);
 
-			userPersistence.update(user, false);
+			userPersistence.update(user);
 
 			Contact contact = user.getContact();
 
 			contact.setEmailAddress(user.getEmailAddress());
 
-			contactPersistence.update(contact, false);
+			contactPersistence.update(contact);
 		}
 		else {
 			sendEmailAddressVerification(user, emailAddress1, serviceContext);
@@ -3893,7 +3892,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		user.setEmailAddressVerified(emailAddressVerified);
 
-		userPersistence.update(user, false);
+		userPersistence.update(user);
 
 		return user;
 	}
@@ -3914,7 +3913,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		user.setFacebookId(facebookId);
 
-		userPersistence.update(user, false);
+		userPersistence.update(user);
 
 		return user;
 	}
@@ -4084,7 +4083,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			contact.setBirthday(birthday);
 			contact.setJobTitle(jobTitle);
 
-			contactPersistence.update(contact, false, serviceContext);
+			contactPersistence.update(contact, serviceContext);
 
 			// Indexer
 
@@ -4096,7 +4095,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		user.setStatus(WorkflowConstants.STATUS_DRAFT);
 
-		userPersistence.update(user, false, serviceContext);
+		userPersistence.update(user, serviceContext);
 
 		// Workflow
 
@@ -4139,14 +4138,14 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		user.setJobTitle(jobTitle);
 
-		userPersistence.update(user, false);
+		userPersistence.update(user);
 
 		Contact contact = contactPersistence.findByPrimaryKey(
 			user.getContactId());
 
 		contact.setJobTitle(jobTitle);
 
-		contactPersistence.update(contact, false);
+		contactPersistence.update(contact);
 
 		return user;
 	}
@@ -4178,7 +4177,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		user.setLastFailedLoginDate(null);
 		user.setFailedLoginAttempts(0);
 
-		userPersistence.update(user, false);
+		userPersistence.update(user);
 
 		return user;
 	}
@@ -4215,7 +4214,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			user.setFailedLoginAttempts(0);
 		}
 
-		userPersistence.update(user, false);
+		userPersistence.update(user);
 
 		return user;
 	}
@@ -4292,7 +4291,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		user.setModifiedDate(modifiedDate);
 
-		userPersistence.update(user, false);
+		userPersistence.update(user);
 
 		return user;
 	}
@@ -4315,7 +4314,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		user.setOpenId(openId);
 
-		userPersistence.update(user, false);
+		userPersistence.update(user);
 
 		return user;
 	}
@@ -4412,7 +4411,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		}
 
 		try {
-			userPersistence.update(user, false);
+			userPersistence.update(user);
 		}
 		catch (ModelListenerException mle) {
 			String msg = GetterUtil.getString(mle.getCause().getMessage());
@@ -4469,7 +4468,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		user.setPasswordModifiedDate(passwordModifiedDate);
 		user.setDigest(StringPool.BLANK);
 
-		userPersistence.update(user, false);
+		userPersistence.update(user);
 
 		return user;
 	}
@@ -4492,7 +4491,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		user.setPasswordReset(passwordReset);
 
-		userPersistence.update(user, false);
+		userPersistence.update(user);
 
 		return user;
 	}
@@ -4552,7 +4551,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			throw new ImageSizeException(ioe);
 		}
 
-		userPersistence.update(user, false);
+		userPersistence.update(user);
 
 		return user;
 	}
@@ -4578,7 +4577,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		user.setReminderQueryQuestion(question);
 		user.setReminderQueryAnswer(answer);
 
-		userPersistence.update(user, false);
+		userPersistence.update(user);
 
 		return user;
 	}
@@ -4610,7 +4609,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		user.setScreenName(screenName);
 
-		userPersistence.update(user, false);
+		userPersistence.update(user);
 
 		// Group
 
@@ -4619,7 +4618,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		group.setFriendlyURL(StringPool.SLASH + screenName);
 
-		groupPersistence.update(group, false);
+		groupPersistence.update(group);
 
 		return user;
 	}
@@ -4640,7 +4639,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		user.setStatus(status);
 
-		userPersistence.update(user, false);
+		userPersistence.update(user);
 
 		reindex(user);
 
@@ -4822,7 +4821,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		user.setJobTitle(jobTitle);
 		user.setExpandoBridgeAttributes(serviceContext);
 
-		userPersistence.update(user, false, serviceContext);
+		userPersistence.update(user, serviceContext);
 
 		// Contact
 
@@ -4866,7 +4865,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		contact.setYmSn(ymSn);
 		contact.setJobTitle(jobTitle);
 
-		contactPersistence.update(contact, false, serviceContext);
+		contactPersistence.update(contact, serviceContext);
 
 		// Group
 
@@ -4875,7 +4874,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		group.setFriendlyURL(StringPool.SLASH + screenName);
 
-		groupPersistence.update(group, false);
+		groupPersistence.update(group);
 
 		// Groups and organizations
 
@@ -4989,12 +4988,12 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 			contact.setEmailAddress(user.getEmailAddress());
 
-			contactPersistence.update(contact, false);
+			contactPersistence.update(contact);
 		}
 
 		user.setEmailAddressVerified(true);
 
-		userPersistence.update(user, false);
+		userPersistence.update(user);
 
 		ticketLocalService.deleteTicket(ticket);
 	}
@@ -5220,7 +5219,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			user.setPassword(PwdEncryptor.encrypt(user.getPassword()));
 			user.setPasswordEncrypted(true);
 
-			userPersistence.update(user, false);
+			userPersistence.update(user);
 		}
 
 		// Check password policy to see if the is account locked out or if the
@@ -5286,7 +5285,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 				user.setDigest(digest);
 
-				userPersistence.update(user, false);
+				userPersistence.update(user);
 			}
 		}
 

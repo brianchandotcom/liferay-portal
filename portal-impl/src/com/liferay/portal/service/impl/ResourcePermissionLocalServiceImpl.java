@@ -202,7 +202,7 @@ public class ResourcePermissionLocalServiceImpl
 
 				resourcePermission.setActionIds(actionIdsLong);
 
-				resourcePermissionPersistence.update(resourcePermission, false);
+				resourcePermissionPersistence.update(resourcePermission);
 			}
 		}
 	}
@@ -811,7 +811,7 @@ public class ResourcePermissionLocalServiceImpl
 		for (ResourcePermission resourcePermission : resourcePermissions) {
 			resourcePermission.setRoleId(toRoleId);
 
-			resourcePermissionPersistence.update(resourcePermission, false);
+			resourcePermissionPersistence.update(resourcePermission);
 		}
 
 		roleLocalService.deleteRole(fromRoleId);
@@ -1126,7 +1126,7 @@ public class ResourcePermissionLocalServiceImpl
 
 		resourcePermission.setActionIds(actionIdsLong);
 
-		resourcePermissionPersistence.update(resourcePermission, false);
+		resourcePermissionPersistence.update(resourcePermission);
 
 		PermissionCacheUtil.clearCache();
 

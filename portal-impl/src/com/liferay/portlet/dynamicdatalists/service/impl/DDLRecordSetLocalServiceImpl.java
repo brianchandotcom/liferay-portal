@@ -78,7 +78,7 @@ public class DDLRecordSetLocalServiceImpl
 		recordSet.setMinDisplayRows(minDisplayRows);
 		recordSet.setScope(scope);
 
-		ddlRecordSetPersistence.update(recordSet, false);
+		ddlRecordSetPersistence.update(recordSet);
 
 		// Resources
 
@@ -255,7 +255,7 @@ public class DDLRecordSetLocalServiceImpl
 		recordSet.setModifiedDate(serviceContext.getModifiedDate(null));
 		recordSet.setMinDisplayRows(minDisplayRows);
 
-		ddlRecordSetPersistence.update(recordSet, false);
+		ddlRecordSetPersistence.update(recordSet);
 
 		return recordSet;
 	}
@@ -303,7 +303,7 @@ public class DDLRecordSetLocalServiceImpl
 		recordSet.setDescriptionMap(descriptionMap);
 		recordSet.setMinDisplayRows(minDisplayRows);
 
-		ddlRecordSetPersistence.update(recordSet, false);
+		ddlRecordSetPersistence.update(recordSet);
 
 		return recordSet;
 	}

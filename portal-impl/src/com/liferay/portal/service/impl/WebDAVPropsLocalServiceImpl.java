@@ -63,7 +63,7 @@ public class WebDAVPropsLocalServiceImpl
 			webDavProps.setClassNameId(classNameId);
 			webDavProps.setClassPK(classPK);
 
-			webDAVPropsPersistence.update(webDavProps, false);
+			webDAVPropsPersistence.update(webDavProps);
 		}
 
 		return webDavProps;
@@ -79,7 +79,7 @@ public class WebDAVPropsLocalServiceImpl
 			throw new WebDAVException("Problem trying to store WebDAVProps", e);
 		}
 
-		webDAVPropsPersistence.update(webDavProps, true);
+		webDAVPropsPersistence.update(webDavProps);
 	}
 
 }

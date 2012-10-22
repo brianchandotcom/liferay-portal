@@ -261,7 +261,7 @@ public class LayoutLocalServiceStagingAdvice implements MethodInterceptor {
 		originalLayout.setLayoutPrototypeLinkEnabled(
 			layoutPrototypeLinkEnabled);
 
-		LayoutUtil.update(originalLayout, false);
+		LayoutUtil.update(originalLayout);
 
 		boolean hasWorkflowTask = StagingUtil.hasWorkflowTask(
 			serviceContext.getUserId(), layoutRevision);

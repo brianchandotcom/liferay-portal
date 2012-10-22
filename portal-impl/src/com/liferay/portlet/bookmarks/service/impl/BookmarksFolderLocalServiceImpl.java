@@ -69,7 +69,7 @@ public class BookmarksFolderLocalServiceImpl
 		folder.setDescription(description);
 		folder.setExpandoBridgeAttributes(serviceContext);
 
-		bookmarksFolderPersistence.update(folder, false);
+		bookmarksFolderPersistence.update(folder);
 
 		// Resources
 
@@ -245,7 +245,7 @@ public class BookmarksFolderLocalServiceImpl
 		folder.setDescription(description);
 		folder.setExpandoBridgeAttributes(serviceContext);
 
-		bookmarksFolderPersistence.update(folder, false);
+		bookmarksFolderPersistence.update(folder);
 
 		return folder;
 	}
@@ -322,7 +322,7 @@ public class BookmarksFolderLocalServiceImpl
 		for (BookmarksEntry entry : entries) {
 			entry.setFolderId(toFolderId);
 
-			bookmarksEntryPersistence.update(entry, false);
+			bookmarksEntryPersistence.update(entry);
 
 			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 				BookmarksEntry.class);

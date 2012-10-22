@@ -66,7 +66,7 @@ public class ShoppingCategoryLocalServiceImpl
 		category.setName(name);
 		category.setDescription(description);
 
-		shoppingCategoryPersistence.update(category, false);
+		shoppingCategoryPersistence.update(category);
 
 		// Resources
 
@@ -298,7 +298,7 @@ public class ShoppingCategoryLocalServiceImpl
 		category.setName(name);
 		category.setDescription(description);
 
-		shoppingCategoryPersistence.update(category, false);
+		shoppingCategoryPersistence.update(category);
 
 		return category;
 	}
@@ -381,7 +381,7 @@ public class ShoppingCategoryLocalServiceImpl
 
 			item.setCategoryId(toCategoryId);
 
-			shoppingItemPersistence.update(item, false);
+			shoppingItemPersistence.update(item);
 		}
 
 		deleteCategory(fromCategory);

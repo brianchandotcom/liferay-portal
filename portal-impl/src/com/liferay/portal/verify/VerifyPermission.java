@@ -161,13 +161,13 @@ public class VerifyPermission extends VerifyProcess {
 				resourcePermission.setActionIds(organizationActions);
 
 				ResourcePermissionLocalServiceUtil.updateResourcePermission(
-					resourcePermission, false);
+					resourcePermission);
 
 				groupResourcePermission.resetOriginalValues();
 				groupResourcePermission.setActionIds(groupActions);
 
 				ResourcePermissionLocalServiceUtil.updateResourcePermission(
-					groupResourcePermission, false);
+					groupResourcePermission);
 			}
 			catch (Exception e) {
 				_log.error(e, e);

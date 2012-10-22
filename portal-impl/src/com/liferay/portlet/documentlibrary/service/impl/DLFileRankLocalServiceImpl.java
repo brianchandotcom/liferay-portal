@@ -50,7 +50,7 @@ public class DLFileRankLocalServiceImpl extends DLFileRankLocalServiceBaseImpl {
 		dlFileRank.setActive(true);
 
 		try {
-			dlFileRankPersistence.update(dlFileRank, false);
+			dlFileRankPersistence.update(dlFileRank);
 		}
 		catch (SystemException se) {
 			if (_log.isWarnEnabled()) {
@@ -137,7 +137,7 @@ public class DLFileRankLocalServiceImpl extends DLFileRankLocalServiceBaseImpl {
 		for (DLFileRank dlFileRank : dlFileRanks) {
 			dlFileRank.setActive(false);
 
-			dlFileRankPersistence.update(dlFileRank, false);
+			dlFileRankPersistence.update(dlFileRank);
 		}
 	}
 
@@ -156,7 +156,7 @@ public class DLFileRankLocalServiceImpl extends DLFileRankLocalServiceBaseImpl {
 		for (DLFileRank dlFileRank : dlFileRanks) {
 			dlFileRank.setActive(true);
 
-			dlFileRankPersistence.update(dlFileRank, false);
+			dlFileRankPersistence.update(dlFileRank);
 		}
 	}
 
@@ -192,7 +192,7 @@ public class DLFileRankLocalServiceImpl extends DLFileRankLocalServiceBaseImpl {
 			dlFileRank.setCreateDate(serviceContext.getCreateDate(null));
 
 			try {
-				dlFileRankPersistence.update(dlFileRank, false);
+				dlFileRankPersistence.update(dlFileRank);
 			}
 			catch (Exception e) {
 				if (_log.isWarnEnabled()) {
@@ -227,7 +227,7 @@ public class DLFileRankLocalServiceImpl extends DLFileRankLocalServiceBaseImpl {
 		for (DLFileRank dlFileRank : dlFileRanks) {
 			dlFileRank.setActive(active);
 
-			dlFileRankPersistence.update(dlFileRank, false);
+			dlFileRankPersistence.update(dlFileRank);
 		}
 	}
 

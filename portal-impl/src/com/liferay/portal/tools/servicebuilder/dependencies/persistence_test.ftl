@@ -215,7 +215,7 @@ public class ${entity.name}PersistenceTest {
 			</#if>
 		</#list>
 
-		_persistence.update(new${entity.name}, false);
+		_persistence.update(new${entity.name});
 
 		${entity.name} existing${entity.name} = _persistence.findByPrimaryKey(new${entity.name}.getPrimaryKey());
 
@@ -562,7 +562,7 @@ public class ${entity.name}PersistenceTest {
 			</#if>
 		</#list>
 
-		_persistence.update(${entity.varName}, false);
+		_persistence.update(${entity.varName});
 
 		return ${entity.varName};
 	}
@@ -604,7 +604,7 @@ public class ${entity.name}PersistenceTest {
 
 			parent${entity.name}.setParent${pkColumn.methodName}(root${entity.name}.get${pkColumn.methodName}());
 
-			_persistence.update(parent${entity.name}, false);
+			_persistence.update(parent${entity.name});
 
 			root${entity.name} = _persistence.fetchByPrimaryKey(root${entity.name}.getPrimaryKey());
 			child${entity.name} = _persistence.fetchByPrimaryKey(child${entity.name}.getPrimaryKey());
@@ -634,7 +634,7 @@ public class ${entity.name}PersistenceTest {
 
 			parent${entity.name}.setParent${pkColumn.methodName}(root${entity.name}.get${pkColumn.methodName}());
 
-			_persistence.update(parent${entity.name}, false);
+			_persistence.update(parent${entity.name});
 
 			root${entity.name} = _persistence.fetchByPrimaryKey(root${entity.name}.getPrimaryKey());
 			child${entity.name} = _persistence.fetchByPrimaryKey(child${entity.name}.getPrimaryKey());
@@ -672,7 +672,7 @@ public class ${entity.name}PersistenceTest {
 
 			parent${entity.name}.setParent${pkColumn.methodName}(rightRootChild${entity.name}.get${pkColumn.methodName}());
 
-			_persistence.update(parent${entity.name}, false);
+			_persistence.update(parent${entity.name});
 
 			root${entity.name} = _persistence.fetchByPrimaryKey(root${entity.name}.getPrimaryKey());
 			leftRootChild${entity.name} = _persistence.fetchByPrimaryKey(leftRootChild${entity.name}.getPrimaryKey());
@@ -716,7 +716,7 @@ public class ${entity.name}PersistenceTest {
 
 			parent${entity.name}.setParent${pkColumn.methodName}(leftRootChild${entity.name}.get${pkColumn.methodName}());
 
-			_persistence.update(parent${entity.name}, false);
+			_persistence.update(parent${entity.name});
 
 			root${entity.name} = _persistence.fetchByPrimaryKey(root${entity.name}.getPrimaryKey());
 			leftRootChild${entity.name} = _persistence.fetchByPrimaryKey(leftRootChild${entity.name}.getPrimaryKey());
@@ -812,7 +812,7 @@ public class ${entity.name}PersistenceTest {
 				${entity.varName}.setParent${pkColumn.methodName}(parent${pkColumn.methodName});
 			}
 
-			_persistence.update(${entity.varName}, false);
+			_persistence.update(${entity.varName});
 
 			return ${entity.varName};
 		}

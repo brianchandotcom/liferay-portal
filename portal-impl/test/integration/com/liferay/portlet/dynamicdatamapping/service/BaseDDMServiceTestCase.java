@@ -17,6 +17,7 @@ package com.liferay.portlet.dynamicdatamapping.service;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.TestPropsValues;
@@ -32,10 +33,17 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import org.junit.Before;
+
 /**
  * @author Eduardo Garcia
  */
 public class BaseDDMServiceTestCase {
+
+	@Before
+	public void setUp() throws Exception {
+		group = ServiceTestUtil.addGroup();
+	}
 
 	protected DDMTemplate addDetailTemplate(long classPK, String name)
 		throws Exception {
@@ -84,10 +92,10 @@ public class BaseDDMServiceTestCase {
 		throws Exception {
 
 		return DDMStructureLocalServiceUtil.addStructure(
-			TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
+			TestPropsValues.getUserId(), group.getGroupId(),
 			DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID, classNameId,
 			structureKey, getDefaultLocaleMap(name), null, xsd, storageType,
-			type, ServiceTestUtil.getServiceContext());
+			type, ServiceTestUtil.getServiceContext(group.getGroupId()));
 	}
 
 	protected DDMTemplate addTemplate(
@@ -116,10 +124,10 @@ public class BaseDDMServiceTestCase {
 		throws Exception {
 
 		return DDMTemplateLocalServiceUtil.addTemplate(
-			TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
-			classNameId, classPK, templateKey, getDefaultLocaleMap(name), null,
-			type, mode, language, script, cacheable,
-			ServiceTestUtil.getServiceContext());
+			TestPropsValues.getUserId(), group.getGroupId(), classNameId,
+			classPK, templateKey, getDefaultLocaleMap(name), null, type, mode,
+			language, script, cacheable,
+			ServiceTestUtil.getServiceContext(group.getGroupId()));
 	}
 
 	protected Map<Locale, String> getDefaultLocaleMap(String defaultValue) {
@@ -161,5 +169,7 @@ public class BaseDDMServiceTestCase {
 
 		return StringUtil.read(inputStream);
 	}
+
+	protected Group group;
 
 }

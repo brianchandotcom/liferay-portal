@@ -180,14 +180,14 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 	@Test
 	public void testSearchCount() throws Exception {
 		int initialCount = DDMTemplateLocalServiceUtil.searchCount(
-			TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
-			_classNameId, 0, "Test Template", null, null, null, null, false);
+			TestPropsValues.getCompanyId(), group.getGroupId(), _classNameId, 0,
+			"Test Template", null, null, null, null, false);
 
 		addListTemplate(_classNameId, 0, "Test Template");
 
 		int count = DDMTemplateLocalServiceUtil.searchCount(
-			TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
-			_classNameId, 0, "Test Template", null, null, null, null, false);
+			TestPropsValues.getCompanyId(), group.getGroupId(), _classNameId, 0,
+			"Test Template", null, null, null, null, false);
 
 		Assert.assertEquals(initialCount + 1, count);
 	}
@@ -195,14 +195,14 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 	@Test
 	public void testSearchCountByKeywords() throws Exception {
 		int initialCount = DDMTemplateLocalServiceUtil.searchCount(
-			TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
-			_classNameId, 0, null, null, null);
+			TestPropsValues.getCompanyId(), group.getGroupId(), _classNameId, 0,
+			null, null, null);
 
 		addListTemplate(_classNameId, 0, "Test Template");
 
 		int count = DDMTemplateLocalServiceUtil.searchCount(
-			TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
-			_classNameId, 0, null, null, null);
+			TestPropsValues.getCompanyId(), group.getGroupId(), _classNameId, 0,
+			null, null, null);
 
 		Assert.assertEquals(initialCount + 1, count);
 	}
@@ -213,7 +213,7 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 		return DDMTemplateLocalServiceUtil.copyTemplates(
 			template.getUserId(), template.getClassNameId(),
 			template.getClassPK(), -1, template.getType(),
-			ServiceTestUtil.getServiceContext());
+			ServiceTestUtil.getServiceContext(group.getGroupId()));
 	}
 
 	protected DDMTemplate updateTemplate(DDMTemplate template)
@@ -223,7 +223,8 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 			template.getTemplateId(), template.getNameMap(),
 			template.getDescriptionMap(), template.getType(),
 			template.getMode(), template.getLanguage(), template.getScript(),
-			template.isCacheable(), ServiceTestUtil.getServiceContext());
+			template.isCacheable(),
+			ServiceTestUtil.getServiceContext(group.getGroupId()));
 	}
 
 	private long _classNameId = PortalUtil.getClassNameId(AssetEntry.class);

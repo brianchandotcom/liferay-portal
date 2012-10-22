@@ -19,7 +19,9 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.TestPropsValues;
@@ -39,6 +41,8 @@ public class DLAppServiceHttpTest {
 
 	@Before
 	public void setUp() throws Exception {
+		_group = ServiceTestUtil.addGroup();
+
 		String name = "Test Folder";
 		String description = "This is a test folder.";
 
@@ -46,18 +50,18 @@ public class DLAppServiceHttpTest {
 
 		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAddGuestPermissions(true);
+		serviceContext.setScopeGroupId(_group.getGroupId());
 
 		try {
 			DLAppServiceHttp.deleteFolder(
-				TestPropsValues.getHttpPrincipal(),
-				TestPropsValues.getGroupId(),
+				TestPropsValues.getHttpPrincipal(), _group.getGroupId(),
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, name);
 		}
 		catch (Exception e) {
 		}
 
 		_folder = DLAppServiceHttp.addFolder(
-			TestPropsValues.getHttpPrincipal(), TestPropsValues.getGroupId(),
+			TestPropsValues.getHttpPrincipal(), _group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, name, description,
 			serviceContext);
 	}
@@ -106,16 +110,19 @@ public class DLAppServiceHttpTest {
 
 		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAddGuestPermissions(true);
+		serviceContext.setScopeGroupId(_group.getGroupId());
 
 		return DLAppServiceHttp.addFileEntry(
-			TestPropsValues.getHttpPrincipal(), TestPropsValues.getGroupId(),
-			folderId, title, ContentTypes.TEXT_PLAIN, title, description,
-			changeLog, bytes, serviceContext);
+			TestPropsValues.getHttpPrincipal(), _group.getGroupId(), folderId,
+			title, ContentTypes.TEXT_PLAIN, title, description, changeLog,
+			bytes, serviceContext);
 	}
 
 	private static final String _CONTENT =
 		"Content: Enterprise. Open Source. For Life.";
 
 	private Folder _folder;
+
+	private Group _group;
 
 }

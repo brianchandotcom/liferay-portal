@@ -68,6 +68,7 @@ public class TestPropsValues {
 		return _companyId;
 	}
 
+	@Deprecated
 	public static long getGroupId() throws Exception {
 		if (_groupId > 0) {
 			return _groupId;
@@ -123,12 +124,17 @@ public class TestPropsValues {
 		return login;
 	}
 
+	@Deprecated
 	public static long getPlid() throws Exception {
+		return getPlid(getGroupId());
+	}
+
+	public static long getPlid(long groupId) throws Exception {
 		if (_plid > 0) {
 			return _plid;
 		}
 
-		_plid = LayoutLocalServiceUtil.getDefaultPlid(getGroupId());
+		_plid = LayoutLocalServiceUtil.getDefaultPlid(groupId);
 
 		return _plid;
 	}

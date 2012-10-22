@@ -22,6 +22,8 @@ import com.liferay.client.soap.portlet.documentlibrary.service.http.DLAppService
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.Group;
+import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.TestPropsValues;
@@ -41,6 +43,8 @@ public class DLAppServiceSoapTest {
 
 	@Before
 	public void setUp() throws Exception {
+		_group = ServiceTestUtil.addGroup();
+
 		String name = "Test Folder";
 		String description = "This is a test folder.";
 
@@ -48,19 +52,19 @@ public class DLAppServiceSoapTest {
 
 		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAddGuestPermissions(true);
+		serviceContext.setScopeGroupId(_group.getGroupId());
 
 		try {
 			getDLAppServiceSoap().deleteFolder(
-				TestPropsValues.getGroupId(),
-				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, name);
+				_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				name);
 		}
 		catch (Exception e) {
 		}
 
 		_folder = getDLAppServiceSoap().addFolder(
-			TestPropsValues.getGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, name, description,
-			serviceContext);
+			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			name, description, serviceContext);
 	}
 
 	@After
@@ -104,11 +108,11 @@ public class DLAppServiceSoapTest {
 
 		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAddGuestPermissions(true);
+		serviceContext.setScopeGroupId(_group.getGroupId());
 
 		return getDLAppServiceSoap().addFileEntry(
-			TestPropsValues.getGroupId(), folderId, title,
-			ContentTypes.TEXT_PLAIN, title, description, changeLog, bytes,
-			serviceContext);
+			_group.getGroupId(), folderId, title, ContentTypes.TEXT_PLAIN,
+			title, description, changeLog, bytes, serviceContext);
 	}
 
 	protected DLAppServiceSoap getDLAppServiceSoap() throws Exception {
@@ -129,5 +133,7 @@ public class DLAppServiceSoapTest {
 
 	private static FolderSoap _folder;
 	private static DLAppServiceSoap _service;
+
+	private Group _group;
 
 }

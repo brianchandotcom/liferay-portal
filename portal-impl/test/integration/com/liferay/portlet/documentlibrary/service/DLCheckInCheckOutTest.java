@@ -22,10 +22,11 @@ import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
-import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
@@ -48,12 +49,15 @@ public class DLCheckInCheckOutTest {
 
 	@Before
 	public void setUp() throws Exception {
-		long repositoryId = TestPropsValues.getGroupId();
+		_group = ServiceTestUtil.addGroup();
+
+		long repositoryId = _group.getGroupId();
 
 		_folder = createFolder(repositoryId, "CheckInCheckOutTest");
 
 		_serviceContext = new ServiceContext();
 
+		_serviceContext.setScopeGroupId(_group.getGroupId());
 		_serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
 		_fileEntry = createFileEntry(
@@ -247,6 +251,7 @@ public class DLCheckInCheckOutTest {
 
 	private FileEntry _fileEntry;
 	private Folder _folder;
+	private Group _group;
 	private ServiceContext _serviceContext;
 
 }

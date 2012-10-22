@@ -205,16 +205,14 @@ public class DDMStructureServiceTest extends BaseDDMServiceTestCase {
 	@Test
 	public void testSearchCount() throws Exception {
 		int initialCount = DDMStructureLocalServiceUtil.searchCount(
-			TestPropsValues.getCompanyId(),
-			new long[] {TestPropsValues.getGroupId()},
+			TestPropsValues.getCompanyId(), new long[] {group.getGroupId()},
 			new long[] {_classNameId}, "Test Structure", null, null,
 			DDMStructureConstants.TYPE_DEFAULT, false);
 
 		addStructure(_classNameId, "Test Structure");
 
 		int count = DDMStructureLocalServiceUtil.searchCount(
-			TestPropsValues.getCompanyId(),
-			new long[] {TestPropsValues.getGroupId()},
+			TestPropsValues.getCompanyId(), new long[] {group.getGroupId()},
 			new long[] {_classNameId}, "Test Structure", null, null,
 			DDMStructureConstants.TYPE_DEFAULT, false);
 
@@ -224,15 +222,13 @@ public class DDMStructureServiceTest extends BaseDDMServiceTestCase {
 	@Test
 	public void testSearchCountByKeywords() throws Exception {
 		int initialCount = DDMStructureLocalServiceUtil.searchCount(
-			TestPropsValues.getCompanyId(),
-			new long[] {TestPropsValues.getGroupId()},
+			TestPropsValues.getCompanyId(), new long[] {group.getGroupId()},
 			new long[] {_classNameId}, null);
 
 		addStructure(_classNameId, "Test Structure");
 
 		int count = DDMStructureLocalServiceUtil.searchCount(
-			TestPropsValues.getCompanyId(),
-			new long[] {TestPropsValues.getGroupId()},
+			TestPropsValues.getCompanyId(), new long[] {group.getGroupId()},
 			new long[] {_classNameId}, null);
 
 		Assert.assertEquals(initialCount + 1, count);
@@ -244,7 +240,7 @@ public class DDMStructureServiceTest extends BaseDDMServiceTestCase {
 		return DDMStructureLocalServiceUtil.copyStructure(
 			structure.getUserId(), structure.getStructureId(),
 			structure.getNameMap(), structure.getDescriptionMap(),
-			ServiceTestUtil.getServiceContext());
+			ServiceTestUtil.getServiceContext(group.getGroupId()));
 	}
 
 	protected DDMStructure updateStructure(DDMStructure structure)
@@ -253,7 +249,8 @@ public class DDMStructureServiceTest extends BaseDDMServiceTestCase {
 		return DDMStructureLocalServiceUtil.updateStructure(
 			structure.getStructureId(), structure.getParentStructureId(),
 			structure.getNameMap(), structure.getDescriptionMap(),
-			structure.getXsd(), ServiceTestUtil.getServiceContext());
+			structure.getXsd(),
+			ServiceTestUtil.getServiceContext(group.getGroupId()));
 	}
 
 	private long _classNameId = PortalUtil.getClassNameId(DDLRecord.class);

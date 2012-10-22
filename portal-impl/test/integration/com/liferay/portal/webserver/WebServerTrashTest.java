@@ -60,7 +60,7 @@ public class WebServerTrashTest extends BaseWebServerTestCase {
 		super.setUp();
 
 		_user = ServiceTestUtil.addUser(
-			null, true, new long[] {TestPropsValues.getGroupId()});
+			null, true, new long[] {group.getGroupId()});
 
 		try {
 			_role = RoleLocalServiceUtil.getRole(

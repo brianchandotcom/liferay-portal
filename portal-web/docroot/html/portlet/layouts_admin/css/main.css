@@ -536,9 +536,9 @@
 
 .ie7 {
 	.edit-layout-form, .edit-layoutset-form {
-		.layout-description textarea {
-			width: 100%;
+		.layout-description .aui-field-input-text {
 			max-width: 350px;
+			width: 100%;
 		}
 	}
 }

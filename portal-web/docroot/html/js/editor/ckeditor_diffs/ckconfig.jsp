@@ -116,18 +116,24 @@ CKEDITOR.config.toolbar_liferayArticle = [
 	['Image', 'Flash', 'Table', '-', 'Smiley', 'SpecialChar', 'LiferayPageBreak']
 ];
 
-CKEDITOR.on('dialogDefinition', function(e) {
-	var dialogDefinition = e.data.definition;
+CKEDITOR.on(
+	'dialogDefinition',
+	function(event) {
+		var dialogDefinition = event.data.definition;
 
-	dialogDefinition.onShow = function() {
-		if (window.top != window.self) {
-			var editorElement = this.getParentEditor().container;
+		dialogDefinition.onShow = function() {
+			if (window.top != window.self) {
+				var editorElement = this.getParentEditor().container;
 
-			var x = (editorElement.getDocumentPosition().x + ((editorElement.getSize('width', true) - this.getSize().width) / 2));
+				var documentPosition = editorElement.getDocumentPosition();
 
-			var y = (editorElement.getDocumentPosition().y + ((editorElement.getSize('height', true) - this.getSize().height) / 2));
+				var dialogSize = this.getSize();
 
-			this.move(x, y, false);
+				var x = documentPosition.x + ((editorElement.getSize('width', true) - dialogSize.width) / 2);
+				var y = documentPosition.y + ((editorElement.getSize('height', true) - dialogSize.height) / 2);
+
+				this.move(x, y, false);
+			}
 		}
 	}
-})
+);

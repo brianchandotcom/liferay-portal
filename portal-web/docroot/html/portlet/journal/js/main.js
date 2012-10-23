@@ -1132,6 +1132,9 @@ AUI.add(
 
 						componentContainer.one('.aui-field-input').val('');
 					}
+					else if (fieldType == 'image') {
+						newSource.all('.journal-image-show-hide,.journal-image-preview').remove();
+					}
 					else if (fieldType == 'text_area') {
 						var html = instance.buildHTMLEditor(fieldInstance);
 
@@ -1143,9 +1146,6 @@ AUI.add(
 						var componentContainer = newSource.one('.journal-article-component-container');
 
 						componentContainer.one('.aui-field-input').html('');
-					}
-					else if (fieldType == 'image') {
-						newSource.all('.journal-image-show-hide,.journal-image-preview').remove();
 					}
 
 					return fieldInstance;

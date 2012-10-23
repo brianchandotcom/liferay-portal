@@ -215,7 +215,13 @@ public class LDAPUtil {
 	}
 
 	public static boolean validateFilter(String filter) {
-		if (Validator.isNull(filter) || filter.trim().equals(StringPool.STAR)) {
+		if (Validator.isNull(filter)) {
+			return true;
+		}
+
+		filter = filter.trim();
+
+		if (filter.equals(StringPool.STAR)) {
 			return true;
 		}
 
@@ -272,4 +278,5 @@ public class LDAPUtil {
 
 		return true;
 	}
+
 }

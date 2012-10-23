@@ -39,7 +39,7 @@ public class LDAPSettingsUtil {
 	public static String getAuthSearchFilter(
 			long ldapServerId, long companyId, String emailAddress,
 			String screenName, String userId)
-		throws LDAPFilterException, SystemException {
+		throws Exception {
 
 		String postfix = getPropertyPostfix(ldapServerId);
 

@@ -18,7 +18,26 @@
 
 <%
 String signature = ParamUtil.getString(request, "signature");
+
+Set<String> servletContextPaths = JSONWebServiceActionsManagerUtil.getJSONWebServiceServletContextPaths();
 %>
+
+<aui:select inlineField="<%= false %>" label="context-path" name="contextPath">
+
+	<%
+	for (String servletContextPath : servletContextPaths) {
+		if (Validator.isNull(servletContextPath)) {
+			servletContextPath = StringPool.SLASH;
+		}
+	%>
+
+		<aui:option label="<%= servletContextPath %>" selected="<%= contextPath.equals(servletContextPath) %>" value="<%= servletContextPath %>" />
+
+	<%
+	}
+	%>
+
+</aui:select>
 
 <aui:input cssClass="lfr-api-service-search" label="" name="serviceSearch" placeholder="search" />
 
@@ -68,7 +87,19 @@ String signature = ParamUtil.getString(request, "signature");
 				%>
 
 					<li class="lfr-api-signature <%= (serviceSignature.equals(signature)) ? "selected" : StringPool.BLANK %>">
-						<a class="method-name lfr-api-service-result" data-metaData="<%= jsonWebServiceClassName %>" href="?signature=<%= serviceSignature %>">
+
+						<%
+						String methodURL = jsonwsContextURL;
+
+						if (Validator.isNull(contextPath)) {
+							methodURL += "?signature=".concat(serviceSignature);
+						}
+						else {
+							methodURL += "&signature=".concat(serviceSignature);
+						}
+						%>
+
+						<a class="method-name lfr-api-service-result" data-metaData="<%= jsonWebServiceClassName %>" href="<%= methodURL %>">
 							<%= path %>
 						</a>
 					</li>
@@ -89,6 +120,22 @@ String signature = ParamUtil.getString(request, "signature");
 <div class="no-matches aui-helper-hidden" id="noMatches">
 	<liferay-ui:message key="there-are-no-services-matching-that-phrase" />
 </div>
+
+<aui:script use="aui-base">
+	A.one('#<portlet:namespace />contextPath').on(
+		'change',
+		function(event){
+			var contextPath = event.currentTarget.val();
+			var location = '<%= mainJsonwsContextURL %>';
+
+			if (contextPath && (contextPath != '/')) {
+				location += '?contextPath=' + contextPath;
+			}
+
+			window.location = location;
+		}
+	);
+</aui:script>
 
 <aui:script use="aui-base,autocomplete-base,autocomplete-filters,autocomplete-highlighters">
 	var Lang = A.Lang;

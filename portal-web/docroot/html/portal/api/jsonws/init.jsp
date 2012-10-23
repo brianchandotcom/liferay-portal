@@ -28,9 +28,15 @@ page import="com.liferay.portal.kernel.util.MethodParameter" %>
 <%@ page import="java.lang.reflect.Method" %>
 
 <%
-String contextPath = request.getParameter("contextPath");
+String contextPath = ParamUtil.getString(request, "contextPath");
+String mainJsonwsContextURL = themeDisplay.getPathContext() + "/api/jsonws";
+String jsonwsContextURL = mainJsonwsContextURL;
 
-if (contextPath == null) {
+if (Validator.isNull(contextPath) || contextPath.equals(StringPool.SLASH)) {
 	contextPath = ContextPathUtil.getContextPath(application);
+}
+
+if (Validator.isNotNull(contextPath)) {
+	jsonwsContextURL += "?contextPath=" + contextPath;
 }
 %>

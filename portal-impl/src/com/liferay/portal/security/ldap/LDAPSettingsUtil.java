@@ -15,6 +15,8 @@
 package com.liferay.portal.security.ldap;
 
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.ldap.LDAPFilterException;
+import com.liferay.portal.kernel.ldap.LDAPUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.log.LogUtil;
@@ -37,7 +39,7 @@ public class LDAPSettingsUtil {
 	public static String getAuthSearchFilter(
 			long ldapServerId, long companyId, String emailAddress,
 			String screenName, String userId)
-		throws SystemException {
+		throws Exception {
 
 		String postfix = getPropertyPostfix(ldapServerId);
 
@@ -56,6 +58,10 @@ public class LDAPSettingsUtil {
 			new String[] {
 				String.valueOf(companyId), emailAddress, screenName, userId
 			});
+
+		if (!LDAPUtil.validateFilter(filter)) {
+			throw new LDAPFilterException("Invalid filter syntax");
+		}
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Search filter after transformation " + filter);

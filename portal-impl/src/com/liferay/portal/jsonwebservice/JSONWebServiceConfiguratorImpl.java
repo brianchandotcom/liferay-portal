@@ -83,6 +83,10 @@ public class JSONWebServiceConfiguratorImpl extends ClassFinder
 		_delegate.configure();
 	}
 
+	public int getRegisteredActionsCount() {
+		return _delegate.getRegisteredActionsCount();
+	}
+
 	public void init(
 		String servletContextPath, ServletContext servletContext,
 		ClassLoader classLoader) {
@@ -126,6 +130,12 @@ public class JSONWebServiceConfiguratorImpl extends ClassFinder
 		}
 		catch (Exception e) {
 			throw new PortalException(e.getMessage(), e);
+		}
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"Configured " + getRegisteredActionsCount() + " actions in " +
+					stopWatch.getTime() + " ms");
 		}
 	}
 

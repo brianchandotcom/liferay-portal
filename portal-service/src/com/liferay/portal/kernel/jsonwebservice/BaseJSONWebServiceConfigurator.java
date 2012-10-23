@@ -68,6 +68,10 @@ public abstract class BaseJSONWebServiceConfigurator
 		return _classLoader;
 	}
 
+	public int getRegisteredActionsCount() {
+		return _registeredActionsCount;
+	}
+
 	public ServletContext getServletContext() {
 		return _servletContext;
 	}

@@ -30,6 +30,8 @@ public interface JSONWebServiceConfigurator {
 
 	public void configure() throws PortalException, SystemException;
 
+	public int getRegisteredActionsCount();
+
 	public void init(
 		String servletContextPath, ServletContext servletContext,
 		ClassLoader classLoader);

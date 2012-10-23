@@ -533,3 +533,14 @@
 		width: 30%;
 	}
 }
+
+.ie7 {
+	.portlet-communities, .portlet-users-admin {
+		.edit-layout-form, .edit-layoutset-form {
+			.layout-description .aui-field-input-text {
+				max-width: 350px;
+				width: 100%;
+			}
+		}
+	}
+}

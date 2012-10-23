@@ -15,6 +15,7 @@
 package com.liferay.portalweb.asset.assetpublisher.portlet;
 
 import com.liferay.portalweb.asset.assetpublisher.portlet.addportletap.AddPortletAPTests;
+import com.liferay.portalweb.asset.assetpublisher.portlet.addportletapsite.AddPortletAPSiteTests;
 import com.liferay.portalweb.asset.assetpublisher.portlet.addportletmultipleap.AddPortletMultipleAPTests;
 import com.liferay.portalweb.asset.assetpublisher.portlet.configureportletapdisplaypage.ConfigurePortletAPDisplayPageTests;
 import com.liferay.portalweb.asset.assetpublisher.portlet.configureportletapenableratings.ConfigurePortletAPEnableRatingsTests;
@@ -57,6 +58,7 @@ public class PortletTestPlan extends BaseTestSuite {
 		TestSuite testSuite = new TestSuite();
 
 		testSuite.addTest(AddPortletAPTests.suite());
+		testSuite.addTest(AddPortletAPSiteTests.suite());
 		testSuite.addTest(AddPortletMultipleAPTests.suite());
 		testSuite.addTest(ConfigurePortletAPDisplayPageTests.suite());
 		testSuite.addTest(ConfigurePortletAPEnableRatingsTests.suite());

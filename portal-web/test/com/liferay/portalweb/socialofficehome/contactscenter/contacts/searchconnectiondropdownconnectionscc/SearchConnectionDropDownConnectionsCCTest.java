@@ -47,6 +47,7 @@ public class SearchConnectionDropDownConnectionsCCTest extends BaseTestCase {
 			selenium.getText("//div[contains(@class, 'lfr-contact-extra')]"));
 		assertEquals(RuntimeVariables.replace("You have 1 connections."),
 			selenium.getText("link=You have 1 connections."));
+		Thread.sleep(5000);
 		selenium.clickAt("//div[contains(@class, 'lfr-contact-name')]/a",
 			RuntimeVariables.replace("User01, Social01"));
 		selenium.waitForVisible("//div[contains(@class, 'contacts-profile')]");

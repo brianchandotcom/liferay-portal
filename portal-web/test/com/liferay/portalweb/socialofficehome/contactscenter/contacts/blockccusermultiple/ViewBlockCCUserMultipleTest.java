@@ -39,6 +39,7 @@ public class ViewBlockCCUserMultipleTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("User01, Social01"),
 			selenium.getText(
 				"xPath=(//div[contains(@class, 'lfr-contact-name')]/a)[contains(.,'User01, Social01')]"));
+		Thread.sleep(5000);
 		selenium.clickAt("xPath=(//div[contains(@class, 'lfr-contact-name')]/a)[contains(.,'User01, Social01')]",
 			RuntimeVariables.replace("User01, Social01"));
 		selenium.waitForVisible(
@@ -61,6 +62,7 @@ public class ViewBlockCCUserMultipleTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("User02, Social02"),
 			selenium.getText(
 				"xPath=(//div[contains(@class, 'lfr-contact-name')]/a)[contains(.,'User02, Social02')]"));
+		Thread.sleep(5000);
 		selenium.clickAt("xPath=(//div[contains(@class, 'lfr-contact-name')]/a)[contains(.,'User02, Social02')]",
 			RuntimeVariables.replace("User02, Social02"));
 		selenium.waitForText("//div[contains(@class, 'contacts-profile')]/div/div[2]/div/a",
@@ -83,6 +85,7 @@ public class ViewBlockCCUserMultipleTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("User03, Social03"),
 			selenium.getText(
 				"xPath=(//div[contains(@class, 'lfr-contact-name')]/a)[contains(.,'User03, Social03')]"));
+		Thread.sleep(5000);
 		selenium.clickAt("xPath=(//div[contains(@class, 'lfr-contact-name')]/a)[contains(.,'User03, Social03')]",
 			RuntimeVariables.replace("User03, Social03"));
 		selenium.waitForVisible("//div[contains(@class, 'contacts-profile')]");

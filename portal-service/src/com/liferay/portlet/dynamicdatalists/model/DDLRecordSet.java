@@ -36,7 +36,7 @@ public interface DDLRecordSet extends DDLRecordSetModel, PersistedModel {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure getDDMStructure(
-		long detailDDMTemplateId)
+		long formDDMTemplateId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 

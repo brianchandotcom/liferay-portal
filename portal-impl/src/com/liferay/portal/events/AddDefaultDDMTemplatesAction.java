@@ -82,7 +82,7 @@ public class AddDefaultDDMTemplatesAction extends SimpleAction {
 
 		DDMTemplateLocalServiceUtil.addTemplate(
 			userId, groupId, classNameId, 0, templateKey, nameMap,
-			descriptionMap, DDMTemplateConstants.TEMPLATE_TYPE_LIST, null,
+			descriptionMap, DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY, null,
 			language, script, cacheable, serviceContext);
 	}
 

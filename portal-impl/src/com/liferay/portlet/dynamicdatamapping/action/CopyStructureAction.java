@@ -161,22 +161,22 @@ public class CopyStructureAction extends PortletAction {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DDMTemplate.class.getName(), actionRequest);
 
-		boolean copyDetailTemplates = ParamUtil.getBoolean(
-			actionRequest, "copyDetailTemplates");
+		boolean copyDisplayTemplates = ParamUtil.getBoolean(
+			actionRequest, "copyDisplayTemplates");
 
-		if (copyDetailTemplates) {
+		if (copyDisplayTemplates) {
 			DDMTemplateServiceUtil.copyTemplates(
 				classNameId, structureId, newStructureId,
-				DDMTemplateConstants.TEMPLATE_TYPE_DETAIL, serviceContext);
+				DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY, serviceContext);
 		}
 
-		boolean copyListTemplates = ParamUtil.getBoolean(
-			actionRequest, "copyListTemplates");
+		boolean copyFormTemplates = ParamUtil.getBoolean(
+			actionRequest, "copyFormTemplates");
 
-		if (copyListTemplates) {
+		if (copyFormTemplates) {
 			DDMTemplateServiceUtil.copyTemplates(
 				classNameId, structureId, newStructureId,
-				DDMTemplateConstants.TEMPLATE_TYPE_LIST, serviceContext);
+				DDMTemplateConstants.TEMPLATE_TYPE_FORM, serviceContext);
 		}
 	}
 

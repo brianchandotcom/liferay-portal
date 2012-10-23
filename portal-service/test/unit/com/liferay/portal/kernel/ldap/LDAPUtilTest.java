@@ -22,21 +22,15 @@ import com.liferay.portal.kernel.test.TestCase;
 public class LDAPUtilTest extends TestCase {
 
 	public void testSpecialChars() {
-		assertEquals(true, LDAPUtil.validateFilter());
-		assertEquals(true, LDAPUtil.validateFilter(''));
 		assertEquals(true, LDAPUtil.validateFilter(""));
-		assertEquals(true, LDAPUtil.validateFilter(null));
-		assertEquals(true, LDAPUtil.validateFilter(new String()));
 		assertEquals(true, LDAPUtil.validateFilter("*"));
 		assertEquals(true, LDAPUtil.validateFilter("  *   "));
-		assertEquals(true, LDAPUtil.validateFilter('*'));
-		assertEquals(true, LDAPUtil.validateFilter(new String(" *  "));
 	}
 
-	public void testOpenCloseParenthesis() {
+	public void testOpenAndCloseParentheses() {
 		assertEquals(true, LDAPUtil.validateFilter("(object=value)"));
-		assertEquals(true, LDAPUtil.validateFilter("    (object=value)"));
-		assertEquals(true, LDAPUtil.validateFilter("(object=value)    "));
+		assertEquals(true, LDAPUtil.validateFilter("  (object=value)"));
+		assertEquals(true, LDAPUtil.validateFilter("(object=value)  "));
 		assertEquals(false, LDAPUtil.validateFilter("object=value)"));
 		assertEquals(false, LDAPUtil.validateFilter("(object=value"));
 		assertEquals(false, LDAPUtil.validateFilter("object=value"));
@@ -45,56 +39,62 @@ public class LDAPUtilTest extends TestCase {
 		assertEquals(false, LDAPUtil.validateFilter(")("));
 	}
 
-	public void testBalancedParenthesis() {
+	public void testBalancedParentheses() {
 		assertEquals(true, LDAPUtil.validateFilter("(object=value)"));
 		assertEquals(true, LDAPUtil.validateFilter("((((object=value))))"));
-		assertEquals(true, LDAPUtil.validateFilter(
-			"((((object=value))(org=liferay)))"));
-		assertEquals(true, LDAPUtil.validateFilter(
-			"(((inetorg=www)((object=value))(org=liferay)))(user=test)"));
+		assertEquals(
+			true, LDAPUtil.validateFilter("((((object=value))(org=liferay)))"));
+		assertEquals(
+			true,
+			LDAPUtil.validateFilter(
+				"(((inetorg=www)((object=value))(org=liferay)))(user=test)"));
 		assertEquals(false, LDAPUtil.validateFilter("(object=value))"));
 		assertEquals(false, LDAPUtil.validateFilter("(((object=value))"));
-		assertEquals(false, LDAPUtil.validateFilter(
-			"((((object=value)))(org=liferay)))"));
-		assertEquals(false, LDAPUtil.validateFilter(
-			"(((inetorg=www)((object=value))(org=liferay)))(user=test))"));
+		assertEquals(
+			false,
+			LDAPUtil.validateFilter("((((object=value)))(org=liferay)))"));
+		assertEquals(
+			false,
+			LDAPUtil.validateFilter(
+				"(((inetorg=www)((object=value))(org=liferay)))(user=test))"));
 	}
 
 	public void testFilterTypesInSequence() {
 		assertEquals(true, LDAPUtil.validateFilter("(object=value)"));
 		assertEquals(true, LDAPUtil.validateFilter("(object=value=subvalue)"));
 		assertEquals(true, LDAPUtil.validateFilter("(object<=value)"));
-		assertEquals(true, LDAPUtil.validateFilter(
-			"(object<=value<=subvalue)"));
+		assertEquals(
+			true, LDAPUtil.validateFilter("(object<=value<=subvalue)"));
 		assertEquals(true, LDAPUtil.validateFilter("(object>=value)"));
-		assertEquals(true, LDAPUtil.validateFilter(
-			"(object>=value>=subvalue)"));
+		assertEquals(
+			true, LDAPUtil.validateFilter("(object>=value>=subvalue)"));
 		assertEquals(true, LDAPUtil.validateFilter("(object~=value)"));
-		assertEquals(true, LDAPUtil.validateFilter(
-			"(object~=value~=subvalue)"));
-		assertEquals(true, LDAPUtil.validateFilter(
-			"(object~=value>=subvalue<=subsubvalue)"));
+		assertEquals(
+			true, LDAPUtil.validateFilter("(object~=value~=subvalue)"));
+		assertEquals(
+			true,
+			LDAPUtil.validateFilter("(object~=value>=subvalue<=subsubvalue)"));
 		assertEquals(false, LDAPUtil.validateFilter("(object==value)"));
-		assertEquals(false, LDAPUtil.validateFilter(
-			"(object=value=<=subvalue)"));
+		assertEquals(
+			false, LDAPUtil.validateFilter("(object=value=<=subvalue)"));
 		assertEquals(false, LDAPUtil.validateFilter("(object~==value)"));
-		assertEquals(false, LDAPUtil.validateFilter(
-			"(object=value=>=subvalue)");
-		assertEquals(false, LDAPUtil.validateFilter(
-			"(object~=value>==subvalue<=subsubvalue)"));
+		assertEquals(
+			false, LDAPUtil.validateFilter("(object=value=>=subvalue)"));
+		assertEquals(
+			false,
+			LDAPUtil.validateFilter("(object~=value>==subvalue<=subsubvalue)"));
 	}
 
-	public void testFilterTypeAfterOpeningParenthesis() {
+	public void testFilterTypeAfterOpenParenthesis() {
 		assertEquals(true, LDAPUtil.validateFilter("(object=value)"));
 		assertEquals(false, LDAPUtil.validateFilter("(=value)"));
 		assertEquals(false, LDAPUtil.validateFilter("(<=value)"));
 		assertEquals(false, LDAPUtil.validateFilter("(>=value)"));
 		assertEquals(false, LDAPUtil.validateFilter("(~=value)"));
-		assertEquals(false, LDAPUtil.validateFilter(
-			"(~=value)(object=value)"));
+		assertEquals(false, LDAPUtil.validateFilter("(~=value)(object=value)"));
 	}
 
-	public void testFilterTypeBeforeClosingParenthesis() {
+	public void testFilterTypeBeforeCloseParenthesis() {
 		assertEquals(true, LDAPUtil.validateFilter("(object=value)"));
 		assertEquals(true, LDAPUtil.validateFilter("(object=*)"));
 		assertEquals(true, LDAPUtil.validateFilter("(object=subobject=*)"));
@@ -103,15 +103,15 @@ public class LDAPUtilTest extends TestCase {
 		assertEquals(false, LDAPUtil.validateFilter("(object>=)"));
 		assertEquals(false, LDAPUtil.validateFilter("(object~=)"));
 		assertEquals(false, LDAPUtil.validateFilter("(object=subobject=)"));
-		assertEquals(false, LDAPUtil.validateFilter(
-			"(org=liferay)(object=subobject=)"));
+		assertEquals(
+			false, LDAPUtil.validateFilter("(org=liferay)(object=subobject=)"));
 	}
 
 	public void testNoFilterType() {
 		assertEquals(true, LDAPUtil.validateFilter("(object=value)"));
 		assertEquals(false, LDAPUtil.validateFilter("(object)"));
-		assertEquals(false, LDAPUtil.validateFilter("(value)"));
 		assertEquals(false, LDAPUtil.validateFilter("(object)(value)"));
 		assertEquals(false, LDAPUtil.validateFilter("(!object)"));
 	}
+
 }

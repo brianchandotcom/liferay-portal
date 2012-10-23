@@ -603,7 +603,28 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 
 		destination.delete();
 
-		return source.renameTo(destination);
+		if (source.isDirectory()) {
+			try {
+				FileUtils.moveDirectory(source, destination);
+
+				return true;
+			}
+			catch (IOException ioe) {
+
+			}
+		}
+		else {
+			try {
+				FileUtils.moveFile(source, destination);
+
+				return true;
+			}
+			catch (IOException ioe) {
+
+			}
+		}
+
+		return false;
 	}
 
 	public boolean move(String sourceFileName, String destinationFileName) {

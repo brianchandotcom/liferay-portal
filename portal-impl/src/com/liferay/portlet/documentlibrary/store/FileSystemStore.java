@@ -309,7 +309,7 @@ public class FileSystemStore extends BaseStore {
 
 		File parentFile = fileNameDir.getParentFile();
 
-		boolean renamed = fileNameDir.renameTo(newFileNameDir);
+		boolean renamed = FileUtil.move(fileNameDir, newFileNameDir);
 
 		if (!renamed) {
 			throw new SystemException(
@@ -335,7 +335,7 @@ public class FileSystemStore extends BaseStore {
 
 		File parentFile = fileNameDir.getParentFile();
 
-		boolean renamed = fileNameDir.renameTo(newFileNameDir);
+		boolean renamed = FileUtil.move(fileNameDir, newFileNameDir);
 
 		if (!renamed) {
 			throw new SystemException(
@@ -383,8 +383,8 @@ public class FileSystemStore extends BaseStore {
 			throw new DuplicateFileException(toFileNameVersionFile.getPath());
 		}
 
-		boolean renamed = fromFileNameVersionFile.renameTo(
-			toFileNameVersionFile);
+		boolean renamed = FileUtil.move(
+			fromFileNameVersionFile, toFileNameVersionFile);
 
 		if (!renamed) {
 			throw new SystemException(

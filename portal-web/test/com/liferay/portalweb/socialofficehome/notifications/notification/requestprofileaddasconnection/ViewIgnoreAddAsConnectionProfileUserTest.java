@@ -51,6 +51,7 @@ public class ViewIgnoreAddAsConnectionProfileUserTest extends BaseTestCase {
 			selenium.getText("//div[contains(@class, 'lfr-contact-name')]/a"));
 		assertEquals(RuntimeVariables.replace("socialoffice01@liferay.com"),
 			selenium.getText("//div[contains(@class, 'lfr-contact-extra')]"));
+		Thread.sleep(5000);
 		selenium.clickAt("//div[contains(@class, 'lfr-contact-name')]/a",
 			RuntimeVariables.replace("User01, Social01"));
 		selenium.waitForVisible("//div[contains(@class, 'contacts-profile')]");

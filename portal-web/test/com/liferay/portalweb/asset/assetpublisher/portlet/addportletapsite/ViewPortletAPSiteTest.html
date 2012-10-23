@@ -1,0 +1,68 @@
+e<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>ViewPortletAPSiteTest</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">ViewPortletAPSiteTest</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/web/site-name/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>link=Asset Publisher Test Page</td>
+	<td>Asset Publisher Test Page</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//section</td>
+	<td>Portlet</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//h1[@class='portlet-title']/span[2]</td>
+	<td>Asset Publisher</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@title='Options']/ul/li/strong/a</td>
+	<td>Options</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//img[@title='Minimize']</td>
+	<td>Minimize</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//img[@title='Maximize']</td>
+	<td>Maximize</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//img[@title='Remove']</td>
+	<td>Remove</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//span[@title='Add New']/ul/li/strong/a/img</td>
+	<td>Add New (Icon)</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@title='Add New']/ul/li/strong/a/span</td>
+	<td>Add New</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-info']</td>
+	<td>There are no results.</td>
+</tr>
+</tbody></table>
+</body>
+</html>

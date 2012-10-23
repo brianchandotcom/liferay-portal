@@ -83,11 +83,11 @@ String templateHeaderTitle = ParamUtil.getString(request, "templateHeaderTitle")
 
 String templateTypeValue = StringPool.BLANK;
 
-if (scopeTemplateType.equals(DDMTemplateConstants.TEMPLATE_TYPE_DETAIL)) {
-	templateTypeValue = DDMTemplateConstants.TEMPLATE_TYPE_DETAIL;
+if (scopeStorageType.equals(DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY)) {
+	templateTypeValue = DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY;
 }
-else if (scopeStorageType.equals(DDMTemplateConstants.TEMPLATE_TYPE_LIST)) {
-	templateTypeValue = DDMTemplateConstants.TEMPLATE_TYPE_LIST;
+else if (scopeTemplateType.equals(DDMTemplateConstants.TEMPLATE_TYPE_FORM)) {
+	templateTypeValue = DDMTemplateConstants.TEMPLATE_TYPE_FORM;
 }
 
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);

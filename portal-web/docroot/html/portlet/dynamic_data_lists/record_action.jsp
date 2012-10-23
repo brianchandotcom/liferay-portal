@@ -25,7 +25,7 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 
 DDLRecord record = (DDLRecord)row.getObject();
 
-long detailDDMTemplateId = GetterUtil.getLong((String)row.getParameter("detailDDMTemplateId"));
+long formDDMTemplateId = GetterUtil.getLong((String)row.getParameter("formDDMTemplateId"));
 
 boolean editable = GetterUtil.getBoolean((String)row.getParameter("editable"));
 %>
@@ -36,7 +36,7 @@ boolean editable = GetterUtil.getBoolean((String)row.getParameter("editable"));
 			<portlet:param name="struts_action" value="/dynamic_data_lists/view_record" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="recordId" value="<%= String.valueOf(record.getRecordId()) %>" />
-			<portlet:param name="detailDDMTemplateId" value="<%= String.valueOf(detailDDMTemplateId) %>" />
+			<portlet:param name="formDDMTemplateId" value="<%= String.valueOf(formDDMTemplateId) %>" />
 			<portlet:param name="editable" value="<%= String.valueOf(editable) %>" />
 		</portlet:renderURL>
 
@@ -52,7 +52,7 @@ boolean editable = GetterUtil.getBoolean((String)row.getParameter("editable"));
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UPDATE %>" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="recordId" value="<%= String.valueOf(record.getRecordId()) %>" />
-			<portlet:param name="detailDDMTemplateId" value="<%= String.valueOf(detailDDMTemplateId) %>" />
+			<portlet:param name="formDDMTemplateId" value="<%= String.valueOf(formDDMTemplateId) %>" />
 		</portlet:renderURL>
 
 		<liferay-ui:icon

@@ -21,7 +21,7 @@ String backURL = ParamUtil.getString(request, "backURL");
 
 DDLRecord record = (DDLRecord)request.getAttribute(WebKeys.DYNAMIC_DATA_LISTS_RECORD);
 
-long detailDDMTemplateId = ParamUtil.getLong(request, "detailDDMTemplateId");
+long formDDMTemplateId = ParamUtil.getLong(request, "formDDMTemplateId");
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
@@ -65,7 +65,7 @@ portletURL.setParameter("recordId", String.valueOf(record.getRecordId()));
 
 		ResultRow row = new ResultRow(recordVersion, recordVersion.getRecordVersionId(), i);
 
-		row.setParameter("detailDDMTemplateId", String.valueOf(detailDDMTemplateId));
+		row.setParameter("formDDMTemplateId", String.valueOf(formDDMTemplateId));
 
 		PortletURL rowURL = renderResponse.createRenderURL();
 
@@ -73,7 +73,7 @@ portletURL.setParameter("recordId", String.valueOf(record.getRecordId()));
 		rowURL.setParameter("redirect", currentURL);
 		rowURL.setParameter("recordId", String.valueOf(recordVersion.getRecordId()));
 		rowURL.setParameter("version", String.valueOf(recordVersion.getVersion()));
-		rowURL.setParameter("detailDDMTemplateId", String.valueOf(detailDDMTemplateId));
+		rowURL.setParameter("formDDMTemplateId", String.valueOf(formDDMTemplateId));
 
 		// Record version id
 

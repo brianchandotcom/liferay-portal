@@ -35,9 +35,11 @@ import com.liferay.portal.util.PropsValues;
 import java.lang.reflect.Method;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -205,6 +207,21 @@ public class JSONWebServiceActionsManagerImpl
 		}
 
 		return jsonWebServiceActionMappings;
+	}
+
+	public Set<String> getJSONWebServiceServletContextPaths() {
+		Set<String> servletContextPaths = new HashSet<String>();
+
+		for (JSONWebServiceActionConfig jsonWebServiceActionConfig :
+				_jsonWebServiceActionConfigs) {
+
+			String jsonWebServiceServletContextPath =
+				jsonWebServiceActionConfig.getServletContextPath();
+
+			servletContextPaths.add(jsonWebServiceServletContextPath);
+		}
+
+		return servletContextPaths;
 	}
 
 	public void registerJSONWebServiceAction(

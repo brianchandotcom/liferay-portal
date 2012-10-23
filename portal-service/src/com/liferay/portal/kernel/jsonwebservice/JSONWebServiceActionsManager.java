@@ -18,6 +18,7 @@ import java.lang.reflect.Method;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -38,6 +39,8 @@ public interface JSONWebServiceActionsManager {
 
 	public List<JSONWebServiceActionMapping> getJSONWebServiceActionMappings(
 		String servletContextPath);
+
+	public Set<String> getJSONWebServiceServletContextPaths();
 
 	public void registerJSONWebServiceAction(
 		String servletContextPath, Class<?> actionClass, Method actionMethod,

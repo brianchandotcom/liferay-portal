@@ -2357,17 +2357,7 @@ public class SourceFormatter {
 			portalPortalProperties = _fileUtil.read(portalPortalPropertiesFile);
 		}
 		else {
-			ClassLoader classLoader = SourceFormatter.class.getClassLoader();
-
-			InputStream inputStream = classLoader.getResourceAsStream(
-				"portal.properties");
-
-			if (inputStream == null) {
-				return;
-			}
-
-			portalPortalProperties = new String(
-				_fileUtil.getBytes(inputStream));
+			portalPortalProperties = ContentUtil.get("portal.properties");
 		}
 
 		DirectoryScanner directoryScanner = new DirectoryScanner();

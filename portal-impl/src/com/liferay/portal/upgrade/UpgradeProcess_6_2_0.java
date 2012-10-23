@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.upgrade.v6_2_0.UpgradeBlogs;
 import com.liferay.portal.upgrade.v6_2_0.UpgradeCustomizablePortlets;
+import com.liferay.portal.upgrade.v6_2_0.UpgradeDynamicDataListDisplay;
 import com.liferay.portal.upgrade.v6_2_0.UpgradeDynamicDataMapping;
 import com.liferay.portal.upgrade.v6_2_0.UpgradeSchema;
 import com.liferay.portal.upgrade.v6_2_0.UpgradeUser;
@@ -39,6 +40,7 @@ public class UpgradeProcess_6_2_0 extends UpgradeProcess {
 		upgrade(UpgradeBlogs.class);
 		upgrade(UpgradeCustomizablePortlets.class);
 		upgrade(UpgradeDynamicDataMapping.class);
+		upgrade(UpgradeDynamicDataListDisplay.class);
 		upgrade(UpgradeUser.class);
 	}
 

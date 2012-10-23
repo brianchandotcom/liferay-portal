@@ -525,7 +525,7 @@ public class DDMStructureLocalServiceImpl
 
 		List<DDMTemplate> templates = ddmTemplateLocalService.getTemplates(
 			classNameId, structure.getStructureId(),
-			DDMTemplateConstants.TEMPLATE_TYPE_DETAIL);
+			DDMTemplateConstants.TEMPLATE_TYPE_FORM);
 
 		for (DDMTemplate template : templates) {
 			String script = template.getScript();

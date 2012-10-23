@@ -221,9 +221,8 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 			byte[] bytes = null;
 
 			FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
-				group.getGroupId(), folderId, name,
-				ContentTypes.TEXT_PLAIN, name, description, changeLog, bytes,
-				serviceContext);
+				group.getGroupId(), folderId, name, ContentTypes.TEXT_PLAIN,
+				name, description, changeLog, bytes, serviceContext);
 
 			DLAppServiceUtil.updateFileEntry(
 				fileEntry.getFileEntryId(), name, ContentTypes.TEXT_PLAIN, name,
@@ -248,9 +247,8 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 			File file = null;
 
 			FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
-				group.getGroupId(), folderId, name,
-				ContentTypes.TEXT_PLAIN, name, description, changeLog, file,
-				serviceContext);
+				group.getGroupId(), folderId, name, ContentTypes.TEXT_PLAIN,
+				name, description, changeLog, file, serviceContext);
 
 			DLAppServiceUtil.updateFileEntry(
 				fileEntry.getFileEntryId(), name, ContentTypes.TEXT_PLAIN, name,
@@ -280,9 +278,8 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 			InputStream is = null;
 
 			FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
-				group.getGroupId(), folderId, name,
-				ContentTypes.TEXT_PLAIN, name, description, changeLog, is, 0,
-				serviceContext);
+				group.getGroupId(), folderId, name, ContentTypes.TEXT_PLAIN,
+				name, description, changeLog, is, 0, serviceContext);
 
 			DLAppServiceUtil.updateFileEntry(
 				fileEntry.getFileEntryId(), name, ContentTypes.TEXT_PLAIN, name,
@@ -330,9 +327,8 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 		serviceContext.setAssetTagNames(assetTagNames);
 
 		FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
-			group.getGroupId(), folderId, name,
-			ContentTypes.TEXT_PLAIN, name, description, changeLog, bytes,
-			serviceContext);
+			group.getGroupId(), folderId, name, ContentTypes.TEXT_PLAIN, name,
+			description, changeLog, bytes, serviceContext);
 
 		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
 			DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId());

@@ -54,8 +54,7 @@ public class DLAppServiceHttpTest {
 
 		try {
 			DLAppServiceHttp.deleteFolder(
-				TestPropsValues.getHttpPrincipal(),
-				_group.getGroupId(),
+				TestPropsValues.getHttpPrincipal(), _group.getGroupId(),
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, name);
 		}
 		catch (Exception e) {
@@ -114,9 +113,9 @@ public class DLAppServiceHttpTest {
 		serviceContext.setScopeGroupId(_group.getGroupId());
 
 		return DLAppServiceHttp.addFileEntry(
-			TestPropsValues.getHttpPrincipal(), _group.getGroupId(),
-			folderId, title, ContentTypes.TEXT_PLAIN, title, description,
-			changeLog, bytes, serviceContext);
+			TestPropsValues.getHttpPrincipal(), _group.getGroupId(), folderId,
+			title, ContentTypes.TEXT_PLAIN, title, description, changeLog,
+			bytes, serviceContext);
 	}
 
 	private static final String _CONTENT =

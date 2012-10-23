@@ -27,6 +27,7 @@ import com.liferay.portal.test.TransactionalExecutionTestListener;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -35,10 +36,11 @@ import org.junit.runner.RunWith;
 /**
  * @author Manuel de la Peña
  */
-@ExecutionTestListeners(listeners = {
-	EnvironmentExecutionTestListener.class,
-	TransactionalExecutionTestListener.class
-})
+@ExecutionTestListeners(
+	listeners = {
+		EnvironmentExecutionTestListener.class,
+		TransactionalExecutionTestListener.class
+	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 @Transactional
 public class DLAppLocalServiceTest {

@@ -83,9 +83,9 @@ public class ResourceLocalServiceTest {
 			successCount == ServiceTestUtil.THREAD_COUNT);
 	}
 
-	private long[] _userIds;
-
 	private Group _group;
+
+	private long[] _userIds;
 
 	private class AddResources extends DoAsUserThread {
 
@@ -112,8 +112,8 @@ public class ResourceLocalServiceTest {
 				boolean addGuestPermission = true;
 
 				ResourceLocalServiceUtil.addResources(
-					TestPropsValues.getCompanyId(),
-					_group.getGroupId(), 0, Layout.class.getName(),
+					TestPropsValues.getCompanyId(), _group.getGroupId(), 0,
+					Layout.class.getName(),
 					TestPropsValues.getPlid(_group.getGroupId()), false,
 					addGroupPermission, addGuestPermission);
 			}

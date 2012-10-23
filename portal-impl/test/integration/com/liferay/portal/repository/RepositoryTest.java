@@ -99,10 +99,10 @@ public class RepositoryTest {
 		long classNameId = PortalUtil.getClassNameId(LiferayRepository.class);
 
 		long dlRepositoryId = RepositoryLocalServiceUtil.addRepository(
-			TestPropsValues.getUserId(), _group.getGroupId(),
-			classNameId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Test 1",
-			"Test 1", PortletKeys.DOCUMENT_LIBRARY, new UnicodeProperties(),
-			hidden, new ServiceContext());
+			TestPropsValues.getUserId(), _group.getGroupId(), classNameId,
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Test 1", "Test 1",
+			PortletKeys.DOCUMENT_LIBRARY, new UnicodeProperties(), hidden,
+			new ServiceContext());
 
 		long[] repositoryIds = {dlRepositoryId};
 
@@ -179,8 +179,7 @@ public class RepositoryTest {
 
 		// Delete repositories
 
-		RepositoryLocalServiceUtil.deleteRepositories(
-			_group.getGroupId());
+		RepositoryLocalServiceUtil.deleteRepositories(_group.getGroupId());
 
 		for (int i = 0; i < repositoryIds.length; i++) {
 			long repositoryId = repositoryIds[i];
@@ -207,18 +206,17 @@ public class RepositoryTest {
 		// Add repositories
 
 		int initialMountFolders = DLFolderServiceUtil.getMountFoldersCount(
-			_group.getGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		long[] repositoryIds = new long[2];
 
 		long classNameId = PortalUtil.getClassNameId(LiferayRepository.class);
 
 		repositoryIds[0] = RepositoryLocalServiceUtil.addRepository(
-			TestPropsValues.getUserId(), _group.getGroupId(),
-			classNameId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Test 1",
-			"Test 1", PortletKeys.DOCUMENT_LIBRARY, new UnicodeProperties(),
-			hidden, new ServiceContext());
+			TestPropsValues.getUserId(), _group.getGroupId(), classNameId,
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Test 1", "Test 1",
+			PortletKeys.DOCUMENT_LIBRARY, new UnicodeProperties(), hidden,
+			new ServiceContext());
 
 		DLFolder dlFolder = DLFolderServiceUtil.addFolder(
 			_group.getGroupId(), _group.getGroupId(), false,
@@ -226,8 +224,8 @@ public class RepositoryTest {
 			new ServiceContext());
 
 		repositoryIds[1] = RepositoryLocalServiceUtil.addRepository(
-			TestPropsValues.getUserId(), _group.getGroupId(),
-			classNameId, dlFolder.getFolderId(), "Test 2", "Test 2",
+			TestPropsValues.getUserId(), _group.getGroupId(), classNameId,
+			dlFolder.getFolderId(), "Test 2", "Test 2",
 			PortletKeys.DOCUMENT_LIBRARY, new UnicodeProperties(), hidden,
 			new ServiceContext());
 
@@ -248,8 +246,7 @@ public class RepositoryTest {
 
 		// Delete repositories
 
-		RepositoryLocalServiceUtil.deleteRepositories(
-			_group.getGroupId());
+		RepositoryLocalServiceUtil.deleteRepositories(_group.getGroupId());
 
 		for (long repositoryId : repositoryIds) {
 			try {

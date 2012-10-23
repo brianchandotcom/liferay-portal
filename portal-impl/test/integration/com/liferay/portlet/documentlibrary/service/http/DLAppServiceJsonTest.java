@@ -24,7 +24,6 @@ import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.BaseJsonClientTestCase;
-import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 
 import org.apache.http.client.methods.HttpGet;
@@ -56,8 +55,8 @@ public class DLAppServiceJsonTest extends BaseJsonClientTestCase {
 		MultipartEntity multipartEntity = getMultipartEntity(
 			new String[] {"repositoryId", "parentFolderId", "name"},
 			new Object[] {
-				_group.getGroupId(),
-				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, name
+				_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				name
 			});
 
 		httpPost.setEntity(multipartEntity);
@@ -71,8 +70,8 @@ public class DLAppServiceJsonTest extends BaseJsonClientTestCase {
 				"repositoryId", "parentFolderId", "name", "description"
 			},
 			new Object[] {
-				_group.getGroupId(),
-				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, name, description
+				_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				name, description
 			});
 
 		httpPost.setEntity(multipartEntity);

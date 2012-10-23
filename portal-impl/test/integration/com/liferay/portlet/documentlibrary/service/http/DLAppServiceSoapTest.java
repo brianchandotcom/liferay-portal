@@ -56,16 +56,15 @@ public class DLAppServiceSoapTest {
 
 		try {
 			getDLAppServiceSoap().deleteFolder(
-				_group.getGroupId(),
-				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, name);
+				_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				name);
 		}
 		catch (Exception e) {
 		}
 
 		_folder = getDLAppServiceSoap().addFolder(
-			_group.getGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, name, description,
-			serviceContext);
+			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			name, description, serviceContext);
 	}
 
 	@After
@@ -112,9 +111,8 @@ public class DLAppServiceSoapTest {
 		serviceContext.setScopeGroupId(_group.getGroupId());
 
 		return getDLAppServiceSoap().addFileEntry(
-			_group.getGroupId(), folderId, title,
-			ContentTypes.TEXT_PLAIN, title, description, changeLog, bytes,
-			serviceContext);
+			_group.getGroupId(), folderId, title, ContentTypes.TEXT_PLAIN,
+			title, description, changeLog, bytes, serviceContext);
 	}
 
 	protected DLAppServiceSoap getDLAppServiceSoap() throws Exception {
@@ -137,4 +135,5 @@ public class DLAppServiceSoapTest {
 	private static DLAppServiceSoap _service;
 
 	private Group _group;
+
 }

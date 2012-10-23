@@ -26,13 +26,14 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants;
 import com.liferay.portlet.dynamicdatamapping.storage.StorageType;
-import org.junit.Before;
 
 import java.io.InputStream;
 
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+
+import org.junit.Before;
 
 /**
  * @author Eduardo Garcia
@@ -123,9 +124,9 @@ public class BaseDDMServiceTestCase {
 		throws Exception {
 
 		return DDMTemplateLocalServiceUtil.addTemplate(
-			TestPropsValues.getUserId(), group.getGroupId(),
-			classNameId, classPK, templateKey, getDefaultLocaleMap(name), null,
-			type, mode, language, script, cacheable,
+			TestPropsValues.getUserId(), group.getGroupId(), classNameId,
+			classPK, templateKey, getDefaultLocaleMap(name), null, type, mode,
+			language, script, cacheable,
 			ServiceTestUtil.getServiceContext(group.getGroupId()));
 	}
 

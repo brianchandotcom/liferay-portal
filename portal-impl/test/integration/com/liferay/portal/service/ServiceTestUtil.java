@@ -237,7 +237,9 @@ public class ServiceTestUtil {
 		return getSearchContext(TestPropsValues.getGroupId());
 	}
 
-	public static SearchContext getSearchContext(long groupId) throws Exception {
+	public static SearchContext getSearchContext(long groupId)
+		throws Exception {
+
 		SearchContext searchContext = new SearchContext();
 
 		searchContext.setCompanyId(TestPropsValues.getCompanyId());
@@ -252,7 +254,9 @@ public class ServiceTestUtil {
 		return getServiceContext(TestPropsValues.getGroupId());
 	}
 
-	public static ServiceContext getServiceContext(long groupId) throws Exception {
+	public static ServiceContext getServiceContext(long groupId)
+		throws Exception {
+
 		ServiceContext serviceContext = new ServiceContext();
 
 		serviceContext.setCompanyId(TestPropsValues.getCompanyId());

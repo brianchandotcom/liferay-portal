@@ -173,10 +173,10 @@ if (Validator.isNotNull(structureAvailableFields)) {
 
 		<c:choose>
 			<c:when test="<%= type.equals(DDMTemplateConstants.TEMPLATE_TYPE_FORM) %>">
-				<%@ include file="/html/portlet/dynamic_data_mapping/edit_template_detail.jspf" %>
+				<%@ include file="/html/portlet/dynamic_data_mapping/edit_template_form.jspf" %>
 			</c:when>
 			<c:otherwise>
-				<%@ include file="/html/portlet/dynamic_data_mapping/edit_template_list.jspf" %>
+				<%@ include file="/html/portlet/dynamic_data_mapping/edit_template_display.jspf" %>
 			</c:otherwise>
 		</c:choose>
 	</aui:fieldset>

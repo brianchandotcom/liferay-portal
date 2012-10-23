@@ -79,14 +79,14 @@
 	<td>The data of this portlet is not staged. Any data changes are immediately available to the Local Live site. The portlet's own workflow is still honored. Portlet setup is still managed from staging.</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//span[3]/span/ul/li/strong/a</td>
-	<td>Add</td>
-</tr>
-<tr>
 	<td>pause</td>
 	<td>5000</td>
 	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[3]/span/ul/li/strong/a</td>
+	<td>Add</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -95,17 +95,17 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Basic Document')]</td>
 	<td>Basic Document</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Basic Document')]</td>
 	<td>Basic Document</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Basic Document')]</td>
 	<td>Basic Document</td>
 </tr>
 <tr>
@@ -150,12 +150,12 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//a[@class='document-link']</td>
+	<td>//a[@title='DM Document Title - DM Document Description']</td>
 	<td>DM Document Title</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//a[@class='document-link']</td>
+	<td>//a[@title='DM Document Title - DM Document Description']</td>
 	<td>DM Document Title</td>
 </tr>
 <tr>
@@ -176,7 +176,7 @@
 <tr>
 	<td>assertText</td>
 	<td>//span[@class='download-document']</td>
-	<td>Download (12.4k)</td>
+	<td>Download (12k)</td>
 </tr>
 </tbody></table>
 </body>

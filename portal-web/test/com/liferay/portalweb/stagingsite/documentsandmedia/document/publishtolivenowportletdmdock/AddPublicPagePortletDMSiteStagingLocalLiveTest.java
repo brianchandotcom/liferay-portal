@@ -44,14 +44,10 @@ public class AddPublicPagePortletDMSiteStagingLocalLiveTest extends BaseTestCase
 		selenium.waitForElementPresent(
 			"//script[contains(@src,'/aui/aui-live-search/aui-live-search-min.js')]");
 		selenium.waitForVisible("//input[@id='layout_configuration_content']");
-		selenium.type("//input[@id='layout_configuration_content']",
+		selenium.sendKeys("//input[@id='layout_configuration_content']",
 			RuntimeVariables.replace("d"));
-		selenium.keyDown("//input[@id='layout_configuration_content']",
-			RuntimeVariables.replace("\\13"));
-		selenium.keyUp("//input[@id='layout_configuration_content']",
-			RuntimeVariables.replace("\\13"));
-		selenium.waitForVisible("//div[@title='Documents and Media']/p/a");
-		selenium.clickAt("//div[@title='Documents and Media']/p/a",
+		selenium.waitForVisible("//li[@title='Documents and Media']/p/a");
+		selenium.clickAt("//li[@title='Documents and Media']/p/a",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible("//section");
 		assertTrue(selenium.isVisible("//section"));

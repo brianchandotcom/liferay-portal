@@ -19,26 +19,26 @@ import com.liferay.portal.kernel.exception.PortalException;
 /**
  * @author James Lefeu
  */
-public class LDAPFilterValidationException extends PortalException {
+public class LDAPFilterException extends PortalException {
 
 	/**
 	 *
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public LDAPFilterValidationException() {
+	public LDAPFilterException() {
 		super();
 	}
 
-	public LDAPFilterValidationException(String msg) {
+	public LDAPFilterException(String msg) {
 		super(msg);
 	}
 
-	public LDAPFilterValidationException(String msg, Throwable cause) {
+	public LDAPFilterException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
 
-	public LDAPFilterValidationException(Throwable cause) {
+	public LDAPFilterException(Throwable cause) {
 		super(cause);
 	}
 

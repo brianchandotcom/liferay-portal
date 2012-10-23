@@ -41,6 +41,7 @@ import com.liferay.portal.model.LayoutSetPrototype;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.impl.PortletImpl;
+import com.liferay.portal.repository.liferayrepository.LiferayRepository;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
@@ -49,6 +50,7 @@ import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.portal.util.InitUtil;
 import com.liferay.portal.util.PortalInstances;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.TestPropsValues;
@@ -361,6 +363,10 @@ public class ServiceTestUtil {
 			e.printStackTrace();
 		}
 
+		// Stateful services
+
+		_setStatefulServices();
+
 		// Asset
 
 		AssetRendererFactoryRegistryUtil.register(
@@ -470,6 +476,13 @@ public class ServiceTestUtil {
 
 		FileUtil.deltree(
 			PropsUtil.get(PropsKeys.JCR_JACKRABBIT_REPOSITORY_ROOT));
+	}
+
+	private static void _setStatefulServices() {
+
+		// Repository Default ClassName
+
+		PortalUtil.getClassNameId(LiferayRepository.class.getName());
 	}
 
 	private static Random _random = new Random();

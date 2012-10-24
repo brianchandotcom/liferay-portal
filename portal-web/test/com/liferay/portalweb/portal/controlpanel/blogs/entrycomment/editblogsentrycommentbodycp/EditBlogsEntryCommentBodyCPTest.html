@@ -14,6 +14,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
+	<td>AUI Editable Min</td>
+</tr>
+<tr>
 	<td>assertText</td>
 	<td>//li[@id='_145_mySites']/a/span</td>
 	<td>Go to</td>
@@ -40,12 +50,12 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[2]/a</td>
+	<td>//tr[contains(.,'Blogs Entry Title')]/td[2]/a</td>
 	<td>Blogs Entry Title</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//td[2]/a</td>
+	<td>//tr[contains(.,'Blogs Entry Title')]/td[2]/a</td>
 	<td>Blogs Entry Title</td>
 </tr>
 <tr>
@@ -55,38 +65,33 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//form/div/div/div/div[3]/div/div[1]</td>
+	<td>//div[@class='lfr-discussion-message']</td>
 	<td>Blogs Entry Comment Body</td>
 </tr>
 <tr>
+	<td>mouseOver</td>
+	<td>//li[@class='lfr-discussion-delete-reply']/span/a</td>
+	<td>Edit</td>
+</tr>
+<tr>
 	<td>assertText</td>
-	<td>//li[3]/span/a/span</td>
+	<td>//li[@class='lfr-discussion-delete-reply']/span/a</td>
 	<td>Edit</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//li[3]/span/a/span</td>
+	<td>//li[@class='lfr-discussion-delete-reply']/span/a</td>
 	<td>Edit</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
 	<td>//textarea[@name='_161_editReplyBody1']</td>
-	<td></td>
+	<td>Comment Box</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>//textarea[@name='_161_editReplyBody1']</td>
 	<td>Blogs Entry Comment Body Edited</td>
-</tr>
-<tr>
-	<td>keyPress</td>
-	<td>//textarea[@name='_161_editReplyBody1']</td>
-	<td>\48</td>
-</tr>
-<tr>
-	<td>keyPress</td>
-	<td>//textarea[@name='_161_editReplyBody1']</td>
-	<td>\8</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -110,12 +115,12 @@
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//form/div/div/div/div[3]/div/div[1]</td>
+	<td>//div[@class='lfr-discussion-message']</td>
 	<td>Blogs Entry Comment Body Edited</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//form/div/div/div/div[3]/div/div[1]</td>
+	<td>//div[@class='lfr-discussion-message']</td>
 	<td>Blogs Entry Comment Body Edited</td>
 </tr>
 </tbody></table>

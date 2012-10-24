@@ -25,6 +25,10 @@ public class AddBlogsEntryRatingCPTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
@@ -35,14 +39,16 @@ public class AddBlogsEntryRatingCPTest extends BaseTestCase {
 		selenium.clickAt("link=Blogs", RuntimeVariables.replace("Blogs"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Blogs Entry Title"),
-			selenium.getText("//td[2]/a"));
-		selenium.clickAt("//td[2]/a",
+			selenium.getText("//tr[contains(.,'Blogs Entry Title')]/td[2]/a"));
+		selenium.clickAt("//tr[contains(.,'Blogs Entry Title')]/td[2]/a",
 			RuntimeVariables.replace("Blogs Entry Title"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isPartialText(
 				"xPath=(//div[@class='aui-rating-label-element'])[2]", "0 Votes"));
-		selenium.waitForElementPresent("//a[5]");
-		selenium.clickAt("//a[5]", RuntimeVariables.replace(""));
+		selenium.waitForVisible(
+			"//div[@class='taglib-ratings stars']/div/div/a[5]");
+		selenium.clickAt("//div[@class='taglib-ratings stars']/div/div/a[5]",
+			RuntimeVariables.replace("Rate 5 Stars"));
 		selenium.waitForPartialText("xPath=(//div[@class='aui-rating-label-element'])[2]",
 			"1 Vote");
 		assertTrue(selenium.isPartialText(

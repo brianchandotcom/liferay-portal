@@ -248,7 +248,11 @@ AUI.add(
 						var maxOverlayMask = instance._maxOverlayMask;
 
 						if (!maxOverlayMask) {
-							maxOverlayMask = new A.OverlayMask({visible: true});
+							maxOverlayMask = new A.OverlayMask(
+								{
+									visible: true
+								}
+							);
 
 							instance._maxOverlayMask = maxOverlayMask;
 						}

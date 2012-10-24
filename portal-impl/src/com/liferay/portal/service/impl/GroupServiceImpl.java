@@ -86,9 +86,6 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 			boolean active, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		GroupPermissionUtil.check(
-			getPermissionChecker(), liveGroupId, ActionKeys.UPDATE);
-
 		if (!GroupPermissionUtil.contains(
 				getPermissionChecker(), parentGroupId,
 				ActionKeys.MANAGE_SUBGROUPS) &&

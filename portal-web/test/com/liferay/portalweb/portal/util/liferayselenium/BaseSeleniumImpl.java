@@ -41,6 +41,10 @@ public abstract class BaseSeleniumImpl
 		selenium.start();
 	}
 
+	public void addPortletKeyboard() {
+		LiferaySeleniumHelper.addPortletKeyboard();
+	}
+
 	public void assertAlert(String pattern) {
 		LiferaySeleniumHelper.assertAlert(this, pattern);
 	}

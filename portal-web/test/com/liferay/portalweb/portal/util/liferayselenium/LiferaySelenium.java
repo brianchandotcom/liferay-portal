@@ -21,6 +21,8 @@ import com.thoughtworks.selenium.Selenium;
  */
 public interface LiferaySelenium extends Selenium {
 
+	public void addPortletKeyboard();
+
 	public void assertAlert(String pattern);
 
 	public void assertChecked(String pattern);

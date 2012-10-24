@@ -631,6 +631,11 @@ public class SeleneseToJavaBuilder {
 
 				sb.append("));");
 			}
+			else if (param1.equals("addPortletKeyboard")) {
+					sb.append("selenium.");
+					sb.append(param1);
+					sb.append("();");
+			}
 			else if (param1.equals("assertAlert") ||
 					 param1.equals("assertNotAlert")) {
 
@@ -1187,7 +1192,7 @@ public class SeleneseToJavaBuilder {
 					sb.append(text);
 					sb.append("\")");
 				}
-				else {
+			else {
 					sb.append("\"");
 					sb.append(param3);
 					sb.append("\"");

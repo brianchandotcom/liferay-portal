@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 /**
  * @author James Lefeu
- * @auther Peter Shin
+ * @author Peter Shin
  */
 public class IndexMetadataFactoryUtil {
 

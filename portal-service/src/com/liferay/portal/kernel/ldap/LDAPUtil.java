@@ -17,12 +17,14 @@ package com.liferay.portal.kernel.ldap;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.text.DateFormat;
 
 import java.util.Date;
 import java.util.Properties;
+import java.util.regex.Pattern;
 
 import javax.naming.NamingException;
 import javax.naming.directory.Attribute;
@@ -32,6 +34,7 @@ import javax.naming.directory.Attributes;
  * @author Toma Bedolla
  * @author Michael Young
  * @author Brian Wing Shun Chan
+ * @author James Lefeu
  */
 public class LDAPUtil {
 
@@ -209,6 +212,71 @@ public class LDAPUtil {
 			format);
 
 		return dateFormat.parse(date);
+	}
+
+	public static boolean validateFilter(String filter) {
+		if (Validator.isNull(filter)) {
+			return true;
+		}
+
+		filter = filter.trim();
+
+		if (filter.equals(StringPool.STAR)) {
+			return true;
+		}
+
+		filter = StringUtil.replace(filter, StringPool.SPACE, StringPool.BLANK);
+
+		if (!filter.startsWith(StringPool.OPEN_PARENTHESIS) ||
+			!filter.endsWith(StringPool.CLOSE_PARENTHESIS)) {
+
+			return false;
+		}
+
+		int count = 0;
+
+		for (int i = 0; i < filter.length(); i++) {
+			char c = filter.charAt(i);
+
+			if (c == CharPool.CLOSE_PARENTHESIS) {
+				count--;
+			}
+			else if (c == CharPool.OPEN_PARENTHESIS) {
+				count++;
+			}
+
+			if (count < 0) {
+				return false;
+			}
+		}
+
+		if (count > 0) {
+			return false;
+		}
+
+		// Cannot have two filter types in a sequence
+
+		if (Pattern.matches(".*[~<>]*=[~<>]*=.*", filter)) {
+			return false;
+		}
+
+		// Cannot have a filter type after an opening parenthesis
+
+		if (Pattern.matches("\\([~<>]*=.*", filter)) {
+			return false;
+		}
+
+		// Cannot have an attribute without a filter type or extensible
+
+		if (Pattern.matches("\\([^~<>=]*\\)", filter)) {
+			return false;
+		}
+
+		if (Pattern.matches(".*[^~<>=]*[~<>]*=\\)", filter)) {
+			return false;
+		}
+
+		return true;
 	}
 
 }

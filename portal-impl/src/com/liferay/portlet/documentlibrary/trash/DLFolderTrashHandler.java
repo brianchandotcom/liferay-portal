@@ -42,7 +42,7 @@ import com.liferay.portlet.trash.util.TrashUtil;
 import javax.portlet.PortletRequest;
 
 /**
- * Represents the trash handler for the folder entity.
+ * Implements trash handling for the folder entity.
  *
  * @author Alexander Chow
  * @author Zsolt Berentey
@@ -84,15 +84,6 @@ public class DLFolderTrashHandler extends BaseTrashHandler {
 		}
 	}
 
-	/**
-	 * Deletes all folders with the matching primary keys.
-	 *
-	 * @param  classPKs the primary keys of the folders to be deleted
-	 * @param  checkPermission whether to check permission before deleting each
-	 *         folder
-	 * @throws PortalException if any one of the folders could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
 	public void deleteTrashEntries(long[] classPKs, boolean checkPermission)
 		throws PortalException, SystemException {
 
@@ -106,11 +97,6 @@ public class DLFolderTrashHandler extends BaseTrashHandler {
 		}
 	}
 
-	/**
-	 * Returns the folder entity's class name
-	 *
-	 * @return the folder entity's class name
-	 */
 	public String getClassName() {
 		return CLASS_NAME;
 	}
@@ -140,14 +126,6 @@ public class DLFolderTrashHandler extends BaseTrashHandler {
 			portletRequest, dlFolder.getParentFolderId());
 	}
 
-	/**
-	 * Returns the trash renderer associated to the trash entry.
-	 *
-	 * @param  classPK the primary key of the folder
-	 * @return the trash renderer associated to the folder
-	 * @throws PortalException if the folder could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
 	@Override
 	public TrashRenderer getTrashRenderer(long classPK)
 		throws PortalException, SystemException {
@@ -184,13 +162,6 @@ public class DLFolderTrashHandler extends BaseTrashHandler {
 		return false;
 	}
 
-	/**
-	 * Restores all folders with the matching primary keys.
-	 *
-	 * @param  classPKs the primary keys of the folders to be deleted
-	 * @throws PortalException if any one of the folders could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
 	public void restoreTrashEntries(long[] classPKs)
 		throws PortalException, SystemException {
 

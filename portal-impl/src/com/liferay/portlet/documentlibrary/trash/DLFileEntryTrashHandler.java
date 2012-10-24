@@ -45,7 +45,7 @@ import com.liferay.portlet.trash.util.TrashUtil;
 import javax.portlet.PortletRequest;
 
 /**
- * Represents the trash handler for the file entry entity.
+ * Implements trash handling for the file entry entity.
  *
  * @author Alexander Chow
  * @author Manuel de la Peña
@@ -89,15 +89,6 @@ public class DLFileEntryTrashHandler extends BaseTrashHandler {
 		}
 	}
 
-	/**
-	 * Deletes all file entries with the matching primary keys.
-	 *
-	 * @param  classPKs the primary keys of the file entries to be deleted
-	 * @param  checkPermission whether to check permission before deleting each
-	 *         file entry
-	 * @throws PortalException if any one of the file entries could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
 	public void deleteTrashEntries(long[] classPKs, boolean checkPermission)
 		throws PortalException, SystemException {
 
@@ -111,18 +102,13 @@ public class DLFileEntryTrashHandler extends BaseTrashHandler {
 		}
 	}
 
-	/**
-	 * Returns the file entry entity's class name
-	 *
-	 * @return the file entry entity's class name
-	 */
 	public String getClassName() {
 		return CLASS_NAME;
 	}
 
 	@Override
 	public String getDeleteMessage() {
-		return "found-in-deleted-folder-x";
+		return "found-in-deleted-file-entry-x";
 	}
 
 	@Override
@@ -175,13 +161,6 @@ public class DLFileEntryTrashHandler extends BaseTrashHandler {
 		return false;
 	}
 
-	/**
-	 * Restores all file entries with the matching primary keys.
-	 *
-	 * @param  classPKs the primary keys of the file entries to be deleted
-	 * @throws PortalException if any one of the file entries could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
 	public void restoreTrashEntries(long[] classPKs)
 		throws PortalException, SystemException {
 

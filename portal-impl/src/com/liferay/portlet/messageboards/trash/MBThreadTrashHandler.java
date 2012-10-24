@@ -37,7 +37,7 @@ import java.util.Date;
 import javax.portlet.PortletRequest;
 
 /**
- * Represents the trash handler for message boards threads.
+ * Implements trash handling for message boards thread entity.
  *
  * @author Zsolt Berentey
  */

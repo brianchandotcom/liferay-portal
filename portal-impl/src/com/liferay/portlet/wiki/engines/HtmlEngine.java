@@ -102,7 +102,9 @@ public class HtmlEngine implements WikiEngine {
 		for (StartTag startTag : startTags) {
 			String href = startTag.getAttributeValue("href");
 
-			if (Validator.isNull(href)) {
+			if (Validator.isNull(href) ||
+				(href.length() <= _friendlyURLMapping.length())) {
+
 				continue;
 			}
 

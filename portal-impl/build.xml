@@ -718,6 +718,57 @@ public class Creole10Parser]]></replacevalue>
 		<ant dir="../portal-web" target="build-themes" />
 	</target>
 
+	<target name="build-tiles" depends="compile">
+		<tstamp>
+			<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
+		</tstamp>
+
+		<get
+			dest="struts-1.2.9-src.zip"
+			src="http://archive.apache.org/dist/struts/source/struts-1.2.9-src.zip"
+			verbose="true"
+			/>
+
+		<unzip
+			dest="${tstamp.value}"
+			src="struts-1.2.9-src.zip"
+			>
+			<patternset includes="**/I18nFactorySet.java" />
+			<flattenmapper />
+		</unzip>
+
+		<delete file="struts-1.2.9-src.zip" />
+
+		<patch
+			failonerror="true"
+			originalfile="${tstamp.value}/I18nFactorySet.java"
+			patchfile="${project.dir}/tools/liferay-tiles-I18nFactorySet.patch"
+			dir="${tstamp.value}"
+			/>
+
+		<move
+			file="${tstamp.value}/I18nFactorySet.java"
+			tofile="${tstamp.value}/src/com/liferay/portal/struts/PortalTilesDefinitionsFactory.java"
+			/>
+
+		<mkdir dir="${tstamp.value}/classes" />
+
+		<antcall target="compile-java">
+			<param name="javac.classpathref" value="project.classpath" />
+			<param name="javac.destdir" value="${tstamp.value}/classes" />
+			<param name="javac.srcdir" value="${tstamp.value}/src" />
+		</antcall>
+
+		<jar
+			basedir="${tstamp.value}/classes"
+			destfile="${tstamp.value}/liferay-tiles.jar"
+			/>
+
+		<copy file="${tstamp.value}/liferay-tiles.jar" todir="${project.dir}/lib/portal" />
+
+		<delete dir="${tstamp.value}" />
+	</target>
+
 	<target name="build-upgrade-table">
 		<if>
 			<isset property="upgrade.table.dir" />

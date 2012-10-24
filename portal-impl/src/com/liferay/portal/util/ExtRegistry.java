@@ -72,6 +72,11 @@ public class ExtRegistry {
 		return conflicts;
 	}
 
+	public static Set<String> getFileNames(String servletContextName) {
+		return Collections.unmodifiableSet(_extMap.get(servletContextName)
+			.getFileNames());
+	}
+
 	public static Set<String> getServletContextNames() {
 		return Collections.unmodifiableSet(_extMap.keySet());
 	}
@@ -199,7 +204,11 @@ public class ExtRegistry {
 
 	private static final String[] _SUPPORTED_MERGING_FILE_NAMES = new String[] {
 		"content/Language-ext", "ext-hbm.xml", "ext-model-hints.xml",
-		"ext-spring.xml", "portal-ext.properties", "portal-log4j-ext.xml"
+		"ext-spring.xml", "liferay-display-ext.xml",
+		"liferay-layout-templates-ext.xml", "liferay-look-and-feel-ext.xml",
+		"liferay-portlet-ext.xml", "portal-ext.properties",
+		"portal-log4j-ext.xml", "portlet-ext.xml", "remoting-servlet-ext.xml",
+		"struts-config-ext.xml", "tiles-defs-ext.xml", "web.xml"
 	};
 
 	private static Map<String, ExtRegistryInfo> _extMap =

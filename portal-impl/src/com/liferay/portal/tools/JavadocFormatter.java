@@ -212,7 +212,7 @@ public class JavadocFormatter {
 
 		String comment = _getCDATA(javaClass);
 
-		if (comment.startsWith("Copyright (c) 2000-2010 Liferay, Inc.")) {
+		if (comment.startsWith("Copyright (c)")) {
 			comment = StringPool.BLANK;
 		}
 
@@ -1350,7 +1350,7 @@ public class JavadocFormatter {
 				while (true) {
 					lines[pos] = null;
 
-					if (line.startsWith("/**")) {
+					if (line.startsWith("/**") || line.startsWith("/*")) {
 						break;
 					}
 

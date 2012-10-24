@@ -42,6 +42,13 @@
 	</target>
 
 	<target name="jar">
+		<copy file="src/META-INF/liferay-portlet.tld" tofile="classes/META-INF/liferay-portlet_2_0.tld"/>
+
+		<replace file="classes/META-INF/liferay-portlet_2_0.tld">
+			<replacetoken>&lt;uri&gt;http://java.sun.com/portlet&lt;/uri&gt;</replacetoken>
+			<replacevalue>&lt;uri&gt;http://java.sun.com/portlet_2_0&lt;/uri&gt;</replacevalue>
+		</replace>
+
 		<antcall target="build-common-java.jar" />
 
 		<copy file="${jar.file}.jar" todir="${portal-impl.classes.dir}/com/liferay/portal/deploy/dependencies" />

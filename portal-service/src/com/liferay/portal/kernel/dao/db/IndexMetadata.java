@@ -16,7 +16,7 @@ package com.liferay.portal.kernel.dao.db;
 
 /**
  * @author James Lefeu
- * @auther Peter Shin
+ * @author Peter Shin
  */
 public class IndexMetadata extends Index {
 

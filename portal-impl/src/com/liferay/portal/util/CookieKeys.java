@@ -15,8 +15,8 @@
 package com.liferay.portal.util;
 
 /**
- * @author Brian Wing Shun Chan
- * @author Minhchau Dang
+ * @author     Brian Wing Shun Chan
+ * @author     Minhchau Dang
  * @deprecated {@link com.liferay.portal.kernel.util.CookieKeys}
  */
 public class CookieKeys extends com.liferay.portal.kernel.util.CookieKeys {

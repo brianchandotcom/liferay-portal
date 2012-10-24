@@ -48,7 +48,8 @@ import java.util.Date;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
-/*
+
+/**
  * @author Eudaldo Alonso
  */
 public class WikiPageTrashHandler extends BaseTrashHandler {

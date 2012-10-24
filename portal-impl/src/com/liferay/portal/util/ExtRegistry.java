@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -33,6 +34,16 @@ import javax.servlet.ServletContext;
  * @author Tomas Polesovsky
  */
 public class ExtRegistry {
+
+	public static final List<String> EXT_PLUGIN_JARS_GLOBAL_CL =
+		Arrays.asList(new String[] {
+			"ext-service"
+		});
+
+	public static final List<String> EXT_PLUGIN_JARS_PORTAL_CL =
+		Arrays.asList(new String[] {
+			"ext-impl", "ext-util-bridges", "ext-util-java", "ext-util-taglib"
+		});
 
 	public static Map<String, Set<String>> getConflicts(
 			ServletContext servletContext)
@@ -162,6 +173,10 @@ public class ExtRegistry {
 					servletContextName, new ExtRegistryInfo(null, fileNames));
 			}
 		}
+	}
+
+	public static void unregisterExt(String servletContextName) {
+		_extMap.remove(servletContextName);
 	}
 
 	public static void updateRegisteredServletContext(

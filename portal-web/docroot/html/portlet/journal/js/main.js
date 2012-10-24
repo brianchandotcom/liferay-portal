@@ -1116,34 +1116,38 @@ AUI.add(
 					fieldInstance.set('source', newSource);
 					fieldInstance.set('instanceId', instanceId);
 
-					var localizedCheckbox = newSource.one('.journal-article-localized-checkbox');
+					var localizedCheckbox = newSource.one('.journal-article-localized-checkbox .aui-field-input');
 
-					localizedCheckbox.one('.aui-field-input').attr('checked', false);
+					if (localizedCheckbox) {
+						localizedCheckbox.attr('checked', false);
+					}
 
 					var fieldType = fieldInstance.get('fieldType');
 
+					var componentContainer;
+
 					if (fieldType == 'boolean') {
-						var componentContainer = newSource.one('.journal-article-component-container');
+						componentContainer = newSource.one('.journal-article-component-container');
 
 						componentContainer.one('.aui-field-input').attr('checked', false);
 					}
-					else if ((fieldType == 'document_library') || (fieldType == 'text')) {
-						var componentContainer = newSource.one('.journal-article-component-container');
+					else if (fieldType == 'document_library' || fieldType == 'text') {
+						componentContainer = newSource.one('.journal-article-component-container');
 
 						componentContainer.one('.aui-field-input').val('');
 					}
 					else if (fieldType == 'image') {
-						newSource.all('.journal-image-show-hide,.journal-image-preview').remove();
+						newSource.all('.journal-image-preview, .journal-image-show-hide').remove(true);
 					}
 					else if (fieldType == 'text_area') {
 						var html = instance.buildHTMLEditor(fieldInstance);
 
-						var componentContainer = newSource.one('.journal-article-component-container');
+						componentContainer = newSource.one('.journal-article-component-container');
 
 						componentContainer.html(html);
 					}
 					else if (fieldType == 'text_box') {
-						var componentContainer = newSource.one('.journal-article-component-container');
+						componentContainer = newSource.one('.journal-article-component-container');
 
 						componentContainer.one('.aui-field-input').html('');
 					}
@@ -1965,7 +1969,7 @@ AUI.add(
 				if (editContainerWrapper) {
 					var editContainerSaveMode = instance.editContainerSaveMode;
 
-					editContainerWrapper.delegate('click', editContainerSaveMode,'input[type=checkbox]', instance);
+					editContainerWrapper.delegate('click', editContainerSaveMode, 'input[type=checkbox]', instance);
 
 					var closeEditField = instance.closeEditFieldOptions;
 

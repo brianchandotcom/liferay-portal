@@ -38,7 +38,6 @@ public class AdminTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddNullServerInstanceMDTest.class);
 		testSuite.addTestSuite(EditServerInstanceTest.class);
 		testSuite.addTestSuite(BrowseServerPluginsInstallationTest.class);
-		testSuite.addTestSuite(BrowseInstallMorePluginsTest.class);
 
 		return testSuite;
 	}

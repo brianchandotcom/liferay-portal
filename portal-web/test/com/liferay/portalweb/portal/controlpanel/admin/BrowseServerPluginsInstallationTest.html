@@ -14,6 +14,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
+	<td>AUI Editable Min</td>
+</tr>
+<tr>
 	<td>assertText</td>
 	<td>//li[@id='_145_mySites']/a/span</td>
 	<td>Go to</td>
@@ -39,19 +49,24 @@
 	<td>Plugins Installation</td>
 </tr>
 <tr>
-	<td>assertVisible</td>
-	<td>//input[@value='Install More Portlets']</td>
-	<td>Install More Portlets</td>
+	<td>clickAtAndWait</td>
+	<td>link=Portlet Plugins</td>
+	<td>Portlet Plugins</td>
 </tr>
 <tr>
-	<td>selectAndWait</td>
-	<td>//select[@name='_136_page']</td>
-	<td>4</td>
+	<td>assertText</td>
+	<td>//tr[@class='portlet-section-header results-header']/th[1]</td>
+	<td>Portlet</td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
-	<td>Wiki</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//tr[@class='portlet-section-header results-header']/th[2]</td>
+	<td>Active</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[@class='portlet-section-header results-header']/th[3]</td>
+	<td>Search Index</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -59,9 +74,19 @@
 	<td>Theme Plugins</td>
 </tr>
 <tr>
-	<td>assertVisible</td>
-	<td>//input[@value='Install More Themes']</td>
-	<td>Install More Themes</td>
+	<td>assertText</td>
+	<td>//tr[@class='portlet-section-header results-header']/th[1]</td>
+	<td>Theme</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[@class='portlet-section-header results-header']/th[2]</td>
+	<td>Active</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[@class='portlet-section-header results-header']/th[3]</td>
+	<td>Roles</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -69,9 +94,19 @@
 	<td>Layout Template Plugins</td>
 </tr>
 <tr>
-	<td>assertVisible</td>
-	<td>//input[@value='Install More Layout Templates']</td>
-	<td>Install More Layout Templates</td>
+	<td>assertText</td>
+	<td>//tr[@class='portlet-section-header results-header']/th[1]</td>
+	<td>Layout Template</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[@class='portlet-section-header results-header']/th[2]</td>
+	<td>Active</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[@class='portlet-section-header results-header']/th[3]</td>
+	<td>Roles</td>
 </tr>
 </tbody></table>
 </body>

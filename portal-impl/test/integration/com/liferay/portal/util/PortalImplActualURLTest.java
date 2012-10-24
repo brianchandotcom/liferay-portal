@@ -103,9 +103,10 @@ public class PortalImplActualURLTest {
 
 		Group group = GroupLocalServiceUtil.addGroup(
 			TestPropsValues.getUserId(), GroupConstants.DEFAULT_PARENT_GROUP_ID,
-			StringPool.BLANK, 0, "Test " + ServiceTestUtil.nextInt(),
-			StringPool.BLANK, GroupConstants.TYPE_SITE_OPEN, StringPool.BLANK,
-			true, true, serviceContext);
+			StringPool.BLANK, 0, GroupConstants.DEFAULT_LIVE_GROUP_ID,
+			"Test " + ServiceTestUtil.nextInt(), StringPool.BLANK,
+			GroupConstants.TYPE_SITE_OPEN, StringPool.BLANK, true, true,
+			serviceContext);
 
 		LayoutLocalServiceUtil.addLayout(
 			TestPropsValues.getUserId(), group.getGroupId(), false,

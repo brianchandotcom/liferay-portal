@@ -85,8 +85,8 @@ public class AdvancedFileSystemStore extends FileSystemStore {
 					FileUtil.stripExtension(fileNameVersion) +
 						StringPool.PERIOD + _HOOK_EXTENSION);
 
-			boolean renamed = fileNameVersionFile.renameTo(
-				newFileNameVersionFile);
+			boolean renamed = FileUtil.move(
+				fileNameVersionFile, newFileNameVersionFile);
 
 			if (!renamed) {
 				throw new SystemException(

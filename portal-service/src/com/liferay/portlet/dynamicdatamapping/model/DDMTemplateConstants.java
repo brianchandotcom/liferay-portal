@@ -36,8 +36,8 @@ public class DDMTemplateConstants {
 
 	public static final String TEMPLATE_MODE_EDIT = "edit";
 
-	public static final String TEMPLATE_TYPE_DETAIL = "detail";
+	public static final String TEMPLATE_TYPE_DISPLAY = "display";
 
-	public static final String TEMPLATE_TYPE_LIST = "list";
+	public static final String TEMPLATE_TYPE_FORM = "form";
 
 }

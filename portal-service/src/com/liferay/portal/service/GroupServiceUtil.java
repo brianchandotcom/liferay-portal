@@ -104,13 +104,16 @@ public class GroupServiceUtil {
 	* @param active whether the group is active
 	* @param serviceContext the service context to be applied (optionally
 	<code>null</code>). Can set asset category IDs and asset tag
-	names for the group, and can set whether the group is for staging
+	names for the group, and can set whether the group is for
+	staging
 	* @return the group
-	* @throws PortalException if the user did not have permission to add the
-	group, if a creator could not be found, if the group's
-	information was invalid, if a layout could not be found, or if a
-	valid friendly URL could not be created for the group
+	* @throws PortalException if the user did not have permission to add
+	the group, if a creator could not be found, if the group's
+	information was invalid, if a layout could not be found, or
+	if a valid friendly URL could not be created for the group
 	* @throws SystemException if a system exception occurred
+	* @deprecated {@link #addGroup(long, long, String, String, int, String,
+	boolean, boolean, ServiceContext)}
 	*/
 	public static com.liferay.portal.model.Group addGroup(long parentGroupId,
 		java.lang.String name, java.lang.String description, int type,

@@ -54,8 +54,9 @@ public class RoleServiceImpl extends RoleServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	public Role addRole(
-			String name, Map<Locale, String> titleMap,
-			Map<Locale, String> descriptionMap, int type)
+			String className, long classPK, String name,
+			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
+			int type, String subType)
 		throws PortalException, SystemException {
 
 		PortalPermissionUtil.check(getPermissionChecker(), ActionKeys.ADD_ROLE);
@@ -63,8 +64,33 @@ public class RoleServiceImpl extends RoleServiceBaseImpl {
 		User user = getUser();
 
 		return roleLocalService.addRole(
-			user.getUserId(), user.getCompanyId(), name, titleMap,
-			descriptionMap, type);
+			user.getUserId(), className, classPK, name, titleMap,
+			descriptionMap, type, subType);
+	}
+
+	/**
+	 * Adds a role. The user is reindexed after role is added.
+	 *
+	 * @param      name the role's name
+	 * @param      titleMap the role's localized titles (optionally
+	 *             <code>null</code>)
+	 * @param      descriptionMap the role's localized descriptions (optionally
+	 *             <code>null</code>)
+	 * @param      type the role's type (optionally <code>0</code>)
+	 * @return     the role
+	 * @throws     PortalException if a user with the primary key could not be
+	 *             found, if the user did not have permission to add roles, if
+	 *             the class name or the role name were invalid, or if the role
+	 *             is a duplicate
+	 * @throws     SystemException if a system exception occurred
+	 * @deprecated {@link #addRole(String, long, String, Map, Map, int, String)}
+	 */
+	public Role addRole(
+			String name, Map<Locale, String> titleMap,
+			Map<Locale, String> descriptionMap, int type)
+		throws PortalException, SystemException {
+
+		return addRole(null, 0, name, titleMap, descriptionMap, type, null);
 	}
 
 	/**

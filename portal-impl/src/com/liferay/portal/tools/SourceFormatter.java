@@ -1759,7 +1759,8 @@ public class SourceFormatter {
 								"line break: " + fileName + " " + lineCount);
 						}
 
-						if (((previousLine.endsWith(StringPool.COLON) &&
+						if (Validator.isNotNull(trimmedLine) &&
+							((previousLine.endsWith(StringPool.COLON) &&
 							  previousLine.contains(StringPool.TAB + "for ")) ||
 							 (previousLine.endsWith(
 								 StringPool.OPEN_PARENTHESIS) &&
@@ -2357,17 +2358,7 @@ public class SourceFormatter {
 			portalPortalProperties = _fileUtil.read(portalPortalPropertiesFile);
 		}
 		else {
-			ClassLoader classLoader = SourceFormatter.class.getClassLoader();
-
-			InputStream inputStream = classLoader.getResourceAsStream(
-				"portal.properties");
-
-			if (inputStream == null) {
-				return;
-			}
-
-			portalPortalProperties = new String(
-				_fileUtil.getBytes(inputStream));
+			portalPortalProperties = ContentUtil.get("portal.properties");
 		}
 
 		DirectoryScanner directoryScanner = new DirectoryScanner();

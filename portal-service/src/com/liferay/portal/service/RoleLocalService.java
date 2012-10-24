@@ -226,6 +226,37 @@ public interface RoleLocalService extends BaseLocalService,
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	/**
+	* Adds a role with additional parameters. The user is reindexed after role
+	* is added.
+	*
+	* @param userId the primary key of the user
+	* @param companyId the primary key of the company
+	* @param className the name of the class for which the role is created
+	(optionally <code>null</code>)
+	* @param classPK the primary key of the class for which the role is
+	created (optionally <code>0</code>)
+	* @param name the role's name
+	* @param titleMap the role's localized titles (optionally
+	<code>null</code>)
+	* @param descriptionMap the role's localized descriptions (optionally
+	<code>null</code>)
+	* @param type the role's type (optionally <code>0</code>)
+	* @param subtype the role's subtype (optionally <code>null</code>)
+	* @return the role
+	* @throws PortalException if the class name or the role name were invalid,
+	if the role is a duplicate, or if a user with the primary key
+	could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Role addRole(long userId,
+		java.lang.String className, long classPK, java.lang.String name,
+		java.util.Map<java.util.Locale, java.lang.String> titleMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		int type, java.lang.String subType)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Adds a role. The user is reindexed after role is added.
 	*
 	* @param userId the primary key of the user
@@ -241,6 +272,7 @@ public interface RoleLocalService extends BaseLocalService,
 	if the role is a duplicate, or if a user with the primary key
 	could not be found
 	* @throws SystemException if a system exception occurred
+	* @deprecated {@link #addRole(long, String, long, String, Map, Map, int, String)}
 	*/
 	public com.liferay.portal.model.Role addRole(long userId, long companyId,
 		java.lang.String name,
@@ -271,6 +303,7 @@ public interface RoleLocalService extends BaseLocalService,
 	if the role is a duplicate, or if a user with the primary key
 	could not be found
 	* @throws SystemException if a system exception occurred
+	* @deprecated {@link #addRole(long, String, long, String, Map, Map, int, String)}
 	*/
 	public com.liferay.portal.model.Role addRole(long userId, long companyId,
 		java.lang.String name,

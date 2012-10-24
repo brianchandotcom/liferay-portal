@@ -1117,6 +1117,7 @@ public class SitesUtil {
 			GroupLocalServiceUtil.addGroup(
 				userId, GroupConstants.DEFAULT_PARENT_GROUP_ID,
 				Layout.class.getName(), targetLayout.getPlid(),
+				GroupConstants.DEFAULT_LIVE_GROUP_ID,
 				targetLayout.getName(languageId), null, 0, null, false, true,
 				null);
 		}

@@ -68,8 +68,8 @@ public class WebServerTrashTest extends BaseWebServerTestCase {
 		}
 		catch (NoSuchRoleException nsre) {
 			_role = RoleLocalServiceUtil.addRole(
-				TestPropsValues.getUserId(), TestPropsValues.getCompanyId(),
-				"Trash Admin", null, null, RoleConstants.TYPE_REGULAR);
+				TestPropsValues.getUserId(), null, 0, "Trash Admin", null, null,
+				RoleConstants.TYPE_REGULAR, null);
 		}
 
 		ResourcePermissionLocalServiceUtil.addResourcePermission(

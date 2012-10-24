@@ -76,6 +76,7 @@ public class LayoutPrototypeLocalServiceImpl
 			userId, GroupConstants.DEFAULT_PARENT_GROUP_ID,
 			LayoutPrototype.class.getName(),
 			layoutPrototype.getLayoutPrototypeId(),
+			GroupConstants.DEFAULT_LIVE_GROUP_ID,
 			layoutPrototype.getName(LocaleUtil.getDefault()), null, 0,
 			friendlyURL, false, true, null);
 

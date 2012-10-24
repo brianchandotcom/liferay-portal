@@ -182,9 +182,9 @@ public class EditRecordSetAction extends PortletAction {
 				PortletPreferencesFactoryUtil.getPortletSetup(
 					actionRequest, portletResource);
 
-			preferences.reset("detailDDMTemplateId");
+			preferences.reset("displayDDMTemplateId");
 			preferences.reset("editable");
-			preferences.reset("listDDMTemplateId");
+			preferences.reset("formDDMTemplateId");
 			preferences.reset("spreadsheet");
 
 			preferences.setValue(

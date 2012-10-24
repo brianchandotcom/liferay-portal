@@ -120,8 +120,9 @@ public class ServiceTestUtil {
 		boolean active = true;
 
 		return GroupLocalServiceUtil.addGroup(
-			TestPropsValues.getUserId(), parentGroupId, null, 0, name,
-			description, type, friendlyURL, site, active, getServiceContext());
+			TestPropsValues.getUserId(), parentGroupId, null, 0,
+			GroupConstants.DEFAULT_LIVE_GROUP_ID, name, description, type,
+			friendlyURL, site, active, getServiceContext());
 	}
 
 	public static Group addGroup(String name) throws Exception {

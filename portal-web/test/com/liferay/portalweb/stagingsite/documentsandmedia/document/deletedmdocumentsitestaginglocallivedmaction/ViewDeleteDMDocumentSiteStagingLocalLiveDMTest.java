@@ -45,7 +45,7 @@ public class ViewDeleteDMDocumentSiteStagingLocalLiveDMTest extends BaseTestCase
 				"//body[contains(@class,'local-staging')]"));
 		assertEquals(RuntimeVariables.replace(
 				"There are no documents or media files in this folder."),
-			selenium.getText("//div[@class='portlet-msg-info']"));
+			selenium.getText("//div[@class='entries-empty portlet-msg-info']"));
 		assertFalse(selenium.isTextPresent("DM Document Title"));
 		assertTrue(selenium.isPartialText("//li[2]/span/a", "Staging"));
 		selenium.clickAt("//li[2]/span/a", RuntimeVariables.replace("Staging"));
@@ -59,7 +59,7 @@ public class ViewDeleteDMDocumentSiteStagingLocalLiveDMTest extends BaseTestCase
 				"//body[contains(@class,'live-view')]"));
 		assertEquals(RuntimeVariables.replace(
 				"There are no documents or media files in this folder."),
-			selenium.getText("//div[@class='portlet-msg-info']"));
+			selenium.getText("//div[@class='entries-empty portlet-msg-info']"));
 		assertFalse(selenium.isTextPresent("DM Document Title"));
 	}
 }

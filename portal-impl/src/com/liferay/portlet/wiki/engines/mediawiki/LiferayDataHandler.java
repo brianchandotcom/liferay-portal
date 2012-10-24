@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.wiki.engines.mediawiki;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
@@ -83,8 +81,6 @@ public class LiferayDataHandler extends DummyDataHandler {
 
 		return GetterUtil.getLong(nodeId);
 	}
-
-	private static Log _log = LogFactoryUtil.getLog(LiferayDataHandler.class);
 
 	private Namespace _fileNamespace = Namespace.DEFAULT_NAMESPACES.get(
 		Namespace.FILE_ID);

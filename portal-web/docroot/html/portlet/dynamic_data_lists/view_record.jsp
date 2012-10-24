@@ -26,7 +26,7 @@ long recordId = BeanParamUtil.getLong(record, request, "recordId");
 
 long recordSetId = BeanParamUtil.getLong(record, request, "recordSetId");
 
-long detailDDMTemplateId = ParamUtil.getLong(request, "detailDDMTemplateId");
+long formDDMTemplateId = ParamUtil.getLong(request, "formDDMTemplateId");
 
 String version = ParamUtil.getString(request, "version", DDLRecordConstants.VERSION_DEFAULT);
 
@@ -55,7 +55,7 @@ if (editable) {
 	<%
 	DDLRecordSet recordSet = DDLRecordSetLocalServiceUtil.getRecordSet(recordSetId);
 
-	DDMStructure ddmStructure = recordSet.getDDMStructure(detailDDMTemplateId);
+	DDMStructure ddmStructure = recordSet.getDDMStructure(formDDMTemplateId);
 
 	Fields fields = null;
 

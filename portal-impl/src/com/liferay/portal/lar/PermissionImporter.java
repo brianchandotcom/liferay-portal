@@ -93,8 +93,6 @@ public class PermissionImporter {
 
 		for (Element roleElement : roleElements) {
 			String name = roleElement.attributeValue("name");
-			int type = GetterUtil.getInteger(
-				roleElement.attributeValue("type"));
 
 			Role role = null;
 
@@ -132,8 +130,13 @@ public class PermissionImporter {
 				Map<Locale, String> descriptionMap =
 					LocalizationUtil.getLocalizationMap(description);
 
+				int type = GetterUtil.getInteger(
+					roleElement.attributeValue("type"));
+				String subType = roleElement.attributeValue("subType");
+
 				role = RoleLocalServiceUtil.addRole(
-					userId, companyId, name, titleMap, descriptionMap, type);
+					userId, null, 0, name, titleMap, descriptionMap, type,
+					subType);
 			}
 
 			String roleName = role.getName();

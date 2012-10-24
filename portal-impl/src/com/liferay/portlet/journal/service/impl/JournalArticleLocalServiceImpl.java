@@ -3640,9 +3640,7 @@ public class JournalArticleLocalServiceImpl
 			smallImageFile, smallImageBytes);
 	}
 
-	protected void validate(String articleId)
-		throws PortalException, SystemException {
-
+	protected void validate(String articleId) throws PortalException {
 		if (Validator.isNull(articleId) ||
 			(articleId.indexOf(CharPool.SPACE) != -1)) {
 

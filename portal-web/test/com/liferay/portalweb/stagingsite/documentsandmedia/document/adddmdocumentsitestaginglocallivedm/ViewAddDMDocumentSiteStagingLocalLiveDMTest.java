@@ -47,8 +47,9 @@ public class ViewAddDMDocumentSiteStagingLocalLiveDMTest extends BaseTestCase {
 		selenium.clickAt("//li[2]/span/a", RuntimeVariables.replace("Staging"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("DM Document Title"),
-			selenium.getText("//a[@class='document-link']"));
-		selenium.clickAt("//a[@class='document-link']",
+			selenium.getText(
+				"//a[@title='DM Document Title - DM Document Description']"));
+		selenium.clickAt("//a[@title='DM Document Title - DM Document Description']",
 			RuntimeVariables.replace("DM Document Title"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("DM Document Title"),
@@ -57,12 +58,12 @@ public class ViewAddDMDocumentSiteStagingLocalLiveDMTest extends BaseTestCase {
 			selenium.getText("//span[@class='document-description']"));
 		assertEquals(RuntimeVariables.replace("Status: Approved"),
 			selenium.getText("//span[@class='workflow-status']"));
-		assertEquals(RuntimeVariables.replace("Download (12.4k)"),
+		assertEquals(RuntimeVariables.replace("Download (12k)"),
 			selenium.getText("//span[@class='download-document']"));
 		assertEquals(RuntimeVariables.replace("1.0"),
 			selenium.getText("//tr[3]/td[1]"));
 		assertTrue(selenium.isElementPresent("//tr[3]/td[2]"));
-		assertEquals(RuntimeVariables.replace("12.4k"),
+		assertEquals(RuntimeVariables.replace("12k"),
 			selenium.getText("//tr[3]/td[3]"));
 		assertEquals(RuntimeVariables.replace("Approved"),
 			selenium.getText("//tr[3]/td[4]"));
@@ -79,7 +80,7 @@ public class ViewAddDMDocumentSiteStagingLocalLiveDMTest extends BaseTestCase {
 				"//body[contains(@class,'local-staging')]"));
 		assertEquals(RuntimeVariables.replace(
 				"There are no documents or media files in this folder."),
-			selenium.getText("//div[@class='portlet-msg-info']"));
+			selenium.getText("//div[@class='entries-empty portlet-msg-info']"));
 		assertFalse(selenium.isTextPresent("DM Document Title"));
 	}
 }

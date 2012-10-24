@@ -52,10 +52,12 @@ public class ViewDeleteLivePageSiteStagingLocalLiveDMTest extends BaseTestCase {
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForText("//a[@class='document-link']", "DM Document Title");
+		selenium.waitForText("//a[@title='DM Document Title - DM Document Description']",
+			"DM Document Title");
 		assertEquals(RuntimeVariables.replace("DM Document Title"),
-			selenium.getText("//a[@class='document-link']"));
-		selenium.clickAt("//a[@class='document-link']",
+			selenium.getText(
+				"//a[@title='DM Document Title - DM Document Description']"));
+		selenium.clickAt("//a[@title='DM Document Title - DM Document Description']",
 			RuntimeVariables.replace("DM Document Title"));
 		selenium.waitForPageToLoad("30000");
 		selenium.waitForText("//h2[@class='document-title']",
@@ -66,12 +68,12 @@ public class ViewDeleteLivePageSiteStagingLocalLiveDMTest extends BaseTestCase {
 			selenium.getText("//span[@class='document-description']"));
 		assertEquals(RuntimeVariables.replace("Status: Approved"),
 			selenium.getText("//span[@class='workflow-status']"));
-		assertEquals(RuntimeVariables.replace("Download (12.4k)"),
+		assertEquals(RuntimeVariables.replace("Download (12k)"),
 			selenium.getText("//span[@class='download-document']"));
 		assertEquals(RuntimeVariables.replace("1.0"),
 			selenium.getText("//tr[3]/td[1]"));
 		assertTrue(selenium.isElementPresent("//tr[3]/td[2]"));
-		assertEquals(RuntimeVariables.replace("12.4k"),
+		assertEquals(RuntimeVariables.replace("12k"),
 			selenium.getText("//tr[3]/td[3]"));
 		assertEquals(RuntimeVariables.replace("Approved"),
 			selenium.getText("//tr[3]/td[4]"));

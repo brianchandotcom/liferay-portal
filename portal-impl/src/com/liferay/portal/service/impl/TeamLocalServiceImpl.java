@@ -73,8 +73,8 @@ public class TeamLocalServiceImpl extends TeamLocalServiceBaseImpl {
 		// Role
 
 		roleLocalService.addRole(
-			userId, user.getCompanyId(), String.valueOf(teamId), null, null,
-			RoleConstants.TYPE_PROVIDER, Team.class.getName(), teamId);
+			userId, Team.class.getName(), teamId, String.valueOf(teamId), null,
+			null, RoleConstants.TYPE_PROVIDER, null);
 
 		return team;
 	}

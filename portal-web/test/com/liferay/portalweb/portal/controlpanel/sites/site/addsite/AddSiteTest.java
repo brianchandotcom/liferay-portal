@@ -79,6 +79,7 @@ public class AddSiteTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isPartialText("//td[1]/a", "Site Name"));
+		assertTrue(selenium.isPartialText("//td[contains(.,'Site Name')]/a",
+				"Site Name"));
 	}
 }

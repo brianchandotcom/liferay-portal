@@ -38,8 +38,8 @@ if ((structure == null) && (template != null)) {
 	structure = DDMTemplateHelperUtil.fetchStructure(template);
 }
 
-String type = BeanParamUtil.getString(template, request, "type", "detail");
-String mode = BeanParamUtil.getString(template, request, "mode", "create");
+String type = BeanParamUtil.getString(template, request, "type", DDMTemplateConstants.TEMPLATE_TYPE_FORM);
+String mode = BeanParamUtil.getString(template, request, "mode", DDMTemplateConstants.TEMPLATE_MODE_CREATE);
 String language = BeanParamUtil.getString(template, request, "language", DDMTemplateConstants.LANG_TYPE_VM);
 String script = BeanParamUtil.getString(template, request, "script");
 
@@ -51,14 +51,14 @@ if (Validator.isNull(script)) {
 			script = ContentUtil.get(portletDisplayTemplateHandler.getTemplatesHelpPath(language));
 		}
 	}
-	else if (!type.equals("detail")) {
+	else if (!type.equals(DDMTemplateConstants.TEMPLATE_TYPE_FORM)) {
 		script = ContentUtil.get(PropsUtil.get(PropsKeys.DYNAMIC_DATA_MAPPING_TEMPLATE_LANGUAGE_CONTENT, new Filter(DDMTemplateConstants.LANG_TYPE_VM)));
 	}
 }
 
 JSONArray scriptJSONArray = null;
 
-if (type.equals("detail") && Validator.isNotNull(script)) {
+if (type.equals(DDMTemplateConstants.TEMPLATE_TYPE_FORM) && Validator.isNotNull(script)) {
 	scriptJSONArray = DDMXSDUtil.getJSONArray(script);
 }
 
@@ -153,7 +153,7 @@ if (Validator.isNotNull(structureAvailableFields)) {
 					</c:if>
 				</c:if>
 
-				<c:if test="<%= type.equals(DDMTemplateConstants.TEMPLATE_TYPE_DETAIL) %>">
+				<c:if test="<%= type.equals(DDMTemplateConstants.TEMPLATE_TYPE_FORM) %>">
 					<aui:select helpMessage="only-allow-deleting-required-fields-in-edit-mode" label="mode" name="mode">
 						<aui:option label="create" />
 						<aui:option label="edit" />
@@ -172,17 +172,17 @@ if (Validator.isNotNull(structureAvailableFields)) {
 		</liferay-ui:panel-container>
 
 		<c:choose>
-			<c:when test="<%= type.equals(DDMTemplateConstants.TEMPLATE_TYPE_DETAIL) %>">
-				<%@ include file="/html/portlet/dynamic_data_mapping/edit_template_detail.jspf" %>
+			<c:when test="<%= type.equals(DDMTemplateConstants.TEMPLATE_TYPE_FORM) %>">
+				<%@ include file="/html/portlet/dynamic_data_mapping/edit_template_form.jspf" %>
 			</c:when>
 			<c:otherwise>
-				<%@ include file="/html/portlet/dynamic_data_mapping/edit_template_list.jspf" %>
+				<%@ include file="/html/portlet/dynamic_data_mapping/edit_template_display.jspf" %>
 			</c:otherwise>
 		</c:choose>
 	</aui:fieldset>
 </aui:form>
 
-<c:if test='<%= type.equals("detail") %>'>
+<c:if test="<%= type.equals(DDMTemplateConstants.TEMPLATE_TYPE_FORM) %>">
 	<%@ include file="/html/portlet/dynamic_data_mapping/form_builder.jspf" %>
 
 	<aui:script use="aui-base">

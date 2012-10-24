@@ -141,7 +141,8 @@ public class EditRoleAction extends PortletAction {
 
 			// Add role
 
-			RoleServiceUtil.addRole(name, titleMap, descriptionMap, type);
+			RoleServiceUtil.addRole(
+				null, 0, name, titleMap, descriptionMap, type, subtype);
 		}
 		else {
 

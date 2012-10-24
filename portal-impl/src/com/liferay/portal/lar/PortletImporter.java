@@ -1670,8 +1670,9 @@ public class PortletImporter {
 					scopeGroup = GroupLocalServiceUtil.addGroup(
 						portletDataContext.getUserId(null),
 						GroupConstants.DEFAULT_PARENT_GROUP_ID,
-						Layout.class.getName(), scopeLayout.getPlid(), name,
-						null, 0, null, false, true, null);
+						Layout.class.getName(), scopeLayout.getPlid(),
+						GroupConstants.DEFAULT_LIVE_GROUP_ID, name, null, 0,
+						null, false, true, null);
 				}
 
 				Group group = scopeLayout.getGroup();

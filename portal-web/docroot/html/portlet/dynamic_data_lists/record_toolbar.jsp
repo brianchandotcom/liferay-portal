@@ -19,7 +19,7 @@
 <%
 DDLRecord record = (DDLRecord)request.getAttribute(WebKeys.DYNAMIC_DATA_LISTS_RECORD);
 
-long detailDDMTemplateId = ParamUtil.getLong(request, "detailDDMTemplateId");
+long formDDMTemplateId = ParamUtil.getLong(request, "formDDMTemplateId");
 %>
 
 <div class="record-toolbar" id="<portlet:namespace />recordToolbar"></div>
@@ -33,7 +33,7 @@ long detailDDMTemplateId = ParamUtil.getLong(request, "detailDDMTemplateId");
 				<portlet:param name="struts_action" value="/dynamic_data_lists/view_record_history" />
 				<portlet:param name="backURL" value="<%= currentURL %>" />
 				<portlet:param name="recordId" value="<%= String.valueOf(record.getRecordId()) %>" />
-				<portlet:param name="detailDDMTemplateId" value="<%= String.valueOf(detailDDMTemplateId) %>" />
+				<portlet:param name="formDDMTemplateId" value="<%= String.valueOf(formDDMTemplateId) %>" />
 			</portlet:renderURL>
 
 			{

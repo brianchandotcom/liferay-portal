@@ -278,10 +278,13 @@ public interface GroupLocalService extends BaseLocalService,
 	<code>null</code>). Can set asset category IDs and asset tag
 	names for the group, and whether the group is for staging.
 	* @return the group
-	* @throws PortalException if a creator could not be found, if the group's
-	information was invalid, if a layout could not be found, or if a
-	valid friendly URL could not be created for the group
+	* @throws PortalException if a creator could not be found, if the
+	group's information was invalid, if a layout could not be
+	found, or if a valid friendly URL could not be created for
+	the group
 	* @throws SystemException if a system exception occurred
+	* @deprecated {@link #addGroup(long, long, String, long, long, String,
+	String, int, String, boolean, boolean, ServiceContext)}
 	*/
 	public com.liferay.portal.model.Group addGroup(long userId,
 		long parentGroupId, java.lang.String className, long classPK,

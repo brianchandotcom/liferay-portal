@@ -64,15 +64,16 @@ public class PublishToLiveNowPortletDMDockTest extends BaseTestCase {
 				selenium.waitForElementPresent(
 					"//nav[@class='site-breadcrumbs aui-helper-hidden lfr-hudcrumbs']");
 				assertEquals(RuntimeVariables.replace("DM Document Title"),
-					selenium.getText("//a[@class='document-link']"));
+					selenium.getText(
+						"//a[@title='DM Document Title - DM Document Description']"));
 				selenium.clickAt("//strong/a",
 					RuntimeVariables.replace("Staging"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a");
+					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Publish to Live Now')]");
 				assertEquals(RuntimeVariables.replace("Publish to Live Now"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
-				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a",
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Publish to Live Now')]"));
+				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Publish to Live Now')]",
 					RuntimeVariables.replace("Publish to Live Now"));
 				selenium.waitForElementPresent(
 					"//script[contains(@src,'/liferay/panel.js')]");

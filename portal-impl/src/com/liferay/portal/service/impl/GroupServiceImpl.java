@@ -89,39 +89,6 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 		GroupPermissionUtil.check(
 			getPermissionChecker(), liveGroupId, ActionKeys.UPDATE);
 
-		return groupLocalService.addGroup(
-			getUserId(), parentGroupId, null, 0, liveGroupId, name, description,
-			type, friendlyURL, site, active, serviceContext);
-	}
-
-	/**
-	 * Adds the group using the group default live group ID.
-	 *
-	 * @param  parentGroupId the primary key of the parent group
-	 * @param  name the entity's name
-	 * @param  description the group's description (optionally
-	 *         <code>null</code>)
-	 * @param  type the group's type. For more information see {@link
-	 *         com.liferay.portal.model.GroupConstants}
-	 * @param  friendlyURL the group's friendlyURL
-	 * @param  site whether the group is to be associated with a main site
-	 * @param  active whether the group is active
-	 * @param  serviceContext the service context to be applied (optionally
-	 *         <code>null</code>). Can set asset category IDs and asset tag
-	 *         names for the group, and can set whether the group is for staging
-	 * @return the group
-	 * @throws PortalException if the user did not have permission to add the
-	 *         group, if a creator could not be found, if the group's
-	 *         information was invalid, if a layout could not be found, or if a
-	 *         valid friendly URL could not be created for the group
-	 * @throws SystemException if a system exception occurred
-	 */
-	public Group addGroup(
-			long parentGroupId, String name, String description, int type,
-			String friendlyURL, boolean site, boolean active,
-			ServiceContext serviceContext)
-		throws PortalException, SystemException {
-
 		if (!GroupPermissionUtil.contains(
 				getPermissionChecker(), parentGroupId,
 				ActionKeys.MANAGE_SUBGROUPS) &&
@@ -134,8 +101,44 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 		}
 
 		return groupLocalService.addGroup(
-			getUserId(), parentGroupId, null, 0, name, description, type,
-			friendlyURL, site, active, serviceContext);
+			getUserId(), parentGroupId, null, 0, liveGroupId, name, description,
+			type, friendlyURL, site, active, serviceContext);
+	}
+
+	/**
+	 * Adds the group using the group default live group ID.
+	 *
+	 * @param      parentGroupId the primary key of the parent group
+	 * @param      name the entity's name
+	 * @param      description the group's description (optionally
+	 *             <code>null</code>)
+	 * @param      type the group's type. For more information see {@link
+	 *             com.liferay.portal.model.GroupConstants}
+	 * @param      friendlyURL the group's friendlyURL
+	 * @param      site whether the group is to be associated with a main site
+	 * @param      active whether the group is active
+	 * @param      serviceContext the service context to be applied (optionally
+	 *             <code>null</code>). Can set asset category IDs and asset tag
+	 *             names for the group, and can set whether the group is for
+	 *             staging
+	 * @return     the group
+	 * @throws     PortalException if the user did not have permission to add
+	 *             the group, if a creator could not be found, if the group's
+	 *             information was invalid, if a layout could not be found, or
+	 *             if a valid friendly URL could not be created for the group
+	 * @throws     SystemException if a system exception occurred
+	 * @deprecated {@link #addGroup(long, long, String, String, int, String,
+	 *             boolean, boolean, ServiceContext)}
+	 */
+	public Group addGroup(
+			long parentGroupId, String name, String description, int type,
+			String friendlyURL, boolean site, boolean active,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		return addGroup(
+			parentGroupId, GroupConstants.DEFAULT_LIVE_GROUP_ID, name,
+			description, type, friendlyURL, site, active, serviceContext);
 	}
 
 	/**

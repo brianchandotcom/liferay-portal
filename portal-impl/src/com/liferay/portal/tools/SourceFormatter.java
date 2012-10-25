@@ -89,6 +89,7 @@ public class SourceFormatter {
 						_formatDDLStructuresXML();
 						_formatFriendlyURLRoutesXML();
 						_formatFTL();
+						_formatJS();
 						_formatPortalProperties();
 						_formatPortletXML();
 						_formatServiceXML();
@@ -1897,6 +1898,92 @@ public class SourceFormatter {
 		}
 
 		return newContent;
+	}
+
+	private static void _formatJS() throws IOException {
+		String basedir = "./";
+
+		List<String> list = new ArrayList<String>();
+
+		DirectoryScanner directoryScanner = new DirectoryScanner();
+
+		directoryScanner.setBasedir(basedir);
+
+		String[] excludes = {
+			"**\\tools\\**", "**\\js\\aui\\**", "**\\js\\editor\\**",
+			"**\\js\\misc\\**", "**\\VAADIN\\**"
+		};
+
+		excludes = ArrayUtil.append(excludes, _excludes);
+
+		directoryScanner.setExcludes(excludes);
+
+		directoryScanner.setIncludes(new String[] {"**\\*.js"});
+
+		list.addAll(_sourceFormatterHelper.scanForFiles(directoryScanner));
+
+		String[] fileNames = list.toArray(new String[list.size()]);
+
+		for (String fileName : fileNames) {
+			File file = new File(basedir + fileName);
+
+			String content = _fileUtil.read(file);
+
+			String newContent = StringUtil.replace(
+				content,
+				new String[] {
+					"else{", "for(", "function (", "if(", "while(", "){\n",
+					"= new Array();", "= new Object();"
+				},
+				new String[] {
+					"else {", "for (", "function(", "if (", "while (", ") {\n",
+					"= [];", "= {};"
+				});
+
+			StringBundler sb = new StringBundler();
+
+			UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
+				new UnsyncStringReader(newContent));
+
+			int lineCount = 0;
+
+			String line = null;
+
+			Pattern pattern = Pattern.compile("var \\w+\\,");
+
+			while ((line = unsyncBufferedReader.readLine()) != null) {
+				lineCount++;
+
+				line = _trimLine(line);
+
+				String trimmedLine = StringUtil.trimLeading(line);
+
+				Matcher matcher = pattern.matcher(trimmedLine);
+
+				if (matcher.find()) {
+					_sourceFormatterHelper.printError(
+						fileName, "one var per line: " + fileName + " " +
+							lineCount);
+				}
+
+				sb.append(line);
+				sb.append("\n");
+			}
+
+			unsyncBufferedReader.close();
+
+			newContent = sb.toString();
+
+			if (newContent.endsWith("\n")) {
+				newContent = newContent.substring(0, newContent.length() - 1);
+			}
+
+			if ((newContent != null) && !content.equals(newContent)) {
+				_fileUtil.write(file, newContent);
+
+				_sourceFormatterHelper.printError(fileName, file);
+			}
+		}
 	}
 
 	private static void _formatJSP() throws IOException {

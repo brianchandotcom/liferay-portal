@@ -187,7 +187,7 @@ AUI.add(
 
 				A.each(
 					instance.options,
-					function (value, key) {
+					function(value, key) {
 						if (value !== null) {
 							data[key] = [value].join('');
 						}
@@ -202,7 +202,7 @@ AUI.add(
 			_forceStringValues: function(obj) {
 				A.each(
 					obj,
-					function (value, key) {
+					function(value, key) {
 						if (value !== null) {
 							obj[key] = [value].join('');
 						}

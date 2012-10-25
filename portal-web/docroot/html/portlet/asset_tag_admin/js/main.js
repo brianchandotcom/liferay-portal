@@ -748,7 +748,7 @@ AUI.add(
 
 							tagPanelMerge.after(
 								'visibleChange',
-								function(event){
+								function(event) {
 									if (!event.newVal) {
 										instance._previousTagData = null;
 									}
@@ -1481,7 +1481,7 @@ AUI.add(
 
 						output.show();
 
-						if(autoHide !== false) {
+						if (autoHide !== false) {
 							instance._hideMessageTask();
 						}
 					},
@@ -1598,7 +1598,7 @@ AUI.add(
 							if (previousTagNextSibling) {
 								previousTagNextSibling.placeBefore(previousTag);
 							}
-							else if (previousTagPrevSibling){
+							else if (previousTagPrevSibling) {
 								previousTagPrevSibling.placeAfter(previousTag);
 							}
 							else {
@@ -1651,7 +1651,7 @@ AUI.add(
 				EXTENDS: A.Base,
 				NAME: 'tagssearch',
 				prototype: {
-					initializer: function () {
+					initializer: function() {
 						this._bindUIACBase();
 						this._syncUIACBase();
 					}

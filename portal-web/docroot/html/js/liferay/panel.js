@@ -193,7 +193,7 @@ AUI.add(
 						);
 					},
 
-					_saveState: function (id, state) {
+					_saveState: function(id, state) {
 						var instance = this;
 
 						if (instance._persistState) {

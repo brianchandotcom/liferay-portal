@@ -669,7 +669,7 @@ public interface Portal {
 			Map<String, String[]> params, Map<String, Object> requestContext)
 		throws PortalException, SystemException;
 
-	public String getJsSafePortletId(String portletId) ;
+	public String getJsSafePortletId(String portletId);
 
 	public String getLayoutActualURL(Layout layout);
 

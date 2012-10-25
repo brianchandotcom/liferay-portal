@@ -70,7 +70,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 		_userIds = new long[ServiceTestUtil.THREAD_COUNT];
 
-		for (int i = 0 ; i < ServiceTestUtil.THREAD_COUNT; i++) {
+		for (int i = 0; i < ServiceTestUtil.THREAD_COUNT; i++) {
 			User user = ServiceTestUtil.addUser(
 				"DLAppServiceTest" + (i + 1), false,
 				new long[] {TestPropsValues.getGroupId()});

@@ -34,7 +34,7 @@ public interface IndexAccessor {
 
 	public void close();
 
-	public void delete() ;
+	public void delete();
 
 	public void deleteDocuments(Term term) throws IOException;
 

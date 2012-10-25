@@ -78,7 +78,7 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 
 		unlock(_TEST_FILE_NAME);
 
-		for (int i = 0 ; i < 3; i++) {
+		for (int i = 0; i < 3; i++) {
 			lock(HttpServletResponse.SC_OK, _TEST_FILE_NAME);
 
 			tuple = serviceGet(_TEST_FILE_NAME);
@@ -118,7 +118,7 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 				serviceDelete(_TEST_META_NAME));
 		}
 
-		for (int i = 0 ; i < 3; i++) {
+		for (int i = 0; i < 3; i++) {
 			if (i == 1) {
 				lock(HttpServletResponse.SC_OK, _TEST_META_NAME);
 

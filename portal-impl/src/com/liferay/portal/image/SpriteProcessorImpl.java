@@ -388,7 +388,7 @@ public class SpriteProcessorImpl implements SpriteProcessor {
 			"filestore", tiledImage, "test.png", "PNG");
 
 		printImage(renderedImage);
-		printImage(tiledImage);}*/
+		printImage(tiledImage);*/
 
 		return tiledImage;
 	}

@@ -2914,7 +2914,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			StringPool.BLANK, latestFileVersion.getContentStream(false),
 			latestFileVersion.getSize(), serviceContext);
 
-		for (int i = fileVersions.size() - 2; i >= 0 ; i--) {
+		for (int i = fileVersions.size() - 2; i >= 0; i--) {
 			FileVersion fileVersion = fileVersions.get(i);
 
 			FileVersion previousFileVersion = fileVersions.get(i + 1);

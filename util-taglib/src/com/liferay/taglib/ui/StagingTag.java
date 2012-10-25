@@ -63,7 +63,7 @@ public class StagingTag extends IncludeTag {
 	protected void cleanUp() {
 		_cssClass = null;
 		_extended = true;
-		_groupId = 0 ;
+		_groupId = 0;
 		_icon = "/dockbar/staging.png";
 		_layoutSetBranchId = 0;
 		_message = "staging";

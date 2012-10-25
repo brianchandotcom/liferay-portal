@@ -121,10 +121,10 @@ public interface TrashHandler {
 		throws PortalException, SystemException;
 
 	/**
-	 * Deletes all the trash entries with the primary keys.
+	 * Deletes all the model entities with the primary keys.
 	 *
-	 * @param  classPKs the primary keys of the trash entries to delete
-	 * @throws PortalException if any one of the trash entries could not be
+	 * @param  classPKs the primary keys of the model entities to delete
+	 * @throws PortalException if any one of the model entities could not be
 	 *         found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -132,13 +132,13 @@ public interface TrashHandler {
 		throws PortalException, SystemException;
 
 	/**
-	 * Deletes all the trash entries with the primary keys, optionally checking
-	 * permission before deleting each trash entry.
+	 * Deletes all the model entities with the primary keys, optionally checking
+	 * permission before deleting each model entity.
 	 *
-	 * @param  classPKs the primary keys of the trash entries to delete
+	 * @param  classPKs the primary keys of the model entities to delete
 	 * @param  checkPermission whether to check permission before deleting each
-	 *         trash entry
-	 * @throws PortalException if any one of the trash entries could not be
+	 *         model entity
+	 * @throws PortalException if any one of the model entities could not be
 	 *         found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -146,10 +146,10 @@ public interface TrashHandler {
 		throws PortalException, SystemException;
 
 	/**
-	 * Deletes the trash entry with the primary key.
+	 * Deletes the model entity with the primary key.
 	 *
-	 * @param  classPK the primary key of the trash entry to delete
-	 * @throws PortalException if a trash entry with the primary key could not
+	 * @param  classPK the primary key of the model entity to delete
+	 * @throws PortalException if a model entity with the primary key could not
 	 *         be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -157,12 +157,12 @@ public interface TrashHandler {
 		throws PortalException, SystemException;
 
 	/**
-	 * Deletes the trash entry with the primary key.
+	 * Deletes the model entity with the primary key.
 	 *
-	 * @param  classPK the primary key of the trash entry to delete
+	 * @param  classPK the primary key of the model entity to delete
 	 * @param  checkPermission whether to check permission before deleting the
-	 *         trash entry
-	 * @throws PortalException if a trash entry with the primary key could not
+	 *         model entity
+	 * @throws PortalException if a model entity with the primary key could not
 	 *         be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -198,7 +198,7 @@ public interface TrashHandler {
 	/**
 	 * Returns a range of all the container models that are children of the
 	 * parent container model identified by the container model ID. These
-	 * container models must be able to contain the entity identified by the
+	 * container models must be able to contain the model entity identified by the
 	 * primary key.
 	 *
 	 * <p>
@@ -216,13 +216,13 @@ public interface TrashHandler {
 	 * result set.
 	 * </p>
 	 *
-	 * @param  classPK the primary key of an entity the container models must be
+	 * @param  classPK the primary key of a model entity the container models must be
 	 *         able to contain
 	 * @param  containerModelId the primary key of the parent container model
 	 * @param  start the lower bound of the range of results
 	 * @param  end the upper bound of the range of results (not inclusive)
 	 * @return the range of matching container models
-	 * @throws PortalException if a trash entry with the primary key could not
+	 * @throws PortalException if a model entity with the primary key could not
 	 *         be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -233,18 +233,18 @@ public interface TrashHandler {
 	/**
 	 * Returns the number of container models that are children of the parent
 	 * container model identified by the container model ID. These container
-	 * models must be able to contain the entity identified by the primary key.
+	 * models must be able to contain the model entity identified by the primary key.
 	 *
 	 * <p>
 	 * This method checks for the view permission when counting the container
 	 * models.
 	 * </p>
 	 *
-	 * @param  classPK the primary key of an entity the container models must be
+	 * @param  classPK the primary key of a model entity the container models must be
 	 *         able to contain
 	 * @param  containerModelId the primary key of the parent container model
 	 * @return the number of matching container models
-	 * @throws PortalException if a trash entry with the primary key could not
+	 * @throws PortalException if a model entity with the primary key could not
 	 *         be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -252,20 +252,28 @@ public interface TrashHandler {
 		throws PortalException, SystemException;
 
 	/**
-	 * Returns the message indicating that a search hit was found in a trash
-	 * entry (e.g. in a trashed file or folder).
+	 * Returns the language key to the localized message to display next to a trash entry listed in
+	 * a search result, indicating that the trash entry was found in a trashed
+	 * container (e.g. folder or message board thread) trash handler is associated with.
 	 *
-	 * @return the message
+	 * <p>
+	 * If the language key (e.g. <code>found-in-deleted-folder-x</code>)
+	 * used accepts a single parameter, the trash framework replaces that parameter
+	 * with the trashed container's name.
+	 * </p>
+	 *
+	 * @return the language key to the localized message to display next to a trash entry listed in
+	 * a search result
 	 */
 	public String getDeleteMessage();
 
 	/**
-	 * Returns the link to the location to which the trash entry was restored.
+	 * Returns the link to the location to which the model entity was restored.
 	 *
 	 * @param  portletRequest the portlet request
-	 * @param  classPK the primary key of the restored trash entry
+	 * @param  classPK the primary key of the restored model entity
 	 * @return the restore link
-	 * @throws PortalException if a trash entry with the primary key could not
+	 * @throws PortalException if a model entity with the primary key could not
 	 *         be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -273,13 +281,13 @@ public interface TrashHandler {
 		throws PortalException, SystemException;
 
 	/**
-	 * Returns the message describing the location to which the trash entry was
+	 * Returns the message describing the location to which the model entity was
 	 * restored.
 	 *
 	 * @param  portletRequest the portlet request
-	 * @param  classPK the primary key of the restored trash entry
+	 * @param  classPK the primary key of the restored model entity
 	 * @return the restore message
-	 * @throws PortalException if a trash entry with the primary key could not
+	 * @throws PortalException if a model entity with the primary key could not
 	 *         be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -302,12 +310,12 @@ public interface TrashHandler {
 	public String getSubcontainerModelName();
 
 	/**
-	 * Returns the trash renderer associated to the trash entry with the primary
+	 * Returns the trash renderer associated to the model entity with the primary
 	 * key.
 	 *
-	 * @param  classPK the primary key of the trash entry
-	 * @return the trash renderer associated to the trash entry
-	 * @throws PortalException if a trash entry with the primary key could not
+	 * @param  classPK the primary key of the model entity
+	 * @return the trash renderer associated to the model entity
+	 * @throws PortalException if a model entity with the primary key could not
 	 *         be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -316,7 +324,7 @@ public interface TrashHandler {
 
 	/**
 	 * Returns <code>true</code> if the user has the required permission to
-	 * perform the trash action on the trash entry with the primary key.
+	 * perform the trash action on the model entity with the primary key.
 	 *
 	 * <p>
 	 * This method is a mapper for special Recycle Bin operations that are not
@@ -326,11 +334,11 @@ public interface TrashHandler {
 	 *
 	 * @param  permissionChecker the permission checker
 	 * @param  groupId the primary key of the group
-	 * @param  classPK the primary key of the trash entry
+	 * @param  classPK the primary key of the model entity
 	 * @param  trashActionId the trash action permission to check
 	 * @return <code>true</code> if the user has the required permission;
 	 *         <code>false</code> otherwise
-	 * @throws PortalException if a trash entry with the primary key could not
+	 * @throws PortalException if a model entity with the primary key could not
 	 *         be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -340,13 +348,13 @@ public interface TrashHandler {
 		throws PortalException, SystemException;
 
 	/**
-	 * Returns <code>true</code> if the trash entry with the primary key is in
+	 * Returns <code>true</code> if the model entity with the primary key is in
 	 * the Recycle Bin.
 	 *
-	 * @param  classPK the primary key of the trash entry
-	 * @return <code>true</code> if the trash entry is in the Recycle Bin;
+	 * @param  classPK the primary key of the model entity
+	 * @return <code>true</code> if the model entity is in the Recycle Bin;
 	 *         <code>false</code> otherwise
-	 * @throws PortalException if a trash entry with the primary key could not
+	 * @throws PortalException if a model entity with the primary key could not
 	 *         be found in the portal
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -354,19 +362,19 @@ public interface TrashHandler {
 		throws PortalException, SystemException;
 
 	/**
-	 * Returns <code>true</code> if the trash entry can be restored to its
+	 * Returns <code>true</code> if the model entity can be restored to its
 	 * original location.
 	 *
 	 * <p>
 	 * This method usually returns <code>false</code> if the container (e.g.
-	 * folder) of the trash entry is no longer available (e.g. moved to the
+	 * folder) of the model entity is no longer available (e.g. moved to the
 	 * Recycle Bin or deleted).
 	 * </p>
 	 *
-	 * @param  classPK the primary key of the trash entry
-	 * @return <code>true</code> if the trash entry can be restored to its
+	 * @param  classPK the primary key of the model entity
+	 * @return <code>true</code> if the model entity can be restored to its
 	 *         original location; <code>false</code> otherwise
-	 * @throws PortalException if a trash entry with the primary key could not
+	 * @throws PortalException if a model entity with the primary key could not
 	 *         be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -374,15 +382,15 @@ public interface TrashHandler {
 		throws PortalException, SystemException;
 
 	/**
-	 * Moves the trash entry with the primary key out of the Recycle Bin to a
+	 * Moves the model entity with the primary key out of the Recycle Bin to a
 	 * new destination identified by the container model ID.
 	 *
-	 * @param  classPK the primary key of the trash entry
+	 * @param  classPK the primary key of the model entity
 	 * @param  containerModelId the primary key of the destination container
 	 *         model
 	 * @param  serviceContext the service context
-	 * @return the moved trash entry
-	 * @throws PortalException if a trash entry with the primary key or the
+	 * @return the moved model entity
+	 * @throws PortalException if a model entity with the primary key or the
 	 *         destination container model with the primary key could not be
 	 *         found
 	 * @throws SystemException if a system exception occurred
@@ -392,10 +400,10 @@ public interface TrashHandler {
 		throws PortalException, SystemException;
 
 	/**
-	 * Restores all the trash entries with the primary keys.
+	 * Restores all the model entities with the primary keys.
 	 *
-	 * @param  classPKs the primary keys of the trash entries to restore
-	 * @throws PortalException if any one of the trash entries could not be
+	 * @param  classPKs the primary keys of the model entities to restore
+	 * @throws PortalException if any one of the model entities could not be
 	 *         found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -403,10 +411,10 @@ public interface TrashHandler {
 		throws PortalException, SystemException;
 
 	/**
-	 * Restores the trash entry with the primary key.
+	 * Restores the model entity with the primary key.
 	 *
-	 * @param  classPK the primary key of the trash entry to restore
-	 * @throws PortalException if a trash entry with the primary key could not
+	 * @param  classPK the primary key of the model entity to restore
+	 * @throws PortalException if a model entity with the primary key could not
 	 *         be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -414,13 +422,13 @@ public interface TrashHandler {
 		throws PortalException, SystemException;
 
 	/**
-	 * Updates the title of the trash entry with the primary key. This method is
+	 * Updates the title of the model entity with the primary key. This method is
 	 * called by {@link com.liferay.portlet.trash.action.EditEntryAction} before
-	 * restoring the trash entry via its restore rename action.
+	 * restoring the model entity via its restore rename action.
 	 *
-	 * @param  classPK the primary key of the trash entry
+	 * @param  classPK the primary key of the model entity
 	 * @param  title the title to be assigned
-	 * @throws PortalException if a trash entry with the primary key could not
+	 * @throws PortalException if a model entity with the primary key could not
 	 *         be found
 	 * @throws SystemException if a system exception occurred
 	 */

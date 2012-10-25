@@ -43,7 +43,9 @@ if (event.getRepeating() && (recurrence != null)) {
 
 if (Validator.isNull(redirect)) {
 	PortletURL viewURL = renderResponse.createRenderURL();
+
 	viewURL.setParameter("struts_action", "/calendar/view");
+
 	redirect = viewURL.toString();
 }
 

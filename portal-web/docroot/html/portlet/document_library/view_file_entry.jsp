@@ -89,8 +89,10 @@ boolean hasVideo = VideoProcessorUtil.hasVideo(fileVersion);
 
 if (Validator.isNull(redirect)) {
 	PortletURL viewURL = renderResponse.createRenderURL();
+
 	viewURL.setParameter("struts_action", "/document_library/view");
 	viewURL.setParameter("folderId", String.valueOf(folderId));
+
 	redirect = viewURL.toString();
 }
 

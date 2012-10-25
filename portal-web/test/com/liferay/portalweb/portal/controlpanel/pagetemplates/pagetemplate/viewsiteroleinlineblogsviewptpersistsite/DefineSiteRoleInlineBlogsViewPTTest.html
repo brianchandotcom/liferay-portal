@@ -68,7 +68,7 @@
 </tr>
 <tr>
 	<td>storeAttribute</td>
-	<td>//div[contains(.,'Configuration')]/span/a/@href</td>
+	<td>//div[contains(.,'Configuration')]/span/a@href</td>
 	<td>pageTemplate</td>
 </tr>
 <tr>
@@ -98,17 +98,17 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Configuration')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]</td>
 	<td>Configuration</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Configuration')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]</td>
 	<td>Configuration</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Configuration')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]</td>
 	<td>Configuration</td>
 </tr>
 <tr>
@@ -137,14 +137,24 @@
 	<td>Permissions</td>
 </tr>
 <tr>
-	<td>assertNotChecked</td>
+	<td>storeChecked</td>
 	<td>//input[@id='roles-siterole-name_ACTION_VIEW']</td>
-	<td>Blogs View</td>
+	<td>rolesSiteroleNameViewCheckbox</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${rolesSiteroleNameViewCheckbox}</td>
+	<td>RolesSiteroleNameViewCheckbox</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>//input[@id='roles-siterole-name_ACTION_VIEW']</td>
 	<td>Blogs View</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>RolesSiteroleNameViewCheckbox</td>
+	<td></td>
 </tr>
 <tr>
 	<td>assertChecked</td>

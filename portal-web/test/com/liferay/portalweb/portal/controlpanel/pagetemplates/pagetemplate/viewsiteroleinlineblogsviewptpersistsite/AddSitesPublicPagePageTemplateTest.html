@@ -53,7 +53,7 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>//input[@id='_134_name']</td>
+	<td>//input[@name='_134_keywords']</td>
 	<td>Site Name</td>
 </tr>
 <tr>
@@ -73,17 +73,17 @@
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Manage Pages')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Pages')]</td>
 	<td>Manage Pages</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Manage Pages')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Pages')]</td>
 	<td>Manage Pages</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Manage Pages')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Pages')]</td>
 	<td>Manage Pages</td>
 </tr>
 <tr>
@@ -112,14 +112,24 @@
 	<td>Page Template Name</td>
 </tr>
 <tr>
-	<td>assertChecked</td>
+	<td>storeChecked</td>
 	<td>//input[@id='_156_layoutPrototypeLinkEnabledCheckbox']</td>
-	<td>Automatically apply changes done to the page template.</td>
+	<td>applyChangesCheckbox</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${applyChangesCheckbox}</td>
+	<td>ApplyChangesCheckbox</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>//input[@id='_156_layoutPrototypeLinkEnabledCheckbox']</td>
 	<td>Automatically apply changes done to the page template.</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>ApplyChangesCheckbox</td>
+	<td></td>
 </tr>
 <tr>
 	<td>assertNotChecked</td>

@@ -49,7 +49,7 @@ public class AddPortletBlogsPageTemplateTest extends BaseTestCase {
 				"Open Page Template"));
 
 		String pageTemplate = selenium.getAttribute(
-				"//div[contains(.,'Configuration')]/span/a/@href");
+				"//div[contains(.,'Configuration')]/span/a@href");
 		RuntimeVariables.setValue("pageTemplate", pageTemplate);
 		selenium.open(RuntimeVariables.getValue("pageTemplate"));
 		assertEquals(RuntimeVariables.replace("Page Template Name"),

@@ -22,73 +22,96 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class DefineSiteRoleInlineBlogsViewPTTest extends BaseTestCase {
 	public void testDefineSiteRoleInlineBlogsViewPT() throws Exception {
-		selenium.selectWindow("null");
-		selenium.selectFrame("relative=top");
-		selenium.open("/web/guest/home/");
-		selenium.clickAt("//div[@id='dockbar']",
-			RuntimeVariables.replace("Dockbar"));
-		selenium.waitForElementPresent(
-			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
-		assertEquals(RuntimeVariables.replace("Go to"),
-			selenium.getText("//li[@id='_145_mySites']/a/span"));
-		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
-		selenium.waitForVisible("link=Control Panel");
-		selenium.clickAt("link=Control Panel",
-			RuntimeVariables.replace("Control Panel"));
-		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Page Templates",
-			RuntimeVariables.replace("Page Templates"));
-		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Page Template Name"),
-			selenium.getText("//td[contains(.,'Page Template Name')]/a"));
-		selenium.clickAt("//td[contains(.,'Page Template Name')]/a",
-			RuntimeVariables.replace("Page Template Name"));
-		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isPartialText(
-				"//div[contains(.,'Configuration')]/span/a",
-				"Open Page Template"));
+		int label = 1;
 
-		String pageTemplate = selenium.getAttribute(
-				"//div[contains(.,'Configuration')]/span/a/@href");
-		RuntimeVariables.setValue("pageTemplate", pageTemplate);
-		selenium.open(RuntimeVariables.getValue("pageTemplate"));
-		assertEquals(RuntimeVariables.replace("Page Template Name"),
-			selenium.getText("//span[@title='Go to Page Template Name']"));
-		Thread.sleep(5000);
-		assertEquals(RuntimeVariables.replace("Options"),
-			selenium.getText("//span[@title='Options']/ul/li/strong/a"));
-		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
-			RuntimeVariables.replace("Options"));
-		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Configuration')]/a");
-		assertEquals(RuntimeVariables.replace("Configuration"),
-			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Configuration')]/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Configuration')]/a",
-			RuntimeVariables.replace("Configuration"));
-		selenium.waitForVisible("//iframe[@id='_33_configurationIframeDialog']");
-		selenium.selectFrame("//iframe[@id='_33_configurationIframeDialog']");
-		selenium.waitForElementPresent(
-			"//script[contains(@src,'/liferay/navigation_interaction.js')]");
-		selenium.waitForVisible("link=Permissions");
-		selenium.clickAt("link=Permissions",
-			RuntimeVariables.replace("Permissions"));
-		selenium.waitForPageToLoad("30000");
-		assertFalse(selenium.isChecked(
-				"//input[@id='roles-siterole-name_ACTION_VIEW']"));
-		selenium.clickAt("//input[@id='roles-siterole-name_ACTION_VIEW']",
-			RuntimeVariables.replace("Blogs View"));
-		assertTrue(selenium.isChecked(
-				"//input[@id='roles-siterole-name_ACTION_VIEW']"));
-		selenium.clickAt("//input[@value='Save']",
-			RuntimeVariables.replace("Save"));
-		selenium.waitForText("//div[@class='portlet-msg-success']",
-			"Your request completed successfully.");
-		assertEquals(RuntimeVariables.replace(
-				"Your request completed successfully."),
-			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertTrue(selenium.isChecked(
-				"//input[@id='roles-siterole-name_ACTION_VIEW']"));
-		selenium.selectFrame("relative=top");
+		while (label >= 1) {
+			switch (label) {
+			case 1:
+				selenium.selectWindow("null");
+				selenium.selectFrame("relative=top");
+				selenium.open("/web/guest/home/");
+				selenium.clickAt("//div[@id='dockbar']",
+					RuntimeVariables.replace("Dockbar"));
+				selenium.waitForElementPresent(
+					"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+				assertEquals(RuntimeVariables.replace("Go to"),
+					selenium.getText("//li[@id='_145_mySites']/a/span"));
+				selenium.mouseOver("//li[@id='_145_mySites']/a/span");
+				selenium.waitForVisible("link=Control Panel");
+				selenium.clickAt("link=Control Panel",
+					RuntimeVariables.replace("Control Panel"));
+				selenium.waitForPageToLoad("30000");
+				selenium.clickAt("link=Page Templates",
+					RuntimeVariables.replace("Page Templates"));
+				selenium.waitForPageToLoad("30000");
+				assertEquals(RuntimeVariables.replace("Page Template Name"),
+					selenium.getText("//td[contains(.,'Page Template Name')]/a"));
+				selenium.clickAt("//td[contains(.,'Page Template Name')]/a",
+					RuntimeVariables.replace("Page Template Name"));
+				selenium.waitForPageToLoad("30000");
+				assertTrue(selenium.isPartialText(
+						"//div[contains(.,'Configuration')]/span/a",
+						"Open Page Template"));
+
+				String pageTemplate = selenium.getAttribute(
+						"//div[contains(.,'Configuration')]/span/a@href");
+				RuntimeVariables.setValue("pageTemplate", pageTemplate);
+				selenium.open(RuntimeVariables.getValue("pageTemplate"));
+				assertEquals(RuntimeVariables.replace("Page Template Name"),
+					selenium.getText(
+						"//span[@title='Go to Page Template Name']"));
+				Thread.sleep(5000);
+				assertEquals(RuntimeVariables.replace("Options"),
+					selenium.getText("//span[@title='Options']/ul/li/strong/a"));
+				selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
+					RuntimeVariables.replace("Options"));
+				selenium.waitForVisible(
+					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]");
+				assertEquals(RuntimeVariables.replace("Configuration"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]"));
+				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]",
+					RuntimeVariables.replace("Configuration"));
+				selenium.waitForVisible(
+					"//iframe[@id='_33_configurationIframeDialog']");
+				selenium.selectFrame(
+					"//iframe[@id='_33_configurationIframeDialog']");
+				selenium.waitForElementPresent(
+					"//script[contains(@src,'/liferay/navigation_interaction.js')]");
+				selenium.waitForVisible("link=Permissions");
+				selenium.clickAt("link=Permissions",
+					RuntimeVariables.replace("Permissions"));
+				selenium.waitForPageToLoad("30000");
+
+				boolean rolesSiteroleNameViewCheckbox = selenium.isChecked(
+						"//input[@id='roles-siterole-name_ACTION_VIEW']");
+
+				if (rolesSiteroleNameViewCheckbox) {
+					label = 2;
+
+					continue;
+				}
+
+				selenium.clickAt("//input[@id='roles-siterole-name_ACTION_VIEW']",
+					RuntimeVariables.replace("Blogs View"));
+
+			case 2:
+				assertTrue(selenium.isChecked(
+						"//input[@id='roles-siterole-name_ACTION_VIEW']"));
+				selenium.clickAt("//input[@value='Save']",
+					RuntimeVariables.replace("Save"));
+				selenium.waitForText("//div[@class='portlet-msg-success']",
+					"Your request completed successfully.");
+				assertEquals(RuntimeVariables.replace(
+						"Your request completed successfully."),
+					selenium.getText("//div[@class='portlet-msg-success']"));
+				assertTrue(selenium.isChecked(
+						"//input[@id='roles-siterole-name_ACTION_VIEW']"));
+				selenium.selectFrame("relative=top");
+
+			case 100:
+				label = -1;
+			}
+		}
 	}
 }

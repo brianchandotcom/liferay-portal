@@ -89,11 +89,12 @@ public class ViewPageTemplateTest extends BaseTestCase {
 		assertTrue(selenium.isVisible("//textarea[@id='_146_description']"));
 		assertTrue(selenium.isChecked("//input[@id='_146_activeCheckbox']"));
 		assertEquals(RuntimeVariables.replace("Active"),
-			selenium.getText("//label[@for='_146_Checkbox']"));
+			selenium.getText("//label[@for='_146_activeCheckbox']"));
 		assertEquals(RuntimeVariables.replace("Configuration"),
 			selenium.getText("//div/label"));
-		assertEquals(RuntimeVariables.replace("Open Page Template"),
-			selenium.getText("//span/a/span"));
+		assertEquals(RuntimeVariables.replace(
+				"Open Page Template (Opens New Window)"),
+			selenium.getText("//a[@title='(Opens New Window)']"));
 		assertTrue(selenium.isVisible("//input[@value='Save']"));
 		assertTrue(selenium.isVisible("//input[@value='Cancel']"));
 	}

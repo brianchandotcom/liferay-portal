@@ -1926,8 +1926,10 @@ public class SourceFormatter {
 
 			String content = _fileUtil.read(file);
 
-			String newContent = StringUtil.replace(
-				content,
+			String newContent = _trimContent(content);
+
+			newContent = StringUtil.replace(
+				newContent,
 				new String[] {
 					"else{", "for(", "function (", "if(", "while(", "){\n",
 					"= new Array();", "= new Object();"
@@ -1937,39 +1939,30 @@ public class SourceFormatter {
 					"= [];", "= {};"
 				});
 
-			StringBundler sb = new StringBundler();
+			Pattern pattern = Pattern.compile("\t+var \\w+\\, ");
 
-			UnsyncBufferedReader unsyncBufferedReader =
-				new UnsyncBufferedReader(new UnsyncStringReader(newContent));
+			for (;;) {
+				Matcher matcher = pattern.matcher(newContent);
 
-			int lineCount = 0;
-
-			String line = null;
-
-			Pattern pattern = Pattern.compile("var \\w+\\,");
-
-			while ((line = unsyncBufferedReader.readLine()) != null) {
-				lineCount++;
-
-				line = _trimLine(line);
-
-				String trimmedLine = StringUtil.trimLeading(line);
-
-				Matcher matcher = pattern.matcher(trimmedLine);
-
-				if (matcher.find()) {
-					_sourceFormatterHelper.printError(
-						fileName, "one var per line: " + fileName + " " +
-							lineCount);
+				if (!matcher.find()) {
+					break;
 				}
 
-				sb.append(line);
+				String match = newContent.substring(
+					matcher.start(), matcher.end());
+
+				int pos = match.indexOf("var ");
+
+				StringBundler sb = new StringBundler(4);
+
+				sb.append(match.substring(0, match.length() - 2));
+				sb.append(StringPool.SEMICOLON);
 				sb.append("\n");
+				sb.append(match.substring(0, pos + 4));
+
+				newContent = StringUtil.replace(
+					newContent, match, sb.toString());
 			}
-
-			unsyncBufferedReader.close();
-
-			newContent = sb.toString();
 
 			if (newContent.endsWith("\n")) {
 				newContent = newContent.substring(0, newContent.length() - 1);

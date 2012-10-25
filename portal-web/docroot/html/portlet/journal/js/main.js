@@ -1116,17 +1116,40 @@ AUI.add(
 					fieldInstance.set('source', newSource);
 					fieldInstance.set('instanceId', instanceId);
 
+					var localizedCheckbox = newSource.one('.journal-article-localized-checkbox .aui-field-input');
+
+					if (localizedCheckbox) {
+						localizedCheckbox.attr('checked', false);
+					}
+
 					var fieldType = fieldInstance.get('fieldType');
 
-					if (fieldType == 'text_area') {
+					var componentContainer;
+
+					if (fieldType == 'boolean') {
+						componentContainer = newSource.one('.journal-article-component-container');
+
+						componentContainer.one('.aui-field-input').attr('checked', false);
+					}
+					else if (fieldType == 'document_library' || fieldType == 'text') {
+						componentContainer = newSource.one('.journal-article-component-container');
+
+						componentContainer.one('.aui-field-input').val('');
+					}
+					else if (fieldType == 'image') {
+						newSource.all('.journal-image-preview, .journal-image-show-hide').remove(true);
+					}
+					else if (fieldType == 'text_area') {
 						var html = instance.buildHTMLEditor(fieldInstance);
 
-						var componentContainer = newSource.one('.journal-article-component-container');
+						componentContainer = newSource.one('.journal-article-component-container');
 
 						componentContainer.html(html);
 					}
-					else if (fieldType == 'image') {
-						newSource.all('.journal-image-show-hide,.journal-image-preview').remove();
+					else if (fieldType == 'text_box') {
+						componentContainer = newSource.one('.journal-article-component-container');
+
+						componentContainer.one('.aui-field-input').html('');
 					}
 
 					return fieldInstance;
@@ -1946,7 +1969,7 @@ AUI.add(
 				if (editContainerWrapper) {
 					var editContainerSaveMode = instance.editContainerSaveMode;
 
-					editContainerWrapper.delegate('click', editContainerSaveMode,'input[type=checkbox]', instance);
+					editContainerWrapper.delegate('click', editContainerSaveMode, 'input[type=checkbox]', instance);
 
 					var closeEditField = instance.closeEditFieldOptions;
 

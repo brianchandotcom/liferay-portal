@@ -44,130 +44,29 @@ public class TearDownBlogsEntryCPTest extends BaseTestCase {
 				selenium.clickAt("link=Blogs", RuntimeVariables.replace("Blogs"));
 				selenium.waitForPageToLoad("30000");
 
-				boolean entry1Present = selenium.isElementPresent(
-						"//input[@name='_161_rowIds']");
+				boolean allRowIdsPresent = selenium.isVisible(
+						"//input[contains(@name,'allRowIds')]");
 
-				if (!entry1Present) {
+				if (!allRowIdsPresent) {
 					label = 2;
 
 					continue;
 				}
 
-				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText(
-						"//span[@title='Actions']/ul/li/strong/a/span"));
-				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
-					RuntimeVariables.replace("Actions"));
+				selenium.clickAt("//input[contains(@name,'allRowIds')]",
+					RuntimeVariables.replace("allRowIdsPresent"));
+				selenium.clickAt("//input[@value='Move to the Recycle Bin']",
+					RuntimeVariables.replace("Move to the Recycle Bin"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move to the Recycle Bin')]");
-				assertEquals(RuntimeVariables.replace("Move to the Recycle Bin"),
-					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move to the Recycle Bin')]"));
-				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move to the Recycle Bin')]"));
-				selenium.waitForPageToLoad("30000");
+					"//div[@class='portlet-msg-success taglib-trash-undo']/form");
+				assertTrue(selenium.isPartialText(
+						"//div[@class='portlet-msg-success taglib-trash-undo']",
+						"moved to the Recycle Bin. Undo"));
+				assertTrue(selenium.isVisible("//a[@class='trash-undo-link']"));
 
 			case 2:
-
-				boolean entry2Present = selenium.isElementPresent(
-						"//input[@name='_161_rowIds']");
-
-				if (!entry2Present) {
-					label = 3;
-
-					continue;
-				}
-
-				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText(
-						"//span[@title='Actions']/ul/li/strong/a/span"));
-				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
-					RuntimeVariables.replace("Actions"));
-				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move to the Recycle Bin')]");
-				assertEquals(RuntimeVariables.replace("Move to the Recycle Bin"),
-					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move to the Recycle Bin')]"));
-				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move to the Recycle Bin')]"));
-				selenium.waitForPageToLoad("30000");
-
-			case 3:
-
-				boolean entry3Present = selenium.isElementPresent(
-						"//input[@name='_161_rowIds']");
-
-				if (!entry3Present) {
-					label = 4;
-
-					continue;
-				}
-
-				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText(
-						"//span[@title='Actions']/ul/li/strong/a/span"));
-				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
-					RuntimeVariables.replace("Actions"));
-				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move to the Recycle Bin')]");
-				assertEquals(RuntimeVariables.replace("Move to the Recycle Bin"),
-					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move to the Recycle Bin')]"));
-				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move to the Recycle Bin')]"));
-				selenium.waitForPageToLoad("30000");
-
-			case 4:
-
-				boolean entry4Present = selenium.isElementPresent(
-						"//input[@name='_161_rowIds']");
-
-				if (!entry4Present) {
-					label = 5;
-
-					continue;
-				}
-
-				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText(
-						"//span[@title='Actions']/ul/li/strong/a/span"));
-				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
-					RuntimeVariables.replace("Actions"));
-				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move to the Recycle Bin')]");
-				assertEquals(RuntimeVariables.replace("Move to the Recycle Bin"),
-					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move to the Recycle Bin')]"));
-				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move to the Recycle Bin')]"));
-				selenium.waitForPageToLoad("30000");
-
-			case 5:
-
-				boolean entry5Present = selenium.isElementPresent(
-						"//input[@name='_161_rowIds']");
-
-				if (!entry5Present) {
-					label = 6;
-
-					continue;
-				}
-
-				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText(
-						"//span[@title='Actions']/ul/li/strong/a/span"));
-				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
-					RuntimeVariables.replace("Actions"));
-				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move to the Recycle Bin')]");
-				assertEquals(RuntimeVariables.replace("Move to the Recycle Bin"),
-					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move to the Recycle Bin')]"));
-				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move to the Recycle Bin')]"));
-				selenium.waitForPageToLoad("30000");
-
-			case 6:
+				assertEquals(RuntimeVariables.replace("No entries were found."),
+					selenium.getText("//div[@class='portlet-msg-info']"));
 				selenium.open("/web/guest/home/");
 				selenium.clickAt("//div[@id='dockbar']",
 					RuntimeVariables.replace("Dockbar"));
@@ -184,140 +83,31 @@ public class TearDownBlogsEntryCPTest extends BaseTestCase {
 					RuntimeVariables.replace("Recycle Bin"));
 				selenium.waitForPageToLoad("30000");
 
-				boolean entry1Present1 = selenium.isElementPresent(
-						"//tr[@class='portlet-section-body results-row last']/td[1]/span/a");
+				boolean recycleBinNotEmpty = selenium.isElementPresent(
+						"//a[@class='trash-empty-link']");
 
-				if (!entry1Present1) {
-					label = 7;
-
-					continue;
-				}
-
-				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText(
-						"//span[@title='Actions']/ul/li/strong/a/span"));
-				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
-					RuntimeVariables.replace("Actions"));
-				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]");
-				assertEquals(RuntimeVariables.replace("Delete"),
-					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]"));
-				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]"));
-				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
-
-			case 7:
-
-				boolean entry2Present2 = selenium.isElementPresent(
-						"//tr[@class='portlet-section-body results-row']/td[1]/span/a");
-
-				if (!entry2Present2) {
-					label = 8;
+				if (!recycleBinNotEmpty) {
+					label = 3;
 
 					continue;
 				}
 
-				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText(
-						"//span[@title='Actions']/ul/li/strong/a/span"));
-				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
-					RuntimeVariables.replace("Actions"));
-				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]");
-				assertEquals(RuntimeVariables.replace("Delete"),
-					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]"));
-				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]"));
+				assertEquals(RuntimeVariables.replace("Empty the Recycle Bin"),
+					selenium.getText("//a[@class='trash-empty-link']"));
+				selenium.clickAt("//a[@class='trash-empty-link']",
+					RuntimeVariables.replace("Empty the Recycle Bin"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
+								   .matches("^Are you sure you want to empty the Recycle Bin[\\s\\S]$"));
+				assertEquals(RuntimeVariables.replace(
+						"Your request completed successfully."),
+					selenium.getText("//div[@class='portlet-msg-success']"));
 
-			case 8:
+			case 3:
+				assertEquals(RuntimeVariables.replace(
+						"The Recycle Bin is empty."),
+					selenium.getText("//div[@class='portlet-msg-info']"));
 
-				boolean entry3Present3 = selenium.isElementPresent(
-						"//tr[@class='portlet-section-body results-row last']/td[1]/span/a");
-
-				if (!entry3Present3) {
-					label = 9;
-
-					continue;
-				}
-
-				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText(
-						"//span[@title='Actions']/ul/li/strong/a/span"));
-				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
-					RuntimeVariables.replace("Actions"));
-				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]");
-				assertEquals(RuntimeVariables.replace("Delete"),
-					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]"));
-				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]"));
-				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
-
-			case 9:
-
-				boolean entry4Present4 = selenium.isElementPresent(
-						"//tr[@class='portlet-section-body results-row last']/td[1]/span/a");
-
-				if (!entry4Present4) {
-					label = 10;
-
-					continue;
-				}
-
-				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText(
-						"//span[@title='Actions']/ul/li/strong/a/span"));
-				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
-					RuntimeVariables.replace("Actions"));
-				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]");
-				assertEquals(RuntimeVariables.replace("Delete"),
-					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]"));
-				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]"));
-				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
-
-			case 10:
-
-				boolean entry5Present5 = selenium.isElementPresent(
-						"//tr[@class='portlet-section-body results-row last']/td[1]/span/a");
-
-				if (!entry5Present5) {
-					label = 11;
-
-					continue;
-				}
-
-				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText(
-						"//span[@title='Actions']/ul/li/strong/a/span"));
-				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
-					RuntimeVariables.replace("Actions"));
-				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]");
-				assertEquals(RuntimeVariables.replace("Delete"),
-					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]"));
-				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]"));
-				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
-
-			case 11:
 			case 100:
 				label = -1;
 			}

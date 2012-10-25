@@ -31,6 +31,7 @@ public class DeleteBlogsEntryCommentCPTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddBlogsEntryCPTest.class);
 		testSuite.addTestSuite(AddBlogsEntryCommentCPTest.class);
 		testSuite.addTestSuite(DeleteBlogsEntryCommentCPTest.class);
+		testSuite.addTestSuite(ViewDeleteEntryCommentCPTest.class);
 		testSuite.addTestSuite(TearDownBlogsEntryCPTest.class);
 
 		return testSuite;

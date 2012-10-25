@@ -52,8 +52,8 @@ public class DeleteBlogsEntryCommentCPTest extends BaseTestCase {
 			selenium.getText("//li[@class='lfr-discussion-delete']/span/a"));
 		selenium.clickAt("//li[@class='lfr-discussion-delete']/span/a",
 			RuntimeVariables.replace("Delete"));
-		assertTrue(selenium.getConfirmation()
-						   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
+		selenium.waitForConfirmation(
+			"Are you sure you want to delete this? It will be deleted immediately.");
 		selenium.waitForText("//span[@class='comments']", "0 Comments");
 		assertEquals(RuntimeVariables.replace("0 Comments"),
 			selenium.getText("//span[@class='comments']"));

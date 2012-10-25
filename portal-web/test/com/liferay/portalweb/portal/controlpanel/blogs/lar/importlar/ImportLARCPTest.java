@@ -43,7 +43,9 @@ public class ImportLARCPTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				selenium.clickAt("link=Blogs", RuntimeVariables.replace("Blogs"));
 				selenium.waitForPageToLoad("30000");
-				selenium.clickAt("//menu/span/ul/li/strong/a",
+				assertEquals(RuntimeVariables.replace("Options"),
+					selenium.getText("//span[@title='Options']/ul/li/strong/a"));
+				selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
 					RuntimeVariables.replace("Options"));
 				selenium.waitForVisible(
 					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Export / Import')]");

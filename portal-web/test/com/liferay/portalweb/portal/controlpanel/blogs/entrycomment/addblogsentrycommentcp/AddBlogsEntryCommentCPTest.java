@@ -46,8 +46,8 @@ public class AddBlogsEntryCommentCPTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("0 Comments"),
 			selenium.getText("//span[@class='comments']"));
 		assertEquals(RuntimeVariables.replace("Be the first."),
-			selenium.getText("//div[@class='aui-fieldset-content ']/a"));
-		selenium.clickAt("//div[@class='aui-fieldset-content ']/a",
+			selenium.getText("//fieldset[contains(@class,'add-comment')]/div/a"));
+		selenium.clickAt("//fieldset[contains(@class,'add-comment')]/div/a",
 			RuntimeVariables.replace("Be the first."));
 		selenium.waitForVisible("//textarea[@name='_161_postReplyBody0']");
 		selenium.type("//textarea[@name='_161_postReplyBody0']",

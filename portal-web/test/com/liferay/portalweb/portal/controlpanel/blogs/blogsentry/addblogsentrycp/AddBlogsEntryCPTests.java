@@ -26,6 +26,7 @@ public class AddBlogsEntryCPTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddBlogsEntryCPTest.class);
+		testSuite.addTestSuite(ViewBlogsEntryCPTest.class);
 		testSuite.addTestSuite(TearDownBlogsEntryCPTest.class);
 
 		return testSuite;

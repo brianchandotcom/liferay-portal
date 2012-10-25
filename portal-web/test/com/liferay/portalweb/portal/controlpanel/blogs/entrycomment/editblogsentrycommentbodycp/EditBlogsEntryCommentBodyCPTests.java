@@ -31,6 +31,7 @@ public class EditBlogsEntryCommentBodyCPTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddBlogsEntryCPTest.class);
 		testSuite.addTestSuite(AddBlogsEntryCommentCPTest.class);
 		testSuite.addTestSuite(EditBlogsEntryCommentBodyCPTest.class);
+		testSuite.addTestSuite(ViewEditBlogsEntryCommentBodyCPTest.class);
 		testSuite.addTestSuite(TearDownBlogsEntryCPTest.class);
 
 		return testSuite;

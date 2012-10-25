@@ -58,11 +58,6 @@ public class DLFileShortcutTrashHandler extends BaseTrashHandler {
 	}
 
 	@Override
-	public String getDeleteMessage() {
-		return "found-in-deleted-file-shortcut-x";
-	}
-
-	@Override
 	public String getRestoreLink(PortletRequest portletRequest, long classPK)
 		throws PortalException, SystemException {
 

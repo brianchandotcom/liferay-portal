@@ -55,6 +55,9 @@ public class UpdateLicenseAction extends Action {
 		// PLACEHOLDER 03
 		// PLACEHOLDER 04
 		// PLACEHOLDER 05
+		// PLACEHOLDER 06
+		// PLACEHOLDER 07
+		// PLACEHOLDER 08
 
 		if (_isValidRequest(request)) {
 			String cmd = ParamUtil.getString(request, Constants.CMD);
@@ -148,9 +151,6 @@ public class UpdateLicenseAction extends Action {
 
 	private boolean _isValidRequest(HttpServletRequest request) {
 
-		// PLACEHOLDER 06
-		// PLACEHOLDER 07
-		// PLACEHOLDER 08
 		// PLACEHOLDER 09
 		// PLACEHOLDER 10
 		// PLACEHOLDER 11
@@ -162,6 +162,9 @@ public class UpdateLicenseAction extends Action {
 		// PLACEHOLDER 17
 		// PLACEHOLDER 18
 		// PLACEHOLDER 19
+		// PLACEHOLDER 20
+		// PLACEHOLDER 21
+		// PLACEHOLDER 22
 
 		if (_isOmniAdmin(request)) {
 			LicenseUtil.registerOrder(request);

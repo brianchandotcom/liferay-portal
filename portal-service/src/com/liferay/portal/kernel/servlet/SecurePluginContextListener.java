@@ -146,6 +146,10 @@ public class SecurePluginContextListener
 	}
 
 	public void instantiatingListeners() throws Exception {
+		instantiatingListeners(false);
+	}
+
+	public void instantiatingListeners(boolean postListeners) throws Exception {
 		if (_servletRequestListeners != null) {
 			return;
 		}
@@ -154,7 +158,19 @@ public class SecurePluginContextListener
 			servletContext.getInitParameter("portalListenerClasses"));
 
 		for (String listenerClassName : listenerClassNames) {
-			instantiatingListener(listenerClassName);
+			Object listener = InstanceFactory.newInstance(
+				pluginClassLoader, listenerClassName);
+
+			if (_log.isDebugEnabled()) {
+				_log.debug("Instantiating " + listenerClassName);
+			}
+
+			if (postListeners) {
+				instantiatingPostListener(listener);
+			}
+			else {
+				instantiatingListener(listener);
+			}
 		}
 	}
 
@@ -267,15 +283,10 @@ public class SecurePluginContextListener
 		super.fireUndeployEvent();
 	}
 
-	protected void instantiatingListener(String listenerClassName)
-		throws Exception {
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Instantiating " + listenerClassName);
+	protected void instantiatingListener(Object listener) throws Exception {
+		if (listener instanceof ServletContextPostListener) {
+			return;
 		}
-
-		Object listener = InstanceFactory.newInstance(
-			pluginClassLoader, listenerClassName);
 
 		if (listener instanceof HttpSessionActivationListener) {
 			if (_httpSessionActivationListeners == null) {
@@ -350,6 +361,25 @@ public class SecurePluginContextListener
 			}
 
 			_servletRequestListeners.add((ServletRequestListener)listener);
+		}
+	}
+
+	protected void instantiatingPostListener(Object listener) throws Exception {
+		if (listener instanceof ServletContextPostListener) {
+			if (_servletContextListeners == null) {
+				_servletContextListeners =
+					new CopyOnWriteArrayList<ServletContextListener>();
+			}
+
+			ServletContextListener servletContextListener =
+				(ServletContextListener)listener;
+
+			_servletContextListeners.add(servletContextListener);
+
+			ServletContextEvent servletContextEvent = new ServletContextEvent(
+				servletContext);
+
+			servletContextListener.contextInitialized(servletContextEvent);
 		}
 	}
 

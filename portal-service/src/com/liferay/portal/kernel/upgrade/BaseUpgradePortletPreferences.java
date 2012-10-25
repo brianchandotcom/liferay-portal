@@ -43,6 +43,7 @@ public abstract class BaseUpgradePortletPreferences extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		requestTemporaryIndex(
 			true, "PortletPreferences", "portletPreferencesId");
+		addTemporaryIndexes();
 
 		updatePortletPreferences();
 	}

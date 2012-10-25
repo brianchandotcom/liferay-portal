@@ -274,14 +274,14 @@ public class EditCompanyAction extends PortletAction {
 			return;
 		}
 
+		boolean ldapExportEnabled = ParamUtil.getBoolean(
+			actionRequest, "settings--" + PropsKeys.LDAP_EXPORT_ENABLED + "--");
 		boolean ldapImportEnabled = ParamUtil.getBoolean(
 			actionRequest, "settings--" + PropsKeys.LDAP_IMPORT_ENABLED + "--");
 
-		boolean ldapExportEnabled = ParamUtil.getBoolean(
-			actionRequest, "settings--" + PropsKeys.LDAP_EXPORT_ENABLED + "--");
-
-		if (ldapImportEnabled && ldapExportEnabled) {
-			SessionErrors.add(actionRequest, "ldapAutogenertingImportExport");
+		if (ldapExportEnabled && ldapImportEnabled) {
+			SessionErrors.add(
+				actionRequest, "ldapExportAndImportOnPasswordAutogeneration");
 		}
 	}
 

@@ -69,6 +69,7 @@ import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -1548,11 +1549,16 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		if (autoPassword) {
 			if (LDAPSettingsUtil.isPasswordPolicyEnabled(user.getCompanyId())) {
-				_log.warn(
-					"When LDAP password policy is enabled, it's possible " +
-						"that portal generated passwords will not match the " +
-							"LDAP policy! Using RegExpToolkit to generate " +
-								"new password.");
+				if (_log.isWarnEnabled()) {
+					StringBundler sb = new StringBundler(4);
+
+					sb.append("When LDAP password policy is enabled, it is ");
+					sb.append("possible that portal generated passwords will ");
+					sb.append("not match the LDAP policy. Using ");
+					sb.append("RegExpToolkit to generate new password.");
+
+					_log.warn(sb.toString());
+				}
 
 				RegExpToolkit regExpToolkit = new RegExpToolkit();
 
@@ -3417,14 +3423,20 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			if (!PwdEncryptor.PASSWORDS_ENCRYPTION_ALGORITHM.equals(
 					PwdEncryptor.TYPE_NONE)) {
 
-				if (LDAPSettingsUtil
-					.isPasswordPolicyEnabled(user.getCompanyId())) {
+				if (LDAPSettingsUtil.isPasswordPolicyEnabled(
+						user.getCompanyId())) {
 
-					_log.warn(
-						"When LDAP password policy is enabled, it's possible " +
-							"that portal generated passwords will not match " +
-								"the LDAP policy! Using RegExpToolkit to " +
-									"generate new password.");
+					if (_log.isWarnEnabled()) {
+						StringBundler sb = new StringBundler(5);
+
+						sb.append("When LDAP password policy is enabled, ");
+						sb.append("it is possible that portal generated ");
+						sb.append("passwords will not match the LDAP policy.");
+						sb.append("Using RegExpToolkit to generate new ");
+						sb.append("password.");
+
+						_log.warn(sb.toString());
+					}
 
 					RegExpToolkit regExpToolkit = new RegExpToolkit();
 

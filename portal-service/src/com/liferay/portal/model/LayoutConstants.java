@@ -27,7 +27,8 @@ public class LayoutConstants {
 
 	public static final long DEFAULT_PLID = 0;
 
-	public static final int FRIENDLY_URL_MAX_LENGTH = GetterUtil.getInteger(PropsUtil.get(PropsKeys.LAYOUT_FRIENDLY_URL_MAX_LENGTH));
+	public static final int FRIENDLY_URL_MAX_LENGTH = GetterUtil.getInteger(
+		PropsUtil.get(PropsKeys.LAYOUT_FRIENDLY_URL_MAX_LENGTH));
 
 	public static final String NAME_CONTROL_PANEL_DEFAULT = "Control Panel";
 

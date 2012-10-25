@@ -52,16 +52,30 @@ public class DLAppLocalServiceTest {
 
 	@Test
 	public void testAddFolder() throws Exception {
-		addFolder(true);
+		Folder folder = null;
 
-		Assert.assertTrue(true);
+		try {
+			folder = addFolder(true);
+		}
+		catch (Exception e) {
+			Assert.fail("Unexpected error while creating a folder");
+		}
+
+		Assert.assertTrue(folder != null);
 	}
 
 	@Test
 	public void testAddRootFolder() throws Exception {
-		addFolder(false);
+		Folder folder = null;
 
-		Assert.assertTrue(true);
+		try {
+			folder = addFolder(false);
+		}
+		catch (Exception e) {
+			Assert.fail("Unexpected error while creating a folder");
+		}
+
+		Assert.assertTrue(folder != null);
 	}
 
 	protected Folder addFolder(boolean rootFolder) throws Exception {
@@ -93,8 +107,6 @@ public class DLAppLocalServiceTest {
 			long parentFolderId, String name, boolean deleteExisting)
 		throws Exception {
 
-		String description = StringPool.BLANK;
-
 		ServiceContext serviceContext = new ServiceContext();
 
 		serviceContext.setAddGroupPermissions(true);
@@ -114,7 +126,7 @@ public class DLAppLocalServiceTest {
 
 		return DLAppLocalServiceUtil.addFolder(
 			TestPropsValues.getUserId(), _group.getGroupId(), parentFolderId,
-			name, description, serviceContext);
+			name, StringPool.BLANK, serviceContext);
 	}
 
 	private Group _group;

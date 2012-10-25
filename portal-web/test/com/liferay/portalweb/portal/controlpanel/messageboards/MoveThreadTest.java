@@ -30,7 +30,14 @@ public class MoveThreadTest extends BaseTestCase {
 				selenium.selectWindow("null");
 				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
-				selenium.waitForElementPresent("link=Control Panel");
+				selenium.clickAt("//div[@id='dockbar']",
+					RuntimeVariables.replace("Dockbar"));
+				selenium.waitForElementPresent(
+					"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+				assertEquals(RuntimeVariables.replace("Go to"),
+					selenium.getText("//li[@id='_145_mySites']/a/span"));
+				selenium.mouseOver("//li[@id='_145_mySites']/a/span");
+				selenium.waitForVisible("link=Control Panel");
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
@@ -76,22 +83,20 @@ public class MoveThreadTest extends BaseTestCase {
 				selenium.waitForElementPresent(
 					"//textarea[@id='_162_editor' and @style='display: none;']");
 				assertEquals(RuntimeVariables.replace("Source"),
-					selenium.getText(
-						"//span[@id='cke_34_label' and .='Source']"));
-				selenium.clickAt("//span[@id='cke_34_label' and .='Source']",
+					selenium.getText("//span[.='Source']"));
+				selenium.clickAt("//span[.='Source']",
 					RuntimeVariables.replace("Source"));
+				selenium.waitForVisible(
+					"//a[@class='cke_button_source cke_on']");
 				selenium.waitForVisible(
 					"//td[@id='cke_contents__162_editor']/textarea");
 				selenium.type("//td[@id='cke_contents__162_editor']/textarea",
 					RuntimeVariables.replace(
 						"Trust and paths will be straightened."));
 				assertEquals(RuntimeVariables.replace("Source"),
-					selenium.getText(
-						"//span[@id='cke_34_label' and .='Source']"));
-				selenium.clickAt("//span[@id='cke_34_label' and .='Source']",
+					selenium.getText("//span[.='Source']"));
+				selenium.clickAt("//span[.='Source']",
 					RuntimeVariables.replace("Source"));
-				selenium.waitForElementPresent(
-					"//textarea[@id='_162_editor' and @style='display: none;']");
 				selenium.waitForVisible(
 					"//td[@id='cke_contents__162_editor']/iframe");
 				selenium.selectFrame(
@@ -101,9 +106,7 @@ public class MoveThreadTest extends BaseTestCase {
 				selenium.selectFrame("relative=top");
 				selenium.clickAt("//input[@value='Select']",
 					RuntimeVariables.replace("Select"));
-				selenium.waitForPopUp("category",
-					RuntimeVariables.replace("30000"));
-				selenium.selectWindow("category");
+				selenium.selectWindow("title=Message Boards");
 				Thread.sleep(5000);
 
 				boolean CategoriesPresent = selenium.isElementPresent(
@@ -120,10 +123,9 @@ public class MoveThreadTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 
 			case 2:
-				selenium.click("//input[@value='Choose']");
+				selenium.clickAt("//input[@value='Choose']",
+					RuntimeVariables.replace("Choose"));
 				selenium.selectWindow("null");
-				Thread.sleep(5000);
-				assertTrue(selenium.isElementPresent("link=Sujr"));
 				selenium.clickAt("//input[@value='Move Thread']",
 					RuntimeVariables.replace("Move Thread"));
 				selenium.waitForPageToLoad("30000");

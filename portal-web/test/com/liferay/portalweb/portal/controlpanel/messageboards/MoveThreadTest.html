@@ -14,7 +14,27 @@
 	<td></td>
 </tr>
 <tr>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
 	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
+	<td>AUI Editable Min</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>mouseOver</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
 	<td>link=Control Panel</td>
 	<td>Control Panel</td>
 </tr>
@@ -105,13 +125,18 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//span[@id='cke_34_label' and .='Source']</td>
+	<td>//span[.='Source']</td>
 	<td>Source</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//span[@id='cke_34_label' and .='Source']</td>
+	<td>//span[.='Source']</td>
 	<td>Source</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//a[@class='cke_button_source cke_on']</td>
+	<td>Source Button On</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -125,18 +150,13 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//span[@id='cke_34_label' and .='Source']</td>
+	<td>//span[.='Source']</td>
 	<td>Source</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//span[@id='cke_34_label' and .='Source']</td>
+	<td>//span[.='Source']</td>
 	<td>Source</td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>//textarea[@id='_162_editor' and @style='display: none;']</td>
-	<td>Text Area</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -164,14 +184,9 @@
 	<td>Select</td>
 </tr>
 <tr>
-	<td>waitForPopUp</td>
-	<td>category</td>
-	<td>30000</td>
-</tr>
-<tr>
 	<td>selectWindow</td>
-	<td>category</td>
-	<td></td>
+	<td>title=Message Boards</td>
+	<td>Message Boards Window</td>
 </tr>
 <tr>
 	<td>pause</td>
@@ -179,8 +194,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('link=Categories'))</td>
+	<td>storeElementPresent</td>
+	<td>link=Categories</td>
 	<td>CategoriesPresent</td>
 </tr>
 <tr>
@@ -199,7 +214,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>click</td>
+	<td>clickAt</td>
 	<td>//input[@value='Choose']</td>
 	<td>Choose</td>
 </tr>
@@ -207,16 +222,6 @@
 	<td>selectWindow</td>
 	<td>null</td>
 	<td></td>
-</tr>
-<tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertElementPresent</td>
-	<td>link=Sujr</td>
-	<td>Sujr</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>

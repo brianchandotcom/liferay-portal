@@ -30,6 +30,8 @@ import com.liferay.portlet.wiki.service.WikiNodeServiceUtil;
 import com.liferay.portlet.wiki.service.permission.WikiNodePermission;
 
 /**
+ * Implements trash handling for the wiki node entity.
+ *
  * @author Eudaldo Alonso
  */
 public class WikiNodeTrashHandler extends BaseTrashHandler {
@@ -66,15 +68,6 @@ public class WikiNodeTrashHandler extends BaseTrashHandler {
 		}
 	}
 
-	/**
-	 * Deletes all wiki nodes with the matching primary keys.
-	 *
-	 * @param  classPKs the primary keys of the wiki nodes to be deleted
-	 * @param  checkPermission whether to check permission before deleting each
-	 *         folder
-	 * @throws PortalException if any one of the wiki nodes could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
 	public void deleteTrashEntries(long[] classPKs, boolean checkPermission)
 		throws PortalException, SystemException {
 
@@ -88,23 +81,10 @@ public class WikiNodeTrashHandler extends BaseTrashHandler {
 		}
 	}
 
-	/**
-	 * Returns the wiki node entity's class name
-	 *
-	 * @return the wiki node entity's class name
-	 */
 	public String getClassName() {
 		return CLASS_NAME;
 	}
 
-	/**
-	 * Returns the trash renderer associated to the trash entry.
-	 *
-	 * @param  classPK the primary key of the wiki node
-	 * @return the trash renderer associated to the wiki node
-	 * @throws PortalException if the wiki node could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
 	@Override
 	public TrashRenderer getTrashRenderer(long classPK)
 		throws PortalException, SystemException {
@@ -122,13 +102,6 @@ public class WikiNodeTrashHandler extends BaseTrashHandler {
 		return node.isInTrash();
 	}
 
-	/**
-	 * Restores all wiki nodes with the matching primary keys.
-	 *
-	 * @param  classPKs the primary keys of the wiki nodes to be deleted
-	 * @throws PortalException if any one of the wiki nodes could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
 	public void restoreTrashEntries(long[] classPKs)
 		throws PortalException, SystemException {
 

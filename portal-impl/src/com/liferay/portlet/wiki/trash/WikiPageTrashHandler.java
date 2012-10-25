@@ -50,6 +50,8 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
 /**
+ * Implements trash handling for the wiki page entity.
+ *
  * @author Eudaldo Alonso
  */
 public class WikiPageTrashHandler extends BaseTrashHandler {
@@ -90,14 +92,6 @@ public class WikiPageTrashHandler extends BaseTrashHandler {
 		}
 	}
 
-	/**
-	 * Deletes trash attachments from all the wiki pages from a group that were
-	 * deleted after a given date.
-	 *
-	 * @param  group the group
-	 * @param  date the date from which attachments will be deleted
-	 * @throws SystemException if a system exception occurred
-	 */
 	@Override
 	public void deleteTrashAttachments(Group group, Date date)
 		throws PortalException, SystemException {
@@ -130,15 +124,6 @@ public class WikiPageTrashHandler extends BaseTrashHandler {
 		}
 	}
 
-	/**
-	 * Deletes all wiki page with the matching primary keys.
-	 *
-	 * @param  classPKs the primary keys of the wiki pages to be deleted
-	 * @param  checkPermission whether to check permission before deleting each
-	 *         folder
-	 * @throws PortalException if any one of the wiki pages could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
 	public void deleteTrashEntries(long[] classPKs, boolean checkPermission)
 		throws PortalException, SystemException {
 
@@ -156,11 +141,6 @@ public class WikiPageTrashHandler extends BaseTrashHandler {
 		}
 	}
 
-	/**
-	 * Returns the wiki page entity's class name
-	 *
-	 * @return the wiki page entity's class name
-	 */
 	public String getClassName() {
 		return CLASS_NAME;
 	}
@@ -198,14 +178,6 @@ public class WikiPageTrashHandler extends BaseTrashHandler {
 		return page.getTitle();
 	}
 
-	/**
-	 * Returns the trash renderer associated to the trash entry.
-	 *
-	 * @param  classPK the primary key of the wiki page
-	 * @return the trash renderer associated to the wiki page
-	 * @throws PortalException if the wiki page could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
 	@Override
 	public TrashRenderer getTrashRenderer(long classPK)
 		throws PortalException, SystemException {
@@ -227,13 +199,6 @@ public class WikiPageTrashHandler extends BaseTrashHandler {
 		return false;
 	}
 
-	/**
-	 * Restores all wiki pages with the matching primary keys.
-	 *
-	 * @param  classPKs the primary keys of the wiki pages to be deleted
-	 * @throws PortalException if any one of the wiki pages could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
 	public void restoreTrashEntries(long[] classPKs)
 		throws PortalException, SystemException {
 

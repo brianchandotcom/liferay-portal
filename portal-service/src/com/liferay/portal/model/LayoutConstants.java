@@ -14,6 +14,10 @@
 
 package com.liferay.portal.model;
 
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -23,7 +27,7 @@ public class LayoutConstants {
 
 	public static final long DEFAULT_PLID = 0;
 
-	public static final int FRIENDLY_URL_MAX_LENGTH = 255;
+	public static final int FRIENDLY_URL_MAX_LENGTH = GetterUtil.getInteger(PropsUtil.get(PropsKeys.LAYOUT_FRIENDLY_URL_MAX_LENGTH));
 
 	public static final String NAME_CONTROL_PANEL_DEFAULT = "Control Panel";
 

@@ -518,6 +518,36 @@
 			oldBox.options[0].selected = true;
 		},
 
+		setCursorPosition: function(el, position) {
+			var instance = this;
+
+			instance.setSelectionRange(el, position, position);
+		},
+
+		setSelectionRange: function(el, selectionStart, selectionEnd) {
+			var instance = this;
+
+			if (Lang.isFunction(el.getDOM)) {
+				el = el.getDOM();
+			}
+
+			if (el.setSelectionRange) {
+				el.focus();
+
+				el.setSelectionRange(selectionStart, selectionEnd);
+			}
+			else if (el.createTextRange) {
+				var textRange = el.createTextRange();
+
+				textRange.collapse(true);
+
+				textRange.moveEnd('character', selectionEnd);
+				textRange.moveEnd('character', selectionStart);
+
+				textRange.select();
+			}
+		},
+
 		showCapsLock: function(event, span) {
 			var keyCode = event.keyCode ? event.keyCode : event.which;
 			var shiftKey = event.shiftKey ? event.shiftKey : ((keyCode == 16) ? true : false);

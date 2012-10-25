@@ -108,6 +108,10 @@ public class HtmlEngine implements WikiEngine {
 
 			int pos = href.lastIndexOf(_friendlyURLMapping);
 
+			if (pos == -1) {
+				continue;
+			}
+
 			String friendlyURL = href.substring(
 				pos + _friendlyURLMapping.length());
 

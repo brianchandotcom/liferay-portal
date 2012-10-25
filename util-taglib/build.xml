@@ -49,6 +49,13 @@
 			<replacevalue>&lt;uri&gt;http://java.sun.com/portlet_2_0&lt;/uri&gt;</replacevalue>
 		</replace>
 
+		<copy file="src/META-INF/aui.tld" tofile="classes/META-INF/liferay-aui.tld" />
+
+		<replace file="classes/META-INF/liferay-aui.tld">
+			<replacetoken>&lt;uri&gt;http://alloy.liferay.com/tld/aui&lt;/uri&gt;</replacetoken>
+			<replacevalue>&lt;uri&gt;http://liferay.com/tld/aui&lt;/uri&gt;</replacevalue>
+		</replace>
+
 		<antcall target="build-common-java.jar" />
 
 		<copy file="${jar.file}.jar" todir="${portal-impl.classes.dir}/com/liferay/portal/deploy/dependencies" />

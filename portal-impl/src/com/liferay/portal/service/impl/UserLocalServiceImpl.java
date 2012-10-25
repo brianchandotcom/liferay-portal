@@ -116,6 +116,7 @@ import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.portal.security.pwd.PwdAuthenticator;
 import com.liferay.portal.security.pwd.PwdEncryptor;
 import com.liferay.portal.security.pwd.PwdToolkitUtil;
+import com.liferay.portal.security.pwd.RegExpToolkit;
 import com.liferay.portal.service.BaseServiceImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.UserLocalServiceBaseImpl;
@@ -1546,11 +1547,24 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		String password = null;
 
 		if (autoPassword) {
-			PasswordPolicy passwordPolicy =
-				passwordPolicyLocalService.getPasswordPolicy(
-					user.getCompanyId(), user.getOrganizationIds());
+			if (LDAPSettingsUtil.isPasswordPolicyEnabled(user.getCompanyId())) {
+				_log.warn(
+					"When LDAP password policy is enabled, it's possible " +
+						"that portal generated passwords will not match the " +
+							"LDAP policy! Using RegExpToolkit to generate " +
+								"new password.");
 
-			password = PwdToolkitUtil.generate(passwordPolicy);
+				RegExpToolkit regExpToolkit = new RegExpToolkit();
+
+				password = regExpToolkit.generate(null);
+			}
+			else {
+				PasswordPolicy passwordPolicy =
+					passwordPolicyLocalService.getPasswordPolicy(
+						user.getCompanyId(), user.getOrganizationIds());
+
+				password = PwdToolkitUtil.generate(passwordPolicy);
+			}
 
 			user.setPassword(PwdEncryptor.encrypt(password));
 			user.setPasswordEncrypted(true);
@@ -2900,7 +2914,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		PasswordPolicy passwordPolicy = user.getPasswordPolicy();
 
-		if (passwordPolicy.getExpireable()) {
+		if ((passwordPolicy != null) && passwordPolicy.getExpireable()) {
 			Date now = new Date();
 
 			if (user.getPasswordModifiedDate() == null) {
@@ -2940,7 +2954,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		PasswordPolicy passwordPolicy = user.getPasswordPolicy();
 
-		if (passwordPolicy.isExpireable() &&
+		if ((passwordPolicy != null) && passwordPolicy.isExpireable() &&
 			(passwordPolicy.getWarningTime() > 0)) {
 
 			Date now = new Date();
@@ -3381,7 +3395,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		if (company.isSendPasswordResetLink()) {
 			Date expirationDate = null;
 
-			if (passwordPolicy.getResetTicketMaxAge() > 0) {
+			if ((passwordPolicy != null) &&
+				(passwordPolicy.getResetTicketMaxAge() > 0)) {
 				expirationDate = new Date(
 					System.currentTimeMillis() +
 						(passwordPolicy.getResetTicketMaxAge() * 1000));
@@ -3402,7 +3417,22 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			if (!PwdEncryptor.PASSWORDS_ENCRYPTION_ALGORITHM.equals(
 					PwdEncryptor.TYPE_NONE)) {
 
-				newPassword = PwdToolkitUtil.generate(passwordPolicy);
+				if (LDAPSettingsUtil
+					.isPasswordPolicyEnabled(user.getCompanyId())) {
+
+					_log.warn(
+						"When LDAP password policy is enabled, it's possible " +
+							"that portal generated passwords will not match " +
+								"the LDAP policy! Using RegExpToolkit to " +
+									"generate new password.");
+
+					RegExpToolkit regExpToolkit = new RegExpToolkit();
+
+					newPassword = regExpToolkit.generate(null);
+				}
+				else {
+					newPassword = PwdToolkitUtil.generate(passwordPolicy);
+				}
 
 				boolean passwordReset = false;
 
@@ -4048,7 +4078,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 			PasswordPolicy passwordPolicy = defaultUser.getPasswordPolicy();
 
-			if (passwordPolicy.isChangeable() &&
+			if ((passwordPolicy != null) && passwordPolicy.isChangeable() &&
 				passwordPolicy.isChangeRequired()) {
 
 				user.setPasswordReset(true);

@@ -50,6 +50,15 @@ public class PortletSessionFactoryImpl extends SessionFactoryImpl {
 	}
 
 	@Override
+	public void closeSession(Session session) throws ORMException {
+		session.flush();
+
+		if (!PropsValues.SPRING_HIBERNATE_SESSION_DELEGATED) {
+			session.close();
+		}
+	}
+
+	@Override
 	public void destroy() {
 		portletSessionFactories.remove(this);
 	}

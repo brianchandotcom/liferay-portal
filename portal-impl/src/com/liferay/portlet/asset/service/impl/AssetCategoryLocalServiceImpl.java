@@ -40,6 +40,7 @@ import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.base.AssetCategoryLocalServiceBaseImpl;
 
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -457,11 +458,6 @@ public class AssetCategoryLocalServiceImpl
 		List<AssetCategoryProperty> oldCategoryProperties =
 			assetCategoryPropertyPersistence.findByCategoryId(categoryId);
 
-		for (AssetCategoryProperty categoryProperty : oldCategoryProperties) {
-			assetCategoryPropertyLocalService.deleteAssetCategoryProperty(
-				categoryProperty);
-		}
-
 		for (int i = 0; i < categoryProperties.length; i++) {
 			String[] categoryProperty = StringUtil.split(
 				categoryProperties[i], CharPool.COLON);
@@ -479,9 +475,39 @@ public class AssetCategoryLocalServiceImpl
 			}
 
 			if (Validator.isNotNull(key)) {
-				assetCategoryPropertyLocalService.addCategoryProperty(
-					userId, categoryId, key, value);
+				boolean newProperty = true;
+
+				Iterator<AssetCategoryProperty> iterator =
+					oldCategoryProperties.iterator();
+
+				while (iterator.hasNext()) {
+					AssetCategoryProperty oldAssetCategoryProperty =
+						iterator.next();
+
+					if ((oldAssetCategoryProperty.getUserId() == userId) &&
+						(oldAssetCategoryProperty.getCategoryId() ==
+							categoryId) &&
+						oldAssetCategoryProperty.getKey().equals(key) &&
+						oldAssetCategoryProperty.getValue().equals(value)) {
+
+						newProperty = false;
+
+						iterator.remove();
+
+						break;
+					}
+				}
+
+				if (newProperty) {
+					assetCategoryPropertyLocalService.addCategoryProperty(
+						userId, categoryId, key, value);
+				}
 			}
+		}
+
+		for (AssetCategoryProperty categoryProperty : oldCategoryProperties) {
+			assetCategoryPropertyLocalService.deleteAssetCategoryProperty(
+				categoryProperty);
 		}
 
 		// Indexer

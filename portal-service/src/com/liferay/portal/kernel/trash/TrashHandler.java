@@ -198,8 +198,8 @@ public interface TrashHandler {
 	/**
 	 * Returns a range of all the container models that are children of the
 	 * parent container model identified by the container model ID. These
-	 * container models must be able to contain the model entity identified by the
-	 * primary key.
+	 * container models must be able to contain the model entity identified by
+	 * the primary key.
 	 *
 	 * <p>
 	 * This method checks for the view permission when retrieving the container
@@ -216,8 +216,8 @@ public interface TrashHandler {
 	 * result set.
 	 * </p>
 	 *
-	 * @param  classPK the primary key of a model entity the container models must be
-	 *         able to contain
+	 * @param  classPK the primary key of a model entity the container models
+	 *         must be able to contain
 	 * @param  containerModelId the primary key of the parent container model
 	 * @param  start the lower bound of the range of results
 	 * @param  end the upper bound of the range of results (not inclusive)
@@ -233,15 +233,16 @@ public interface TrashHandler {
 	/**
 	 * Returns the number of container models that are children of the parent
 	 * container model identified by the container model ID. These container
-	 * models must be able to contain the model entity identified by the primary key.
+	 * models must be able to contain the model entity identified by the primary
+	 * key.
 	 *
 	 * <p>
 	 * This method checks for the view permission when counting the container
 	 * models.
 	 * </p>
 	 *
-	 * @param  classPK the primary key of a model entity the container models must be
-	 *         able to contain
+	 * @param  classPK the primary key of a model entity the container models
+	 *         must be able to contain
 	 * @param  containerModelId the primary key of the parent container model
 	 * @return the number of matching container models
 	 * @throws PortalException if a model entity with the primary key could not
@@ -252,18 +253,19 @@ public interface TrashHandler {
 		throws PortalException, SystemException;
 
 	/**
-	 * Returns the language key to the localized message to display next to a trash entry listed in
-	 * a search result, indicating that the trash entry was found in a trashed
-	 * container (e.g. folder or message board thread) this trash handler is associated with.
+	 * Returns the language key to the localized message to display next to a
+	 * trash entry listed in a search result, indicating that the trash entry
+	 * was found in a trashed container (e.g. folder or message board thread)
+	 * this trash handler is associated with.
 	 *
 	 * <p>
-	 * If the language key (e.g. <code>found-in-deleted-folder-x</code>)
-	 * used accepts a single parameter, the trash framework replaces that parameter
+	 * If the language key (e.g. <code>found-in-deleted-folder-x</code>) used
+	 * accepts a single parameter, the trash framework replaces that parameter
 	 * with the trashed container's name.
 	 * </p>
 	 *
-	 * @return the language key to the localized message to display next to a trash entry listed in
-	 * a search result
+	 * @return the language key to the localized message to display next to a
+	 *         trash entry listed in a search result
 	 */
 	public String getDeleteMessage();
 
@@ -310,8 +312,8 @@ public interface TrashHandler {
 	public String getSubcontainerModelName();
 
 	/**
-	 * Returns the trash renderer associated to the model entity with the primary
-	 * key.
+	 * Returns the trash renderer associated to the model entity with the
+	 * primary key.
 	 *
 	 * @param  classPK the primary key of the model entity
 	 * @return the trash renderer associated to the model entity
@@ -422,9 +424,9 @@ public interface TrashHandler {
 		throws PortalException, SystemException;
 
 	/**
-	 * Updates the title of the model entity with the primary key. This method is
-	 * called by {@link com.liferay.portlet.trash.action.EditEntryAction} before
-	 * restoring the model entity via its restore rename action.
+	 * Updates the title of the model entity with the primary key. This method
+	 * is called by {@link com.liferay.portlet.trash.action.EditEntryAction}
+	 * before restoring the model entity via its restore rename action.
 	 *
 	 * @param  classPK the primary key of the model entity
 	 * @param  title the title to be assigned

@@ -83,11 +83,19 @@ public class LayoutImpl extends LayoutBaseImpl {
 	}
 
 	public static int validateFriendlyURL(String friendlyURL) {
+		return validateFriendlyURL(friendlyURL, true);
+	}
+
+	public static int validateFriendlyURL(
+		String friendlyURL, boolean checkMaxLength) {
+
 		if (friendlyURL.length() < 2) {
 			return LayoutFriendlyURLException.TOO_SHORT;
 		}
 
-		if (friendlyURL.length() > LayoutConstants.FRIENDLY_URL_MAX_LENGTH) {
+		if (checkMaxLength &&
+			(friendlyURL.length() > LayoutConstants.FRIENDLY_URL_MAX_LENGTH)) {
+
 			return LayoutFriendlyURLException.TOO_LONG;
 		}
 

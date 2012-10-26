@@ -23,8 +23,20 @@ import javax.naming.NamingException;
 /**
  * @author Hugo Huijser
  * @author Brian Wing Shun Chan
+ * @author Peter Shin
  */
 public interface DBProcess {
+
+	public void addPermanentIndex(
+			boolean unique, String tableName, String... columnNames)
+		throws IOException, SQLException;
+
+	public void addTemporaryIndexes() throws IOException, SQLException;
+
+	public void dropTemporaryIndexes() throws IOException, SQLException;
+
+	public void requestTemporaryIndex(
+		boolean unique, String tableName, String... columnNames);
 
 	public void runSQL(String template) throws IOException, SQLException;
 

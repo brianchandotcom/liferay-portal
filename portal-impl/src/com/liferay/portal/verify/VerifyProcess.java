@@ -15,6 +15,7 @@
 package com.liferay.portal.verify;
 
 import com.liferay.portal.kernel.dao.db.BaseDBProcess;
+import com.liferay.portal.kernel.dao.db.IndexMetadata;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -26,7 +27,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -40,6 +43,7 @@ import java.util.regex.Pattern;
  *
  * @author Alexander Chow
  * @author Hugo Huijser
+ * @author Peter Shin
  */
 public abstract class VerifyProcess extends BaseDBProcess {
 
@@ -55,7 +59,11 @@ public abstract class VerifyProcess extends BaseDBProcess {
 				_log.info("Verifying " + getClass().getName());
 			}
 
+			addTemporaryIndexes();
+
 			doVerify();
+
+			dropTemporaryIndexes();
 		}
 		catch (Exception e) {
 			throw new VerifyException(e);
@@ -64,6 +72,10 @@ public abstract class VerifyProcess extends BaseDBProcess {
 
 	public void verify(VerifyProcess verifyProcess) throws VerifyException {
 		verifyProcess.verify();
+	}
+
+	protected List<IndexMetadata> doGetIndexMetadatas() {
+		return Collections.emptyList();
 	}
 
 	protected void doVerify() throws Exception {

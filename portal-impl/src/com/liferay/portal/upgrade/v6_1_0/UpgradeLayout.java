@@ -33,11 +33,15 @@ import java.util.Locale;
 /**
  * @author Jorge Ferrer
  * @author Julio Camarero
+ * @author James Lefeu
  */
 public class UpgradeLayout extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		requestTemporaryIndex(false, "Layout", "plid");
+		addTemporaryIndexes();
+
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -65,9 +69,8 @@ public class UpgradeLayout extends UpgradeProcess {
 	}
 
 	protected void updateJavaScript(
-			UnicodeProperties typeSettingsProperties, String javaScript1,
-			String javaScript2, String javaScript3)
-		throws Exception {
+		UnicodeProperties typeSettingsProperties, String javaScript1,
+		String javaScript2, String javaScript3) {
 
 		StringBundler sb = new StringBundler(6);
 

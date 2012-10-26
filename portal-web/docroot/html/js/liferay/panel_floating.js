@@ -166,6 +166,9 @@ AUI.add(
 
 										var paginatorInstance = new A.Paginator(
 											{
+												TPL: {
+													defaultOutput: '<span class="lfr-paginator-prev">{PrevPageLink}</span>{PageLinks}<span class="lfr-paginator-next">{NextPageLink}</span>'
+												},
 												containers: paginatorContainer,
 												on: {
 													changeRequest: function(newState) {
@@ -178,8 +181,6 @@ AUI.add(
 														this.setState(newState);
 													}
 												},
-												pageContainerTemplate: '<span></span>',
-												template: '<span class="lfr-paginator-prev">{PrevPageLink}</span>{PageLinks}<span class="lfr-paginator-next">{NextPageLink}</span>',
 												total: totalPages
 											}
 										).render();

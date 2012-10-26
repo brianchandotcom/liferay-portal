@@ -28,8 +28,8 @@
 					'<div>';
 
 	var TPL_LINK_TO_PAGE = '<div class="lfr-ddm-link-to-page">' +
-						'<a href="javascript:;"><%= UnicodeLanguageUtil.get(pageContext, "link") %></a>' +
-					'</div>';
+							'<a href="javascript:;"><%= UnicodeLanguageUtil.get(pageContext, "link") %></a>' +
+						'</div>';
 
 	var TPL_PARAGRAPH = '<p></p>';
 

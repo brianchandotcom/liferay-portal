@@ -25,6 +25,10 @@ public class DeleteBlogsEntryCommentCPTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
@@ -35,23 +39,24 @@ public class DeleteBlogsEntryCommentCPTest extends BaseTestCase {
 		selenium.clickAt("link=Blogs", RuntimeVariables.replace("Blogs"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Blogs Entry Title"),
-			selenium.getText("//td[2]/a"));
-		selenium.clickAt("//td[2]/a",
+			selenium.getText("//tr[contains(.,'Blogs Entry Title')]/td[2]/a"));
+		selenium.clickAt("//tr[contains(.,'Blogs Entry Title')]/td[2]/a",
 			RuntimeVariables.replace("Blogs Entry Title"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("1 Comment"),
 			selenium.getText("//span[@class='comments']"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry Comment Body"),
-			selenium.getText("//form/div/div/div/div[3]/div/div[1]"));
+			selenium.getText("//div[@class='lfr-discussion-message']"));
+		selenium.mouseOver("//li[@class='lfr-discussion-delete']/span/a");
 		assertEquals(RuntimeVariables.replace("Delete"),
-			selenium.getText("//li[4]/span/a/span"));
-		selenium.clickAt("//li[4]/span/a/span",
+			selenium.getText("//li[@class='lfr-discussion-delete']/span/a"));
+		selenium.clickAt("//li[@class='lfr-discussion-delete']/span/a",
 			RuntimeVariables.replace("Delete"));
+		selenium.waitForConfirmation(
+			"Are you sure you want to delete this? It will be deleted immediately.");
 		selenium.waitForText("//span[@class='comments']", "0 Comments");
 		assertEquals(RuntimeVariables.replace("0 Comments"),
 			selenium.getText("//span[@class='comments']"));
 		assertFalse(selenium.isTextPresent("Blogs Entry Comment Body"));
-		assertTrue(selenium.getConfirmation()
-						   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
 	}
 }

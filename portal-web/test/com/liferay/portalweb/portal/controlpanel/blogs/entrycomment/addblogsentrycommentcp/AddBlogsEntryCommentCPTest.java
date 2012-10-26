@@ -25,6 +25,10 @@ public class AddBlogsEntryCommentCPTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
@@ -35,29 +39,25 @@ public class AddBlogsEntryCommentCPTest extends BaseTestCase {
 		selenium.clickAt("link=Blogs", RuntimeVariables.replace("Blogs"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Blogs Entry Title"),
-			selenium.getText("//td[2]/a"));
-		selenium.clickAt("//td[2]/a",
+			selenium.getText("//tr[contains(.,'Blogs Entry Title')]/td[2]/a"));
+		selenium.clickAt("//tr[contains(.,'Blogs Entry Title')]/td[2]/a",
 			RuntimeVariables.replace("Blogs Entry Title"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("0 Comments"),
 			selenium.getText("//span[@class='comments']"));
 		assertEquals(RuntimeVariables.replace("Be the first."),
-			selenium.getText("//fieldset/div/a"));
-		selenium.clickAt("//fieldset/div/a",
+			selenium.getText("//fieldset[contains(@class,'add-comment')]/div/a"));
+		selenium.clickAt("//fieldset[contains(@class,'add-comment')]/div/a",
 			RuntimeVariables.replace("Be the first."));
 		selenium.waitForVisible("//textarea[@name='_161_postReplyBody0']");
 		selenium.type("//textarea[@name='_161_postReplyBody0']",
 			RuntimeVariables.replace("Blogs Entry Comment Body"));
-		selenium.keyPress("//textarea[@name='_161_postReplyBody0']",
-			RuntimeVariables.replace("\\48"));
-		selenium.keyPress("//textarea[@name='_161_postReplyBody0']",
-			RuntimeVariables.replace("\\8"));
 		selenium.clickAt("//input[@value='Reply']",
 			RuntimeVariables.replace("Reply"));
 		selenium.waitForText("//span[@class='comments']", "1 Comment");
 		assertEquals(RuntimeVariables.replace("1 Comment"),
 			selenium.getText("//span[@class='comments']"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry Comment Body"),
-			selenium.getText("//form/div/div/div/div[3]/div/div[1]"));
+			selenium.getText("//div[@class='lfr-discussion-message']"));
 	}
 }

@@ -14,6 +14,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
+	<td>AUI Editable Min</td>
+</tr>
+<tr>
 	<td>assertText</td>
 	<td>//li[@id='_145_mySites']/a/span</td>
 	<td>Go to</td>
@@ -39,23 +49,28 @@
 	<td>Blogs</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//span[@title='Options']/ul/li/strong/a</td>
+	<td>Options</td>
+</tr>
+<tr>
 	<td>clickAt</td>
-	<td>//menu/span/ul/li/strong/a</td>
+	<td>//span[@title='Options']/ul/li/strong/a</td>
 	<td>Options</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Export / Import')]</td>
 	<td>Export / Import</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Export / Import')]</td>
 	<td>Export / Import</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Export / Import')]</td>
 	<td>Export / Import</td>
 </tr>
 <tr>
@@ -64,19 +79,29 @@
 	<td>Import</td>
 </tr>
 <tr>
-	<td>type</td>
+	<td>uploadFile</td>
 	<td>//input[@id='_86_importFileName']</td>
 	<td>L:\portal\build\portal-web\test\com\liferay\portalweb\portal\controlpanel\blogs\dependencies\Selenium-Blogs.portlet.lar</td>
 </tr>
 <tr>
-	<td>assertNotChecked</td>
+	<td>storeChecked</td>
 	<td>//input[@id='_86_DELETE_PORTLET_DATACheckbox']</td>
-	<td>Delete Portlet data before importing Checkbox</td>
+	<td>deletePortletDataCheckbox</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${deletePortletDataCheckbox}</td>
+	<td>DeletePortletDataCheckbox</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>//input[@id='_86_DELETE_PORTLET_DATACheckbox']</td>
 	<td>Delete Portlet data before importing Checkbox</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>DeletePortletDataCheckbox</td>
+	<td></td>
 </tr>
 <tr>
 	<td>assertChecked</td>
@@ -84,14 +109,24 @@
 	<td>Delete Portlet data before importing Checkbox</td>
 </tr>
 <tr>
-	<td>assertNotChecked</td>
+	<td>storeChecked</td>
 	<td>//input[@id='_86_PORTLET_DATACheckbox']</td>
-	<td>Data Checkbox</td>
+	<td>dataCheckbox</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${dataCheckbox}</td>
+	<td>DataCheckbox</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>//input[@id='_86_PORTLET_DATACheckbox']</td>
 	<td>Data Checkbox</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>DataCheckbox</td>
+	<td></td>
 </tr>
 <tr>
 	<td>assertChecked</td>

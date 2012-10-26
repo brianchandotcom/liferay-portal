@@ -29,6 +29,7 @@ public class AddBlogsEntryCommentCPTests extends BaseTestSuite {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddBlogsEntryCPTest.class);
 		testSuite.addTestSuite(AddBlogsEntryCommentCPTest.class);
+		testSuite.addTestSuite(ViewBlogsEntryCommentCPTest.class);
 		testSuite.addTestSuite(TearDownBlogsEntryCPTest.class);
 
 		return testSuite;

@@ -17,6 +17,7 @@ package com.liferay.portalweb.portal.controlpanel.blogs.entrycomment.deleteblogs
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.controlpanel.blogs.blogsentry.addblogsentrycp.AddBlogsEntryCPTest;
 import com.liferay.portalweb.portal.controlpanel.blogs.blogsentry.addblogsentrycp.TearDownBlogsEntryCPTest;
+import com.liferay.portalweb.portal.controlpanel.blogs.entrycomment.addblogsentrycommentcp.AddBlogsEntryCommentCPTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -30,6 +31,7 @@ public class DeleteBlogsEntryCommentCPTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddBlogsEntryCPTest.class);
 		testSuite.addTestSuite(AddBlogsEntryCommentCPTest.class);
 		testSuite.addTestSuite(DeleteBlogsEntryCommentCPTest.class);
+		testSuite.addTestSuite(ViewDeleteEntryCommentCPTest.class);
 		testSuite.addTestSuite(TearDownBlogsEntryCPTest.class);
 
 		return testSuite;

@@ -14,6 +14,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
+	<td>AUI Editable Min</td>
+</tr>
+<tr>
 	<td>assertText</td>
 	<td>//li[@id='_145_mySites']/a/span</td>
 	<td>Go to</td>
@@ -40,12 +50,12 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[2]/a</td>
+	<td>//tr[contains(.,'Blogs Entry Title')]/td[2]/a</td>
 	<td>Blogs Entry Title</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//td[2]/a</td>
+	<td>//tr[contains(.,'Blogs Entry Title')]/td[2]/a</td>
 	<td>Blogs Entry Title</td>
 </tr>
 <tr>
@@ -54,14 +64,14 @@
 	<td>0 Votes</td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>//a[5]</td>
-	<td></td>
+	<td>waitForVisible</td>
+	<td>//div[@class='taglib-ratings stars']/div/div/a[5]</td>
+	<td>Rate 5 Stars</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//a[5]</td>
-	<td></td>
+	<td>//div[@class='taglib-ratings stars']/div/div/a[5]</td>
+	<td>Rate 5 Stars</td>
 </tr>
 <tr>
 	<td>waitForPartialText</td>

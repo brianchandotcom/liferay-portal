@@ -25,6 +25,10 @@ public class AddBlogsEntryAutoDraftCPTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
@@ -38,17 +42,22 @@ public class AddBlogsEntryAutoDraftCPTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_161_title']",
 			RuntimeVariables.replace("Blogs Entry Title"));
+		selenium.waitForElementPresent(
+			"//textarea[@id='_161_editor' and @style='display: none;']");
 		assertEquals(RuntimeVariables.replace("Source"),
-			selenium.getText("//span[@id='cke_48_label' and .='Source']"));
-		selenium.clickAt("//span[@id='cke_48_label' and .='Source']",
+			selenium.getText("//span[.='Source']"));
+		selenium.clickAt("//span[.='Source']",
 			RuntimeVariables.replace("Source"));
+		selenium.waitForVisible("//a[@class='cke_button_source cke_on']");
 		selenium.waitForVisible("//td[@id='cke_contents__161_editor']/textarea");
 		selenium.type("//td[@id='cke_contents__161_editor']/textarea",
 			RuntimeVariables.replace("Blogs Entry Content"));
 		assertEquals(RuntimeVariables.replace("Source"),
-			selenium.getText("//span[@id='cke_48_label' and .='Source']"));
-		selenium.clickAt("//span[@id='cke_48_label' and .='Source']",
+			selenium.getText("//span[.='Source']"));
+		selenium.clickAt("//span[.='Source']",
 			RuntimeVariables.replace("Source"));
+		selenium.waitForElementPresent(
+			"//textarea[@id='_161_editor' and @style='display: none;']");
 		selenium.waitForVisible("//td[@id='cke_contents__161_editor']/iframe");
 		selenium.selectFrame("//td[@id='cke_contents__161_editor']/iframe");
 		selenium.waitForText("//body", "Blogs Entry Content");
@@ -59,6 +68,10 @@ public class AddBlogsEntryAutoDraftCPTest extends BaseTestCase {
 		assertTrue(selenium.isPartialText(
 				"//div[@class='save-status portlet-msg-success']", "Draft saved"));
 		selenium.open("/web/guest/home/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
@@ -69,8 +82,8 @@ public class AddBlogsEntryAutoDraftCPTest extends BaseTestCase {
 		selenium.clickAt("link=Blogs", RuntimeVariables.replace("Blogs"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Draft"),
-			selenium.getText("//td[5]/a"));
+			selenium.getText("//tr[contains(.,'Draft')]/td[5]/a"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry Title"),
-			selenium.getText("//td[2]/a"));
+			selenium.getText("//tr[contains(.,'Blogs Entry Title')]/td[2]/a"));
 	}
 }

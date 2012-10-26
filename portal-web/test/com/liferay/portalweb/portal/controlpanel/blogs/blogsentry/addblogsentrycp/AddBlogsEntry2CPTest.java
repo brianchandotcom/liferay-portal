@@ -25,6 +25,10 @@ public class AddBlogsEntry2CPTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
@@ -65,8 +69,8 @@ public class AddBlogsEntry2CPTest extends BaseTestCase {
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry2 Title"),
-			selenium.getText("//td[2]/a"));
-		selenium.clickAt("//td[2]/a",
+			selenium.getText("//tr[contains(.,'Blogs Entry2 Title')]/td[2]/a"));
+		selenium.clickAt("//tr[contains(.,'Blogs Entry2 Title')]/td[2]/a",
 			RuntimeVariables.replace("Blogs Entry2 Title"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Blogs Entry2 Title"),

@@ -1,0 +1,203 @@
+e<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>ViewDeleteEntryCommentCPTest</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">ViewDeleteEntryCommentCPTest</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/web/guest/home/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
+	<td>AUI Editable Min</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>mouseOver</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>link=Control Panel</td>
+	<td>Control Panel</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>link=Control Panel</td>
+	<td>Control Panel</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>link=Blogs</td>
+	<td>Blogs</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Blogs Entry Title')]/td[2]/a</td>
+	<td>Blogs Entry Title</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//tr[contains(.,'Blogs Entry Title')]/td[2]/a</td>
+	<td>Blogs Entry Title</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@class='portlet-title-text']</td>
+	<td>Blogs</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//h1[@class='header-title']/span</td>
+	<td>Blogs Entry Title</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@class='header-back-to']/a</td>
+	<td>« Back</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='entry-title']/h2/a</td>
+	<td>Blogs Entry Title</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//div[@class='entry-date']</td>
+	<td>Entry Date</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[contains(.,'Edit')]/span/a/span</td>
+	<td>Edit</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[contains(.,'Permissions')]/span/a/span</td>
+	<td>Permissions</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[contains(.,'Move to the Recycle Bin')]/span/a/span</td>
+	<td>Move to the Recycle Bin</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='entry-body']/p</td>
+	<td>Blogs Entry Content</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='entry-author']</td>
+	<td>By Joe Bloggs</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@class='comments']/a</td>
+	<td>0 Comments</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='taglib-flags']/span/a/span</td>
+	<td>Flag</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//li[@class='taglib-social-bookmark-twitter']</td>
+	<td>Twitter</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//li[@class='taglib-social-bookmark-facebook']</td>
+	<td>Facebook</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//li[@class='taglib-social-bookmark-plusone']</td>
+	<td>Google</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//div[contains(@id,'ratingStar')]/div</td>
+	<td>Your Rating</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[contains(@id,'ratingScore')]/div</td>
+	<td>Average (0 Votes)</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//span[@class='previous']</td>
+	<td>Previous</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//span[@class='next']</td>
+	<td>Next</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='blogsCommentsPanelContainer']/div/div/div/span</td>
+	<td>Comments</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//div[@id='blogsCommentsPanelContainer']/div/div[contains(.,'Trackback URL:')]</td>
+	<td>Trackback URL:</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//fieldset[contains(@class,'add-comment')]/div/a</td>
+	<td>Be the first.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@class='subscribe-link']/a/span</td>
+	<td>Unsubscribe from Comments</td>
+</tr>
+<tr>
+	<td>assertElementNotPresent</td>
+	<td>//span[@class='user-profile-image']/img</td>
+	<td>User Profile Image</td>
+</tr>
+<tr>
+	<td>assertElementNotPresent</td>
+	<td>//span[@class='user-name']</td>
+	<td>Joe Bloggs</td>
+</tr>
+<tr>
+	<td>assertTextNotPresent</td>
+	<td>Blogs Entry Comment Body</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextNotPresent</td>
+	<td>0 (0 Votes)</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementNotPresent</td>
+	<td>//div[@class='lfr-discussion-posted-on']</td>
+	<td>Posted on Date</td>
+</tr>
+</tbody></table>
+</body>
+</html>

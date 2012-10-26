@@ -18,8 +18,6 @@ import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.controlpanel.webcontent.wctemplate.addwctemplate.AddWCTemplateTests;
 import com.liferay.portalweb.portal.controlpanel.webcontent.wctemplate.addwctemplatestructure.AddWCTemplateStructureTests;
 import com.liferay.portalweb.portal.controlpanel.webcontent.wctemplate.addwctemplatexsl.AddWCTemplateXSLTests;
-import com.liferay.portalweb.portal.controlpanel.webcontent.wctemplate.advancedsearchwctemplate.AdvancedSearchWCTemplateTests;
-import com.liferay.portalweb.portal.controlpanel.webcontent.wctemplate.searchwctemplate.SearchWCTemplateTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -35,8 +33,6 @@ public class WCTemplateTestPlan extends BaseTestSuite {
 		testSuite.addTest(AddWCTemplateTests.suite());
 		testSuite.addTest(AddWCTemplateStructureTests.suite());
 		testSuite.addTest(AddWCTemplateXSLTests.suite());
-		testSuite.addTest(AdvancedSearchWCTemplateTests.suite());
-		testSuite.addTest(SearchWCTemplateTests.suite());
 
 		return testSuite;
 	}

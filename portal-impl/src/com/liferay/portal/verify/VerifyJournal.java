@@ -60,6 +60,8 @@ public class VerifyJournal extends VerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
+		requestTemporaryIndex(false, "PortletPreferences", "portletId");
+		addTemporaryIndexes();
 
 		// Oracle new line
 

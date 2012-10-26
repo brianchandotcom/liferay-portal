@@ -136,10 +136,7 @@ public class SQLServerDB extends BaseDB {
 		sb.append("use ");
 		sb.append(databaseName);
 		sb.append(";\n\n");
-		sb.append(
-			readFile(
-				sqlDir + "/portal" + suffix + "/portal" + suffix +
-					"-sql-server.sql"));
+		sb.append(getCreateTablesContent(sqlDir, suffix));
 		sb.append("\n\n");
 		sb.append(readFile(sqlDir + "/indexes/indexes-sql-server.sql"));
 		sb.append("\n\n");

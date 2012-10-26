@@ -80,14 +80,10 @@ public class SybaseDB extends BaseDB {
 		sb.append("', ");
 		sb.append("'select into/bulkcopy/pllsort' , true\n");
 		sb.append("go\n\n");
-
 		sb.append("use ");
 		sb.append(databaseName);
 		sb.append("\n\n");
-		sb.append(
-			readFile(
-				sqlDir + "/portal" + suffix + "/portal" + suffix +
-					"-sybase.sql"));
+		sb.append(getCreateTablesContent(sqlDir, suffix));
 		sb.append("\n\n");
 		sb.append(readFile(sqlDir + "/indexes/indexes-sybase.sql"));
 		sb.append("\n\n");

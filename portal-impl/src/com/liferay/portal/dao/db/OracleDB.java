@@ -188,10 +188,7 @@ public class OracleDB extends BaseDB {
 		sb.append("connect &1/&2;\n");
 		sb.append("set define off;\n");
 		sb.append("\n");
-		sb.append(
-			readFile(
-				sqlDir + "/portal" + suffix + "/portal" + suffix +
-					"-oracle.sql"));
+		sb.append(getCreateTablesContent(sqlDir, suffix));
 		sb.append("\n\n");
 		sb.append(readFile(sqlDir + "/indexes/indexes-oracle.sql"));
 		sb.append("\n\n");

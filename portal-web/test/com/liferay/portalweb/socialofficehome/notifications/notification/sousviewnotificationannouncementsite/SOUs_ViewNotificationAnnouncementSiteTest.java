@@ -39,10 +39,10 @@ public class SOUs_ViewNotificationAnnouncementSiteTest extends BaseTestCase {
 				"Joe Bloggs sent a new announcement"));
 		assertEquals(RuntimeVariables.replace("Announcements Entry Title"),
 			selenium.getText("//div[@class='notification-entry']/div[2]"));
-		assertEquals(RuntimeVariables.replace("Mark as Read"),
+		assertEquals(RuntimeVariables.replace("Mark All as Read"),
 			selenium.getText("//a[@class='dismiss-notifications']"));
 		selenium.clickAt("//a[@class='dismiss-notifications']",
-			RuntimeVariables.replace("Mark as Read"));
+			RuntimeVariables.replace("Mark All as Read"));
 		selenium.waitForNotText("//span[@class='notification-count']", "1");
 		assertEquals(RuntimeVariables.replace("0"),
 			selenium.getText("//span[@class='notification-count']"));

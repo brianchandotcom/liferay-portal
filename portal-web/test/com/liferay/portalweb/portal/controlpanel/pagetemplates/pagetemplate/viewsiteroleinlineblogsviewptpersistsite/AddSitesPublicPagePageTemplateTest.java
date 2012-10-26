@@ -43,7 +43,7 @@ public class AddSitesPublicPagePageTemplateTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				selenium.clickAt("link=Sites", RuntimeVariables.replace("Sites"));
 				selenium.waitForPageToLoad("30000");
-				selenium.type("//input[@id='_134_name']",
+				selenium.type("//input[@name='_134_keywords']",
 					RuntimeVariables.replace("Site Name"));
 				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));
@@ -53,13 +53,13 @@ public class AddSitesPublicPagePageTemplateTest extends BaseTestCase {
 						"//span[@title='Actions']/ul/li/strong/a/span"));
 				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
-				selenium.waitForText("//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Manage Pages')]/a",
+				selenium.waitForText("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Pages')]",
 					"Manage Pages");
 				assertEquals(RuntimeVariables.replace("Manage Pages"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Manage Pages')]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Pages')]"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Manage Pages')]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Pages')]"));
 				selenium.waitForPageToLoad("30000");
 				selenium.clickAt("link=Public Pages",
 					RuntimeVariables.replace("Public Pages"));
@@ -71,11 +71,21 @@ public class AddSitesPublicPagePageTemplateTest extends BaseTestCase {
 					RuntimeVariables.replace("Public Page"));
 				selenium.select("//select[@id='_156_layoutPrototypeId']",
 					RuntimeVariables.replace("Page Template Name"));
-				assertTrue(selenium.isChecked(
-						"//input[@id='_156_layoutPrototypeLinkEnabledCheckbox']"));
+
+				boolean applyChangesCheckbox = selenium.isChecked(
+						"//input[@id='_156_layoutPrototypeLinkEnabledCheckbox']");
+
+				if (!applyChangesCheckbox) {
+					label = 2;
+
+					continue;
+				}
+
 				selenium.clickAt("//input[@id='_156_layoutPrototypeLinkEnabledCheckbox']",
 					RuntimeVariables.replace(
 						"Automatically apply changes done to the page template."));
+
+			case 2:
 				assertFalse(selenium.isChecked(
 						"//input[@id='_156_layoutPrototypeLinkEnabledCheckbox']"));
 				selenium.clickAt("//input[@value='Add Page']",
@@ -93,7 +103,7 @@ public class AddSitesPublicPagePageTemplateTest extends BaseTestCase {
 						"xPath=(//a[@class='layout-tree'])[2]");
 
 				if (pageVisible) {
-					label = 2;
+					label = 3;
 
 					continue;
 				}
@@ -101,7 +111,7 @@ public class AddSitesPublicPagePageTemplateTest extends BaseTestCase {
 				selenium.clickAt("//div[@class='aui-tree-hitarea']",
 					RuntimeVariables.replace("Drop Down Arrow"));
 
-			case 2:
+			case 3:
 				selenium.waitForVisible("//li/ul/li/div/div[3]/a");
 				assertEquals(RuntimeVariables.replace("Public Page"),
 					selenium.getText("//li/ul/li/div/div[3]/a"));

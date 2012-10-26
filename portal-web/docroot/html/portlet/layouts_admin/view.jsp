@@ -215,10 +215,9 @@ SitesUtil.addPortletBreadcrumbEntries(group, pagesName, redirectURL, request, re
 			function(event) {
 				event.preventDefault();
 
-				var isHitArea = event.target.test('.aui-tree-hitarea');
 				var link = event.currentTarget.one('a');
 
-				if (link && !isHitArea) {
+				if (link && !event.target.hasClass('aui-tree-hitarea')) {
 					var href = link.attr('href');
 
 					var hash = location.hash;

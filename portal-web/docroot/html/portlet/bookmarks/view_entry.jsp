@@ -17,6 +17,8 @@
 <%@ include file="/html/portlet/bookmarks/init.jsp" %>
 
 <%
+String redirect = ParamUtil.getString(request, "redirect");
+
 BookmarksEntry entry = (BookmarksEntry)request.getAttribute(WebKeys.BOOKMARKS_ENTRY);
 
 entry = entry.toEscapedModel();
@@ -34,13 +36,28 @@ request.setAttribute("view_entry.jsp-entry", entry);
 
 <liferay-util:include page="/html/portlet/bookmarks/top_links.jsp" />
 
-<c:if test="<%= folder != null %>">
-	<liferay-ui:header
-		escapeXml="<%= false %>"
-		localizeTitle="<%= false %>"
-		title="<%= entry.getName() %>"
-	/>
-</c:if>
+<c:choose>
+	<c:when test="<%= Validator.isNull(redirect) %>">
+		<portlet:renderURL var="backURL">
+			<portlet:param name="struts_action" value="/bookmarks/view" />
+			<portlet:param name="folderId" value="<%= (folder != null) ? String.valueOf(folder.getFolderId()) : String.valueOf(BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
+		</portlet:renderURL>
+
+		<liferay-ui:header
+			backLabel='<%= (folder != null) ? folder.getName() : "home" %>'
+			backURL="<%= backURL.toString() %>"
+			localizeTitle="<%= false %>"
+			title="<%= entry.getName() %>"
+		/>
+	</c:when>
+	<c:otherwise>
+		<liferay-ui:header
+			backURL="<%= redirect %>"
+			localizeTitle="<%= false %>"
+			title="<%= entry.getName() %>"
+		/>
+	</c:otherwise>
+</c:choose>
 
 <aui:layout>
 	<aui:column columnWidth="<%= 75 %>" cssClass="lfr-asset-column lfr-asset-column-details" first="<%= true %>">

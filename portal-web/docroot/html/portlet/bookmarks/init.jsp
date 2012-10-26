@@ -34,6 +34,7 @@ page import="com.liferay.portlet.bookmarks.model.BookmarksEntry" %><%@
 page import="com.liferay.portlet.bookmarks.model.BookmarksFolder" %><%@
 page import="com.liferay.portlet.bookmarks.model.BookmarksFolderConstants" %><%@
 page import="com.liferay.portlet.bookmarks.service.BookmarksEntryServiceUtil" %><%@
+page import="com.liferay.portlet.bookmarks.service.BookmarksFolderLocalServiceUtil" %><%@
 page import="com.liferay.portlet.bookmarks.service.BookmarksFolderServiceUtil" %><%@
 page import="com.liferay.portlet.bookmarks.service.permission.BookmarksEntryPermission" %><%@
 page import="com.liferay.portlet.bookmarks.service.permission.BookmarksFolderPermission" %><%@

@@ -45,10 +45,10 @@ public class TearDownMBCategoryCPTest extends BaseTestCase {
 					RuntimeVariables.replace("Message Boards"));
 				selenium.waitForPageToLoad("30000");
 
-				boolean category1Present = selenium.isElementPresent(
+				boolean categoryPresent = selenium.isElementPresent(
 						"//input[@name='_162_allRowIds']");
 
-				if (!category1Present) {
+				if (!categoryPresent) {
 					label = 2;
 
 					continue;
@@ -61,8 +61,15 @@ public class TearDownMBCategoryCPTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
+				assertEquals(RuntimeVariables.replace(
+						"Your request completed successfully."),
+					selenium.getText("//div[@class='portlet-msg-success']"));
 
 			case 2:
+				assertEquals(RuntimeVariables.replace(
+						"There are no threads in this category."),
+					selenium.getText("//div[@class='portlet-msg-info']"));
+
 			case 100:
 				label = -1;
 			}

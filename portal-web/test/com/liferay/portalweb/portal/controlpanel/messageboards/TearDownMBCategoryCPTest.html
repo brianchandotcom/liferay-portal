@@ -51,12 +51,12 @@
 <tr>
 	<td>storeElementPresent</td>
 	<td>//input[@name='_162_allRowIds']</td>
-	<td>category1Present</td>
+	<td>categoryPresent</td>
 </tr>
 <tr>
 	<td>gotoIf</td>
-	<td>!${category1Present}</td>
-	<td>Category1NotPresent</td>
+	<td>!${categoryPresent}</td>
+	<td>CategoryNotPresent</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -74,9 +74,19 @@
 	<td></td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
+</tr>
+<tr>
 	<td>label</td>
-	<td>Category1NotPresent</td>
+	<td>CategoryNotPresent</td>
 	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-info']</td>
+	<td>There are no threads in this category.</td>
 </tr>
 </tbody></table>
 </body>

@@ -84,11 +84,15 @@ public class AddReplyMessageTest extends BaseTestCase {
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("RE: T\u00e9st M\u00e9ssag\u00e9"),
 			selenium.getText("//h1[@class='header-title']/span"));
+		assertEquals(RuntimeVariables.replace("T\u00e9st M\u00e9ssag\u00e9"),
+			selenium.getText("xpath=(//div[@class='subject']/a/strong)[1]"));
+		assertEquals(RuntimeVariables.replace(
+				"This is a t\u00e9st m\u00e9ssag\u00e9!"),
+			selenium.getText("xpath=(//div[@class='thread-body'])[1]"));
 		assertEquals(RuntimeVariables.replace("RE: T\u00e9st M\u00e9ssag\u00e9"),
-			selenium.getText(
-				"//div[5]/table/tbody/tr[1]/td[2]/div[1]/div/a/strong"));
+			selenium.getText("xpath=(//div[@class='subject']/a/strong)[2]"));
 		assertEquals(RuntimeVariables.replace(
 				"This is a t\u00e9st r\u00e9ply m\u00e9ssag\u00e9!"),
-			selenium.getText("//div[5]/table/tbody/tr[1]/td[2]/div[2]"));
+			selenium.getText("xpath=(//div[@class='thread-body'])[2]"));
 	}
 }

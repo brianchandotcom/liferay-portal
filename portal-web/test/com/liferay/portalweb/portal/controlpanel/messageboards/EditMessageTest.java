@@ -41,8 +41,9 @@ public class EditMessageTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"T\u00e9st Cat\u00e9gory Edit\u00e9d"),
-			selenium.getText("//tr[4]/td[2]/a[1]/strong"));
-		selenium.clickAt("//tr[4]/td[2]/a[1]/strong",
+			selenium.getText(
+				"//tr[contains(.,'T\u00e9st Cat\u00e9gory Edit\u00e9d')]/td[2]/a/strong"));
+		selenium.clickAt("//tr[contains(.,'T\u00e9st Cat\u00e9gory Edit\u00e9d')]/td[2]/a/strong",
 			RuntimeVariables.replace("T\u00e9st Cat\u00e9gory Edit\u00e9d"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("T\u00e9st Subcat\u00e9gory"),
@@ -50,10 +51,17 @@ public class EditMessageTest extends BaseTestCase {
 		selenium.clickAt("//td[2]/a/strong",
 			RuntimeVariables.replace("T\u00e9st Subcat\u00e9gory"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=T\u00e9st M\u00e9ssag\u00e9",
+		assertEquals(RuntimeVariables.replace("T\u00e9st M\u00e9ssag\u00e9"),
+			selenium.getText(
+				"//tr[contains(.,'T\u00e9st M\u00e9ssag\u00e9')]/td[2]/a"));
+		selenium.clickAt("//tr[contains(.,'T\u00e9st M\u00e9ssag\u00e9')]/td[2]/a",
 			RuntimeVariables.replace("T\u00e9st M\u00e9ssag\u00e9"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Edit", RuntimeVariables.replace("Edit"));
+		assertEquals(RuntimeVariables.replace("Edit"),
+			selenium.getText(
+				"//ul[@class='edit-controls lfr-component']/li/span/a[contains(.,'Edit')]"));
+		selenium.click(RuntimeVariables.replace(
+				"//ul[@class='edit-controls lfr-component']/li/span/a[contains(.,'Edit')]"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_162_subject']",
 			RuntimeVariables.replace("T\u00e9st M\u00e9ssag\u00e9 Edited"));
@@ -85,12 +93,12 @@ public class EditMessageTest extends BaseTestCase {
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace(
 				"T\u00e9st M\u00e9ssag\u00e9 Edited"),
-			selenium.getText("//div[@class='subject']/a"));
+			selenium.getText("//h1[@class='header-title']"));
+		assertEquals(RuntimeVariables.replace(
+				"T\u00e9st M\u00e9ssag\u00e9 Edited"),
+			selenium.getText("//div[@class='subject']/a/strong"));
 		assertEquals(RuntimeVariables.replace(
 				"This is edited test M\u00e9ssag\u00e9!"),
-			selenium.getText("//div[@class='thread-body']"));
-		assertNotEquals(RuntimeVariables.replace(
-				"This is a t\u00e9st m\u00e9ssag\u00e9!"),
 			selenium.getText("//div[@class='thread-body']"));
 	}
 }

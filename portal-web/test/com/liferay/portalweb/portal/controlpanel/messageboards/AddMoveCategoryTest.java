@@ -50,6 +50,7 @@ public class AddMoveCategoryTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertTrue(selenium.isElementPresent("link=Sujr"));
+		assertEquals(RuntimeVariables.replace("Sujr"),
+			selenium.getText("//tr[3]/td[2]/a/strong"));
 	}
 }

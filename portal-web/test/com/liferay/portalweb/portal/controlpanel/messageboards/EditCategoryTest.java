@@ -40,16 +40,17 @@ public class EditCategoryTest extends BaseTestCase {
 			RuntimeVariables.replace("Message Boards"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Actions"),
-			selenium.getText("//tr[4]/td[6]/span/ul/li/strong/a/span"));
-		selenium.clickAt("//tr[4]/td[6]/span/ul/li/strong/a/span",
+			selenium.getText(
+				"//tr[contains(.,'T\u00e9st Cat\u00e9gory')]/td[6]/span[@title='Actions']/ul/li/strong/a"));
+		selenium.clickAt("//tr[contains(.,'T\u00e9st Cat\u00e9gory')]/td[6]/span[@title='Actions']/ul/li/strong/a",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]");
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_162_name']",
 			RuntimeVariables.replace("T\u00e9st Cat\u00e9gory Edit\u00e9d"));

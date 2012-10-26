@@ -81,11 +81,11 @@ public class AddMessageTest extends BaseTestCase {
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("T\u00e9st M\u00e9ssag\u00e9"),
-			selenium.getText("//div[1]/h1/span"));
+			selenium.getText("//h1[@class='header-title']"));
 		assertEquals(RuntimeVariables.replace("T\u00e9st M\u00e9ssag\u00e9"),
-			selenium.getText("//div/a/strong"));
+			selenium.getText("//div[@class='subject']/a/strong"));
 		assertEquals(RuntimeVariables.replace(
 				"This is a t\u00e9st m\u00e9ssag\u00e9!"),
-			selenium.getText("//td[2]/div[2]"));
+			selenium.getText("//div[@class='thread-body']"));
 	}
 }

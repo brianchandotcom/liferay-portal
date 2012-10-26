@@ -75,12 +75,12 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[5]/table/tbody/tr[1]/td[2]/div[1]/ul/li[2]/span/a/span</td>
+	<td>//tr[contains(.,'This is a tést réply méssagé!')]/td[2]/div/ul[@class='edit-controls lfr-component']/li/span/a[contains(.,'Reply')]</td>
 	<td>Reply</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//div[5]/table/tbody/tr[1]/td[2]/div[1]/ul/li[2]/span/a/span</td>
+	<td>//tr[contains(.,'This is a tést réply méssagé!')]/td[2]/div/ul[@class='edit-controls lfr-component']/li/span/a[contains(.,'Reply')]</td>
 	<td>Reply</td>
 </tr>
 <tr>
@@ -165,12 +165,32 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[6]/table/tbody/tr[1]/td[2]/div[1]/div/a/strong</td>
+	<td>xpath=(//div[@class='subject']/a/strong)[1]</td>
+	<td>Tést Méssagé</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xpath=(//div[@class='thread-body'])[1]</td>
+	<td>This is a tést méssagé!</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xpath=(//div[@class='subject']/a/strong)[2]</td>
 	<td>RE: Tést Méssagé</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[6]/table/tbody/tr[1]/td[2]/div[2]</td>
+	<td>xpath=(//div[@class='thread-body'])[2]</td>
+	<td>This is a tést réply méssagé!</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xpath=(//div[@class='subject']/a/strong)[3]</td>
+	<td>RE: Tést Méssagé</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xpath=(//div[@class='thread-body'])[3]</td>
 	<td>This is a second reply message.</td>
 </tr>
 </tbody></table>

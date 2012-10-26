@@ -160,12 +160,22 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[5]/table/tbody/tr[1]/td[2]/div[1]/div/a/strong</td>
+	<td>xpath=(//div[@class='subject']/a/strong)[1]</td>
+	<td>Tést Méssagé</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xpath=(//div[@class='thread-body'])[1]</td>
+	<td>This is a tést méssagé!</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xpath=(//div[@class='subject']/a/strong)[2]</td>
 	<td>RE: Tést Méssagé</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[5]/table/tbody/tr[1]/td[2]/div[2]</td>
+	<td>xpath=(//div[@class='thread-body'])[2]</td>
 	<td>This is a tést réply méssagé!</td>
 </tr>
 </tbody></table>

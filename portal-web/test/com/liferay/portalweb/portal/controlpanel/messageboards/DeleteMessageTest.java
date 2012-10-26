@@ -50,12 +50,14 @@ public class DeleteMessageTest extends BaseTestCase {
 			RuntimeVariables.replace(
 				"T\u00e9st M\u00e9ssag\u00e9 to b\u00e9 D\u00e9l\u00e9t\u00e9d"));
 		selenium.waitForPageToLoad("30000");
-		selenium.click(RuntimeVariables.replace("link=Delete"));
+		assertEquals(RuntimeVariables.replace("Delete"),
+			selenium.getText(
+				"//ul[@class='edit-controls lfr-component']/li/span/a[contains(.,'Delete')]"));
+		selenium.clickAt("//ul[@class='edit-controls lfr-component']/li/span/a[contains(.,'Delete')]",
+			RuntimeVariables.replace("Delete"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.getConfirmation()
-						   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
-		selenium.waitForText("//div[@class='portlet-msg-success']",
-			"Your request completed successfully.");
+		selenium.waitForConfirmation(
+			"Are you sure you want to delete this? It will be deleted immediately.");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
@@ -78,9 +80,14 @@ public class DeleteMessageTest extends BaseTestCase {
 			selenium.getText("//td[2]/a/strong"));
 		selenium.clickAt("//td[2]/a/strong", RuntimeVariables.replace("Sujr"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Moved to Sujr",
-			RuntimeVariables.replace("Moved to Sujr"));
+		assertEquals(RuntimeVariables.replace("Moved to Sujr"),
+			selenium.getText("//td[2]/a"));
+		selenium.clickAt("//td[2]/a", RuntimeVariables.replace("Moved to Sujr"));
 		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("Moved to Sujr"),
+			selenium.getText("//h1[@class='header-title']"));
+		assertEquals(RuntimeVariables.replace("Moved to Sujr"),
+			selenium.getText("//div[@class='subject']/a/strong"));
 		assertEquals(RuntimeVariables.replace(
 				"Trust and paths will be straightened."),
 			selenium.getText("//div[@class='thread-body']"));

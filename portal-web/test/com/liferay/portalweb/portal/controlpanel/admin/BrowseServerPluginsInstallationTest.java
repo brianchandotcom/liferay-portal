@@ -25,6 +25,10 @@ public class BrowseServerPluginsInstallationTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
@@ -35,19 +39,41 @@ public class BrowseServerPluginsInstallationTest extends BaseTestCase {
 		selenium.clickAt("link=Plugins Installation",
 			RuntimeVariables.replace("Plugins Installation"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isVisible("//input[@value='Install More Portlets']"));
-		selenium.select("//select[@name='_136_page']",
-			RuntimeVariables.replace("4"));
+		selenium.clickAt("link=Portlet Plugins",
+			RuntimeVariables.replace("Portlet Plugins"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isTextPresent("Wiki"));
+		assertEquals(RuntimeVariables.replace("Portlet"),
+			selenium.getText(
+				"//tr[@class='portlet-section-header results-header']/th[1]"));
+		assertEquals(RuntimeVariables.replace("Active"),
+			selenium.getText(
+				"//tr[@class='portlet-section-header results-header']/th[2]"));
+		assertEquals(RuntimeVariables.replace("Search Index"),
+			selenium.getText(
+				"//tr[@class='portlet-section-header results-header']/th[3]"));
 		selenium.clickAt("link=Theme Plugins",
 			RuntimeVariables.replace("Theme Plugins"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isVisible("//input[@value='Install More Themes']"));
+		assertEquals(RuntimeVariables.replace("Theme"),
+			selenium.getText(
+				"//tr[@class='portlet-section-header results-header']/th[1]"));
+		assertEquals(RuntimeVariables.replace("Active"),
+			selenium.getText(
+				"//tr[@class='portlet-section-header results-header']/th[2]"));
+		assertEquals(RuntimeVariables.replace("Roles"),
+			selenium.getText(
+				"//tr[@class='portlet-section-header results-header']/th[3]"));
 		selenium.clickAt("link=Layout Template Plugins",
 			RuntimeVariables.replace("Layout Template Plugins"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isVisible(
-				"//input[@value='Install More Layout Templates']"));
+		assertEquals(RuntimeVariables.replace("Layout Template"),
+			selenium.getText(
+				"//tr[@class='portlet-section-header results-header']/th[1]"));
+		assertEquals(RuntimeVariables.replace("Active"),
+			selenium.getText(
+				"//tr[@class='portlet-section-header results-header']/th[2]"));
+		assertEquals(RuntimeVariables.replace("Roles"),
+			selenium.getText(
+				"//tr[@class='portlet-section-header results-header']/th[3]"));
 	}
 }

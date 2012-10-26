@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.servlet.SecurePluginContextListener;
 import com.liferay.portal.kernel.servlet.SecureServlet;
 import com.liferay.portal.kernel.servlet.SerializableSessionAttributeListener;
 import com.liferay.portal.kernel.servlet.filters.invoker.InvokerFilter;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -1889,14 +1890,20 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 
 	public String secureWebXml(
 			String content, boolean hasCustomServletListener,
-			boolean securityManagerEnabled)
+			Properties properties)
 		throws Exception {
+
+		boolean securityManagerEnabled = GetterUtil.getBoolean(
+			properties.getProperty("security-manager-enabled"));
 
 		if (!hasCustomServletListener && !securityManagerEnabled) {
 			return content;
 		}
 
 		Document document = SAXReaderUtil.read(content);
+
+		String[] postListenerClasses = StringUtil.split(
+			properties.getProperty("post-listener-classes"));
 
 		Element rootElement = document.getRootElement();
 
@@ -1914,7 +1921,9 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 				continue;
 			}
 
-			listenerClasses.add(listenerClass);
+			if (!ArrayUtil.contains(postListenerClasses, listenerClass)) {
+				listenerClasses.add(listenerClass);
+			}
 
 			listenerElement.detach();
 		}
@@ -1925,6 +1934,14 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 		DocUtil.add(
 			contextParamElement, "param-value",
 			StringUtil.merge(listenerClasses));
+
+		contextParamElement = rootElement.addElement("context-param");
+
+		DocUtil.add(
+			contextParamElement, "param-name", "portalPostListenerClasses");
+		DocUtil.add(
+			contextParamElement, "param-value",
+			StringUtil.merge(postListenerClasses));
 
 		if (securityManagerEnabled) {
 			List<Element> servletElements = rootElement.elements("servlet");
@@ -2234,7 +2251,7 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 		// Update web.xml
 
 		newContent = secureWebXml(
-			newContent, hasCustomServletListener, securityManagerEnabled);
+			newContent, hasCustomServletListener, properties);
 
 		newContent = WebXMLBuilder.organizeWebXML(newContent);
 

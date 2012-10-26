@@ -66,9 +66,10 @@ public class ServletContextListenerHotDeployListener
 		if (securePluginContextListener != null) {
 			Class<?> clazz = securePluginContextListener.getClass();
 
-			Method method = clazz.getMethod("instantiatingListeners");
+			Method method = clazz.getMethod(
+				"instantiatingListeners", String.class);
 
-			method.invoke(securePluginContextListener);
+			method.invoke(securePluginContextListener, "portalListenerClasses");
 		}
 	}
 

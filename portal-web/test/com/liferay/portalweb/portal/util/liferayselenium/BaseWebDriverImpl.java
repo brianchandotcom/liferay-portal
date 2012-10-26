@@ -45,8 +45,107 @@ public abstract class BaseWebDriverImpl
 		webDriver.get(browserURL);
 	}
 
+	public void assertAlert(String pattern) {
+		LiferaySeleniumHelper.assertAlert(this, pattern);
+	}
+
+	public void assertChecked(String locator) {
+		LiferaySeleniumHelper.assertChecked(this, locator);
+	}
+
+	public void assertConfirmation(String pattern) {
+		LiferaySeleniumHelper.assertConfirmation(this, pattern);
+	}
+
+	public void assertElementNotPresent(String locator) {
+		LiferaySeleniumHelper.assertElementNotPresent(this, locator);
+	}
+
+	public void assertElementPresent(String locator) {
+		LiferaySeleniumHelper.assertElementPresent(this, locator);
+	}
+
+	public void assertLocation(String pattern) {
+		LiferaySeleniumHelper.assertLocation(this, pattern);
+	}
+
+	public void assertNotAlert(String pattern) {
+		LiferaySeleniumHelper.assertNotAlert(this, pattern);
+	}
+
+	public void assertNotChecked(String locator) {
+		LiferaySeleniumHelper.assertNotChecked(this, locator);
+	}
+
+	public void assertNotLocation(String pattern) {
+		LiferaySeleniumHelper.assertNotLocation(this, pattern);
+	}
+
+	public void assertNotPartialText(String locator, String pattern) {
+		LiferaySeleniumHelper.assertNotPartialText(this, locator, pattern);
+	}
+
+	public void assertNotSelectedLabel(String selectLocator, String pattern) {
+		LiferaySeleniumHelper.assertNotSelectedLabel(
+			this, selectLocator, pattern);
+	}
+
+	public void assertNotText(String locator, String pattern) {
+		LiferaySeleniumHelper.assertNotText(this, locator, pattern);
+	}
+
+	public void assertNotValue(String locator, String pattern) {
+		LiferaySeleniumHelper.assertNotValue(this, locator, pattern);
+	}
+
+	public void assertNotVisible(String locator) {
+		LiferaySeleniumHelper.assertNotVisible(this, locator);
+	}
+
+	public void assertPartialText(String locator, String pattern) {
+		LiferaySeleniumHelper.assertPartialText(this, locator, pattern);
+	}
+
+	public void assertSelectedLabel(String selectLocator, String pattern) {
+		LiferaySeleniumHelper.assertSelectedLabel(this, selectLocator, pattern);
+	}
+
+	public void assertText(String locator, String pattern) {
+		LiferaySeleniumHelper.assertText(this, locator, pattern);
+	}
+
+	public void assertTextNotPresent(String pattern) {
+		LiferaySeleniumHelper.assertTextNotPresent(this, pattern);
+	}
+
+	public void assertTextPresent(String pattern) {
+		LiferaySeleniumHelper.assertTextPresent(this, pattern);
+	}
+
+	public void assertValue(String locator, String pattern) {
+		LiferaySeleniumHelper.assertValue(this, locator, pattern);
+	}
+
+	public void assertVisible(String locator) {
+		LiferaySeleniumHelper.assertVisible(this, locator);
+	}
+
+	public void clickAndWait(String locator) {
+		super.click(locator);
+		super.waitForPageToLoad("30000");
+	}
+
+	public void clickAtAndWait(String locator, String coordString) {
+		super.clickAt(locator, coordString);
+		super.waitForPageToLoad("30000");
+	}
+
 	public void downloadTempFile(String value) {
 		LiferaySeleniumHelper.downloadTempFile(value);
+	}
+
+	public void echo(String message) {
+		LiferaySeleniumHelper.echo(message);
 	}
 
 	public String getCurrentDay() {
@@ -103,6 +202,11 @@ public abstract class BaseWebDriverImpl
 		return StringUtil.valueOf(GetterUtil.getInteger(firstNumber) + 1);
 	}
 
+	public void goBackAndWait() {
+		super.goBack();
+		super.waitForPageToLoad("30000");
+	}
+
 	public boolean isElementNotPresent(String locator) {
 		WebDriver.Options options = manage();
 
@@ -126,7 +230,36 @@ public abstract class BaseWebDriverImpl
 		return text.contains(value);
 	}
 
+	public void keyDownAndWait(String locator, String keySequence) {
+		super.keyDown(locator, keySequence);
+		super.waitForPageToLoad("30000");
+	}
+
+	public void keyPressAndWait(String locator, String keySequence) {
+		super.keyPress(locator, keySequence);
+		super.waitForPageToLoad("30000");
+	}
+
+	public void keyUpAndWait(String locator, String keySequence) {
+		super.keyUp(locator, keySequence);
+		super.waitForPageToLoad("30000");
+	}
+
+	public void pause(String waitTime) throws Exception {
+		LiferaySeleniumHelper.pause(waitTime);
+	}
+
+	public void refreshAndWait() {
+		super.refresh();
+		super.waitForPageToLoad("30000");
+	}
+
 	public void saveScreenShotAndSource() throws Exception {
+	}
+
+	public void selectAndWait(String selectLocator, String optionLocator) {
+		super.select(selectLocator, optionLocator);
+		super.waitForPageToLoad("30000");
 	}
 
 	public void sendKeys(String locator, String value) {
@@ -255,6 +388,11 @@ public abstract class BaseWebDriverImpl
 
 	public void waitForVisible(String locator) throws Exception {
 		LiferaySeleniumHelper.waitForVisible(this, locator);
+	}
+
+	public void windowMaximizeAndWait() {
+		super.windowMaximize();
+		super.waitForPageToLoad("30000");
 	}
 
 	private String _projectDir;

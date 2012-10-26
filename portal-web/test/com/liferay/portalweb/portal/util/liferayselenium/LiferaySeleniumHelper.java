@@ -14,6 +14,7 @@
 
 package com.liferay.portalweb.portal.util.liferayselenium;
 
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
 import com.liferay.portalweb.portal.util.TestPropsValues;
@@ -22,6 +23,141 @@ import com.liferay.portalweb.portal.util.TestPropsValues;
  * @author Brian Wing Shun Chan
  */
 public class LiferaySeleniumHelper {
+
+	public static void assertAlert(
+		LiferaySelenium liferaySelenium, String pattern) {
+
+		BaseTestCase.assertEquals(pattern, liferaySelenium.getAlert());
+	}
+
+	public static void assertChecked(
+		LiferaySelenium liferaySelenium, String locator) {
+
+		BaseTestCase.assertTrue(liferaySelenium.isChecked(locator));
+	}
+
+	public static void assertConfirmation(
+		LiferaySelenium liferaySelenium, String pattern) {
+
+		pattern = StringUtil.replace(pattern, "?", "[\\\\s\\\\S]");
+
+		BaseTestCase.assertTrue(
+			liferaySelenium.getConfirmation().matches("^" + pattern + "$"));
+	}
+
+	public static void assertElementNotPresent(
+		LiferaySelenium liferaySelenium, String locator) {
+
+		BaseTestCase.assertFalse(liferaySelenium.isElementPresent(locator));
+	}
+
+	public static void assertElementPresent(
+		LiferaySelenium liferaySelenium, String locator) {
+
+		BaseTestCase.assertTrue(liferaySelenium.isElementPresent(locator));
+	}
+
+	public static void assertLocation(
+		LiferaySelenium liferaySelenium, String pattern) {
+
+		BaseTestCase.assertEquals(pattern, liferaySelenium.getLocation());
+	}
+
+	public static void assertNotAlert(
+		LiferaySelenium liferaySelenium, String pattern) {
+
+		BaseTestCase.assertNotEquals(pattern, liferaySelenium.getAlert());
+	}
+
+	public static void assertNotChecked(
+		LiferaySelenium liferaySelenium, String locator) {
+
+		BaseTestCase.assertFalse(liferaySelenium.isChecked(locator));
+	}
+
+	public static void assertNotLocation(
+		LiferaySelenium liferaySelenium, String pattern) {
+
+		BaseTestCase.assertNotEquals(pattern, liferaySelenium.getLocation());
+	}
+
+	public static void assertNotPartialText(
+		LiferaySelenium liferaySelenium, String locator, String pattern) {
+
+		BaseTestCase.assertFalse(
+			liferaySelenium.isPartialText(locator, pattern));
+	}
+
+	public static void assertNotSelectedLabel(
+		LiferaySelenium liferaySelenium, String selectLocator, String pattern) {
+
+		BaseTestCase.assertNotEquals(
+			pattern, liferaySelenium.getSelectedLabel(selectLocator));
+	}
+
+	public static void assertNotText(
+		LiferaySelenium liferaySelenium, String locator, String pattern) {
+
+		BaseTestCase.assertNotEquals(pattern, liferaySelenium.getText(locator));
+	}
+
+	public static void assertNotValue(
+		LiferaySelenium liferaySelenium, String locator, String pattern) {
+
+		BaseTestCase.assertNotEquals(
+			pattern, liferaySelenium.getValue(locator));
+
+	}
+
+	public static void assertNotVisible(
+		LiferaySelenium liferaySelenium, String locator) {
+
+		BaseTestCase.assertFalse(liferaySelenium.isVisible(locator));
+	}
+
+	public static void assertPartialText(
+		LiferaySelenium liferaySelenium, String locator, String pattern) {
+
+		BaseTestCase.assertTrue(
+			liferaySelenium.isPartialText(locator, pattern));
+	}
+
+	public static void assertSelectedLabel(
+		LiferaySelenium liferaySelenium, String selectLocator, String pattern) {
+
+		BaseTestCase.assertEquals(
+			pattern, liferaySelenium.getSelectedLabel(selectLocator));
+	}
+
+	public static void assertText(
+		LiferaySelenium liferaySelenium, String locator, String pattern) {
+
+		BaseTestCase.assertEquals(pattern, liferaySelenium.getText(locator));
+	}
+
+	public static void assertTextNotPresent(
+		LiferaySelenium liferaySelenium, String pattern) {
+
+		BaseTestCase.assertFalse(liferaySelenium.isTextPresent(pattern));
+	}
+
+	public static void assertTextPresent(
+		LiferaySelenium liferaySelenium, String pattern) {
+
+		BaseTestCase.assertTrue(liferaySelenium.isTextPresent(pattern));
+	}
+
+	public static void assertValue(
+		LiferaySelenium liferaySelenium, String locator, String pattern) {
+
+		BaseTestCase.assertEquals(pattern, liferaySelenium.getValue(locator));
+	}
+
+	public static void assertVisible(
+		LiferaySelenium liferaySelenium, String locator) {
+
+		BaseTestCase.assertTrue(liferaySelenium.isVisible(locator));
+	}
 
 	public static void downloadTempFile(String value) {
 		if (!_BROWSER_TYPE.equals("*chrome") &&
@@ -48,6 +184,14 @@ public class LiferaySeleniumHelper {
 		catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	public static void echo(String message) {
+		System.out.println(message);
+	}
+
+	public static void pause(String waitTime) throws Exception {
+		Thread.sleep(Integer.parseInt(waitTime));
 	}
 
 	public static void setBrowserOption() {

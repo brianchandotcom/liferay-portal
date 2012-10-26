@@ -804,6 +804,13 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			new LayoutPriorityComparator());
 	}
 
+	public Layout fetchLayout(
+			long groupId, boolean privateLayout, long layoutId)
+		throws SystemException {
+
+		return layoutPersistence.fetchByG_P_L(groupId, privateLayout, layoutId);
+	}
+
 	/**
 	 * Returns the layout matching the universally unique identifier and group
 	 * ID

@@ -777,6 +777,12 @@ AUI.add(
 					iconClass: 'aui-form-builder-field-icon lfr-ddm-text-html-icon',
 					label: Liferay.Language.get('html'),
 					type: 'ddm-text-html'
+				},
+				{
+					hiddenAttributes: MAP_HIDDEN_FIELD_ATTRS.DEFAULT,
+					iconClass: 'aui-form-builder-field-icon lfr-ddm-link-icon',
+					label: Liferay.Language.get('link-to-page'),
+					type: 'ddm-link-to-page'
 				}
 			],
 

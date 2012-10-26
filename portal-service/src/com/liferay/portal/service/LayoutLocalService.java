@@ -559,6 +559,11 @@ public interface LayoutLocalService extends BaseLocalService,
 		boolean privateLayout, long parentLayoutId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.Layout fetchLayout(long groupId,
+		boolean privateLayout, long layoutId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	/**
 	* Returns the layout matching the universally unique identifier and group
 	* ID

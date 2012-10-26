@@ -625,6 +625,12 @@ public class LayoutLocalServiceUtil {
 				   .fetchFirstLayout(groupId, privateLayout, parentLayoutId);
 	}
 
+	public static com.liferay.portal.model.Layout fetchLayout(long groupId,
+		boolean privateLayout, long layoutId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().fetchLayout(groupId, privateLayout, layoutId);
+	}
+
 	/**
 	* Returns the layout matching the universally unique identifier and group
 	* ID

@@ -610,6 +610,12 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 			parentLayoutId);
 	}
 
+	public com.liferay.portal.model.Layout fetchLayout(long groupId,
+		boolean privateLayout, long layoutId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _layoutLocalService.fetchLayout(groupId, privateLayout, layoutId);
+	}
+
 	/**
 	* Returns the layout matching the universally unique identifier and group
 	* ID

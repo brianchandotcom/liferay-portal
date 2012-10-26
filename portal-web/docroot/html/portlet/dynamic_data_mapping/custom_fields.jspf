@@ -27,6 +27,10 @@
 						'<input type="button" value="<%= UnicodeLanguageUtil.get(pageContext, "select") %>" />' +
 					'<div>';
 
+	var TPL_LINK_TO_PAGE = '<div class="lfr-ddm-link-to-page">' +
+							'<a href="javascript:;"><%= UnicodeLanguageUtil.get(pageContext, "link") %></a>' +
+						'</div>';
+
 	var TPL_PARAGRAPH = '<p></p>';
 
 	var TPL_SEPARATOR = '<div class="separator"></div>';
@@ -513,11 +517,36 @@
 		}
 	);
 
+	var DDMLinkToPageField = A.Component.create(
+		{
+			ATTRS: {
+				dataType: {
+					value: 'link-to-page'
+				},
+
+				fieldNamespace: {
+					value: 'ddm'
+				}
+			},
+
+			EXTENDS: FormBuilderTextField,
+
+			NAME: 'ddm-link-to-page',
+
+			prototype: {
+				getHTML: function() {
+					return TPL_LINK_TO_PAGE;
+				}
+			}
+		}
+	);
+
 	FormBuilderTypes['ddm-date'] = DDMDateField;
 	FormBuilderTypes['ddm-decimal'] = DDMDecimalField;
 	FormBuilderTypes['ddm-documentlibrary'] = DDMDocumentLibraryField;
 	FormBuilderTypes['ddm-fileupload'] = DDMFileUploadField;
 	FormBuilderTypes['ddm-integer'] = DDMIntegerField;
+	FormBuilderTypes['ddm-link-to-page'] = DDMLinkToPageField;
 	FormBuilderTypes['ddm-number'] = DDMNumberField;
 	FormBuilderTypes['ddm-paragraph'] = DDMParagraphField;
 	FormBuilderTypes['ddm-separator'] = DDMSeparatorField;

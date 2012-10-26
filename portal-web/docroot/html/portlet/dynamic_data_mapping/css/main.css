@@ -34,6 +34,15 @@
 		margin-bottom: 15px;
 	}
 
+	.lfr-ddm-link-icon {
+		background-image: url(@theme_image_path@/aui/hyperlink.png);
+	}
+
+	.lfr-ddm-link-to-page a {
+		clear: both;
+		display: block;
+	}
+
 	.lfr-ddm-text-html, .lfr-ddm-text-html-icon {
 		background-image: url(@theme_image_path@/aui/textarea.png);
 	}

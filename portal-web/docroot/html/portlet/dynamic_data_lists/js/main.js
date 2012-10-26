@@ -339,7 +339,7 @@ AUI.add(
 					_setDataStableSort: function(data) {
 						var instance = this;
 
-						data.sort = function (options) {
+						data.sort = function(options) {
 							if (this.comparator) {
 								options = options || {};
 

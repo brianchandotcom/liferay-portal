@@ -124,7 +124,7 @@ AUI.add(
 							}
 						);
 
-						if (config.sortable){
+						if (config.sortable) {
 							instance._makeSortable(config.sortableHandle);
 						}
 

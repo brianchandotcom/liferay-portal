@@ -181,7 +181,7 @@
 			if (params) {
 				var loc = url || location.href;
 
-				var anchorHash
+				var anchorHash;
 				var finalUrl;
 
 				if (loc.indexOf('#') > -1) {

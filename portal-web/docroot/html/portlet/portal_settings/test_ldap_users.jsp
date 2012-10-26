@@ -82,7 +82,9 @@ String[] attributeIds = StringUtil.split(StringUtil.merge(userMappings.values())
 
 List<SearchResult> searchResults = new ArrayList<SearchResult>();
 
-PortalLDAPUtil.getUsers(themeDisplay.getCompanyId(), ldapContext, new byte[0], 20, baseDN, userFilter, attributeIds, searchResults);
+if (!Validator.isNull(userFilter) && !(userFilter.trim().equals(StringPool.STAR))) {
+	PortalLDAPUtil.getUsers(themeDisplay.getCompanyId(), ldapContext, new byte[0], 20, baseDN, userFilter, attributeIds, searchResults);
+}
 %>
 
 <liferay-ui:message key="test-ldap-users" />

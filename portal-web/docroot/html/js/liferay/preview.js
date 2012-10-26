@@ -330,7 +330,7 @@ AUI.add(
 
 						var baseImageURL = instance._baseImageURL;
 
-						while(instance._previewFileCountDown < maxIndex && i++ < 10) {
+						while (instance._previewFileCountDown < maxIndex && i++ < 10) {
 							displayedIndex = previewFileCountDown + 1;
 
 							MAP_IMAGE_DATA.displayedIndex = displayedIndex;

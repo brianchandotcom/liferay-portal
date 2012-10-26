@@ -2747,7 +2747,7 @@ AUI.add(
 				EXTENDS: A.Base,
 				NAME: 'livesearch',
 				prototype: {
-					initializer: function () {
+					initializer: function() {
 						this._bindUIACBase();
 						this._syncUIACBase();
 					}

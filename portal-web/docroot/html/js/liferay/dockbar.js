@@ -181,7 +181,7 @@ AUI.add(
 
 					contentBox.delegate(
 						'mouseenter',
-						function (event) {
+						function(event) {
 							focusManager.focus(event.currentTarget.one('a'));
 						},
 						'.aui-menu-item'
@@ -189,7 +189,7 @@ AUI.add(
 
 					contentBox.delegate(
 						'mouseleave',
-						function (event) {
+						function(event) {
 							focusManager.blur(event.currentTarget.one('a'));
 						},
 						'.aui-menu-item'

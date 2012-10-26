@@ -407,7 +407,7 @@ AUI.add(
 
 					bodyNode.delegate(
 						'mouseenter',
-						function (event) {
+						function(event) {
 							if (focusManager.get('focused')) {
 								focusManager.focus(event.currentTarget.one(SELECTOR_ANCHOR));
 							}

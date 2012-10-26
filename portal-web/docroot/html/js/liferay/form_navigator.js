@@ -79,7 +79,7 @@ AUI.add(
 		};
 
 		FormNavigator.prototype = {
-			_addModifiedSection: function (section) {
+			_addModifiedSection: function(section) {
 				var instance = this;
 
 				if (A.Array.indexOf(instance._modifiedSectionsArray, section) == -1) {

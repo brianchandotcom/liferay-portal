@@ -275,7 +275,7 @@ AUI.add(
 						var instance = this;
 
 						var sets = instance._container.all('.lfr-panel').filter(
-							function (node) {
+							function(node) {
 								return !node.hasClass('lfr-collapsed');
 							}
 						);

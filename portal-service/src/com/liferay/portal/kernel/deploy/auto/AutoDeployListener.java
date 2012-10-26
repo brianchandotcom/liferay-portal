@@ -24,6 +24,6 @@ import com.liferay.portal.kernel.deploy.auto.context.AutoDeploymentContext;
 public interface AutoDeployListener {
 
 	public void deploy(AutoDeploymentContext autoDeploymentContext)
-		throws AutoDeployException ;
+		throws AutoDeployException;
 
 }

@@ -26,7 +26,7 @@ public interface WebDAVRequest {
 
 	public long getCompanyId();
 
-	public long getGroupId() ;
+	public long getGroupId();
 
 	public HttpServletRequest getHttpServletRequest();
 

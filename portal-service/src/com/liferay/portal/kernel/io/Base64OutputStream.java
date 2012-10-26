@@ -80,7 +80,7 @@ public class Base64OutputStream extends OutputStream {
 		while (bytesLength > 0) {
 			encodeUnit(bytes[offset], bytes[offset + 1], bytes[offset + 2]);
 
-			bytesLength -=3 ;
+			bytesLength -= 3;
 			offset += 3;
 		}
 

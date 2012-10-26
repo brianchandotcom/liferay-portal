@@ -155,7 +155,7 @@ public class DDMTemplateFinderImpl
 
 		return doCountByC_G_C_C_N_D_T_M_L(
 			companyId, groupIds, classNameIds, classPK, names, descriptions,
-			types, modes, languages, andOperator, false) ;
+			types, modes, languages, andOperator, false);
 	}
 
 	public int filterCountByKeywords(

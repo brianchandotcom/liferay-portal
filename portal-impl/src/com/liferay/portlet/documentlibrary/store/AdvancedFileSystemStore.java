@@ -104,7 +104,7 @@ public class AdvancedFileSystemStore extends FileSystemStore {
 			return;
 		}
 
-		for (int i = 0;i < fileNameFragmentLength;i += 2) {
+		for (int i = 0; i < fileNameFragmentLength; i += 2) {
 			if ((i + 2) < fileNameFragmentLength) {
 				sb.append(fileNameFragment.substring(i, i + 2));
 				sb.append(StringPool.SLASH);

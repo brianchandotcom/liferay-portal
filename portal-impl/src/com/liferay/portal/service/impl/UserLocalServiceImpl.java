@@ -4570,7 +4570,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	public User updateReminderQuery(long userId, String question, String answer)
 		throws PortalException, SystemException {
 
-		validateReminderQuery(question, answer) ;
+		validateReminderQuery(question, answer);
 
 		User user = userPersistence.findByPrimaryKey(userId);
 

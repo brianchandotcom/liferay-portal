@@ -26,7 +26,7 @@ public interface Resource {
 
 	public String getClassName();
 
-	public InputStream getContentAsStream() throws WebDAVException ;
+	public InputStream getContentAsStream() throws WebDAVException;
 
 	public String getContentType();
 

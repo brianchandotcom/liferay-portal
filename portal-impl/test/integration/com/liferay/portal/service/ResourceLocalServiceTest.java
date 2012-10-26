@@ -40,7 +40,7 @@ public class ResourceLocalServiceTest {
 	public void setUp() throws Exception {
 		_userIds = new long[ServiceTestUtil.THREAD_COUNT];
 
-		for (int i = 0 ; i < ServiceTestUtil.THREAD_COUNT; i++) {
+		for (int i = 0; i < ServiceTestUtil.THREAD_COUNT; i++) {
 			User user = ServiceTestUtil.addUser(
 				"ResourceLocalServiceTest" + (i + 1), false,
 				new long[] {TestPropsValues.getGroupId()});

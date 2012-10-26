@@ -76,7 +76,7 @@ public interface ChannelHub {
 
 	public void flush(long userId, long timestamp) throws ChannelException;
 
-	public Channel getChannel(long userId) throws ChannelException ;
+	public Channel getChannel(long userId) throws ChannelException;
 
 	public Channel getChannel(long userId, boolean createIfAbsent)
 		throws ChannelException;

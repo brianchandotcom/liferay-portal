@@ -338,7 +338,7 @@ public class DiffImpl implements com.liferay.portal.kernel.util.Diff {
 		// After the for loop above, some lines might remained unchecked.
 		// They are considered as deletions or additions.
 
-		for (; i <= difference.getDeletedEnd();i++) {
+		for (; i <= difference.getDeletedEnd(); i++) {
 			_highlightLines(
 				sourceStringList, deletedMarkerStart, deletedMarkerEnd, i, i);
 

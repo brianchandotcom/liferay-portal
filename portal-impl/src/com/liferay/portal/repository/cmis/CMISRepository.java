@@ -1836,7 +1836,7 @@ public class CMISRepository extends BaseCmisRepository {
 		if ((mimeTypes != null) && (mimeTypes.length > 0)) {
 			sb.append(" WHERE cmis:contentStreamMimeType IN (");
 
-			for (int i = 0 ; i < mimeTypes.length; i++) {
+			for (int i = 0; i < mimeTypes.length; i++) {
 				sb.append(StringUtil.quote(mimeTypes[i]));
 
 				if ((i + 1) < mimeTypes.length) {

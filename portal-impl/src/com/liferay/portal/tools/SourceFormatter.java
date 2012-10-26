@@ -1634,17 +1634,27 @@ public class SourceFormatter {
 					}
 
 					for (int x = -1;;) {
-						x = line.indexOf(StringPool.COMMA, x + 1);
+						int posComma = line.indexOf(StringPool.COMMA, x + 1);
+						int posSemicolon = line.indexOf(
+							StringPool.SEMICOLON, x + 1);
+
+						if ((posComma == -1) && (posSemicolon == -1)) {
+							break;
+						}
+
+						x = Math.min(posComma, posSemicolon);
 
 						if (x == -1) {
-							break;
+							x = Math.max(posComma, posSemicolon);
 						}
 
 						if (line.length() > (x + 1)) {
 							char nextChar = line.charAt(x + 1);
 
-							if ((nextChar != CharPool.SPACE) &&
-								(nextChar != CharPool.APOSTROPHE)) {
+							if ((nextChar != CharPool.APOSTROPHE) &&
+								(nextChar != CharPool.CLOSE_PARENTHESIS) &&
+								(nextChar != CharPool.SPACE) &&
+								(nextChar != CharPool.STAR)) {
 
 								line = StringUtil.insert(
 									line, StringPool.SPACE, x + 1);

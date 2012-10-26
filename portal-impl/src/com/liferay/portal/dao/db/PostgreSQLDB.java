@@ -116,10 +116,7 @@ public class PostgreSQLDB extends BaseDB {
 		sb.append("\\c ");
 		sb.append(databaseName);
 		sb.append(";\n\n");
-		sb.append(
-			readFile(
-				sqlDir + "/portal" + suffix + "/portal" + suffix +
-					"-postgresql.sql"));
+		sb.append(getCreateTablesContent(sqlDir, suffix));
 		sb.append("\n\n");
 		sb.append(readFile(sqlDir + "/indexes/indexes-postgresql.sql"));
 		sb.append("\n\n");

@@ -63,9 +63,15 @@ public class DBBuilder {
 			_databaseName = databaseName;
 			_databaseTypes = databaseTypes;
 
-			_buildSQLFile(sqlDir, "portal");
-			_buildSQLFile(sqlDir, "portal-minimal");
-			_buildSQLFile(sqlDir, "portal-tables");
+			if (!sqlDir.endsWith("/WEB-INF/sql")) {
+				_buildSQLFile(sqlDir, "portal");
+				_buildSQLFile(sqlDir, "portal-minimal");
+				_buildSQLFile(sqlDir, "portal-tables");
+			}
+			else {
+				_buildSQLFile(sqlDir, "tables");
+			}
+
 			_buildSQLFile(sqlDir, "indexes");
 			_buildSQLFile(sqlDir, "sequences");
 			_buildSQLFile(sqlDir, "update-5.0.1-5.1.0");

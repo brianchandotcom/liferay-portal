@@ -68,11 +68,21 @@ public class FirebirdDB extends BaseDB {
 		sb.append("connect '");
 		sb.append(databaseName);
 		sb.append(".gdb' user 'sysdba' password 'masterkey';\n");
-		sb.append(
-			readSQL(
-				sqlDir + "/portal" + suffix + "/portal" + suffix +
-					"-firebird.sql",
-				_FIREBIRD[0], ";\n"));
+
+		if (!sqlDir.endsWith("/WEB-INF/sql")) {
+			sb.append(
+				readSQL(
+					sqlDir + "/portal" + suffix + "/portal" + suffix +
+						"-firebird.sql",
+					_FIREBIRD[0], ";\n"));
+		}
+		else {
+			sb.append(
+				readSQL(
+					sqlDir + "/tables" + suffix + "/tables" + suffix +
+						"-firebird.sql",
+					_FIREBIRD[0], ";\n"));
+		}
 
 		return sb.toString();
 	}

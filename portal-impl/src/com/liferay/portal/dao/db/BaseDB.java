@@ -742,6 +742,32 @@ public abstract class BaseDB implements DB {
 		return template;
 	}
 
+	protected String getCreateTablesContent(String sqlDir, String suffix)
+		throws IOException {
+
+		StringBundler sb = new StringBundler(8);
+
+		sb.append(sqlDir);
+
+		if (!sqlDir.endsWith("/WEB-INF/sql")) {
+			sb.append("/portal");
+			sb.append(suffix);
+			sb.append("/portal");
+		}
+		else {
+			sb.append("/tables");
+			sb.append(suffix);
+			sb.append("/tables");
+		}
+
+		sb.append(suffix);
+		sb.append(StringPool.DASH);
+		sb.append(getServerName());
+		sb.append(".sql");
+
+		return readFile(sb.toString());
+	}
+
 	protected abstract String getServerName();
 
 	protected String getSuffix(int type) {

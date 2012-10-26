@@ -254,7 +254,7 @@ public interface TrashHandler {
 	/**
 	 * Returns the language key to the localized message to display next to a trash entry listed in
 	 * a search result, indicating that the trash entry was found in a trashed
-	 * container (e.g. folder or message board thread) trash handler is associated with.
+	 * container (e.g. folder or message board thread) this trash handler is associated with.
 	 *
 	 * <p>
 	 * If the language key (e.g. <code>found-in-deleted-folder-x</code>)

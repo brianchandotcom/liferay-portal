@@ -146,12 +146,18 @@ public class SecurePluginContextListener
 	}
 
 	public void instantiatingListeners() throws Exception {
+		instantiatingListeners("portalListenerClasses");
+	}
+
+	public void instantiatingListeners(String portalListenerClasses)
+		throws Exception {
+
 		if (_servletRequestListeners != null) {
 			return;
 		}
 
 		String[] listenerClassNames = StringUtil.split(
-			servletContext.getInitParameter("portalListenerClasses"));
+			servletContext.getInitParameter(portalListenerClasses));
 
 		for (String listenerClassName : listenerClassNames) {
 			instantiatingListener(listenerClassName);

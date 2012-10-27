@@ -26,7 +26,7 @@ import javax.servlet.ServletContext;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ServletContextListenerHotDeployListener
+public class ServletContextPostListenerHotDeployListener
 	extends BaseHotDeployListener {
 
 	public void invokeDeploy(HotDeployEvent hotDeployEvent)
@@ -69,7 +69,8 @@ public class ServletContextListenerHotDeployListener
 			Method method = clazz.getMethod(
 				"instantiatingListeners", String.class);
 
-			method.invoke(securePluginContextListener, "portalListenerClasses");
+			method.invoke(
+				securePluginContextListener, "portalPostListenerClasses");
 		}
 	}
 

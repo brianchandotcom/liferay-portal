@@ -33,10 +33,10 @@ public class ViewPMMessageReplyTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Social01 Office01 User01 sent you a message."),
 			selenium.getText("//div[@class='title']"));
-		assertEquals(RuntimeVariables.replace("Mark as Read"),
+		assertEquals(RuntimeVariables.replace("Mark All as Read"),
 			selenium.getText("//span[@class='dismiss-notifications']/a"));
 		selenium.clickAt("//span[@class='dismiss-notifications']/a",
-			RuntimeVariables.replace("Mark as Read"));
+			RuntimeVariables.replace("Mark All as Read"));
 		selenium.waitForPageToLoad("30000");
 		selenium.waitForElementPresent("//li[@id='_145_notificationsMenu']");
 		assertEquals(RuntimeVariables.replace("0"),

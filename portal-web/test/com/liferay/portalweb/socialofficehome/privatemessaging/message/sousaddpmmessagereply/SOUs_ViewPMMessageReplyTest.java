@@ -24,7 +24,7 @@ public class SOUs_ViewPMMessageReplyTest extends BaseTestCase {
 	public void testSOUs_ViewPMMessageReply() throws Exception {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
-		selenium.open("/user/socialoffice01/home");
+		selenium.open("/user/socialoffice01/so/dashboard");
 		selenium.waitForVisible("//nav/ul/li[contains(.,'Messages')]/a/span");
 		selenium.clickAt("//nav/ul/li[contains(.,'Messages')]/a/span",
 			RuntimeVariables.replace("Messages"));
@@ -48,7 +48,8 @@ public class SOUs_ViewPMMessageReplyTest extends BaseTestCase {
 			selenium.getText(
 				"//div[@class='aui-layout-content thread-info-content ']"));
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
-			selenium.getText("xPath=(//span[@class='name'])[2]"));
+			selenium.getText(
+				"xPath=(//span[@class='name'])[contains(.,'Joe Bloggs')]"));
 		assertEquals(RuntimeVariables.replace("Message Body"),
 			selenium.getText("xPath=(//div[@class='body'])[1]"));
 		assertEquals(RuntimeVariables.replace("Social01 Office01 User01"),

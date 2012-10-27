@@ -28,6 +28,7 @@ import com.liferay.portalweb.socialoffice.users.user.signinso.SOUs2_SignInSOTest
 import com.liferay.portalweb.socialoffice.users.user.signinso.SOUs2_SignOutSOTest;
 import com.liferay.portalweb.socialoffice.users.user.signinso.SignInSOTest;
 import com.liferay.portalweb.socialoffice.users.user.signinso.SignOutSOTest;
+import com.liferay.portalweb.socialofficehome.privatemessaging.message.addpmmessage.TearDownPMMessageTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -63,6 +64,7 @@ public class SOUs2_DeletePMMessageTests extends BaseTestSuite {
 		testSuite.addTestSuite(SOUs1_ViewDeletePMMessageTest.class);
 		testSuite.addTestSuite(SOUs1_SignOutSOTest.class);
 		testSuite.addTestSuite(SignInSOTest.class);
+		testSuite.addTestSuite(TearDownPMMessageTest.class);
 		testSuite.addTestSuite(TearDownSOUserTest.class);
 
 		return testSuite;

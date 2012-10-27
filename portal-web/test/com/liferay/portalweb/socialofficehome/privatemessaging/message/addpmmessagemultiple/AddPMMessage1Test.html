@@ -10,7 +10,7 @@
 </thead><tbody>
 <tr>
 	<td>open</td>
-	<td>/user/joebloggs/home/</td>
+	<td>/user/joebloggs/so/dashboard/</td>
 	<td></td>
 </tr>
 <tr>
@@ -50,16 +50,16 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//span[2]/span/button</td>
+	<td>//button[contains(@class,'autocomplete-button')]/span</td>
 	<td>Dropdown</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//span[2]/span/button</td>
+	<td>//button[contains(@class,'autocomplete-button')]/span</td>
 	<td>Dropdown</td>
 </tr>
 <tr>
-	<td>typeKeys</td>
+	<td>sendKeys</td>
 	<td>//input[@id='_1_WAR_privatemessagingportlet_to']</td>
 	<td>Social01</td>
 </tr>
@@ -69,18 +69,18 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForText</td>
-	<td>//li</td>
+	<td>waitForPartialText</td>
+	<td>//li[contains(@data-text,'Social01 Office01 User01')]</td>
 	<td>Social01 Office01 User01</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//li</td>
+	<td>assertPartialText</td>
+	<td>//li[contains(@data-text,'Social01 Office01 User01')]</td>
 	<td>Social01 Office01 User01</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//li</td>
+	<td>//li[contains(@data-text,'Social01 Office01 User01')]</td>
 	<td>Social01 Office01 User01</td>
 </tr>
 <tr>

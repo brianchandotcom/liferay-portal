@@ -49,9 +49,10 @@ public class ViewPMMessageAttachmentTest extends BaseTestCase {
 			selenium.getText(
 				"//div[@class='aui-layout-content thread-info-content ']"));
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
-			selenium.getText("xPath=(//span[@class='name'])[2]"));
+			selenium.getText(
+				"xPath=(//span[@class='name'])[contains(.,'Joe Bloggs')]"));
 		assertTrue(selenium.isPartialText("//div[@class='body']", "Message Body"));
-		assertTrue(selenium.isVisible("//div/img"));
+		assertTrue(selenium.isVisible("//div[@class='image-thumbnail']/a/img"));
 		assertEquals(RuntimeVariables.replace("PM_Attachment.jpg"),
 			selenium.getText("//td[2]/a"));
 	}

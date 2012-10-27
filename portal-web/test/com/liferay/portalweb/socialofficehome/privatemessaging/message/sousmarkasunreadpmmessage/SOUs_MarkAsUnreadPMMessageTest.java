@@ -29,7 +29,7 @@ public class SOUs_MarkAsUnreadPMMessageTest extends BaseTestCase {
 			case 1:
 				selenium.selectWindow("null");
 				selenium.selectFrame("relative=top");
-				selenium.open("/user/socialoffice01/home");
+				selenium.open("/user/socialoffice01/so/dashboard");
 				selenium.waitForVisible(
 					"//nav/ul/li[contains(.,'Messages')]/a/span");
 				selenium.clickAt("//nav/ul/li[contains(.,'Messages')]/a/span",

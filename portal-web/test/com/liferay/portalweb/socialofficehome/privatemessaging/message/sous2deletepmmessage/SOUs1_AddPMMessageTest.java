@@ -42,7 +42,7 @@ public class SOUs1_AddPMMessageTest extends BaseTestCase {
 			"//button[contains(@class,'autocomplete-button')]/span");
 		selenium.clickAt("//button[contains(@class,'autocomplete-button')]/span",
 			RuntimeVariables.replace("Dropdown"));
-		selenium.typeKeys("//input[@id='_1_WAR_privatemessagingportlet_to']",
+		selenium.sendKeys("//input[@id='_1_WAR_privatemessagingportlet_to']",
 			RuntimeVariables.replace("Social02"));
 		Thread.sleep(5000);
 		selenium.waitForPartialText("//li[contains(@data-text,'Social02 Office02 User02')]",

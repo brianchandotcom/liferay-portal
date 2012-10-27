@@ -15,6 +15,7 @@
 package com.liferay.portalweb.socialofficehome.privatemessaging.message.addpmmessagenonuser;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.socialofficehome.privatemessaging.message.addpmmessage.TearDownPMMessageTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

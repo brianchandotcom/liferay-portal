@@ -42,7 +42,7 @@ public class AddPMMessageNonUserTest extends BaseTestCase {
 			"//button[contains(@class,'autocomplete-button')]/span");
 		selenium.clickAt("//button[contains(@class,'autocomplete-button')]/span",
 			RuntimeVariables.replace("Dropdown"));
-		selenium.typeKeys("//input[@id='_1_WAR_privatemessagingportlet_to']",
+		selenium.sendKeys("//input[@id='_1_WAR_privatemessagingportlet_to']",
 			RuntimeVariables.replace(
 				"Social01 Office01 User01 <socialoffice01>"));
 		assertEquals("Social01 Office01 User01 <socialoffice01>",

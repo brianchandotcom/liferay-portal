@@ -24,7 +24,6 @@ import com.liferay.portalweb.socialofficehome.privatemessaging.message.backtomes
 import com.liferay.portalweb.socialofficehome.privatemessaging.message.deletepmmessage.DeletePMMessageTests;
 import com.liferay.portalweb.socialofficehome.privatemessaging.message.deletepmmessageall.DeletePMMessageAllTests;
 import com.liferay.portalweb.socialofficehome.privatemessaging.message.deletepmmessagedetails.DeletePMMessageDetailsTests;
-import com.liferay.portalweb.socialofficehome.privatemessaging.message.gmailviewpmmessage.Gmail_ViewPMMessageTests;
 import com.liferay.portalweb.socialofficehome.privatemessaging.message.markasunreadpmmessageall.MarkAsUnreadPMMessageAllTests;
 import com.liferay.portalweb.socialofficehome.privatemessaging.message.selectallpmmessage.SelectAllPMMessageTests;
 import com.liferay.portalweb.socialofficehome.privatemessaging.message.selectnonepmmessage.SelectNonePMMessageTests;
@@ -56,7 +55,7 @@ public class MessageTestPlan extends BaseTestSuite {
 		testSuite.addTest(DeletePMMessageTests.suite());
 		testSuite.addTest(DeletePMMessageAllTests.suite());
 		testSuite.addTest(DeletePMMessageDetailsTests.suite());
-		testSuite.addTest(Gmail_ViewPMMessageTests.suite());
+		//testSuite.addTest(Gmail_ViewPMMessageTests.suite());
 		testSuite.addTest(MarkAsUnreadPMMessageAllTests.suite());
 		testSuite.addTest(SelectAllPMMessageTests.suite());
 		testSuite.addTest(SelectNonePMMessageTests.suite());

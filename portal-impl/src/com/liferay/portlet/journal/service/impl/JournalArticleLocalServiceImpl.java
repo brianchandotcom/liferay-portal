@@ -3288,14 +3288,20 @@ public class JournalArticleLocalServiceImpl
 			body = JournalUtil.getEmailArticleUpdatedBody(preferences);
 		}
 
+		String languageId = serviceContext.getLanguageId();
+
+		if (languageId == null) {
+			languageId = LocaleUtil.toLanguageId(LocaleUtil.getDefault());
+		}
+
 		SubscriptionSender subscriptionSender = new SubscriptionSender();
 
 		subscriptionSender.setBody(body);
 		subscriptionSender.setCompanyId(article.getCompanyId());
 		subscriptionSender.setContextAttributes(
 			"[$ARTICLE_ID$]", article.getArticleId(), "[$ARTICLE_TITLE$]",
-			article.getTitle(serviceContext.getLanguageId()), "[$ARTICLE_URL$]",
-			articleURL, "[$ARTICLE_VERSION$]", article.getVersion());
+			article.getTitle(languageId), "[$ARTICLE_URL$]", articleURL,
+			"[$ARTICLE_VERSION$]", article.getVersion());
 		subscriptionSender.setContextUserPrefix("ARTICLE");
 		subscriptionSender.setFrom(fromAddress, fromName);
 		subscriptionSender.setHtmlFormat(true);
@@ -3408,14 +3414,20 @@ public class JournalArticleLocalServiceImpl
 			body = JournalUtil.getEmailArticleReviewBody(preferences);
 		}
 
+		String languageId = serviceContext.getLanguageId();
+
+		if (languageId == null) {
+			languageId = LocaleUtil.toLanguageId(LocaleUtil.getDefault());
+		}
+
 		SubscriptionSender subscriptionSender = new SubscriptionSender();
 
 		subscriptionSender.setBody(body);
 		subscriptionSender.setCompanyId(company.getCompanyId());
 		subscriptionSender.setContextAttributes(
 			"[$ARTICLE_ID$]", article.getArticleId(), "[$ARTICLE_TITLE$]",
-			article.getTitle(serviceContext.getLanguageId()), "[$ARTICLE_URL$]",
-			articleURL, "[$ARTICLE_USER_NAME$]", article.getUserName(),
+			article.getTitle(languageId), "[$ARTICLE_URL$]", articleURL,
+			"[$ARTICLE_USER_NAME$]", article.getUserName(),
 			"[$ARTICLE_VERSION$]", article.getVersion());
 		subscriptionSender.setContextUserPrefix("ARTICLE");
 		subscriptionSender.setFrom(fromAddress, fromName);

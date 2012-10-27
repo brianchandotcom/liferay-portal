@@ -14,7 +14,27 @@
 	<td></td>
 </tr>
 <tr>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
 	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
+	<td>AUI Editable Min</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>mouseOver</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
 	<td>link=Control Panel</td>
 	<td>Control Panel</td>
 </tr>
@@ -49,19 +69,29 @@
 	<td>Tést Subcatégory</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>link=Tést Méssagé</td>
+	<td>assertText</td>
+	<td>//td[2]/a</td>
 	<td>Tést Méssagé</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Split Thread</td>
+	<td>//td[2]/a</td>
+	<td>Tést Méssagé</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//ul[@class='edit-controls lfr-component']/li/span/a[contains(.,'Split Thread')]</td>
 	<td>Split Thread</td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
+	<td>clickAndWait</td>
+	<td>//ul[@class='edit-controls lfr-component']/li/span/a[contains(.,'Split Thread')]</td>
+	<td>Split Thread</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-info']</td>
 	<td>Click OK to create a new thread with the following messages.</td>
-	<td></td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -74,19 +104,34 @@
 	<td></td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
+	<td>assertText</td>
+	<td>xpath=(//div[@class='subject']/a/strong)[1]</td>
+	<td>RE: Tést Méssagé</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xpath=(//div[@class='thread-body'])[1]</td>
 	<td>This is a tést réply méssagé!</td>
-	<td></td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
+	<td>assertText</td>
+	<td>xpath=(//div[@class='subject']/a/strong)[2]</td>
+	<td>RE: RE: Tést Méssagé</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xpath=(//div[@class='thread-body'])[2]</td>
 	<td>This is a second reply message.</td>
-	<td></td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
+	<td>assertText</td>
+	<td>xpath=(//div[@class='subject']/a/strong)[3]</td>
+	<td>RE: Tést Méssagé</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xpath=(//div[@class='thread-body'])[3]</td>
 	<td>This is a third reply message.</td>
-	<td></td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -99,8 +144,13 @@
 	<td>Tést Méssagé</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>link=RE: Tést Méssagé</td>
+	<td>assertText</td>
+	<td>//tr[3]/td[2]/a</td>
+	<td>Tést Méssagé</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[4]/td[2]/a</td>
 	<td>RE: Tést Méssagé</td>
 </tr>
 </tbody></table>

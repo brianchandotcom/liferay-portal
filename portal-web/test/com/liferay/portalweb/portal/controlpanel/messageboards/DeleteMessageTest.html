@@ -14,7 +14,27 @@
 	<td></td>
 </tr>
 <tr>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
 	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
+	<td>AUI Editable Min</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>mouseOver</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
 	<td>link=Control Panel</td>
 	<td>Control Panel</td>
 </tr>
@@ -49,19 +69,19 @@
 	<td>Tést Méssagé to bé Délétéd</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>link=Delete</td>
+	<td>assertText</td>
+	<td>//ul[@class='edit-controls lfr-component']/li/span/a[contains(.,'Delete')]</td>
 	<td>Delete</td>
 </tr>
 <tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete this?</td>
-	<td></td>
+	<td>clickAtAndWait</td>
+	<td>//ul[@class='edit-controls lfr-component']/li/span/a[contains(.,'Delete')]</td>
+	<td>Delete</td>
 </tr>
 <tr>
-	<td>waitForText</td>
-	<td>//div[@class='portlet-msg-success']</td>
-	<td>Your request completed successfully.</td>
+	<td>waitForConfirmation</td>
+	<td>Are you sure you want to delete this? It will be deleted immediately.</td>
+	<td></td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -74,7 +94,27 @@
 	<td></td>
 </tr>
 <tr>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
 	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
+	<td>AUI Editable Min</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>mouseOver</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
 	<td>link=Control Panel</td>
 	<td>Control Panel</td>
 </tr>
@@ -99,8 +139,23 @@
 	<td>Sujr</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//td[2]/a</td>
+	<td>Moved to Sujr</td>
+</tr>
+<tr>
 	<td>clickAtAndWait</td>
-	<td>link=Moved to Sujr</td>
+	<td>//td[2]/a</td>
+	<td>Moved to Sujr</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//h1[@class='header-title']</td>
+	<td>Moved to Sujr</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='subject']/a/strong</td>
 	<td>Moved to Sujr</td>
 </tr>
 <tr>

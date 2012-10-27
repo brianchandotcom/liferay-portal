@@ -14,7 +14,27 @@
 	<td></td>
 </tr>
 <tr>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
 	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
+	<td>AUI Editable Min</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>mouseOver</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
 	<td>link=Control Panel</td>
 	<td>Control Panel</td>
 </tr>
@@ -55,12 +75,12 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[6]/table/tbody/tr[1]/td[2]/div[1]/ul/li[2]/span/a/span</td>
+	<td>//tr[contains(.,'This is a second reply message.')]/td[2]/div/ul[@class='edit-controls lfr-component']/li/span/a[contains(.,'Reply')]</td>
 	<td>Reply</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>//div[6]/table/tbody/tr[1]/td[2]/div[1]/ul/li[2]/span/a/span</td>
+	<td>clickAndWait</td>
+	<td>//tr[contains(.,'This is a second reply message. ')]/td[2]/div/ul[@class='edit-controls lfr-component']/li/span/a[contains(.,'Reply')]</td>
 	<td>Reply</td>
 </tr>
 <tr>
@@ -70,13 +90,18 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//span[@id='cke_34_label' and .='Source']</td>
+	<td>//span[.='Source']</td>
 	<td>Source</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//span[@id='cke_34_label' and .='Source']</td>
+	<td>//span[.='Source']</td>
 	<td>Source</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//a[@class='cke_button_source cke_on']</td>
+	<td>Source Button On</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -90,12 +115,12 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//span[@id='cke_34_label' and .='Source']</td>
+	<td>//span[.='Source']</td>
 	<td>Source</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//span[@id='cke_34_label' and .='Source']</td>
+	<td>//span[.='Source']</td>
 	<td>Source</td>
 </tr>
 <tr>
@@ -140,12 +165,42 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[7]/table/tbody/tr[1]/td[2]/div[1]/div/a/strong</td>
-	<td>exact:RE: Tést Méssagé</td>
+	<td>xpath=(//div[@class='subject']/a/strong)[1]</td>
+	<td>Tést Méssagé</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[7]/table/tbody/tr[1]/td[2]/div[2]</td>
+	<td>xpath=(//div[@class='thread-body'])[1]</td>
+	<td>This is a tést méssagé!</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xpath=(//div[@class='subject']/a/strong)[2]</td>
+	<td>RE: Tést Méssagé</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xpath=(//div[@class='thread-body'])[2]</td>
+	<td>This is a tést réply méssagé!</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xpath=(//div[@class='subject']/a/strong)[3]</td>
+	<td>RE: Tést Méssagé</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xpath=(//div[@class='thread-body'])[3]</td>
+	<td>This is a second reply message.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xpath=(//div[@class='subject']/a/strong)[4]</td>
+	<td>RE: Tést Méssagé</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xpath=(//div[@class='thread-body'])[4]</td>
 	<td>This is a third reply message.</td>
 </tr>
 </tbody></table>

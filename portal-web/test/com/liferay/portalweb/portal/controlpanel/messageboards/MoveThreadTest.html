@@ -14,7 +14,27 @@
 	<td></td>
 </tr>
 <tr>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
 	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
+	<td>AUI Editable Min</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>mouseOver</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
 	<td>link=Control Panel</td>
 	<td>Control Panel</td>
 </tr>
@@ -30,12 +50,12 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[4]/td[2]/a[1]/strong</td>
+	<td>//tr[4]/td[2]/a/strong</td>
 	<td>Tést Catégory</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//tr[4]/td[2]/a[1]/strong</td>
+	<td>//tr[4]/td[2]/a/strong</td>
 	<td>Tést Catégory</td>
 </tr>
 <tr>
@@ -59,29 +79,59 @@
 	<td>Sécond Tést Subcatégory</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>link=Tést Méssagé to bé Délétéd</td>
+	<td>assertText</td>
+	<td>//tr[3]/td[2]/a</td>
 	<td>Tést Méssagé to bé Délétéd</td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
-	<td>This méssagé will bé délétéd!</td>
-	<td></td>
+	<td>clickAtAndWait</td>
+	<td>//tr[3]/td[2]/a</td>
+	<td>Tést Méssagé to bé Délétéd</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>link=Move Thread</td>
+	<td>assertText</td>
+	<td>//h1[@class='header-title']</td>
+	<td>Tést Méssagé to bé Délétéd</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='subject']/a/strong</td>
+	<td>Tést Méssagé to bé Délétéd</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='thread-body']</td>
+	<td>This méssagé will bé délétéd!</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='thread-actions']/table/tbody/tr/td/span/a[contains(.,'Move Thread')]</td>
 	<td>Move Thread</td>
 </tr>
 <tr>
-	<td>assertNotChecked</td>
+	<td>clickAtAndWait</td>
+	<td>//div[@class='thread-actions']/table/tbody/tr/td/span/a[contains(.,'Move Thread')]</td>
+	<td>Move Thread</td>
+</tr>
+<tr>
+	<td>storeChecked</td>
 	<td>//input[@id='_162_addExplanationPostCheckbox']</td>
-	<td>Add post explanation.</td>
+	<td>addExplanationPostChecked</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${addExplanationPostChecked}</td>
+	<td>AddExplanationPostChecked</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>//input[@id='_162_addExplanationPostCheckbox']</td>
 	<td>Add post explanation.</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>AddExplanationPostChecked</td>
+	<td></td>
 </tr>
 <tr>
 	<td>assertChecked</td>
@@ -91,7 +141,7 @@
 <tr>
 	<td>waitForVisible</td>
 	<td>//input[@id='_162_subject']</td>
-	<td></td>
+	<td>Subject Field</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -105,13 +155,18 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//span[@id='cke_34_label' and .='Source']</td>
+	<td>//span[.='Source']</td>
 	<td>Source</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//span[@id='cke_34_label' and .='Source']</td>
+	<td>//span[.='Source']</td>
 	<td>Source</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//a[@class='cke_button_source cke_on']</td>
+	<td>Source Button On</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -125,18 +180,13 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//span[@id='cke_34_label' and .='Source']</td>
+	<td>//span[.='Source']</td>
 	<td>Source</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//span[@id='cke_34_label' and .='Source']</td>
+	<td>//span[.='Source']</td>
 	<td>Source</td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>//textarea[@id='_162_editor' and @style='display: none;']</td>
-	<td>Text Area</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -164,43 +214,38 @@
 	<td>Select</td>
 </tr>
 <tr>
-	<td>waitForPopUp</td>
-	<td>category</td>
-	<td>30000</td>
-</tr>
-<tr>
-	<td>selectWindow</td>
-	<td>category</td>
-	<td></td>
-</tr>
-<tr>
 	<td>pause</td>
 	<td>5000</td>
 	<td></td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('link=Categories'))</td>
-	<td>CategoriesPresent</td>
+	<td>selectWindow</td>
+	<td>title=Message Boards</td>
+	<td>Message Boards Window</td>
 </tr>
 <tr>
-	<td>gotoIf</td>
-	<td>!${CategoriesPresent}</td>
-	<td>categoriesNotPresent</td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>link=Categories</td>
+	<td>waitForVisible</td>
+	<td>//ul[contains(@class,'breadcrumbs')]/li/span/a</td>
 	<td>Categories</td>
 </tr>
 <tr>
-	<td>label</td>
-	<td>categoriesNotPresent</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//ul[contains(@class,'breadcrumbs')]/li/span/a</td>
+	<td>Categories</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//ul[contains(@class,'breadcrumbs')]/li/span/a</td>
+	<td>Categories</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Sujr')]/td[1]/a</td>
+	<td>Sujr</td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>//input[@value='Choose']</td>
+	<td>//tr[contains(.,'Sujr')]/td[5]/input[@value='Choose']</td>
 	<td>Choose</td>
 </tr>
 <tr>
@@ -209,49 +254,49 @@
 	<td></td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertElementPresent</td>
-	<td>link=Sujr</td>
-	<td>Sujr</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Move Thread']</td>
 	<td>Move Thread</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>link=Sujr</td>
-	<td>Sujr</td>
-</tr>
-<tr>
-	<td>assertElementPresent</td>
-	<td>link=Tést Méssagé to bé Délétéd</td>
+	<td>assertText</td>
+	<td>//h1[@class='header-title']/span</td>
 	<td>Tést Méssagé to bé Délétéd</td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Moved to Sujr')]/td[1]/a/strong</td>
+	<td>Moved to Sujr</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xpath=(//div[@class='subject']/a/strong)[1]</td>
+	<td>Tést Méssagé to bé Délétéd</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xpath=(//div[@class='thread-body'])[1]</td>
 	<td>This méssagé will bé délétéd!</td>
-	<td></td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
+	<td>assertText</td>
+	<td>xpath=(//div[@class='subject']/a/strong)[2]</td>
+	<td>Moved to Sujr</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xpath=(//div[@class='thread-body'])[2]</td>
 	<td>Trust and paths will be straightened.</td>
+</tr>
+<tr>
+	<td>assertTextNotPresent</td>
+	<td>Tést Subcatégory</td>
 	<td></td>
 </tr>
 <tr>
-	<td>assertElementNotPresent</td>
-	<td>link=Tést Subcatégory</td>
-	<td>Tést Subcatégory</td>
-</tr>
-<tr>
-	<td>assertElementNotPresent</td>
-	<td>link=Tést Catégory</td>
+	<td>assertTextNotPresent</td>
 	<td>Tést Catégory</td>
+	<td></td>
 </tr>
 </tbody></table>
 </body>

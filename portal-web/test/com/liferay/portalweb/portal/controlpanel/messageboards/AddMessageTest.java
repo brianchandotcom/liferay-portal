@@ -25,7 +25,14 @@ public class AddMessageTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent("link=Control Panel");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
+		selenium.waitForVisible("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
@@ -50,15 +57,16 @@ public class AddMessageTest extends BaseTestCase {
 		selenium.waitForElementPresent(
 			"//textarea[@id='_162_editor' and @style='display: none;']");
 		assertEquals(RuntimeVariables.replace("Source"),
-			selenium.getText("//span[@id='cke_34_label' and .='Source']"));
-		selenium.clickAt("//span[@id='cke_34_label' and .='Source']",
+			selenium.getText("//span[.='Source']"));
+		selenium.clickAt("//span[.='Source']",
 			RuntimeVariables.replace("Source"));
+		selenium.waitForVisible("//a[@class='cke_button_source cke_on']");
 		selenium.waitForVisible("//td[@id='cke_contents__162_editor']/textarea");
 		selenium.type("//td[@id='cke_contents__162_editor']/textarea",
 			RuntimeVariables.replace("This is a t\u00e9st m\u00e9ssag\u00e9!"));
 		assertEquals(RuntimeVariables.replace("Source"),
-			selenium.getText("//span[@id='cke_34_label' and .='Source']"));
-		selenium.clickAt("//span[@id='cke_34_label' and .='Source']",
+			selenium.getText("//span[.='Source']"));
+		selenium.clickAt("//span[.='Source']",
 			RuntimeVariables.replace("Source"));
 		selenium.waitForElementPresent(
 			"//textarea[@id='_162_editor' and @style='display: none;']");
@@ -73,11 +81,11 @@ public class AddMessageTest extends BaseTestCase {
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("T\u00e9st M\u00e9ssag\u00e9"),
-			selenium.getText("//div[1]/h1/span"));
+			selenium.getText("//h1[@class='header-title']"));
 		assertEquals(RuntimeVariables.replace("T\u00e9st M\u00e9ssag\u00e9"),
-			selenium.getText("//div/a/strong"));
+			selenium.getText("//div[@class='subject']/a/strong"));
 		assertEquals(RuntimeVariables.replace(
 				"This is a t\u00e9st m\u00e9ssag\u00e9!"),
-			selenium.getText("//td[2]/div[2]"));
+			selenium.getText("//div[@class='thread-body']"));
 	}
 }

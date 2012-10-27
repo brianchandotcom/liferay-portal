@@ -14,7 +14,27 @@
 	<td></td>
 </tr>
 <tr>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
 	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
+	<td>AUI Editable Min</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>mouseOver</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
 	<td>link=Control Panel</td>
 	<td>Control Panel</td>
 </tr>
@@ -29,18 +49,33 @@
 	<td>Message Boards</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>//tr[4]/td[2]/a[1]/strong</td>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Tést Catégory Editéd')]/td[2]/a/strong</td>
 	<td>Tést Catégory Editéd</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Waiting for an Answer</td>
+	<td>//tr[contains(.,'Tést Catégory Editéd')]/td[2]/a/strong</td>
+	<td>Tést Catégory Editéd</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Favorite Color Test Question')]/td[3]/a</td>
 	<td>Waiting for an Answer</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Reply</td>
+	<td>//tr[contains(.,'Favorite Color Test Question')]/td[3]/a</td>
+	<td>Waiting for an Answer</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Favorite Color Test Question')]/td[2]/div/ul[@class='edit-controls lfr-component']/li/span/a[contains(.,'Reply')]</td>
+	<td>Reply</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//tr[contains(.,'Favorite Color Test Question')]/td[2]/div/ul[@class='edit-controls lfr-component']/li/span/a[contains(.,'Reply')]</td>
 	<td>Reply</td>
 </tr>
 <tr>
@@ -50,13 +85,18 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//span[@id='cke_34_label' and .='Source']</td>
+	<td>//span[.='Source']</td>
 	<td>Source</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//span[@id='cke_34_label' and .='Source']</td>
+	<td>//span[.='Source']</td>
 	<td>Source</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//a[@class='cke_button_source cke_on']</td>
+	<td>Source Button On</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -70,12 +110,12 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//span[@id='cke_34_label' and .='Source']</td>
+	<td>//span[.='Source']</td>
 	<td>Source</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//span[@id='cke_34_label' and .='Source']</td>
+	<td>//span[.='Source']</td>
 	<td>Source</td>
 </tr>
 <tr>
@@ -109,14 +149,54 @@
 	<td>Publish</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>//div[5]/table/tbody/tr[1]/td[2]/div[1]/ul/li[1]/span/a/span</td>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//h1[@class='header-title']/span</td>
+	<td>RE: Favorite Color Test Question</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xpath=(//div[@class='subject']/a/strong)[1]</td>
+	<td>Favorite Color Test Question</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xpath=(//div[@class='thread-body'])[1]</td>
+	<td>What is your favorite color?</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xpath=(//div[@class='subject']/a/strong)[2]</td>
+	<td>RE: Favorite Color Test Question</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xpath=(//div[@class='thread-body'])[2]</td>
+	<td>I like green because it is so natural. Obviously.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'RE: Favorite Color Test Question')]/td[2]/div/ul[@class='edit-controls lfr-component']/li/span/a[contains(.,'Mark as an Answer')]</td>
 	<td>Mark as an Answer</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//div[5]/table/tbody/tr[1]/td[2]/div[1]/ul/li[1]/span/a/span</td>
+	<td>//tr[contains(.,'RE: Favorite Color Test Question')]/td[2]/div/ul[@class='edit-controls lfr-component']/li/span/a[contains(.,'Mark as an Answer')]</td>
 	<td>Mark as an Answer</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//tr[contains(.,'RE: Favorite Color Test Question')]/td[2]/div/div/div[@class='answer']</td>
+	<td>Answer Checked</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//tr[contains(.,'RE: Favorite Color Test Question')]/td[2]/div/div/div[@class='answer']</td>
+	<td>Answer Checked</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -129,14 +209,19 @@
 	<td></td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>link=Resolved</td>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Favorite Color Test Question')]/td[2]/a</td>
+	<td>Favorite Color Test Question</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Favorite Color Test Question')]/td[3]/a</td>
 	<td>Resolved</td>
 </tr>
 <tr>
-	<td>assertElementNotPresent</td>
-	<td>link=Waiting for an Answer</td>
+	<td>assertTextNotPresent</td>
 	<td>Waiting for an Answer</td>
+	<td></td>
 </tr>
 </tbody></table>
 </body>

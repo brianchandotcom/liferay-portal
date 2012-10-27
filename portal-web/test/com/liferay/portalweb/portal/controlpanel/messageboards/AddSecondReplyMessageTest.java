@@ -25,7 +25,14 @@ public class AddSecondReplyMessageTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent("link=Control Panel");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
+		selenium.waitForVisible("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
@@ -47,22 +54,23 @@ public class AddSecondReplyMessageTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Reply"),
 			selenium.getText(
-				"//div[5]/table/tbody/tr[1]/td[2]/div[1]/ul/li[2]/span/a/span"));
+				"//tr[contains(.,'This is a t\u00e9st r\u00e9ply m\u00e9ssag\u00e9!')]/td[2]/div/ul[@class='edit-controls lfr-component']/li/span/a[contains(.,'Reply')]"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[5]/table/tbody/tr[1]/td[2]/div[1]/ul/li[2]/span/a/span"));
+				"//tr[contains(.,'This is a t\u00e9st r\u00e9ply m\u00e9ssag\u00e9!')]/td[2]/div/ul[@class='edit-controls lfr-component']/li/span/a[contains(.,'Reply')]"));
 		selenium.waitForPageToLoad("30000");
 		selenium.waitForElementPresent(
 			"//textarea[@id='_162_editor' and @style='display: none;']");
 		assertEquals(RuntimeVariables.replace("Source"),
-			selenium.getText("//span[@id='cke_34_label' and .='Source']"));
-		selenium.clickAt("//span[@id='cke_34_label' and .='Source']",
+			selenium.getText("//span[.='Source']"));
+		selenium.clickAt("//span[.='Source']",
 			RuntimeVariables.replace("Source"));
+		selenium.waitForVisible("//a[@class='cke_button_source cke_on']");
 		selenium.waitForVisible("//td[@id='cke_contents__162_editor']/textarea");
 		selenium.type("//td[@id='cke_contents__162_editor']/textarea",
 			RuntimeVariables.replace("This is a second reply message."));
 		assertEquals(RuntimeVariables.replace("Source"),
-			selenium.getText("//span[@id='cke_34_label' and .='Source']"));
-		selenium.clickAt("//span[@id='cke_34_label' and .='Source']",
+			selenium.getText("//span[.='Source']"));
+		selenium.clickAt("//span[.='Source']",
 			RuntimeVariables.replace("Source"));
 		selenium.waitForElementPresent(
 			"//textarea[@id='_162_editor' and @style='display: none;']");
@@ -78,10 +86,19 @@ public class AddSecondReplyMessageTest extends BaseTestCase {
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("RE: T\u00e9st M\u00e9ssag\u00e9"),
 			selenium.getText("//h1[@class='header-title']/span"));
+		assertEquals(RuntimeVariables.replace("T\u00e9st M\u00e9ssag\u00e9"),
+			selenium.getText("xpath=(//div[@class='subject']/a/strong)[1]"));
+		assertEquals(RuntimeVariables.replace(
+				"This is a t\u00e9st m\u00e9ssag\u00e9!"),
+			selenium.getText("xpath=(//div[@class='thread-body'])[1]"));
 		assertEquals(RuntimeVariables.replace("RE: T\u00e9st M\u00e9ssag\u00e9"),
-			selenium.getText(
-				"//div[6]/table/tbody/tr[1]/td[2]/div[1]/div/a/strong"));
+			selenium.getText("xpath=(//div[@class='subject']/a/strong)[2]"));
+		assertEquals(RuntimeVariables.replace(
+				"This is a t\u00e9st r\u00e9ply m\u00e9ssag\u00e9!"),
+			selenium.getText("xpath=(//div[@class='thread-body'])[2]"));
+		assertEquals(RuntimeVariables.replace("RE: T\u00e9st M\u00e9ssag\u00e9"),
+			selenium.getText("xpath=(//div[@class='subject']/a/strong)[3]"));
 		assertEquals(RuntimeVariables.replace("This is a second reply message."),
-			selenium.getText("//div[6]/table/tbody/tr[1]/td[2]/div[2]"));
+			selenium.getText("xpath=(//div[@class='thread-body'])[3]"));
 	}
 }

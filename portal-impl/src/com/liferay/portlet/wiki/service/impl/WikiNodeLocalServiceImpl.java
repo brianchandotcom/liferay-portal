@@ -480,7 +480,8 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 		serviceContext.setAddGuestPermissions(true);
 		serviceContext.setScopeGroupId(groupId);
 
-		WikiNode node = addDefaultNode(defaultUserId, serviceContext);
+		WikiNode node = wikiNodeLocalService.addDefaultNode(
+			defaultUserId, serviceContext);
 
 		List<WikiNode> nodes = new ArrayList<WikiNode>(1);
 

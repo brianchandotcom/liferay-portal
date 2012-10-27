@@ -10,18 +10,23 @@
 </thead><tbody>
 <tr>
 	<td>open</td>
-	<td>/user/socialoffice01/home</td>
+	<td>/user/socialoffice01/so/dashboard</td>
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>//span[@class='notification-count']</td>
-	<td>Notification Count</td>
+	<td>waitForElementPresent</td>
+	<td>//li[@id='_145_notificationsMenu']</td>
+	<td>Notifications</td>
 </tr>
 <tr>
-	<td>clickAt</td>
+	<td>assertText</td>
 	<td>//span[@class='notification-count']</td>
-	<td>Notification Count</td>
+	<td>1</td>
+</tr>
+<tr>
+	<td>mouseOver</td>
+	<td>//li[@id='_145_notificationsMenu']</td>
+	<td>Notifications</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -36,22 +41,27 @@
 <tr>
 	<td>assertText</td>
 	<td>//span[@class='dismiss-notifications']/a</td>
-	<td>Mark as Read</td>
+	<td>Mark All as Read</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//span[@class='dismiss-notifications']/a</td>
-	<td>Mark as Read</td>
+	<td>Mark All as Read</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>//span[@class='notification-count']</td>
-	<td>Notification Count</td>
+	<td>waitForElementPresent</td>
+	<td>//li[@id='_145_notificationsMenu']</td>
+	<td>Notifications</td>
 </tr>
 <tr>
-	<td>clickAt</td>
+	<td>assertText</td>
 	<td>//span[@class='notification-count']</td>
-	<td>Notification Count</td>
+	<td>0</td>
+</tr>
+<tr>
+	<td>mouseOver</td>
+	<td>//li[@id='_145_notificationsMenu']</td>
+	<td>Notifications</td>
 </tr>
 <tr>
 	<td>assertTextNotPresent</td>
@@ -110,7 +120,7 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>xPath=(//span[@class='name'])[2]</td>
+	<td>xPath=(//span[@class='name'])[contains(.,'Joe Bloggs')]</td>
 	<td>Joe Bloggs</td>
 </tr>
 <tr>
@@ -134,9 +144,9 @@
 	<td>Attachments</td>
 </tr>
 <tr>
-	<td>type</td>
+	<td>uploadFile</td>
 	<td>//input[@id='_1_WAR_privatemessagingportlet_msgFile1']</td>
-	<td>L:\portal\build\portal-web\test\com\liferay\portalweb\socialofficehome\message\sousaddpmmessagereplyattachment\dependencies\PM_Attachment.jpg</td>
+	<td>L:\portal\build\portal-web\test\com\liferay\portalweb\socialofficehome\privatemessaging\message\sousaddpmmessagereplyattachment\dependencies\PM_Attachment.jpg</td>
 </tr>
 <tr>
 	<td>clickAt</td>

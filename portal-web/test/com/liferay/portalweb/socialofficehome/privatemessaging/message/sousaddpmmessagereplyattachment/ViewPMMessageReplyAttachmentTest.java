@@ -24,22 +24,24 @@ public class ViewPMMessageReplyAttachmentTest extends BaseTestCase {
 	public void testViewPMMessageReplyAttachment() throws Exception {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
-		selenium.open("/user/joebloggs/home/");
-		selenium.waitForVisible("//span[@class='notification-count']");
-		selenium.clickAt("//span[@class='notification-count']",
-			RuntimeVariables.replace("Notification Count"));
+		selenium.open("/user/joebloggs/so/dashboard/");
+		selenium.waitForElementPresent("//li[@id='_145_notificationsMenu']");
+		assertEquals(RuntimeVariables.replace("1"),
+			selenium.getText("//span[@class='notification-count']"));
+		selenium.mouseOver("//li[@id='_145_notificationsMenu']");
 		selenium.waitForVisible("//div[@class='title']");
 		assertEquals(RuntimeVariables.replace(
 				"Social01 Office01 User01 sent you a message."),
 			selenium.getText("//div[@class='title']"));
-		assertEquals(RuntimeVariables.replace("Mark as Read"),
+		assertEquals(RuntimeVariables.replace("Mark All as Read"),
 			selenium.getText("//span[@class='dismiss-notifications']/a"));
 		selenium.clickAt("//span[@class='dismiss-notifications']/a",
-			RuntimeVariables.replace("Mark as Read"));
+			RuntimeVariables.replace("Mark All as Read"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForVisible("//span[@class='notification-count']");
-		selenium.clickAt("//span[@class='notification-count']",
-			RuntimeVariables.replace("Notification Count"));
+		selenium.waitForElementPresent("//li[@id='_145_notificationsMenu']");
+		assertEquals(RuntimeVariables.replace("0"),
+			selenium.getText("//span[@class='notification-count']"));
+		selenium.mouseOver("//li[@id='_145_notificationsMenu']");
 		assertFalse(selenium.isTextPresent(
 				"Social01 Office01 User01 sent you a message."));
 		selenium.waitForVisible("//nav/ul/li[contains(.,'Messages')]/a/span");
@@ -66,11 +68,13 @@ public class ViewPMMessageReplyAttachmentTest extends BaseTestCase {
 			selenium.getText(
 				"//div[@class='aui-layout-content thread-info-content ']"));
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
-			selenium.getText("xPath=(//span[@class='name'])[2]"));
+			selenium.getText(
+				"xPath=(//span[@class='name'])[contains(.,'Joe Bloggs')]"));
 		assertEquals(RuntimeVariables.replace("Message Body"),
 			selenium.getText("xPath=(//div[@class='body'])[1]"));
 		assertEquals(RuntimeVariables.replace("Social01 Office01 User01"),
-			selenium.getText("xPath=(//span[@class='name'])[3]"));
+			selenium.getText(
+				"xPath=(//span[@class='name'])[contains(.,'Social01 Office01 User01')]"));
 		assertTrue(selenium.isPartialText("xPath=(//div[@class='body'])[2]",
 				"Message Subject Reply"));
 		assertTrue(selenium.isVisible("//div[@class='image-thumbnail']/a/img"));

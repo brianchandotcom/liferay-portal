@@ -29,7 +29,7 @@ public class DeletePMMessageAllTest extends BaseTestCase {
 			case 1:
 				selenium.selectWindow("null");
 				selenium.selectFrame("relative=top");
-				selenium.open("/user/joebloggs/home/");
+				selenium.open("/user/joebloggs/so/dashboard/");
 				selenium.waitForVisible(
 					"//nav/ul/li[contains(.,'Messages')]/a/span");
 				selenium.clickAt("//nav/ul/li[contains(.,'Messages')]/a/span",
@@ -123,9 +123,9 @@ public class DeletePMMessageAllTest extends BaseTestCase {
 						"//tr[4]/td[1]/span/span/span/input[2]"));
 				assertFalse(selenium.isChecked(
 						"//tr[5]/td[1]/span/span/span/input[2]"));
-				assertEquals(RuntimeVariables.replace("All"),
-					selenium.getText("//span[@class='select-all']"));
-				selenium.clickAt("//span[@class='select-all']",
+				selenium.waitForVisible(
+					"//input[@id='_1_WAR_privatemessagingportlet_checkAll']");
+				selenium.clickAt("//input[@id='_1_WAR_privatemessagingportlet_checkAll']",
 					RuntimeVariables.replace("All"));
 				assertTrue(selenium.isChecked("//td[1]/span/span/span/input[2]"));
 				assertTrue(selenium.isChecked(

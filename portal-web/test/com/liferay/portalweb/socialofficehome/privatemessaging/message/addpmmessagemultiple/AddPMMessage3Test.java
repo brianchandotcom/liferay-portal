@@ -24,7 +24,7 @@ public class AddPMMessage3Test extends BaseTestCase {
 	public void testAddPMMessage3() throws Exception {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
-		selenium.open("/user/joebloggs/home/");
+		selenium.open("/user/joebloggs/so/dashboard/");
 		selenium.waitForVisible("//nav/ul/li[contains(.,'Messages')]/a/span");
 		selenium.clickAt("//nav/ul/li[contains(.,'Messages')]/a/span",
 			RuntimeVariables.replace("Messages"));
@@ -38,16 +38,19 @@ public class AddPMMessage3Test extends BaseTestCase {
 			selenium.getValue("//input[@value='New Message']"));
 		selenium.clickAt("//input[@value='New Message']",
 			RuntimeVariables.replace("New Message"));
-		selenium.waitForVisible("//span[2]/span/button");
-		selenium.clickAt("//span[2]/span/button",
+		selenium.waitForVisible(
+			"//button[contains(@class,'autocomplete-button')]/span");
+		selenium.clickAt("//button[contains(@class,'autocomplete-button')]/span",
 			RuntimeVariables.replace("Dropdown"));
-		selenium.typeKeys("//input[@id='_1_WAR_privatemessagingportlet_to']",
+		selenium.sendKeys("//input[@id='_1_WAR_privatemessagingportlet_to']",
 			RuntimeVariables.replace("Social01"));
 		Thread.sleep(5000);
-		selenium.waitForText("//li", "Social01 Office01 User01");
-		assertEquals(RuntimeVariables.replace("Social01 Office01 User01"),
-			selenium.getText("//li"));
-		selenium.clickAt("//li",
+		selenium.waitForPartialText("//li[contains(@data-text,'Social01 Office01 User01')]",
+			"Social01 Office01 User01");
+		assertTrue(selenium.isPartialText(
+				"//li[contains(@data-text,'Social01 Office01 User01')]",
+				"Social01 Office01 User01"));
+		selenium.clickAt("//li[contains(@data-text,'Social01 Office01 User01')]",
 			RuntimeVariables.replace("Social01 Office01 User01"));
 		assertEquals("Social01 Office01 User01 <socialoffice01>,",
 			selenium.getValue(

@@ -10,18 +10,23 @@
 </thead><tbody>
 <tr>
 	<td>open</td>
-	<td>/user/joebloggs/home/</td>
+	<td>/user/joebloggs/so/dashboard/</td>
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>//span[@class='notification-count']</td>
-	<td>Notification Count</td>
+	<td>waitForElementPresent</td>
+	<td>//li[@id='_145_notificationsMenu']</td>
+	<td>Notifications</td>
 </tr>
 <tr>
-	<td>clickAt</td>
+	<td>assertText</td>
 	<td>//span[@class='notification-count']</td>
-	<td>Notification Count</td>
+	<td>1</td>
+</tr>
+<tr>
+	<td>mouseOver</td>
+	<td>//li[@id='_145_notificationsMenu']</td>
+	<td>Notifications</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -36,22 +41,27 @@
 <tr>
 	<td>assertText</td>
 	<td>//span[@class='dismiss-notifications']/a</td>
-	<td>Mark as Read</td>
+	<td>Mark All as Read</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//span[@class='dismiss-notifications']/a</td>
-	<td>Mark as Read</td>
+	<td>Mark All as Read</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>//span[@class='notification-count']</td>
-	<td>Notification Count</td>
+	<td>waitForElementPresent</td>
+	<td>//li[@id='_145_notificationsMenu']</td>
+	<td>Notifications</td>
 </tr>
 <tr>
-	<td>clickAt</td>
+	<td>assertText</td>
 	<td>//span[@class='notification-count']</td>
-	<td>Notification Count</td>
+	<td>0</td>
+</tr>
+<tr>
+	<td>mouseOver</td>
+	<td>//li[@id='_145_notificationsMenu']</td>
+	<td>Notifications</td>
 </tr>
 <tr>
 	<td>assertTextNotPresent</td>
@@ -110,7 +120,7 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>xPath=(//span[@class='name'])[2]</td>
+	<td>xPath=(//span[@class='name'])[contains(.,'Joe Bloggs')]</td>
 	<td>Joe Bloggs</td>
 </tr>
 <tr>
@@ -120,7 +130,7 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>xPath=(//span[@class='name'])[3]</td>
+	<td>xPath=(//span[@class='name'])[contains(.,'Social01 Office01 User01')]</td>
 	<td>Social01 Office01 User01</td>
 </tr>
 <tr>

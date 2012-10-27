@@ -29,7 +29,7 @@ public class TearDownPMMessageTest extends BaseTestCase {
 			case 1:
 				selenium.selectWindow("null");
 				selenium.selectFrame("relative=top");
-				selenium.open("/user/joebloggs/home/");
+				selenium.open("/user/joebloggs/so/dashboard/");
 				selenium.waitForVisible(
 					"//nav/ul/li[contains(.,'Messages')]/a/span");
 				selenium.clickAt("//nav/ul/li[contains(.,'Messages')]/a/span",

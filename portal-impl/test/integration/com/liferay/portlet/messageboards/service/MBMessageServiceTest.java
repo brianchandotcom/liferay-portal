@@ -15,15 +15,16 @@
 package com.liferay.portlet.messageboards.service;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.DoAsUserThread;
 import com.liferay.portal.service.*;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
-import com.liferay.portal.util.TestPropsValues;
+import com.liferay.portal.test.MainServletExecutionTestListener;
+import com.liferay.portal.test.TransactionalCallbackAwareExecutionTestListener;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
 import com.liferay.portlet.messageboards.model.MBMessageConstants;
@@ -33,7 +34,6 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -42,8 +42,14 @@ import org.junit.runner.RunWith;
 /**
  * @author Alexander Chow
  */
-@ExecutionTestListeners(listeners = {EnvironmentExecutionTestListener.class})
+@ExecutionTestListeners(
+	listeners = {
+		EnvironmentExecutionTestListener.class,
+		MainServletExecutionTestListener.class,
+		TransactionalCallbackAwareExecutionTestListener.class
+	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
+@Transactional
 public class MBMessageServiceTest {
 
 	@Before
@@ -69,8 +75,13 @@ public class MBMessageServiceTest {
 		boolean allowAnonymous = false;
 		boolean mailingListActive = false;
 
-		Group group = GroupLocalServiceUtil.getGroup(
-			TestPropsValues.getCompanyId(), GroupConstants.GUEST);
+		_group = ServiceTestUtil.addGroup();
+
+		for (int i = 0; i < ServiceTestUtil.THREAD_COUNT; i++) {
+			ServiceTestUtil.addUser(
+				ServiceTestUtil.randomString(), false,
+				new long[] {_group.getGroupId()});
+		}
 
 		ServiceContext serviceContext = new ServiceContext();
 
@@ -78,7 +89,7 @@ public class MBMessageServiceTest {
 			new String[] {ActionKeys.ADD_MESSAGE, ActionKeys.VIEW});
 		serviceContext.setGuestPermissions(
 			new String[] {ActionKeys.ADD_MESSAGE, ActionKeys.VIEW});
-		serviceContext.setScopeGroupId(group.getGroupId());
+		serviceContext.setScopeGroupId(_group.getGroupId());
 
 		_category = MBCategoryServiceUtil.addCategory(
 			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, name, description,
@@ -87,21 +98,12 @@ public class MBMessageServiceTest {
 			outCustom, outServerName, outServerPort, outUseSSL, outUserName,
 			outPassword, allowAnonymous, mailingListActive, serviceContext);
 
-		_userIds = UserLocalServiceUtil.getGroupUserIds(group.getGroupId());
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		if (_category != null) {
-			MBCategoryServiceUtil.deleteCategory(
-				_category.getGroupId(), _category.getCategoryId());
-		}
+		_userIds = UserLocalServiceUtil.getGroupUserIds(_group.getGroupId());
 	}
 
 	@Test
 	public void testAddMessagesConcurrently() throws Exception {
-		DoAsUserThread[] doAsUserThreads =
-			new DoAsUserThread[ServiceTestUtil.THREAD_COUNT];
+		DoAsUserThread[] doAsUserThreads = new DoAsUserThread[_userIds.length];
 
 		for (int i = 0; i < doAsUserThreads.length; i++) {
 			String subject = "Test Message " + i;
@@ -126,13 +128,13 @@ public class MBMessageServiceTest {
 		}
 
 		Assert.assertTrue(
-			"Only " + successCount + " out of " +
-				ServiceTestUtil.THREAD_COUNT +
-					" threads added messages successfully",
-			successCount == ServiceTestUtil.THREAD_COUNT);
+			"Only " + successCount + " out of " + _userIds.length +
+				" threads added messages successfully",
+			successCount == _userIds.length);
 	}
 
 	private MBCategory _category;
+	private Group _group;
 	private long[] _userIds;
 
 	private class AddMessageThread extends DoAsUserThread {

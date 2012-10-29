@@ -43,9 +43,7 @@ import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ClassLoaderPool;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.scheduler.job.MessageSenderJob;
 import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
@@ -617,23 +615,12 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 			return null;
 		}
 
+		Date startDate = trigger.getStartDate();
 		Date endDate = trigger.getEndDate();
 		String jobName = fixMaxLength(
 			trigger.getJobName(), JOB_NAME_MAX_LENGTH);
 		String groupName = fixMaxLength(
 			trigger.getGroupName(), GROUP_NAME_MAX_LENGTH);
-
-		Date startDate = trigger.getStartDate();
-
-		if (startDate == null) {
-			if (ServerDetector.isTomcat()) {
-				startDate = new Date(System.currentTimeMillis() + Time.MINUTE);
-			}
-			else {
-				startDate = new Date(
-					System.currentTimeMillis() + Time.MINUTE * 3);
-			}
-		}
 
 		Trigger quartzTrigger = null;
 

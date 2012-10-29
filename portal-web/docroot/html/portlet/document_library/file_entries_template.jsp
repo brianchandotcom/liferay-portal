@@ -19,7 +19,37 @@ String thumbnailSrc = "/html/themes/classic/images/file_system/large/default.png
 
 String thumbnailStyle = DLUtil.getThumbnailStyle();
 %>
+<%--
+	actionJsp="/html/portlet/document_library/file_entry_action.jsp"
+	description="<%= fileEntry.getDescription() %>"
+	locked="false"
+	rowCheckerId="<%= String.valueOf(rowCheckerId) %>"
+	rowCheckerName="<%= rowCheckerName %>"
+	shortcut="false"
+	showCheckbox="false"
+	status="<%= latestFileVersion.getStatus() %>"
+	thumbnailDivStyle="<%= DLUtil.getThumbnailStyle(false, 4) %>"
+--%>
+<div class="aui-helper-hidden">
+	<liferay-ui:app-view-entry
+		displayStyle="icon"
+		showCheckbox="<%= Boolean.FALSE %>"
+		thumbnailSrc="/html/themes/classic/images/file_system/large/default.png"
+		thumbnailStyle="<%= DLUtil.getThumbnailStyle() %>"
+		title="{title}"
+		url="<%= uploadURL %>"
+	/>
 
+	<liferay-ui:app-view-entry
+		displayStyle="descriptive"
+		showCheckbox="<%= Boolean.FALSE %>"
+		thumbnailSrc="/html/themes/classic/images/file_system/large/default.png"
+		thumbnailStyle="<%= DLUtil.getThumbnailStyle() %>"
+		title="{title}"
+		url="<%= uploadURL %>"
+	/>
+</div>
+<%--
 <div class="app-view-entry-taglib aui-helper-hidden entry-display-style display-icon" data-draggable="<%= Boolean.FALSE.toString() %>" data-title="{title}">
 	<a class="entry-link" data-folder="<%= Boolean.FALSE.toString() %>" href="<%= uploadURL %>" title="{title}">
 		<span class="entry-thumbnail">
@@ -45,3 +75,4 @@ String thumbnailStyle = DLUtil.getThumbnailStyle();
 		<span class="entry-description"></span>
 	</a>
 </div>
+--%>

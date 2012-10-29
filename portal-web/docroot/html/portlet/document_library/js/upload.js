@@ -167,19 +167,17 @@ AUI.add(
 				var overlayManager = instance._overlayManager;
 
 				var addEntry = function(file) {
-
 					var title = file.name;
 
 					var entryNode = instance._spawnEntryNode(displayStyle, file);
 
 					var errorMessage = file.errorMessage;
 
-					if (!!errorMessage) {
+					if (errorMessage) {
 						instance._displayEntryError(entryNode, errorMessage, displayStyle);
 					}
 					else {
 						var overlay = instance._createOverlay(entryNode);
-
 						var progressBar = instance._createProgressBar();
 
 						overlayManager.register(overlay);
@@ -187,7 +185,6 @@ AUI.add(
 						overlay.show();
 
 						file.overlay = overlay;
-
 						file.progressBar = progressBar;
 					}
 
@@ -233,7 +230,7 @@ AUI.add(
 					function(item, index, collection) {
 						var columnName = item;
 
-						if (columnName === 'name') {
+						if (columnName == 'name') {
 							columnName = 'title';
 						}
 
@@ -377,7 +374,7 @@ AUI.add(
 			_displayEntryError: function(node, message, displayStyle) {
 				var instance = this;
 
-				var displayStyleIsList = (displayStyle === LIST);
+				var displayStyleIsList = (displayStyle == LIST);
 
 				if (displayStyleIsList) {
 					var imageIcon = node.one(CSS_IMAGE_ICON);
@@ -484,13 +481,11 @@ AUI.add(
 
 				var getTargetFolderEntry = function() {
 
-					var entryLink = target.ancestor('.entry-link' + CSS_DATA_FOLDER);
-
 					var folderEntry;
 
+					var entryLink = target.ancestor('.entry-link' + CSS_DATA_FOLDER);
 					var resultsRow = target.ancestor(CSS_DATA_FOLDER_DATA_TITLE);
-
-					var targetIsDataFolder = (target.attr('data-folder') === "true");
+					var targetIsDataFolder = (target.attr('data-folder') == "true");
 
 					if (entryLink) {
 						folderEntry = entryLink;
@@ -533,13 +528,12 @@ AUI.add(
 			_getMediaThumbnail: function(fileName) {
 				var instance = this;
 
+				var extensionPath;
+				var imagePath;
+
 				var extension = fileName.substring(fileName.length, fileName.lastIndexOf('.'));
 
-				var extensionPath;
-
 				var lowerCaseExtension = extension.toLowerCase();
-
-				var imagePath;
 
 				if ((/\.(bmp|gif|jpeg|jpg|png|tiff)$/i).test(lowerCaseExtension)) {
 					imagePath = '/documents/' + themeDisplay.getScopeGroupId() + '/' + instance._folderId + '/' + fileName;
@@ -574,12 +568,12 @@ AUI.add(
 				catch(err) {
 				}
 
-				if (!!parsedResponseData) {
+				if (parsedResponseData) {
+					var errorMessage;
+
 					var errorCode = String(parsedResponseData);
 
-					var errorDetected = (errorCode.indexOf('49') === 0);
-
-					var errorMessage;
+					var errorDetected = (errorCode.indexOf('49') == 0);
 
 					if (errorDetected) {
 						errorMessage = instance._errorMessages[parsedResponseData];
@@ -589,8 +583,8 @@ AUI.add(
 					}
 
 					return {
-						message: errorMessage,
-						error: errorDetected
+						error: errorDetected,
+						message: errorMessage
 					};
 				}
 			},
@@ -600,7 +594,7 @@ AUI.add(
 
 				var uploadURL = instance._uploadURL;
 
-				if (!instance._uploadURL) {
+				if (!uploadURL) {
 					var config = instance._config;
 
 					var redirect = config.redirect;
@@ -616,13 +610,18 @@ AUI.add(
 					);
 				}
 
-				return A.Lang.sub(uploadURL, {folderId: folderId});
+				return A.Lang.sub(
+					uploadURL,
+					{
+						folderId: folderId
+					}
+				);
 			},
 
 			_initDLUpload: function() {
 				var instance = this;
 
-				if (UPLOADER_TYPE && UPLOADER_TYPE === 'html5' && !UA.ios) {
+				if (UPLOADER_TYPE == 'html5' && !UA.ios) {
 					var config = instance._config;
 
 					var documentContainer = A.one(CSS_DOCUMENT_CONTAINER);
@@ -730,13 +729,7 @@ AUI.add(
 
 							var target = event.target;
 
-							var dropEffect = 'none';
-
-							if (true) {
-								dropEffect = 'copy';
-							}
-
-							dataTransfer.dropEffect = dropEffect;
+							dataTransfer.dropEffect = 'copy';
 						}
 
 						entriesContainer.addClass(CSS_DRAG_HIGHLIGHT);
@@ -757,9 +750,9 @@ AUI.add(
 
 						var dataTransfer = originalEvent.dataTransfer;
 
-						var files = originalEvent.dataTransfer.files;
+						var files = dataTransfer.files;
 
-						if (dataTransfer && AArray.indexOf(dataTransfer.types, 'Files') > -1) {
+						if (AArray.indexOf(dataTransfer.types, 'Files') > -1) {
 							event.halt();
 
 							if (!instance._navigationOverlays) {
@@ -768,7 +761,12 @@ AUI.add(
 
 							event.fileList = instance._getDragDropFiles(files);
 
-							uploader.fire('fileselect', {_EVT: event});
+							uploader.fire(
+								'fileselect',
+								{
+									_EVT: event
+								}
+							);
 						}
 					},
 					'body, .document-container, .aui-overlaymask, .aui-progressbar, [data-folder="true"]'
@@ -803,7 +801,7 @@ AUI.add(
 
 				var queue = instance._uploader.queue;
 
-				var isUploading = !!(queue && queue._currentState == UPLOADING);
+				var isUploading = (queue && queue._currentState == UPLOADING);
 
 				return isUploading;
 			},
@@ -819,21 +817,21 @@ AUI.add(
 			_queueUpload: function(event) {
 				var instance = this;
 
-				var fileList = event._EVT.fileList;
+				var folderId;
+				var overlay;
+				var progressBar;
+
+				var evt = event._EVT;
+
+				var fileList = evt.fileList;
 
 				var files = instance._validateFiles(fileList);
 
-				var folderEntry = instance._getFolderEntry(event._EVT.target);
-
-				var folderId;
+				var folderEntry = instance._getFolderEntry(evt.target);
 
 				var invalidFiles = files.invalidFiles;
 
-				var isFolderUpload = (folderEntry !== null);
-
-				var overlay;
-
-				var progressBar;
+				var isFolderUpload = (folderEntry != null);
 
 				var uploadData = instance._getCurrentUploadData();
 
@@ -854,7 +852,7 @@ AUI.add(
 					folderId = instance._folderId;
 				}
 
-				var activeUpload = !!(uploadData && uploadData.folderId === folderId);
+				var activeUpload = (uploadData && uploadData.folderId == folderId);
 
 				var dataset = instance._dataset;
 
@@ -868,18 +866,20 @@ AUI.add(
 
 				var queue = uploader.queue;
 
-				if (isUploading && activeUpload) {
-					AArray.map(
-						validFiles,
-						function(item, index, collection) {
-							queue.addToQueueBottom(item);
-						}
-					);
-				}
-				else if (isUploading && pendingUploadData) {
-					instance._combineFileLists(pendingUploadData.fileList, validFiles);
+				if (isUploading) {
+					if (activeUpload) {
+						AArray.map(
+							validFiles,
+							function(item, index, collection) {
+								queue.addToQueueBottom(item);
+							}
+						);
+					}
+					else if (pendingUploadData) {
+						instance._combineFileLists(pendingUploadData.fileList, validFiles);
 
-					dataset.replace(folderId, pendingUploadData);
+						dataset.replace(folderId, pendingUploadData);
+					}
 				}
 				else {
 					dataset.add(
@@ -944,7 +944,6 @@ AUI.add(
 				var instance = this;
 
 				var file = event.file;
-
 				var percentLoaded = event.percentLoaded;
 
 				var progressBar = file.progressBar;
@@ -958,7 +957,6 @@ AUI.add(
 				var file = event.file;
 
 				var overlay = file.overlay;
-
 				var progressBar = file.progressBar;
 
 				var overlayContentBox = overlay.get(CONTENT_BOX);
@@ -974,7 +972,7 @@ AUI.add(
 			_showFolderUploadComplete: function(event, uploadData, displayStyle) {
 				var instance = this;
 
-				var displayStyleIsList = (displayStyle === LIST);
+				var displayStyleIsList = (displayStyle == LIST);
 
 				var folderEntry = uploadData.folderEntry;
 
@@ -1045,7 +1043,7 @@ AUI.add(
 
 				var title = file.name;
 
-				if (displayStyle === LIST) {
+				if (displayStyle == LIST) {
 					var searchContainer = A.one(CSS_SEARCH_CONTAINER);
 
 					entriesContainer = searchContainer.one('tbody');
@@ -1053,7 +1051,7 @@ AUI.add(
 					entryNode = instance._createEntryRow(file);
 				}
 				else {
-					var invisibleEntry = displayStyle === CSS_ICON ? instance._invisibleIconEntry : instance._invisibleDescriptiveEntry;
+					var invisibleEntry = displayStyle == CSS_ICON ? instance._invisibleIconEntry : instance._invisibleDescriptiveEntry;
 
 					entryNode = invisibleEntry.clone();
 
@@ -1156,7 +1154,7 @@ AUI.add(
 						if (size > maxFileSize) {
 							error = instance._invalidFileSizeText;
 						}
-						else if (size === 0) {
+						else if (size == 0) {
 							error = instance._zeroByteFileText;
 						}
 

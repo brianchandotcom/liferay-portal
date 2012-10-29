@@ -1,19 +1,21 @@
 @import "compass";
 
-.app-view-entry-taglib .upload-success:after {
-	content: url(../../../themes/classic/images/messages/success.png);
-	display: block;
-	left: 50%;
-	top: 50%;
-	position: absolute;
-}
+.app-view-entry-taglib {
+	.upload-error:after {
+		content: url(@theme_image_path@/messages/alert.png);
+		display: block;
+		left: 50%;
+		position: absolute;
+		top: 50%;
+	}
 
-.app-view-entry-taglib .upload-error:after {
-	content: url(../../../themes/classic/images/messages/alert.png);
-	display: block;
-	left: 50%;
-	top: 50%;
-	position: absolute;
+	.upload-success:after {
+		content: url(@theme_image_path@/messages/success.png);
+		display: block;
+		left: 50%;
+		position: absolute;
+		top: 50%;
+	}
 }
 
 .portlet-document-library, .portlet-document-library-display {

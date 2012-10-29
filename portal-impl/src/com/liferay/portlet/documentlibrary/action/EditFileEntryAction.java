@@ -855,17 +855,16 @@ public class EditFileEntryAction extends PortletAction {
 				actionRequest, DLFileEntry.class.getName(), folderId);
 		}
 		catch (Exception e) {
-
 			UploadException uploadException =
-					(UploadException)actionRequest.getAttribute(
-						WebKeys.UPLOAD_EXCEPTION);
+				(UploadException)actionRequest.getAttribute(
+					WebKeys.UPLOAD_EXCEPTION);
 
-			if (uploadException != null && 
+			if (uploadException != null &&
 				uploadException.isExceededSizeLimit()) {
-				
+
 				throw new FileSizeException(uploadException.getCause());
 			}
-				
+
 			throw e;
 		}
 		finally {

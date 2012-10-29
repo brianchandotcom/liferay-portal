@@ -33,6 +33,7 @@ import java.sql.ResultSetMetaData;
 /**
  * @author Brian Wing Shun Chan
  * @author Alexander Chow
+ * @author Peter Shin
  */
 public abstract class UpgradeProcess extends BaseDBProcess {
 
@@ -107,9 +108,7 @@ public abstract class UpgradeProcess extends BaseDBProcess {
 		return db.isSupportsUpdateWithInnerJoin();
 	}
 
-	public boolean tableHasColumn(String tableName, String columnName)
-		throws Exception {
-
+	public boolean tableHasColumn(String tableName, String columnName) {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -140,7 +139,7 @@ public abstract class UpgradeProcess extends BaseDBProcess {
 		return false;
 	}
 
-	public boolean tableHasData(String tableName) throws Exception {
+	public boolean tableHasData(String tableName) {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -175,7 +174,11 @@ public abstract class UpgradeProcess extends BaseDBProcess {
 				_log.info("Upgrading " + getClass().getName());
 			}
 
+			addTemporaryIndexes();
+
 			doUpgrade();
+
+			dropTemporaryIndexes();
 		}
 		catch (Exception e) {
 			throw new UpgradeException(e);

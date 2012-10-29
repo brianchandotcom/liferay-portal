@@ -44,18 +44,28 @@
 	<td>Control Panel</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//a[contains(@id,'groupSelectorButton')]/span</td>
+	<td>Liferay</td>
+</tr>
+<tr>
 	<td>clickAt</td>
 	<td>//a[contains(@id,'groupSelectorButton')]/span</td>
 	<td>Site Selector</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>link=Organization Name</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Organization Name')]</td>
 	<td>Organization Name</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>link=Organization Name</td>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Organization Name')]</td>
+	<td>Organization Name</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Organization Name')]</td>
 	<td>Organization Name</td>
 </tr>
 <tr>
@@ -164,14 +174,24 @@
 	<td>usersn</td>
 </tr>
 <tr>
-	<td>assertNotChecked</td>
+	<td>storeChecked</td>
 	<td>//tr[contains(.,'userfn userln')]/td[1]/input</td>
-	<td>Checkbox usersn</td>
+	<td>userCheckbox</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${userCheckbox}</td>
+	<td>UserCheckbox</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>//tr[contains(.,'userfn userln')]/td[1]/input</td>
 	<td>Checkbox usersn</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>UserCheckbox</td>
+	<td></td>
 </tr>
 <tr>
 	<td>assertChecked</td>

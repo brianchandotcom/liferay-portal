@@ -15,6 +15,8 @@
 package com.liferay.portalweb.portal.controlpanel.organizations.organizationemailaddress.addorganizationemailaddresses;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.controlpanel.organizations.organization.addorganization.AddOrganizationTest;
+import com.liferay.portalweb.portal.controlpanel.organizations.organization.addorganization.TearDownOrganizationTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -29,7 +31,7 @@ public class AddOrganizationEmailAddressesTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddOrganizationEmailAddress1Test.class);
 		testSuite.addTestSuite(AddOrganizationEmailAddress2Test.class);
 		testSuite.addTestSuite(AddOrganizationEmailAddress3Test.class);
-		testSuite.addTestSuite(TearDownTest.class);
+		testSuite.addTestSuite(TearDownOrganizationTest.class);
 
 		return testSuite;
 	}

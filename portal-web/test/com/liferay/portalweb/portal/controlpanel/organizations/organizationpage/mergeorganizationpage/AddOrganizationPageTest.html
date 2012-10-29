@@ -14,6 +14,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
+	<td>AUI Editable Min</td>
+</tr>
+<tr>
 	<td>assertText</td>
 	<td>//li[@id='_145_mySites']/a/span</td>
 	<td>Go to</td>
@@ -41,7 +51,7 @@
 <tr>
 	<td>type</td>
 	<td>//input[@id='_125_keywords']</td>
-	<td>Selenium</td>
+	<td>Organization Name</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -60,17 +70,17 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]</td>
 	<td>Edit</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]</td>
 	<td>Edit</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]</td>
 	<td>Edit</td>
 </tr>
 <tr>
@@ -84,12 +94,27 @@
 	<td>Organization site</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
+	<td>storeChecked</td>
+	<td>//input[@id='_125_siteCheckbox']</td>
+	<td>createSiteCheckbox</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${createSiteCheckbox}</td>
+	<td>CreateSiteCheckbox</td>
+</tr>
+<tr>
+	<td>clickAt</td>
 	<td>//input[@id='_125_siteCheckbox']</td>
 	<td>Create Site Checkbox</td>
 </tr>
 <tr>
-	<td>clickAt</td>
+	<td>label</td>
+	<td>CreateSiteCheckbox</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertChecked</td>
 	<td>//input[@id='_125_siteCheckbox']</td>
 	<td>Create Site Checkbox</td>
 </tr>
@@ -120,7 +145,7 @@
 </tr>
 <tr>
 	<td>open</td>
-	<td>/web/selenium/home</td>
+	<td>/web/organization-name/home</td>
 	<td></td>
 </tr>
 <tr>
@@ -162,6 +187,16 @@
 	<td>pause</td>
 	<td>10000</td>
 	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//iframe</td>
+	<td>Manage Page</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//iframe</td>
+	<td>Manage Page</td>
 </tr>
 <tr>
 	<td>waitForText</td>
@@ -247,6 +282,11 @@
 	<td>assertText</td>
 	<td>link=Selenium Test Home Page</td>
 	<td>Selenium Test Home Page</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>relative=top</td>
+	<td>top</td>
 </tr>
 </tbody></table>
 </body>

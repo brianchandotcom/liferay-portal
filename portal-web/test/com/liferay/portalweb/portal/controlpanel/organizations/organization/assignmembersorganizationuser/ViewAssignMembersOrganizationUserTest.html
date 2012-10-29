@@ -60,13 +60,103 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//a[2]/strong</td>
+	<td>//tr[contains(.,'Organization Name')]/td[2]/a/strong</td>
 	<td>Organization Name</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//a[2]/strong</td>
+	<td>//tr[contains(.,'Organization Name')]/td[2]/a/strong</td>
 	<td>Organization Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//h1[@class='portlet-title']/span</td>
+	<td>Users and Organizations</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@class='lfr-toolbar-button view-button current']/a[contains(.,'Browse')]</td>
+	<td>Browse</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@class='lfr-toolbar-button view-button ']/a[contains(.,'View Organizations')]</td>
+	<td>View Organizations</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@class='lfr-toolbar-button view-button ']/a[contains(.,'View Users')]</td>
+	<td>View Users</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@title='Add']/ul/li/strong/a</td>
+	<td>Add</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@class='lfr-toolbar-button export-button']/a[contains(.,'Export All Users')]</td>
+	<td>Export All Users</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//h1[@class='header-title']/span</td>
+	<td>Organization Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@class='header-back-to']/a</td>
+	<td>« Back to Users and Organizations Home</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//input[@value='Deactivate']</td>
+	<td>Deactivate</td>
+</tr>
+<tr>
+	<td>assertNotChecked</td>
+	<td>//tr[@class='portlet-section-header results-header']/th[1]/input</td>
+	<td>Checkbox</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[@class='portlet-section-header results-header']/th[2]</td>
+	<td>First Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[@class='portlet-section-header results-header']/th[3]</td>
+	<td>Last Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[@class='portlet-section-header results-header']/th[4]</td>
+	<td>Screen Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[@class='portlet-section-header results-header']/th[5]</td>
+	<td>Job Title</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[@class='portlet-section-header results-header']/th[6]</td>
+	<td>Organization Roles</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[@class='portlet-section-header results-header']/th[7]</td>
+	<td>User Groups</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[@class='portlet-section-header results-header']/th[8]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertNotChecked</td>
+	<td>//tr[contains(.,'userfn')]/td[1]/input</td>
+	<td>Checkbox</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -82,6 +172,76 @@
 	<td>assertText</td>
 	<td>//tr[contains(.,'userfn')]/td[4]/a</td>
 	<td>usersn</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'userfn')]/td[5]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'userfn')]/td[6]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'userfn')]/td[7]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@title='Actions']/ul/li/strong/a</td>
+	<td>Actions</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='search-results']</td>
+	<td>Showing 1 result.</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//div[@class='lfr-asset-summary']/img</td>
+	<td>Avatar</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-asset-summary']/div/h4</td>
+	<td>Organization Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Edit')]</td>
+	<td>Edit</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Assign Organization Roles')]</td>
+	<td>Assign Organization Roles</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Assign Users')]</td>
+	<td>Assign Users</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Add User')]</td>
+	<td>Add User</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Add Regular Organization')]</td>
+	<td>Add Regular Organization</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Add Location')]</td>
+	<td>Add Location</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Delete')]</td>
+	<td>Delete</td>
 </tr>
 </tbody></table>
 </body>

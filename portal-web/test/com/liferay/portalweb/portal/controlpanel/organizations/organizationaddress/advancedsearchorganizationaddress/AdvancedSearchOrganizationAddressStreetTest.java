@@ -31,6 +31,10 @@ public class AdvancedSearchOrganizationAddressStreetTest extends BaseTestCase {
 				selenium.selectWindow("null");
 				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
+				selenium.clickAt("//div[@id='dockbar']",
+					RuntimeVariables.replace("Dockbar"));
+				selenium.waitForElementPresent(
+					"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
 				assertEquals(RuntimeVariables.replace("Go to"),
 					selenium.getText("//li[@id='_145_mySites']/a/span"));
 				selenium.mouseOver("//li[@id='_145_mySites']/a/span");
@@ -63,8 +67,9 @@ public class AdvancedSearchOrganizationAddressStreetTest extends BaseTestCase {
 				selenium.clickAt("//div[2]/span[2]/span/input",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
-				assertEquals(RuntimeVariables.replace("Selenium"),
-					selenium.getText("//td[2]/a"));
+				assertEquals(RuntimeVariables.replace("Organization Name"),
+					selenium.getText(
+						"//tr[contains(.,'Organization Name')]/td[2]/a"));
 
 				boolean basicPresent = selenium.isVisible("link=\u00ab Basic");
 

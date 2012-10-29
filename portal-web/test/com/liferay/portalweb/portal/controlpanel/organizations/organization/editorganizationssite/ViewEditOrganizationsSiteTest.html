@@ -50,7 +50,7 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>//input[@id='_134_name']</td>
+	<td>//input[@name='_134_keywords']</td>
 	<td>Organization</td>
 </tr>
 <tr>
@@ -59,64 +59,109 @@
 	<td>Search</td>
 </tr>
 <tr>
+	<td>assertNotChecked</td>
+	<td>//tr[@class='portlet-section-header results-header']/th[1]/input</td>
+	<td>Checkbox</td>
+</tr>
+<tr>
 	<td>assertText</td>
-	<td>//div[@id='_134_groupsSearchContainer']/div/table/tbody/tr[1]/th[1]</td>
+	<td>//tr[@class='portlet-section-header results-header']/th[2]</td>
 	<td>Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@id='_134_groupsSearchContainer']/div/table/tbody/tr[1]/th[2]</td>
+	<td>//tr[@class='portlet-section-header results-header']/th[3]</td>
 	<td>Type</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@id='_134_groupsSearchContainer']/div/table/tbody/tr[1]/th[3]</td>
+	<td>//tr[@class='portlet-section-header results-header']/th[4]</td>
 	<td>Members</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@id='_134_groupsSearchContainer']/div/table/tbody/tr[1]/th[4]</td>
+	<td>//tr[@class='portlet-section-header results-header']/th[5]</td>
 	<td>Active</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@id='_134_groupsSearchContainer']/div/table/tbody/tr[1]/th[5]</td>
+	<td>//tr[@class='portlet-section-header results-header']/th[6]</td>
 	<td>Pending Requests</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@id='_134_groupsSearchContainer']/div/table/tbody/tr[1]/th[6]</td>
+	<td>//tr[@class='portlet-section-header results-header']/th[7]</td>
 	<td>Tags</td>
 </tr>
 <tr>
-	<td>assertPartialText</td>
-	<td>//div[@id='_134_groupsSearchContainer']/div/table/tbody/tr[3]/td[1]</td>
+	<td>assertText</td>
+	<td>//tr[@class='portlet-section-header results-header']/th[8]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertNotChecked</td>
+	<td>//tr[contains(.,'Organization1 Name')]/td[1]/input</td>
+	<td>Checkbox</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Organization1 Name')]/td[2]/a</td>
 	<td>Organization1 Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@id='_134_groupsSearchContainer']/div/table/tbody/tr[3]/td[2]</td>
+	<td>//tr[contains(.,'Organization1 Name')]/td[3]/a</td>
 	<td>Private</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@id='_134_groupsSearchContainer']/div/table/tbody/tr[3]/td[3]</td>
+	<td>//tr[contains(.,'Organization1 Name')]/td[4]</td>
 	<td>1 Organization</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@id='_134_groupsSearchContainer']/div/table/tbody/tr[3]/td[4]</td>
+	<td>//tr[contains(.,'Organization1 Name')]/td[5]</td>
 	<td>Yes</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Organization1 Name')]/td[6]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Organization1 Name')]/td[7]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//span[@title='Actions']/ul/li/strong/a)[1]</td>
+	<td>Actions</td>
+</tr>
+<tr>
 	<td>clickAtAndWait</td>
-	<td>//div[@id='_134_groupsSearchContainer']/div/table/tbody/tr[3]/td[1]/a</td>
+	<td>//tr[contains(.,'Organization1 Name')]/td[2]/a</td>
 	<td>Organization1 Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//h1[@class='portlet-title']/span</td>
-	<td>Site Settings</td>
+	<td>Sites</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@class='lfr-toolbar-button view-button current']/a[contains(.,'Browse')]</td>
+	<td>Browse</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@class='lfr-toolbar-button view-button ']/a[contains(.,'View All')]</td>
+	<td>View All</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@title='Add']/ul/li/strong/a</td>
+	<td>Add</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -124,54 +169,159 @@
 	<td>Organization1 Name</td>
 </tr>
 <tr>
-	<td>assertPartialText</td>
-	<td>//div[@id='_165_details']/fieldset/div/div/div</td>
+	<td>assertText</td>
+	<td>//span[@class='header-back-to']/a</td>
+	<td>« Back to Sites Home</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//dt[@class='first']</td>
+	<td>Members:</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//dd[@class='members-info']</td>
+	<td>None</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[contains(.,'Membership Type:')]</td>
+	<td>Membership Type:</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//dd[@class='last']</td>
+	<td>Private</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//div[@class='lfr-asset-summary']/img</td>
+	<td>Avatar</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-asset-summary']/div/h4</td>
 	<td>Organization1 Name</td>
 </tr>
 <tr>
-	<td>assertSelectedLabel</td>
-	<td>//select[@id='_165_type']</td>
-	<td>Private</td>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Edit Settings')]</td>
+	<td>Edit Settings</td>
 </tr>
 <tr>
-	<td>assertChecked</td>
-	<td>//input[@id='_165_activeCheckbox']</td>
-	<td>Site Active</td>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Manage Pages')]</td>
+	<td>Manage Pages</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Manage Memberships')]</td>
+	<td>Manage Memberships</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Deactivate')]</td>
+	<td>Deactivate</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Delete')]</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Add Blank Site')]</td>
+	<td>Add Blank Site</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Add Community Site')]</td>
+	<td>Add Community Site</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Add Intranet Site')]</td>
+	<td>Add Intranet Site</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=« Back</td>
-	<td>« Back</td>
+	<td>//span[@class='header-back-to']/a</td>
+	<td>« Back to Sites Home</td>
 </tr>
 <tr>
-	<td>assertPartialText</td>
-	<td>//div[@id='_134_groupsSearchContainer']/div/table/tbody/tr[4]/td[1]</td>
+	<td>type</td>
+	<td>//input[@name='_134_keywords']</td>
+	<td>Organization</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//input[@value='Search']</td>
+	<td>Search</td>
+</tr>
+<tr>
+	<td>assertNotChecked</td>
+	<td>//tr[contains(.,'Organization2 Name')]/td[1]/input</td>
+	<td>Checkbox</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Organization2 Name')]/td[2]/a</td>
 	<td>Organization2 Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@id='_134_groupsSearchContainer']/div/table/tbody/tr[4]/td[2]</td>
+	<td>//tr[contains(.,'Organization2 Name')]/td[3]/a</td>
 	<td>Private</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@id='_134_groupsSearchContainer']/div/table/tbody/tr[4]/td[3]</td>
+	<td>//tr[contains(.,'Organization2 Name')]/td[4]</td>
 	<td>1 Organization</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@id='_134_groupsSearchContainer']/div/table/tbody/tr[4]/td[4]</td>
+	<td>//tr[contains(.,'Organization2 Name')]/td[5]</td>
 	<td>Yes</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Organization2 Name')]/td[6]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Organization2 Name')]/td[7]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//span[@title='Actions']/ul/li/strong/a)[2]</td>
+	<td>Actions</td>
+</tr>
+<tr>
 	<td>clickAtAndWait</td>
-	<td>//div[@id='_134_groupsSearchContainer']/div/table/tbody/tr[4]/td[1]/a</td>
+	<td>//tr[contains(.,'Organization2 Name')]/td[2]/a</td>
 	<td>Organization2 Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//h1[@class='portlet-title']/span</td>
-	<td>Site Settings</td>
+	<td>Sites</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@class='lfr-toolbar-button view-button current']/a[contains(.,'Browse')]</td>
+	<td>Browse</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@class='lfr-toolbar-button view-button ']/a[contains(.,'View All')]</td>
+	<td>View All</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@title='Add']/ul/li/strong/a</td>
+	<td>Add</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -179,54 +329,159 @@
 	<td>Organization2 Name</td>
 </tr>
 <tr>
-	<td>assertPartialText</td>
-	<td>//div[@id='_165_details']/fieldset/div/div/div</td>
-	<td>Organization2 Name</td>
+	<td>assertText</td>
+	<td>//span[@class='header-back-to']/a</td>
+	<td>« Back to Sites Home</td>
 </tr>
 <tr>
-	<td>assertSelectedLabel</td>
-	<td>//select[@id='_165_type']</td>
+	<td>assertText</td>
+	<td>//dt[@class='first']</td>
+	<td>Members:</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//dd[@class='members-info']</td>
+	<td>None</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[contains(.,'Membership Type:')]</td>
+	<td>Membership Type:</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//dd[@class='last']</td>
 	<td>Private</td>
 </tr>
 <tr>
-	<td>assertChecked</td>
-	<td>//input[@id='_165_activeCheckbox']</td>
-	<td>Site Active</td>
+	<td>assertVisible</td>
+	<td>//div[@class='lfr-asset-summary']/img</td>
+	<td>Avatar</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-asset-summary']/div/h4</td>
+	<td>Organization2 Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Edit Settings')]</td>
+	<td>Edit Settings</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Manage Pages')]</td>
+	<td>Manage Pages</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Manage Memberships')]</td>
+	<td>Manage Memberships</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Deactivate')]</td>
+	<td>Deactivate</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Delete')]</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Add Blank Site')]</td>
+	<td>Add Blank Site</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Add Community Site')]</td>
+	<td>Add Community Site</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Add Intranet Site')]</td>
+	<td>Add Intranet Site</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=« Back</td>
-	<td>« Back</td>
+	<td>//span[@class='header-back-to']/a</td>
+	<td>« Back to Sites Home</td>
 </tr>
 <tr>
-	<td>assertPartialText</td>
-	<td>//div[@id='_134_groupsSearchContainer']/div/table/tbody/tr[5]/td[1]</td>
+	<td>type</td>
+	<td>//input[@name='_134_keywords']</td>
+	<td>Organization</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//input[@value='Search']</td>
+	<td>Search</td>
+</tr>
+<tr>
+	<td>assertNotChecked</td>
+	<td>//tr[contains(.,'Organization3 Name')]/td[1]/input</td>
+	<td>Checkbox</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Organization3 Name')]/td[2]/a</td>
 	<td>Organization3 Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@id='_134_groupsSearchContainer']/div/table/tbody/tr[5]/td[2]</td>
+	<td>//tr[contains(.,'Organization3 Name')]/td[3]/a</td>
 	<td>Private</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@id='_134_groupsSearchContainer']/div/table/tbody/tr[5]/td[3]</td>
+	<td>//tr[contains(.,'Organization3 Name')]/td[4]</td>
 	<td>1 Organization</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@id='_134_groupsSearchContainer']/div/table/tbody/tr[5]/td[4]</td>
+	<td>//tr[contains(.,'Organization3 Name')]/td[5]</td>
 	<td>Yes</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Organization3 Name')]/td[6]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Organization3 Name')]/td[7]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//span[@title='Actions']/ul/li/strong/a)[3]</td>
+	<td>Actions</td>
+</tr>
+<tr>
 	<td>clickAtAndWait</td>
-	<td>//div[@id='_134_groupsSearchContainer']/div/table/tbody/tr[5]/td[1]/a</td>
+	<td>//tr[contains(.,'Organization3 Name')]/td[2]/a</td>
 	<td>Organization3 Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//h1[@class='portlet-title']/span</td>
-	<td>Site Settings</td>
+	<td>Sites</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@class='lfr-toolbar-button view-button current']/a[contains(.,'Browse')]</td>
+	<td>Browse</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@class='lfr-toolbar-button view-button ']/a[contains(.,'View All')]</td>
+	<td>View All</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@title='Add']/ul/li/strong/a</td>
+	<td>Add</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -234,19 +489,79 @@
 	<td>Organization3 Name</td>
 </tr>
 <tr>
-	<td>assertPartialText</td>
-	<td>//div[@id='_165_details']/fieldset/div/div/div</td>
-	<td>Organization3 Name</td>
+	<td>assertText</td>
+	<td>//span[@class='header-back-to']/a</td>
+	<td>« Back to Sites Home</td>
 </tr>
 <tr>
-	<td>assertSelectedLabel</td>
-	<td>//select[@id='_165_type']</td>
+	<td>assertText</td>
+	<td>//dt[@class='first']</td>
+	<td>Members:</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//dd[@class='members-info']</td>
+	<td>None</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[contains(.,'Membership Type:')]</td>
+	<td>Membership Type:</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//dd[@class='last']</td>
 	<td>Private</td>
 </tr>
 <tr>
-	<td>assertChecked</td>
-	<td>//input[@id='_165_activeCheckbox']</td>
-	<td>Site Active</td>
+	<td>assertVisible</td>
+	<td>//div[@class='lfr-asset-summary']/img</td>
+	<td>Avatar</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-asset-summary']/div/h4</td>
+	<td>Organization3 Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Edit Settings')]</td>
+	<td>Edit Settings</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Manage Pages')]</td>
+	<td>Manage Pages</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Manage Memberships')]</td>
+	<td>Manage Memberships</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Deactivate')]</td>
+	<td>Deactivate</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Delete')]</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Add Blank Site')]</td>
+	<td>Add Blank Site</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Add Community Site')]</td>
+	<td>Add Community Site</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Add Intranet Site')]</td>
+	<td>Add Intranet Site</td>
 </tr>
 </tbody></table>
 </body>

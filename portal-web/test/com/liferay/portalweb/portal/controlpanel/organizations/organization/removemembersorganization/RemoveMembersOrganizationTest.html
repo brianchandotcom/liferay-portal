@@ -104,14 +104,24 @@
 	<td>Search</td>
 </tr>
 <tr>
-	<td>assertChecked</td>
+	<td>storeChecked</td>
 	<td>//input[@name='_125_rowIds']</td>
-	<td>Select User</td>
+	<td>selectUserCheckbox</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${selectUserCheckbox}</td>
+	<td>SelectUserCheckbox</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>//input[@name='_125_rowIds']</td>
 	<td>Select User</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>SelectUserCheckbox</td>
+	<td></td>
 </tr>
 <tr>
 	<td>assertNotChecked</td>

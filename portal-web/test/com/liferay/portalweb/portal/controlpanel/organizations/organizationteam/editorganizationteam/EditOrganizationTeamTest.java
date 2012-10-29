@@ -36,11 +36,17 @@ public class EditOrganizationTeamTest extends BaseTestCase {
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("Liferay"),
+			selenium.getText("//a[contains(@id,'groupSelectorButton')]/span"));
 		selenium.clickAt("//a[contains(@id,'groupSelectorButton')]/span",
 			RuntimeVariables.replace("Site Selector"));
-		selenium.waitForVisible("link=Organization Name");
-		selenium.clickAt("link=Organization Name",
-			RuntimeVariables.replace("Organization Name"));
+		selenium.waitForVisible(
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Organization Name')]");
+		assertEquals(RuntimeVariables.replace("Organization Name"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Organization Name')]"));
+		selenium.click(RuntimeVariables.replace(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Organization Name')]"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Site Memberships",
 			RuntimeVariables.replace("Site Memberships"));
@@ -67,9 +73,13 @@ public class EditOrganizationTeamTest extends BaseTestCase {
 				"//tr[contains(.,'Organization Team Name')]/td[3]/span[@title='Actions']/ul/li/strong/a"));
 		selenium.clickAt("//tr[contains(.,'Organization Team Name')]/td[3]/span[@title='Actions']/ul/li/strong/a",
 			RuntimeVariables.replace("Actions"));
-		selenium.waitForVisible("//ul[@role='menu']/li/a[contains(.,'Edit')]");
-		selenium.clickAt("//ul[@role='menu']/li/a[contains(.,'Edit')]",
-			RuntimeVariables.replace("Edit"));
+		selenium.waitForVisible(
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]");
+		assertEquals(RuntimeVariables.replace("Edit"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]"));
+		selenium.click(RuntimeVariables.replace(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_174_name']",
 			RuntimeVariables.replace("Organization Team Name Edit"));

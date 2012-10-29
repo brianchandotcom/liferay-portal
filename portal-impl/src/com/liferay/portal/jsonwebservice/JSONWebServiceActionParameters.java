@@ -289,9 +289,7 @@ public class JSONWebServiceActionParameters {
 			_serviceContext.setHeaders(serviceContext.getHeaders());
 		}
 
-		if (Validator.isNotNull(serviceContext.getLanguageId())) {
-			_serviceContext.setLanguageId(serviceContext.getLanguageId());
-		}
+		_serviceContext.setLanguageId(serviceContext.getLanguageId());
 
 		if (Validator.isNotNull(serviceContext.getLayoutFullURL())) {
 			_serviceContext.setLayoutFullURL(serviceContext.getLayoutFullURL());

@@ -298,6 +298,7 @@ AUI.add(
 								on: {
 									request: function(event) {
 										var term = decodeURIComponent(event.request);
+
 										var key = term;
 
 										if (term == '*') {

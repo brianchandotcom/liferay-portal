@@ -115,8 +115,10 @@ Element contentEl = (Element)request.getAttribute(WebKeys.JOURNAL_ARTICLE_CONTEN
 
 			<div class="journal-article-move-handler"></div>
 
-			<label class="journal-article-field-label">
-				<span><%= HtmlUtil.escape(elLabel) %></span>
+			<c:if test='<%= !elType.equals("selection_break") %>'>
+				<label class="journal-article-field-label">
+					<span><%= HtmlUtil.escape(elLabel) %></span>
+			</c:if>
 
 				<c:if test="<%= (Validator.isNotNull(elInstructions) && displayAsTooltip) %>">
 					<img align="top" class="journal-article-instructions-container" src="/html/themes/classic/images/portlet/help.png" />
@@ -427,7 +429,9 @@ Element contentEl = (Element)request.getAttribute(WebKeys.JOURNAL_ARTICLE_CONTEN
 			</div>
 
 			<c:if test="<%= Validator.isNull(toLanguageId) %>">
-				<aui:input cssClass="journal-article-localized-checkbox" label="localizable" name='<%= elInstanceId + "localized-checkbox" %>' type="checkbox" value="<%= !elLanguageId.equals(StringPool.BLANK) %>" />
+				<c:if test='<%= !elType.equals("selection_break") %>'>
+					<aui:input cssClass="journal-article-localized-checkbox" label="localizable" name='<%= elInstanceId + "localized-checkbox" %>' type="checkbox" value="<%= !elLanguageId.equals(StringPool.BLANK) %>" />
+				</c:if>
 			</c:if>
 
 			<div class="journal-article-required-message portlet-msg-error">

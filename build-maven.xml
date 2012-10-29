@@ -109,7 +109,25 @@ for GPG setup instructions.
 		<ant dir="support-tomcat" target="jar-sources" inheritAll="false" />
 		<ant dir="util-bridges" target="jar-sources" inheritAll="false" />
 		<ant dir="util-java" target="jar-sources" inheritAll="false" />
+
+		<copy file="util-taglib/src/META-INF/aui.tld" tofile="util-taglib/src/META-INF/liferay-aui.tld" />
+
+		<replace file="util-taglib/src/META-INF/liferay-aui.tld">
+			<replacetoken>&lt;uri&gt;http://alloy.liferay.com/tld/aui&lt;/uri&gt;</replacetoken>
+			<replacevalue>&lt;uri&gt;http://liferay.com/tld/aui&lt;/uri&gt;</replacevalue>
+		</replace>
+
+		<copy file="util-taglib/src/META-INF/liferay-portlet.tld" tofile="util-taglib/src/META-INF/liferay-portlet_2_0.tld" />
+
+		<replace file="util-taglib/src/META-INF/liferay-portlet_2_0.tld">
+			<replacetoken>&lt;uri&gt;http://java.sun.com/portlet&lt;/uri&gt;</replacetoken>
+			<replacevalue>&lt;uri&gt;http://java.sun.com/portlet_2_0&lt;/uri&gt;</replacevalue>
+		</replace>
+
 		<ant dir="util-taglib" target="jar-sources" inheritAll="false" />
+
+		<delete file="util-taglib/src/META-INF/liferay-aui.tld" />
+		<delete file="util-taglib/src/META-INF/liferay-portlet_2_0.tld" />
 	</target>
 
 	<target name="prepare-maven">
@@ -259,3 +277,4 @@ Run "ant -f build-dist.xml all zip-portal-war" to generate that file.
 		<delete dir="${tstamp.value}" />
 	</target>
 </project>
+

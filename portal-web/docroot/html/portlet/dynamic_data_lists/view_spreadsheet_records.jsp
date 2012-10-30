@@ -19,10 +19,10 @@
 <%
 DDLRecordSet recordSet = (DDLRecordSet)request.getAttribute(WebKeys.DYNAMIC_DATA_LISTS_RECORD_SET);
 
-boolean editable = DDLUtil.isEditable(request, portletDisplay.getId(), themeDisplay.getScopeGroupId());
+boolean editable = false;
 
 if (!DDLRecordSetPermission.contains(permissionChecker, recordSet.getRecordSetId(), ActionKeys.ADD_RECORD)) {
-	editable = false;
+	editable = DDLUtil.isEditable(request, portletDisplay.getId(), themeDisplay.getScopeGroupId());;
 }
 
 DDMStructure ddmStructure = recordSet.getDDMStructure();

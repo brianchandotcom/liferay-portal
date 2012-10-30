@@ -78,7 +78,7 @@ PollsQuestion question = (PollsQuestion)request.getAttribute(WebKeys.POLLS_QUEST
 
 						</aui:field-wrapper>
 
-						<aui:button type="submit" value="vote" />
+						<aui:button type="submit" value="vote[action]" />
 					</aui:fieldset>
 				</c:when>
 				<c:otherwise>

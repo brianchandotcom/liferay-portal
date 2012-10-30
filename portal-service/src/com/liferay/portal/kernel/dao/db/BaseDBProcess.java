@@ -99,7 +99,7 @@ public abstract class BaseDBProcess implements DBProcess {
 	public void requestTemporaryIndex(
 		boolean unique, String tableName, String... columnNames) {
 
-		if (!_INDEX_ON_UPGRADE) {
+		if (!_DATABASE_INDEXES_UPDATE_ON_STARTUP) {
 			return;
 		}
 
@@ -153,8 +153,9 @@ public abstract class BaseDBProcess implements DBProcess {
 		}
 	}
 
-	private static final boolean _INDEX_ON_UPGRADE = GetterUtil.getBoolean(
-		PropsUtil.get(PropsKeys.INDEX_ON_UPGRADE));
+	private static final boolean _DATABASE_INDEXES_UPDATE_ON_STARTUP =
+		GetterUtil.getBoolean(
+		PropsUtil.get(PropsKeys.DATABASE_INDEXES_UPDATE_ON_STARTUP));
 
 	private List<IndexMetadata> _requestedTemporaryIndexMetadatas =
 		new ArrayList<IndexMetadata>();

@@ -60,10 +60,10 @@ public class ViewDeleteOrganizationAssignMembersTest extends BaseTestCase {
 				"//span[@class='lfr-toolbar-button view-button current']/a[contains(.,'Browse')]"));
 		assertEquals(RuntimeVariables.replace("View Organizations"),
 			selenium.getText(
-				"//span[@class='lfr-toolbar-button view-button ']/a[contains(.,'View Organizations')]"));
+				"//span[contains(@class,'lfr-toolbar-button view-button')]/a[contains(.,'View Organizations')]"));
 		assertEquals(RuntimeVariables.replace("View Users"),
 			selenium.getText(
-				"//span[@class='lfr-toolbar-button view-button ']/a[contains(.,'View Users')]"));
+				"//span[contains(@class,'lfr-toolbar-button view-button')]/a[contains(.,'View Users')]"));
 		assertEquals(RuntimeVariables.replace("Add"),
 			selenium.getText("//span[@title='Add']/ul/li/strong/a"));
 		assertEquals(RuntimeVariables.replace("Export All Users"),

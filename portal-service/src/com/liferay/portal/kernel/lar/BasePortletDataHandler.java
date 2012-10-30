@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Time;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
@@ -123,15 +124,17 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 		long sourceGroupId = portletDataContext.getSourceGroupId();
 
 		try {
-			Document document = SAXReaderUtil.read(data);
+			if (Validator.isXml(data)) {
+				Document document = SAXReaderUtil.read(data);
 
-			Element rootElement = document.getRootElement();
+				Element rootElement = document.getRootElement();
 
-			long portletSourceGroupId = GetterUtil.getLong(
-				rootElement.attributeValue("group-id"));
+				long portletSourceGroupId = GetterUtil.getLong(
+					rootElement.attributeValue("group-id"));
 
-			if (portletSourceGroupId != 0) {
-				portletDataContext.setSourceGroupId(portletSourceGroupId);
+				if (portletSourceGroupId != 0) {
+					portletDataContext.setSourceGroupId(portletSourceGroupId);
+				}
 			}
 
 			return doImportData(

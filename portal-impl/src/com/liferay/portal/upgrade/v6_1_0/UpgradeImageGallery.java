@@ -1010,7 +1010,7 @@ public class UpgradeImageGallery extends UpgradeProcess {
 		// respectively. This means the loop will execute at most 2^7 (128)
 		// times. If we were to check before update, we would still have to
 		// perform 128 queries, so we may as well just update 128 times even if
-		// no candidates exist for a give value.
+		// no candidates exist for a given value.
 
 		for (int i = 0; i < Math.pow(2, igBitwiseValues.size()); i++) {
 			List<String> igActionIds = getResourceActionIds(igBitwiseValues, i);

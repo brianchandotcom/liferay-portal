@@ -176,16 +176,14 @@ public class JSONWebServiceServlet extends JSONServlet {
 	}
 
 	private void _servicePreAction(
-		HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
-		ServicePreAction servicePreAction =
-			(ServicePreAction)InstancePool.get(
-				ServicePreAction.class.getName());
+		ServicePreAction servicePreAction = (ServicePreAction)InstancePool.get(
+			ServicePreAction.class.getName());
 
 		servicePreAction.initApiService(request, response);
 	}
-
 
 	private static Log _log = LogFactoryUtil.getLog(
 		JSONWebServiceServlet.class);

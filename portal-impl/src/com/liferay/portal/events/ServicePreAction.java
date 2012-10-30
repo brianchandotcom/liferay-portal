@@ -169,16 +169,11 @@ public class ServicePreAction extends Action {
 			return;
 		}
 
-		boolean signedIn = false;
-
 		if (user == null) {
 			user = company.getDefaultUser();
 		}
-		else if (!user.isDefaultUser()) {
-			signedIn = true;
-		}
 
-		Locale locale = _initLocale(request, response, user, signedIn);
+		Locale locale = initLocale(request, response, user);
 
 		LocaleThreadLocal.setThemeDisplayLocale(locale);
 	}
@@ -352,9 +347,9 @@ public class ServicePreAction extends Action {
 		// Locale
 
 		String i18nLanguageId = (String)request.getAttribute(
-					WebKeys.I18N_LANGUAGE_ID);
+			WebKeys.I18N_LANGUAGE_ID);
 
-		Locale locale = _initLocale(request, response, user, signedIn);
+		Locale locale = initLocale(request, response, user);
 
 		// Cookie support
 
@@ -1729,6 +1724,97 @@ public class ServicePreAction extends Action {
 		}
 	}
 
+	protected Locale initLocale(
+		HttpServletRequest request, HttpServletResponse response, User user) {
+
+		boolean signedIn = false;
+
+		if (!user.isDefaultUser()) {
+			signedIn = true;
+		}
+
+		HttpSession session = request.getSession();
+
+		String doAsUserLanguageId = ParamUtil.getString(
+			request, "doAsUserLanguageId");
+
+		Locale locale = (Locale)session.getAttribute(Globals.LOCALE_KEY);
+
+		if (Validator.isNotNull(doAsUserLanguageId)) {
+			locale = LocaleUtil.fromLanguageId(doAsUserLanguageId);
+		}
+
+		String i18nLanguageId = (String)request.getAttribute(
+			WebKeys.I18N_LANGUAGE_ID);
+
+		if (Validator.isNotNull(i18nLanguageId)) {
+			locale = LocaleUtil.fromLanguageId(i18nLanguageId);
+		}
+		else if (locale == null) {
+			if (signedIn) {
+				locale = user.getLocale();
+			}
+			else {
+
+				// User previously set their preferred language
+
+				String languageId = CookieKeys.getCookie(
+					request, CookieKeys.GUEST_LANGUAGE_ID, false);
+
+				if (Validator.isNotNull(languageId)) {
+					locale = LocaleUtil.fromLanguageId(languageId);
+				}
+
+				// Get locale from the request
+
+				if ((locale == null) && PropsValues.LOCALE_DEFAULT_REQUEST) {
+					Enumeration<Locale> locales = request.getLocales();
+
+					while (locales.hasMoreElements()) {
+						Locale requestLocale = locales.nextElement();
+
+						if (Validator.isNull(requestLocale.getCountry())) {
+
+							// Locales must contain a country code
+
+							requestLocale = LanguageUtil.getLocale(
+								requestLocale.getLanguage());
+						}
+
+						if (LanguageUtil.isAvailableLocale(requestLocale)) {
+							locale = requestLocale;
+
+							break;
+						}
+					}
+				}
+
+				// Get locale from the default user
+
+				if (locale == null) {
+					locale = user.getLocale();
+				}
+
+				if (Validator.isNull(locale.getCountry())) {
+
+					// Locales must contain a country code
+
+					locale = LanguageUtil.getLocale(locale.getLanguage());
+				}
+
+				if (!LanguageUtil.isAvailableLocale(locale)) {
+					locale = user.getLocale();
+				}
+			}
+
+			session.setAttribute(Globals.LOCALE_KEY, locale);
+
+			LanguageUtil.updateCookie(request, response, locale);
+		}
+
+		return locale;
+	}
+
 	protected boolean isLoginRequest(HttpServletRequest request) {
 		String requestURI = request.getRequestURI();
 
@@ -2085,92 +2171,6 @@ public class ServicePreAction extends Action {
 				deleteDefaultUserPublicLayouts(user);
 			}
 		}
-	}
-
-	private Locale _initLocale(
-			HttpServletRequest request, HttpServletResponse response, User user,
-							   boolean signedIn) {
-
-		HttpSession session = request.getSession();
-
-		String doAsUserLanguageId = ParamUtil.getString(
-					request, "doAsUserLanguageId");
-
-		Locale locale = (Locale)session.getAttribute(Globals.LOCALE_KEY);
-
-		if (Validator.isNotNull(doAsUserLanguageId)) {
-			locale = LocaleUtil.fromLanguageId(doAsUserLanguageId);
-		}
-
-		String i18nLanguageId = (String)request.getAttribute(
-			WebKeys.I18N_LANGUAGE_ID);
-
-		if (Validator.isNotNull(i18nLanguageId)) {
-			locale = LocaleUtil.fromLanguageId(i18nLanguageId);
-		}
-		else if (locale == null) {
-			if (signedIn) {
-				locale = user.getLocale();
-			}
-			else {
-
-				// User previously set their preferred language
-
-				String languageId = CookieKeys.getCookie(
-					request, CookieKeys.GUEST_LANGUAGE_ID, false);
-
-				if (Validator.isNotNull(languageId)) {
-					locale = LocaleUtil.fromLanguageId(languageId);
-				}
-
-				// Get locale from the request
-
-				if ((locale == null) && PropsValues.LOCALE_DEFAULT_REQUEST) {
-					Enumeration<Locale> locales = request.getLocales();
-
-					while (locales.hasMoreElements()) {
-						Locale requestLocale = locales.nextElement();
-
-						if (Validator.isNull(requestLocale.getCountry())) {
-
-							// Locales must contain a country code
-
-							requestLocale = LanguageUtil.getLocale(
-								requestLocale.getLanguage());
-						}
-
-						if (LanguageUtil.isAvailableLocale(requestLocale)) {
-							locale = requestLocale;
-
-							break;
-						}
-					}
-				}
-
-				// Get locale from the default user
-
-				if (locale == null) {
-					locale = user.getLocale();
-				}
-
-				if (Validator.isNull(locale.getCountry())) {
-
-					// Locales must contain a country code
-
-					locale = LanguageUtil.getLocale(locale.getLanguage());
-				}
-
-				if (!LanguageUtil.isAvailableLocale(locale)) {
-					locale = user.getLocale();
-				}
-			}
-
-			session.setAttribute(Globals.LOCALE_KEY, locale);
-
-			LanguageUtil.updateCookie(request, response, locale);
-		}
-
-		return locale;
 	}
 
 	protected File privateLARFile;

@@ -793,6 +793,8 @@
 		Util,
 		'afterIframeLoaded',
 		function(event) {
+			A.Node._instances = {};
+
 			var iframeDocument = A.one(event.doc);
 
 			var iframeBody = iframeDocument.one('body');
@@ -801,17 +803,13 @@
 
 			iframeBody.addClass('aui-dialog-iframe-popup');
 
+			var detachEventHandles = function() {
+				AArray.invoke(eventHandles, 'detach');
+
+				iframeDocument.purge(true);
+			};
+
 			var eventHandles = [
-				iframeBody.delegate(
-					EVENT_CLICK,
-					function() {
-						detachEventHandles();
-
-						dialog.close();
-					},
-					'.aui-button-input-cancel'
-				),
-
 				iframeBody.delegate('submit', detachEventHandles, 'form'),
 
 				iframeBody.delegate(
@@ -825,11 +823,18 @@
 				)
 			];
 
-			var detachEventHandles = function() {
-				AArray.invoke(eventHandles, 'detach');
+			var cancelButton = iframeBody.one('.aui-button-input-cancel');
 
-				iframeDocument.purge(true);
-			};
+			if (cancelButton) {
+				cancelButton.after(
+					EVENT_CLICK,
+					function() {
+						detachEventHandles();
+
+						dialog.close();
+					}
+				);
+			}
 
 			var rolesSearchContainer = iframeBody.one('#rolesSearchContainerSearchContainer');
 

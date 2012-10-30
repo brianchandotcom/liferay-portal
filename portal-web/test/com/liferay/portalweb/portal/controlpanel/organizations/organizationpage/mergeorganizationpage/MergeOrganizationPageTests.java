@@ -15,6 +15,8 @@
 package com.liferay.portalweb.portal.controlpanel.organizations.organizationpage.mergeorganizationpage;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.controlpanel.organizations.organization.addorganization.AddOrganizationTest;
+import com.liferay.portalweb.portal.controlpanel.organizations.organization.addorganization.TearDownOrganizationTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -31,7 +33,7 @@ public class MergeOrganizationPageTests extends BaseTestSuite {
 		testSuite.addTestSuite(AssertNotMergeOrganizationPageTest.class);
 		testSuite.addTestSuite(MergeOrganizationPageTest.class);
 		testSuite.addTestSuite(AssertMergeOrganizationPageTest.class);
-		testSuite.addTestSuite(TearDownTest.class);
+		testSuite.addTestSuite(TearDownOrganizationTest.class);
 
 		return testSuite;
 	}

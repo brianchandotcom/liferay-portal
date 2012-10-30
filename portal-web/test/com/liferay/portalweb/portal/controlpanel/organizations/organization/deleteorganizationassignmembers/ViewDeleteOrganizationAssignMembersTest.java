@@ -55,15 +55,20 @@ public class ViewDeleteOrganizationAssignMembersTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Users and Organizations"),
 			selenium.getText("//h1[@class='portlet-title']/span"));
-		assertEquals(RuntimeVariables.replace("View All"),
+		assertEquals(RuntimeVariables.replace("Browse"),
 			selenium.getText(
-				"//div[@class='lfr-portlet-toolbar']/span[contains(.,'View All')]"));
+				"//span[@class='lfr-toolbar-button view-button current']/a[contains(.,'Browse')]"));
+		assertEquals(RuntimeVariables.replace("View Organizations"),
+			selenium.getText(
+				"//span[contains(@class,'lfr-toolbar-button view-button')]/a[contains(.,'View Organizations')]"));
+		assertEquals(RuntimeVariables.replace("View Users"),
+			selenium.getText(
+				"//span[contains(@class,'lfr-toolbar-button view-button')]/a[contains(.,'View Users')]"));
 		assertEquals(RuntimeVariables.replace("Add"),
-			selenium.getText(
-				"//div[@class='lfr-portlet-toolbar']/span/ul/li/strong/a/span[contains(.,'Add')]"));
+			selenium.getText("//span[@title='Add']/ul/li/strong/a"));
 		assertEquals(RuntimeVariables.replace("Export All Users"),
 			selenium.getText(
-				"//div[@class='lfr-portlet-toolbar']/span/a[contains(.,'Export All Users')]"));
+				"//span[@class='lfr-toolbar-button export-button']/a[contains(.,'Export All Users')]"));
 		assertEquals(RuntimeVariables.replace("Organization Name"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace(
@@ -109,8 +114,9 @@ public class ViewDeleteOrganizationAssignMembersTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(""),
 			selenium.getText("//tr[contains(.,'userfn')]/td[7]"));
 		assertEquals(RuntimeVariables.replace("Actions"),
-			selenium.getText(
-				"//tr[contains(.,'userfn')]/td[8]/span[@title='Actions']/ul/li/strong/a"));
+			selenium.getText("//span[@title='Actions']/ul/li/strong/a"));
+		assertEquals(RuntimeVariables.replace("Showing 1 result."),
+			selenium.getText("//div[@class='search-results']"));
 		assertTrue(selenium.isVisible("//div[@class='lfr-asset-summary']/img"));
 		assertEquals(RuntimeVariables.replace("Organization Name"),
 			selenium.getText("//div[@class='lfr-asset-summary']/div/h4"));

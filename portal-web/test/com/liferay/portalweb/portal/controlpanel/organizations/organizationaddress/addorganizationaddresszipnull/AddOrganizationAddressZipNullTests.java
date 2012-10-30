@@ -15,6 +15,8 @@
 package com.liferay.portalweb.portal.controlpanel.organizations.organizationaddress.addorganizationaddresszipnull;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.controlpanel.organizations.organization.addorganization.AddOrganizationTest;
+import com.liferay.portalweb.portal.controlpanel.organizations.organization.addorganization.TearDownOrganizationTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -27,7 +29,7 @@ public class AddOrganizationAddressZipNullTests extends BaseTestSuite {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddOrganizationTest.class);
 		testSuite.addTestSuite(AddOrganizationAddressZipNullTest.class);
-		testSuite.addTestSuite(TearDownTest.class);
+		testSuite.addTestSuite(TearDownOrganizationTest.class);
 
 		return testSuite;
 	}

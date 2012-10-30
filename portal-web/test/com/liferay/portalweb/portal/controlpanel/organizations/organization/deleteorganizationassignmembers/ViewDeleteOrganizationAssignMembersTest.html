@@ -80,17 +80,27 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-portlet-toolbar']/span[contains(.,'View All')]</td>
-	<td>View All</td>
+	<td>//span[@class='lfr-toolbar-button view-button current']/a[contains(.,'Browse')]</td>
+	<td>Browse</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-portlet-toolbar']/span/ul/li/strong/a/span[contains(.,'Add')]</td>
+	<td>//span[contains(@class,'lfr-toolbar-button view-button')]/a[contains(.,'View Organizations')]</td>
+	<td>View Organizations</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[contains(@class,'lfr-toolbar-button view-button')]/a[contains(.,'View Users')]</td>
+	<td>View Users</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@title='Add']/ul/li/strong/a</td>
 	<td>Add</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-portlet-toolbar']/span/a[contains(.,'Export All Users')]</td>
+	<td>//span[@class='lfr-toolbar-button export-button']/a[contains(.,'Export All Users')]</td>
 	<td>Export All Users</td>
 </tr>
 <tr>
@@ -190,8 +200,13 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[contains(.,'userfn')]/td[8]/span[@title='Actions']/ul/li/strong/a</td>
+	<td>//span[@title='Actions']/ul/li/strong/a</td>
 	<td>Actions</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='search-results']</td>
+	<td>Showing 1 result.</td>
 </tr>
 <tr>
 	<td>assertVisible</td>

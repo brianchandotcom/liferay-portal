@@ -25,6 +25,10 @@ public class AssertNotMergeOrganizationPageTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
@@ -36,26 +40,29 @@ public class AssertNotMergeOrganizationPageTest extends BaseTestCase {
 			RuntimeVariables.replace("Users and Organizations"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@name='_125_keywords']",
-			RuntimeVariables.replace("Selenium"));
+			RuntimeVariables.replace("Organization Name"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//strong/a", RuntimeVariables.replace("Global"));
+		assertEquals(RuntimeVariables.replace("Liferay"),
+			selenium.getText("//li[@class='lfr-trigger']/strong/a"));
+		selenium.clickAt("//li[@class='lfr-trigger']/strong/a",
+			RuntimeVariables.replace("Liferay"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a");
-		assertEquals(RuntimeVariables.replace("Selenium"),
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Organization Name')]");
+		assertEquals(RuntimeVariables.replace("Organization Name"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Organization Name')]"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Organization Name')]"));
 		selenium.waitForPageToLoad("30000");
 		selenium.waitForVisible("link=Site Pages");
 		selenium.clickAt("link=Site Pages", RuntimeVariables.replace("Pages"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("//div[2]/span/button[2]",
 			RuntimeVariables.replace("View Pages"));
-		selenium.waitForPopUp("", RuntimeVariables.replace("5000"));
-		selenium.selectPopUp("");
+		selenium.waitForPopUp("null", RuntimeVariables.replace("5000"));
+		selenium.selectPopUp("null");
 		assertTrue(selenium.isElementNotPresent("link=Welcome"));
 		assertTrue(selenium.isElementPresent("link=Selenium Test Home Page"));
 		selenium.close();

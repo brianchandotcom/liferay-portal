@@ -15,6 +15,7 @@
 package com.liferay.portalweb.portal.controlpanel.organizations.organization.addorganizationnamenull;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.controlpanel.organizations.organization.addorganization.TearDownOrganizationTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -26,7 +27,7 @@ public class AddOrganizationNameNullTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddOrganizationNameNullTest.class);
-		testSuite.addTestSuite(TearDownTest.class);
+		testSuite.addTestSuite(TearDownOrganizationTest.class);
 
 		return testSuite;
 	}

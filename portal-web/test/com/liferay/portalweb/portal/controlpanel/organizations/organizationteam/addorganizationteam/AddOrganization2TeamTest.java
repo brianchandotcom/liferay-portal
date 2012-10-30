@@ -36,11 +36,17 @@ public class AddOrganization2TeamTest extends BaseTestCase {
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("Liferay"),
+			selenium.getText("//a[contains(@id,'groupSelectorButton')]/span"));
 		selenium.clickAt("//a[contains(@id,'groupSelectorButton')]/span",
 			RuntimeVariables.replace("Site Selector"));
-		selenium.waitForVisible("link=Organization2 Name");
-		selenium.clickAt("link=Organization2 Name",
-			RuntimeVariables.replace("Organization2 Name"));
+		selenium.waitForVisible(
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Organization2 Name')]");
+		assertEquals(RuntimeVariables.replace("Organization2 Name"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Organization2 Name')]"));
+		selenium.click(RuntimeVariables.replace(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Organization2 Name')]"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Site Memberships",
 			RuntimeVariables.replace("Site Memberships"));

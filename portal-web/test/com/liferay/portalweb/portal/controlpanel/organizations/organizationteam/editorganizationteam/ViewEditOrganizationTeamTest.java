@@ -36,11 +36,17 @@ public class ViewEditOrganizationTeamTest extends BaseTestCase {
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("Liferay"),
+			selenium.getText("//a[contains(@id,'groupSelectorButton')]/span"));
 		selenium.clickAt("//a[contains(@id,'groupSelectorButton')]/span",
 			RuntimeVariables.replace("Site Selector"));
-		selenium.waitForVisible("link=Organization Name");
-		selenium.clickAt("link=Organization Name",
-			RuntimeVariables.replace("Organization Name"));
+		selenium.waitForVisible(
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Organization Name')]");
+		assertEquals(RuntimeVariables.replace("Organization Name"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Organization Name')]"));
+		selenium.click(RuntimeVariables.replace(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Organization Name')]"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Site Memberships",
 			RuntimeVariables.replace("Site Memberships"));
@@ -53,6 +59,17 @@ public class ViewEditOrganizationTeamTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Organization Name: Manage Memberships"),
 			selenium.getText("//h1[@class='header-title']/span"));
+		assertEquals(RuntimeVariables.replace("\u00ab Back"),
+			selenium.getText("//span[@class='header-back-to']/a"));
+		assertEquals(RuntimeVariables.replace("View Members"),
+			selenium.getText("//div[@class='lfr-portlet-toolbar']/span[1]"));
+		assertTrue(selenium.isPartialText(
+				"//div[@class='lfr-portlet-toolbar']/span[2]", "Add Members"));
+		assertTrue(selenium.isPartialText(
+				"//div[@class='lfr-portlet-toolbar']/span[3]",
+				"Add Site Roles to"));
+		assertEquals(RuntimeVariables.replace("View Teams"),
+			selenium.getText("//div[@class='lfr-portlet-toolbar']/span[4]"));
 		assertTrue(selenium.isVisible("//input[@id='_174_name']"));
 		assertTrue(selenium.isVisible("//input[@value='Search']"));
 		assertTrue(selenium.isVisible("//input[@value='Add Team']"));

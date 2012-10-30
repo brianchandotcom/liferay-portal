@@ -25,6 +25,10 @@ public class AddOrganizationService1Test extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
@@ -36,21 +40,23 @@ public class AddOrganizationService1Test extends BaseTestCase {
 			RuntimeVariables.replace("Users and Organizations"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@name='_125_keywords']",
-			RuntimeVariables.replace("Selenium"));
+			RuntimeVariables.replace("Organization Name"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Selenium"),
-			selenium.getText("//a[2]/strong"));
-		selenium.clickAt("//a[2]/strong", RuntimeVariables.replace("Selenium"));
+		assertEquals(RuntimeVariables.replace("Organization Name"),
+			selenium.getText(
+				"//tr[@class='portlet-section-body results-row last']/td[2]/a[2]/strong"));
+		selenium.clickAt("//tr[@class='portlet-section-body results-row last']/td[2]/a[2]/strong",
+			RuntimeVariables.replace("Organization Name"));
 		selenium.waitForPageToLoad("30000");
 		selenium.waitForVisible(
-			"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li/a");
+			"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Edit')]");
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText(
-				"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li/a"));
+				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Edit')]"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li/a"));
+				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Edit')]"));
 		selenium.waitForPageToLoad("30000");
 		selenium.waitForVisible("//a[@id='_125_servicesLink']");
 		selenium.clickAt("//a[@id='_125_servicesLink']",

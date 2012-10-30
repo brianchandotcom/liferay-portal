@@ -14,6 +14,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
+	<td>AUI Editable Min</td>
+</tr>
+<tr>
 	<td>assertText</td>
 	<td>//li[@id='_145_mySites']/a/span</td>
 	<td>Go to</td>
@@ -41,7 +51,7 @@
 <tr>
 	<td>type</td>
 	<td>//input[@name='_125_keywords']</td>
-	<td>Selenium</td>
+	<td>Organization Name</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -49,24 +59,29 @@
 	<td>Search</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//li[@class='lfr-trigger']/strong/a</td>
+	<td>Liferay</td>
+</tr>
+<tr>
 	<td>clickAt</td>
-	<td>//strong/a</td>
-	<td>Global</td>
+	<td>//li[@class='lfr-trigger']/strong/a</td>
+	<td>Liferay</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
-	<td>Selenium</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Organization Name')]</td>
+	<td>Organization Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
-	<td>Selenium</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Organization Name')]</td>
+	<td>Organization Name</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
-	<td>Selenium</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Organization Name')]</td>
+	<td>Organization Name</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -85,13 +100,18 @@
 </tr>
 <tr>
 	<td>waitForPopUp</td>
-	<td></td>
+	<td>null</td>
 	<td>5000</td>
 </tr>
 <tr>
 	<td>selectPopUp</td>
+	<td>null</td>
 	<td></td>
-	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>link=Welcome</td>
+	<td>Welcome</td>
 </tr>
 <tr>
 	<td>assertElementPresent</td>

@@ -14,6 +14,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
+	<td>AUI Editable Min</td>
+</tr>
+<tr>
 	<td>assertText</td>
 	<td>//li[@id='_145_mySites']/a/span</td>
 	<td>Go to</td>
@@ -66,7 +76,7 @@
 <tr>
 	<td>type</td>
 	<td>//input[@id='_125_name']</td>
-	<td>Selenium</td>
+	<td>Organization Name</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -74,9 +84,9 @@
 	<td>Search</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>link=Selenium</td>
-	<td>Selenium</td>
+	<td>assertText</td>
+	<td>//tr[@class='portlet-section-body results-row last']/td[2]/a</td>
+	<td>Organization Name</td>
 </tr>
 <tr>
 	<td>store</td>

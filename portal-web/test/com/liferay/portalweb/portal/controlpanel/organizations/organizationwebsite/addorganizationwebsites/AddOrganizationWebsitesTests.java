@@ -15,6 +15,8 @@
 package com.liferay.portalweb.portal.controlpanel.organizations.organizationwebsite.addorganizationwebsites;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.controlpanel.organizations.organization.addorganization.AddOrganizationTest;
+import com.liferay.portalweb.portal.controlpanel.organizations.organization.addorganization.TearDownOrganizationTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -29,7 +31,7 @@ public class AddOrganizationWebsitesTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddOrganizationWebsite1Test.class);
 		testSuite.addTestSuite(AddOrganizationWebsite2Test.class);
 		testSuite.addTestSuite(AddOrganizationWebsite3Test.class);
-		testSuite.addTestSuite(TearDownTest.class);
+		testSuite.addTestSuite(TearDownOrganizationTest.class);
 
 		return testSuite;
 	}

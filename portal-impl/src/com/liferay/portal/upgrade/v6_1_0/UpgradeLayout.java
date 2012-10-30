@@ -39,7 +39,6 @@ public class UpgradeLayout extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		requestTemporaryIndex(false, "Layout", "plid");
 
 		Connection con = null;
 		PreparedStatement ps = null;

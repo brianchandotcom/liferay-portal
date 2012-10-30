@@ -43,12 +43,10 @@ public class TearDownBlogsEntryAPTest extends BaseTestCase {
 					continue;
 				}
 
-				assertEquals(RuntimeVariables.replace("Delete"),
+				assertEquals(RuntimeVariables.replace("Move to the Recycle Bin"),
 					selenium.getText("//td[3]/span/a/span"));
 				selenium.click(RuntimeVariables.replace("//td[3]/span/a/span"));
 				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 
 				boolean blogsEntry2Present = selenium.isElementPresent(
 						"//td[3]/span/a/span");
@@ -59,12 +57,10 @@ public class TearDownBlogsEntryAPTest extends BaseTestCase {
 					continue;
 				}
 
-				assertEquals(RuntimeVariables.replace("Delete"),
+				assertEquals(RuntimeVariables.replace("Move to the Recycle Bin"),
 					selenium.getText("//td[3]/span/a/span"));
 				selenium.click(RuntimeVariables.replace("//td[3]/span/a/span"));
 				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 
 				boolean blogsEntry3Present = selenium.isElementPresent(
 						"//td[3]/span/a/span");
@@ -75,12 +71,10 @@ public class TearDownBlogsEntryAPTest extends BaseTestCase {
 					continue;
 				}
 
-				assertEquals(RuntimeVariables.replace("Delete"),
+				assertEquals(RuntimeVariables.replace("Move to the Recycle Bin"),
 					selenium.getText("//td[3]/span/a/span"));
 				selenium.click(RuntimeVariables.replace("//td[3]/span/a/span"));
 				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 
 				boolean blogsEntry4Present = selenium.isElementPresent(
 						"//td[3]/span/a/span");
@@ -91,12 +85,10 @@ public class TearDownBlogsEntryAPTest extends BaseTestCase {
 					continue;
 				}
 
-				assertEquals(RuntimeVariables.replace("Delete"),
+				assertEquals(RuntimeVariables.replace("Move to the Recycle Bin"),
 					selenium.getText("//td[3]/span/a/span"));
 				selenium.click(RuntimeVariables.replace("//td[3]/span/a/span"));
 				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 
 				boolean blogsEntry5Present = selenium.isElementPresent(
 						"//td[3]/span/a/span");
@@ -107,18 +99,50 @@ public class TearDownBlogsEntryAPTest extends BaseTestCase {
 					continue;
 				}
 
-				assertEquals(RuntimeVariables.replace("Delete"),
+				assertEquals(RuntimeVariables.replace("Move to the Recycle Bin"),
 					selenium.getText("//td[3]/span/a/span"));
 				selenium.click(RuntimeVariables.replace("//td[3]/span/a/span"));
 				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 
 			case 2:
 			case 3:
 			case 4:
 			case 5:
 			case 6:
+				selenium.open("/web/guest/home/");
+				selenium.clickAt("//div[@id='dockbar']",
+					RuntimeVariables.replace("Dockbar"));
+				selenium.waitForElementPresent(
+					"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+				assertEquals(RuntimeVariables.replace("Go to"),
+					selenium.getText("//li[@id='_145_mySites']/a/span"));
+				selenium.mouseOver("//li[@id='_145_mySites']/a/span");
+				selenium.waitForVisible("link=Control Panel");
+				selenium.clickAt("link=Control Panel",
+					RuntimeVariables.replace("Control Panel"));
+				selenium.waitForPageToLoad("30000");
+				selenium.clickAt("link=Recycle Bin",
+					RuntimeVariables.replace("Recycle Bin"));
+				selenium.waitForPageToLoad("30000");
+
+				boolean blogsEntryPresent = selenium.isElementPresent(
+						"//span[@title='Actions']/ul/li/strong/a/span");
+
+				if (!blogsEntryPresent) {
+					label = 7;
+
+					continue;
+				}
+
+				assertEquals(RuntimeVariables.replace("Empty the Recycle Bin"),
+					selenium.getText("//a[@class='trash-empty-link']"));
+				selenium.clickAt("//a[@class='trash-empty-link']",
+					RuntimeVariables.replace("Empty the Recycle Bin"));
+				selenium.waitForPageToLoad("30000");
+				assertTrue(selenium.getConfirmation()
+								   .matches("^Are you sure you want to empty the Recycle Bin[\\s\\S]$"));
+
+			case 7:
 			case 100:
 				label = -1;
 			}

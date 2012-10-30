@@ -123,10 +123,6 @@ public abstract class BaseTransformer implements Transformer {
 				listener = (TransformerListener)InstanceFactory.newInstance(
 					classLoader, listeners[i]);
 
-				listener.setTemplateDriven(templateDriven);
-				listener.setLanguageId(languageId);
-				listener.setTokens(tokens);
-
 				listenersList.add(listener);
 			}
 			catch (Exception e) {
@@ -140,7 +136,7 @@ public abstract class BaseTransformer implements Transformer {
 			}
 
 			if (listener != null) {
-				xml = listener.onXml(xml);
+				xml = listener.onXml(xml, languageId, tokens);
 
 				if (_logXmlAfterListener.isDebugEnabled()) {
 					_logXmlAfterListener.debug(xml);
@@ -154,7 +150,7 @@ public abstract class BaseTransformer implements Transformer {
 			}
 
 			if (listener != null) {
-				script = listener.onScript(script);
+				script = listener.onScript(script, xml, languageId, tokens);
 
 				if (_logScriptAfterListener.isDebugEnabled()) {
 					_logScriptAfterListener.debug(script);
@@ -213,7 +209,7 @@ public abstract class BaseTransformer implements Transformer {
 				_logOutputBeforeListener.debug(output);
 			}
 
-			output = listener.onOutput(output);
+			output = listener.onOutput(output, languageId, tokens);
 
 			if (_logOutputAfterListener.isDebugEnabled()) {
 				_logOutputAfterListener.debug(output);

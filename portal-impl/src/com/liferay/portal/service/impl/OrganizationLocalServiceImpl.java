@@ -93,11 +93,6 @@ public class OrganizationLocalServiceImpl
 
 		groupPersistence.addOrganizations(groupId, organizationIds);
 
-		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-			Organization.class);
-
-		indexer.reindex(organizationIds);
-
 		PermissionCacheUtil.clearCache();
 	}
 
@@ -1467,11 +1462,6 @@ public class OrganizationLocalServiceImpl
 
 		groupPersistence.setOrganizations(groupId, organizationIds);
 
-		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-			Organization.class);
-
-		indexer.reindex(organizationIds);
-
 		PermissionCacheUtil.clearCache();
 	}
 
@@ -1487,11 +1477,6 @@ public class OrganizationLocalServiceImpl
 		throws PortalException, SystemException {
 
 		groupPersistence.removeOrganizations(groupId, organizationIds);
-
-		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-			Organization.class);
-
-		indexer.reindex(organizationIds);
 
 		PermissionCacheUtil.clearCache();
 	}

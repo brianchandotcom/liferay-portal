@@ -232,7 +232,6 @@ public class ServiceTestUtil {
 		_deleteDLDirectories();
 	}
 
-	@Deprecated
 	public static SearchContext getSearchContext() throws Exception {
 		return getSearchContext(TestPropsValues.getGroupId());
 	}
@@ -249,7 +248,6 @@ public class ServiceTestUtil {
 		return searchContext;
 	}
 
-	@Deprecated
 	public static ServiceContext getServiceContext() throws Exception {
 		return getServiceContext(TestPropsValues.getGroupId());
 	}
@@ -369,7 +367,7 @@ public class ServiceTestUtil {
 
 		// Stateful services
 
-		_setStatefulServices();
+		_checkClassNames();
 
 		// Asset
 
@@ -475,18 +473,18 @@ public class ServiceTestUtil {
 		}
 	}
 
+	private static void _checkClassNames() {
+
+		// Repository Default ClassName
+
+		PortalUtil.getClassNameId(LiferayRepository.class.getName());
+	}
+
 	private static void _deleteDLDirectories() {
 		FileUtil.deltree(PropsValues.DL_STORE_FILE_SYSTEM_ROOT_DIR);
 
 		FileUtil.deltree(
 			PropsUtil.get(PropsKeys.JCR_JACKRABBIT_REPOSITORY_ROOT));
-	}
-
-	private static void _setStatefulServices() {
-
-		// Repository Default ClassName
-
-		PortalUtil.getClassNameId(LiferayRepository.class.getName());
 	}
 
 	private static Random _random = new Random();

@@ -620,7 +620,12 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 			trigger.getJobName(), JOB_NAME_MAX_LENGTH);
 		String groupName = fixMaxLength(
 			trigger.getGroupName(), GROUP_NAME_MAX_LENGTH);
+
 		Date startDate = trigger.getStartDate();
+
+		if (startDate == null) {
+			startDate = new Date(System.currentTimeMillis());
+		}
 
 		Trigger quartzTrigger = null;
 

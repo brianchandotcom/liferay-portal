@@ -34,6 +34,8 @@ public abstract class BaseSeleniumImpl
 	public BaseSeleniumImpl(String projectDir, Selenium selenium) {
 		super(selenium);
 
+		_clipBoard = "";
+
 		_projectDir = projectDir;
 
 		initCommandProcessor();
@@ -136,6 +138,14 @@ public abstract class BaseSeleniumImpl
 		super.waitForPageToLoad("30000");
 	}
 
+	public void copyText(String locator) {
+		_clipBoard = super.getText(locator);
+	}
+
+	public void copyValue(String locator) {
+		_clipBoard = super.getValue(locator);
+	}
+
 	public void downloadTempFile(String value) {
 		LiferaySeleniumHelper.downloadTempFile(value);
 	}
@@ -195,6 +205,10 @@ public abstract class BaseSeleniumImpl
 	public void keyUpAndWait(String locator, String keySequence) {
 		super.keyUp(locator, keySequence);
 		super.waitForPageToLoad("30000");
+	}
+
+	public void paste(String location) {
+		super.type(location, _clipBoard);
 	}
 
 	public void pause(String waitTime) throws Exception {
@@ -427,6 +441,7 @@ public abstract class BaseSeleniumImpl
 	private static final String _OUTPUT_SCREENSHOTS_DIR =
 		TestPropsValues.OUTPUT_DIR + "screenshots/";
 
+	private String _clipBoard;
 	private CommandProcessor _commandProcessor;
 	private String _projectDir;
 	private String _timeout = "90000";

@@ -40,6 +40,8 @@ public abstract class BaseWebDriverImpl
 
 		super(webDriver);
 
+		_clipBoard = "";
+
 		_projectDir = projectDir;
 
 		webDriver.get(browserURL);
@@ -138,6 +140,14 @@ public abstract class BaseWebDriverImpl
 	public void clickAtAndWait(String locator, String coordString) {
 		super.clickAt(locator, coordString);
 		super.waitForPageToLoad("30000");
+	}
+
+	public void copyText(String locator) {
+		_clipBoard = super.getText(locator);
+	}
+
+	public void copyValue(String locator) {
+		_clipBoard = super.getValue(locator);
 	}
 
 	public void downloadTempFile(String value) {
@@ -243,6 +253,10 @@ public abstract class BaseWebDriverImpl
 	public void keyUpAndWait(String locator, String keySequence) {
 		super.keyUp(locator, keySequence);
 		super.waitForPageToLoad("30000");
+	}
+
+	public void paste(String location) {
+		super.type(location, _clipBoard);
 	}
 
 	public void pause(String waitTime) throws Exception {
@@ -395,6 +409,7 @@ public abstract class BaseWebDriverImpl
 		super.waitForPageToLoad("30000");
 	}
 
+	private String _clipBoard;
 	private String _projectDir;
 
 }

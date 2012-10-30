@@ -267,8 +267,7 @@ public class PropsUtil {
 			defaultLiferayHome = SystemProperties.get("jonas.base") + "/..";
 		}
 		else if (ServerDetector.isWebLogic()) {
-			defaultLiferayHome =
-				SystemProperties.get("env.DOMAIN_HOME") + "/..";
+			defaultLiferayHome = SystemProperties.get("env.MW_HOME") + "/..";
 		}
 		else if (ServerDetector.isJetty()) {
 			defaultLiferayHome = SystemProperties.get("jetty.home") + "/..";

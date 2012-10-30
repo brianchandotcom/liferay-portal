@@ -492,21 +492,19 @@ public class DDLImpl implements DDL {
 			String portletId, long groupId, boolean defaultValue)
 		throws Exception {
 
-		boolean editable = defaultValue;
-
 		String rootPortletId = PortletConstants.getRootPortletId(portletId);
 
 		if (rootPortletId.equals(PortletKeys.DYNAMIC_DATA_LISTS)) {
-			editable = true;
+			return true;
 		}
 
 		Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 
 		if ((group == null) || group.isInStagingPortlet(portletId)) {
-			editable = false;
+			return false;
 		}
 
-		return editable;
+		return defaultValue;
 	}
 
 	protected void uploadRecordFieldFiles(

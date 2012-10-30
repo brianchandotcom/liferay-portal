@@ -27,6 +27,7 @@ import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
 import java.util.List;
 import java.util.Map;
 
+import javax.portlet.PortletPreferences;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -102,8 +103,22 @@ public class DDLUtil {
 		throws Exception {
 
 		return getDDL().getTemplateContent(
-			ddmTemplateId, recordSet, themeDisplay, renderRequest,
-			renderResponse);
+				ddmTemplateId, recordSet, themeDisplay, renderRequest,
+				renderResponse);
+	}
+
+	public static boolean isEditable(
+			HttpServletRequest request, String portletId, long groupId)
+		throws Exception {
+
+		return getDDL().isEditable(request, portletId, groupId);
+	}
+
+	public static boolean isEditable(
+			PortletPreferences preferences, String portletId, long groupId)
+		throws Exception {
+
+		return getDDL().isEditable(preferences, portletId, groupId);
 	}
 
 	public static void sendRecordFileUpload(

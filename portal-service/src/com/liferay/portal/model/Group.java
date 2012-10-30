@@ -102,6 +102,8 @@ public interface Group extends GroupModel, PersistedModel {
 
 	public boolean isGuest();
 
+	public boolean isInStagingPortlet(java.lang.String portletId);
+
 	public boolean isLayout();
 
 	public boolean isLayoutPrototype();

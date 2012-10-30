@@ -21,14 +21,10 @@ DDLRecordSet recordSet = (DDLRecordSet)request.getAttribute(WebKeys.DYNAMIC_DATA
 
 long formDDMTemplateId = ParamUtil.getLong(request, "formDDMTemplateId");
 
-boolean editable = ParamUtil.getBoolean(request, "editable", true);
+boolean editable = false;
 
-if (portletName.equals(PortletKeys.DYNAMIC_DATA_LISTS)) {
-	editable = true;
-}
-
-if (!DDLRecordSetPermission.contains(permissionChecker, recordSet.getRecordSetId(), ActionKeys.UPDATE)) {
-	editable = false;
+if (DDLRecordSetPermission.contains(permissionChecker, recordSet.getRecordSetId(), ActionKeys.UPDATE)) {
+	editable = DDLUtil.isEditable(request, portletDisplay.getId(), themeDisplay.getScopeGroupId());
 }
 
 PortletURL portletURL = renderResponse.createRenderURL();

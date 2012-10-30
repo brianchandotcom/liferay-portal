@@ -155,7 +155,7 @@ public abstract class BaseDBProcess implements DBProcess {
 
 	private static final boolean _DATABASE_INDEXES_UPDATE_ON_STARTUP =
 		GetterUtil.getBoolean(
-		PropsUtil.get(PropsKeys.DATABASE_INDEXES_UPDATE_ON_STARTUP));
+			PropsUtil.get(PropsKeys.DATABASE_INDEXES_UPDATE_ON_STARTUP));
 
 	private List<IndexMetadata> _requestedTemporaryIndexMetadatas =
 		new ArrayList<IndexMetadata>();

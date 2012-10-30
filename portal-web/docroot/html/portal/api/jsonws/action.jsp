@@ -417,7 +417,8 @@ String signature = ParamUtil.getString(request, "signature");
 					var data = [];
 
 					var ignoreFields = {
-						formDate: true
+						formDate: true,
+						p_auth: true
 					};
 
 					formQueryString.replace(
@@ -486,8 +487,8 @@ String signature = ParamUtil.getString(request, "signature");
 Liferay.Service(
   '<%= invocationPath %>',
   <tpl if="data.length">{
-<%= StringPool.FOUR_SPACES %><tpl for="data"><tpl if="key != 'p_auth'">{key}: {[this.formatDataType(values.key, values.value)]}<tpl if="!$last">,
-<%= StringPool.FOUR_SPACES %></tpl></tpl></tpl>
+<%= StringPool.FOUR_SPACES %><tpl for="data">{key}: {[this.formatDataType(values.key, values.value)]}<tpl if="!$last">,
+<%= StringPool.FOUR_SPACES %></tpl></tpl>
   },
   </tpl>function(obj) {
 <%= StringPool.FOUR_SPACES %>console.log(obj);

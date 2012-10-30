@@ -216,6 +216,10 @@ h3 {
 	color: #999;
 }
 
+.lfr-api-context .aui-field-input, .lfr-api-context .aui-field-element, .lfr-api-context .aui-field-content {
+	width: 100%;
+}
+
 .lfr-api-service-search .aui-field-content {
 	margin-top: 2px;
 }

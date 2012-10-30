@@ -22,22 +22,24 @@ String signature = ParamUtil.getString(request, "signature");
 Set<String> servletContextPaths = JSONWebServiceActionsManagerUtil.getJSONWebServiceServletContextPaths();
 %>
 
-<aui:select inlineField="<%= false %>" label="context-path" name="contextPath">
+<c:if test="<%= servletContextPaths.size() > 1 %>">
+	<aui:select cssClass="lfr-api-context" label="context-path" name="contextPath">
 
-	<%
-	for (String servletContextPath : servletContextPaths) {
-		if (Validator.isNull(servletContextPath)) {
-			servletContextPath = StringPool.SLASH;
+		<%
+		for (String servletContextPath : servletContextPaths) {
+			if (Validator.isNull(servletContextPath)) {
+				servletContextPath = StringPool.SLASH;
+			}
+		%>
+
+			<aui:option label="<%= servletContextPath %>" selected="<%= contextPath.equals(servletContextPath) %>" value="<%= servletContextPath %>" />
+
+		<%
 		}
-	%>
+		%>
 
-		<aui:option label="<%= servletContextPath %>" selected="<%= contextPath.equals(servletContextPath) %>" value="<%= servletContextPath %>" />
-
-	<%
-	}
-	%>
-
-</aui:select>
+	</aui:select>
+</c:if>
 
 <aui:input cssClass="lfr-api-service-search" label="" name="serviceSearch" placeholder="search" />
 
@@ -121,26 +123,25 @@ Set<String> servletContextPaths = JSONWebServiceActionsManagerUtil.getJSONWebSer
 	<liferay-ui:message key="there-are-no-services-matching-that-phrase" />
 </div>
 
-<aui:script use="aui-base">
-	A.one('#<portlet:namespace />contextPath').on(
-		'change',
-		function(event){
-			var contextPath = event.currentTarget.val();
-			var location = '<%= mainJsonwsContextURL %>';
-
-			if (contextPath && (contextPath != '/')) {
-				location += '?contextPath=' + contextPath;
-			}
-
-			window.location = location;
-		}
-	);
-</aui:script>
-
 <aui:script use="aui-base,autocomplete-base,autocomplete-filters,autocomplete-highlighters">
 	var Lang = A.Lang;
 
 	var AArray = A.Array;
+
+	A.one('#<portlet:namespace />contextPath').on(
+		'change',
+		function(event){
+			var contextPath = event.currentTarget.val();
+
+			var location = '<%= mainJsonwsContextURL %>';
+
+			if (contextPath && (contextPath != '/')) {
+				location = Liferay.Util.addParams('contextPath=' + contextPath, location);
+			}
+
+			window.location.href = location;
+		}
+	);
 
 	var ServiceFilter = A.Component.create(
 		{

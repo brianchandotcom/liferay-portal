@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -74,7 +75,6 @@ import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.dynamicdatamapping.lar.DDMPortletDataHandlerImpl;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
-import com.liferay.portlet.dynamicdatamapping.service.persistence.DDMStructureUtil;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 import com.liferay.portlet.dynamicdatamapping.storage.StorageEngineUtil;
 import com.liferay.util.PwdGenerator;
@@ -1367,17 +1367,13 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 				portletDataContext, structureElement);
 		}
 
-		String[] ddmStructureUuids = StringUtil.split(
-			fileEntryTypeElement.attributeValue("structureUuids"));
+		Map<Long, Long> ddmStructureNewIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				DDMStructure.class);
 
-		long[] ddmStrutureIds = new long[ddmStructureUuids.length];
-
-		for (int i = 0; i < ddmStructureUuids.length; i++) {
-			DDMStructure existingStructure = DDMStructureUtil.fetchByUUID_G(
-				ddmStructureUuids[i], portletDataContext.getScopeGroupId());
-
-			ddmStrutureIds[i] = existingStructure.getStructureId();
-		}
+		long[] ddmStructureIds = ArrayUtil.toArray(
+			ddmStructureNewIds.values().toArray(
+				new Long[ddmStructureNewIds.size()]));
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			path, dlFileEntryType, _NAMESPACE);
@@ -1396,13 +1392,13 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 				importedDLFileEntryType =
 					DLFileEntryTypeLocalServiceUtil.addFileEntryType(
 						userId, portletDataContext.getScopeGroupId(), name,
-						dlFileEntryType.getDescription(), ddmStrutureIds,
+						dlFileEntryType.getDescription(), ddmStructureIds,
 						serviceContext);
 			}
 			else {
 				DLFileEntryTypeLocalServiceUtil.updateFileEntryType(
 					userId, existingDLFileEntryType.getFileEntryTypeId(), name,
-					dlFileEntryType.getDescription(), ddmStrutureIds,
+					dlFileEntryType.getDescription(), ddmStructureIds,
 					serviceContext);
 
 				importedDLFileEntryType = existingDLFileEntryType;
@@ -1412,7 +1408,7 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 			importedDLFileEntryType =
 				DLFileEntryTypeLocalServiceUtil.addFileEntryType(
 					userId, portletDataContext.getScopeGroupId(), name,
-					dlFileEntryType.getDescription(), ddmStrutureIds,
+					dlFileEntryType.getDescription(), ddmStructureIds,
 					serviceContext);
 		}
 

@@ -32,6 +32,7 @@ public class ViewDMFolder2AddMultipleDocumentsDMDActionsTest
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("DM Folder2 Name"),
 			selenium.getText("//tr[4]/td[1]/a[2]/strong"));
+		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText(
 				"xPath=(//span[@title='Actions']/ul/li/strong/a/span)[2]"));
@@ -49,9 +50,7 @@ public class ViewDMFolder2AddMultipleDocumentsDMDActionsTest
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace("\u00ab Back"),
 			selenium.getText("//span[@class='header-back-to']/a"));
-		assertTrue(selenium.isVisible(
-				"link=Browse (you can select multiple files)."));
-		assertTrue(selenium.isVisible(
-				"//div[@class='lfr-upload-movie-content']/object"));
+		assertTrue(selenium.isVisible("//h4[@class='drop-file-text']"));
+		assertTrue(selenium.isVisible("//input[@value='Select Files']"));
 	}
 }

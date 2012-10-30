@@ -59,14 +59,9 @@
 	<td>Move to the Recycle Bin</td>
 </tr>
 <tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to move this to the Recycle Bin?</td>
-	<td></td>
-</tr>
-<tr>
 	<td>assertText</td>
-	<td>//div[@class='portlet-msg-success']</td>
-	<td>Your request completed successfully.</td>
+	<td>//div[@class='portlet-msg-success taglib-trash-undo']</td>
+	<td>The selected item was moved to the Recycle Bin. Undo</td>
 </tr>
 <tr>
 	<td>storeElementPresent</td>
@@ -109,14 +104,9 @@
 	<td>Move to the Recycle Bin</td>
 </tr>
 <tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to move this to the Recycle Bin?</td>
-	<td></td>
-</tr>
-<tr>
 	<td>assertText</td>
-	<td>//div[@class='portlet-msg-success']</td>
-	<td>Your request completed successfully.</td>
+	<td>//div[@class='portlet-msg-success taglib-trash-undo']</td>
+	<td>The selected item was moved to the Recycle Bin. Undo</td>
 </tr>
 <tr>
 	<td>storeElementPresent</td>
@@ -159,14 +149,9 @@
 	<td>Move to the Recycle Bin</td>
 </tr>
 <tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to move this to the Recycle Bin?</td>
-	<td></td>
-</tr>
-<tr>
 	<td>assertText</td>
-	<td>//div[@class='portlet-msg-success']</td>
-	<td>Your request completed successfully.</td>
+	<td>//div[@class='portlet-msg-success taglib-trash-undo']</td>
+	<td>The selected item was moved to the Recycle Bin. Undo</td>
 </tr>
 <tr>
 	<td>storeElementPresent</td>
@@ -209,14 +194,9 @@
 	<td>Move to the Recycle Bin</td>
 </tr>
 <tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to move this to the Recycle Bin?</td>
-	<td></td>
-</tr>
-<tr>
 	<td>assertText</td>
-	<td>//div[@class='portlet-msg-success']</td>
-	<td>Your request completed successfully.</td>
+	<td>//div[@class='portlet-msg-success taglib-trash-undo']</td>
+	<td>The selected item was moved to the Recycle Bin. Undo</td>
 </tr>
 <tr>
 	<td>storeElementPresent</td>
@@ -259,14 +239,9 @@
 	<td>Move to the Recycle Bin</td>
 </tr>
 <tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to move this to the Recycle Bin?</td>
-	<td></td>
-</tr>
-<tr>
 	<td>assertText</td>
-	<td>//div[@class='portlet-msg-success']</td>
-	<td>Your request completed successfully.</td>
+	<td>//div[@class='portlet-msg-success taglib-trash-undo']</td>
+	<td>The selected item was moved to the Recycle Bin. Undo</td>
 </tr>
 <tr>
 	<td>label</td>
@@ -340,58 +315,33 @@
 </tr>
 <tr>
 	<td>storeElementPresent</td>
-	<td>//input[@name='_182_rowIds']</td>
-	<td>dmDocumentNotDeleted</td>
+	<td>//form[@id='_182_emptyForm']/a</td>
+	<td>recycleBinPresent</td>
 </tr>
 <tr>
 	<td>gotoIf</td>
-	<td>!${dmDocumentNotDeleted}</td>
-	<td>DMDocumentDeleted</td>
+	<td>!${recycleBinPresent}</td>
+	<td>RecycleBinNotPresent</td>
 </tr>
 <tr>
-	<td>assertNotChecked</td>
-	<td>//input[@name='_182_allRowIds']</td>
-	<td>All Entries Check Box</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//input[@name='_182_allRowIds']</td>
-	<td>All Entries Check Box</td>
-</tr>
-<tr>
-	<td>assertChecked</td>
-	<td>//input[@name='_182_allRowIds']</td>
-	<td>All Entries Check Box</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//tr[@class='portlet-section-body results-row last selected']</td>
-	<td>Row Selected</td>
+	<td>assertText</td>
+	<td>//form[@id='_182_emptyForm']/a</td>
+	<td>Empty the Recycle Bin</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//input[@value='Delete']</td>
-	<td>Delete</td>
+	<td>//form[@id='_182_emptyForm']/a</td>
+	<td>Empty the Recycle Bin</td>
 </tr>
 <tr>
 	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete the selected entries? They will be deleted immediately.</td>
+	<td>Are you sure you want to empty the Recycle Bin?</td>
 	<td></td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='portlet-msg-success']</td>
-	<td>Your request completed successfully.</td>
 </tr>
 <tr>
 	<td>label</td>
-	<td>DMDocumentDeleted</td>
+	<td>RecycleBinNotPresent</td>
 	<td></td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='portlet-msg-info' and contains(.,'The Recycle Bin is empty.')]</td>
-	<td>The Recycle Bin is empty.</td>
 </tr>
 </tbody>
 </table>

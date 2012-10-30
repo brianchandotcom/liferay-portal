@@ -35,6 +35,10 @@ public class ViewDeleteDMDocumentsDMDActionsTest extends BaseTestCase {
 		assertFalse(selenium.isTextPresent("DM Document2 Title"));
 		assertFalse(selenium.isTextPresent("DM Document3 Title"));
 		selenium.open("/web/guest/home/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");

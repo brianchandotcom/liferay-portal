@@ -58,11 +58,10 @@ public class TearDownDMDocumentDMDTest extends BaseTestCase {
 				selenium.clickAt("//a[contains(@id,'objectsSearchContainer_1_menu_move-to-the-recycle-bin')]",
 					RuntimeVariables.replace("Move to the Recycle Bin"));
 				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to move this to the Recycle Bin[\\s\\S]$"));
 				assertEquals(RuntimeVariables.replace(
-						"Your request completed successfully."),
-					selenium.getText("//div[@class='portlet-msg-success']"));
+						"The selected item was moved to the Recycle Bin. Undo"),
+					selenium.getText(
+						"//div[@class='portlet-msg-success taglib-trash-undo']"));
 
 				boolean dmDocument2Present = selenium.isElementPresent(
 						"//span[@class='entry-title']");
@@ -87,11 +86,10 @@ public class TearDownDMDocumentDMDTest extends BaseTestCase {
 				selenium.clickAt("//a[contains(@id,'objectsSearchContainer_1_menu_move-to-the-recycle-bin')]",
 					RuntimeVariables.replace("Move to the Recycle Bin"));
 				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to move this to the Recycle Bin[\\s\\S]$"));
 				assertEquals(RuntimeVariables.replace(
-						"Your request completed successfully."),
-					selenium.getText("//div[@class='portlet-msg-success']"));
+						"The selected item was moved to the Recycle Bin. Undo"),
+					selenium.getText(
+						"//div[@class='portlet-msg-success taglib-trash-undo']"));
 
 				boolean dmDocument3Present = selenium.isElementPresent(
 						"//span[@class='entry-title']");
@@ -116,11 +114,10 @@ public class TearDownDMDocumentDMDTest extends BaseTestCase {
 				selenium.clickAt("//a[contains(@id,'objectsSearchContainer_1_menu_move-to-the-recycle-bin')]",
 					RuntimeVariables.replace("Move to the Recycle Bin"));
 				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to move this to the Recycle Bin[\\s\\S]$"));
 				assertEquals(RuntimeVariables.replace(
-						"Your request completed successfully."),
-					selenium.getText("//div[@class='portlet-msg-success']"));
+						"The selected item was moved to the Recycle Bin. Undo"),
+					selenium.getText(
+						"//div[@class='portlet-msg-success taglib-trash-undo']"));
 
 				boolean dmDocument4Present = selenium.isElementPresent(
 						"//span[@class='entry-title']");
@@ -145,11 +142,10 @@ public class TearDownDMDocumentDMDTest extends BaseTestCase {
 				selenium.clickAt("//a[contains(@id,'objectsSearchContainer_1_menu_move-to-the-recycle-bin')]",
 					RuntimeVariables.replace("Move to the Recycle Bin"));
 				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to move this to the Recycle Bin[\\s\\S]$"));
 				assertEquals(RuntimeVariables.replace(
-						"Your request completed successfully."),
-					selenium.getText("//div[@class='portlet-msg-success']"));
+						"The selected item was moved to the Recycle Bin. Undo"),
+					selenium.getText(
+						"//div[@class='portlet-msg-success taglib-trash-undo']"));
 
 				boolean dmDocument5Present = selenium.isElementPresent(
 						"//span[@class='entry-title']");
@@ -174,11 +170,10 @@ public class TearDownDMDocumentDMDTest extends BaseTestCase {
 				selenium.clickAt("//a[contains(@id,'objectsSearchContainer_1_menu_move-to-the-recycle-bin')]",
 					RuntimeVariables.replace("Move to the Recycle Bin"));
 				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to move this to the Recycle Bin[\\s\\S]$"));
 				assertEquals(RuntimeVariables.replace(
-						"Your request completed successfully."),
-					selenium.getText("//div[@class='portlet-msg-success']"));
+						"The selected item was moved to the Recycle Bin. Undo"),
+					selenium.getText(
+						"//div[@class='portlet-msg-success taglib-trash-undo']"));
 
 			case 2:
 			case 3:
@@ -204,37 +199,24 @@ public class TearDownDMDocumentDMDTest extends BaseTestCase {
 					RuntimeVariables.replace("Recycle Bin"));
 				selenium.waitForPageToLoad("30000");
 
-				boolean dmDocumentNotDeleted = selenium.isElementPresent(
-						"//input[@name='_182_rowIds']");
+				boolean recycleBinPresent = selenium.isElementPresent(
+						"//form[@id='_182_emptyForm']/a");
 
-				if (!dmDocumentNotDeleted) {
+				if (!recycleBinPresent) {
 					label = 7;
 
 					continue;
 				}
 
-				assertFalse(selenium.isChecked(
-						"//input[@name='_182_allRowIds']"));
-				selenium.clickAt("//input[@name='_182_allRowIds']",
-					RuntimeVariables.replace("All Entries Check Box"));
-				assertTrue(selenium.isChecked("//input[@name='_182_allRowIds']"));
-				selenium.waitForVisible(
-					"//tr[@class='portlet-section-body results-row last selected']");
-				selenium.clickAt("//input[@value='Delete']",
-					RuntimeVariables.replace("Delete"));
+				assertEquals(RuntimeVariables.replace("Empty the Recycle Bin"),
+					selenium.getText("//form[@id='_182_emptyForm']/a"));
+				selenium.clickAt("//form[@id='_182_emptyForm']/a",
+					RuntimeVariables.replace("Empty the Recycle Bin"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete the selected entries[\\s\\S] They will be deleted immediately.$"));
-				assertEquals(RuntimeVariables.replace(
-						"Your request completed successfully."),
-					selenium.getText("//div[@class='portlet-msg-success']"));
+								   .matches("^Are you sure you want to empty the Recycle Bin[\\s\\S]$"));
 
 			case 7:
-				assertEquals(RuntimeVariables.replace(
-						"The Recycle Bin is empty."),
-					selenium.getText(
-						"//div[@class='portlet-msg-info' and contains(.,'The Recycle Bin is empty.')]"));
-
 			case 100:
 				label = -1;
 			}

@@ -45,9 +45,7 @@ public class ViewDMFolder1AddMultipleDocumentsDMDDetailsTest
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace("\u00ab Back"),
 			selenium.getText("//span[@class='header-back-to']/a"));
-		assertTrue(selenium.isVisible(
-				"link=Browse (you can select multiple files)."));
-		assertTrue(selenium.isVisible(
-				"//div[@class='lfr-upload-movie-content']/object"));
+		assertTrue(selenium.isVisible("//h4[@class='drop-file-text']"));
+		assertTrue(selenium.isVisible("//input[@value='Select Files']"));
 	}
 }

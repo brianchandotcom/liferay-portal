@@ -17,6 +17,7 @@ package com.liferay.portlet.wiki.attachments;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
@@ -32,6 +33,7 @@ import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
 import java.io.File;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -45,6 +47,11 @@ import org.junit.runner.RunWith;
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class WikiAttachmentsTrashTest {
+
+	@Before
+	public void setUp() throws Exception {
+		_group = ServiceTestUtil.addGroup();
+	}
 
 	@Test
 	@Transactional
@@ -61,7 +68,7 @@ public class WikiAttachmentsTrashTest {
 	private void trashWikiAttachments(boolean restore) throws Exception {
 		ServiceContext serviceContext = new ServiceContext();
 
-		serviceContext.setScopeGroupId(TestPropsValues.getGroupId());
+		serviceContext.setScopeGroupId(_group.getGroupId());
 
 		WikiNode wikiNode = WikiNodeLocalServiceUtil.addNode(
 			TestPropsValues.getUserId(), ServiceTestUtil.randomString(), "",
@@ -151,5 +158,7 @@ public class WikiAttachmentsTrashTest {
 				initialTrashEntriesCount, deletedAttachmentsFiles.length);
 		}
 	}
+
+	private Group _group;
 
 }

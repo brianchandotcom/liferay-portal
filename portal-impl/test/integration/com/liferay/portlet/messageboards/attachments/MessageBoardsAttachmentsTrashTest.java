@@ -18,8 +18,10 @@ import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.model.CompanyConstants;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.TransactionalCallbackAwareExecutionTestListener;
@@ -36,6 +38,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -49,6 +52,11 @@ import org.junit.runner.RunWith;
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class MessageBoardsAttachmentsTrashTest {
+
+	@Before
+	public void setUp() throws Exception {
+		_group = ServiceTestUtil.addGroup();
+	}
 
 	@Test
 	@Transactional
@@ -88,10 +96,10 @@ public class MessageBoardsAttachmentsTrashTest {
 
 		ServiceContext serviceContext = new ServiceContext();
 
-		serviceContext.setScopeGroupId(TestPropsValues.getGroupId());
+		serviceContext.setScopeGroupId(_group.getGroupId());
 
 		MBMessage message = MBMessageLocalServiceUtil.addMessage(
-			user.getUserId(), user.getFullName(), TestPropsValues.getGroupId(),
+			user.getUserId(), user.getFullName(), _group.getGroupId(),
 			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, "Subject", "Body",
 			MBMessageConstants.DEFAULT_FORMAT,
 			getInputStreamOVPs("company_logo.png"), false, 0, false,
@@ -165,5 +173,7 @@ public class MessageBoardsAttachmentsTrashTest {
 				message.getMessageId(), fileName);
 		}
 	}
+
+	private Group _group;
 
 }

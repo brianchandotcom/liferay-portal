@@ -67,6 +67,10 @@ public interface LiferaySelenium extends Selenium {
 
 	public void clickAtAndWait(String locator, String coordString);
 
+	public void copyText(String locator);
+
+	public void copyValue(String locator);
+
 	public void downloadTempFile(String value);
 
 	public void echo(String message);
@@ -92,6 +96,8 @@ public interface LiferaySelenium extends Selenium {
 	public void keyPressAndWait(String locator, String keySequence);
 
 	public void keyUpAndWait(String locator, String keySequence);
+
+	public void paste(String locator);
 
 	public void pause(String waitTime) throws Exception;
 

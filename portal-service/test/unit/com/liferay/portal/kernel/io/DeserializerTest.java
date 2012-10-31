@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.io;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
+import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.ObjectOutputStream;
 import java.io.StreamCorruptedException;
@@ -314,6 +315,30 @@ public class DeserializerTest {
 	}
 
 	@Test
+	public void testReadObjectClass() throws Exception {
+		Class<?> clazz = getClass();
+
+		String className = clazz.getName();
+
+		ByteBuffer byteBuffer = ByteBuffer.allocate(className.length() + 11);
+
+		byteBuffer.put(SerializationConstants.TC_CLASS);
+		byteBuffer.put((byte)1);
+		byteBuffer.putInt(0);
+		byteBuffer.put((byte)1);
+		byteBuffer.putInt(className.length());
+		byteBuffer.put(className.getBytes(StringPool.UTF8));
+
+		byteBuffer.flip();
+
+		Deserializer deserializer = new Deserializer(byteBuffer);
+
+		Class<?> readClass = deserializer.readObject();
+
+		Assert.assertSame(clazz, readClass);
+	}
+
+	@Test
 	public void testReadObjectDouble() throws ClassNotFoundException {
 		ByteBuffer byteBuffer = ByteBuffer.allocate(9);
 
@@ -531,7 +556,7 @@ public class DeserializerTest {
 	public void testReadObjectUnknowTCCode() throws ClassNotFoundException {
 		ByteBuffer byteBuffer = ByteBuffer.allocate(1);
 
-		byteBuffer.put((byte)11);
+		byteBuffer.put((byte)12);
 
 		Deserializer deserializer = new Deserializer(byteBuffer);
 
@@ -539,7 +564,7 @@ public class DeserializerTest {
 			deserializer.readObject();
 		}
 		catch (IllegalStateException ise) {
-			Assert.assertEquals("Unkown TC code 11", ise.getMessage());
+			Assert.assertEquals("Unkown TC code 12", ise.getMessage());
 		}
 	}
 

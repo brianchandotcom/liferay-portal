@@ -19,11 +19,13 @@ import com.liferay.portal.kernel.io.Serializer.BufferQueue;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.test.NewClassLoaderJUnitTestRunner;
+import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -582,6 +584,32 @@ public class SerializerTest {
 		Assert.assertEquals(
 			SerializationConstants.TC_CHARACTER, byteBuffer.get());
 		Assert.assertEquals('a', byteBuffer.getChar());
+	}
+
+	@Test
+	public void testWriteObjectClass() throws UnsupportedEncodingException {
+		Serializer serializer = new Serializer();
+
+		Class<?> clazz = getClass();
+
+		String className = clazz.getName();
+
+		serializer.writeObject(clazz);
+
+		ByteBuffer byteBuffer = serializer.toByteBuffer();
+
+		Assert.assertEquals(className.length() + 11, byteBuffer.limit());
+
+		Assert.assertEquals(SerializationConstants.TC_CLASS, byteBuffer.get());
+		Assert.assertEquals(1, byteBuffer.get());
+		Assert.assertEquals(0, byteBuffer.getInt());
+		Assert.assertEquals(1, byteBuffer.get());
+		Assert.assertEquals(className.length(), byteBuffer.getInt());
+		Assert.assertEquals(
+			className,
+			new String(
+				byteBuffer.array(), byteBuffer.position(),
+				byteBuffer.remaining(), StringPool.UTF8));
 	}
 
 	@Test

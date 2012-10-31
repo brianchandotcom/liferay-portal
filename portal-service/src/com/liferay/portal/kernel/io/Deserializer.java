@@ -117,6 +117,15 @@ public class Deserializer {
 			case SerializationConstants.TC_CHARACTER:
 				return (T)Character.valueOf(readChar());
 
+			case SerializationConstants.TC_CLASS:
+				String contextName = readString();
+				String className = readString();
+
+				ClassLoader classLoader = ClassLoaderPool.getClassLoader(
+					contextName);
+
+				return (T)classLoader.loadClass(className);
+
 			case SerializationConstants.TC_DOUBLE:
 				return (T)Double.valueOf(readDouble());
 
@@ -139,10 +148,9 @@ public class Deserializer {
 				return (T)readString();
 
 			case SerializationConstants.TC_CONTEXT_NAME:
-				String contextName = readString();
+				contextName = readString();
 
-				ClassLoader classLoader = ClassLoaderPool.getClassLoader(
-					contextName);
+				classLoader = ClassLoaderPool.getClassLoader(contextName);
 
 				try {
 					ObjectInputStream objectInpputStream =

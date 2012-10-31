@@ -40,6 +40,7 @@ import java.util.regex.Pattern;
  *
  * @author Alexander Chow
  * @author Hugo Huijser
+ * @author Peter Shin
  */
 public abstract class VerifyProcess extends BaseDBProcess {
 
@@ -55,7 +56,11 @@ public abstract class VerifyProcess extends BaseDBProcess {
 				_log.info("Verifying " + getClass().getName());
 			}
 
+			addTemporaryIndexes();
+
 			doVerify();
+
+			dropTemporaryIndexes();
 		}
 		catch (Exception e) {
 			throw new VerifyException(e);

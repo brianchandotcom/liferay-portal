@@ -793,9 +793,17 @@
 		Util,
 		'afterIframeLoaded',
 		function(event) {
-			A.Node._instances = {};
+			var nodeInstances = A.Node._instances;
 
-			var iframeDocument = A.one(event.doc);
+			var docEl = event.doc;
+
+			var docUID = docEl._yuid;
+
+			if (docUID in nodeInstances) {
+				delete nodeInstances[docUID];
+			}
+
+			var iframeDocument = A.one(docEl);
 
 			var iframeBody = iframeDocument.one('body');
 

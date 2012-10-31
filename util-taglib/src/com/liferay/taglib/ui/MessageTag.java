@@ -89,11 +89,20 @@ public class MessageTag extends TagSupport {
 	}
 
 	public void setArguments(Object argument) {
-		_arguments = new Object[] {argument};
-	}
+		if (argument == null) {
+			_arguments = null;
 
-	public void setArguments(Object[] arguments) {
-		_arguments = arguments;
+			return;
+		}
+
+		Class<?> clazz = argument.getClass();
+
+		if (clazz.isArray()) {
+			_arguments = (Object[])argument;
+		}
+		else {
+			_arguments = new Object[] {argument};
+		}
 	}
 
 	public void setKey(String key) {

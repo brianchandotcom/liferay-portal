@@ -77,7 +77,7 @@ for GPG setup instructions.
 
 		<ant dir="${tstamp.value}" target="install" inheritall="false" />
 
-		<delete dir="${tstamp.value}" />
+		<delete dir="${tstamp.value}" failonerror="false" />
 	</target>
 
 	<target name="install-release-artifacts">

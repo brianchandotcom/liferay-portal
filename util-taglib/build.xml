@@ -80,6 +80,19 @@
 
 		<mkdir dir="${doc.taglibs.dir}" />
 
+		<tstamp>
+			<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
+		</tstamp>
+
+		<property name="tlddoc.temp.dir" value="${java.io.tmpdir}/${tstamp.value}" />
+
+		<mkdir dir="${tlddoc.temp.dir}" />
+
+		<copy todir="${tlddoc.temp.dir}">
+			<fileset dir="${doc.dir}/taglibs" includes="**/*" />
+			<fileset dir="${project.dir}/util-taglib/src/META-INF/" includes="*.tld" />
+		</copy>
+
 		<java
 			classname="com.sun.tlddoc.TLDDoc"
 			classpathref="project.classpath"
@@ -87,7 +100,7 @@
 			fork="true"
 			maxmemory="256m"
 		>
-			<arg line="-d ${doc.taglibs.dir}" />
+			<arg line="-d ${tlddoc.temp.dir}" />
 			<arg value="${project.dir}/util-taglib/src/META-INF/aui.tld" />
 			<arg value="${project.dir}/util-taglib/src/META-INF/liferay-faces.tld" />
 			<arg value="${project.dir}/util-taglib/src/META-INF/liferay-portlet-ext.tld" />
@@ -97,5 +110,17 @@
 			<arg value="${project.dir}/util-taglib/src/META-INF/liferay-ui.tld" />
 			<arg value="${project.dir}/util-taglib/src/META-INF/liferay-util.tld" />
 		</java>
+
+		<delete>
+			<fileset dir="${tlddoc.temp.dir}">
+			    <include name="*.tld"/>
+			</fileset>
+		</delete>
+
+		<copy todir="${doc.taglibs.dir}">
+			<fileset dir="${tlddoc.temp.dir}" includes="**/*" />
+		</copy>
+
+		<delete dir="${tlddoc.temp.dir}" />
 	</target>
 </project>

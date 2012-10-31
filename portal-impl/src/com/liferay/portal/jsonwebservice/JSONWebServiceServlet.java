@@ -74,7 +74,11 @@ public class JSONWebServiceServlet extends JSONServlet {
 
 		if (!path.equals(StringPool.SLASH) && !path.equals(StringPool.BLANK)) {
 			try {
-				_servicePreAction(request, response);
+				ServicePreAction servicePreAction =
+					(ServicePreAction)InstancePool.get(
+						ServicePreAction.class.getName());
+
+				servicePreAction.initLocale(request, response, null);
 			}
 			catch (Exception e) {
 				throw new ServletException(e);
@@ -173,16 +177,6 @@ public class JSONWebServiceServlet extends JSONServlet {
 		_jsonWebServiceServiceAction.setServletContext(servletContext);
 
 		return _jsonWebServiceServiceAction;
-	}
-
-	private void _servicePreAction(
-			HttpServletRequest request, HttpServletResponse response)
-		throws Exception {
-
-		ServicePreAction servicePreAction = (ServicePreAction)InstancePool.get(
-			ServicePreAction.class.getName());
-
-		servicePreAction.initApiService(request, response);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

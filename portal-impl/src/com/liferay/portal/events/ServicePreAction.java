@@ -138,44 +138,103 @@ public class ServicePreAction extends Action {
 		initImportLARFiles();
 	}
 
-	public void initApiService(
-			HttpServletRequest request, HttpServletResponse response)
+	public Locale initLocale(
+			HttpServletRequest request, HttpServletResponse response, User user)
 		throws Exception {
+
+		if (user == null) {
+			try {
+				user = initUser(request);
+			}
+			catch (NoSuchUserException nsue) {
+				return null;
+			}
+		}
+
+		boolean signedIn = !user.isDefaultUser();
 
 		HttpSession session = request.getSession();
 
-		// Company
+		String doAsUserLanguageId = ParamUtil.getString(
+			request, "doAsUserLanguageId");
 
-		Company company = PortalUtil.getCompany(request);
+		Locale locale = (Locale)session.getAttribute(Globals.LOCALE_KEY);
 
-		// User
-
-		User user = null;
-
-		try {
-			user = PortalUtil.getUser(request);
+		if (Validator.isNotNull(doAsUserLanguageId)) {
+			locale = LocaleUtil.fromLanguageId(doAsUserLanguageId);
 		}
-		catch (NoSuchUserException nsue) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(nsue.getMessage());
+
+		String i18nLanguageId = (String)request.getAttribute(
+			WebKeys.I18N_LANGUAGE_ID);
+
+		if (Validator.isNotNull(i18nLanguageId)) {
+			locale = LocaleUtil.fromLanguageId(i18nLanguageId);
+		}
+		else if (locale == null) {
+			if (signedIn) {
+				locale = user.getLocale();
+			}
+			else {
+
+				// User previously set their preferred language
+
+				String languageId = CookieKeys.getCookie(
+					request, CookieKeys.GUEST_LANGUAGE_ID, false);
+
+				if (Validator.isNotNull(languageId)) {
+					locale = LocaleUtil.fromLanguageId(languageId);
+				}
+
+				// Get locale from the request
+
+				if ((locale == null) && PropsValues.LOCALE_DEFAULT_REQUEST) {
+					Enumeration<Locale> locales = request.getLocales();
+
+					while (locales.hasMoreElements()) {
+						Locale requestLocale = locales.nextElement();
+
+						if (Validator.isNull(requestLocale.getCountry())) {
+
+							// Locales must contain a country code
+
+							requestLocale = LanguageUtil.getLocale(
+								requestLocale.getLanguage());
+						}
+
+						if (LanguageUtil.isAvailableLocale(requestLocale)) {
+							locale = requestLocale;
+
+							break;
+						}
+					}
+				}
+
+				// Get locale from the default user
+
+				if (locale == null) {
+					locale = user.getLocale();
+				}
+
+				if (Validator.isNull(locale.getCountry())) {
+
+					// Locales must contain a country code
+
+					locale = LanguageUtil.getLocale(locale.getLanguage());
+				}
+
+				if (!LanguageUtil.isAvailableLocale(locale)) {
+					locale = user.getLocale();
+				}
 			}
 
-			long userId = PortalUtil.getUserId(request);
+			session.setAttribute(Globals.LOCALE_KEY, locale);
 
-			if (userId > 0) {
-				session.invalidate();
-			}
-
-			return;
+			LanguageUtil.updateCookie(request, response, locale);
 		}
-
-		if (user == null) {
-			user = company.getDefaultUser();
-		}
-
-		Locale locale = initLocale(request, response, user);
 
 		LocaleThreadLocal.setThemeDisplayLocale(locale);
+
+		return locale;
 	}
 
 	public ThemeDisplay initThemeDisplay(
@@ -276,30 +335,13 @@ public class ServicePreAction extends Action {
 		User user = null;
 
 		try {
-			user = PortalUtil.getUser(request);
+			user = initUser(request);
 		}
 		catch (NoSuchUserException nsue) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(nsue.getMessage());
-			}
-
-			long userId = PortalUtil.getUserId(request);
-
-			if (userId > 0) {
-				session.invalidate();
-			}
-
 			return null;
 		}
 
-		boolean signedIn = false;
-
-		if (user == null) {
-			user = company.getDefaultUser();
-		}
-		else if (!user.isDefaultUser()) {
-			signedIn = true;
-		}
+		boolean signedIn = !user.isDefaultUser();
 
 		if (PropsValues.BROWSER_CACHE_DISABLED ||
 			(PropsValues.BROWSER_CACHE_SIGNED_IN_DISABLED && signedIn)) {
@@ -1724,95 +1766,33 @@ public class ServicePreAction extends Action {
 		}
 	}
 
-	protected Locale initLocale(
-		HttpServletRequest request, HttpServletResponse response, User user) {
+	protected User initUser(HttpServletRequest request) throws Exception {
+		try {
+			User user = PortalUtil.getUser(request);
 
-		boolean signedIn = false;
-
-		if (!user.isDefaultUser()) {
-			signedIn = true;
-		}
-
-		HttpSession session = request.getSession();
-
-		String doAsUserLanguageId = ParamUtil.getString(
-			request, "doAsUserLanguageId");
-
-		Locale locale = (Locale)session.getAttribute(Globals.LOCALE_KEY);
-
-		if (Validator.isNotNull(doAsUserLanguageId)) {
-			locale = LocaleUtil.fromLanguageId(doAsUserLanguageId);
-		}
-
-		String i18nLanguageId = (String)request.getAttribute(
-			WebKeys.I18N_LANGUAGE_ID);
-
-		if (Validator.isNotNull(i18nLanguageId)) {
-			locale = LocaleUtil.fromLanguageId(i18nLanguageId);
-		}
-		else if (locale == null) {
-			if (signedIn) {
-				locale = user.getLocale();
+			if (user != null) {
+				return user;
 			}
-			else {
-
-				// User previously set their preferred language
-
-				String languageId = CookieKeys.getCookie(
-					request, CookieKeys.GUEST_LANGUAGE_ID, false);
-
-				if (Validator.isNotNull(languageId)) {
-					locale = LocaleUtil.fromLanguageId(languageId);
-				}
-
-				// Get locale from the request
-
-				if ((locale == null) && PropsValues.LOCALE_DEFAULT_REQUEST) {
-					Enumeration<Locale> locales = request.getLocales();
-
-					while (locales.hasMoreElements()) {
-						Locale requestLocale = locales.nextElement();
-
-						if (Validator.isNull(requestLocale.getCountry())) {
-
-							// Locales must contain a country code
-
-							requestLocale = LanguageUtil.getLocale(
-								requestLocale.getLanguage());
-						}
-
-						if (LanguageUtil.isAvailableLocale(requestLocale)) {
-							locale = requestLocale;
-
-							break;
-						}
-					}
-				}
-
-				// Get locale from the default user
-
-				if (locale == null) {
-					locale = user.getLocale();
-				}
-
-				if (Validator.isNull(locale.getCountry())) {
-
-					// Locales must contain a country code
-
-					locale = LanguageUtil.getLocale(locale.getLanguage());
-				}
-
-				if (!LanguageUtil.isAvailableLocale(locale)) {
-					locale = user.getLocale();
-				}
+		}
+		catch (NoSuchUserException nsue) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(nsue.getMessage());
 			}
 
-			session.setAttribute(Globals.LOCALE_KEY, locale);
+			long userId = PortalUtil.getUserId(request);
 
-			LanguageUtil.updateCookie(request, response, locale);
+			if (userId > 0) {
+				HttpSession session = request.getSession();
+
+				session.invalidate();
+			}
+
+			throw nsue;
 		}
 
-		return locale;
+		Company company = PortalUtil.getCompany(request);
+
+		return company.getDefaultUser();
 	}
 
 	protected boolean isLoginRequest(HttpServletRequest request) {

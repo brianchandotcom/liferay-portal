@@ -25,7 +25,15 @@ long categoryId = MBUtil.getCategoryId(request, category);
 
 long parentCategoryId = BeanParamUtil.getLong(category, request, "parentCategoryId", MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID);
 
-String displayStyle = BeanParamUtil.getString(category, request, "displayStyle", MBCategoryConstants.DEFAULT_DISPLAY_STYLE);
+String defaultDisplayStyle = MBCategoryConstants.DEFAULT_DISPLAY_STYLE;
+
+if ((category == null) && (parentCategoryId > 0)) {
+	MBCategory parentCategory = MBCategoryLocalServiceUtil.getCategory(parentCategoryId);
+
+	defaultDisplayStyle = parentCategory.getDisplayStyle();
+}
+
+String displayStyle = BeanParamUtil.getString(category, request, "displayStyle", defaultDisplayStyle);
 
 MBMailingList mailingList = null;
 

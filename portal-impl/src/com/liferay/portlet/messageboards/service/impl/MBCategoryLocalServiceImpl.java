@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.messageboards.service.impl;
 
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.Indexer;
@@ -413,7 +414,12 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 		category.setParentCategoryId(parentCategoryId);
 		category.setName(name);
 		category.setDescription(description);
-		category.setDisplayStyle(displayStyle);
+
+		if (!category.getDisplayStyle().equals(displayStyle)) {
+			category.setDisplayStyle(displayStyle);
+
+			updateChildrenCategoriesDisplayStyle(category, displayStyle);
+		}
 
 		mbCategoryPersistence.update(category);
 
@@ -566,6 +572,23 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 		mbCategoryPersistence.update(toCategory);
 
 		deleteCategory(fromCategory);
+	}
+
+	protected void updateChildrenCategoriesDisplayStyle(
+			MBCategory category, String displayStyle)
+		throws PortalException, SystemException {
+
+		List<MBCategory> categories = getCategories(
+			category.getGroupId(), category.getCategoryId(), QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS);
+
+		for (MBCategory curCategory : categories) {
+			updateChildrenCategoriesDisplayStyle(curCategory, displayStyle);
+
+			curCategory.setDisplayStyle(displayStyle);
+
+			mbCategoryPersistence.update(curCategory, false);
+		}
 	}
 
 	protected void validate(String name) throws PortalException {

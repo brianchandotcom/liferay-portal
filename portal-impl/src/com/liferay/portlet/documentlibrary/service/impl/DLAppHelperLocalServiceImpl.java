@@ -63,6 +63,7 @@ import com.liferay.portlet.trash.util.TrashUtil;
 import java.io.Serializable;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -444,8 +445,22 @@ public class DLAppHelperLocalServiceImpl
 
 			// App helper
 
-			return dlAppService.moveFileEntry(
+			fileEntry = dlAppService.moveFileEntry(
 				fileEntry.getFileEntryId(), newFolderId, serviceContext);
+
+			// Social
+
+			socialActivityCounterLocalService.enableActivityCounters(
+				DLFileEntryConstants.getClassName(),
+				fileEntry.getFileEntryId());
+
+			socialActivityLocalService.addActivity(
+				userId, fileEntry.getGroupId(),
+				DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId(),
+				SocialActivityConstants.TYPE_RESTORE_FROM_TRASH,
+				StringPool.BLANK, 0);
+
+			return fileEntry;
 		}
 	}
 
@@ -983,18 +998,24 @@ public class DLAppHelperLocalServiceImpl
 
 			// Social
 
-			int activityType = DLActivityKeys.UPDATE_FILE_ENTRY;
+			if ((oldStatus != WorkflowConstants.STATUS_IN_TRASH) &&
+				!latestFileVersion.isInTrashFolder()) {
 
-			if (latestFileVersionVersion.equals(
-					DLFileEntryConstants.VERSION_DEFAULT)) {
+				Date activityDate = latestFileVersion.getModifiedDate();
 
-				activityType = DLActivityKeys.ADD_FILE_ENTRY;
-			}
+				int activityType = DLActivityKeys.UPDATE_FILE_ENTRY;
 
-			if (oldStatus != WorkflowConstants.STATUS_IN_TRASH) {
+				if (latestFileVersionVersion.equals(
+						DLFileEntryConstants.VERSION_DEFAULT)) {
+
+					activityDate = latestFileVersion.getCreateDate();
+
+					activityType = DLActivityKeys.ADD_FILE_ENTRY;
+				}
+
 				socialActivityLocalService.addUniqueActivity(
 					latestFileVersion.getStatusByUserId(),
-					fileEntry.getGroupId(), latestFileVersion.getCreateDate(),
+					fileEntry.getGroupId(), activityDate,
 					DLFileEntryConstants.getClassName(),
 					fileEntry.getFileEntryId(), activityType, StringPool.BLANK,
 					0);

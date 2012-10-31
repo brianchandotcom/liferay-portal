@@ -207,6 +207,10 @@ public class FileVersionProxyBean
 		return _fileVersion.isInTrash();
 	}
 
+	public boolean isInTrashFolder() {
+		return _fileVersion.isInTrashFolder();
+	}
+
 	public boolean isPending() {
 		return _fileVersion.isPending();
 	}

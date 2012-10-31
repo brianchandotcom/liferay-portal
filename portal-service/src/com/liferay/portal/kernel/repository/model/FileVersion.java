@@ -92,6 +92,8 @@ public interface FileVersion extends RepositoryModel<FileVersion> {
 
 	public boolean isInTrash();
 
+	public boolean isInTrashFolder();
+
 	public boolean isPending();
 
 }

@@ -159,6 +159,7 @@ String shortTitle = StringUtil.shorten(title, 60);
 			data="<%= data %>"
 			image="<%= thumbnailSrc %>"
 			label="<%= true %>"
+			linkCssClass="entry-link"
 			localizeMessage="<%= false %>"
 			message="<%= title %>"
 			method="get"

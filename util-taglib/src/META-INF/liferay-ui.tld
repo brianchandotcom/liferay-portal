@@ -1130,6 +1130,11 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>linkCssClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>localizeMessage</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

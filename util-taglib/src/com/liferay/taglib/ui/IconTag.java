@@ -66,6 +66,10 @@ public class IconTag extends IncludeTag {
 		_lang = lang;
 	}
 
+	public void setLinkCssClass(String linkCssClass) {
+		_linkCssClass = linkCssClass;
+	}
+
 	public void setLocalizeMessage(boolean localizeMessage) {
 		_localizeMessage = localizeMessage;
 	}
@@ -112,6 +116,7 @@ public class IconTag extends IncludeTag {
 		_imageHover = null;
 		_label = false;
 		_lang = null;
+		_linkCssClass = null;
 		_localizeMessage = true;
 		_message = null;
 		_method = null;
@@ -172,6 +177,7 @@ public class IconTag extends IncludeTag {
 		request.setAttribute("liferay-ui:icon:imageHover", _imageHover);
 		request.setAttribute("liferay-ui:icon:label", String.valueOf(_label));
 		request.setAttribute("liferay-ui:icon:lang", _lang);
+		request.setAttribute("liferay-ui:icon:linkCssClass", _linkCssClass);
 		request.setAttribute(
 			"liferay-ui:icon:localizeMessage",
 			String.valueOf(_localizeMessage));
@@ -198,6 +204,7 @@ public class IconTag extends IncludeTag {
 	private String _imageHover;
 	private boolean _label;
 	private String _lang;
+	private String _linkCssClass;
 	private boolean _localizeMessage = true;
 	private String _message;
 	private String _method;

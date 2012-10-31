@@ -3,12 +3,6 @@
 		color: #333;
 	}
 
-	.entry-link {
-		display: block;
-		text-align: center;
-		text-decoration: none;
-	}
-
 	.entry-thumbnail {
 		img {
 			background: #EAEAEA;
@@ -75,6 +69,12 @@
 			word-wrap: break-word;
 		}
 
+		.entry-link {
+			display: block;
+			text-align: center;
+			text-decoration: none;
+		}
+
 		.folder-action, .entry-action {
 			overflow: hidden;
 			position: absolute;
@@ -130,6 +130,12 @@
 			display: block;
 			overflow: hidden;
 			word-wrap: break-word;
+		}
+
+		.entry-link {
+			display: block;
+			text-align: center;
+			text-decoration: none;
 		}
 
 		.folder-action, .entry-action {

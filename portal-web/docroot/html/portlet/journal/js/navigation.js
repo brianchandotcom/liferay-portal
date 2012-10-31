@@ -142,7 +142,7 @@ AUI.add(
 						};
 
 						moveConfig.displayStyleCSSClass = displayStyleCSSClass;
-						moveConfig.draggableCSSClass = 'entry-link';
+						moveConfig.draggableCSSClass = '.entry-link';
 						moveConfig.namespace = namespace;
 						moveConfig.portletContainerId = portletContainerId;
 						moveConfig.portletGroup = 'journal';

@@ -136,15 +136,11 @@ private void _buildParentGroupsBreadcrumb(LayoutSet layoutSet, PortletURL portle
 		return;
 	}
 
-	if (group.isOrganization()) {
-		Organization organization = OrganizationLocalServiceUtil.getOrganization(group.getOrganizationId());
+	if (group.isSite()) {
+		Group parentSite = group.getParentGroup();
 
-		Organization parentOrganization = organization.getParentOrganization();
-
-		if (parentOrganization != null) {
-			Group parentGroup = parentOrganization.getGroup();
-
-			LayoutSet parentLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(parentGroup.getGroupId(), layoutSet.isPrivateLayout());
+		if (parentSite != null) {
+			LayoutSet parentLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(parentSite.getGroupId(), layoutSet.isPrivateLayout());
 
 			_buildParentGroupsBreadcrumb(parentLayoutSet, portletURL, themeDisplay, sb);
 		}

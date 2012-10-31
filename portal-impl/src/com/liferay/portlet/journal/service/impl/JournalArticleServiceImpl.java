@@ -295,7 +295,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 			OrderByComparator obc)
 		throws SystemException {
 
-		return journalArticlePersistence.filterFindByG_U(
+		return journalArticlePersistence.filterFindByG_U_C(
 			groupId, userId, start, end, obc);
 	}
 
@@ -320,7 +320,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	public int getArticlesCountByUserId(long groupId, long userId)
 		throws SystemException {
 
-		return journalArticlePersistence.filterCountByG_U(groupId, userId);
+		return journalArticlePersistence.filterCountByG_U_C(groupId, userId);
 	}
 
 	public JournalArticle getDisplayArticleByUrlTitle(

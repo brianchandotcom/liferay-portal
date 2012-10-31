@@ -1416,7 +1416,7 @@ public interface JournalArticlePersistence extends BasePersistence<JournalArticl
 	* @return the matching journal articles
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByG_U(
+	public java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByG_U_C(
 		long groupId, long userId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
@@ -1434,7 +1434,7 @@ public interface JournalArticlePersistence extends BasePersistence<JournalArticl
 	* @return the range of matching journal articles
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByG_U(
+	public java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByG_U_C(
 		long groupId, long userId, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
@@ -1453,7 +1453,7 @@ public interface JournalArticlePersistence extends BasePersistence<JournalArticl
 	* @return the ordered range of matching journal articles
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByG_U(
+	public java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByG_U_C(
 		long groupId, long userId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -1468,7 +1468,7 @@ public interface JournalArticlePersistence extends BasePersistence<JournalArticl
 	* @throws com.liferay.portlet.journal.NoSuchArticleException if a matching journal article could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.journal.model.JournalArticle findByG_U_First(
+	public com.liferay.portlet.journal.model.JournalArticle findByG_U_C_First(
 		long groupId, long userId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
@@ -1483,7 +1483,7 @@ public interface JournalArticlePersistence extends BasePersistence<JournalArticl
 	* @return the first matching journal article, or <code>null</code> if a matching journal article could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.journal.model.JournalArticle fetchByG_U_First(
+	public com.liferay.portlet.journal.model.JournalArticle fetchByG_U_C_First(
 		long groupId, long userId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -1498,7 +1498,7 @@ public interface JournalArticlePersistence extends BasePersistence<JournalArticl
 	* @throws com.liferay.portlet.journal.NoSuchArticleException if a matching journal article could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.journal.model.JournalArticle findByG_U_Last(
+	public com.liferay.portlet.journal.model.JournalArticle findByG_U_C_Last(
 		long groupId, long userId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
@@ -1513,7 +1513,7 @@ public interface JournalArticlePersistence extends BasePersistence<JournalArticl
 	* @return the last matching journal article, or <code>null</code> if a matching journal article could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.journal.model.JournalArticle fetchByG_U_Last(
+	public com.liferay.portlet.journal.model.JournalArticle fetchByG_U_C_Last(
 		long groupId, long userId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -1529,7 +1529,7 @@ public interface JournalArticlePersistence extends BasePersistence<JournalArticl
 	* @throws com.liferay.portlet.journal.NoSuchArticleException if a journal article with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.journal.model.JournalArticle[] findByG_U_PrevAndNext(
+	public com.liferay.portlet.journal.model.JournalArticle[] findByG_U_C_PrevAndNext(
 		long id, long groupId, long userId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
@@ -1543,7 +1543,7 @@ public interface JournalArticlePersistence extends BasePersistence<JournalArticl
 	* @return the matching journal articles that the user has permission to view
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.portlet.journal.model.JournalArticle> filterFindByG_U(
+	public java.util.List<com.liferay.portlet.journal.model.JournalArticle> filterFindByG_U_C(
 		long groupId, long userId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
@@ -1561,7 +1561,7 @@ public interface JournalArticlePersistence extends BasePersistence<JournalArticl
 	* @return the range of matching journal articles that the user has permission to view
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.portlet.journal.model.JournalArticle> filterFindByG_U(
+	public java.util.List<com.liferay.portlet.journal.model.JournalArticle> filterFindByG_U_C(
 		long groupId, long userId, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
@@ -1580,7 +1580,7 @@ public interface JournalArticlePersistence extends BasePersistence<JournalArticl
 	* @return the ordered range of matching journal articles that the user has permission to view
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.portlet.journal.model.JournalArticle> filterFindByG_U(
+	public java.util.List<com.liferay.portlet.journal.model.JournalArticle> filterFindByG_U_C(
 		long groupId, long userId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -1596,7 +1596,7 @@ public interface JournalArticlePersistence extends BasePersistence<JournalArticl
 	* @throws com.liferay.portlet.journal.NoSuchArticleException if a journal article with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.journal.model.JournalArticle[] filterFindByG_U_PrevAndNext(
+	public com.liferay.portlet.journal.model.JournalArticle[] filterFindByG_U_C_PrevAndNext(
 		long id, long groupId, long userId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
@@ -5160,7 +5160,7 @@ public interface JournalArticlePersistence extends BasePersistence<JournalArticl
 	* @param userId the user ID
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByG_U(long groupId, long userId)
+	public void removeByG_U_C(long groupId, long userId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
@@ -5499,7 +5499,7 @@ public interface JournalArticlePersistence extends BasePersistence<JournalArticl
 	* @return the number of matching journal articles
 	* @throws SystemException if a system exception occurred
 	*/
-	public int countByG_U(long groupId, long userId)
+	public int countByG_U_C(long groupId, long userId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
@@ -5510,7 +5510,7 @@ public interface JournalArticlePersistence extends BasePersistence<JournalArticl
 	* @return the number of matching journal articles that the user has permission to view
 	* @throws SystemException if a system exception occurred
 	*/
-	public int filterCountByG_U(long groupId, long userId)
+	public int filterCountByG_U_C(long groupId, long userId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

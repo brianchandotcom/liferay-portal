@@ -29,6 +29,8 @@ public class JournalArticleConstants {
 
 	public static final String CANONICAL_URL_SEPARATOR = "/-/";
 
+	public static final long DEFAULT_CLASSNAME_ID = 0;
+
 	public static final String PORTLET = "portlet";
 
 	public static final String STAND_ALONE = "stand-alone";

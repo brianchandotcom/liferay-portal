@@ -190,7 +190,8 @@
 			FROM
 				JournalArticle
 			WHERE
-				(JournalArticle.groupId = ?)
+				(JournalArticle.groupId = ?) AND
+				(JournalArticle.classNameId = 0)
 				[$ARTICLE_FOLDER_ID$]
 		]]>
 	</sql>
@@ -212,7 +213,8 @@
 			FROM
 				JournalArticle
 			WHERE
-				(JournalArticle.groupId = ?)
+				(JournalArticle.groupId = ?) AND
+				(JournalArticle.classNameId = 0)
 				[$ARTICLE_FOLDER_ID$]
 			GROUP BY
 				JournalArticle.folderId, JournalArticle.articleId, JournalArticle.displayDate

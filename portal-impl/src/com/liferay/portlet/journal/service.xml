@@ -86,7 +86,7 @@
 			<finder-column name="resourcePrimKey" />
 			<finder-column name="status" />
 		</finder>
-		<finder name="G_U" return-type="Collection">
+		<finder name="G_U_C" return-type="Collection" where="classNameId = 0">
 			<finder-column name="groupId" />
 			<finder-column name="userId" />
 		</finder>

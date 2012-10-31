@@ -1748,10 +1748,10 @@ public class JournalArticleUtil {
 	* @return the matching journal articles
 	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByG_U(
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByG_U_C(
 		long groupId, long userId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findByG_U(groupId, userId);
+		return getPersistence().findByG_U_C(groupId, userId);
 	}
 
 	/**
@@ -1768,10 +1768,10 @@ public class JournalArticleUtil {
 	* @return the range of matching journal articles
 	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByG_U(
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByG_U_C(
 		long groupId, long userId, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findByG_U(groupId, userId, start, end);
+		return getPersistence().findByG_U_C(groupId, userId, start, end);
 	}
 
 	/**
@@ -1789,12 +1789,12 @@ public class JournalArticleUtil {
 	* @return the ordered range of matching journal articles
 	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByG_U(
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByG_U_C(
 		long groupId, long userId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence()
-				   .findByG_U(groupId, userId, start, end, orderByComparator);
+				   .findByG_U_C(groupId, userId, start, end, orderByComparator);
 	}
 
 	/**
@@ -1807,13 +1807,13 @@ public class JournalArticleUtil {
 	* @throws com.liferay.portlet.journal.NoSuchArticleException if a matching journal article could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portlet.journal.model.JournalArticle findByG_U_First(
+	public static com.liferay.portlet.journal.model.JournalArticle findByG_U_C_First(
 		long groupId, long userId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
-				   .findByG_U_First(groupId, userId, orderByComparator);
+				   .findByG_U_C_First(groupId, userId, orderByComparator);
 	}
 
 	/**
@@ -1825,12 +1825,12 @@ public class JournalArticleUtil {
 	* @return the first matching journal article, or <code>null</code> if a matching journal article could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portlet.journal.model.JournalArticle fetchByG_U_First(
+	public static com.liferay.portlet.journal.model.JournalArticle fetchByG_U_C_First(
 		long groupId, long userId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence()
-				   .fetchByG_U_First(groupId, userId, orderByComparator);
+				   .fetchByG_U_C_First(groupId, userId, orderByComparator);
 	}
 
 	/**
@@ -1843,13 +1843,13 @@ public class JournalArticleUtil {
 	* @throws com.liferay.portlet.journal.NoSuchArticleException if a matching journal article could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portlet.journal.model.JournalArticle findByG_U_Last(
+	public static com.liferay.portlet.journal.model.JournalArticle findByG_U_C_Last(
 		long groupId, long userId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
-				   .findByG_U_Last(groupId, userId, orderByComparator);
+				   .findByG_U_C_Last(groupId, userId, orderByComparator);
 	}
 
 	/**
@@ -1861,12 +1861,12 @@ public class JournalArticleUtil {
 	* @return the last matching journal article, or <code>null</code> if a matching journal article could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portlet.journal.model.JournalArticle fetchByG_U_Last(
+	public static com.liferay.portlet.journal.model.JournalArticle fetchByG_U_C_Last(
 		long groupId, long userId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence()
-				   .fetchByG_U_Last(groupId, userId, orderByComparator);
+				   .fetchByG_U_C_Last(groupId, userId, orderByComparator);
 	}
 
 	/**
@@ -1880,13 +1880,14 @@ public class JournalArticleUtil {
 	* @throws com.liferay.portlet.journal.NoSuchArticleException if a journal article with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portlet.journal.model.JournalArticle[] findByG_U_PrevAndNext(
+	public static com.liferay.portlet.journal.model.JournalArticle[] findByG_U_C_PrevAndNext(
 		long id, long groupId, long userId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
-				   .findByG_U_PrevAndNext(id, groupId, userId, orderByComparator);
+				   .findByG_U_C_PrevAndNext(id, groupId, userId,
+			orderByComparator);
 	}
 
 	/**
@@ -1897,10 +1898,10 @@ public class JournalArticleUtil {
 	* @return the matching journal articles that the user has permission to view
 	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> filterFindByG_U(
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> filterFindByG_U_C(
 		long groupId, long userId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().filterFindByG_U(groupId, userId);
+		return getPersistence().filterFindByG_U_C(groupId, userId);
 	}
 
 	/**
@@ -1917,10 +1918,10 @@ public class JournalArticleUtil {
 	* @return the range of matching journal articles that the user has permission to view
 	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> filterFindByG_U(
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> filterFindByG_U_C(
 		long groupId, long userId, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().filterFindByG_U(groupId, userId, start, end);
+		return getPersistence().filterFindByG_U_C(groupId, userId, start, end);
 	}
 
 	/**
@@ -1938,12 +1939,12 @@ public class JournalArticleUtil {
 	* @return the ordered range of matching journal articles that the user has permission to view
 	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> filterFindByG_U(
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> filterFindByG_U_C(
 		long groupId, long userId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence()
-				   .filterFindByG_U(groupId, userId, start, end,
+				   .filterFindByG_U_C(groupId, userId, start, end,
 			orderByComparator);
 	}
 
@@ -1958,13 +1959,13 @@ public class JournalArticleUtil {
 	* @throws com.liferay.portlet.journal.NoSuchArticleException if a journal article with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portlet.journal.model.JournalArticle[] filterFindByG_U_PrevAndNext(
+	public static com.liferay.portlet.journal.model.JournalArticle[] filterFindByG_U_C_PrevAndNext(
 		long id, long groupId, long userId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.journal.NoSuchArticleException {
 		return getPersistence()
-				   .filterFindByG_U_PrevAndNext(id, groupId, userId,
+				   .filterFindByG_U_C_PrevAndNext(id, groupId, userId,
 			orderByComparator);
 	}
 
@@ -6197,9 +6198,9 @@ public class JournalArticleUtil {
 	* @param userId the user ID
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByG_U(long groupId, long userId)
+	public static void removeByG_U_C(long groupId, long userId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByG_U(groupId, userId);
+		getPersistence().removeByG_U_C(groupId, userId);
 	}
 
 	/**
@@ -6601,9 +6602,9 @@ public class JournalArticleUtil {
 	* @return the number of matching journal articles
 	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByG_U(long groupId, long userId)
+	public static int countByG_U_C(long groupId, long userId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByG_U(groupId, userId);
+		return getPersistence().countByG_U_C(groupId, userId);
 	}
 
 	/**
@@ -6614,9 +6615,9 @@ public class JournalArticleUtil {
 	* @return the number of matching journal articles that the user has permission to view
 	* @throws SystemException if a system exception occurred
 	*/
-	public static int filterCountByG_U(long groupId, long userId)
+	public static int filterCountByG_U_C(long groupId, long userId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().filterCountByG_U(groupId, userId);
+		return getPersistence().filterCountByG_U_C(groupId, userId);
 	}
 
 	/**

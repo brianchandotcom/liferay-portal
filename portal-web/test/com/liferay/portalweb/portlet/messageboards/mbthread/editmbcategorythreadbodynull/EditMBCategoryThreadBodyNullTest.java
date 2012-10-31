@@ -82,7 +82,6 @@ public class EditMBCategoryThreadBodyNullTest extends BaseTestCase {
 				"MB Category Thread Message Subject"),
 			selenium.getText("//div[@class='thread-body']"));
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Message Boards Test Page");
 		selenium.clickAt("link=Message Boards Test Page",
 			RuntimeVariables.replace("Message Boards Test Page"));
 		selenium.waitForPageToLoad("30000");

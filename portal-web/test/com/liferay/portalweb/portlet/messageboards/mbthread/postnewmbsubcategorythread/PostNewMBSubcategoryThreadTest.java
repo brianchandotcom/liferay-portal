@@ -44,7 +44,8 @@ public class PostNewMBSubcategoryThreadTest extends BaseTestCase {
 			RuntimeVariables.replace("Post New Thread"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_19_subject']",
-			RuntimeVariables.replace("MB Subcategory Thread Message Subject"));
+			RuntimeVariables.replace(
+				"MB Category Subcategory Thread Message Subject"));
 		selenium.waitForElementPresent(
 			"//textarea[@id='_19_editor' and @style='display: none;']");
 		assertEquals(RuntimeVariables.replace("Source"),
@@ -54,7 +55,8 @@ public class PostNewMBSubcategoryThreadTest extends BaseTestCase {
 		selenium.waitForVisible("//a[@class='cke_button_source cke_on']");
 		selenium.waitForVisible("//td[@id='cke_contents__19_editor']/textarea");
 		selenium.type("//td[@id='cke_contents__19_editor']/textarea",
-			RuntimeVariables.replace("MB Subcategory Thread Message Body"));
+			RuntimeVariables.replace(
+				"MB Category Subcategory Thread Message Body"));
 		assertEquals(RuntimeVariables.replace("Source"),
 			selenium.getText("//span[.='Source']"));
 		selenium.clickAt("//span[.='Source']",
@@ -63,7 +65,8 @@ public class PostNewMBSubcategoryThreadTest extends BaseTestCase {
 			"//textarea[@id='_19_editor' and @style='display: none;']");
 		selenium.waitForVisible("//td[@id='cke_contents__19_editor']/iframe");
 		selenium.selectFrame("//td[@id='cke_contents__19_editor']/iframe");
-		selenium.waitForText("//body", "MB Subcategory Thread Message Body");
+		selenium.waitForText("//body",
+			"MB Category Subcategory Thread Message Body");
 		selenium.selectFrame("relative=top");
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
@@ -72,10 +75,10 @@ public class PostNewMBSubcategoryThreadTest extends BaseTestCase {
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace(
-				"MB Subcategory Thread Message Subject"),
+				"MB Category Subcategory Thread Message Subject"),
 			selenium.getText("//div[@class='subject']/a/strong"));
 		assertEquals(RuntimeVariables.replace(
-				"MB Subcategory Thread Message Body"),
+				"MB Category Subcategory Thread Message Body"),
 			selenium.getText("//div[@class='thread-body']"));
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("link=Message Boards Test Page",
@@ -92,7 +95,7 @@ public class PostNewMBSubcategoryThreadTest extends BaseTestCase {
 			RuntimeVariables.replace("MB Category Subcategory Name"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
-				"MB Subcategory Thread Message Subject"),
+				"MB Category Subcategory Thread Message Subject"),
 			selenium.getText("//td[1]/a"));
 	}
 }

@@ -25,7 +25,6 @@ public class ViewImportMBLARTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Message Boards Test Page");
 		selenium.clickAt("link=Message Boards Test Page",
 			RuntimeVariables.replace("Message Boards Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -100,7 +99,6 @@ public class ViewImportMBLARTest extends BaseTestCase {
 				"This is a t\u00e9st m\u00e9ssag\u00e9 edited!"),
 			selenium.getText("//div[@class='thread-body']"));
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Message Boards Test Page");
 		selenium.clickAt("link=Message Boards Test Page",
 			RuntimeVariables.replace("Message Boards Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -131,7 +129,6 @@ public class ViewImportMBLARTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("This is a third reply message."),
 			selenium.getText("xPath=(//div[@class='thread-body'])[3]"));
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Message Boards Test Page");
 		selenium.clickAt("link=Message Boards Test Page",
 			RuntimeVariables.replace("Message Boards Test Page"));
 		selenium.waitForPageToLoad("30000");

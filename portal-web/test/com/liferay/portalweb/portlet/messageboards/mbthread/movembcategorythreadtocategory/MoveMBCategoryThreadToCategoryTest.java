@@ -69,7 +69,6 @@ public class MoveMBCategoryThreadToCategoryTest extends BaseTestCase {
 			RuntimeVariables.replace("Move Thread"));
 		selenium.waitForPageToLoad("30000");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Message Boards Test Page");
 		selenium.clickAt("link=Message Boards Test Page",
 			RuntimeVariables.replace("Message Boards Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -81,7 +80,6 @@ public class MoveMBCategoryThreadToCategoryTest extends BaseTestCase {
 		assertFalse(selenium.isTextPresent(
 				"MB Category1 Thread Message Subject"));
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Message Boards Test Page");
 		selenium.clickAt("link=Message Boards Test Page",
 			RuntimeVariables.replace("Message Boards Test Page"));
 		selenium.waitForPageToLoad("30000");

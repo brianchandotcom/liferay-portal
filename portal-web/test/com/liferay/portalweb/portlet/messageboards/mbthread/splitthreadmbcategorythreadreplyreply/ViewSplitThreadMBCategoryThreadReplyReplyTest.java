@@ -26,7 +26,6 @@ public class ViewSplitThreadMBCategoryThreadReplyReplyTest extends BaseTestCase 
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Message Boards Test Page");
 		selenium.clickAt("link=Message Boards Test Page",
 			RuntimeVariables.replace("Message Boards Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -70,7 +69,6 @@ public class ViewSplitThreadMBCategoryThreadReplyReplyTest extends BaseTestCase 
 		assertFalse(selenium.isTextPresent(
 				"MB Category Thread Message Reply Body"));
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Message Boards Test Page");
 		selenium.clickAt("link=Message Boards Test Page",
 			RuntimeVariables.replace("Message Boards Test Page"));
 		selenium.waitForPageToLoad("30000");

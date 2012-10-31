@@ -32,7 +32,9 @@ public class UserGroupCustomAttributesDisplay
 
 	@Override
 	public String getIconPath(ThemeDisplay themeDisplay) {
-		return themeDisplay.getPathThemeImages() + "/common/user_icon.png";
+		return
+			themeDisplay.getPathThemeImages() +
+				"/common/assign_user_group_roles.png";
 	}
 
 }

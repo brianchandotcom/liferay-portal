@@ -124,11 +124,15 @@ public class TestPropsValues {
 	}
 
 	public static long getPlid() throws Exception {
+		return getPlid(getGroupId());
+	}
+
+	public static long getPlid(long groupId) throws Exception {
 		if (_plid > 0) {
 			return _plid;
 		}
 
-		_plid = LayoutLocalServiceUtil.getDefaultPlid(getGroupId());
+		_plid = LayoutLocalServiceUtil.getDefaultPlid(groupId);
 
 		return _plid;
 	}

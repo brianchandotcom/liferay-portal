@@ -16,6 +16,7 @@ package com.liferay.portal.service;
 
 import com.liferay.portal.NoSuchResourceException;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
@@ -38,12 +39,14 @@ public class ResourceLocalServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
+		_group = ServiceTestUtil.addGroup();
+
 		_userIds = new long[ServiceTestUtil.THREAD_COUNT];
 
 		for (int i = 0; i < ServiceTestUtil.THREAD_COUNT; i++) {
 			User user = ServiceTestUtil.addUser(
 				"ResourceLocalServiceTest" + (i + 1), false,
-				new long[] {TestPropsValues.getGroupId()});
+				new long[] {_group.getGroupId()});
 
 			_userIds[i] = user.getUserId();
 		}
@@ -80,6 +83,8 @@ public class ResourceLocalServiceTest {
 			successCount == ServiceTestUtil.THREAD_COUNT);
 	}
 
+	private Group _group;
+
 	private long[] _userIds;
 
 	private class AddResources extends DoAsUserThread {
@@ -99,17 +104,18 @@ public class ResourceLocalServiceTest {
 				ResourceLocalServiceUtil.getResource(
 					TestPropsValues.getCompanyId(), Layout.class.getName(),
 					ResourceConstants.SCOPE_INDIVIDUAL,
-					String.valueOf(TestPropsValues.getPlid()));
+					String.valueOf(
+						TestPropsValues.getPlid(_group.getGroupId())));
 			}
 			catch (NoSuchResourceException nsre) {
 				boolean addGroupPermission = true;
 				boolean addGuestPermission = true;
 
 				ResourceLocalServiceUtil.addResources(
-					TestPropsValues.getCompanyId(),
-					TestPropsValues.getGroupId(), 0, Layout.class.getName(),
-					TestPropsValues.getPlid(), false, addGroupPermission,
-					addGuestPermission);
+					TestPropsValues.getCompanyId(), _group.getGroupId(), 0,
+					Layout.class.getName(),
+					TestPropsValues.getPlid(_group.getGroupId()), false,
+					addGroupPermission, addGuestPermission);
 			}
 		}
 

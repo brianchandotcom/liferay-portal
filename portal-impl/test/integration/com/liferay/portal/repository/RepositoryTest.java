@@ -24,10 +24,12 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.repository.liferayrepository.LiferayRepository;
 import com.liferay.portal.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.service.RepositoryServiceUtil;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
@@ -42,6 +44,7 @@ import com.liferay.portlet.documentlibrary.service.DLFolderServiceUtil;
 import java.io.InputStream;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -55,6 +58,11 @@ import org.junit.runner.RunWith;
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class RepositoryTest {
+
+	@Before
+	public void setUp() throws Exception {
+		_group = ServiceTestUtil.addGroup();
+	}
 
 	@Test
 	@Transactional
@@ -86,15 +94,15 @@ public class RepositoryTest {
 
 		// One default and one mapped repository
 
-		long defaultRepositoryId = TestPropsValues.getGroupId();
+		long defaultRepositoryId = _group.getGroupId();
 
 		long classNameId = PortalUtil.getClassNameId(LiferayRepository.class);
 
 		long dlRepositoryId = RepositoryLocalServiceUtil.addRepository(
-			TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
-			classNameId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Test 1",
-			"Test 1", PortletKeys.DOCUMENT_LIBRARY, new UnicodeProperties(),
-			hidden, new ServiceContext());
+			TestPropsValues.getUserId(), _group.getGroupId(), classNameId,
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Test 1", "Test 1",
+			PortletKeys.DOCUMENT_LIBRARY, new UnicodeProperties(), hidden,
+			new ServiceContext());
 
 		long[] repositoryIds = {dlRepositoryId};
 
@@ -171,8 +179,7 @@ public class RepositoryTest {
 
 		// Delete repositories
 
-		RepositoryLocalServiceUtil.deleteRepositories(
-			TestPropsValues.getGroupId());
+		RepositoryLocalServiceUtil.deleteRepositories(_group.getGroupId());
 
 		for (int i = 0; i < repositoryIds.length; i++) {
 			long repositoryId = repositoryIds[i];
@@ -199,27 +206,26 @@ public class RepositoryTest {
 		// Add repositories
 
 		int initialMountFolders = DLFolderServiceUtil.getMountFoldersCount(
-			TestPropsValues.getGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		long[] repositoryIds = new long[2];
 
 		long classNameId = PortalUtil.getClassNameId(LiferayRepository.class);
 
 		repositoryIds[0] = RepositoryLocalServiceUtil.addRepository(
-			TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
-			classNameId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Test 1",
-			"Test 1", PortletKeys.DOCUMENT_LIBRARY, new UnicodeProperties(),
-			hidden, new ServiceContext());
+			TestPropsValues.getUserId(), _group.getGroupId(), classNameId,
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Test 1", "Test 1",
+			PortletKeys.DOCUMENT_LIBRARY, new UnicodeProperties(), hidden,
+			new ServiceContext());
 
 		DLFolder dlFolder = DLFolderServiceUtil.addFolder(
-			TestPropsValues.getGroupId(), TestPropsValues.getGroupId(), false,
+			_group.getGroupId(), _group.getGroupId(), false,
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Folder", "Folder",
 			new ServiceContext());
 
 		repositoryIds[1] = RepositoryLocalServiceUtil.addRepository(
-			TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
-			classNameId, dlFolder.getFolderId(), "Test 2", "Test 2",
+			TestPropsValues.getUserId(), _group.getGroupId(), classNameId,
+			dlFolder.getFolderId(), "Test 2", "Test 2",
 			PortletKeys.DOCUMENT_LIBRARY, new UnicodeProperties(), hidden,
 			new ServiceContext());
 
@@ -227,21 +233,20 @@ public class RepositoryTest {
 			Assert.assertEquals(
 				initialMountFolders,
 				DLFolderServiceUtil.getMountFoldersCount(
-					TestPropsValues.getGroupId(),
+					_group.getGroupId(),
 					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID));
 		}
 		else {
 			Assert.assertEquals(
 				initialMountFolders + 1,
 				DLFolderServiceUtil.getMountFoldersCount(
-					TestPropsValues.getGroupId(),
+					_group.getGroupId(),
 					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID));
 		}
 
 		// Delete repositories
 
-		RepositoryLocalServiceUtil.deleteRepositories(
-			TestPropsValues.getGroupId());
+		RepositoryLocalServiceUtil.deleteRepositories(_group.getGroupId());
 
 		for (long repositoryId : repositoryIds) {
 			try {
@@ -257,11 +262,13 @@ public class RepositoryTest {
 		Assert.assertEquals(
 			initialMountFolders,
 			DLFolderServiceUtil.getMountFoldersCount(
-				TestPropsValues.getGroupId(),
+				_group.getGroupId(),
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID));
 	}
 
 	private static final String _TEST_CONTENT =
 		"LIFERAY\nEnterprise. Open Source. For Life.";
+
+	private Group _group;
 
 }

@@ -14,16 +14,24 @@
 
 package com.liferay.portlet.bookmarks.service;
 
+import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.util.TestPropsValues;
+import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portlet.bookmarks.model.BookmarksEntry;
 import com.liferay.portlet.bookmarks.model.BookmarksFolder;
 import com.liferay.portlet.bookmarks.model.BookmarksFolderConstants;
+
+import org.junit.Before;
 
 /**
  * @author Brian Wing Shun Chan
  */
 public class BaseBookmarksServiceTestCase {
+
+	@Before
+	public void setUp() throws Exception {
+		group = ServiceTestUtil.addGroup();
+	}
 
 	protected BookmarksEntry addEntry() throws Exception {
 		BookmarksFolder folder = addFolder();
@@ -56,10 +64,12 @@ public class BaseBookmarksServiceTestCase {
 
 		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAddGuestPermissions(true);
-		serviceContext.setScopeGroupId(TestPropsValues.getGroupId());
+		serviceContext.setScopeGroupId(group.getGroupId());
 
 		return BookmarksFolderServiceUtil.addFolder(
 			parentFolderId, name, description, serviceContext);
 	}
+
+	protected Group group;
 
 }

@@ -18,6 +18,7 @@ import com.liferay.portal.NoSuchRoleException;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.OrganizationConstants;
@@ -53,7 +54,7 @@ public class LayoutCache {
 		if (entityGroupIdObj == null) {
 			if (entityName.equals("user-group")) {
 				List<UserGroup> userGroups = UserGroupLocalServiceUtil.search(
-					companyId, null, null, 0, 1, null);
+					companyId, null, null, 0, 1, (OrderByComparator)null);
 
 				if (userGroups.size() > 0) {
 					UserGroup userGroup = userGroups.get(0);
@@ -99,7 +100,7 @@ public class LayoutCache {
 			if (entityName.equals("user-group")) {
 				List<UserGroup> userGroups = UserGroupLocalServiceUtil.search(
 					companyId, null, null, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null);
+					(OrderByComparator)null);
 
 				for (int i = 0; i < userGroups.size(); i++) {
 					UserGroup userGroup = userGroups.get(i);

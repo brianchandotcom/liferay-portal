@@ -16,6 +16,7 @@ package com.liferay.portlet.usersadmin.util;
 
 import com.liferay.portal.NoSuchOrganizationException;
 import com.liferay.portal.NoSuchUserException;
+import com.liferay.portal.NoSuchUserGroupException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.Document;
@@ -57,6 +58,7 @@ import com.liferay.portal.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.service.PhoneLocalServiceUtil;
 import com.liferay.portal.service.PhoneServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
+import com.liferay.portal.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.service.UserGroupRoleLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.service.WebsiteLocalServiceUtil;
@@ -840,6 +842,40 @@ public class UsersAdminImpl implements UsersAdmin {
 		}
 
 		return userGroupRoles;
+	}
+
+	public Tuple getUserGroups(Hits hits)
+		throws PortalException, SystemException {
+
+		List<UserGroup> userGroups = new ArrayList<UserGroup>();
+		boolean corruptIndex = false;
+
+		List<Document> documents = hits.toList();
+
+		for (Document document : documents) {
+			long userGroupId = GetterUtil.getLong(
+				document.get(Field.USER_GROUP_ID));
+
+			try {
+				UserGroup userGroup = UserGroupLocalServiceUtil.getUserGroup(
+					userGroupId);
+
+				userGroups.add(userGroup);
+			}
+			catch (NoSuchUserGroupException nsuge) {
+				corruptIndex = true;
+
+				Indexer indexer = IndexerRegistryUtil.getIndexer(
+					UserGroup.class);
+
+				long companyId = GetterUtil.getLong(
+					document.get(Field.COMPANY_ID));
+
+				indexer.delete(companyId, document.getUID());
+			}
+		}
+
+		return new Tuple(userGroups, corruptIndex);
 	}
 
 	public OrderByComparator getUserOrderByComparator(

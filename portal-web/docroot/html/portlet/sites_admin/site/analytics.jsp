@@ -38,7 +38,7 @@ for (String analyticsType : analyticsTypes) {
 %>
 
 	<c:choose>
-		<c:when test='<%= analyticsType.equals("google") %>'>
+		<c:when test='<%= analyticsType.equalsIgnoreCase("google") %>'>
 
 			<%
 			String googleAnalyticsId = PropertiesParamUtil.getString(groupTypeSettings, request, "googleAnalyticsId");

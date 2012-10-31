@@ -495,7 +495,7 @@ public class EditGroupAction extends PortletAction {
 			StringPool.NEW_LINE);
 
 		for (String analyticsType : analyticsTypes) {
-			if (analyticsType.equals("google")) {
+			if (analyticsType.equalsIgnoreCase("google")) {
 				String googleAnalyticsId = ParamUtil.getString(
 					actionRequest, "googleAnalyticsId",
 					typeSettingsProperties.getProperty("googleAnalyticsId"));

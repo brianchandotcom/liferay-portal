@@ -622,27 +622,28 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 			trigger.getGroupName(), GROUP_NAME_MAX_LENGTH);
 		Date startDate = trigger.getStartDate();
 
-		Trigger quartzTrigger = null;
+		TriggerBuilder<Trigger>triggerBuilder = TriggerBuilder.newTrigger();
+
+		triggerBuilder.forJob(jobName, groupName);
+		triggerBuilder.withIdentity(jobName, groupName);
+
+		if (endDate != null) {
+			triggerBuilder.endAt(endDate);
+		}
+
+		if (startDate != null) {
+			triggerBuilder.startAt(startDate);
+		}
 
 		TriggerType triggerType = trigger.getTriggerType();
 
 		if (triggerType.equals(TriggerType.CRON)) {
 			try {
-				TriggerBuilder<Trigger>triggerBuilder =
-					TriggerBuilder.newTrigger();
-
-				triggerBuilder.endAt(endDate);
-				triggerBuilder.forJob(jobName, groupName);
-				triggerBuilder.startAt(startDate);
-				triggerBuilder.withIdentity(jobName, groupName);
-
 				CronScheduleBuilder cronScheduleBuilder =
 					CronScheduleBuilder.cronSchedule(
 						(String)trigger.getTriggerContent());
 
 				triggerBuilder.withSchedule(cronScheduleBuilder);
-
-				quartzTrigger = triggerBuilder.build();
 			}
 			catch (ParseException pe) {
 				throw new SchedulerException(
@@ -662,30 +663,18 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 				return null;
 			}
 
-			TriggerBuilder<Trigger>triggerBuilder = TriggerBuilder.newTrigger();
-
-			triggerBuilder.endAt(endDate);
-			triggerBuilder.forJob(jobName, groupName);
-			triggerBuilder.startAt(startDate);
-			triggerBuilder.withIdentity(jobName, groupName);
-
-			SimpleScheduleBuilder simpleScheduleBuilder =
-				SimpleScheduleBuilder.simpleSchedule();
-
-			simpleScheduleBuilder.withIntervalInMilliseconds(interval);
-			simpleScheduleBuilder.withRepeatCount(
-				SimpleTrigger.REPEAT_INDEFINITELY);
+			SimpleScheduleBuilder simpleScheduleBuilder = SimpleScheduleBuilder
+				.simpleSchedule().withIntervalInMilliseconds(interval)
+				.withRepeatCount(SimpleTrigger.REPEAT_INDEFINITELY);
 
 			triggerBuilder.withSchedule(simpleScheduleBuilder);
-
-			quartzTrigger = triggerBuilder.build();
 		}
 		else {
 			throw new SchedulerException(
 				"Unknown trigger type " + trigger.getTriggerType());
 		}
 
-		return quartzTrigger;
+		return triggerBuilder.build();
 	}
 
 	protected SchedulerResponse getScheduledJob(

@@ -38,86 +38,102 @@ String panelTreeKey = "panelSelectedPortletsPanelTree";
 <div id="<portlet:namespace />panelSelectPortletsOutput" style="margin: 4px;"></div>
 
 <aui:script use="aui-tree-view">
-	var panelSelectedPortletsEl = A.one('#<portlet:namespace />panelSelectedPortlets');
-	var selectedPortlets = panelSelectedPortletsEl.val().split(',');
+	var initPanelSelectPortlets = function(event) {
+		var panelSelectedPortletsEl = A.one('#<portlet:namespace />panelSelectedPortlets');
+		var selectedPortlets = panelSelectedPortletsEl.val().split(',');
 
-	var onCheck = function(event, plid) {
-		var node = event.target;
-		var add = A.Array.indexOf(selectedPortlets, plid) == -1;
+		var onCheck = function(event, plid) {
+			var node = event.target;
+			var add = A.Array.indexOf(selectedPortlets, plid) == -1;
 
-		if (plid && add) {
-			selectedPortlets.push(plid);
+			if (plid && add) {
+				selectedPortlets.push(plid);
 
-			panelSelectedPortletsEl.val(selectedPortlets.join(','));
-		}
-	};
-
-	var onUncheck = function(event, plid) {
-		var node = event.target;
-
-		if (plid) {
-			if (selectedPortlets.length) {
-				A.Array.removeItem(selectedPortlets, plid);
+				panelSelectedPortletsEl.val(selectedPortlets.join(','));
 			}
+		};
 
-			panelSelectedPortletsEl.val(selectedPortlets.join(','));
+		var onUncheck = function(event, plid) {
+			var node = event.target;
+
+			if (plid) {
+				if (selectedPortlets.length) {
+					A.Array.removeItem(selectedPortlets, plid);
+				}
+
+				panelSelectedPortletsEl.val(selectedPortlets.join(','));
+			}
+		};
+
+		var treeView = new A.TreeView(
+			{
+				boundingBox: '#<portlet:namespace />panelSelectPortletsOutput'
+			}
+		).render();
+
+		<%
+		PortletLister portletLister = PortletListerFactoryUtil.getPortletLister();
+
+		portletLister.setIncludeInstanceablePortlets(false);
+		portletLister.setIteratePortlets(true);
+		portletLister.setLayoutTypePortlet(layoutTypePortlet);
+		portletLister.setRootNodeName(LanguageUtil.get(pageContext, "application"));
+		portletLister.setServletContext(application);
+		portletLister.setThemeDisplay(themeDisplay);
+		portletLister.setUser(user);
+
+		TreeView treeView = portletLister.getTreeView();
+
+		List<TreeNodeView> treeNodeViews = treeView.getList();
+
+		for (int i = 0; i < treeNodeViews.size(); i++) {
+			TreeNodeView treeNodeView = treeNodeViews.get(i);
+		%>
+
+			var parentNode<%= i %> = treeView.getNodeById('treePanel<%= treeNodeView.getParentId() %>') || treeView;
+			var objId<%= i %> = '<%= treeNodeView.getObjId() %>';
+			var checked<%= i %> = objId<%= i %> ? (A.Array.indexOf(selectedPortlets, objId<%= i %>) > -1) : false;
+			var label<%= i %> = '<%= UnicodeFormatter.toString(LanguageUtil.get(user.getLocale(), treeNodeView.getName())) %>';
+
+			parentNode<%= i %>.appendChild(
+				new A.TreeNodeTask(
+					{
+						after: {
+							checkedChange: function(event) {
+								if (event.newVal) {
+									onCheck(event, objId<%= i %>);
+								}
+								else {
+									onUncheck(event, objId<%= i %>);
+								}
+							}
+						},
+						checked: checked<%= i %>,
+						expanded: <%= treeNodeView.getDepth() == 0 %>,
+						id: 'treePanel<%= treeNodeView.getId() %>',
+						label: label<%= i %>,
+						leaf: <%= treeNodeView.isLeaf() %>
+					}
+				)
+			);
+
+		<%
 		}
+		%>
+
+		initPanelSelectPortlets = A.Lang.emptyFn;
 	};
 
-	var treeView = new A.TreeView(
-		{
-			boundingBox: '#<portlet:namespace />panelSelectPortletsOutput'
-		}
-	).render();
-
-	<%
-	PortletLister portletLister = PortletListerFactoryUtil.getPortletLister();
-
-	portletLister.setIncludeInstanceablePortlets(false);
-	portletLister.setIteratePortlets(true);
-	portletLister.setLayoutTypePortlet(layoutTypePortlet);
-	portletLister.setRootNodeName(LanguageUtil.get(pageContext, "application"));
-	portletLister.setServletContext(application);
-	portletLister.setThemeDisplay(themeDisplay);
-	portletLister.setUser(user);
-
-	TreeView treeView = portletLister.getTreeView();
-
-	List<TreeNodeView> treeNodeViews = treeView.getList();
-
-	for (int i = 0; i < treeNodeViews.size(); i++) {
-		TreeNodeView treeNodeView = treeNodeViews.get(i);
-	%>
-
-		var parentNode<%= i %> = treeView.getNodeById('treePanel<%= treeNodeView.getParentId() %>') || treeView;
-		var objId<%= i %> = '<%= treeNodeView.getObjId() %>';
-		var checked<%= i %> = objId<%= i %> ? (A.Array.indexOf(selectedPortlets, objId<%= i %>) > -1) : false;
-		var label<%= i %> = '<%= UnicodeFormatter.toString(LanguageUtil.get(user.getLocale(), treeNodeView.getName())) %>';
-
-		parentNode<%= i %>.appendChild(
-			new A.TreeNodeTask(
-				{
-					after: {
-						checkedChange: function(event) {
-							if (event.newVal) {
-								onCheck(event, objId<%= i %>);
-							}
-							else {
-								onUncheck(event, objId<%= i %>);
-							}
-						}
-					},
-					checked: checked<%= i %>,
-					expanded: <%= treeNodeView.getDepth() == 0 %>,
-					id: 'treePanel<%= treeNodeView.getId() %>',
-					label: label<%= i %>,
-					leaf: <%= treeNodeView.isLeaf() %>
-				}
-			)
-		);
-
-	<%
+	if (<%= selLayout.isTypePanel() %>) {
+		initPanelSelectPortlets();
 	}
-	%>
 
+	Liferay.on(
+		'<portlet:namespace />toggleLayoutTypeFields',
+		function(event) {
+			if (event.type == 'panel') {
+				initPanelSelectPortlets();
+			}
+		}
+	);
 </aui:script>

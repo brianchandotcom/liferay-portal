@@ -21,6 +21,10 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 boolean viewTrashAttachments = ParamUtil.getBoolean(request, "viewTrashAttachments");
 
+if (!TrashUtil.isTrashEnabled(scopeGroupId)) {
+	viewTrashAttachments = false;
+}
+
 WikiNode node = (WikiNode)request.getAttribute(WebKeys.WIKI_NODE);
 WikiPage wikiPage = (WikiPage)request.getAttribute(WebKeys.WIKI_PAGE);
 
@@ -165,20 +169,21 @@ for (int i = 0; i < results.size(); i++) {
 			/>
 		</c:when>
 		<c:otherwise>
-			<portlet:renderURL var="viewTrashAttachmentsURL">
-				<portlet:param name="struts_action" value="/wiki/view_page_attachments" />
-				<portlet:param name="tabs1" value="attachments" />
-				<portlet:param name="redirect" value="<%= currentURL %>" />
-				<portlet:param name="nodeId" value="<%= String.valueOf(node.getNodeId()) %>" />
-				<portlet:param name="title" value="<%= wikiPage.getTitle() %>" />
-				<portlet:param name="viewTrashAttachments" value="<%= Boolean.TRUE.toString() %>" />
-			</portlet:renderURL>
 
 			<%
 			String[] deletedAttachments = wikiPage.getDeletedAttachmentsFiles();
 			%>
 
-			<c:if test="<%= deletedAttachments.length > 0 %>">
+			<c:if test="<%= TrashUtil.isTrashEnabled(scopeGroupId) && (deletedAttachments.length > 0) %>">
+				<portlet:renderURL var="viewTrashAttachmentsURL">
+					<portlet:param name="struts_action" value="/wiki/view_page_attachments" />
+					<portlet:param name="tabs1" value="attachments" />
+					<portlet:param name="redirect" value="<%= currentURL %>" />
+					<portlet:param name="nodeId" value="<%= String.valueOf(node.getNodeId()) %>" />
+					<portlet:param name="title" value="<%= wikiPage.getTitle() %>" />
+					<portlet:param name="viewTrashAttachments" value="<%= Boolean.TRUE.toString() %>" />
+				</portlet:renderURL>
+
 				<liferay-ui:icon
 					cssClass="trash-attachments"
 					image="delete"

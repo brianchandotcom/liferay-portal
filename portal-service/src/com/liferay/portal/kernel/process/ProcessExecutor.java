@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.process.log.ProcessOutputStream;
+import com.liferay.portal.kernel.util.ClassLoaderObjectInputStream;
 import com.liferay.portal.kernel.util.NamedThreadFactory;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
@@ -526,9 +527,9 @@ public class ProcessExecutor {
 
 						unsyncBufferedInputStream.mark(4);
 
-						objectInputStream =
-							new PortalClassLoaderObjectInputStream(
-								unsyncBufferedInputStream);
+						objectInputStream = new ClassLoaderObjectInputStream(
+							unsyncBufferedInputStream,
+							PortalClassLoaderUtil.getClassLoader());
 
 						// Found the beginning of the object input stream. Flush
 						// out corrupted log if necessary.

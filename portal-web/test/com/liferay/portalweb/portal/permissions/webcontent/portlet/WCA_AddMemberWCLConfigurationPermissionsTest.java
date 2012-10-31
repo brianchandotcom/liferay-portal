@@ -23,47 +23,67 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class WCA_AddMemberWCLConfigurationPermissionsTest extends BaseTestCase {
 	public void testWCA_AddMemberWCLConfigurationPermissions()
 		throws Exception {
-		selenium.selectWindow("null");
-		selenium.selectFrame("relative=top");
-		selenium.open("/web/guest/home/");
-		selenium.clickAt("link=Web Content List Permissions Page",
-			RuntimeVariables.replace("Web Content List Permissions Page"));
-		selenium.waitForPageToLoad("30000");
-		Thread.sleep(5000);
-		assertEquals(RuntimeVariables.replace("Options"),
-			selenium.getText("//span[@title='Options']/ul/li/strong/a"));
-		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
-			RuntimeVariables.replace("Options"));
-		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Configuration')]/a");
-		assertEquals(RuntimeVariables.replace("Configuration"),
-			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Configuration')]/a"));
-		selenium.click(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Configuration')]/a");
-		selenium.waitForVisible(
-			"//iframe[contains(@id,'configurationIframeDialog')]");
-		selenium.selectFrame(
-			"//iframe[contains(@id,'configurationIframeDialog')]");
-		selenium.waitForElementPresent(
-			"//script[contains(@src,'/liferay/navigation_interaction.js')]");
-		selenium.waitForVisible("link=Permissions");
-		selenium.clickAt("link=Permissions",
-			RuntimeVariables.replace("Permissions"));
-		selenium.waitForPageToLoad("30000");
-		assertFalse(selenium.isChecked(
-				"//input[@id='member_ACTION_CONFIGURATION']"));
-		selenium.check("//input[@id='member_ACTION_CONFIGURATION']");
-		assertTrue(selenium.isChecked(
-				"//input[@id='member_ACTION_CONFIGURATION']"));
-		selenium.clickAt("//input[@value='Save']",
-			RuntimeVariables.replace("Save"));
-		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace(
-				"Your request completed successfully."),
-			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertTrue(selenium.isChecked(
-				"//input[@id='member_ACTION_CONFIGURATION']"));
-		selenium.selectFrame("relative=top");
+		int label = 1;
+
+		while (label >= 1) {
+			switch (label) {
+			case 1:
+				selenium.selectWindow("null");
+				selenium.selectFrame("relative=top");
+				selenium.open("/web/guest/home/");
+				selenium.clickAt("link=Web Content List Test Page",
+					RuntimeVariables.replace("Web Content List Test Page"));
+				selenium.waitForPageToLoad("30000");
+				Thread.sleep(5000);
+				assertEquals(RuntimeVariables.replace("Options"),
+					selenium.getText("//span[@title='Options']/ul/li/strong/a"));
+				selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
+					RuntimeVariables.replace("Options"));
+				selenium.waitForVisible(
+					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]");
+				assertEquals(RuntimeVariables.replace("Configuration"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]"));
+				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]",
+					RuntimeVariables.replace("Configuration"));
+				selenium.waitForVisible(
+					"//iframe[contains(@id,'configurationIframeDialog')]");
+				selenium.selectFrame(
+					"//iframe[contains(@id,'configurationIframeDialog')]");
+				selenium.waitForElementPresent(
+					"//script[contains(@src,'/liferay/navigation_interaction.js')]");
+				selenium.waitForVisible("link=Permissions");
+				selenium.clickAt("link=Permissions",
+					RuntimeVariables.replace("Permissions"));
+				selenium.waitForPageToLoad("30000");
+
+				boolean memberActionConfigChecked = selenium.isChecked(
+						"//input[@id='member_ACTION_CONFIGURATION']");
+
+				if (memberActionConfigChecked) {
+					label = 2;
+
+					continue;
+				}
+
+				selenium.check("//input[@id='member_ACTION_CONFIGURATION']");
+
+			case 2:
+				assertTrue(selenium.isChecked(
+						"//input[@id='member_ACTION_CONFIGURATION']"));
+				selenium.clickAt("//input[@value='Save']",
+					RuntimeVariables.replace("Save"));
+				selenium.waitForPageToLoad("30000");
+				assertEquals(RuntimeVariables.replace(
+						"Your request completed successfully."),
+					selenium.getText("//div[@class='portlet-msg-success']"));
+				assertTrue(selenium.isChecked(
+						"//input[@id='member_ACTION_CONFIGURATION']"));
+				selenium.selectFrame("relative=top");
+
+			case 100:
+				label = -1;
+			}
+		}
 	}
 }

@@ -49,23 +49,33 @@
 	<td>Web Content</td>
 </tr>
 <tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
 	<td>clickAt</td>
-	<td>//li[@class='app-view-navigation-entry folder selected']/span/span/ul/li/strong/a/span</td>
+	<td>//li[@class='app-view-navigation-entry folder selected']/span/span/ul/li/strong/a</td>
 	<td>Actions</td>
 </tr>
 <tr>
+	<td>waitForElementNotPresent</td>
+	<td>//div[contains(@class,'aui-overlay-hidden')]</td>
+	<td>AUI Overlay Hidden</td>
+</tr>
+<tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Permissions')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Permissions')]</td>
 	<td>Permissions</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Permissions')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Permissions')]</td>
 	<td>Permissions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Permissions')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Permissions')]</td>
 	<td>Permissions</td>
 </tr>
 <tr>

@@ -89,14 +89,24 @@
 	<td>Web Content Management</td>
 </tr>
 <tr>
-	<td>assertNotChecked</td>
+	<td>storeChecked</td>
+	<td>//input[@value='com.liferay.portlet.journalPERMISSIONS']</td>
+	<td>webContentMgmtPermissions</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${webContentMgmtPermissions}</td>
+	<td>WebContentMgmtPermissions</td>
+</tr>
+<tr>
+	<td>clickAt</td>
 	<td>//input[@value='com.liferay.portlet.journalPERMISSIONS']</td>
 	<td>Permissions</td>
 </tr>
 <tr>
-	<td>check</td>
-	<td>//input[@value='com.liferay.portlet.journalPERMISSIONS']</td>
-	<td>Permissions</td>
+	<td>label</td>
+	<td>WebContentMgmtPermissions</td>
+	<td>WebContentMgmtPermissions</td>
 </tr>
 <tr>
 	<td>assertChecked</td>

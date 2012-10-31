@@ -51,32 +51,32 @@
 <tr>
 	<td>assertText</td>
 	<td>//a[@class='entry-link']/span</td>
-	<td>Web Content Name</td>
+	<td>WC WebContent Title</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//span[@class='entry-action overlay']/span/ul/li/strong/a</td>
+	<td>//div[@data-title='WC WebContent Title']/span[@class='entry-action overlay']/span/ul/li/strong/a</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'View')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'View')]</td>
 	<td>View</td>
 </tr>
 <tr>
-	<td>assertPartialText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'View')]/a</td>
-	<td>View</td>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'View')]</td>
+	<td>View (Opens New Window)</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//a[@class='entry-link']/span</td>
-	<td>Web Content Name</td>
+	<td>WC WebContent Title</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//h1[@class='header-title']/span</td>
-	<td>Web Content Name</td>
+	<td>WC WebContent Title</td>
 </tr>
 </tbody></table>
 </body>

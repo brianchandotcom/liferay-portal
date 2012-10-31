@@ -39,9 +39,11 @@ public class Member_AssertCannotViewWCEntryTest extends BaseTestCase {
 		selenium.clickAt("link=Web Content",
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/event-tap/event-tap-min.js')]");
 		assertEquals(RuntimeVariables.replace(
-				"You do not have the roles required to access this portlet."),
+				"You do not have the required permissions."),
 			selenium.getText("//div[@class='portlet-msg-error']"));
-		assertFalse(selenium.isTextPresent("Web Content Name"));
+		assertFalse(selenium.isTextPresent("WC WebContent Title"));
 	}
 }

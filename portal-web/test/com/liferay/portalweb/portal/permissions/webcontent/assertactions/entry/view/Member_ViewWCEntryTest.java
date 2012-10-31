@@ -39,19 +39,19 @@ public class Member_ViewWCEntryTest extends BaseTestCase {
 		selenium.clickAt("link=Web Content",
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Web Content Name"),
+		assertEquals(RuntimeVariables.replace("WC WebContent Title"),
 			selenium.getText("//a[@class='entry-link']/span"));
-		selenium.clickAt("//span[@class='entry-action overlay']/span/ul/li/strong/a",
+		selenium.clickAt("//div[@data-title='WC WebContent Title']/span[@class='entry-action overlay']/span/ul/li/strong/a",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'View')]/a");
-		assertTrue(selenium.isPartialText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'View')]/a",
-				"View"));
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'View')]");
+		assertEquals(RuntimeVariables.replace("View (Opens New Window)"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'View')]"));
 		selenium.clickAt("//a[@class='entry-link']/span",
-			RuntimeVariables.replace("Web Content Name"));
+			RuntimeVariables.replace("WC WebContent Title"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Web Content Name"),
+		assertEquals(RuntimeVariables.replace("WC WebContent Title"),
 			selenium.getText("//h1[@class='header-title']/span"));
 	}
 }

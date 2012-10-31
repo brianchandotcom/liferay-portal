@@ -25,16 +25,16 @@ public class Member_EditCommentTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.clickAt("link=Web Content Display Permissions Page",
-			RuntimeVariables.replace("Web Content Display Permissions Page"));
+		selenium.clickAt("link=Web Content Display Test Page",
+			RuntimeVariables.replace("Web Content Display Test Page"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("WC Comment"),
+		assertEquals(RuntimeVariables.replace("WC WebContent Comment"),
 			selenium.getText("//div[@class='lfr-discussion-message']"));
 		selenium.clickAt("link=Edit", RuntimeVariables.replace("Edit"));
 		selenium.waitForVisible(
 			"//div[@class='lfr-discussion-form lfr-discussion-form-edit']/span/span/span/textarea");
 		selenium.type("//div[@class='lfr-discussion-form lfr-discussion-form-edit']/span/span/span/textarea",
-			RuntimeVariables.replace("WC Comment Edited"));
+			RuntimeVariables.replace("WC WebContent Comment Edited"));
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForVisible(
@@ -43,9 +43,9 @@ public class Member_EditCommentTest extends BaseTestCase {
 				"Your request processed successfully."),
 			selenium.getText(
 				"//div[@class='lfr-message-response portlet-msg-success']"));
-		assertEquals(RuntimeVariables.replace("WC Comment Edited"),
+		assertEquals(RuntimeVariables.replace("WC WebContent Comment Edited"),
 			selenium.getText("//div[@class='lfr-discussion-message']"));
-		assertNotEquals(RuntimeVariables.replace("WC Comment"),
+		assertNotEquals(RuntimeVariables.replace("WC WebContent Comment"),
 			selenium.getText("//div[@class='lfr-discussion-message']"));
 	}
 }

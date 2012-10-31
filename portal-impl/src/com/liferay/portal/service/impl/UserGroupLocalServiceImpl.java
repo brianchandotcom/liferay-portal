@@ -37,6 +37,7 @@ import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.model.UserGroupConstants;
 import com.liferay.portal.security.ldap.LDAPUserGroupTransactionThreadLocal;
 import com.liferay.portal.security.permission.PermissionCacheUtil;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.UserGroupLocalServiceBaseImpl;
 import com.liferay.portal.util.PropsValues;
 
@@ -94,16 +95,47 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	 * resources for the user group.
 	 * </p>
 	 *
+	 * @param      userId the primary key of the user
+	 * @param      companyId the primary key of the user group's company
+	 * @param      name the user group's name
+	 * @param      description the user group's description
+	 * @return     the user group
+	 * @throws     PortalException if the user group's information was invalid
+	 * @throws     SystemException if a system exception occurred
+	 * @deprecated {@link #addUserGroup(long, long, String, String,
+	 *             ServiceContext)}
+	 */
+	public UserGroup addUserGroup(
+			long userId, long companyId, String name, String description)
+		throws PortalException, SystemException {
+
+		return addUserGroup(userId, companyId, name, description, null);
+	}
+
+	/**
+	 * Adds a user group.
+	 *
+	 * <p>
+	 * This method handles the creation and bookkeeping of the user group,
+	 * including its resources, metadata, and internal data structures. It is
+	 * not necessary to make subsequent calls to setup default groups and
+	 * resources for the user group.
+	 * </p>
+	 *
 	 * @param  userId the primary key of the user
 	 * @param  companyId the primary key of the user group's company
 	 * @param  name the user group's name
 	 * @param  description the user group's description
+	 * @param  serviceContext the user group's service context (optionally
+	 *         <code>null</code>). Can set expando bridge attributes for the
+	 *         user group.
 	 * @return the user group
 	 * @throws PortalException if the user group's information was invalid
 	 * @throws SystemException if a system exception occurred
 	 */
 	public UserGroup addUserGroup(
-			long userId, long companyId, String name, String description)
+			long userId, long companyId, String name, String description,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		// User Group
@@ -121,6 +153,7 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 		userGroup.setDescription(description);
 		userGroup.setAddedByLDAPImport(
 			LDAPUserGroupTransactionThreadLocal.isOriginatesFromLDAP());
+		userGroup.setExpandoBridgeAttributes(serviceContext);
 
 		userGroupPersistence.update(userGroup);
 
@@ -283,6 +316,11 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 		if (count > 0) {
 			throw new RequiredUserGroupException();
 		}
+
+		// Expando
+
+		expandoValueLocalService.deleteValues(
+			UserGroup.class.getName(), userGroup.getUserGroupId());
 
 		// Users
 
@@ -598,17 +636,42 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	/**
 	 * Updates the user group.
 	 *
+	 * @param      companyId the primary key of the user group's company
+	 * @param      userGroupId the primary key of the user group
+	 * @param      name the user group's name
+	 * @param      description the user group's description
+	 * @return     the user group
+	 * @throws     PortalException if a user group with the primary key could
+	 *             not be found or if the new information was invalid
+	 * @throws     SystemException if a system exception occurred
+	 * @deprecated {@link #updateUserGroup(long, long, String, String,
+	 *             ServiceContext)}
+	 */
+	public UserGroup updateUserGroup(
+			long companyId, long userGroupId, String name, String description)
+		throws PortalException, SystemException {
+
+		return updateUserGroup(companyId, userGroupId, name, description, null);
+	}
+
+	/**
+	 * Updates the user group.
+	 *
 	 * @param  companyId the primary key of the user group's company
 	 * @param  userGroupId the primary key of the user group
 	 * @param  name the user group's name
 	 * @param  description the user group's description
+	 * @param  serviceContext the user group's service context (optionally
+	 *         <code>null</code>). Can set expando bridge attributes for the
+	 *         user group.
 	 * @return the user group
 	 * @throws PortalException if a user group with the primary key could not be
 	 *         found or if the new information was invalid
 	 * @throws SystemException if a system exception occurred
 	 */
 	public UserGroup updateUserGroup(
-			long companyId, long userGroupId, String name, String description)
+			long companyId, long userGroupId, String name, String description,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		validate(userGroupId, companyId, name);
@@ -618,6 +681,7 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 
 		userGroup.setName(name);
 		userGroup.setDescription(description);
+		userGroup.setExpandoBridgeAttributes(serviceContext);
 
 		userGroupPersistence.update(userGroup);
 

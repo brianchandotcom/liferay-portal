@@ -120,6 +120,8 @@ public class Field implements Serializable {
 
 	public static final String URL = "url";
 
+	public static final String USER_GROUP_ID = "userGroupId";
+
 	public static final String USER_ID = "userId";
 
 	public static final String USER_NAME = "userName";

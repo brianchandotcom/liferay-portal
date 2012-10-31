@@ -622,6 +622,10 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 			trigger.getGroupName(), GROUP_NAME_MAX_LENGTH);
 		Date startDate = trigger.getStartDate();
 
+		if (startDate == null) {
+			startDate = new Date(System.currentTimeMillis());
+		}
+
 		Trigger quartzTrigger = null;
 
 		TriggerType triggerType = trigger.getTriggerType();

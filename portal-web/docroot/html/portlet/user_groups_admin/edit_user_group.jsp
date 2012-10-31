@@ -57,6 +57,15 @@ long userGroupId = BeanParamUtil.getLong(userGroup, request, "userGroupId");
 
 		<aui:input name="description" />
 
+		<liferay-ui:custom-attributes-available className="<%= UserGroup.class.getName() %>">
+			<liferay-ui:custom-attribute-list
+				className="<%= UserGroup.class.getName() %>"
+				classPK="<%= userGroupId %>"
+				editable="<%= true %>"
+				label="<%= true %>"
+			/>
+		</liferay-ui:custom-attributes-available>
+
 	</aui:fieldset>
 	<aui:fieldset helpMessage="user-group-site-help" label="user-group-site">
 

@@ -22,8 +22,12 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.portal.kernel.lar.UserIdStrategy;
+import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.QueryConfig;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
@@ -37,12 +41,15 @@ import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.model.UserGroupConstants;
 import com.liferay.portal.security.ldap.LDAPUserGroupTransactionThreadLocal;
 import com.liferay.portal.security.permission.PermissionCacheUtil;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.UserGroupLocalServiceBaseImpl;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
+import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -94,16 +101,47 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	 * resources for the user group.
 	 * </p>
 	 *
+	 * @param      userId the primary key of the user
+	 * @param      companyId the primary key of the user group's company
+	 * @param      name the user group's name
+	 * @param      description the user group's description
+	 * @return     the user group
+	 * @throws     PortalException if the user group's information was invalid
+	 * @throws     SystemException if a system exception occurred
+	 * @deprecated {@link #addUserGroup(long, long, String, String,
+	 *             ServiceContext)}
+	 */
+	public UserGroup addUserGroup(
+			long userId, long companyId, String name, String description)
+		throws PortalException, SystemException {
+
+		return addUserGroup(userId, companyId, name, description, null);
+	}
+
+	/**
+	 * Adds a user group.
+	 *
+	 * <p>
+	 * This method handles the creation and bookkeeping of the user group,
+	 * including its resources, metadata, and internal data structures. It is
+	 * not necessary to make subsequent calls to setup default groups and
+	 * resources for the user group.
+	 * </p>
+	 *
 	 * @param  userId the primary key of the user
 	 * @param  companyId the primary key of the user group's company
 	 * @param  name the user group's name
 	 * @param  description the user group's description
+	 * @param  serviceContext the user group's service context (optionally
+	 *         <code>null</code>). Can set expando bridge attributes for the
+	 *         user group.
 	 * @return the user group
 	 * @throws PortalException if the user group's information was invalid
 	 * @throws SystemException if a system exception occurred
 	 */
 	public UserGroup addUserGroup(
-			long userId, long companyId, String name, String description)
+			long userId, long companyId, String name, String description,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		// User Group
@@ -121,6 +159,7 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 		userGroup.setDescription(description);
 		userGroup.setAddedByLDAPImport(
 			LDAPUserGroupTransactionThreadLocal.isOriginatesFromLDAP());
+		userGroup.setExpandoBridgeAttributes(serviceContext);
 
 		userGroupPersistence.update(userGroup);
 
@@ -137,6 +176,13 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 		resourceLocalService.addResources(
 			companyId, 0, userId, UserGroup.class.getName(),
 			userGroup.getUserGroupId(), false, false, false);
+
+		// Indexer
+
+		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			UserGroup.class);
+
+		indexer.reindex(userGroup);
 
 		return userGroup;
 	}
@@ -283,6 +329,11 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 		if (count > 0) {
 			throw new RequiredUserGroupException();
 		}
+
+		// Expando
+
+		expandoValueLocalService.deleteValues(
+			UserGroup.class.getName(), userGroup.getUserGroupId());
 
 		// Users
 
@@ -449,6 +500,148 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	}
 
 	/**
+	 * Returns an ordered range of all the user groups that match the keywords,
+	 * using the indexer. It is preferable to use this method instead of the
+	 * non-indexed version whenever possible for performance reasons.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end -
+	 * start</code> instances. <code>start</code> and <code>end</code> are not
+	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
+	 * refers to the first result in the set. Setting both <code>start</code>
+	 * and <code>end</code> to {@link
+	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	 * result set.
+	 * </p>
+	 *
+	 * @param  companyId the primary key of the user group's company
+	 * @param  keywords the keywords (space separated), which may occur in the
+	 *         user group's name or description (optionally <code>null</code>)
+	 * @param  params the finder params (optionally <code>null</code>). For more
+	 *         information see {@link
+	 *         com.liferay.portlet.usergroupsadmin.util.UserGroupIndexer}
+	 * @param  start the lower bound of the range of user groups to return
+	 * @param  end the upper bound of the range of user groups to return (not
+	 *         inclusive)
+	 * @param  sort the field and direction by which to sort (optionally
+	 *         <code>null</code>)
+	 * @return the matching user groups ordered by sort
+	 * @throws SystemException if a system exception occurred
+	 * @see    com.liferay.portlet.usergroupsadmin.util.UserGroupIndexer
+	 */
+	public Hits search(
+			long companyId, String keywords,
+			LinkedHashMap<String, Object> params, int start, int end, Sort sort)
+		throws SystemException {
+
+		String name = null;
+		String description = null;
+		boolean andOperator = false;
+
+		if (Validator.isNotNull(keywords)) {
+			name = keywords;
+			description = keywords;
+		}
+		else {
+			andOperator = true;
+		}
+
+		if (params != null) {
+			params.put("keywords", keywords);
+		}
+
+		return search(
+			companyId, name, description, params, andOperator, start, end,
+			sort);
+	}
+
+	/**
+	 * Returns an ordered range of all the user groups that match the name and
+	 * description. It is preferable to use this method instead of the
+	 * non-indexed version whenever possible for performance reasons.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end -
+	 * start</code> instances. <code>start</code> and <code>end</code> are not
+	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
+	 * refers to the first result in the set. Setting both <code>start</code>
+	 * and <code>end</code> to {@link
+	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	 * result set.
+	 * </p>
+	 *
+	 * @param  companyId the primary key of the user group's company
+	 * @param  name the user group's name (optionally <code>null</code>)
+	 * @param  description the user group's description (optionally
+	 *         <code>null</code>)
+	 * @param  params the finder params (optionally <code>null</code>). For more
+	 *         information see {@link
+	 *         com.liferay.portlet.usergroupsadmin.util.UserGroupIndexer}
+	 * @param  andSearch whether every field must match its keywords or just one
+	 *         field
+	 * @param  start the lower bound of the range of user groups to return
+	 * @param  end the upper bound of the range of user groups to return (not
+	 *         inclusive)
+	 * @param  sort the field and direction by which to sort (optionally
+	 *         <code>null</code>)
+	 * @return the matching user groups ordered by sort
+	 * @throws SystemException if a system exception occurred
+	 * @see    com.liferay.portal.service.persistence.UserGroupFinder
+	 */
+	public Hits search(
+			long companyId, String name, String description,
+			LinkedHashMap<String, Object> params, boolean andSearch, int start,
+			int end, Sort sort)
+		throws SystemException {
+
+		try {
+			SearchContext searchContext = new SearchContext();
+
+			searchContext.setAndSearch(andSearch);
+
+			Map<String, Serializable> attributes =
+				new HashMap<String, Serializable>();
+
+			attributes.put("description", description);
+			attributes.put("name", name);
+
+			searchContext.setAttributes(attributes);
+
+			searchContext.setCompanyId(companyId);
+			searchContext.setEnd(end);
+
+			if (params != null) {
+				String keywords = (String)params.remove("keywords");
+
+				if (Validator.isNotNull(keywords)) {
+					searchContext.setKeywords(keywords);
+				}
+			}
+
+			QueryConfig queryConfig = new QueryConfig();
+
+			queryConfig.setHighlightEnabled(false);
+			queryConfig.setScoreEnabled(false);
+
+			searchContext.setQueryConfig(queryConfig);
+
+			if (sort != null) {
+				searchContext.setSorts(new Sort[] {sort});
+			}
+
+			searchContext.setStart(start);
+
+			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+				UserGroup.class);
+
+			return indexer.search(searchContext);
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+	}
+
+	/**
 	 * Returns an ordered range of all the user groups that match the name and
 	 * description.
 	 *
@@ -598,17 +791,42 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	/**
 	 * Updates the user group.
 	 *
+	 * @param      companyId the primary key of the user group's company
+	 * @param      userGroupId the primary key of the user group
+	 * @param      name the user group's name
+	 * @param      description the user group's description
+	 * @return     the user group
+	 * @throws     PortalException if a user group with the primary key could
+	 *             not be found or if the new information was invalid
+	 * @throws     SystemException if a system exception occurred
+	 * @deprecated {@link #updateUserGroup(long, long, String, String,
+	 *             ServiceContext)}
+	 */
+	public UserGroup updateUserGroup(
+			long companyId, long userGroupId, String name, String description)
+		throws PortalException, SystemException {
+
+		return updateUserGroup(companyId, userGroupId, name, description, null);
+	}
+
+	/**
+	 * Updates the user group.
+	 *
 	 * @param  companyId the primary key of the user group's company
 	 * @param  userGroupId the primary key of the user group
 	 * @param  name the user group's name
 	 * @param  description the user group's description
+	 * @param  serviceContext the user group's service context (optionally
+	 *         <code>null</code>). Can set expando bridge attributes for the
+	 *         user group.
 	 * @return the user group
 	 * @throws PortalException if a user group with the primary key could not be
 	 *         found or if the new information was invalid
 	 * @throws SystemException if a system exception occurred
 	 */
 	public UserGroup updateUserGroup(
-			long companyId, long userGroupId, String name, String description)
+			long companyId, long userGroupId, String name, String description,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		validate(userGroupId, companyId, name);
@@ -618,8 +836,16 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 
 		userGroup.setName(name);
 		userGroup.setDescription(description);
+		userGroup.setExpandoBridgeAttributes(serviceContext);
 
 		userGroupPersistence.update(userGroup);
+
+		// Indexer
+
+		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			UserGroup.class);
+
+		indexer.reindex(userGroup);
 
 		return userGroup;
 	}

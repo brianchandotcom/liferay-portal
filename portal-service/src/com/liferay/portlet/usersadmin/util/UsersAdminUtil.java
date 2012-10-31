@@ -198,6 +198,12 @@ public class UsersAdminUtil {
 		return getUsersAdmin().getUserGroupRoles(portletRequest);
 	}
 
+	public static Tuple getUserGroups(Hits hits)
+		throws PortalException, SystemException {
+
+		return getUsersAdmin().getUserGroups(hits);
+	}
+
 	public static OrderByComparator getUserOrderByComparator(
 		String orderByCol, String orderByType) {
 

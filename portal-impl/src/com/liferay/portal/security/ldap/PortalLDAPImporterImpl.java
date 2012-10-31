@@ -937,7 +937,7 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 
 			UserGroupLocalServiceUtil.updateUserGroup(
 				companyId, userGroup.getUserGroupId(), ldapGroup.getGroupName(),
-				ldapGroup.getDescription());
+				ldapGroup.getDescription(), null);
 		}
 		catch (NoSuchUserGroupException nsuge) {
 			if (_log.isDebugEnabled()) {
@@ -953,7 +953,7 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 			try {
 				userGroup = UserGroupLocalServiceUtil.addUserGroup(
 					defaultUserId, companyId, ldapGroup.getGroupName(),
-					ldapGroup.getDescription());
+					ldapGroup.getDescription(), null);
 			}
 			catch (Exception e) {
 				if (_log.isWarnEnabled()) {

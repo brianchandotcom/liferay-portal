@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.UserGroupServiceBaseImpl;
 import com.liferay.portal.service.permission.GroupPermissionUtil;
 import com.liferay.portal.service.permission.PortalPermissionUtil;
@@ -82,14 +83,40 @@ public class UserGroupServiceImpl extends UserGroupServiceBaseImpl {
 	 * including its resources, metadata, and internal data structures.
 	 * </p>
 	 *
+	 * @param      name the user group's name
+	 * @param      description the user group's description
+	 * @return     the user group
+	 * @throws     PortalException if the user group's information was invalid
+	 *             or if the user did not have permission to add the user group
+	 * @throws     SystemException if a system exception occurred
+	 * @deprecated {@link #addUserGroup(String, String, serviceContext)}
+	 */
+	public UserGroup addUserGroup(String name, String description)
+		throws PortalException, SystemException {
+
+		return addUserGroup(name, description, null);
+	}
+
+	/**
+	 * Adds a user group.
+	 *
+	 * <p>
+	 * This method handles the creation and bookkeeping of the user group,
+	 * including its resources, metadata, and internal data structures.
+	 * </p>
+	 *
 	 * @param  name the user group's name
 	 * @param  description the user group's description
+	 * @param  serviceContext the user group's service context (optionally
+	 *         <code>null</code>). Can set expando bridge attributes for the
+	 *         user group.
 	 * @return the user group
 	 * @throws PortalException if the user group's information was invalid or if
 	 *         the user did not have permission to add the user group
 	 * @throws SystemException if a system exception occurred
 	 */
-	public UserGroup addUserGroup(String name, String description)
+	public UserGroup addUserGroup(
+			String name, String description, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		PortalPermissionUtil.check(
@@ -98,7 +125,8 @@ public class UserGroupServiceImpl extends UserGroupServiceBaseImpl {
 		User user = getUser();
 
 		return userGroupLocalService.addUserGroup(
-			user.getUserId(), user.getCompanyId(), name, description);
+			user.getUserId(), user.getCompanyId(), name, description,
+			serviceContext);
 	}
 
 	/**
@@ -223,9 +251,33 @@ public class UserGroupServiceImpl extends UserGroupServiceBaseImpl {
 	/**
 	 * Updates the user group.
 	 *
+	 * @param      userGroupId the primary key of the user group
+	 * @param      name the user group's name
+	 * @param      description the the user group's description
+	 * @return     the user group
+	 * @throws     PortalException if a user group with the primary key was not
+	 *             found, if the new information was invalid, or if the user did
+	 *             not have permission to update the user group information
+	 * @throws     SystemException if a system exception occurred
+	 * @deprecated {@link #updateUserGroup(long, String, String,
+	 *             serviceContext)}
+	 */
+	public UserGroup updateUserGroup(
+			long userGroupId, String name, String description)
+		throws PortalException, SystemException {
+
+		return updateUserGroup(userGroupId, name, description, null);
+	}
+
+	/**
+	 * Updates the user group.
+	 *
 	 * @param  userGroupId the primary key of the user group
 	 * @param  name the user group's name
 	 * @param  description the the user group's description
+	 * @param  serviceContext the user group's service context (optionally
+	 *         <code>null</code>). Can set expando bridge attributes for the
+	 *         user group.
 	 * @return the user group
 	 * @throws PortalException if a user group with the primary key was not
 	 *         found, if the new information was invalid, or if the user did not
@@ -233,7 +285,8 @@ public class UserGroupServiceImpl extends UserGroupServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	public UserGroup updateUserGroup(
-			long userGroupId, String name, String description)
+			long userGroupId, String name, String description,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		UserGroupPermissionUtil.check(
@@ -242,7 +295,8 @@ public class UserGroupServiceImpl extends UserGroupServiceBaseImpl {
 		User user = getUser();
 
 		return userGroupLocalService.updateUserGroup(
-			user.getCompanyId(), userGroupId, name, description);
+			user.getCompanyId(), userGroupId, name, description,
+			serviceContext);
 	}
 
 	protected List<UserGroup> filterUserGroups(List<UserGroup> userGroups)

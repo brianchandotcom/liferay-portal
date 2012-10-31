@@ -121,6 +121,9 @@ public interface UsersAdmin {
 	public List<UserGroupRole> getUserGroupRoles(PortletRequest portletRequest)
 		throws PortalException, SystemException;
 
+	public Tuple getUserGroups(Hits hits)
+		throws PortalException, SystemException;
+
 	public OrderByComparator getUserOrderByComparator(
 		String orderByCol, String orderByType);
 

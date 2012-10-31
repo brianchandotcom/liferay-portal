@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
  *
@@ -12,22 +11,30 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/html/portlet/users_admin/init.jsp" %>
+package com.liferay.portal;
 
-<%
-User selUser = (User)request.getAttribute("user.selUser");
-%>
+import com.liferay.portal.kernel.exception.PortalException;
 
-<liferay-ui:error-marker key="errorSection" value="openId" />
+/**
+ * @author Brian Wing Shun Chan
+ */
+public class DuplicateOpenIdException extends PortalException {
 
-<aui:model-context bean="<%= selUser %>" model="<%= User.class %>" />
+	public DuplicateOpenIdException() {
+		super();
+	}
 
-<h3><liferay-ui:message key="open-id" /></h3>
+	public DuplicateOpenIdException(String msg) {
+		super(msg);
+	}
 
-<liferay-ui:error exception="<%= DuplicateOpenIdException.class %>" message="an-account-with-that-open-id-already-exists-in-the-portal" />
+	public DuplicateOpenIdException(String msg, Throwable cause) {
+		super(msg, cause);
+	}
 
-<aui:fieldset>
-	<aui:input label="" name="openId" />
-</aui:fieldset>
+	public DuplicateOpenIdException(Throwable cause) {
+		super(cause);
+	}
+
+}

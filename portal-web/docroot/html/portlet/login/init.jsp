@@ -24,6 +24,7 @@ page import="com.liferay.portal.ContactFirstNameException" %><%@
 page import="com.liferay.portal.ContactFullNameException" %><%@
 page import="com.liferay.portal.ContactLastNameException" %><%@
 page import="com.liferay.portal.CookieNotSupportedException" %><%@
+page import="com.liferay.portal.DuplicateOpenIdException" %><%@
 page import="com.liferay.portal.DuplicateUserEmailAddressException" %><%@
 page import="com.liferay.portal.DuplicateUserIdException" %><%@
 page import="com.liferay.portal.DuplicateUserScreenNameException" %><%@

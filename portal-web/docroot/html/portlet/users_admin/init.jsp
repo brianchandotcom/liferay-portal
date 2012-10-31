@@ -24,6 +24,7 @@ page import="com.liferay.portal.ContactBirthdayException" %><%@
 page import="com.liferay.portal.ContactFirstNameException" %><%@
 page import="com.liferay.portal.ContactFullNameException" %><%@
 page import="com.liferay.portal.ContactLastNameException" %><%@
+page import="com.liferay.portal.DuplicateOpenIdException" %><%@
 page import="com.liferay.portal.DuplicateOrganizationException" %><%@
 page import="com.liferay.portal.DuplicateUserEmailAddressException" %><%@
 page import="com.liferay.portal.DuplicateUserIdException" %><%@

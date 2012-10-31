@@ -36,7 +36,7 @@ String property = (String)request.getAttribute("liferay-ui:write:property");
 
 				Country country = address.getCountry();
 
-				String countryName = country.getName();
+				String countryName = country.getName(locale);
 
 				if (Validator.isNull(countryName)) {
 					try {

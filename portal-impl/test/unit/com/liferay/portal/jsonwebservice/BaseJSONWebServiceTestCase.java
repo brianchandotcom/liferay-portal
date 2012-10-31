@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.json.JSONSerializable;
 import com.liferay.portal.kernel.json.JSONSerializer;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceAction;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManagerUtil;
+import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceClassVisitorFactoryUtil;
+import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceMappingResolver;
 import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.util.MethodParametersResolverUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -31,12 +33,13 @@ import java.lang.reflect.Method;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.powermock.api.mockito.PowerMockito;
-
 import org.springframework.mock.web.MockHttpServletRequest;
+
+import org.powermock.api.mockito.PowerMockito;
 
 /**
  * @author Igor Spasic
+ * @author Raymond Augé
  */
 public abstract class BaseJSONWebServiceTestCase extends PowerMockito {
 
@@ -50,6 +53,14 @@ public abstract class BaseJSONWebServiceTestCase extends PowerMockito {
 
 		jsonWebServiceActionsManagerUtil.setJSONWebServiceActionsManager(
 			new JSONWebServiceActionsManagerImpl());
+
+		JSONWebServiceClassVisitorFactoryUtil
+			jsonWebServiceClassVisitorFactoryUtil =
+				new JSONWebServiceClassVisitorFactoryUtil();
+
+		jsonWebServiceClassVisitorFactoryUtil.
+			setJSONWebServiceClassVisitorFactory(
+				new JSONWebServiceClassVisitorFactoryImpl());
 
 		MethodParametersResolverUtil methodParametersResolverUtil =
 			new MethodParametersResolverUtil();

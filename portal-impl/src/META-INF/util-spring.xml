@@ -150,11 +150,11 @@
 			<bean class="com.liferay.portal.googleapps.GoogleAppsFactoryImpl" />
 		</property>
 	</bean>
-    <bean id="com.liferay.portal.kernel.image.GhostscriptUtil" class="com.liferay.portal.kernel.image.GhostscriptUtil">
-        <property name="ghostscript">
-            <bean class="com.liferay.portal.image.GhostscriptImpl" />
-        </property>
-    </bean>
+	<bean id="com.liferay.portal.kernel.image.GhostscriptUtil" class="com.liferay.portal.kernel.image.GhostscriptUtil">
+		<property name="ghostscript">
+			<bean class="com.liferay.portal.image.GhostscriptImpl" />
+		</property>
+	</bean>
 	<bean id="com.liferay.portal.kernel.image.ImageMagickUtil" class="com.liferay.portal.kernel.image.ImageMagickUtil" destroy-method="destroy">
 		<property name="imageMagick">
 			<bean class="com.liferay.portal.image.ImageMagickImpl" factory-method="getInstance" />
@@ -182,6 +182,11 @@
 	<bean id="com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManagerUtil" class="com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManagerUtil">
 		<property name="JSONWebServiceActionsManager">
 			<bean class="com.liferay.portal.jsonwebservice.JSONWebServiceActionsManagerImpl" />
+		</property>
+	</bean>
+	<bean id="com.liferay.portal.kernel.jsonwebservice.JSONWebServiceClassVisitorFactoryUtil" class="com.liferay.portal.kernel.jsonwebservice.JSONWebServiceClassVisitorFactoryUtil">
+		<property name="JSONWebServiceClassVisitorFactory">
+			<bean class="com.liferay.portal.jsonwebservice.JSONWebServiceClassVisitorFactoryImpl" />
 		</property>
 	</bean>
 	<bean id="com.liferay.portal.kernel.language.LanguageUtil" class="com.liferay.portal.kernel.language.LanguageUtil">

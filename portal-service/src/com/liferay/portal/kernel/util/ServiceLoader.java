@@ -39,6 +39,12 @@ public class ServiceLoader {
 
 		ClassLoader classLoader = currentThread.getContextClassLoader();
 
+		return load(classLoader, clazz);
+	}
+
+	public static <S> List<S> load(ClassLoader classLoader, Class<S> clazz)
+		throws Exception {
+
 		Enumeration<URL> enu = classLoader.getResources(
 			"META-INF/services/" + clazz.getName());
 

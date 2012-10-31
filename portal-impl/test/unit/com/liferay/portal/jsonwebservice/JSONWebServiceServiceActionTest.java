@@ -15,30 +15,37 @@
 package com.liferay.portal.jsonwebservice;
 
 import com.liferay.portal.kernel.servlet.HttpMethods;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.util.PortalImpl;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PropsImpl;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import javax.servlet.ServletContext;
+
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
+import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.mock.web.MockServletContext;
+
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
 import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
-import org.springframework.mock.web.MockHttpServletRequest;
-import org.springframework.mock.web.MockHttpServletResponse;
-
 /**
  * @author Igor Spasic
+ * @author Raymond Augé
  */
 @PowerMockIgnore("javax.xml.datatype.*")
 @PrepareForTest(PortalUtil.class)
@@ -50,14 +57,27 @@ public class JSONWebServiceServiceActionTest
 	public static void init() throws Exception {
 		initPortalServices();
 
+		PropsUtil.setProps(new PropsImpl());
+
 		PortalUtil portalUtil = new PortalUtil();
 
 		portalUtil.setPortal(new PortalImpl());
 
+		ServletContext servletContext = new MockServletContext();
+
+		Class<?> clazz = JSONWebServiceServiceAction.class;
+
+		PortalClassLoaderUtil.setClassLoader(clazz.getClassLoader());
+
 		_jsonWebServiceServiceAction = new JSONWebServiceServiceAction(
-			"", null);
+			"", servletContext, null);
 
 		registerActionClass(FooService.class);
+	}
+
+	@AfterClass
+	public static void tearDown() throws Exception {
+		PortalClassLoaderUtil.setClassLoader(null);
 	}
 
 	@Before

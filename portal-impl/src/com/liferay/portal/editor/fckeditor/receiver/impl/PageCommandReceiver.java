@@ -14,12 +14,14 @@
 
 package com.liferay.portal.editor.fckeditor.receiver.impl;
 
+import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.editor.fckeditor.command.CommandArgument;
 import com.liferay.portal.editor.fckeditor.exception.FCKException;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
+import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutServiceUtil;
 import com.liferay.portal.util.PortalUtil;
 
@@ -122,15 +124,7 @@ public class PageCommandReceiver extends BaseCommandReceiver {
 			String layoutName = _getLayoutName(
 				commandArgument.getCurrentFolder());
 
-			Layout layout = null;
-
-			for (int i = 0; i < layouts.size(); i++) {
-				layout = _getLayout(layoutName, layouts.get(i));
-
-				if (layout != null) {
-					break;
-				}
-			}
+			Layout layout = _getLayout(group.getGroupId(), layoutName);
 
 			if (layout == null) {
 				return;
@@ -198,15 +192,7 @@ public class PageCommandReceiver extends BaseCommandReceiver {
 				String layoutName = _getLayoutName(
 					commandArgument.getCurrentFolder());
 
-				Layout layout = null;
-
-				for (int i = 0; i < layouts.size(); i++) {
-					layout = _getLayout(layoutName, layouts.get(i));
-
-					if (layout != null) {
-						break;
-					}
-				}
+				Layout layout = _getLayout(group.getGroupId(), layoutName);
 
 				if (layout != null) {
 					List<Layout> layoutChildren = layout.getChildren();
@@ -228,28 +214,27 @@ public class PageCommandReceiver extends BaseCommandReceiver {
 		}
 	}
 
-	private Layout _getLayout(String layoutName, Layout layout)
+	private Layout _getLayout(long groupId, String layoutName)
 		throws Exception {
 
-		String friendlyURL = layout.getFriendlyURL();
+		Layout layout = null;
 
-		if (layoutName.equals(friendlyURL)) {
+		try {
+			layout = LayoutLocalServiceUtil.getFriendlyURLLayout(
+				groupId, false, layoutName);
+
 			return layout;
 		}
-
-		List<Layout> layoutChildren = layout.getChildren();
-
-		if (layoutChildren.size() == 0) {
-			return null;
+		catch (NoSuchLayoutException nsle) {
 		}
-		else {
-			for (Layout layoutChild : layoutChildren) {
-				Layout currentLayout = _getLayout(layoutName, layoutChild);
 
-				if (currentLayout != null) {
-					return currentLayout;
-				}
-			}
+		try {
+			layout = LayoutLocalServiceUtil.getFriendlyURLLayout(
+				groupId, true, layoutName);
+
+			return layout;
+		}
+		catch (NoSuchLayoutException nsle) {
 		}
 
 		return null;

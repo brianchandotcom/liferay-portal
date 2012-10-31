@@ -1367,13 +1367,13 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 				portletDataContext, structureElement);
 		}
 
-		Map<Long, Long> ddmStructureNewIds =
+		Map<Long, Long> ddmStructureIdsMap =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				DDMStructure.class);
 
 		long[] ddmStructureIds = ArrayUtil.toArray(
-			ddmStructureNewIds.values().toArray(
-				new Long[ddmStructureNewIds.size()]));
+			ddmStructureIdsMap.values().toArray(
+				new Long[ddmStructureIdsMap.size()]));
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			path, dlFileEntryType, _NAMESPACE);

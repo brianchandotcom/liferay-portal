@@ -665,6 +665,10 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 		return _group.isGuest();
 	}
 
+	public boolean isInStagingPortlet(java.lang.String portletId) {
+		return _group.isInStagingPortlet(portletId);
+	}
+
 	public boolean isLayout() {
 		return _group.isLayout();
 	}

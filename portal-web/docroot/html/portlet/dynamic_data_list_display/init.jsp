@@ -47,7 +47,8 @@ long recordSetId = GetterUtil.getLong(preferences.getValue("recordSetId", String
 long displayDDMTemplateId = GetterUtil.getLong(preferences.getValue("displayDDMTemplateId", StringPool.BLANK));
 long formDDMTemplateId = GetterUtil.getLong(preferences.getValue("formDDMTemplateId", StringPool.BLANK));
 
-boolean editable = GetterUtil.getBoolean(preferences.getValue("editable", Boolean.TRUE.toString()));
+boolean editable = DDLUtil.isEditable(preferences, portletDisplay.getId(), themeDisplay.getScopeGroupId());
+
 boolean spreadsheet = GetterUtil.getBoolean(preferences.getValue("spreadsheet", Boolean.FALSE.toString()));
 
 String ddmResource = portletConfig.getInitParameter("ddm-resource");

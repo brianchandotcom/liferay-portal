@@ -380,6 +380,16 @@ public class GroupImpl extends GroupBaseImpl {
 		}
 	}
 
+	public boolean isInStagingPortlet(String portletId) {
+		Group liveGroup = getLiveGroup();
+
+		if (liveGroup == null) {
+			return false;
+		}
+
+		return liveGroup.isStagedPortlet(portletId);
+	}
+
 	public boolean isLayout() {
 		return hasClassName(Layout.class);
 	}

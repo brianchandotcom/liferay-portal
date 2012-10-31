@@ -25,6 +25,10 @@ public class AddCategoryViewableByAnyoneTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
@@ -35,6 +39,7 @@ public class AddCategoryViewableByAnyoneTest extends BaseTestCase {
 		selenium.clickAt("link=Categories",
 			RuntimeVariables.replace("Categories"));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(5000);
 		selenium.clickAt("//input[@value='Add Category']",
 			RuntimeVariables.replace("Add Category"));
 		selenium.waitForVisible("//input[@id='_147_title_en_US']");
@@ -43,7 +48,7 @@ public class AddCategoryViewableByAnyoneTest extends BaseTestCase {
 		selenium.type("//textarea[@id='_147_description_en_US']",
 			RuntimeVariables.replace("Category Description"));
 		Thread.sleep(5000);
-		selenium.select("//select[@id='_147_inputPermissionsViewRole']",
+		selenium.select("//select[@id='_147__inputPermissionsViewRole']",
 			RuntimeVariables.replace("Anyone (Guest Role)"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));

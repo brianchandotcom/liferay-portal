@@ -25,6 +25,10 @@ public class ViewCategoryViewableByOwnerTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
@@ -48,11 +52,16 @@ public class ViewCategoryViewableByOwnerTest extends BaseTestCase {
 			selenium.getText("//div[@class='view-category']/div[2]"));
 		selenium.clickAt("//input[@id='updateCategoryPermissions']",
 			RuntimeVariables.replace("Permissions"));
+		selenium.waitForVisible("//iframe");
+		selenium.selectFrame("//iframe");
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/liferay/search_container.js')]");
 		selenium.waitForVisible("//tr[3]/td[6]/input");
 		assertFalse(selenium.isChecked("//tr[3]/td[6]/input"));
 		assertTrue(selenium.isChecked("//tr[4]/td[6]/input"));
 		assertFalse(selenium.isChecked("//tr[5]/td[6]/input"));
 		assertFalse(selenium.isChecked("//tr[6]/td[6]/input"));
 		assertFalse(selenium.isChecked("//tr[7]/td[6]/input"));
+		selenium.selectFrame("relative=top");
 	}
 }

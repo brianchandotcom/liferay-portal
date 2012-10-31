@@ -25,6 +25,10 @@ public class ViewVocabularyViewableByAnyoneTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
@@ -46,11 +50,16 @@ public class ViewVocabularyViewableByAnyoneTest extends BaseTestCase {
 			selenium.getText("//textarea[@id='_147_description_en_US']"));
 		selenium.clickAt("//input[@value='Permissions']",
 			RuntimeVariables.replace("Permissions"));
+		selenium.waitForVisible("//iframe");
+		selenium.selectFrame("//iframe");
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/liferay/search_container.js')]");
 		selenium.waitForVisible("//tr[3]/td[5]/input");
 		assertTrue(selenium.isChecked("//tr[3]/td[5]/input"));
 		assertTrue(selenium.isChecked("//tr[4]/td[5]/input"));
 		assertFalse(selenium.isChecked("//tr[5]/td[5]/input"));
 		assertFalse(selenium.isChecked("//tr[6]/td[5]/input"));
 		assertTrue(selenium.isChecked("//tr[7]/td[5]/input"));
+		selenium.selectFrame("relative=top");
 	}
 }

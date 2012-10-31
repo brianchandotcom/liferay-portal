@@ -26,6 +26,10 @@ public class AddVocabularyViewableBySiteMembersTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
@@ -44,7 +48,7 @@ public class AddVocabularyViewableBySiteMembersTest extends BaseTestCase {
 		selenium.type("//textarea[@id='_147_description_en_US']",
 			RuntimeVariables.replace("Vocabulary Description"));
 		Thread.sleep(5000);
-		selenium.select("//select[@id='_147_inputPermissionsViewRole']",
+		selenium.select("//select[@id='_147__inputPermissionsViewRole']",
 			RuntimeVariables.replace("Site Members"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));

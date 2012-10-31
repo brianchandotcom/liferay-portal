@@ -3166,10 +3166,14 @@ public class PortalImpl implements Portal {
 
 		String name = WebKeys.PORTLET_BREADCRUMBS;
 
+		String portletName = portletDisplay.getPortletName();
+
 		if (Validator.isNotNull(portletDisplay.getId()) &&
+			!portletName.equals(PortletKeys.BREADCRUMB) &&
 			!portletDisplay.isFocused()) {
 
-			name += StringPool.UNDERLINE + portletDisplay.getId();
+			name = name.concat(
+				StringPool.UNDERLINE.concat(portletDisplay.getId()));
 		}
 
 		return (List<BreadcrumbEntry>)request.getAttribute(name);

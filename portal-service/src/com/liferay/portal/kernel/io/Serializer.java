@@ -185,6 +185,18 @@ public class Serializer {
 
 			return;
 		}
+		else if (serializable instanceof Class) {
+			Class<?> clazz = (Class<?>)serializable;
+			ClassLoader classLoader = clazz.getClassLoader();
+
+			String contextName = ClassLoaderPool.getContextName(classLoader);
+
+			writeByte(SerializationConstants.TC_CLASS);
+			writeString(contextName);
+			writeString(clazz.getName());
+
+			return;
+		}
 		else if (serializable instanceof Short) {
 			writeByte(SerializationConstants.TC_SHORT);
 			writeShort((Short)serializable);

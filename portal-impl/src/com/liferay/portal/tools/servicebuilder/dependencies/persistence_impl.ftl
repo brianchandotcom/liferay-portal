@@ -489,7 +489,9 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 					${entity.name}Impl.class, ${entity.varName}.getPrimaryKeyObj());
 			}
 
-			session.delete(${entity.varName});
+			if (${entity.varName} != null) {
+				session.delete(${entity.varName});
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -498,7 +500,9 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			closeSession(session);
 		}
 
-		clearCache(${entity.varName});
+		if (${entity.varName} != null) {
+			clearCache(${entity.varName});
+		}
 
 		return ${entity.varName};
 	}

@@ -27,7 +27,6 @@ import java.sql.ResultSet;
 /**
  * @author Jorge Ferrer
  * @author Brian Wing Shun Chan
- * @author James Lefeu
  */
 public abstract class BaseUpgradePortletPreferences extends UpgradeProcess {
 
@@ -41,9 +40,6 @@ public abstract class BaseUpgradePortletPreferences extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		requestTemporaryIndex(
-			true, "PortletPreferences", "portletPreferencesId");
-
 		updatePortletPreferences();
 	}
 

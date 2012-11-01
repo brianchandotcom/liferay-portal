@@ -302,7 +302,35 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 	 * @deprecated {@link #update(BaseModel)}}
 	 */
 	public T update(T model, boolean merge) throws SystemException {
-		return update(model);
+		if (model instanceof ModelWrapper) {
+			ModelWrapper<T> modelWrapper = (ModelWrapper<T>)model;
+
+			model = modelWrapper.getWrappedModel();
+		}
+
+		boolean isNew = model.isNew();
+
+		for (ModelListener<T> listener : listeners) {
+			if (isNew) {
+				listener.onBeforeCreate(model);
+			}
+			else {
+				listener.onBeforeUpdate(model);
+			}
+		}
+
+		model = updateImpl(model, merge);
+
+		for (ModelListener<T> listener : listeners) {
+			if (isNew) {
+				listener.onAfterCreate(model);
+			}
+			else {
+				listener.onAfterUpdate(model);
+			}
+		}
+
+		return model;
 	}
 
 	/**

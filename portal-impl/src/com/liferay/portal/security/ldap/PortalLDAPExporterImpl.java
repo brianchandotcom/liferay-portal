@@ -64,6 +64,10 @@ public class PortalLDAPExporterImpl implements PortalLDAPExporter {
 		User user = UserLocalServiceUtil.getUserByContactId(
 			contact.getContactId());
 
+		if (user.isDefaultUser()) {
+			return;
+		}
+
 		long ldapServerId = PortalLDAPUtil.getLdapServerId(
 			companyId, user.getScreenName(), user.getEmailAddress());
 

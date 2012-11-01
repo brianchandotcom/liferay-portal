@@ -72,7 +72,7 @@ portletURL.setParameter("userGroupId", String.valueOf(userGroup.getUserGroupId()
 		<%
 		UserSearchTerms searchTerms = (UserSearchTerms)searchContainer.getSearchTerms();
 
-		LinkedHashMap userParams = new LinkedHashMap();
+		LinkedHashMap<String, Object> userParams = new LinkedHashMap<String, Object>();
 
 		if (filterManageableOrganizations) {
 			userParams.put("usersOrgsTree", user.getOrganizations());

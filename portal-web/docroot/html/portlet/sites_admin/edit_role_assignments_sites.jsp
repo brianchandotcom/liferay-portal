@@ -43,7 +43,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_role_assignments.
 	<%
 	GroupSearchTerms searchTerms = (GroupSearchTerms)searchContainer.getSearchTerms();
 
-	LinkedHashMap groupParams = new LinkedHashMap();
+	LinkedHashMap<String, Object> groupParams = new LinkedHashMap<String, Object>();
 
 	groupParams.put("site", Boolean.TRUE);
 

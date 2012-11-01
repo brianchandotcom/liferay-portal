@@ -46,7 +46,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_role_assignments.
 	<%
 	UserGroupSearchTerms searchTerms = (UserGroupSearchTerms)searchContainer.getSearchTerms();
 
-	LinkedHashMap userGroupParams = new LinkedHashMap();
+	LinkedHashMap<String, Object> userGroupParams = new LinkedHashMap<String, Object>();
 
 	if (tabs3.equals("current")) {
 		List userGroupsRoles = new ArrayList();

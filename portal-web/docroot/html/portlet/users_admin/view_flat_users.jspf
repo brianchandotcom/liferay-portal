@@ -151,7 +151,7 @@ if (!ParamUtil.getBoolean(renderRequest, "advancedSearch")) {
 	</c:if>
 
 	<%
-	LinkedHashMap userParams = new LinkedHashMap();
+	LinkedHashMap<String, Object> userParams = new LinkedHashMap<String, Object>();
 
 	if (userOrganizationId > 0) {
 		userParams.put("usersOrgs", new Long(userOrganizationId));

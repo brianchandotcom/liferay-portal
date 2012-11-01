@@ -91,7 +91,7 @@ portletURL.setParameter("tabs3", tabs3);
 				<%
 				UserSearchTerms searchTerms = (UserSearchTerms)searchContainer.getSearchTerms();
 
-				LinkedHashMap userParams = new LinkedHashMap();
+				LinkedHashMap<String, Object> userParams = new LinkedHashMap<String, Object>();
 
 				if (tabs3.equals("current")) {
 					userParams.put("usersPasswordPolicies", new Long(passwordPolicy.getPasswordPolicyId()));
@@ -156,7 +156,7 @@ portletURL.setParameter("tabs3", tabs3);
 
 				long parentOrganizationId = OrganizationConstants.ANY_PARENT_ORGANIZATION_ID;
 
-				LinkedHashMap organizationParams = new LinkedHashMap();
+				LinkedHashMap<String, Object> organizationParams = new LinkedHashMap<String, Object>();
 
 				if (tabs3.equals("current")) {
 					organizationParams.put("organizationsPasswordPolicies", new Long(passwordPolicy.getPasswordPolicyId()));

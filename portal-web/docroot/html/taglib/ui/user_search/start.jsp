@@ -24,7 +24,7 @@
 <%
 PortletURL portletURL = (PortletURL)request.getAttribute("liferay-ui:user-search:portletURL");
 RowChecker rowChecker = (RowChecker)request.getAttribute("liferay-ui:user-search:rowChecker");
-LinkedHashMap userParams = (LinkedHashMap)request.getAttribute("liferay-ui:user-search:userParams");
+LinkedHashMap<String, Object> userParams = (LinkedHashMap<String, Object>)request.getAttribute("liferay-ui:user-search:userParams");
 
 UserSearch searchContainer = new UserSearch(renderRequest, portletURL);
 

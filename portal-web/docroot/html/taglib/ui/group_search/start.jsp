@@ -24,7 +24,7 @@
 <%
 PortletURL portletURL = (PortletURL)request.getAttribute("liferay-ui:group-search:portletURL");
 RowChecker rowChecker = (RowChecker)request.getAttribute("liferay-ui:group-search:rowChecker");
-LinkedHashMap groupParams = (LinkedHashMap)request.getAttribute("liferay-ui:group-search:groupParams");
+LinkedHashMap<String, Object> groupParams = (LinkedHashMap<String, Object>)request.getAttribute("liferay-ui:group-search:groupParams");
 
 GroupSearch searchContainer = new GroupSearch(renderRequest, portletURL);
 

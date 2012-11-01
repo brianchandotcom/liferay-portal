@@ -52,7 +52,7 @@ if (group.isOrganization()) {
 			>
 
 				<%
-				LinkedHashMap userParams = new LinkedHashMap();
+				LinkedHashMap<String, Object> userParams = new LinkedHashMap<String, Object>();
 
 				userParams.put("usersOrgs", new Long(organization.getOrganizationId()));
 

@@ -89,7 +89,7 @@ if ((group != null) && !group.isRoot()) {
 
 			request.setAttribute("view_tree.jspf-searchTerms", searchTerms);
 
-			LinkedHashMap groupParams = new LinkedHashMap();
+			LinkedHashMap<String, Object> groupParams = new LinkedHashMap<String, Object>();
 
 			groupParams.put("site", Boolean.TRUE);
 

@@ -73,7 +73,7 @@ portletURL.setParameter("organizationId", String.valueOf(organization.getOrganiz
 		<%
 		UserSearchTerms searchTerms = (UserSearchTerms)searchContainer.getSearchTerms();
 
-		LinkedHashMap userParams = new LinkedHashMap();
+		LinkedHashMap<String, Object> userParams = new LinkedHashMap<String, Object>();
 
 		if (tabs2.equals("current")) {
 			userParams.put("usersOrgs", new Long(organization.getOrganizationId()));

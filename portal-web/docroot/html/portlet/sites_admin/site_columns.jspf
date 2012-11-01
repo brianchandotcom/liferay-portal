@@ -87,7 +87,7 @@
 >
 
 	<%
-	LinkedHashMap userParams = new LinkedHashMap();
+	LinkedHashMap<String, Object> userParams = new LinkedHashMap<String, Object>();
 
 	userParams.put("inherit", true);
 	userParams.put("usersGroups", new Long(curGroup.getGroupId()));
@@ -100,7 +100,7 @@
 		buffer.append("</div>");
 	}
 
-	LinkedHashMap organizationParams = new LinkedHashMap();
+	LinkedHashMap<String, Object> organizationParams = new LinkedHashMap<String, Object>();
 
 	organizationParams.put("organizationsGroups", new Long(curGroup.getGroupId()));
 
@@ -116,7 +116,7 @@
 		buffer.append("</div>");
 	}
 
-	LinkedHashMap userGroupParams = new LinkedHashMap();
+	LinkedHashMap<String, Object> userGroupParams = new LinkedHashMap<String, Object>();
 
 	userGroupParams.put("userGroupsGroups", new Long(curGroup.getGroupId()));
 

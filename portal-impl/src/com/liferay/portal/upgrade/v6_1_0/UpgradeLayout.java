@@ -33,13 +33,11 @@ import java.util.Locale;
 /**
  * @author Jorge Ferrer
  * @author Julio Camarero
- * @author James Lefeu
  */
 public class UpgradeLayout extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;

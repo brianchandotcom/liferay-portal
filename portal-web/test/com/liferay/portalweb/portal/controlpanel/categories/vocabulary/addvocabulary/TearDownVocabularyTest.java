@@ -30,6 +30,10 @@ public class TearDownVocabularyTest extends BaseTestCase {
 				selenium.selectWindow("null");
 				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
+				selenium.clickAt("//div[@id='dockbar']",
+					RuntimeVariables.replace("Dockbar"));
+				selenium.waitForElementPresent(
+					"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
 				assertEquals(RuntimeVariables.replace("Go to"),
 					selenium.getText("//li[@id='_145_mySites']/a/span"));
 				selenium.mouseOver("//li[@id='_145_mySites']/a/span");
@@ -61,12 +65,12 @@ public class TearDownVocabularyTest extends BaseTestCase {
 						"//span[@title='Actions']/ul/li/strong/a/span"));
 				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
-				selenium.waitForText("//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a",
+				selenium.waitForText("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]",
 					"Delete");
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
-				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a",
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]"));
+				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]",
 					RuntimeVariables.replace("Delete"));
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete the selected vocabularies[\\s\\S]$"));

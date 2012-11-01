@@ -159,7 +159,7 @@ else {
 			%>
 
 			<c:if test="<%= PropsValues.USERS_REMINDER_QUERIES_CUSTOM_QUESTION_ENABLED %>">
-				<aui:option label="write-my-own-question" selected="<%= hasCustomQuestion %>" value="<%= UsersAdminUtil.CUSTOM_QUESTION %>" />
+				<aui:option label="write-my-own-question" selected="<%= hasCustomQuestion %>" useModelValue="<%= false %>" value="<%= UsersAdminUtil.CUSTOM_QUESTION %>" />
 			</c:if>
 		</aui:select>
 

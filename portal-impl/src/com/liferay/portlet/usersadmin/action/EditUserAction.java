@@ -552,7 +552,7 @@ public class EditUserAction extends PortletAction {
 			user, actionRequest, "reminderQueryQuestion");
 
 		if (reminderQueryQuestion.equals(UsersAdminUtil.CUSTOM_QUESTION)) {
-			reminderQueryQuestion = BeanParamUtil.getString(
+			reminderQueryQuestion = BeanParamUtil.getStringSilent(
 				user, actionRequest, "reminderQueryCustomQuestion");
 		}
 

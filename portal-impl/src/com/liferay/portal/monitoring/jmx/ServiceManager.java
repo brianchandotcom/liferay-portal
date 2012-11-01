@@ -15,7 +15,6 @@
 package com.liferay.portal.monitoring.jmx;
 
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.monitoring.statistics.service.ServerStatistics;
 import com.liferay.portal.monitoring.statistics.service.ServiceMonitorAdvice;
 
@@ -66,7 +65,7 @@ public class ServiceManager implements ServiceManagerMBean {
 		return _serviceMonitorAdvice.getMonitoredClasses();
 	}
 
-	public Set<MethodKey> getMonitoredMethods() {
+	public Set<MethodSignature> getMonitoredMethods() {
 		return _serviceMonitorAdvice.getMonitoredMethods();
 	}
 

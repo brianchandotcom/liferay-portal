@@ -15,7 +15,6 @@
 package com.liferay.portal.monitoring.jmx;
 
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.util.MethodKey;
 
 import java.util.Set;
 
@@ -44,7 +43,7 @@ public interface ServiceManagerMBean {
 
 	public Set<String> getMonitoredClasses();
 
-	public Set<MethodKey> getMonitoredMethods();
+	public Set<MethodSignature> getMonitoredMethods();
 
 	public long getRequestCount(
 			String className, String methodName, String[] parameterTypes)

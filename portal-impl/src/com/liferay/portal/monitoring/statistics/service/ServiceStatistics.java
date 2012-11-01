@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.monitoring.RequestStatus;
 import com.liferay.portal.kernel.monitoring.statistics.DataSampleProcessor;
 import com.liferay.portal.kernel.monitoring.statistics.RequestStatistics;
-import com.liferay.portal.kernel.util.MethodKey;
+import com.liferay.portal.monitoring.jmx.MethodSignature;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -36,19 +36,14 @@ public class ServiceStatistics
 	public long getAverageTime(String methodName, String[] parameterTypes)
 		throws SystemException {
 
-		try {
-			MethodKey methodKey = new MethodKey(
-				_className, methodName, parameterTypes);
+		MethodSignature methodSignature = new MethodSignature(
+			_className, methodName, parameterTypes);
 
-			RequestStatistics requestStatistics = _methodRequestStatistics.get(
-				methodKey);
+		RequestStatistics requestStatistics = _methodRequestStatistics.get(
+			methodSignature);
 
-			if (requestStatistics != null) {
-				return requestStatistics.getAverageTime();
-			}
-		}
-		catch (ClassNotFoundException cnfe) {
-			throw new SystemException(cnfe);
+		if (requestStatistics != null) {
+			return requestStatistics.getAverageTime();
 		}
 
 		return -1;
@@ -57,19 +52,14 @@ public class ServiceStatistics
 	public long getErrorCount(String methodName, String[] parameterTypes)
 		throws SystemException {
 
-		try {
-			MethodKey methodKey = new MethodKey(
-				_className, methodName, parameterTypes);
+		MethodSignature methodSignature = new MethodSignature(
+			_className, methodName, parameterTypes);
 
-			RequestStatistics requestStatistics = _methodRequestStatistics.get(
-				methodKey);
+		RequestStatistics requestStatistics = _methodRequestStatistics.get(
+			methodSignature);
 
-			if (requestStatistics != null) {
-				return requestStatistics.getErrorCount();
-			}
-		}
-		catch (ClassNotFoundException cnfe) {
-			throw new SystemException(cnfe);
+		if (requestStatistics != null) {
+			return requestStatistics.getErrorCount();
 		}
 
 		return -1;
@@ -78,19 +68,14 @@ public class ServiceStatistics
 	public long getMaxTime(String methodName, String[] parameterTypes)
 		throws SystemException {
 
-		try {
-			MethodKey methodKey = new MethodKey(
-				_className, methodName, parameterTypes);
+		MethodSignature methodSignature = new MethodSignature(
+			_className, methodName, parameterTypes);
 
-			RequestStatistics requestStatistics = _methodRequestStatistics.get(
-				methodKey);
+		RequestStatistics requestStatistics = _methodRequestStatistics.get(
+			methodSignature);
 
-			if (requestStatistics != null) {
-				return requestStatistics.getMaxTime();
-			}
-		}
-		catch (ClassNotFoundException cnfe) {
-			throw new SystemException(cnfe);
+		if (requestStatistics != null) {
+			return requestStatistics.getMaxTime();
 		}
 
 		return -1;
@@ -99,19 +84,14 @@ public class ServiceStatistics
 	public long getMinTime(String methodName, String[] parameterTypes)
 		throws SystemException {
 
-		try {
-			MethodKey methodKey = new MethodKey(
-				_className, methodName, parameterTypes);
+		MethodSignature methodSignature = new MethodSignature(
+			_className, methodName, parameterTypes);
 
-			RequestStatistics requestStatistics = _methodRequestStatistics.get(
-				methodKey);
+		RequestStatistics requestStatistics = _methodRequestStatistics.get(
+			methodSignature);
 
-			if (requestStatistics != null) {
-				return requestStatistics.getMinTime();
-			}
-		}
-		catch (ClassNotFoundException cnfe) {
-			throw new SystemException(cnfe);
+		if (requestStatistics != null) {
+			return requestStatistics.getMinTime();
 		}
 
 		return -1;
@@ -120,19 +100,14 @@ public class ServiceStatistics
 	public long getRequestCount(String methodName, String[] parameterTypes)
 		throws SystemException {
 
-		try {
-			MethodKey methodKey = new MethodKey(
-				_className, methodName, parameterTypes);
+		MethodSignature methodSignature = new MethodSignature(
+			_className, methodName, parameterTypes);
 
-			RequestStatistics requestStatistics = _methodRequestStatistics.get(
-				methodKey);
+		RequestStatistics requestStatistics = _methodRequestStatistics.get(
+			methodSignature);
 
-			if (requestStatistics != null) {
-				return requestStatistics.getRequestCount();
-			}
-		}
-		catch (ClassNotFoundException cnfe) {
-			throw new SystemException(cnfe);
+		if (requestStatistics != null) {
+			return requestStatistics.getRequestCount();
 		}
 
 		return -1;
@@ -141,15 +116,17 @@ public class ServiceStatistics
 	public void processDataSample(
 		ServiceRequestDataSample serviceRequestDataSample) {
 
-		MethodKey methodKey = serviceRequestDataSample.getMethodKey();
+		MethodSignature methodSignature =
+			serviceRequestDataSample.getMethodSignature();
 
 		RequestStatistics requestStatistics = _methodRequestStatistics.get(
-			methodKey);
+			methodSignature);
 
 		if (requestStatistics == null) {
-			requestStatistics = new RequestStatistics(methodKey.toString());
+			requestStatistics = new RequestStatistics(
+				methodSignature.toString());
 
-			_methodRequestStatistics.put(methodKey, requestStatistics);
+			_methodRequestStatistics.put(methodSignature, requestStatistics);
 		}
 
 		RequestStatus requestStatus =
@@ -168,7 +145,7 @@ public class ServiceStatistics
 	}
 
 	private String _className;
-	private Map<MethodKey, RequestStatistics> _methodRequestStatistics =
-		new ConcurrentHashMap<MethodKey, RequestStatistics>();
+	private Map<MethodSignature, RequestStatistics> _methodRequestStatistics =
+		new ConcurrentHashMap<MethodSignature, RequestStatistics>();
 
 }

@@ -191,7 +191,7 @@ public class PortalLDAPExporterImpl implements PortalLDAPExporter {
 			Attribute groupMembers = attributes.get(
 				groupMappings.getProperty(GroupConverterKeys.USER));
 
-			if (groupMembers.size() == 1) {
+			if ((groupMembers != null) && (groupMembers.size() == 1)) {
 				ldapContext.unbind(fullGroupDN);
 			}
 		}

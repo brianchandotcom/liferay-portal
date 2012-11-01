@@ -50,7 +50,7 @@
 </tr>
 <tr>
 	<td>storeElementPresent</td>
-	<td>//input[@name='_15_rowIds']</td>
+	<td>//div[@class='entry-thumbnail']</td>
 	<td>webContentPresent</td>
 </tr>
 <tr>
@@ -59,39 +59,54 @@
 	<td>WebContentNotPresent</td>
 </tr>
 <tr>
-	<td>assertNotChecked</td>
-	<td>//input[@name='_15_allRowIds']</td>
-	<td>Select All</td>
-</tr>
-<tr>
 	<td>clickAt</td>
-	<td>//input[@name='_15_allRowIds']</td>
+	<td>//input[@id='_15_allRowIdsCheckbox']</td>
 	<td>Select All</td>
 </tr>
 <tr>
 	<td>assertChecked</td>
-	<td>//input[@name='_15_allRowIds']</td>
+	<td>//input[@id='_15_allRowIdsCheckbox']</td>
 	<td>Select All</td>
 </tr>
 <tr>
-	<td>waitForElementNotPresent</td>
-	<td>//span[contains(@class,'aui-button-disabled')]/span/input[@value='Delete']</td>
-	<td>Disabled Delete Button</td>
+	<td>waitForVisible</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>Actions</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>//input[@value='Delete']</td>
+	<td>assertText</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>Actions</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>Actions</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]</td>
 	<td>Delete</td>
 </tr>
 <tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete the selected web content?</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]</td>
+	<td>Delete</td>
 </tr>
 <tr>
 	<td>label</td>
 	<td>WebContentNotPresent</td>
 	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='entries-empty portlet-msg-info']</td>
+	<td>No Web Content was found.</td>
 </tr>
 </tbody></table>
 </body>

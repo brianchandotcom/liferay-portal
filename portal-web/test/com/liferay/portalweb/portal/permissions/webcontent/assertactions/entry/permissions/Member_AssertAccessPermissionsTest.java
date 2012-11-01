@@ -39,7 +39,7 @@ public class Member_AssertAccessPermissionsTest extends BaseTestCase {
 		selenium.clickAt("link=Web Content",
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Web Content Name"),
+		assertEquals(RuntimeVariables.replace("WC WebContent Title"),
 			selenium.getText("//a[@class='entry-link']/span"));
 		selenium.clickAt("//span[@class='entry-action overlay']/span/ul/li/strong/a",
 			RuntimeVariables.replace("Actions"));
@@ -49,9 +49,9 @@ public class Member_AssertAccessPermissionsTest extends BaseTestCase {
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Permissions')]/a"));
 		selenium.clickAt("//a[@class='entry-link']/span",
-			RuntimeVariables.replace("Web Content Name"));
+			RuntimeVariables.replace("WC WebContent Title"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Web Content Name"),
+		assertEquals(RuntimeVariables.replace("WC WebContent Title"),
 			selenium.getText("//h1[@class='header-title']"));
 		assertEquals(RuntimeVariables.replace("Permissions"),
 			selenium.getText(
@@ -62,7 +62,7 @@ public class Member_AssertAccessPermissionsTest extends BaseTestCase {
 		selenium.selectFrame("//iframe[contains(@id,'articlePermissions')]");
 		selenium.waitForElementPresent(
 			"//script[contains(@src,'/liferay/search_container.js')]");
-		assertEquals(RuntimeVariables.replace("Web Content Name"),
+		assertEquals(RuntimeVariables.replace("WC WebContent Title"),
 			selenium.getText("//h1[@class='header-title']"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));

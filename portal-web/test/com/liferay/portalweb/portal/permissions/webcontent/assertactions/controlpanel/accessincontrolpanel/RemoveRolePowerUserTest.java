@@ -45,9 +45,8 @@ public class RemoveRolePowerUserTest extends BaseTestCase {
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Member"),
-			selenium.getText("//tbody/tr[3]/td[2]/a"));
-		selenium.clickAt("//tbody/tr[3]/td[2]/a",
-			RuntimeVariables.replace("Member"));
+			selenium.getText("//tr[3]/td[2]/a"));
+		selenium.clickAt("//tr[3]/td[2]/a", RuntimeVariables.replace("Member"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isPartialText("//a[@id='_125_rolesLink']", "Roles"));
 		selenium.clickAt("//a[@id='_125_rolesLink']",

@@ -22,45 +22,66 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class EnableCommentsWCDTest extends BaseTestCase {
 	public void testEnableCommentsWCD() throws Exception {
-		selenium.selectWindow("null");
-		selenium.selectFrame("relative=top");
-		selenium.open("/web/guest/home/");
-		selenium.clickAt("link=Web Content Display Permissions Page",
-			RuntimeVariables.replace("Web Content Display Permissions Page"));
-		selenium.waitForPageToLoad("30000");
-		Thread.sleep(5000);
-		assertEquals(RuntimeVariables.replace("Options"),
-			selenium.getText("//span[@title='Options']/ul/li/strong/a"));
-		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
-			RuntimeVariables.replace("Options"));
-		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Configuration')]/a");
-		assertEquals(RuntimeVariables.replace("Configuration"),
-			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Configuration')]/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Configuration')]/a",
-			RuntimeVariables.replace("Configuration"));
-		selenium.waitForVisible(
-			"//iframe[contains(@id,'configurationIframeDialog')]");
-		selenium.selectFrame(
-			"//iframe[contains(@id,'configurationIframeDialog')]");
-		selenium.waitForElementPresent(
-			"//script[contains(@src,'/liferay/navigation_interaction.js')]");
-		selenium.waitForVisible("//input[@id='_86_enableCommentsCheckbox']");
-		assertFalse(selenium.isChecked(
-				"//input[@id='_86_enableCommentsCheckbox']"));
-		selenium.clickAt("//input[@id='_86_enableCommentsCheckbox']",
-			RuntimeVariables.replace("Enable Comments"));
-		assertTrue(selenium.isChecked(
-				"//input[@id='_86_enableCommentsCheckbox']"));
-		selenium.clickAt("//input[@value='Save']",
-			RuntimeVariables.replace("Save"));
-		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace(
-				"You have successfully updated the setup."),
-			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertTrue(selenium.isChecked(
-				"//input[@id='_86_enableCommentsCheckbox']"));
-		selenium.selectFrame("relative=top");
+		int label = 1;
+
+		while (label >= 1) {
+			switch (label) {
+			case 1:
+				selenium.selectWindow("null");
+				selenium.selectFrame("relative=top");
+				selenium.open("/web/guest/home/");
+				selenium.clickAt("link=Web Content Display Test Page",
+					RuntimeVariables.replace("Web Content Display Test Page"));
+				selenium.waitForPageToLoad("30000");
+				Thread.sleep(5000);
+				assertEquals(RuntimeVariables.replace("Options"),
+					selenium.getText("//span[@title='Options']/ul/li/strong/a"));
+				selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
+					RuntimeVariables.replace("Options"));
+				selenium.waitForVisible(
+					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]");
+				assertEquals(RuntimeVariables.replace("Configuration"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]"));
+				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]",
+					RuntimeVariables.replace("Configuration"));
+				selenium.waitForVisible(
+					"//iframe[contains(@id,'configurationIframeDialog')]");
+				selenium.selectFrame(
+					"//iframe[contains(@id,'configurationIframeDialog')]");
+				selenium.waitForElementPresent(
+					"//script[contains(@src,'/liferay/navigation_interaction.js')]");
+				selenium.waitForVisible(
+					"//input[@id='_86_enableCommentsCheckbox']");
+
+				boolean enableCommentsChecked = selenium.isChecked(
+						"//input[@id='_86_enableCommentsCheckbox']");
+
+				if (enableCommentsChecked) {
+					label = 2;
+
+					continue;
+				}
+
+				selenium.clickAt("//input[@id='_86_enableCommentsCheckbox']",
+					RuntimeVariables.replace("Enable Comments"));
+
+			case 2:
+				assertTrue(selenium.isChecked(
+						"//input[@id='_86_enableCommentsCheckbox']"));
+				selenium.clickAt("//input[@value='Save']",
+					RuntimeVariables.replace("Save"));
+				selenium.waitForPageToLoad("30000");
+				assertEquals(RuntimeVariables.replace(
+						"You have successfully updated the setup."),
+					selenium.getText("//div[@class='portlet-msg-success']"));
+				assertTrue(selenium.isChecked(
+						"//input[@id='_86_enableCommentsCheckbox']"));
+				selenium.selectFrame("relative=top");
+
+			case 100:
+				label = -1;
+			}
+		}
 	}
 }

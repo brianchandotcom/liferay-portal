@@ -39,9 +39,9 @@ public class Member_ExpireWCEntryTest extends BaseTestCase {
 		selenium.clickAt("link=Web Content",
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Web Content Name"),
+		assertEquals(RuntimeVariables.replace("WC WebContent Title"),
 			selenium.getText("//a[@class='entry-link']/span"));
-		selenium.clickAt("//span[@class='entry-action overlay']/span/ul/li/strong/a",
+		selenium.clickAt("//div[@data-title='WC WebContent Title']/span[@class='entry-action overlay']/span/ul/li/strong/a",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
 			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Expire')]/a");
@@ -55,9 +55,9 @@ public class Member_ExpireWCEntryTest extends BaseTestCase {
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		selenium.clickAt("//a[@class='entry-link']/span",
-			RuntimeVariables.replace("Web Content Name"));
+			RuntimeVariables.replace("WC WebContent Title"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Web Content Name"),
+		assertEquals(RuntimeVariables.replace("WC WebContent Title"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace("Expired"),
 			selenium.getText("//strong[@class='workflow-status-expired']"));

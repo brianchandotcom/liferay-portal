@@ -51,12 +51,12 @@
 <tr>
 	<td>assertText</td>
 	<td>//a[@class='entry-link']/span</td>
-	<td>Web Content Name</td>
+	<td>WC WebContent Title</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//a[@class='entry-link']/span</td>
-	<td>Web Content Name</td>
+	<td>WC WebContent Title</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -84,14 +84,24 @@
 	<td>Search Container</td>
 </tr>
 <tr>
-	<td>uncheck</td>
+	<td>storeChecked</td>
+	<td>//input[@id='guest_ACTION_ADD_DISCUSSION']</td>
+	<td>guestAddDiscussionChecked</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${guestAddDiscussionChecked}</td>
+	<td>GuestAddDiscussionNotChecked</td>
+</tr>
+<tr>
+	<td>clickAt</td>
 	<td>//input[@id='guest_ACTION_ADD_DISCUSSION']</td>
 	<td>Guest Add Discussion</td>
 </tr>
 <tr>
-	<td>uncheck</td>
-	<td>//input[@id='guest_ACTION_DELETE']</td>
-	<td>Guest Delete</td>
+	<td>label</td>
+	<td>GuestAddDiscussionNotChecked</td>
+	<td>GuestAddDiscussionNotChecked</td>
 </tr>
 <tr>
 	<td>assertNotChecked</td>
@@ -99,27 +109,27 @@
 	<td>Guest Delete Discussion</td>
 </tr>
 <tr>
-	<td>assertNotChecked</td>
-	<td>//input[@id='guest_ACTION_EXPIRE']</td>
-	<td>Guest Expire</td>
+	<td>storeChecked</td>
+	<td>//input[@id='guest_ACTION_VIEW']</td>
+	<td>guestViewChecked</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${guestViewChecked}</td>
+	<td>GuestViewNotChecked</td>
 </tr>
 <tr>
 	<td>uncheck</td>
-	<td>//input[@id='guest_ACTION_PERMISSIONS']</td>
-	<td>Guest Permissions</td>
+	<td>//input[@id='guest_ACTION_VIEW']</td>
+	<td>Guest View</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>GuestViewNotChecked</td>
+	<td></td>
 </tr>
 <tr>
 	<td>assertNotChecked</td>
-	<td>//input[@id='guest_ACTION_UPDATE']</td>
-	<td>Guest Update</td>
-</tr>
-<tr>
-	<td>assertNotChecked</td>
-	<td>//input[@id='guest_ACTION_UPDATE_DISCUSSION']</td>
-	<td>Guest Update Discussion</td>
-</tr>
-<tr>
-	<td>uncheck</td>
 	<td>//input[@id='guest_ACTION_VIEW']</td>
 	<td>Guest View</td>
 </tr>

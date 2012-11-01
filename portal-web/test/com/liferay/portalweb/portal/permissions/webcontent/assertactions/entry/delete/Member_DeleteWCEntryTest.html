@@ -49,9 +49,14 @@
 	<td>Web Content</td>
 </tr>
 <tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
 	<td>assertText</td>
 	<td>//a[@class='entry-link']/span</td>
-	<td>Web Content Name</td>
+	<td>WC WebContent Title</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -60,18 +65,23 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]</td>
 	<td>Delete</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]</td>
 	<td>Delete</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]</td>
 	<td>Delete</td>
+</tr>
+<tr>
+	<td>waitForConfirmation</td>
+	<td>Are you sure you want to delete this? It will be deleted immediately.</td>
+	<td></td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -90,8 +100,8 @@
 </tr>
 <tr>
 	<td>assertTextNotPresent</td>
-	<td>Web Content Name</td>
-	<td>Web Content Name</td>
+	<td>WC WebContent Title</td>
+	<td>WC WebContent Title</td>
 </tr>
 </tbody></table>
 </body>

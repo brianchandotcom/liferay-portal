@@ -25,10 +25,10 @@ public class Member_AssertCannotEditCommentTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.clickAt("link=Web Content Display Permissions Page",
-			RuntimeVariables.replace("Web Content Display Permissions Page"));
+		selenium.clickAt("link=Web Content Display Test Page",
+			RuntimeVariables.replace("Web Content Display Test Page"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("WC Comment"),
+		assertEquals(RuntimeVariables.replace("WC WebContent Comment"),
 			selenium.getText("//div[@class='lfr-discussion-message']"));
 		assertTrue(selenium.isElementNotPresent("link=Edit"));
 	}

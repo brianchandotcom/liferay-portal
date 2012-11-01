@@ -15,8 +15,8 @@
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Web Content List Permissions Page</td>
-	<td>Web Content List Permissions Page</td>
+	<td>link=Web Content List Test Page</td>
+	<td>Web Content List Test Page</td>
 </tr>
 <tr>
 	<td>pause</td>
@@ -35,17 +35,17 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Configuration')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]</td>
 	<td>Configuration</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Configuration')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]</td>
 	<td>Configuration</td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Configuration')]/a</td>
+	<td>clickAt</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]</td>
 	<td>Configuration</td>
 </tr>
 <tr>
@@ -74,14 +74,24 @@
 	<td>Permissions</td>
 </tr>
 <tr>
-	<td>assertNotChecked</td>
+	<td>storeChecked</td>
 	<td>//input[@id='member_ACTION_CONFIGURATION']</td>
-	<td>Configuration</td>
+	<td>memberActionConfigChecked</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${memberActionConfigChecked}</td>
+	<td>MemberActionConfigChecked</td>
 </tr>
 <tr>
 	<td>check</td>
 	<td>//input[@id='member_ACTION_CONFIGURATION']</td>
 	<td>Configuration</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>MemberActionConfigChecked</td>
+	<td></td>
 </tr>
 <tr>
 	<td>assertChecked</td>

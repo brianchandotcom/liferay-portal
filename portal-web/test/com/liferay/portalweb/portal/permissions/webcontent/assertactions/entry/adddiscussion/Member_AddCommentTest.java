@@ -25,13 +25,14 @@ public class Member_AddCommentTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.clickAt("link=Web Content Display Permissions Page",
-			RuntimeVariables.replace("Web Content Display Permissions Page"));
+		selenium.clickAt("link=Web Content Display Test Page",
+			RuntimeVariables.replace("Web Content Display Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Be the first.",
 			RuntimeVariables.replace("Be the first."));
 		selenium.waitForVisible("//textarea");
-		selenium.type("//textarea", RuntimeVariables.replace("WC Comment"));
+		selenium.type("//textarea",
+			RuntimeVariables.replace("WC WebContent Comment"));
 		selenium.clickAt("//input[@value='Reply']",
 			RuntimeVariables.replace("Reply"));
 		selenium.waitForVisible(
@@ -40,7 +41,7 @@ public class Member_AddCommentTest extends BaseTestCase {
 				"Your request processed successfully."),
 			selenium.getText(
 				"//div[@class='lfr-message-response portlet-msg-success']"));
-		assertEquals(RuntimeVariables.replace("WC Comment"),
+		assertEquals(RuntimeVariables.replace("WC WebContent Comment"),
 			selenium.getText("//div[@class='lfr-discussion-message']"));
 		assertFalse(selenium.isTextPresent("No comments yet"));
 	}

@@ -25,6 +25,8 @@ public class WCA_LoginTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
+		selenium.clickAt("link=Welcome", RuntimeVariables.replace("Welcome"));
+		selenium.waitForPageToLoad("30000");
 		selenium.waitForVisible("//input[@id='_58_login']");
 		selenium.type("//input[@id='_58_login']",
 			RuntimeVariables.replace("wca@liferay.com"));

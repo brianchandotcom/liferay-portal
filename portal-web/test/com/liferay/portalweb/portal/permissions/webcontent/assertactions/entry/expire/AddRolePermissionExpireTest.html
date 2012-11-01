@@ -84,14 +84,24 @@
 	<td>Web Content</td>
 </tr>
 <tr>
-	<td>assertNotChecked</td>
+	<td>storeChecked</td>
 	<td>//input[@value='com.liferay.portlet.journal.model.JournalArticleEXPIRE']</td>
-	<td>Expire</td>
+	<td>webContentExpireChecked</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${webContentExpireChecked}</td>
+	<td>WebContentExpireChecked</td>
 </tr>
 <tr>
 	<td>check</td>
 	<td>//input[@value='com.liferay.portlet.journal.model.JournalArticleEXPIRE']</td>
 	<td>Expire</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>WebContentExpireChecked</td>
+	<td></td>
 </tr>
 <tr>
 	<td>assertChecked</td>

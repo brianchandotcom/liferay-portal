@@ -39,14 +39,17 @@ public class Member_AssertAccessPermissionsTest extends BaseTestCase {
 		selenium.clickAt("link=Web Content",
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//li[@class='app-view-navigation-entry folder selected']/span/span/ul/li/strong/a/span",
+		Thread.sleep(5000);
+		selenium.clickAt("//li[@class='app-view-navigation-entry folder selected']/span/span/ul/li/strong/a",
 			RuntimeVariables.replace("Actions"));
+		selenium.waitForElementNotPresent(
+			"//div[contains(@class,'aui-overlay-hidden')]");
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Permissions')]/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Permissions')]");
 		assertEquals(RuntimeVariables.replace("Permissions"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Permissions')]/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Permissions')]/a",
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Permissions')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Permissions')]",
 			RuntimeVariables.replace("Permissions"));
 		selenium.waitForText("//h1[@class='header-title']/span", "Liferay");
 		assertEquals(RuntimeVariables.replace("Liferay"),

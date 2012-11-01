@@ -25,8 +25,8 @@ public class Member_AssertViewWCSTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.clickAt("link=Web Content Search Permissions Page",
-			RuntimeVariables.replace("Web Content Search Permissions Page"));
+		selenium.clickAt("link=Web Content Search Test Page",
+			RuntimeVariables.replace("Web Content Search Test Page"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isVisible("//section"));
 		assertTrue(selenium.isVisible("//input[@value='Search...']"));

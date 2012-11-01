@@ -84,14 +84,24 @@
 	<td>Web Content</td>
 </tr>
 <tr>
-	<td>assertNotChecked</td>
+	<td>storeChecked</td>
 	<td>//input[@value='com.liferay.portlet.journal.model.JournalArticleDELETE_DISCUSSION']</td>
-	<td>Delete Discussion</td>
+	<td>webContentDeleteDiscussionChecked</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${webContentDeleteDiscussionChecked}</td>
+	<td>WebContentDeleteDiscussionChecked</td>
 </tr>
 <tr>
 	<td>check</td>
 	<td>//input[@value='com.liferay.portlet.journal.model.JournalArticleDELETE_DISCUSSION']</td>
 	<td>Delete Discussion</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>WebContentDeleteDiscussionChecked</td>
+	<td></td>
 </tr>
 <tr>
 	<td>assertChecked</td>

@@ -76,42 +76,7 @@
 <tr>
 	<td>selectAndWait</td>
 	<td>//select[@id='_128_add-permissions']</td>
-	<td>index=111</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//h3</td>
-	<td>Web Content</td>
-</tr>
-<tr>
-	<td>assertChecked</td>
-	<td>//input[@value='15VIEW']</td>
-	<td>View</td>
-</tr>
-<tr>
-	<td>uncheck</td>
-	<td>//input[@value='15VIEW']</td>
-	<td>View</td>
-</tr>
-<tr>
-	<td>assertNotChecked</td>
-	<td>//input[@value='15VIEW']</td>
-	<td>View</td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>//input[@value='Save']</td>
-	<td>Save</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='portlet-msg-success']</td>
-	<td>The role permissions were updated.</td>
-</tr>
-<tr>
-	<td>selectAndWait</td>
-	<td>//select[@id='_128_add-permissions']</td>
-	<td>index=29</td>
+	<td>label=Web Content</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -119,14 +84,24 @@
 	<td>Web Content Management</td>
 </tr>
 <tr>
-	<td>assertChecked</td>
+	<td>storeChecked</td>
+	<td>//input[@value='com.liferay.portlet.journalVIEW']</td>
+	<td>webContentManagementViewChecked</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${webContentManagementViewChecked}</td>
+	<td>WebContentManagementViewNotChecked</td>
+</tr>
+<tr>
+	<td>clickAt</td>
 	<td>//input[@value='com.liferay.portlet.journalVIEW']</td>
 	<td>View</td>
 </tr>
 <tr>
-	<td>uncheck</td>
-	<td>//input[@value='com.liferay.portlet.journalVIEW']</td>
-	<td>View</td>
+	<td>label</td>
+	<td>WebContentManagementViewNotChecked</td>
+	<td></td>
 </tr>
 <tr>
 	<td>assertNotChecked</td>
@@ -169,9 +144,29 @@
 	<td>Delete</td>
 </tr>
 <tr>
-	<td>assertElementNotPresent</td>
+	<td>assertText</td>
+	<td>//tr[4]/td[1]/a</td>
+	<td>Web Content</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[4]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
 	<td>//tr[4]/td[3]</td>
 	<td>View</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[4]/td[4]</td>
+	<td>Portal</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[4]/td[5]/span/a</td>
+	<td>Delete</td>
 </tr>
 <tr>
 	<td>assertElementNotPresent</td>

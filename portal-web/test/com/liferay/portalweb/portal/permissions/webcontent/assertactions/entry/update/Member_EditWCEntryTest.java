@@ -39,9 +39,9 @@ public class Member_EditWCEntryTest extends BaseTestCase {
 		selenium.clickAt("link=Web Content",
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Web Content Name"),
+		assertEquals(RuntimeVariables.replace("WC WebContent Title"),
 			selenium.getText("//a[@class='entry-link']/span"));
-		selenium.clickAt("//span[@class='entry-action overlay']/span/ul/li/strong/a",
+		selenium.clickAt("//div[@data-title='WC WebContent Title']/span[@class='entry-action overlay']/span/ul/li/strong/a",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
 			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a");
@@ -53,7 +53,7 @@ public class Member_EditWCEntryTest extends BaseTestCase {
 		Thread.sleep(5000);
 		selenium.waitForVisible("//input[@id='_15_title_en_US']");
 		selenium.type("//input[@id='_15_title_en_US']",
-			RuntimeVariables.replace("Web Content Name Edited"));
+			RuntimeVariables.replace("WC WebContent Title Edited"));
 		selenium.waitForVisible(
 			"//td[@id='cke_top__15__15_structure_el_TextAreaField_content']");
 		assertEquals(RuntimeVariables.replace("Source"),
@@ -83,7 +83,7 @@ public class Member_EditWCEntryTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals(RuntimeVariables.replace("Web Content Name Edited"),
+		assertEquals(RuntimeVariables.replace("WC WebContent Title Edited"),
 			selenium.getText("//a[@class='entry-link']/span"));
 	}
 }

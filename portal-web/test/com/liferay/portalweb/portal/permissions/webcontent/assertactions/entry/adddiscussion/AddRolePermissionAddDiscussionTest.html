@@ -84,14 +84,24 @@
 	<td>Web Content</td>
 </tr>
 <tr>
-	<td>assertNotChecked</td>
+	<td>storeChecked</td>
 	<td>//input[@value='com.liferay.portlet.journal.model.JournalArticleADD_DISCUSSION']</td>
-	<td>Add Discussion</td>
+	<td>webContentAddDiscussionChecked</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${webContentAddDiscussionChecked}</td>
+	<td>WebContentAddDiscussionChecked</td>
 </tr>
 <tr>
 	<td>check</td>
 	<td>//input[@value='com.liferay.portlet.journal.model.JournalArticleADD_DISCUSSION']</td>
 	<td>Add Discussion</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>WebContentAddDiscussionChecked</td>
+	<td></td>
 </tr>
 <tr>
 	<td>assertChecked</td>

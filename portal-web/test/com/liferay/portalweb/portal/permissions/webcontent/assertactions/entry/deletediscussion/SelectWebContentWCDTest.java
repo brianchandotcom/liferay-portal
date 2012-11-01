@@ -25,10 +25,13 @@ public class SelectWebContentWCDTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.clickAt("link=Web Content Display Permissions Page",
-			RuntimeVariables.replace("Web Content Display Permissions Page"));
+		selenium.clickAt("link=Web Content Display Test Page",
+			RuntimeVariables.replace("Web Content Display Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//span[@class='portlet-configuration']/a",
+		assertEquals(RuntimeVariables.replace("Select Web Content"),
+			selenium.getText(
+				"//span[@class='icon-action icon-action-configuration']/a/span"));
+		selenium.clickAt("//span[@class='icon-action icon-action-configuration']/a/span",
 			RuntimeVariables.replace("Select Web Content"));
 		selenium.waitForVisible(
 			"//iframe[contains(@id,'configurationIframeDialog')]");
@@ -36,13 +39,14 @@ public class SelectWebContentWCDTest extends BaseTestCase {
 			"//iframe[contains(@id,'configurationIframeDialog')]");
 		selenium.waitForElementPresent(
 			"//script[contains(@src,'/liferay/navigation_interaction.js')]");
-		selenium.waitForVisible("link=Web Content Name");
-		selenium.clickAt("link=Web Content Name",
-			RuntimeVariables.replace("Web Content Name"));
-		selenium.waitForVisible("//span[@class='displaying-article-id-holder']");
+		selenium.waitForVisible("link=WC WebContent Title");
+		selenium.clickAt("link=WC WebContent Title",
+			RuntimeVariables.replace("WC WebContent Title"));
+		selenium.waitForVisible(
+			"//span[@class='displaying-article-id-holder ']");
 		assertEquals(RuntimeVariables.replace(
-				"Displaying Content: Web Content Name (Modified)"),
-			selenium.getText("//span[@class='displaying-article-id-holder']"));
+				"Displaying Content: WC WebContent Title (Modified)"),
+			selenium.getText("//span[@class='displaying-article-id-holder ']"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");

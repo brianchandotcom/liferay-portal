@@ -244,6 +244,13 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 
 		Modifications modifications = Modifications.getInstance();
 
+		String groupMappingAttributeName = userMappings.getProperty(
+			UserConverterKeys.GROUP);
+
+		if (Validator.isNull(groupMappingAttributeName)) {
+			return modifications;
+		}
+
 		Properties groupMappings = LDAPSettingsUtil.getGroupMappings(
 			ldapServerId, user.getCompanyId());
 
@@ -260,8 +267,7 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 			}
 
 			modifications.addItem(
-				DirContext.ADD_ATTRIBUTE,
-				userMappings.getProperty(UserConverterKeys.GROUP), groupDN);
+				DirContext.ADD_ATTRIBUTE, groupMappingAttributeName, groupDN);
 		}
 
 		return modifications;

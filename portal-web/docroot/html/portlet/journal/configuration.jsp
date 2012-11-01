@@ -88,10 +88,10 @@ else if (tabs2.equals("web-content-updated-email")) {
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 
 	<%
-	String tabs1Names = "email-from,web-content-added-email,web-content-updated-email";
+	String tabs1Names = "email-from,web-content-added-email,web-content-review-email,web-content-updated-email";
 
 	if (WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, JournalArticle.class.getName())) {
-		tabs1Names = tabs1Names.concat(",web-content-approval-denied-email,web-content-approval-granted-email,web-content-approval-requested-email,web-content-review-email");
+		tabs1Names = tabs1Names.concat(",web-content-approval-denied-email,web-content-approval-granted-email,web-content-approval-requested-email");
 	}
 	%>
 

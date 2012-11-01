@@ -74,7 +74,7 @@ organizationSearch.setEmptyResultsMessage(emptyResultsMessage);
 
 	long parentOrganizationId = OrganizationConstants.ANY_PARENT_ORGANIZATION_ID;
 
-	LinkedHashMap organizationParams = new LinkedHashMap();
+	LinkedHashMap<String, Object> organizationParams = new LinkedHashMap<String, Object>();
 
 	if (tabs1.equals("summary") || tabs2.equals("current")) {
 		organizationParams.put("organizationsGroups", new Long(group.getGroupId()));

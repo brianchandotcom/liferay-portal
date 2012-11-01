@@ -17,7 +17,7 @@
 <%
 List<Organization> userOrganizations = user.getOrganizations(true);
 
-LinkedHashMap organizationParams = new LinkedHashMap();
+LinkedHashMap<String, Object> organizationParams = new LinkedHashMap<String, Object>();
 
 boolean showList = true;
 

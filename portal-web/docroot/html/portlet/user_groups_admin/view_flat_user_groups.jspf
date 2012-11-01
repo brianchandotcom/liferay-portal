@@ -28,7 +28,7 @@
 	<%
 	UserGroupSearchTerms searchTerms = (UserGroupSearchTerms)searchContainer.getSearchTerms();
 
-	LinkedHashMap userGroupParams = new LinkedHashMap();
+	LinkedHashMap<String, Object> userGroupParams = new LinkedHashMap<String, Object>();
 
 	if (filterManageableUserGroups) {
 		userGroupParams.put("userGroupsUsers", new Long(user.getUserId()));

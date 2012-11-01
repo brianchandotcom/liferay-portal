@@ -46,7 +46,7 @@ request.setAttribute("view.jsp-tabs1", tabs1);
 		<%
 		GroupSearchTerms searchTerms = (GroupSearchTerms)searchContainer.getSearchTerms();
 
-		LinkedHashMap groupParams = new LinkedHashMap();
+		LinkedHashMap<String, Object> groupParams = new LinkedHashMap<String, Object>();
 
 		groupParams.put("site", Boolean.TRUE);
 
@@ -171,7 +171,7 @@ request.setAttribute("view.jsp-tabs1", tabs1);
 			</liferay-ui:search-container-column-text>
 
 			<%
-			LinkedHashMap userParams = new LinkedHashMap();
+			LinkedHashMap<String, Object> userParams = new LinkedHashMap<String, Object>();
 
 			userParams.put("inherit", true);
 			userParams.put("usersGroups", new Long(group.getGroupId()));

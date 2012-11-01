@@ -189,7 +189,7 @@ for (int i = 0; i < results.size(); i++) {
 	int scope;
 
 	if (role.getType() == RoleConstants.TYPE_REGULAR) {
-		LinkedHashMap groupParams = new LinkedHashMap();
+		LinkedHashMap<String, Object> groupParams = new LinkedHashMap<String, Object>();
 
 		List rolePermissions = new ArrayList();
 

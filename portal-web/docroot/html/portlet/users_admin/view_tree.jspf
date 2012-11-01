@@ -31,7 +31,7 @@ if (organization != null) {
 	organizationGroupId = organizationGroup.getGroupId();
 }
 
-LinkedHashMap organizationParams = new LinkedHashMap();
+LinkedHashMap<String, Object> organizationParams = new LinkedHashMap<String, Object>();
 
 List<Organization> organizations = new ArrayList<Organization>();
 
@@ -208,7 +208,7 @@ if (filterManageableOrganizations) {
 						usersCount = UserLocalServiceUtil.getOrganizationUsersCount(organizationId, WorkflowConstants.STATUS_APPROVED);
 					}
 					else {
-						LinkedHashMap userParams = new LinkedHashMap();
+						LinkedHashMap<String, Object> userParams = new LinkedHashMap<String, Object>();
 
 						userParams.put("noOrganizations", Boolean.TRUE);
 						userParams.put("usersOrgsCount", 0);

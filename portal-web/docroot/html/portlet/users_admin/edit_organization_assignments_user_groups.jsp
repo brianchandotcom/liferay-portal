@@ -48,7 +48,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_organization_assi
 	<%
 	UserGroupSearchTerms searchTerms = (UserGroupSearchTerms)searchContainer.getSearchTerms();
 
-	LinkedHashMap userGroupParams = new LinkedHashMap();
+	LinkedHashMap<String, Object> userGroupParams = new LinkedHashMap<String, Object>();
 
 	if (tabs3.equals("current")) {
 		userGroupParams.put("userGroupsGroups", new Long(group.getGroupId()));

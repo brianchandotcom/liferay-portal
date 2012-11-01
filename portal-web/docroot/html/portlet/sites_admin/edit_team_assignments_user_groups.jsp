@@ -50,7 +50,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_team_assignments.
 	<%
 	UserGroupSearchTerms searchTerms = (UserGroupSearchTerms)searchContainer.getSearchTerms();
 
-	LinkedHashMap userGroupParams = new LinkedHashMap();
+	LinkedHashMap<String, Object> userGroupParams = new LinkedHashMap<String, Object>();
 
 	userGroupParams.put("userGroupsGroups", new Long(group.getGroupId()));
 

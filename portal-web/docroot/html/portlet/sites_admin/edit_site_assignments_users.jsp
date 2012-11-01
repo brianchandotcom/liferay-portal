@@ -72,7 +72,7 @@ userSearch.setEmptyResultsMessage(emptyResultsMessage);
 	<%
 	UserSearchTerms searchTerms = (UserSearchTerms)searchContainer.getSearchTerms();
 
-	LinkedHashMap userParams = new LinkedHashMap();
+	LinkedHashMap<String, Object> userParams = new LinkedHashMap<String, Object>();
 
 	if (tabs1.equals("summary") || tabs2.equals("current")) {
 		userParams.put("inherit", true);

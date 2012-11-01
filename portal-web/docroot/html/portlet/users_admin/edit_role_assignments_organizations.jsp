@@ -48,7 +48,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_role_assignments.
 
 	long parentOrganizationId = OrganizationConstants.ANY_PARENT_ORGANIZATION_ID;
 
-	LinkedHashMap organizationParams = new LinkedHashMap();
+	LinkedHashMap<String, Object> organizationParams = new LinkedHashMap<String, Object>();
 
 	if (tabs3.equals("current")) {
 		organizationParams.put("organizationsRoles", new Long(role.getRoleId()));

@@ -20,7 +20,7 @@
 <%@ page import="com.liferay.portlet.journal.util.JournalUtil" %>
 
 <%
-LinkedHashMap journalParams = new LinkedHashMap();
+LinkedHashMap<String, Object> journalParams = new LinkedHashMap<String, Object>();
 
 journalParams.put("expandoAttributes", searchTerms.getKeywords());
 

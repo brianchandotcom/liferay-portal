@@ -40,7 +40,7 @@
 
 	int suborganizationsCount = OrganizationLocalServiceUtil.searchCount(company.getCompanyId(), curOrganization.getOrganizationId(), null, null, null, null, organizationParams);
 
-	LinkedHashMap userParams = new LinkedHashMap();
+	LinkedHashMap<String, Object> userParams = new LinkedHashMap<String, Object>();
 
 	userParams.put("usersOrgs", curOrganization.getOrganizationId());
 

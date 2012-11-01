@@ -32,7 +32,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
 	<%
 	OrganizationSearchTerms searchTerms = (OrganizationSearchTerms)searchContainer.getSearchTerms();
 
-	LinkedHashMap organizationParams = new LinkedHashMap();
+	LinkedHashMap<String, Object> organizationParams = new LinkedHashMap<String, Object>();
 
 	long parentOrganizationId = ParamUtil.getLong(request, "parentOrganizationId", OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID);
 

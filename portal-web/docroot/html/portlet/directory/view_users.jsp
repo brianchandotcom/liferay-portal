@@ -79,7 +79,7 @@ if (Validator.isNotNull(viewUsersRedirect)) {
 	/>
 
 	<%
-	LinkedHashMap userParams = new LinkedHashMap();
+	LinkedHashMap<String, Object> userParams = new LinkedHashMap<String, Object>();
 
 	if (organizationId > 0) {
 		userParams.put("usersOrgs", new Long(organizationId));

@@ -10,9 +10,6 @@
 >
 	<bean class="com.liferay.portal.spring.aop.ServiceBeanAutoProxyCreator">
 		<property name="methodInterceptor" ref="serviceAdvice" />
-		<property name="serviceBeanAopCacheManager">
-			<bean class="com.liferay.portal.spring.aop.ServiceBeanAopCacheManager" />
-		</property>
 	</bean>
 	<bean class="com.liferay.portal.spring.bean.BeanReferenceAnnotationBeanPostProcessor" />
 	<bean id="basePersistence" abstract="true">

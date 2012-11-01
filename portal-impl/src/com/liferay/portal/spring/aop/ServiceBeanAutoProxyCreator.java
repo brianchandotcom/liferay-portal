@@ -32,17 +32,28 @@ import org.springframework.aop.framework.autoproxy.AbstractAdvisorAutoProxyCreat
 public class ServiceBeanAutoProxyCreator
 	extends AbstractAdvisorAutoProxyCreator {
 
-	public void setMethodInterceptor(MethodInterceptor methodInterceptor) {
-		_methodInterceptor = methodInterceptor;
-	}
+	public void afterPropertiesSet() {
+		ServiceBeanAopCacheManager serviceBeanAopCacheManager =
+			new ServiceBeanAopCacheManager();
 
-	public void setServiceBeanAopCacheManager(
-		ServiceBeanAopCacheManager serviceBeanAopCacheManager) {
+		serviceBeanAopCacheManager.registerAnnotationChainableMethodAdvice(
+			Skip.class, null);
+
+		ServiceBeanAopCacheManagerUtil.registerServiceBeanAopCacheManager(
+			serviceBeanAopCacheManager);
 
 		_serviceBeanAopCacheManager = serviceBeanAopCacheManager;
+	}
 
-		_serviceBeanAopCacheManager.registerAnnotationChainableMethodAdvice(
-			Skip.class, null);
+	public void destroy() {
+		if (_serviceBeanAopCacheManager != null) {
+			ServiceBeanAopCacheManagerUtil.unregisterServiceBeanAopCacheManager(
+				_serviceBeanAopCacheManager);
+		}
+	}
+
+	public void setMethodInterceptor(MethodInterceptor methodInterceptor) {
+		_methodInterceptor = methodInterceptor;
 	}
 
 	@Override

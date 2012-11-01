@@ -101,6 +101,19 @@ public class ClassLoaderPoolTest {
 			clazz.getClassLoader(),
 			ClassLoaderPool.getClassLoader(StringPool.BLANK));
 
+		// Get class loader with an invalid context name, portal classloader not
+		// initialized
+
+		PortalClassLoaderUtil.setClassLoader(null);
+
+		Thread currentThread = Thread.currentThread();
+
+		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+
+		Assert.assertSame(
+			contextClassLoader,
+			ClassLoaderPool.getClassLoader(StringPool.BLANK));
+
 		// Get context name with a valid class loader
 
 		Assert.assertEquals(

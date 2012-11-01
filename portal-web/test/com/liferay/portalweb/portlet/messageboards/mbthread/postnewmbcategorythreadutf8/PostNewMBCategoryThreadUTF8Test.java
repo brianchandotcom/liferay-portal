@@ -25,7 +25,6 @@ public class PostNewMBCategoryThreadUTF8Test extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Message Boards Test Page");
 		selenium.clickAt("link=Message Boards Test Page",
 			RuntimeVariables.replace("Message Boards Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -77,7 +76,6 @@ public class PostNewMBCategoryThreadUTF8Test extends BaseTestCase {
 				"MB Cat\u00e8gory Thr\u00e8ad M\u00e8ssag\u00e8 Body"),
 			selenium.getText("//div[@class='thread-body']"));
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Message Boards Test Page");
 		selenium.clickAt("link=Message Boards Test Page",
 			RuntimeVariables.replace("Message Boards Test Page"));
 		selenium.waitForPageToLoad("30000");

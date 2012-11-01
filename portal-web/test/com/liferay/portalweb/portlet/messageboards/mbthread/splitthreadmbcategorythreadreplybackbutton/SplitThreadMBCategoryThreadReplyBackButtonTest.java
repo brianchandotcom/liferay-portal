@@ -64,6 +64,7 @@ public class SplitThreadMBCategoryThreadReplyBackButtonTest extends BaseTestCase
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("//input[@value='OK']", RuntimeVariables.replace("OK"));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(5000);
 		selenium.goBack();
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("//input[@value='OK']", RuntimeVariables.replace("OK"));

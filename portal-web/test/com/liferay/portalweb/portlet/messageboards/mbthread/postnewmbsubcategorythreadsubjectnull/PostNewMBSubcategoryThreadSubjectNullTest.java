@@ -36,10 +36,10 @@ public class PostNewMBSubcategoryThreadSubjectNullTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("MB Category Name"),
 			selenium.getText("//h1[@class='header-title']/span"));
-		assertEquals(RuntimeVariables.replace("MB Subcategory Name"),
+		assertEquals(RuntimeVariables.replace("MB Category Subcategory Name"),
 			selenium.getText("//a/strong"));
 		selenium.clickAt("//a/strong",
-			RuntimeVariables.replace("MB Subcategory Name"));
+			RuntimeVariables.replace("MB Category Subcategory Name"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("//input[@value='Post New Thread']",
 			RuntimeVariables.replace("Post New Thread"));
@@ -88,7 +88,7 @@ public class PostNewMBSubcategoryThreadSubjectNullTest extends BaseTestCase {
 		selenium.clickAt("//a/strong",
 			RuntimeVariables.replace("MB Category Name"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("MB Subcategory Name"),
+		assertEquals(RuntimeVariables.replace("MB Category Subcategory Name"),
 			selenium.getText("//a/strong"));
 		assertEquals(RuntimeVariables.replace("0"),
 			selenium.getText("//td[2]/a"));
@@ -97,7 +97,7 @@ public class PostNewMBSubcategoryThreadSubjectNullTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("0"),
 			selenium.getText("//td[4]/a"));
 		selenium.clickAt("//a/strong",
-			RuntimeVariables.replace("MB Subcategory Name"));
+			RuntimeVariables.replace("MB Category Subcategory Name"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isElementNotPresent(
 				"//td[7]/span/ul/li/strong/a/span"));

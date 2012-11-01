@@ -25,7 +25,6 @@ public class EditMBCategoryThreadSubjectTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Message Boards Test Page");
 		selenium.clickAt("link=Message Boards Test Page",
 			RuntimeVariables.replace("Message Boards Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -64,7 +63,6 @@ public class EditMBCategoryThreadSubjectTest extends BaseTestCase {
 				"MB Category Thread Message Subject Edit"),
 			selenium.getText("//div[@class='subject']/a/strong"));
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Message Boards Test Page");
 		selenium.clickAt("link=Message Boards Test Page",
 			RuntimeVariables.replace("Message Boards Test Page"));
 		selenium.waitForPageToLoad("30000");

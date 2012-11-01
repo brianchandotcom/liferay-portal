@@ -35,16 +35,17 @@ public class PostNewMBSubcategoryThread3Test extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("MB Category Name"),
 			selenium.getText("//h1[@class='header-title']/span"));
-		assertEquals(RuntimeVariables.replace("MB Subcategory Name"),
+		assertEquals(RuntimeVariables.replace("MB Category Subcategory Name"),
 			selenium.getText("//td[1]/a/strong"));
 		selenium.clickAt("//td[1]/a/strong",
-			RuntimeVariables.replace("MB Subcategory Name"));
+			RuntimeVariables.replace("MB Category Subcategory Name"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("//input[@value='Post New Thread']",
 			RuntimeVariables.replace("Post New Thread"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_19_subject']",
-			RuntimeVariables.replace("MB Subcategory Thread3 Message Subject"));
+			RuntimeVariables.replace(
+				"MB Category Subcategory Thread3 Message Subject"));
 		selenium.waitForElementPresent(
 			"//textarea[@id='_19_editor' and @style='display: none;']");
 		assertEquals(RuntimeVariables.replace("Source"),
@@ -54,7 +55,8 @@ public class PostNewMBSubcategoryThread3Test extends BaseTestCase {
 		selenium.waitForVisible("//a[@class='cke_button_source cke_on']");
 		selenium.waitForVisible("//td[@id='cke_contents__19_editor']/textarea");
 		selenium.type("//td[@id='cke_contents__19_editor']/textarea",
-			RuntimeVariables.replace("MB Subcategory Thread3 Message Body"));
+			RuntimeVariables.replace(
+				"MB Category Subcategory Thread3 Message Body"));
 		assertEquals(RuntimeVariables.replace("Source"),
 			selenium.getText("//span[.='Source']"));
 		selenium.clickAt("//span[.='Source']",
@@ -63,7 +65,8 @@ public class PostNewMBSubcategoryThread3Test extends BaseTestCase {
 			"//textarea[@id='_19_editor' and @style='display: none;']");
 		selenium.waitForVisible("//td[@id='cke_contents__19_editor']/iframe");
 		selenium.selectFrame("//td[@id='cke_contents__19_editor']/iframe");
-		selenium.waitForText("//body", "MB Subcategory Thread3 Message Body");
+		selenium.waitForText("//body",
+			"MB Category Subcategory Thread3 Message Body");
 		selenium.selectFrame("relative=top");
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
@@ -72,10 +75,10 @@ public class PostNewMBSubcategoryThread3Test extends BaseTestCase {
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace(
-				"MB Subcategory Thread3 Message Subject"),
+				"MB Category Subcategory Thread3 Message Subject"),
 			selenium.getText("//div[@class='subject']/a/strong"));
 		assertEquals(RuntimeVariables.replace(
-				"MB Subcategory Thread3 Message Body"),
+				"MB Category Subcategory Thread3 Message Body"),
 			selenium.getText("//div[@class='thread-body']"));
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("link=Message Boards Test Page",
@@ -86,19 +89,19 @@ public class PostNewMBSubcategoryThread3Test extends BaseTestCase {
 		selenium.clickAt("//td[1]/a/strong",
 			RuntimeVariables.replace("MB Category Name"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("MB Subcategory Name"),
+		assertEquals(RuntimeVariables.replace("MB Category Subcategory Name"),
 			selenium.getText("//td[1]/a/strong"));
 		selenium.clickAt("//td[1]/a/strong",
-			RuntimeVariables.replace("MB Subcategory Name"));
+			RuntimeVariables.replace("MB Category Subcategory Name"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
-				"MB Subcategory Thread3 Message Subject"),
+				"MB Category Subcategory Thread3 Message Subject"),
 			selenium.getText("//tr[3]/td[1]/a"));
 		assertEquals(RuntimeVariables.replace(
-				"MB Subcategory Thread2 Message Subject"),
+				"MB Category Subcategory Thread2 Message Subject"),
 			selenium.getText("//tr[4]/td[1]/a"));
 		assertEquals(RuntimeVariables.replace(
-				"MB Subcategory Thread1 Message Subject"),
+				"MB Category Subcategory Thread1 Message Subject"),
 			selenium.getText("//tr[5]/td[1]/a"));
 	}
 }

@@ -37,7 +37,7 @@ public class AddMBSubcategoryTest extends BaseTestCase {
 			RuntimeVariables.replace("Add Subcategory"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_19_name']",
-			RuntimeVariables.replace("MB Subcategory Name"));
+			RuntimeVariables.replace("MB Category Subcategory Name"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
@@ -46,7 +46,7 @@ public class AddMBSubcategoryTest extends BaseTestCase {
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("MB Category Name"),
 			selenium.getText("//h1[@class='header-title']/span"));
-		assertEquals(RuntimeVariables.replace("MB Subcategory Name"),
+		assertEquals(RuntimeVariables.replace("MB Category Subcategory Name"),
 			selenium.getText("//td[1]/a/strong"));
 	}
 }

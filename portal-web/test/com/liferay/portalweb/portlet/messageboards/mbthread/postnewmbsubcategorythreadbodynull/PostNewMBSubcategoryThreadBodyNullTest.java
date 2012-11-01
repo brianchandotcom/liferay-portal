@@ -36,16 +36,17 @@ public class PostNewMBSubcategoryThreadBodyNullTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("MB Category Name"),
 			selenium.getText("//h1[@class='header-title']/span"));
-		assertEquals(RuntimeVariables.replace("MB Subcategory Name"),
+		assertEquals(RuntimeVariables.replace("MB Category Subcategory Name"),
 			selenium.getText("//a/strong"));
 		selenium.clickAt("//a/strong",
-			RuntimeVariables.replace("MB Subcategory Name"));
+			RuntimeVariables.replace("MB Category Subcategory Name"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("//input[@value='Post New Thread']",
 			RuntimeVariables.replace("Post New Thread"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_19_subject']",
-			RuntimeVariables.replace("MB Subcategory Thread Message Subject"));
+			RuntimeVariables.replace(
+				"MB Category Subcategory Thread Message Subject"));
 		selenium.waitForElementPresent(
 			"//textarea[@id='_19_editor' and @style='display: none;']");
 		assertEquals(RuntimeVariables.replace("Source"),
@@ -70,10 +71,10 @@ public class PostNewMBSubcategoryThreadBodyNullTest extends BaseTestCase {
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
-				"MB Subcategory Thread Message Subject"),
+				"MB Category Subcategory Thread Message Subject"),
 			selenium.getText("//div[@class='subject']/a/strong"));
 		assertEquals(RuntimeVariables.replace(
-				"MB Subcategory Thread Message Subject"),
+				"MB Category Subcategory Thread Message Subject"),
 			selenium.getText("//div[@class='thread-body']"));
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("link=Message Boards Test Page",
@@ -90,7 +91,7 @@ public class PostNewMBSubcategoryThreadBodyNullTest extends BaseTestCase {
 		selenium.clickAt("//a/strong",
 			RuntimeVariables.replace("MB Category Name"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("MB Subcategory Name"),
+		assertEquals(RuntimeVariables.replace("MB Category Subcategory Name"),
 			selenium.getText("//a/strong"));
 		assertEquals(RuntimeVariables.replace("0"),
 			selenium.getText("//td[2]/a"));
@@ -99,10 +100,10 @@ public class PostNewMBSubcategoryThreadBodyNullTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("1"),
 			selenium.getText("//td[4]/a"));
 		selenium.clickAt("//a/strong",
-			RuntimeVariables.replace("MB Subcategory Name"));
+			RuntimeVariables.replace("MB Category Subcategory Name"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
-				"MB Subcategory Thread Message Subject"),
+				"MB Category Subcategory Thread Message Subject"),
 			selenium.getText("//td[1]/a"));
 	}
 }

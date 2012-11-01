@@ -86,7 +86,6 @@ public class ReplyMBCategoryThreadQuestionReplyTest extends BaseTestCase {
 				"MB Category Thread Message Reply Body"),
 			selenium.getText("xPath=(//div[@class='thread-body'])[2]"));
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Message Boards Test Page");
 		selenium.clickAt("link=Message Boards Test Page",
 			RuntimeVariables.replace("Message Boards Test Page"));
 		selenium.waitForPageToLoad("30000");

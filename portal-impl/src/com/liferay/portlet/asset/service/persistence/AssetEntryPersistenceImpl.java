@@ -439,7 +439,9 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 						assetEntry.getPrimaryKeyObj());
 			}
 
-			session.delete(assetEntry);
+			if (assetEntry != null) {
+				session.delete(assetEntry);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -448,7 +450,9 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 			closeSession(session);
 		}
 
-		clearCache(assetEntry);
+		if (assetEntry != null) {
+			clearCache(assetEntry);
+		}
 
 		return assetEntry;
 	}

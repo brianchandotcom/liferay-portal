@@ -329,7 +329,9 @@ public class MDRRulePersistenceImpl extends BasePersistenceImpl<MDRRule>
 						mdrRule.getPrimaryKeyObj());
 			}
 
-			session.delete(mdrRule);
+			if (mdrRule != null) {
+				session.delete(mdrRule);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -338,7 +340,9 @@ public class MDRRulePersistenceImpl extends BasePersistenceImpl<MDRRule>
 			closeSession(session);
 		}
 
-		clearCache(mdrRule);
+		if (mdrRule != null) {
+			clearCache(mdrRule);
+		}
 
 		return mdrRule;
 	}

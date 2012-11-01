@@ -345,7 +345,9 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 						resourceTypePermission.getPrimaryKeyObj());
 			}
 
-			session.delete(resourceTypePermission);
+			if (resourceTypePermission != null) {
+				session.delete(resourceTypePermission);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -354,7 +356,9 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 			closeSession(session);
 		}
 
-		clearCache(resourceTypePermission);
+		if (resourceTypePermission != null) {
+			clearCache(resourceTypePermission);
+		}
 
 		return resourceTypePermission;
 	}

@@ -292,7 +292,9 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 						shoppingCategory.getPrimaryKeyObj());
 			}
 
-			session.delete(shoppingCategory);
+			if (shoppingCategory != null) {
+				session.delete(shoppingCategory);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -301,7 +303,9 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 			closeSession(session);
 		}
 
-		clearCache(shoppingCategory);
+		if (shoppingCategory != null) {
+			clearCache(shoppingCategory);
+		}
 
 		return shoppingCategory;
 	}

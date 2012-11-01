@@ -312,7 +312,9 @@ public class SCProductVersionPersistenceImpl extends BasePersistenceImpl<SCProdu
 						scProductVersion.getPrimaryKeyObj());
 			}
 
-			session.delete(scProductVersion);
+			if (scProductVersion != null) {
+				session.delete(scProductVersion);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -321,7 +323,9 @@ public class SCProductVersionPersistenceImpl extends BasePersistenceImpl<SCProdu
 			closeSession(session);
 		}
 
-		clearCache(scProductVersion);
+		if (scProductVersion != null) {
+			clearCache(scProductVersion);
+		}
 
 		return scProductVersion;
 	}

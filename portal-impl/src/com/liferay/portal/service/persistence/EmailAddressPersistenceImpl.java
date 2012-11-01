@@ -353,7 +353,9 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 						emailAddress.getPrimaryKeyObj());
 			}
 
-			session.delete(emailAddress);
+			if (emailAddress != null) {
+				session.delete(emailAddress);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -362,7 +364,9 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 			closeSession(session);
 		}
 
-		clearCache(emailAddress);
+		if (emailAddress != null) {
+			clearCache(emailAddress);
+		}
 
 		return emailAddress;
 	}

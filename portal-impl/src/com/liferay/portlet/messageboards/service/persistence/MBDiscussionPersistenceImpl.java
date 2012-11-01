@@ -308,7 +308,9 @@ public class MBDiscussionPersistenceImpl extends BasePersistenceImpl<MBDiscussio
 						mbDiscussion.getPrimaryKeyObj());
 			}
 
-			session.delete(mbDiscussion);
+			if (mbDiscussion != null) {
+				session.delete(mbDiscussion);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -317,7 +319,9 @@ public class MBDiscussionPersistenceImpl extends BasePersistenceImpl<MBDiscussio
 			closeSession(session);
 		}
 
-		clearCache(mbDiscussion);
+		if (mbDiscussion != null) {
+			clearCache(mbDiscussion);
+		}
 
 		return mbDiscussion;
 	}

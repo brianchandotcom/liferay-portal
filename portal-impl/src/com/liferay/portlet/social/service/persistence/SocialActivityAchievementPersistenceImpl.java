@@ -416,7 +416,9 @@ public class SocialActivityAchievementPersistenceImpl
 						socialActivityAchievement.getPrimaryKeyObj());
 			}
 
-			session.delete(socialActivityAchievement);
+			if (socialActivityAchievement != null) {
+				session.delete(socialActivityAchievement);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -425,7 +427,9 @@ public class SocialActivityAchievementPersistenceImpl
 			closeSession(session);
 		}
 
-		clearCache(socialActivityAchievement);
+		if (socialActivityAchievement != null) {
+			clearCache(socialActivityAchievement);
+		}
 
 		return socialActivityAchievement;
 	}

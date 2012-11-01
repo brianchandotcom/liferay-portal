@@ -347,7 +347,9 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 						workflowDefinitionLink.getPrimaryKeyObj());
 			}
 
-			session.delete(workflowDefinitionLink);
+			if (workflowDefinitionLink != null) {
+				session.delete(workflowDefinitionLink);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -356,7 +358,9 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 			closeSession(session);
 		}
 
-		clearCache(workflowDefinitionLink);
+		if (workflowDefinitionLink != null) {
+			clearCache(workflowDefinitionLink);
+		}
 
 		return workflowDefinitionLink;
 	}

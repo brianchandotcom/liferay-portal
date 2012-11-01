@@ -345,7 +345,9 @@ public class SocialActivityLimitPersistenceImpl extends BasePersistenceImpl<Soci
 						socialActivityLimit.getPrimaryKeyObj());
 			}
 
-			session.delete(socialActivityLimit);
+			if (socialActivityLimit != null) {
+				session.delete(socialActivityLimit);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -354,7 +356,9 @@ public class SocialActivityLimitPersistenceImpl extends BasePersistenceImpl<Soci
 			closeSession(session);
 		}
 
-		clearCache(socialActivityLimit);
+		if (socialActivityLimit != null) {
+			clearCache(socialActivityLimit);
+		}
 
 		return socialActivityLimit;
 	}

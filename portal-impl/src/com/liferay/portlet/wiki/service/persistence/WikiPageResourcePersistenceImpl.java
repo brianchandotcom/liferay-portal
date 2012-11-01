@@ -304,7 +304,9 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 						wikiPageResource.getPrimaryKeyObj());
 			}
 
-			session.delete(wikiPageResource);
+			if (wikiPageResource != null) {
+				session.delete(wikiPageResource);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -313,7 +315,9 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 			closeSession(session);
 		}
 
-		clearCache(wikiPageResource);
+		if (wikiPageResource != null) {
+			clearCache(wikiPageResource);
+		}
 
 		return wikiPageResource;
 	}

@@ -326,7 +326,9 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 						mbBan.getPrimaryKeyObj());
 			}
 
-			session.delete(mbBan);
+			if (mbBan != null) {
+				session.delete(mbBan);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -335,7 +337,9 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 			closeSession(session);
 		}
 
-		clearCache(mbBan);
+		if (mbBan != null) {
+			clearCache(mbBan);
+		}
 
 		return mbBan;
 	}

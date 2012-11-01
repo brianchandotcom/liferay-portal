@@ -403,7 +403,9 @@ public class SocialActivityCounterPersistenceImpl extends BasePersistenceImpl<So
 						socialActivityCounter.getPrimaryKeyObj());
 			}
 
-			session.delete(socialActivityCounter);
+			if (socialActivityCounter != null) {
+				session.delete(socialActivityCounter);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -412,7 +414,9 @@ public class SocialActivityCounterPersistenceImpl extends BasePersistenceImpl<So
 			closeSession(session);
 		}
 
-		clearCache(socialActivityCounter);
+		if (socialActivityCounter != null) {
+			clearCache(socialActivityCounter);
+		}
 
 		return socialActivityCounter;
 	}

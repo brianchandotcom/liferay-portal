@@ -316,7 +316,9 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 						userIdMapper.getPrimaryKeyObj());
 			}
 
-			session.delete(userIdMapper);
+			if (userIdMapper != null) {
+				session.delete(userIdMapper);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -325,7 +327,9 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 			closeSession(session);
 		}
 
-		clearCache(userIdMapper);
+		if (userIdMapper != null) {
+			clearCache(userIdMapper);
+		}
 
 		return userIdMapper;
 	}

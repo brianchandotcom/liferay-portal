@@ -410,7 +410,9 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 						wikiNode.getPrimaryKeyObj());
 			}
 
-			session.delete(wikiNode);
+			if (wikiNode != null) {
+				session.delete(wikiNode);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -419,7 +421,9 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 			closeSession(session);
 		}
 
-		clearCache(wikiNode);
+		if (wikiNode != null) {
+			clearCache(wikiNode);
+		}
 
 		return wikiNode;
 	}

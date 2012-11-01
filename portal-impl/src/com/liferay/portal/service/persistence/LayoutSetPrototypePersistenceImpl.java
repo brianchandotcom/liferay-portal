@@ -339,7 +339,9 @@ public class LayoutSetPrototypePersistenceImpl extends BasePersistenceImpl<Layou
 						layoutSetPrototype.getPrimaryKeyObj());
 			}
 
-			session.delete(layoutSetPrototype);
+			if (layoutSetPrototype != null) {
+				session.delete(layoutSetPrototype);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -348,7 +350,9 @@ public class LayoutSetPrototypePersistenceImpl extends BasePersistenceImpl<Layou
 			closeSession(session);
 		}
 
-		clearCache(layoutSetPrototype);
+		if (layoutSetPrototype != null) {
+			clearCache(layoutSetPrototype);
+		}
 
 		return layoutSetPrototype;
 	}

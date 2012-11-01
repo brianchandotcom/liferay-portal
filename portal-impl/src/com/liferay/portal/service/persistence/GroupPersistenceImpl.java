@@ -557,7 +557,9 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 						group.getPrimaryKeyObj());
 			}
 
-			session.delete(group);
+			if (group != null) {
+				session.delete(group);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -566,7 +568,9 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 			closeSession(session);
 		}
 
-		clearCache(group);
+		if (group != null) {
+			clearCache(group);
+		}
 
 		return group;
 	}

@@ -432,7 +432,9 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 						dlFileShortcut.getPrimaryKeyObj());
 			}
 
-			session.delete(dlFileShortcut);
+			if (dlFileShortcut != null) {
+				session.delete(dlFileShortcut);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -441,7 +443,9 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 			closeSession(session);
 		}
 
-		clearCache(dlFileShortcut);
+		if (dlFileShortcut != null) {
+			clearCache(dlFileShortcut);
+		}
 
 		return dlFileShortcut;
 	}

@@ -262,7 +262,9 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 						ticket.getPrimaryKeyObj());
 			}
 
-			session.delete(ticket);
+			if (ticket != null) {
+				session.delete(ticket);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -271,7 +273,9 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 			closeSession(session);
 		}
 
-		clearCache(ticket);
+		if (ticket != null) {
+			clearCache(ticket);
+		}
 
 		return ticket;
 	}

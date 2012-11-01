@@ -422,7 +422,9 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 						bookmarksEntry.getPrimaryKeyObj());
 			}
 
-			session.delete(bookmarksEntry);
+			if (bookmarksEntry != null) {
+				session.delete(bookmarksEntry);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -431,7 +433,9 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 			closeSession(session);
 		}
 
-		clearCache(bookmarksEntry);
+		if (bookmarksEntry != null) {
+			clearCache(bookmarksEntry);
+		}
 
 		return bookmarksEntry;
 	}

@@ -737,7 +737,9 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 						blogsEntry.getPrimaryKeyObj());
 			}
 
-			session.delete(blogsEntry);
+			if (blogsEntry != null) {
+				session.delete(blogsEntry);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -746,7 +748,9 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 			closeSession(session);
 		}
 
-		clearCache(blogsEntry);
+		if (blogsEntry != null) {
+			clearCache(blogsEntry);
+		}
 
 		return blogsEntry;
 	}

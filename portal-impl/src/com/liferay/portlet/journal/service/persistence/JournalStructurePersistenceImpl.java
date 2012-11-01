@@ -445,7 +445,9 @@ public class JournalStructurePersistenceImpl extends BasePersistenceImpl<Journal
 						journalStructure.getPrimaryKeyObj());
 			}
 
-			session.delete(journalStructure);
+			if (journalStructure != null) {
+				session.delete(journalStructure);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -454,7 +456,9 @@ public class JournalStructurePersistenceImpl extends BasePersistenceImpl<Journal
 			closeSession(session);
 		}
 
-		clearCache(journalStructure);
+		if (journalStructure != null) {
+			clearCache(journalStructure);
+		}
 
 		return journalStructure;
 	}

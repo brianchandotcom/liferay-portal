@@ -240,7 +240,9 @@ public class CounterPersistenceImpl extends BasePersistenceImpl<Counter>
 						counter.getPrimaryKeyObj());
 			}
 
-			session.delete(counter);
+			if (counter != null) {
+				session.delete(counter);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -249,7 +251,9 @@ public class CounterPersistenceImpl extends BasePersistenceImpl<Counter>
 			closeSession(session);
 		}
 
-		clearCache(counter);
+		if (counter != null) {
+			clearCache(counter);
+		}
 
 		return counter;
 	}

@@ -344,7 +344,9 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 						pollsQuestion.getPrimaryKeyObj());
 			}
 
-			session.delete(pollsQuestion);
+			if (pollsQuestion != null) {
+				session.delete(pollsQuestion);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -353,7 +355,9 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 			closeSession(session);
 		}
 
-		clearCache(pollsQuestion);
+		if (pollsQuestion != null) {
+			clearCache(pollsQuestion);
+		}
 
 		return pollsQuestion;
 	}

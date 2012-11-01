@@ -457,7 +457,9 @@ public class JournalTemplatePersistenceImpl extends BasePersistenceImpl<JournalT
 						journalTemplate.getPrimaryKeyObj());
 			}
 
-			session.delete(journalTemplate);
+			if (journalTemplate != null) {
+				session.delete(journalTemplate);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -466,7 +468,9 @@ public class JournalTemplatePersistenceImpl extends BasePersistenceImpl<JournalT
 			closeSession(session);
 		}
 
-		clearCache(journalTemplate);
+		if (journalTemplate != null) {
+			clearCache(journalTemplate);
+		}
 
 		return journalTemplate;
 	}

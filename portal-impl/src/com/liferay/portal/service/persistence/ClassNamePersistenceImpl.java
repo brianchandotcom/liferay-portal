@@ -264,7 +264,9 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 						className.getPrimaryKeyObj());
 			}
 
-			session.delete(className);
+			if (className != null) {
+				session.delete(className);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -273,7 +275,9 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 			closeSession(session);
 		}
 
-		clearCache(className);
+		if (className != null) {
+			clearCache(className);
+		}
 
 		return className;
 	}

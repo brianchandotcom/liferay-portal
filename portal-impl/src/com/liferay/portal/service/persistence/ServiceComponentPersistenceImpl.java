@@ -298,7 +298,9 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 						serviceComponent.getPrimaryKeyObj());
 			}
 
-			session.delete(serviceComponent);
+			if (serviceComponent != null) {
+				session.delete(serviceComponent);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -307,7 +309,9 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 			closeSession(session);
 		}
 
-		clearCache(serviceComponent);
+		if (serviceComponent != null) {
+			clearCache(serviceComponent);
+		}
 
 		return serviceComponent;
 	}

@@ -459,7 +459,9 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 						calEvent.getPrimaryKeyObj());
 			}
 
-			session.delete(calEvent);
+			if (calEvent != null) {
+				session.delete(calEvent);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -468,7 +470,9 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 			closeSession(session);
 		}
 
-		clearCache(calEvent);
+		if (calEvent != null) {
+			clearCache(calEvent);
+		}
 
 		return calEvent;
 	}

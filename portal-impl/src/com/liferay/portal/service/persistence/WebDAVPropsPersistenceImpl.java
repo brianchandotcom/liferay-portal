@@ -270,7 +270,9 @@ public class WebDAVPropsPersistenceImpl extends BasePersistenceImpl<WebDAVProps>
 						webDAVProps.getPrimaryKeyObj());
 			}
 
-			session.delete(webDAVProps);
+			if (webDAVProps != null) {
+				session.delete(webDAVProps);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -279,7 +281,9 @@ public class WebDAVPropsPersistenceImpl extends BasePersistenceImpl<WebDAVProps>
 			closeSession(session);
 		}
 
-		clearCache(webDAVProps);
+		if (webDAVProps != null) {
+			clearCache(webDAVProps);
+		}
 
 		return webDAVProps;
 	}

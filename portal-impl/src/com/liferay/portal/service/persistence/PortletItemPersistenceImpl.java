@@ -333,7 +333,9 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 						portletItem.getPrimaryKeyObj());
 			}
 
-			session.delete(portletItem);
+			if (portletItem != null) {
+				session.delete(portletItem);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -342,7 +344,9 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 			closeSession(session);
 		}
 
-		clearCache(portletItem);
+		if (portletItem != null) {
+			clearCache(portletItem);
+		}
 
 		return portletItem;
 	}

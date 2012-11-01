@@ -303,7 +303,9 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 						expandoTable.getPrimaryKeyObj());
 			}
 
-			session.delete(expandoTable);
+			if (expandoTable != null) {
+				session.delete(expandoTable);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -312,7 +314,9 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 			closeSession(session);
 		}
 
-		clearCache(expandoTable);
+		if (expandoTable != null) {
+			clearCache(expandoTable);
+		}
 
 		return expandoTable;
 	}

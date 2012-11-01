@@ -336,7 +336,9 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 						mdrRuleGroup.getPrimaryKeyObj());
 			}
 
-			session.delete(mdrRuleGroup);
+			if (mdrRuleGroup != null) {
+				session.delete(mdrRuleGroup);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -345,7 +347,9 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 			closeSession(session);
 		}
 
-		clearCache(mdrRuleGroup);
+		if (mdrRuleGroup != null) {
+			clearCache(mdrRuleGroup);
+		}
 
 		return mdrRuleGroup;
 	}

@@ -94,9 +94,9 @@ public class RoleServiceUtil {
 	* @param type the role's type (optionally <code>0</code>)
 	* @return the role
 	* @throws PortalException if a user with the primary key could not be
-	found, if the user did not have permission to add roles, if the
-	class name or the role name were invalid, or if the role is a
-	duplicate
+	found, if the user did not have permission to add roles, if
+	the class name or the role name were invalid, or if the role
+	is a duplicate
 	* @throws SystemException if a system exception occurred
 	* @deprecated {@link #addRole(String, long, String, Map, Map, int, String)}
 	*/

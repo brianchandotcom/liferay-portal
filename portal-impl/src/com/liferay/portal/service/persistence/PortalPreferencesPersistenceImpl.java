@@ -275,7 +275,9 @@ public class PortalPreferencesPersistenceImpl extends BasePersistenceImpl<Portal
 						portalPreferences.getPrimaryKeyObj());
 			}
 
-			session.delete(portalPreferences);
+			if (portalPreferences != null) {
+				session.delete(portalPreferences);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -284,7 +286,9 @@ public class PortalPreferencesPersistenceImpl extends BasePersistenceImpl<Portal
 			closeSession(session);
 		}
 
-		clearCache(portalPreferences);
+		if (portalPreferences != null) {
+			clearCache(portalPreferences);
+		}
 
 		return portalPreferences;
 	}

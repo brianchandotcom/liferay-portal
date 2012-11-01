@@ -353,7 +353,9 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 						ddmContent.getPrimaryKeyObj());
 			}
 
-			session.delete(ddmContent);
+			if (ddmContent != null) {
+				session.delete(ddmContent);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -362,7 +364,9 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 			closeSession(session);
 		}
 
-		clearCache(ddmContent);
+		if (ddmContent != null) {
+			clearCache(ddmContent);
+		}
 
 		return ddmContent;
 	}

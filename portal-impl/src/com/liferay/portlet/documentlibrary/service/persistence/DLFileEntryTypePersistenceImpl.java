@@ -407,7 +407,9 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 						dlFileEntryType.getPrimaryKeyObj());
 			}
 
-			session.delete(dlFileEntryType);
+			if (dlFileEntryType != null) {
+				session.delete(dlFileEntryType);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -416,7 +418,9 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 			closeSession(session);
 		}
 
-		clearCache(dlFileEntryType);
+		if (dlFileEntryType != null) {
+			clearCache(dlFileEntryType);
+		}
 
 		return dlFileEntryType;
 	}

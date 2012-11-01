@@ -353,7 +353,9 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 						userGroup.getPrimaryKeyObj());
 			}
 
-			session.delete(userGroup);
+			if (userGroup != null) {
+				session.delete(userGroup);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -362,7 +364,9 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 			closeSession(session);
 		}
 
-		clearCache(userGroup);
+		if (userGroup != null) {
+			clearCache(userGroup);
+		}
 
 		return userGroup;
 	}

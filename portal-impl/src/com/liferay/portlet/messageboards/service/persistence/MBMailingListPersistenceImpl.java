@@ -364,7 +364,9 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 						mbMailingList.getPrimaryKeyObj());
 			}
 
-			session.delete(mbMailingList);
+			if (mbMailingList != null) {
+				session.delete(mbMailingList);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -373,7 +375,9 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 			closeSession(session);
 		}
 
-		clearCache(mbMailingList);
+		if (mbMailingList != null) {
+			clearCache(mbMailingList);
+		}
 
 		return mbMailingList;
 	}

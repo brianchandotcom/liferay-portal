@@ -332,7 +332,9 @@ public class TrashEntryPersistenceImpl extends BasePersistenceImpl<TrashEntry>
 						trashEntry.getPrimaryKeyObj());
 			}
 
-			session.delete(trashEntry);
+			if (trashEntry != null) {
+				session.delete(trashEntry);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -341,7 +343,9 @@ public class TrashEntryPersistenceImpl extends BasePersistenceImpl<TrashEntry>
 			closeSession(session);
 		}
 
-		clearCache(trashEntry);
+		if (trashEntry != null) {
+			clearCache(trashEntry);
+		}
 
 		return trashEntry;
 	}

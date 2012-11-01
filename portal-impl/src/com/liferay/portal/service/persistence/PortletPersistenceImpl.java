@@ -291,7 +291,9 @@ public class PortletPersistenceImpl extends BasePersistenceImpl<Portlet>
 						portlet.getPrimaryKeyObj());
 			}
 
-			session.delete(portlet);
+			if (portlet != null) {
+				session.delete(portlet);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -300,7 +302,9 @@ public class PortletPersistenceImpl extends BasePersistenceImpl<Portlet>
 			closeSession(session);
 		}
 
-		clearCache(portlet);
+		if (portlet != null) {
+			clearCache(portlet);
+		}
 
 		return portlet;
 	}

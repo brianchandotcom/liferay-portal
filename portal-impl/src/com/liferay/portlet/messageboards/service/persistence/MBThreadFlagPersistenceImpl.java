@@ -310,7 +310,9 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 						mbThreadFlag.getPrimaryKeyObj());
 			}
 
-			session.delete(mbThreadFlag);
+			if (mbThreadFlag != null) {
+				session.delete(mbThreadFlag);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -319,7 +321,9 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 			closeSession(session);
 		}
 
-		clearCache(mbThreadFlag);
+		if (mbThreadFlag != null) {
+			clearCache(mbThreadFlag);
+		}
 
 		return mbThreadFlag;
 	}

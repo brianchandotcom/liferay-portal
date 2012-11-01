@@ -310,7 +310,9 @@ public class ShoppingCartPersistenceImpl extends BasePersistenceImpl<ShoppingCar
 						shoppingCart.getPrimaryKeyObj());
 			}
 
-			session.delete(shoppingCart);
+			if (shoppingCart != null) {
+				session.delete(shoppingCart);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -319,7 +321,9 @@ public class ShoppingCartPersistenceImpl extends BasePersistenceImpl<ShoppingCar
 			closeSession(session);
 		}
 
-		clearCache(shoppingCart);
+		if (shoppingCart != null) {
+			clearCache(shoppingCart);
+		}
 
 		return shoppingCart;
 	}

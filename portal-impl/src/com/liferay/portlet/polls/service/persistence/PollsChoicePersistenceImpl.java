@@ -318,7 +318,9 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 						pollsChoice.getPrimaryKeyObj());
 			}
 
-			session.delete(pollsChoice);
+			if (pollsChoice != null) {
+				session.delete(pollsChoice);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -327,7 +329,9 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 			closeSession(session);
 		}
 
-		clearCache(pollsChoice);
+		if (pollsChoice != null) {
+			clearCache(pollsChoice);
+		}
 
 		return pollsChoice;
 	}

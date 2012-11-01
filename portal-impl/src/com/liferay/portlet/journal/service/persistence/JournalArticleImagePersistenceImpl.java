@@ -381,7 +381,9 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 						journalArticleImage.getPrimaryKeyObj());
 			}
 
-			session.delete(journalArticleImage);
+			if (journalArticleImage != null) {
+				session.delete(journalArticleImage);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -390,7 +392,9 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 			closeSession(session);
 		}
 
-		clearCache(journalArticleImage);
+		if (journalArticleImage != null) {
+			clearCache(journalArticleImage);
+		}
 
 		return journalArticleImage;
 	}

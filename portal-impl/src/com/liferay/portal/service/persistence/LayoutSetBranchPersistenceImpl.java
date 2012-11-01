@@ -331,7 +331,9 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 						layoutSetBranch.getPrimaryKeyObj());
 			}
 
-			session.delete(layoutSetBranch);
+			if (layoutSetBranch != null) {
+				session.delete(layoutSetBranch);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -340,7 +342,9 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 			closeSession(session);
 		}
 
-		clearCache(layoutSetBranch);
+		if (layoutSetBranch != null) {
+			clearCache(layoutSetBranch);
+		}
 
 		return layoutSetBranch;
 	}

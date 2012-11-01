@@ -347,7 +347,9 @@ public class UserGroupRolePersistenceImpl extends BasePersistenceImpl<UserGroupR
 						userGroupRole.getPrimaryKeyObj());
 			}
 
-			session.delete(userGroupRole);
+			if (userGroupRole != null) {
+				session.delete(userGroupRole);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -356,7 +358,9 @@ public class UserGroupRolePersistenceImpl extends BasePersistenceImpl<UserGroupR
 			closeSession(session);
 		}
 
-		clearCache(userGroupRole);
+		if (userGroupRole != null) {
+			clearCache(userGroupRole);
+		}
 
 		return userGroupRole;
 	}

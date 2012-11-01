@@ -334,7 +334,9 @@ public class SCProductScreenshotPersistenceImpl extends BasePersistenceImpl<SCPr
 						scProductScreenshot.getPrimaryKeyObj());
 			}
 
-			session.delete(scProductScreenshot);
+			if (scProductScreenshot != null) {
+				session.delete(scProductScreenshot);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -343,7 +345,9 @@ public class SCProductScreenshotPersistenceImpl extends BasePersistenceImpl<SCPr
 			closeSession(session);
 		}
 
-		clearCache(scProductScreenshot);
+		if (scProductScreenshot != null) {
+			clearCache(scProductScreenshot);
+		}
 
 		return scProductScreenshot;
 	}

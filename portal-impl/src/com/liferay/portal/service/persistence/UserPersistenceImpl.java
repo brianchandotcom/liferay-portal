@@ -571,7 +571,9 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 				user = (User)session.get(UserImpl.class, user.getPrimaryKeyObj());
 			}
 
-			session.delete(user);
+			if (user != null) {
+				session.delete(user);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -580,7 +582,9 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 			closeSession(session);
 		}
 
-		clearCache(user);
+		if (user != null) {
+			clearCache(user);
+		}
 
 		return user;
 	}

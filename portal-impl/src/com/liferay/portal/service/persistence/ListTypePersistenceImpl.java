@@ -260,7 +260,9 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 						listType.getPrimaryKeyObj());
 			}
 
-			session.delete(listType);
+			if (listType != null) {
+				session.delete(listType);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -269,7 +271,9 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 			closeSession(session);
 		}
 
-		clearCache(listType);
+		if (listType != null) {
+			clearCache(listType);
+		}
 
 		return listType;
 	}

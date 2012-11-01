@@ -313,7 +313,9 @@ public class LayoutSetPersistenceImpl extends BasePersistenceImpl<LayoutSet>
 						layoutSet.getPrimaryKeyObj());
 			}
 
-			session.delete(layoutSet);
+			if (layoutSet != null) {
+				session.delete(layoutSet);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -322,7 +324,9 @@ public class LayoutSetPersistenceImpl extends BasePersistenceImpl<LayoutSet>
 			closeSession(session);
 		}
 
-		clearCache(layoutSet);
+		if (layoutSet != null) {
+			clearCache(layoutSet);
+		}
 
 		return layoutSet;
 	}

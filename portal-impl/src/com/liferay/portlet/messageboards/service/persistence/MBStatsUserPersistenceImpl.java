@@ -330,7 +330,9 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 						mbStatsUser.getPrimaryKeyObj());
 			}
 
-			session.delete(mbStatsUser);
+			if (mbStatsUser != null) {
+				session.delete(mbStatsUser);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -339,7 +341,9 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 			closeSession(session);
 		}
 
-		clearCache(mbStatsUser);
+		if (mbStatsUser != null) {
+			clearCache(mbStatsUser);
+		}
 
 		return mbStatsUser;
 	}

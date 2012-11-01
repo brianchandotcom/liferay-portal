@@ -365,7 +365,9 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 						dlFileRank.getPrimaryKeyObj());
 			}
 
-			session.delete(dlFileRank);
+			if (dlFileRank != null) {
+				session.delete(dlFileRank);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -374,7 +376,9 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 			closeSession(session);
 		}
 
-		clearCache(dlFileRank);
+		if (dlFileRank != null) {
+			clearCache(dlFileRank);
+		}
 
 		return dlFileRank;
 	}

@@ -269,7 +269,9 @@ public class ShoppingOrderItemPersistenceImpl extends BasePersistenceImpl<Shoppi
 						shoppingOrderItem.getPrimaryKeyObj());
 			}
 
-			session.delete(shoppingOrderItem);
+			if (shoppingOrderItem != null) {
+				session.delete(shoppingOrderItem);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -278,7 +280,9 @@ public class ShoppingOrderItemPersistenceImpl extends BasePersistenceImpl<Shoppi
 			closeSession(session);
 		}
 
-		clearCache(shoppingOrderItem);
+		if (shoppingOrderItem != null) {
+			clearCache(shoppingOrderItem);
+		}
 
 		return shoppingOrderItem;
 	}

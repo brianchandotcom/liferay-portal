@@ -466,7 +466,9 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 						mbThread.getPrimaryKeyObj());
 			}
 
-			session.delete(mbThread);
+			if (mbThread != null) {
+				session.delete(mbThread);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -475,7 +477,9 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 			closeSession(session);
 		}
 
-		clearCache(mbThread);
+		if (mbThread != null) {
+			clearCache(mbThread);
+		}
 
 		return mbThread;
 	}

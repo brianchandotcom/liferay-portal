@@ -354,7 +354,9 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 						dlContent.getPrimaryKeyObj());
 			}
 
-			session.delete(dlContent);
+			if (dlContent != null) {
+				session.delete(dlContent);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -363,7 +365,9 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 			closeSession(session);
 		}
 
-		clearCache(dlContent);
+		if (dlContent != null) {
+			clearCache(dlContent);
+		}
 
 		return dlContent;
 	}

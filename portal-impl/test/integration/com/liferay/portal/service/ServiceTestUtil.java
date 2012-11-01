@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.messaging.sender.SynchronousMessageSender;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
@@ -375,6 +376,15 @@ public class ServiceTestUtil {
 			new BlogsEntryAssetRendererFactory());
 		AssetRendererFactoryRegistryUtil.register(
 			new DLFileEntryAssetRendererFactory());
+
+		// Template Manager
+
+		try {
+			TemplateManagerUtil.init();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
 
 		// Trash
 

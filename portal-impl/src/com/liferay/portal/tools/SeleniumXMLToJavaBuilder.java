@@ -28,6 +28,7 @@ import jargs.gnu.CmdLineParser;
 
 import java.io.File;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -74,36 +75,66 @@ public class SeleniumXMLToJavaBuilder {
 
 		if (runBlockName.equals("actiondef")) {
 			actionDefName = runBlock.attributeValue("name");
+
+			sb.append(handleActionDefBlock(runBlock, actionDefName));
 		}
+		else {
+
+			for (Element command : commands) {
+				String commandName = command.getName();
+
+				if (commandName.equals("action")) {
+					sb.append(getCommandActions(command));
+				}
+				else if (commandName.equals("conditional")) {
+					sb.append(getCommandConditional(command, actionDefName));
+				}
+				else if (commandName.equals("defaultcommand")) {
+					sb.append(getCommandDefaultCommand(actionDefName));
+				}
+				else if (commandName.equals("if")) {
+					sb.append(getCommandIf(command));
+				}
+				else if (commandName.equals("macro")) {
+					sb.append(getCommandMacros(command));
+				}
+				else if (commandName.equals("selenium")) {
+					sb.append(getCommandSelenium(command));
+				}
+				else if (commandName.equals("units")) {
+					sb.append(getCommandUnits(command, actionDefName));
+				}
+				else if (commandName.equals("while")) {
+					sb.append(getCommandWhile(command));
+				}
+			}
+		}
+
+		return sb.toString();
+	}
+
+	protected String handleActionDefBlock(Element runBlock, String actionDefName) {
+		StringBundler sb = new StringBundler();
+
+		List<Element> commands = runBlock.elements();
+
+		int count = 0;
+
+		sb.append("if ");
 
 		for (Element command : commands) {
-			String commandName = command.getName();
+			if (count > 0) {
+				sb.append(" else if ");
+			}
 
-			if (commandName.equals("action")) {
-				sb.append(getCommandActions(command));
-			}
-			else if (commandName.equals("conditional")) {
-				sb.append(getCommandConditional(command, actionDefName));
-			}
-			else if (commandName.equals("defaultcommand")) {
-				sb.append(getCommandDefaultCommand(actionDefName));
-			}
-			else if (commandName.equals("if")) {
-				sb.append(getCommandIf(command));
-			}
-			else if (commandName.equals("macro")) {
-				sb.append(getCommandMacros(command));
-			}
-			else if (commandName.equals("selenium")) {
-				sb.append(getCommandSelenium(command));
-			}
-			else if (commandName.equals("units")) {
-				sb.append(getCommandUnits(command, actionDefName));
-			}
-			else if (commandName.equals("while")) {
-				sb.append(getCommandWhile(command));
-			}
+			sb.append(getCommandConditional(command, actionDefName));
+
+			count++;
 		}
+
+		sb.append(" else {");
+		sb.append("super." + actionDefName + "(params[0], params[1]);");
+		sb.append("}");
 
 		return sb.toString();
 	}
@@ -403,12 +434,87 @@ public class SeleniumXMLToJavaBuilder {
 		return sb.toString();
 	}
 
-	private String getCommandConditional(
-		Element conditional, String actionDefName) {
+	private String getCommandConditional(Element conditional, String methodName) {
+		String conditionalName = conditional.getName();
 
 		StringBundler sb = new StringBundler();
 
-		sb.append("");
+		StringBundler elementsClause = new StringBundler();
+		StringBundler isSeleniumClause = new StringBundler();
+		StringBundler startsWithClause = new StringBundler();
+
+		String elements = conditional.attributeValue("elements");
+		String isselenium = conditional.attributeValue("isselenium");
+		String startswith = conditional.attributeValue("startswith");
+
+		Boolean hasElements = !(elements == null) && !(elements.equals(""));
+		Boolean hasIsSelenium = !(isselenium == null) && isselenium.equals("true");
+		Boolean hasStartsWith = !(startswith == null) && !(startswith.equals(""));
+
+		String elementConditionalList = "";
+
+		if (hasElements) {
+			elementsClause.append("(");
+
+			String[] elementArray = elements.split(",");
+
+			Set<String> elementSet = new TreeSet<String>(Arrays.asList(elementArray));
+
+			for (String element : elementSet) {
+				elementConditionalList = elementConditionalList + "param1.equals(\"";
+				elementConditionalList = elementConditionalList + element;
+				elementConditionalList = elementConditionalList + "\") ||\n";
+			}
+
+			int x = elementConditionalList.lastIndexOf("|");
+
+			elementConditionalList = elementConditionalList.substring(0, x - 1);
+			elementConditionalList = elementConditionalList.trim();
+
+			elementsClause.append(elementConditionalList);
+
+			elementsClause.append(")");
+		}
+
+		if (hasIsSelenium) {
+			isSeleniumClause.append("LiferaySeleniumHelper.isSelenium()");
+
+		}
+
+		if (hasStartsWith) {
+			startsWithClause.append("param1.startsWith(\"");
+			startsWithClause.append(startswith);
+			startsWithClause.append("\")");
+		}
+
+		sb.append("(");
+
+		if (hasElements) {
+			sb.append(elementsClause.toString());
+		}
+
+		if (hasElements && hasIsSelenium) {
+			sb.append(" && ");
+		}
+
+		if (hasIsSelenium) {
+			sb.append(isSeleniumClause.toString());
+		}
+
+		if ((hasIsSelenium && hasStartsWith) ||
+			(hasElements && hasStartsWith)) {
+			sb.append(" && ");
+		}
+
+		if (hasStartsWith) {
+			sb.append(startsWithClause.toString());
+		}
+
+		sb.append(") {\n");
+
+		sb.append(getCommands(conditional));
+
+		sb.append("}");
 
 		return sb.toString();
 	}

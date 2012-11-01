@@ -133,6 +133,18 @@ if (ldapAuthEnabled && (ldapServerIds.length <= 0) && Validator.isNull(PrefsProp
 		<div class="results-grid ldap-servers">
 			<table class="taglib-search-iterator">
 
+				<tr class="results-header">
+					<th>
+						<liferay-ui:message key="ldap-server-id" />
+					</th>
+					<th>
+						<liferay-ui:message key="ldap-server-name" />
+					</th>
+					<th>
+						&nbsp;
+					</th>
+				<tr>
+
 			<%
 			for (int i = 0; i < ldapServerIds.length; i++) {
 				long ldapServerId = ldapServerIds[i];
@@ -147,6 +159,9 @@ if (ldapAuthEnabled && (ldapServerIds.length <= 0) && Validator.isNull(PrefsProp
 			%>
 
 				<tr class="<%= className %>" data-ldapServerId="<%= ldapServerId %>">
+					<td>
+						<%= ldapServerId %>
+					</td>
 					<td>
 						<%= ldapServerName %>
 					</td>

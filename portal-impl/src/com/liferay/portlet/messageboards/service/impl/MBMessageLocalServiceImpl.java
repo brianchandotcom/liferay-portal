@@ -1409,20 +1409,22 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		MBMessage message = mbMessagePersistence.findByPrimaryKey(messageId);
 
+		int oldStatus = message.getStatus();
+
 		subject = ModelHintsUtil.trimString(
 			MBMessage.class.getName(), "subject", subject);
 		body = SanitizerUtil.sanitize(
 			message.getCompanyId(), message.getGroupId(), userId,
 			MBMessage.class.getName(), messageId, "text/" + message.getFormat(),
 			body);
-		Date now = new Date();
+		Date modifiedDate = serviceContext.getModifiedDate(new Date());
 
 		validate(subject, body);
 
 		subject = getSubject(subject, body);
 		body = getBody(subject, body);
 
-		message.setModifiedDate(serviceContext.getModifiedDate(now));
+		message.setModifiedDate(modifiedDate);
 		message.setSubject(subject);
 		message.setBody(body);
 		message.setAttachments(
@@ -1433,6 +1435,9 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			message.setPriority(priority);
 		}
 
+		MBThread thread = mbThreadPersistence.findByPrimaryKey(
+			message.getThreadId());
+
 		if (serviceContext.getWorkflowAction() ==
 				WorkflowConstants.ACTION_SAVE_DRAFT) {
 
@@ -1440,6 +1445,29 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			}
 			else {
 				message.setStatus(WorkflowConstants.STATUS_DRAFT);
+
+				// Thread
+
+				User user = userPersistence.findByPrimaryKey(userId);
+
+				updateThreadStatus(
+					thread, message, user, oldStatus, modifiedDate);
+
+				// Asset
+
+				assetEntryLocalService.updateVisible(
+					message.getWorkflowClassName(), message.getMessageId(),
+					false);
+
+				if (!message.isDiscussion()) {
+
+					// Indexer
+
+					Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+						MBMessage.class);
+
+					indexer.delete(message);
+				}
 			}
 		}
 
@@ -1507,9 +1535,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		// Thread
 
-		MBThread thread = mbThreadPersistence.findByPrimaryKey(
-			message.getThreadId());
-
 		if ((priority != MBThreadConstants.PRIORITY_NOT_GIVEN) &&
 			(thread.getPriority() != priority)) {
 
@@ -1569,10 +1594,12 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		User user = userPersistence.findByPrimaryKey(userId);
 		Date now = new Date();
 
+		Date modifiedDate = serviceContext.getModifiedDate(now);
+
 		message.setStatus(status);
 		message.setStatusByUserId(userId);
 		message.setStatusByUserName(user.getFullName());
-		message.setStatusDate(serviceContext.getModifiedDate(now));
+		message.setStatusDate(modifiedDate);
 
 		mbMessagePersistence.update(message);
 
@@ -1581,63 +1608,13 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		MBThread thread = mbThreadPersistence.findByPrimaryKey(
 			message.getThreadId());
 
-		MBCategory category = null;
-
-		if ((thread.getCategoryId() !=
-				MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) &&
-			(thread.getCategoryId() !=
-				MBCategoryConstants.DISCUSSION_CATEGORY_ID)) {
-
-			category = mbCategoryPersistence.findByPrimaryKey(
-				thread.getCategoryId());
-		}
-
-		if ((thread.getRootMessageId() == message.getMessageId()) &&
-			(oldStatus != status)) {
-
-			thread.setStatus(status);
-			thread.setStatusByUserId(userId);
-			thread.setStatusByUserName(user.getFullName());
-			thread.setStatusDate(serviceContext.getModifiedDate(now));
-		}
+		updateThreadStatus(thread, message, user, oldStatus, modifiedDate);
 
 		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 			MBMessage.class);
 
 		if (status == WorkflowConstants.STATUS_APPROVED) {
 			if (oldStatus != WorkflowConstants.STATUS_APPROVED) {
-
-				// Thread
-
-				if ((category != null) &&
-					(thread.getRootMessageId() == message.getMessageId())) {
-
-					category.setThreadCount(category.getThreadCount() + 1);
-
-					mbCategoryPersistence.update(category);
-				}
-
-				thread.setMessageCount(thread.getMessageCount() + 1);
-
-				if (message.isAnonymous()) {
-					thread.setLastPostByUserId(0);
-				}
-				else {
-					thread.setLastPostByUserId(message.getUserId());
-				}
-
-				thread.setLastPostDate(serviceContext.getModifiedDate(now));
-
-				// Category
-
-				if (category != null) {
-					category.setMessageCount(category.getMessageCount() + 1);
-					category.setLastPostDate(
-						serviceContext.getModifiedDate(now));
-
-					mbCategoryPersistence.update(category);
-
-				}
 
 				// Asset
 
@@ -1750,28 +1727,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 			pingPingback(message, serviceContext);
 		}
-		else if ((oldStatus == WorkflowConstants.STATUS_APPROVED) &&
-				 (status != WorkflowConstants.STATUS_APPROVED)) {
-
-			// Thread
-
-			if ((category != null) &&
-				(thread.getRootMessageId() == message.getMessageId())) {
-
-				category.setThreadCount(category.getThreadCount() - 1);
-
-				mbCategoryPersistence.update(category);
-			}
-
-			thread.setMessageCount(thread.getMessageCount() - 1);
-
-			// Category
-
-			if (category != null) {
-				category.setMessageCount(category.getMessageCount() - 1);
-
-				mbCategoryPersistence.update(category);
-			}
+		else if (oldStatus == WorkflowConstants.STATUS_APPROVED) {
 
 			// Asset
 
@@ -1784,10 +1740,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 				indexer.delete(message);
 			}
-		}
-
-		if (status != oldStatus) {
-			mbThreadPersistence.update(thread);
 		}
 
 		// Statistics
@@ -2236,6 +2188,95 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 				mbMessagePersistence.update(message);
 			}
+		}
+	}
+
+	protected void updateThreadStatus(
+			MBThread thread, MBMessage message, User user, int oldStatus,
+			Date modifiedDate)
+		throws PortalException, SystemException {
+
+		MBCategory category = null;
+
+		int status = message.getStatus();
+
+		if ((thread.getCategoryId() !=
+				MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) &&
+			(thread.getCategoryId() !=
+				MBCategoryConstants.DISCUSSION_CATEGORY_ID)) {
+
+			category = mbCategoryPersistence.findByPrimaryKey(
+				thread.getCategoryId());
+		}
+
+		if ((thread.getRootMessageId() == message.getMessageId()) &&
+			(oldStatus != status)) {
+
+			thread.setStatus(status);
+			thread.setStatusByUserId(user.getUserId());
+			thread.setStatusByUserName(user.getFullName());
+			thread.setStatusDate(modifiedDate);
+		}
+
+		if ((status == WorkflowConstants.STATUS_APPROVED) &&
+			(oldStatus != WorkflowConstants.STATUS_APPROVED)) {
+
+			// Thread
+
+			if ((category != null) &&
+				(thread.getRootMessageId() == message.getMessageId())) {
+
+				category.setThreadCount(category.getThreadCount() + 1);
+
+				mbCategoryPersistence.update(category);
+			}
+
+			thread.setMessageCount(thread.getMessageCount() + 1);
+
+			if (message.isAnonymous()) {
+				thread.setLastPostByUserId(0);
+			}
+			else {
+				thread.setLastPostByUserId(message.getUserId());
+			}
+
+			thread.setLastPostDate(modifiedDate);
+
+			// Category
+
+			if (category != null) {
+				category.setMessageCount(category.getMessageCount() + 1);
+				category.setLastPostDate(modifiedDate);
+
+				mbCategoryPersistence.update(category);
+			}
+		}
+		else if ((oldStatus == WorkflowConstants.STATUS_APPROVED) &&
+				 (status != WorkflowConstants.STATUS_APPROVED)) {
+
+			// Thread
+
+			if ((category != null) &&
+				(thread.getRootMessageId() == message.getMessageId())) {
+
+				category.setThreadCount(category.getThreadCount() - 1);
+
+				mbCategoryPersistence.update(category);
+			}
+
+			thread.setMessageCount(thread.getMessageCount() - 1);
+
+			// Category
+
+			if (category != null) {
+				category.setMessageCount(category.getMessageCount() - 1);
+
+				mbCategoryPersistence.update(category);
+			}
+		}
+
+		if (status != oldStatus) {
+			mbThreadPersistence.update(thread);
 		}
 	}
 

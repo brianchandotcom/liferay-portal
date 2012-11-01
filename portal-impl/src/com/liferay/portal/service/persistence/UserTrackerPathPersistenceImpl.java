@@ -268,7 +268,9 @@ public class UserTrackerPathPersistenceImpl extends BasePersistenceImpl<UserTrac
 						userTrackerPath.getPrimaryKeyObj());
 			}
 
-			session.delete(userTrackerPath);
+			if (userTrackerPath != null) {
+				session.delete(userTrackerPath);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -277,7 +279,9 @@ public class UserTrackerPathPersistenceImpl extends BasePersistenceImpl<UserTrac
 			closeSession(session);
 		}
 
-		clearCache(userTrackerPath);
+		if (userTrackerPath != null) {
+			clearCache(userTrackerPath);
+		}
 
 		return userTrackerPath;
 	}

@@ -380,7 +380,9 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 						address.getPrimaryKeyObj());
 			}
 
-			session.delete(address);
+			if (address != null) {
+				session.delete(address);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -389,7 +391,9 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 			closeSession(session);
 		}
 
-		clearCache(address);
+		if (address != null) {
+			clearCache(address);
+		}
 
 		return address;
 	}

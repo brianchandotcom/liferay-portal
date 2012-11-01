@@ -299,7 +299,9 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 						contact.getPrimaryKeyObj());
 			}
 
-			session.delete(contact);
+			if (contact != null) {
+				session.delete(contact);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -308,7 +310,9 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 			closeSession(session);
 		}
 
-		clearCache(contact);
+		if (contact != null) {
+			clearCache(contact);
+		}
 
 		return contact;
 	}

@@ -348,7 +348,9 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 						shoppingItem.getPrimaryKeyObj());
 			}
 
-			session.delete(shoppingItem);
+			if (shoppingItem != null) {
+				session.delete(shoppingItem);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -357,7 +359,9 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 			closeSession(session);
 		}
 
-		clearCache(shoppingItem);
+		if (shoppingItem != null) {
+			clearCache(shoppingItem);
+		}
 
 		return shoppingItem;
 	}

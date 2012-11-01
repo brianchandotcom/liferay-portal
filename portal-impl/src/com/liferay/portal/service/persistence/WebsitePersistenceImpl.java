@@ -351,7 +351,9 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 						website.getPrimaryKeyObj());
 			}
 
-			session.delete(website);
+			if (website != null) {
+				session.delete(website);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -360,7 +362,9 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 			closeSession(session);
 		}
 
-		clearCache(website);
+		if (website != null) {
+			clearCache(website);
+		}
 
 		return website;
 	}

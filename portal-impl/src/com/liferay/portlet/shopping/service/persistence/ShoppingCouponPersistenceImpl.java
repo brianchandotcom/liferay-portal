@@ -290,7 +290,9 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 						shoppingCoupon.getPrimaryKeyObj());
 			}
 
-			session.delete(shoppingCoupon);
+			if (shoppingCoupon != null) {
+				session.delete(shoppingCoupon);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -299,7 +301,9 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 			closeSession(session);
 		}
 
-		clearCache(shoppingCoupon);
+		if (shoppingCoupon != null) {
+			clearCache(shoppingCoupon);
+		}
 
 		return shoppingCoupon;
 	}

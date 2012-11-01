@@ -448,7 +448,9 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 						dlFileVersion.getPrimaryKeyObj());
 			}
 
-			session.delete(dlFileVersion);
+			if (dlFileVersion != null) {
+				session.delete(dlFileVersion);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -457,7 +459,9 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 			closeSession(session);
 		}
 
-		clearCache(dlFileVersion);
+		if (dlFileVersion != null) {
+			clearCache(dlFileVersion);
+		}
 
 		return dlFileVersion;
 	}

@@ -309,7 +309,9 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 				team = (Team)session.get(TeamImpl.class, team.getPrimaryKeyObj());
 			}
 
-			session.delete(team);
+			if (team != null) {
+				session.delete(team);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -318,7 +320,9 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 			closeSession(session);
 		}
 
-		clearCache(team);
+		if (team != null) {
+			clearCache(team);
+		}
 
 		return team;
 	}

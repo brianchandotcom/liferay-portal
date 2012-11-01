@@ -286,7 +286,9 @@ public class VirtualHostPersistenceImpl extends BasePersistenceImpl<VirtualHost>
 						virtualHost.getPrimaryKeyObj());
 			}
 
-			session.delete(virtualHost);
+			if (virtualHost != null) {
+				session.delete(virtualHost);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -295,7 +297,9 @@ public class VirtualHostPersistenceImpl extends BasePersistenceImpl<VirtualHost>
 			closeSession(session);
 		}
 
-		clearCache(virtualHost);
+		if (virtualHost != null) {
+			clearCache(virtualHost);
+		}
 
 		return virtualHost;
 	}

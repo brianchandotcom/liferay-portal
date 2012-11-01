@@ -348,7 +348,9 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 						subscription.getPrimaryKeyObj());
 			}
 
-			session.delete(subscription);
+			if (subscription != null) {
+				session.delete(subscription);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -357,7 +359,9 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 			closeSession(session);
 		}
 
-		clearCache(subscription);
+		if (subscription != null) {
+			clearCache(subscription);
+		}
 
 		return subscription;
 	}

@@ -272,7 +272,9 @@ public class RatingsStatsPersistenceImpl extends BasePersistenceImpl<RatingsStat
 						ratingsStats.getPrimaryKeyObj());
 			}
 
-			session.delete(ratingsStats);
+			if (ratingsStats != null) {
+				session.delete(ratingsStats);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -281,7 +283,9 @@ public class RatingsStatsPersistenceImpl extends BasePersistenceImpl<RatingsStat
 			closeSession(session);
 		}
 
-		clearCache(ratingsStats);
+		if (ratingsStats != null) {
+			clearCache(ratingsStats);
+		}
 
 		return ratingsStats;
 	}

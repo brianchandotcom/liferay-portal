@@ -296,7 +296,9 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 						expandoColumn.getPrimaryKeyObj());
 			}
 
-			session.delete(expandoColumn);
+			if (expandoColumn != null) {
+				session.delete(expandoColumn);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -305,7 +307,9 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 			closeSession(session);
 		}
 
-		clearCache(expandoColumn);
+		if (expandoColumn != null) {
+			clearCache(expandoColumn);
+		}
 
 		return expandoColumn;
 	}

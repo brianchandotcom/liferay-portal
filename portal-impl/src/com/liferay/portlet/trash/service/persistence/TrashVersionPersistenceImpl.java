@@ -282,7 +282,9 @@ public class TrashVersionPersistenceImpl extends BasePersistenceImpl<TrashVersio
 						trashVersion.getPrimaryKeyObj());
 			}
 
-			session.delete(trashVersion);
+			if (trashVersion != null) {
+				session.delete(trashVersion);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -291,7 +293,9 @@ public class TrashVersionPersistenceImpl extends BasePersistenceImpl<TrashVersio
 			closeSession(session);
 		}
 
-		clearCache(trashVersion);
+		if (trashVersion != null) {
+			clearCache(trashVersion);
+		}
 
 		return trashVersion;
 	}

@@ -348,7 +348,9 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 						assetCategoryProperty.getPrimaryKeyObj());
 			}
 
-			session.delete(assetCategoryProperty);
+			if (assetCategoryProperty != null) {
+				session.delete(assetCategoryProperty);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -357,7 +359,9 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 			closeSession(session);
 		}
 
-		clearCache(assetCategoryProperty);
+		if (assetCategoryProperty != null) {
+			clearCache(assetCategoryProperty);
+		}
 
 		return assetCategoryProperty;
 	}

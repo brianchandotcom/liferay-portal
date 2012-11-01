@@ -262,7 +262,9 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 						release.getPrimaryKeyObj());
 			}
 
-			session.delete(release);
+			if (release != null) {
+				session.delete(release);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -271,7 +273,9 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 			closeSession(session);
 		}
 
-		clearCache(release);
+		if (release != null) {
+			clearCache(release);
+		}
 
 		return release;
 	}

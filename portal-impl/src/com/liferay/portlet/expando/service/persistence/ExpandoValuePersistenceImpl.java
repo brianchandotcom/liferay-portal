@@ -461,7 +461,9 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 						expandoValue.getPrimaryKeyObj());
 			}
 
-			session.delete(expandoValue);
+			if (expandoValue != null) {
+				session.delete(expandoValue);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -470,7 +472,9 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 			closeSession(session);
 		}
 
-		clearCache(expandoValue);
+		if (expandoValue != null) {
+			clearCache(expandoValue);
+		}
 
 		return expandoValue;
 	}

@@ -431,7 +431,9 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 						ddmStructure.getPrimaryKeyObj());
 			}
 
-			session.delete(ddmStructure);
+			if (ddmStructure != null) {
+				session.delete(ddmStructure);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -440,7 +442,9 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 			closeSession(session);
 		}
 
-		clearCache(ddmStructure);
+		if (ddmStructure != null) {
+			clearCache(ddmStructure);
+		}
 
 		return ddmStructure;
 	}

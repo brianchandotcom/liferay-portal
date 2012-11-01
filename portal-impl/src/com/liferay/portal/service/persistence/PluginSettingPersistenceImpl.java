@@ -308,7 +308,9 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 						pluginSetting.getPrimaryKeyObj());
 			}
 
-			session.delete(pluginSetting);
+			if (pluginSetting != null) {
+				session.delete(pluginSetting);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -317,7 +319,9 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 			closeSession(session);
 		}
 
-		clearCache(pluginSetting);
+		if (pluginSetting != null) {
+			clearCache(pluginSetting);
+		}
 
 		return pluginSetting;
 	}

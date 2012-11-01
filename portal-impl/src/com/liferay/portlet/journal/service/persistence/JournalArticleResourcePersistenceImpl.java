@@ -354,7 +354,9 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 						journalArticleResource.getPrimaryKeyObj());
 			}
 
-			session.delete(journalArticleResource);
+			if (journalArticleResource != null) {
+				session.delete(journalArticleResource);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -363,7 +365,9 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 			closeSession(session);
 		}
 
-		clearCache(journalArticleResource);
+		if (journalArticleResource != null) {
+			clearCache(journalArticleResource);
+		}
 
 		return journalArticleResource;
 	}

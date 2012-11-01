@@ -376,7 +376,9 @@ public class DDLRecordPersistenceImpl extends BasePersistenceImpl<DDLRecord>
 						ddlRecord.getPrimaryKeyObj());
 			}
 
-			session.delete(ddlRecord);
+			if (ddlRecord != null) {
+				session.delete(ddlRecord);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -385,7 +387,9 @@ public class DDLRecordPersistenceImpl extends BasePersistenceImpl<DDLRecord>
 			closeSession(session);
 		}
 
-		clearCache(ddlRecord);
+		if (ddlRecord != null) {
+			clearCache(ddlRecord);
+		}
 
 		return ddlRecord;
 	}

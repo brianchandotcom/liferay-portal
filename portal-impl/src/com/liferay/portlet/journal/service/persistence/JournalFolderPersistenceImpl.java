@@ -445,7 +445,9 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 						journalFolder.getPrimaryKeyObj());
 			}
 
-			session.delete(journalFolder);
+			if (journalFolder != null) {
+				session.delete(journalFolder);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -454,7 +456,9 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 			closeSession(session);
 		}
 
-		clearCache(journalFolder);
+		if (journalFolder != null) {
+			clearCache(journalFolder);
+		}
 
 		return journalFolder;
 	}

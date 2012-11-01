@@ -533,7 +533,9 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 						socialRequest.getPrimaryKeyObj());
 			}
 
-			session.delete(socialRequest);
+			if (socialRequest != null) {
+				session.delete(socialRequest);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -542,7 +544,9 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 			closeSession(session);
 		}
 
-		clearCache(socialRequest);
+		if (socialRequest != null) {
+			clearCache(socialRequest);
+		}
 
 		return socialRequest;
 	}

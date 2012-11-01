@@ -575,7 +575,9 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 						dlFileEntry.getPrimaryKeyObj());
 			}
 
-			session.delete(dlFileEntry);
+			if (dlFileEntry != null) {
+				session.delete(dlFileEntry);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -584,7 +586,9 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 			closeSession(session);
 		}
 
-		clearCache(dlFileEntry);
+		if (dlFileEntry != null) {
+			clearCache(dlFileEntry);
+		}
 
 		return dlFileEntry;
 	}

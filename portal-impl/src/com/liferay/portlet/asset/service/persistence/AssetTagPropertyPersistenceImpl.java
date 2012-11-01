@@ -342,7 +342,9 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 						assetTagProperty.getPrimaryKeyObj());
 			}
 
-			session.delete(assetTagProperty);
+			if (assetTagProperty != null) {
+				session.delete(assetTagProperty);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -351,7 +353,9 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 			closeSession(session);
 		}
 
-		clearCache(assetTagProperty);
+		if (assetTagProperty != null) {
+			clearCache(assetTagProperty);
+		}
 
 		return assetTagProperty;
 	}

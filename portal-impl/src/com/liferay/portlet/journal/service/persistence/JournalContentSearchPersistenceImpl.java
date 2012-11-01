@@ -479,7 +479,9 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 						journalContentSearch.getPrimaryKeyObj());
 			}
 
-			session.delete(journalContentSearch);
+			if (journalContentSearch != null) {
+				session.delete(journalContentSearch);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -488,7 +490,9 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 			closeSession(session);
 		}
 
-		clearCache(journalContentSearch);
+		if (journalContentSearch != null) {
+			clearCache(journalContentSearch);
+		}
 
 		return journalContentSearch;
 	}

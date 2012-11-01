@@ -370,7 +370,9 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 						blogsStatsUser.getPrimaryKeyObj());
 			}
 
-			session.delete(blogsStatsUser);
+			if (blogsStatsUser != null) {
+				session.delete(blogsStatsUser);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -379,7 +381,9 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 			closeSession(session);
 		}
 
-		clearCache(blogsStatsUser);
+		if (blogsStatsUser != null) {
+			clearCache(blogsStatsUser);
+		}
 
 		return blogsStatsUser;
 	}

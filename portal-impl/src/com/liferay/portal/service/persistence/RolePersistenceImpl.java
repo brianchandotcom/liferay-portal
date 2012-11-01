@@ -395,7 +395,9 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 				role = (Role)session.get(RoleImpl.class, role.getPrimaryKeyObj());
 			}
 
-			session.delete(role);
+			if (role != null) {
+				session.delete(role);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -404,7 +406,9 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 			closeSession(session);
 		}
 
-		clearCache(role);
+		if (role != null) {
+			clearCache(role);
+		}
 
 		return role;
 	}

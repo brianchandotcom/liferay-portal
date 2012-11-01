@@ -327,7 +327,9 @@ public class PasswordPolicyRelPersistenceImpl extends BasePersistenceImpl<Passwo
 						passwordPolicyRel.getPrimaryKeyObj());
 			}
 
-			session.delete(passwordPolicyRel);
+			if (passwordPolicyRel != null) {
+				session.delete(passwordPolicyRel);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -336,7 +338,9 @@ public class PasswordPolicyRelPersistenceImpl extends BasePersistenceImpl<Passwo
 			closeSession(session);
 		}
 
-		clearCache(passwordPolicyRel);
+		if (passwordPolicyRel != null) {
+			clearCache(passwordPolicyRel);
+		}
 
 		return passwordPolicyRel;
 	}

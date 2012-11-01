@@ -501,7 +501,9 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 						socialRelation.getPrimaryKeyObj());
 			}
 
-			session.delete(socialRelation);
+			if (socialRelation != null) {
+				session.delete(socialRelation);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -510,7 +512,9 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 			closeSession(session);
 		}
 
-		clearCache(socialRelation);
+		if (socialRelation != null) {
+			clearCache(socialRelation);
+		}
 
 		return socialRelation;
 	}

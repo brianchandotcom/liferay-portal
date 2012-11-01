@@ -311,7 +311,9 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 						company.getPrimaryKeyObj());
 			}
 
-			session.delete(company);
+			if (company != null) {
+				session.delete(company);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -320,7 +322,9 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 			closeSession(session);
 		}
 
-		clearCache(company);
+		if (company != null) {
+			clearCache(company);
+		}
 
 		return company;
 	}

@@ -366,7 +366,9 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 						scProductEntry.getPrimaryKeyObj());
 			}
 
-			session.delete(scProductEntry);
+			if (scProductEntry != null) {
+				session.delete(scProductEntry);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -375,7 +377,9 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 			closeSession(session);
 		}
 
-		clearCache(scProductEntry);
+		if (scProductEntry != null) {
+			clearCache(scProductEntry);
+		}
 
 		return scProductEntry;
 	}

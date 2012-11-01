@@ -582,7 +582,9 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 						resourcePermission.getPrimaryKeyObj());
 			}
 
-			session.delete(resourcePermission);
+			if (resourcePermission != null) {
+				session.delete(resourcePermission);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -591,7 +593,9 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 			closeSession(session);
 		}
 
-		clearCache(resourcePermission);
+		if (resourcePermission != null) {
+			clearCache(resourcePermission);
+		}
 
 		return resourcePermission;
 	}

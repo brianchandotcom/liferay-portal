@@ -335,7 +335,9 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 						mdrAction.getPrimaryKeyObj());
 			}
 
-			session.delete(mdrAction);
+			if (mdrAction != null) {
+				session.delete(mdrAction);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -344,7 +346,9 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 			closeSession(session);
 		}
 
-		clearCache(mdrAction);
+		if (mdrAction != null) {
+			clearCache(mdrAction);
+		}
 
 		return mdrAction;
 	}

@@ -374,7 +374,9 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 						announcementsEntry.getPrimaryKeyObj());
 			}
 
-			session.delete(announcementsEntry);
+			if (announcementsEntry != null) {
+				session.delete(announcementsEntry);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -383,7 +385,9 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 			closeSession(session);
 		}
 
-		clearCache(announcementsEntry);
+		if (announcementsEntry != null) {
+			clearCache(announcementsEntry);
+		}
 
 		return announcementsEntry;
 	}

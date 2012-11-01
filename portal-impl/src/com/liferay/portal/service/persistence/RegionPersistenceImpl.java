@@ -329,7 +329,9 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 						region.getPrimaryKeyObj());
 			}
 
-			session.delete(region);
+			if (region != null) {
+				session.delete(region);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -338,7 +340,9 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 			closeSession(session);
 		}
 
-		clearCache(region);
+		if (region != null) {
+			clearCache(region);
+		}
 
 		return region;
 	}

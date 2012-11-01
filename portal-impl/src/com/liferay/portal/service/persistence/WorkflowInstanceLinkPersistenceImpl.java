@@ -278,7 +278,9 @@ public class WorkflowInstanceLinkPersistenceImpl extends BasePersistenceImpl<Wor
 						workflowInstanceLink.getPrimaryKeyObj());
 			}
 
-			session.delete(workflowInstanceLink);
+			if (workflowInstanceLink != null) {
+				session.delete(workflowInstanceLink);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -287,7 +289,9 @@ public class WorkflowInstanceLinkPersistenceImpl extends BasePersistenceImpl<Wor
 			closeSession(session);
 		}
 
-		clearCache(workflowInstanceLink);
+		if (workflowInstanceLink != null) {
+			clearCache(workflowInstanceLink);
+		}
 
 		return workflowInstanceLink;
 	}

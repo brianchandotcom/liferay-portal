@@ -372,7 +372,9 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 						dlFileEntryMetadata.getPrimaryKeyObj());
 			}
 
-			session.delete(dlFileEntryMetadata);
+			if (dlFileEntryMetadata != null) {
+				session.delete(dlFileEntryMetadata);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -381,7 +383,9 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 			closeSession(session);
 		}
 
-		clearCache(dlFileEntryMetadata);
+		if (dlFileEntryMetadata != null) {
+			clearCache(dlFileEntryMetadata);
+		}
 
 		return dlFileEntryMetadata;
 	}

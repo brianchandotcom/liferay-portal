@@ -341,7 +341,9 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 						resourceBlock.getPrimaryKeyObj());
 			}
 
-			session.delete(resourceBlock);
+			if (resourceBlock != null) {
+				session.delete(resourceBlock);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -350,7 +352,9 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 			closeSession(session);
 		}
 
-		clearCache(resourceBlock);
+		if (resourceBlock != null) {
+			clearCache(resourceBlock);
+		}
 
 		return resourceBlock;
 	}

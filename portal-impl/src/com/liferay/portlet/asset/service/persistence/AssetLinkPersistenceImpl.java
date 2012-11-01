@@ -374,7 +374,9 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 						assetLink.getPrimaryKeyObj());
 			}
 
-			session.delete(assetLink);
+			if (assetLink != null) {
+				session.delete(assetLink);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -383,7 +385,9 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 			closeSession(session);
 		}
 
-		clearCache(assetLink);
+		if (assetLink != null) {
+			clearCache(assetLink);
+		}
 
 		return assetLink;
 	}

@@ -364,7 +364,9 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 						organization.getPrimaryKeyObj());
 			}
 
-			session.delete(organization);
+			if (organization != null) {
+				session.delete(organization);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -373,7 +375,9 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 			closeSession(session);
 		}
 
-		clearCache(organization);
+		if (organization != null) {
+			clearCache(organization);
+		}
 
 		return organization;
 	}

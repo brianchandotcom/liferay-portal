@@ -877,7 +877,9 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 						mbMessage.getPrimaryKeyObj());
 			}
 
-			session.delete(mbMessage);
+			if (mbMessage != null) {
+				session.delete(mbMessage);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -886,7 +888,9 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 			closeSession(session);
 		}
 
-		clearCache(mbMessage);
+		if (mbMessage != null) {
+			clearCache(mbMessage);
+		}
 
 		return mbMessage;
 	}

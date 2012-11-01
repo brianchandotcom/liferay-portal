@@ -388,7 +388,9 @@ public class SocialActivitySettingPersistenceImpl extends BasePersistenceImpl<So
 						socialActivitySetting.getPrimaryKeyObj());
 			}
 
-			session.delete(socialActivitySetting);
+			if (socialActivitySetting != null) {
+				session.delete(socialActivitySetting);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -397,7 +399,9 @@ public class SocialActivitySettingPersistenceImpl extends BasePersistenceImpl<So
 			closeSession(session);
 		}
 
-		clearCache(socialActivitySetting);
+		if (socialActivitySetting != null) {
+			clearCache(socialActivitySetting);
+		}
 
 		return socialActivitySetting;
 	}

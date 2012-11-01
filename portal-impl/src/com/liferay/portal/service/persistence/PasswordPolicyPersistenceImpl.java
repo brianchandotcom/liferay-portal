@@ -298,7 +298,9 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 						passwordPolicy.getPrimaryKeyObj());
 			}
 
-			session.delete(passwordPolicy);
+			if (passwordPolicy != null) {
+				session.delete(passwordPolicy);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -307,7 +309,9 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 			closeSession(session);
 		}
 
-		clearCache(passwordPolicy);
+		if (passwordPolicy != null) {
+			clearCache(passwordPolicy);
+		}
 
 		return passwordPolicy;
 	}

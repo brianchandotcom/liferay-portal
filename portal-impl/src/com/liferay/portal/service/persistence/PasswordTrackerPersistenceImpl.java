@@ -267,7 +267,9 @@ public class PasswordTrackerPersistenceImpl extends BasePersistenceImpl<Password
 						passwordTracker.getPrimaryKeyObj());
 			}
 
-			session.delete(passwordTracker);
+			if (passwordTracker != null) {
+				session.delete(passwordTracker);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -276,7 +278,9 @@ public class PasswordTrackerPersistenceImpl extends BasePersistenceImpl<Password
 			closeSession(session);
 		}
 
-		clearCache(passwordTracker);
+		if (passwordTracker != null) {
+			clearCache(passwordTracker);
+		}
 
 		return passwordTracker;
 	}

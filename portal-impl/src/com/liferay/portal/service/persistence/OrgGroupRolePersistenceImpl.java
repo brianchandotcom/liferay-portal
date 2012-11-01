@@ -280,7 +280,9 @@ public class OrgGroupRolePersistenceImpl extends BasePersistenceImpl<OrgGroupRol
 						orgGroupRole.getPrimaryKeyObj());
 			}
 
-			session.delete(orgGroupRole);
+			if (orgGroupRole != null) {
+				session.delete(orgGroupRole);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -289,7 +291,9 @@ public class OrgGroupRolePersistenceImpl extends BasePersistenceImpl<OrgGroupRol
 			closeSession(session);
 		}
 
-		clearCache(orgGroupRole);
+		if (orgGroupRole != null) {
+			clearCache(orgGroupRole);
+		}
 
 		return orgGroupRole;
 	}

@@ -307,7 +307,9 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 						announcementsFlag.getPrimaryKeyObj());
 			}
 
-			session.delete(announcementsFlag);
+			if (announcementsFlag != null) {
+				session.delete(announcementsFlag);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -316,7 +318,9 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 			closeSession(session);
 		}
 
-		clearCache(announcementsFlag);
+		if (announcementsFlag != null) {
+			clearCache(announcementsFlag);
+		}
 
 		return announcementsFlag;
 	}

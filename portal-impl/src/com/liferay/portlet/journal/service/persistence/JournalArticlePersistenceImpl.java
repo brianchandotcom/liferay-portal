@@ -1012,7 +1012,9 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 						journalArticle.getPrimaryKeyObj());
 			}
 
-			session.delete(journalArticle);
+			if (journalArticle != null) {
+				session.delete(journalArticle);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -1021,7 +1023,9 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			closeSession(session);
 		}
 
-		clearCache(journalArticle);
+		if (journalArticle != null) {
+			clearCache(journalArticle);
+		}
 
 		return journalArticle;
 	}

@@ -338,7 +338,9 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 						userNotificationEvent.getPrimaryKeyObj());
 			}
 
-			session.delete(userNotificationEvent);
+			if (userNotificationEvent != null) {
+				session.delete(userNotificationEvent);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -347,7 +349,9 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 			closeSession(session);
 		}
 
-		clearCache(userNotificationEvent);
+		if (userNotificationEvent != null) {
+			clearCache(userNotificationEvent);
+		}
 
 		return userNotificationEvent;
 	}

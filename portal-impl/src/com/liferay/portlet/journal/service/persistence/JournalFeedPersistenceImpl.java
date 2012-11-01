@@ -360,7 +360,9 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 						journalFeed.getPrimaryKeyObj());
 			}
 
-			session.delete(journalFeed);
+			if (journalFeed != null) {
+				session.delete(journalFeed);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -369,7 +371,9 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 			closeSession(session);
 		}
 
-		clearCache(journalFeed);
+		if (journalFeed != null) {
+			clearCache(journalFeed);
+		}
 
 		return journalFeed;
 	}

@@ -240,7 +240,9 @@ public class ClusterGroupPersistenceImpl extends BasePersistenceImpl<ClusterGrou
 						clusterGroup.getPrimaryKeyObj());
 			}
 
-			session.delete(clusterGroup);
+			if (clusterGroup != null) {
+				session.delete(clusterGroup);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -249,7 +251,9 @@ public class ClusterGroupPersistenceImpl extends BasePersistenceImpl<ClusterGrou
 			closeSession(session);
 		}
 
-		clearCache(clusterGroup);
+		if (clusterGroup != null) {
+			clearCache(clusterGroup);
+		}
 
 		return clusterGroup;
 	}

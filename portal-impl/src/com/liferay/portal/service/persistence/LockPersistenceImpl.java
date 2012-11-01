@@ -344,7 +344,9 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 				lock = (Lock)session.get(LockImpl.class, lock.getPrimaryKeyObj());
 			}
 
-			session.delete(lock);
+			if (lock != null) {
+				session.delete(lock);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -353,7 +355,9 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 			closeSession(session);
 		}
 
-		clearCache(lock);
+		if (lock != null) {
+			clearCache(lock);
+		}
 
 		return lock;
 	}

@@ -283,7 +283,9 @@ public class ShardPersistenceImpl extends BasePersistenceImpl<Shard>
 						shard.getPrimaryKeyObj());
 			}
 
-			session.delete(shard);
+			if (shard != null) {
+				session.delete(shard);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -292,7 +294,9 @@ public class ShardPersistenceImpl extends BasePersistenceImpl<Shard>
 			closeSession(session);
 		}
 
-		clearCache(shard);
+		if (shard != null) {
+			clearCache(shard);
+		}
 
 		return shard;
 	}

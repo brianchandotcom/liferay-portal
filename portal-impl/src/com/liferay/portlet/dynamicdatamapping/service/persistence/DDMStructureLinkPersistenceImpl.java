@@ -314,7 +314,9 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 						ddmStructureLink.getPrimaryKeyObj());
 			}
 
-			session.delete(ddmStructureLink);
+			if (ddmStructureLink != null) {
+				session.delete(ddmStructureLink);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -323,7 +325,9 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 			closeSession(session);
 		}
 
-		clearCache(ddmStructureLink);
+		if (ddmStructureLink != null) {
+			clearCache(ddmStructureLink);
+		}
 
 		return ddmStructureLink;
 	}

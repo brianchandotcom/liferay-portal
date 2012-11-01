@@ -347,7 +347,9 @@ public class RepositoryEntryPersistenceImpl extends BasePersistenceImpl<Reposito
 						repositoryEntry.getPrimaryKeyObj());
 			}
 
-			session.delete(repositoryEntry);
+			if (repositoryEntry != null) {
+				session.delete(repositoryEntry);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -356,7 +358,9 @@ public class RepositoryEntryPersistenceImpl extends BasePersistenceImpl<Reposito
 			closeSession(session);
 		}
 
-		clearCache(repositoryEntry);
+		if (repositoryEntry != null) {
+			clearCache(repositoryEntry);
+		}
 
 		return repositoryEntry;
 	}

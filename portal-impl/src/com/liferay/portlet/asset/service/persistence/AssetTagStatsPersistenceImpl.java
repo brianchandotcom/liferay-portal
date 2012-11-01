@@ -315,7 +315,9 @@ public class AssetTagStatsPersistenceImpl extends BasePersistenceImpl<AssetTagSt
 						assetTagStats.getPrimaryKeyObj());
 			}
 
-			session.delete(assetTagStats);
+			if (assetTagStats != null) {
+				session.delete(assetTagStats);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -324,7 +326,9 @@ public class AssetTagStatsPersistenceImpl extends BasePersistenceImpl<AssetTagSt
 			closeSession(session);
 		}
 
-		clearCache(assetTagStats);
+		if (assetTagStats != null) {
+			clearCache(assetTagStats);
+		}
 
 		return assetTagStats;
 	}

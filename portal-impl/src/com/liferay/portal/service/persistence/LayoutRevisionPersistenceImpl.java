@@ -503,7 +503,9 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 						layoutRevision.getPrimaryKeyObj());
 			}
 
-			session.delete(layoutRevision);
+			if (layoutRevision != null) {
+				session.delete(layoutRevision);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -512,7 +514,9 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 			closeSession(session);
 		}
 
-		clearCache(layoutRevision);
+		if (layoutRevision != null) {
+			clearCache(layoutRevision);
+		}
 
 		return layoutRevision;
 	}

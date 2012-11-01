@@ -412,7 +412,9 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 						portletPreferences.getPrimaryKeyObj());
 			}
 
-			session.delete(portletPreferences);
+			if (portletPreferences != null) {
+				session.delete(portletPreferences);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -421,7 +423,9 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 			closeSession(session);
 		}
 
-		clearCache(portletPreferences);
+		if (portletPreferences != null) {
+			clearCache(portletPreferences);
+		}
 
 		return portletPreferences;
 	}

@@ -574,7 +574,9 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 						dlFolder.getPrimaryKeyObj());
 			}
 
-			session.delete(dlFolder);
+			if (dlFolder != null) {
+				session.delete(dlFolder);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -583,7 +585,9 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 			closeSession(session);
 		}
 
-		clearCache(dlFolder);
+		if (dlFolder != null) {
+			clearCache(dlFolder);
+		}
 
 		return dlFolder;
 	}

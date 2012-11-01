@@ -254,7 +254,9 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 						image.getPrimaryKeyObj());
 			}
 
-			session.delete(image);
+			if (image != null) {
+				session.delete(image);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -263,7 +265,9 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 			closeSession(session);
 		}
 
-		clearCache(image);
+		if (image != null) {
+			clearCache(image);
+		}
 
 		return image;
 	}

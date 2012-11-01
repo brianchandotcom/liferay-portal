@@ -267,7 +267,9 @@ public class BrowserTrackerPersistenceImpl extends BasePersistenceImpl<BrowserTr
 						browserTracker.getPrimaryKeyObj());
 			}
 
-			session.delete(browserTracker);
+			if (browserTracker != null) {
+				session.delete(browserTracker);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -276,7 +278,9 @@ public class BrowserTrackerPersistenceImpl extends BasePersistenceImpl<BrowserTr
 			closeSession(session);
 		}
 
-		clearCache(browserTracker);
+		if (browserTracker != null) {
+			clearCache(browserTracker);
+		}
 
 		return browserTracker;
 	}

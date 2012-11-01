@@ -304,7 +304,9 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 						announcementsDelivery.getPrimaryKeyObj());
 			}
 
-			session.delete(announcementsDelivery);
+			if (announcementsDelivery != null) {
+				session.delete(announcementsDelivery);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -313,7 +315,9 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 			closeSession(session);
 		}
 
-		clearCache(announcementsDelivery);
+		if (announcementsDelivery != null) {
+			clearCache(announcementsDelivery);
+		}
 
 		return announcementsDelivery;
 	}

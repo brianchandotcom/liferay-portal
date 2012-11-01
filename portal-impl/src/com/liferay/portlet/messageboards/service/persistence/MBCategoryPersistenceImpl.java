@@ -383,7 +383,9 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 						mbCategory.getPrimaryKeyObj());
 			}
 
-			session.delete(mbCategory);
+			if (mbCategory != null) {
+				session.delete(mbCategory);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -392,7 +394,9 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 			closeSession(session);
 		}
 
-		clearCache(mbCategory);
+		if (mbCategory != null) {
+			clearCache(mbCategory);
+		}
 
 		return mbCategory;
 	}

@@ -303,7 +303,9 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 						resourceBlockPermission.getPrimaryKeyObj());
 			}
 
-			session.delete(resourceBlockPermission);
+			if (resourceBlockPermission != null) {
+				session.delete(resourceBlockPermission);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -312,7 +314,9 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 			closeSession(session);
 		}
 
-		clearCache(resourceBlockPermission);
+		if (resourceBlockPermission != null) {
+			clearCache(resourceBlockPermission);
+		}
 
 		return resourceBlockPermission;
 	}

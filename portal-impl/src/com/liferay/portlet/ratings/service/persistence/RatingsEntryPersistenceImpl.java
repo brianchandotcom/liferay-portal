@@ -329,7 +329,9 @@ public class RatingsEntryPersistenceImpl extends BasePersistenceImpl<RatingsEntr
 						ratingsEntry.getPrimaryKeyObj());
 			}
 
-			session.delete(ratingsEntry);
+			if (ratingsEntry != null) {
+				session.delete(ratingsEntry);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -338,7 +340,9 @@ public class RatingsEntryPersistenceImpl extends BasePersistenceImpl<RatingsEntr
 			closeSession(session);
 		}
 
-		clearCache(ratingsEntry);
+		if (ratingsEntry != null) {
+			clearCache(ratingsEntry);
+		}
 
 		return ratingsEntry;
 	}

@@ -291,7 +291,9 @@ public class ExpandoRowPersistenceImpl extends BasePersistenceImpl<ExpandoRow>
 						expandoRow.getPrimaryKeyObj());
 			}
 
-			session.delete(expandoRow);
+			if (expandoRow != null) {
+				session.delete(expandoRow);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -300,7 +302,9 @@ public class ExpandoRowPersistenceImpl extends BasePersistenceImpl<ExpandoRow>
 			closeSession(session);
 		}
 
-		clearCache(expandoRow);
+		if (expandoRow != null) {
+			clearCache(expandoRow);
+		}
 
 		return expandoRow;
 	}

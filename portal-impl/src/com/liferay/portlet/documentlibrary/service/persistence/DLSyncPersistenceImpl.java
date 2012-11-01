@@ -282,7 +282,9 @@ public class DLSyncPersistenceImpl extends BasePersistenceImpl<DLSync>
 						dlSync.getPrimaryKeyObj());
 			}
 
-			session.delete(dlSync);
+			if (dlSync != null) {
+				session.delete(dlSync);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -291,7 +293,9 @@ public class DLSyncPersistenceImpl extends BasePersistenceImpl<DLSync>
 			closeSession(session);
 		}
 
-		clearCache(dlSync);
+		if (dlSync != null) {
+			clearCache(dlSync);
+		}
 
 		return dlSync;
 	}

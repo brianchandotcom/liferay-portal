@@ -395,7 +395,9 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 						assetVocabulary.getPrimaryKeyObj());
 			}
 
-			session.delete(assetVocabulary);
+			if (assetVocabulary != null) {
+				session.delete(assetVocabulary);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -404,7 +406,9 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 			closeSession(session);
 		}
 
-		clearCache(assetVocabulary);
+		if (assetVocabulary != null) {
+			clearCache(assetVocabulary);
+		}
 
 		return assetVocabulary;
 	}

@@ -301,7 +301,9 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 						scLicense.getPrimaryKeyObj());
 			}
 
-			session.delete(scLicense);
+			if (scLicense != null) {
+				session.delete(scLicense);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -310,7 +312,9 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 			closeSession(session);
 		}
 
-		clearCache(scLicense);
+		if (scLicense != null) {
+			clearCache(scLicense);
+		}
 
 		return scLicense;
 	}

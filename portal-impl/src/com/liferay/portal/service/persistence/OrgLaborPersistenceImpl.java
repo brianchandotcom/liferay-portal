@@ -261,7 +261,9 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 						orgLabor.getPrimaryKeyObj());
 			}
 
-			session.delete(orgLabor);
+			if (orgLabor != null) {
+				session.delete(orgLabor);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -270,7 +272,9 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 			closeSession(session);
 		}
 
-		clearCache(orgLabor);
+		if (orgLabor != null) {
+			clearCache(orgLabor);
+		}
 
 		return orgLabor;
 	}

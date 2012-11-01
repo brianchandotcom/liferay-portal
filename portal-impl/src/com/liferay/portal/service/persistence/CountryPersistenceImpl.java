@@ -311,7 +311,9 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 						country.getPrimaryKeyObj());
 			}
 
-			session.delete(country);
+			if (country != null) {
+				session.delete(country);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -320,7 +322,9 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 			closeSession(session);
 		}
 
-		clearCache(country);
+		if (country != null) {
+			clearCache(country);
+		}
 
 		return country;
 	}

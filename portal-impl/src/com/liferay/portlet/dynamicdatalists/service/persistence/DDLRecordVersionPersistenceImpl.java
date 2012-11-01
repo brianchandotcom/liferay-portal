@@ -321,7 +321,9 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 						ddlRecordVersion.getPrimaryKeyObj());
 			}
 
-			session.delete(ddlRecordVersion);
+			if (ddlRecordVersion != null) {
+				session.delete(ddlRecordVersion);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -330,7 +332,9 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 			closeSession(session);
 		}
 
-		clearCache(ddlRecordVersion);
+		if (ddlRecordVersion != null) {
+			clearCache(ddlRecordVersion);
+		}
 
 		return ddlRecordVersion;
 	}

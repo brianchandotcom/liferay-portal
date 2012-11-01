@@ -317,7 +317,9 @@ public class DDMStorageLinkPersistenceImpl extends BasePersistenceImpl<DDMStorag
 						ddmStorageLink.getPrimaryKeyObj());
 			}
 
-			session.delete(ddmStorageLink);
+			if (ddmStorageLink != null) {
+				session.delete(ddmStorageLink);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -326,7 +328,9 @@ public class DDMStorageLinkPersistenceImpl extends BasePersistenceImpl<DDMStorag
 			closeSession(session);
 		}
 
-		clearCache(ddmStorageLink);
+		if (ddmStorageLink != null) {
+			clearCache(ddmStorageLink);
+		}
 
 		return ddmStorageLink;
 	}

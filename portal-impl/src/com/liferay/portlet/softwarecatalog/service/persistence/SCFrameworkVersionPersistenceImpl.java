@@ -331,7 +331,9 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 						scFrameworkVersion.getPrimaryKeyObj());
 			}
 
-			session.delete(scFrameworkVersion);
+			if (scFrameworkVersion != null) {
+				session.delete(scFrameworkVersion);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -340,7 +342,9 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 			closeSession(session);
 		}
 
-		clearCache(scFrameworkVersion);
+		if (scFrameworkVersion != null) {
+			clearCache(scFrameworkVersion);
+		}
 
 		return scFrameworkVersion;
 	}

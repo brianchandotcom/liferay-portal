@@ -289,7 +289,9 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 						resourceAction.getPrimaryKeyObj());
 			}
 
-			session.delete(resourceAction);
+			if (resourceAction != null) {
+				session.delete(resourceAction);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -298,7 +300,9 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 			closeSession(session);
 		}
 
-		clearCache(resourceAction);
+		if (resourceAction != null) {
+			clearCache(resourceAction);
+		}
 
 		return resourceAction;
 	}

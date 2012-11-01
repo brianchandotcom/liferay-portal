@@ -350,7 +350,9 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 						phone.getPrimaryKeyObj());
 			}
 
-			session.delete(phone);
+			if (phone != null) {
+				session.delete(phone);
+			}
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -359,7 +361,9 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 			closeSession(session);
 		}
 
-		clearCache(phone);
+		if (phone != null) {
+			clearCache(phone);
+		}
 
 		return phone;
 	}

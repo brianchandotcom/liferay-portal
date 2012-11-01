@@ -93,9 +93,7 @@ public class UpgradePortletPreferences
 		updatePortletPreferencesOwner();
 		upgrade(UpgradeCommunityProperties.class);
 
-		runSQL(
-			"create index IX_D1F795F1 on PortalPreferences (ownerId, " +
-				"ownerType)");
+		addPermanentIndex(false, "PortalPreferences", "ownerId", "ownerType");
 	}
 
 	protected long getOwnerId(long plid) throws Exception {

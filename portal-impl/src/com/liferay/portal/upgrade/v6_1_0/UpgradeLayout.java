@@ -65,9 +65,8 @@ public class UpgradeLayout extends UpgradeProcess {
 	}
 
 	protected void updateJavaScript(
-			UnicodeProperties typeSettingsProperties, String javaScript1,
-			String javaScript2, String javaScript3)
-		throws Exception {
+		UnicodeProperties typeSettingsProperties, String javaScript1,
+		String javaScript2, String javaScript3) {
 
 		StringBundler sb = new StringBundler(6);
 

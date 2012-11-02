@@ -293,35 +293,37 @@ if (Validator.isNull(mainLanguageValue)) {
 
 		var languageSelectorTrigger = A.one('#<%= randomNamespace %>languageSelectorTrigger');
 
-		Liferay.component(
-			'<%= namespace + name %>languageSelector',
-			function(event) {
-				if (handle) {
-					handle.detach();
+		if (languageSelectorTrigger) {
+			Liferay.component(
+				'<%= namespace + name %>languageSelector',
+				function(event) {
+					if (handle) {
+						handle.detach();
 
-					handle = null;
-				}
-
-				autoFields.render();
-
-				A.all('#<%= randomNamespace %>languageSelector select').each(
-					function(item) {
-						if (item) {
-							item.on('change', updateLanguageFlag);
-						}
+						handle = null;
 					}
-				);
 
-				languageSelectorTrigger.setData('autoFieldsInstance', autoFields);
-				languageSelectorTrigger.setData('panelInstance', panel);
-			}
-		);
+					autoFields.render();
 
-		var handle = languageSelectorTrigger.once(
-			'click',
-			function(event) {
-				Liferay.component('<%= namespace + name %>languageSelector');
-			}
-		);
+					A.all('#<%= randomNamespace %>languageSelector select').each(
+						function(item) {
+							if (item) {
+								item.on('change', updateLanguageFlag);
+							}
+						}
+					);
+
+					languageSelectorTrigger.setData('autoFieldsInstance', autoFields);
+					languageSelectorTrigger.setData('panelInstance', panel);
+				}
+			);
+
+			var handle = languageSelectorTrigger.once(
+				'click',
+				function(event) {
+					Liferay.component('<%= namespace + name %>languageSelector');
+				}
+			);
+		}
 	</aui:script>
 </c:if>

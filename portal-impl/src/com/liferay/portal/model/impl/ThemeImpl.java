@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
-import com.liferay.portal.kernel.template.TemplateResource;
+import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.util.ContextPathUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -198,10 +198,10 @@ public class ThemeImpl extends PluginBaseImpl implements Theme {
 
 	public String getFreeMarkerTemplateLoader() {
 		if (_loadFromServletContext) {
-			return TemplateResource.SERVLET_SEPARATOR;
+			return TemplateConstants.SERVLET_SEPARATOR;
 		}
 		else {
-			return TemplateResource.THEME_LOADER_SEPARATOR;
+			return TemplateConstants.THEME_LOADER_SEPARATOR;
 		}
 	}
 
@@ -355,10 +355,10 @@ public class ThemeImpl extends PluginBaseImpl implements Theme {
 
 	public String getVelocityResourceListener() {
 		if (_loadFromServletContext) {
-			return TemplateResource.SERVLET_SEPARATOR;
+			return TemplateConstants.SERVLET_SEPARATOR;
 		}
 		else {
-			return TemplateResource.THEME_LOADER_SEPARATOR;
+			return TemplateConstants.THEME_LOADER_SEPARATOR;
 		}
 	}
 

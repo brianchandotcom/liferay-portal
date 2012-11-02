@@ -14,26 +14,31 @@
 
 package com.liferay.portal.kernel.template;
 
+import com.liferay.portal.kernel.util.StringPool;
+
 /**
  * @author Tina Tian
  */
-public interface TemplateManager {
+public interface TemplateConstants {
 
-	public void destroy();
+	public static final String DEFAUT_ENCODING = StringPool.UTF8;
 
-	public void destroy(ClassLoader classLoader);
+	public static final String JOURNAL_SEPARATOR = "_JOURNAL_CONTEXT_";
 
-	public String getName();
+	public static final String LANG_TYPE_CSS = "css";
 
-	public Template getTemplate(
-		TemplateResource templateResource,
-		TemplateContextType templateContextType);
+	public static final String LANG_TYPE_FTL = "ftl";
 
-	public Template getTemplate(
-		TemplateResource templateResource,
-		TemplateResource errorTemplateResource,
-		TemplateContextType templateContextType);
+	public static final String LANG_TYPE_VM = "vm";
 
-	public void init() throws TemplateException;
+	public static final String LANG_TYPE_XSL = "xsl";
+
+	public static final String SERVLET_SEPARATOR = "_SERVLET_CONTEXT_";
+
+	public static final String TEMPLATE_RESOURCE_UUID_PREFIX =
+		"TEMPLATE_RESOURCE_UUID";
+
+	public static final String THEME_LOADER_SEPARATOR =
+		"_THEME_LOADER_CONTEXT_";
 
 }

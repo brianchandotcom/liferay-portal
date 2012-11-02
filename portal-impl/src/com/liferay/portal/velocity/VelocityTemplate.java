@@ -15,8 +15,8 @@
 package com.liferay.portal.velocity;
 
 import com.liferay.portal.kernel.template.StringTemplateResource;
+import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateException;
-import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.template.AbstractTemplate;
 import com.liferay.portal.template.TemplateContextHelper;
@@ -43,7 +43,7 @@ public class VelocityTemplate extends AbstractTemplate {
 
 		super(
 			templateResource, errorTemplateResource, templateContextHelper,
-			TemplateManager.VELOCITY,
+			TemplateConstants.LANG_TYPE_VM,
 			PropsValues.VELOCITY_ENGINE_RESOURCE_MODIFICATION_CHECK_INTERVAL);
 
 		if (velocityContext == null) {
@@ -105,18 +105,18 @@ public class VelocityTemplate extends AbstractTemplate {
 		throws Exception {
 
 		TemplateResourceThreadLocal.setTemplateResource(
-			TemplateManager.VELOCITY, templateResource);
+			TemplateConstants.LANG_TYPE_VM, templateResource);
 
 		try {
 			Template template = _velocityEngine.getTemplate(
 				getTemplateResourceUUID(templateResource),
-				TemplateResource.DEFAUT_ENCODING);
+				TemplateConstants.DEFAUT_ENCODING);
 
 			template.merge(_velocityContext, writer);
 		}
 		finally {
 			TemplateResourceThreadLocal.setTemplateResource(
-				TemplateManager.VELOCITY, null);
+				TemplateConstants.LANG_TYPE_VM, null);
 		}
 	}
 

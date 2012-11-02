@@ -16,7 +16,7 @@ package com.liferay.portal.template;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.template.TemplateResource;
+import com.liferay.portal.kernel.template.TemplateConstants;
 
 import java.net.URL;
 
@@ -27,9 +27,9 @@ public class ClassLoaderResourceParser extends URLResourceParser {
 
 	@Override
 	public URL getURL(String templateId) {
-		if (templateId.contains(TemplateResource.JOURNAL_SEPARATOR) ||
-			templateId.contains(TemplateResource.SERVLET_SEPARATOR) ||
-			templateId.contains(TemplateResource.THEME_LOADER_SEPARATOR)) {
+		if (templateId.contains(TemplateConstants.JOURNAL_SEPARATOR) ||
+			templateId.contains(TemplateConstants.SERVLET_SEPARATOR) ||
+			templateId.contains(TemplateConstants.THEME_LOADER_SEPARATOR)) {
 
 			return null;
 		}

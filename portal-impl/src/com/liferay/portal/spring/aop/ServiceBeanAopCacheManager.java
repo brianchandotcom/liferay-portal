@@ -69,15 +69,6 @@ public class ServiceBeanAopCacheManager {
 		_annotations.put(methodInvocation, annotations);
 	}
 
-	public void afterPropertiesSet() {
-		ServiceBeanAopCacheManagerUtil.registerServiceBeanAopCacheManager(this);
-	}
-
-	public void destroy() {
-		ServiceBeanAopCacheManagerUtil.unregisterServiceBeanAopCacheManager(
-			this);
-	}
-
 	public MethodInterceptorsBag getMethodInterceptorsBag(
 		MethodInvocation methodInvocation) {
 

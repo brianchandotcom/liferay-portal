@@ -97,7 +97,7 @@ public class AspectJMockingNewJVMJUnitTestRunner extends NewJVMJUnitTestRunner {
 
 		String dumpDirName = System.getProperty("junit.aspectj.dump");
 
-		String className = methodKey.getClassName();
+		String className = methodKey.getDeclaringClass().getName();
 
 		File dumpDir = new File(
 			dumpDirName,

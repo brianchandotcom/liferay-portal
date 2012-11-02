@@ -1600,7 +1600,7 @@ public class LayoutImporter {
 	private static Log _log = LogFactoryUtil.getLog(LayoutImporter.class);
 
 	private static MethodHandler _loadThemesMethodHandler = new MethodHandler(
-		new MethodKey(ThemeLoaderFactory.class.getName(), "loadThemes"));
+		new MethodKey(ThemeLoaderFactory.class, "loadThemes"));
 
 	private PermissionImporter _permissionImporter = new PermissionImporter();
 	private PortletImporter _portletImporter = new PortletImporter();

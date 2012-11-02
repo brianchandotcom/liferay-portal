@@ -16,8 +16,9 @@ package com.liferay.portal.security.jaas.ext.jonas;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ClassResolverUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
-import com.liferay.portal.kernel.util.MethodCache;
+import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.security.jaas.ext.BasicLoginModule;
 
 import java.lang.reflect.Method;
@@ -55,8 +56,11 @@ public class PortalLoginModule extends BasicLoginModule {
 				Object role = InstanceFactory.newInstance(
 					_JROLE, String.class, "users");
 
-				Method method = MethodCache.get(
-					_JGROUP, "addMember", new Class[] {role.getClass()});
+				MethodKey methodKey = new MethodKey(
+					ClassResolverUtil.resolveByContextClassLoader(_JGROUP),
+					"addMember", role.getClass());
+
+				Method method = methodKey.getMethod();
 
 				method.invoke(group, new Object[] {role});
 

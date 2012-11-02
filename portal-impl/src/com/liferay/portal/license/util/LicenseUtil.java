@@ -718,8 +718,7 @@ public class LicenseUtil {
 
 	private static String _encryptedSymmetricKey;
 	private static MethodHandler _getServerInfoMethodHandler =
-		new MethodHandler(
-			new MethodKey(LicenseUtil.class.getName(), "getServerInfo"));
+		new MethodHandler(new MethodKey(LicenseUtil.class, "getServerInfo"));
 	private static String _hostName;
 	private static Set<String> _ipAddresses;
 	private static Set<String> _macAddresses;
@@ -728,8 +727,8 @@ public class LicenseUtil {
 	private static Pattern _macAddressPattern2 = Pattern.compile(
 		"\\s((\\p{XDigit}{1,2}(\\.)){5}(\\p{XDigit}{1,2}))(?:\\s|$)");
 	private static MethodKey _registerOrderMethodKey = new MethodKey(
-		LicenseUtil.class.getName(), "registerOrder", String.class,
-		String.class, int.class);
+		LicenseUtil.class, "registerOrder", String.class, String.class,
+		int.class);
 	private static byte[] _serverIdBytes;
 	private static Key _symmetricKey;
 

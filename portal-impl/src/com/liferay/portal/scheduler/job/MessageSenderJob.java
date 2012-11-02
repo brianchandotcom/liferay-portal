@@ -126,7 +126,7 @@ public class MessageSenderJob implements Job {
 	private static Log _log = LogFactoryUtil.getLog(MessageSenderJob.class);
 
 	private static MethodKey _deleteJobMethodKey = new MethodKey(
-		SchedulerEngineHelperUtil.class.getName(), "delete", String.class,
-		String.class, StorageType.class);
+		SchedulerEngineHelperUtil.class, "delete", String.class, String.class,
+		StorageType.class);
 
 }

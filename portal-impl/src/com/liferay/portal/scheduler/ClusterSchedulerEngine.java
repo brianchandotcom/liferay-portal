@@ -897,15 +897,13 @@ public class ClusterSchedulerEngine
 		ClusterSchedulerEngine.class);
 
 	private static MethodKey _getScheduledJobMethodKey = new MethodKey(
-		SchedulerEngine.class.getName(), "getScheduledJob", String.class,
-		String.class);
+		SchedulerEngine.class, "getScheduledJob", String.class, String.class);
 	private static MethodKey _getScheduledJobsMethodKey1 = new MethodKey(
-		SchedulerEngine.class.getName(), "getScheduledJobs");
+		SchedulerEngine.class, "getScheduledJobs");
 	private static MethodKey _getScheduledJobsMethodKey2 = new MethodKey(
-		SchedulerEngine.class.getName(), "getScheduledJobs", String.class);
+		SchedulerEngine.class, "getScheduledJobs", String.class);
 	private static MethodKey _getScheduledJobsMethodKey3 = new MethodKey(
-		SchedulerEngineHelperUtil.class.getName(), "getScheduledJobs",
-		StorageType.class);
+		SchedulerEngineHelperUtil.class, "getScheduledJobs", StorageType.class);
 
 	private String _beanIdentifier;
 	private ClusterEventListener _clusterEventListener;

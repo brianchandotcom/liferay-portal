@@ -16,10 +16,10 @@ package com.liferay.portal.kernel.test;
 
 import com.liferay.portal.kernel.process.ClassPathUtil;
 import com.liferay.portal.kernel.util.MethodCache;
-import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -146,9 +146,11 @@ public class NewClassLoaderJUnitTestRunner extends BlockJUnit4ClassRunner {
 		private void _invoke(MethodKey methodKey, Object object)
 			throws Exception {
 
-			MethodHandler methodHandler = new MethodHandler(methodKey);
+			methodKey = methodKey.transform(_newClassLoader);
 
-			methodHandler.invoke(object);
+			Method method = methodKey.getMethod();
+
+			method.invoke(object);
 		}
 
 		private List<MethodKey> _afterMethodKeys;

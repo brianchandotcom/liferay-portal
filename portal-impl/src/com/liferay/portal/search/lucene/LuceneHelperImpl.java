@@ -800,11 +800,9 @@ public class LuceneHelperImpl implements LuceneHelper {
 	private static Log _log = LogFactoryUtil.getLog(LuceneHelperImpl.class);
 
 	private static MethodKey _createTokenMethodKey =
-		new MethodKey(TransientTokenUtil.class.getName(), "createToken",
-		long.class);
+		new MethodKey(TransientTokenUtil.class, "createToken", long.class);
 	private static MethodKey _getLastGenerationMethodKey =
-		new MethodKey(LuceneHelperUtil.class.getName(), "getLastGeneration",
-		long.class);
+		new MethodKey(LuceneHelperUtil.class, "getLastGeneration", long.class);
 
 	private Analyzer _analyzer;
 	private Map<Long, IndexAccessor> _indexAccessors =

@@ -98,10 +98,9 @@ public class ClassLoaderProxy {
 					arg.getClass().getName(), true, _classLoader);
 
 				if (ClassUtil.isSubclass(argClass, PrimitiveWrapper.class)) {
-					MethodKey methodKey = new MethodKey(
-						argClass.getName(), "getValue");
+					MethodKey methodKey = new MethodKey(argClass, "getValue");
 
-					Method method = MethodCache.get(methodKey);
+					Method method = methodKey.getMethod();
 
 					args[i] = method.invoke(arg, (Object[])null);
 
@@ -219,8 +218,11 @@ public class ClassLoaderProxy {
 			return methodHandler.invoke(_obj);
 		}
 		catch (NoSuchMethodException nsme) {
-			String name = methodHandler.getMethodName();
-			Class<?>[] parameterTypes = methodHandler.getArgumentsClasses();
+			MethodKey methodKey = methodHandler.getMethodKey();
+
+			String name = methodKey.getMethodName();
+
+			Class<?>[] parameterTypes = methodKey.getParameterTypes();
 
 			Class<?> clazz = Class.forName(_className, true, _classLoader);
 

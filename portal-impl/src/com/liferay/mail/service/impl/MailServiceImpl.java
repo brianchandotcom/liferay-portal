@@ -292,27 +292,24 @@ public class MailServiceImpl implements MailService, IdentifiableBean {
 	private static Log _log = LogFactoryUtil.getLog(MailServiceImpl.class);
 
 	private static MethodKey _addForwardMethodKey = new MethodKey(
-		Hook.class.getName(), "addForward", long.class, long.class, List.class,
+		Hook.class, "addForward", long.class, long.class, List.class,
 		List.class, boolean.class);
 	private static MethodKey _addUserMethodKey = new MethodKey(
-		Hook.class.getName(), "addUser", long.class, long.class, String.class,
+		Hook.class, "addUser", long.class, long.class, String.class,
 		String.class, String.class, String.class, String.class);
 	private static MethodKey _addVacationMessageMethodKey = new MethodKey(
-		Hook.class.getName(), "addVacationMessage", long.class, long.class,
-		String.class, String.class);
+		Hook.class, "addVacationMessage", long.class, long.class, String.class,
+		String.class);
 	private static MethodKey _deleteEmailAddressMethodKey = new MethodKey(
-		Hook.class.getName(), "deleteEmailAddress", long.class, long.class);
+		Hook.class, "deleteEmailAddress", long.class, long.class);
 	private static MethodKey _deleteUserMethodKey = new MethodKey(
-		Hook.class.getName(), "deleteUser", long.class, long.class);
+		Hook.class, "deleteUser", long.class, long.class);
 	private static MethodKey _updateBlockedMethodKey = new MethodKey(
-		Hook.class.getName(), "updateBlocked", long.class, long.class,
-		List.class);
+		Hook.class, "updateBlocked", long.class, long.class, List.class);
 	private static MethodKey _updateEmailAddressMethodKey = new MethodKey(
-		Hook.class.getName(), "updateEmailAddress", long.class, long.class,
-		String.class);
+		Hook.class, "updateEmailAddress", long.class, long.class, String.class);
 	private static MethodKey _updatePasswordMethodKey = new MethodKey(
-		Hook.class.getName(), "updatePassword", long.class, long.class,
-		String.class);
+		Hook.class, "updatePassword", long.class, long.class, String.class);
 
 	private String _beanIdentifier;
 	private Session _session;

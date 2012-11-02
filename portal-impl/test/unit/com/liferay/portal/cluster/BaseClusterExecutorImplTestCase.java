@@ -298,13 +298,13 @@ public abstract class BaseClusterExecutorImplTestCase
 		"TestServletContextName";
 
 	protected static MethodKey testMethod1MethodKey = new MethodKey(
-		TestBean.class.getName(), "testMethod1", String.class);
+		TestBean.class, "testMethod1", String.class);
 	protected static MethodKey testMethod2MethodKey = new MethodKey(
-		TestBean.class.getName(), "testMethod2");
+		TestBean.class, "testMethod2");
 	protected static MethodKey testMethod3MethodKey = new MethodKey(
-		TestBean.class.getName(), "testMethod3", String.class);
+		TestBean.class, "testMethod3", String.class);
 	protected static MethodKey testMethod4MethodKey = new MethodKey(
-		TestBean.class.getName(), "testMethod4");
+		TestBean.class, "testMethod4");
 
 	protected class MockClusterEventListener implements ClusterEventListener {
 

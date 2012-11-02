@@ -56,40 +56,4 @@ public class PortalClassInvoker {
 		}
 	}
 
-	public static Object invoke(
-			boolean newInstance, String className, String methodName,
-			String[] parameterTypeNames, Object... arguments)
-		throws Exception {
-
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
-		try {
-			currentThread.setContextClassLoader(
-				PortalClassLoaderUtil.getClassLoader());
-
-			MethodKey methodKey = new MethodKey(
-				className, methodName, parameterTypeNames);
-
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, arguments);
-
-			return methodHandler.invoke(newInstance);
-		}
-		catch (InvocationTargetException ite) {
-			Throwable cause = ite.getCause();
-
-			if (cause instanceof Error) {
-				throw new SystemException(ite);
-			}
-			else {
-				throw (Exception)cause;
-			}
-		}
-		finally {
-			currentThread.setContextClassLoader(contextClassLoader);
-		}
-	}
-
 }

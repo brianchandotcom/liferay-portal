@@ -6287,8 +6287,7 @@ public class PortalImpl implements Portal {
 	private static Map<Long, String> _cdnHostHttpsMap =
 		new ConcurrentHashMap<Long, String>();
 	private static MethodHandler _resetCDNHostsMethodHandler =
-		new MethodHandler(
-			new MethodKey(PortalUtil.class.getName(), "resetCDNHosts"));
+		new MethodHandler(new MethodKey(PortalUtil.class, "resetCDNHosts"));
 	private static Date _upTime = new Date();
 
 	private String[] _allSystemGroups;

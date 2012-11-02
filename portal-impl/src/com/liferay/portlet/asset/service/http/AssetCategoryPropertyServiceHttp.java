@@ -60,7 +60,7 @@ public class AssetCategoryPropertyServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(AssetCategoryPropertyServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(AssetCategoryPropertyServiceUtil.class,
 					"addCategoryProperty", _addCategoryPropertyParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, entryId,
@@ -97,7 +97,7 @@ public class AssetCategoryPropertyServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(AssetCategoryPropertyServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(AssetCategoryPropertyServiceUtil.class,
 					"deleteCategoryProperty",
 					_deleteCategoryPropertyParameterTypes1);
 
@@ -130,7 +130,7 @@ public class AssetCategoryPropertyServiceHttp {
 		HttpPrincipal httpPrincipal, long entryId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(AssetCategoryPropertyServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(AssetCategoryPropertyServiceUtil.class,
 					"getCategoryProperties",
 					_getCategoryPropertiesParameterTypes2);
 
@@ -162,7 +162,7 @@ public class AssetCategoryPropertyServiceHttp {
 		HttpPrincipal httpPrincipal, long companyId, java.lang.String key)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(AssetCategoryPropertyServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(AssetCategoryPropertyServiceUtil.class,
 					"getCategoryPropertyValues",
 					_getCategoryPropertyValuesParameterTypes3);
 
@@ -197,7 +197,7 @@ public class AssetCategoryPropertyServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(AssetCategoryPropertyServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(AssetCategoryPropertyServiceUtil.class,
 					"updateCategoryProperty",
 					_updateCategoryPropertyParameterTypes4);
 

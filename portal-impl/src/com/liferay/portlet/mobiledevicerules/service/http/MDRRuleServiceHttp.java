@@ -63,7 +63,7 @@ public class MDRRuleServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(MDRRuleServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(MDRRuleServiceUtil.class,
 					"addRule", _addRuleParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -106,7 +106,7 @@ public class MDRRuleServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(MDRRuleServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(MDRRuleServiceUtil.class,
 					"addRule", _addRuleParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -143,7 +143,7 @@ public class MDRRuleServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(MDRRuleServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(MDRRuleServiceUtil.class,
 					"deleteRule", _deleteRuleParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, ruleId);
@@ -175,7 +175,7 @@ public class MDRRuleServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(MDRRuleServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(MDRRuleServiceUtil.class,
 					"fetchRule", _fetchRuleParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, ruleId);
@@ -211,7 +211,7 @@ public class MDRRuleServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(MDRRuleServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(MDRRuleServiceUtil.class,
 					"getRule", _getRuleParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, ruleId);
@@ -251,7 +251,7 @@ public class MDRRuleServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(MDRRuleServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(MDRRuleServiceUtil.class,
 					"updateRule", _updateRuleParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, ruleId,
@@ -293,7 +293,7 @@ public class MDRRuleServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(MDRRuleServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(MDRRuleServiceUtil.class,
 					"updateRule", _updateRuleParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, ruleId,

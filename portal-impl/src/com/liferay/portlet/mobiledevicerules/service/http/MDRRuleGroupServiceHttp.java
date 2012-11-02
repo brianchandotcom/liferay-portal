@@ -62,7 +62,7 @@ public class MDRRuleGroupServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(MDRRuleGroupServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(MDRRuleGroupServiceUtil.class,
 					"addRuleGroup", _addRuleGroupParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -100,7 +100,7 @@ public class MDRRuleGroupServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(MDRRuleGroupServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(MDRRuleGroupServiceUtil.class,
 					"copyRuleGroup", _copyRuleGroupParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -137,7 +137,7 @@ public class MDRRuleGroupServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(MDRRuleGroupServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(MDRRuleGroupServiceUtil.class,
 					"deleteRuleGroup", _deleteRuleGroupParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -170,7 +170,7 @@ public class MDRRuleGroupServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(MDRRuleGroupServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(MDRRuleGroupServiceUtil.class,
 					"fetchRuleGroup", _fetchRuleGroupParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -207,7 +207,7 @@ public class MDRRuleGroupServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(MDRRuleGroupServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(MDRRuleGroupServiceUtil.class,
 					"getRuleGroup", _getRuleGroupParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -247,7 +247,7 @@ public class MDRRuleGroupServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(MDRRuleGroupServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(MDRRuleGroupServiceUtil.class,
 					"updateRuleGroup", _updateRuleGroupParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,

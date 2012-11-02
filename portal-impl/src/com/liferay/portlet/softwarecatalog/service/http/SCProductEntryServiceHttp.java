@@ -66,7 +66,7 @@ public class SCProductEntryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(SCProductEntryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(SCProductEntryServiceUtil.class,
 					"addProductEntry", _addProductEntryParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, name,
@@ -105,7 +105,7 @@ public class SCProductEntryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(SCProductEntryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(SCProductEntryServiceUtil.class,
 					"deleteProductEntry", _deleteProductEntryParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -138,7 +138,7 @@ public class SCProductEntryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(SCProductEntryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(SCProductEntryServiceUtil.class,
 					"getProductEntry", _getProductEntryParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -181,7 +181,7 @@ public class SCProductEntryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(SCProductEntryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(SCProductEntryServiceUtil.class,
 					"updateProductEntry", _updateProductEntryParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,

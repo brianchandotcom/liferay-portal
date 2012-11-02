@@ -64,7 +64,7 @@ public class SCProductVersionServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(SCProductVersionServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(SCProductVersionServiceUtil.class,
 					"addProductVersion", _addProductVersionParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -103,7 +103,7 @@ public class SCProductVersionServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(SCProductVersionServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(SCProductVersionServiceUtil.class,
 					"deleteProductVersion", _deleteProductVersionParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -136,7 +136,7 @@ public class SCProductVersionServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(SCProductVersionServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(SCProductVersionServiceUtil.class,
 					"getProductVersion", _getProductVersionParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -173,7 +173,7 @@ public class SCProductVersionServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(SCProductVersionServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(SCProductVersionServiceUtil.class,
 					"getProductVersions", _getProductVersionsParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -210,7 +210,7 @@ public class SCProductVersionServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(SCProductVersionServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(SCProductVersionServiceUtil.class,
 					"getProductVersionsCount",
 					_getProductVersionsCountParameterTypes4);
 
@@ -252,7 +252,7 @@ public class SCProductVersionServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(SCProductVersionServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(SCProductVersionServiceUtil.class,
 					"updateProductVersion", _updateProductVersionParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,

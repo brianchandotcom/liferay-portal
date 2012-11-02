@@ -57,7 +57,7 @@ public class ContactServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(ContactServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(ContactServiceUtil.class,
 					"getContact", _getContactParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, contactId);
@@ -95,7 +95,7 @@ public class ContactServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(ContactServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(ContactServiceUtil.class,
 					"getContacts", _getContactsParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -132,7 +132,7 @@ public class ContactServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(ContactServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(ContactServiceUtil.class,
 					"getContactsCount", _getContactsCountParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,

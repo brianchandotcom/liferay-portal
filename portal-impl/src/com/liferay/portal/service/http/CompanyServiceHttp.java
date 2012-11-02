@@ -59,7 +59,7 @@ public class CompanyServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(CompanyServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(CompanyServiceUtil.class,
 					"addCompany", _addCompanyParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, webId,
@@ -95,7 +95,7 @@ public class CompanyServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(CompanyServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(CompanyServiceUtil.class,
 					"deleteLogo", _deleteLogoParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, companyId);
@@ -127,7 +127,7 @@ public class CompanyServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(CompanyServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(CompanyServiceUtil.class,
 					"getCompanyById", _getCompanyByIdParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, companyId);
@@ -163,7 +163,7 @@ public class CompanyServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(CompanyServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(CompanyServiceUtil.class,
 					"getCompanyByLogoId", _getCompanyByLogoIdParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, logoId);
@@ -199,7 +199,7 @@ public class CompanyServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(CompanyServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(CompanyServiceUtil.class,
 					"getCompanyByMx", _getCompanyByMxParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, mx);
@@ -235,7 +235,7 @@ public class CompanyServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(CompanyServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(CompanyServiceUtil.class,
 					"getCompanyByVirtualHost",
 					_getCompanyByVirtualHostParameterTypes5);
 
@@ -273,7 +273,7 @@ public class CompanyServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(CompanyServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(CompanyServiceUtil.class,
 					"getCompanyByWebId", _getCompanyByWebIdParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, webId);
@@ -309,7 +309,7 @@ public class CompanyServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(CompanyServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(CompanyServiceUtil.class,
 					"removePreferences", _removePreferencesParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -344,7 +344,7 @@ public class CompanyServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(CompanyServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(CompanyServiceUtil.class,
 					"updateCompany", _updateCompanyParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -387,7 +387,7 @@ public class CompanyServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(CompanyServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(CompanyServiceUtil.class,
 					"updateCompany", _updateCompanyParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -438,7 +438,7 @@ public class CompanyServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(CompanyServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(CompanyServiceUtil.class,
 					"updateCompany", _updateCompanyParameterTypes10);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -478,7 +478,7 @@ public class CompanyServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(CompanyServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(CompanyServiceUtil.class,
 					"updateDisplay", _updateDisplayParameterTypes11);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -511,7 +511,7 @@ public class CompanyServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(CompanyServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(CompanyServiceUtil.class,
 					"updateLogo", _updateLogoParameterTypes12);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -549,7 +549,7 @@ public class CompanyServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(CompanyServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(CompanyServiceUtil.class,
 					"updateLogo", _updateLogoParameterTypes13);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -587,7 +587,7 @@ public class CompanyServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(CompanyServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(CompanyServiceUtil.class,
 					"updatePreferences", _updatePreferencesParameterTypes14);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -622,7 +622,7 @@ public class CompanyServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(CompanyServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(CompanyServiceUtil.class,
 					"updateSecurity", _updateSecurityParameterTypes15);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,

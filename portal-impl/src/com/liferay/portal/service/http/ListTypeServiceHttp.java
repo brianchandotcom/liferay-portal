@@ -57,7 +57,7 @@ public class ListTypeServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(ListTypeServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(ListTypeServiceUtil.class,
 					"getListType", _getListTypeParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -93,7 +93,7 @@ public class ListTypeServiceHttp {
 		HttpPrincipal httpPrincipal, java.lang.String type)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(ListTypeServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(ListTypeServiceUtil.class,
 					"getListTypes", _getListTypesParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, type);
@@ -125,7 +125,7 @@ public class ListTypeServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(ListTypeServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(ListTypeServiceUtil.class,
 					"validate", _validateParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -158,7 +158,7 @@ public class ListTypeServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(ListTypeServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(ListTypeServiceUtil.class,
 					"validate", _validateParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,

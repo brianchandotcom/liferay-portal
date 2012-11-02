@@ -67,7 +67,7 @@ public class BlogsEntryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(BlogsEntryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(BlogsEntryServiceUtil.class,
 					"addEntry", _addEntryParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, title,
@@ -107,7 +107,7 @@ public class BlogsEntryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(BlogsEntryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(BlogsEntryServiceUtil.class,
 					"deleteEntry", _deleteEntryParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, entryId);
@@ -140,7 +140,7 @@ public class BlogsEntryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(BlogsEntryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(BlogsEntryServiceUtil.class,
 					"getCompanyEntries", _getCompanyEntriesParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -181,7 +181,7 @@ public class BlogsEntryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(BlogsEntryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(BlogsEntryServiceUtil.class,
 					"getCompanyEntriesRSS", _getCompanyEntriesRSSParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -219,7 +219,7 @@ public class BlogsEntryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(BlogsEntryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(BlogsEntryServiceUtil.class,
 					"getEntry", _getEntryParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, entryId);
@@ -255,7 +255,7 @@ public class BlogsEntryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(BlogsEntryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(BlogsEntryServiceUtil.class,
 					"getEntry", _getEntryParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -292,7 +292,7 @@ public class BlogsEntryServiceHttp {
 		int status, int max)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(BlogsEntryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(BlogsEntryServiceUtil.class,
 					"getGroupEntries", _getGroupEntriesParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -325,7 +325,7 @@ public class BlogsEntryServiceHttp {
 		int status, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(BlogsEntryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(BlogsEntryServiceUtil.class,
 					"getGroupEntries", _getGroupEntriesParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -357,7 +357,7 @@ public class BlogsEntryServiceHttp {
 		HttpPrincipal httpPrincipal, long groupId, int status, int max)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(BlogsEntryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(BlogsEntryServiceUtil.class,
 					"getGroupEntries", _getGroupEntriesParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -389,7 +389,7 @@ public class BlogsEntryServiceHttp {
 		HttpPrincipal httpPrincipal, long groupId, int status, int start,
 		int end) throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(BlogsEntryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(BlogsEntryServiceUtil.class,
 					"getGroupEntries", _getGroupEntriesParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -421,7 +421,7 @@ public class BlogsEntryServiceHttp {
 		long groupId, java.util.Date displayDate, int status)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(BlogsEntryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(BlogsEntryServiceUtil.class,
 					"getGroupEntriesCount",
 					_getGroupEntriesCountParameterTypes10);
 
@@ -454,7 +454,7 @@ public class BlogsEntryServiceHttp {
 		long groupId, int status)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(BlogsEntryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(BlogsEntryServiceUtil.class,
 					"getGroupEntriesCount",
 					_getGroupEntriesCountParameterTypes11);
 
@@ -492,7 +492,7 @@ public class BlogsEntryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(BlogsEntryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(BlogsEntryServiceUtil.class,
 					"getGroupEntriesRSS", _getGroupEntriesRSSParameterTypes12);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -531,7 +531,7 @@ public class BlogsEntryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(BlogsEntryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(BlogsEntryServiceUtil.class,
 					"getGroupsEntries", _getGroupsEntriesParameterTypes13);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -569,7 +569,7 @@ public class BlogsEntryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(BlogsEntryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(BlogsEntryServiceUtil.class,
 					"getOrganizationEntries",
 					_getOrganizationEntriesParameterTypes14);
 
@@ -611,7 +611,7 @@ public class BlogsEntryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(BlogsEntryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(BlogsEntryServiceUtil.class,
 					"getOrganizationEntriesRSS",
 					_getOrganizationEntriesRSSParameterTypes15);
 
@@ -650,7 +650,7 @@ public class BlogsEntryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(BlogsEntryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(BlogsEntryServiceUtil.class,
 					"moveEntryToTrash", _moveEntryToTrashParameterTypes16);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, entryId);
@@ -682,7 +682,7 @@ public class BlogsEntryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(BlogsEntryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(BlogsEntryServiceUtil.class,
 					"restoreEntryFromTrash",
 					_restoreEntryFromTrashParameterTypes17);
 
@@ -714,7 +714,7 @@ public class BlogsEntryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(BlogsEntryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(BlogsEntryServiceUtil.class,
 					"subscribe", _subscribeParameterTypes18);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId);
@@ -745,7 +745,7 @@ public class BlogsEntryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(BlogsEntryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(BlogsEntryServiceUtil.class,
 					"unsubscribe", _unsubscribeParameterTypes19);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId);
@@ -785,7 +785,7 @@ public class BlogsEntryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(BlogsEntryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(BlogsEntryServiceUtil.class,
 					"updateEntry", _updateEntryParameterTypes20);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, entryId,

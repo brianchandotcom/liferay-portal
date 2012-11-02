@@ -65,7 +65,7 @@ public class DDMTemplateServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DDMTemplateServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DDMTemplateServiceUtil.class,
 					"addTemplate", _addTemplateParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -105,7 +105,7 @@ public class DDMTemplateServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DDMTemplateServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DDMTemplateServiceUtil.class,
 					"copyTemplates", _copyTemplatesParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -142,7 +142,7 @@ public class DDMTemplateServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DDMTemplateServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DDMTemplateServiceUtil.class,
 					"deleteTemplate", _deleteTemplateParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -174,7 +174,7 @@ public class DDMTemplateServiceHttp {
 		HttpPrincipal httpPrincipal, long groupId, java.lang.String templateKey)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DDMTemplateServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DDMTemplateServiceUtil.class,
 					"fetchTemplate", _fetchTemplateParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -207,7 +207,7 @@ public class DDMTemplateServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DDMTemplateServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DDMTemplateServiceUtil.class,
 					"getTemplate", _getTemplateParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -244,7 +244,7 @@ public class DDMTemplateServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DDMTemplateServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DDMTemplateServiceUtil.class,
 					"getTemplate", _getTemplateParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -280,7 +280,7 @@ public class DDMTemplateServiceHttp {
 		HttpPrincipal httpPrincipal, long groupId, long classNameId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DDMTemplateServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DDMTemplateServiceUtil.class,
 					"getTemplates", _getTemplatesParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -313,7 +313,7 @@ public class DDMTemplateServiceHttp {
 		long classPK)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DDMTemplateServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DDMTemplateServiceUtil.class,
 					"getTemplates", _getTemplatesParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -346,7 +346,7 @@ public class DDMTemplateServiceHttp {
 		java.lang.String type, java.lang.String mode)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DDMTemplateServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DDMTemplateServiceUtil.class,
 					"getTemplates", _getTemplatesParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -381,7 +381,7 @@ public class DDMTemplateServiceHttp {
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DDMTemplateServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DDMTemplateServiceUtil.class,
 					"search", _searchParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -419,7 +419,7 @@ public class DDMTemplateServiceHttp {
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DDMTemplateServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DDMTemplateServiceUtil.class,
 					"search", _searchParameterTypes10);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -456,7 +456,7 @@ public class DDMTemplateServiceHttp {
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DDMTemplateServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DDMTemplateServiceUtil.class,
 					"search", _searchParameterTypes11);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -494,7 +494,7 @@ public class DDMTemplateServiceHttp {
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DDMTemplateServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DDMTemplateServiceUtil.class,
 					"search", _searchParameterTypes12);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -529,7 +529,7 @@ public class DDMTemplateServiceHttp {
 		java.lang.String keywords, java.lang.String type, java.lang.String mode)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DDMTemplateServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DDMTemplateServiceUtil.class,
 					"searchCount", _searchCountParameterTypes13);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -564,7 +564,7 @@ public class DDMTemplateServiceHttp {
 		java.lang.String mode, java.lang.String language, boolean andOperator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DDMTemplateServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DDMTemplateServiceUtil.class,
 					"searchCount", _searchCountParameterTypes14);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -598,7 +598,7 @@ public class DDMTemplateServiceHttp {
 		java.lang.String keywords, java.lang.String type, java.lang.String mode)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DDMTemplateServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DDMTemplateServiceUtil.class,
 					"searchCount", _searchCountParameterTypes15);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -634,7 +634,7 @@ public class DDMTemplateServiceHttp {
 		java.lang.String language, boolean andOperator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DDMTemplateServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DDMTemplateServiceUtil.class,
 					"searchCount", _searchCountParameterTypes16);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -673,7 +673,7 @@ public class DDMTemplateServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DDMTemplateServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DDMTemplateServiceUtil.class,
 					"updateTemplate", _updateTemplateParameterTypes17);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,

@@ -58,7 +58,7 @@ public class ResourcePermissionServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(ResourcePermissionServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(ResourcePermissionServiceUtil.class,
 					"addResourcePermission",
 					_addResourcePermissionParameterTypes0);
 
@@ -93,7 +93,7 @@ public class ResourcePermissionServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(ResourcePermissionServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(ResourcePermissionServiceUtil.class,
 					"removeResourcePermission",
 					_removeResourcePermissionParameterTypes1);
 
@@ -128,7 +128,7 @@ public class ResourcePermissionServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(ResourcePermissionServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(ResourcePermissionServiceUtil.class,
 					"removeResourcePermissions",
 					_removeResourcePermissionsParameterTypes2);
 
@@ -164,7 +164,7 @@ public class ResourcePermissionServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(ResourcePermissionServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(ResourcePermissionServiceUtil.class,
 					"setIndividualResourcePermissions",
 					_setIndividualResourcePermissionsParameterTypes3);
 
@@ -200,7 +200,7 @@ public class ResourcePermissionServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(ResourcePermissionServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(ResourcePermissionServiceUtil.class,
 					"setIndividualResourcePermissions",
 					_setIndividualResourcePermissionsParameterTypes4);
 

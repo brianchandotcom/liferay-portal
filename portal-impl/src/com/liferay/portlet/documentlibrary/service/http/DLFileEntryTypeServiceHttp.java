@@ -61,7 +61,7 @@ public class DLFileEntryTypeServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLFileEntryTypeServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLFileEntryTypeServiceUtil.class,
 					"addFileEntryType", _addFileEntryTypeParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -98,7 +98,7 @@ public class DLFileEntryTypeServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLFileEntryTypeServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLFileEntryTypeServiceUtil.class,
 					"deleteFileEntryType", _deleteFileEntryTypeParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -131,7 +131,7 @@ public class DLFileEntryTypeServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLFileEntryTypeServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLFileEntryTypeServiceUtil.class,
 					"getFileEntryType", _getFileEntryTypeParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -167,7 +167,7 @@ public class DLFileEntryTypeServiceHttp {
 		HttpPrincipal httpPrincipal, long[] groupIds)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLFileEntryTypeServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLFileEntryTypeServiceUtil.class,
 					"getFileEntryTypes", _getFileEntryTypesParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupIds);
@@ -198,7 +198,7 @@ public class DLFileEntryTypeServiceHttp {
 		long[] groupIds)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLFileEntryTypeServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLFileEntryTypeServiceUtil.class,
 					"getFileEntryTypesCount",
 					_getFileEntryTypesCountParameterTypes4);
 
@@ -233,7 +233,7 @@ public class DLFileEntryTypeServiceHttp {
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLFileEntryTypeServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLFileEntryTypeServiceUtil.class,
 					"search", _searchParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -267,7 +267,7 @@ public class DLFileEntryTypeServiceHttp {
 		boolean includeBasicFileEntryType)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLFileEntryTypeServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLFileEntryTypeServiceUtil.class,
 					"searchCount", _searchCountParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -302,7 +302,7 @@ public class DLFileEntryTypeServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLFileEntryTypeServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLFileEntryTypeServiceUtil.class,
 					"updateFileEntryType", _updateFileEntryTypeParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,

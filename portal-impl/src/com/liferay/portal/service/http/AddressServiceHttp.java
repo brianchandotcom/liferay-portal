@@ -61,7 +61,7 @@ public class AddressServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(AddressServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(AddressServiceUtil.class,
 					"addAddress", _addAddressParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -98,7 +98,7 @@ public class AddressServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(AddressServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(AddressServiceUtil.class,
 					"deleteAddress", _deleteAddressParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, addressId);
@@ -130,7 +130,7 @@ public class AddressServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(AddressServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(AddressServiceUtil.class,
 					"getAddress", _getAddressParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, addressId);
@@ -166,7 +166,7 @@ public class AddressServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(AddressServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(AddressServiceUtil.class,
 					"getAddresses", _getAddressesParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -206,7 +206,7 @@ public class AddressServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(AddressServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(AddressServiceUtil.class,
 					"updateAddress", _updateAddressParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,

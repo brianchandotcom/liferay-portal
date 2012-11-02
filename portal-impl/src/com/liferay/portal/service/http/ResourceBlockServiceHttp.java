@@ -58,7 +58,7 @@ public class ResourceBlockServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(ResourceBlockServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(ResourceBlockServiceUtil.class,
 					"addCompanyScopePermission",
 					_addCompanyScopePermissionParameterTypes0);
 
@@ -93,7 +93,7 @@ public class ResourceBlockServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(ResourceBlockServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(ResourceBlockServiceUtil.class,
 					"addGroupScopePermission",
 					_addGroupScopePermissionParameterTypes1);
 
@@ -129,7 +129,7 @@ public class ResourceBlockServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(ResourceBlockServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(ResourceBlockServiceUtil.class,
 					"addIndividualScopePermission",
 					_addIndividualScopePermissionParameterTypes2);
 
@@ -164,7 +164,7 @@ public class ResourceBlockServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(ResourceBlockServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(ResourceBlockServiceUtil.class,
 					"removeAllGroupScopePermissions",
 					_removeAllGroupScopePermissionsParameterTypes3);
 
@@ -199,7 +199,7 @@ public class ResourceBlockServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(ResourceBlockServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(ResourceBlockServiceUtil.class,
 					"removeCompanyScopePermission",
 					_removeCompanyScopePermissionParameterTypes4);
 
@@ -234,7 +234,7 @@ public class ResourceBlockServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(ResourceBlockServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(ResourceBlockServiceUtil.class,
 					"removeGroupScopePermission",
 					_removeGroupScopePermissionParameterTypes5);
 
@@ -270,7 +270,7 @@ public class ResourceBlockServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(ResourceBlockServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(ResourceBlockServiceUtil.class,
 					"removeIndividualScopePermission",
 					_removeIndividualScopePermissionParameterTypes6);
 
@@ -305,7 +305,7 @@ public class ResourceBlockServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(ResourceBlockServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(ResourceBlockServiceUtil.class,
 					"setCompanyScopePermissions",
 					_setCompanyScopePermissionsParameterTypes7);
 
@@ -340,7 +340,7 @@ public class ResourceBlockServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(ResourceBlockServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(ResourceBlockServiceUtil.class,
 					"setGroupScopePermissions",
 					_setGroupScopePermissionsParameterTypes8);
 
@@ -376,7 +376,7 @@ public class ResourceBlockServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(ResourceBlockServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(ResourceBlockServiceUtil.class,
 					"setIndividualScopePermissions",
 					_setIndividualScopePermissionsParameterTypes9);
 
@@ -412,7 +412,7 @@ public class ResourceBlockServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(ResourceBlockServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(ResourceBlockServiceUtil.class,
 					"setIndividualScopePermissions",
 					_setIndividualScopePermissionsParameterTypes10);
 

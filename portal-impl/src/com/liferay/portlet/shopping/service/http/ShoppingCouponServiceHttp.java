@@ -67,7 +67,7 @@ public class ShoppingCouponServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(ShoppingCouponServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(ShoppingCouponServiceUtil.class,
 					"addCoupon", _addCouponParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, code,
@@ -108,7 +108,7 @@ public class ShoppingCouponServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(ShoppingCouponServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(ShoppingCouponServiceUtil.class,
 					"deleteCoupon", _deleteCouponParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -141,7 +141,7 @@ public class ShoppingCouponServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(ShoppingCouponServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(ShoppingCouponServiceUtil.class,
 					"getCoupon", _getCouponParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -180,7 +180,7 @@ public class ShoppingCouponServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(ShoppingCouponServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(ShoppingCouponServiceUtil.class,
 					"search", _searchParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -225,7 +225,7 @@ public class ShoppingCouponServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(ShoppingCouponServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(ShoppingCouponServiceUtil.class,
 					"updateCoupon", _updateCouponParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,

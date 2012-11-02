@@ -64,7 +64,7 @@ public class DDMStructureServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DDMStructureServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DDMStructureServiceUtil.class,
 					"addStructure", _addStructureParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -105,7 +105,7 @@ public class DDMStructureServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DDMStructureServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DDMStructureServiceUtil.class,
 					"copyStructure", _copyStructureParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -142,7 +142,7 @@ public class DDMStructureServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DDMStructureServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DDMStructureServiceUtil.class,
 					"deleteStructure", _deleteStructureParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -175,7 +175,7 @@ public class DDMStructureServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DDMStructureServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DDMStructureServiceUtil.class,
 					"fetchStructure", _fetchStructureParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -212,7 +212,7 @@ public class DDMStructureServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DDMStructureServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DDMStructureServiceUtil.class,
 					"getStructure", _getStructureParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -250,7 +250,7 @@ public class DDMStructureServiceHttp {
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DDMStructureServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DDMStructureServiceUtil.class,
 					"search", _searchParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -287,7 +287,7 @@ public class DDMStructureServiceHttp {
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DDMStructureServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DDMStructureServiceUtil.class,
 					"search", _searchParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -321,7 +321,7 @@ public class DDMStructureServiceHttp {
 		long[] groupIds, long[] classNameIds, java.lang.String keywords)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DDMStructureServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DDMStructureServiceUtil.class,
 					"searchCount", _searchCountParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -355,7 +355,7 @@ public class DDMStructureServiceHttp {
 		boolean andOperator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DDMStructureServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DDMStructureServiceUtil.class,
 					"searchCount", _searchCountParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -393,7 +393,7 @@ public class DDMStructureServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DDMStructureServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DDMStructureServiceUtil.class,
 					"updateStructure", _updateStructureParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -436,7 +436,7 @@ public class DDMStructureServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DDMStructureServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DDMStructureServiceUtil.class,
 					"updateStructure", _updateStructureParameterTypes10);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,

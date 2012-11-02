@@ -60,7 +60,7 @@ public class MBBanServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(MBBanServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(MBBanServiceUtil.class,
 					"addBan", _addBanParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -97,7 +97,7 @@ public class MBBanServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(MBBanServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(MBBanServiceUtil.class,
 					"deleteBan", _deleteBanParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,

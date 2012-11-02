@@ -59,7 +59,7 @@ public class PhoneServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(PhoneServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(PhoneServiceUtil.class,
 					"addPhone", _addPhoneParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -95,7 +95,7 @@ public class PhoneServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(PhoneServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(PhoneServiceUtil.class,
 					"deletePhone", _deletePhoneParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, phoneId);
@@ -127,7 +127,7 @@ public class PhoneServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(PhoneServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(PhoneServiceUtil.class,
 					"getPhone", _getPhoneParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, phoneId);
@@ -163,7 +163,7 @@ public class PhoneServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(PhoneServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(PhoneServiceUtil.class,
 					"getPhones", _getPhonesParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -201,7 +201,7 @@ public class PhoneServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(PhoneServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(PhoneServiceUtil.class,
 					"updatePhone", _updatePhoneParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, phoneId,

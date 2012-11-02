@@ -59,7 +59,7 @@ public class LayoutPrototypeServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(LayoutPrototypeServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(LayoutPrototypeServiceUtil.class,
 					"addLayoutPrototype", _addLayoutPrototypeParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, nameMap,
@@ -96,7 +96,7 @@ public class LayoutPrototypeServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(LayoutPrototypeServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(LayoutPrototypeServiceUtil.class,
 					"deleteLayoutPrototype",
 					_deleteLayoutPrototypeParameterTypes1);
 
@@ -130,7 +130,7 @@ public class LayoutPrototypeServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(LayoutPrototypeServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(LayoutPrototypeServiceUtil.class,
 					"getLayoutPrototype", _getLayoutPrototypeParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -168,7 +168,7 @@ public class LayoutPrototypeServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(LayoutPrototypeServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(LayoutPrototypeServiceUtil.class,
 					"search", _searchParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -207,7 +207,7 @@ public class LayoutPrototypeServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(LayoutPrototypeServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(LayoutPrototypeServiceUtil.class,
 					"updateLayoutPrototype",
 					_updateLayoutPrototypeParameterTypes4);
 

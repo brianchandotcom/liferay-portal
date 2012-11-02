@@ -61,7 +61,7 @@ public class SCLicenseServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(SCLicenseServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(SCLicenseServiceUtil.class,
 					"addLicense", _addLicenseParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, name,
@@ -97,7 +97,7 @@ public class SCLicenseServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(SCLicenseServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(SCLicenseServiceUtil.class,
 					"deleteLicense", _deleteLicenseParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, licenseId);
@@ -129,7 +129,7 @@ public class SCLicenseServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(SCLicenseServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(SCLicenseServiceUtil.class,
 					"getLicense", _getLicenseParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, licenseId);
@@ -167,7 +167,7 @@ public class SCLicenseServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(SCLicenseServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(SCLicenseServiceUtil.class,
 					"updateLicense", _updateLicenseParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,

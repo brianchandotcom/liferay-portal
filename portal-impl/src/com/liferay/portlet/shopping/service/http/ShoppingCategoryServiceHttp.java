@@ -61,7 +61,7 @@ public class ShoppingCategoryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(ShoppingCategoryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(ShoppingCategoryServiceUtil.class,
 					"addCategory", _addCategoryParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -98,7 +98,7 @@ public class ShoppingCategoryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(ShoppingCategoryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(ShoppingCategoryServiceUtil.class,
 					"deleteCategory", _deleteCategoryParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -130,7 +130,7 @@ public class ShoppingCategoryServiceHttp {
 		HttpPrincipal httpPrincipal, long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(ShoppingCategoryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(ShoppingCategoryServiceUtil.class,
 					"getCategories", _getCategoriesParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId);
@@ -162,7 +162,7 @@ public class ShoppingCategoryServiceHttp {
 		int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(ShoppingCategoryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(ShoppingCategoryServiceUtil.class,
 					"getCategories", _getCategoriesParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -194,7 +194,7 @@ public class ShoppingCategoryServiceHttp {
 		long groupId, long parentCategoryId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(ShoppingCategoryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(ShoppingCategoryServiceUtil.class,
 					"getCategoriesCount", _getCategoriesCountParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -227,7 +227,7 @@ public class ShoppingCategoryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(ShoppingCategoryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(ShoppingCategoryServiceUtil.class,
 					"getCategory", _getCategoryParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -264,7 +264,7 @@ public class ShoppingCategoryServiceHttp {
 		long categoryId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(ShoppingCategoryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(ShoppingCategoryServiceUtil.class,
 					"getSubcategoryIds", _getSubcategoryIdsParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -296,7 +296,7 @@ public class ShoppingCategoryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(ShoppingCategoryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(ShoppingCategoryServiceUtil.class,
 					"updateCategory", _updateCategoryParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,

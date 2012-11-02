@@ -60,7 +60,7 @@ public class AnnouncementsDeliveryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(AnnouncementsDeliveryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(AnnouncementsDeliveryServiceUtil.class,
 					"updateDelivery", _updateDeliveryParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, userId,

@@ -62,7 +62,7 @@ public class ShoppingOrderServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(ShoppingOrderServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(ShoppingOrderServiceUtil.class,
 					"completeOrder", _completeOrderParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -96,7 +96,7 @@ public class ShoppingOrderServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(ShoppingOrderServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(ShoppingOrderServiceUtil.class,
 					"deleteOrder", _deleteOrderParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -129,7 +129,7 @@ public class ShoppingOrderServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(ShoppingOrderServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(ShoppingOrderServiceUtil.class,
 					"getOrder", _getOrderParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -167,7 +167,7 @@ public class ShoppingOrderServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(ShoppingOrderServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(ShoppingOrderServiceUtil.class,
 					"sendEmail", _sendEmailParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -203,7 +203,7 @@ public class ShoppingOrderServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(ShoppingOrderServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(ShoppingOrderServiceUtil.class,
 					"updateOrder", _updateOrderParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -255,7 +255,7 @@ public class ShoppingOrderServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(ShoppingOrderServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(ShoppingOrderServiceUtil.class,
 					"updateOrder", _updateOrderParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,

@@ -64,7 +64,7 @@ public class DDLRecordSetServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DDLRecordSetServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DDLRecordSetServiceUtil.class,
 					"addRecordSet", _addRecordSetParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -102,7 +102,7 @@ public class DDLRecordSetServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DDLRecordSetServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DDLRecordSetServiceUtil.class,
 					"deleteRecordSet", _deleteRecordSetParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -135,7 +135,7 @@ public class DDLRecordSetServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DDLRecordSetServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DDLRecordSetServiceUtil.class,
 					"getRecordSet", _getRecordSetParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -173,7 +173,7 @@ public class DDLRecordSetServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DDLRecordSetServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DDLRecordSetServiceUtil.class,
 					"updateMinDisplayRows", _updateMinDisplayRowsParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -214,7 +214,7 @@ public class DDLRecordSetServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DDLRecordSetServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DDLRecordSetServiceUtil.class,
 					"updateRecordSet", _updateRecordSetParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -257,7 +257,7 @@ public class DDLRecordSetServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DDLRecordSetServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DDLRecordSetServiceUtil.class,
 					"updateRecordSet", _updateRecordSetParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,

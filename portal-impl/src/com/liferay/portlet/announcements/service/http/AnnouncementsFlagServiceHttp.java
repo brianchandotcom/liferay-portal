@@ -59,7 +59,7 @@ public class AnnouncementsFlagServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(AnnouncementsFlagServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(AnnouncementsFlagServiceUtil.class,
 					"addFlag", _addFlagParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, entryId,
@@ -91,7 +91,7 @@ public class AnnouncementsFlagServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(AnnouncementsFlagServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(AnnouncementsFlagServiceUtil.class,
 					"deleteFlag", _deleteFlagParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, flagId);
@@ -123,7 +123,7 @@ public class AnnouncementsFlagServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(AnnouncementsFlagServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(AnnouncementsFlagServiceUtil.class,
 					"getFlag", _getFlagParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, entryId,

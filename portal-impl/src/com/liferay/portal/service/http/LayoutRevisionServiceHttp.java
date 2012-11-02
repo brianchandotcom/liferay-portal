@@ -66,7 +66,7 @@ public class LayoutRevisionServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(LayoutRevisionServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(LayoutRevisionServiceUtil.class,
 					"addLayoutRevision", _addLayoutRevisionParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, userId,

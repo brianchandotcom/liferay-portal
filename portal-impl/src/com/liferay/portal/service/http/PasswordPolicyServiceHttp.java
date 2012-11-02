@@ -64,7 +64,7 @@ public class PasswordPolicyServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(PasswordPolicyServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(PasswordPolicyServiceUtil.class,
 					"addPasswordPolicy", _addPasswordPolicyParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, name,
@@ -106,7 +106,7 @@ public class PasswordPolicyServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(PasswordPolicyServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(PasswordPolicyServiceUtil.class,
 					"deletePasswordPolicy", _deletePasswordPolicyParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -147,7 +147,7 @@ public class PasswordPolicyServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(PasswordPolicyServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(PasswordPolicyServiceUtil.class,
 					"updatePasswordPolicy", _updatePasswordPolicyParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,

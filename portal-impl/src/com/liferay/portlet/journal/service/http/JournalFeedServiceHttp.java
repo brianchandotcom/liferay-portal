@@ -68,7 +68,7 @@ public class JournalFeedServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(JournalFeedServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(JournalFeedServiceUtil.class,
 					"addFeed", _addFeedParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -108,7 +108,7 @@ public class JournalFeedServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(JournalFeedServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(JournalFeedServiceUtil.class,
 					"deleteFeed", _deleteFeedParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -141,7 +141,7 @@ public class JournalFeedServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(JournalFeedServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(JournalFeedServiceUtil.class,
 					"deleteFeed", _deleteFeedParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -174,7 +174,7 @@ public class JournalFeedServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(JournalFeedServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(JournalFeedServiceUtil.class,
 					"getFeed", _getFeedParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -211,7 +211,7 @@ public class JournalFeedServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(JournalFeedServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(JournalFeedServiceUtil.class,
 					"getFeed", _getFeedParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -256,7 +256,7 @@ public class JournalFeedServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(JournalFeedServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(JournalFeedServiceUtil.class,
 					"updateFeed", _updateFeedParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,

@@ -65,7 +65,7 @@ public class JournalStructureServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(JournalStructureServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(JournalStructureServiceUtil.class,
 					"addStructure", _addStructureParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -105,7 +105,7 @@ public class JournalStructureServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(JournalStructureServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(JournalStructureServiceUtil.class,
 					"copyStructure", _copyStructureParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -142,7 +142,7 @@ public class JournalStructureServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(JournalStructureServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(JournalStructureServiceUtil.class,
 					"deleteStructure", _deleteStructureParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -175,7 +175,7 @@ public class JournalStructureServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(JournalStructureServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(JournalStructureServiceUtil.class,
 					"getStructure", _getStructureParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -211,7 +211,7 @@ public class JournalStructureServiceHttp {
 		HttpPrincipal httpPrincipal, long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(JournalStructureServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(JournalStructureServiceUtil.class,
 					"getStructures", _getStructuresParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId);
@@ -242,7 +242,7 @@ public class JournalStructureServiceHttp {
 		HttpPrincipal httpPrincipal, long[] groupIds)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(JournalStructureServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(JournalStructureServiceUtil.class,
 					"getStructures", _getStructuresParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupIds);
@@ -275,7 +275,7 @@ public class JournalStructureServiceHttp {
 		com.liferay.portal.kernel.util.OrderByComparator obc)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(JournalStructureServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(JournalStructureServiceUtil.class,
 					"search", _searchParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -310,7 +310,7 @@ public class JournalStructureServiceHttp {
 		com.liferay.portal.kernel.util.OrderByComparator obc)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(JournalStructureServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(JournalStructureServiceUtil.class,
 					"search", _searchParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -343,7 +343,7 @@ public class JournalStructureServiceHttp {
 		long[] groupIds, java.lang.String keywords)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(JournalStructureServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(JournalStructureServiceUtil.class,
 					"searchCount", _searchCountParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -376,7 +376,7 @@ public class JournalStructureServiceHttp {
 		java.lang.String description, boolean andOperator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(JournalStructureServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(JournalStructureServiceUtil.class,
 					"searchCount", _searchCountParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -415,7 +415,7 @@ public class JournalStructureServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(JournalStructureServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(JournalStructureServiceUtil.class,
 					"updateStructure", _updateStructureParameterTypes10);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,

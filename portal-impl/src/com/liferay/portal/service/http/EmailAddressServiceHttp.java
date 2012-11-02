@@ -58,7 +58,7 @@ public class EmailAddressServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(EmailAddressServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(EmailAddressServiceUtil.class,
 					"addEmailAddress", _addEmailAddressParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -95,7 +95,7 @@ public class EmailAddressServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(EmailAddressServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(EmailAddressServiceUtil.class,
 					"deleteEmailAddress", _deleteEmailAddressParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -128,7 +128,7 @@ public class EmailAddressServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(EmailAddressServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(EmailAddressServiceUtil.class,
 					"getEmailAddress", _getEmailAddressParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -165,7 +165,7 @@ public class EmailAddressServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(EmailAddressServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(EmailAddressServiceUtil.class,
 					"getEmailAddresses", _getEmailAddressesParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -203,7 +203,7 @@ public class EmailAddressServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(EmailAddressServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(EmailAddressServiceUtil.class,
 					"updateEmailAddress", _updateEmailAddressParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,

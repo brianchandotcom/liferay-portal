@@ -62,7 +62,7 @@ public class DDLRecordServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DDLRecordServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DDLRecordServiceUtil.class,
 					"addRecord", _addRecordParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -102,7 +102,7 @@ public class DDLRecordServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DDLRecordServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DDLRecordServiceUtil.class,
 					"addRecord", _addRecordParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -139,7 +139,7 @@ public class DDLRecordServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DDLRecordServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DDLRecordServiceUtil.class,
 					"getRecord", _getRecordParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, recordId);
@@ -179,7 +179,7 @@ public class DDLRecordServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DDLRecordServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DDLRecordServiceUtil.class,
 					"updateRecord", _updateRecordParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -220,7 +220,7 @@ public class DDLRecordServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DDLRecordServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DDLRecordServiceUtil.class,
 					"updateRecord", _updateRecordParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,

@@ -57,7 +57,7 @@ public class OrganizationServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(OrganizationServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(OrganizationServiceUtil.class,
 					"addGroupOrganizations",
 					_addGroupOrganizationsParameterTypes0);
 
@@ -100,7 +100,7 @@ public class OrganizationServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(OrganizationServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(OrganizationServiceUtil.class,
 					"addOrganization", _addOrganizationParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -142,7 +142,7 @@ public class OrganizationServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(OrganizationServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(OrganizationServiceUtil.class,
 					"addOrganization", _addOrganizationParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -181,7 +181,7 @@ public class OrganizationServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(OrganizationServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(OrganizationServiceUtil.class,
 					"addPasswordPolicyOrganizations",
 					_addPasswordPolicyOrganizationsParameterTypes3);
 
@@ -215,7 +215,7 @@ public class OrganizationServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(OrganizationServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(OrganizationServiceUtil.class,
 					"deleteLogo", _deleteLogoParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -248,7 +248,7 @@ public class OrganizationServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(OrganizationServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(OrganizationServiceUtil.class,
 					"deleteOrganization", _deleteOrganizationParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -281,7 +281,7 @@ public class OrganizationServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(OrganizationServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(OrganizationServiceUtil.class,
 					"getManageableOrganizations",
 					_getManageableOrganizationsParameterTypes6);
 
@@ -319,7 +319,7 @@ public class OrganizationServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(OrganizationServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(OrganizationServiceUtil.class,
 					"getOrganization", _getOrganizationParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -356,7 +356,7 @@ public class OrganizationServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(OrganizationServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(OrganizationServiceUtil.class,
 					"getOrganizationId", _getOrganizationIdParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -392,7 +392,7 @@ public class OrganizationServiceHttp {
 		HttpPrincipal httpPrincipal, long companyId, long parentOrganizationId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(OrganizationServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(OrganizationServiceUtil.class,
 					"getOrganizations", _getOrganizationsParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -425,7 +425,7 @@ public class OrganizationServiceHttp {
 		int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(OrganizationServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(OrganizationServiceUtil.class,
 					"getOrganizations", _getOrganizationsParameterTypes10);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -457,7 +457,7 @@ public class OrganizationServiceHttp {
 		long companyId, long parentOrganizationId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(OrganizationServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(OrganizationServiceUtil.class,
 					"getOrganizationsCount",
 					_getOrganizationsCountParameterTypes11);
 
@@ -491,7 +491,7 @@ public class OrganizationServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(OrganizationServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(OrganizationServiceUtil.class,
 					"getUserOrganizations",
 					_getUserOrganizationsParameterTypes12);
 
@@ -528,7 +528,7 @@ public class OrganizationServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(OrganizationServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(OrganizationServiceUtil.class,
 					"setGroupOrganizations",
 					_setGroupOrganizationsParameterTypes13);
 
@@ -562,7 +562,7 @@ public class OrganizationServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(OrganizationServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(OrganizationServiceUtil.class,
 					"unsetGroupOrganizations",
 					_unsetGroupOrganizationsParameterTypes14);
 
@@ -597,7 +597,7 @@ public class OrganizationServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(OrganizationServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(OrganizationServiceUtil.class,
 					"unsetPasswordPolicyOrganizations",
 					_unsetPasswordPolicyOrganizationsParameterTypes15);
 
@@ -640,7 +640,7 @@ public class OrganizationServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(OrganizationServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(OrganizationServiceUtil.class,
 					"updateOrganization", _updateOrganizationParameterTypes16);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -684,7 +684,7 @@ public class OrganizationServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(OrganizationServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(OrganizationServiceUtil.class,
 					"updateOrganization", _updateOrganizationParameterTypes17);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,

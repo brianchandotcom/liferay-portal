@@ -61,7 +61,7 @@ public class ExpandoValueServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(ExpandoValueServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(ExpandoValueServiceUtil.class,
 					"addValue", _addValueParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -100,7 +100,7 @@ public class ExpandoValueServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(ExpandoValueServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(ExpandoValueServiceUtil.class,
 					"addValue", _addValueParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -138,7 +138,7 @@ public class ExpandoValueServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(ExpandoValueServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(ExpandoValueServiceUtil.class,
 					"addValues", _addValuesParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -173,7 +173,7 @@ public class ExpandoValueServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(ExpandoValueServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(ExpandoValueServiceUtil.class,
 					"getData", _getDataParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -211,7 +211,7 @@ public class ExpandoValueServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(ExpandoValueServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(ExpandoValueServiceUtil.class,
 					"getData", _getDataParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -250,7 +250,7 @@ public class ExpandoValueServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(ExpandoValueServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(ExpandoValueServiceUtil.class,
 					"getJSONData", _getJSONDataParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,

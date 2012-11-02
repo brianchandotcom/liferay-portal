@@ -59,7 +59,7 @@ public class LayoutBranchServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(LayoutBranchServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(LayoutBranchServiceUtil.class,
 					"addLayoutBranch", _addLayoutBranchParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -96,7 +96,7 @@ public class LayoutBranchServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(LayoutBranchServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(LayoutBranchServiceUtil.class,
 					"deleteLayoutBranch", _deleteLayoutBranchParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -131,7 +131,7 @@ public class LayoutBranchServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(LayoutBranchServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(LayoutBranchServiceUtil.class,
 					"updateLayoutBranch", _updateLayoutBranchParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,

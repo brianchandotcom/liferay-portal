@@ -58,7 +58,7 @@ public class AssetEntryServiceHttp {
 		HttpPrincipal httpPrincipal, long companyId, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(AssetEntryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(AssetEntryServiceUtil.class,
 					"getCompanyEntries", _getCompanyEntriesParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -90,7 +90,7 @@ public class AssetEntryServiceHttp {
 		long companyId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(AssetEntryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(AssetEntryServiceUtil.class,
 					"getCompanyEntriesCount",
 					_getCompanyEntriesCountParameterTypes1);
 
@@ -124,7 +124,7 @@ public class AssetEntryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(AssetEntryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(AssetEntryServiceUtil.class,
 					"getEntries", _getEntriesParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -161,7 +161,7 @@ public class AssetEntryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(AssetEntryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(AssetEntryServiceUtil.class,
 					"getEntriesCount", _getEntriesCountParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -198,7 +198,7 @@ public class AssetEntryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(AssetEntryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(AssetEntryServiceUtil.class,
 					"getEntry", _getEntryParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, entryId);
@@ -234,7 +234,7 @@ public class AssetEntryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(AssetEntryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(AssetEntryServiceUtil.class,
 					"incrementViewCounter", _incrementViewCounterParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -279,7 +279,7 @@ public class AssetEntryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(AssetEntryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(AssetEntryServiceUtil.class,
 					"updateEntry", _updateEntryParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -327,7 +327,7 @@ public class AssetEntryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(AssetEntryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(AssetEntryServiceUtil.class,
 					"updateEntry", _updateEntryParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -375,7 +375,7 @@ public class AssetEntryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(AssetEntryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(AssetEntryServiceUtil.class,
 					"updateEntry", _updateEntryParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,

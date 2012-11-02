@@ -60,7 +60,7 @@ public class GroupServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(GroupServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(GroupServiceUtil.class,
 					"addGroup", _addGroupParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -101,7 +101,7 @@ public class GroupServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(GroupServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(GroupServiceUtil.class,
 					"addGroup", _addGroupParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -142,7 +142,7 @@ public class GroupServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(GroupServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(GroupServiceUtil.class,
 					"addGroup", _addGroupParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, name,
@@ -179,7 +179,7 @@ public class GroupServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(GroupServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(GroupServiceUtil.class,
 					"addRoleGroups", _addRoleGroupsParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, roleId,
@@ -211,7 +211,7 @@ public class GroupServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(GroupServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(GroupServiceUtil.class,
 					"deleteGroup", _deleteGroupParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId);
@@ -243,7 +243,7 @@ public class GroupServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(GroupServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(GroupServiceUtil.class,
 					"getGroup", _getGroupParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId);
@@ -279,7 +279,7 @@ public class GroupServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(GroupServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(GroupServiceUtil.class,
 					"getGroup", _getGroupParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -317,7 +317,7 @@ public class GroupServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(GroupServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(GroupServiceUtil.class,
 					"getManageableSites", _getManageableSitesParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -355,7 +355,7 @@ public class GroupServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(GroupServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(GroupServiceUtil.class,
 					"getOrganizationsGroups",
 					_getOrganizationsGroupsParameterTypes8);
 
@@ -393,7 +393,7 @@ public class GroupServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(GroupServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(GroupServiceUtil.class,
 					"getUserGroup", _getUserGroupParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -431,7 +431,7 @@ public class GroupServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(GroupServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(GroupServiceUtil.class,
 					"getUserGroupsGroups", _getUserGroupsGroupsParameterTypes10);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -468,7 +468,7 @@ public class GroupServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(GroupServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(GroupServiceUtil.class,
 					"getUserOrganizationsGroups",
 					_getUserOrganizationsGroupsParameterTypes11);
 
@@ -507,7 +507,7 @@ public class GroupServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(GroupServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(GroupServiceUtil.class,
 					"getUserPlaces", _getUserPlacesParameterTypes12);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, userId,
@@ -545,7 +545,7 @@ public class GroupServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(GroupServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(GroupServiceUtil.class,
 					"getUserPlaces", _getUserPlacesParameterTypes13);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, userId,
@@ -582,7 +582,7 @@ public class GroupServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(GroupServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(GroupServiceUtil.class,
 					"getUserPlaces", _getUserPlacesParameterTypes14);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -619,7 +619,7 @@ public class GroupServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(GroupServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(GroupServiceUtil.class,
 					"getUserSites", _getUserSitesParameterTypes15);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey);
@@ -655,7 +655,7 @@ public class GroupServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(GroupServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(GroupServiceUtil.class,
 					"hasUserGroup", _hasUserGroupParameterTypes16);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, userId,
@@ -694,7 +694,7 @@ public class GroupServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(GroupServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(GroupServiceUtil.class,
 					"search", _searchParameterTypes17);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -731,7 +731,7 @@ public class GroupServiceHttp {
 		java.lang.String[] params)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(GroupServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(GroupServiceUtil.class,
 					"searchCount", _searchCountParameterTypes18);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -764,7 +764,7 @@ public class GroupServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(GroupServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(GroupServiceUtil.class,
 					"setRoleGroups", _setRoleGroupsParameterTypes19);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, roleId,
@@ -797,7 +797,7 @@ public class GroupServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(GroupServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(GroupServiceUtil.class,
 					"unsetRoleGroups", _unsetRoleGroupsParameterTypes20);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, roleId,
@@ -830,7 +830,7 @@ public class GroupServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(GroupServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(GroupServiceUtil.class,
 					"updateFriendlyURL", _updateFriendlyURLParameterTypes21);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -870,7 +870,7 @@ public class GroupServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(GroupServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(GroupServiceUtil.class,
 					"updateGroup", _updateGroupParameterTypes22);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -908,7 +908,7 @@ public class GroupServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(GroupServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(GroupServiceUtil.class,
 					"updateGroup", _updateGroupParameterTypes23);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,

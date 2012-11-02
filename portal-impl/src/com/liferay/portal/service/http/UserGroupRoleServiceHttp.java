@@ -57,7 +57,7 @@ public class UserGroupRoleServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(UserGroupRoleServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(UserGroupRoleServiceUtil.class,
 					"addUserGroupRoles", _addUserGroupRolesParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, userId,
@@ -90,7 +90,7 @@ public class UserGroupRoleServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(UserGroupRoleServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(UserGroupRoleServiceUtil.class,
 					"addUserGroupRoles", _addUserGroupRolesParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, userIds,
@@ -123,7 +123,7 @@ public class UserGroupRoleServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(UserGroupRoleServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(UserGroupRoleServiceUtil.class,
 					"deleteUserGroupRoles", _deleteUserGroupRolesParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, userId,
@@ -156,7 +156,7 @@ public class UserGroupRoleServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(UserGroupRoleServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(UserGroupRoleServiceUtil.class,
 					"deleteUserGroupRoles", _deleteUserGroupRolesParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, userIds,

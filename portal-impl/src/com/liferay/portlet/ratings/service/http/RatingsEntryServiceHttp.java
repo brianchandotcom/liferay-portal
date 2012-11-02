@@ -59,7 +59,7 @@ public class RatingsEntryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(RatingsEntryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(RatingsEntryServiceUtil.class,
 					"deleteEntry", _deleteEntryParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -93,7 +93,7 @@ public class RatingsEntryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(RatingsEntryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(RatingsEntryServiceUtil.class,
 					"updateEntry", _updateEntryParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,

@@ -62,7 +62,7 @@ public class FlagsEntryServiceHttp {
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(FlagsEntryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(FlagsEntryServiceUtil.class,
 					"addEntry", _addEntryParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,

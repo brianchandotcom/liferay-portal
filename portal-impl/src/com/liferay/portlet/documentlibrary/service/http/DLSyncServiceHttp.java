@@ -60,7 +60,7 @@ public class DLSyncServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLSyncServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLSyncServiceUtil.class,
 					"getDLSyncUpdate", _getDLSyncUpdateParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -98,7 +98,7 @@ public class DLSyncServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLSyncServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLSyncServiceUtil.class,
 					"getFileDeltaAsStream", _getFileDeltaAsStreamParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -140,7 +140,7 @@ public class DLSyncServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLSyncServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLSyncServiceUtil.class,
 					"updateFileEntry", _updateFileEntryParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,

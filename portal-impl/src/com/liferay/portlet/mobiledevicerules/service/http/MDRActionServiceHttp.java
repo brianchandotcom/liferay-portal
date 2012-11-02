@@ -63,7 +63,7 @@ public class MDRActionServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(MDRActionServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(MDRActionServiceUtil.class,
 					"addAction", _addActionParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -106,7 +106,7 @@ public class MDRActionServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(MDRActionServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(MDRActionServiceUtil.class,
 					"addAction", _addActionParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -143,7 +143,7 @@ public class MDRActionServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(MDRActionServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(MDRActionServiceUtil.class,
 					"deleteAction", _deleteActionParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, actionId);
@@ -175,7 +175,7 @@ public class MDRActionServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(MDRActionServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(MDRActionServiceUtil.class,
 					"fetchAction", _fetchActionParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, actionId);
@@ -211,7 +211,7 @@ public class MDRActionServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(MDRActionServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(MDRActionServiceUtil.class,
 					"getAction", _getActionParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, actionId);
@@ -251,7 +251,7 @@ public class MDRActionServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(MDRActionServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(MDRActionServiceUtil.class,
 					"updateAction", _updateActionParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -294,7 +294,7 @@ public class MDRActionServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(MDRActionServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(MDRActionServiceUtil.class,
 					"updateAction", _updateActionParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,

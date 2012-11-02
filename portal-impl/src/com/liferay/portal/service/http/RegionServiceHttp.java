@@ -58,7 +58,7 @@ public class RegionServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(RegionServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(RegionServiceUtil.class,
 					"addRegion", _addRegionParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -94,7 +94,7 @@ public class RegionServiceHttp {
 		HttpPrincipal httpPrincipal, long countryId, java.lang.String regionCode)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(RegionServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(RegionServiceUtil.class,
 					"fetchRegion", _fetchRegionParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -127,7 +127,7 @@ public class RegionServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(RegionServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(RegionServiceUtil.class,
 					"getRegion", _getRegionParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, regionId);
@@ -163,7 +163,7 @@ public class RegionServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(RegionServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(RegionServiceUtil.class,
 					"getRegion", _getRegionParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -199,7 +199,7 @@ public class RegionServiceHttp {
 		HttpPrincipal httpPrincipal)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(RegionServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(RegionServiceUtil.class,
 					"getRegions", _getRegionsParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey);
@@ -230,7 +230,7 @@ public class RegionServiceHttp {
 		HttpPrincipal httpPrincipal, boolean active)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(RegionServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(RegionServiceUtil.class,
 					"getRegions", _getRegionsParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, active);
@@ -261,7 +261,7 @@ public class RegionServiceHttp {
 		HttpPrincipal httpPrincipal, long countryId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(RegionServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(RegionServiceUtil.class,
 					"getRegions", _getRegionsParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, countryId);
@@ -292,7 +292,7 @@ public class RegionServiceHttp {
 		HttpPrincipal httpPrincipal, long countryId, boolean active)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(RegionServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(RegionServiceUtil.class,
 					"getRegions", _getRegionsParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,

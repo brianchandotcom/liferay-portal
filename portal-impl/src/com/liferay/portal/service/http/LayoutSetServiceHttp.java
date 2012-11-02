@@ -59,7 +59,7 @@ public class LayoutSetServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(LayoutSetServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(LayoutSetServiceUtil.class,
 					"updateLayoutSetPrototypeLinkEnabled",
 					_updateLayoutSetPrototypeLinkEnabledParameterTypes0);
 
@@ -94,7 +94,7 @@ public class LayoutSetServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(LayoutSetServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(LayoutSetServiceUtil.class,
 					"updateLogo", _updateLogoParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -127,7 +127,7 @@ public class LayoutSetServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(LayoutSetServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(LayoutSetServiceUtil.class,
 					"updateLogo", _updateLogoParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -160,7 +160,7 @@ public class LayoutSetServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(LayoutSetServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(LayoutSetServiceUtil.class,
 					"updateLogo", _updateLogoParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -194,7 +194,7 @@ public class LayoutSetServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(LayoutSetServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(LayoutSetServiceUtil.class,
 					"updateLogo", _updateLogoParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -229,7 +229,7 @@ public class LayoutSetServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(LayoutSetServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(LayoutSetServiceUtil.class,
 					"updateLookAndFeel", _updateLookAndFeelParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -267,7 +267,7 @@ public class LayoutSetServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(LayoutSetServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(LayoutSetServiceUtil.class,
 					"updateSettings", _updateSettingsParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -305,7 +305,7 @@ public class LayoutSetServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(LayoutSetServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(LayoutSetServiceUtil.class,
 					"updateVirtualHost", _updateVirtualHostParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,

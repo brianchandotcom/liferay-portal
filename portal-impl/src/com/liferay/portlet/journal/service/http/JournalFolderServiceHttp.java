@@ -61,7 +61,7 @@ public class JournalFolderServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(JournalFolderServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(JournalFolderServiceUtil.class,
 					"addFolder", _addFolderParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -97,7 +97,7 @@ public class JournalFolderServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(JournalFolderServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(JournalFolderServiceUtil.class,
 					"deleteFolder", _deleteFolderParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, folderId);
@@ -129,7 +129,7 @@ public class JournalFolderServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(JournalFolderServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(JournalFolderServiceUtil.class,
 					"getFolder", _getFolderParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, folderId);
@@ -164,7 +164,7 @@ public class JournalFolderServiceHttp {
 		HttpPrincipal httpPrincipal, long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(JournalFolderServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(JournalFolderServiceUtil.class,
 					"getFolders", _getFoldersParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId);
@@ -195,7 +195,7 @@ public class JournalFolderServiceHttp {
 		HttpPrincipal httpPrincipal, long groupId, long parentFolderId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(JournalFolderServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(JournalFolderServiceUtil.class,
 					"getFolders", _getFoldersParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -228,7 +228,7 @@ public class JournalFolderServiceHttp {
 		int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(JournalFolderServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(JournalFolderServiceUtil.class,
 					"getFolders", _getFoldersParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -261,7 +261,7 @@ public class JournalFolderServiceHttp {
 		int end, com.liferay.portal.kernel.util.OrderByComparator obc)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(JournalFolderServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(JournalFolderServiceUtil.class,
 					"getFoldersAndArticles",
 					_getFoldersAndArticlesParameterTypes6);
 
@@ -294,7 +294,7 @@ public class JournalFolderServiceHttp {
 		long groupId, java.util.List<java.lang.Long> folderIds, int status)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(JournalFolderServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(JournalFolderServiceUtil.class,
 					"getFoldersAndArticlesCount",
 					_getFoldersAndArticlesCountParameterTypes7);
 
@@ -327,7 +327,7 @@ public class JournalFolderServiceHttp {
 		long groupId, long folderId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(JournalFolderServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(JournalFolderServiceUtil.class,
 					"getFoldersAndArticlesCount",
 					_getFoldersAndArticlesCountParameterTypes8);
 
@@ -360,7 +360,7 @@ public class JournalFolderServiceHttp {
 		long groupId, long parentFolderId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(JournalFolderServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(JournalFolderServiceUtil.class,
 					"getFoldersCount", _getFoldersCountParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -392,7 +392,7 @@ public class JournalFolderServiceHttp {
 		java.util.List<java.lang.Long> folderIds, long groupId, long folderId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(JournalFolderServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(JournalFolderServiceUtil.class,
 					"getSubfolderIds", _getSubfolderIdsParameterTypes10);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -421,7 +421,7 @@ public class JournalFolderServiceHttp {
 		boolean recurse)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(JournalFolderServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(JournalFolderServiceUtil.class,
 					"getSubfolderIds", _getSubfolderIdsParameterTypes11);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -455,7 +455,7 @@ public class JournalFolderServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(JournalFolderServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(JournalFolderServiceUtil.class,
 					"moveFolder", _moveFolderParameterTypes12);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -495,7 +495,7 @@ public class JournalFolderServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(JournalFolderServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(JournalFolderServiceUtil.class,
 					"updateFolder", _updateFolderParameterTypes13);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,

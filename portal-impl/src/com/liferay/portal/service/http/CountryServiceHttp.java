@@ -59,7 +59,7 @@ public class CountryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(CountryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(CountryServiceUtil.class,
 					"addCountry", _addCountryParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, name,
@@ -95,7 +95,7 @@ public class CountryServiceHttp {
 		HttpPrincipal httpPrincipal, long countryId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(CountryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(CountryServiceUtil.class,
 					"fetchCountry", _fetchCountryParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, countryId);
@@ -126,7 +126,7 @@ public class CountryServiceHttp {
 		HttpPrincipal httpPrincipal, java.lang.String a2)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(CountryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(CountryServiceUtil.class,
 					"fetchCountryByA2", _fetchCountryByA2ParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, a2);
@@ -157,7 +157,7 @@ public class CountryServiceHttp {
 		HttpPrincipal httpPrincipal, java.lang.String a3)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(CountryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(CountryServiceUtil.class,
 					"fetchCountryByA3", _fetchCountryByA3ParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, a3);
@@ -188,7 +188,7 @@ public class CountryServiceHttp {
 		HttpPrincipal httpPrincipal)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(CountryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(CountryServiceUtil.class,
 					"getCountries", _getCountriesParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey);
@@ -219,7 +219,7 @@ public class CountryServiceHttp {
 		HttpPrincipal httpPrincipal, boolean active)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(CountryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(CountryServiceUtil.class,
 					"getCountries", _getCountriesParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, active);
@@ -251,7 +251,7 @@ public class CountryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(CountryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(CountryServiceUtil.class,
 					"getCountry", _getCountryParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, countryId);
@@ -287,7 +287,7 @@ public class CountryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(CountryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(CountryServiceUtil.class,
 					"getCountryByA2", _getCountryByA2ParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, a2);
@@ -323,7 +323,7 @@ public class CountryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(CountryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(CountryServiceUtil.class,
 					"getCountryByA3", _getCountryByA3ParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, a3);
@@ -359,7 +359,7 @@ public class CountryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(CountryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(CountryServiceUtil.class,
 					"getCountryByName", _getCountryByNameParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, name);

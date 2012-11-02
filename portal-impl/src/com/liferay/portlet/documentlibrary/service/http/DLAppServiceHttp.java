@@ -63,7 +63,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"addFileEntry", _addFileEntryParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -105,7 +105,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"addFileEntry", _addFileEntryParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -147,7 +147,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"addFileEntry", _addFileEntryParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -187,7 +187,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"addFileShortcut", _addFileShortcutParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -226,7 +226,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"addFolder", _addFolderParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -267,7 +267,7 @@ public class DLAppServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException,
 			java.io.IOException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"addTempFileEntry", _addTempFileEntryParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -310,7 +310,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"addTempFileEntry", _addTempFileEntryParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -347,7 +347,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"cancelCheckOut", _cancelCheckOutParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -381,7 +381,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"checkInFileEntry", _checkInFileEntryParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -414,7 +414,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"checkInFileEntry", _checkInFileEntryParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -448,7 +448,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"checkInFileEntry", _checkInFileEntryParameterTypes10);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -482,7 +482,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"checkOutFileEntry", _checkOutFileEntryParameterTypes11);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -517,7 +517,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"checkOutFileEntry", _checkOutFileEntryParameterTypes12);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -557,7 +557,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"copyFolder", _copyFolderParameterTypes13);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -595,7 +595,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"deleteFileEntry", _deleteFileEntryParameterTypes14);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -628,7 +628,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"deleteFileEntryByTitle",
 					_deleteFileEntryByTitleParameterTypes15);
 
@@ -662,7 +662,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"deleteFileShortcut", _deleteFileShortcutParameterTypes16);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -695,7 +695,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"deleteFileVersion", _deleteFileVersionParameterTypes17);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -727,7 +727,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"deleteFolder", _deleteFolderParameterTypes18);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, folderId);
@@ -759,7 +759,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"deleteFolder", _deleteFolderParameterTypes19);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -793,7 +793,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"deleteTempFileEntry", _deleteTempFileEntryParameterTypes20);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -826,7 +826,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"getFileEntries", _getFileEntriesParameterTypes21);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -864,7 +864,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"getFileEntries", _getFileEntriesParameterTypes22);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -902,7 +902,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"getFileEntries", _getFileEntriesParameterTypes23);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -940,7 +940,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"getFileEntries", _getFileEntriesParameterTypes24);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -978,7 +978,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"getFileEntries", _getFileEntriesParameterTypes25);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -1017,7 +1017,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"getFileEntries", _getFileEntriesParameterTypes26);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -1055,7 +1055,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"getFileEntriesAndFileShortcuts",
 					_getFileEntriesAndFileShortcutsParameterTypes27);
 
@@ -1094,7 +1094,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"getFileEntriesAndFileShortcutsCount",
 					_getFileEntriesAndFileShortcutsCountParameterTypes28);
 
@@ -1133,7 +1133,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"getFileEntriesAndFileShortcutsCount",
 					_getFileEntriesAndFileShortcutsCountParameterTypes29);
 
@@ -1171,7 +1171,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"getFileEntriesCount", _getFileEntriesCountParameterTypes30);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -1208,7 +1208,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"getFileEntriesCount", _getFileEntriesCountParameterTypes31);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -1245,7 +1245,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"getFileEntry", _getFileEntryParameterTypes32);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -1283,7 +1283,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"getFileEntry", _getFileEntryParameterTypes33);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -1320,7 +1320,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"getFileEntryByUuidAndGroupId",
 					_getFileEntryByUuidAndGroupIdParameterTypes34);
 
@@ -1358,7 +1358,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"getFileShortcut", _getFileShortcutParameterTypes35);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -1395,7 +1395,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"getFolder", _getFolderParameterTypes36);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, folderId);
@@ -1432,7 +1432,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"getFolder", _getFolderParameterTypes37);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -1469,7 +1469,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"getFolders", _getFoldersParameterTypes38);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -1507,7 +1507,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"getFolders", _getFoldersParameterTypes39);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -1545,7 +1545,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"getFolders", _getFoldersParameterTypes40);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -1585,7 +1585,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"getFolders", _getFoldersParameterTypes41);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -1625,7 +1625,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"getFolders", _getFoldersParameterTypes42);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -1664,7 +1664,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"getFolders", _getFoldersParameterTypes43);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -1702,7 +1702,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"getFolders", _getFoldersParameterTypes44);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -1740,7 +1740,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"getFoldersAndFileEntriesAndFileShortcuts",
 					_getFoldersAndFileEntriesAndFileShortcutsParameterTypes45);
 
@@ -1781,7 +1781,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"getFoldersAndFileEntriesAndFileShortcuts",
 					_getFoldersAndFileEntriesAndFileShortcutsParameterTypes46);
 
@@ -1822,7 +1822,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"getFoldersAndFileEntriesAndFileShortcuts",
 					_getFoldersAndFileEntriesAndFileShortcutsParameterTypes47);
 
@@ -1862,7 +1862,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"getFoldersAndFileEntriesAndFileShortcutsCount",
 					_getFoldersAndFileEntriesAndFileShortcutsCountParameterTypes48);
 
@@ -1901,7 +1901,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"getFoldersAndFileEntriesAndFileShortcutsCount",
 					_getFoldersAndFileEntriesAndFileShortcutsCountParameterTypes49);
 
@@ -1940,7 +1940,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"getFoldersCount", _getFoldersCountParameterTypes50);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -1977,7 +1977,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"getFoldersCount", _getFoldersCountParameterTypes51);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -2015,7 +2015,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"getFoldersCount", _getFoldersCountParameterTypes52);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -2052,7 +2052,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"getFoldersFileEntriesCount",
 					_getFoldersFileEntriesCountParameterTypes53);
 
@@ -2091,7 +2091,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"getGroupFileEntries", _getGroupFileEntriesParameterTypes54);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -2129,7 +2129,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"getGroupFileEntries", _getGroupFileEntriesParameterTypes55);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -2167,7 +2167,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"getGroupFileEntries", _getGroupFileEntriesParameterTypes56);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -2206,7 +2206,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"getGroupFileEntries", _getGroupFileEntriesParameterTypes57);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -2245,7 +2245,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"getGroupFileEntries", _getGroupFileEntriesParameterTypes58);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -2282,7 +2282,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"getGroupFileEntriesCount",
 					_getGroupFileEntriesCountParameterTypes59);
 
@@ -2320,7 +2320,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"getGroupFileEntriesCount",
 					_getGroupFileEntriesCountParameterTypes60);
 
@@ -2359,7 +2359,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"getGroupFileEntriesCount",
 					_getGroupFileEntriesCountParameterTypes61);
 
@@ -2397,7 +2397,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"getMountFolders", _getMountFoldersParameterTypes62);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -2435,7 +2435,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"getMountFolders", _getMountFoldersParameterTypes63);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -2473,7 +2473,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"getMountFolders", _getMountFoldersParameterTypes64);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -2510,7 +2510,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"getMountFoldersCount",
 					_getMountFoldersCountParameterTypes65);
 
@@ -2549,7 +2549,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"getSubfolderIds", _getSubfolderIdsParameterTypes66);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -2582,7 +2582,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"getSubfolderIds", _getSubfolderIdsParameterTypes67);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -2620,7 +2620,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"getSubfolderIds", _getSubfolderIdsParameterTypes68);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -2658,7 +2658,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"getTempFileEntryNames",
 					_getTempFileEntryNamesParameterTypes69);
 
@@ -2696,7 +2696,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"lockFileEntry", _lockFileEntryParameterTypes70);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -2734,7 +2734,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"lockFileEntry", _lockFileEntryParameterTypes71);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -2771,7 +2771,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"lockFolder", _lockFolderParameterTypes72);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -2809,7 +2809,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"lockFolder", _lockFolderParameterTypes73);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -2847,7 +2847,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"moveFileEntry", _moveFileEntryParameterTypes74);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -2885,7 +2885,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"moveFileEntryFromTrash",
 					_moveFileEntryFromTrashParameterTypes75);
 
@@ -2923,7 +2923,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"moveFileEntryToTrash",
 					_moveFileEntryToTrashParameterTypes76);
 
@@ -2962,7 +2962,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"moveFileShortcutFromTrash",
 					_moveFileShortcutFromTrashParameterTypes77);
 
@@ -3000,7 +3000,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"moveFileShortcutToTrash",
 					_moveFileShortcutToTrashParameterTypes78);
 
@@ -3039,7 +3039,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"moveFolder", _moveFolderParameterTypes79);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -3077,7 +3077,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"moveFolderFromTrash", _moveFolderFromTrashParameterTypes80);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -3114,7 +3114,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"moveFolderToTrash", _moveFolderToTrashParameterTypes81);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, folderId);
@@ -3151,7 +3151,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"refreshFileEntryLock",
 					_refreshFileEntryLockParameterTypes82);
 
@@ -3190,7 +3190,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"refreshFolderLock", _refreshFolderLockParameterTypes83);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -3227,7 +3227,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"restoreFileEntryFromTrash",
 					_restoreFileEntryFromTrashParameterTypes84);
 
@@ -3261,7 +3261,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"restoreFileShortcutFromTrash",
 					_restoreFileShortcutFromTrashParameterTypes85);
 
@@ -3295,7 +3295,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"restoreFolderFromTrash",
 					_restoreFolderFromTrashParameterTypes86);
 
@@ -3329,7 +3329,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"revertFileEntry", _revertFileEntryParameterTypes87);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -3363,7 +3363,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portal.kernel.search.SearchException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"search", _searchParameterTypes88);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -3398,7 +3398,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portal.kernel.search.SearchException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"search", _searchParameterTypes89);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -3431,7 +3431,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"unlockFileEntry", _unlockFileEntryParameterTypes90);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -3464,7 +3464,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"unlockFileEntry", _unlockFileEntryParameterTypes91);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -3497,7 +3497,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"unlockFolder", _unlockFolderParameterTypes92);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -3531,7 +3531,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"unlockFolder", _unlockFolderParameterTypes93);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -3568,7 +3568,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"updateFileEntry", _updateFileEntryParameterTypes94);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -3610,7 +3610,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"updateFileEntry", _updateFileEntryParameterTypes95);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -3653,7 +3653,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"updateFileEntry", _updateFileEntryParameterTypes96);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -3695,7 +3695,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"updateFileEntryAndCheckIn",
 					_updateFileEntryAndCheckInParameterTypes97);
 
@@ -3739,7 +3739,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"updateFileEntryAndCheckIn",
 					_updateFileEntryAndCheckInParameterTypes98);
 
@@ -3780,7 +3780,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"updateFileShortcut", _updateFileShortcutParameterTypes99);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -3819,7 +3819,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"updateFolder", _updateFolderParameterTypes100);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -3856,7 +3856,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"verifyFileEntryCheckOut",
 					_verifyFileEntryCheckOutParameterTypes101);
 
@@ -3894,7 +3894,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"verifyFileEntryLock", _verifyFileEntryLockParameterTypes102);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -3931,7 +3931,7 @@ public class DLAppServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"verifyInheritableLock",
 					_verifyInheritableLockParameterTypes103);
 

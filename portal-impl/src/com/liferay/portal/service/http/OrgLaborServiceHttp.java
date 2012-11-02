@@ -60,7 +60,7 @@ public class OrgLaborServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(OrgLaborServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(OrgLaborServiceUtil.class,
 					"addOrgLabor", _addOrgLaborParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -99,7 +99,7 @@ public class OrgLaborServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(OrgLaborServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(OrgLaborServiceUtil.class,
 					"deleteOrgLabor", _deleteOrgLaborParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -132,7 +132,7 @@ public class OrgLaborServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(OrgLaborServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(OrgLaborServiceUtil.class,
 					"getOrgLabor", _getOrgLaborParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -169,7 +169,7 @@ public class OrgLaborServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(OrgLaborServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(OrgLaborServiceUtil.class,
 					"getOrgLabors", _getOrgLaborsParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -209,7 +209,7 @@ public class OrgLaborServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(OrgLaborServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(OrgLaborServiceUtil.class,
 					"updateOrgLabor", _updateOrgLaborParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,

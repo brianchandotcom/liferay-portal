@@ -60,7 +60,7 @@ public class AssetTagPropertyServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(AssetTagPropertyServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(AssetTagPropertyServiceUtil.class,
 					"addTagProperty", _addTagPropertyParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, tagId,
@@ -97,7 +97,7 @@ public class AssetTagPropertyServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(AssetTagPropertyServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(AssetTagPropertyServiceUtil.class,
 					"deleteTagProperty", _deleteTagPropertyParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -129,7 +129,7 @@ public class AssetTagPropertyServiceHttp {
 		HttpPrincipal httpPrincipal, long tagId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(AssetTagPropertyServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(AssetTagPropertyServiceUtil.class,
 					"getTagProperties", _getTagPropertiesParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, tagId);
@@ -160,7 +160,7 @@ public class AssetTagPropertyServiceHttp {
 		HttpPrincipal httpPrincipal, long companyId, java.lang.String key)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(AssetTagPropertyServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(AssetTagPropertyServiceUtil.class,
 					"getTagPropertyValues", _getTagPropertyValuesParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -194,7 +194,7 @@ public class AssetTagPropertyServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(AssetTagPropertyServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(AssetTagPropertyServiceUtil.class,
 					"updateTagProperty", _updateTagPropertyParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,

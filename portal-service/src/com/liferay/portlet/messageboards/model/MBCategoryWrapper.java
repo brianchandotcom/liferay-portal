@@ -550,6 +550,12 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 		return _mbCategory.getAncestors();
 	}
 
+	public com.liferay.portlet.messageboards.model.MBCategory getParentCategory()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _mbCategory.getParentCategory();
+	}
+
 	public boolean isRoot() {
 		return _mbCategory.isRoot();
 	}

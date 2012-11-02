@@ -19,6 +19,8 @@
 <%@ page import="com.liferay.portal.LocaleException" %><%@
 page import="com.liferay.portal.NoSuchLayoutException" %><%@
 page import="com.liferay.portal.kernel.editor.EditorUtil" %><%@
+page import="com.liferay.portal.kernel.template.TemplateConstants" %><%@
+page import="com.liferay.portal.kernel.template.TemplateManagerUtil" %><%@
 page import="com.liferay.portal.kernel.xml.Document" %><%@
 page import="com.liferay.portal.kernel.xml.Element" %><%@
 page import="com.liferay.portal.kernel.xml.Node" %><%@
@@ -81,7 +83,6 @@ page import="com.liferay.portlet.journal.model.JournalFolderConstants" %><%@
 page import="com.liferay.portlet.journal.model.JournalSearchConstants" %><%@
 page import="com.liferay.portlet.journal.model.JournalStructure" %><%@
 page import="com.liferay.portlet.journal.model.JournalTemplate" %><%@
-page import="com.liferay.portlet.journal.model.JournalTemplateConstants" %><%@
 page import="com.liferay.portlet.journal.model.impl.JournalArticleImpl" %><%@
 page import="com.liferay.portlet.journal.search.ArticleDisplayTerms" %><%@
 page import="com.liferay.portlet.journal.search.ArticleSearch" %><%@

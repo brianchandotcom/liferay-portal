@@ -15,6 +15,7 @@
 package com.liferay.portlet.dynamicdatamapping.action;
 
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
+import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -49,7 +50,7 @@ public class GetTemplateAction extends Action {
 				templateId);
 
 			String extension = GetterUtil.getString(
-				template.getLanguage(), DDMTemplateConstants.LANG_TYPE_VM);
+				template.getLanguage(), TemplateConstants.LANG_TYPE_VM);
 
 			String script = template.getScript();
 

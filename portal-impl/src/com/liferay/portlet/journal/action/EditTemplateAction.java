@@ -17,6 +17,7 @@ package com.liferay.portlet.journal.action;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -41,7 +42,6 @@ import com.liferay.portlet.journal.TemplateSmallImageNameException;
 import com.liferay.portlet.journal.TemplateSmallImageSizeException;
 import com.liferay.portlet.journal.TemplateXslException;
 import com.liferay.portlet.journal.model.JournalTemplate;
-import com.liferay.portlet.journal.model.JournalTemplateConstants;
 import com.liferay.portlet.journal.service.JournalTemplateServiceUtil;
 import com.liferay.portlet.journal.util.JournalUtil;
 
@@ -269,8 +269,7 @@ public class EditTemplateAction extends PortletAction {
 		}
 
 		String langType = ParamUtil.getString(
-			uploadPortletRequest, "langType",
-			JournalTemplateConstants.LANG_TYPE_XSL);
+			uploadPortletRequest, "langType", TemplateConstants.LANG_TYPE_XSL);
 
 		boolean cacheable = ParamUtil.getBoolean(
 			uploadPortletRequest, "cacheable");

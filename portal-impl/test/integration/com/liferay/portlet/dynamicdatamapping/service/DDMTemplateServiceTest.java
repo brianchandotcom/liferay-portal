@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.dynamicdatamapping.service;
 
+import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.StringPool;
@@ -51,7 +52,7 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 	@Test
 	public void testAddTemplateWithDuplicateKey() throws Exception {
 		String templateKey = ServiceTestUtil.randomString();
-		String language = DDMTemplateConstants.LANG_TYPE_VM;
+		String language = TemplateConstants.LANG_TYPE_VM;
 
 		try {
 			addTemplate(
@@ -73,7 +74,7 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 
 	@Test
 	public void testAddTemplateWithoutName() throws Exception {
-		String language = DDMTemplateConstants.LANG_TYPE_VM;
+		String language = TemplateConstants.LANG_TYPE_VM;
 
 		try {
 			addTemplate(
@@ -95,7 +96,7 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 				_classNameId, 0, null, "Test Template",
 				DDMTemplateConstants.TEMPLATE_TYPE_FORM,
 				DDMTemplateConstants.TEMPLATE_MODE_CREATE,
-				DDMTemplateConstants.LANG_TYPE_VM, StringPool.BLANK);
+				TemplateConstants.LANG_TYPE_VM, StringPool.BLANK);
 
 			Assert.fail();
 		}

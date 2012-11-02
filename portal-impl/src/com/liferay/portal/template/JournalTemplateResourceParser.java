@@ -17,6 +17,7 @@ package com.liferay.portal.template;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.template.JournalTemplateResource;
+import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.util.CharPool;
@@ -35,7 +36,7 @@ public class JournalTemplateResourceParser implements TemplateResourceParser {
 		throws TemplateException {
 
 		int pos = templateId.indexOf(
-			TemplateResource.JOURNAL_SEPARATOR + StringPool.SLASH);
+			TemplateConstants.JOURNAL_SEPARATOR + StringPool.SLASH);
 
 		if (pos == -1) {
 			return null;

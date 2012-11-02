@@ -27,10 +27,10 @@ if (Validator.isNotNull(scriptContent)) {
 <aui:select label="language-type" name="language">
 
 	<%
-	for (int i = 0; i < DDMTemplateConstants.LANG_TYPES.length; i++) {
+	for (String templateManagerName : TemplateManagerUtil.getTemplateManagerNames()) {
 	%>
 
-		<aui:option label="<%= DDMTemplateConstants.LANG_TYPES[i].toUpperCase() %>" selected="<%= language.equals(DDMTemplateConstants.LANG_TYPES[i]) %>" value="<%= DDMTemplateConstants.LANG_TYPES[i] %>" />
+		<aui:option label="<%= templateManagerName.toUpperCase() %>" selected="<%= language.equals(templateManagerName) %>" value="<%= templateManagerName %>" />
 
 	<%
 	}

@@ -15,11 +15,11 @@
 package com.liferay.portlet.journal.action;
 
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
+import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMXMLUtil;
-import com.liferay.portlet.journal.model.JournalTemplateConstants;
 import com.liferay.portlet.journal.util.JournalUtil;
 
 import javax.servlet.http.HttpServletRequest;
@@ -45,10 +45,10 @@ public class GetTemplateContentAction extends Action {
 			String xslContent = ParamUtil.getString(request, "xslContent");
 			boolean formatXsl = ParamUtil.getBoolean(request, "formatXsl");
 			String langType = ParamUtil.getString(
-				request, "langType", JournalTemplateConstants.LANG_TYPE_XSL);
+				request, "langType", TemplateConstants.LANG_TYPE_XSL);
 
 			if (formatXsl) {
-				if (langType.equals(JournalTemplateConstants.LANG_TYPE_VM)) {
+				if (langType.equals(TemplateConstants.LANG_TYPE_VM)) {
 					xslContent = JournalUtil.formatVM(xslContent);
 				}
 				else {

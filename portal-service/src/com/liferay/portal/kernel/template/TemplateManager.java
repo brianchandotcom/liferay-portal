@@ -19,10 +19,6 @@ package com.liferay.portal.kernel.template;
  */
 public interface TemplateManager {
 
-	public static final String FREEMARKER = "FREEMARKER";
-
-	public static final String VELOCITY = "VELOCITY";
-
 	public void destroy();
 
 	public void destroy(ClassLoader classLoader);

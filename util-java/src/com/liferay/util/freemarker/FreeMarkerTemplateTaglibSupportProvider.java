@@ -17,7 +17,7 @@ package com.liferay.util.freemarker;
 import com.liferay.portal.kernel.servlet.PortletServlet;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.template.Template;
-import com.liferay.portal.kernel.template.TemplateResource;
+import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateTaglibSupportProvider;
 import com.liferay.portal.util.PortalUtil;
 
@@ -53,7 +53,7 @@ public class FreeMarkerTemplateTaglibSupportProvider
 
 		template.put(
 			"fullTemplatesPath", servletContextName.concat(
-				TemplateResource.SERVLET_SEPARATOR));
+				TemplateConstants.SERVLET_SEPARATOR));
 
 		ServletConfig servletConfig =
 			(ServletConfig)portletRequest.getAttribute(

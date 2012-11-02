@@ -21,8 +21,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.plugin.PluginPackage;
 import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.template.Template;
+import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateContextType;
-import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.template.TemplateResourceLoaderUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -474,7 +474,7 @@ public class LayoutTemplateLocalServiceImpl
 						layoutTemplateId;
 
 				TemplateResourceLoaderUtil.clearCache(
-					TemplateManager.VELOCITY, templateId);
+					TemplateConstants.LANG_TYPE_VM, templateId);
 
 				_warStandard.remove(layoutTemplateId);
 			}
@@ -484,7 +484,7 @@ public class LayoutTemplateLocalServiceImpl
 						layoutTemplateId;
 
 				TemplateResourceLoaderUtil.clearCache(
-					TemplateManager.VELOCITY, templateId);
+					TemplateConstants.LANG_TYPE_VM, templateId);
 
 				_warCustom.remove(layoutTemplateId);
 			}
@@ -510,7 +510,7 @@ public class LayoutTemplateLocalServiceImpl
 
 			try {
 				TemplateResourceLoaderUtil.clearCache(
-					TemplateManager.VELOCITY, templateId);
+					TemplateConstants.LANG_TYPE_VM, templateId);
 			}
 			catch (Exception e) {
 				_log.error(
@@ -535,7 +535,7 @@ public class LayoutTemplateLocalServiceImpl
 
 			try {
 				TemplateResourceLoaderUtil.clearCache(
-					TemplateManager.VELOCITY, templateId);
+					TemplateConstants.LANG_TYPE_VM, templateId);
 			}
 			catch (Exception e) {
 				_log.error(
@@ -555,7 +555,7 @@ public class LayoutTemplateLocalServiceImpl
 			InitColumnProcessor processor = new InitColumnProcessor();
 
 			Template template = TemplateManagerUtil.getTemplate(
-				TemplateManager.VELOCITY,
+				TemplateConstants.LANG_TYPE_VM,
 				new StringTemplateResource(
 					velocityTemplateId, velocityTemplateContent),
 				TemplateContextType.STANDARD);

@@ -16,7 +16,7 @@ package com.liferay.portlet.journal.util;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.templateparser.BaseTransformerListener;
+import com.liferay.portal.kernel.templateparser.TransformerListener;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -26,33 +26,37 @@ import java.util.Map;
 /**
  * @author Raymond Augé
  */
-public class ViewCounterTransformerListener extends BaseTransformerListener {
+public class ViewCounterTransformerListener implements TransformerListener {
 
-	@Override
-	public String onOutput(String s) {
+	public String onOutput(
+		String output, String languageId, Map<String, String> tokens) {
+
 		if (_log.isDebugEnabled()) {
 			_log.debug("onOutput");
 		}
 
-		return replace(s);
+		return replace(output, tokens);
 	}
 
-	@Override
-	public String onScript(String s) {
+	public String onScript(
+		String script, String xml, String languageId,
+		Map<String, String> tokens) {
+
 		if (_log.isDebugEnabled()) {
 			_log.debug("onScript");
 		}
 
-		return s;
+		return script;
 	}
 
-	@Override
-	public String onXml(String s) {
+	public String onXml(
+		String xml, String languageId, Map<String, String> tokens) {
+
 		if (_log.isDebugEnabled()) {
 			_log.debug("onXml");
 		}
 
-		return s;
+		return xml;
 	}
 
 	/**
@@ -60,9 +64,7 @@ public class ViewCounterTransformerListener extends BaseTransformerListener {
 	 *
 	 * @return the processed string
 	 */
-	protected String replace(String s) {
-		Map<String, String> tokens = getTokens();
-
+	protected String replace(String s, Map<String, String> tokens) {
 		String articleResourcePK = tokens.get("article_resource_pk");
 
 		String counterToken = StringPool.AT + "view_counter" + StringPool.AT;

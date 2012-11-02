@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -46,7 +47,6 @@ import com.liferay.portlet.journal.TemplateSmallImageSizeException;
 import com.liferay.portlet.journal.TemplateXslException;
 import com.liferay.portlet.journal.model.JournalStructure;
 import com.liferay.portlet.journal.model.JournalTemplate;
-import com.liferay.portlet.journal.model.JournalTemplateConstants;
 import com.liferay.portlet.journal.service.base.JournalTemplateLocalServiceBaseImpl;
 import com.liferay.portlet.journal.util.JournalUtil;
 
@@ -82,7 +82,7 @@ public class JournalTemplateLocalServiceImpl
 
 		try {
 			if (formatXsl) {
-				if (langType.equals(JournalTemplateConstants.LANG_TYPE_VM)) {
+				if (langType.equals(TemplateConstants.LANG_TYPE_VM)) {
 					xsl = JournalUtil.formatVM(xsl);
 				}
 				else {
@@ -545,7 +545,7 @@ public class JournalTemplateLocalServiceImpl
 
 		try {
 			if (formatXsl) {
-				if (langType.equals(JournalTemplateConstants.LANG_TYPE_VM)) {
+				if (langType.equals(TemplateConstants.LANG_TYPE_VM)) {
 					xsl = JournalUtil.formatVM(xsl);
 				}
 				else {

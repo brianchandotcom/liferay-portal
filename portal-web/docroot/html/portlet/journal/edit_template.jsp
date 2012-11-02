@@ -65,7 +65,7 @@ if (xslContent == null) {
 	xsl = BeanParamUtil.getString(template, request, "xsl");
 }
 
-String langType = BeanParamUtil.getString(template, request, "langType", JournalTemplateConstants.LANG_TYPE_VM);
+String langType = BeanParamUtil.getString(template, request, "langType", TemplateConstants.LANG_TYPE_VM);
 
 String editorContent = xsl;
 
@@ -201,10 +201,10 @@ if (template == null) {
 		<aui:select label="language-type" name="langType">
 
 			<%
-			for (int i = 0; i < JournalTemplateConstants.LANG_TYPES.length; i++) {
+			for (String templateManagerName : TemplateManagerUtil.getTemplateManagerNames()) {
 			%>
 
-				<aui:option label="<%= JournalTemplateConstants.LANG_TYPES[i].toUpperCase() %>" selected="<%= langType.equals(JournalTemplateConstants.LANG_TYPES[i]) %>" value="<%= JournalTemplateConstants.LANG_TYPES[i] %>" />
+				<aui:option label="<%= templateManagerName.toUpperCase() %>" selected="<%= langType.equals(templateManagerName) %>" value="<%= templateManagerName %>" />
 
 			<%
 			}

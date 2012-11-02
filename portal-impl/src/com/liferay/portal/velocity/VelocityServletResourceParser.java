@@ -17,7 +17,7 @@ package com.liferay.portal.velocity;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
-import com.liferay.portal.kernel.template.TemplateResource;
+import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.template.URLResourceParser;
 import com.liferay.portal.util.PortalUtil;
@@ -36,7 +36,7 @@ public class VelocityServletResourceParser extends URLResourceParser {
 
 	@Override
 	public URL getURL(String source) throws IOException {
-		int pos = source.indexOf(TemplateResource.SERVLET_SEPARATOR);
+		int pos = source.indexOf(TemplateConstants.SERVLET_SEPARATOR);
 
 		if (pos == -1) {
 			return null;
@@ -60,7 +60,7 @@ public class VelocityServletResourceParser extends URLResourceParser {
 		}
 
 		String name = source.substring(
-			pos + TemplateResource.SERVLET_SEPARATOR.length());
+			pos + TemplateConstants.SERVLET_SEPARATOR.length());
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(

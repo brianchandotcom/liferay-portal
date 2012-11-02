@@ -79,9 +79,7 @@ public class TemplateManagerUtil {
 		return templateManagers.get(templateManagerName);
 	}
 
-	public static Set<String> getTemplateManagerNames(
-		String templateManagerName) {
-
+	public static Set<String> getTemplateManagerNames() {
 		Map<String, TemplateManager> templateManagers = _getTemplateManagers();
 
 		return templateManagers.keySet();

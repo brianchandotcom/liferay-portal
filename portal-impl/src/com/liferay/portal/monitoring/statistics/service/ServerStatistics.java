@@ -16,7 +16,7 @@ package com.liferay.portal.monitoring.statistics.service;
 
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.monitoring.statistics.DataSampleProcessor;
-import com.liferay.portal.kernel.util.MethodKey;
+import com.liferay.portal.monitoring.jmx.MethodSignature;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -96,9 +96,10 @@ public class ServerStatistics
 	public void processDataSample(
 		ServiceRequestDataSample serviceRequestDataSample) {
 
-		MethodKey methodKey = serviceRequestDataSample.getMethodKey();
+		MethodSignature methodSignature =
+			serviceRequestDataSample.getMethodSignature();
 
-		String className = methodKey.getClassName();
+		String className = methodSignature.getClassName();
 
 		ServiceStatistics serviceStatistics = _serviceStatistics.get(className);
 

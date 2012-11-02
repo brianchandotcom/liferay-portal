@@ -14,10 +14,10 @@
 
 package com.liferay.portal.tools.jspc.resin;
 
-import com.liferay.portal.kernel.util.MethodHandler;
-import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.StackTraceUtil;
 import com.liferay.portal.util.FileImpl;
+
+import java.lang.reflect.Method;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -75,14 +75,13 @@ public class BatchJspCompiler {
 		arguments.add(_classDir);
 		arguments.addAll(Arrays.asList(fileNames));
 
-		MethodKey methodKey = new MethodKey(
-			"com.caucho.jsp.JspCompiler", "main", String[].class);
+		Class<?> mainClass = Class.forName("com.caucho.jsp.JspCompiler");
 
-		MethodHandler methodHandler = new MethodHandler(
-			methodKey, (Object)arguments.toArray(new String[arguments.size()]));
+		Method mainMethod = mainClass.getMethod("main", String[].class);
 
 		try {
-			methodHandler.invoke(false);
+			mainMethod.invoke(
+				null, (Object)arguments.toArray(new String[arguments.size()]));
 		}
 		catch (Exception e) {
 			_fileUtil.write(

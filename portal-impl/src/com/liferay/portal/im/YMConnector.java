@@ -16,7 +16,6 @@ package com.liferay.portal.im;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.MethodCache;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.util.PropsUtil;
 
@@ -26,6 +25,7 @@ import java.lang.reflect.Method;
  * @author Brian Wing Shun Chan
  * @author Brett Randall
  * @author Bruno Farache
+ * @author Shuyang Zhou
  */
 public class YMConnector {
 
@@ -46,7 +46,14 @@ public class YMConnector {
 
 	private void _connect() {
 		try {
-			_ym = Class.forName(_SESSION).newInstance();
+			Class<?> clazz = Class.forName(_SESSION);
+
+			_ym = clazz.newInstance();
+
+			_loginMethod = clazz.getMethod("login", String.class, String.class);
+			_logoutMethod = clazz.getMethod("logout");
+			_sendMessageMethod = clazz.getMethod(
+				"sendMessage", String.class, String.class);
 		}
 		catch (Exception e) {
 			_jYMSGLibraryFound = false;
@@ -62,11 +69,7 @@ public class YMConnector {
 				String login = PropsUtil.get(PropsKeys.YM_LOGIN);
 				String password = PropsUtil.get(PropsKeys.YM_PASSWORD);
 
-				Method method = MethodCache.get(
-					_SESSION, "login",
-					new Class[] {String.class, String.class});
-
-				method.invoke(_ym, new Object[] {login, password});
+				_loginMethod.invoke(_ym, login, password);
 			}
 		}
 		catch (Exception e) {
@@ -77,9 +80,7 @@ public class YMConnector {
 	private void _disconnect() {
 		try {
 			if (_ym != null) {
-				Method method = MethodCache.get(_SESSION, "logout");
-
-				method.invoke(_ym, new Object[] {});
+				_logoutMethod.invoke(_ym);
 			}
 		}
 		catch (Exception e) {
@@ -96,11 +97,7 @@ public class YMConnector {
 			}
 
 			if (_jYMSGLibraryFound) {
-				Method method = MethodCache.get(
-					_SESSION, "sendMessage",
-					new Class[] {String.class, String.class});
-
-				method.invoke(_ym, new Object[] {to, msg});
+				_sendMessageMethod.invoke(_ym, to, msg);
 			}
 		}
 		catch (Exception e) {
@@ -115,6 +112,9 @@ public class YMConnector {
 	private static YMConnector _instance = new YMConnector();
 
 	private boolean _jYMSGLibraryFound = true;
+	private Method _loginMethod;
+	private Method _logoutMethod;
+	private Method _sendMessageMethod;
 	private Object _ym;
 
 }

@@ -14,8 +14,8 @@
 
 package com.liferay.portal.monitoring.statistics.service;
 
-import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.monitoring.MonitorNames;
+import com.liferay.portal.monitoring.jmx.MethodSignature;
 import com.liferay.portal.monitoring.statistics.BaseDataSample;
 
 import java.lang.reflect.Method;
@@ -32,19 +32,15 @@ public class ServiceRequestDataSample extends BaseDataSample {
 
 		Method method = methodInvocation.getMethod();
 
-		String className = method.getDeclaringClass().getName();
-		String methodName = method.getName();
-		Class<?>[] parameterTypes = method.getParameterTypes();
+		_methodSignature = new MethodSignature(method);
 
-		_methodKey = new MethodKey(className, methodName, parameterTypes);
-
-		setDescription(_methodKey.toString());
+		setDescription(method.toString());
 	}
 
-	public MethodKey getMethodKey() {
-		return _methodKey;
+	public MethodSignature getMethodSignature() {
+		return _methodSignature;
 	}
 
-	private MethodKey _methodKey;
+	private MethodSignature _methodSignature;
 
 }

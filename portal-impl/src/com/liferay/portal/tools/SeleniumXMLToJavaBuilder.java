@@ -28,7 +28,7 @@ import jargs.gnu.CmdLineParser;
 
 import java.io.File;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -62,6 +62,33 @@ public class SeleniumXMLToJavaBuilder {
 		pageObjectSet = getPageObjects();
 	}
 
+	protected String getActionDefBlock(Element runBlock, String actionDefName) {
+		StringBundler sb = new StringBundler();
+
+		List<Element> commands = runBlock.elements();
+
+		boolean firstConditional = true;
+
+		for (Element command : commands) {
+			if (firstConditional) {
+				sb.append("if ");
+
+				firstConditional = false;
+			}
+			else {
+				sb.append("else if ");
+			}
+
+			sb.append(getCommandConditional(command, actionDefName));
+		}
+
+		sb.append("else {");
+		sb.append(getCommandDefaultCommand(actionDefName));
+		sb.append("}");
+
+		return sb.toString();
+	}
+
 	protected String getCommands(Element runBlock) {
 		return getCommands(runBlock, "");
 	}
@@ -76,10 +103,9 @@ public class SeleniumXMLToJavaBuilder {
 		if (runBlockName.equals("actiondef")) {
 			actionDefName = runBlock.attributeValue("name");
 
-			sb.append(handleActionDefBlock(runBlock, actionDefName));
+			sb.append(getActionDefBlock(runBlock, actionDefName));
 		}
 		else {
-
 			for (Element command : commands) {
 				String commandName = command.getName();
 
@@ -109,32 +135,6 @@ public class SeleniumXMLToJavaBuilder {
 				}
 			}
 		}
-
-		return sb.toString();
-	}
-
-	protected String handleActionDefBlock(Element runBlock, String actionDefName) {
-		StringBundler sb = new StringBundler();
-
-		List<Element> commands = runBlock.elements();
-
-		int count = 0;
-
-		sb.append("if ");
-
-		for (Element command : commands) {
-			if (count > 0) {
-				sb.append(" else if ");
-			}
-
-			sb.append(getCommandConditional(command, actionDefName));
-
-			count++;
-		}
-
-		sb.append(" else {");
-		sb.append("super." + actionDefName + "(params[0], params[1]);");
-		sb.append("}");
 
 		return sb.toString();
 	}
@@ -333,6 +333,26 @@ public class SeleniumXMLToJavaBuilder {
 
 	protected Set<String> pageObjectSet;
 
+	private String combineConditionals(
+		List<String> conditionalList, String delimiter) {
+
+		boolean firstConditional = true;
+
+		StringBundler sb = new StringBundler();
+
+		for (String conditional : conditionalList) {
+			if (!firstConditional) {
+				sb.append(" " + delimiter + " ");
+			}
+
+			sb.append(conditional);
+
+			firstConditional = false;
+		}
+
+		return sb.toString();
+	}
+
 	private String getCommandActions(Element command) {
 		StringBundler sb = new StringBundler();
 
@@ -434,86 +454,59 @@ public class SeleniumXMLToJavaBuilder {
 		return sb.toString();
 	}
 
-	private String getCommandConditional(Element conditional, String methodName) {
-		String conditionalName = conditional.getName();
+	private String getCommandConditional(
+		Element conditional, String actionDefName) {
 
-		StringBundler sb = new StringBundler();
-
-		StringBundler elementsClause = new StringBundler();
-		StringBundler isSeleniumClause = new StringBundler();
-		StringBundler startsWithClause = new StringBundler();
+		List<String> clauseList = new ArrayList<String>();
 
 		String elements = conditional.attributeValue("elements");
-		String isselenium = conditional.attributeValue("isselenium");
-		String startswith = conditional.attributeValue("startswith");
 
-		Boolean hasElements = !(elements == null) && !(elements.equals(""));
-		Boolean hasIsSelenium = !(isselenium == null) && isselenium.equals("true");
-		Boolean hasStartsWith = !(startswith == null) && !(startswith.equals(""));
-
-		String elementConditionalList = "";
-
-		if (hasElements) {
-			elementsClause.append("(");
+		if (!(elements == null) && !elements.equals("")) {
+			StringBundler sbConditional = new StringBundler();
 
 			String[] elementArray = elements.split(",");
 
-			Set<String> elementSet = new TreeSet<String>(Arrays.asList(elementArray));
+			List<String> elementList = new ArrayList<String>();
 
-			for (String element : elementSet) {
-				elementConditionalList = elementConditionalList + "param1.equals(\"";
-				elementConditionalList = elementConditionalList + element;
-				elementConditionalList = elementConditionalList + "\") ||\n";
+			for (String element : elementArray) {
+				elementList.add("param1.equals(\"" + element + "\")");
 			}
 
-			int x = elementConditionalList.lastIndexOf("|");
+			sbConditional.append("(");
+			sbConditional.append(combineConditionals(elementList, "||"));
+			sbConditional.append(")");
 
-			elementConditionalList = elementConditionalList.substring(0, x - 1);
-			elementConditionalList = elementConditionalList.trim();
-
-			elementsClause.append(elementConditionalList);
-
-			elementsClause.append(")");
+			clauseList.add(sbConditional.toString());
 		}
 
-		if (hasIsSelenium) {
-			isSeleniumClause.append("LiferaySeleniumHelper.isSelenium()");
+		String isselenium = conditional.attributeValue("isselenium");
 
+		if (!(isselenium == null) && isselenium.equals("true")) {
+			StringBundler sbConditional = new StringBundler();
+
+			sbConditional.append("LiferaySeleniumHelper.isSelenium()");
+
+			clauseList.add(sbConditional.toString());
 		}
 
-		if (hasStartsWith) {
-			startsWithClause.append("param1.startsWith(\"");
-			startsWithClause.append(startswith);
-			startsWithClause.append("\")");
+		String startswith = conditional.attributeValue("startswith");
+
+		if (!(startswith == null) && !startswith.equals("")) {
+			StringBundler sbConditional = new StringBundler();
+
+			sbConditional.append("param1.startsWith(\"");
+			sbConditional.append(startswith);
+			sbConditional.append("\")");
+
+			clauseList.add(sbConditional.toString());
 		}
+
+		StringBundler sb = new StringBundler();
 
 		sb.append("(");
-
-		if (hasElements) {
-			sb.append(elementsClause.toString());
-		}
-
-		if (hasElements && hasIsSelenium) {
-			sb.append(" && ");
-		}
-
-		if (hasIsSelenium) {
-			sb.append(isSeleniumClause.toString());
-		}
-
-		if ((hasIsSelenium && hasStartsWith) ||
-			(hasElements && hasStartsWith)) {
-			sb.append(" && ");
-		}
-
-		if (hasStartsWith) {
-			sb.append(startsWithClause.toString());
-		}
-
-		sb.append(") {\n");
-
-		sb.append(getCommands(conditional));
-
+		sb.append(combineConditionals(clauseList, "&&"));
+		sb.append(") {");
+		sb.append(getCommands(conditional, actionDefName));
 		sb.append("}");
 
 		return sb.toString();

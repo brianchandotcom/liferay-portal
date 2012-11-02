@@ -150,6 +150,8 @@ else if (yearNullable) {
 		function() {
 			if (handle) {
 				handle.detach();
+
+				handle = null;
 			}
 
 			return new A.DatePickerSelect(

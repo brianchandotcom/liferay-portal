@@ -263,7 +263,7 @@ if (Validator.isNull(mainLanguageValue)) {
 						}
 					}
 				}
-			).render();
+			);
 		</c:if>
 
 		var form = A.one(document.<portlet:namespace /><%= formName %>);
@@ -291,19 +291,39 @@ if (Validator.isNull(mainLanguageValue)) {
 
 		panel._positionHelper.appendTo(form);
 
-		A.all('#<%= randomNamespace %>languageSelector select').each(
-			function(item) {
-				if (item) {
-					item.on('change', updateLanguageFlag);
-				}
-			}
-		);
-
 		var languageSelectorTrigger = A.one('#<%= randomNamespace %>languageSelectorTrigger');
 
 		if (languageSelectorTrigger) {
-			languageSelectorTrigger.setData('autoFieldsInstance', autoFields);
-			languageSelectorTrigger.setData('panelInstance', panel);
+			Liferay.component(
+				'<%= namespace + name %>languageSelector',
+				function(event) {
+					if (handle) {
+						handle.detach();
+
+						handle = null;
+					}
+
+					autoFields.render();
+
+					A.all('#<%= randomNamespace %>languageSelector select').each(
+						function(item) {
+							if (item) {
+								item.on('change', updateLanguageFlag);
+							}
+						}
+					);
+
+					languageSelectorTrigger.setData('autoFieldsInstance', autoFields);
+					languageSelectorTrigger.setData('panelInstance', panel);
+				}
+			);
+
+			var handle = languageSelectorTrigger.once(
+				'click',
+				function(event) {
+					Liferay.component('<%= namespace + name %>languageSelector');
+				}
+			);
 		}
 	</aui:script>
 </c:if>

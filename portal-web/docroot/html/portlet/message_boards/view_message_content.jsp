@@ -272,6 +272,26 @@ MBThreadFlag threadFlag = MBThreadFlagLocalServiceUtil.getThreadFlag(themeDispla
 					url="<%= editThreadURL %>"
 				/>
 			</c:if>
+
+			<c:if test="<%= MBMessagePermission.contains(permissionChecker, message, ActionKeys.DELETE) && !thread.isLocked() %>">
+				<portlet:renderURL var="parentCategoryURL">
+					<portlet:param name="struts_action" value="/message_boards/view" />
+					<portlet:param name="mbCategoryId" value="<%= (category != null) ? String.valueOf(category.getCategoryId()) : String.valueOf(MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) %>" />
+				</portlet:renderURL>
+
+				<portlet:actionURL var="deleteURL">
+					<portlet:param name="struts_action" value="/message_boards/delete_thread" />
+					<portlet:param name="<%= Constants.CMD %>" value="<%= TrashUtil.isTrashEnabled(themeDisplay.getScopeGroupId()) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>" />
+					<portlet:param name="redirect" value="<%= parentCategoryURL %>" />
+					<portlet:param name="threadId" value="<%= String.valueOf(message.getThreadId()) %>" />
+				</portlet:actionURL>
+
+				<liferay-ui:icon-delete
+					label="<%= true %>"
+					trash="<%= TrashUtil.isTrashEnabled(themeDisplay.getScopeGroupId()) %>"
+					url="<%= deleteURL %>"
+				/>
+			</c:if>
 		</liferay-ui:icon-list>
 	</div>
 

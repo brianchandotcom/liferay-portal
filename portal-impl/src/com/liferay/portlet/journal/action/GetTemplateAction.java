@@ -16,6 +16,7 @@ package com.liferay.portlet.journal.action;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
+import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -23,7 +24,6 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.journal.model.JournalTemplate;
-import com.liferay.portlet.journal.model.JournalTemplateConstants;
 import com.liferay.portlet.journal.service.JournalTemplateLocalServiceUtil;
 import com.liferay.portlet.journal.util.JournalUtil;
 
@@ -73,7 +73,7 @@ public class GetTemplateAction extends Action {
 			String script = JournalUtil.getTemplateScript(
 				template, tokens, languageId, transform);
 
-			String extension = JournalTemplateConstants.LANG_TYPE_VM;
+			String extension = TemplateConstants.LANG_TYPE_VM;
 
 			if (template.getLangType() != null) {
 				extension = template.getLangType();
@@ -84,13 +84,11 @@ public class GetTemplateAction extends Action {
 
 			String contentType = ContentTypes.TEXT_PLAIN_UTF8;
 
-			if (Validator.equals(
-					extension, JournalTemplateConstants.LANG_TYPE_CSS)) {
-
+			if (Validator.equals(extension, TemplateConstants.LANG_TYPE_CSS)) {
 				contentType = ContentTypes.TEXT_CSS_UTF8;
 			}
 			else if (Validator.equals(
-					extension, JournalTemplateConstants.LANG_TYPE_XSL)) {
+					extension, TemplateConstants.LANG_TYPE_XSL)) {
 
 				contentType = ContentTypes.TEXT_XML_UTF8;
 			}

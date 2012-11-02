@@ -31,8 +31,10 @@ public class ViewConfigurePortletAbstractsDMDocumentAPTest extends BaseTestCase 
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("DM Folder Document Title"),
 			selenium.getText("//h3[@class='asset-title']/a"));
-		assertEquals(RuntimeVariables.replace("DM Folder Document Title"),
-			selenium.getText("//div[@class='asset-resource-info']/span/a/span"));
+		assertTrue(selenium.isPartialText(
+				"//div[@class='asset-resource-info']/span/a/span", "Download"));
+		assertTrue(selenium.isPartialText(
+				"//div[@class='asset-resource-info']/span/a/span", "(0k)"));
 		assertEquals(RuntimeVariables.replace(
 				"Read More About DM Folder Document Title \u00bb"),
 			selenium.getText("//div[@class='asset-more']/a"));
@@ -42,8 +44,6 @@ public class ViewConfigurePortletAbstractsDMDocumentAPTest extends BaseTestCase 
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("DM Folder Document Title"),
 			selenium.getText("//h1[@class='header-title']/span"));
-		assertEquals(RuntimeVariables.replace("DM Folder Document Title"),
-			selenium.getText("//div[@class='asset-resource-info']/a"));
 		assertEquals(RuntimeVariables.replace("View in Context \u00bb"),
 			selenium.getText("//div[@class='asset-more']/a"));
 		selenium.clickAt("//div[@class='asset-more']/a",
@@ -51,7 +51,5 @@ public class ViewConfigurePortletAbstractsDMDocumentAPTest extends BaseTestCase 
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("DM Folder Document Title"),
 			selenium.getText("//h1[@class='header-title']/span"));
-		assertEquals(RuntimeVariables.replace("DM Folder Document Title"),
-			selenium.getText("//h2[@class='document-title']"));
 	}
 }

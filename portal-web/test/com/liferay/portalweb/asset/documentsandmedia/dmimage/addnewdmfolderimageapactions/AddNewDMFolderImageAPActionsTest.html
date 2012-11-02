@@ -19,14 +19,9 @@
 	<td>Asset Publisher Test Page</td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>//nav[@class='site-breadcrumbs aui-helper-hidden lfr-hudcrumbs']</td>
-	<td>AUI Help Hidden LFR Hudcrumbs</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//span[@title='Add New']/ul/li/strong/a</td>
-	<td>Add New</td>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -40,33 +35,33 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Basic Document')]</td>
 	<td>Basic Document</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Basic Document')]</td>
 	<td>Basic Document</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Basic Document')]</td>
 	<td>Basic Document</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
 	<td>//iframe[contains(@id,'editAsset')]</td>
-	<td>Documents and Media Document IFrame</td>
+	<td>Documents and Media Document</td>
 </tr>
 <tr>
 	<td>selectFrame</td>
 	<td>//iframe[contains(@id,'editAsset')]</td>
-	<td>Documents and Media Document IFrame</td>
+	<td>Documents and Media Document</td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/liferay/search_container.js')]</td>
+	<td>Search Container</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -111,17 +106,17 @@
 <tr>
 	<td>waitForVisible</td>
 	<td>//iframe[contains(@id,'editAsset')]</td>
-	<td>Documents and Media Document IFrame</td>
+	<td>Documents and Media Document</td>
 </tr>
 <tr>
 	<td>selectFrame</td>
 	<td>//iframe[contains(@id,'editAsset')]</td>
-	<td>Documents and Media Document IFrame</td>
+	<td>Documents and Media Document</td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/liferay/search_container.js')]</td>
+	<td>Search Container</td>
 </tr>
 <tr>
 	<td>waitForText</td>
@@ -176,11 +171,6 @@
 <tr>
 	<td>assertVisible</td>
 	<td>//div[@class='asset-resource-info']/div/img</td>
-	<td>DM Folder Image Title</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='asset-resource-info']/div</td>
 	<td>DM Folder Image Title</td>
 </tr>
 </tbody></table>

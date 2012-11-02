@@ -28,6 +28,7 @@ public class RateDMFolderDocumentAPTest extends BaseTestCase {
 		selenium.clickAt("link=Asset Publisher Test Page",
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(5000);
 
 		String voteCount = selenium.getFirstNumberIncrement(
 				"xPath=(//div[@class='aui-rating-label-element'])[2]");

@@ -30,14 +30,12 @@ public class ViewConfigurePortletTitleListDMDocumentAPTest extends BaseTestCase 
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("DM Folder Document Title"),
-			selenium.getText("//span/a/span"));
-		selenium.clickAt("//span/a/span",
+			selenium.getText("//ul[@class='title-list']/li/span/a/span"));
+		selenium.clickAt("//ul[@class='title-list']/li/span/a/span",
 			RuntimeVariables.replace("DM Folder Document Title"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("DM Folder Document Title"),
 			selenium.getText("//h1[@class='header-title']/span"));
-		assertEquals(RuntimeVariables.replace("DM Folder Document Title"),
-			selenium.getText("//div[@class='asset-resource-info']/a"));
 		assertEquals(RuntimeVariables.replace("View in Context \u00bb"),
 			selenium.getText("//div[@class='asset-more']/a"));
 		selenium.clickAt("//div[@class='asset-more']/a",
@@ -45,7 +43,5 @@ public class ViewConfigurePortletTitleListDMDocumentAPTest extends BaseTestCase 
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("DM Folder Document Title"),
 			selenium.getText("//h1[@class='header-title']/span"));
-		assertEquals(RuntimeVariables.replace("DM Folder Document Title"),
-			selenium.getText("//h2[@class='document-title']"));
 	}
 }

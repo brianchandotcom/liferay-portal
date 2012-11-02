@@ -34,14 +34,9 @@
 	<td>Icon View</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>//div[@class='aui-loadingmask-message']</td>
-	<td>Loading Message</td>
-</tr>
-<tr>
-	<td>waitForNotVisible</td>
-	<td>//div[@class='aui-loadingmask-message']</td>
-	<td>Loading Message</td>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -55,7 +50,7 @@
 </tr>
 <tr>
 	<td>storeElementPresent</td>
-	<td>//div[@id='_20_entriesContainer']//a[@class='entry-link']</td>
+	<td>//div[@class='entry-thumbnail']/img</td>
 	<td>dmDocumentNotRecycled</td>
 </tr>
 <tr>
@@ -64,14 +59,24 @@
 	<td>DMDocumentRecycled</td>
 </tr>
 <tr>
-	<td>assertNotChecked</td>
+	<td>storeChecked</td>
 	<td>//input[@id='_20_allRowIdsCheckbox']</td>
-	<td>All Entries Check Box</td>
+	<td>allEntriesNotChecked</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${allEntriesNotChecked}</td>
+	<td>AllEntriesChecked</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>//input[@id='_20_allRowIdsCheckbox']</td>
 	<td>All Entries Check Box</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>AllEntriesChecked</td>
+	<td></td>
 </tr>
 <tr>
 	<td>assertChecked</td>
@@ -95,28 +100,23 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move to the Recycle Bin')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move to the Recycle Bin')]</td>
 	<td>Move to the Recycle Bin</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move to the Recycle Bin')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move to the Recycle Bin')]</td>
 	<td>Move to the Recycle Bin</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move to the Recycle Bin')]/a</td>
+	<td>clickAtAndWait</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move to the Recycle Bin')]</td>
 	<td>Move to the Recycle Bin</td>
 </tr>
 <tr>
 	<td>label</td>
 	<td>DMDocumentRecycled</td>
 	<td></td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='entries-empty portlet-msg-info']</td>
-	<td>There are no documents or media files in this folder.</td>
 </tr>
 <tr>
 	<td>open</td>

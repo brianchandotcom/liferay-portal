@@ -28,23 +28,22 @@ public class AddNewDMFolderImageAPActionsTest extends BaseTestCase {
 		selenium.clickAt("link=Asset Publisher Test Page",
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForElementPresent(
-			"//nav[@class='site-breadcrumbs aui-helper-hidden lfr-hudcrumbs']");
-		selenium.waitForVisible("//span[@title='Add New']/ul/li/strong/a");
+		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Add New"),
 			selenium.getText("//span[@title='Add New']/ul/li/strong/a"));
 		selenium.clickAt("//span[@title='Add New']/ul/li/strong/a",
 			RuntimeVariables.replace("Add New"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Basic Document')]");
 		assertEquals(RuntimeVariables.replace("Basic Document"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a",
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Basic Document')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Basic Document')]",
 			RuntimeVariables.replace("Basic Document"));
 		selenium.waitForVisible("//iframe[contains(@id,'editAsset')]");
 		selenium.selectFrame("//iframe[contains(@id,'editAsset')]");
-		Thread.sleep(5000);
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/liferay/search_container.js')]");
 		selenium.waitForVisible("//input[@value='Select']");
 		selenium.clickAt("//input[@value='Select']",
 			RuntimeVariables.replace("Select"));
@@ -56,7 +55,8 @@ public class AddNewDMFolderImageAPActionsTest extends BaseTestCase {
 		selenium.selectFrame("relative=top");
 		selenium.waitForVisible("//iframe[contains(@id,'editAsset')]");
 		selenium.selectFrame("//iframe[contains(@id,'editAsset')]");
-		Thread.sleep(5000);
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/liferay/search_container.js')]");
 		selenium.waitForText("//a[@id='_20_folderName']", "DM Folder Name");
 		assertEquals(RuntimeVariables.replace("DM Folder Name"),
 			selenium.getText("//a[@id='_20_folderName']"));
@@ -78,7 +78,5 @@ public class AddNewDMFolderImageAPActionsTest extends BaseTestCase {
 			selenium.getText("//h3[@class='asset-title']/a"));
 		assertTrue(selenium.isVisible(
 				"//div[@class='asset-resource-info']/div/img"));
-		assertEquals(RuntimeVariables.replace("DM Folder Image Title"),
-			selenium.getText("//div[@class='asset-resource-info']/div"));
 	}
 }

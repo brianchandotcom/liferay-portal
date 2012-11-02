@@ -32,29 +32,31 @@ public class ViewDMFolderImageAPTest extends BaseTestCase {
 			selenium.getText("//h3[@class='asset-title']/a"));
 		assertTrue(selenium.isVisible(
 				"//div[@class='asset-resource-info']/div/img"));
-		assertEquals(RuntimeVariables.replace("DM Folder Image Title"),
-			selenium.getText("//div[@class='asset-resource-info']/div"));
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(5000);
+		selenium.waitForVisible("//button[@title='Icon View']");
 		selenium.clickAt("//button[@title='Icon View']",
 			RuntimeVariables.replace("Icon View"));
+		Thread.sleep(5000);
 		selenium.waitForVisible(
-			"//button[@title='Icon View' and contains(@class,'aui-state-active')]");
+			"//button[contains(@class,'aui-state-active') and @title='Icon View']");
 		assertTrue(selenium.isVisible(
-				"//button[@title='Icon View' and contains(@class,'aui-state-active')]"));
+				"//button[contains(@class,'aui-state-active') and @title='Icon View']"));
 		assertEquals(RuntimeVariables.replace("DM Folder Name"),
-			selenium.getText("//div/a/span[2]"));
-		selenium.clickAt("//div/a/span[2]",
+			selenium.getText("//a[contains(@class,'entry-link')]/span"));
+		selenium.clickAt("//a[contains(@class,'entry-link')]/span",
 			RuntimeVariables.replace("DM Folder Name"));
-		selenium.waitForText("//li[@class='folder selected']/a/span[2]",
+		selenium.waitForText("//li[@class='app-view-navigation-entry folder selected']/a/span[2]",
 			"DM Folder Name");
-		assertTrue(selenium.isPartialText(
-				"//li[@class='folder selected']/a/span[2]", "DM Folder Name"));
+		assertEquals(RuntimeVariables.replace("DM Folder Name"),
+			selenium.getText(
+				"//li[@class='app-view-navigation-entry folder selected']/a/span[2]"));
 		assertEquals(RuntimeVariables.replace("DM Folder Image Title"),
-			selenium.getText("//div[@id='_20_entries']/div/a/span[2]"));
-		selenium.clickAt("//div[@id='_20_entries']/div/a/span[2]",
+			selenium.getText("//a[contains(@class,'entry-link')]/span"));
+		selenium.clickAt("//a[contains(@class,'entry-link')]/span",
 			RuntimeVariables.replace("DM Folder Image Title"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("DM Folder Image Title"),
@@ -63,7 +65,7 @@ public class ViewDMFolderImageAPTest extends BaseTestCase {
 			selenium.getText("//h3[@class='version ']"));
 		assertEquals(RuntimeVariables.replace("Status: Approved"),
 			selenium.getText("//span[@class='workflow-status']"));
-		assertEquals(RuntimeVariables.replace("Download (12.9k)"),
+		assertEquals(RuntimeVariables.replace("Download (13k)"),
 			selenium.getText("//span[1]/span/a/span"));
 		assertTrue(selenium.isPartialText(
 				"//div[2]/div[2]/div/div[1]/div[2]/div[1]", "image/jpeg"));

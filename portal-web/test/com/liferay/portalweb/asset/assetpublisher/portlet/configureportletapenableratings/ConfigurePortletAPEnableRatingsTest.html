@@ -51,12 +51,12 @@
 <tr>
 	<td>waitForElementPresent</td>
 	<td>//iframe[contains(@id,'configurationIframeDialog')]</td>
-	<td>iFrame</td>
+	<td>Asset Publisher - Configuration</td>
 </tr>
 <tr>
 	<td>selectFrame</td>
 	<td>//iframe[contains(@id,'configurationIframeDialog')]</td>
-	<td>iFrame</td>
+	<td>Asset Publisher - Configuration</td>
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
@@ -69,14 +69,24 @@
 	<td>Enable Ratings</td>
 </tr>
 <tr>
-	<td>assertNotChecked</td>
+	<td>storeChecked</td>
 	<td>//input[@id='_86_enableRatingsCheckbox']</td>
-	<td>Enable Ratings</td>
+	<td>ratingsDisabled</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${ratingsDisabled}</td>
+	<td>RatingsEnabled</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>//input[@id='_86_enableRatingsCheckbox']</td>
 	<td>Enable Ratings</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>RatingsEnabled</td>
+	<td></td>
 </tr>
 <tr>
 	<td>assertChecked</td>

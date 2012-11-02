@@ -48,7 +48,8 @@ public class ViewRegRoleUserTest extends BaseTestCase {
 					RuntimeVariables.replace("Search All Users"));
 				selenium.waitForPageToLoad("30000");
 
-				boolean basicVisible = selenium.isVisible("link=\u00ab Basic");
+				boolean basicVisible = selenium.isVisible(
+						"//a[.='\u00ab Basic']");
 
 				if (!basicVisible) {
 					label = 2;
@@ -56,7 +57,7 @@ public class ViewRegRoleUserTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("link=\u00ab Basic",
+				selenium.clickAt("//a[.='\u00ab Basic']",
 					RuntimeVariables.replace("\u00ab Basic"));
 				selenium.waitForVisible("//input[@name='_125_keywords']");
 
@@ -98,7 +99,7 @@ public class ViewRegRoleUserTest extends BaseTestCase {
 						"//td[@id='_125_rolesSearchContainer_col-title_row-2']"));
 				assertEquals(RuntimeVariables.replace("Remove"),
 					selenium.getText(
-						"//td[@id='_125_rolesSearchContainer_col-2_row-2']"));
+						"//td[@id='_125_rolesSearchContainer_col-2_row-2']/a/span/span"));
 
 			case 100:
 				label = -1;

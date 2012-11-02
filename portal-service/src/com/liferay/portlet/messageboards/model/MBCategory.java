@@ -39,5 +39,9 @@ public interface MBCategory extends MBCategoryModel, PersistedModel {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	public com.liferay.portlet.messageboards.model.MBCategory getParentCategory()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	public boolean isRoot();
 }

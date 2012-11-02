@@ -259,7 +259,7 @@ public class MBUtil {
 		sb.append(themeDisplay.translate("home"));
 		sb.append(StringPool.SPACE);
 
-		for (int i = categories.size(); i >= 0; i--) {
+		for (int i = categories.size() - 1; i >= 0; i--) {
 			MBCategory curCategory = categories.get(i);
 
 			sb.append(StringPool.RAQUO);

@@ -82,23 +82,24 @@ public class DeleteThreadAction extends PortletAction {
 			ActionRequest actionRequest, boolean moveToTrash)
 		throws Exception {
 
-		long[] deleteThreadIds = StringUtil.split(
-			ParamUtil.getString(actionRequest, "threadIds"), 0L);
+		long[] deleteThreadIds = null;
 
-		if (deleteThreadIds.length == 0) {
-			long threadId = ParamUtil.getLong(actionRequest, "threadId");
+		long threadId = ParamUtil.getLong(actionRequest, "threadId");
 
-			if (threadId > 0) {
-				deleteThreadIds = new long[] {threadId};
-			}
+		if (threadId > 0) {
+			deleteThreadIds = new long[] {threadId};
+		}
+		else {
+			deleteThreadIds = StringUtil.split(
+				ParamUtil.getString(actionRequest, "threadIds"), 0L);
 		}
 
-		for (int i = 0; i < deleteThreadIds.length; i++) {
+		for (long deleteThreadId : deleteThreadIds) {
 			if (moveToTrash) {
-				MBThreadServiceUtil.moveThreadToTrash(deleteThreadIds[i]);
+				MBThreadServiceUtil.moveThreadToTrash(deleteThreadId);
 			}
 			else {
-				MBThreadServiceUtil.deleteThread(deleteThreadIds[i]);
+				MBThreadServiceUtil.deleteThread(deleteThreadId);
 			}
 		}
 

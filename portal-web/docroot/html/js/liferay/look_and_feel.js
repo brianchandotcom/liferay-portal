@@ -8,7 +8,7 @@ AUI.add(
 
 		var REGEX_IGNORED_CLASSES_PORTLET = /(?:^|\s)portlet(?=\s|$)/g;
 
-		var REGEX_VALID_CLASSES = /portlet-([a-zA-Z0-9-_]+)/g;
+		var REGEX_VALID_CLASSES = /(?:([\w\d-]+)-)?portlet(?:-?([\w\d-]+-?))?/g;
 
 		var PortletCSS = {
 			init: function(portletId) {
@@ -457,7 +457,7 @@ AUI.add(
 				var portletClasses = instance._getCSSClasses(portletBoundary, portlet);
 
 				var portletInfoText =
-					Liferay.Language.get('your-current-portlet-information-is-as-follows') + ':<br />' +
+					Liferay.Language.get('your-current-portlet-information-is-as-follows') + '<br />' +
 						Liferay.Language.get('portlet-id') + ': <strong>#' + portletId + '</strong><br />' +
 							Liferay.Language.get('portlet-classes') + ': <strong>' + portletClasses + '</strong>';
 
@@ -633,8 +633,8 @@ AUI.add(
 
 				portletBoundary.attr('className').replace(
 					REGEX_VALID_CLASSES,
-					function(match, subMatch) {
-						if (!REGEX_IGNORED_CLASSES.test(subMatch)) {
+					function(match, subMatch1, subMatch2) {
+						if (!REGEX_IGNORED_CLASSES.test(subMatch2)) {
 							boundaryClasses.push(match);
 						}
 					}

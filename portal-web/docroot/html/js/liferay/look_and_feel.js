@@ -8,7 +8,7 @@ AUI.add(
 
 		var REGEX_IGNORED_CLASSES_PORTLET = /(?:^|\s)portlet(?=\s|$)/g;
 
-		var REGEX_VALID_CLASSES = /portlet-([a-zA-Z0-9-_]+)|([a-zA-Z0-9-_]+)-portlet-([a-zA-Z0-9-_]+)|([a-zA-Z0-9-_]+)-portlet/g;
+		var REGEX_VALID_CLASSES = /(?:([\w\d-]+)-)?portlet(?:-?([\w\d-]+-?))?/g;
 
 		var PortletCSS = {
 			init: function(portletId) {
@@ -633,14 +633,14 @@ AUI.add(
 
 				portletBoundary.attr('className').replace(
 					REGEX_VALID_CLASSES,
-					function(match, subMatch) {
-						if (!REGEX_IGNORED_CLASSES.test(subMatch)) {
+					function(match, subMatch1, subMatch2) {
+						if (!REGEX_IGNORED_CLASSES.test(subMatch2)) {
 							boundaryClasses.push(match);
 						}
 					}
 				);
 
-				return '.' + boundaryClasses.join(' .') + portletClasses;
+				return '.' + boundaryClasses.join('.') + portletClasses;
 			},
 
 			_getNodeById: function(id) {

@@ -426,13 +426,9 @@ public class DeserializerTest {
 		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 			new UnsyncByteArrayOutputStream();
 
-		unsyncByteArrayOutputStream.write(
-			SerializationConstants.TC_CONTEXT_NAME);
+		unsyncByteArrayOutputStream.write(SerializationConstants.TC_OBJECT);
 
-		unsyncByteArrayOutputStream.write(1);
-		unsyncByteArrayOutputStream.write(new byte[4]);
-
-		ObjectOutputStream objectOutputStream = new ObjectOutputStream(
+		ObjectOutputStream objectOutputStream = new AnnotatedObjectOutputStream(
 			unsyncByteArrayOutputStream);
 
 		Date date = new Date(123456);
@@ -455,8 +451,7 @@ public class DeserializerTest {
 		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 			new UnsyncByteArrayOutputStream();
 
-		unsyncByteArrayOutputStream.write(
-			SerializationConstants.TC_CONTEXT_NAME);
+		unsyncByteArrayOutputStream.write(SerializationConstants.TC_OBJECT);
 
 		unsyncByteArrayOutputStream.write(1);
 		unsyncByteArrayOutputStream.write(new byte[4]);

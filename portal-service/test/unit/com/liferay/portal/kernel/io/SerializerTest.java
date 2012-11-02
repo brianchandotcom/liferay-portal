@@ -686,11 +686,14 @@ public class SerializerTest {
 
 		ByteBuffer byteBuffer = serializer.toByteBuffer();
 
+		Assert.assertEquals(SerializationConstants.TC_OBJECT, byteBuffer.get());
+
 		UnsyncByteArrayInputStream unsyncByteArrayInputStream =
 			new UnsyncByteArrayInputStream(
-				byteBuffer.array(), 6, byteBuffer.remaining());
+				byteBuffer.array(), byteBuffer.position(),
+				byteBuffer.remaining());
 
-		ObjectInputStream objectInputStream = new ObjectInputStream(
+		ObjectInputStream objectInputStream = new AnnotatedObjectInputStream(
 			unsyncByteArrayInputStream);
 
 		Object object = objectInputStream.readObject();

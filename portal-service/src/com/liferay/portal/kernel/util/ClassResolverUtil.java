@@ -40,6 +40,44 @@ public class ClassResolverUtil {
 		}
 	}
 
+	public static Class<?> resolveByContextClassLoader(String className) {
+		Thread thread = Thread.currentThread();
+
+		ClassLoader contextClassLoader = thread.getContextClassLoader();
+
+		try {
+			return contextClassLoader.loadClass(className);
+		}
+		catch (ClassNotFoundException cnfe) {
+			throw new RuntimeException(cnfe);
+		}
+	}
+
+	public static Class<?> resolveByPortalClassLoader(String className) {
+		ClassLoader portalClassLoader = PortalClassLoaderUtil.getClassLoader();
+
+		try {
+			return portalClassLoader.loadClass(className);
+		}
+		catch (ClassNotFoundException cnfe) {
+			throw new RuntimeException(cnfe);
+		}
+	}
+
+	public static Class<?> resolveByPortletClassLoader(
+		String className, String servletContextName) {
+
+		ClassLoader classLoader = ClassLoaderPool.getClassLoader(
+			servletContextName);
+
+		try {
+			return classLoader.loadClass(className);
+		}
+		catch (ClassNotFoundException cnfe) {
+			throw new RuntimeException(cnfe);
+		}
+	}
+
 	private static final Map<String, Class<?>> _primitiveClasses =
 		new HashMap<String, Class<?>>(9, 1.0F);
 

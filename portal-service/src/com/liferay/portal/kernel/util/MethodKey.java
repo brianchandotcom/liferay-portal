@@ -14,55 +14,52 @@
 
 package com.liferay.portal.kernel.util;
 
-import java.io.Serializable;
+import com.liferay.portal.kernel.io.Deserializer;
+import com.liferay.portal.kernel.io.Serializer;
+
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 
 import java.lang.reflect.Method;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.nio.ByteBuffer;
 
 /**
+ * A serializable loose representation for {@link Method}. Only declaring class,
+ * method name and parameter types are considered. Return type and exception
+ * types are ignored, which means compiler generated bridging method is
+ * considered logically the same as it source counterpart. On deserialization
+ * for generic {@link Method}, which {@link Method} is resolved (bridge one or
+ * source one) is runtime environment depended. As a force cast to return value
+ * will be performed anyway, this generally is not a problem.
+ *
  * @author Brian Wing Shun Chan
  * @author Shuyang Zhou
  */
-public class MethodKey implements Serializable {
+public class MethodKey implements Externalizable {
 
-	public MethodKey(Method method) {
-		this(
-			method.getDeclaringClass().getName(), method.getName(),
-			method.getParameterTypes());
+	/**
+	 * The empty constructor is required by {@link java.io.Externalizable}. Do
+	 * not use this for any other purpose.
+	 */
+	public MethodKey() {
 	}
 
 	public MethodKey(
-		String className, String methodName, Class<?>... parameterTypes) {
+		Class<?> declaringClass, String methodName,
+		Class<?>... parameterTypes) {
 
-		_className = className;
+		_declaringClass = declaringClass;
 		_methodName = methodName;
 		_parameterTypes = parameterTypes;
 	}
 
-	public MethodKey(
-			String className, String methodName, String[] parameterTypeNames)
-		throws ClassNotFoundException {
-
-		_className = className;
-		_methodName = methodName;
-
-		_parameterTypes = new Class[parameterTypeNames.length];
-
-		ClassLoader classLoader = null;
-
-		if (parameterTypeNames.length > 0) {
-			Thread currentThread = Thread.currentThread();
-
-			classLoader = currentThread.getContextClassLoader();
-		}
-
-		for (int i = 0; i < parameterTypeNames.length; i++) {
-			String parameterTypeName = parameterTypeNames[i];
-
-			_parameterTypes[i] = _getClass(parameterTypeName, classLoader);
-		}
+	public MethodKey(Method method) {
+		this(
+			method.getDeclaringClass(), method.getName(),
+			method.getParameterTypes());
 	}
 
 	@Override
@@ -71,20 +68,34 @@ public class MethodKey implements Serializable {
 			return false;
 		}
 
-		MethodKey methodKey = (MethodKey)obj;
-
-		String string = toString();
-
-		if (string.equals(methodKey.toString())) {
-			return true;
-		}
-		else {
+		if (!(obj instanceof MethodKey)) {
 			return false;
 		}
+
+		MethodKey methodKey = (MethodKey)obj;
+
+		if ((_declaringClass == methodKey._declaringClass) &&
+			_methodName.equals(methodKey._methodName) &&
+			(_parameterTypes.length == methodKey._parameterTypes.length)) {
+
+			for (int i = 0; i < _parameterTypes.length; i++) {
+				if (_parameterTypes[i] != methodKey._parameterTypes[i]) {
+					return false;
+				}
+			}
+
+			return true;
+		}
+
+		return false;
 	}
 
-	public String getClassName() {
-		return _className;
+	public Class<?> getDeclaringClass() {
+		return _declaringClass;
+	}
+
+	public Method getMethod() throws NoSuchMethodException {
+		return MethodCache.get(this);
 	}
 
 	public String getMethodName() {
@@ -97,66 +108,101 @@ public class MethodKey implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return toString().hashCode();
+
+		// Using the same hash algorithm as java.lang.reflect.Method
+
+		return _declaringClass.getName().hashCode() ^ _methodName.hashCode();
+	}
+
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+
+		int size = objectInput.readInt();
+
+		byte[] data = new byte[size];
+
+		objectInput.readFully(data);
+
+		Deserializer deserializer = new Deserializer(ByteBuffer.wrap(data));
+
+		_declaringClass = deserializer.readObject();
+		_methodName = deserializer.readString();
+
+		int parameterTypesLength = deserializer.readInt();
+
+		_parameterTypes = new Class<?>[parameterTypesLength];
+
+		for (int i = 0; i < parameterTypesLength; i++) {
+			_parameterTypes[i] = deserializer.readObject();
+		}
 	}
 
 	@Override
 	public String toString() {
-		return _toString();
-	}
-
-	private Class<?> _getClass(String typeName, ClassLoader classLoader)
-		throws ClassNotFoundException {
-
-		if (_primitiveClasses.containsKey(typeName)) {
-			return _primitiveClasses.get(typeName);
-		}
-		else {
-			return Class.forName(typeName, true, classLoader);
-		}
-	}
-
-	private String _toString() {
 		if (_toString == null) {
-			if ((_parameterTypes != null) && (_parameterTypes.length > 0)) {
-				StringBundler sb = new StringBundler(
-					3 + _parameterTypes.length);
+			StringBundler sb = new StringBundler(
+				4 + _parameterTypes.length * 2);
 
-				sb.append(_className);
-				sb.append(_methodName);
-				sb.append(StringPool.DASH);
+			sb.append(_declaringClass.getName());
+			sb.append(StringPool.PERIOD);
+			sb.append(_methodName);
+			sb.append(StringPool.OPEN_PARENTHESIS);
 
-				for (Class<?> parameterType : _parameterTypes) {
-					sb.append(parameterType.getName());
-				}
-
-				_toString = sb.toString();
+			for (Class<?> parameterType : _parameterTypes) {
+				sb.append(parameterType.getName());
+				sb.append(StringPool.COMMA);
 			}
-			else {
-				_toString = _className.concat(_methodName);
-			}
+
+			sb.setIndex(sb.index() - 1);
+
+			sb.append(StringPool.CLOSE_PARENTHESIS);
+
+			_toString = sb.toString();
 		}
 
 		return _toString;
 	}
 
-	private static Map<String, Class<?>> _primitiveClasses =
-		new HashMap<String, Class<?>>();
+	public MethodKey transform(ClassLoader classLoader)
+		throws ClassNotFoundException {
 
-	static {
-		_primitiveClasses.put("byte", byte.class);
-		_primitiveClasses.put("boolean", boolean.class);
-		_primitiveClasses.put("char", char.class);
-		_primitiveClasses.put("double", double.class);
-		_primitiveClasses.put("float", float.class);
-		_primitiveClasses.put("int", int.class);
-		_primitiveClasses.put("long", long.class);
-		_primitiveClasses.put("short", short.class);
+		Class<?> declaringClass = classLoader.loadClass(
+			_declaringClass.getName());
+		Class<?>[] parameterTypes = new Class<?>[_parameterTypes.length];
+
+		for (int i = 0; i < _parameterTypes.length; i++) {
+			parameterTypes[i] = classLoader.loadClass(
+				_parameterTypes[i].getName());
+		}
+
+		return new MethodKey(declaringClass, _methodName, parameterTypes);
 	}
 
-	private String _className;
+	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		Serializer serializer = new Serializer();
+
+		serializer.writeObject(_declaringClass);
+		serializer.writeString(_methodName);
+		serializer.writeInt(_parameterTypes.length);
+
+		for (Class<?> parameterType : _parameterTypes) {
+			serializer.writeObject(parameterType);
+		}
+
+		ByteBuffer byteBuffer = serializer.toByteBuffer();
+
+		objectOutput.writeInt(byteBuffer.remaining());
+		objectOutput.write(
+			byteBuffer.array(), byteBuffer.position(), byteBuffer.remaining());
+	}
+
+	private Class<?> _declaringClass;
+
 	private String _methodName;
 	private Class<?>[] _parameterTypes;
+
+	// Transient cache
+
 	private String _toString;
 
 }

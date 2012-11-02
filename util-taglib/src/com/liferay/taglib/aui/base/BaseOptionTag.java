@@ -57,6 +57,10 @@ public class BaseOptionTag extends com.liferay.taglib.util.IncludeTag {
 		return _style;
 	}
 
+	public boolean getUseModelValue() {
+		return _useModelValue;
+	}
+
 	public java.lang.Object getValue() {
 		return _value;
 	}
@@ -97,6 +101,12 @@ public class BaseOptionTag extends com.liferay.taglib.util.IncludeTag {
 		setScopedAttribute("style", style);
 	}
 
+	public void setUseModelValue(boolean useModelValue) {
+		_useModelValue = useModelValue;
+
+		setScopedAttribute("useModelValue", useModelValue);
+	}
+
 	public void setValue(java.lang.Object value) {
 		_value = value;
 
@@ -132,6 +142,7 @@ public class BaseOptionTag extends com.liferay.taglib.util.IncludeTag {
 		setNamespacedAttribute(request, "label", _label);
 		setNamespacedAttribute(request, "selected", _selected);
 		setNamespacedAttribute(request, "style", _style);
+		setNamespacedAttribute(request, "useModelValue", _useModelValue);
 		setNamespacedAttribute(request, "value", _value);
 	}
 
@@ -149,6 +160,7 @@ public class BaseOptionTag extends com.liferay.taglib.util.IncludeTag {
 	private java.lang.Object _label = null;
 	private boolean _selected = false;
 	private java.lang.String _style = null;
+	private boolean _useModelValue = true;
 	private java.lang.Object _value = null;
 
 }

@@ -54,11 +54,13 @@ public class OptionTag extends BaseOptionTag {
 
 		boolean selected = getSelected();
 
-		String selectValue = GetterUtil.getString(
-			(String)request.getAttribute("aui:select:value"));
+		if (getUseModelValue()) {
+			String selectValue = GetterUtil.getString(
+				(String)request.getAttribute("aui:select:value"));
 
-		if (Validator.isNotNull(selectValue)) {
-			selected = selectValue.equals(String.valueOf(value));
+			if (Validator.isNotNull(selectValue)) {
+				selected = selectValue.equals(String.valueOf(value));
+			}
 		}
 
 		setNamespacedAttribute(request, "selected", String.valueOf(selected));

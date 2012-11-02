@@ -29,9 +29,14 @@
 	<td>DM Folder Document Title</td>
 </tr>
 <tr>
-	<td>assertText</td>
+	<td>assertPartialText</td>
 	<td>//div[@class='asset-resource-info']/span/a/span</td>
-	<td>DM Folder Document Title</td>
+	<td>Download</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//div[@class='asset-resource-info']/span/a/span</td>
+	<td>(0k)</td>
 </tr>
 <tr>
 	<td>open</td>
@@ -44,9 +49,24 @@
 	<td>Documents and Media Test Page</td>
 </tr>
 <tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//button[@title='Icon View']</td>
+	<td>Icon View</td>
+</tr>
+<tr>
 	<td>clickAt</td>
 	<td>//button[@title='Icon View']</td>
 	<td>Icon View</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -60,32 +80,32 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div/a/span[2]</td>
+	<td>//a[contains(@class,'entry-link')]/span</td>
 	<td>DM Folder Name</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//div/a/span[2]</td>
+	<td>//a[contains(@class,'entry-link')]/span</td>
 	<td>DM Folder Name</td>
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//li[@class='folder selected']/a/span[2]</td>
-	<td>DM Folder Name</td>
-</tr>
-<tr>
-	<td>assertPartialText</td>
-	<td>//li[@class='folder selected']/a/span[2]</td>
+	<td>//li[@class='app-view-navigation-entry folder selected']/a/span[2]</td>
 	<td>DM Folder Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@id='_20_entries']/div/a/span[2]</td>
+	<td>//li[@class='app-view-navigation-entry folder selected']/a/span[2]</td>
+	<td>DM Folder Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//a[contains(@class,'entry-link')]/span</td>
 	<td>DM Folder Document Title</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div[@id='_20_entries']/div/a/span[2]</td>
+	<td>//a[contains(@class,'entry-link')]/span</td>
 	<td>DM Folder Document Title</td>
 </tr>
 <tr>
@@ -106,7 +126,7 @@
 <tr>
 	<td>assertText</td>
 	<td>//span[1]/span/a/span</td>
-	<td>Download (0.3k)</td>
+	<td>Download (0k)</td>
 </tr>
 <tr>
 	<td>assertPartialText</td>
@@ -124,14 +144,14 @@
 	<td>1.0</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
+	<td>assertVisible</td>
 	<td>//tr[3]/td[3]</td>
 	<td>Date</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//tr[3]/td[4]</td>
-	<td>0.3k</td>
+	<td>0k</td>
 </tr>
 </tbody></table>
 </body>

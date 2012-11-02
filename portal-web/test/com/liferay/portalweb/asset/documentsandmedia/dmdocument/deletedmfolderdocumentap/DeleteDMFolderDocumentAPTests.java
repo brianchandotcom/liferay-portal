@@ -17,12 +17,12 @@ package com.liferay.portalweb.asset.documentsandmedia.dmdocument.deletedmfolderd
 import com.liferay.portalweb.asset.assetpublisher.portlet.addportletap.AddPageAPTest;
 import com.liferay.portalweb.asset.assetpublisher.portlet.addportletap.AddPortletAPTest;
 import com.liferay.portalweb.asset.assetpublisher.portlet.configureportletassetselectionmanual.ConfigurePortletAssetSelectionManualTest;
-import com.liferay.portalweb.asset.documentsandmedia.dmdocument.addnewdmfolderdocumentapactions.AddDMFolderTest;
 import com.liferay.portalweb.asset.documentsandmedia.dmdocument.addnewdmfolderdocumentapactions.AddNewDMFolderDocumentAPActionsTest;
 import com.liferay.portalweb.asset.documentsandmedia.dmdocument.selectexistingdmfolderdocumentapactions.SelectExistingDMFolderDocumentAPActionsTest;
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
 import com.liferay.portalweb.portlet.documentsandmedia.dmdocument.adddmdocument.TearDownDMDocumentTest;
+import com.liferay.portalweb.portlet.documentsandmedia.dmfolder.adddmfolder.AddDMFolderTest;
 import com.liferay.portalweb.portlet.documentsandmedia.portlet.addportletdm.AddPageDMTest;
 import com.liferay.portalweb.portlet.documentsandmedia.portlet.addportletdm.AddPortletDMTest;
 

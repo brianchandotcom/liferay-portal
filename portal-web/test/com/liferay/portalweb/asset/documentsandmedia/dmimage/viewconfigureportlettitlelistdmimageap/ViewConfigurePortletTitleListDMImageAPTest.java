@@ -38,17 +38,15 @@ public class ViewConfigurePortletTitleListDMImageAPTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("DM Folder Image Title"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertTrue(selenium.isVisible(
-				"//div[@class='asset-resource-info']/a/div/img"));
-		assertEquals(RuntimeVariables.replace("DM Folder Image Title"),
-			selenium.getText("//div[@class='asset-resource-info']/a/div"));
+				"//div[@class='lfr-preview-file-image-container']/img"));
 		assertEquals(RuntimeVariables.replace("View in Context \u00bb"),
 			selenium.getText("//div[@class='asset-more']/a"));
 		selenium.clickAt("//div[@class='asset-more']/a",
 			RuntimeVariables.replace("View in Context \u00bb"));
 		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("DM Folder Image Title"),
+			selenium.getText("//h1[@class='header-title']/span"));
 		assertTrue(selenium.isVisible(
 				"//img[@class='lfr-preview-file-image-current']"));
-		assertEquals(RuntimeVariables.replace("DM Folder Image Title"),
-			selenium.getText("//h2[@class='document-title']"));
 	}
 }

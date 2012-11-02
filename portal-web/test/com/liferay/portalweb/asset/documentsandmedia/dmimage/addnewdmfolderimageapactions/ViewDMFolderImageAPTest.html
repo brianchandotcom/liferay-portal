@@ -29,11 +29,6 @@
 	<td>DM Folder Image Title</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@class='asset-resource-info']/div</td>
-	<td>DM Folder Image Title</td>
-</tr>
-<tr>
 	<td>open</td>
 	<td>/web/guest/home/</td>
 	<td></td>
@@ -44,48 +39,63 @@
 	<td>Documents and Media Test Page</td>
 </tr>
 <tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//button[@title='Icon View']</td>
+	<td>Icon View</td>
+</tr>
+<tr>
 	<td>clickAt</td>
 	<td>//button[@title='Icon View']</td>
 	<td>Icon View</td>
 </tr>
 <tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
 	<td>waitForVisible</td>
-	<td>//button[@title='Icon View' and contains(@class,'aui-state-active')]</td>
+	<td>//button[contains(@class,'aui-state-active') and @title='Icon View']</td>
 	<td>Icon View Selected</td>
 </tr>
 <tr>
 	<td>assertVisible</td>
-	<td>//button[@title='Icon View' and contains(@class,'aui-state-active')]</td>
+	<td>//button[contains(@class,'aui-state-active') and @title='Icon View']</td>
 	<td>Icon View Selected</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div/a/span[2]</td>
+	<td>//a[contains(@class,'entry-link')]/span</td>
 	<td>DM Folder Name</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//div/a/span[2]</td>
+	<td>//a[contains(@class,'entry-link')]/span</td>
 	<td>DM Folder Name</td>
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//li[@class='folder selected']/a/span[2]</td>
-	<td>DM Folder Name</td>
-</tr>
-<tr>
-	<td>assertPartialText</td>
-	<td>//li[@class='folder selected']/a/span[2]</td>
+	<td>//li[@class='app-view-navigation-entry folder selected']/a/span[2]</td>
 	<td>DM Folder Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@id='_20_entries']/div/a/span[2]</td>
+	<td>//li[@class='app-view-navigation-entry folder selected']/a/span[2]</td>
+	<td>DM Folder Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//a[contains(@class,'entry-link')]/span</td>
 	<td>DM Folder Image Title</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div[@id='_20_entries']/div/a/span[2]</td>
+	<td>//a[contains(@class,'entry-link')]/span</td>
 	<td>DM Folder Image Title</td>
 </tr>
 <tr>
@@ -106,7 +116,7 @@
 <tr>
 	<td>assertText</td>
 	<td>//span[1]/span/a/span</td>
-	<td>Download (12.9k)</td>
+	<td>Download (13k)</td>
 </tr>
 <tr>
 	<td>assertPartialText</td>

@@ -37,28 +37,34 @@ public class TearDownDMDocumentTest extends BaseTestCase {
 				selenium.waitForVisible("//button[@title='Icon View']");
 				selenium.clickAt("//button[@title='Icon View']",
 					RuntimeVariables.replace("Icon View"));
-				selenium.waitForVisible(
-					"//div[@class='aui-loadingmask-message']");
-				selenium.waitForNotVisible(
-					"//div[@class='aui-loadingmask-message']");
+				Thread.sleep(5000);
 				selenium.waitForVisible(
 					"//button[contains(@class,'aui-state-active') and @title='Icon View']");
 				assertTrue(selenium.isVisible(
 						"//button[contains(@class,'aui-state-active') and @title='Icon View']"));
 
 				boolean dmDocumentNotRecycled = selenium.isElementPresent(
-						"//div[@id='_20_entriesContainer']//a[@class='entry-link']");
+						"//div[@class='entry-thumbnail']/img");
 
 				if (!dmDocumentNotRecycled) {
+					label = 3;
+
+					continue;
+				}
+
+				boolean allEntriesNotChecked = selenium.isChecked(
+						"//input[@id='_20_allRowIdsCheckbox']");
+
+				if (allEntriesNotChecked) {
 					label = 2;
 
 					continue;
 				}
 
-				assertFalse(selenium.isChecked(
-						"//input[@id='_20_allRowIdsCheckbox']"));
 				selenium.clickAt("//input[@id='_20_allRowIdsCheckbox']",
 					RuntimeVariables.replace("All Entries Check Box"));
+
+			case 2:
 				assertTrue(selenium.isChecked(
 						"//input[@id='_20_allRowIdsCheckbox']"));
 				selenium.waitForVisible(
@@ -69,19 +75,15 @@ public class TearDownDMDocumentTest extends BaseTestCase {
 				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move to the Recycle Bin')]/a");
+					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move to the Recycle Bin')]");
 				assertEquals(RuntimeVariables.replace("Move to the Recycle Bin"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move to the Recycle Bin')]/a"));
-				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move to the Recycle Bin')]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move to the Recycle Bin')]"));
+				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move to the Recycle Bin')]",
+					RuntimeVariables.replace("Move to the Recycle Bin"));
 				selenium.waitForPageToLoad("30000");
 
-			case 2:
-				assertEquals(RuntimeVariables.replace(
-						"There are no documents or media files in this folder."),
-					selenium.getText(
-						"//div[@class='entries-empty portlet-msg-info']"));
+			case 3:
 				selenium.open("/web/guest/home/");
 				selenium.clickAt("//div[@id='dockbar']",
 					RuntimeVariables.replace("Dockbar"));
@@ -102,7 +104,7 @@ public class TearDownDMDocumentTest extends BaseTestCase {
 						"//form[@id='_182_emptyForm']/a");
 
 				if (!recycleBinPresent) {
-					label = 3;
+					label = 4;
 
 					continue;
 				}
@@ -115,7 +117,7 @@ public class TearDownDMDocumentTest extends BaseTestCase {
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to empty the Recycle Bin[\\s\\S]$"));
 
-			case 3:
+			case 4:
 			case 100:
 				label = -1;
 			}

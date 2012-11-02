@@ -178,8 +178,9 @@ public class OpenIdAction extends PortletAction {
 		if (hostName.equals(_YAHOO_OPEN_ID_HOST)) {
 			return true;
 		}
-
-		return false;
+		else {
+			return false;
+		}
 	}
 
 	protected String readOpenIdResponse(
@@ -204,7 +205,7 @@ public class OpenIdAction extends PortletAction {
 		}
 
 		String receivingUrl = ParamUtil.getString(
-			actionRequest, WebKeys.OPEN_ID_RETURN_TO);
+			actionRequest, "openid.return_to");
 
 		VerificationResult verification = manager.verify(
 			receivingUrl, params, discovered);

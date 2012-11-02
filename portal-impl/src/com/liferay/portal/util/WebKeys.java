@@ -302,8 +302,6 @@ public class WebKeys implements com.liferay.portal.kernel.util.WebKeys {
 
 	public static final String OPEN_ID_LOGIN_PENDING = "OPEN_ID_LOGIN_PENDING";
 
-	public static final String OPEN_ID_RETURN_TO = "openid.return_to";
-
 	public static final String OPEN_SSO_LOGIN = "OPEN_SSO_LOGIN";
 
 	public static final String ORG_LABOR = "ORG_LABOR";

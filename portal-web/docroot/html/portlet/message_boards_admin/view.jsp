@@ -34,6 +34,13 @@ portletURL.setParameter("mbCategoryId", String.valueOf(categoryId));
 request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 %>
 
+<portlet:actionURL var="undoTrashURL">
+	<portlet:param name="struts_action" value="/message_boards_admin/restore_thread" />
+	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
+</portlet:actionURL>
+
+<liferay-ui:trash-undo portletURL="<%= undoTrashURL %>" />
+
 <liferay-ui:tabs
 	names="message-boards-home,recent-posts,statistics,banned-users"
 	url="<%= portletURL.toString() %>"

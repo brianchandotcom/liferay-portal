@@ -14,43 +14,38 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Documents and Media Test Page</td>
-	<td>Documents and Media Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Documents and Media Test Page</td>
 	<td>Documents and Media Test Page</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//a[contains(@class,'document-link')]/span[@class='entry-title']</td>
+	<td>//a[contains(@class,'entry-link')]/span[@class='entry-title']</td>
 	<td>DM Folder Name</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//a[contains(@class,'document-link')]/span[@class='entry-title']</td>
+	<td>//a[contains(@class,'entry-link')]/span[@class='entry-title']</td>
 	<td>DM Folder Name</td>
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//li[@class='folder selected']/a</td>
+	<td>//li[contains(@class,'folder selected')]/a</td>
 	<td>DM Folder Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//li[@class='folder selected']/a</td>
+	<td>//li[contains(@class,'folder selected')]/a</td>
 	<td>DM Folder Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//a[contains(@class,'document-link')]/span[@class='entry-title']</td>
+	<td>//a[contains(@class,'entry-link')]/span[@class='entry-title']</td>
 	<td>DM Folder Document Title</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//a[contains(@class,'document-link')]/span[@class='entry-title']</td>
+	<td>//a[contains(@class,'entry-link')]/span[@class='entry-title']</td>
 	<td>DM Folder Document Title</td>
 </tr>
 <tr>
@@ -67,6 +62,111 @@
 	<td>uploadCommonFile</td>
 	<td>//input[@id='_20_file']</td>
 	<td>Document_1.txt</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//input[@value='Publish']</td>
+	<td>Publish</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[3]/td[2]</td>
+	<td>1.0</td>
+</tr>
+<tr>
+	<td>assertNotChecked</td>
+	<td>//input[@name='_20_rowIds']</td>
+	<td>1.0 Check Box</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@name='_20_rowIds']</td>
+	<td>1.0 Check Box</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@name='_20_rowIds']</td>
+	<td>1.0 Check Box</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//input[@value='Compare Versions']</td>
+	<td>Compare Versions</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//section/div/div/div</td>
+	<td>There are no differences between DM Folder Document Title 1.0 and DM Folder Document Title 1.0.</td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/web/guest/home/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>link=Documents and Media Test Page</td>
+	<td>Documents and Media Test Page</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//a[contains(@class,'entry-link')]/span[@class='entry-title']</td>
+	<td>DM Folder Name</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//a[contains(@class,'entry-link')]/span[@class='entry-title']</td>
+	<td>DM Folder Name</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//li[contains(@class,'folder selected')]/a</td>
+	<td>DM Folder Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[contains(@class,'folder selected')]/a</td>
+	<td>DM Folder Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//a[contains(@class,'entry-link')]/span[@class='entry-title']</td>
+	<td>DM Folder Document Title</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//a[contains(@class,'entry-link')]/span[@class='entry-title']</td>
+	<td>DM Folder Document Title</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//button[2]</td>
+	<td>Edit</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//button[2]</td>
+	<td>Edit</td>
+</tr>
+<tr>
+	<td>uploadCommonFile</td>
+	<td>//input[@id='_20_file']</td>
+	<td>Document_4.txt</td>
 </tr>
 <tr>
 	<td>pause</td>
@@ -122,131 +222,6 @@
 	<td>assertChecked</td>
 	<td>xPath=(//input[@name='_20_rowIds'])[2]</td>
 	<td>1.0 Check Box</td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>//input[@value='Compare Versions']</td>
-	<td>Compare Versions</td>
-</tr>
-<tr>
-	<td>assertPartialText</td>
-	<td>//section/div/div/div</td>
-	<td>There are no differences between DM Folder Document Title 1.0 and DM Folder Document Title 1.1.</td>
-</tr>
-<tr>
-	<td>open</td>
-	<td>/web/guest/home/</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>link=Documents and Media Test Page</td>
-	<td>Documents and Media Test Page</td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>link=Documents and Media Test Page</td>
-	<td>Documents and Media Test Page</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//a[contains(@class,'document-link')]/span[@class='entry-title']</td>
-	<td>DM Folder Name</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//a[contains(@class,'document-link')]/span[@class='entry-title']</td>
-	<td>DM Folder Name</td>
-</tr>
-<tr>
-	<td>waitForText</td>
-	<td>//li[@class='folder selected']/a</td>
-	<td>DM Folder Name</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//li[@class='folder selected']/a</td>
-	<td>DM Folder Name</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//a[contains(@class,'document-link')]/span[@class='entry-title']</td>
-	<td>DM Folder Document Title</td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>//a[contains(@class,'document-link')]/span[@class='entry-title']</td>
-	<td>DM Folder Document Title</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//button[2]</td>
-	<td>Edit</td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>//button[2]</td>
-	<td>Edit</td>
-</tr>
-<tr>
-	<td>uploadCommonFile</td>
-	<td>//input[@id='_20_file']</td>
-	<td>Document_4.txt</td>
-</tr>
-<tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>//input[@value='Publish']</td>
-	<td>Publish</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//div[@class='portlet-msg-success']</td>
-	<td>Your request completed successfully.</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='portlet-msg-success']</td>
-	<td>Your request completed successfully.</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//tr[3]/td[2]</td>
-	<td>1.2</td>
-</tr>
-<tr>
-	<td>assertNotChecked</td>
-	<td>xPath=(//input[@name='_20_rowIds'])[1]</td>
-	<td>1.2 Check Box</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>xPath=(//input[@name='_20_rowIds'])[1]</td>
-	<td>1.2 Check Box</td>
-</tr>
-<tr>
-	<td>assertChecked</td>
-	<td>xPath=(//input[@name='_20_rowIds'])[1]</td>
-	<td>1.2 Check Box</td>
-</tr>
-<tr>
-	<td>assertNotChecked</td>
-	<td>xPath=(//input[@name='_20_rowIds'])[2]</td>
-	<td>1.1 Check Box</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>xPath=(//input[@name='_20_rowIds'])[2]</td>
-	<td>1.1 Check Box</td>
-</tr>
-<tr>
-	<td>assertChecked</td>
-	<td>xPath=(//input[@name='_20_rowIds'])[2]</td>
-	<td>1.1 Check Box</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>

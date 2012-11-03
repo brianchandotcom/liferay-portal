@@ -30,10 +30,10 @@ public class MoveDMSubfolderToFolder2Test extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("DM Folder1 Name"),
 			selenium.getText(
-				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[1]"));
-		selenium.clickAt("xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[1]",
+				"xPath=(//a[contains(@class,'entry-link')]/span[@class='entry-title'])[1]"));
+		selenium.clickAt("xPath=(//a[contains(@class,'entry-link')]/span[@class='entry-title'])[1]",
 			RuntimeVariables.replace("DM Folder1 Name"));
-		selenium.waitForText("//a[contains(@class,'document-link')]/span[@class='entry-title']",
+		selenium.waitForText("//a[contains(@class,'entry-link')]/span[@class='entry-title']",
 			"DM Folder1 Subfolder Name");
 		assertFalse(selenium.isChecked(
 				"//form/div[1]/div/div/span[1]/span/span/input[2]"));
@@ -59,16 +59,14 @@ public class MoveDMSubfolderToFolder2Test extends BaseTestCase {
 			selenium.getText("//span[@class='folder-title']"));
 		selenium.clickAt("//input[@value='Select']",
 			RuntimeVariables.replace("Select"));
-		selenium.waitForPopUp("folder", RuntimeVariables.replace("30000"));
-		selenium.selectWindow("name=folder");
 		Thread.sleep(5000);
+		selenium.selectWindow("title=Documents and Media");
 		selenium.waitForVisible("//tr[4]/td[1]/a");
 		assertEquals(RuntimeVariables.replace("DM Folder2 Name"),
 			selenium.getText("//tr[4]/td[1]/a"));
 		selenium.click(RuntimeVariables.replace("//tr[4]/td[1]/a"));
 		selenium.waitForPageToLoad("30000");
 		selenium.click("//input[@value='Choose This Folder']");
-		Thread.sleep(5000);
 		selenium.selectWindow("null");
 		selenium.waitForText("//a[@id='_20_folderName']", "DM Folder2 Name");
 		assertEquals(RuntimeVariables.replace("DM Folder2 Name"),

@@ -14,48 +14,43 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Documents and Media Test Page</td>
-	<td>Documents and Media Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Documents and Media Test Page</td>
 	<td>Documents and Media Test Page</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//span[@class='document-thumbnail']/img</td>
+	<td>//div[@class='entry-thumbnail']/img</td>
 	<td>Document Thumbnail</td>
 </tr>
 <tr>
 	<td>assertVisible</td>
-	<td>//span[@class='document-thumbnail']/img</td>
+	<td>//div[@class='entry-thumbnail']/img</td>
 	<td>Document Thumbnail</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='document-container']/div/a/span[2]</td>
+	<td>//a[contains(@class,'entry-link')]/span[@class='entry-title']</td>
 	<td>DM Folder Name</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//div[@class='document-container']/div/a/span[2]</td>
+	<td>//a[contains(@class,'entry-link')]/span[@class='entry-title']</td>
 	<td>DM Folder Name</td>
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//li[@class='folder selected']/a/span[2]</td>
+	<td>//li[contains(@class,'folder selected')]/a/span[2]</td>
 	<td>DM Folder Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//li[@class='folder selected']/a/span[2]</td>
+	<td>//li[contains(@class,'folder selected')]/a/span[2]</td>
 	<td>DM Folder Name</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//span[@class='overlay document-action']/span/ul/li/strong/a</td>
+	<td>//span[@class='entry-action overlay']/span/ul/li/strong/a</td>
 	<td>Actions Arrow Drop Down</td>
 </tr>
 <tr>

@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Documents and Media Test Page</td>
-	<td>Documents and Media Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Documents and Media Test Page</td>
 	<td>Documents and Media Test Page</td>
@@ -30,17 +25,17 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//button[@title='Icon View' and contains(@class,'aui-buttonitem-focused')]</td>
+	<td>//button[@title='Icon View' and contains(@class,'aui-buttonitem-content')]</td>
 	<td>Icon View</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//a[contains(@class,'document-link')]/span[@class='entry-title']</td>
+	<td>//a[contains(@class,'entry-link')]/span[@class='entry-title']</td>
 	<td>DM Folder Name</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//a[contains(@class,'document-link')]/span[@class='entry-title']</td>
+	<td>//a[contains(@class,'entry-link')]/span[@class='entry-title']</td>
 	<td>DM Folder Name</td>
 </tr>
 <tr>
@@ -60,7 +55,7 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//button[@title='List View' and contains(@class,'aui-buttonitem-focused')]</td>
+	<td>//button[@title='List View' and contains(@class,'aui-buttonitem-content')]</td>
 	<td>List View</td>
 </tr>
 <tr>
@@ -90,12 +85,12 @@
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//a[contains(@class,'document-link')]/span[@class='entry-title']</td>
+	<td>//a[contains(@class,'entry-link')]/span[@class='entry-title']</td>
 	<td>DM Folder Document Title</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//a[contains(@class,'document-link')]/span[@class='entry-title']</td>
+	<td>//a[contains(@class,'entry-link')]/span[@class='entry-title']</td>
 	<td>DM Folder Document Title</td>
 </tr>
 </tbody></table>

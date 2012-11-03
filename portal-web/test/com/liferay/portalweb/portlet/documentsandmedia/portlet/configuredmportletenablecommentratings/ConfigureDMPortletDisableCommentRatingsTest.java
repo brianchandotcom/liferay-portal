@@ -31,7 +31,6 @@ public class ConfigureDMPortletDisableCommentRatingsTest extends BaseTestCase {
 				selenium.selectWindow("null");
 				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
-				selenium.waitForVisible("link=Documents and Media Test Page");
 				selenium.clickAt("link=Documents and Media Test Page",
 					RuntimeVariables.replace("Documents and Media Test Page"));
 				selenium.waitForPageToLoad("30000");
@@ -40,7 +39,6 @@ public class ConfigureDMPortletDisableCommentRatingsTest extends BaseTestCase {
 					selenium.getText("//span[@title='Options']/ul/li/strong/a"));
 				selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
 					RuntimeVariables.replace("Options"));
-				Thread.sleep(5000);
 				selenium.waitForVisible(
 					"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
 				assertEquals(RuntimeVariables.replace("Configuration"),
@@ -48,6 +46,10 @@ public class ConfigureDMPortletDisableCommentRatingsTest extends BaseTestCase {
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
 				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a",
 					RuntimeVariables.replace("Configuration"));
+				selenium.waitForElementPresent(
+					"//iframe[contains(@id,'configurationIframeDialog')]");
+				selenium.selectFrame(
+					"//iframe[contains(@id,'configurationIframeDialog')]");
 				selenium.waitForVisible(
 					"//input[@id='_86_enableCommentRatingsCheckbox']");
 
@@ -60,14 +62,13 @@ public class ConfigureDMPortletDisableCommentRatingsTest extends BaseTestCase {
 					continue;
 				}
 
-				assertTrue(selenium.isChecked(
-						"//input[@id='_86_enableCommentRatingsCheckbox']"));
 				selenium.clickAt("//input[@id='_86_enableCommentRatingsCheckbox']",
 					RuntimeVariables.replace("Enable Comment Ratings"));
-				assertFalse(selenium.isChecked(
-						"//input[@id='_86_enableCommentRatingsCheckbox']"));
 
 			case 2:
+				assertFalse(selenium.isChecked(
+						"//input[@id='_86_enableCommentRatingsCheckbox']"));
+				Thread.sleep(5000);
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
@@ -76,6 +77,7 @@ public class ConfigureDMPortletDisableCommentRatingsTest extends BaseTestCase {
 					selenium.getText("//div[@class='portlet-msg-success']"));
 				assertFalse(selenium.isChecked(
 						"//input[@id='_86_enableCommentRatingsCheckbox']"));
+				selenium.selectFrame("relative=top");
 
 			case 100:
 				label = -1;

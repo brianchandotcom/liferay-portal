@@ -20,18 +20,38 @@
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>//li[7]/a</td>
-	<td>Site Content</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
+	<td>AUI Editable Min</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//li[7]/a</td>
+	<td>//li[@id='_145_manageContent']/a/span</td>
+	<td>Manage</td>
+</tr>
+<tr>
+	<td>mouseOver</td>
+	<td>//li[@id='_145_manageContent']/a/span</td>
+	<td>Manage</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>link=Site Content</td>
 	<td>Site Content</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//li[7]/a</td>
+	<td>link=Site Content</td>
 	<td>Site Content</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//iframe[@id='manageContentDialog']</td>
+	<td>Manage Content Iframe</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//iframe[@id='manageContentDialog']</td>
+	<td>Manage Content Iframe</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -55,12 +75,12 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//a[@id='_20_bbln_menuButton']</td>
+	<td>//strong/a</td>
 	<td>Options</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//a[@id='_20_bbln_menuButton']</td>
+	<td>//strong/a</td>
 	<td>Options</td>
 </tr>
 <tr>
@@ -89,7 +109,7 @@
 	<td>Import</td>
 </tr>
 <tr>
-	<td>type</td>
+	<td>uploadFile</td>
 	<td>//input[@id='_86_importFileName']</td>
 	<td>L:\portal\build\portal-web\test\com\liferay\portalweb\portlet\documentsandmedia\dependencies\Document_Library-Selenium.portlet.lar</td>
 </tr>
@@ -122,6 +142,11 @@
 	<td>assertText</td>
 	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>relative=top</td>
+	<td>top</td>
 </tr>
 </tbody></table>
 </body>

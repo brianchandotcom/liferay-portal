@@ -25,7 +25,6 @@ public class SearchDMFolderImageTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Documents and Media Test Page");
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -40,7 +39,7 @@ public class SearchDMFolderImageTest extends BaseTestCase {
 			selenium.getText("//span[@class='keywords']"));
 		assertEquals(RuntimeVariables.replace("DM Folder Image Title"),
 			selenium.getText(
-				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
+				"//a[contains(@class,'entry-link')]/span[@class='entry-title']"));
 		selenium.type("//input[@id='_20_keywords']",
 			RuntimeVariables.replace("DM1 Folder1 Image1 Title1"));
 		selenium.clickAt("//input[@value='Search']",
@@ -51,6 +50,6 @@ public class SearchDMFolderImageTest extends BaseTestCase {
 				"Searched for DM1 Folder1 Image1 Title1 everywhere."),
 			selenium.getText("//span[@class='keywords']"));
 		assertTrue(selenium.isElementNotPresent(
-				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
+				"//a[contains(@class,'entry-link')]/span[@class='entry-title']"));
 	}
 }

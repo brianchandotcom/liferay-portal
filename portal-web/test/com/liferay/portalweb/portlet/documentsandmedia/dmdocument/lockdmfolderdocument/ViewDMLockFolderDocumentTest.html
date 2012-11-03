@@ -14,33 +14,28 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Documents and Media Test Page</td>
-	<td>Documents and Media Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Documents and Media Test Page</td>
 	<td>Documents and Media Test Page</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//a[contains(@class,'document-link')]/span[@class='entry-title']</td>
+	<td>//a[contains(@class,'entry-link')]/span[@class='entry-title']</td>
 	<td>DM Folder Name</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//a[contains(@class,'document-link')]/span[@class='entry-title']</td>
+	<td>//a[contains(@class,'entry-link')]/span[@class='entry-title']</td>
 	<td>DM Folder Name</td>
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//li[@class='folder selected']/a</td>
+	<td>//li[contains(@class,'folder selected')]/a</td>
 	<td>DM Folder Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//li[@class='folder selected']/a</td>
+	<td>//li[contains(@class,'folder selected')]/a</td>
 	<td>DM Folder Name</td>
 </tr>
 <tr>
@@ -50,18 +45,18 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//a[contains(@class,'document-link')]/span[@class='entry-title']</td>
+	<td>//a[contains(@class,'entry-link')]/span[@class='entry-title']</td>
 	<td>DM Folder Document Title (Draft)</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//a[contains(@class,'document-link')]/span[@class='entry-title']</td>
+	<td>//a[contains(@class,'entry-link')]/span[@class='entry-title']</td>
 	<td>DM Folder Document Title (Draft)</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//div[@class='portlet-msg-lock portlet-msg-success']</td>
-	<td>You now have an indefinite lock on this document. No one else can edit this document until you unlock it. This lock will never expire.</td>
+	<td>You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 1 day.</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -76,9 +71,8 @@
 <tr>
 	<td>assertText</td>
 	<td>//div[@class='portlet-msg-success']</td>
-	<td>You now have an indefinite lock on this document. No one else can edit this document until you unlock it. This lock will never expire.</td>
+	<td>You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 1 day.</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

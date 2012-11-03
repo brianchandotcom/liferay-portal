@@ -20,17 +20,17 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[1]</td>
+	<td>xPath=(//a[contains(@class,'entry-link')]/span[@class='entry-title'])[1]</td>
 	<td>DM Folder1 Name</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[1]</td>
+	<td>xPath=(//a[contains(@class,'entry-link')]/span[@class='entry-title'])[1]</td>
 	<td>DM Folder1 Name</td>
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//a[contains(@class,'document-link')]/span[@class='entry-title']</td>
+	<td>//a[contains(@class,'entry-link')]/span[@class='entry-title']</td>
 	<td>DM Folder1 Subfolder Name</td>
 </tr>
 <tr>
@@ -89,18 +89,13 @@
 	<td>Select</td>
 </tr>
 <tr>
-	<td>waitForPopUp</td>
-	<td>folder</td>
-	<td>30000</td>
-</tr>
-<tr>
-	<td>selectWindow</td>
-	<td>name=folder</td>
+	<td>pause</td>
+	<td>5000</td>
 	<td></td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>5000</td>
+	<td>selectWindow</td>
+	<td>title=Documents and Media</td>
 	<td></td>
 </tr>
 <tr>
@@ -122,11 +117,6 @@
 	<td>click</td>
 	<td>//input[@value='Choose This Folder']</td>
 	<td>Choose This Folder</td>
-</tr>
-<tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
 </tr>
 <tr>
 	<td>selectWindow</td>

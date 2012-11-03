@@ -44,7 +44,7 @@ public class TearDownDMDocumentTest extends BaseTestCase {
 						"//button[contains(@class,'aui-state-active') and @title='Icon View']"));
 
 				boolean dmDocumentNotRecycled = selenium.isElementPresent(
-						"//div[@class='entry-thumbnail']/img");
+						"//a[contains(@class,'entry-link')]/span[@class='entry-title']");
 
 				if (!dmDocumentNotRecycled) {
 					label = 3;
@@ -68,7 +68,7 @@ public class TearDownDMDocumentTest extends BaseTestCase {
 				assertTrue(selenium.isChecked(
 						"//input[@id='_20_allRowIdsCheckbox']"));
 				selenium.waitForVisible(
-					"//div[@id='_20_entries']/div[contains(@class,'selected')]");
+					"//div[contains(@class,'display-icon selectable selected')]");
 				assertEquals(RuntimeVariables.replace("Actions"),
 					selenium.getText(
 						"//span[@title='Actions']/ul/li/strong/a/span"));
@@ -100,18 +100,18 @@ public class TearDownDMDocumentTest extends BaseTestCase {
 					RuntimeVariables.replace("Recycle Bin"));
 				selenium.waitForPageToLoad("30000");
 
-				boolean recycleBinPresent = selenium.isElementPresent(
-						"//form[@id='_182_emptyForm']/a");
+				boolean dmFolderNotDeleted = selenium.isElementPresent(
+						"//span[@title='Actions']/ul/li/strong/a");
 
-				if (!recycleBinPresent) {
+				if (!dmFolderNotDeleted) {
 					label = 4;
 
 					continue;
 				}
 
 				assertEquals(RuntimeVariables.replace("Empty the Recycle Bin"),
-					selenium.getText("//form[@id='_182_emptyForm']/a"));
-				selenium.clickAt("//form[@id='_182_emptyForm']/a",
+					selenium.getText("//a[@class='trash-empty-link']"));
+				selenium.clickAt("//a[@class='trash-empty-link']",
 					RuntimeVariables.replace("Empty the Recycle Bin"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()

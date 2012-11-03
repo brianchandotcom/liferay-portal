@@ -25,13 +25,12 @@ public class ViewDMFolderActionsThumbnailTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Documents and Media Test Page");
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.waitForVisible(
-			"xPath=(//span[@class='overlay document-action']/span/ul/li/strong/a)[2]");
-		selenium.clickAt("xPath=(//span[@class='overlay document-action']/span/ul/li/strong/a)[2]",
+			"xPath=(//span[@class='entry-action overlay']/span/ul/li/strong/a)[2]");
+		selenium.clickAt("xPath=(//span[@class='entry-action overlay']/span/ul/li/strong/a)[2]",
 			RuntimeVariables.replace("Actions Arrow Drop Down"));
 		selenium.waitForVisible(
 			"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a");

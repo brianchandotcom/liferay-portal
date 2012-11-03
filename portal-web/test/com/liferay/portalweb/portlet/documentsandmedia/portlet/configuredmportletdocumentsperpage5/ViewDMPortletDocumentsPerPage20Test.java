@@ -25,45 +25,44 @@ public class ViewDMPortletDocumentsPerPage20Test extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Documents and Media Test Page");
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("DM Folder Name"),
 			selenium.getText(
-				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
-		selenium.clickAt("//a[contains(@class,'document-link')]/span[@class='entry-title']",
+				"//a[contains(@class,'entry-link')]/span[@class='entry-title']"));
+		selenium.clickAt("//a[contains(@class,'entry-link')]/span[@class='entry-title']",
 			RuntimeVariables.replace("DM Folder Name"));
-		selenium.waitForText("//li[@class='folder selected']/a",
+		selenium.waitForText("//li[contains(@class,'folder selected')]/a",
 			"DM Folder Name");
 		assertEquals(RuntimeVariables.replace("DM Folder Name"),
-			selenium.getText("//li[@class='folder selected']/a"));
-		selenium.waitForText("xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[1]",
+			selenium.getText("//li[contains(@class,'folder selected')]/a"));
+		selenium.waitForText("xPath=(//a[contains(@class,'entry-link')]/span[@class='entry-title'])[1]",
 			"DM Folder Document1 Title");
 		assertEquals(RuntimeVariables.replace("DM Folder Document1 Title"),
 			selenium.getText(
-				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[1]"));
+				"xPath=(//a[contains(@class,'entry-link')]/span[@class='entry-title'])[1]"));
 		assertEquals(RuntimeVariables.replace("DM Folder Document2 Title"),
 			selenium.getText(
-				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[2]"));
+				"xPath=(//a[contains(@class,'entry-link')]/span[@class='entry-title'])[2]"));
 		assertEquals(RuntimeVariables.replace("DM Folder Document3 Title"),
 			selenium.getText(
-				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[3]"));
+				"xPath=(//a[contains(@class,'entry-link')]/span[@class='entry-title'])[3]"));
 		assertEquals(RuntimeVariables.replace("DM Folder Document4 Title"),
 			selenium.getText(
-				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[4]"));
+				"xPath=(//a[contains(@class,'entry-link')]/span[@class='entry-title'])[4]"));
 		assertEquals(RuntimeVariables.replace("DM Folder Document5 Title"),
 			selenium.getText(
-				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[5]"));
+				"xPath=(//a[contains(@class,'entry-link')]/span[@class='entry-title'])[5]"));
 		assertFalse(selenium.isTextPresent("DM Folder Document6 Title"));
 		Thread.sleep(5000);
 		selenium.clickAt("xPath=(//a[@class='aui-paginator-link aui-paginator-next-link'])[2]",
 			RuntimeVariables.replace("Next"));
-		selenium.waitForText("//a[contains(@class,'document-link')]/span[@class='entry-title']",
+		selenium.waitForText("//a[contains(@class,'entry-link')]/span[@class='entry-title']",
 			"DM Folder Document6 Title");
 		assertEquals(RuntimeVariables.replace("DM Folder Document6 Title"),
 			selenium.getText(
-				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
+				"//a[contains(@class,'entry-link')]/span[@class='entry-title']"));
 		assertFalse(selenium.isTextPresent("DM Folder Document1 Title"));
 		assertFalse(selenium.isTextPresent("DM Folder Document2 Title"));
 		assertFalse(selenium.isTextPresent("DM Folder Document3 Title"));
@@ -71,31 +70,31 @@ public class ViewDMPortletDocumentsPerPage20Test extends BaseTestCase {
 		assertFalse(selenium.isTextPresent("DM Folder Document5 Title"));
 		selenium.clickAt("xPath=(//a[@class='aui-paginator-link aui-paginator-prev-link'])[2]",
 			RuntimeVariables.replace("Previous"));
-		selenium.waitForText("xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[1]",
+		selenium.waitForText("xPath=(//a[contains(@class,'entry-link')]/span[@class='entry-title'])[1]",
 			"DM Folder Document1 Title");
 		assertEquals(RuntimeVariables.replace("DM Folder Document1 Title"),
 			selenium.getText(
-				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[1]"));
+				"xPath=(//a[contains(@class,'entry-link')]/span[@class='entry-title'])[1]"));
 		assertEquals(RuntimeVariables.replace("DM Folder Document2 Title"),
 			selenium.getText(
-				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[2]"));
+				"xPath=(//a[contains(@class,'entry-link')]/span[@class='entry-title'])[2]"));
 		assertEquals(RuntimeVariables.replace("DM Folder Document3 Title"),
 			selenium.getText(
-				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[3]"));
+				"xPath=(//a[contains(@class,'entry-link')]/span[@class='entry-title'])[3]"));
 		assertEquals(RuntimeVariables.replace("DM Folder Document4 Title"),
 			selenium.getText(
-				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[4]"));
+				"xPath=(//a[contains(@class,'entry-link')]/span[@class='entry-title'])[4]"));
 		assertEquals(RuntimeVariables.replace("DM Folder Document5 Title"),
 			selenium.getText(
-				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[5]"));
+				"xPath=(//a[contains(@class,'entry-link')]/span[@class='entry-title'])[5]"));
 		assertFalse(selenium.isTextPresent("DM Folder Document6 Title"));
 		selenium.clickAt("xPath=(//a[@class='aui-paginator-link aui-paginator-last-link'])[2]",
 			RuntimeVariables.replace("Last"));
-		selenium.waitForText("//a[contains(@class,'document-link')]/span[@class='entry-title']",
+		selenium.waitForText("//a[contains(@class,'entry-link')]/span[@class='entry-title']",
 			"DM Folder Document6 Title");
 		assertEquals(RuntimeVariables.replace("DM Folder Document6 Title"),
 			selenium.getText(
-				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
+				"//a[contains(@class,'entry-link')]/span[@class='entry-title']"));
 		assertFalse(selenium.isTextPresent("DM Folder Document1 Title"));
 		assertFalse(selenium.isTextPresent("DM Folder Document2 Title"));
 		assertFalse(selenium.isTextPresent("DM Folder Document3 Title"));
@@ -103,30 +102,30 @@ public class ViewDMPortletDocumentsPerPage20Test extends BaseTestCase {
 		assertFalse(selenium.isTextPresent("DM Folder Document5 Title"));
 		selenium.clickAt("xPath=(//a[@class='aui-paginator-link aui-paginator-first-link'])[2]",
 			RuntimeVariables.replace("First"));
-		selenium.waitForText("xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[1]",
+		selenium.waitForText("xPath=(//a[contains(@class,'entry-link')]/span[@class='entry-title'])[1]",
 			"DM Folder Document1 Title");
 		assertEquals(RuntimeVariables.replace("DM Folder Document1 Title"),
 			selenium.getText(
-				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[1]"));
+				"xPath=(//a[contains(@class,'entry-link')]/span[@class='entry-title'])[1]"));
 		assertEquals(RuntimeVariables.replace("DM Folder Document2 Title"),
 			selenium.getText(
-				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[2]"));
+				"xPath=(//a[contains(@class,'entry-link')]/span[@class='entry-title'])[2]"));
 		assertEquals(RuntimeVariables.replace("DM Folder Document3 Title"),
 			selenium.getText(
-				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[3]"));
+				"xPath=(//a[contains(@class,'entry-link')]/span[@class='entry-title'])[3]"));
 		assertEquals(RuntimeVariables.replace("DM Folder Document4 Title"),
 			selenium.getText(
-				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[4]"));
+				"xPath=(//a[contains(@class,'entry-link')]/span[@class='entry-title'])[4]"));
 		assertEquals(RuntimeVariables.replace("DM Folder Document5 Title"),
 			selenium.getText(
-				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[5]"));
+				"xPath=(//a[contains(@class,'entry-link')]/span[@class='entry-title'])[5]"));
 		assertFalse(selenium.isTextPresent("DM Folder Document6 Title"));
 		selenium.clickAt("//a[@page='2']", RuntimeVariables.replace("2"));
-		selenium.waitForText("//a[contains(@class,'document-link')]/span[@class='entry-title']",
+		selenium.waitForText("//a[contains(@class,'entry-link')]/span[@class='entry-title']",
 			"DM Folder Document6 Title");
 		assertEquals(RuntimeVariables.replace("DM Folder Document6 Title"),
 			selenium.getText(
-				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
+				"//a[contains(@class,'entry-link')]/span[@class='entry-title']"));
 		assertFalse(selenium.isTextPresent("DM Folder Document1 Title"));
 		assertFalse(selenium.isTextPresent("DM Folder Document2 Title"));
 		assertFalse(selenium.isTextPresent("DM Folder Document3 Title"));
@@ -134,23 +133,23 @@ public class ViewDMPortletDocumentsPerPage20Test extends BaseTestCase {
 		assertFalse(selenium.isTextPresent("DM Folder Document5 Title"));
 		selenium.clickAt("xPath=(//a[@page='1'])[2]",
 			RuntimeVariables.replace("1"));
-		selenium.waitForText("xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[1]",
+		selenium.waitForText("xPath=(//a[contains(@class,'entry-link')]/span[@class='entry-title'])[1]",
 			"DM Folder Document1 Title");
 		assertEquals(RuntimeVariables.replace("DM Folder Document1 Title"),
 			selenium.getText(
-				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[1]"));
+				"xPath=(//a[contains(@class,'entry-link')]/span[@class='entry-title'])[1]"));
 		assertEquals(RuntimeVariables.replace("DM Folder Document2 Title"),
 			selenium.getText(
-				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[2]"));
+				"xPath=(//a[contains(@class,'entry-link')]/span[@class='entry-title'])[2]"));
 		assertEquals(RuntimeVariables.replace("DM Folder Document3 Title"),
 			selenium.getText(
-				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[3]"));
+				"xPath=(//a[contains(@class,'entry-link')]/span[@class='entry-title'])[3]"));
 		assertEquals(RuntimeVariables.replace("DM Folder Document4 Title"),
 			selenium.getText(
-				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[4]"));
+				"xPath=(//a[contains(@class,'entry-link')]/span[@class='entry-title'])[4]"));
 		assertEquals(RuntimeVariables.replace("DM Folder Document5 Title"),
 			selenium.getText(
-				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[5]"));
+				"xPath=(//a[contains(@class,'entry-link')]/span[@class='entry-title'])[5]"));
 		assertFalse(selenium.isTextPresent("DM Folder Document6 Title"));
 	}
 }

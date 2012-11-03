@@ -34,11 +34,11 @@ public class ViewDMDocumentTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Access these files offline using Liferay Sync."),
 			selenium.getText("//div[@id='_20_syncNotificationContent']/a"));
-		assertTrue(selenium.isVisible("//div[@class='document-thumbnail']/img"));
+		assertTrue(selenium.isVisible("//div[@class='entry-thumbnail']/img"));
 		assertEquals(RuntimeVariables.replace("DM Document Title"),
 			selenium.getText(
-				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
-		selenium.clickAt("//a[contains(@class,'document-link')]/span[@class='entry-title']",
+				"//a[contains(@class,'entry-link')]/span[@class='entry-title']"));
+		selenium.clickAt("//a[contains(@class,'entry-link')]/span[@class='entry-title']",
 			RuntimeVariables.replace("DM Document Title"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("DM Document Title"),

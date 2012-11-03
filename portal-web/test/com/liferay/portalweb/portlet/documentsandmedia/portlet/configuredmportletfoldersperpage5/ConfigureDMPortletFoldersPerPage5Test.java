@@ -26,7 +26,6 @@ public class ConfigureDMPortletFoldersPerPage5Test extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Documents and Media Test Page");
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -34,7 +33,6 @@ public class ConfigureDMPortletFoldersPerPage5Test extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Options"),
 			selenium.getText("//strong/a"));
 		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
-		Thread.sleep(5000);
 		selenium.waitForVisible(
 			"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
 		assertEquals(RuntimeVariables.replace("Configuration"),
@@ -42,6 +40,10 @@ public class ConfigureDMPortletFoldersPerPage5Test extends BaseTestCase {
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
 		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a",
 			RuntimeVariables.replace("Configuration"));
+		selenium.waitForElementPresent(
+			"//iframe[contains(@id,'configurationIframeDialog')]");
+		selenium.selectFrame(
+			"//iframe[contains(@id,'configurationIframeDialog')]");
 		Thread.sleep(5000);
 		selenium.waitForVisible("//select[@id='_86_entriesPerPage']");
 		selenium.select("//select[@id='_86_entriesPerPage']",
@@ -53,5 +55,6 @@ public class ConfigureDMPortletFoldersPerPage5Test extends BaseTestCase {
 				"You have successfully updated the setup."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertTrue(selenium.isVisible("//select[@id='_86_entriesPerPage']"));
+		selenium.selectFrame("relative=top");
 	}
 }

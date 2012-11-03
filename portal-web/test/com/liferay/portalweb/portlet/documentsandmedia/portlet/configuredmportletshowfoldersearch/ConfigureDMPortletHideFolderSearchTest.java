@@ -31,7 +31,6 @@ public class ConfigureDMPortletHideFolderSearchTest extends BaseTestCase {
 				selenium.selectWindow("null");
 				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
-				selenium.waitForVisible("link=Documents and Media Test Page");
 				selenium.clickAt("link=Documents and Media Test Page",
 					RuntimeVariables.replace("Documents and Media Test Page"));
 				selenium.waitForPageToLoad("30000");
@@ -40,7 +39,6 @@ public class ConfigureDMPortletHideFolderSearchTest extends BaseTestCase {
 					selenium.getText("//span[@title='Options']/ul/li/strong/a"));
 				selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
 					RuntimeVariables.replace("Options"));
-				Thread.sleep(5000);
 				selenium.waitForVisible(
 					"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
 				assertEquals(RuntimeVariables.replace("Configuration"),
@@ -48,8 +46,10 @@ public class ConfigureDMPortletHideFolderSearchTest extends BaseTestCase {
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
 				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a",
 					RuntimeVariables.replace("Configuration"));
-				selenium.waitForVisible("//iframe");
-				selenium.selectFrame("//iframe");
+				selenium.waitForElementPresent(
+					"//iframe[contains(@id,'configurationIframeDialog')]");
+				selenium.selectFrame(
+					"//iframe[contains(@id,'configurationIframeDialog')]");
 				selenium.waitForVisible(
 					"//input[@id='_86_showFoldersSearchCheckbox']");
 
@@ -62,13 +62,12 @@ public class ConfigureDMPortletHideFolderSearchTest extends BaseTestCase {
 					continue;
 				}
 
-				assertTrue(selenium.isChecked(
-						"//input[@id='_86_showFoldersSearchCheckbox']"));
 				selenium.click("//input[@id='_86_showFoldersSearchCheckbox']");
-				assertFalse(selenium.isChecked(
-						"//input[@id='_86_showFoldersSearchCheckbox']"));
 
 			case 2:
+				assertFalse(selenium.isChecked(
+						"//input[@id='_86_showFoldersSearchCheckbox']"));
+				Thread.sleep(5000);
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");

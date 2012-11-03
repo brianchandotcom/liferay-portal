@@ -25,17 +25,16 @@ public class EditDMFolderTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Documents and Media Test Page");
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForText("//a[contains(@class,'document-link')]/span[@class='entry-title']",
+		selenium.waitForText("//a[contains(@class,'entry-link')]/span[@class='entry-title']",
 			"DM Folder Name");
 		assertEquals(RuntimeVariables.replace("DM Folder Name"),
 			selenium.getText(
-				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
+				"//a[contains(@class,'entry-link')]/span[@class='entry-title']"));
 		Thread.sleep(5000);
-		selenium.clickAt("xPath=(//span[@class='overlay document-action']/span/ul/li/strong/a)[2]",
+		selenium.clickAt("xPath=(//span[@class='entry-action overlay']/span/ul/li/strong/a)[2]",
 			RuntimeVariables.replace("Drop Down"));
 		Thread.sleep(5000);
 		selenium.waitForVisible(
@@ -60,7 +59,7 @@ public class EditDMFolderTest extends BaseTestCase {
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("DM Folder Name Edit"),
 			selenium.getText(
-				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
+				"//a[contains(@class,'entry-link')]/span[@class='entry-title']"));
 		selenium.clickAt("//button[@title='List View']",
 			RuntimeVariables.replace("List View"));
 		selenium.waitForText("//tr[3]/td[2]/span/a/span", "DM Folder Name Edit");
@@ -72,10 +71,10 @@ public class EditDMFolderTest extends BaseTestCase {
 			selenium.getText("//tr[3]/td[4]"));
 		selenium.clickAt("//button[@title='Icon View']",
 			RuntimeVariables.replace("Icon View"));
-		selenium.waitForText("//a[contains(@class,'document-link')]/span[@class='entry-title']",
+		selenium.waitForText("//a[contains(@class,'entry-link')]/span[@class='entry-title']",
 			"DM Folder Name Edit");
 		assertEquals(RuntimeVariables.replace("DM Folder Name Edit"),
 			selenium.getText(
-				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
+				"//a[contains(@class,'entry-link')]/span[@class='entry-title']"));
 	}
 }

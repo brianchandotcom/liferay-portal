@@ -25,7 +25,6 @@ public class SearchDMFolderDocumentTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Documents and Media Test Page");
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -39,9 +38,8 @@ public class SearchDMFolderDocumentTest extends BaseTestCase {
 			selenium.getText("//div[@class='search-info']/span[1]"));
 		assertEquals(RuntimeVariables.replace("DM Folder Document Title"),
 			selenium.getText(
-				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
+				"//a[contains(@class,'entry-link')]/span[@class='entry-title']"));
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Documents and Media Test Page");
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -54,7 +52,7 @@ public class SearchDMFolderDocumentTest extends BaseTestCase {
 				"Searched for DM1 Folder1 Document1 Title1 everywhere."),
 			selenium.getText("//div[@class='search-info']/span[1]"));
 		assertTrue(selenium.isElementNotPresent(
-				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
+				"//a[contains(@class,'entry-link')]/span[@class='entry-title']"));
 		assertTrue(selenium.isElementNotPresent("link=DM Folder Document Title"));
 	}
 }

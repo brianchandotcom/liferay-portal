@@ -25,16 +25,15 @@ public class AddDMSubfolderNameImageNameTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Documents and Media Test Page");
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForText("//a[contains(@class,'document-link')]/span[@class='entry-title']",
+		selenium.waitForText("//a[contains(@class,'entry-link')]/span[@class='entry-title']",
 			"DM Folder Name");
 		assertEquals(RuntimeVariables.replace("DM Folder Name"),
 			selenium.getText(
-				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
-		selenium.clickAt("//a[contains(@class,'document-link')]/span[@class='entry-title']",
+				"//a[contains(@class,'entry-link')]/span[@class='entry-title']"));
+		selenium.clickAt("//a[contains(@class,'entry-link')]/span[@class='entry-title']",
 			RuntimeVariables.replace("DM Folder Name"));
 		Thread.sleep(5000);
 		selenium.waitForVisible("//span[3]/span/span/ul/li/strong/a/span");

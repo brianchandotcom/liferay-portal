@@ -25,21 +25,20 @@ public class EditDMFolderImageDetailsTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Documents and Media Test Page");
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("DM Folder Name"),
 			selenium.getText(
-				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
-		selenium.clickAt("//a[contains(@class,'document-link')]/span[@class='entry-title']",
+				"//a[contains(@class,'entry-link')]/span[@class='entry-title']"));
+		selenium.clickAt("//a[contains(@class,'entry-link')]/span[@class='entry-title']",
 			RuntimeVariables.replace("DM Folder Name"));
-		selenium.waitForText("//a[contains(@class,'document-link')]/span[@class='entry-title']",
+		selenium.waitForText("//a[contains(@class,'entry-link')]/span[@class='entry-title']",
 			"DM Folder Image Title");
 		assertEquals(RuntimeVariables.replace("DM Folder Image Title"),
 			selenium.getText(
-				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
-		selenium.clickAt("//a[contains(@class,'document-link')]/span[@class='entry-title']",
+				"//a[contains(@class,'entry-link')]/span[@class='entry-title']"));
+		selenium.clickAt("//a[contains(@class,'entry-link')]/span[@class='entry-title']",
 			RuntimeVariables.replace("DM Folder Image Title"));
 		selenium.waitForPageToLoad("30000");
 		selenium.waitForVisible("//button[2]");
@@ -61,21 +60,20 @@ public class EditDMFolderImageDetailsTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("DM Folder Image Title Edit"),
 			selenium.getText("//h2[@class='document-title']"));
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Documents and Media Test Page");
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("DM Folder Name"),
 			selenium.getText(
-				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
-		selenium.clickAt("//a[contains(@class,'document-link')]/span[@class='entry-title']",
+				"//a[contains(@class,'entry-link')]/span[@class='entry-title']"));
+		selenium.clickAt("//a[contains(@class,'entry-link')]/span[@class='entry-title']",
 			RuntimeVariables.replace("DM Folder Name"));
-		selenium.waitForText("//a[contains(@class,'document-link')]/span[@class='entry-title']",
+		selenium.waitForText("//a[contains(@class,'entry-link')]/span[@class='entry-title']",
 			"DM Folder Image Title Edit");
 		assertEquals(RuntimeVariables.replace("DM Folder Image Title Edit"),
 			selenium.getText(
-				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
-		selenium.clickAt("//a[contains(@class,'document-link')]/span[@class='entry-title']",
+				"//a[contains(@class,'entry-link')]/span[@class='entry-title']"));
+		selenium.clickAt("//a[contains(@class,'entry-link')]/span[@class='entry-title']",
 			RuntimeVariables.replace("DM Folder Image Title Edit"));
 		selenium.waitForPageToLoad("30000");
 		selenium.waitForVisible(

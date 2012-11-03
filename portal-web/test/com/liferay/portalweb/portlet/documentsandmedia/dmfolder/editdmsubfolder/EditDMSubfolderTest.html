@@ -14,38 +14,33 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Documents and Media Test Page</td>
-	<td>Documents and Media Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Documents and Media Test Page</td>
 	<td>Documents and Media Test Page</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//a[contains(@class,'document-link')]/span[@class='entry-title']</td>
+	<td>//a[contains(@class,'entry-link')]/span[@class='entry-title']</td>
 	<td>DM Folder Name</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//a[contains(@class,'document-link')]/span[@class='entry-title']</td>
+	<td>//a[contains(@class,'entry-link')]/span[@class='entry-title']</td>
 	<td>DM Folder Name</td>
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//li[@class='folder selected']/a[2]</td>
+	<td>//li[contains(@class,'folder selected')]/a[2]</td>
 	<td>DM Folder Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//li[@class='folder selected']/a[2]</td>
+	<td>//li[contains(@class,'folder selected')]/a[2]</td>
 	<td>DM Folder Name</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>xPath=(//span[@class='overlay document-action']/span/ul/li/strong/a)[2]</td>
+	<td>xPath=(//span[@class='entry-action overlay']/span/ul/li/strong/a)[2]</td>
 	<td>Drop Down</td>
 </tr>
 <tr>
@@ -85,7 +80,7 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//a[contains(@class,'document-link')]/span[@class='entry-title']</td>
+	<td>//a[contains(@class,'entry-link')]/span[@class='entry-title']</td>
 	<td>DM Subfolder Name Edit</td>
 </tr>
 <tr>
@@ -120,15 +115,14 @@
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//a[contains(@class,'document-link')]/span[@class='entry-title']</td>
+	<td>//a[contains(@class,'entry-link')]/span[@class='entry-title']</td>
 	<td>DM Subfolder Name Edit</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//a[contains(@class,'document-link')]/span[@class='entry-title']</td>
+	<td>//a[contains(@class,'entry-link')]/span[@class='entry-title']</td>
 	<td>DM Subfolder Name Edit</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

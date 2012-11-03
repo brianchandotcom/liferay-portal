@@ -14,33 +14,28 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Documents and Media Test Page</td>
-	<td>Documents and Media Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Documents and Media Test Page</td>
 	<td>Documents and Media Test Page</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//a[contains(@class,'document-link')]/span[@class='entry-title']</td>
+	<td>//a[contains(@class,'entry-link')]/span[@class='entry-title']</td>
 	<td>DM Folder Name</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//a[contains(@class,'document-link')]/span[@class='entry-title']</td>
+	<td>//a[contains(@class,'entry-link')]/span[@class='entry-title']</td>
 	<td>DM Folder Name</td>
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//li[@class='folder selected']/a</td>
+	<td>//li[contains(@class,'folder selected')]/a</td>
 	<td>DM Folder Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//li[@class='folder selected']/a</td>
+	<td>//li[contains(@class,'folder selected')]/a</td>
 	<td>DM Folder Name</td>
 </tr>
 <tr>
@@ -84,19 +79,14 @@
 	<td>Move to the Recycle Bin</td>
 </tr>
 <tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to move the selected entries to the Recycle Bin?</td>
-	<td></td>
-</tr>
-<tr>
 	<td>waitForText</td>
-	<td>//div[@class='portlet-msg-success']</td>
-	<td>Your request completed successfully.</td>
+	<td>//div[@class='portlet-msg-success taglib-trash-undo']</td>
+	<td>The selected item was moved to the Recycle Bin. Undo</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='portlet-msg-success']</td>
-	<td>Your request completed successfully.</td>
+	<td>//div[@class='portlet-msg-success taglib-trash-undo']</td>
+	<td>The selected item was moved to the Recycle Bin. Undo</td>
 </tr>
 <tr>
 	<td>assertTextNotPresent</td>

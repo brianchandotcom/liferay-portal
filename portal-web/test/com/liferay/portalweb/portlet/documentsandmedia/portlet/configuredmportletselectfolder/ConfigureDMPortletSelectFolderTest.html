@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Documents and Media Test Page</td>
-	<td>Documents and Media Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Documents and Media Test Page</td>
 	<td>Documents and Media Test Page</td>
@@ -39,11 +34,6 @@
 	<td>Options</td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
-</tr>
-<tr>
 	<td>waitForVisible</td>
 	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
 	<td>Configuration</td>
@@ -59,6 +49,16 @@
 	<td>Configuration</td>
 </tr>
 <tr>
+	<td>waitForElementPresent</td>
+	<td>//iframe[contains(@id,'configurationIframeDialog')]</td>
+	<td>iFrame</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//iframe[contains(@id,'configurationIframeDialog')]</td>
+	<td>iFrame</td>
+</tr>
+<tr>
 	<td>pause</td>
 	<td>5000</td>
 	<td></td>
@@ -74,13 +74,13 @@
 	<td>Select</td>
 </tr>
 <tr>
-	<td>waitForPopUp</td>
-	<td>folder</td>
-	<td>30000</td>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
 </tr>
 <tr>
 	<td>selectWindow</td>
-	<td>name=folder</td>
+	<td>title=Documents and Media</td>
 	<td></td>
 </tr>
 <tr>
@@ -97,6 +97,21 @@
 	<td>selectWindow</td>
 	<td>null</td>
 	<td></td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>relative=top</td>
+	<td>top</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//iframe[contains(@id,'configurationIframeDialog')]</td>
+	<td>iFrame</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//iframe[contains(@id,'configurationIframeDialog')]</td>
+	<td>iFrame</td>
 </tr>
 <tr>
 	<td>waitForText</td>
@@ -122,6 +137,11 @@
 	<td>assertText</td>
 	<td>//div[@class='portlet-msg-success']</td>
 	<td>You have successfully updated the setup.</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>relative=top</td>
+	<td>top</td>
 </tr>
 </tbody></table>
 </body>

@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Documents and Media Test Page</td>
-	<td>Documents and Media Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Documents and Media Test Page</td>
 	<td>Documents and Media Test Page</td>
@@ -39,11 +34,6 @@
 	<td>Options</td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
-</tr>
-<tr>
 	<td>waitForVisible</td>
 	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
 	<td>Configuration</td>
@@ -59,14 +49,14 @@
 	<td>Configuration</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>//iframe</td>
-	<td>Documents and Media - Configuration</td>
+	<td>waitForElementPresent</td>
+	<td>//iframe[contains(@id,'configurationIframeDialog')]</td>
+	<td>iFrame</td>
 </tr>
 <tr>
 	<td>selectFrame</td>
-	<td>//iframe</td>
-	<td>Documents and Media - Configuration</td>
+	<td>//iframe[contains(@id,'configurationIframeDialog')]</td>
+	<td>iFrame</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -84,14 +74,14 @@
 	<td>showSearchUnchecked</td>
 </tr>
 <tr>
-	<td>assertChecked</td>
+	<td>click</td>
 	<td>//input[@id='_86_showFoldersSearchCheckbox']</td>
 	<td>Show Search</td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>//input[@id='_86_showFoldersSearchCheckbox']</td>
-	<td>Show Search</td>
+	<td>label</td>
+	<td>showSearchUnchecked</td>
+	<td></td>
 </tr>
 <tr>
 	<td>assertNotChecked</td>
@@ -99,8 +89,8 @@
 	<td>Show Search</td>
 </tr>
 <tr>
-	<td>label</td>
-	<td>showSearchUnchecked</td>
+	<td>pause</td>
+	<td>5000</td>
 	<td></td>
 </tr>
 <tr>

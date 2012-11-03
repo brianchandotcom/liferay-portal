@@ -30,14 +30,14 @@ public class MoveDMFolderDocumentToFolderTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("DM Folder1 Name"),
 			selenium.getText(
-				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
-		selenium.clickAt("//a[contains(@class,'document-link')]/span[@class='entry-title']",
+				"//a[contains(@class,'entry-link')]/span[@class='entry-title']"));
+		selenium.clickAt("//a[contains(@class,'entry-link')]/span[@class='entry-title']",
 			RuntimeVariables.replace("DM Folder1 Name"));
-		selenium.waitForText("//li[@class='folder selected']/a",
+		selenium.waitForText("//li[contains(@class,'folder selected')]/a",
 			"DM Folder1 Name");
 		assertEquals(RuntimeVariables.replace("DM Folder1 Document Title"),
 			selenium.getText(
-				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
+				"//a[contains(@class,'entry-link')]/span[@class='entry-title']"));
 		assertFalse(selenium.isChecked(
 				"//input[@id='_20_rowIdsFileEntryCheckbox']"));
 		selenium.clickAt("//input[@id='_20_rowIdsFileEntryCheckbox']",
@@ -60,8 +60,8 @@ public class MoveDMFolderDocumentToFolderTest extends BaseTestCase {
 			selenium.getText("//a[@id='_20_folderName']"));
 		selenium.clickAt("//input[@value='Select']",
 			RuntimeVariables.replace("Select"));
-		selenium.waitForPopUp("folder", RuntimeVariables.replace("30000"));
-		selenium.selectWindow("name=folder");
+		Thread.sleep(5000);
+		selenium.selectWindow("title=Documents and Media");
 		selenium.waitForVisible("xPath=(//input[@value='Choose'])[2]");
 		selenium.click("xPath=(//input[@value='Choose'])[2]");
 		selenium.selectWindow("null");
@@ -80,13 +80,13 @@ public class MoveDMFolderDocumentToFolderTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("DM Folder1 Name"),
 			selenium.getText(
-				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
-		selenium.clickAt("//a[contains(@class,'document-link')]/span[@class='entry-title']",
+				"//a[contains(@class,'entry-link')]/span[@class='entry-title']"));
+		selenium.clickAt("//a[contains(@class,'entry-link')]/span[@class='entry-title']",
 			RuntimeVariables.replace("DM Folder1 Name"));
-		selenium.waitForText("//li[@class='folder selected']/a",
+		selenium.waitForText("//li[contains(@class,'folder selected')]/a",
 			"DM Folder1 Name");
 		assertEquals(RuntimeVariables.replace("DM Folder1 Name"),
-			selenium.getText("//li[@class='folder selected']/a"));
+			selenium.getText("//li[contains(@class,'folder selected')]/a"));
 		assertFalse(selenium.isTextPresent("DM Folder1 Document Title"));
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("link=Documents and Media Test Page",
@@ -94,15 +94,15 @@ public class MoveDMFolderDocumentToFolderTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("DM Folder2 Name"),
 			selenium.getText(
-				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[2]"));
-		selenium.clickAt("xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[2]",
+				"xPath=(//a[contains(@class,'entry-link')]/span[@class='entry-title'])[2]"));
+		selenium.clickAt("xPath=(//a[contains(@class,'entry-link')]/span[@class='entry-title'])[2]",
 			RuntimeVariables.replace("DM Folder2 Name"));
-		selenium.waitForText("//li[@class='folder selected']/a",
+		selenium.waitForText("//li[contains(@class,'folder selected')]/a",
 			"DM Folder2 Name");
 		assertEquals(RuntimeVariables.replace("DM Folder2 Name"),
-			selenium.getText("//li[@class='folder selected']/a"));
+			selenium.getText("//li[contains(@class,'folder selected')]/a"));
 		assertEquals(RuntimeVariables.replace("DM Folder1 Document Title"),
 			selenium.getText(
-				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
+				"//a[contains(@class,'entry-link')]/span[@class='entry-title']"));
 	}
 }

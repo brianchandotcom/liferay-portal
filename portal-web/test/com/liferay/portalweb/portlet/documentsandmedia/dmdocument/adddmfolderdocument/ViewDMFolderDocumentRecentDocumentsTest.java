@@ -26,7 +26,6 @@ public class ViewDMFolderDocumentRecentDocumentsTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Documents and Media Test Page");
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -37,11 +36,11 @@ public class ViewDMFolderDocumentRecentDocumentsTest extends BaseTestCase {
 			selenium.getText("//ul[@class='lfr-component']/li[2]/a"));
 		selenium.clickAt("//ul[@class='lfr-component']/li[2]/a",
 			RuntimeVariables.replace("Recent"));
-		selenium.waitForText("//a[contains(@class,'document-link')]/span[@class='entry-title']",
+		selenium.waitForText("//a[contains(@class,'entry-link')]/span[@class='entry-title']",
 			"DM Folder Document Title");
 		assertEquals(RuntimeVariables.replace("DM Folder Document Title"),
 			selenium.getText(
-				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
+				"//a[contains(@class,'entry-link')]/span[@class='entry-title']"));
 		selenium.clickAt("//button[@title='List View']",
 			RuntimeVariables.replace("List View"));
 		selenium.waitForText("//tr[3]/td[2]/span/a/span",
@@ -54,10 +53,10 @@ public class ViewDMFolderDocumentRecentDocumentsTest extends BaseTestCase {
 			selenium.getText("//tr[3]/td[4]"));
 		selenium.clickAt("//button[@title='Icon View']",
 			RuntimeVariables.replace("Icon View"));
-		selenium.waitForText("//a[contains(@class,'document-link')]/span[@class='entry-title']",
+		selenium.waitForText("//a[contains(@class,'entry-link')]/span[@class='entry-title']",
 			"DM Folder Document Title");
 		assertEquals(RuntimeVariables.replace("DM Folder Document Title"),
 			selenium.getText(
-				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
+				"//a[contains(@class,'entry-link')]/span[@class='entry-title']"));
 	}
 }

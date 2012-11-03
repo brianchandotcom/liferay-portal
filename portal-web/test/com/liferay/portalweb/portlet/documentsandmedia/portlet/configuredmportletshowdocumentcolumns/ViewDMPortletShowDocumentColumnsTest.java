@@ -26,18 +26,17 @@ public class ViewDMPortletShowDocumentColumnsTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Documents and Media Test Page");
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("//button[@title='Icon View']",
 			RuntimeVariables.replace("Icon View"));
-		selenium.waitForText("//a[contains(@class,'document-link')]/span[@class='entry-title']",
+		selenium.waitForText("//a[contains(@class,'entry-link')]/span[@class='entry-title']",
 			"DM Folder Name");
 		assertEquals(RuntimeVariables.replace("DM Folder Name"),
 			selenium.getText(
-				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
-		selenium.clickAt("//a[contains(@class,'document-link')]/span[@class='entry-title']",
+				"//a[contains(@class,'entry-link')]/span[@class='entry-title']"));
+		selenium.clickAt("//a[contains(@class,'entry-link')]/span[@class='entry-title']",
 			RuntimeVariables.replace("DM Folder Name"));
 		selenium.waitForText("//div[@class='document-library-breadcrumb']/ul/li[2]/span/a",
 			"DM Folder Name");
@@ -47,7 +46,7 @@ public class ViewDMPortletShowDocumentColumnsTest extends BaseTestCase {
 		selenium.clickAt("//button[@title='List View']",
 			RuntimeVariables.replace("List View"));
 		selenium.waitForVisible(
-			"//button[@title='List View' and contains(@class,'aui-buttonitem-focused')]");
+			"//button[@title='List View' and contains(@class,'aui-buttonitem-content')]");
 		selenium.waitForText("//tr[3]/td[2]/span/a/span",
 			"DM Folder Document Title");
 		assertEquals(RuntimeVariables.replace("DM Folder Document Title"),
@@ -58,10 +57,10 @@ public class ViewDMPortletShowDocumentColumnsTest extends BaseTestCase {
 			selenium.getText("//tr[3]/td[4]"));
 		selenium.clickAt("//button[@title='Icon View']",
 			RuntimeVariables.replace("Icon View"));
-		selenium.waitForText("//a[contains(@class,'document-link')]/span[@class='entry-title']",
+		selenium.waitForText("//a[contains(@class,'entry-link')]/span[@class='entry-title']",
 			"DM Folder Document Title");
 		assertEquals(RuntimeVariables.replace("DM Folder Document Title"),
 			selenium.getText(
-				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
+				"//a[contains(@class,'entry-link')]/span[@class='entry-title']"));
 	}
 }

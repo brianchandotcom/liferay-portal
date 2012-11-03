@@ -31,17 +31,17 @@ public class RevertVersionDMFolderDocumentTitle10Test extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("DM Folder Name"),
 			selenium.getText(
-				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
-		selenium.clickAt("//a[contains(@class,'document-link')]/span[@class='entry-title']",
+				"//a[contains(@class,'entry-link')]/span[@class='entry-title']"));
+		selenium.clickAt("//a[contains(@class,'entry-link')]/span[@class='entry-title']",
 			RuntimeVariables.replace("DM Folder Name"));
-		selenium.waitForText("//li[@class='folder selected']/a",
+		selenium.waitForText("//li[contains(@class,'folder selected')]/a",
 			"DM Folder Name");
 		assertEquals(RuntimeVariables.replace("DM Folder Name"),
-			selenium.getText("//li[@class='folder selected']/a"));
+			selenium.getText("//li[contains(@class,'folder selected')]/a"));
 		assertEquals(RuntimeVariables.replace("DM Folder Document Title Edit"),
 			selenium.getText(
-				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
-		selenium.clickAt("//a[contains(@class,'document-link')]/span[@class='entry-title']",
+				"//a[contains(@class,'entry-link')]/span[@class='entry-title']"));
+		selenium.clickAt("//a[contains(@class,'entry-link')]/span[@class='entry-title']",
 			RuntimeVariables.replace("DM Folder Document Title Edit"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("DM Folder Document Title Edit"),
@@ -58,6 +58,7 @@ public class RevertVersionDMFolderDocumentTitle10Test extends BaseTestCase {
 			selenium.getText("//tr[4]/td[2]"));
 		assertEquals(RuntimeVariables.replace("0k"),
 			selenium.getText("//tr[4]/td[4]"));
+		Thread.sleep(5000);
 		selenium.clickAt("//tr[4]/td[6]/span/ul[contains(@class,'lfr-component lfr-actions')]/li/strong/a",
 			RuntimeVariables.replace("Version 1.0 Drop Down"));
 		selenium.waitForVisible(

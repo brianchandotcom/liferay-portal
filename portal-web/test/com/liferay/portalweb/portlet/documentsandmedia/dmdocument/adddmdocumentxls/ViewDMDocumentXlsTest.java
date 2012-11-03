@@ -34,11 +34,11 @@ public class ViewDMDocumentXlsTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Access these files offline using Liferay Sync."),
 			selenium.getText("//div[@id='_20_syncNotificationContent']/a"));
-		assertTrue(selenium.isVisible("//span[@class='document-thumbnail']/img"));
+		assertTrue(selenium.isVisible("//div[@class='entry-thumbnail']/img"));
 		assertEquals(RuntimeVariables.replace("DM Document Title"),
 			selenium.getText(
-				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
-		selenium.clickAt("//a[contains(@class,'document-link')]/span[@class='entry-title']",
+				"//a[contains(@class,'entry-link')]/span[@class='entry-title']"));
+		selenium.clickAt("//a[contains(@class,'entry-link')]/span[@class='entry-title']",
 			RuntimeVariables.replace("DM Document Title"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("DM Document Title"),
@@ -60,7 +60,7 @@ public class ViewDMDocumentXlsTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Permissions"),
 			selenium.getText(
 				"//span[@class='aui-toolbar-content']/button[5]/span[2]"));
-		assertEquals(RuntimeVariables.replace("Delete"),
+		assertEquals(RuntimeVariables.replace("Move to the Recycle Bin"),
 			selenium.getText(
 				"//span[@class='aui-toolbar-content']/button[6]/span[2]"));
 		assertEquals(RuntimeVariables.replace("DM Document Title"),
@@ -86,7 +86,7 @@ public class ViewDMDocumentXlsTest extends BaseTestCase {
 				"//div[@class='lfr-asset-icon lfr-asset-date']"));
 		assertEquals(RuntimeVariables.replace("Status: Approved"),
 			selenium.getText("//span[@class='workflow-status']"));
-		assertEquals(RuntimeVariables.replace("Download (23.0k)"),
+		assertEquals(RuntimeVariables.replace("Download (23k)"),
 			selenium.getText("//span[@class='download-document']/span/a/span"));
 		assertEquals(RuntimeVariables.replace("Get URL or WebDAV URL."),
 			selenium.getText("//span[@class='webdav-url']"));
@@ -124,7 +124,7 @@ public class ViewDMDocumentXlsTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("1.0"),
 			selenium.getText("//tr[3]/td[1]"));
 		assertTrue(selenium.isVisible("//tr[3]/td[2]"));
-		assertEquals(RuntimeVariables.replace("23.0k"),
+		assertEquals(RuntimeVariables.replace("23k"),
 			selenium.getText("//tr[3]/td[3]"));
 		assertEquals(RuntimeVariables.replace("Approved"),
 			selenium.getText("//tr[3]/td[4]"));

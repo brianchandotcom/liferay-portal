@@ -25,16 +25,15 @@ public class MoveDMFolder1ImageToFolder2Test extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Documents and Media Test Page");
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("DM Folder1 Name"),
 			selenium.getText(
-				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[1]"));
-		selenium.clickAt("xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[1]",
+				"xPath=(//a[contains(@class,'entry-link')]/span[@class='entry-title'])[1]"));
+		selenium.clickAt("xPath=(//a[contains(@class,'entry-link')]/span[@class='entry-title'])[1]",
 			RuntimeVariables.replace("DM Folder1 Name"));
-		selenium.waitForText("//a[contains(@class,'document-link')]/span[@class='entry-title']",
+		selenium.waitForText("//a[contains(@class,'entry-link')]/span[@class='entry-title']",
 			"DM Folder1 Image Title");
 		assertFalse(selenium.isChecked(
 				"//input[@id='_20_rowIdsFileEntryCheckbox']"));
@@ -60,8 +59,8 @@ public class MoveDMFolder1ImageToFolder2Test extends BaseTestCase {
 			selenium.getText("//a[@id='_20_folderName']"));
 		selenium.clickAt("//input[@value='Select']",
 			RuntimeVariables.replace("Select"));
-		selenium.waitForPopUp("folder", RuntimeVariables.replace("30000"));
-		selenium.selectWindow("name=folder");
+		Thread.sleep(5000);
+		selenium.selectWindow("title=Documents and Media");
 		selenium.waitForVisible("//tr[4]/td[1]/a");
 		assertEquals(RuntimeVariables.replace("DM Folder2 Name"),
 			selenium.getText("//tr[4]/td[1]/a"));

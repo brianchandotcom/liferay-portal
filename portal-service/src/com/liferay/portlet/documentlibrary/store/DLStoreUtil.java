@@ -304,6 +304,12 @@ public class DLStoreUtil {
 	 * UnsupportedOperationException}.
 	 * </p>
 	 *
+	 * <p>
+	 * If using an S3 store, it is preferable for performance reasons to use
+	 * {@link #getFileAsStream(long, long, String)} instead of this method
+	 * wherever possible.
+	 * </p>
+	 *
 	 * @param  companyId the primary key of the company
 	 * @param  repositoryId the primary key of the data repository (optionally
 	 *         {@link com.liferay.portal.model.CompanyConstants#SYSTEM})
@@ -328,6 +334,12 @@ public class DLStoreUtil {
 	 * object in any way. This method is only supported in certain stores. If
 	 * not supported, this method will throw an {@link
 	 * UnsupportedOperationException}.
+	 * </p>
+	 *
+	 * <p>
+	 * If using an S3 store, it is preferable for performance reasons to use
+	 * {@link #getFileAsStream(long, long, String, String)} instead of this
+	 * method wherever possible.
 	 * </p>
 	 *
 	 * @param  companyId the primary key of the company
@@ -390,6 +402,12 @@ public class DLStoreUtil {
 	/**
 	 * Returns the file as an {@link java.io.InputStream} object.
 	 *
+	 * <p>
+	 * If using an S3 store, it is preferable for performance reasons to use
+	 * this method to get the file as an {@link java.io.InputStream} instead of
+	 * using other methods to get the file as a {@link java.io.File}.
+	 * </p>
+	 *
 	 * @param  companyId the primary key of the company
 	 * @param  repositoryId the primary key of the data repository (optionally
 	 *         {@link com.liferay.portal.model.CompanyConstants#SYSTEM})
@@ -408,6 +426,12 @@ public class DLStoreUtil {
 
 	/**
 	 * Returns the file as an {@link java.io.InputStream} object.
+	 *
+	 * <p>
+	 * If using an S3 store, it is preferable for performance reasons to use
+	 * this method to get the file as an {@link java.io.InputStream} instead of
+	 * using other methods to get the file as a {@link java.io.File}.
+	 * </p>
 	 *
 	 * @param  companyId the primary key of the company
 	 * @param  repositoryId the primary key of the data repository (optionally

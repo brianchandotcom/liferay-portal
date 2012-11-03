@@ -82,9 +82,6 @@ public class TearDownDMDocumentTest extends BaseTestCase {
 				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move to the Recycle Bin')]",
 					RuntimeVariables.replace("Move to the Recycle Bin"));
 				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.isPartialText(
-						"//div[@class='portlet-msg-success taglib-trash-undo']",
-						"moved to the Recycle Bin. Undo"));
 
 			case 3:
 				selenium.open("/web/guest/home/");
@@ -119,16 +116,8 @@ public class TearDownDMDocumentTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to empty the Recycle Bin[\\s\\S]$"));
-				assertEquals(RuntimeVariables.replace(
-						"Your request completed successfully."),
-					selenium.getText("//div[@class='portlet-msg-success']"));
 
 			case 4:
-				assertEquals(RuntimeVariables.replace(
-						"The Recycle Bin is empty."),
-					selenium.getText(
-						"//div[@class='portlet-msg-info' and contains(.,'The Recycle Bin is empty.')]"));
-
 			case 100:
 				label = -1;
 			}

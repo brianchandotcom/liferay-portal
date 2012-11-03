@@ -45,7 +45,6 @@ public class ViewWikiPageViewCountAPTest extends BaseTestCase {
 				"//span[@class='metadata-entry metadata-view-count']");
 		RuntimeVariables.setValue("viewCount2", viewCount2);
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Wiki Test Page");
 		selenium.clickAt("link=Wiki Test Page",
 			RuntimeVariables.replace("Wiki Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -56,7 +55,6 @@ public class ViewWikiPageViewCountAPTest extends BaseTestCase {
 				"//div[@class='stats']");
 		RuntimeVariables.setValue("viewCount3", viewCount3);
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Asset Publisher Test Page");
 		selenium.clickAt("link=Asset Publisher Test Page",
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");

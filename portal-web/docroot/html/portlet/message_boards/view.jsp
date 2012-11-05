@@ -174,6 +174,65 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 				localizeTitle="<%= false %>"
 				title="<%= category.getName() %>"
 			/>
+
+			<div class="thread-actions">
+				<liferay-ui:icon-list>
+					<c:if test="<%= PortalUtil.isRSSFeedsEnabled() %>">
+
+						<%
+						rssURL.setParameter("p_l_id", String.valueOf(plid));
+
+						if (category.getCategoryId() > 0) {
+							rssURL.setParameter("mbCategoryId", String.valueOf(category.getCategoryId()));
+						}
+						else {
+							rssURL.setParameter("groupId", String.valueOf(scopeGroupId));
+						}
+						%>
+
+						<liferay-ui:icon
+							image="rss"
+							label="<%= true %>"
+							method="get"
+							target="_blank"
+							url="<%= rssURL.toString() %>"
+						/>
+					</c:if>
+
+					<c:if test="<%= MBCategoryPermission.contains(permissionChecker, category, ActionKeys.SUBSCRIBE) %>">
+						<c:choose>
+							<c:when test="<%= (categorySubscriptionClassPKs != null) && categorySubscriptionClassPKs.contains(category.getCategoryId()) %>">
+								<portlet:actionURL var="unsubscribeURL">
+									<portlet:param name="struts_action" value="/message_boards/edit_category" />
+									<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UNSUBSCRIBE %>" />
+									<portlet:param name="redirect" value="<%= currentURL %>" />
+									<portlet:param name="mbCategoryId" value="<%= String.valueOf(category.getCategoryId()) %>" />
+								</portlet:actionURL>
+
+								<liferay-ui:icon
+									image="unsubscribe"
+									label="<%= true %>"
+									url="<%= unsubscribeURL %>"
+								/>
+							</c:when>
+							<c:otherwise>
+								<portlet:actionURL var="subscribeURL">
+									<portlet:param name="struts_action" value="/message_boards/edit_category" />
+									<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.SUBSCRIBE %>" />
+									<portlet:param name="redirect" value="<%= currentURL %>" />
+									<portlet:param name="mbCategoryId" value="<%= String.valueOf(category.getCategoryId()) %>" />
+								</portlet:actionURL>
+
+								<liferay-ui:icon
+									image="subscribe"
+									label="<%= true %>"
+									url="<%= subscribeURL %>"
+								/>
+							</c:otherwise>
+						</c:choose>
+					</c:if>
+				</liferay-ui:icon-list>
+			</div>
 		</c:if>
 
 		<div class="displayStyle-<%= displayStyle %>">

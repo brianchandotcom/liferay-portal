@@ -156,116 +156,123 @@ MBThreadFlag threadFlag = MBThreadFlagLocalServiceUtil.getThreadFlag(themeDispla
 	</c:if>
 
 	<div class="thread-actions">
-		<table class="lfr-table">
-		<tr>
+		<liferay-ui:icon-list>
 			<c:if test="<%= MBCategoryPermission.contains(permissionChecker, scopeGroupId, (category != null) ? category.getCategoryId() : MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, ActionKeys.ADD_MESSAGE) %>">
-				<td>
-					<portlet:renderURL var="addMessageURL">
-						<portlet:param name="struts_action" value="/message_boards/edit_message" />
-						<portlet:param name="redirect" value="<%= currentURL %>" />
-						<portlet:param name="mbCategoryId" value="<%= (category != null) ? String.valueOf(category.getCategoryId()) : String.valueOf(MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) %>" />
-					</portlet:renderURL>
+				<portlet:renderURL var="addMessageURL">
+					<portlet:param name="struts_action" value="/message_boards/edit_message" />
+					<portlet:param name="redirect" value="<%= currentURL %>" />
+					<portlet:param name="mbCategoryId" value="<%= (category != null) ? String.valueOf(category.getCategoryId()) : String.valueOf(MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) %>" />
+				</portlet:renderURL>
 
-					<liferay-ui:icon
-						image="post"
-						label="<%= true %>"
-						message="post-new-thread"
-						url="<%= addMessageURL %>"
-					/>
-				</td>
+				<liferay-ui:icon
+					image="post"
+					label="<%= true %>"
+					message="post-new-thread"
+					url="<%= addMessageURL %>"
+				/>
+			</c:if>
+
+			<c:if test="<%= PortalUtil.isRSSFeedsEnabled() && MBMessagePermission.contains(permissionChecker, message, ActionKeys.VIEW) %>">
+
+				<%
+				rssURL.setParameter("p_l_id", String.valueOf(plid));
+				rssURL.setParameter("mbCategoryId", StringPool.BLANK);
+				rssURL.setParameter("threadId", String.valueOf(message.getThreadId()));
+				%>
+
+				<liferay-ui:icon
+					image="rss"
+					label="<%= true %>"
+					method="get"
+					target="_blank"
+					url="<%= rssURL.toString() %>"
+				/>
 			</c:if>
 
 			<c:if test="<%= MBMessagePermission.contains(permissionChecker, message, ActionKeys.SUBSCRIBE) %>">
-				<td>
-					<c:choose>
-						<c:when test="<%= SubscriptionLocalServiceUtil.isSubscribed(user.getCompanyId(), user.getUserId(), MBThread.class.getName(), message.getThreadId()) %>">
-							<portlet:actionURL var="unsubscribeURL">
-								<portlet:param name="struts_action" value="/message_boards/edit_message" />
-								<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UNSUBSCRIBE %>" />
-								<portlet:param name="redirect" value="<%= currentURL %>" />
-								<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
-							</portlet:actionURL>
+				<c:choose>
+					<c:when test="<%= SubscriptionLocalServiceUtil.isSubscribed(user.getCompanyId(), user.getUserId(), MBThread.class.getName(), message.getThreadId()) %>">
+						<portlet:actionURL var="unsubscribeURL">
+							<portlet:param name="struts_action" value="/message_boards/edit_message" />
+							<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UNSUBSCRIBE %>" />
+							<portlet:param name="redirect" value="<%= currentURL %>" />
+							<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
+						</portlet:actionURL>
 
-							<liferay-ui:icon
-								image="unsubscribe"
-								label="<%= true %>"
-								url="<%= unsubscribeURL %>"
-							/>
-						</c:when>
-						<c:otherwise>
-							<portlet:actionURL var="subscribeURL">
-								<portlet:param name="struts_action" value="/message_boards/edit_message" />
-								<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.SUBSCRIBE %>" />
-								<portlet:param name="redirect" value="<%= currentURL %>" />
-								<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
-							</portlet:actionURL>
+						<liferay-ui:icon
+							image="unsubscribe"
+							label="<%= true %>"
+							url="<%= unsubscribeURL %>"
+						/>
+					</c:when>
+					<c:otherwise>
+						<portlet:actionURL var="subscribeURL">
+							<portlet:param name="struts_action" value="/message_boards/edit_message" />
+							<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.SUBSCRIBE %>" />
+							<portlet:param name="redirect" value="<%= currentURL %>" />
+							<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
+						</portlet:actionURL>
 
-							<liferay-ui:icon
-								image="subscribe"
-								label="<%= true %>"
-								url="<%= subscribeURL %>"
-							/>
-						</c:otherwise>
-					</c:choose>
-				</td>
+						<liferay-ui:icon
+							image="subscribe"
+							label="<%= true %>"
+							url="<%= subscribeURL %>"
+						/>
+					</c:otherwise>
+				</c:choose>
 			</c:if>
 
 			<c:if test="<%= MBCategoryPermission.contains(permissionChecker, scopeGroupId, (category != null) ? category.getCategoryId() : MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, ActionKeys.LOCK_THREAD) %>">
-				<td>
-					<c:choose>
-						<c:when test="<%= thread.isLocked() %>">
-							<portlet:actionURL var="unlockThreadURL">
-								<portlet:param name="struts_action" value="/message_boards/edit_message" />
-								<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UNLOCK %>" />
-								<portlet:param name="redirect" value="<%= currentURL %>" />
-								<portlet:param name="threadId" value="<%= String.valueOf(message.getThreadId()) %>" />
-							</portlet:actionURL>
+				<c:choose>
+					<c:when test="<%= thread.isLocked() %>">
+						<portlet:actionURL var="unlockThreadURL">
+							<portlet:param name="struts_action" value="/message_boards/edit_message" />
+							<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UNLOCK %>" />
+							<portlet:param name="redirect" value="<%= currentURL %>" />
+							<portlet:param name="threadId" value="<%= String.valueOf(message.getThreadId()) %>" />
+						</portlet:actionURL>
 
-							<liferay-ui:icon
-								image="unlock"
-								label="<%= true %>"
-								message="unlock-thread"
-								url="<%= unlockThreadURL %>"
-							/>
-						</c:when>
-						<c:otherwise>
-							<portlet:actionURL var="lockThreadURL">
-								<portlet:param name="struts_action" value="/message_boards/edit_message" />
-								<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.LOCK %>" />
-								<portlet:param name="redirect" value="<%= currentURL %>" />
-								<portlet:param name="threadId" value="<%= String.valueOf(message.getThreadId()) %>" />
-							</portlet:actionURL>
+						<liferay-ui:icon
+							image="unlock"
+							label="<%= true %>"
+							message="unlock-thread"
+							url="<%= unlockThreadURL %>"
+						/>
+					</c:when>
+					<c:otherwise>
+						<portlet:actionURL var="lockThreadURL">
+							<portlet:param name="struts_action" value="/message_boards/edit_message" />
+							<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.LOCK %>" />
+							<portlet:param name="redirect" value="<%= currentURL %>" />
+							<portlet:param name="threadId" value="<%= String.valueOf(message.getThreadId()) %>" />
+						</portlet:actionURL>
 
-							<liferay-ui:icon
-								image="lock"
-								label="<%= true %>"
-								message="lock-thread"
-								url="<%= lockThreadURL %>"
-							/>
-						</c:otherwise>
-					</c:choose>
-				</td>
+						<liferay-ui:icon
+							image="lock"
+							label="<%= true %>"
+							message="lock-thread"
+							url="<%= lockThreadURL %>"
+						/>
+					</c:otherwise>
+				</c:choose>
 			</c:if>
 
 			<c:if test="<%= MBCategoryPermission.contains(permissionChecker, scopeGroupId, (category != null) ? category.getCategoryId() : MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, ActionKeys.MOVE_THREAD) %>">
-				<td>
-					<portlet:renderURL var="editThreadURL">
-						<portlet:param name="struts_action" value="/message_boards/move_thread" />
-						<portlet:param name="redirect" value="<%= currentURL %>" />
-						<portlet:param name="mbCategoryId" value="<%= (category != null) ? String.valueOf(category.getCategoryId()) : String.valueOf(MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) %>" />
-						<portlet:param name="threadId" value="<%= String.valueOf(message.getThreadId()) %>" />
-					</portlet:renderURL>
+				<portlet:renderURL var="editThreadURL">
+					<portlet:param name="struts_action" value="/message_boards/move_thread" />
+					<portlet:param name="redirect" value="<%= currentURL %>" />
+					<portlet:param name="mbCategoryId" value="<%= (category != null) ? String.valueOf(category.getCategoryId()) : String.valueOf(MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) %>" />
+					<portlet:param name="threadId" value="<%= String.valueOf(message.getThreadId()) %>" />
+				</portlet:renderURL>
 
-					<liferay-ui:icon
-						image="forward"
-						label="<%= true %>"
-						message="move-thread"
-						url="<%= editThreadURL %>"
-					/>
-				</td>
+				<liferay-ui:icon
+					image="forward"
+					label="<%= true %>"
+					message="move-thread"
+					url="<%= editThreadURL %>"
+				/>
 			</c:if>
-		</tr>
-		</table>
+		</liferay-ui:icon-list>
 	</div>
 
 	<div class="clear"></div>

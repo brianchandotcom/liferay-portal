@@ -40,13 +40,9 @@ public class SearchUnitConverterTest extends BaseTestCase {
 		selenium.waitForElementPresent(
 			"//script[contains(@src,'/aui/aui-live-search/aui-live-search-min.js')]");
 		selenium.waitForVisible("//input[@id='layout_configuration_content']");
-		selenium.type("//input[@id='layout_configuration_content']",
+		selenium.sendKeys("//input[@id='layout_configuration_content']",
 			RuntimeVariables.replace("u"));
-		selenium.keyDown("//input[@id='layout_configuration_content']",
-			RuntimeVariables.replace("\\13"));
-		selenium.keyUp("//input[@id='layout_configuration_content']",
-			RuntimeVariables.replace("\\13"));
-		selenium.waitForVisible("//div[@title='Unit Converter']");
-		assertTrue(selenium.isVisible("//div[@title='Unit Converter']"));
+		selenium.waitForVisible("//li[@title='Unit Converter']");
+		assertTrue(selenium.isVisible("//li[@title='Unit Converter']"));
 	}
 }

@@ -40,13 +40,9 @@ public class SearchNestedPortletsTest extends BaseTestCase {
 		selenium.waitForElementPresent(
 			"//script[contains(@src,'/aui/aui-live-search/aui-live-search-min.js')]");
 		selenium.waitForVisible("//input[@id='layout_configuration_content']");
-		selenium.type("//input[@id='layout_configuration_content']",
+		selenium.sendKeys("//input[@id='layout_configuration_content']",
 			RuntimeVariables.replace("n"));
-		selenium.keyDown("//input[@id='layout_configuration_content']",
-			RuntimeVariables.replace("\\13"));
-		selenium.keyUp("//input[@id='layout_configuration_content']",
-			RuntimeVariables.replace("\\13"));
-		selenium.waitForVisible("//div[@title='Nested Portlets']");
-		assertTrue(selenium.isVisible("//div[@title='Nested Portlets']"));
+		selenium.waitForVisible("//li[@title='Nested Portlets']");
+		assertTrue(selenium.isVisible("//li[@title='Nested Portlets']"));
 	}
 }

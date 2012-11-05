@@ -40,13 +40,9 @@ public class SearchRecentBloggersTest extends BaseTestCase {
 		selenium.waitForElementPresent(
 			"//script[contains(@src,'/aui/aui-live-search/aui-live-search-min.js')]");
 		selenium.waitForVisible("//input[@id='layout_configuration_content']");
-		selenium.type("//input[@id='layout_configuration_content']",
+		selenium.sendKeys("//input[@id='layout_configuration_content']",
 			RuntimeVariables.replace("r"));
-		selenium.keyDown("//input[@id='layout_configuration_content']",
-			RuntimeVariables.replace("\\13"));
-		selenium.keyUp("//input[@id='layout_configuration_content']",
-			RuntimeVariables.replace("\\13"));
-		selenium.waitForVisible("//div[@title='Recent Bloggers']");
-		assertTrue(selenium.isVisible("//div[@title='Recent Bloggers']"));
+		selenium.waitForVisible("//li[@title='Recent Bloggers']");
+		assertTrue(selenium.isVisible("//li[@title='Recent Bloggers']"));
 	}
 }

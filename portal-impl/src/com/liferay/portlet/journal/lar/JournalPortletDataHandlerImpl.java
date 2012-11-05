@@ -672,7 +672,6 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 
 		serviceContext.setAddGroupPermissions(addGroupPermissions);
 		serviceContext.setAddGuestPermissions(addGuestPermissions);
-		serviceContext.setAttribute("imported", Boolean.TRUE.toString());
 
 		if (article.getStatus() != WorkflowConstants.STATUS_APPROVED) {
 			serviceContext.setWorkflowAction(

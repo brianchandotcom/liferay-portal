@@ -65,7 +65,7 @@ public class AnnouncementsEntryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(AnnouncementsEntryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(AnnouncementsEntryServiceUtil.class,
 					"addEntry", _addEntryParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, plid,
@@ -105,7 +105,7 @@ public class AnnouncementsEntryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(AnnouncementsEntryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(AnnouncementsEntryServiceUtil.class,
 					"deleteEntry", _deleteEntryParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, entryId);
@@ -137,7 +137,7 @@ public class AnnouncementsEntryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(AnnouncementsEntryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(AnnouncementsEntryServiceUtil.class,
 					"getEntry", _getEntryParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, entryId);
@@ -178,7 +178,7 @@ public class AnnouncementsEntryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(AnnouncementsEntryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(AnnouncementsEntryServiceUtil.class,
 					"updateEntry", _updateEntryParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, entryId,

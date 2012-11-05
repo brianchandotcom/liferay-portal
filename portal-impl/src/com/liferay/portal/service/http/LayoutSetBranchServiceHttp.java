@@ -60,7 +60,7 @@ public class LayoutSetBranchServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(LayoutSetBranchServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(LayoutSetBranchServiceUtil.class,
 					"addLayoutSetBranch", _addLayoutSetBranchParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -98,7 +98,7 @@ public class LayoutSetBranchServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(LayoutSetBranchServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(LayoutSetBranchServiceUtil.class,
 					"deleteLayoutSetBranch",
 					_deleteLayoutSetBranchParameterTypes1);
 
@@ -131,7 +131,7 @@ public class LayoutSetBranchServiceHttp {
 		HttpPrincipal httpPrincipal, long groupId, boolean privateLayout)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(LayoutSetBranchServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(LayoutSetBranchServiceUtil.class,
 					"getLayoutSetBranches", _getLayoutSetBranchesParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -166,7 +166,7 @@ public class LayoutSetBranchServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(LayoutSetBranchServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(LayoutSetBranchServiceUtil.class,
 					"mergeLayoutSetBranch", _mergeLayoutSetBranchParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -205,7 +205,7 @@ public class LayoutSetBranchServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(LayoutSetBranchServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(LayoutSetBranchServiceUtil.class,
 					"updateLayoutSetBranch",
 					_updateLayoutSetBranchParameterTypes4);
 

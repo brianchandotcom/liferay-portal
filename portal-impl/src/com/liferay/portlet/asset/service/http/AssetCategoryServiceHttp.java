@@ -63,7 +63,7 @@ public class AssetCategoryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(AssetCategoryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(AssetCategoryServiceUtil.class,
 					"addCategory", _addCategoryParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -101,7 +101,7 @@ public class AssetCategoryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(AssetCategoryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(AssetCategoryServiceUtil.class,
 					"deleteCategories", _deleteCategoriesParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -134,7 +134,7 @@ public class AssetCategoryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(AssetCategoryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(AssetCategoryServiceUtil.class,
 					"deleteCategory", _deleteCategoryParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -167,7 +167,7 @@ public class AssetCategoryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(AssetCategoryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(AssetCategoryServiceUtil.class,
 					"getCategories", _getCategoriesParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -204,7 +204,7 @@ public class AssetCategoryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(AssetCategoryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(AssetCategoryServiceUtil.class,
 					"getCategory", _getCategoryParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -241,7 +241,7 @@ public class AssetCategoryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(AssetCategoryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(AssetCategoryServiceUtil.class,
 					"getChildCategories", _getChildCategoriesParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -279,7 +279,7 @@ public class AssetCategoryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(AssetCategoryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(AssetCategoryServiceUtil.class,
 					"getChildCategories", _getChildCategoriesParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -317,7 +317,7 @@ public class AssetCategoryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(AssetCategoryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(AssetCategoryServiceUtil.class,
 					"getJSONSearch", _getJSONSearchParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -355,7 +355,7 @@ public class AssetCategoryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(AssetCategoryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(AssetCategoryServiceUtil.class,
 					"getJSONVocabularyCategories",
 					_getJSONVocabularyCategoriesParameterTypes8);
 
@@ -395,7 +395,7 @@ public class AssetCategoryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(AssetCategoryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(AssetCategoryServiceUtil.class,
 					"getJSONVocabularyCategories",
 					_getJSONVocabularyCategoriesParameterTypes9);
 
@@ -434,7 +434,7 @@ public class AssetCategoryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(AssetCategoryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(AssetCategoryServiceUtil.class,
 					"getVocabularyCategories",
 					_getVocabularyCategoriesParameterTypes10);
 
@@ -473,7 +473,7 @@ public class AssetCategoryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(AssetCategoryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(AssetCategoryServiceUtil.class,
 					"getVocabularyCategories",
 					_getVocabularyCategoriesParameterTypes11);
 
@@ -512,7 +512,7 @@ public class AssetCategoryServiceHttp {
 		com.liferay.portal.kernel.util.OrderByComparator obc)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(AssetCategoryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(AssetCategoryServiceUtil.class,
 					"getVocabularyCategories",
 					_getVocabularyCategoriesParameterTypes12);
 
@@ -545,7 +545,7 @@ public class AssetCategoryServiceHttp {
 		HttpPrincipal httpPrincipal, long groupId, long vocabularyId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(AssetCategoryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(AssetCategoryServiceUtil.class,
 					"getVocabularyCategoriesCount",
 					_getVocabularyCategoriesCountParameterTypes13);
 
@@ -579,7 +579,7 @@ public class AssetCategoryServiceHttp {
 		long vocabularyId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(AssetCategoryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(AssetCategoryServiceUtil.class,
 					"getVocabularyCategoriesCount",
 					_getVocabularyCategoriesCountParameterTypes14);
 
@@ -614,7 +614,7 @@ public class AssetCategoryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(AssetCategoryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(AssetCategoryServiceUtil.class,
 					"getVocabularyRootCategories",
 					_getVocabularyRootCategoriesParameterTypes15);
 
@@ -654,7 +654,7 @@ public class AssetCategoryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(AssetCategoryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(AssetCategoryServiceUtil.class,
 					"moveCategory", _moveCategoryParameterTypes16);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -693,7 +693,7 @@ public class AssetCategoryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(AssetCategoryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(AssetCategoryServiceUtil.class,
 					"search", _searchParameterTypes17);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -731,7 +731,7 @@ public class AssetCategoryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(AssetCategoryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(AssetCategoryServiceUtil.class,
 					"search", _searchParameterTypes18);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -772,7 +772,7 @@ public class AssetCategoryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(AssetCategoryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(AssetCategoryServiceUtil.class,
 					"updateCategory", _updateCategoryParameterTypes19);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,

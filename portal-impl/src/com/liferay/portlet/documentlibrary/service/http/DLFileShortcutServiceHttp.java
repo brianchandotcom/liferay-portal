@@ -61,7 +61,7 @@ public class DLFileShortcutServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLFileShortcutServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLFileShortcutServiceUtil.class,
 					"addFileShortcut", _addFileShortcutParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -98,7 +98,7 @@ public class DLFileShortcutServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLFileShortcutServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLFileShortcutServiceUtil.class,
 					"deleteFileShortcut", _deleteFileShortcutParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -131,7 +131,7 @@ public class DLFileShortcutServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLFileShortcutServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLFileShortcutServiceUtil.class,
 					"getFileShortcut", _getFileShortcutParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -170,7 +170,7 @@ public class DLFileShortcutServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLFileShortcutServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLFileShortcutServiceUtil.class,
 					"updateFileShortcut", _updateFileShortcutParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,

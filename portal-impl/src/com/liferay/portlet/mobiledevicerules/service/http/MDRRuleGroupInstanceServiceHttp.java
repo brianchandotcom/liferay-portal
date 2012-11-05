@@ -61,7 +61,7 @@ public class MDRRuleGroupInstanceServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(MDRRuleGroupInstanceServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(MDRRuleGroupInstanceServiceUtil.class,
 					"addRuleGroupInstance", _addRuleGroupInstanceParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -100,7 +100,7 @@ public class MDRRuleGroupInstanceServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(MDRRuleGroupInstanceServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(MDRRuleGroupInstanceServiceUtil.class,
 					"addRuleGroupInstance", _addRuleGroupInstanceParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -137,7 +137,7 @@ public class MDRRuleGroupInstanceServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(MDRRuleGroupInstanceServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(MDRRuleGroupInstanceServiceUtil.class,
 					"deleteRuleGroupInstance",
 					_deleteRuleGroupInstanceParameterTypes2);
 
@@ -172,7 +172,7 @@ public class MDRRuleGroupInstanceServiceHttp {
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(MDRRuleGroupInstanceServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(MDRRuleGroupInstanceServiceUtil.class,
 					"getRuleGroupInstances",
 					_getRuleGroupInstancesParameterTypes3);
 
@@ -205,7 +205,7 @@ public class MDRRuleGroupInstanceServiceHttp {
 		java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(MDRRuleGroupInstanceServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(MDRRuleGroupInstanceServiceUtil.class,
 					"getRuleGroupInstancesCount",
 					_getRuleGroupInstancesCountParameterTypes4);
 
@@ -239,7 +239,7 @@ public class MDRRuleGroupInstanceServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(MDRRuleGroupInstanceServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(MDRRuleGroupInstanceServiceUtil.class,
 					"updateRuleGroupInstance",
 					_updateRuleGroupInstanceParameterTypes5);
 

@@ -61,7 +61,7 @@ public class LayoutSetPrototypeServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(LayoutSetPrototypeServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(LayoutSetPrototypeServiceUtil.class,
 					"addLayoutSetPrototype",
 					_addLayoutSetPrototypeParameterTypes0);
 
@@ -99,7 +99,7 @@ public class LayoutSetPrototypeServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(LayoutSetPrototypeServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(LayoutSetPrototypeServiceUtil.class,
 					"deleteLayoutSetPrototype",
 					_deleteLayoutSetPrototypeParameterTypes1);
 
@@ -133,7 +133,7 @@ public class LayoutSetPrototypeServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(LayoutSetPrototypeServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(LayoutSetPrototypeServiceUtil.class,
 					"getLayoutSetPrototype",
 					_getLayoutSetPrototypeParameterTypes2);
 
@@ -172,7 +172,7 @@ public class LayoutSetPrototypeServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(LayoutSetPrototypeServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(LayoutSetPrototypeServiceUtil.class,
 					"search", _searchParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -213,7 +213,7 @@ public class LayoutSetPrototypeServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(LayoutSetPrototypeServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(LayoutSetPrototypeServiceUtil.class,
 					"updateLayoutSetPrototype",
 					_updateLayoutSetPrototypeParameterTypes4);
 
@@ -253,7 +253,7 @@ public class LayoutSetPrototypeServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(LayoutSetPrototypeServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(LayoutSetPrototypeServiceUtil.class,
 					"updateLayoutSetPrototype",
 					_updateLayoutSetPrototypeParameterTypes5);
 

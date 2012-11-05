@@ -67,7 +67,7 @@ public class CalEventServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(CalEventServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(CalEventServiceUtil.class,
 					"addEvent", _addEventParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, title,
@@ -117,7 +117,7 @@ public class CalEventServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(CalEventServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(CalEventServiceUtil.class,
 					"addEvent", _addEventParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, title,
@@ -158,7 +158,7 @@ public class CalEventServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(CalEventServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(CalEventServiceUtil.class,
 					"deleteEvent", _deleteEventParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, eventId);
@@ -190,7 +190,7 @@ public class CalEventServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(CalEventServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(CalEventServiceUtil.class,
 					"exportEvent", _exportEventParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, eventId);
@@ -227,7 +227,7 @@ public class CalEventServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(CalEventServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(CalEventServiceUtil.class,
 					"exportEvents", _exportEventsParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, events,
@@ -264,7 +264,7 @@ public class CalEventServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(CalEventServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(CalEventServiceUtil.class,
 					"exportGroupEvents", _exportGroupEventsParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -301,7 +301,7 @@ public class CalEventServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(CalEventServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(CalEventServiceUtil.class,
 					"getEvent", _getEventParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, eventId);
@@ -338,7 +338,7 @@ public class CalEventServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(CalEventServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(CalEventServiceUtil.class,
 					"getEvents", _getEventsParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -376,7 +376,7 @@ public class CalEventServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(CalEventServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(CalEventServiceUtil.class,
 					"getEvents", _getEventsParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -413,7 +413,7 @@ public class CalEventServiceHttp {
 		int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(CalEventServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(CalEventServiceUtil.class,
 					"getEvents", _getEventsParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -446,7 +446,7 @@ public class CalEventServiceHttp {
 		int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(CalEventServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(CalEventServiceUtil.class,
 					"getEvents", _getEventsParameterTypes10);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -478,7 +478,7 @@ public class CalEventServiceHttp {
 		java.lang.String type)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(CalEventServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(CalEventServiceUtil.class,
 					"getEventsCount", _getEventsCountParameterTypes11);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -510,7 +510,7 @@ public class CalEventServiceHttp {
 		java.lang.String[] types)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(CalEventServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(CalEventServiceUtil.class,
 					"getEventsCount", _getEventsCountParameterTypes12);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -543,7 +543,7 @@ public class CalEventServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(CalEventServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(CalEventServiceUtil.class,
 					"hasEvents", _hasEventsParameterTypes13);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -580,7 +580,7 @@ public class CalEventServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(CalEventServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(CalEventServiceUtil.class,
 					"hasEvents", _hasEventsParameterTypes14);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -617,7 +617,7 @@ public class CalEventServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(CalEventServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(CalEventServiceUtil.class,
 					"hasEvents", _hasEventsParameterTypes15);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -654,7 +654,7 @@ public class CalEventServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(CalEventServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(CalEventServiceUtil.class,
 					"importICal4j", _importICal4jParameterTypes16);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -695,7 +695,7 @@ public class CalEventServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(CalEventServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(CalEventServiceUtil.class,
 					"updateEvent", _updateEventParameterTypes17);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, eventId,
@@ -745,7 +745,7 @@ public class CalEventServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(CalEventServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(CalEventServiceUtil.class,
 					"updateEvent", _updateEventParameterTypes18);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, eventId,

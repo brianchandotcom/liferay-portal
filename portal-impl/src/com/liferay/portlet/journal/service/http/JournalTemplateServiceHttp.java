@@ -66,7 +66,7 @@ public class JournalTemplateServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(JournalTemplateServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(JournalTemplateServiceUtil.class,
 					"addTemplate", _addTemplateParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -111,7 +111,7 @@ public class JournalTemplateServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(JournalTemplateServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(JournalTemplateServiceUtil.class,
 					"addTemplate", _addTemplateParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -152,7 +152,7 @@ public class JournalTemplateServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(JournalTemplateServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(JournalTemplateServiceUtil.class,
 					"copyTemplate", _copyTemplateParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -189,7 +189,7 @@ public class JournalTemplateServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(JournalTemplateServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(JournalTemplateServiceUtil.class,
 					"deleteTemplate", _deleteTemplateParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -221,7 +221,7 @@ public class JournalTemplateServiceHttp {
 		HttpPrincipal httpPrincipal, long groupId, java.lang.String structureId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(JournalTemplateServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(JournalTemplateServiceUtil.class,
 					"getStructureTemplates",
 					_getStructureTemplatesParameterTypes4);
 
@@ -255,7 +255,7 @@ public class JournalTemplateServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(JournalTemplateServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(JournalTemplateServiceUtil.class,
 					"getTemplate", _getTemplateParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -294,7 +294,7 @@ public class JournalTemplateServiceHttp {
 		com.liferay.portal.kernel.util.OrderByComparator obc)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(JournalTemplateServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(JournalTemplateServiceUtil.class,
 					"search", _searchParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -331,7 +331,7 @@ public class JournalTemplateServiceHttp {
 		com.liferay.portal.kernel.util.OrderByComparator obc)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(JournalTemplateServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(JournalTemplateServiceUtil.class,
 					"search", _searchParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -366,7 +366,7 @@ public class JournalTemplateServiceHttp {
 		java.lang.String structureId, java.lang.String structureIdComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(JournalTemplateServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(JournalTemplateServiceUtil.class,
 					"searchCount", _searchCountParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -401,7 +401,7 @@ public class JournalTemplateServiceHttp {
 		java.lang.String name, java.lang.String description, boolean andOperator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(JournalTemplateServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(JournalTemplateServiceUtil.class,
 					"searchCount", _searchCountParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -442,7 +442,7 @@ public class JournalTemplateServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(JournalTemplateServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(JournalTemplateServiceUtil.class,
 					"updateTemplate", _updateTemplateParameterTypes10);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -487,7 +487,7 @@ public class JournalTemplateServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(JournalTemplateServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(JournalTemplateServiceUtil.class,
 					"updateTemplate", _updateTemplateParameterTypes11);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,

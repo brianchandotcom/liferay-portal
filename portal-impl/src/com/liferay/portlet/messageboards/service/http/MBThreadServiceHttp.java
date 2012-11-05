@@ -58,7 +58,7 @@ public class MBThreadServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(MBThreadServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(MBThreadServiceUtil.class,
 					"deleteThread", _deleteThreadParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, threadId);
@@ -91,7 +91,7 @@ public class MBThreadServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(MBThreadServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(MBThreadServiceUtil.class,
 					"getGroupThreads", _getGroupThreadsParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -129,7 +129,7 @@ public class MBThreadServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(MBThreadServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(MBThreadServiceUtil.class,
 					"getGroupThreads", _getGroupThreadsParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -167,7 +167,7 @@ public class MBThreadServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(MBThreadServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(MBThreadServiceUtil.class,
 					"getGroupThreads", _getGroupThreadsParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -205,7 +205,7 @@ public class MBThreadServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(MBThreadServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(MBThreadServiceUtil.class,
 					"getGroupThreads", _getGroupThreadsParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -241,7 +241,7 @@ public class MBThreadServiceHttp {
 		long groupId, long userId, java.util.Date modifiedDate, int status)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(MBThreadServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(MBThreadServiceUtil.class,
 					"getGroupThreadsCount", _getGroupThreadsCountParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -273,7 +273,7 @@ public class MBThreadServiceHttp {
 		long groupId, long userId, int status)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(MBThreadServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(MBThreadServiceUtil.class,
 					"getGroupThreadsCount", _getGroupThreadsCountParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -305,7 +305,7 @@ public class MBThreadServiceHttp {
 		long groupId, long userId, int status, boolean subscribed)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(MBThreadServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(MBThreadServiceUtil.class,
 					"getGroupThreadsCount", _getGroupThreadsCountParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -338,7 +338,7 @@ public class MBThreadServiceHttp {
 		boolean includeAnonymous)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(MBThreadServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(MBThreadServiceUtil.class,
 					"getGroupThreadsCount", _getGroupThreadsCountParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -371,7 +371,7 @@ public class MBThreadServiceHttp {
 		int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(MBThreadServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(MBThreadServiceUtil.class,
 					"getThreads", _getThreadsParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -403,7 +403,7 @@ public class MBThreadServiceHttp {
 		long groupId, long categoryId, int status)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(MBThreadServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(MBThreadServiceUtil.class,
 					"getThreadsCount", _getThreadsCountParameterTypes10);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -436,7 +436,7 @@ public class MBThreadServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(MBThreadServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(MBThreadServiceUtil.class,
 					"lockThread", _lockThreadParameterTypes11);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, threadId);
@@ -472,7 +472,7 @@ public class MBThreadServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(MBThreadServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(MBThreadServiceUtil.class,
 					"moveThread", _moveThreadParameterTypes12);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -509,7 +509,7 @@ public class MBThreadServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(MBThreadServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(MBThreadServiceUtil.class,
 					"moveThreadToTrash", _moveThreadToTrashParameterTypes13);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, threadId);
@@ -545,7 +545,7 @@ public class MBThreadServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(MBThreadServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(MBThreadServiceUtil.class,
 					"restoreThreadFromTrash",
 					_restoreThreadFromTrashParameterTypes14);
 
@@ -579,7 +579,7 @@ public class MBThreadServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(MBThreadServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(MBThreadServiceUtil.class,
 					"splitThread", _splitThreadParameterTypes15);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -615,7 +615,7 @@ public class MBThreadServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(MBThreadServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(MBThreadServiceUtil.class,
 					"unlockThread", _unlockThreadParameterTypes16);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, threadId);

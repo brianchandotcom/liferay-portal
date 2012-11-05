@@ -61,7 +61,7 @@ public class RoleServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(RoleServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(RoleServiceUtil.class,
 					"addRole", _addRoleParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -102,7 +102,7 @@ public class RoleServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(RoleServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(RoleServiceUtil.class,
 					"addRole", _addRoleParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, name,
@@ -139,7 +139,7 @@ public class RoleServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(RoleServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(RoleServiceUtil.class,
 					"addUserRoles", _addUserRolesParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, userId,
@@ -171,7 +171,7 @@ public class RoleServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(RoleServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(RoleServiceUtil.class,
 					"deleteRole", _deleteRoleParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, roleId);
@@ -203,7 +203,7 @@ public class RoleServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(RoleServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(RoleServiceUtil.class,
 					"getGroupRoles", _getGroupRolesParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId);
@@ -239,7 +239,7 @@ public class RoleServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(RoleServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(RoleServiceUtil.class,
 					"getRole", _getRoleParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, roleId);
@@ -275,7 +275,7 @@ public class RoleServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(RoleServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(RoleServiceUtil.class,
 					"getRole", _getRoleParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -312,7 +312,7 @@ public class RoleServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(RoleServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(RoleServiceUtil.class,
 					"getUserGroupGroupRoles",
 					_getUserGroupGroupRolesParameterTypes7);
 
@@ -350,7 +350,7 @@ public class RoleServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(RoleServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(RoleServiceUtil.class,
 					"getUserGroupRoles", _getUserGroupRolesParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, userId,
@@ -388,7 +388,7 @@ public class RoleServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(RoleServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(RoleServiceUtil.class,
 					"getUserRelatedRoles", _getUserRelatedRolesParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, userId,
@@ -425,7 +425,7 @@ public class RoleServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(RoleServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(RoleServiceUtil.class,
 					"getUserRoles", _getUserRolesParameterTypes10);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, userId);
@@ -461,7 +461,7 @@ public class RoleServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(RoleServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(RoleServiceUtil.class,
 					"hasUserRole", _hasUserRoleParameterTypes11);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, userId,
@@ -498,7 +498,7 @@ public class RoleServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(RoleServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(RoleServiceUtil.class,
 					"hasUserRoles", _hasUserRolesParameterTypes12);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, userId,
@@ -535,7 +535,7 @@ public class RoleServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(RoleServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(RoleServiceUtil.class,
 					"unsetUserRoles", _unsetUserRolesParameterTypes13);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, userId,
@@ -571,7 +571,7 @@ public class RoleServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(RoleServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(RoleServiceUtil.class,
 					"updateRole", _updateRoleParameterTypes14);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, roleId,

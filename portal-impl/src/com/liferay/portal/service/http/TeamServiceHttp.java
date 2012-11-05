@@ -58,7 +58,7 @@ public class TeamServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(TeamServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(TeamServiceUtil.class,
 					"addTeam", _addTeamParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -94,7 +94,7 @@ public class TeamServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(TeamServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(TeamServiceUtil.class,
 					"deleteTeam", _deleteTeamParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, teamId);
@@ -126,7 +126,7 @@ public class TeamServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(TeamServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(TeamServiceUtil.class,
 					"getGroupTeams", _getGroupTeamsParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId);
@@ -162,7 +162,7 @@ public class TeamServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(TeamServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(TeamServiceUtil.class,
 					"getTeam", _getTeamParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, teamId);
@@ -198,7 +198,7 @@ public class TeamServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(TeamServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(TeamServiceUtil.class,
 					"getTeam", _getTeamParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -235,7 +235,7 @@ public class TeamServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(TeamServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(TeamServiceUtil.class,
 					"getUserTeams", _getUserTeamsParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, userId);
@@ -271,7 +271,7 @@ public class TeamServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(TeamServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(TeamServiceUtil.class,
 					"getUserTeams", _getUserTeamsParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, userId,
@@ -308,7 +308,7 @@ public class TeamServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(TeamServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(TeamServiceUtil.class,
 					"hasUserTeam", _hasUserTeamParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, userId,
@@ -346,7 +346,7 @@ public class TeamServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(TeamServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(TeamServiceUtil.class,
 					"updateTeam", _updateTeamParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, teamId,

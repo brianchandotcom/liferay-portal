@@ -56,7 +56,7 @@ public class PortletServiceHttp {
 		HttpPrincipal httpPrincipal)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(PortletServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(PortletServiceUtil.class,
 					"getWARPortlets", _getWARPortletsParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey);
@@ -85,7 +85,7 @@ public class PortletServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(PortletServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(PortletServiceUtil.class,
 					"updatePortlet", _updatePortletParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,

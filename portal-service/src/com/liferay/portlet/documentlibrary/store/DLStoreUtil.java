@@ -17,7 +17,6 @@ package com.liferay.portlet.documentlibrary.store;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.util.MethodCache;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 import java.io.File;
@@ -500,8 +499,6 @@ public class DLStoreUtil {
 				DLStore.class.getName());
 
 			ReferenceRegistry.registerReference(DLStoreUtil.class, "_store");
-
-			MethodCache.remove(DLStore.class);
 		}
 
 		return _store;
@@ -810,8 +807,6 @@ public class DLStoreUtil {
 		_store = store;
 
 		ReferenceRegistry.registerReference(DLStoreUtil.class, "_store");
-
-		MethodCache.remove(DLStore.class);
 	}
 
 	private static DLStore _store;

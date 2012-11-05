@@ -58,7 +58,7 @@ public class TrashEntryServiceHttp {
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portal.security.auth.PrincipalException {
 		try {
-			MethodKey methodKey = new MethodKey(TrashEntryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(TrashEntryServiceUtil.class,
 					"deleteEntries", _deleteEntriesParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId);
@@ -90,7 +90,7 @@ public class TrashEntryServiceHttp {
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portal.security.auth.PrincipalException {
 		try {
-			MethodKey methodKey = new MethodKey(TrashEntryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(TrashEntryServiceUtil.class,
 					"getEntries", _getEntriesParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId);
@@ -127,7 +127,7 @@ public class TrashEntryServiceHttp {
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portal.security.auth.PrincipalException {
 		try {
-			MethodKey methodKey = new MethodKey(TrashEntryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(TrashEntryServiceUtil.class,
 					"getEntries", _getEntriesParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,

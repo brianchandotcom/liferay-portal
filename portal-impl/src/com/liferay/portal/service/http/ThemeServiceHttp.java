@@ -56,7 +56,7 @@ public class ThemeServiceHttp {
 		HttpPrincipal httpPrincipal, long companyId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(ThemeServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(ThemeServiceUtil.class,
 					"getThemes", _getThemesParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, companyId);
@@ -83,7 +83,7 @@ public class ThemeServiceHttp {
 		HttpPrincipal httpPrincipal)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(ThemeServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(ThemeServiceUtil.class,
 					"getWARThemes", _getWARThemesParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey);

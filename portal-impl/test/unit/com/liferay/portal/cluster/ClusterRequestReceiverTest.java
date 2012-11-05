@@ -350,7 +350,7 @@ public class ClusterRequestReceiverTest
 			clusterExecutorImpl2 = getClusterExecutorImpl(false, true);
 
 			MethodHandler methodHandler = new MethodHandler(
-				new MethodKey(TestBean.class.getName(), "nonexistentMethod"));
+				new MethodKey(TestBean.class, "nonexistentMethod"));
 
 			Address address = clusterExecutorImpl2.getLocalClusterNodeAddress();
 

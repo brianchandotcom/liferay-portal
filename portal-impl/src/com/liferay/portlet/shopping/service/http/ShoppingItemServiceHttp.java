@@ -59,7 +59,7 @@ public class ShoppingItemServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(ShoppingItemServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(ShoppingItemServiceUtil.class,
 					"addBookItems", _addBookItemsParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -104,7 +104,7 @@ public class ShoppingItemServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(ShoppingItemServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(ShoppingItemServiceUtil.class,
 					"addItem", _addItemParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -145,7 +145,7 @@ public class ShoppingItemServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(ShoppingItemServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(ShoppingItemServiceUtil.class,
 					"deleteItem", _deleteItemParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, itemId);
@@ -176,7 +176,7 @@ public class ShoppingItemServiceHttp {
 		long groupId, java.util.List<java.lang.Long> categoryIds)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(ShoppingItemServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(ShoppingItemServiceUtil.class,
 					"getCategoriesItemsCount",
 					_getCategoriesItemsCountParameterTypes3);
 
@@ -210,7 +210,7 @@ public class ShoppingItemServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(ShoppingItemServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(ShoppingItemServiceUtil.class,
 					"getItem", _getItemParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, itemId);
@@ -245,7 +245,7 @@ public class ShoppingItemServiceHttp {
 		HttpPrincipal httpPrincipal, long groupId, long categoryId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(ShoppingItemServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(ShoppingItemServiceUtil.class,
 					"getItems", _getItemsParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -278,7 +278,7 @@ public class ShoppingItemServiceHttp {
 		int end, com.liferay.portal.kernel.util.OrderByComparator obc)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(ShoppingItemServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(ShoppingItemServiceUtil.class,
 					"getItems", _getItemsParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -310,7 +310,7 @@ public class ShoppingItemServiceHttp {
 		long categoryId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(ShoppingItemServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(ShoppingItemServiceUtil.class,
 					"getItemsCount", _getItemsCountParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -344,7 +344,7 @@ public class ShoppingItemServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(ShoppingItemServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(ShoppingItemServiceUtil.class,
 					"getItemsPrevAndNext", _getItemsPrevAndNextParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, itemId,
@@ -393,7 +393,7 @@ public class ShoppingItemServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(ShoppingItemServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(ShoppingItemServiceUtil.class,
 					"updateItem", _updateItemParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, itemId,

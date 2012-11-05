@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.process.ClassPathUtil;
 import com.liferay.portal.kernel.process.ProcessCallable;
 import com.liferay.portal.kernel.process.ProcessException;
 import com.liferay.portal.kernel.process.ProcessExecutor;
-import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -27,6 +26,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import java.io.Serializable;
 
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -155,12 +155,21 @@ public class NewJVMJUnitTestRunner extends BlockJUnit4ClassRunner {
 				Object object = clazz.newInstance();
 
 				for (MethodKey beforeMethodKey : _beforeMethodKeys) {
+					beforeMethodKey = beforeMethodKey.transform(
+						contextClassLoader);
+
 					_invoke(beforeMethodKey, object);
 				}
 
-				_invoke(_testMethodKey, object);
+				MethodKey testMethodKey = _testMethodKey.transform(
+					contextClassLoader);
+
+				_invoke(testMethodKey, object);
 
 				for (MethodKey afterMethodKey : _afterMethodKeys) {
+					afterMethodKey = afterMethodKey.transform(
+						contextClassLoader);
+
 					_invoke(afterMethodKey, object);
 				}
 			}
@@ -186,9 +195,9 @@ public class NewJVMJUnitTestRunner extends BlockJUnit4ClassRunner {
 		private void _invoke(MethodKey methodKey, Object object)
 			throws Exception {
 
-			MethodHandler methodHandler = new MethodHandler(methodKey);
+			Method method = methodKey.getMethod();
 
-			methodHandler.invoke(object);
+			method.invoke(object);
 		}
 
 		private List<MethodKey> _afterMethodKeys;

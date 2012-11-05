@@ -16,7 +16,6 @@ package com.liferay.mail.service;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.util.MethodCache;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
@@ -48,8 +47,6 @@ public class CyrusServiceUtil {
 
 			ReferenceRegistry.registerReference(
 				CyrusServiceUtil.class, "_service");
-
-			MethodCache.remove(CyrusService.class);
 		}
 
 		return _service;
@@ -73,8 +70,6 @@ public class CyrusServiceUtil {
 		_service = service;
 
 		ReferenceRegistry.registerReference(CyrusServiceUtil.class, "_service");
-
-		MethodCache.remove(CyrusService.class);
 	}
 
 	private static CyrusService _service;

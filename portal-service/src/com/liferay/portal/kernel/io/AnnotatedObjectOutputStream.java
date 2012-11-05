@@ -12,37 +12,31 @@
  * details.
  */
 
-package com.liferay.portal.kernel.util;
+package com.liferay.portal.kernel.io;
+
+import com.liferay.portal.kernel.util.ClassLoaderPool;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectStreamClass;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 
 /**
- * @author Brian Wing Shun Chan
  * @author Shuyang Zhou
  */
-public class ClassLoaderObjectInputStream extends ObjectInputStream {
+public class AnnotatedObjectOutputStream extends ObjectOutputStream {
 
-	public ClassLoaderObjectInputStream(
-			InputStream inputStream, ClassLoader classLoader)
-		throws IOException {
-
-		super(inputStream);
-
-		_classLoader = classLoader;
+	public AnnotatedObjectOutputStream(OutputStream outputStream)
+			throws IOException {
+		super(outputStream);
 	}
 
 	@Override
-	protected Class<?> resolveClass(ObjectStreamClass objectStreamClass)
-		throws ClassNotFoundException {
+	protected void annotateClass(Class<?> clazz) throws IOException {
+		ClassLoader classLoader = clazz.getClassLoader();
 
-		String name = objectStreamClass.getName();
+		String contextName = ClassLoaderPool.getContextName(classLoader);
 
-		return ClassResolverUtil.resolve(name, _classLoader);
+		writeUTF(contextName);
 	}
-
-	private ClassLoader _classLoader;
 
 }

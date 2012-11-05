@@ -56,7 +56,7 @@ public class ClassNameServiceHttp {
 		HttpPrincipal httpPrincipal, java.lang.String value)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(ClassNameServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(ClassNameServiceUtil.class,
 					"fetchClassName", _fetchClassNameParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, value);
@@ -87,7 +87,7 @@ public class ClassNameServiceHttp {
 		java.lang.Class<?> clazz)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(ClassNameServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(ClassNameServiceUtil.class,
 					"fetchClassNameId", _fetchClassNameIdParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, clazz);
@@ -114,7 +114,7 @@ public class ClassNameServiceHttp {
 		java.lang.String value)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(ClassNameServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(ClassNameServiceUtil.class,
 					"fetchClassNameId", _fetchClassNameIdParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, value);

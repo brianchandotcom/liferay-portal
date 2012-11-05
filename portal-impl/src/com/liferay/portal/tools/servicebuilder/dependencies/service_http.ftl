@@ -79,7 +79,7 @@ public class ${entity.name}ServiceHttp {
 
 			{
 				try {
-					MethodKey methodKey = new MethodKey(${entity.name}ServiceUtil.class.getName(), "${method.name}", _${method.name}ParameterTypes${method_index});
+					MethodKey methodKey = new MethodKey(${entity.name}ServiceUtil.class, "${method.name}", _${method.name}ParameterTypes${method_index});
 
 					MethodHandler methodHandler = new MethodHandler(methodKey
 

@@ -57,7 +57,7 @@ public class PermissionServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(PermissionServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(PermissionServiceUtil.class,
 					"checkPermission", _checkPermissionParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -90,7 +90,7 @@ public class PermissionServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(PermissionServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(PermissionServiceUtil.class,
 					"checkPermission", _checkPermissionParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,

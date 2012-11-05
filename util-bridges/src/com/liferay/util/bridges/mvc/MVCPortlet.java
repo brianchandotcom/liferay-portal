@@ -17,7 +17,9 @@ package com.liferay.util.bridges.mvc;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortlet;
+import com.liferay.portal.kernel.util.ClassResolverUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalClassInvoker;
 import com.liferay.portal.kernel.util.StringPool;
@@ -200,16 +202,8 @@ public class MVCPortlet extends LiferayPortlet {
 		PortletConfig portletConfig = getPortletConfig();
 
 		PortalClassInvoker.invoke(
-			true,
-			"com.liferay.portlet.messageboards.action.EditDiscussionAction",
-			"processAction",
-			new String[] {
-				"org.apache.struts.action.ActionMapping",
-				"org.apache.struts.action.ActionForm",
-				PortletConfig.class.getName(), ActionRequest.class.getName(),
-				ActionResponse.class.getName()
-			},
-			null, null, portletConfig, actionRequest, actionResponse);
+			true, _processActionMethodKey, null, null, portletConfig,
+			actionRequest, actionResponse);
 	}
 
 	@Override
@@ -429,6 +423,16 @@ public class MVCPortlet extends LiferayPortlet {
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(MVCPortlet.class);
+
+	private static MethodKey _processActionMethodKey = new MethodKey(
+		ClassResolverUtil.resolveByPortalClassLoader(
+			"com.liferay.portlet.messageboards.action.EditDiscussionAction"),
+		"processAction",
+		ClassResolverUtil.resolveByPortalClassLoader(
+			"org.apache.struts.action.ActionMapping"),
+		ClassResolverUtil.resolveByPortalClassLoader(
+			"org.apache.struts.action.ActionForm"),
+		PortletConfig.class, ActionRequest.class, ActionResponse.class);
 
 	private ActionCommandCache _actionCommandCache;
 

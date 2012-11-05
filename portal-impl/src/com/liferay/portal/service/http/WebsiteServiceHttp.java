@@ -58,7 +58,7 @@ public class WebsiteServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(WebsiteServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(WebsiteServiceUtil.class,
 					"addWebsite", _addWebsiteParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -94,7 +94,7 @@ public class WebsiteServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(WebsiteServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(WebsiteServiceUtil.class,
 					"deleteWebsite", _deleteWebsiteParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, websiteId);
@@ -126,7 +126,7 @@ public class WebsiteServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(WebsiteServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(WebsiteServiceUtil.class,
 					"getWebsite", _getWebsiteParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, websiteId);
@@ -162,7 +162,7 @@ public class WebsiteServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(WebsiteServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(WebsiteServiceUtil.class,
 					"getWebsites", _getWebsitesParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -200,7 +200,7 @@ public class WebsiteServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(WebsiteServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(WebsiteServiceUtil.class,
 					"updateWebsite", _updateWebsiteParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,

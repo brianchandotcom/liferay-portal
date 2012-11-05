@@ -62,7 +62,7 @@ public class DLFolderServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLFolderServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLFolderServiceUtil.class,
 					"addFolder", _addFolderParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -99,7 +99,7 @@ public class DLFolderServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLFolderServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLFolderServiceUtil.class,
 					"deleteFolder", _deleteFolderParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, folderId);
@@ -131,7 +131,7 @@ public class DLFolderServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLFolderServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLFolderServiceUtil.class,
 					"deleteFolder", _deleteFolderParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -164,7 +164,7 @@ public class DLFolderServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLFolderServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLFolderServiceUtil.class,
 					"deleteFolder", _deleteFolderParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -198,7 +198,7 @@ public class DLFolderServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLFolderServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLFolderServiceUtil.class,
 					"getFileEntriesAndFileShortcuts",
 					_getFileEntriesAndFileShortcutsParameterTypes4);
 
@@ -235,7 +235,7 @@ public class DLFolderServiceHttp {
 		HttpPrincipal httpPrincipal, long groupId, long folderId, int status)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLFolderServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLFolderServiceUtil.class,
 					"getFileEntriesAndFileShortcutsCount",
 					_getFileEntriesAndFileShortcutsCountParameterTypes5);
 
@@ -269,7 +269,7 @@ public class DLFolderServiceHttp {
 		java.lang.String[] mimeTypes)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLFolderServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLFolderServiceUtil.class,
 					"getFileEntriesAndFileShortcutsCount",
 					_getFileEntriesAndFileShortcutsCountParameterTypes6);
 
@@ -303,7 +303,7 @@ public class DLFolderServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLFolderServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLFolderServiceUtil.class,
 					"getFolder", _getFolderParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, folderId);
@@ -340,7 +340,7 @@ public class DLFolderServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLFolderServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLFolderServiceUtil.class,
 					"getFolder", _getFolderParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -377,7 +377,7 @@ public class DLFolderServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLFolderServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLFolderServiceUtil.class,
 					"getFolderIds", _getFolderIdsParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -416,7 +416,7 @@ public class DLFolderServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLFolderServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLFolderServiceUtil.class,
 					"getFolders", _getFoldersParameterTypes10);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -454,7 +454,7 @@ public class DLFolderServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLFolderServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLFolderServiceUtil.class,
 					"getFolders", _getFoldersParameterTypes11);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -493,7 +493,7 @@ public class DLFolderServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLFolderServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLFolderServiceUtil.class,
 					"getFoldersAndFileEntriesAndFileShortcuts",
 					_getFoldersAndFileEntriesAndFileShortcutsParameterTypes12);
 
@@ -532,7 +532,7 @@ public class DLFolderServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLFolderServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLFolderServiceUtil.class,
 					"getFoldersAndFileEntriesAndFileShortcuts",
 					_getFoldersAndFileEntriesAndFileShortcutsParameterTypes13);
 
@@ -572,7 +572,7 @@ public class DLFolderServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLFolderServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLFolderServiceUtil.class,
 					"getFoldersAndFileEntriesAndFileShortcuts",
 					_getFoldersAndFileEntriesAndFileShortcutsParameterTypes14);
 
@@ -611,7 +611,7 @@ public class DLFolderServiceHttp {
 		boolean includeMountFolders)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLFolderServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLFolderServiceUtil.class,
 					"getFoldersAndFileEntriesAndFileShortcutsCount",
 					_getFoldersAndFileEntriesAndFileShortcutsCountParameterTypes15);
 
@@ -645,7 +645,7 @@ public class DLFolderServiceHttp {
 		java.lang.String[] mimeTypes, boolean includeMountFolders)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLFolderServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLFolderServiceUtil.class,
 					"getFoldersAndFileEntriesAndFileShortcutsCount",
 					_getFoldersAndFileEntriesAndFileShortcutsCountParameterTypes16);
 
@@ -678,7 +678,7 @@ public class DLFolderServiceHttp {
 		long groupId, long parentFolderId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLFolderServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLFolderServiceUtil.class,
 					"getFoldersCount", _getFoldersCountParameterTypes17);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -711,7 +711,7 @@ public class DLFolderServiceHttp {
 		boolean includeMountfolders)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLFolderServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLFolderServiceUtil.class,
 					"getFoldersCount", _getFoldersCountParameterTypes18);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -745,7 +745,7 @@ public class DLFolderServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLFolderServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLFolderServiceUtil.class,
 					"getMountFolders", _getMountFoldersParameterTypes19);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -781,7 +781,7 @@ public class DLFolderServiceHttp {
 		long groupId, long parentFolderId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLFolderServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLFolderServiceUtil.class,
 					"getMountFoldersCount",
 					_getMountFoldersCountParameterTypes20);
 
@@ -815,7 +815,7 @@ public class DLFolderServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLFolderServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLFolderServiceUtil.class,
 					"getSubfolderIds", _getSubfolderIdsParameterTypes21);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -849,7 +849,7 @@ public class DLFolderServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLFolderServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLFolderServiceUtil.class,
 					"getSubfolderIds", _getSubfolderIdsParameterTypes22);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -886,7 +886,7 @@ public class DLFolderServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLFolderServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLFolderServiceUtil.class,
 					"hasFolderLock", _hasFolderLockParameterTypes23);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, folderId);
@@ -922,7 +922,7 @@ public class DLFolderServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLFolderServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLFolderServiceUtil.class,
 					"hasInheritableLock", _hasInheritableLockParameterTypes24);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, folderId);
@@ -957,7 +957,7 @@ public class DLFolderServiceHttp {
 		long folderId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLFolderServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLFolderServiceUtil.class,
 					"isFolderLocked", _isFolderLockedParameterTypes25);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, folderId);
@@ -989,7 +989,7 @@ public class DLFolderServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLFolderServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLFolderServiceUtil.class,
 					"lockFolder", _lockFolderParameterTypes26);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, folderId);
@@ -1026,7 +1026,7 @@ public class DLFolderServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLFolderServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLFolderServiceUtil.class,
 					"lockFolder", _lockFolderParameterTypes27);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -1064,7 +1064,7 @@ public class DLFolderServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLFolderServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLFolderServiceUtil.class,
 					"moveFolder", _moveFolderParameterTypes28);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -1102,7 +1102,7 @@ public class DLFolderServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLFolderServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLFolderServiceUtil.class,
 					"refreshFolderLock", _refreshFolderLockParameterTypes29);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -1139,7 +1139,7 @@ public class DLFolderServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLFolderServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLFolderServiceUtil.class,
 					"unlockFolder", _unlockFolderParameterTypes30);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -1172,7 +1172,7 @@ public class DLFolderServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLFolderServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLFolderServiceUtil.class,
 					"unlockFolder", _unlockFolderParameterTypes31);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -1209,7 +1209,7 @@ public class DLFolderServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLFolderServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLFolderServiceUtil.class,
 					"updateFolder", _updateFolderParameterTypes32);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -1247,7 +1247,7 @@ public class DLFolderServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLFolderServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLFolderServiceUtil.class,
 					"verifyInheritableLock",
 					_verifyInheritableLockParameterTypes33);
 

@@ -58,7 +58,7 @@ public class PluginSettingServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(PluginSettingServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(PluginSettingServiceUtil.class,
 					"updatePluginSetting", _updatePluginSettingParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,

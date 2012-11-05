@@ -65,7 +65,7 @@ public class PollsQuestionServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(PollsQuestionServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(PollsQuestionServiceUtil.class,
 					"addQuestion", _addQuestionParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -104,7 +104,7 @@ public class PollsQuestionServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(PollsQuestionServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(PollsQuestionServiceUtil.class,
 					"deleteQuestion", _deleteQuestionParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -137,7 +137,7 @@ public class PollsQuestionServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(PollsQuestionServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(PollsQuestionServiceUtil.class,
 					"getQuestion", _getQuestionParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -180,7 +180,7 @@ public class PollsQuestionServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(PollsQuestionServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(PollsQuestionServiceUtil.class,
 					"updateQuestion", _updateQuestionParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,

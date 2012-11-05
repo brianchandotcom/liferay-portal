@@ -60,7 +60,7 @@ public class SocialRequestServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(SocialRequestServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(SocialRequestServiceUtil.class,
 					"updateRequest", _updateRequestParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,

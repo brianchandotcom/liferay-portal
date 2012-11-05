@@ -229,18 +229,12 @@ public class Serializer {
 			return;
 		}
 		else {
-			writeByte(SerializationConstants.TC_CONTEXT_NAME);
+			writeByte(SerializationConstants.TC_OBJECT);
 		}
 
-		ClassLoader classLoader = serializable.getClass().getClassLoader();
-
-		String contextName = ClassLoaderPool.getContextName(classLoader);
-
-		writeString(contextName);
-
 		try {
-			ObjectOutputStream objectOutputStream = new ObjectOutputStream(
-				new BufferOutputStream());
+			ObjectOutputStream objectOutputStream =
+				new AnnotatedObjectOutputStream(new BufferOutputStream());
 
 			objectOutputStream.writeObject(serializable);
 

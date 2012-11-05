@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.repository.cmis;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.RepositoryException;
+import com.liferay.portal.kernel.util.ClassResolverUtil;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.PortalClassInvoker;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -86,20 +87,20 @@ public class CMISRepositoryUtil {
 		return value;
 	}
 
-	private static final String _CLASS_NAME =
-		"com.liferay.portal.repository.cmis.CMISRepositoryUtil";
+	private static final Class<?> _CLASS =
+		ClassResolverUtil.resolveByPortalClassLoader(
+			"com.liferay.portal.repository.cmis.CMISRepositoryUtil");
 
 	private static Log _log = LogFactoryUtil.getLog(CMISRepositoryUtil.class);
 
 	private static MethodKey _checkRepository = new MethodKey(
-		_CLASS_NAME, "checkRepository", long.class, Map.class,
+		_CLASS, "checkRepository", long.class, Map.class,
 		UnicodeProperties.class, String.class);
 
 	private static MethodKey _createSession = new MethodKey(
-		_CLASS_NAME, "createSession", Map.class);
+		_CLASS, "createSession", Map.class);
 
 	private static MethodKey _getTypeSettingsValue = new MethodKey(
-		_CLASS_NAME, "getTypeSettingsValue", UnicodeProperties.class,
-		String.class);
+		_CLASS, "getTypeSettingsValue", UnicodeProperties.class, String.class);
 
 }

@@ -60,7 +60,7 @@ public class SocialActivitySettingServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(SocialActivitySettingServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(SocialActivitySettingServiceUtil.class,
 					"getActivityDefinition",
 					_getActivityDefinitionParameterTypes0);
 
@@ -98,7 +98,7 @@ public class SocialActivitySettingServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(SocialActivitySettingServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(SocialActivitySettingServiceUtil.class,
 					"getActivityDefinitions",
 					_getActivityDefinitionsParameterTypes1);
 
@@ -136,7 +136,7 @@ public class SocialActivitySettingServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(SocialActivitySettingServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(SocialActivitySettingServiceUtil.class,
 					"getJSONActivityDefinitions",
 					_getJSONActivityDefinitionsParameterTypes2);
 
@@ -174,7 +174,7 @@ public class SocialActivitySettingServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(SocialActivitySettingServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(SocialActivitySettingServiceUtil.class,
 					"updateActivitySetting",
 					_updateActivitySettingParameterTypes3);
 
@@ -209,7 +209,7 @@ public class SocialActivitySettingServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(SocialActivitySettingServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(SocialActivitySettingServiceUtil.class,
 					"updateActivitySetting",
 					_updateActivitySettingParameterTypes4);
 
@@ -244,7 +244,7 @@ public class SocialActivitySettingServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(SocialActivitySettingServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(SocialActivitySettingServiceUtil.class,
 					"updateActivitySettings",
 					_updateActivitySettingsParameterTypes5);
 

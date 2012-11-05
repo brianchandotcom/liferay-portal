@@ -18,7 +18,6 @@ import com.liferay.mail.model.Filter;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.mail.MailMessage;
-import com.liferay.portal.kernel.util.MethodCache;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 import java.util.List;
@@ -74,8 +73,6 @@ public class MailServiceUtil {
 
 			ReferenceRegistry.registerReference(
 				MailServiceUtil.class, "_service");
-
-			MethodCache.remove(MailService.class);
 		}
 
 		return _service;
@@ -111,8 +108,6 @@ public class MailServiceUtil {
 		_service = service;
 
 		ReferenceRegistry.registerReference(MailServiceUtil.class, "_service");
-
-		MethodCache.remove(MailService.class);
 	}
 
 	private static MailService _service;

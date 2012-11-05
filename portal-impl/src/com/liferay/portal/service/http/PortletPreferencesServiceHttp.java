@@ -57,7 +57,7 @@ public class PortletPreferencesServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(PortletPreferencesServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(PortletPreferencesServiceUtil.class,
 					"deleteArchivedPreferences",
 					_deleteArchivedPreferencesParameterTypes0);
 
@@ -93,7 +93,7 @@ public class PortletPreferencesServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(PortletPreferencesServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(PortletPreferencesServiceUtil.class,
 					"restoreArchivedPreferences",
 					_restoreArchivedPreferencesParameterTypes1);
 
@@ -130,7 +130,7 @@ public class PortletPreferencesServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(PortletPreferencesServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(PortletPreferencesServiceUtil.class,
 					"restoreArchivedPreferences",
 					_restoreArchivedPreferencesParameterTypes2);
 
@@ -166,7 +166,7 @@ public class PortletPreferencesServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(PortletPreferencesServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(PortletPreferencesServiceUtil.class,
 					"restoreArchivedPreferences",
 					_restoreArchivedPreferencesParameterTypes3);
 
@@ -201,7 +201,7 @@ public class PortletPreferencesServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(PortletPreferencesServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(PortletPreferencesServiceUtil.class,
 					"updateArchivePreferences",
 					_updateArchivePreferencesParameterTypes4);
 

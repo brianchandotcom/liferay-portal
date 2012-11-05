@@ -59,7 +59,7 @@ public class DLFileVersionServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLFileVersionServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLFileVersionServiceUtil.class,
 					"getFileVersion", _getFileVersionParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -96,7 +96,7 @@ public class DLFileVersionServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(DLFileVersionServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(DLFileVersionServiceUtil.class,
 					"getLatestFileVersion", _getLatestFileVersionParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,

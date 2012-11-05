@@ -58,7 +58,7 @@ public class MembershipRequestServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(MembershipRequestServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(MembershipRequestServiceUtil.class,
 					"addMembershipRequest", _addMembershipRequestParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -95,7 +95,7 @@ public class MembershipRequestServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(MembershipRequestServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(MembershipRequestServiceUtil.class,
 					"deleteMembershipRequests",
 					_deleteMembershipRequestsParameterTypes1);
 
@@ -129,7 +129,7 @@ public class MembershipRequestServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(MembershipRequestServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(MembershipRequestServiceUtil.class,
 					"getMembershipRequest", _getMembershipRequestParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -167,7 +167,7 @@ public class MembershipRequestServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(MembershipRequestServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(MembershipRequestServiceUtil.class,
 					"updateStatus", _updateStatusParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,

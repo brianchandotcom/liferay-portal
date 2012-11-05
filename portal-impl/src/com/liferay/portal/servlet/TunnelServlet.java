@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
+import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.security.ac.AccessControlThreadLocal;
 import com.liferay.portal.security.auth.HttpPrincipal;
@@ -69,12 +70,12 @@ public class TunnelServlet extends HttpServlet {
 			MethodHandler methodHandler = ovp.getValue();
 
 			if (methodHandler != null) {
-				if (!isValidRequest(methodHandler.getClassName())) {
+				MethodKey methodKey = methodHandler.getMethodKey();
+
+				if (!isValidRequest(methodKey.getDeclaringClass().getName())) {
 					return;
 				}
-			}
 
-			if (methodHandler != null) {
 				returnObj = methodHandler.invoke(true);
 			}
 		}

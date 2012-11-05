@@ -60,7 +60,7 @@ public class PollsVoteServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(PollsVoteServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(PollsVoteServiceUtil.class,
 					"addVote", _addVoteParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,

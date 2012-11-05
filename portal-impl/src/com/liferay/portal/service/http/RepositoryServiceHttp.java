@@ -60,7 +60,7 @@ public class RepositoryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(RepositoryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(RepositoryServiceUtil.class,
 					"addRepository", _addRepositoryParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -98,7 +98,7 @@ public class RepositoryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(RepositoryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(RepositoryServiceUtil.class,
 					"checkRepository", _checkRepositoryParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -131,7 +131,7 @@ public class RepositoryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(RepositoryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(RepositoryServiceUtil.class,
 					"deleteRepository", _deleteRepositoryParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -164,7 +164,7 @@ public class RepositoryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(RepositoryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(RepositoryServiceUtil.class,
 					"getLocalRepositoryImpl",
 					_getLocalRepositoryImplParameterTypes3);
 
@@ -203,7 +203,7 @@ public class RepositoryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(RepositoryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(RepositoryServiceUtil.class,
 					"getLocalRepositoryImpl",
 					_getLocalRepositoryImplParameterTypes4);
 
@@ -241,7 +241,7 @@ public class RepositoryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(RepositoryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(RepositoryServiceUtil.class,
 					"getRepository", _getRepositoryParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -278,7 +278,7 @@ public class RepositoryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(RepositoryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(RepositoryServiceUtil.class,
 					"getRepositoryImpl", _getRepositoryImplParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -316,7 +316,7 @@ public class RepositoryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(RepositoryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(RepositoryServiceUtil.class,
 					"getRepositoryImpl", _getRepositoryImplParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -352,7 +352,7 @@ public class RepositoryServiceHttp {
 		HttpPrincipal httpPrincipal, long classNameId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(RepositoryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(RepositoryServiceUtil.class,
 					"getSupportedConfigurations",
 					_getSupportedConfigurationsParameterTypes8);
 
@@ -386,7 +386,7 @@ public class RepositoryServiceHttp {
 		java.lang.String configuration)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(RepositoryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(RepositoryServiceUtil.class,
 					"getSupportedParameters",
 					_getSupportedParametersParameterTypes9);
 
@@ -420,7 +420,7 @@ public class RepositoryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(RepositoryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(RepositoryServiceUtil.class,
 					"getTypeSettingsProperties",
 					_getTypeSettingsPropertiesParameterTypes10);
 
@@ -458,7 +458,7 @@ public class RepositoryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(RepositoryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(RepositoryServiceUtil.class,
 					"updateRepository", _updateRepositoryParameterTypes11);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,

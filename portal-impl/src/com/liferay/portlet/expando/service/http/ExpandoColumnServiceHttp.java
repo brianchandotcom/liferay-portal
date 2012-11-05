@@ -60,7 +60,7 @@ public class ExpandoColumnServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(ExpandoColumnServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(ExpandoColumnServiceUtil.class,
 					"addColumn", _addColumnParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, tableId,
@@ -98,7 +98,7 @@ public class ExpandoColumnServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(ExpandoColumnServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(ExpandoColumnServiceUtil.class,
 					"addColumn", _addColumnParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, tableId,
@@ -134,7 +134,7 @@ public class ExpandoColumnServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(ExpandoColumnServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(ExpandoColumnServiceUtil.class,
 					"deleteColumn", _deleteColumnParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, columnId);
@@ -167,7 +167,7 @@ public class ExpandoColumnServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(ExpandoColumnServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(ExpandoColumnServiceUtil.class,
 					"updateColumn", _updateColumnParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -205,7 +205,7 @@ public class ExpandoColumnServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(ExpandoColumnServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(ExpandoColumnServiceUtil.class,
 					"updateColumn", _updateColumnParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
@@ -243,7 +243,7 @@ public class ExpandoColumnServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(ExpandoColumnServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(ExpandoColumnServiceUtil.class,
 					"updateTypeSettings", _updateTypeSettingsParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,

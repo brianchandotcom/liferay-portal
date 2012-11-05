@@ -62,7 +62,7 @@ public class BookmarksEntryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(BookmarksEntryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(BookmarksEntryServiceUtil.class,
 					"addEntry", _addEntryParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -98,7 +98,7 @@ public class BookmarksEntryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(BookmarksEntryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(BookmarksEntryServiceUtil.class,
 					"deleteEntry", _deleteEntryParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, entryId);
@@ -129,7 +129,7 @@ public class BookmarksEntryServiceHttp {
 		HttpPrincipal httpPrincipal, long groupId, long folderId, int start,
 		int end) throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(BookmarksEntryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(BookmarksEntryServiceUtil.class,
 					"getEntries", _getEntriesParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -163,7 +163,7 @@ public class BookmarksEntryServiceHttp {
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(BookmarksEntryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(BookmarksEntryServiceUtil.class,
 					"getEntries", _getEntriesParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -195,7 +195,7 @@ public class BookmarksEntryServiceHttp {
 		long groupId, long folderId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(BookmarksEntryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(BookmarksEntryServiceUtil.class,
 					"getEntriesCount", _getEntriesCountParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -228,7 +228,7 @@ public class BookmarksEntryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(BookmarksEntryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(BookmarksEntryServiceUtil.class,
 					"getEntry", _getEntryParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, entryId);
@@ -263,7 +263,7 @@ public class BookmarksEntryServiceHttp {
 		long groupId, java.util.List<java.lang.Long> folderIds)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(BookmarksEntryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(BookmarksEntryServiceUtil.class,
 					"getFoldersEntriesCount",
 					_getFoldersEntriesCountParameterTypes6);
 
@@ -296,7 +296,7 @@ public class BookmarksEntryServiceHttp {
 		HttpPrincipal httpPrincipal, long groupId, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(BookmarksEntryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(BookmarksEntryServiceUtil.class,
 					"getGroupEntries", _getGroupEntriesParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -328,7 +328,7 @@ public class BookmarksEntryServiceHttp {
 		HttpPrincipal httpPrincipal, long groupId, long userId, int start,
 		int end) throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(BookmarksEntryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(BookmarksEntryServiceUtil.class,
 					"getGroupEntries", _getGroupEntriesParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
@@ -360,7 +360,7 @@ public class BookmarksEntryServiceHttp {
 		long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(BookmarksEntryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(BookmarksEntryServiceUtil.class,
 					"getGroupEntriesCount", _getGroupEntriesCountParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId);
@@ -391,7 +391,7 @@ public class BookmarksEntryServiceHttp {
 		long groupId, long userId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(BookmarksEntryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(BookmarksEntryServiceUtil.class,
 					"getGroupEntriesCount",
 					_getGroupEntriesCountParameterTypes10);
 
@@ -425,7 +425,7 @@ public class BookmarksEntryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(BookmarksEntryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(BookmarksEntryServiceUtil.class,
 					"openEntry", _openEntryParameterTypes11);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, entryId);
@@ -460,7 +460,7 @@ public class BookmarksEntryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(BookmarksEntryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(BookmarksEntryServiceUtil.class,
 					"subscribeEntry", _subscribeEntryParameterTypes12);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, entryId);
@@ -492,7 +492,7 @@ public class BookmarksEntryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(BookmarksEntryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(BookmarksEntryServiceUtil.class,
 					"unsubscribeEntry", _unsubscribeEntryParameterTypes13);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, entryId);
@@ -527,7 +527,7 @@ public class BookmarksEntryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			MethodKey methodKey = new MethodKey(BookmarksEntryServiceUtil.class.getName(),
+			MethodKey methodKey = new MethodKey(BookmarksEntryServiceUtil.class,
 					"updateEntry", _updateEntryParameterTypes14);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, entryId,

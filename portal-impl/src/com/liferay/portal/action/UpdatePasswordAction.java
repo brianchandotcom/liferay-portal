@@ -97,11 +97,17 @@ public class UpdatePasswordAction extends Action {
 		try {
 			updatePassword(request, response, themeDisplay, ticket);
 
-			PortletURL portletURL = new PortletURLImpl(
-				request, PortletKeys.LOGIN, themeDisplay.getPlid(),
-				PortletRequest.RENDER_PHASE);
+			String redirect = ParamUtil.getString(request, WebKeys.REFERER);
 
-			response.sendRedirect(portletURL.toString());
+			if (Validator.isNull(redirect)) {
+				PortletURL portletURL = new PortletURLImpl(
+					request, PortletKeys.LOGIN, themeDisplay.getPlid(),
+					PortletRequest.RENDER_PHASE);
+
+				redirect = portletURL.toString();
+			}
+
+			response.sendRedirect(redirect);
 
 			return null;
 		}

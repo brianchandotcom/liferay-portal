@@ -531,6 +531,10 @@ public class Creole10Parser]]></replacevalue>
 		<delete dir="${tstamp.value}" />
 	</target>
 
+	<target name="build-selenium-test-plans">
+		<ant dir="../portal-web" target="build-selenium-test-plans" />
+	</target>
+
 	<target name="build-selenium-tests">
 		<ant dir="../portal-web" target="build-selenium-tests" />
 	</target>

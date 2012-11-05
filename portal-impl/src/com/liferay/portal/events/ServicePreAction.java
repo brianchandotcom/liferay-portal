@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -235,30 +236,13 @@ public class ServicePreAction extends Action {
 		User user = null;
 
 		try {
-			user = PortalUtil.getUser(request);
+			user = initUser(request);
 		}
 		catch (NoSuchUserException nsue) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(nsue.getMessage());
-			}
-
-			long userId = PortalUtil.getUserId(request);
-
-			if (userId > 0) {
-				session.invalidate();
-			}
-
 			return null;
 		}
 
-		boolean signedIn = false;
-
-		if (user == null) {
-			user = company.getDefaultUser();
-		}
-		else if (!user.isDefaultUser()) {
-			signedIn = true;
-		}
+		boolean signedIn = !user.isDefaultUser();
 
 		if (PropsValues.BROWSER_CACHE_DISABLED ||
 			(PropsValues.BROWSER_CACHE_SIGNED_IN_DISABLED && signedIn)) {
@@ -1750,6 +1734,35 @@ public class ServicePreAction extends Action {
 				}
 			}
 		}
+	}
+
+	protected User initUser(HttpServletRequest request) throws Exception {
+		try {
+			User user = PortalUtil.getUser(request);
+
+			if (user != null) {
+				return user;
+			}
+		}
+		catch (NoSuchUserException nsue) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(nsue.getMessage());
+			}
+
+			long userId = PortalUtil.getUserId(request);
+
+			if (userId > 0) {
+				HttpSession session = request.getSession();
+
+				session.invalidate();
+			}
+
+			throw nsue;
+		}
+
+		Company company = PortalUtil.getCompany(request);
+
+		return company.getDefaultUser();
 	}
 
 	protected boolean isLoginRequest(HttpServletRequest request) {

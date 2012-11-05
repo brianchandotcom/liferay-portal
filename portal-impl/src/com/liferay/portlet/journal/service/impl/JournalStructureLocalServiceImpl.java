@@ -45,6 +45,7 @@ import com.liferay.portlet.journal.StructureInheritanceException;
 import com.liferay.portlet.journal.StructureNameException;
 import com.liferay.portlet.journal.StructureXsdException;
 import com.liferay.portlet.journal.model.JournalArticle;
+import com.liferay.portlet.journal.model.JournalArticleConstants;
 import com.liferay.portlet.journal.model.JournalStructure;
 import com.liferay.portlet.journal.model.JournalStructureConstants;
 import com.liferay.portlet.journal.service.base.JournalStructureLocalServiceBaseImpl;
@@ -284,7 +285,8 @@ public class JournalStructureLocalServiceImpl
 		}
 		else {
 			if (journalArticlePersistence.countByG_C_S(
-					structure.getGroupId(), 0,
+					structure.getGroupId(),
+					JournalArticleConstants.CLASSNAME_ID_DEFAULT,
 					structure.getStructureId()) > 0) {
 
 				throw new RequiredStructureException(

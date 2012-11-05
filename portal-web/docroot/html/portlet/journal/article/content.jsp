@@ -231,7 +231,7 @@ if (Validator.isNotNull(content)) {
 										<%= HtmlUtil.escape(structureName) %>
 									</span>
 
-									<c:if test="<%= classNameId == 0 %>">
+									<c:if test="<%= classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT %>">
 										<c:if test="<%= (structure == null) || JournalStructurePermission.contains(permissionChecker, structure, ActionKeys.UPDATE) %>">
 											<liferay-ui:icon id="editStructureLink" image="edit" url="javascript:;" />
 										</c:if>
@@ -483,7 +483,7 @@ if (Validator.isNotNull(content)) {
 
 		<div class="journal-article-general-fields">
 			<aui:input defaultLanguageId="<%= Validator.isNotNull(toLanguageId) ? toLanguageId : defaultLanguageId %>" languageId="<%= Validator.isNotNull(toLanguageId) ? toLanguageId : defaultLanguageId %>" name="title">
-				<c:if test="<%= classNameId == 0 %>">
+				<c:if test="<%= classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT %>">
 					<aui:validator name="required" />
 				</c:if>
 			</aui:input>

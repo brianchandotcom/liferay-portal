@@ -43,7 +43,7 @@ if ((article != null) && Validator.isNotNull(toLanguageId)) {
 boolean localizeTitle = true;
 String title = "new-web-content";
 
-if (classNameId > 0) {
+if (classNameId > JournalArticleConstants.CLASSNAME_ID_DEFAULT) {
 	title = "structure-default-values";
 }
 else if (article != null) {

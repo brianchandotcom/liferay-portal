@@ -30,6 +30,7 @@ import com.liferay.portlet.journal.NoSuchArticleException;
 import com.liferay.portlet.journal.NoSuchFolderException;
 import com.liferay.portlet.journal.NoSuchStructureException;
 import com.liferay.portlet.journal.model.JournalArticle;
+import com.liferay.portlet.journal.model.JournalArticleConstants;
 import com.liferay.portlet.journal.model.JournalFeed;
 import com.liferay.portlet.journal.model.JournalFolder;
 import com.liferay.portlet.journal.model.JournalFolderConstants;
@@ -166,7 +167,9 @@ public class ActionUtil {
 			article = JournalArticleServiceUtil.getLatestArticle(
 				groupId, articleId, WorkflowConstants.STATUS_ANY);
 		}
-		else if ((classNameId > 0) && (classPK > 0)) {
+		else if ((classNameId > 0) &&
+			(classPK != JournalArticleConstants.CLASSNAME_ID_DEFAULT)) {
+
 			String className = PortalUtil.getClassName(classNameId);
 
 			article = JournalArticleServiceUtil.getLatestArticle(
@@ -199,7 +202,8 @@ public class ActionUtil {
 			article.setNew(true);
 
 			article.setId(0);
-			article.setClassNameId(0);
+			article.setClassNameId(
+				JournalArticleConstants.CLASSNAME_ID_DEFAULT);
 			article.setClassPK(0);
 			article.setArticleId(null);
 			article.setVersion(0);

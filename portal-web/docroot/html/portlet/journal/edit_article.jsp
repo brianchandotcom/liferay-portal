@@ -252,7 +252,7 @@ request.setAttribute("edit_article.jsp-toLanguageId", toLanguageId);
 						publishButtonLabel = "submit-for-publication";
 					}
 
-					if (classNameId > 0) {
+					if (classNameId > JournalArticleConstants.CLASSNAME_ID_DEFAULT) {
 						publishButtonLabel = "save";
 					}
 					%>
@@ -260,7 +260,7 @@ request.setAttribute("edit_article.jsp-toLanguageId", toLanguageId);
 					<c:choose>
 						<c:when test="<%= Validator.isNull(toLanguageId) %>">
 							<c:if test="<%= hasSavePermission %>">
-								<c:if test="<%= classNameId == 0 %>">
+								<c:if test="<%= classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT %>">
 									<aui:button name="saveButton" value="<%= saveButtonLabel %>" />
 								</c:if>
 

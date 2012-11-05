@@ -60,7 +60,7 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[2]/a</td>
+	<td>//tr[contains(.,'Site Name')]/td[2]/a</td>
 	<td>Site Name</td>
 </tr>
 <tr>
@@ -75,17 +75,17 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Manage Memberships')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Memberships')]</td>
 	<td>Manage Memberships</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Manage Memberships')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Memberships')]</td>
 	<td>Manage Memberships</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Manage Memberships')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Memberships')]</td>
 	<td>Manage Memberships</td>
 </tr>
 <tr>
@@ -100,17 +100,17 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'User')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'User')]</td>
 	<td>User</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'User')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'User')]</td>
 	<td>User</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'User')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'User')]</td>
 	<td>User</td>
 </tr>
 <tr>
@@ -145,18 +145,28 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[3]/td[2]</td>
+	<td>//tr[contains(.,'userfn userln')]/td[2]</td>
 	<td>userfn userln</td>
 </tr>
 <tr>
-	<td>assertNotChecked</td>
+	<td>storeChecked</td>
 	<td>//input[@name='_174_rowIds']</td>
-	<td>Entry Check Box</td>
+	<td>entryCheckbox</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${entryCheckbox}</td>
+	<td>EntryCheckbox</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>//input[@name='_174_rowIds']</td>
 	<td>Entry Check Box</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>EntryCheckbox</td>
+	<td></td>
 </tr>
 <tr>
 	<td>assertChecked</td>
@@ -185,7 +195,7 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[3]/td[1]</td>
+	<td>//tr[contains(.,'userfn userln')]/td[1]</td>
 	<td>userfn userln</td>
 </tr>
 </tbody></table>

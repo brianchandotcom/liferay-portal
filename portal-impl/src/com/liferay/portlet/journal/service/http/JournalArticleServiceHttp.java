@@ -789,15 +789,16 @@ public class JournalArticleServiceHttp {
 	}
 
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> getArticlesByUserId(
-		HttpPrincipal httpPrincipal, long groupId, long userId, int start,
-		int end, com.liferay.portal.kernel.util.OrderByComparator obc)
+		HttpPrincipal httpPrincipal, long groupId, long userId,
+		long classNameId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(JournalArticleServiceUtil.class,
 					"getArticlesByUserId", _getArticlesByUserIdParameterTypes19);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					userId, start, end, obc);
+					userId, classNameId, start, end, obc);
 
 			Object returnObj = null;
 
@@ -920,7 +921,7 @@ public class JournalArticleServiceHttp {
 	}
 
 	public static int getArticlesCountByUserId(HttpPrincipal httpPrincipal,
-		long groupId, long userId)
+		long groupId, long userId, long classNameId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(JournalArticleServiceUtil.class,
@@ -928,7 +929,7 @@ public class JournalArticleServiceHttp {
 					_getArticlesCountByUserIdParameterTypes23);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					userId);
+					userId, classNameId);
 
 			Object returnObj = null;
 
@@ -1940,7 +1941,7 @@ public class JournalArticleServiceHttp {
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[] _getArticlesByUserIdParameterTypes19 = new Class[] {
-			long.class, long.class, int.class, int.class,
+			long.class, long.class, long.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[] _getArticlesCountParameterTypes20 = new Class[] {
@@ -1951,7 +1952,7 @@ public class JournalArticleServiceHttp {
 	private static final Class<?>[] _getArticlesCountByStructureIdParameterTypes22 =
 		new Class[] { long.class, java.lang.String.class };
 	private static final Class<?>[] _getArticlesCountByUserIdParameterTypes23 = new Class[] {
-			long.class, long.class
+			long.class, long.class, long.class
 		};
 	private static final Class<?>[] _getDisplayArticleByUrlTitleParameterTypes24 =
 		new Class[] { long.class, java.lang.String.class };

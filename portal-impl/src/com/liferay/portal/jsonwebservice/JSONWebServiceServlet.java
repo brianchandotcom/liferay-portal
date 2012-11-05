@@ -14,6 +14,7 @@
 
 package com.liferay.portal.jsonwebservice;
 
+import com.liferay.portal.events.ServicePreAction;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.PluginContextListener;
@@ -21,6 +22,8 @@ import com.liferay.portal.kernel.upload.UploadServletRequest;
 import com.liferay.portal.kernel.util.ContextPathUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.InstancePool;
+import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -36,6 +39,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 import java.net.URL;
+import java.util.Locale;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -71,6 +75,20 @@ public class JSONWebServiceServlet extends JSONServlet {
 		String path = GetterUtil.getString(request.getPathInfo());
 
 		if (!path.equals(StringPool.SLASH) && !path.equals(StringPool.BLANK)) {
+			try {
+				ServicePreAction servicePreAction =
+					(ServicePreAction)InstancePool.get(
+						ServicePreAction.class.getName());
+
+				Locale locale = servicePreAction.initLocale(
+					request, response, null);
+
+				LocaleThreadLocal.setThemeDisplayLocale(locale);
+			}
+			catch (Exception e) {
+				throw new ServletException(e);
+			}
+
 			super.service(request, response);
 
 			return;

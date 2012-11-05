@@ -46,6 +46,7 @@ public class SeleniumXMLToJavaBuilder {
 		new MacrosXMLToJavaBuilder(args);
 		new PathsXMLToJavaBuilder(args);
 		new TestXMLToJavaBuilder(args);
+		new TestPlanBuilder(args);
 	}
 
 	public SeleniumXMLToJavaBuilder(String[] args) throws Exception {

@@ -68,7 +68,7 @@ public class MethodKey implements Externalizable {
 
 		MethodKey methodKey = (MethodKey)obj;
 
-		if (Validator.equals(_declaringClass, methodKey._declaringClass) &&
+		if ((_declaringClass == methodKey._declaringClass) &&
 			Validator.equals(_methodName, methodKey._methodName) &&
 			Arrays.equals(_parameterTypes, methodKey._parameterTypes)) {
 

@@ -105,7 +105,7 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 
 	@Test
 	public void testCopyTemplates() throws Exception {
-		DDMTemplate template = addListTemplate(
+		DDMTemplate template = addDisplayTemplate(
 			_classNameId, 0, "Test Template");
 
 		List<DDMTemplate> templates = copyTemplate(template);
@@ -115,7 +115,7 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 
 	@Test
 	public void testDeleteTemplate() throws Exception {
-		DDMTemplate template = addListTemplate(
+		DDMTemplate template = addDisplayTemplate(
 			_classNameId, 0, "Test Template");
 
 		DDMTemplateLocalServiceUtil.deleteTemplate(template.getTemplateId());
@@ -127,7 +127,7 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 
 	@Test
 	public void testFetchTemplate() throws Exception {
-		DDMTemplate template = addListTemplate(
+		DDMTemplate template = addDisplayTemplate(
 			_classNameId, 0, "Test Template");
 
 		Assert.assertNotNull(
@@ -137,7 +137,7 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 
 	@Test
 	public void testGetTemplates() throws Exception {
-		DDMTemplate template = addListTemplate(
+		DDMTemplate template = addDisplayTemplate(
 			_classNameId, 0, "Test Template");
 
 		List<DDMTemplate> templates = DDMTemplateLocalServiceUtil.getTemplates(
@@ -148,10 +148,10 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 
 	@Test
 	public void testSearch() throws Exception {
-		DDMTemplate template = addListTemplate(
+		DDMTemplate template = addDisplayTemplate(
 			_classNameId, 0, "Test Template 1");
 
-		addListTemplate(_classNameId, 0, "Test Template 2");
+		addDisplayTemplate(_classNameId, 0, "Test Template 2");
 
 		List<DDMTemplate> templates = DDMTemplateLocalServiceUtil.search(
 			template.getCompanyId(), template.getGroupId(),
@@ -164,10 +164,10 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 
 	@Test
 	public void testSearchByKeywords() throws Exception {
-		DDMTemplate template = addListTemplate(
+		DDMTemplate template = addDisplayTemplate(
 			_classNameId, 0, "Test Template 1");
 
-		addListTemplate(_classNameId, 0, "Test Template 2");
+		addDisplayTemplate(_classNameId, 0, "Test Template 2");
 
 		List<DDMTemplate> templates = DDMTemplateLocalServiceUtil.search(
 			template.getCompanyId(), template.getGroupId(),
@@ -183,7 +183,7 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 			TestPropsValues.getCompanyId(), group.getGroupId(), _classNameId, 0,
 			"Test Template", null, null, null, null, false);
 
-		addListTemplate(_classNameId, 0, "Test Template");
+		addDisplayTemplate(_classNameId, 0, "Test Template");
 
 		int count = DDMTemplateLocalServiceUtil.searchCount(
 			TestPropsValues.getCompanyId(), group.getGroupId(), _classNameId, 0,
@@ -198,7 +198,7 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 			TestPropsValues.getCompanyId(), group.getGroupId(), _classNameId, 0,
 			null, null, null);
 
-		addListTemplate(_classNameId, 0, "Test Template");
+		addDisplayTemplate(_classNameId, 0, "Test Template");
 
 		int count = DDMTemplateLocalServiceUtil.searchCount(
 			TestPropsValues.getCompanyId(), group.getGroupId(), _classNameId, 0,

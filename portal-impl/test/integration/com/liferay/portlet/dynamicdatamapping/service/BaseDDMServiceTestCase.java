@@ -45,19 +45,7 @@ public class BaseDDMServiceTestCase {
 		group = ServiceTestUtil.addGroup();
 	}
 
-	protected DDMTemplate addDetailTemplate(long classPK, String name)
-		throws Exception {
-
-		String language = "xsd";
-
-		return addTemplate(
-			PortalUtil.getClassNameId(DDMStructure.class), classPK, name,
-			DDMTemplateConstants.TEMPLATE_TYPE_FORM,
-			DDMTemplateConstants.TEMPLATE_MODE_CREATE, language,
-			getTestTemplateScript(language));
-	}
-
-	protected DDMTemplate addListTemplate(
+	protected DDMTemplate addDisplayTemplate(
 			long classNameId, long classPK, String name)
 		throws Exception {
 
@@ -69,11 +57,26 @@ public class BaseDDMServiceTestCase {
 			language, getTestTemplateScript(language));
 	}
 
-	protected DDMTemplate addListTemplate(long classPK, String name)
+	protected DDMTemplate addDisplayTemplate(long classPK, String name)
 		throws Exception {
 
-		return addListTemplate(
+		return addDisplayTemplate(
 			PortalUtil.getClassNameId(DDMStructure.class), classPK, name);
+	}
+
+	protected DDMTemplate addFormTemplate(long classPK, String name)
+		throws Exception {
+
+		return addFormTemplate(classPK, name, getTestTemplateScript("xsd"));
+	}
+
+	protected DDMTemplate addFormTemplate(long classPK, String name, String xsd)
+		throws Exception {
+
+		return addTemplate(
+			PortalUtil.getClassNameId(DDMStructure.class), classPK, name,
+			DDMTemplateConstants.TEMPLATE_TYPE_FORM,
+			DDMTemplateConstants.TEMPLATE_MODE_CREATE, "xsd", xsd);
 	}
 
 	protected DDMStructure addStructure(long classNameId, String name)

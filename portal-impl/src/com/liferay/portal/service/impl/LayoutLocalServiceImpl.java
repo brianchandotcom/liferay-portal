@@ -459,7 +459,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			deleteLayout(childLayout, updateLayoutSet, serviceContext);
 		}
 
-		//Mobile Device Rules
+		// Mobile Device Rules
 
 		long layoutClassNameId = classNameLocalService.getClassNameId(
 			Layout.class);

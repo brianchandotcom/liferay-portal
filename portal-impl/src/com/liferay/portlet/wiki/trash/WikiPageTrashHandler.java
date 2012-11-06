@@ -78,11 +78,15 @@ public class WikiPageTrashHandler extends BaseTrashHandler {
 
 		String originalTitle = TrashUtil.stripTrashNamespace(restoredTitle);
 
-		WikiPage duplicatePage = WikiPageLocalServiceUtil.fetchPage(
-			containerModelId, originalTitle, page.getVersion());
+		WikiPageResource pageResource =
+			WikiPageResourceLocalServiceUtil.fetchPageResource(
+				containerModelId, originalTitle);
 
-		if (duplicatePage != null) {
+		if (pageResource != null) {
 			DuplicateEntryException dee = new DuplicateEntryException();
+
+			WikiPage duplicatePage = WikiPageLocalServiceUtil.getPage(
+				pageResource.getResourcePrimKey());
 
 			dee.setDuplicateEntryId(duplicatePage.getPageId());
 			dee.setOldName(duplicatePage.getTitle());

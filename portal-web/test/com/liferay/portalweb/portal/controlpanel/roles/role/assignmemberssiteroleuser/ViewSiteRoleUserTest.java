@@ -84,6 +84,7 @@ public class ViewSiteRoleUserTest extends BaseTestCase {
 						"Roles"));
 				selenium.clickAt("//a[@id='_125_rolesLink']",
 					RuntimeVariables.replace("Roles"));
+				selenium.waitForVisible("//h1[@class='header-title']/span");
 				assertEquals(RuntimeVariables.replace("Users and Organizations"),
 					selenium.getText("//span[@class='portlet-title-text']"));
 				assertEquals(RuntimeVariables.replace("Browse"),
@@ -100,7 +101,6 @@ public class ViewSiteRoleUserTest extends BaseTestCase {
 				assertEquals(RuntimeVariables.replace("Export All Users"),
 					selenium.getText(
 						"//div[@class='lfr-portlet-toolbar']/span[contains(.,'Export All Users')]/a"));
-				selenium.waitForVisible("//h1[@class='header-title']/span");
 				assertEquals(RuntimeVariables.replace("userfn userln"),
 					selenium.getText("//h1[@class='header-title']/span"));
 				assertEquals(RuntimeVariables.replace("\u00ab Back"),

@@ -314,9 +314,9 @@ public class JournalTemplateLocalServiceImpl
 		}
 		else {
 			if (journalArticlePersistence.countByG_C_T(
-				template.getGroupId(),
-				JournalArticleConstants.CLASSNAME_ID_DEFAULT,
-				template.getTemplateId()) > 0) {
+					template.getGroupId(),
+					JournalArticleConstants.CLASSNAME_ID_DEFAULT,
+					template.getTemplateId()) > 0) {
 
 				throw new RequiredTemplateException();
 			}

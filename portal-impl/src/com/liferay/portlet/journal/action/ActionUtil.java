@@ -168,7 +168,7 @@ public class ActionUtil {
 				groupId, articleId, WorkflowConstants.STATUS_ANY);
 		}
 		else if ((classNameId > 0) &&
-			(classPK != JournalArticleConstants.CLASSNAME_ID_DEFAULT)) {
+			(classPK > JournalArticleConstants.CLASSNAME_ID_DEFAULT)) {
 
 			String className = PortalUtil.getClassName(classNameId);
 

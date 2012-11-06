@@ -20,13 +20,13 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//li[2]/span/a</td>
+	<td>//span[@title='Go to Virtual Hosting Community']</td>
 	<td>Virtual Hosting Community</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>link=Public Page</td>
-	<td>Public Page</td>
+	<td>assertText</td>
+	<td>//a[contains(text(),'Virtual Hosting Community')]</td>
+	<td>Virtual Hosting Community</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -48,7 +48,6 @@
 	<td>http://www.able.com:8080/public-page</td>
 	<td></td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

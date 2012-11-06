@@ -20,13 +20,23 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//li[2]/span/a</td>
+	<td>//span[@title='Go to Virtual Hosting Community']</td>
 	<td>Virtual Hosting Community</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
+	<td>assertText</td>
+	<td>//a[contains(text(),'Virtual Hosting Community')]</td>
+	<td>Virtual Hosting Community</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
 	<td>link=Private Page</td>
 	<td>Private Page</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -38,7 +48,6 @@
 	<td>http://localhost:8080/group/alpha/private-page</td>
 	<td></td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

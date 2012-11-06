@@ -45,17 +45,28 @@ public class AssertPrivatePageHostURLTest extends BaseTestCase {
 					RuntimeVariables.replace("test"));
 				selenium.clickAt("//input[@id='_58_rememberMeCheckbox']",
 					RuntimeVariables.replace("Remember Me Checkbox"));
+
+			case 2:
+				assertTrue(selenium.isChecked(
+						"//input[@id='_58_rememberMeCheckbox']"));
 				selenium.clickAt("//input[@value='Sign In']",
 					RuntimeVariables.replace("Sign In"));
 				selenium.waitForPageToLoad("30000");
-
-			case 2:
+				Thread.sleep(5000);
 				assertEquals(RuntimeVariables.replace(
 						"http://www.baker.com:8080/"), selenium.getLocation());
 				assertEquals(RuntimeVariables.replace(
 						"Virtual Hosting Community"),
-					selenium.getText("//li[2]/span/a"));
-				assertTrue(selenium.isElementPresent("link=Private Page"));
+					selenium.getText(
+						"//span[@title='Go to Virtual Hosting Community']"));
+				assertEquals(RuntimeVariables.replace(
+						"Virtual Hosting Community"),
+					selenium.getText(
+						"//a[contains(text(),'Virtual Hosting Community')]"));
+				selenium.clickAt("link=Private Page",
+					RuntimeVariables.replace("Private Page"));
+				selenium.waitForPageToLoad("30000");
+				Thread.sleep(5000);
 				selenium.clickAt("link=Private Page",
 					RuntimeVariables.replace("Private Page"));
 				selenium.waitForPageToLoad("30000");

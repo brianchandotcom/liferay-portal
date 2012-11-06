@@ -250,10 +250,10 @@ if (Validator.isNotNull(structureAvailableFields)) {
 		<%@ include file="/html/portlet/dynamic_data_mapping/form_builder.jspf" %>
 
 		<aui:script>
-			var hiddenAttributesMap = window.<portlet:namespace />formBuilder.MAP_HIDDEN_FIELD_ATTRS;
+			var <portlet:namespace />hiddenAttributesMap = window.<portlet:namespace />formBuilder.MAP_HIDDEN_FIELD_ATTRS;
 
-			var getFieldHiddenAttributes = function(mode, field) {
-				var hiddenAttributes = hiddenAttributesMap[field.get('type')] || hiddenAttributesMap.DEFAULT;
+			var <portlet:namespace />getFieldHiddenAttributes = function(mode, field) {
+				var hiddenAttributes = <portlet:namespace />hiddenAttributesMap[field.get('type')] || <portlet:namespace />hiddenAttributesMap.DEFAULT;
 
 				hiddenAttributes = A.Array(hiddenAttributes);
 
@@ -264,8 +264,8 @@ if (Validator.isNotNull(structureAvailableFields)) {
 				return hiddenAttributes;
 			};
 
-			var setFieldsHiddenAttributes = function(item, index, collection) {
-				var hiddenAttributes = getFieldHiddenAttributes(mode, item);
+			var <portlet:namespace />setFieldsHiddenAttributes = function(item, index, collection) {
+				var hiddenAttributes = <portlet:namespace />getFieldHiddenAttributes(mode, item);
 
 				item.set('hiddenAttributes', hiddenAttributes);
 			};
@@ -278,15 +278,15 @@ if (Validator.isNotNull(structureAvailableFields)) {
 
 					window.<portlet:namespace />formBuilder.set('allowRemoveRequiredFields', modeEdit);
 
-					window.<portlet:namespace />formBuilder.get('fields').each(setFieldsHiddenAttributes);
+					window.<portlet:namespace />formBuilder.get('fields').each(<portlet:namespace />setFieldsHiddenAttributes);
 
-					A.Array.each(window.<portlet:namespace />formBuilder.get('availableFields'), setFieldsHiddenAttributes);
+					A.Array.each(window.<portlet:namespace />formBuilder.get('availableFields'), <portlet:namespace />setFieldsHiddenAttributes);
 				},
 				['aui-base']
 			);
 		</aui:script>
 
-		<aui:script use="aui-base">
+		<aui:script>
 			<portlet:namespace />toggleMode('<%= HtmlUtil.escape(mode) %>');
 		</aui:script>
 	</c:when>
@@ -310,16 +310,14 @@ if (Validator.isNotNull(structureAvailableFields)) {
 			container.delegate(
 				'change',
 				function(event) {
-					var input = event.currentTarget;
-
-					var index = types.indexOf(input);
+					var index = types.indexOf(event.currentTarget);
 
 					selectSmallImageType(index);
 				},
 				'.lfr-ddm-small-image-type'
 			);
 
-			var <portlet:namespace />toggler = new A.Toggler(
+			new A.Toggler(
 				{
 					animated: true,
 					content: '#<portlet:namespace />smallImageContainer .lfr-ddm-small-image-content',

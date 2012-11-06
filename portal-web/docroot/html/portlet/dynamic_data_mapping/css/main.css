@@ -1,5 +1,3 @@
-@import "compass/css3";
-
 .aui-document-library-file-entry-cell-editor-hidden {
 	display: none;
 }
@@ -46,20 +44,20 @@
 	}
 
 	.lfr-ddm-small-image-preview {
-		background-color: white;
+		background-color: #FFF;
 		border: 1px solid #CCC;
 		padding: 4px;
 		max-width: 120px;
 	}
 
 	.lfr-ddm-small-image-preview div {
-		background: #ccc;
+		background: #CCC;
 		height: 80px;
 		width: 80px;
 	}
 
 	.lfr-ddm-small-image-content {
-		background-color: #f5f5f5;
+		background-color: #F5F5F5;
 		padding: 5px;
 
 		th {

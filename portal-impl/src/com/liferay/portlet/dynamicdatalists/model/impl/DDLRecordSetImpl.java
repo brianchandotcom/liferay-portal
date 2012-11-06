@@ -52,6 +52,10 @@ public class DDLRecordSetImpl extends DDLRecordSetBaseImpl {
 				DDMTemplate ddmTemplate =
 					DDMTemplateLocalServiceUtil.getTemplate(formDDMTemplateId);
 
+				// Clone ddmStructure to make sure changes are never persisted
+
+				ddmStructure = (DDMStructure)ddmStructure.clone();
+
 				ddmStructure.setXsd(ddmTemplate.getScript());
 			}
 			catch (NoSuchTemplateException nste) {

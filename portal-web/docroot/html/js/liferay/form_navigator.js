@@ -20,8 +20,6 @@ AUI.add(
 		var FormNavigator = function(options) {
 			var instance = this;
 
-			var hash;
-å
 			var modifiedSections = options.modifiedSections;
 
 			instance._container = A.one(options.container);
@@ -29,7 +27,8 @@ AUI.add(
 			instance._hash = null;
 			instance._modifiedSections = null;
 
-	å		instance._formName = options.formName;
+			instance._formName = options.formName;
+
 			instance._modifiedSectionsArray = options.defaultModifiedSections || [];
 			instance._namespace = options.namespace || '';
 
@@ -52,27 +51,7 @@ AUI.add(
 				}
 			}
 
-			setInterval(
-				function(){
-					hash = location.hash;
-
-					if (hash != instance._hash) {
-						A.fire('formNavigator:revealSection', hash);
-
-						Liferay.Util.getTop().Liferay.fire(
-							'hashChange',
-							{
-								newVal: hash,
-								prevVal: instance._hash,
-								uri: location.href
-							}
-						);
-
-						instance._hash = hash;
-					}
-				},
-				100
-			);
+			A.setInterval(instance._pollHash, 100, instance);
 
 			A.on('formNavigator:revealSection', instance._revealSection, instance);
 			A.on('formNavigator:trackChanges', instance._trackChanges, instance);
@@ -177,6 +156,27 @@ AUI.add(
 				}
 			},
 
+			_pollHash: function() {
+				var instance = this;
+
+				var hash = location.hash;
+
+				if (hash != instance._hash) {
+					A.fire('formNavigator:revealSection', hash);
+
+					Liferay.Util.getTop().Liferay.fire(
+						'hashChange',
+						{
+							newVal: hash,
+							prevVal: instance._hash,
+							uri: location.href
+						}
+					);
+
+					instance._hash = hash;
+				}
+			},
+
 			_revealSection: function(id, currentNavItem) {
 				var instance = this;
 
@@ -245,18 +245,16 @@ AUI.add(
 			_updateHash: function(event) {
 				var instance = this;
 
-				var hash = event.hashValue;
-
 				if (event.src && event.src == UI_SRC) {
-					location.hash = instance._hashKey + hash;
+					location.hash = instance._hashKey + event.hashValue;
 				}
 			},
 
 			_updateSectionStatus: function() {
 				var instance = this;
 
-				var navigation = instance._navigation;
 				var formValidator = instance._formValidator;
+				var navigation = instance._navigation;
 
 				var lis = navigation.all('li');
 
@@ -288,6 +286,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-base']
+		requires: ['aui-base', 'aui-task-manager']
 	}
 );

@@ -1619,6 +1619,9 @@
 			<hint-collection name="CLOB" />
 		</field>
 		<field name="cacheable" type="boolean" />
+		<field name="smallImage" type="boolean" />
+		<field name="smallImageId" type="long" />
+		<field name="smallImageURL" type="String" />
 	</model>
 	<model name="com.liferay.portlet.expando.model.ExpandoColumn">
 		<field name="columnId" type="long" />

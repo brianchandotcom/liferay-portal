@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
+import com.liferay.portal.service.persistence.ImagePersistence;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
@@ -873,6 +874,9 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 		ddmTemplateImpl.setLanguage(ddmTemplate.getLanguage());
 		ddmTemplateImpl.setScript(ddmTemplate.getScript());
 		ddmTemplateImpl.setCacheable(ddmTemplate.isCacheable());
+		ddmTemplateImpl.setSmallImage(ddmTemplate.isSmallImage());
+		ddmTemplateImpl.setSmallImageId(ddmTemplate.getSmallImageId());
+		ddmTemplateImpl.setSmallImageURL(ddmTemplate.getSmallImageURL());
 
 		return ddmTemplateImpl;
 	}
@@ -7699,6 +7703,8 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	protected DDMStructureLinkPersistence ddmStructureLinkPersistence;
 	@BeanReference(type = DDMTemplatePersistence.class)
 	protected DDMTemplatePersistence ddmTemplatePersistence;
+	@BeanReference(type = ImagePersistence.class)
+	protected ImagePersistence imagePersistence;
 	@BeanReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
 	private static final String _SQL_SELECT_DDMTEMPLATE = "SELECT ddmTemplate FROM DDMTemplate ddmTemplate";

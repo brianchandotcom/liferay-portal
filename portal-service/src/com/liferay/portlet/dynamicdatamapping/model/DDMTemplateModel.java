@@ -528,6 +528,56 @@ public interface DDMTemplateModel extends AttachedModel, BaseModel<DDMTemplate>,
 	 */
 	public void setCacheable(boolean cacheable);
 
+	/**
+	 * Returns the small image of this d d m template.
+	 *
+	 * @return the small image of this d d m template
+	 */
+	public boolean getSmallImage();
+
+	/**
+	 * Returns <code>true</code> if this d d m template is small image.
+	 *
+	 * @return <code>true</code> if this d d m template is small image; <code>false</code> otherwise
+	 */
+	public boolean isSmallImage();
+
+	/**
+	 * Sets whether this d d m template is small image.
+	 *
+	 * @param smallImage the small image of this d d m template
+	 */
+	public void setSmallImage(boolean smallImage);
+
+	/**
+	 * Returns the small image ID of this d d m template.
+	 *
+	 * @return the small image ID of this d d m template
+	 */
+	public long getSmallImageId();
+
+	/**
+	 * Sets the small image ID of this d d m template.
+	 *
+	 * @param smallImageId the small image ID of this d d m template
+	 */
+	public void setSmallImageId(long smallImageId);
+
+	/**
+	 * Returns the small image u r l of this d d m template.
+	 *
+	 * @return the small image u r l of this d d m template
+	 */
+	@AutoEscape
+	public String getSmallImageURL();
+
+	/**
+	 * Sets the small image u r l of this d d m template.
+	 *
+	 * @param smallImageURL the small image u r l of this d d m template
+	 */
+	public void setSmallImageURL(String smallImageURL);
+
 	public boolean isNew();
 
 	public void setNew(boolean n);

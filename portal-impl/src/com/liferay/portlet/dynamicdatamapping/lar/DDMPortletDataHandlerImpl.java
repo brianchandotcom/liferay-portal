@@ -21,16 +21,21 @@ import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.portal.kernel.lar.PortletDataHandlerControl;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.model.Image;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.service.persistence.ImageUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.dynamicdatamapping.TemplateDuplicateTemplateKeyException;
@@ -40,6 +45,8 @@ import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUt
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.service.persistence.DDMStructureUtil;
 import com.liferay.portlet.dynamicdatamapping.service.persistence.DDMTemplateUtil;
+
+import java.io.File;
 
 import java.util.List;
 import java.util.Locale;
@@ -95,7 +102,32 @@ public class DDMPortletDataHandlerImpl extends BasePortletDataHandler {
 			return;
 		}
 
+		// Clone this template to make sure changes to its content are never
+		// persisted
+
+		template = (DDMTemplate)template.clone();
+
 		Element templateElement = templatesElement.addElement("template");
+
+		if (template.isSmallImage() &&
+				Validator.isNull(template.getSmallImageURL())) {
+
+			Image smallImage = ImageUtil.fetchByPrimaryKey(
+				template.getSmallImageId());
+
+			if (smallImage != null) {
+				String smallImagePath = getTemplateSmallImagePath(
+					portletDataContext, template);
+
+				templateElement.addAttribute(
+					"small-image-path", smallImagePath);
+
+				template.setSmallImageType(smallImage.getType());
+
+				portletDataContext.addZipEntry(
+					smallImagePath, smallImage.getTextObj());
+			}
+		}
 
 		portletDataContext.addClassedModel(
 			templateElement, path, template, _NAMESPACE);
@@ -207,6 +239,23 @@ public class DDMPortletDataHandlerImpl extends BasePortletDataHandler {
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			templateElement, template, _NAMESPACE);
 
+		File smallFile = null;
+
+		String smallImagePath = templateElement.attributeValue(
+			"small-image-path");
+
+		if (template.isSmallImage() && Validator.isNotNull(smallImagePath)) {
+			byte[] bytes = portletDataContext.getZipEntryAsByteArray(
+				smallImagePath);
+
+			if (bytes != null) {
+				smallFile = FileUtil.createTempFile(
+					template.getSmallImageType());
+
+				FileUtil.write(smallFile, bytes);
+			}
+		}
+
 		DDMTemplate importedTemplate = null;
 
 		if (portletDataContext.isDataStrategyMirror()) {
@@ -218,7 +267,7 @@ public class DDMPortletDataHandlerImpl extends BasePortletDataHandler {
 
 				importedTemplate = addTemplate(
 					userId, portletDataContext.getScopeGroupId(), template,
-					classPK, serviceContext);
+					classPK, smallFile, serviceContext);
 			}
 			else {
 				importedTemplate = DDMTemplateLocalServiceUtil.updateTemplate(
@@ -226,13 +275,14 @@ public class DDMPortletDataHandlerImpl extends BasePortletDataHandler {
 					template.getDescriptionMap(), template.getType(),
 					template.getMode(), template.getLanguage(),
 					template.getScript(), template.isCacheable(),
-					serviceContext);
+					template.getSmallImage(), template.getSmallImageURL(),
+					smallFile, serviceContext);
 			}
 		}
 		else {
 			importedTemplate = addTemplate(
 				userId, portletDataContext.getScopeGroupId(), template, classPK,
-				serviceContext);
+				smallFile, serviceContext);
 		}
 
 		portletDataContext.importClassedModel(
@@ -261,7 +311,7 @@ public class DDMPortletDataHandlerImpl extends BasePortletDataHandler {
 
 	protected static DDMTemplate addTemplate(
 			long userId, long groupId, DDMTemplate template, long classPK,
-			ServiceContext serviceContext)
+			File smallFile, ServiceContext serviceContext)
 		throws Exception {
 
 		DDMTemplate newTemplate = null;
@@ -272,14 +322,18 @@ public class DDMPortletDataHandlerImpl extends BasePortletDataHandler {
 				template.getTemplateKey(), template.getNameMap(),
 				template.getDescriptionMap(), template.getType(),
 				template.getMode(), template.getLanguage(),
-				template.getScript(), template.isCacheable(), serviceContext);
+				template.getScript(), template.isCacheable(),
+				template.isSmallImage(), template.getSmallImageURL(), smallFile,
+				serviceContext);
 		}
 		catch (TemplateDuplicateTemplateKeyException tdtke) {
 			newTemplate = DDMTemplateLocalServiceUtil.addTemplate(
 				userId, groupId, template.getClassNameId(), classPK, null,
 				template.getNameMap(), template.getDescriptionMap(),
 				template.getType(), template.getMode(), template.getLanguage(),
-				template.getScript(), template.isCacheable(), serviceContext);
+				template.getScript(), template.isCacheable(),
+				template.isSmallImage(), template.getSmallImageURL(), smallFile,
+				serviceContext);
 
 			if (_log.isWarnEnabled()) {
 				_log.warn(
@@ -318,6 +372,23 @@ public class DDMPortletDataHandlerImpl extends BasePortletDataHandler {
 		sb.append("/templates/");
 		sb.append(template.getTemplateId());
 		sb.append(".xml");
+
+		return sb.toString();
+	}
+
+	protected static String getTemplateSmallImagePath(
+			PortletDataContext portletDataContext, DDMTemplate template)
+		throws Exception {
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append(
+			portletDataContext.getPortletPath(
+				PortletKeys.DYNAMIC_DATA_MAPPING));
+		sb.append("/templates/thumbnail-");
+		sb.append(template.getTemplateId());
+		sb.append(StringPool.PERIOD);
+		sb.append(template.getSmallImageType());
 
 		return sb.toString();
 	}

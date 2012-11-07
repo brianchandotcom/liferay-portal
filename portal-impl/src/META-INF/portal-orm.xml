@@ -2290,6 +2290,9 @@
 			<basic name="language" />
 			<basic name="script" />
 			<basic name="cacheable" />
+			<basic name="smallImage" />
+			<basic name="smallImageId" />
+			<basic name="smallImageURL" />
 			<transient name="className" />
 			<transient name="descriptionCurrentLanguageId" />
 			<transient name="descriptionMap" />
@@ -4183,7 +4186,9 @@
 	</entity>
 	<entity class="com.liferay.portlet.dynamicdatamapping.model.impl.DDMTemplateImpl" name="DDMTemplate">
 		<table name="DDMTemplate" />
-		<attributes />
+		<attributes>
+			<transient name="smallImageType" />
+		</attributes>
 	</entity>
 	<entity class="com.liferay.portlet.expando.model.impl.ExpandoColumnImpl" name="ExpandoColumn">
 		<table name="ExpandoColumn" />

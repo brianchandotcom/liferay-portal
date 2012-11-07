@@ -64,6 +64,9 @@ public class DDMTemplateWrapper implements DDMTemplate,
 		attributes.put("language", getLanguage());
 		attributes.put("script", getScript());
 		attributes.put("cacheable", getCacheable());
+		attributes.put("smallImage", getSmallImage());
+		attributes.put("smallImageId", getSmallImageId());
+		attributes.put("smallImageURL", getSmallImageURL());
 
 		return attributes;
 	}
@@ -175,6 +178,24 @@ public class DDMTemplateWrapper implements DDMTemplate,
 
 		if (cacheable != null) {
 			setCacheable(cacheable);
+		}
+
+		Boolean smallImage = (Boolean)attributes.get("smallImage");
+
+		if (smallImage != null) {
+			setSmallImage(smallImage);
+		}
+
+		Long smallImageId = (Long)attributes.get("smallImageId");
+
+		if (smallImageId != null) {
+			setSmallImageId(smallImageId);
+		}
+
+		String smallImageURL = (String)attributes.get("smallImageURL");
+
+		if (smallImageURL != null) {
+			setSmallImageURL(smallImageURL);
 		}
 	}
 
@@ -780,6 +801,69 @@ public class DDMTemplateWrapper implements DDMTemplate,
 		_ddmTemplate.setCacheable(cacheable);
 	}
 
+	/**
+	* Returns the small image of this d d m template.
+	*
+	* @return the small image of this d d m template
+	*/
+	public boolean getSmallImage() {
+		return _ddmTemplate.getSmallImage();
+	}
+
+	/**
+	* Returns <code>true</code> if this d d m template is small image.
+	*
+	* @return <code>true</code> if this d d m template is small image; <code>false</code> otherwise
+	*/
+	public boolean isSmallImage() {
+		return _ddmTemplate.isSmallImage();
+	}
+
+	/**
+	* Sets whether this d d m template is small image.
+	*
+	* @param smallImage the small image of this d d m template
+	*/
+	public void setSmallImage(boolean smallImage) {
+		_ddmTemplate.setSmallImage(smallImage);
+	}
+
+	/**
+	* Returns the small image ID of this d d m template.
+	*
+	* @return the small image ID of this d d m template
+	*/
+	public long getSmallImageId() {
+		return _ddmTemplate.getSmallImageId();
+	}
+
+	/**
+	* Sets the small image ID of this d d m template.
+	*
+	* @param smallImageId the small image ID of this d d m template
+	*/
+	public void setSmallImageId(long smallImageId) {
+		_ddmTemplate.setSmallImageId(smallImageId);
+	}
+
+	/**
+	* Returns the small image u r l of this d d m template.
+	*
+	* @return the small image u r l of this d d m template
+	*/
+	public java.lang.String getSmallImageURL() {
+		return _ddmTemplate.getSmallImageURL();
+	}
+
+	/**
+	* Sets the small image u r l of this d d m template.
+	*
+	* @param smallImageURL the small image u r l of this d d m template
+	*/
+	public void setSmallImageURL(java.lang.String smallImageURL) {
+		_ddmTemplate.setSmallImageURL(smallImageURL);
+	}
+
 	public boolean isNew() {
 		return _ddmTemplate.isNew();
 	}
@@ -862,6 +946,16 @@ public class DDMTemplateWrapper implements DDMTemplate,
 
 	public java.lang.String getDefaultLanguageId() {
 		return _ddmTemplate.getDefaultLanguageId();
+	}
+
+	public java.lang.String getSmallImageType()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _ddmTemplate.getSmallImageType();
+	}
+
+	public void setSmallImageType(java.lang.String smallImageType) {
+		_ddmTemplate.setSmallImageType(smallImageType);
 	}
 
 	/**

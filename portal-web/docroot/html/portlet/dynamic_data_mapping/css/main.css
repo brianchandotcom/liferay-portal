@@ -43,6 +43,35 @@
 		display: block;
 	}
 
+	.lfr-ddm-small-image-preview {
+		background-color: #FFF;
+		border: 1px solid #CCC;
+		padding: 4px;
+		max-width: 120px;
+	}
+
+	.lfr-ddm-small-image-preview div {
+		background: #CCC;
+		height: 80px;
+		width: 80px;
+	}
+
+	.lfr-ddm-small-image-content {
+		background-color: #F5F5F5;
+		padding: 5px;
+
+		th {
+			padding: 5px;
+			white-space: nowrap;
+			width: 1%;
+		}
+
+		.aui-field-input-text {
+			margin: 5px;
+			width: 350px;
+		}
+	}
+
 	.lfr-ddm-text-html, .lfr-ddm-text-html-icon {
 		background-image: url(@theme_image_path@/aui/textarea.png);
 	}

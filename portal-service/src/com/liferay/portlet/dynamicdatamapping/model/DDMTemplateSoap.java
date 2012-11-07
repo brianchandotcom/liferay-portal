@@ -49,6 +49,9 @@ public class DDMTemplateSoap implements Serializable {
 		soapModel.setLanguage(model.getLanguage());
 		soapModel.setScript(model.getScript());
 		soapModel.setCacheable(model.getCacheable());
+		soapModel.setSmallImage(model.getSmallImage());
+		soapModel.setSmallImageId(model.getSmallImageId());
+		soapModel.setSmallImageURL(model.getSmallImageURL());
 
 		return soapModel;
 	}
@@ -249,6 +252,34 @@ public class DDMTemplateSoap implements Serializable {
 		_cacheable = cacheable;
 	}
 
+	public boolean getSmallImage() {
+		return _smallImage;
+	}
+
+	public boolean isSmallImage() {
+		return _smallImage;
+	}
+
+	public void setSmallImage(boolean smallImage) {
+		_smallImage = smallImage;
+	}
+
+	public long getSmallImageId() {
+		return _smallImageId;
+	}
+
+	public void setSmallImageId(long smallImageId) {
+		_smallImageId = smallImageId;
+	}
+
+	public String getSmallImageURL() {
+		return _smallImageURL;
+	}
+
+	public void setSmallImageURL(String smallImageURL) {
+		_smallImageURL = smallImageURL;
+	}
+
 	private String _uuid;
 	private long _templateId;
 	private long _groupId;
@@ -267,4 +298,7 @@ public class DDMTemplateSoap implements Serializable {
 	private String _language;
 	private String _script;
 	private boolean _cacheable;
+	private boolean _smallImage;
+	private long _smallImageId;
+	private String _smallImageURL;
 }

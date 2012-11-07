@@ -26,6 +26,8 @@ import com.liferay.portlet.dynamicdatamapping.service.base.DDMTemplateServiceBas
 import com.liferay.portlet.dynamicdatamapping.service.permission.DDMPermission;
 import com.liferay.portlet.dynamicdatamapping.service.permission.DDMTemplatePermission;
 
+import java.io.File;
+
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -41,7 +43,8 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 			long groupId, long classNameId, long classPK, String templateKey,
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
 			String type, String mode, String language, String script,
-			boolean cacheable, ServiceContext serviceContext)
+			boolean cacheable, boolean smallImage, String smallImageURL,
+			File smallImageFile, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		String ddmResource = ParamUtil.getString(serviceContext, "ddmResource");
@@ -64,8 +67,8 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 
 		return ddmTemplateLocalService.addTemplate(
 			getUserId(), groupId, classNameId, classPK, templateKey, nameMap,
-			descriptionMap, type, mode, language, script, cacheable,
-			serviceContext);
+			descriptionMap, type, mode, language, script, cacheable, smallImage,
+			smallImageURL, smallImageFile, serviceContext);
 	}
 
 	public List<DDMTemplate> copyTemplates(
@@ -226,6 +229,7 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 			long templateId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, String type, String mode,
 			String language, String script, boolean cacheable,
+			boolean smallImage, String smallImageURL, File smallImageFile,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
@@ -234,7 +238,8 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 
 		return ddmTemplateLocalService.updateTemplate(
 			templateId, nameMap, descriptionMap, type, mode, language, script,
-			cacheable, serviceContext);
+			cacheable, smallImage, smallImageURL, smallImageFile,
+			serviceContext);
 	}
 
 	private static final String _DDL_CLASS_NAME =

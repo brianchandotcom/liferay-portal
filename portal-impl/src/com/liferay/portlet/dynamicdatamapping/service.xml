@@ -166,6 +166,9 @@
 		<column name="language" type="String" />
 		<column name="script" type="String" />
 		<column name="cacheable" type="boolean" />
+		<column name="smallImage" type="boolean" />
+		<column name="smallImageId" type="long" />
+		<column name="smallImageURL" type="String" />
 
 		<!-- Finder methods -->
 
@@ -205,6 +208,10 @@
 			<finder-column name="type" />
 			<finder-column name="mode" />
 		</finder>
+
+		<!-- References -->
+
+		<reference package-path="com.liferay.portal" entity="Image" />
 	</entity>
 	<exceptions>
 		<exception>Content</exception>
@@ -222,5 +229,7 @@
 		<exception>TemplateDuplicateTemplateKey</exception>
 		<exception>TemplateName</exception>
 		<exception>TemplateScript</exception>
+		<exception>TemplateSmallImageName</exception>
+		<exception>TemplateSmallImageSize</exception>
 	</exceptions>
 </service-builder>

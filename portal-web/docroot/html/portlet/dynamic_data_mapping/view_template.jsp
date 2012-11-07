@@ -139,6 +139,11 @@ if (!portletName.equals(PortletKeys.PORTLET_DISPLAY_TEMPLATES)) {
 			}
 			%>
 
+			<liferay-ui:search-container-row-parameter
+				name="rowHREF"
+				value="<%= rowHREF %>"
+			/>
+
 			<liferay-ui:search-container-column-text
 				href="<%= rowHREF %>"
 				name="id"
@@ -151,6 +156,11 @@ if (!portletName.equals(PortletKeys.PORTLET_DISPLAY_TEMPLATES)) {
 				href="<%= rowHREF %>"
 				name="name"
 				value="<%= HtmlUtil.escape(LanguageUtil.get(pageContext, template.getName(locale))) %>"
+			/>
+
+			<liferay-ui:search-container-column-jsp
+				name="description"
+				path="/html/portlet/dynamic_data_mapping/template_description.jsp"
 			/>
 
 			<c:if test="<%= Validator.isNull(templateTypeValue) && (classNameId == 0) %>">

@@ -14,10 +14,14 @@
 
 package com.liferay.portlet.dynamicdatamapping.model.impl;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.model.Image;
+import com.liferay.portal.service.ImageLocalServiceUtil;
 
 import java.util.Locale;
 
@@ -48,5 +52,22 @@ public class DDMTemplateImpl extends DDMTemplateBaseImpl {
 
 		return locale.toString();
 	}
+
+	public String getSmallImageType() throws PortalException, SystemException {
+		if ((_smallImageType == null) && isSmallImage()) {
+			Image smallImage = ImageLocalServiceUtil.getImage(
+				getSmallImageId());
+
+			_smallImageType = smallImage.getType();
+		}
+
+		return _smallImageType;
+	}
+
+	public void setSmallImageType(String smallImageType) {
+		_smallImageType = smallImageType;
+	}
+
+	private String _smallImageType;
 
 }

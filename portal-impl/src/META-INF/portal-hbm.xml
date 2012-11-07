@@ -1698,6 +1698,9 @@
 		<property name="language" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="script" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="cacheable" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="smallImage" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="smallImageId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="smallImageURL" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="com.liferay.portlet.expando.model.impl.ExpandoColumnImpl" table="ExpandoColumn">
 		<cache usage="read-write" />

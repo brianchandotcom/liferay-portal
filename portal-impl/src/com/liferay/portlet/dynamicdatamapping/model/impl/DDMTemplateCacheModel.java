@@ -38,7 +38,7 @@ public class DDMTemplateCacheModel implements CacheModel<DDMTemplate>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(43);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -76,6 +76,12 @@ public class DDMTemplateCacheModel implements CacheModel<DDMTemplate>,
 		sb.append(script);
 		sb.append(", cacheable=");
 		sb.append(cacheable);
+		sb.append(", smallImage=");
+		sb.append(smallImage);
+		sb.append(", smallImageId=");
+		sb.append(smallImageId);
+		sb.append(", smallImageURL=");
+		sb.append(smallImageURL);
 		sb.append("}");
 
 		return sb.toString();
@@ -170,6 +176,15 @@ public class DDMTemplateCacheModel implements CacheModel<DDMTemplate>,
 		}
 
 		ddmTemplateImpl.setCacheable(cacheable);
+		ddmTemplateImpl.setSmallImage(smallImage);
+		ddmTemplateImpl.setSmallImageId(smallImageId);
+
+		if (smallImageURL == null) {
+			ddmTemplateImpl.setSmallImageURL(StringPool.BLANK);
+		}
+		else {
+			ddmTemplateImpl.setSmallImageURL(smallImageURL);
+		}
 
 		ddmTemplateImpl.resetOriginalValues();
 
@@ -195,6 +210,9 @@ public class DDMTemplateCacheModel implements CacheModel<DDMTemplate>,
 		language = objectInput.readUTF();
 		script = objectInput.readUTF();
 		cacheable = objectInput.readBoolean();
+		smallImage = objectInput.readBoolean();
+		smallImageId = objectInput.readLong();
+		smallImageURL = objectInput.readUTF();
 	}
 
 	public void writeExternal(ObjectOutput objectOutput)
@@ -273,6 +291,15 @@ public class DDMTemplateCacheModel implements CacheModel<DDMTemplate>,
 		}
 
 		objectOutput.writeBoolean(cacheable);
+		objectOutput.writeBoolean(smallImage);
+		objectOutput.writeLong(smallImageId);
+
+		if (smallImageURL == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(smallImageURL);
+		}
 	}
 
 	public String uuid;
@@ -293,4 +320,7 @@ public class DDMTemplateCacheModel implements CacheModel<DDMTemplate>,
 	public String language;
 	public String script;
 	public boolean cacheable;
+	public boolean smallImage;
+	public long smallImageId;
+	public String smallImageURL;
 }

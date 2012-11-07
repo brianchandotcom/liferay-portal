@@ -201,9 +201,8 @@ public class MVCPortlet extends LiferayPortlet {
 
 		PortletConfig portletConfig = getPortletConfig();
 
-		PortalClassInvoker.invoke(
-			true, _processActionMethodKey, null, null, portletConfig,
-			actionRequest, actionResponse);
+		PortalUtil.invokeTaglibDiscussion(
+			portletConfig, actionRequest, actionResponse);
 	}
 
 	@Override
@@ -423,16 +422,6 @@ public class MVCPortlet extends LiferayPortlet {
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(MVCPortlet.class);
-
-	private static MethodKey _processActionMethodKey = new MethodKey(
-		ClassResolverUtil.resolveByPortalClassLoader(
-			"com.liferay.portlet.messageboards.action.EditDiscussionAction"),
-		"processAction",
-		ClassResolverUtil.resolveByPortalClassLoader(
-			"org.apache.struts.action.ActionMapping"),
-		ClassResolverUtil.resolveByPortalClassLoader(
-			"org.apache.struts.action.ActionForm"),
-		PortletConfig.class, ActionRequest.class, ActionResponse.class);
 
 	private ActionCommandCache _actionCommandCache;
 

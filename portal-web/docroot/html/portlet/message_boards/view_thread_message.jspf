@@ -360,7 +360,7 @@
 								<liferay-ui:icon
 									image="delete"
 									label="<%= true %>"
-									message='<%= LanguageUtil.format(pageContext, "x-recent-removed-attachments", deletedAttachments.length) %>'
+									message='<%= LanguageUtil.format(pageContext, (deletedAttachments.length == 1) ? "x-recently-removed-attachment" : "x-recently-removed-attachments", deletedAttachments.length) %>'
 									url="<%= viewTrashAttachmentsURL %>"
 								/>
 							</div>

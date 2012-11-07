@@ -58,6 +58,7 @@ iteratorURL.setParameter("messageId", String.valueOf(messageId));
 <liferay-ui:trash-empty
 	confirmMessage="are-you-sure-you-want-to-remove-the-attachments-for-this-message"
 	emptyMessage="remove-the-attachments-for-this-message"
+	infoMessage="attachments-that-have-been-removed-for-more-than-x-days-will-be-automatically-deleted"
 	portletURL="<%= emptyTrashURL.toString() %>"
 	totalEntries="<%= attachments.size() %>"
 />

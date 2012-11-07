@@ -38,6 +38,10 @@ public class TrashEmptyTag extends IncludeTag {
 		_emptyMessage = emptyMessage;
 	}
 
+	public void setInfoMessage(String infoMessage) {
+		_infoMessage = infoMessage;
+	}
+
 	public void setPortletURL(PortletURL portletURL) {
 		_portletURL = portletURL.toString();
 	}
@@ -56,6 +60,7 @@ public class TrashEmptyTag extends IncludeTag {
 
 		_confirmMessage = _CONFIRM_MESSAGE;
 		_emptyMessage = _EMPTY_MESSAGE;
+		_infoMessage = _INFO_MESSAGE;
 		_portletURL = null;
 		_totalEntries = 0;
 	}
@@ -76,6 +81,8 @@ public class TrashEmptyTag extends IncludeTag {
 			"liferay-ui:trash-empty:confirmMessage", _confirmMessage);
 		request.setAttribute(
 			"liferay-ui:trash-empty:emptyMessage", _emptyMessage);
+		request.setAttribute(
+			"liferay-ui:trash-empty:infoMessage", _infoMessage);
 		request.setAttribute("liferay-ui:trash-empty:portletURL", _portletURL);
 		request.setAttribute(
 			"liferay-ui:trash-empty:totalEntries", _totalEntries);
@@ -88,10 +95,15 @@ public class TrashEmptyTag extends IncludeTag {
 
 	private static final String _EMPTY_MESSAGE = "empty-the-recycle-bin";
 
+	private static final String _INFO_MESSAGE =
+		"entries-that-have-been-in-recycle-bin-for-more-than-x-days-will-be-" +
+			"automatically-deleted";
+
 	private static final String _PAGE = "/html/taglib/ui/trash_empty/page.jsp";
 
 	private String _confirmMessage = _CONFIRM_MESSAGE;
 	private String _emptyMessage = _EMPTY_MESSAGE;
+	private String _infoMessage = _INFO_MESSAGE;
 	private String _portletURL;
 	private int _totalEntries;
 

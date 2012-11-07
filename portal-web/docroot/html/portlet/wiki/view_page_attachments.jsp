@@ -164,6 +164,7 @@ for (int i = 0; i < results.size(); i++) {
 			<liferay-ui:trash-empty
 				confirmMessage="are-you-sure-you-want-to-remove-the-attachments-for-this-page"
 				emptyMessage="remove-the-attachments-for-this-page"
+				infoMessage="attachments-that-have-been-removed-for-more-than-x-days-will-be-automatically-deleted"
 				portletURL="<%= emptyTrashURL.toString() %>"
 				totalEntries="<%= attachments.length %>"
 			/>
@@ -188,7 +189,7 @@ for (int i = 0; i < results.size(); i++) {
 					cssClass="trash-attachments"
 					image="delete"
 					label="<%= true %>"
-					message='<%= LanguageUtil.format(pageContext, "x-recent-removed-attachments", deletedAttachments.length) %>'
+					message='<%= LanguageUtil.format(pageContext, (deletedAttachments.length == 1) ? "x-recently-removed-attachment" : "x-recently-removed-attachments", deletedAttachments.length) %>'
 					url="<%= viewTrashAttachmentsURL %>"
 				/>
 			</c:if>

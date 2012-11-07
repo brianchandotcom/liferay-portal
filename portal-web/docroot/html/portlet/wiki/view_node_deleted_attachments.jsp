@@ -56,6 +56,7 @@ iteratorURL.setParameter("viewTrashAttachments", Boolean.TRUE.toString());
 <liferay-ui:trash-empty
 	confirmMessage="are-you-sure-you-want-to-remove-the-attachments-for-this-wiki-node"
 	emptyMessage="remove-the-attachments-for-this-wiki-node"
+	infoMessage="attachments-that-have-been-removed-for-more-than-x-days-will-be-automatically-deleted"
 	portletURL="<%= emptyTrashURL.toString() %>"
 	totalEntries="<%= attachments.size() %>"
 />

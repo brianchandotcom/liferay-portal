@@ -257,7 +257,7 @@ if (Validator.isNull(redirect)) {
 								<liferay-ui:icon-delete
 									id='<%= "removeExisting" + (i + 1) %>'
 									label="<%= true %>"
-									message="delete"
+									message='<%= TrashUtil.isTrashEnabled(scopeGroupId) ? "remove" : "delete" %>'
 									method="get"
 									trash="<%= TrashUtil.isTrashEnabled(scopeGroupId) %>"
 									url="<%= taglibJavascript %>"
@@ -280,7 +280,7 @@ if (Validator.isNull(redirect)) {
 									<span class="aui-helper-hidden" id="<portlet:namespace />undoFile<%= i + 1 %>">
 										<aui:input id='<%= "undoPath" + (i + 1) %>' name='<%= "undoPath" + (i + 1) %>' type="hidden" value="<%= existingPath %>" />
 
-										<span class="undo">(<liferay-ui:message key="marked-as-deleted" />)</span> <a class="trash-undo-link" href="<%= sb.toString() %>" id="<portlet:namespace />undo"><liferay-ui:message key="undo" /></a>
+										<span class="undo">(<liferay-ui:message key="marked-as-removed" />)</span> <a class="trash-undo-link" href="<%= sb.toString() %>" id="<portlet:namespace />undo"><liferay-ui:message key="undo" /></a>
 									</span>
 								</c:if>
 							</li>

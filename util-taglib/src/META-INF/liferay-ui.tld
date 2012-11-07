@@ -3455,6 +3455,11 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>infoMessage</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>portletURL</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>

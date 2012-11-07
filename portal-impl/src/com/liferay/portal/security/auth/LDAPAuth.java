@@ -52,6 +52,7 @@ import javax.naming.ldap.LdapContext;
 /**
  * @author Brian Wing Shun Chan
  * @author Scott Lee
+ * @author Josef Sustacek
  */
 public class LDAPAuth implements Authenticator {
 
@@ -358,6 +359,13 @@ public class LDAPAuth implements Authenticator {
 			_log.debug("Authenticator is enabled");
 		}
 
+		int preferredLDAPResult = authenticateAgainstPreferredLdapServer(
+				companyId, emailAddress, screenName, userId, password);
+
+		if (preferredLDAPResult == SUCCESS) {
+			return preferredLDAPResult;
+		}
+
 		long[] ldapServerIds = StringUtil.split(
 			PrefsPropsUtil.getString(companyId, "ldap.server.ids"), 0L);
 
@@ -458,6 +466,74 @@ public class LDAPAuth implements Authenticator {
 		else {
 			return SUCCESS;
 		}
+	}
+
+	protected int authenticateAgainstPreferredLdapServer(
+			long companyId, String emailAddress, String screenName, long userId,
+			String password)
+		throws Exception {
+
+		int result = DNE;
+
+		User user = null;
+
+		try {
+			if (userId > 0) {
+				user = UserLocalServiceUtil.getUserById(companyId, userId);
+			}
+			else if (Validator.isNotNull(emailAddress)) {
+				user = UserLocalServiceUtil.getUserByEmailAddress(
+					companyId, emailAddress);
+			}
+			else if (Validator.isNotNull(screenName)) {
+				user = UserLocalServiceUtil.getUserByScreenName(
+					companyId, screenName);
+			}
+			else {
+				if (_log.isDebugEnabled()) {
+					_log.debug(String.format("No user credentials found, " +
+							"cannot fetch preferred LDAP server"));
+				}
+
+				return result;
+			}
+		}
+		catch (NoSuchUserException e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"User not found, cannot fetch preferred LDAP server", e);
+			}
+
+			return result;
+		}
+
+		long ldapServerId = user.getLdapServerId();
+
+		if (ldapServerId < 0) {
+			return result;
+		}
+
+		String postfix = LDAPSettingsUtil.getPropertyPostfix(ldapServerId);
+
+		String providerUrl = PrefsPropsUtil.getString(
+			user.getCompanyId(),
+			PropsKeys.LDAP_BASE_PROVIDER_URL + postfix);
+
+		if (Validator.isNull(providerUrl)) {
+			return result;
+		}
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"Using ldapServerId: " + ldapServerId +
+				" to authenticate user: " + user.getScreenName());
+		}
+
+		result = authenticate(
+			companyId, ldapServerId, emailAddress, screenName, userId,
+			password);
+
+		return result;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(LDAPAuth.class);

@@ -279,6 +279,19 @@ public class PortalLDAPUtil {
 			long companyId, String screenName, String emailAddress)
 		throws Exception {
 
+		long preferredLdapServerId =
+			LDAPSettingsUtil.getPreferredLdapServerId(
+				companyId, screenName);
+
+		if (preferredLdapServerId >= 0) {
+			if (hasUser(
+					preferredLdapServerId, companyId, screenName,
+					emailAddress)) {
+
+				return preferredLdapServerId;
+			}
+		}
+
 		long[] ldapServerIds = StringUtil.split(
 			PrefsPropsUtil.getString(companyId, "ldap.server.ids"), 0L);
 
@@ -890,6 +903,21 @@ public class PortalLDAPUtil {
 		sb.append(end);
 
 		return sb.toString();
+	}
+
+	/**
+	 * Returns first not empty value (emailAddress or screenName).
+	 *
+	 * @param emailAddress
+	 * @param screenName
+	 * @return
+	 */
+	private static String _getFirstNotBlank(String emailAddress,
+	String screenName) {
+
+		return Validator.isNotNull(emailAddress)
+				? emailAddress
+				: screenName;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(PortalLDAPUtil.class);

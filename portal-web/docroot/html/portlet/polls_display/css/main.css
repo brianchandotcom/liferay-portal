@@ -1,11 +1,11 @@
 @import "compass";
 
 .portlet-polls-display {
-    .no-progress {
-        @include opacity(0.4);
+	.no-progress {
+		@include opacity(0.4);
 
-        .aui-progress-bar-status {
-            display: none;
-        }
-    }
+		.aui-progress-bar-status {
+			display: none;
+		}
+	}
 }

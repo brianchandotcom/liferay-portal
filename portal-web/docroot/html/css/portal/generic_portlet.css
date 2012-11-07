@@ -120,11 +120,7 @@
 	font-weight: bold;
 }
 
-.lfr-checkbox-preselected {
-	@include opacity(0.5);
-}
-
-.lfr-configurator-visibility {
+.lfr-checkbox-preselected, .lfr-configurator-visibility {
 	@include opacity(0.5);
 }
 
@@ -138,13 +134,7 @@
 }
 
 .ie {
-	.lfr-checkbox-preselected {
+	.lfr-checkbox-preselected, .lfr-configurator-visibility, .lfr-configurator-visibility .portlet-topper {
 		zoom: 1;
-	}
-
-	.lfr-configurator-visibility {
-		&, .portlet-topper {
-			zoom: 1;
-		}
 	}
 }

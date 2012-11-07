@@ -785,13 +785,9 @@
 		width: auto;
 	}
 
-	.journal-article-helper {
-		@include opacity(0.8);
-
-		&.not-intersecting .forbidden-action {
-			right: 2px;
-			top: 2px;
-		}
+	.journal-article-helper .not-intersecting .forbidden-action {
+		right: 2px;
+		top: 2px;
 	}
 
 	.portlet-journal {

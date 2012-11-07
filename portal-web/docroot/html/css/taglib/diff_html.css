@@ -18,12 +18,6 @@
 	@include opacity(0.55);
 }
 
-.gecko {
-	.taglib-diff-html div.diff-removed-image, div.diff-added-image {
-		@include opacity(0.55);
-	}
-}
-
 /* Skin */
 
 .taglib-diff-html {

@@ -974,6 +974,9 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 			thread.getThreadId(), WorkflowConstants.STATUS_ANY);
 
 		for (MBMessage message : messages) {
+			if (message.isDiscussion()) {
+				return;
+			}
 
 			// Asset
 
@@ -992,9 +995,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 				MBMessage.class);
 
-			if (!message.isDiscussion()) {
-				indexer.delete(message);
-			}
+			indexer.reindex(message);
 
 			// Workflow
 
@@ -1021,6 +1022,9 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 			thread.getThreadId(), WorkflowConstants.STATUS_ANY);
 
 		for (MBMessage message : messages) {
+			if (message.isDiscussion()) {
+				return;
+			}
 
 			// Asset
 
@@ -1039,9 +1043,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 				MBMessage.class);
 
-			if (!message.isDiscussion()) {
-				indexer.reindex(message);
-			}
+			indexer.reindex(message);
 		}
 	}
 

@@ -150,6 +150,12 @@ public class MBMessageImpl extends MBMessageBaseImpl {
 		}
 	}
 
+	public boolean isInTrashThread() throws PortalException, SystemException {
+		MBThread thread = getThread();
+
+		return thread.isInTrash();
+	}
+
 	public boolean isReply() {
 		return !isRoot();
 	}

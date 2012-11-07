@@ -64,6 +64,10 @@ public interface MBMessage extends MBMessageModel, PersistedModel {
 
 	public boolean isFormatBBCode();
 
+	public boolean isInTrashThread()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	public boolean isReply();
 
 	public boolean isRoot();

@@ -1027,6 +1027,12 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 		return _mbMessage.isFormatBBCode();
 	}
 
+	public boolean isInTrashThread()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _mbMessage.isInTrashThread();
+	}
+
 	public boolean isReply() {
 		return _mbMessage.isReply();
 	}

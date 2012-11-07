@@ -19,12 +19,14 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.parsers.bbcode.BBCodeTranslatorUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
+import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.model.BaseAssetRenderer;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.permission.MBDiscussionPermission;
@@ -43,7 +45,8 @@ import javax.portlet.WindowState;
  * @author Juan Fernández
  * @author Sergio González
  */
-public class MBMessageAssetRenderer extends BaseAssetRenderer {
+public class MBMessageAssetRenderer extends BaseAssetRenderer
+	implements TrashRenderer {
 
 	public MBMessageAssetRenderer(MBMessage message) {
 		_message = message;
@@ -59,6 +62,12 @@ public class MBMessageAssetRenderer extends BaseAssetRenderer {
 
 	public long getGroupId() {
 		return _message.getGroupId();
+	}
+
+	public String getPortletId() {
+		AssetRendererFactory assetRendererFactory = getAssetRendererFactory();
+
+		return assetRendererFactory.getPortletId();
 	}
 
 	@Override
@@ -77,6 +86,10 @@ public class MBMessageAssetRenderer extends BaseAssetRenderer {
 
 	public String getTitle(Locale locale) {
 		return _message.getSubject();
+	}
+
+	public String getType() {
+		return MBMessageAssetRendererFactory.TYPE;
 	}
 
 	@Override

@@ -18,13 +18,17 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.trash.BaseTrashRenderer;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.messageboards.model.MBMessage;
+import com.liferay.portlet.messageboards.model.MBMessageDisplay;
 import com.liferay.portlet.messageboards.model.MBThread;
+import com.liferay.portlet.messageboards.model.MBThreadConstants;
+import com.liferay.portlet.messageboards.model.MBTreeWalker;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
+import com.liferay.portlet.messageboards.service.MBMessageServiceUtil;
 
 import java.util.Locale;
 
@@ -71,16 +75,36 @@ public class MBThreadTrashRenderer extends BaseTrashRenderer {
 			String template)
 		throws Exception {
 
-		if (template.equals(AssetRenderer.TEMPLATE_ABSTRACT) ||
-			template.equals(AssetRenderer.TEMPLATE_FULL_CONTENT)) {
+		MBMessageDisplay messageDisplay =
+			MBMessageServiceUtil.getMessageDisplay(
+				_rootMessage.getMessageId(), WorkflowConstants.STATUS_ANY,
+				MBThreadConstants.THREAD_VIEW_TREE, false);
 
-			renderRequest.setAttribute(
-				WebKeys.MESSAGE_BOARDS_MESSAGE, _rootMessage);
+		renderRequest.setAttribute(
+			WebKeys.MESSAGE_BOARDS_MESSAGE, messageDisplay);
 
-			return "/html/portlet/message_boards/asset/" + template + ".jsp";
-		}
+		MBTreeWalker treeWalker = messageDisplay.getTreeWalker();
 
-		return null;
+		renderRequest.setAttribute(
+			WebKeys.MESSAGE_BOARDS_TREE_WALKER, treeWalker);
+		renderRequest.setAttribute(
+			WebKeys.MESSAGE_BOARDS_TREE_WALKER_SEL_MESSAGE, _rootMessage);
+		renderRequest.setAttribute(
+			WebKeys.MESSAGE_BOARDS_TREE_WALKER_CUR_MESSAGE,
+			treeWalker.getRoot());
+		renderRequest.setAttribute(
+			WebKeys.MESSAGE_BOARDS_TREE_WALKER_CATEGORY,
+			messageDisplay.getCategory());
+		renderRequest.setAttribute(
+			WebKeys.MESSAGE_BOARDS_TREE_WALKER_THREAD,
+			messageDisplay.getThread());
+		renderRequest.setAttribute(
+			WebKeys.MESSAGE_BOARDS_TREE_WALKER_LAST_NODE,
+			Boolean.valueOf(false));
+		renderRequest.setAttribute(
+			WebKeys.MESSAGE_BOARDS_TREE_WALKER_DEPTH, new Integer(0));
+
+		return "/html/portlet/message_boards/view_thread_tree.jsp";
 	}
 
 	private MBMessage _rootMessage;

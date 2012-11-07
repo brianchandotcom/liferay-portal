@@ -1,4 +1,4 @@
-.portlet-message-boards {
+.portlet-message-boards, .portlet-trash {
 	.category-buttons {
 		clear: both;
 		margin-bottom: 1em;
@@ -369,7 +369,7 @@
 }
 
 .ie {
-	.portlet-message-boards {
+	.portlet-message-boards, .portlet-trash {
 		.message-container {
 			width: 100%;
 
@@ -381,7 +381,7 @@
 }
 
 .ie6 {
-	.portlet-message-boards {
+	.portlet-message-boards, .portlet-trash {
 		.code {
 			width: 100%;
 		}

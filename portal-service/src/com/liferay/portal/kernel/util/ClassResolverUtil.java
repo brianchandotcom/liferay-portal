@@ -26,7 +26,7 @@ public class ClassResolverUtil {
 		throws ClassNotFoundException {
 
 		try {
-			return classLoader.loadClass(className);
+			return Class.forName(className, false, classLoader);
 		}
 		catch (ClassNotFoundException cnfe) {
 			Class<?> clazz = _primitiveClasses.get(className);
@@ -46,7 +46,7 @@ public class ClassResolverUtil {
 		ClassLoader contextClassLoader = thread.getContextClassLoader();
 
 		try {
-			return contextClassLoader.loadClass(className);
+			return Class.forName(className, false, contextClassLoader);
 		}
 		catch (ClassNotFoundException cnfe) {
 			throw new RuntimeException(cnfe);
@@ -57,7 +57,7 @@ public class ClassResolverUtil {
 		ClassLoader portalClassLoader = PortalClassLoaderUtil.getClassLoader();
 
 		try {
-			return portalClassLoader.loadClass(className);
+			return Class.forName(className, false, portalClassLoader);
 		}
 		catch (ClassNotFoundException cnfe) {
 			throw new RuntimeException(cnfe);
@@ -71,7 +71,7 @@ public class ClassResolverUtil {
 			servletContextName);
 
 		try {
-			return classLoader.loadClass(className);
+			return Class.forName(className, false, classLoader);
 		}
 		catch (ClassNotFoundException cnfe) {
 			throw new RuntimeException(cnfe);

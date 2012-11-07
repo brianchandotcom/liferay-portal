@@ -239,8 +239,8 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 			groupName);
 		subscriptionSender.setFrom(fromAddress, fromName);
 		subscriptionSender.setHtmlFormat(true);
-		subscriptionSender.setMailId("flags_request", contentId, 
-				PortalUUIDUtil.generate());
+		subscriptionSender.setMailId(
+			"flags_request", contentId, PortalUUIDUtil.generate());
 		subscriptionSender.setPortletId(PortletKeys.FLAGS);
 		subscriptionSender.setServiceContext(serviceContext);
 		subscriptionSender.setSubject(subject);

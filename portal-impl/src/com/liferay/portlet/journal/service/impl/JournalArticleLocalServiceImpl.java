@@ -3308,8 +3308,8 @@ public class JournalArticleLocalServiceImpl
 		subscriptionSender.setContextUserPrefix("ARTICLE");
 		subscriptionSender.setFrom(fromAddress, fromName);
 		subscriptionSender.setHtmlFormat(true);
-		subscriptionSender.setMailId("journal_article", article.getId(),
-				PortalUUIDUtil.generate());
+		subscriptionSender.setMailId(
+			"journal_article", article.getId(), PortalUUIDUtil.generate());
 		subscriptionSender.setPortletId(PortletKeys.JOURNAL);
 		subscriptionSender.setReplyToAddress(fromAddress);
 		subscriptionSender.setScopeGroupId(article.getGroupId());
@@ -3430,8 +3430,8 @@ public class JournalArticleLocalServiceImpl
 		subscriptionSender.setContextUserPrefix("ARTICLE");
 		subscriptionSender.setFrom(fromAddress, fromName);
 		subscriptionSender.setHtmlFormat(true);
-		subscriptionSender.setMailId("journal_article", article.getId(),
-				PortalUUIDUtil.generate());
+		subscriptionSender.setMailId(
+			"journal_article", article.getId(), PortalUUIDUtil.generate());
 		subscriptionSender.setPortletId(PortletKeys.JOURNAL);
 		subscriptionSender.setScopeGroupId(article.getGroupId());
 		subscriptionSender.setServiceContext(serviceContext);

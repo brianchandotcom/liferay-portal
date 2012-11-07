@@ -467,8 +467,9 @@ public class AnnouncementsEntryLocalServiceImpl
 				(entry.isAlert() ? "alert" : "announcement")));
 		subscriptionSender.setFrom(fromAddress, fromName);
 		subscriptionSender.setHtmlFormat(true);
-		subscriptionSender.setMailId("announcements_entry", entry.getEntryId(),
-				PortalUUIDUtil.generate());
+		subscriptionSender.setMailId(
+			"announcements_entry", entry.getEntryId(),
+			PortalUUIDUtil.generate());
 		subscriptionSender.setPortletId(PortletKeys.ANNOUNCEMENTS);
 		subscriptionSender.setScopeGroupId(entry.getGroupId());
 		subscriptionSender.setSubject(subject);

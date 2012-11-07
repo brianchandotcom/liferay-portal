@@ -461,8 +461,8 @@ public class BookmarksEntryLocalServiceImpl
 		subscriptionSender.setHtmlFormat(true);
 		subscriptionSender.setLocalizedBodyMap(localizedBodyMap);
 		subscriptionSender.setLocalizedSubjectMap(localizedSubjectMap);
-		subscriptionSender.setMailId("bookmarks_entry", entry.getEntryId(), 
-				PortalUUIDUtil.generate());
+		subscriptionSender.setMailId(
+			"bookmarks_entry", entry.getEntryId(), PortalUUIDUtil.generate());
 		subscriptionSender.setPortletId(PortletKeys.BOOKMARKS);
 		subscriptionSender.setReplyToAddress(fromAddress);
 		subscriptionSender.setScopeGroupId(entry.getGroupId());

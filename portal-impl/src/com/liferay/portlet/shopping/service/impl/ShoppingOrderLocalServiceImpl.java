@@ -496,8 +496,8 @@ public class ShoppingOrderLocalServiceImpl
 			total);
 		subscriptionSender.setFrom(fromAddress, fromName);
 		subscriptionSender.setHtmlFormat(true);
-		subscriptionSender.setMailId("shopping_order", order.getOrderId(),
-				PortalUUIDUtil.generate());
+		subscriptionSender.setMailId(
+			"shopping_order", order.getOrderId(), PortalUUIDUtil.generate());
 		subscriptionSender.setPortletId(PortletKeys.SHOPPING);
 		subscriptionSender.setScopeGroupId(order.getGroupId());
 		subscriptionSender.setServiceContext(serviceContext);

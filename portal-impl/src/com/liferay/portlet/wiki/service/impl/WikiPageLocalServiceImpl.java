@@ -1878,7 +1878,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		subscriptionSender.setFrom(fromAddress, fromName);
 		subscriptionSender.setHtmlFormat(true);
 		subscriptionSender.setMailId(
-			"wiki_page", page.getNodeId(), page.getPageId(), 
+			"wiki_page", page.getNodeId(), page.getPageId(),
 			PortalUUIDUtil.generate());
 		subscriptionSender.setPortletId(PortletKeys.WIKI);
 		subscriptionSender.setReplyToAddress(fromAddress);

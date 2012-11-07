@@ -4210,8 +4210,8 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 				_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(), "UPDATE ${entity.table} SET left${pkColumn.methodName} = (left${pkColumn.methodName} - ?) WHERE (${scopeColumn.DBName} = ?) AND (left${pkColumn.methodName} > ?)", new int[] {java.sql.Types.${serviceBuilder.getSqlType("long")}, java.sql.Types.${serviceBuilder.getSqlType("long")}, java.sql.Types.${serviceBuilder.getSqlType("long")}});
 			}
 
-			protected void shrink(long ${scopeColumn.name}, long left${pkColumn.methodName}, long delta) {
-				_sqlUpdate.update(new Object[] {delta, ${scopeColumn.name}, left${pkColumn.methodName}});
+			protected void shrink(long ${scopeColumn.name}, long right${pkColumn.methodName}, long delta) {
+				_sqlUpdate.update(new Object[] {delta, ${scopeColumn.name}, right${pkColumn.methodName}});
 			}
 
 			private SqlUpdate _sqlUpdate;

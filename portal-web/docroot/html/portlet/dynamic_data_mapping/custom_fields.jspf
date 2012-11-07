@@ -57,7 +57,12 @@
 
 				return A.FormBuilderField.buildFieldName(instance.get('label'));
 			}
-		}
+		},
+
+		repeatable: {
+			setter: A.DataType.Boolean.parse,
+			value: false
+		},
 	};
 
 	A.Base.mix(A.FormBuilderField, [LiferayFormBuilderField]);
@@ -73,35 +78,52 @@
 
 		var type = instance.get('type');
 
-		var options = {
+		var indexTypeOptions = {
 			'': '<liferay-ui:message key="no" />',
 			'keyword': '<liferay-ui:message key="yes" />'
 		};
 
 		if ((type == 'text') || (type == 'textarea')) {
-			options = {
+			indexTypeOptions = {
 				'': '<liferay-ui:message key="not-indexable" />',
 				'keyword': '<liferay-ui:message key="indexable-keyword" />',
 				'text': '<liferay-ui:message key="indexable-text" />'
 			};
 		}
 
-		model.push(
-			{
-				attributeName: 'indexType',
-				editor: new A.RadioCellEditor(
-					{
-						options: options
-					}
-				),
-				formatter: function(val) {
-					return options[val.data.value];
-				},
-				name: '<liferay-ui:message key="indexable" />'
-			}
-		);
+		var repeatableOptions = {
+			'false': '<liferay-ui:message key="no" />',
+			'true': '<liferay-ui:message key="yes" />'
+		};
 
-		return model;
+		return model.concat(
+			[
+				{
+					attributeName: 'indexType',
+					editor: new A.RadioCellEditor(
+						{
+							options: indexTypeOptions
+						}
+					),
+					formatter: function(val) {
+						return indexTypeOptions[val.data.value];
+					},
+					name: '<liferay-ui:message key="indexable" />'
+				},
+				{
+					attributeName: 'repeatable',
+					editor: new A.RadioCellEditor(
+						{
+							options: repeatableOptions
+						}
+					),
+					formatter: function(val) {
+						return repeatableOptions[val.data.value];
+					},
+					name: '<liferay-ui:message key="repeatable" />'
+				}
+			]
+		);
 	};
 
 	var DDMDateField = A.Component.create(

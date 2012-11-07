@@ -15,12 +15,20 @@
 package com.liferay.portlet.dynamicdatamapping.action;
 
 import com.liferay.portal.LocaleException;
+import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.xml.Document;
+import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.kernel.xml.Node;
+import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.kernel.xml.XPath;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
@@ -37,6 +45,7 @@ import com.liferay.portlet.dynamicdatamapping.StructureXsdException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.util.DDMXSDUtil;
 
 import java.util.Locale;
 import java.util.Map;
@@ -47,6 +56,15 @@ import javax.portlet.PortletConfig;
 import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
+
+import javax.servlet.Servlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.jsp.JspFactory;
+import javax.servlet.jsp.JspWriter;
+import javax.servlet.jsp.PageContext;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -161,6 +179,70 @@ public class EditStructureAction extends PortletAction {
 		return mapping.findForward(
 			getForward(
 				renderRequest, "portlet.dynamic_data_mapping.edit_structure"));
+	}
+
+	@Override
+	public void serveResource(
+			ActionMapping mapping, ActionForm form, PortletConfig portletConfig,
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+		throws Exception {
+
+		String cmd = ParamUtil.getString(resourceRequest, Constants.CMD);
+
+		if (cmd.equals("fieldHTML")) {
+			JspFactory factory = JspFactory.getDefaultFactory();
+
+			Servlet servlet = getServlet();
+
+			HttpServletRequest httpServletRequest =
+				PortalUtil.getHttpServletRequest(resourceRequest);
+
+			HttpServletResponse httpServletResponse =
+				PortalUtil.getHttpServletResponse(resourceResponse);
+
+			PageContext pageContext = factory.getPageContext(
+				servlet, httpServletRequest, httpServletResponse, null, true,
+				JspWriter.DEFAULT_BUFFER, true);
+
+			String className = ParamUtil.getString(
+				resourceRequest, "className");
+			long classPK = ParamUtil.getLong(resourceRequest, "classPK");
+			String fieldName = ParamUtil.getString(
+				resourceRequest, "fieldName");
+			boolean readOnly = ParamUtil.getBoolean(
+				resourceRequest, "readOnly");
+			String repeatableIndex = ParamUtil.getString(
+				resourceRequest, "repeatableIndex");
+
+			Locale locale = PortalUtil.getLocale(httpServletRequest);
+
+			String xPathExpression =
+				"dynamic-element[@name=".concat(
+					HtmlUtil.escapeXPathAttribute(fieldName)).concat("]");
+
+			XPath xPathSelector = SAXReaderUtil.createXPath(xPathExpression);
+
+			String xsd = DDMXSDUtil.getXSD(className, classPK);
+
+			Document document = SAXReaderUtil.read(xsd);
+
+			Node node = xPathSelector.selectSingleNode(
+				document.getRootElement());
+
+			Element fieldElement = (Element)node.asXPathResult(
+				node.getParent());
+
+			if (Validator.isNotNull(repeatableIndex)) {
+				fieldElement.addAttribute("repeatableIndex", repeatableIndex);
+			}
+
+			String fieldHTML = DDMXSDUtil.getFieldHTML(
+				pageContext, fieldElement, null, null, null, readOnly, locale);
+
+			resourceResponse.setContentType(ContentTypes.TEXT_HTML);
+
+			PortletResponseUtil.write(resourceResponse, fieldHTML);
+		}
 	}
 
 	protected void deleteStructures(ActionRequest actionRequest)

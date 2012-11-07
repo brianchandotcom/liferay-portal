@@ -8,6 +8,20 @@
 
 <#assign cssClass = escapeAttribute(fieldStructure.fieldCssClass!"")>
 
+<#-- Repeatable -->
+
+<#assign repeatable = false>
+
+<#if fieldStructure.repeatable?? && (fieldStructure.repeatable == "true")>
+	<#assign repeatable = true>
+</#if>
+
+<#assign repeatableIndex = "">
+
+<#if fieldStructure.repeatableIndex?? && (fieldStructure.repeatableIndex != "")>
+	<#assign repeatableIndex = "__" + fieldStructure.repeatableIndex>
+</#if>
+
 <#-- Field name -->
 
 <#assign fieldName = fieldStructure.name>
@@ -21,14 +35,18 @@
 	<#assign fieldName = parentName>
 </#if>
 
-<#assign namespacedFieldName = "${namespace}${fieldName}">
+<#assign namespace = namespace!"">
+
+<#assign namespacedFieldName = "${namespace}${fieldName}${repeatableIndex}">
 
 <#assign namespacedParentName = "${namespace}${parentName}">
 
 <#-- Data -->
 
 <#assign data = {
-	"fieldName": fieldStructure.name
+	"fieldName": fieldStructure.name,
+	"repeatable": repeatable?string,
+	"repeatableIndex": repeatableIndex
 }>
 
 <#-- Predefined value -->

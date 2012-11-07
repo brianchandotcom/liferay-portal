@@ -26,37 +26,38 @@ public class ConfigurePortletDisplayStyleFullContentTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Blogs Test Page");
 		selenium.clickAt("link=Blogs Test Page",
 			RuntimeVariables.replace("Blogs Test Page"));
 		selenium.waitForPageToLoad("30000");
 		Thread.sleep(5000);
-		selenium.waitForVisible("//strong/a");
-		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
+		selenium.waitForVisible("//span[@title='Options']/ul/li/strong/a");
+		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
+			RuntimeVariables.replace("Options"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]");
 		assertEquals(RuntimeVariables.replace("Configuration"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]",
+			RuntimeVariables.replace("Configuration"));
 		selenium.waitForVisible("//iframe[@id='_33_configurationIframeDialog']");
 		selenium.selectFrame("//iframe[@id='_33_configurationIframeDialog']");
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/liferay/navigation_interaction.js')]");
 		selenium.waitForVisible("link=Display Settings");
 		selenium.clickAt("link=Display Settings",
 			RuntimeVariables.replace("Display Settings"));
-		Thread.sleep(5000);
-		selenium.waitForVisible("//select[@id='_86_pageDisplayStyle']");
-		selenium.select("//select[@id='_86_pageDisplayStyle']",
+		selenium.waitForPageToLoad("30000");
+		selenium.select("//select[@id='_86_displayStyle']",
 			RuntimeVariables.replace("Full Content"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
-		selenium.waitForText("//div[@class='portlet-msg-success']",
-			"You have successfully updated the setup.");
+		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"You have successfully updated the setup."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals("Full Content",
-			selenium.getSelectedLabel("//select[@id='_86_pageDisplayStyle']"));
+			selenium.getSelectedLabel("//select[@id='_86_displayStyle']"));
 		selenium.selectFrame("relative=top");
 	}
 }

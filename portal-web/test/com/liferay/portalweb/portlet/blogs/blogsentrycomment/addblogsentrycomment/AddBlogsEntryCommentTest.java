@@ -42,8 +42,8 @@ public class AddBlogsEntryCommentTest extends BaseTestCase {
 			RuntimeVariables.replace("Blogs Entry Comment Body"));
 		selenium.clickAt("//input[@value='Reply']",
 			RuntimeVariables.replace("Reply"));
-		selenium.waitForText("//div[@class='lfr-message-response portlet-msg-success']",
-			"Your request processed successfully.");
+		selenium.waitForVisible(
+			"//div[@class='lfr-message-response portlet-msg-success']");
 		assertEquals(RuntimeVariables.replace(
 				"Your request processed successfully."),
 			selenium.getText(

@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Blogs Test Page</td>
-	<td>Blogs Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Blogs Test Page</td>
 	<td>Blogs Test Page</td>
@@ -32,6 +27,11 @@
 	<td>clickAtAndWait</td>
 	<td>//div[@class='entry-title']/h2/a</td>
 	<td>Blogs Entry Title</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -40,16 +40,21 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//li[4]/span/a/span</td>
+	<td>//ul[@class='lfr-discussion-actions']/li[4]/span/a/span</td>
 	<td>Delete</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//li[4]/span/a/span</td>
+	<td>//ul[@class='lfr-discussion-actions']/li[4]/span/a/span</td>
 	<td>Delete</td>
 </tr>
 <tr>
-	<td>waitForText</td>
+	<td>waitForConfirmation</td>
+	<td>Are you sure you want to delete this? It will be deleted immediately.</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
 	<td>//div[@class='lfr-message-response portlet-msg-success']</td>
 	<td>Your request processed successfully.</td>
 </tr>
@@ -61,11 +66,6 @@
 <tr>
 	<td>assertTextNotPresent</td>
 	<td>Blogs Entry Comment Body</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete this? It will be deleted immediately.</td>
 	<td></td>
 </tr>
 </tbody></table>

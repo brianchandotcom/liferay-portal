@@ -45,6 +45,7 @@ public class ConfigurePortletBlogs3ScopeCurrentPageTest extends BaseTestCase {
 		selenium.selectFrame("//iframe[@id='_33_configurationIframeDialog']");
 		selenium.waitForElementPresent(
 			"//script[contains(@src,'/liferay/navigation_interaction.js')]");
+		selenium.waitForVisible("link=Scope");
 		selenium.clickAt("link=Scope", RuntimeVariables.replace("Scope"));
 		selenium.waitForVisible("//select[@id='_86_scopeType']");
 		assertEquals("Default",

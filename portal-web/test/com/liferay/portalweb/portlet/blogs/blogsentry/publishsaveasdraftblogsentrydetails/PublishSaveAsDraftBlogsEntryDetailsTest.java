@@ -26,7 +26,6 @@ public class PublishSaveAsDraftBlogsEntryDetailsTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Blogs Test Page");
 		selenium.clickAt("link=Blogs Test Page",
 			RuntimeVariables.replace("Blogs Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -37,8 +36,8 @@ public class PublishSaveAsDraftBlogsEntryDetailsTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Blogs Entry Content"),
 			selenium.getText("//div[@class='entry-body']/p"));
 		assertEquals(RuntimeVariables.replace("Edit"),
-			selenium.getText("//span/a/span"));
-		selenium.click(RuntimeVariables.replace("//span/a/span"));
+			selenium.getText("//td[1]/span/a/span"));
+		selenium.click(RuntimeVariables.replace("//td[1]/span/a/span"));
 		selenium.waitForPageToLoad("30000");
 		Thread.sleep(5000);
 		selenium.clickAt("//input[@value='Publish']",

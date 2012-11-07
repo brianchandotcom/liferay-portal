@@ -27,7 +27,7 @@ public class ViewGmailBlogsEntryComment1NotificationTest extends BaseTestCase {
 		selenium.selectFrame("relative=top");
 		selenium.openWindow("http://www.gmail.com/",
 			RuntimeVariables.replace("gmail"));
-		selenium.waitForPopUp("gmail", RuntimeVariables.replace(""));
+		Thread.sleep(5000);
 		selenium.selectWindow("gmail");
 		selenium.type("//input[@id='Email']",
 			RuntimeVariables.replace("liferay.qa.testing.trunk@gmail.com"));

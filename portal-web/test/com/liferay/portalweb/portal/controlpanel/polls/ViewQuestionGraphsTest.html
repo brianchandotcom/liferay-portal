@@ -14,6 +14,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
+	<td>AUI Editable Min</td>
+</tr>
+<tr>
 	<td>assertText</td>
 	<td>//li[@id='_145_mySites']/a/span</td>
 	<td>Go to</td>
@@ -39,24 +49,44 @@
 	<td>Polls</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>link=Test Poll Question</td>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Test Poll Question')]/td[1]/a</td>
 	<td>Test Poll Question</td>
 </tr>
 <tr>
-	<td>clickAt</td>
-	<td>link=Area</td>
+	<td>clickAtAndWait</td>
+	<td>//tr[contains(.,'Test Poll Question')]/td[1]/a</td>
+	<td>Test Poll Question</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//a[contains(.,'Area')]</td>
 	<td>Area</td>
 </tr>
 <tr>
-	<td>waitForPopUp</td>
-	<td>viewChart</td>
-	<td>30000</td>
+	<td>clickAt</td>
+	<td>//a[contains(.,'Area')]</td>
+	<td>Area</td>
 </tr>
 <tr>
-	<td>selectWindow</td>
-	<td>viewChart</td>
+	<td>pause</td>
+	<td>5000</td>
 	<td></td>
+</tr>
+<tr>
+	<td>selectPopUp</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//body/img</td>
+	<td>Area Chart Image</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//body/img</td>
+	<td>Area Chart Image</td>
 </tr>
 <tr>
 	<td>close</td>
@@ -70,23 +100,38 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>link=Horizontal Bar</td>
+	<td>//a[contains(.,'Horizontal Bar')]</td>
+	<td>Horizontal Bar</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//a[contains(.,'Horizontal Bar')]</td>
 	<td>Horizontal Bar</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>link=Horizontal Bar</td>
+	<td>//a[contains(.,'Horizontal Bar')]</td>
 	<td>Horizontal Bar</td>
 </tr>
 <tr>
-	<td>waitForPopUp</td>
-	<td>viewChart</td>
-	<td>30000</td>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
 </tr>
 <tr>
-	<td>selectWindow</td>
-	<td>viewChart</td>
+	<td>selectPopUp</td>
 	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//body/img</td>
+	<td>Horizontal Bar Chart Image</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//body/img</td>
+	<td>Horizontal Bar Chart Image</td>
 </tr>
 <tr>
 	<td>close</td>
@@ -100,23 +145,38 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>link=Line</td>
+	<td>//a[contains(.,'Line')]</td>
+	<td>Line</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//a[contains(.,'Line')]</td>
 	<td>Line</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>link=Line</td>
+	<td>//a[contains(.,'Line')]</td>
 	<td>Line</td>
 </tr>
 <tr>
-	<td>waitForPopUp</td>
-	<td>viewChart</td>
-	<td>30000</td>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
 </tr>
 <tr>
-	<td>selectWindow</td>
-	<td>viewChart</td>
+	<td>selectPopUp</td>
 	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//body/img</td>
+	<td>Line Chart Image</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//body/img</td>
+	<td>Line Chart Image</td>
 </tr>
 <tr>
 	<td>close</td>
@@ -130,23 +190,38 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>link=Pie</td>
+	<td>//a[contains(.,'Pie')]</td>
+	<td>Pie</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//a[contains(.,'Pie')]</td>
 	<td>Pie</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>link=Pie</td>
+	<td>//a[contains(.,'Pie')]</td>
 	<td>Pie</td>
 </tr>
 <tr>
-	<td>waitForPopUp</td>
-	<td>viewChart</td>
-	<td>30000</td>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
 </tr>
 <tr>
-	<td>selectWindow</td>
-	<td>viewChart</td>
+	<td>selectPopUp</td>
 	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//body/img</td>
+	<td>Pie Chart Image</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//body/img</td>
+	<td>Pie Chart Image</td>
 </tr>
 <tr>
 	<td>close</td>
@@ -160,23 +235,38 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>link=Vertical Bar</td>
+	<td>//a[contains(.,'Vertical Bar')]</td>
+	<td>Vertical Bar</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//a[contains(.,'Vertical Bar')]</td>
 	<td>Vertical Bar</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>link=Vertical Bar</td>
+	<td>//a[contains(.,'Vertical Bar')]</td>
 	<td>Vertical Bar</td>
 </tr>
 <tr>
-	<td>waitForPopUp</td>
-	<td>viewChart</td>
-	<td>30000</td>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
 </tr>
 <tr>
-	<td>selectWindow</td>
-	<td>viewChart</td>
+	<td>selectPopUp</td>
 	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//body/img</td>
+	<td>Vertical Bar Image</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//body/img</td>
+	<td>Vertical Bar Image</td>
 </tr>
 <tr>
 	<td>close</td>

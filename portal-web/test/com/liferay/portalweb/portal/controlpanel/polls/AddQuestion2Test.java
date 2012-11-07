@@ -25,6 +25,10 @@ public class AddQuestion2Test extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
@@ -57,12 +61,15 @@ public class AddQuestion2Test extends BaseTestCase {
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("Test Poll Question 2"),
-			selenium.getText("//td[1]/a"));
+			selenium.getText("//tr[contains(.,'Test Poll Question 2')]/td[1]/a"));
 		assertEquals(RuntimeVariables.replace("0"),
-			selenium.getText("//td[2]/a"));
+			selenium.getText("//tr[contains(.,'Test Poll Question 2')]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Never"),
-			selenium.getText("//td[3]/a"));
+			selenium.getText("//tr[contains(.,'Test Poll Question 2')]/td[3]/a"));
 		assertEquals(RuntimeVariables.replace("Never"),
-			selenium.getText("//td[4]/a"));
+			selenium.getText("//tr[contains(.,'Test Poll Question 2')]/td[4]/a"));
+		assertEquals(RuntimeVariables.replace("Actions"),
+			selenium.getText(
+				"//tr[contains(.,'Test Poll Question 2')]/td[5]/span[@title='Actions']/ul/li/strong/a/span"));
 	}
 }

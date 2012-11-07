@@ -25,6 +25,10 @@ public class AssertExpiredQuestionTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
@@ -34,7 +38,10 @@ public class AssertExpiredQuestionTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Polls", RuntimeVariables.replace("Polls"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Edited Test Question 2",
+		assertEquals(RuntimeVariables.replace("Edited Test Question 2"),
+			selenium.getText(
+				"//tr[contains(.,'Edited Test Question 2')]/td[1]/a"));
+		selenium.clickAt("//tr[contains(.,'Edited Test Question 2')]/td[1]/a",
 			RuntimeVariables.replace("Edited Test Question 2"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isElementNotPresent(

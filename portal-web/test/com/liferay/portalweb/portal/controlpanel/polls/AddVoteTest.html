@@ -14,6 +14,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
+	<td>AUI Editable Min</td>
+</tr>
+<tr>
 	<td>assertText</td>
 	<td>//li[@id='_145_mySites']/a/span</td>
 	<td>Go to</td>
@@ -40,18 +50,28 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[1]/a</td>
+	<td>//tr[contains(.,'Test Poll Question')]/td[1]/a</td>
 	<td>Test Poll Question</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//td[1]/a</td>
+	<td>//tr[contains(.,'Test Poll Question')]/td[1]/a</td>
 	<td>Test Poll Question</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@class='aui-field aui-field-choice']/span/label</td>
+	<td>a. Test Choice A</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>//input[@name='_25_choiceId']</td>
-	<td>Choice A</td>
+	<td>Test Choice A</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@name='_25_choiceId']</td>
+	<td>Test Choice A</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -75,22 +95,27 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[2]/td[1]</td>
+	<td>//tr[contains(.,'Test Choice A')]/td[1]</td>
 	<td>100%</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[2]/td[2]</td>
+	<td>//tr[contains(.,'Test Choice A')]/td[2]</td>
 	<td>1</td>
 </tr>
 <tr>
+	<td>assertVisible</td>
+	<td>//tr[contains(.,'Test Choice A')]/td[3]/div/div/div[contains(@style,'width: 100%')]</td>
+	<td>Progress Bar 100%</td>
+</tr>
+<tr>
 	<td>assertText</td>
-	<td>//td[6]/strong</td>
+	<td>//tr[contains(.,'Test Choice A')]/td[4]</td>
 	<td>a.</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[7]</td>
+	<td>//tr[contains(.,'Test Choice A')]/td[5]</td>
 	<td>Test Choice A</td>
 </tr>
 </tbody></table>

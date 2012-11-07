@@ -25,6 +25,10 @@ public class AddVoteTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
@@ -35,12 +39,16 @@ public class AddVoteTest extends BaseTestCase {
 		selenium.clickAt("link=Polls", RuntimeVariables.replace("Polls"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Test Poll Question"),
-			selenium.getText("//td[1]/a"));
-		selenium.clickAt("//td[1]/a",
+			selenium.getText("//tr[contains(.,'Test Poll Question')]/td[1]/a"));
+		selenium.clickAt("//tr[contains(.,'Test Poll Question')]/td[1]/a",
 			RuntimeVariables.replace("Test Poll Question"));
 		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("a. Test Choice A"),
+			selenium.getText(
+				"//span[@class='aui-field aui-field-choice']/span/label"));
 		selenium.clickAt("//input[@name='_25_choiceId']",
-			RuntimeVariables.replace("Choice A"));
+			RuntimeVariables.replace("Test Choice A"));
+		assertTrue(selenium.isChecked("//input[@name='_25_choiceId']"));
 		selenium.clickAt("//input[@value='Vote']",
 			RuntimeVariables.replace("Vote"));
 		selenium.waitForPageToLoad("30000");
@@ -53,12 +61,14 @@ public class AddVoteTest extends BaseTestCase {
 				"This is a test poll description."),
 			selenium.getText("//fieldset/div/span"));
 		assertEquals(RuntimeVariables.replace("100%"),
-			selenium.getText("//tr[2]/td[1]"));
+			selenium.getText("//tr[contains(.,'Test Choice A')]/td[1]"));
 		assertEquals(RuntimeVariables.replace("1"),
-			selenium.getText("//tr[2]/td[2]"));
+			selenium.getText("//tr[contains(.,'Test Choice A')]/td[2]"));
+		assertTrue(selenium.isVisible(
+				"//tr[contains(.,'Test Choice A')]/td[3]/div/div/div[contains(@style,'width: 100%')]"));
 		assertEquals(RuntimeVariables.replace("a."),
-			selenium.getText("//td[6]/strong"));
+			selenium.getText("//tr[contains(.,'Test Choice A')]/td[4]"));
 		assertEquals(RuntimeVariables.replace("Test Choice A"),
-			selenium.getText("//td[7]"));
+			selenium.getText("//tr[contains(.,'Test Choice A')]/td[5]"));
 	}
 }

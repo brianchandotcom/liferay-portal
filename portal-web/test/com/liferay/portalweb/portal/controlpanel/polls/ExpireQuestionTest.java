@@ -22,63 +22,117 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ExpireQuestionTest extends BaseTestCase {
 	public void testExpireQuestion() throws Exception {
-		selenium.selectWindow("null");
-		selenium.selectFrame("relative=top");
-		selenium.open("/web/guest/home/");
-		assertEquals(RuntimeVariables.replace("Go to"),
-			selenium.getText("//li[@id='_145_mySites']/a/span"));
-		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
-		selenium.waitForVisible("link=Control Panel");
-		selenium.clickAt("link=Control Panel",
-			RuntimeVariables.replace("Control Panel"));
-		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Polls", RuntimeVariables.replace("Polls"));
-		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Edited Test Question 2",
-			RuntimeVariables.replace("Edited Test Question 2"));
-		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isElementPresent(
-				"//div[2]/div/span[1]/span/span/input"));
-		assertTrue(selenium.isElementPresent("//span[2]/span/span/input"));
-		assertTrue(selenium.isElementPresent("//span[3]/span/span/input"));
-		assertTrue(selenium.isElementPresent("//span[4]/span/span/input"));
-		selenium.clickAt("//input[@value='Cancel']",
-			RuntimeVariables.replace("Cancel"));
-		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Actions"),
-			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
-		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
-			RuntimeVariables.replace("Actions"));
-		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a");
-		assertEquals(RuntimeVariables.replace("Edit"),
-			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a"));
-		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a"));
-		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isChecked("//input[@id='_25_neverExpireCheckbox']"));
-		selenium.clickAt("//input[@id='_25_neverExpireCheckbox']",
-			RuntimeVariables.replace("Never Expire"));
-		assertFalse(selenium.isChecked("//input[@id='_25_neverExpireCheckbox']"));
-		selenium.waitForVisible("//select[@id='_25_expirationDateMonth']");
-		selenium.select("//select[@id='_25_expirationDateYear']",
-			RuntimeVariables.replace("label=2008"));
-		selenium.select("//select[@id='_25_expirationDateMonth']",
-			RuntimeVariables.replace("label=January"));
-		selenium.select("//select[@id='_25_expirationDateDay']",
-			RuntimeVariables.replace("label=1"));
-		selenium.select("//select[@name='_25_expirationDateHour']",
-			RuntimeVariables.replace("label=12"));
-		selenium.select("//select[@name='_25_expirationDateMinute']",
-			RuntimeVariables.replace("label=:00"));
-		selenium.select("//select[@name='_25_expirationDateAmPm']",
-			RuntimeVariables.replace("label=AM"));
-		selenium.clickAt("//input[@value='Save']",
-			RuntimeVariables.replace("Save"));
-		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace(
-				"Your request completed successfully."),
-			selenium.getText("//div[@class='portlet-msg-success']"));
+		int label = 1;
+
+		while (label >= 1) {
+			switch (label) {
+			case 1:
+				selenium.selectWindow("null");
+				selenium.selectFrame("relative=top");
+				selenium.open("/web/guest/home/");
+				selenium.clickAt("//div[@id='dockbar']",
+					RuntimeVariables.replace("Dockbar"));
+				selenium.waitForElementPresent(
+					"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+				assertEquals(RuntimeVariables.replace("Go to"),
+					selenium.getText("//li[@id='_145_mySites']/a/span"));
+				selenium.mouseOver("//li[@id='_145_mySites']/a/span");
+				selenium.waitForVisible("link=Control Panel");
+				selenium.clickAt("link=Control Panel",
+					RuntimeVariables.replace("Control Panel"));
+				selenium.waitForPageToLoad("30000");
+				selenium.clickAt("link=Polls", RuntimeVariables.replace("Polls"));
+				selenium.waitForPageToLoad("30000");
+				assertEquals(RuntimeVariables.replace("Edited Test Question 2"),
+					selenium.getText(
+						"//tr[contains(.,'Edited Test Question 2')]/td[1]/a"));
+				selenium.clickAt("//tr[contains(.,'Edited Test Question 2')]/td[1]/a",
+					RuntimeVariables.replace("Edited Test Question 2"));
+				selenium.waitForPageToLoad("30000");
+				assertTrue(selenium.isVisible(
+						"//div[2]/div/span[1]/span/span/input"));
+				assertEquals(RuntimeVariables.replace("a. Test Choice A"),
+					selenium.getText("//span[1]/span/label"));
+				assertTrue(selenium.isVisible("//span[2]/span/span/input"));
+				assertEquals(RuntimeVariables.replace("b. Test Choice B"),
+					selenium.getText("//span[2]/span/label"));
+				assertTrue(selenium.isVisible("//span[3]/span/span/input"));
+				assertEquals(RuntimeVariables.replace("c. Test Choice C"),
+					selenium.getText("//span[3]/span/label"));
+				assertTrue(selenium.isVisible("//span[4]/span/span/input"));
+				assertEquals(RuntimeVariables.replace("d. NEW Test Choice D"),
+					selenium.getText("//span[4]/span/label"));
+				selenium.clickAt("//input[@value='Cancel']",
+					RuntimeVariables.replace("Cancel"));
+				selenium.waitForPageToLoad("30000");
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText(
+						"//span[@title='Actions']/ul/li/strong/a/span"));
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
+					RuntimeVariables.replace("Actions"));
+				selenium.waitForVisible(
+					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]");
+				assertEquals(RuntimeVariables.replace("Edit"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]"));
+				selenium.click(RuntimeVariables.replace(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]"));
+				selenium.waitForPageToLoad("30000");
+
+				boolean neverExpireCheckbox = selenium.isChecked(
+						"//input[@id='_25_neverExpireCheckbox']");
+
+				if (!neverExpireCheckbox) {
+					label = 2;
+
+					continue;
+				}
+
+				selenium.clickAt("//input[@id='_25_neverExpireCheckbox']",
+					RuntimeVariables.replace("Never Expire"));
+
+			case 2:
+				assertFalse(selenium.isChecked(
+						"//input[@id='_25_neverExpireCheckbox']"));
+				selenium.waitForVisible(
+					"//select[@id='_25_expirationDateMonth']");
+				selenium.select("//select[@id='_25_expirationDateYear']",
+					RuntimeVariables.replace("label=2008"));
+				selenium.select("//select[@id='_25_expirationDateMonth']",
+					RuntimeVariables.replace("label=January"));
+				selenium.select("//select[@id='_25_expirationDateDay']",
+					RuntimeVariables.replace("label=1"));
+				selenium.select("//select[@name='_25_expirationDateHour']",
+					RuntimeVariables.replace("label=12"));
+				selenium.select("//select[@name='_25_expirationDateMinute']",
+					RuntimeVariables.replace("label=:00"));
+				selenium.select("//select[@name='_25_expirationDateAmPm']",
+					RuntimeVariables.replace("label=AM"));
+				selenium.clickAt("//input[@value='Save']",
+					RuntimeVariables.replace("Save"));
+				selenium.waitForPageToLoad("30000");
+				assertEquals(RuntimeVariables.replace(
+						"Your request completed successfully."),
+					selenium.getText("//div[@class='portlet-msg-success']"));
+				assertEquals(RuntimeVariables.replace("Edited Test Question 2"),
+					selenium.getText(
+						"//tr[contains(.,'Edited Test Question 2')]/td[1]/a"));
+				assertEquals(RuntimeVariables.replace("0"),
+					selenium.getText(
+						"//tr[contains(.,'Edited Test Question 2')]/td[2]/a"));
+				assertEquals(RuntimeVariables.replace("Never"),
+					selenium.getText(
+						"//tr[contains(.,'Edited Test Question 2')]/td[3]/a"));
+				assertNotEquals(RuntimeVariables.replace("Never"),
+					selenium.getText(
+						"//tr[contains(.,'Edited Test Question 2')]/td[4]/a"));
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText(
+						"//tr[contains(.,'Edited Test Question 2')]/td[5]/span[@title='Actions']/ul/li/strong/a/span"));
+
+			case 100:
+				label = -1;
+			}
+		}
 	}
 }

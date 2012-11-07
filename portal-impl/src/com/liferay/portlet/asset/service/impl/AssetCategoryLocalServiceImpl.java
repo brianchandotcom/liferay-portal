@@ -218,7 +218,11 @@ public class AssetCategoryLocalServiceImpl
 			assetCategoryPersistence.findByVocabularyId(vocabularyId);
 
 		for (AssetCategory category : categories) {
-			deleteCategory(category);
+			if (category.getParentCategoryId() ==
+					AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
+
+				deleteCategory(category);
+			}
 		}
 	}
 

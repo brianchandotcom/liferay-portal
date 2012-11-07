@@ -35,15 +35,20 @@ public class ConfigurePortletRemoveAllPermissionTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
 			RuntimeVariables.replace("Options"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]");
 		assertEquals(RuntimeVariables.replace("Configuration"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]",
+			RuntimeVariables.replace("Configuration"));
+		selenium.waitForVisible("//iframe[@id='_33_configurationIframeDialog']");
+		selenium.selectFrame("//iframe[@id='_33_configurationIframeDialog']");
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/liferay/navigation_interaction.js')]");
 		selenium.waitForVisible("link=Permissions");
 		selenium.clickAt("link=Permissions",
 			RuntimeVariables.replace("Permissions"));
-		selenium.waitForVisible("//td[4]/input");
+		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isChecked("//td[4]/input"));
 		selenium.clickAt("//td[4]/input", RuntimeVariables.replace("Guest View"));
 		assertFalse(selenium.isChecked("//td[4]/input"));
@@ -69,13 +74,12 @@ public class ConfigurePortletRemoveAllPermissionTest extends BaseTestCase {
 		assertFalse(selenium.isChecked("//tr[7]/td[4]/input"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
-		selenium.waitForText("//div[@class='portlet-msg-success']",
-			"Your request completed successfully.");
+		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Blogs Test Page");
 		selenium.clickAt("link=Blogs Test Page",
 			RuntimeVariables.replace("Blogs Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -85,20 +89,26 @@ public class ConfigurePortletRemoveAllPermissionTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
 			RuntimeVariables.replace("Options"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]");
 		assertEquals(RuntimeVariables.replace("Configuration"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]",
+			RuntimeVariables.replace("Configuration"));
+		selenium.waitForVisible("//iframe[@id='_33_configurationIframeDialog']");
+		selenium.selectFrame("//iframe[@id='_33_configurationIframeDialog']");
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/liferay/navigation_interaction.js')]");
 		selenium.waitForVisible("link=Permissions");
 		selenium.clickAt("link=Permissions",
 			RuntimeVariables.replace("Permissions"));
-		selenium.waitForVisible("//td[4]/input");
+		selenium.waitForPageToLoad("30000");
 		assertFalse(selenium.isChecked("//td[4]/input"));
 		assertFalse(selenium.isChecked("//tr[4]/td[2]/input"));
 		assertFalse(selenium.isChecked("//tr[4]/td[3]/input"));
 		assertFalse(selenium.isChecked("//tr[4]/td[4]/input"));
 		assertFalse(selenium.isChecked("//tr[4]/td[5]/input"));
 		assertFalse(selenium.isChecked("//tr[7]/td[4]/input"));
+		selenium.selectFrame("relative=top");
 	}
 }

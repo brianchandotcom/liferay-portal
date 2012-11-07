@@ -25,7 +25,6 @@ public class DeleteBlogsEntryCommentTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Blogs Test Page");
 		selenium.clickAt("link=Blogs Test Page",
 			RuntimeVariables.replace("Blogs Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -34,20 +33,22 @@ public class DeleteBlogsEntryCommentTest extends BaseTestCase {
 		selenium.clickAt("//div[@class='entry-title']/h2/a",
 			RuntimeVariables.replace("Blogs Entry Title"));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Blogs Entry Comment Body"),
 			selenium.getText("//div[@class='lfr-discussion-message']"));
 		assertEquals(RuntimeVariables.replace("Delete"),
-			selenium.getText("//li[4]/span/a/span"));
-		selenium.clickAt("//li[4]/span/a/span",
+			selenium.getText(
+				"//ul[@class='lfr-discussion-actions']/li[4]/span/a/span"));
+		selenium.clickAt("//ul[@class='lfr-discussion-actions']/li[4]/span/a/span",
 			RuntimeVariables.replace("Delete"));
-		selenium.waitForText("//div[@class='lfr-message-response portlet-msg-success']",
-			"Your request processed successfully.");
+		selenium.waitForConfirmation(
+			"Are you sure you want to delete this? It will be deleted immediately.");
+		selenium.waitForVisible(
+			"//div[@class='lfr-message-response portlet-msg-success']");
 		assertEquals(RuntimeVariables.replace(
 				"Your request processed successfully."),
 			selenium.getText(
 				"//div[@class='lfr-message-response portlet-msg-success']"));
 		assertFalse(selenium.isTextPresent("Blogs Entry Comment Body"));
-		assertTrue(selenium.getConfirmation()
-						   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
 	}
 }

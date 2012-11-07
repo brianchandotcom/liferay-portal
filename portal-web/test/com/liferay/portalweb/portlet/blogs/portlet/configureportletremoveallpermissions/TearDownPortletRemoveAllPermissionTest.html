@@ -35,18 +35,33 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]</td>
 	<td>Configuration</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]</td>
 	<td>Configuration</td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>clickAt</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]</td>
 	<td>Configuration</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//iframe[@id='_33_configurationIframeDialog']</td>
+	<td>Blogs - Configuration</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//iframe[@id='_33_configurationIframeDialog']</td>
+	<td>Blogs - Configuration</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/liferay/navigation_interaction.js')]</td>
+	<td>Navigation Interaction</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -54,19 +69,19 @@
 	<td>Permissions</td>
 </tr>
 <tr>
-	<td>clickAt</td>
+	<td>clickAtAndWait</td>
 	<td>link=Permissions</td>
 	<td>Permissions</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
+	<td>storeChecked</td>
 	<td>//td[4]/input</td>
-	<td>Guest View</td>
+	<td>guestViewNotChecked</td>
 </tr>
 <tr>
-	<td>assertNotChecked</td>
-	<td>//td[4]/input</td>
-	<td>Guest View</td>
+	<td>gotoIf</td>
+	<td>${guestViewNotChecked}</td>
+	<td>GuestViewChecked</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -74,19 +89,34 @@
 	<td>Guest View</td>
 </tr>
 <tr>
+	<td>label</td>
+	<td>GuestViewChecked</td>
+	<td></td>
+</tr>
+<tr>
 	<td>assertChecked</td>
 	<td>//td[4]/input</td>
 	<td>Guest View</td>
 </tr>
 <tr>
-	<td>assertNotChecked</td>
+	<td>storeChecked</td>
+	<td>//tr[4]/td[2]/input</td>
+	<td>ownerAddToPageNotChecked</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${ownerAddToPageNotChecked}</td>
+	<td>OwnerAddToPageChecked</td>
+</tr>
+<tr>
+	<td>clickAt</td>
 	<td>//tr[4]/td[2]/input</td>
 	<td>Owner Add to Page</td>
 </tr>
 <tr>
-	<td>clickAt</td>
-	<td>//tr[4]/td[2]/input</td>
-	<td>Owner Add to Page</td>
+	<td>label</td>
+	<td>OwnerAddToPageChecked</td>
+	<td></td>
 </tr>
 <tr>
 	<td>assertChecked</td>
@@ -94,14 +124,24 @@
 	<td>Owner Add to Page</td>
 </tr>
 <tr>
-	<td>assertNotChecked</td>
+	<td>storeChecked</td>
+	<td>//tr[4]/td[3]/input</td>
+	<td>ownerConfigurationNotChecked</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${ownerConfigurationNotChecked}</td>
+	<td>OwnerConfigurationChecked</td>
+</tr>
+<tr>
+	<td>clickAt</td>
 	<td>//tr[4]/td[3]/input</td>
 	<td>Owner Configuration</td>
 </tr>
 <tr>
-	<td>clickAt</td>
-	<td>//tr[4]/td[3]/input</td>
-	<td>Owner Configuration</td>
+	<td>label</td>
+	<td>OwnerConfigurationChecked</td>
+	<td></td>
 </tr>
 <tr>
 	<td>assertChecked</td>
@@ -109,14 +149,24 @@
 	<td>Owner Configuration</td>
 </tr>
 <tr>
-	<td>assertNotChecked</td>
+	<td>storeChecked</td>
 	<td>//tr[4]/td[4]/input</td>
-	<td>Owner View</td>
+	<td>ownerViewNotChecked</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${ownerViewNotChecked}</td>
+	<td>OwnerViewChecked</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>//tr[4]/td[4]/input</td>
 	<td>Owner View</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>OwnerViewChecked</td>
+	<td></td>
 </tr>
 <tr>
 	<td>assertChecked</td>
@@ -124,14 +174,24 @@
 	<td>Owner View</td>
 </tr>
 <tr>
-	<td>assertNotChecked</td>
+	<td>storeChecked</td>
 	<td>//tr[4]/td[5]/input</td>
-	<td>Owner Permissions</td>
+	<td>ownerPermissionsNotChecked</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${ownerPermissionsNotChecked}</td>
+	<td>OwnerPermissionsChecked</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>//tr[4]/td[5]/input</td>
 	<td>Owner Permissions</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>OwnerPermissionsChecked</td>
+	<td></td>
 </tr>
 <tr>
 	<td>assertChecked</td>
@@ -139,14 +199,24 @@
 	<td>Owner Permissions</td>
 </tr>
 <tr>
-	<td>assertNotChecked</td>
+	<td>storeChecked</td>
 	<td>//tr[7]/td[4]/input</td>
-	<td>Site Member Permissions</td>
+	<td>siteMemberPermissionsNotChecked</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${siteMemberPermissionsNotChecked}</td>
+	<td>SiteMemberPermissionsChecked</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>//tr[7]/td[4]/input</td>
 	<td>Site Member Permissions</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>SiteMemberPermissionsChecked</td>
+	<td></td>
 </tr>
 <tr>
 	<td>assertChecked</td>
@@ -154,19 +224,49 @@
 	<td>Site Member Permissions</td>
 </tr>
 <tr>
-	<td>clickAt</td>
+	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
 	<td>Save</td>
 </tr>
 <tr>
-	<td>waitForText</td>
+	<td>assertText</td>
 	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@class='portlet-msg-success']</td>
-	<td>Your request completed successfully.</td>
+	<td>assertChecked</td>
+	<td>//td[4]/input</td>
+	<td>Guest View</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//tr[4]/td[2]/input</td>
+	<td>Owner Add to Page</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//tr[4]/td[3]/input</td>
+	<td>Owner Configuration</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//tr[4]/td[4]/input</td>
+	<td>Owner View</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//tr[4]/td[5]/input</td>
+	<td>Owner Permissions</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//tr[7]/td[4]/input</td>
+	<td>Site Member Permissions</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>relative=top</td>
+	<td>top</td>
 </tr>
 </tbody></table>
 </body>

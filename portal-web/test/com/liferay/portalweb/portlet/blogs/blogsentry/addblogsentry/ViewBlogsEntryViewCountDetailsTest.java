@@ -25,7 +25,6 @@ public class ViewBlogsEntryViewCountDetailsTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Blogs Test Page");
 		selenium.clickAt("link=Blogs Test Page",
 			RuntimeVariables.replace("Blogs Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -33,7 +32,6 @@ public class ViewBlogsEntryViewCountDetailsTest extends BaseTestCase {
 			RuntimeVariables.replace("Blogs Entry Title"));
 		selenium.waitForPageToLoad("30000");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Blogs Test Page");
 		selenium.clickAt("link=Blogs Test Page",
 			RuntimeVariables.replace("Blogs Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -45,7 +43,6 @@ public class ViewBlogsEntryViewCountDetailsTest extends BaseTestCase {
 				"//span[@class='view-count']");
 		RuntimeVariables.setValue("viewCount", viewCount);
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Blogs Test Page");
 		selenium.clickAt("link=Blogs Test Page",
 			RuntimeVariables.replace("Blogs Test Page"));
 		selenium.waitForPageToLoad("30000");

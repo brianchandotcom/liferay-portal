@@ -40,8 +40,8 @@ public class EditBlogsEntryContentDetailsTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Blogs Entry Content"),
 			selenium.getText("//div[@class='entry-body']/p"));
 		assertEquals(RuntimeVariables.replace("Edit"),
-			selenium.getText("//span/a/span"));
-		selenium.click(RuntimeVariables.replace("//span/a/span"));
+			selenium.getText("//td[1]/span/a/span"));
+		selenium.click(RuntimeVariables.replace("//td[1]/span/a/span"));
 		selenium.waitForPageToLoad("30000");
 		selenium.waitForElementPresent(
 			"//textarea[@id='_33_editor' and @style='display: none;']");

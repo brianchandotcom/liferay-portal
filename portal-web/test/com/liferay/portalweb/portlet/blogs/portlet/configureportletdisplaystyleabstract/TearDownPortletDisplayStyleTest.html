@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Blogs Test Page</td>
-	<td>Blogs Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Blogs Test Page</td>
 	<td>Blogs Test Page</td>
@@ -29,28 +24,28 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>//strong/a</td>
+	<td>assertText</td>
+	<td>//span[@title='Options']/ul/li/strong/a</td>
 	<td>Options</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//strong/a</td>
+	<td>//span[@title='Options']/ul/li/strong/a</td>
 	<td>Options</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]</td>
 	<td>Configuration</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]</td>
 	<td>Configuration</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]</td>
 	<td>Configuration</td>
 </tr>
 <tr>
@@ -64,24 +59,19 @@
 	<td>Blogs - Configuration</td>
 </tr>
 <tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/liferay/navigation_interaction.js')]</td>
+	<td>Navigation Interaction</td>
+</tr>
+<tr>
 	<td>waitForVisible</td>
 	<td>link=Display Settings</td>
 	<td>Display Settings</td>
 </tr>
 <tr>
-	<td>clickAt</td>
+	<td>clickAtAndWait</td>
 	<td>link=Display Settings</td>
 	<td>Display Settings</td>
-</tr>
-<tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//select[@id='_86_pageDelta']</td>
-	<td>Maximum Items to Display</td>
 </tr>
 <tr>
 	<td>select</td>
@@ -89,18 +79,13 @@
 	<td>5</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>//select[@id='_86_pageDisplayStyle']</td>
-	<td>Display Template</td>
-</tr>
-<tr>
 	<td>select</td>
-	<td>//select[@id='_86_pageDisplayStyle']</td>
+	<td>//select[@id='_86_displayStyle']</td>
 	<td>Full Content</td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isChecked('_86_enableFlagsCheckbox'))</td>
+	<td>storeChecked</td>
+	<td>//input[@id='_86_enableFlagsCheckbox']</td>
 	<td>enableFlagsChecked</td>
 </tr>
 <tr>
@@ -119,8 +104,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isChecked('_86_enableRatingsCheckbox'))</td>
+	<td>assertChecked</td>
+	<td>//input[@id='_86_enableFlagsCheckbox']</td>
+	<td>Enable Flags</td>
+</tr>
+<tr>
+	<td>storeChecked</td>
+	<td>//input[@id='_86_enableRatingsCheckbox']</td>
 	<td>enableRatingsChecked</td>
 </tr>
 <tr>
@@ -139,8 +129,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isChecked('_86_enableCommentsCheckbox'))</td>
+	<td>assertChecked</td>
+	<td>//input[@id='_86_enableRatingsCheckbox']</td>
+	<td>Enable Ratings</td>
+</tr>
+<tr>
+	<td>storeChecked</td>
+	<td>//input[@id='_86_enableCommentsCheckbox']</td>
 	<td>enableCommentsChecked</td>
 </tr>
 <tr>
@@ -159,8 +154,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isChecked('_86_enableCommentRatingsCheckbox'))</td>
+	<td>assertChecked</td>
+	<td>//input[@id='_86_enableCommentsCheckbox']</td>
+	<td>Enable Comments</td>
+</tr>
+<tr>
+	<td>storeChecked</td>
+	<td>//input[@id='_86_enableCommentRatingsCheckbox']</td>
 	<td>enableCommentRatingsChecked</td>
 </tr>
 <tr>
@@ -179,9 +179,44 @@
 	<td></td>
 </tr>
 <tr>
+	<td>assertChecked</td>
+	<td>//input[@id='_86_enableCommentRatingsCheckbox']</td>
+	<td>Enable Comment Ratings</td>
+</tr>
+<tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
+</tr>
+<tr>
+	<td>assertSelectedLabel</td>
+	<td>//select[@id='_86_pageDelta']</td>
+	<td>5</td>
+</tr>
+<tr>
+	<td>assertSelectedLabel</td>
+	<td>//select[@id='_86_displayStyle']</td>
+	<td>Full Content</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@id='_86_enableFlagsCheckbox']</td>
+	<td>Enable Flags</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@id='_86_enableRatingsCheckbox']</td>
+	<td>Enable Ratings</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@id='_86_enableCommentsCheckbox']</td>
+	<td>Enable Comments</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@id='_86_enableCommentRatingsCheckbox']</td>
+	<td>Enable Comment Ratings</td>
 </tr>
 <tr>
 	<td>selectFrame</td>

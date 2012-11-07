@@ -32,19 +32,23 @@ public class ConfigurePortletScopeLayoutCurrentPagePage2Test
 		selenium.waitForPageToLoad("30000");
 		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Options"),
-			selenium.getText("//strong/a"));
-		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
+			selenium.getText("//span[@title='Options']/ul/li/strong/a"));
+		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
+			RuntimeVariables.replace("Options"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]");
 		assertEquals(RuntimeVariables.replace("Configuration"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]",
+			RuntimeVariables.replace("Configuration"));
 		selenium.waitForVisible("//iframe[@id='_33_configurationIframeDialog']");
 		selenium.selectFrame("//iframe[@id='_33_configurationIframeDialog']");
-		selenium.waitForText("link=Scope", "Scope");
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/liferay/navigation_interaction.js')]");
+		selenium.waitForVisible("link=Scope");
 		selenium.clickAt("link=Scope", RuntimeVariables.replace("Scope"));
-		selenium.waitForVisible("//select[@id='_86_scopeType']");
+		selenium.waitForPageToLoad("30000");
 		selenium.select("//select[@id='_86_scopeType']",
 			RuntimeVariables.replace("Select Page"));
 		selenium.waitForVisible("//select[@id='_86_scopeLayoutUuid']");
@@ -53,7 +57,6 @@ public class ConfigurePortletScopeLayoutCurrentPagePage2Test
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForVisible("//div[@class='portlet-msg-success']");
 		assertEquals(RuntimeVariables.replace(
 				"You have successfully updated the setup."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
@@ -61,7 +64,18 @@ public class ConfigurePortletScopeLayoutCurrentPagePage2Test
 			selenium.getSelectedLabel("//select[@id='_86_scopeLayoutUuid']"));
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("//li[@id='_145_mySites']/a/span");
+		selenium.clickAt("link=Blogs Test Page2",
+			RuntimeVariables.replace("Blogs Test Page2"));
+		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("Blogs (Blogs Test Page2)"),
+			selenium.getText("//span[@class='portlet-title-text']"));
+		selenium.open("/web/guest/home/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
 		selenium.waitForVisible("link=Control Panel");
 		selenium.clickAt("link=Control Panel",

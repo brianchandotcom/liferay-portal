@@ -25,10 +25,10 @@ public class RateBlogsEntryTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Blogs Test Page");
 		selenium.clickAt("link=Blogs Test Page",
 			RuntimeVariables.replace("Blogs Test Page"));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(5000);
 		selenium.waitForVisible(
 			"xPath=(//div[@class='aui-rating-label-element'])[2]");
 		assertEquals(RuntimeVariables.replace("Average (0 Votes)"),

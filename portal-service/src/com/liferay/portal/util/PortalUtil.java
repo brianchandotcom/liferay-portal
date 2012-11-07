@@ -50,6 +50,7 @@ import java.util.TimeZone;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletConfig;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
@@ -1325,6 +1326,15 @@ public class PortalUtil {
 		throws PortalException, SystemException {
 
 		return getPortal().isAllowAddPortletDefaultResource(request, portlet);
+	}
+
+	public static void invokeTaglibDiscussion(
+			PortletConfig portletConfig, ActionRequest actionRequest,
+			ActionResponse actionResponse)
+		throws Exception {
+
+		getPortal().invokeTaglibDiscussion(
+			portletConfig, actionRequest, actionResponse);
 	}
 
 	public static boolean isCDNDynamicResourcesEnabled(

@@ -286,12 +286,38 @@ public class MBThreadLocalServiceWrapper implements MBThreadLocalService,
 			categoryId, status);
 	}
 
+	/**
+	* @deprecated {@link #getGroupThreads(long, QueryDefinition)}
+	*/
 	public java.util.List<com.liferay.portlet.messageboards.model.MBThread> getGroupThreads(
 		long groupId, int status, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _mbThreadLocalService.getGroupThreads(groupId, status, start, end);
 	}
 
+	public java.util.List<com.liferay.portlet.messageboards.model.MBThread> getGroupThreads(
+		long groupId, long userId, boolean subscribed,
+		boolean includeAnonymous,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _mbThreadLocalService.getGroupThreads(groupId, userId,
+			subscribed, includeAnonymous, queryDefinition);
+	}
+
+	public java.util.List<com.liferay.portlet.messageboards.model.MBThread> getGroupThreads(
+		long groupId, long userId, boolean subscribed,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _mbThreadLocalService.getGroupThreads(groupId, userId,
+			subscribed, queryDefinition);
+	}
+
+	/**
+	* @deprecated {@link #getGroupThreads(
+	long, long, boolean, boolean, QueryDefinition)}
+	*/
 	public java.util.List<com.liferay.portlet.messageboards.model.MBThread> getGroupThreads(
 		long groupId, long userId, int status, boolean subscribed,
 		boolean includeAnonymous, int start, int end)
@@ -301,6 +327,10 @@ public class MBThreadLocalServiceWrapper implements MBThreadLocalService,
 			subscribed, includeAnonymous, start, end);
 	}
 
+	/**
+	* @deprecated {@link #getGroupThreads(
+	long, long, boolean, QueryDefinition)}
+	*/
 	public java.util.List<com.liferay.portlet.messageboards.model.MBThread> getGroupThreads(
 		long groupId, long userId, int status, boolean subscribed, int start,
 		int end)
@@ -310,6 +340,10 @@ public class MBThreadLocalServiceWrapper implements MBThreadLocalService,
 			subscribed, start, end);
 	}
 
+	/**
+	* @deprecated {@link #getGroupThreads(
+	long, long, QueryDefinition)}
+	*/
 	public java.util.List<com.liferay.portlet.messageboards.model.MBThread> getGroupThreads(
 		long groupId, long userId, int status, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -318,17 +352,61 @@ public class MBThreadLocalServiceWrapper implements MBThreadLocalService,
 			start, end);
 	}
 
+	public java.util.List<com.liferay.portlet.messageboards.model.MBThread> getGroupThreads(
+		long groupId, long userId,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _mbThreadLocalService.getGroupThreads(groupId, userId,
+			queryDefinition);
+	}
+
+	public java.util.List<com.liferay.portlet.messageboards.model.MBThread> getGroupThreads(
+		long groupId,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _mbThreadLocalService.getGroupThreads(groupId, queryDefinition);
+	}
+
+	/**
+	* @deprecated {@link #getGroupThreadsCount(
+	long, QueryDefinition)}
+	*/
 	public int getGroupThreadsCount(long groupId, int status)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _mbThreadLocalService.getGroupThreadsCount(groupId, status);
 	}
 
+	public int getGroupThreadsCount(long groupId, long userId,
+		boolean subscribed, boolean includeAnonymous,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _mbThreadLocalService.getGroupThreadsCount(groupId, userId,
+			subscribed, includeAnonymous, queryDefinition);
+	}
+
+	public int getGroupThreadsCount(long groupId, long userId,
+		boolean subscribed,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _mbThreadLocalService.getGroupThreadsCount(groupId, userId,
+			subscribed, queryDefinition);
+	}
+
+	/**
+	* @deprecated {@link #getGroupThreadsCount(
+	long, long, QueryDefinition)}
+	*/
 	public int getGroupThreadsCount(long groupId, long userId, int status)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _mbThreadLocalService.getGroupThreadsCount(groupId, userId,
 			status);
 	}
 
+	/**
+	* @deprecated {@link #getGroupThreadsCount(
+	long, long, boolean, QueryDefinition)}
+	*/
 	public int getGroupThreadsCount(long groupId, long userId, int status,
 		boolean subscribed)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -336,11 +414,29 @@ public class MBThreadLocalServiceWrapper implements MBThreadLocalService,
 			status, subscribed);
 	}
 
+	/**
+	* @deprecated {@link #getGroupThreadsCount(
+	long, long, boolean, boolean, QueryDefinition)}
+	*/
 	public int getGroupThreadsCount(long groupId, long userId, int status,
 		boolean subscribed, boolean includeAnonymous)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _mbThreadLocalService.getGroupThreadsCount(groupId, userId,
 			status, subscribed, includeAnonymous);
+	}
+
+	public int getGroupThreadsCount(long groupId, long userId,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _mbThreadLocalService.getGroupThreadsCount(groupId, userId,
+			queryDefinition);
+	}
+
+	public int getGroupThreadsCount(long groupId,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _mbThreadLocalService.getGroupThreadsCount(groupId,
+			queryDefinition);
 	}
 
 	public java.util.List<com.liferay.portlet.messageboards.model.MBThread> getNoAssetThreads()

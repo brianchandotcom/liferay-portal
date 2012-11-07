@@ -1,0 +1,25 @@
+<macros>
+	<macrodef name="signIn" params="email,password">
+		<action name="Home" command="open" path="URL_GUEST" />
+
+		<action name="PortletSignIn" command="type" path="EMAIL_ADDRESS_FIELD" value="${email}" />
+		<action name="PortletSignIn" command="type" path="PASSWORD_FIELD" value="${password}" />
+		<action name="PortletSignIn" command="check" path="REMEMBER_ME_LINK" />
+		<action name="PortletSignIn" command="click" path="SIGN_IN_LINK" />
+
+		<if name="PortletSignIn" command="isElementPresent" path="I_AGREE_LINK">
+			<action name="PortletSignIn" command="click" path="I_AGREE_LINK" />
+		</if>
+
+		<if name="PortletSignIn" command="isElementPresent" path="ANSWER_FIELD">
+			<action name="PortletSignIn" command="type" path="ANSWER_FIELD" value="test" />
+			<action name="PortletSignIn" command="click" path="SAVE_LINK" />
+		</if>
+	</macrodef>
+
+	<macrodef name="signOut">
+		<action name="Home" command="open" path="URL_GUEST" />
+
+		<action name="PortletSignIn" command="click" path="SIGN_OUT_LINK" />
+	</macrodef>
+</macros>

@@ -1,0 +1,43 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>ControlPanelBlogsEntryCommentAddBot</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">ControlPanelBlogsEntryCommentAdd</td></tr>
+</thead><tbody>
+<tr>
+	<td>BLOGS_COMMENT_FIELD_BODY</td>
+	<td>//textarea[contains(@id,'_postReplyBody0')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BLOGS_COMMENT_LINK_CANCEL</td>
+	<td>//input[@value='Cancel']</td>
+	<td>Cancel</td>
+</tr>
+<tr>
+	<td>BLOGS_COMMENT_LINK_SAVE</td>
+	<td>//input[@value='Reply']</td>
+	<td>Reply</td>
+</tr>
+<tr>
+	<td>BLOGS_COMMENT_LINK_SUBSCRIBE_ME</td>
+	<td>_161_subscribeCheckbox</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BLOGS_COMMENT_TEXT_SUBSCRIBE_ME</td>
+	<td>//label[@for='_161_subscribeCheckbox']</td>
+	<td>Suscribe Checkbox</td>
+</tr>
+<tr>
+	<td>BLOGS_COMMENT_TEXT_SUCCESS</td>
+	<td>_161_discussion-status-messages</td>
+	<td>Your request processed successfully.</td>
+</tr>
+</tbody></table>
+</body>
+</html>

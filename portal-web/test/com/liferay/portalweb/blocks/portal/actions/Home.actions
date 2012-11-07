@@ -1,0 +1,29 @@
+<actions>
+	<actiondef name="click">
+		<conditional elements="ADD_LINK,GOTO_LINK,MANAGE_LINK">
+			<selenium command="clickAt" target="//div[@id='dockbar']" value="" />
+			<selenium command="waitForElementPresent" target="//script[contains(@src,'/aui/aui-button-item/aui-button-item-min.js')]" />
+			<defaultcommand />
+		</conditional>
+
+		<conditional elements="ADD_LINK_APPLICATION">
+			<units command="partialTextClickAt" />
+		</conditional>
+
+		<conditional elements="GOTO_LINK_CONTROL_PANEL">
+			<units command="textClickAtAndWait" />
+		</conditional>
+
+		<conditional startswith="link=">
+			<units command="textClickAtAndWait" />
+		</conditional>
+	</actiondef>
+
+	<actiondef name="mouseOver">
+		<conditional elements="ADD_LINK,GOTO_LINK,MANAGE_LINK">
+			<selenium command="clickAt" target="//div[@id='dockbar']" value="" />
+			<selenium command="waitForElementPresent" target="//script[contains(@src,'/aui/aui-button-item/aui-button-item-min.js')]" />
+			<defaultcommand />
+		</conditional>
+	</actiondef>
+</actions>

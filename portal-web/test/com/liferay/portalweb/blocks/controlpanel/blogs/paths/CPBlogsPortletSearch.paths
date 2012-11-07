@@ -1,0 +1,103 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>ControlPanelBlogsPortletSearch</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">ControlPanelBlogsPortletSearch</td></tr>
+</thead><tbody>
+<tr>
+	<td>PORTLET_TITLE</td>
+	<td>//span[@class='portlet-title-text']</td>
+	<td>Blogs</td>
+</tr>
+<tr>
+	<td>PORTLET_DESCRIPTION</td>
+	<td>//div[@id='cpContextPanelTemplate']</td>
+	<td>Blogs are short journals, articles, or diary entries that provide a standard blog experience. Administrators can add, view, update and delete blog entries.</td>
+</tr>
+<tr>
+	<td>PAGE_TITLE</td>
+	<td>//h1[@class='header-title']/span</td>
+	<td>Search</td>
+</tr>
+<tr>
+	<td>BACK_LINK</td>
+	<td>//a[@id='_161_TabsBack']</td>
+	<td>Back</td>
+</tr>
+<tr>
+	<td>SEARCH_FIELD</td>
+	<td>//input[@id='_161_keywords']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_BUTTON</td>
+	<td>//input[@value='Search']</td>
+	<td>Search</td>
+</tr>
+<tr>
+	<td>PORTLET_INFO</td>
+	<td>//div[@class='portlet-msg-info']</td>
+	<td>No entries were found that matched the keywords:</td>
+</tr>
+<tr>
+	<td>TABLE_NUMBER_HEADER</td>
+	<td>//tr[1]/th[1]</td>
+	<td>#</td>
+</tr>
+<tr>
+	<td>TABLE_ENTRY_HEADER</td>
+	<td>//tr[1]/th[2]</td>
+	<td>Entry</td>
+</tr>
+<tr>
+	<td>TABLE_NUMBER</td>
+	<td>//tr[contains(.,'Blogs Entry Title')]/td[1]</td>
+	<td>1.</td>
+</tr>
+<tr>
+	<td>TABLE_NUMBER_1</td>
+	<td>//tr[3]/td[1]</td>
+	<td>1.</td>
+</tr>
+<tr>
+	<td>TABLE_NUMBER_2</td>
+	<td>//tr[3]/td[1]</td>
+	<td>2.</td>
+</tr>
+<tr>
+	<td>TABLE_NUMBER_3</td>
+	<td>//tr[3]/td[1]</td>
+	<td>3.</td>
+</tr>
+<tr>
+	<td>TABLE_ENTRY</td>
+	<td>//tr[contains(.,'Blogs Entry Title')]/td[2]/a</td>
+	<td>Blogs Entry Title</td>
+</tr>
+<tr>
+	<td>TABLE_ENTRY_1</td>
+	<td>//tr[3]/td[2]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TABLE_ENTRY_2</td>
+	<td>//tr[3]/td[2]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TABLE_ENTRY_3</td>
+	<td>//tr[3]/td[2]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_RESULTS</td>
+	<td>//div[@class='search-results']</td>
+	<td>Showing 1 result.</td>
+</tr>
+</tbody></table>
+</body>
+</html>

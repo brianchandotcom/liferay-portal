@@ -1,0 +1,7 @@
+<actions>
+	<actiondef name="assertTextEquals">
+		<conditional elements="BLOGS_ENTRY_TEXT_RATING_AVERAGE">
+			<units command="assertPartialText" />
+		</conditional>
+	</actiondef>
+</actions>

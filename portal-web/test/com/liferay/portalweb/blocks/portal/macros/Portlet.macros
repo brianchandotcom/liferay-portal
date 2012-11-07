@@ -1,0 +1,15 @@
+<macros>
+	<macrodef name="addPortlet" params="portlet">
+		<macro name="Navigation" command="navigatePortletPage">
+			<param name="page" value="${portlet}" />
+		</macro>
+
+		<action name="Home" command="mouseOver" path="ADD_LINK" />
+		<action name="Home" command="click" path="ADD_LINK_APPLICATION" />
+
+		<action name="AddApplication" command="type" path="PORTLET_FIELD_SEARCH" value="${portlet}" value-first-letter="true" />
+		<action name="AddApplication" command="click" locator="//div[@title='${portlet}']/p/a" />
+
+		<action name="Home" command="assertTextEquals" path="PORTLET_TEXT_TITLE" value="${portlet}" />
+	</macrodef>
+</macros>

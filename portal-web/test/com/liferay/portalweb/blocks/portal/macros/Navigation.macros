@@ -1,0 +1,13 @@
+<macros>
+	<macrodef name="navigateControlPanelPage" params="page">
+		<action name="Home" command="open" path="URL_GUEST" />
+		<action name="Home" command="mouseOver" path="GOTO_LINK" />
+		<action name="Home" command="click" path="GOTO_LINK_CONTROL_PANEL" />
+		<action name="Home" command="click" locator="link=${page}" value="${page}" />
+	</macrodef>
+
+	<macrodef name="navigatePortletPage" params="page">
+		<action name="Home" command="open" path="URL_GUEST" />
+		<action name="Home" command="click" locator="link=${page} Test Page" value="${page} Test Page" />
+	</macrodef>
+</macros>

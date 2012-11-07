@@ -1,0 +1,15 @@
+<macros>
+	<macrodef name="emptyRecycleBin">
+		<macro name="Navigation" command="navigateControlPanelPage">
+			<param name="page" value="Recycle Bin" />
+		</macro>
+
+		<while name="CPRecycleBinPortlet" command="isElementPresent" path="EMPTY_RECYCLE_BIN">
+			<action name="CPRecycleBinPortlet" command="click" path="EMPTY_RECYCLE_BIN" />
+			<action name="CPRecycleBinPortlet" command="confirm" path="EMPTY_RECYCLE_BIN_CONFIRM" />
+			<action name="CPRecycleBinPortlet" command="assertTextEquals" path="PORTLET_SUCCESS" />
+		</while>
+
+		<action name="CPRecycleBinPortlet" command="assertTextEquals" path="TABLE_EMPTY_MESSAGE" />
+	</macrodef>
+</macros>

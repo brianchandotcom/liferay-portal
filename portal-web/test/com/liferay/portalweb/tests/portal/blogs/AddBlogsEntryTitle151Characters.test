@@ -1,0 +1,25 @@
+<xml>
+	<setup>
+	</setup>
+	<steps>
+		<macro name="Navigation" command="navigateControlPanelPage">
+			<param name="page" value="Blogs" />
+		</macro>
+
+		<action name="CPBlogsPortlet" command="click" path="PORTLET_LINK_ADD" />
+
+		<action name="CPBlogsEntryAdd" command="type" path="CONTENT_FIELD_TITLE" value="|||||||||1|||||||||2|||||||||3|||||||||4|||||||||5|||||||||6|||||||||7|||||||||8|||||||||9||||||||10||||||||11||||||||12||||||||13||||||||14||||||||15X" />
+		<action name="CPBlogsEntryAdd" command="type" path="CONTENT_FIELD_CONTENT" value="Blogs Entry Content" />
+		<action name="CPBlogsEntryAdd" command="click" path="CONTENT_LINK_SAVE" />
+
+		<action name="CPBlogsPortlet" command="assertTextEquals" path="PORTLET_TEXT_SUCCESS" />
+		<action name="CPBlogsPortlet" command="click" path="BLOGS_ENTRY_LINK_TITLE_1" value="|||||||||1|||||||||2|||||||||3|||||||||4|||||||||5|||||||||6|||||||||7|||||||||8|||||||||9||||||||10||||||||11||||||||12||||||||13||||||||14||||||||15" />
+
+		<action name="CPBlogsEntryView" command="click" path="BLOGS_ENTRY_TEXT_TITLE" value="|||||||||1|||||||||2|||||||||3|||||||||4|||||||||5|||||||||6|||||||||7|||||||||8|||||||||9||||||||10||||||||11||||||||12||||||||13||||||||14||||||||15" />
+		<action name="CPBlogsEntryView" command="click" path="BLOGS_ENTRY_TEXT_CONTENT" value="Blogs Entry Content" />
+	</steps>
+	<teardown>
+		<macro name="CPBlogsEntry" command="tearDownBlogsEntry" />
+		<macro name="CPRecycleBin" command="emptyRecycleBin" />
+	</teardown>
+</xml>

@@ -111,12 +111,14 @@ public class PathsXMLToJavaBuilder extends SeleniumXMLToJavaBuilder {
 			String locator = paramList.get(1).getText();
 			String value = paramList.get(2).getText();
 
-			sb.append("private static String[] _");
-			sb.append(key);
-			sb.append(" = {");
-			sb.append("\"" + locator + "\",");
-			sb.append("\"" + value + "\"");
-			sb.append("};");
+			if (!key.equals("")) {
+				sb.append("private static String[] _");
+				sb.append(key);
+				sb.append(" = {");
+				sb.append("\"" + locator + "\",");
+				sb.append("\"" + value + "\"");
+				sb.append("};");
+			}
 		}
 
 		sb.append("private static Map<String, String[]> _paths = ");
@@ -129,11 +131,13 @@ public class PathsXMLToJavaBuilder extends SeleniumXMLToJavaBuilder {
 
 			String key = paramList.get(0).getText();
 
-			sb.append("_paths.put(\"");
-			sb.append(key);
-			sb.append("\", _");
-			sb.append(key);
-			sb.append(");");
+			if (!key.equals("")) {
+				sb.append("_paths.put(\"");
+				sb.append(key);
+				sb.append("\", _");
+				sb.append(key);
+				sb.append(");");
+			}
 		}
 
 		sb.append("}");

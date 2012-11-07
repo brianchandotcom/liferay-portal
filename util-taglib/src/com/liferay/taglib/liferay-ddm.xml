@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+
+<taglibs short-name="ddm" uri="http://liferay.com/tld/ddm" tlib-version="1.0">
+	<authors>
+		<author>Bruno Basto</author>
+	</authors>
+	<component name="HTML" bodyContent="true" writeJSP="true">
+		<attributes>
+			<attribute>
+				<name>className</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+				<required>true</required>
+			</attribute>
+			<attribute>
+				<name>classPK</name>
+				<inputType>long</inputType>
+				<outputType>long</outputType>
+				<required>true</required>
+			</attribute>
+			<attribute>
+				<name>fields</name>
+				<inputType>com.liferay.portlet.dynamicdatamapping.storage.Fields</inputType>
+				<outputType>com.liferay.portlet.dynamicdatamapping.storage.Fields</outputType>
+			</attribute>
+			<attribute>
+				<name>fieldsNamespace</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
+			<attribute>
+				<name>mode</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
+			<attribute>
+				<name>readOnly</name>
+				<inputType>boolean</inputType>
+				<outputType>boolean</outputType>
+			</attribute>
+			<attribute>
+				<name>repeatable</name>
+				<inputType>boolean</inputType>
+				<outputType>boolean</outputType>
+				<defaultValue>true</defaultValue>
+			</attribute>
+		</attributes>
+	</component>
+</taglibs>

@@ -80,7 +80,7 @@ if (record != null) {
 		}
 		%>
 
-		<%= DDMXSDUtil.getHTML(pageContext, ddmStructure.getCompleteXsd(), fields, locale) %>
+		<ddm:html className="<%= DDMStructure.class.getName() %>" classPK="<%= ddmStructure.getStructureId() %>" fields="<%= fields %>" />
 
 		<%
 		boolean pending = false;

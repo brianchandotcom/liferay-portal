@@ -269,9 +269,12 @@ public class InputTag extends BaseInputTag {
 			(Map<String, List<ValidatorTag>>)request.getAttribute(
 				"aui:form:validatorTagsMap");
 
-		List<ValidatorTag> validatorTags = ListUtil.fromMapValues(_validators);
+		if (validatorTagsMap != null) {
+			List<ValidatorTag> validatorTags = ListUtil.fromMapValues(
+				_validators);
 
-		validatorTagsMap.put(_inputName, validatorTags);
+			validatorTagsMap.put(_inputName, validatorTags);
+		}
 	}
 
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;

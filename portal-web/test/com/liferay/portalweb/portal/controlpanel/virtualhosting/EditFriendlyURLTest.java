@@ -59,6 +59,7 @@ public class EditFriendlyURLTest extends BaseTestCase {
 				"Site URL"));
 		selenium.clickAt("//a[@id='_165_siteUrlLink']",
 			RuntimeVariables.replace("Site URL"));
+		selenium.waitForVisible("//input[@name='_165_friendlyURL']");
 		selenium.type("//input[@name='_165_friendlyURL']",
 			RuntimeVariables.replace("/alpha"));
 		selenium.clickAt("//input[@value='Save']",

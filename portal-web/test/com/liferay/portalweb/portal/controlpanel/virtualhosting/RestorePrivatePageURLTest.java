@@ -59,6 +59,7 @@ public class RestorePrivatePageURLTest extends BaseTestCase {
 				"Site URL"));
 		selenium.clickAt("//a[@id='_165_siteUrlLink']",
 			RuntimeVariables.replace("Site URL"));
+		selenium.waitForVisible("//input[@name='_165_privateVirtualHost']");
 		selenium.type("//input[@name='_165_privateVirtualHost']",
 			RuntimeVariables.replace(""));
 		selenium.clickAt("//input[@value='Save']",

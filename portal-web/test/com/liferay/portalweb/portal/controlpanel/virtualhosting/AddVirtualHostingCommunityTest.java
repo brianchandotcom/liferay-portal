@@ -50,7 +50,6 @@ public class AddVirtualHostingCommunityTest extends BaseTestCase {
 		selenium.click(RuntimeVariables.replace(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Blank Site')]"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForVisible("//input[@id='_134_name']");
 		selenium.type("//input[@id='_134_name']",
 			RuntimeVariables.replace("Virtual Hosting Community"));
 		selenium.clickAt("//input[@value='Save']",

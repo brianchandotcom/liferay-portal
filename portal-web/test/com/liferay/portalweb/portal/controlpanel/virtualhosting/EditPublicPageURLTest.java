@@ -59,6 +59,7 @@ public class EditPublicPageURLTest extends BaseTestCase {
 				"Site URL"));
 		selenium.clickAt("//a[@id='_165_siteUrlLink']",
 			RuntimeVariables.replace("Site URL"));
+		selenium.waitForVisible("//input[@name='_165_publicVirtualHost']");
 		selenium.type("//input[@name='_165_publicVirtualHost']",
 			RuntimeVariables.replace("www.able.com"));
 		selenium.clickAt("//input[@value='Save']",

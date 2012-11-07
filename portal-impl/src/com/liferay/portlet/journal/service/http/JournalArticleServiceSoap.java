@@ -355,13 +355,13 @@ public class JournalArticleServiceSoap {
 	}
 
 	public static com.liferay.portlet.journal.model.JournalArticleSoap[] getArticlesByUserId(
-		long groupId, long userId, int start, int end,
+		long groupId, long userId, long classNameId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator obc)
 		throws RemoteException {
 		try {
 			java.util.List<com.liferay.portlet.journal.model.JournalArticle> returnValue =
 				JournalArticleServiceUtil.getArticlesByUserId(groupId, userId,
-					start, end, obc);
+					classNameId, start, end, obc);
 
 			return com.liferay.portlet.journal.model.JournalArticleSoap.toSoapModels(returnValue);
 		}
@@ -417,11 +417,11 @@ public class JournalArticleServiceSoap {
 		}
 	}
 
-	public static int getArticlesCountByUserId(long groupId, long userId)
-		throws RemoteException {
+	public static int getArticlesCountByUserId(long groupId, long userId,
+		long classNameId) throws RemoteException {
 		try {
 			int returnValue = JournalArticleServiceUtil.getArticlesCountByUserId(groupId,
-					userId);
+					userId, classNameId);
 
 			return returnValue;
 		}

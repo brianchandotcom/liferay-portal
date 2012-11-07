@@ -317,7 +317,7 @@ public class JournalArticleLocalServiceImpl
 
 		// Workflow
 
-		if (classNameId == 0) {
+		if (classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT) {
 			WorkflowHandlerRegistryUtil.startWorkflowInstance(
 				user.getCompanyId(), groupId, userId,
 				JournalArticle.class.getName(), article.getId(), article,
@@ -359,8 +359,9 @@ public class JournalArticleLocalServiceImpl
 		int displayDateMinute = calendar.get(Calendar.MINUTE);
 
 		return addArticle(
-			userId, groupId, folderId, 0, 0, StringPool.BLANK, true, 1,
-			titleMap, descriptionMap, content, "general", structureId,
+			userId, groupId, folderId,
+			JournalArticleConstants.CLASSNAME_ID_DEFAULT, 0, StringPool.BLANK,
+			true, 1, titleMap, descriptionMap, content, "general", structureId,
 			templateId, null, displayDateMonth, displayDateDay, displayDateYear,
 			displayDateHour, displayDateMinute, 0, 0, 0, 0, 0, true, 0, 0, 0, 0,
 			0, true, true, false, null, null, null, null, serviceContext);
@@ -435,7 +436,8 @@ public class JournalArticleLocalServiceImpl
 
 		List<JournalArticle> articles =
 			journalArticleFinder.findByExpirationDate(
-				0, WorkflowConstants.STATUS_APPROVED,
+				JournalArticleConstants.CLASSNAME_ID_DEFAULT,
+				WorkflowConstants.STATUS_APPROVED,
 				new Date(now.getTime() + _JOURNAL_ARTICLE_CHECK_INTERVAL));
 
 		if (_log.isDebugEnabled()) {
@@ -480,7 +482,8 @@ public class JournalArticleLocalServiceImpl
 		}
 
 		articles = journalArticleFinder.findByReviewDate(
-			0, now, new Date(now.getTime() - _JOURNAL_ARTICLE_CHECK_INTERVAL));
+			JournalArticleConstants.CLASSNAME_ID_DEFAULT, now,
+			new Date(now.getTime() - _JOURNAL_ARTICLE_CHECK_INTERVAL));
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
@@ -2395,7 +2398,9 @@ public class JournalArticleLocalServiceImpl
 
 		boolean visible = article.isApproved();
 
-		if (article.getClassNameId() > 0) {
+		if (article.getClassNameId() !=
+			JournalArticleConstants.CLASSNAME_ID_DEFAULT) {
+
 			visible = false;
 		}
 
@@ -2558,7 +2563,8 @@ public class JournalArticleLocalServiceImpl
 					}
 				}
 
-				if (article.getClassNameId() == 0) {
+				if (article.getClassNameId() ==
+					JournalArticleConstants.CLASSNAME_ID_DEFAULT) {
 
 					// Get the earliest display date and latest expiration date
 					// among all article versions
@@ -2592,7 +2598,8 @@ public class JournalArticleLocalServiceImpl
 			}
 		}
 
-		if (article.getClassNameId() == 0) {
+		if (article.getClassNameId() ==
+			JournalArticleConstants.CLASSNAME_ID_DEFAULT) {
 
 			// Email
 
@@ -3530,7 +3537,7 @@ public class JournalArticleLocalServiceImpl
 			throw le;
 		}
 
-		if ((classNameId == 0) &&
+		if ((classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT) &&
 			(titleMap.isEmpty() ||
 			 Validator.isNull(titleMap.get(articleDefaultLocale)))) {
 
@@ -3569,7 +3576,9 @@ public class JournalArticleLocalServiceImpl
 					throw new NoSuchTemplateException();
 				}
 			}
-			else if (classNameId == 0) {
+			else if (classNameId ==
+				JournalArticleConstants.CLASSNAME_ID_DEFAULT) {
+
 				throw new NoSuchTemplateException();
 			}
 		}

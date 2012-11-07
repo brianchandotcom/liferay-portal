@@ -44,6 +44,7 @@ import com.liferay.portlet.journal.TemplateNameException;
 import com.liferay.portlet.journal.TemplateSmallImageNameException;
 import com.liferay.portlet.journal.TemplateSmallImageSizeException;
 import com.liferay.portlet.journal.TemplateXslException;
+import com.liferay.portlet.journal.model.JournalArticleConstants;
 import com.liferay.portlet.journal.model.JournalStructure;
 import com.liferay.portlet.journal.model.JournalTemplate;
 import com.liferay.portlet.journal.model.JournalTemplateConstants;
@@ -313,7 +314,9 @@ public class JournalTemplateLocalServiceImpl
 		}
 		else {
 			if (journalArticlePersistence.countByG_C_T(
-					template.getGroupId(), 0, template.getTemplateId()) > 0) {
+					template.getGroupId(),
+					JournalArticleConstants.CLASSNAME_ID_DEFAULT,
+					template.getTemplateId()) > 0) {
 
 				throw new RequiredTemplateException();
 			}

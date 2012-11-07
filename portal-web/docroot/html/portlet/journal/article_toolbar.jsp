@@ -39,7 +39,7 @@ if ((article != null) && article.isDraft()) {
 
 	var toolbarChildren = [];
 
-	<c:if test="<%= (article != null) && Validator.isNotNull(structureId) && (classNameId == 0) %>">
+	<c:if test="<%= (article != null) && Validator.isNotNull(structureId) && (classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT) %>">
 		toolbarChildren.push(
 			{
 				icon: 'preview',

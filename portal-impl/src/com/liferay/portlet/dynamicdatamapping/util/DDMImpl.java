@@ -100,6 +100,10 @@ public class DDMImpl implements DDM {
 			DDMTemplate ddmTemplate = DDMTemplateLocalServiceUtil.getTemplate(
 				ddmTemplateId);
 
+			// Clone ddmStructure to make sure changes are never persisted
+
+			ddmStructure = (DDMStructure)ddmStructure.clone();
+
 			ddmStructure.setXsd(ddmTemplate.getScript());
 		}
 		catch (NoSuchTemplateException nste) {

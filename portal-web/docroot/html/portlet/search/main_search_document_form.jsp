@@ -25,6 +25,20 @@ String entryClassName = document.get(Field.ENTRY_CLASS_NAME);
 
 AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(entryClassName);
 
+AssetRenderer assetRenderer = null;
+
+if (assetRendererFactory != null) {
+	long classPK = GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK));
+
+	long resourcePrimKey = GetterUtil.getLong(document.get(Field.ROOT_ENTRY_CLASS_PK));
+
+	if (resourcePrimKey > 0) {
+		classPK = resourcePrimKey;
+	}
+
+	assetRenderer = assetRendererFactory.getAssetRenderer(classPK);
+}
+
 String[] queryTerms = (String[])request.getAttribute("search.jsp-queryTerms");
 
 PortletURL portletURL = (PortletURL)request.getAttribute("search.jsp-portletURL");
@@ -38,8 +52,8 @@ PortletURL portletURL = (PortletURL)request.getAttribute("search.jsp-portletURL"
 	<span class="toggle-details">[+]</span>
 
 	<span class="asset-entry-title">
-		<c:if test="<%= assetRendererFactory != null %>">
-			<img alt="" src="<%= assetRendererFactory.getIconPath(renderRequest) %>" />
+		<c:if test="<%= assetRenderer != null %>">
+			<img alt="" src="<%= assetRenderer.getIconPath(renderRequest) %>" />
 		</c:if>
 
 		<%

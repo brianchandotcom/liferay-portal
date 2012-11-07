@@ -939,6 +939,7 @@
 		<property name="jobTitle" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="loginDate" type="org.hibernate.type.TimestampType" />
 		<property name="loginIP" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="ldapServerId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="lastLoginDate" type="org.hibernate.type.TimestampType" />
 		<property name="lastLoginIP" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="lastFailedLoginDate" type="org.hibernate.type.TimestampType" />

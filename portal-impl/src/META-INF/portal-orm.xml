@@ -1126,6 +1126,7 @@
 				<temporal>TIMESTAMP</temporal>
 			</basic>
 			<basic name="loginIP" />
+			<basic name="ldapServerId" />
 			<basic name="lastLoginDate">
 				<temporal>TIMESTAMP</temporal>
 			</basic>

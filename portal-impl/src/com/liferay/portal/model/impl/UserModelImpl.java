@@ -93,6 +93,7 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 			{ "jobTitle", Types.VARCHAR },
 			{ "loginDate", Types.TIMESTAMP },
 			{ "loginIP", Types.VARCHAR },
+			{ "ldapServerId", Types.BIGINT },
 			{ "lastLoginDate", Types.TIMESTAMP },
 			{ "lastLoginIP", Types.VARCHAR },
 			{ "lastFailedLoginDate", Types.TIMESTAMP },
@@ -103,7 +104,7 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 			{ "emailAddressVerified", Types.BOOLEAN },
 			{ "status", Types.INTEGER }
 		};
-	public static final String TABLE_SQL_CREATE = "create table User_ (uuid_ VARCHAR(75) null,userId LONG not null primary key,companyId LONG,createDate DATE null,modifiedDate DATE null,defaultUser BOOLEAN,contactId LONG,password_ VARCHAR(75) null,passwordEncrypted BOOLEAN,passwordReset BOOLEAN,passwordModifiedDate DATE null,digest VARCHAR(255) null,reminderQueryQuestion VARCHAR(75) null,reminderQueryAnswer VARCHAR(75) null,graceLoginCount INTEGER,screenName VARCHAR(75) null,emailAddress VARCHAR(75) null,facebookId LONG,openId VARCHAR(1024) null,portraitId LONG,languageId VARCHAR(75) null,timeZoneId VARCHAR(75) null,greeting VARCHAR(255) null,comments STRING null,firstName VARCHAR(75) null,middleName VARCHAR(75) null,lastName VARCHAR(75) null,jobTitle VARCHAR(100) null,loginDate DATE null,loginIP VARCHAR(75) null,lastLoginDate DATE null,lastLoginIP VARCHAR(75) null,lastFailedLoginDate DATE null,failedLoginAttempts INTEGER,lockout BOOLEAN,lockoutDate DATE null,agreedToTermsOfUse BOOLEAN,emailAddressVerified BOOLEAN,status INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table User_ (uuid_ VARCHAR(75) null,userId LONG not null primary key,companyId LONG,createDate DATE null,modifiedDate DATE null,defaultUser BOOLEAN,contactId LONG,password_ VARCHAR(75) null,passwordEncrypted BOOLEAN,passwordReset BOOLEAN,passwordModifiedDate DATE null,digest VARCHAR(255) null,reminderQueryQuestion VARCHAR(75) null,reminderQueryAnswer VARCHAR(75) null,graceLoginCount INTEGER,screenName VARCHAR(75) null,emailAddress VARCHAR(75) null,facebookId LONG,openId VARCHAR(1024) null,portraitId LONG,languageId VARCHAR(75) null,timeZoneId VARCHAR(75) null,greeting VARCHAR(255) null,comments STRING null,firstName VARCHAR(75) null,middleName VARCHAR(75) null,lastName VARCHAR(75) null,jobTitle VARCHAR(100) null,loginDate DATE null,loginIP VARCHAR(75) null,ldapServerId LONG,lastLoginDate DATE null,lastLoginIP VARCHAR(75) null,lastFailedLoginDate DATE null,failedLoginAttempts INTEGER,lockout BOOLEAN,lockoutDate DATE null,agreedToTermsOfUse BOOLEAN,emailAddressVerified BOOLEAN,status INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table User_";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
@@ -172,6 +173,7 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 		model.setJobTitle(soapModel.getJobTitle());
 		model.setLoginDate(soapModel.getLoginDate());
 		model.setLoginIP(soapModel.getLoginIP());
+		model.setLdapServerId(soapModel.getLdapServerId());
 		model.setLastLoginDate(soapModel.getLastLoginDate());
 		model.setLastLoginIP(soapModel.getLastLoginIP());
 		model.setLastFailedLoginDate(soapModel.getLastFailedLoginDate());
@@ -309,6 +311,7 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 		attributes.put("jobTitle", getJobTitle());
 		attributes.put("loginDate", getLoginDate());
 		attributes.put("loginIP", getLoginIP());
+		attributes.put("ldapServerId", getLdapServerId());
 		attributes.put("lastLoginDate", getLastLoginDate());
 		attributes.put("lastLoginIP", getLastLoginIP());
 		attributes.put("lastFailedLoginDate", getLastFailedLoginDate());
@@ -504,6 +507,12 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 
 		if (loginIP != null) {
 			setLoginIP(loginIP);
+		}
+
+		Long ldapServerId = (Long)attributes.get("ldapServerId");
+
+		if (ldapServerId != null) {
+			setLdapServerId(ldapServerId);
 		}
 
 		Date lastLoginDate = (Date)attributes.get("lastLoginDate");
@@ -1050,6 +1059,15 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 	}
 
 	@JSON
+	public long getLdapServerId() {
+		return _ldapServerId;
+	}
+
+	public void setLdapServerId(long ldapServerId) {
+		_ldapServerId = ldapServerId;
+	}
+
+	@JSON
 	public Date getLastLoginDate() {
 		return _lastLoginDate;
 	}
@@ -1221,6 +1239,7 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 		userImpl.setJobTitle(getJobTitle());
 		userImpl.setLoginDate(getLoginDate());
 		userImpl.setLoginIP(getLoginIP());
+		userImpl.setLdapServerId(getLdapServerId());
 		userImpl.setLastLoginDate(getLastLoginDate());
 		userImpl.setLastLoginIP(getLastLoginIP());
 		userImpl.setLastFailedLoginDate(getLastFailedLoginDate());
@@ -1519,6 +1538,8 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 			userCacheModel.loginIP = null;
 		}
 
+		userCacheModel.ldapServerId = getLdapServerId();
+
 		Date lastLoginDate = getLastLoginDate();
 
 		if (lastLoginDate != null) {
@@ -1569,7 +1590,7 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(79);
+		StringBundler sb = new StringBundler(81);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -1631,6 +1652,8 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 		sb.append(getLoginDate());
 		sb.append(", loginIP=");
 		sb.append(getLoginIP());
+		sb.append(", ldapServerId=");
+		sb.append(getLdapServerId());
 		sb.append(", lastLoginDate=");
 		sb.append(getLastLoginDate());
 		sb.append(", lastLoginIP=");
@@ -1655,7 +1678,7 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 	}
 
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(121);
+		StringBundler sb = new StringBundler(124);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.User");
@@ -1782,6 +1805,10 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 		sb.append(getLoginIP());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>ldapServerId</column-name><column-value><![CDATA[");
+		sb.append(getLdapServerId());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>lastLoginDate</column-name><column-value><![CDATA[");
 		sb.append(getLastLoginDate());
 		sb.append("]]></column-value></column>");
@@ -1874,6 +1901,7 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 	private String _jobTitle;
 	private Date _loginDate;
 	private String _loginIP;
+	private long _ldapServerId;
 	private Date _lastLoginDate;
 	private String _lastLoginIP;
 	private Date _lastFailedLoginDate;

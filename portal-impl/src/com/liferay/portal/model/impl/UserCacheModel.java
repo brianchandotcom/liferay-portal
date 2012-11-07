@@ -36,7 +36,7 @@ import java.util.Date;
 public class UserCacheModel implements CacheModel<User>, Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(79);
+		StringBundler sb = new StringBundler(81);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -98,6 +98,8 @@ public class UserCacheModel implements CacheModel<User>, Externalizable {
 		sb.append(loginDate);
 		sb.append(", loginIP=");
 		sb.append(loginIP);
+		sb.append(", ldapServerId=");
+		sb.append(ldapServerId);
 		sb.append(", lastLoginDate=");
 		sb.append(lastLoginDate);
 		sb.append(", lastLoginIP=");
@@ -286,6 +288,8 @@ public class UserCacheModel implements CacheModel<User>, Externalizable {
 			userImpl.setLoginIP(loginIP);
 		}
 
+		userImpl.setLdapServerId(ldapServerId);
+
 		if (lastLoginDate == Long.MIN_VALUE) {
 			userImpl.setLastLoginDate(null);
 		}
@@ -357,6 +361,7 @@ public class UserCacheModel implements CacheModel<User>, Externalizable {
 		jobTitle = objectInput.readUTF();
 		loginDate = objectInput.readLong();
 		loginIP = objectInput.readUTF();
+		ldapServerId = objectInput.readLong();
 		lastLoginDate = objectInput.readLong();
 		lastLoginIP = objectInput.readUTF();
 		lastFailedLoginDate = objectInput.readLong();
@@ -508,6 +513,7 @@ public class UserCacheModel implements CacheModel<User>, Externalizable {
 			objectOutput.writeUTF(loginIP);
 		}
 
+		objectOutput.writeLong(ldapServerId);
 		objectOutput.writeLong(lastLoginDate);
 
 		if (lastLoginIP == null) {
@@ -556,6 +562,7 @@ public class UserCacheModel implements CacheModel<User>, Externalizable {
 	public String jobTitle;
 	public long loginDate;
 	public String loginIP;
+	public long ldapServerId;
 	public long lastLoginDate;
 	public String lastLoginIP;
 	public long lastFailedLoginDate;

@@ -2044,6 +2044,7 @@ create table User_ (
 	jobTitle VARCHAR(100) null,
 	loginDate DATE null,
 	loginIP VARCHAR(75) null,
+	ldapServerId LONG,
 	lastLoginDate DATE null,
 	lastLoginIP VARCHAR(75) null,
 	lastFailedLoginDate DATE null,

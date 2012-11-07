@@ -595,7 +595,7 @@ if (!selectableTree) {
 				dropAppend: function(event) {
 					var tree = event.tree;
 
-					var index = tree.dragNode.get('parentNode').indexOf(tree.dragNode);
+					var index = tree.dragNode.get('parentNode').getChildrenLength() - 1;
 
 					TreeUtil.updateLayoutParent(
 						TreeUtil.extractPlid(tree.dragNode),

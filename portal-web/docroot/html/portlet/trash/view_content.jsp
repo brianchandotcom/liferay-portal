@@ -82,13 +82,13 @@
 		<c:if test="<%= !assetRenderer.getAssetRendererFactoryClassName().equals(DLFileEntryAssetRendererFactory.CLASS_NAME) %>">
 			<div class="asset-ratings">
 				<liferay-ui:ratings
-					className="<%= entry.getClassName() %>"
-					classPK="<%= entry.getClassPK() %>"
+					className="<%= className %>"
+					classPK="<%= classPK %>"
 				/>
 			</div>
 
 			<%
-			AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(entry.getClassName(), entry.getClassPK());
+			AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(className, classPK);
 			%>
 
 			<div class="asset-related-assets">
@@ -104,13 +104,13 @@
 
 				<div class="asset-discussion">
 					<liferay-ui:discussion
-						className="<%= entry.getClassName() %>"
-						classPK="<%= entry.getClassPK() %>"
+						className="<%= className %>"
+						classPK="<%= classPK %>"
 						formAction="<%= discussionURL %>"
-						formName='<%= "fm" + entry.getClassPK() %>'
+						formName='<%= "fm" + classPK %>'
 						redirect="<%= currentURL %>"
 						subject="<%= trashRenderer.getTitle(locale) %>"
-						userId="<%= entry.getUserId() %>"
+						userId="<%= assetEntry.getUserId() %>"
 					/>
 				</div>
 			</c:if>

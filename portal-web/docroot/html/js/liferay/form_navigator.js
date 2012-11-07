@@ -15,14 +15,22 @@ AUI.add(
 
 		var STR_HREF = 'href';
 
+		var UI_SRC = A.Widget.UI_SRC;
+
 		var FormNavigator = function(options) {
 			var instance = this;
 
-			instance._namespace = options.namespace || '';
+			var modifiedSections = options.modifiedSections;
 
 			instance._container = A.one(options.container);
 
+			instance._hash = null;
+			instance._modifiedSections = null;
+
 			instance._formName = options.formName;
+
+			instance._modifiedSectionsArray = options.defaultModifiedSections || [];
+			instance._namespace = options.namespace || '';
 
 			Liferay.after('form:registered', instance._afterFormRegistered, instance);
 
@@ -33,28 +41,19 @@ AUI.add(
 				instance._navigation.delegate('click', instance._onClick, 'li a', instance);
 			}
 
-			if (options.modifiedSections) {
-				instance._modifiedSections = A.all('[name=' + options.modifiedSections + ']');
+			if (modifiedSections) {
+				instance._modifiedSections = A.all('[name=' + modifiedSections + ']');
 
 				if (!instance._modifiedSections) {
-					instance._modifiedSections = A.Node.create('<input name="' + options.modifiedSections + '" type="hidden" />');
+					instance._modifiedSections = A.Node.create('<input name="' + modifiedSections + '" type="hidden" />');
 
 					instance._container.append(instance._modifiedSections);
 				}
 			}
-			else {
-				instance._modifiedSections = null;
-			}
 
-			if (options.defaultModifiedSections) {
-				instance._modifiedSectionsArray = options.defaultModifiedSections;
-			}
-			else {
-				instance._modifiedSectionsArray = [];
-			}
+			A.setInterval(instance._pollHash, 100, instance);
 
-			instance._revealSection(location.href);
-
+			A.on('formNavigator:revealSection', instance._revealSection, instance);
 			A.on('formNavigator:trackChanges', instance._trackChanges, instance);
 
 			var inputs = instance._container.all('input, select, textarea');
@@ -82,8 +81,10 @@ AUI.add(
 			_addModifiedSection: function(section) {
 				var instance = this;
 
-				if (A.Array.indexOf(instance._modifiedSectionsArray, section) == -1) {
-					instance._modifiedSectionsArray.push(section);
+				var modifiedSectionsArray = instance._modifiedSectionsArray;
+
+				if (A.Array.indexOf(modifiedSectionsArray, section) == -1) {
+					modifiedSectionsArray.push(section);
 				}
 			},
 
@@ -96,7 +97,6 @@ AUI.add(
 					instance._formValidator = formValidator;
 
 					formValidator.on(['errorField', 'validField'], instance._updateSectionStatus, instance);
-
 					formValidator.on('submitError', instance._revealSectionError, instance);
 				}
 			},
@@ -133,6 +133,8 @@ AUI.add(
 
 				event.preventDefault();
 
+				event.src = UI_SRC;
+
 				var target = event.currentTarget;
 
 				var li = target.get('parentNode');
@@ -147,8 +149,31 @@ AUI.add(
 					var hashValue = hash[1];
 
 					if (hashValue) {
-						A.later(0, instance, instance._updateHash, [hashValue]);
+						event.hashValue = hashValue;
+
+						A.later(0, instance, instance._updateHash, event);
 					}
+				}
+			},
+
+			_pollHash: function() {
+				var instance = this;
+
+				var hash = location.hash;
+
+				if (hash != instance._hash) {
+					A.fire('formNavigator:revealSection', hash);
+
+					Liferay.Util.getTop().Liferay.fire(
+						'hashChange',
+						{
+							newVal: hash,
+							prevVal: instance._hash,
+							uri: location.href
+						}
+					);
+
+					instance._hash = hash;
 				}
 			},
 
@@ -217,22 +242,23 @@ AUI.add(
 				instance._addModifiedSection(currentSection);
 			},
 
-			_updateHash: function(section) {
+			_updateHash: function(event) {
 				var instance = this;
 
-				location.hash = instance._hashKey + section;
+				if (event.src && event.src == UI_SRC) {
+					location.hash = instance._hashKey + event.hashValue;
+				}
 			},
 
 			_updateSectionStatus: function() {
 				var instance = this;
 
+				var formValidator = instance._formValidator;
 				var navigation = instance._navigation;
 
 				var lis = navigation.all('li');
 
 				lis.removeClass(CSS_SECTION_ERROR);
-
-				var formValidator = instance._formValidator;
 
 				if (formValidator.hasErrors()) {
 					var selectors = A.Object.keys(formValidator.errors);
@@ -260,6 +286,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-base']
+		requires: ['aui-base', 'aui-task-manager']
 	}
 );

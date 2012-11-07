@@ -54,7 +54,7 @@
 			'dockbar-underlay': ['aui-button-item', 'aui-io-plugin', 'aui-overlay-manager'],
 			'dynamic-select': ['aui-base'],
 			'form': ['aui-base', 'aui-form-validator'],
-			'form-navigator': ['aui-base'],
+			'form-navigator': ['aui-base',  'aui-task-manager'],
 			'form-placeholders': ['liferay-form', 'plugin'],
 			'history': getHistoryRequirements(),
 			'history-html5': ['liferay-history', 'history-html5', 'querystring-stringify-simple'],

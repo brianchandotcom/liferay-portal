@@ -48,6 +48,7 @@ public class SeleniumXMLToJavaBuilder {
 		new PathsXMLToJavaBuilder(args);
 		new TestXMLToJavaBuilder(args);
 		new TestPlanBuilder(args);
+		new UnitsXMLToJavaBuilder(args);
 	}
 
 	public SeleniumXMLToJavaBuilder(String[] args) throws Exception {
@@ -717,17 +718,20 @@ public class SeleniumXMLToJavaBuilder {
 	private Set<String> getImportUnits(
 		Set<String> objectPackageSet, String actionDefName) throws Exception {
 
-		String objectName =
-			StringUtil.upperCaseFirstLetter(actionDefName) + "Units";
+		String unitsObjectName = StringUtil.upperCaseFirstLetter(actionDefName);
 
 		for (String pageObject : pageObjectSet) {
-			if (pageObject.endsWith("/" + objectName + ".java")) {
-				int x = pageObject.length() - 5;
+			if (pageObject.endsWith("/" + unitsObjectName + ".units")) {
+				int x = pageObject.length() - 6;
 
 				String objectPackagePath =
 					StringUtil.replace(
 						pageObject.substring(0, x), StringPool.SLASH,
 						StringPool.PERIOD);
+
+				objectPackagePath = StringUtil.replace(
+					objectPackagePath, unitsObjectName,
+					unitsObjectName + "Units");
 
 				objectPackageSet.add(objectPackagePath);
 			}
@@ -847,7 +851,7 @@ public class SeleniumXMLToJavaBuilder {
 				"**\\portalweb\\blocks\\**\\BaseActionsImpl.java",
 				"**\\portalweb\\blocks\\**\\*.paths",
 				"**\\portalweb\\blocks\\**\\*.macros",
-				"**\\portalweb\\blocks\\**\\*Units.java"
+				"**\\portalweb\\blocks\\**\\*.units"
 			});
 
 		directoryScanner.scan();

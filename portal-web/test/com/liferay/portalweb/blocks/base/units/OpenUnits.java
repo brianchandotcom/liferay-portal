@@ -30,7 +30,8 @@ public class OpenUnits extends BaseActionsUnits {
 		selenium.open(param1);
 	}
 
-	public void openWindow(String param1, String param2) throws Exception {
+	public void openWindow(String param1, String param2)
+		throws Exception {
 		selenium.pause("15000");
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
@@ -38,5 +39,4 @@ public class OpenUnits extends BaseActionsUnits {
 		selenium.waitForPopUp("windowName", "windowName");
 		selenium.selectWindow("windowName");
 	}
-
 }

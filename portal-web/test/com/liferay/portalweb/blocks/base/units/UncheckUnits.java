@@ -24,7 +24,17 @@ public class UncheckUnits extends BaseActionsUnits {
 		super(liferaySelenium);
 	}
 
-	public void uncheck(String param1, String param2) throws Exception {
+	public void click(String param1, String param2) throws Exception {
+		selenium.waitForVisible(param1);
+
+		if (selenium.isChecked(param1)) {
+			selenium.click(param1);
+		}
+
+		selenium.assertNotChecked(param1);
+	}
+
+	public void clickAt(String param1, String param2) throws Exception {
 		selenium.waitForVisible(param1);
 
 		if (selenium.isChecked(param1)) {
@@ -33,5 +43,4 @@ public class UncheckUnits extends BaseActionsUnits {
 
 		selenium.assertNotChecked(param1);
 	}
-
 }

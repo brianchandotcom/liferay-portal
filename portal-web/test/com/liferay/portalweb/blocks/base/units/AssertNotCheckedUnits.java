@@ -26,9 +26,7 @@ public class AssertNotCheckedUnits extends BaseActionsUnits {
 
 	public void assertNotChecked(String param1, String param2)
 		throws Exception {
-
 		selenium.waitForVisible(param1);
 		selenium.assertNotChecked(param1);
 	}
-
 }

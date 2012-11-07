@@ -24,9 +24,9 @@ public class AssertCheckedUnits extends BaseActionsUnits {
 		super(liferaySelenium);
 	}
 
-	public void assertChecked(String param1, String param2) throws Exception {
+	public void assertChecked(String param1, String param2)
+		throws Exception {
 		selenium.waitForVisible(param1);
 		selenium.assertChecked(param1);
 	}
-
 }

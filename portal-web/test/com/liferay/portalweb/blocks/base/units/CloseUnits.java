@@ -27,11 +27,11 @@ public class CloseUnits extends BaseActionsUnits {
 	public void close(String param1, String param2) throws Exception {
 	}
 
-	public void closeWindow(String param1, String param2) throws Exception {
+	public void closeWindow(String param1, String param2)
+		throws Exception {
 		selenium.pause("1000");
 		selenium.close();
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 	}
-
 }

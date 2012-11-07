@@ -26,7 +26,6 @@ public class AssertElementNotPresentUnits extends BaseActionsUnits {
 
 	public void assertElementNotPresent(String param1, String param2)
 		throws Exception {
-
 		if (selenium.isElementPresent(param1)) {
 			selenium.waitForNotVisible(param1);
 			selenium.assertNotVisible(param1);
@@ -36,5 +35,4 @@ public class AssertElementNotPresentUnits extends BaseActionsUnits {
 			selenium.assertElementNotPresent(param1);
 		}
 	}
-
 }

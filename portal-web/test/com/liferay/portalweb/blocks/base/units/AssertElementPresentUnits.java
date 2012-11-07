@@ -26,9 +26,7 @@ public class AssertElementPresentUnits extends BaseActionsUnits {
 
 	public void assertElementPresent(String param1, String param2)
 		throws Exception {
-
 		selenium.waitForVisible(param1);
 		selenium.assertVisible(param1);
 	}
-
 }

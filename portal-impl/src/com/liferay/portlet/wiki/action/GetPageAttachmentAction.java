@@ -17,20 +17,16 @@ package com.liferay.portlet.wiki.action;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
-import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.model.CompanyConstants;
+import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.struts.ActionConstants;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.NoSuchFileException;
-import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
+import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.wiki.NoSuchPageException;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.service.WikiPageServiceUtil;
-
-import java.io.InputStream;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -109,25 +105,14 @@ public class GetPageAttachmentAction extends PortletAction {
 			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
-		int pos = fileName.indexOf(CharPool.SLASH);
+		WikiPage wikiPage = WikiPageServiceUtil.getPage(nodeId, title);
 
-		if (pos != -1) {
-			title = fileName.substring(0, pos);
-			fileName = fileName.substring(pos + 1);
-		}
-
-		WikiPage page = WikiPageServiceUtil.getPage(nodeId, title);
-
-		String path = page.getAttachmentsDir() + "/" + fileName;
-
-		InputStream is = DLStoreUtil.getFileAsStream(
-			page.getCompanyId(), CompanyConstants.SYSTEM, path);
-		long contentLength = DLStoreUtil.getFileSize(
-			page.getCompanyId(), CompanyConstants.SYSTEM, path);
-		String contentType = MimeTypesUtil.getContentType(fileName);
+		DLFileEntry dlFileEntry = PortletFileRepositoryUtil.getPortletFileEntry(
+			wikiPage.getGroupId(), wikiPage.getAttachmentsFolderId(), fileName);
 
 		ServletResponseUtil.sendFile(
-			request, response, fileName, is, contentLength, contentType);
+			request, response, fileName, dlFileEntry.getContentStream(),
+			dlFileEntry.getSize(), dlFileEntry.getMimeType());
 	}
 
 	@Override

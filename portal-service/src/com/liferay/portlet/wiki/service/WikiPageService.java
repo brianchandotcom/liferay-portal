@@ -125,6 +125,10 @@ public interface WikiPageService extends BaseService {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	public void deleteTrashPageAttachments(long nodeId, java.lang.String title)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.wiki.model.WikiPage getDraftPage(long nodeId,
 		java.lang.String title)
@@ -179,13 +183,8 @@ public interface WikiPageService extends BaseService {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
-	public void movePageAttachmentFromTrash(long nodeId,
-		java.lang.String title, java.lang.String deletedFileName)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	public java.lang.String movePageAttachmentToTrash(long nodeId,
-		java.lang.String title, java.lang.String fileName)
+	public long movePageAttachmentToTrash(long nodeId, java.lang.String title,
+		java.lang.String fileName)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -195,6 +194,11 @@ public interface WikiPageService extends BaseService {
 
 	public void movePageToTrash(long nodeId, java.lang.String title,
 		double version)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public void restorePageAttachmentFromTrash(long nodeId,
+		java.lang.String title, java.lang.String fileName)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 

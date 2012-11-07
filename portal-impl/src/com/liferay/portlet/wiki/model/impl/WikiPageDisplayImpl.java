@@ -14,7 +14,10 @@
 
 package com.liferay.portlet.wiki.model.impl;
 
+import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.wiki.model.WikiPageDisplay;
+
+import java.util.List;
 
 /**
  * @author Jorge Ferrer
@@ -24,7 +27,7 @@ public class WikiPageDisplayImpl implements WikiPageDisplay {
 	public WikiPageDisplayImpl(
 		long userId, long nodeId, String title, double version, String content,
 		String formattedContent, String format, boolean head,
-		String[] attachments) {
+		List<DLFileEntry> attachments) {
 
 		_userId = userId;
 		_nodeId = nodeId;
@@ -37,7 +40,7 @@ public class WikiPageDisplayImpl implements WikiPageDisplay {
 		_attachments = attachments;
 	}
 
-	public String[] getAttachments() {
+	public List<DLFileEntry> getAttachments() {
 		return _attachments;
 	}
 
@@ -77,7 +80,7 @@ public class WikiPageDisplayImpl implements WikiPageDisplay {
 		return _head;
 	}
 
-	public void setAttachments(String[] attachments) {
+	public void setAttachments(List<DLFileEntry> attachments) {
 		_attachments = attachments;
 	}
 
@@ -113,7 +116,7 @@ public class WikiPageDisplayImpl implements WikiPageDisplay {
 		_version = version;
 	}
 
-	private String[] _attachments;
+	private List<DLFileEntry> _attachments;
 	private String _content;
 	private String _format;
 	private String _formattedContent;

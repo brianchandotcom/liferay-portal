@@ -44,8 +44,6 @@ String content = BeanParamUtil.getString(wikiPage, request, "content");
 String format = BeanParamUtil.getString(wikiPage, request, "format", WikiPageConstants.DEFAULT_FORMAT);
 String parentTitle = BeanParamUtil.getString(wikiPage, request, "parentTitle");
 
-String[] attachments = new String[0];
-
 boolean preview = ParamUtil.getBoolean(request, "preview");
 
 boolean newPage = ParamUtil.getBoolean(request, "newPage");
@@ -55,6 +53,8 @@ if (wikiPage == null) {
 }
 
 boolean editable = false;
+
+List<DLFileEntry> attachments = null;
 
 if (wikiPage != null) {
 	attachments = wikiPage.getAttachmentsFiles();
@@ -284,23 +284,22 @@ if (Validator.isNull(redirect)) {
 			</c:if>
 
 			<aui:fieldset>
-				<c:if test="<%= attachments.length > 0 %>">
+				<c:if test="<%= (attachments != null) && (attachments.size() > 0) %>">
 					<aui:field-wrapper label="attachments">
 
 						<%
-						for (int i = 0; i < attachments.length; i++) {
-							String fileName = FileUtil.getShortFileName(attachments[i]);
-							long fileSize = DLStoreUtil.getFileSize(company.getCompanyId(), CompanyConstants.SYSTEM, attachments[i]);
+						for (int i = 0; i < attachments.size(); i++) {
+							DLFileEntry dlFileEntry = attachments.get(i);
 						%>
 
 							<portlet:actionURL var="getPageAttachmentURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
 								<portlet:param name="struts_action" value="/wiki/get_page_attachment" />
 								<portlet:param name="nodeId" value="<%= String.valueOf(node.getNodeId()) %>" />
 								<portlet:param name="title" value="<%= wikiPage.getTitle() %>" />
-								<portlet:param name="fileName" value="<%= fileName %>" />
+								<portlet:param name="fileName" value="<%= dlFileEntry.getTitle() %>" />
 							</portlet:actionURL>
 
-							<aui:a href="<%= getPageAttachmentURL %>"><%= fileName %></aui:a> (<%=TextFormatter.formatStorageSize(fileSize, locale) %>)<%= (i < (attachments.length - 1)) ? ", " : "" %>
+							<aui:a href="<%= getPageAttachmentURL %>"><%= dlFileEntry.getTitle() %></aui:a> (<%= TextFormatter.formatStorageSize(dlFileEntry.getSize(), locale) %>)<%= (i < (attachments.size() - 1)) ? ", " : "" %>
 
 						<%
 						}

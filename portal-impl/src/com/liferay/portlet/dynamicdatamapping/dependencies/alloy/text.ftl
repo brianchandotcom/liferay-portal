@@ -4,12 +4,12 @@
 
 <#assign cssClass = cssClass +  " aui-w" + width>
 
-<div class="aui-field-wrapper-content lfr-forms-field-wrapper">
-	<@aui.input cssClass=cssClass helpMessage=escape(fieldStructure.tip) label=escape(label) name=namespacedFieldName type="text" value=fieldValue>
+<@aui["field-wrapper"] data=data helpMessage=escape(fieldStructure.tip)>
+	<@aui.input cssClass=cssClass label=escape(label) name=namespacedFieldName type="text" value=fieldValue>
 		<#if required>
 			<@aui.validator name="required" />
 		</#if>
 	</@aui.input>
 
 	${fieldStructure.children}
-</div>
+</@>

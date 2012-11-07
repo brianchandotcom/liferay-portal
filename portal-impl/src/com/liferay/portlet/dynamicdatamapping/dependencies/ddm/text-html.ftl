@@ -1,6 +1,6 @@
 <#include "../init.ftl">
 
-<@aui["field-wrapper"] helpMessage=escape(fieldStructure.tip) label=escape(label) required=required>
+<@aui["field-wrapper"] data=data helpMessage=escape(fieldStructure.tip) label=escape(label) required=required>
 	<@liferay_ui["input-editor"] initMethod="${namespacedFieldName}InitEditor" name="${namespacedFieldName}Editor" />
 
 	<@aui.input name=namespacedFieldName type="hidden" value=fieldValue />

@@ -25,6 +25,12 @@
 
 <#assign namespacedParentName = "${namespace}${parentName}">
 
+<#-- Data -->
+
+<#assign data = {
+	"fieldName": fieldStructure.name
+}>
+
 <#-- Predefined value -->
 
 <#assign predefinedValue = fieldStructure.predefinedValue!"">

@@ -1594,6 +1594,10 @@ public class PortletImpl extends PortletBaseImpl {
 		return portletBag.getSocialRequestInterpreterInstance();
 	}
 
+	public List<String> getStagedModelDataHandlerClasses() {
+		return _stagedModelDataHandlerClasses;
+	}
+
 	/**
 	 * Returns <code>true</code> if the portlet is a static portlet that is
 	 * cannot be moved.
@@ -3172,6 +3176,12 @@ public class PortletImpl extends PortletBaseImpl {
 		_socialRequestInterpreterClass = socialRequestInterpreterClass;
 	}
 
+	public void setStagedModelDataHandlerClasses(
+		List<String> stagedModelDataHandlerClasses) {
+
+		_stagedModelDataHandlerClasses = stagedModelDataHandlerClasses;
+	}
+
 	/**
 	 * Set to <code>true</code> if the portlet is a static portlet that is
 	 * cannot be moved.
@@ -3806,6 +3816,8 @@ public class PortletImpl extends PortletBaseImpl {
 	 * The name of the social request interpreter class of the portlet.
 	 */
 	private String _socialRequestInterpreterClass;
+
+	private List<String> _stagedModelDataHandlerClasses;
 
 	/**
 	 * <code>True</code> if the portlet is a static portlet that is cannot be

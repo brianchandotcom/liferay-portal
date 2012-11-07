@@ -1,0 +1,105 @@
+<units>
+	<unitdef name="click">
+		<selenium command="waitForVisible" />
+		<selenium command="click" />
+	</unitdef>
+
+	<unitdef name="clickAndWait">
+		<selenium command="waitForVisible" />
+		<selenium command="clickAndWait" />
+	</unitdef>
+
+	<unitdef name="clickAt">
+		<selenium command="waitForVisible" />
+		<selenium command="clickAt" />
+	</unitdef>
+
+	<unitdef name="clickAtAndWait">
+		<selenium command="waitForVisible" />
+		<selenium command="clickAtAndWait" />
+	</unitdef>
+
+	<unitdef name="partialTextClick">
+		<selenium command="waitForVisible" />
+		<selenium command="waitForPartialText" />
+		<selenium command="assertPartialText" />
+		<selenium command="click" />
+	</unitdef>
+
+	<unitdef name="partialTextClickAndWait">
+		<selenium command="waitForVisible" />
+		<selenium command="waitForPartialText" />
+		<selenium command="assertPartialText" />
+		<selenium command="clickAndWait" />
+	</unitdef>
+
+	<unitdef name="partialTextClickAt">
+		<selenium command="waitForVisible" />
+		<selenium command="waitForPartialText" />
+		<selenium command="assertPartialText" />
+		<selenium command="clickAt" />
+	</unitdef>
+
+	<unitdef name="partialTextClickAtAndWait">
+		<selenium command="waitForVisible" />
+		<selenium command="waitForPartialText" />
+		<selenium command="assertPartialText" />
+		<selenium command="clickAtAndWait" />
+	</unitdef>
+
+	<unitdef name="textClick">
+		<selenium command="waitForVisible" />
+		<selenium command="waitForText" />
+		<selenium command="assertText" />
+		<selenium command="click" />
+	</unitdef>
+
+	<unitdef name="textClickAndWait">
+		<selenium command="waitForVisible" />
+		<selenium command="waitForText" />
+		<selenium command="assertText" />
+		<selenium command="clickAndWait" />
+	</unitdef>
+
+	<unitdef name="textClickAt">
+		<selenium command="waitForVisible" />
+		<selenium command="waitForText" />
+		<selenium command="assertText" />
+		<selenium command="clickAt" />
+	</unitdef>
+
+	<unitdef name="textClickAtAndWait">
+		<selenium command="waitForVisible" />
+		<selenium command="waitForText" />
+		<selenium command="assertText" />
+		<selenium command="clickAtAndWait" />
+	</unitdef>
+
+	<unitdef name="valueClick">
+		<selenium command="waitForVisible" />
+		<selenium command="waitForValue" />
+		<selenium command="assertValue" />
+		<selenium command="click" />
+	</unitdef>
+
+	<unitdef name="valueClickAndWait">
+		<selenium command="waitForVisible" />
+		<selenium command="waitForValue" />
+		<selenium command="assertValue" />
+		<selenium command="clickAndWait" />
+	</unitdef>
+
+	<unitdef name="valueClickAt">
+		<selenium command="waitForVisible" />
+		<selenium command="waitForValue" />
+		<selenium command="assertValue" />
+		<selenium command="clickAt" />
+	</unitdef>
+
+	<unitdef name="valueClickAtAndWait">
+		<selenium command="waitForVisible" />
+		<selenium command="waitForValue" />
+		<selenium command="assertValue" />
+		<selenium command="clickAtAndWait" />
+	</unitdef>
+</units>

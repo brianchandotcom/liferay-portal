@@ -20,7 +20,6 @@ import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
  * @author Brian Wing Shun Chan
  */
 public class CheckUnits extends BaseActionsUnits {
-
 	public CheckUnits(LiferaySelenium liferaySelenium) {
 		super(liferaySelenium);
 	}
@@ -39,10 +38,9 @@ public class CheckUnits extends BaseActionsUnits {
 		selenium.waitForVisible(param1);
 
 		if (!selenium.isChecked(param1)) {
-			selenium.clickAt(param1, "");
+			selenium.clickAt(param1, param2);
 		}
 
 		selenium.assertChecked(param1);
 	}
-
 }

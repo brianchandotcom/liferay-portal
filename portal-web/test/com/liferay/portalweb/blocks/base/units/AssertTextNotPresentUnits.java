@@ -26,9 +26,7 @@ public class AssertTextNotPresentUnits extends BaseActionsUnits {
 
 	public void assertTextNotPresent(String param1, String param2)
 		throws Exception {
-
 		selenium.waitForTextNotPresent(param2);
 		selenium.assertTextNotPresent(param2);
 	}
-
 }

@@ -3963,6 +3963,7 @@ public class SourceFormatter {
 			"**\\portal-web\\test\\**\\*Test.java",
 			"**\\portal-web\\test\\**\\*Tests.java",
 			"**\\portal-web\\test\\**\\portalweb\\tests\\**\\*TestPlan.java",
+			"**\\portal-web\\test\\**\\*Units.java",
 			"**\\portlet\\**\\service\\**", "**\\tmp\\**", "**\\tools\\tck\\**"
 		};
 

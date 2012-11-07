@@ -318,6 +318,7 @@ for (int i = 0; i < portlets.size(); i++) {
 				<div class="more-results">
 					<portlet:renderURL var="moreResultsURL">
 						<portlet:param name="struts_action" value="/search/search" />
+						<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 						<portlet:param name="primarySearch" value="<%= portlet.getOpenSearchClass() %>" />
 						<portlet:param name="keywords" value="<%= HtmlUtil.escape(keywords) %>" />
 						<portlet:param name="format" value="<%= format %>" />

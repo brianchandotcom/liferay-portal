@@ -33,11 +33,11 @@ String restorePath = trashRenderer.getRestorePath(renderRequest);
 			<portlet:param name="struts_action" value="/trash/edit_entry" />
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
 			<portlet:param name="redirect" value="<%= redirect %>" />
-			<portlet:param name="entryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
+			<portlet:param name="trashEntryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
 		</portlet:actionURL>
 
 		<%
-		String taglibOnClick = "Liferay.fire('" + renderResponse.getNamespace() + "checkEntry', {entryId: " + entry.getEntryId() + ", uri: '" + restoreEntryURL.toString() + "'});";
+		String taglibOnClick = "Liferay.fire('" + renderResponse.getNamespace() + "checkEntry', {trashEntryId: " + entry.getEntryId() + ", uri: '" + restoreEntryURL.toString() + "'});";
 		%>
 
 		<liferay-ui:icon

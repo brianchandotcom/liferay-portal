@@ -151,7 +151,7 @@ portletURL.setParameter("tabs1", tabs1);
 				viewContentURL.setParameter("classPK", String.valueOf(entry.getClassPK()));
 			}
 			else {
-				viewContentURL.setParameter("entryId", String.valueOf(entry.getEntryId()));
+				viewContentURL.setParameter("trashEntryId", String.valueOf(entry.getEntryId()));
 			}
 
 			viewContentURL.setParameter("type", trashRenderer.getType());
@@ -184,7 +184,7 @@ portletURL.setParameter("tabs1", tabs1);
 
 					viewContentURL.setParameter("struts_action", "/trash/view_content");
 					viewContentURL.setParameter("redirect", currentURL);
-					viewContentURL.setParameter("entryId", String.valueOf(rootEntry.getEntryId()));
+					viewContentURL.setParameter("trashEntryId", String.valueOf(rootEntry.getEntryId()));
 					viewContentURL.setParameter("type", rootTrashRenderer.getType());
 					viewContentURL.setParameter("showActions", Boolean.FALSE.toString());
 					viewContentURL.setParameter("showAssetMetadata", Boolean.TRUE.toString());
@@ -256,8 +256,8 @@ portletURL.setParameter("tabs1", tabs1);
 		<liferay-portlet:renderURLParams varImpl="searchURL" />
 		<aui:input name="<%= Constants.CMD %>" type="hidden" value="" />
 		<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
-		<aui:input name="deleteEntryIds" type="hidden" />
-		<aui:input name="restoreEntryIds" type="hidden" />
+		<aui:input name="deleteTrashEntryIds" type="hidden" />
+		<aui:input name="restoreTrashEntryIds" type="hidden" />
 
 		<aui:button-row>
 			<liferay-ui:search-form

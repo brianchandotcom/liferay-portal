@@ -113,7 +113,7 @@ AUI.add(
 								},
 								arguments: uri,
 								data: {
-									entryId: event.entryId
+									trashEntryId: event.trashEntryId
 								},
 								dataType: 'json'
 							}
@@ -194,7 +194,7 @@ AUI.add(
 									},
 									arguments: form,
 									data: {
-										entryId: trashEntryId.val(),
+										trashEntryId: trashEntryId.val(),
 										newName: newName.val()
 									},
 									dataType: 'json'

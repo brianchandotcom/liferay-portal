@@ -163,14 +163,14 @@ public class EditEntryAction extends PortletAction {
 	}
 
 	protected void deleteEntries(ActionRequest actionRequest) throws Exception {
-		long entryId = ParamUtil.getLong(actionRequest, "entryId");
+		long trashEntryId = ParamUtil.getLong(actionRequest, "trashEntryId");
 
-		if (entryId > 0) {
-			deleteEntry(entryId);
+		if (trashEntryId > 0) {
+			deleteEntry(trashEntryId);
 		}
 		else {
 			long[] deleteEntryIds = StringUtil.split(
-				ParamUtil.getString(actionRequest, "deleteEntryIds"), 0L);
+				ParamUtil.getString(actionRequest, "deleteThrashEntryIds"), 0L);
 
 			for (int i = 0; i < deleteEntryIds.length; i++) {
 				deleteEntry(deleteEntryIds[i]);
@@ -178,8 +178,9 @@ public class EditEntryAction extends PortletAction {
 		}
 	}
 
-	protected void deleteEntry(long entryId) throws Exception {
-		TrashEntry entry = TrashEntryLocalServiceUtil.getTrashEntry(entryId);
+	protected void deleteEntry(long trashEntryId) throws Exception {
+		TrashEntry entry = TrashEntryLocalServiceUtil.getTrashEntry(
+			trashEntryId);
 
 		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
 			entry.getClassName());
@@ -197,16 +198,16 @@ public class EditEntryAction extends PortletAction {
 	protected TrashEntry[] restoreEntries(ActionRequest actionRequest)
 		throws Exception {
 
-		long entryId = ParamUtil.getLong(actionRequest, "entryId");
+		long trashEntryId = ParamUtil.getLong(actionRequest, "trashEntryId");
 
 		TrashEntry[] entry = null;
 
-		if (entryId > 0) {
-			entry = restoreEntry(entryId);
+		if (trashEntryId > 0) {
+			entry = restoreEntry(trashEntryId);
 		}
 		else {
 			long[] restoreEntryIds = StringUtil.split(
-				ParamUtil.getString(actionRequest, "restoreEntryIds"), 0L);
+				ParamUtil.getString(actionRequest, "restoreTrashEntryIds"), 0L);
 
 			entry = new TrashEntry[restoreEntryIds.length];
 
@@ -218,8 +219,9 @@ public class EditEntryAction extends PortletAction {
 		return entry;
 	}
 
-	protected TrashEntry[] restoreEntry(long entryId) throws Exception {
-		TrashEntry entry = TrashEntryLocalServiceUtil.getTrashEntry(entryId);
+	protected TrashEntry[] restoreEntry(long trashEntryId) throws Exception {
+		TrashEntry entry = TrashEntryLocalServiceUtil.getTrashEntry(
+			trashEntryId);
 
 		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
 			entry.getClassName());

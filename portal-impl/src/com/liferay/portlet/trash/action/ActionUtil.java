@@ -34,11 +34,12 @@ public class ActionUtil {
 	public static JSONObject checkEntry(ActionRequest actionRequest)
 		throws Exception {
 
-		long entryId = ParamUtil.getLong(actionRequest, "entryId");
+		long trashEntryId = ParamUtil.getLong(actionRequest, "trashEntryId");
 
 		String newName = ParamUtil.getString(actionRequest, "newName");
 
-		TrashEntry entry = TrashEntryLocalServiceUtil.getTrashEntry(entryId);
+		TrashEntry entry = TrashEntryLocalServiceUtil.getTrashEntry(
+			trashEntryId);
 
 		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
 			entry.getClassName());

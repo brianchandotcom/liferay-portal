@@ -21,15 +21,15 @@
 	<%
 	String redirect = ParamUtil.getString(request, "redirect");
 
-	long entryId = ParamUtil.getLong(request, "entryId");
+	long trashEntryId = ParamUtil.getLong(request, "trashEntryId");
 
 	String className = ParamUtil.getString(request, "className");
 	long classPK = ParamUtil.getLong(request, "classPK");
 
 	TrashEntry entry = null;
 
-	if (entryId > 0) {
-		entry = TrashEntryLocalServiceUtil.getEntry(entryId);
+	if (trashEntryId > 0) {
+		entry = TrashEntryLocalServiceUtil.getEntry(trashEntryId);
 	}
 	else if (Validator.isNotNull(className) && (classPK > 0)) {
 		entry = TrashEntryLocalServiceUtil.fetchEntry(className, classPK);

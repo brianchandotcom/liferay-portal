@@ -60,7 +60,7 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[3]/td[2]/a</td>
+	<td>//tr[contains(.,'Site Name')]/td[2]/a</td>
 	<td>Site Name</td>
 </tr>
 <tr>
@@ -174,18 +174,28 @@
 	<td>usersn</td>
 </tr>
 <tr>
-	<td>assertNotChecked</td>
-	<td>//tr[contains(.,'userfn userln')]/td[1]/input</td>
+	<td>storeChecked</td>
+	<td>//input[@name='_174_rowIds']</td>
+	<td>entryCheckbox</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${entryCheckbox}</td>
+	<td>EntryCheckbox</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@name='_174_rowIds']</td>
 	<td>Checkbox</td>
 </tr>
 <tr>
-	<td>check</td>
-	<td>//tr[contains(.,'userfn userln')]/td[1]/input</td>
-	<td>Checkbox</td>
+	<td>label</td>
+	<td>EntryCheckbox</td>
+	<td></td>
 </tr>
 <tr>
 	<td>assertChecked</td>
-	<td>//tr[contains(.,'userfn userln')]/td[1]/input</td>
+	<td>//input[@name='_174_rowIds']</td>
 	<td>Checkbox</td>
 </tr>
 <tr>

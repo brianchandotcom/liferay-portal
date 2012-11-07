@@ -80,6 +80,6 @@ public class AddSiteTest extends BaseTestCase {
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Site Name"),
-			selenium.getText("//td[2]/a"));
+			selenium.getText("//tr[contains(.,'Site Name')]/td[2]/a"));
 	}
 }

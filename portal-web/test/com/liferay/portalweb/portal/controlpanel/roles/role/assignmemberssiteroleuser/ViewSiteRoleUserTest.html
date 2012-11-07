@@ -130,6 +130,36 @@
 </tr>
 <tr>
 	<td>assertText</td>
+	<td>//span[@class='portlet-title-text']</td>
+	<td>Users and Organizations</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-portlet-toolbar']/span[contains(.,'Browse')]/a</td>
+	<td>Browse</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-portlet-toolbar']/span[contains(.,'View Organizations')]/a</td>
+	<td>View Organizations</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-portlet-toolbar']/span[contains(.,'View Users')]/a</td>
+	<td>View Users</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@title='Add']/ul/li/strong/a</td>
+	<td>Add</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-portlet-toolbar']/span[contains(.,'Export All Users')]/a</td>
+	<td>Export All Users</td>
+</tr>
+<tr>
+	<td>assertText</td>
 	<td>//h1[@class='header-title']/span</td>
 	<td>userfn userln</td>
 </tr>
@@ -139,8 +169,178 @@
 	<td>« Back</td>
 </tr>
 <tr>
+	<td>assertVisible</td>
+	<td>//img[@class='user-logo']</td>
+	<td>User Logo</td>
+</tr>
+<tr>
 	<td>assertText</td>
-	<td>//div[@id='_125_roles']/h3[4]</td>
+	<td>//span[@class='user-name']</td>
+	<td>userfn userln</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//h3[contains(.,'User Information')]</td>
+	<td>User Information</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//a[@id='_125_detailsLink']</td>
+	<td>Details</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//a[@id='_125_passwordLink']</td>
+	<td>Password</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//a[@id='_125_organizationsLink']</td>
+	<td>Organizations</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//a[@id='_125_sitesLink']</td>
+	<td>Sites</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//a[@id='_125_userGroupsLink']</td>
+	<td>User Groups</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//a[@id='_125_rolesLink']</td>
+	<td>Roles</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//a[@id='_125_personalSiteLink']</td>
+	<td>Personal site</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//a[@id='_125_categorizationLink']</td>
+	<td>Categorization</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//h3[contains(.,'Identification')]</td>
+	<td>Identification</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//a[@id='_125_addressesLink']</td>
+	<td>Addresses</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//a[@id='_125_phoneNumbersLink']</td>
+	<td>Phone Numbers</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//a[@id='_125_additionalEmailAddressesLink']</td>
+	<td>Additional Email Addresses</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//a[@id='_125_websitesLink']</td>
+	<td>Websites</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//a[@id='_125_instantMessengerLink']</td>
+	<td>Instant Messenger</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//a[@id='_125_socialNetworkLink']</td>
+	<td>Social Network</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//a[@id='_125_smsLink']</td>
+	<td>SMS</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//a[@id='_125_openIdLink']</td>
+	<td>OpenID</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//h3[contains(.,'Miscellaneous')]</td>
+	<td>Miscellaneous</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//a[@id='_125_announcementsLink']</td>
+	<td>Announcements</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//a[@id='_125_displaySettingsLink']</td>
+	<td>Display Settings</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//a[@id='_125_commentsLink']</td>
+	<td>Comments</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//a[@id='_125_customFieldsLink']</td>
+	<td>Custom Fields</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//input[@value='Save']</td>
+	<td>Save</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//input[@value='Cancel']</td>
+	<td>Cancel</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='_125_roles']/h3[contains(.,'Regular Roles')]</td>
+	<td>Regular Roles</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//th[@id='_125_rolesSearchContainer_col-title']</td>
+	<td>Title</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Power User')]/td[1]</td>
+	<td>Power User</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Power User')]/td[2]</td>
+	<td>Remove</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[6]/span/a/span</td>
+	<td>Select</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='_125_roles']/h3[contains(.,'Inherited Roles')]</td>
+	<td>Inherited Roles</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='_125_roles']/h3[contains(.,'Organization Roles')]</td>
+	<td>Organization Roles</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='_125_roles']/h3[contains(.,'Site Roles')]</td>
 	<td>Site Roles</td>
 </tr>
 <tr>
@@ -155,18 +355,23 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[@id='_125_siteRolesSearchContainer_col-title_row-1']</td>
+	<td>//tr[contains(.,'Roles Siterole Name')]/td[2]</td>
 	<td>Roles Siterole Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[@id='_125_siteRolesSearchContainer_col-site_row-1']</td>
+	<td>//tr[contains(.,'Site Name')]/td[1]</td>
 	<td>Site Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[@id='_125_siteRolesSearchContainer_col-3_row-1']/a/span/span</td>
+	<td>//tr[contains(.,'Remove')]/td[3]</td>
 	<td>Remove</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[6]/span[2]/a/span</td>
+	<td>Select</td>
 </tr>
 </tbody></table>
 </body>

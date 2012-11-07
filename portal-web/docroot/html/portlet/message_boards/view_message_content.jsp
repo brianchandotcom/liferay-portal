@@ -58,13 +58,10 @@ MBThreadFlag threadFlag = MBThreadFlagLocalServiceUtil.getThreadFlag(themeDispla
 	</c:otherwise>
 </c:choose>
 
-<table cellpadding="0" cellspacing="0" class="thread-view-controls" width="100%">
-<tr>
-	<td class="stretch"></td>
-
+<ul class="thread-view-controls">
 	<c:if test="<%= PropsValues.MESSAGE_BOARDS_THREAD_VIEWS.length > 1 %>">
 		<c:if test="<%= ArrayUtil.contains(PropsValues.MESSAGE_BOARDS_THREAD_VIEWS, MBThreadConstants.THREAD_VIEW_COMBINATION) %>">
-			<td class="thread-icon">
+			<li class="thread-icon">
 
 				<%
 				currentURLObj.setParameter("threadView", MBThreadConstants.THREAD_VIEW_COMBINATION);
@@ -76,11 +73,11 @@ MBThreadFlag threadFlag = MBThreadFlagLocalServiceUtil.getThreadFlag(themeDispla
 					method="get"
 					url="<%= currentURLObj.toString() %>"
 				/>
-			</td>
+			</li>
 		</c:if>
 
 		<c:if test="<%= ArrayUtil.contains(PropsValues.MESSAGE_BOARDS_THREAD_VIEWS, MBThreadConstants.THREAD_VIEW_FLAT) %>">
-			<td class="thread-icon">
+			<li class="thread-icon">
 
 				<%
 				currentURLObj.setParameter("threadView", MBThreadConstants.THREAD_VIEW_FLAT);
@@ -92,11 +89,11 @@ MBThreadFlag threadFlag = MBThreadFlagLocalServiceUtil.getThreadFlag(themeDispla
 					method="get"
 					url="<%= currentURLObj.toString() %>"
 				/>
-			</td>
+			</li>
 		</c:if>
 
 		<c:if test="<%= ArrayUtil.contains(PropsValues.MESSAGE_BOARDS_THREAD_VIEWS, MBThreadConstants.THREAD_VIEW_TREE) %>">
-			<td class="thread-icon">
+			<li class="thread-icon">
 
 				<%
 				currentURLObj.setParameter("threadView", MBThreadConstants.THREAD_VIEW_TREE);
@@ -108,11 +105,10 @@ MBThreadFlag threadFlag = MBThreadFlagLocalServiceUtil.getThreadFlag(themeDispla
 					method="get"
 					url="<%= currentURLObj.toString() %>"
 				/>
-			</td>
+			</li>
 		</c:if>
 	</c:if>
-</tr>
-</table>
+</ul>
 
 <div class="thread-controls">
 	<c:if test="<%= PropsValues.MESSAGE_BOARDS_THREAD_PREVIOUS_AND_NEXT_NAVIGATION_ENABLED %>">
@@ -166,7 +162,6 @@ MBThreadFlag threadFlag = MBThreadFlagLocalServiceUtil.getThreadFlag(themeDispla
 
 				<liferay-ui:icon
 					image="post"
-					label="<%= true %>"
 					message="post-new-thread"
 					url="<%= addMessageURL %>"
 				/>
@@ -182,7 +177,6 @@ MBThreadFlag threadFlag = MBThreadFlagLocalServiceUtil.getThreadFlag(themeDispla
 
 				<liferay-ui:icon
 					image="rss"
-					label="<%= true %>"
 					method="get"
 					target="_blank"
 					url="<%= rssURL.toString() %>"
@@ -201,7 +195,6 @@ MBThreadFlag threadFlag = MBThreadFlagLocalServiceUtil.getThreadFlag(themeDispla
 
 						<liferay-ui:icon
 							image="unsubscribe"
-							label="<%= true %>"
 							url="<%= unsubscribeURL %>"
 						/>
 					</c:when>
@@ -215,7 +208,6 @@ MBThreadFlag threadFlag = MBThreadFlagLocalServiceUtil.getThreadFlag(themeDispla
 
 						<liferay-ui:icon
 							image="subscribe"
-							label="<%= true %>"
 							url="<%= subscribeURL %>"
 						/>
 					</c:otherwise>
@@ -234,7 +226,6 @@ MBThreadFlag threadFlag = MBThreadFlagLocalServiceUtil.getThreadFlag(themeDispla
 
 						<liferay-ui:icon
 							image="unlock"
-							label="<%= true %>"
 							message="unlock-thread"
 							url="<%= unlockThreadURL %>"
 						/>
@@ -249,7 +240,6 @@ MBThreadFlag threadFlag = MBThreadFlagLocalServiceUtil.getThreadFlag(themeDispla
 
 						<liferay-ui:icon
 							image="lock"
-							label="<%= true %>"
 							message="lock-thread"
 							url="<%= lockThreadURL %>"
 						/>
@@ -267,9 +257,27 @@ MBThreadFlag threadFlag = MBThreadFlagLocalServiceUtil.getThreadFlag(themeDispla
 
 				<liferay-ui:icon
 					image="forward"
-					label="<%= true %>"
 					message="move-thread"
 					url="<%= editThreadURL %>"
+				/>
+			</c:if>
+
+			<c:if test="<%= MBMessagePermission.contains(permissionChecker, message, ActionKeys.DELETE) && !thread.isLocked() %>">
+				<portlet:renderURL var="parentCategoryURL">
+					<portlet:param name="struts_action" value="/message_boards/view" />
+					<portlet:param name="mbCategoryId" value="<%= (category != null) ? String.valueOf(category.getCategoryId()) : String.valueOf(MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) %>" />
+				</portlet:renderURL>
+
+				<portlet:actionURL var="deleteURL">
+					<portlet:param name="struts_action" value="/message_boards/delete_thread" />
+					<portlet:param name="<%= Constants.CMD %>" value="<%= TrashUtil.isTrashEnabled(themeDisplay.getScopeGroupId()) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>" />
+					<portlet:param name="redirect" value="<%= parentCategoryURL %>" />
+					<portlet:param name="threadId" value="<%= String.valueOf(message.getThreadId()) %>" />
+				</portlet:actionURL>
+
+				<liferay-ui:icon-delete
+					trash="<%= TrashUtil.isTrashEnabled(themeDisplay.getScopeGroupId()) %>"
+					url="<%= deleteURL %>"
 				/>
 			</c:if>
 		</liferay-ui:icon-list>

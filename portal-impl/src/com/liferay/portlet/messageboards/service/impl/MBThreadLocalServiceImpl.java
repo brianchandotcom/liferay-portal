@@ -224,6 +224,11 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		assetEntryLocalService.deleteEntry(
 			MBThread.class.getName(), thread.getThreadId());
 
+		// Trash
+
+		trashEntryLocalService.deleteEntry(
+			MBThread.class.getName(), thread.getThreadId());
+
 		// Thread
 
 		mbThreadPersistence.remove(thread);

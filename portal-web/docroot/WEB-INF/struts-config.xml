@@ -1171,6 +1171,10 @@
 			<forward name="portlet.message_boards.move_thread" path="portlet.message_boards.move_thread" />
 		</action>
 
+		<action path="/message_boards/restore_thread" type="com.liferay.portlet.messageboards.action.RestoreThreadAction">
+			<forward name="portlet.message_boards.error" path="portlet.message_boards.error" />
+		</action>
+
 		<action path="/message_boards/rss" type="com.liferay.portlet.messageboards.action.RSSAction" />
 
 		<action path="/message_boards/search" forward="portlet.message_boards.search" />
@@ -1243,6 +1247,10 @@
 		<action path="/message_boards_admin/move_thread" type="com.liferay.portlet.messageboards.action.MoveThreadAction">
 			<forward name="portlet.message_boards.error" path="portlet.message_boards.error" />
 			<forward name="portlet.message_boards.move_thread" path="portlet.message_boards.move_thread" />
+		</action>
+
+		<action path="/message_boards_admin/restore_thread" type="com.liferay.portlet.messageboards.action.RestoreThreadAction">
+			<forward name="portlet.message_boards.error" path="portlet.message_boards.error" />
 		</action>
 
 		<action path="/message_boards_admin/search" forward="portlet.message_boards.search" />

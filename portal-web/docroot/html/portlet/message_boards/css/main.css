@@ -265,6 +265,16 @@
 		width: 100%;
 	}
 
+	.thread-view-controls {
+		list-style: none;
+		margin: 0;
+		text-align: right;
+
+		li {
+			display: inline-block;
+		}
+	}
+
 	.emoticons {
 		border: 1px solid #ccc;
 		margin-left: 10px;

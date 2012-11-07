@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -110,18 +111,13 @@ public class I18nServlet extends HttpServlet {
 	}
 
 	protected String[] getI18nData(HttpServletRequest request) {
-		String path = request.getRequestURI();
-
-		String contextPath = request.getContextPath();
-		String servletPath = request.getServletPath();
-
-		path = path.substring(contextPath.length() + servletPath.length());
+		String path = GetterUtil.getString(request.getPathInfo());
 
 		if (Validator.isNull(path)) {
 			return null;
 		}
 
-		String i18nLanguageId = servletPath;
+		String i18nLanguageId = request.getServletPath();
 
 		int pos = i18nLanguageId.lastIndexOf(CharPool.SLASH);
 

@@ -8859,8 +8859,8 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 					});
 		}
 
-		protected void shrink(long groupId, long leftCategoryId, long delta) {
-			_sqlUpdate.update(new Object[] { delta, groupId, leftCategoryId });
+		protected void shrink(long groupId, long rightCategoryId, long delta) {
+			_sqlUpdate.update(new Object[] { delta, groupId, rightCategoryId });
 		}
 
 		private SqlUpdate _sqlUpdate;

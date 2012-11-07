@@ -40,13 +40,9 @@ public class SearchHelloVelocityTest extends BaseTestCase {
 		selenium.waitForElementPresent(
 			"//script[contains(@src,'/aui/aui-live-search/aui-live-search-min.js')]");
 		selenium.waitForVisible("//input[@id='layout_configuration_content']");
-		selenium.type("//input[@id='layout_configuration_content']",
+		selenium.sendKeys("//input[@id='layout_configuration_content']",
 			RuntimeVariables.replace("h"));
-		selenium.keyDown("//input[@id='layout_configuration_content']",
-			RuntimeVariables.replace("\\13"));
-		selenium.keyUp("//input[@id='layout_configuration_content']",
-			RuntimeVariables.replace("\\13"));
-		selenium.waitForVisible("//div[@title='Hello Velocity']");
-		assertTrue(selenium.isVisible("//div[@title='Hello Velocity']"));
+		selenium.waitForVisible("//li[@title='Hello Velocity']");
+		assertTrue(selenium.isVisible("//li[@title='Hello Velocity']"));
 	}
 }

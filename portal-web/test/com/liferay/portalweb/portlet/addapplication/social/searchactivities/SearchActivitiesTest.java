@@ -40,13 +40,9 @@ public class SearchActivitiesTest extends BaseTestCase {
 		selenium.waitForElementPresent(
 			"//script[contains(@src,'/aui/aui-live-search/aui-live-search-min.js')]");
 		selenium.waitForVisible("//input[@id='layout_configuration_content']");
-		selenium.type("//input[@id='layout_configuration_content']",
+		selenium.sendKeys("//input[@id='layout_configuration_content']",
 			RuntimeVariables.replace("a"));
-		selenium.keyDown("//input[@id='layout_configuration_content']",
-			RuntimeVariables.replace("\\13"));
-		selenium.keyUp("//input[@id='layout_configuration_content']",
-			RuntimeVariables.replace("\\13"));
-		selenium.waitForVisible("//div[@title='Activities']");
-		assertTrue(selenium.isVisible("//div[@title='Activities']"));
+		selenium.waitForVisible("//li[@title='Activities']");
+		assertTrue(selenium.isVisible("//li[@title='Activities']"));
 	}
 }

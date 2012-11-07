@@ -40,13 +40,9 @@ public class SearchPageCommentsTest extends BaseTestCase {
 		selenium.waitForElementPresent(
 			"//script[contains(@src,'/aui/aui-live-search/aui-live-search-min.js')]");
 		selenium.waitForVisible("//input[@id='layout_configuration_content']");
-		selenium.type("//input[@id='layout_configuration_content']",
+		selenium.sendKeys("//input[@id='layout_configuration_content']",
 			RuntimeVariables.replace("p"));
-		selenium.keyDown("//input[@id='layout_configuration_content']",
-			RuntimeVariables.replace("\\13"));
-		selenium.keyUp("//input[@id='layout_configuration_content']",
-			RuntimeVariables.replace("\\13"));
-		selenium.waitForVisible("//div[@title='Page Comments']");
-		assertTrue(selenium.isVisible("//div[@title='Page Comments']"));
+		selenium.waitForVisible("//li[@title='Page Comments']");
+		assertTrue(selenium.isVisible("//li[@title='Page Comments']"));
 	}
 }

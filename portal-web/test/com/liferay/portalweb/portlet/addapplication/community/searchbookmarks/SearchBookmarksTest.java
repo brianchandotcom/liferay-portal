@@ -40,13 +40,9 @@ public class SearchBookmarksTest extends BaseTestCase {
 		selenium.waitForElementPresent(
 			"//script[contains(@src,'/aui/aui-live-search/aui-live-search-min.js')]");
 		selenium.waitForVisible("//input[@id='layout_configuration_content']");
-		selenium.type("//input[@id='layout_configuration_content']",
+		selenium.sendKeys("//input[@id='layout_configuration_content']",
 			RuntimeVariables.replace("b"));
-		selenium.keyDown("//input[@id='layout_configuration_content']",
-			RuntimeVariables.replace("\\13"));
-		selenium.keyUp("//input[@id='layout_configuration_content']",
-			RuntimeVariables.replace("\\13"));
-		selenium.waitForVisible("//div[@title='Bookmarks']");
-		assertTrue(selenium.isVisible("//div[@title='Bookmarks']"));
+		selenium.waitForVisible("//li[@title='Bookmarks']");
+		assertTrue(selenium.isVisible("//li[@title='Bookmarks']"));
 	}
 }

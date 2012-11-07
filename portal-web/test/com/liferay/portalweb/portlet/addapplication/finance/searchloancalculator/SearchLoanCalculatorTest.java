@@ -40,13 +40,9 @@ public class SearchLoanCalculatorTest extends BaseTestCase {
 		selenium.waitForElementPresent(
 			"//script[contains(@src,'/aui/aui-live-search/aui-live-search-min.js')]");
 		selenium.waitForVisible("//input[@id='layout_configuration_content']");
-		selenium.type("//input[@id='layout_configuration_content']",
+		selenium.sendKeys("//input[@id='layout_configuration_content']",
 			RuntimeVariables.replace("l"));
-		selenium.keyDown("//input[@id='layout_configuration_content']",
-			RuntimeVariables.replace("\\13"));
-		selenium.keyUp("//input[@id='layout_configuration_content']",
-			RuntimeVariables.replace("\\13"));
-		selenium.waitForVisible("//div[@title='Loan Calculator']");
-		assertTrue(selenium.isVisible("//div[@title='Loan Calculator']"));
+		selenium.waitForVisible("//li[@title='Loan Calculator']");
+		assertTrue(selenium.isVisible("//li[@title='Loan Calculator']"));
 	}
 }

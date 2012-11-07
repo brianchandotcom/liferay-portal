@@ -174,7 +174,7 @@ public class AssetCategoryLocalServiceImpl
 				category.getCategoryId());
 
 		for (AssetCategory curCategory : categories) {
-			deleteCategory(curCategory);
+			deleteCategory(curCategory.getCategoryId());
 		}
 
 		// Entries
@@ -221,7 +221,7 @@ public class AssetCategoryLocalServiceImpl
 			if (category.getParentCategoryId() ==
 					AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
 
-				deleteCategory(category);
+				deleteCategory(category.getCategoryId());
 			}
 		}
 	}

@@ -242,7 +242,7 @@ public class BaseActionsImpl implements LiferayActions {
 
 		UncheckUnits uncheckUnits = new UncheckUnits(selenium);
 
-		uncheckUnits.uncheck(params[0], params[1]);
+		uncheckUnits.click(params[0], params[1]);
 	}
 
 	protected String[] getParams(String param1, String param2) {

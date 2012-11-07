@@ -24,14 +24,15 @@ public class CopyUnits extends BaseActionsUnits {
 		super(liferaySelenium);
 	}
 
-	public void textCopy(String param1, String param2) throws Exception {
+	public void textCopy(String param1, String param2)
+		throws Exception {
 		selenium.waitForVisible(param1);
 		selenium.copyText(param1);
 	}
 
-	public void valueCopy(String param1, String param2) throws Exception {
+	public void valueCopy(String param1, String param2)
+		throws Exception {
 		selenium.waitForVisible(param1);
 		selenium.copyValue(param1);
 	}
-
 }

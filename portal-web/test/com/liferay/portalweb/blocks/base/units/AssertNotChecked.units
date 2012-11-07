@@ -1,0 +1,6 @@
+<units>
+	<unitdef name="assertNotChecked">
+		<selenium command="waitForVisible" />
+		<selenium command="assertNotChecked" />
+	</unitdef>
+</units>

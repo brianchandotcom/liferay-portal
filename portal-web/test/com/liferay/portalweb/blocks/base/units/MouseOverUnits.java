@@ -24,34 +24,33 @@ public class MouseOverUnits extends BaseActionsUnits {
 		super(liferaySelenium);
 	}
 
-	public void mouseOver(String param1, String param2) throws Exception {
+	public void mouseOver(String param1, String param2)
+		throws Exception {
 		selenium.waitForVisible(param1);
-		selenium.waitForText(param1, param2);
-		selenium.assertText(param1, param2);
 		selenium.mouseOver(param1);
 	}
 
 	public void partialTextMouseOver(String param1, String param2)
 		throws Exception {
-
 		selenium.waitForVisible(param1);
 		selenium.waitForPartialText(param1, param2);
 		selenium.assertPartialText(param1, param2);
 		selenium.mouseOver(param1);
 	}
 
-	public void textMouseOver(String param1, String param2) throws Exception {
+	public void textMouseOver(String param1, String param2)
+		throws Exception {
 		selenium.waitForVisible(param1);
 		selenium.waitForText(param1, param2);
 		selenium.assertText(param1, param2);
 		selenium.mouseOver(param1);
 	}
 
-	public void valueMouseOver(String param1, String param2) throws Exception {
+	public void valueMouseOver(String param1, String param2)
+		throws Exception {
 		selenium.waitForVisible(param1);
 		selenium.waitForValue(param1, param2);
 		selenium.assertValue(param1, param2);
 		selenium.mouseOver(param1);
 	}
-
 }

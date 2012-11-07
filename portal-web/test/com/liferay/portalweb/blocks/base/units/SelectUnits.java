@@ -29,9 +29,9 @@ public class SelectUnits extends BaseActionsUnits {
 		selenium.select(param1, param2);
 	}
 
-	public void selectAndWait(String param1, String param2) throws Exception {
+	public void selectAndWait(String param1, String param2)
+		throws Exception {
 		selenium.waitForVisible(param1);
 		selenium.selectAndWait(param1, param2);
 	}
-
 }

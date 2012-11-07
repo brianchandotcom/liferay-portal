@@ -1,0 +1,12 @@
+<units>
+	<unitdef name="assertElementNotPresent">
+		<if command="isElementPresent">
+			<selenium command="waitForNotVisible" />
+			<selenium command="assertNotVisible" />
+		</if>
+		<else>
+			<selenium command="waitForElementNotPresent" />
+			<selenium command="assertElementNotPresent" />
+		</else>
+	</unitdef>
+</units>

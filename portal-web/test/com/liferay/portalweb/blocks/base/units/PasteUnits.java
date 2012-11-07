@@ -29,15 +29,15 @@ public class PasteUnits extends BaseActionsUnits {
 		selenium.paste(param1);
 	}
 
-	public void pasteCKEditor(String param1, String param2) throws Exception {
+	public void pasteCKEditor(String param1, String param2)
+		throws Exception {
 		selenium.waitForElementPresent(
 			"//textarea[@id='_161_editor' and @style='display: none;']");
 		selenium.waitForVisible("//span[.='Source']");
 		selenium.assertText("//span[.='Source']", "Source");
 		selenium.click("//span[.='Source']");
 		selenium.waitForVisible("//a[@class='cke_button_source cke_on']");
-		selenium.waitForVisible(
-			"//td[@id='cke_contents__161_editor']/textarea");
+		selenium.waitForVisible("//td[@id='cke_contents__161_editor']/textarea");
 		selenium.paste("//td[@id='cke_contents__161_editor']/textarea");
 		selenium.waitForVisible("//span[.='Source']");
 		selenium.assertText("//span[.='Source']", "Source");
@@ -50,5 +50,4 @@ public class PasteUnits extends BaseActionsUnits {
 		selenium.assertText("//body", param2);
 		selenium.selectFrame("relative=top");
 	}
-
 }

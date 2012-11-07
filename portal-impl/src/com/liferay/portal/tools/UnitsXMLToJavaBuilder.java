@@ -48,15 +48,63 @@ public class UnitsXMLToJavaBuilder extends SeleniumXMLToJavaBuilder {
 
 		Set<String> fileNames = getFileNames();
 
+		getSeleniumMethods();
+
 		for (String fileName : fileNames) {
 			if (fileName.length() > 161) {
 				System.out.println(
 					"Exceeds 177 characters: portal-web/test/" + fileName);
 			}
 
-			getSeleniumMethods();
 			generateUnits(fileName);
 		}
+	}
+
+	protected void generateUnits(String fileName) throws Exception {
+		if (!FileUtil.exists(basedir + "/" + fileName)) {
+			return;
+		}
+
+		int x = fileName.lastIndexOf(StringPool.SLASH);
+		int y = fileName.indexOf(CharPool.PERIOD);
+
+		String unitsFilePath = fileName.substring(0, x);
+		String unitsName = fileName.substring(x + 1, y) + "Units";
+
+		String unitsFileName = unitsFilePath + "/" + unitsName + ".java";
+		String unitsPackagePath = StringUtil.replace(
+			unitsFilePath, StringPool.SLASH, StringPool.PERIOD);
+		String unitsXMLFileName =
+			unitsFilePath + "/" + fileName.substring(x + 1, y) + ".units";
+
+		StringBundler sb = new StringBundler();
+
+		sb.append("package ");
+		sb.append(unitsPackagePath);
+		sb.append(";\n\n");
+
+		sb.append("import com.liferay.portalweb.portal.util.liferayselenium.");
+		sb.append("LiferaySelenium;\n");
+
+		sb.append("public class ");
+		sb.append(unitsName);
+		sb.append(" extends BaseActionsUnits {\n\n");
+
+		sb.append("public ");
+		sb.append(unitsName);
+		sb.append("(LiferaySelenium liferaySelenium) {\n");
+
+		sb.append("super(liferaySelenium);\n");
+
+		sb.append("}\n");
+
+		Element rootElement = getRootElement(unitsXMLFileName);
+
+		sb.append(getUnitDefs(rootElement));
+
+		sb.append("}");
+
+		writeFile(unitsFileName, sb.toString(), true);
 	}
 
 	protected String getCommands(Element runBlock) {
@@ -64,15 +112,41 @@ public class UnitsXMLToJavaBuilder extends SeleniumXMLToJavaBuilder {
 
 		List<Element> commands = runBlock.elements();
 
-		String runBlockName = runBlock.getName();
-
 		for (Element command : commands) {
 			String commandName = command.getName();
 
-			if (commandName.equals("selenium")) {
+			if (commandName.equals("else")) {
+				sb.append(getCommandElse(command));
+			}
+			else if (commandName.equals("selenium")) {
 				sb.append(getCommandSelenium(command));
 			}
+			else if (commandName.equals("if")) {
+				sb.append(getCommandIf(command));
+			}
 		}
+
+		return sb.toString();
+	}
+
+	private String getCommandElse(Element command) {
+		StringBundler sb = new StringBundler();
+
+		sb.append("else {");
+		sb.append(getCommands(command));
+		sb.append("}");
+
+		return sb.toString();
+	}
+
+	private String getCommandIf(Element command) {
+		StringBundler sb = new StringBundler();
+
+		sb.append("if (");
+		sb.append(getCommandSeleniumConditional(command));
+		sb.append(") {");
+		sb.append(getCommands(command));
+		sb.append("}");
 
 		return sb.toString();
 	}
@@ -92,15 +166,91 @@ public class UnitsXMLToJavaBuilder extends SeleniumXMLToJavaBuilder {
 		sb.append(seleniumCommandName);
 		sb.append("(");
 
-		if (numParams > 0) {
-			sb.append("params[0]");
+		String seleniumTargetName = command.attributeValue("target");
+
+		if (!(seleniumTargetName == null)) {
+			sb.append("\"");
+			sb.append(seleniumTargetName);
+			sb.append("\"");
+		}
+		else if (seleniumCommandName.equals("assertConfirmation") ||
+				 seleniumCommandName.equals("assertTextNotPresent") ||
+				 seleniumCommandName.equals("assertTextPresent") ||
+				 seleniumCommandName.equals("waitForConfirmation") ||
+				 seleniumCommandName.equals("waitForTextNotPresent") ||
+				 seleniumCommandName.equals("waitForTextPresent")) {
+
+			sb.append("param2");
+		}
+		else if (numParams > 0) {
+			sb.append("param1");
 		}
 
-		if (numParams > 1) {
-			sb.append(", params[1]");
+		String seleniumValueName = command.attributeValue("value");
+
+		if (!seleniumCommandName.equals("open")) {
+			if (!(seleniumValueName == null)) {
+				sb.append(", \"");
+				sb.append(seleniumValueName);
+				sb.append("\"");
+			}
+			else if (numParams > 1) {
+				sb.append(", param2");
+			}
 		}
 
 		sb.append(");\n");
+
+		return sb.toString();
+	}
+
+	private String getCommandSeleniumConditional(Element command) {
+		StringBundler sb = new StringBundler();
+
+		String seleniumCommandName = command.attributeValue("command");
+
+		if (seleniumCommandName.contains("Not")) {
+			sb.append("!");
+
+			seleniumCommandName = StringUtil.replace(
+				seleniumCommandName, "Not", "");
+		}
+
+		int numParams = 0;
+
+		if (_seleniumMethods.containsKey(seleniumCommandName)) {
+			numParams = _seleniumMethods.get(seleniumCommandName);
+		}
+
+		sb.append("selenium.");
+		sb.append(seleniumCommandName);
+		sb.append("(");
+
+		String seleniumTargetName = command.attributeValue("target");
+
+		if (!(seleniumTargetName == null)) {
+			sb.append("\"");
+			sb.append(seleniumTargetName);
+			sb.append("\"");
+		}
+		else if (numParams > 0) {
+			sb.append("param1");
+		}
+
+		String seleniumValueName = command.attributeValue("value");
+
+		if (!seleniumCommandName.equals("open")) {
+			if (!(seleniumValueName == null)) {
+				sb.append(", \"");
+				sb.append(seleniumValueName);
+				sb.append("\"");
+			}
+			else if (numParams > 1) {
+				sb.append(", param2");
+			}
+		}
+
+		sb.append(")");
 
 		return sb.toString();
 	}
@@ -127,24 +277,34 @@ public class UnitsXMLToJavaBuilder extends SeleniumXMLToJavaBuilder {
 		return fileNames;
 	}
 
-	protected void getSeleniumMethods() throws Exception {
-		String seleniumWrapperFileName =
-			"com/liferay/portalweb/portal/util/liferayselenium/SeleniumWrapper.java";
+	private void getSeleniumFileMethods(String file) throws Exception {
+		String content = getNormalizedContent(file);
 
-		String fileContents = readFile(seleniumWrapperFileName);
+		Pattern pattern = Pattern.compile(
+			"public (boolean|String|void) [A-Za-z0-9_]*\\(.*?\\)");
 
-		Pattern pattern = Pattern.compile("\\spublic\\svoid\\s(.*)\\{");
-
-		Matcher matcher = pattern.matcher(fileContents);
+		Matcher matcher = pattern.matcher(content);
 
 		while (matcher.find()) {
 			String methodDec = matcher.group();
 
-			int leftParen = methodDec.indexOf("(");
-			int rightParen = methodDec.indexOf(")");
+			int x = methodDec.indexOf("(");
+			int y = methodDec.indexOf(")");
 
-			String name = methodDec.substring(13, leftParen);
-			String params = methodDec.substring(leftParen + 1, rightParen);
+			String name = null;
+
+			if (methodDec.startsWith("public boolean")) {
+				name = methodDec.substring(15, x);
+			}
+			else if (methodDec.startsWith("public String")) {
+				name = methodDec.substring(14, x);
+			}
+			else if (methodDec.startsWith("public void")) {
+				name = methodDec.substring(12, x);
+			}
+
+			String params = methodDec.substring(x + 1, y);
+
 			String[] paramsArray = params.split(",");
 
 			int numParams;
@@ -158,42 +318,18 @@ public class UnitsXMLToJavaBuilder extends SeleniumXMLToJavaBuilder {
 
 			_seleniumMethods.put(name, numParams);
 		}
-
-		seleniumWrapperFileName =
-			"com/liferay/portalweb/portal/util/liferayselenium/LiferaySeleniumHelper.java";
-
-		fileContents = readFile(seleniumWrapperFileName);
-
-		pattern = Pattern.compile(
-			"public\\sstatic\\svoid(.*)\\{" +
-			"|public\\sstatic\\svoid(.*)\n(.*)\\{" +
-			"|public\\sstatic\\svoid(.*)\n(.*)\n(.*)\\{" +
-			"|public\\sstatic\\svoid(.*)\n(.*)\n(.*)\n(.*)\\{");
-
-		matcher = pattern.matcher(fileContents);
-
-		while (matcher.find()) {
-			String methodDec = matcher.group();
-			System.out.println(methodDec);
-
-			int leftParen = methodDec.indexOf("(");
-			int rightParen = methodDec.indexOf(")");
-
-			String name = methodDec.substring(19, leftParen);
-			String params = methodDec.substring(leftParen + 1, rightParen);
-			String[] paramsArray = params.split(",");
-
-			int numParams = paramsArray.length - 1;
-
-			_seleniumMethods.put(name, numParams);
-			System.out.println(name);
-		}
-
-		_seleniumMethods.put("clickAndWait", 1);
-		_seleniumMethods.put("clickAtAndWait", 2);
 	}
 
-	protected String getUnitDefs(Element rootElement) throws Exception {
+	private void getSeleniumMethods() throws Exception {
+		getSeleniumFileMethods(
+			"com/liferay/portalweb/portal/util/liferayselenium/" +
+				"SeleniumWrapper.java");
+		getSeleniumFileMethods(
+			"com/liferay/portalweb/portal/util/liferayselenium/" +
+				"LiferaySelenium.java");
+	}
+
+	private String getUnitDefs(Element rootElement) throws Exception {
 		StringBundler sb = new StringBundler();
 
 		List<Element> unitDefs = rootElement.elements("unitdef");
@@ -213,59 +349,7 @@ public class UnitsXMLToJavaBuilder extends SeleniumXMLToJavaBuilder {
 		return sb.toString();
 	}
 
-	protected void generateUnits(String fileName) throws Exception {
-		if (!FileUtil.exists(basedir + "/" + fileName)) {
-			return;
-		}
-
-		int x = fileName.lastIndexOf(StringPool.SLASH);
-		int y = fileName.indexOf(CharPool.PERIOD);
-
-		String unitsName = fileName.substring(x + 1, y) + "Units";
-
-		String unitsFilePath = fileName.substring(0, x);
-
-		String unitsPackagePath = StringUtil.replace(
-			unitsFilePath, StringPool.SLASH, StringPool.PERIOD);
-
-		String unitsFileName = unitsFilePath + "/" + unitsName + ".java";
-
-		String unitsXMLFileName =
-			unitsFilePath + "/" + fileName.substring(x + 1, y) + ".units";
-
-		StringBundler sb = new StringBundler();
-
-		sb.append("package ");
-		sb.append(unitsPackagePath);
-		sb.append(";\n\n");
-
-		sb.append("import com.liferay.portalweb.portal.util.liferayselenium.");
-		sb.append("LiferaySelenium;\n");
-
-		sb.append("public class ");
-		sb.append(unitsName);
-		sb.append(" extends BaseActionUnits {\n\n");
-
-		sb.append("public ");
-		sb.append(unitsName);
-		sb.append("(LiferaySelenium liferaySelenium) {\n");
-
-		sb.append("super(liferaySelenium);\n");
-
-		sb.append("}\n");
-
-		System.out.println("unitsXMLFileName");
-		System.out.println(unitsXMLFileName);
-
-		Element rootElement = getRootElement(unitsXMLFileName);
-
-		sb.append(getUnitDefs(rootElement));
-
-		sb.append("}");
-
-		writeFile(unitsFileName, sb.toString(), true);
-	}
-
-	private static Map<String, Integer> _seleniumMethods = new HashMap<String, Integer>();
+	private static Map<String, Integer> _seleniumMethods =
+		new HashMap<String, Integer>();
 
 }

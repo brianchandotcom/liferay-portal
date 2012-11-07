@@ -26,9 +26,7 @@ public class AssertTextPresentUnits extends BaseActionsUnits {
 
 	public void assertTextPresent(String param1, String param2)
 		throws Exception {
-
 		selenium.waitForTextPresent(param2);
 		selenium.assertTextPresent(param2);
 	}
-
 }

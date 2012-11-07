@@ -25,8 +25,7 @@ public class ConfirmUnits extends BaseActionsUnits {
 	}
 
 	public void confirm(String param1, String param2) throws Exception {
-		selenium.waitForConfirmation(param1);
+		selenium.waitForConfirmation(param2);
 		selenium.pause("1000");
 	}
-
 }

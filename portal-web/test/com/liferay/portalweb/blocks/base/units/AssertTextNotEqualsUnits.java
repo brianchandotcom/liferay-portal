@@ -26,10 +26,8 @@ public class AssertTextNotEqualsUnits extends BaseActionsUnits {
 
 	public void assertTextNotEquals(String param1, String param2)
 		throws Exception {
-
 		selenium.waitForVisible(param1);
 		selenium.waitForNotText(param1, param2);
 		selenium.assertNotText(param1, param2);
 	}
-
 }

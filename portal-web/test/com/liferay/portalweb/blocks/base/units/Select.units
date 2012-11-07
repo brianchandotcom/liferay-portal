@@ -1,0 +1,11 @@
+<units>
+	<unitdef name="select">
+		<selenium command="waitForVisible" />
+		<selenium command="select" />
+	</unitdef>
+
+	<unitdef name="selectAndWait">
+		<selenium command="waitForVisible" />
+		<selenium command="selectAndWait" />
+	</unitdef>
+</units>

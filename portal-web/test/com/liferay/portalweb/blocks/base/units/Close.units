@@ -1,0 +1,11 @@
+<units>
+	<unitdef name="close">
+	</unitdef>
+
+	<unitdef name="closeWindow">
+		<selenium command="pause" target="1000" />
+		<selenium command="close" />
+		<selenium command="selectWindow" target="null" />
+		<selenium command="selectFrame" target="relative=top" />
+	</unitdef>
+</units>

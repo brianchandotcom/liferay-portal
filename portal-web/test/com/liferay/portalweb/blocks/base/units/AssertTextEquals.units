@@ -1,0 +1,13 @@
+<units>
+	<unitdef name="assertPartialText">
+		<selenium command="waitForVisible" />
+		<selenium command="waitForPartialText" />
+		<selenium command="assertPartialText" />
+	</unitdef>
+
+	<unitdef name="assertText">
+		<selenium command="waitForVisible" />
+		<selenium command="waitForText" />
+		<selenium command="assertText" />
+	</unitdef>
+</units>

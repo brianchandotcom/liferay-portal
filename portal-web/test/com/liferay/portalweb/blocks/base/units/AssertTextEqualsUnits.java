@@ -26,16 +26,15 @@ public class AssertTextEqualsUnits extends BaseActionsUnits {
 
 	public void assertPartialText(String param1, String param2)
 		throws Exception {
-
 		selenium.waitForVisible(param1);
 		selenium.waitForPartialText(param1, param2);
 		selenium.assertPartialText(param1, param2);
 	}
 
-	public void assertText(String param1, String param2) throws Exception {
+	public void assertText(String param1, String param2)
+		throws Exception {
 		selenium.waitForVisible(param1);
 		selenium.waitForText(param1, param2);
 		selenium.assertText(param1, param2);
 	}
-
 }

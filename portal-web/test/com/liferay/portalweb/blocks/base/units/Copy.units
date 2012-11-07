@@ -1,0 +1,11 @@
+<units>
+	<unitdef name="textCopy">
+		<selenium command="waitForVisible" />
+		<selenium command="copyText" />
+	</unitdef>
+
+	<unitdef name="valueCopy">
+		<selenium command="waitForVisible" />
+		<selenium command="copyValue" />
+	</unitdef>
+</units>

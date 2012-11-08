@@ -1,3 +1,5 @@
+@import "compass";
+
 .journal-article-component-list {
 	margin: 10px 0 0 0;
 }
@@ -222,7 +224,7 @@
 			background-color: #FDD;
 			background-image: url(@theme_image_path@/messages/error.png);
 			font-weight: normal;
-			opacity: 0.6;
+			@include opacity(0.6);
 
 			.error-message {
 				position: absolute;
@@ -704,12 +706,10 @@
 		}
 
 		.aui-placeholder, .aui-tree-placeholder, .aui-tree-sub-placeholder {
-			-ms-filter: alpha(opacity=75);
 			background: #fff;
 			border: 1px #cdcdcd dashed;
-			filter: alpha(opacity=75);
 			height: 100px;
-			opacity: 0.75;
+			@include opacity(0.75);
 		}
 
 		li {
@@ -785,25 +785,15 @@
 		width: auto;
 	}
 
-	.journal-article-helper {
-		-ms-filter: alpha(opacity=80);
-
-		&.not-intersecting .forbidden-action {
-			right: 2px;
-			top: 2px;
-		}
+	.journal-article-helper .not-intersecting .forbidden-action {
+		right: 2px;
+		top: 2px;
 	}
 
 	.portlet-journal {
 		.structure-tree li {
 			zoom: 1;
 		}
-	}
-}
-
-.ie6, .ie7 {
-	.journal-article-helper {
-		filter: alpha(opacity=80);
 	}
 }
 
@@ -884,7 +874,7 @@
 	background: #dedede;
 	border: 1px #555 dashed;
 	cursor: move;
-	opacity: 0.8;
+	@include opacity(0.8);
 	position: absolute;
 	visibility: hidden;
 	width: 100px;

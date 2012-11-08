@@ -1,3 +1,5 @@
+@import "compass";
+
 .portlet-alerts {
 	.entry {
 		border: 6px solid #c00;
@@ -83,7 +85,7 @@
 	}
 
 	.read-entries .entry-title {
-		opacity: 0.5;
+		@include opacity(0.5);
 	}
 
 	.edit-actions {

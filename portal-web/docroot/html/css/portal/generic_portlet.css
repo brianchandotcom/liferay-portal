@@ -1,3 +1,5 @@
+@import "compass";
+
 .breadcrumbs {
 	margin-bottom: 10px;
 	margin-left: 0;
@@ -118,12 +120,8 @@
 	font-weight: bold;
 }
 
-.lfr-checkbox-preselected {
-	opacity: 0.5;
-}
-
-.lfr-configurator-visibility {
-	opacity: 0.5;
+.lfr-checkbox-preselected, .lfr-configurator-visibility {
+	@include opacity(0.5);
 }
 
 .lfr-change-logo {
@@ -136,15 +134,7 @@
 }
 
 .ie {
-	.lfr-checkbox-preselected {
-		filter: alpha(opacity=50);
+	.lfr-checkbox-preselected, .lfr-configurator-visibility, .lfr-configurator-visibility .portlet-topper {
 		zoom: 1;
-	}
-
-	.lfr-configurator-visibility {
-		&, .portlet-topper {
-			filter: alpha(opacity=50);
-			zoom: 1;
-		}
 	}
 }

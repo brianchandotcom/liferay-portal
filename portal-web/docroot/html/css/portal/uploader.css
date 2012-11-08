@@ -1,3 +1,5 @@
+@import "compass";
+
 .lfr-dynamic-uploader {
 	display: table;
 	table-layout: fixed;
@@ -104,7 +106,7 @@
 	}
 
 	.upload-error {
-		opacity: 1;
+		@include opacity(1);
 		padding-left: 25px;
 	}
 
@@ -256,7 +258,7 @@
 				background-color: #B4DDAD;
 				background-image: url(@theme_image_path@/common/check.png);
 				font-weight: bold;
-				opacity: 0.6;
+				@include opacity(0.6);
 			}
 		}
 	}

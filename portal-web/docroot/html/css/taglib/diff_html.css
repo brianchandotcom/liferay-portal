@@ -1,3 +1,5 @@
+@import "compass";
+
 .taglib-diff-html span {
 	&.diff-html-added img, &.diff-html-removed img {
 		border: 2px solid transparent;
@@ -11,21 +13,9 @@
 .taglib-diff-html div.diff-removed-image, div.diff-added-image {
 	height: 300px;
 	margin: 2px;
-	opacity: 0.55;
+	@include opacity(0.55);
 	position: absolute;
 	width: 200px;
-}
-
-.gecko {
-	.taglib-diff-html div.diff-removed-image, div.diff-added-image {
-		-moz-opacity: 0.55;
-	}
-}
-
-.ie {
-	.taglib-diff-html div.diff-removed-image, div.diff-added-image {
-		filter: alpha(opacity=55);
-	}
 }
 
 /* Skin */

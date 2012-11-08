@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.journal.model.JournalStructure;
-import com.liferay.portlet.journal.service.JournalStructureLocalServiceUtil;
+import com.liferay.portlet.journal.service.JournalStructureServiceUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -46,7 +46,7 @@ public class GetStructureAction extends Action {
 			String structureId = ParamUtil.getString(request, "structureId");
 
 			JournalStructure structure =
-				JournalStructureLocalServiceUtil.getStructure(
+				JournalStructureServiceUtil.getStructure(
 					groupId, structureId, true);
 
 			String fileName = null;

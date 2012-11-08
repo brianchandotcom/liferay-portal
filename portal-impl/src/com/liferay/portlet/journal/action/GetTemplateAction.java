@@ -24,7 +24,7 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.journal.model.JournalTemplate;
 import com.liferay.portlet.journal.model.JournalTemplateConstants;
-import com.liferay.portlet.journal.service.JournalTemplateLocalServiceUtil;
+import com.liferay.portlet.journal.service.JournalTemplateServiceUtil;
 import com.liferay.portlet.journal.util.JournalUtil;
 
 import java.util.Map;
@@ -66,9 +66,8 @@ public class GetTemplateAction extends Action {
 			boolean transform = ParamUtil.getBoolean(
 				request, "transform", true);
 
-			JournalTemplate template =
-				JournalTemplateLocalServiceUtil.getTemplate(
-					groupId, templateId, true);
+			JournalTemplate template = JournalTemplateServiceUtil.getTemplate(
+				groupId, templateId, true);
 
 			String script = JournalUtil.getTemplateScript(
 				template, tokens, languageId, transform);

@@ -86,6 +86,15 @@ public class JournalStructureServiceWrapper implements JournalStructureService,
 		return _journalStructureService.getStructure(groupId, structureId);
 	}
 
+	public com.liferay.portlet.journal.model.JournalStructure getStructure(
+		long groupId, java.lang.String structureId,
+		boolean includeGlobalStructures)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _journalStructureService.getStructure(groupId, structureId,
+			includeGlobalStructures);
+	}
+
 	public java.util.List<com.liferay.portlet.journal.model.JournalStructure> getStructures(
 		long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException {

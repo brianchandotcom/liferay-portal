@@ -140,6 +140,22 @@ public class JournalStructureServiceSoap {
 		}
 	}
 
+	public static com.liferay.portlet.journal.model.JournalStructureSoap getStructure(
+		long groupId, java.lang.String structureId,
+		boolean includeGlobalStructures) throws RemoteException {
+		try {
+			com.liferay.portlet.journal.model.JournalStructure returnValue = JournalStructureServiceUtil.getStructure(groupId,
+					structureId, includeGlobalStructures);
+
+			return com.liferay.portlet.journal.model.JournalStructureSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.portlet.journal.model.JournalStructureSoap[] getStructures(
 		long groupId) throws RemoteException {
 		try {

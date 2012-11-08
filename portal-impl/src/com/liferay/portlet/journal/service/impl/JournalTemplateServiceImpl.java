@@ -106,6 +106,17 @@ public class JournalTemplateServiceImpl extends JournalTemplateServiceBaseImpl {
 		return journalTemplateLocalService.getTemplate(groupId, templateId);
 	}
 
+	public JournalTemplate getTemplate(
+			long groupId, String templateId, boolean includeGlobalTemplates)
+		throws PortalException, SystemException {
+
+		JournalTemplatePermission.check(
+			getPermissionChecker(), groupId, templateId, ActionKeys.VIEW);
+
+		return journalTemplateLocalService.getTemplate(
+			groupId, templateId, includeGlobalTemplates);
+	}
+
 	public List<JournalTemplate> search(
 			long companyId, long[] groupIds, String keywords,
 			String structureId, String structureIdComparator, int start,

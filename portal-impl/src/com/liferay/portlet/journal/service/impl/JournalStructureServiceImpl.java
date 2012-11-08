@@ -81,6 +81,17 @@ public class JournalStructureServiceImpl
 		return journalStructureLocalService.getStructure(groupId, structureId);
 	}
 
+	public JournalStructure getStructure(
+			long groupId, String structureId, boolean includeGlobalStructures)
+		throws PortalException, SystemException {
+
+		JournalStructurePermission.check(
+			getPermissionChecker(), groupId, structureId, ActionKeys.VIEW);
+
+		return journalStructureLocalService.getStructure(
+			groupId, structureId, includeGlobalStructures);
+	}
+
 	public List<JournalStructure> getStructures(long groupId)
 		throws SystemException {
 

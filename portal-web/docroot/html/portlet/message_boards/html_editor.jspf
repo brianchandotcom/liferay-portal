@@ -14,6 +14,20 @@
  */
 --%>
 
+<%
+if (quote && Validator.isNull(body) && (curParentMessage != null)) {
+	StringBundler sb = new StringBundler(5);
+
+	sb.append("<blockquote><div class=\"quote-title\">");
+	sb.append(parentAuthor);
+	sb.append(": </div><div class=\"quote\"><div class=\"quote-content\">");
+	sb.append(curParentMessage.getBody(false));
+	sb.append("</div></blockquote><br><br><br>");
+
+	body = sb.toString();
+}
+%>
+
 <liferay-ui:input-editor editorImpl="<%= HTML_EDITOR_WYSIWYG_IMPL_KEY %>" />
 
 <aui:script>

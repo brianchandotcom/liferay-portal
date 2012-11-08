@@ -123,8 +123,8 @@
 			a {
 				background-image: url(@theme_image_path@/arrows/06_down.png);
 				background-position: 0 4px;
-				padding: 0 5px;
 				@include opacity(0.5);
+				padding: 0 5px;
 			}
 		}
 	}

@@ -106,8 +106,8 @@
 	}
 
 	.upload-error {
-		padding-left: 25px;
 		@include opacity(1);
+		padding-left: 25px;
 	}
 
 	.upload-complete .cancel-button, .delete-button, .upload-complete.file-saved .delete-button, .upload-complete.upload-error .delete-button {

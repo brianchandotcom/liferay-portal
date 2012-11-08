@@ -874,10 +874,10 @@
 	background: #dedede;
 	border: 1px #555 dashed;
 	cursor: move;
+	@include opacity(0.8);
 	position: absolute;
 	visibility: hidden;
 	width: 100px;
-	@include opacity(0.8);
 
 	&.aui-draggable-dragging {
 		font-size: 15px;

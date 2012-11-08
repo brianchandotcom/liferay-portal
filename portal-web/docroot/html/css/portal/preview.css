@@ -75,8 +75,8 @@
 .lfr-preview-file-info {
 	display: inline-block;
 	margin-top: 0.5em;
-	padding: 3px 15px;
 	@include opacity(0.5);
+	padding: 3px 15px;
 
 	&:hover {
 		@include opacity(1);

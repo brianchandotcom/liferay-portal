@@ -167,8 +167,8 @@
 
 .aui-proxy {
 	cursor: move;
-	position: absolute;
 	@include opacity(0.65);
+	position: absolute;
 
 	&.generic-portlet {
 		height: 200px;
@@ -575,10 +575,10 @@
 	background-color: #FFF;
 	font-size: 1.5em;
 	margin: 1em;
+	@include opacity(0.9);
 	padding: 1em;
 	position: absolute;
 	z-index: 15;
-	@include opacity(0.9);
 }
 
 /* ---------- Pagination ---------- */

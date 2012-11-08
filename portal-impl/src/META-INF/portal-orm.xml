@@ -4445,8 +4445,7 @@
 	<entity class="com.liferay.portlet.wiki.model.impl.WikiPageImpl" name="WikiPage">
 		<table name="WikiPage" />
 		<attributes>
-			<transient name="attachmentsDir" />
-			<transient name="deletedAttachmentsDir" />
+			<transient name="attachmentsFolderId" />
 		</attributes>
 	</entity>
 	<entity class="com.liferay.portlet.wiki.model.impl.WikiPageResourceImpl" name="WikiPageResource">

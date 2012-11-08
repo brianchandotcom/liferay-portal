@@ -31,17 +31,25 @@ public interface WikiPage extends WikiPageModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portlet.wiki.model.impl.WikiPageImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public java.lang.String getAttachmentsDir();
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getAttachmentsFiles()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
 
-	public java.lang.String[] getAttachmentsFiles()
+	public int getAttachmentsFilesCount()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public long getAttachmentsFolderId()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> getChildPages();
 
-	public java.lang.String getDeletedAttachmentsDir();
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getDeletedAttachmentsFiles()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
 
-	public java.lang.String[] getDeletedAttachmentsFiles()
+	public int getDeletedAttachmentsFilesCount()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -57,7 +65,5 @@ public interface WikiPage extends WikiPageModel, PersistedModel {
 
 	public boolean isResourceMain();
 
-	public void setAttachmentsDir(java.lang.String attachmentsDir);
-
-	public void setDeletedAttachmentsDir(java.lang.String deletedAttachmentsDir);
+	public void setAttachmentsFolderId(long attachmentFolderId);
 }

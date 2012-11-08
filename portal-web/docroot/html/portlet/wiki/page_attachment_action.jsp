@@ -21,24 +21,22 @@ boolean viewTrashAttachments = ParamUtil.getBoolean(request, "viewTrashAttachmen
 
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
-Object[] objArray = (Object[])row.getObject();
+DLFileEntry dlFileEntry = (DLFileEntry)row.getObject();
 
-WikiNode node = (WikiNode)objArray[0];
-WikiPage wikiPage = (WikiPage)objArray[1];
-String fileName = (String)objArray[2];
+WikiPage wikiPage = WikiPageAttachmentUtil.getPageByFileEntryId(dlFileEntry.getFileEntryId());
 %>
 
 <liferay-ui:icon-menu>
 	<c:choose>
 		<c:when test="<%= viewTrashAttachments %>">
-			<c:if test="<%= WikiNodePermission.contains(permissionChecker, node.getNodeId(), ActionKeys.ADD_ATTACHMENT) %>">
+			<c:if test="<%= WikiNodePermission.contains(permissionChecker, wikiPage.getNodeId(), ActionKeys.ADD_ATTACHMENT) %>">
 				<portlet:actionURL var="restoreEntryURL">
 					<portlet:param name="struts_action" value="/wiki/edit_page_attachment" />
 					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.MOVE_FROM_TRASH %>" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
-					<portlet:param name="nodeId" value="<%= String.valueOf(node.getPrimaryKey()) %>" />
+					<portlet:param name="nodeId" value="<%= String.valueOf(wikiPage.getNodeId()) %>" />
 					<portlet:param name="title" value="<%= wikiPage.getTitle() %>" />
-					<portlet:param name="fileName" value="<%= fileName %>" />
+					<portlet:param name="fileName" value="<%= dlFileEntry.getTitle() %>" />
 				</portlet:actionURL>
 
 				<liferay-ui:icon
@@ -53,9 +51,9 @@ String fileName = (String)objArray[2];
 					<portlet:param name="struts_action" value="/wiki/edit_page_attachment" />
 					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
-					<portlet:param name="nodeId" value="<%= String.valueOf(node.getPrimaryKey()) %>" />
+					<portlet:param name="nodeId" value="<%= String.valueOf(wikiPage.getNodeId()) %>" />
 					<portlet:param name="title" value="<%= wikiPage.getTitle() %>" />
-					<portlet:param name="fileName" value="<%= fileName %>" />
+					<portlet:param name="fileName" value="<%= dlFileEntry.getTitle() %>" />
 				</portlet:actionURL>
 
 				<liferay-ui:icon-delete
@@ -69,9 +67,9 @@ String fileName = (String)objArray[2];
 					<portlet:param name="struts_action" value="/wiki/edit_page_attachment" />
 					<portlet:param name="<%= Constants.CMD %>" value="<%= TrashUtil.isTrashEnabled(scopeGroupId) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
-					<portlet:param name="nodeId" value="<%= String.valueOf(node.getPrimaryKey()) %>" />
+					<portlet:param name="nodeId" value="<%= String.valueOf(wikiPage.getNodeId()) %>" />
 					<portlet:param name="title" value="<%= wikiPage.getTitle() %>" />
-					<portlet:param name="fileName" value="<%= fileName %>" />
+					<portlet:param name="fileName" value="<%= dlFileEntry.getTitle() %>" />
 				</portlet:actionURL>
 
 				<liferay-ui:icon-delete

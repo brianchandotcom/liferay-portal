@@ -28,7 +28,7 @@ if (!TrashUtil.isTrashEnabled(scopeGroupId)) {
 WikiNode node = (WikiNode)request.getAttribute(WebKeys.WIKI_NODE);
 WikiPage wikiPage = (WikiPage)request.getAttribute(WebKeys.WIKI_PAGE);
 
-String[] attachments = null;
+List<DLFileEntry> attachments = null;
 
 if (viewTrashAttachments) {
 	attachments = wikiPage.getDeletedAttachmentsFiles();
@@ -51,12 +51,14 @@ portletURL.setParameter("struts_action", "/wiki/view_page_attachments");
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "attachments"), portletURL.toString());
 %>
 
-<portlet:actionURL var="undoTrashURL">
-	<portlet:param name="struts_action" value="/wiki/edit_page_attachment" />
-	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
-</portlet:actionURL>
+<c:if test="<%= !viewTrashAttachments %>">
+	<portlet:actionURL var="undoTrashURL">
+		<portlet:param name="struts_action" value="/wiki/edit_page_attachment" />
+		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
+	</portlet:actionURL>
 
-<liferay-ui:trash-undo portletURL="<%= undoTrashURL %>" />
+	<liferay-ui:trash-undo portletURL="<%= undoTrashURL %>" />
+</c:if>
 
 <liferay-util:include page="/html/portlet/wiki/top_links.jsp" />
 
@@ -89,26 +91,28 @@ else {
 
 SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, currentURLObj, headerNames, emptyResultsMessage);
 
-int total = attachments.length;
+int total = attachments.size();
 
 searchContainer.setTotal(total);
 
-List results = ListUtil.fromArray(attachments);
-
-results = ListUtil.subList(results, searchContainer.getStart(), searchContainer.getEnd());
+List<DLFileEntry> results = ListUtil.subList(attachments, searchContainer.getStart(), searchContainer.getEnd());
 
 searchContainer.setResults(results);
 
 List resultRows = searchContainer.getResultRows();
 
 for (int i = 0; i < results.size(); i++) {
-	String fileName = (String)results.get(i);
+	DLFileEntry dlFileEntry = results.get(i);
 
-	String shortFileName = FileUtil.getShortFileName(fileName);
+	ResultRow row = new ResultRow(dlFileEntry, dlFileEntry.getFileEntryId(), i);
 
-	long fileSize = DLStoreUtil.getFileSize(company.getCompanyId(), CompanyConstants.SYSTEM, fileName);
+	String shortFileName = dlFileEntry.getTitle();
 
-	ResultRow row = new ResultRow(new Object[] {node, wikiPage, fileName}, fileName, i);
+	// File name
+
+	if (viewTrashAttachments) {
+		shortFileName = TrashUtil.stripTrashNamespace(shortFileName);
+	}
 
 	PortletURL rowURL = renderResponse.createActionURL();
 
@@ -119,20 +123,12 @@ for (int i = 0; i < results.size(); i++) {
 	rowURL.setParameter("title", wikiPage.getTitle());
 	rowURL.setParameter("fileName", shortFileName);
 
-	// File name
-
-	if (viewTrashAttachments) {
-		shortFileName = TrashUtil.stripTrashNamespace(shortFileName, TrashUtil.TRASH_TIME_SEPARATOR);
-	}
-
-	String extension = FileUtil.getExtension(shortFileName);
-
 	StringBundler sb = new StringBundler(6);
 
 	sb.append("<img align=\"left\" border=\"0\" src=\"");
 	sb.append(themeDisplay.getPathThemeImages());
 	sb.append("/file_system/small/");
-	sb.append(DLUtil.getFileIcon(extension));
+	sb.append(DLUtil.getFileIcon(dlFileEntry.getMimeType()));
 	sb.append(".png\">&nbsp;");
 	sb.append(shortFileName);
 
@@ -140,7 +136,7 @@ for (int i = 0; i < results.size(); i++) {
 
 	// Size
 
-	row.addText(TextFormatter.formatStorageSize(fileSize, locale), rowURL);
+	row.addText(TextFormatter.formatStorageSize(dlFileEntry.getSize(), locale), rowURL);
 
 	// Action
 
@@ -166,16 +162,11 @@ for (int i = 0; i < results.size(); i++) {
 				emptyMessage="remove-the-attachments-for-this-page"
 				infoMessage="attachments-that-have-been-removed-for-more-than-x-days-will-be-automatically-deleted"
 				portletURL="<%= emptyTrashURL.toString() %>"
-				totalEntries="<%= attachments.length %>"
+				totalEntries="<%= wikiPage.getDeletedAttachmentsFilesCount() %>"
 			/>
 		</c:when>
 		<c:otherwise>
-
-			<%
-			String[] deletedAttachments = wikiPage.getDeletedAttachmentsFiles();
-			%>
-
-			<c:if test="<%= TrashUtil.isTrashEnabled(scopeGroupId) && (deletedAttachments.length > 0) %>">
+			<c:if test="<%= TrashUtil.isTrashEnabled(scopeGroupId) && (wikiPage.getDeletedAttachmentsFilesCount() > 0) %>">
 				<portlet:renderURL var="viewTrashAttachmentsURL">
 					<portlet:param name="struts_action" value="/wiki/view_page_attachments" />
 					<portlet:param name="tabs1" value="attachments" />
@@ -189,7 +180,7 @@ for (int i = 0; i < results.size(); i++) {
 					cssClass="trash-attachments"
 					image="delete"
 					label="<%= true %>"
-					message='<%= LanguageUtil.format(pageContext, (deletedAttachments.length == 1) ? "x-recently-removed-attachment" : "x-recently-removed-attachments", deletedAttachments.length) %>'
+					message='<%= LanguageUtil.format(pageContext, (wikiPage.getDeletedAttachmentsFilesCount() == 1) ? "x-recently-removed-attachment" : "x-recently-removed-attachments", wikiPage.getDeletedAttachmentsFilesCount()) %>'
 					url="<%= viewTrashAttachmentsURL %>"
 				/>
 			</c:if>

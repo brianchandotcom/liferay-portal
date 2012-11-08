@@ -18,13 +18,9 @@ import com.liferay.portal.editor.fckeditor.command.CommandArgument;
 import com.liferay.portal.editor.fckeditor.exception.FCKException;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portlet.documentlibrary.NoSuchDirectoryException;
-import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
+import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.portlet.wiki.service.WikiPageServiceUtil;
@@ -124,43 +120,22 @@ public class AttachmentCommandReceiver extends BaseCommandReceiver {
 		WikiPage wikiPage = WikiPageLocalServiceUtil.getPage(
 			wikiPageResourcePrimKey);
 
-		long repositoryId = CompanyConstants.SYSTEM;
-
-		String dirName = wikiPage.getAttachmentsDir();
-
-		String[] fileNames = null;
-
-		try {
-			fileNames = DLStoreUtil.getFileNames(
-				wikiPage.getCompanyId(), repositoryId, dirName);
-		}
-		catch (NoSuchDirectoryException nsde) {
-			DLStoreUtil.addDirectory(
-				wikiPage.getCompanyId(), repositoryId, dirName);
-
-			fileNames = DLStoreUtil.getFileNames(
-				wikiPage.getCompanyId(), repositoryId, dirName);
-		}
+		List<DLFileEntry> attachments = wikiPage.getAttachmentsFiles();
 
 		String attachmentURLPrefix = ParamUtil.getString(
 			request, "attachmentURLPrefix");
 
-		for (String fileName : fileNames) {
-			byte[] fileEntry = DLStoreUtil.getFileAsBytes(
-				wikiPage.getCompanyId(), repositoryId, fileName);
-
-			String[] parts = StringUtil.split(fileName, StringPool.SLASH);
-
-			fileName = parts[3];
-
+		for (DLFileEntry dlFileEntry : attachments) {
 			Element fileElement = document.createElement("File");
 
 			filesElement.appendChild(fileElement);
 
-			fileElement.setAttribute("name", fileName);
-			fileElement.setAttribute("desc", fileName);
-			fileElement.setAttribute("size", getSize(fileEntry.length));
-			fileElement.setAttribute("url", attachmentURLPrefix + fileName);
+			fileElement.setAttribute("name", dlFileEntry.getTitle());
+			fileElement.setAttribute("desc", dlFileEntry.getTitle());
+			fileElement.setAttribute(
+				"size", String.valueOf(dlFileEntry.getSize()));
+			fileElement.setAttribute(
+				"url", attachmentURLPrefix + dlFileEntry.getTitle());
 		}
 	}
 

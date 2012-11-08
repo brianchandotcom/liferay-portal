@@ -224,6 +224,15 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 			getUserId(), fileName, tempFolderName);
 	}
 
+	public void deleteTrashPageAttachments(long nodeId, String title)
+		throws PortalException, SystemException {
+
+		WikiPagePermission.check(
+			getPermissionChecker(), nodeId, title, ActionKeys.DELETE);
+
+		wikiPageLocalService.deleteTrashPageAttachments(nodeId, title);
+	}
+
 	public WikiPage getDraftPage(long nodeId, String title)
 		throws PortalException, SystemException {
 
@@ -358,18 +367,7 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 			getUserId(), nodeId, title, newTitle, serviceContext);
 	}
 
-	public void movePageAttachmentFromTrash(
-			long nodeId, String title, String deletedFileName)
-		throws PortalException, SystemException {
-
-		WikiNodePermission.check(
-			getPermissionChecker(), nodeId, ActionKeys.ADD_ATTACHMENT);
-
-		wikiPageLocalService.movePageAttachmentFromTrash(
-			nodeId, title, deletedFileName);
-	}
-
-	public String movePageAttachmentToTrash(
+	public long movePageAttachmentToTrash(
 			long nodeId, String title, String fileName)
 		throws PortalException, SystemException {
 
@@ -377,7 +375,7 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 			getPermissionChecker(), nodeId, title, ActionKeys.DELETE);
 
 		return wikiPageLocalService.movePageAttachmentToTrash(
-			nodeId, title, fileName);
+			getUserId(), nodeId, title, fileName);
 	}
 
 	public void movePageToTrash(long nodeId, String title)
@@ -397,6 +395,17 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 
 		wikiPageLocalService.movePageToTrash(
 			getUserId(), nodeId, title, version);
+	}
+
+	public void restorePageAttachmentFromTrash(
+			long nodeId, String title, String fileName)
+		throws PortalException, SystemException {
+
+		WikiNodePermission.check(
+			getPermissionChecker(), nodeId, ActionKeys.ADD_ATTACHMENT);
+
+		wikiPageLocalService.restorePageAttachmentFromTrash(
+			getUserId(), nodeId, title, fileName);
 	}
 
 	public void restorePageFromTrash(long resourcePrimKey)

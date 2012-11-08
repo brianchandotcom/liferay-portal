@@ -150,6 +150,13 @@ public class WikiPageServiceUtil {
 		getService().deleteTempPageAttachment(nodeId, fileName, tempFolderName);
 	}
 
+	public static void deleteTrashPageAttachments(long nodeId,
+		java.lang.String title)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteTrashPageAttachments(nodeId, title);
+	}
+
 	public static com.liferay.portlet.wiki.model.WikiPage getDraftPage(
 		long nodeId, java.lang.String title)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -221,14 +228,7 @@ public class WikiPageServiceUtil {
 		getService().movePage(nodeId, title, newTitle, serviceContext);
 	}
 
-	public static void movePageAttachmentFromTrash(long nodeId,
-		java.lang.String title, java.lang.String deletedFileName)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		getService().movePageAttachmentFromTrash(nodeId, title, deletedFileName);
-	}
-
-	public static java.lang.String movePageAttachmentToTrash(long nodeId,
+	public static long movePageAttachmentToTrash(long nodeId,
 		java.lang.String title, java.lang.String fileName)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -246,6 +246,13 @@ public class WikiPageServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		getService().movePageToTrash(nodeId, title, version);
+	}
+
+	public static void restorePageAttachmentFromTrash(long nodeId,
+		java.lang.String title, java.lang.String fileName)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().restorePageAttachmentFromTrash(nodeId, title, fileName);
 	}
 
 	public static void restorePageFromTrash(long resourcePrimKey)

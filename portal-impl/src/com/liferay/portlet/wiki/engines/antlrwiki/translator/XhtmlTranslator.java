@@ -16,7 +16,6 @@ package com.liferay.portlet.wiki.engines.antlrwiki.translator;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -29,6 +28,7 @@ import com.liferay.portal.parsers.creole.ast.WikiPageNode;
 import com.liferay.portal.parsers.creole.ast.extension.TableOfContentsNode;
 import com.liferay.portal.parsers.creole.ast.link.LinkNode;
 import com.liferay.portal.parsers.creole.visitor.impl.XhtmlTranslationVisitor;
+import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.wiki.NoSuchPageException;
 import com.liferay.portlet.wiki.engines.antlrwiki.translator.internal.UnformattedHeadingTextVisitor;
 import com.liferay.portlet.wiki.engines.antlrwiki.translator.internal.UnformattedLinksTextVisitor;
@@ -275,23 +275,18 @@ public class XhtmlTranslator extends XhtmlTranslationVisitor {
 	}
 
 	protected String searchLinkInAttachments(LinkNode linkNode) {
-		String[] attachments = null;
-
 		try {
-			attachments = _page.getAttachmentsFiles();
+			List<DLFileEntry> attachments = _page.getAttachmentsFiles();
+
+			for (DLFileEntry attachment : attachments) {
+				String title = attachment.getTitle();
+
+				if (title.equals(linkNode.getLink())) {
+					return title;
+				}
+			}
 		}
 		catch (Exception e) {
-			return null;
-		}
-
-		String link =
-			StringPool.SLASH + _page.getAttachmentsDir() + StringPool.SLASH +
-				linkNode.getLink();
-
-		if (ArrayUtil.contains(attachments, link)) {
-			int pos = link.lastIndexOf(StringPool.SLASH);
-
-			return link.substring(pos + 1);
 		}
 
 		return null;

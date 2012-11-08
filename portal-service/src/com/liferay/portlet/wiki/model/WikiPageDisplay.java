@@ -14,14 +14,18 @@
 
 package com.liferay.portlet.wiki.model;
 
+import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+
 import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * @author Jorge Ferrer
  */
 public interface WikiPageDisplay extends Serializable {
 
-	public String[] getAttachments();
+	public List<DLFileEntry> getAttachments();
 
 	public String getContent();
 
@@ -41,7 +45,7 @@ public interface WikiPageDisplay extends Serializable {
 
 	public boolean isHead();
 
-	public void setAttachments(String[] attachments);
+	public void setAttachments(List<DLFileEntry> attachments);
 
 	public void setContent(String content);
 

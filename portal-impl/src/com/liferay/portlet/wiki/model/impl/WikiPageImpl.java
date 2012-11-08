@@ -19,15 +19,14 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.CompanyConstants;
-import com.liferay.portlet.documentlibrary.NoSuchDirectoryException;
-import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
-import com.liferay.portlet.trash.util.TrashUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
+import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
-import com.liferay.portlet.wiki.model.WikiPageConstants;
 import com.liferay.portlet.wiki.service.WikiNodeLocalServiceUtil;
 import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
+import com.liferay.portlet.wiki.util.WikiPageAttachmentUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,28 +40,33 @@ public class WikiPageImpl extends WikiPageBaseImpl {
 	public WikiPageImpl() {
 	}
 
-	public String getAttachmentsDir() {
-		if (_attachmentDirs == null) {
-			_attachmentDirs =
-				WikiPageConstants.BASE_ATTACHMENTS_DIR + getResourcePrimKey();
-		}
-
-		return _attachmentDirs;
-	}
-
-	public String[] getAttachmentsFiles()
+	public List<DLFileEntry> getAttachmentsFiles()
 		throws PortalException, SystemException {
 
-		String[] fileNames = new String[0];
+		return PortletFileRepositoryUtil.getPortletFileEntries(
+			getGroupId(), getAttachmentsFolderId(),
+			WorkflowConstants.STATUS_APPROVED);
+	}
 
-		try {
-			fileNames = DLStoreUtil.getFileNames(
-				getCompanyId(), CompanyConstants.SYSTEM, getAttachmentsDir());
-		}
-		catch (NoSuchDirectoryException nsde) {
+	public int getAttachmentsFilesCount()
+		throws PortalException, SystemException {
+
+		return PortletFileRepositoryUtil.getPortletFileEntriesCount(
+			getGroupId(), getAttachmentsFolderId(),
+			WorkflowConstants.STATUS_APPROVED);
+	}
+
+	public long getAttachmentsFolderId()
+		throws PortalException, SystemException {
+
+		if (_attachmentFolderId > 0) {
+			return _attachmentFolderId;
 		}
 
-		return fileNames;
+		_attachmentFolderId = WikiPageAttachmentUtil.getPageFolderId(
+			getGroupId(), getUserId(), getNodeId(), getResourcePrimKey());
+
+		return _attachmentFolderId;
 	}
 
 	public List<WikiPage> getChildPages() {
@@ -81,30 +85,20 @@ public class WikiPageImpl extends WikiPageBaseImpl {
 		return pages;
 	}
 
-	public String getDeletedAttachmentsDir() {
-		if (_deletedAttachmentDirs == null) {
-			_deletedAttachmentDirs =
-				WikiPageConstants.BASE_ATTACHMENTS_DIR +
-					TrashUtil.TRASH_ATTACHMENTS_DIR + getResourcePrimKey();
-		}
+	public List<DLFileEntry> getDeletedAttachmentsFiles()
+			throws PortalException, SystemException {
 
-		return _deletedAttachmentDirs;
+		return PortletFileRepositoryUtil.getPortletFileEntries(
+			getGroupId(), getAttachmentsFolderId(),
+			WorkflowConstants.STATUS_IN_TRASH);
 	}
 
-	public String[] getDeletedAttachmentsFiles()
-		throws PortalException, SystemException {
+	public int getDeletedAttachmentsFilesCount()
+			throws PortalException, SystemException {
 
-		String[] fileNames = new String[0];
-
-		try {
-			fileNames = DLStoreUtil.getFileNames(
-				getCompanyId(), CompanyConstants.SYSTEM,
-				getDeletedAttachmentsDir());
-		}
-		catch (NoSuchDirectoryException nsde) {
-		}
-
-		return fileNames;
+		return PortletFileRepositoryUtil.getPortletFileEntriesCount(
+			getGroupId(), getAttachmentsFolderId(),
+			WorkflowConstants.STATUS_IN_TRASH);
 	}
 
 	public WikiNode getNode() {
@@ -186,17 +180,12 @@ public class WikiPageImpl extends WikiPageBaseImpl {
 		return isHead();
 	}
 
-	public void setAttachmentsDir(String attachmentsDir) {
-		_attachmentDirs = attachmentsDir;
-	}
-
-	public void setDeletedAttachmentsDir(String deletedAttachmentsDir) {
-		_deletedAttachmentDirs = deletedAttachmentsDir;
+	public void setAttachmentsFolderId(long attachmentFolderId) {
+		_attachmentFolderId = attachmentFolderId;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(WikiPageImpl.class);
 
-	private String _attachmentDirs;
-	private String _deletedAttachmentDirs;
+	private long _attachmentFolderId;
 
 }

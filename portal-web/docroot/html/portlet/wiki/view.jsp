@@ -40,10 +40,10 @@ if (wikiPage != null) {
 
 List childPages = wikiPage.getChildPages();
 
-String[] attachments = new String[0];
+int attachmentsCount = 0;
 
 if (wikiPage != null) {
-	attachments = wikiPage.getAttachmentsFiles();
+	attachmentsCount = wikiPage.getAttachmentsFilesCount();
 }
 
 boolean preview = false;
@@ -313,7 +313,7 @@ long portletDisplayDDMTemplateId = PortletDisplayTemplateUtil.getPortletDisplayT
 					<liferay-ui:icon
 						image="clip"
 						label="<%= true %>"
-						message='<%= attachments.length + " " + LanguageUtil.get(pageContext, (attachments.length == 1) ? "attachment" : "attachments") %>' method="get" url="<%= viewAttachmentsURL.toString() %>"
+						message='<%= attachmentsCount + " " + LanguageUtil.get(pageContext, (attachmentsCount == 1) ? "attachment" : "attachments") %>' method="get" url="<%= viewAttachmentsURL.toString() %>"
 					/>
 				</div>
 

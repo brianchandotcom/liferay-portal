@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
@@ -466,7 +467,9 @@ public class AnnouncementsEntryLocalServiceImpl
 				(entry.isAlert() ? "alert" : "announcement")));
 		subscriptionSender.setFrom(fromAddress, fromName);
 		subscriptionSender.setHtmlFormat(true);
-		subscriptionSender.setMailId("announcements_entry", entry.getEntryId());
+		subscriptionSender.setMailId(
+			"announcements_entry", entry.getEntryId(),
+			PortalUUIDUtil.generate());
 		subscriptionSender.setPortletId(PortletKeys.ANNOUNCEMENTS);
 		subscriptionSender.setScopeGroupId(entry.getGroupId());
 		subscriptionSender.setSubject(subject);

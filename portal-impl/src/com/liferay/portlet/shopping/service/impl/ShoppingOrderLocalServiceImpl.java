@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
@@ -495,7 +496,8 @@ public class ShoppingOrderLocalServiceImpl
 			total);
 		subscriptionSender.setFrom(fromAddress, fromName);
 		subscriptionSender.setHtmlFormat(true);
-		subscriptionSender.setMailId("shopping_order", order.getOrderId());
+		subscriptionSender.setMailId(
+			"shopping_order", order.getOrderId(), PortalUUIDUtil.generate());
 		subscriptionSender.setPortletId(PortletKeys.SHOPPING);
 		subscriptionSender.setScopeGroupId(order.getGroupId());
 		subscriptionSender.setServiceContext(serviceContext);

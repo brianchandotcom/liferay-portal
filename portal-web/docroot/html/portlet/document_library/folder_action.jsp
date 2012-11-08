@@ -450,8 +450,10 @@ if ((row == null) && (portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) |
 	<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
 </portlet:renderURL>
 
-<aui:script use="aui-dialog,aui-swf">
-	if (A.SWF.isFlashVersionAtLeast(9)) {
+<aui:script use="aui-dialog,aui-swf,uploader">
+	var swfDetect = (A.SWFDetect || A.SWF);
+
+	if (!A.UA.ios && (swfDetect.isFlashVersionAtLeast(9) || A.Uploader.TYPE == 'html5')) {
 		var uploadMultipleDocumentsIcon = A.all('.upload-multiple-documents:hidden');
 
 		uploadMultipleDocumentsIcon.show();

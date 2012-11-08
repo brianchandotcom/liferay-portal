@@ -111,6 +111,15 @@ public class JournalTemplateServiceWrapper implements JournalTemplateService,
 		return _journalTemplateService.getTemplate(groupId, templateId);
 	}
 
+	public com.liferay.portlet.journal.model.JournalTemplate getTemplate(
+		long groupId, java.lang.String templateId,
+		boolean includeGlobalTemplates)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _journalTemplateService.getTemplate(groupId, templateId,
+			includeGlobalTemplates);
+	}
+
 	public java.util.List<com.liferay.portlet.journal.model.JournalTemplate> search(
 		long companyId, long[] groupIds, java.lang.String keywords,
 		java.lang.String structureId, java.lang.String structureIdComparator,

@@ -117,6 +117,15 @@ public class JournalTemplateServiceUtil {
 		return getService().getTemplate(groupId, templateId);
 	}
 
+	public static com.liferay.portlet.journal.model.JournalTemplate getTemplate(
+		long groupId, java.lang.String templateId,
+		boolean includeGlobalTemplates)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getTemplate(groupId, templateId, includeGlobalTemplates);
+	}
+
 	public static java.util.List<com.liferay.portlet.journal.model.JournalTemplate> search(
 		long companyId, long[] groupIds, java.lang.String keywords,
 		java.lang.String structureId, java.lang.String structureIdComparator,

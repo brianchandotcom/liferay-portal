@@ -157,6 +157,22 @@ public class JournalTemplateServiceSoap {
 		}
 	}
 
+	public static com.liferay.portlet.journal.model.JournalTemplateSoap getTemplate(
+		long groupId, java.lang.String templateId,
+		boolean includeGlobalTemplates) throws RemoteException {
+		try {
+			com.liferay.portlet.journal.model.JournalTemplate returnValue = JournalTemplateServiceUtil.getTemplate(groupId,
+					templateId, includeGlobalTemplates);
+
+			return com.liferay.portlet.journal.model.JournalTemplateSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.portlet.journal.model.JournalTemplateSoap[] search(
 		long companyId, long[] groupIds, java.lang.String keywords,
 		java.lang.String structureId, java.lang.String structureIdComparator,

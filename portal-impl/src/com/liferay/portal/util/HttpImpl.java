@@ -1136,6 +1136,15 @@ public class HttpImpl implements Http {
 				else if (method.equals(Http.Method.POST)) {
 					PostMethod postMethod = (PostMethod)httpMethod;
 
+					if (!hasRequestHeader(
+							postMethod, HttpHeaders.CONTENT_TYPE)) {
+
+						postMethod.addRequestHeader(
+							HttpHeaders.CONTENT_TYPE,
+							ContentTypes.
+								APPLICATION_X_WWW_FORM_URLENCODED_UTF8);
+					}
+
 					processPostMethod(postMethod, fileParts, parts);
 				}
 			}
@@ -1159,13 +1168,13 @@ public class HttpImpl implements Http {
 			if ((method.equals(Http.Method.POST) ||
 				 method.equals(Http.Method.PUT)) &&
 				((body != null) ||
-				 ((fileParts != null) && !fileParts.isEmpty()) |
+				 ((fileParts != null) && !fileParts.isEmpty()) ||
 				 ((parts != null) && !parts.isEmpty()))) {
 			}
 			else if (!hasRequestHeader(httpMethod, HttpHeaders.CONTENT_TYPE)) {
 				httpMethod.addRequestHeader(
 					HttpHeaders.CONTENT_TYPE,
-					ContentTypes.APPLICATION_X_WWW_FORM_URLENCODED);
+					ContentTypes.APPLICATION_X_WWW_FORM_URLENCODED_UTF8);
 			}
 
 			if (!hasRequestHeader(httpMethod, HttpHeaders.USER_AGENT)) {

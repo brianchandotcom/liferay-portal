@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedOutputStream;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.mail.MailMessage;
@@ -1007,6 +1008,12 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 			title = ModelHintsUtil.trimString(
 				CalEvent.class.getName(), "title",
 				event.getSummary().getValue());
+		}
+		else {
+			title =
+				StringPool.OPEN_PARENTHESIS +
+					LanguageUtil.get(user.getLocale(), "no-title") +
+						StringPool.CLOSE_PARENTHESIS;
 		}
 
 		// Description

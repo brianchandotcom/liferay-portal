@@ -92,6 +92,6 @@ public class ImportEventsAction extends PortletAction {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(ExportEventsAction.class);
+	private static Log _log = LogFactoryUtil.getLog(ImportEventsAction.class);
 
 }

@@ -1167,7 +1167,7 @@ public class HttpImpl implements Http {
 			if ((method.equals(Http.Method.POST) ||
 				 method.equals(Http.Method.PUT)) &&
 				((body != null) ||
-				 ((fileParts != null) && !fileParts.isEmpty()) |
+				 ((fileParts != null) && !fileParts.isEmpty()) ||
 				 ((parts != null) && !parts.isEmpty()))) {
 			}
 			else if (!hasRequestHeader(httpMethod, HttpHeaders.CONTENT_TYPE)) {

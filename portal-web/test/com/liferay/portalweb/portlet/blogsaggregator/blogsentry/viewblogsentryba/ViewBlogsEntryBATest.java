@@ -25,7 +25,6 @@ public class ViewBlogsEntryBATest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Blogs Aggregator Test Page");
 		selenium.clickAt("link=Blogs Aggregator Test Page",
 			RuntimeVariables.replace("Blogs Aggregator Test Page"));
 		selenium.waitForPageToLoad("30000");

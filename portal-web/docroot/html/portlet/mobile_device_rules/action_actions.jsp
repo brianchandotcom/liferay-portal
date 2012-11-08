@@ -43,6 +43,6 @@ MDRAction action = (MDRAction)row.getObject();
 			<portlet:param name="actionId" value="<%= String.valueOf(action.getActionId()) %>" />
 		</portlet:actionURL>
 
-		<liferay-ui:icon image="delete" url="<%= deleteURL.toString() %>" />
+		<liferay-ui:icon-delete url="<%= deleteURL.toString() %>" />
 	</c:if>
 </liferay-ui:icon-menu>

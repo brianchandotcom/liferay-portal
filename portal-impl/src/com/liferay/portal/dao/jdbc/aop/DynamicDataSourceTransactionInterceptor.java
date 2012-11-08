@@ -31,16 +31,16 @@ public class DynamicDataSourceTransactionInterceptor
 	extends TransactionInterceptor {
 
 	public void afterPropertiesSet() {
-		if (_dynamicDataSourceTargetSource == null) {
-			_dynamicDataSourceTargetSource =
-				(DynamicDataSourceTargetSource)InfrastructureUtil.
-					getDynamicDataSourceTargetSource();
+		if (_dynamicDataSourceOperationSource == null) {
+			_dynamicDataSourceOperationSource =
+				(DynamicDataSourceOperationSource)InfrastructureUtil.
+					getDynamicDataSourceOperationSource();
 		}
 	}
 
 	@Override
 	public Object invoke(MethodInvocation methodInvocation) throws Throwable {
-		if (_dynamicDataSourceTargetSource == null) {
+		if (_dynamicDataSourceOperationSource == null) {
 			return super.invoke(methodInvocation);
 		}
 
@@ -61,13 +61,13 @@ public class DynamicDataSourceTransactionInterceptor
 		if ((transactionAttribute != null) &&
 			transactionAttribute.isReadOnly()) {
 
-			_dynamicDataSourceTargetSource.setOperation(Operation.READ);
+			_dynamicDataSourceOperationSource.setOperation(Operation.READ);
 		}
 		else {
-			_dynamicDataSourceTargetSource.setOperation(Operation.WRITE);
+			_dynamicDataSourceOperationSource.setOperation(Operation.WRITE);
 		}
 
-		_dynamicDataSourceTargetSource.pushMethod(
+		_dynamicDataSourceOperationSource.pushMethod(
 			targetClass.getName().concat(StringPool.PERIOD).concat(
 				targetMethod.getName()));
 
@@ -77,18 +77,18 @@ public class DynamicDataSourceTransactionInterceptor
 			returnValue = super.invoke(methodInvocation);
 		}
 		finally {
-			_dynamicDataSourceTargetSource.popMethod();
+			_dynamicDataSourceOperationSource.popMethod();
 		}
 
 		return returnValue;
 	}
 
-	public void setDynamicDataSourceTargetSource(
-		DynamicDataSourceTargetSource dynamicDataSourceTargetSource) {
+	public void setDynamicDataSourceOperationSource(
+		DynamicDataSourceOperationSource dynamicDataSourceOperationSource) {
 
-		_dynamicDataSourceTargetSource = dynamicDataSourceTargetSource;
+		_dynamicDataSourceOperationSource = dynamicDataSourceOperationSource;
 	}
 
-	private DynamicDataSourceTargetSource _dynamicDataSourceTargetSource;
+	private DynamicDataSourceOperationSource _dynamicDataSourceOperationSource;
 
 }

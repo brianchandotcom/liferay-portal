@@ -3334,9 +3334,11 @@ AUI.add(
 							value = instance.get('variableName');
 						}
 
-						fieldLabel.one('span').html(Liferay.Util.escapeHTML(value));
+						if (fieldLabel) {
+							fieldLabel.one('span').html(Liferay.Util.escapeHTML(value));
 
-						instance.setAttribute('fieldLabel', value);
+							instance.setAttribute('fieldLabel', value);
+						}
 
 						return value;
 					},
@@ -3397,7 +3399,9 @@ AUI.add(
 										requiredMessage.placeAfter(instructionsMessage);
 									}
 									else {
-										label.append(fieldInstance.createTooltipImage());
+										if (label) {
+											label.append(fieldInstance.createTooltipImage());
+										}
 									}
 								}
 							}
@@ -3448,15 +3452,18 @@ AUI.add(
 						var instance = this;
 
 						var fieldLabel = instance.getFieldLabelElement();
-						var input = fieldLabel.get('parentNode').one('.journal-article-component-container .aui-field-input');
 
-						if (input) {
-							input.attr('id', value);
+						if (fieldLabel) {
+							var input = fieldLabel.get('parentNode').one('.journal-article-component-container .aui-field-input');
 
-							fieldLabel.setAttribute('for', value);
+							if (input) {
+								input.attr('id', value);
+
+								fieldLabel.setAttribute('for', value);
+							}
+
+							instance.setAttribute('name', value);
 						}
-
-						instance.setAttribute('name', value);
 
 						return value;
 					},

@@ -1136,6 +1136,10 @@ public class HttpImpl implements Http {
 				else if (method.equals(Http.Method.POST)) {
 					PostMethod postMethod = (PostMethod)httpMethod;
 
+					postMethod.addRequestHeader(
+						HttpHeaders.CONTENT_TYPE,
+						ContentTypes.APPLICATION_X_WWW_FORM_URLENCODED);
+
 					processPostMethod(postMethod, fileParts, parts);
 				}
 			}

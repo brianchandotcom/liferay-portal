@@ -1156,6 +1156,15 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		wikiPagePersistence.update(page);
 
+		List<WikiPage> pageVersions = wikiPagePersistence.findByR_N_H(
+			page.getResourcePrimKey(), page.getNodeId(), false);
+
+		for (WikiPage pageVersion : pageVersions) {
+			pageVersion.setTitle(title);
+
+			wikiPagePersistence.update(pageVersion);
+		}
+
 		WikiPageResource pageResource =
 			wikiPageResourcePersistence.fetchByPrimaryKey(
 				page.getResourcePrimKey());
@@ -1190,6 +1199,15 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		page.setTitle(title);
 
 		wikiPagePersistence.update(page);
+
+		List<WikiPage> pageVersions = wikiPagePersistence.findByR_N_H(
+			page.getResourcePrimKey(), page.getNodeId(), false);
+
+		for (WikiPage pageVersion : pageVersions) {
+			pageVersion.setTitle(title);
+
+			wikiPagePersistence.update(pageVersion);
+		}
 
 		WikiPageResource pageResource =
 			wikiPageResourcePersistence.fetchByPrimaryKey(

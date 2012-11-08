@@ -261,6 +261,13 @@ public class WikiPageResourceLocalServiceWrapper
 		_wikiPageResourceLocalService.deletePageResource(nodeId, title);
 	}
 
+	public com.liferay.portlet.wiki.model.WikiPageResource fetchPageResource(
+		long nodeId, java.lang.String title)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _wikiPageResourceLocalService.fetchPageResource(nodeId, title);
+	}
+
 	public com.liferay.portlet.wiki.model.WikiPageResource getPageResource(
 		long pageResourcePrimKey)
 		throws com.liferay.portal.kernel.exception.PortalException,

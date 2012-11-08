@@ -148,6 +148,11 @@
 			<finder-column name="nodeId" />
 			<finder-column name="version" />
 		</finder>
+		<finder name="R_N_H" return-type="Collection">
+			<finder-column name="resourcePrimKey" />
+			<finder-column name="nodeId" />
+			<finder-column name="head" />
+		</finder>
 		<finder name="R_N_S" return-type="Collection">
 			<finder-column name="resourcePrimKey" />
 			<finder-column name="nodeId" />

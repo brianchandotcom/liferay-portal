@@ -910,6 +910,7 @@ create index IX_EA22A30C on WikiPage (nodeId, title, head, status);
 create index IX_BEA33AB8 on WikiPage (nodeId, title, status);
 create unique index IX_3D4AF476 on WikiPage (nodeId, title, version);
 create index IX_B771D67 on WikiPage (resourcePrimKey, nodeId);
+create index IX_E1F55FB on WikiPage (resourcePrimKey, nodeId, head);
 create index IX_94D1054D on WikiPage (resourcePrimKey, nodeId, status);
 create unique index IX_2CD67C81 on WikiPage (resourcePrimKey, nodeId, version);
 create index IX_FBBE7C96 on WikiPage (userId, nodeId, status);

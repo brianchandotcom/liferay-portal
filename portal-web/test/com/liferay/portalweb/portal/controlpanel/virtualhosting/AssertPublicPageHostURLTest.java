@@ -28,8 +28,10 @@ public class AssertPublicPageHostURLTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("http://www.able.com:8080/"),
 			selenium.getLocation());
 		assertEquals(RuntimeVariables.replace("Virtual Hosting Community"),
-			selenium.getText("//li[2]/span/a"));
-		assertTrue(selenium.isElementPresent("link=Public Page"));
+			selenium.getText("//span[@title='Go to Virtual Hosting Community']"));
+		assertEquals(RuntimeVariables.replace("Virtual Hosting Community"),
+			selenium.getText(
+				"//a[contains(text(),'Virtual Hosting Community')]"));
 		selenium.clickAt("link=Public Page",
 			RuntimeVariables.replace("Public Page"));
 		selenium.waitForPageToLoad("30000");

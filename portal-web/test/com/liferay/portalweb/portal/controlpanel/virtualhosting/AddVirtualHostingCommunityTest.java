@@ -25,6 +25,10 @@ public class AddVirtualHostingCommunityTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
@@ -35,19 +39,17 @@ public class AddVirtualHostingCommunityTest extends BaseTestCase {
 		selenium.clickAt("link=Sites", RuntimeVariables.replace("Sites"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Add"),
-			selenium.getText("link=Add"));
-		selenium.clickAt("link=Add", RuntimeVariables.replace("Add"));
+			selenium.getText("//span[@title='Add']/ul/li/strong/a"));
+		selenium.clickAt("//span[@title='Add']/ul/li/strong/a",
+			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Blank Site')]");
 		assertEquals(RuntimeVariables.replace("Blank Site"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Blank Site')]"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Blank Site')]"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForVisible("//input[@id='_134_name']");
-		selenium.typeKeys("//input[@id='_134_name']",
-			RuntimeVariables.replace("Virtual Hosting Communit"));
 		selenium.type("//input[@id='_134_name']",
 			RuntimeVariables.replace("Virtual Hosting Community"));
 		selenium.clickAt("//input[@value='Save']",

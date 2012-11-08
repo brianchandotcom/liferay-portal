@@ -14,6 +14,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
+	<td>AUI Editable Min</td>
+</tr>
+<tr>
 	<td>assertText</td>
 	<td>//li[@id='_145_mySites']/a/span</td>
 	<td>Go to</td>
@@ -40,38 +50,28 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>link=Add</td>
+	<td>//span[@title='Add']/ul/li/strong/a</td>
 	<td>Add</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>link=Add</td>
+	<td>//span[@title='Add']/ul/li/strong/a</td>
 	<td>Add</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Blank Site')]</td>
 	<td>Blank Site</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Blank Site')]</td>
 	<td>Blank Site</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Blank Site')]</td>
 	<td>Blank Site</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//input[@id='_134_name']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>typeKeys</td>
-	<td>//input[@id='_134_name']</td>
-	<td>Virtual Hosting Communit</td>
 </tr>
 <tr>
 	<td>type</td>

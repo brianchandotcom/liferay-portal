@@ -25,6 +25,10 @@ public class EditFriendlyURLTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
@@ -34,7 +38,7 @@ public class EditFriendlyURLTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Sites", RuntimeVariables.replace("Sites"));
 		selenium.waitForPageToLoad("30000");
-		selenium.type("//input[@id='_134_name']",
+		selenium.type("//input[@name='_134_keywords']",
 			RuntimeVariables.replace("Virtual Hosting Community"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
@@ -44,17 +48,18 @@ public class EditFriendlyURLTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit Settings')]/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit Settings')]");
 		assertEquals(RuntimeVariables.replace("Edit Settings"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit Settings')]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit Settings')]"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit Settings')]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit Settings')]"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isPartialText("//a[@id='_165_siteUrlLink']",
 				"Site URL"));
 		selenium.clickAt("//a[@id='_165_siteUrlLink']",
 			RuntimeVariables.replace("Site URL"));
+		selenium.waitForVisible("//input[@name='_165_friendlyURL']");
 		selenium.type("//input[@name='_165_friendlyURL']",
 			RuntimeVariables.replace("/alpha"));
 		selenium.clickAt("//input[@value='Save']",

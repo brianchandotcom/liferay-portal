@@ -14,6 +14,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
+	<td>AUI Editable Min</td>
+</tr>
+<tr>
 	<td>assertText</td>
 	<td>//li[@id='_145_mySites']/a/span</td>
 	<td>Go to</td>
@@ -40,7 +50,7 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>//input[@id='_134_name']</td>
+	<td>//input[@name='_134_keywords']</td>
 	<td>Virtual Hosting Community</td>
 </tr>
 <tr>
@@ -60,17 +70,17 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Manage Pages')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Pages')]</td>
 	<td>Manage Pages</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Manage Pages')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Pages')]</td>
 	<td>Manage Pages</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Manage Pages')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Pages')]</td>
 	<td>Manage Pages</td>
 </tr>
 <tr>
@@ -80,7 +90,7 @@
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//div/span/button[1]</td>
+	<td>//button[contains(.,'Add Page')]/span</td>
 	<td>Add Page</td>
 </tr>
 <tr>

@@ -14,6 +14,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
+	<td>AUI Editable Min</td>
+</tr>
+<tr>
 	<td>assertText</td>
 	<td>//li[@id='_145_mySites']/a/span</td>
 	<td>Go to</td>
@@ -40,7 +50,7 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>//input[@id='_134_name']</td>
+	<td>//input[@name='_134_keywords']</td>
 	<td>Virtual Hosting Community</td>
 </tr>
 <tr>
@@ -60,17 +70,17 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit Settings')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit Settings')]</td>
 	<td>Edit Settings</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit Settings')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit Settings')]</td>
 	<td>Edit Settings</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit Settings')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit Settings')]</td>
 	<td>Edit Settings</td>
 </tr>
 <tr>
@@ -82,6 +92,11 @@
 	<td>clickAt</td>
 	<td>//a[@id='_165_siteUrlLink']</td>
 	<td>Site URL</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//input[@name='_165_privateVirtualHost']</td>
+	<td>Private Page Host Field</td>
 </tr>
 <tr>
 	<td>type</td>

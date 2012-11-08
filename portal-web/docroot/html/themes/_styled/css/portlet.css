@@ -82,7 +82,9 @@ body.portlet {
 .portlet-journal-content .icon-actions {
 	float: left;
 	margin: 1px 10px 1px 1px;
+
 	@include opacity(0.5);
+
 	padding: 2px 7px;
 
 	.taglib-text {
@@ -131,7 +133,9 @@ body.portlet {
 
 .portlet-borderless-bar {
 	font-size: 10px;
+
 	@include opacity(0.3);
+
 	padding: 2px 5px 1px;
 	position: absolute;
 	right: 0;

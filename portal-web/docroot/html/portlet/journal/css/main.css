@@ -224,6 +224,7 @@
 			background-color: #FDD;
 			background-image: url(@theme_image_path@/messages/error.png);
 			font-weight: normal;
+
 			@include opacity(0.6);
 
 			.error-message {
@@ -709,6 +710,7 @@
 			background: #fff;
 			border: 1px #cdcdcd dashed;
 			height: 100px;
+
 			@include opacity(0.75);
 		}
 
@@ -874,7 +876,9 @@
 	background: #dedede;
 	border: 1px #555 dashed;
 	cursor: move;
+
 	@include opacity(0.8);
+
 	position: absolute;
 	visibility: hidden;
 	width: 100px;

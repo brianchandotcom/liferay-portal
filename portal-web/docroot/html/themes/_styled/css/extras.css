@@ -127,7 +127,7 @@ body > .lfr-menu-list, body > .lfr-menu-list ul, button, input[type="button"], i
 
 .staging-tabview-list {
 	@include background-image(linear-gradient(0 0, rgba(0, 0, 0, 0.06), rgba(0, 0, 0, 0.06) 25%, rgba(0, 0, 0, 0) 25%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.06) 50%, rgba(0, 0, 0, 0.06) 75%, rgba(0, 0, 0, 0) 75%, rgba(0, 0, 0, 0)));
-	background-size: 100px 100px;
+	@include background-size(100px 100px);
 	@include border-radius(0);
 	@include box-shadow(inset 0 0.75em 0.75em rgba(255, 255, 255, 0.55));
 	@include filter-gradient(#FFEED4, #FFDBA6);
@@ -201,7 +201,9 @@ body:first-of-type {
 		display: inline-block;
 		max-width: 0;
 		overflow: hidden;
+
 		@include single-transition(max-width, 0.3s, ease-in, 0.2s);
+
 		text-overflow: ellipsis;
 		white-space: nowrap;
 	}
@@ -232,6 +234,7 @@ body:first-of-type {
 	50% {
 		background-color: #DDEDDE;
 		border-color: #7D7;
+
 		@include scale(1.1);
 	}
 	75% {

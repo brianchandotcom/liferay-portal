@@ -84,6 +84,7 @@
 			background-color: #FDD;
 			background-image: url(@theme_image_path@/messages/error.png);
 			font-weight: normal;
+
 			@include opacity(0.6);
 
 			.error-message {

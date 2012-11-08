@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.wiki.model.WikiPage;
 
 import java.util.Locale;
@@ -44,6 +45,11 @@ public class WikiPortletDisplayTemplateHandler
 
 	public String getResourceName() {
 		return "com.liferay.portlet.wiki";
+	}
+
+	@Override
+	protected String getTemplatesConfigPath() {
+		return PropsValues.WIKI_DISPLAY_TEMPLATES_CONFIG;
 	}
 
 	@Override

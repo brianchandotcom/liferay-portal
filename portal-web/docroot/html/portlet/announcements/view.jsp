@@ -32,6 +32,14 @@ portletURL.setParameter("tabs1", tabs1);
 <c:choose>
 	<c:when test='<%= tabs1.equals("entries") %>'>
 		<%@ include file="/html/portlet/announcements/view_entries.jspf" %>
+
+		<c:if test="<%= !hasResults && portletName.equals(PortletKeys.ALERTS) && !AnnouncementsEntryPermission.contains(permissionChecker, layout, PortletKeys.ANNOUNCEMENTS, ActionKeys.ADD_ENTRY) %>">
+
+			<%
+			renderRequest.setAttribute(WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);
+			%>
+
+		</c:if>
 	</c:when>
 	<c:when test='<%= tabs1.equals("manage-entries") %>'>
 		<%@ include file="/html/portlet/announcements/view_manage_entries.jspf" %>

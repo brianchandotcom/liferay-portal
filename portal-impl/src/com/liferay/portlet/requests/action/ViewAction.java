@@ -60,25 +60,16 @@ public class ViewAction extends PortletAction {
 			user = UserLocalServiceUtil.getUserById(group.getClassPK());
 		}
 
-		if (!UserPermissionUtil.contains(
+		if (UserPermissionUtil.contains(
 				themeDisplay.getPermissionChecker(), user.getUserId(),
 				ActionKeys.UPDATE)) {
 
-			renderRequest.setAttribute(WebKeys.PORTLET_DECORATE, Boolean.FALSE);
-		}
-		else {
 			List<SocialRequest> requests =
 				SocialRequestLocalServiceUtil.getReceiverUserRequests(
 					user.getUserId(), SocialRequestConstants.STATUS_PENDING, 0,
 					100);
 
-			if (requests.size() == 0) {
-				renderRequest.setAttribute(
-					WebKeys.PORTLET_DECORATE, Boolean.FALSE);
-			}
-			else {
-				renderRequest.setAttribute(WebKeys.SOCIAL_REQUESTS, requests);
-			}
+			renderRequest.setAttribute(WebKeys.SOCIAL_REQUESTS, requests);
 		}
 
 		return mapping.findForward("portlet.requests.view");

@@ -38,12 +38,6 @@ public class ViewAction extends PortletAction {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws Exception {
 
-		String portletName = portletConfig.getPortletName();
-
-		if (portletName.equals(PortletKeys.ALERTS)) {
-			renderRequest.setAttribute(WebKeys.PORTLET_DECORATE, Boolean.FALSE);
-		}
-
 		return mapping.findForward("portlet.announcements.view");
 	}
 

@@ -116,6 +116,9 @@ if (Validator.isNotNull(toLanguageId)) {
 else if ((article != null) && (article.getId() > 0)) {
 	mainSections = PropsValues.JOURNAL_ARTICLE_FORM_UPDATE;
 }
+else if (classNameId > JournalArticleConstants.CLASSNAME_ID_DEFAULT) {
+	mainSections = PropsValues.JOURNAL_ARTICLE_FORM_DEFAULT_VALUES;
+}
 
 String[][] categorySections = {mainSections};
 

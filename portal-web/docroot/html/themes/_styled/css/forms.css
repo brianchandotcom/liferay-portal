@@ -31,6 +31,7 @@
 	background: #D4D4D4 url(../images/portlet/header_bg.png) repeat-x 0 0;
 	border-color: #C8C9CA #9E9E9E #9E9E9E #C8C9CA;
 	color: #555;
+
 	@include opacity(0.5);
 }
 
@@ -152,6 +153,7 @@ input, textarea {
 .lfr-actions.lfr-extended {
 	&, ul {
 		@include button-default;
+
 		padding: 0;
 	}
 

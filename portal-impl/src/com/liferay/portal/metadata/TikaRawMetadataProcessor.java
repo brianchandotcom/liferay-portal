@@ -70,7 +70,9 @@ public class TikaRawMetadataProcessor extends XugglerRawMetadataProcessor {
 			if ((rootCause instanceof CryptographyException) ||
 				(rootCause instanceof EncryptedDocumentException)) {
 
-				_log.error("Cannot parse encrypted document.");
+				if (_log.isWarnEnabled()) {
+					_log.warn("Cannot extract metadata from encrypted file!");
+				}
 			}
 			else {
 				_log.error(e, e);

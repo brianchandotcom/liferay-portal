@@ -532,6 +532,20 @@ public interface UserModel extends BaseModel<User> {
 	public void setLoginIP(String loginIP);
 
 	/**
+	 * Returns the ldap server ID of this user.
+	 *
+	 * @return the ldap server ID of this user
+	 */
+	public long getLdapServerId();
+
+	/**
+	 * Sets the ldap server ID of this user.
+	 *
+	 * @param ldapServerId the ldap server ID of this user
+	 */
+	public void setLdapServerId(long ldapServerId);
+
+	/**
 	 * Returns the last login date of this user.
 	 *
 	 * @return the last login date of this user

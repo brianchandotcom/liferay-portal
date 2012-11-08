@@ -14,6 +14,7 @@
 
 package com.liferay.portal.security.ldap;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.ldap.LDAPUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -23,6 +24,8 @@ import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.model.User;
+import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 
@@ -217,6 +220,16 @@ public class LDAPSettingsUtil {
 		else {
 			return false;
 		}
+	}
+
+	public static long getPreferredLdapServerId(
+			long companyId, String screenName)
+		throws PortalException, SystemException {
+
+		User user = UserLocalServiceUtil.getUserByScreenName(
+			companyId, screenName);
+
+		return user.getLdapServerId();
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(LDAPSettingsUtil.class);

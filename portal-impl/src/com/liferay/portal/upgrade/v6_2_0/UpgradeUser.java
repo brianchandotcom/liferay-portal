@@ -38,6 +38,9 @@ public class UpgradeUser extends UpgradeProcess {
 		sb.append("where User_.contactId = Contact_.contactId)");
 
 		runSQL(sb.toString());
+
+		runSQL("update User_ set ldapServerId = -1");
+
 	}
 
 }

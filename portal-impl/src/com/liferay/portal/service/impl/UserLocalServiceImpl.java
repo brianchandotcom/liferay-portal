@@ -798,6 +798,9 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		user.setStatus(WorkflowConstants.STATUS_DRAFT);
 		user.setExpandoBridgeAttributes(serviceContext);
 
+		user.setLdapServerId(-1);
+		updateLdapServerId(user, serviceContext);
+
 		userPersistence.update(user, serviceContext);
 
 		// Resources
@@ -4864,6 +4867,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		user.setJobTitle(jobTitle);
 		user.setExpandoBridgeAttributes(serviceContext);
 
+		updateLdapServerId(user, serviceContext);
+
 		userPersistence.update(user, serviceContext);
 
 		// Contact
@@ -5652,6 +5657,16 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		}
 
 		PermissionCacheUtil.clearCache();
+	}
+
+	protected void updateLdapServerId(
+		User user, ServiceContext serviceContext) {
+
+		Long ldapServerId = (Long)serviceContext.getAttribute("ldapServerId");
+
+		if (ldapServerId != null) {
+			user.setLdapServerId(ldapServerId);
+		}
 	}
 
 	protected void updateOrganizations(

@@ -1103,6 +1103,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		userImpl.setJobTitle(user.getJobTitle());
 		userImpl.setLoginDate(user.getLoginDate());
 		userImpl.setLoginIP(user.getLoginIP());
+		userImpl.setLdapServerId(user.getLdapServerId());
 		userImpl.setLastLoginDate(user.getLastLoginDate());
 		userImpl.setLastLoginIP(user.getLastLoginIP());
 		userImpl.setLastFailedLoginDate(user.getLastFailedLoginDate());

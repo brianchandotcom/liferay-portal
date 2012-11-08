@@ -2024,6 +2024,7 @@
 		<column name="jobTitle" type="String" />
 		<column name="loginDate" type="Date" />
 		<column name="loginIP" type="String" />
+		<column name="ldapServerId" type="long" />
 		<column name="lastLoginDate" type="Date" />
 		<column name="lastLoginIP" type="String" />
 		<column name="lastFailedLoginDate" type="Date" />

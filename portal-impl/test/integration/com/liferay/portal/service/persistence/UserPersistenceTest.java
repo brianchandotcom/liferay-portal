@@ -167,6 +167,8 @@ public class UserPersistenceTest {
 
 		newUser.setLoginIP(ServiceTestUtil.randomString());
 
+		newUser.setLdapServerId(ServiceTestUtil.nextLong());
+
 		newUser.setLastLoginDate(ServiceTestUtil.nextDate());
 
 		newUser.setLastLoginIP(ServiceTestUtil.randomString());
@@ -238,6 +240,8 @@ public class UserPersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(existingUser.getLoginDate()),
 			Time.getShortTimestamp(newUser.getLoginDate()));
 		Assert.assertEquals(existingUser.getLoginIP(), newUser.getLoginIP());
+		Assert.assertEquals(existingUser.getLdapServerId(),
+			newUser.getLdapServerId());
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingUser.getLastLoginDate()),
 			Time.getShortTimestamp(newUser.getLastLoginDate()));
@@ -484,6 +488,8 @@ public class UserPersistenceTest {
 		user.setLoginDate(ServiceTestUtil.nextDate());
 
 		user.setLoginIP(ServiceTestUtil.randomString());
+
+		user.setLdapServerId(ServiceTestUtil.nextLong());
 
 		user.setLastLoginDate(ServiceTestUtil.nextDate());
 

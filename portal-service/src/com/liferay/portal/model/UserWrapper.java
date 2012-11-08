@@ -73,6 +73,7 @@ public class UserWrapper implements User, ModelWrapper<User> {
 		attributes.put("jobTitle", getJobTitle());
 		attributes.put("loginDate", getLoginDate());
 		attributes.put("loginIP", getLoginIP());
+		attributes.put("ldapServerId", getLdapServerId());
 		attributes.put("lastLoginDate", getLastLoginDate());
 		attributes.put("lastLoginIP", getLastLoginIP());
 		attributes.put("lastFailedLoginDate", getLastFailedLoginDate());
@@ -267,6 +268,12 @@ public class UserWrapper implements User, ModelWrapper<User> {
 
 		if (loginIP != null) {
 			setLoginIP(loginIP);
+		}
+
+		Long ldapServerId = (Long)attributes.get("ldapServerId");
+
+		if (ldapServerId != null) {
+			setLdapServerId(ldapServerId);
 		}
 
 		Date lastLoginDate = (Date)attributes.get("lastLoginDate");
@@ -930,6 +937,24 @@ public class UserWrapper implements User, ModelWrapper<User> {
 	*/
 	public void setLoginIP(java.lang.String loginIP) {
 		_user.setLoginIP(loginIP);
+	}
+
+	/**
+	* Returns the ldap server ID of this user.
+	*
+	* @return the ldap server ID of this user
+	*/
+	public long getLdapServerId() {
+		return _user.getLdapServerId();
+	}
+
+	/**
+	* Sets the ldap server ID of this user.
+	*
+	* @param ldapServerId the ldap server ID of this user
+	*/
+	public void setLdapServerId(long ldapServerId) {
+		_user.setLdapServerId(ldapServerId);
 	}
 
 	/**

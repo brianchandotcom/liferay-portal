@@ -61,6 +61,7 @@ public class UserSoap implements Serializable {
 		soapModel.setJobTitle(model.getJobTitle());
 		soapModel.setLoginDate(model.getLoginDate());
 		soapModel.setLoginIP(model.getLoginIP());
+		soapModel.setLdapServerId(model.getLdapServerId());
 		soapModel.setLastLoginDate(model.getLastLoginDate());
 		soapModel.setLastLoginIP(model.getLastLoginIP());
 		soapModel.setLastFailedLoginDate(model.getLastFailedLoginDate());
@@ -374,6 +375,14 @@ public class UserSoap implements Serializable {
 		_loginIP = loginIP;
 	}
 
+	public long getLdapServerId() {
+		return _ldapServerId;
+	}
+
+	public void setLdapServerId(long ldapServerId) {
+		_ldapServerId = ldapServerId;
+	}
+
 	public Date getLastLoginDate() {
 		return _lastLoginDate;
 	}
@@ -488,6 +497,7 @@ public class UserSoap implements Serializable {
 	private String _jobTitle;
 	private Date _loginDate;
 	private String _loginIP;
+	private long _ldapServerId;
 	private Date _lastLoginDate;
 	private String _lastLoginIP;
 	private Date _lastFailedLoginDate;

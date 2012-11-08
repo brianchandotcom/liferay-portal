@@ -854,6 +854,7 @@
 		</field>
 		<field name="loginDate" type="Date" />
 		<field name="loginIP" type="String" />
+		<field name="ldapServerId" type="long" />
 		<field name="lastLoginDate" type="Date" />
 		<field name="lastLoginIP" type="String" />
 		<field name="lastFailedLoginDate" type="Date" />

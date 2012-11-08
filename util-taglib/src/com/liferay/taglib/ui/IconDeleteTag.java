@@ -42,7 +42,12 @@ public class IconDeleteTag extends IconTag {
 			return _PAGE;
 		}
 
-		setImage("delete");
+		if (_trash) {
+			setImage("trash");
+		}
+		else {
+			setImage("delete");
+		}
 
 		if (_trash && Validator.isNull(getMessage())) {
 			setMessage("move-to-the-recycle-bin");

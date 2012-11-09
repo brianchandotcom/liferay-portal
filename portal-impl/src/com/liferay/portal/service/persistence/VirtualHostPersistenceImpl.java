@@ -281,7 +281,7 @@ public class VirtualHostPersistenceImpl extends BasePersistenceImpl<VirtualHost>
 		try {
 			session = openSession();
 
-			if (virtualHost.isCachedModel()) {
+			if (!session.contains(virtualHost)) {
 				virtualHost = (VirtualHost)session.get(VirtualHostImpl.class,
 						virtualHost.getPrimaryKeyObj());
 			}

@@ -306,7 +306,7 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 		try {
 			session = openSession();
 
-			if (country.isCachedModel()) {
+			if (!session.contains(country)) {
 				country = (Country)session.get(CountryImpl.class,
 						country.getPrimaryKeyObj());
 			}

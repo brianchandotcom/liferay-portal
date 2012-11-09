@@ -235,7 +235,7 @@ public class ClusterGroupPersistenceImpl extends BasePersistenceImpl<ClusterGrou
 		try {
 			session = openSession();
 
-			if (clusterGroup.isCachedModel()) {
+			if (!session.contains(clusterGroup)) {
 				clusterGroup = (ClusterGroup)session.get(ClusterGroupImpl.class,
 						clusterGroup.getPrimaryKeyObj());
 			}

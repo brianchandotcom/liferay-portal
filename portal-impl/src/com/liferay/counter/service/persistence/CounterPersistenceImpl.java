@@ -235,7 +235,7 @@ public class CounterPersistenceImpl extends BasePersistenceImpl<Counter>
 		try {
 			session = openSession();
 
-			if (counter.isCachedModel()) {
+			if (!session.contains(counter)) {
 				counter = (Counter)session.get(CounterImpl.class,
 						counter.getPrimaryKeyObj());
 			}

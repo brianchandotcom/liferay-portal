@@ -417,7 +417,7 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 		try {
 			session = openSession();
 
-			if (bookmarksEntry.isCachedModel()) {
+			if (!session.contains(bookmarksEntry)) {
 				bookmarksEntry = (BookmarksEntry)session.get(BookmarksEntryImpl.class,
 						bookmarksEntry.getPrimaryKeyObj());
 			}

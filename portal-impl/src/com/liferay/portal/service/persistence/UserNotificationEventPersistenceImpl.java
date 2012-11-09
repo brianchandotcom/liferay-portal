@@ -333,7 +333,7 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 		try {
 			session = openSession();
 
-			if (userNotificationEvent.isCachedModel()) {
+			if (!session.contains(userNotificationEvent)) {
 				userNotificationEvent = (UserNotificationEvent)session.get(UserNotificationEventImpl.class,
 						userNotificationEvent.getPrimaryKeyObj());
 			}

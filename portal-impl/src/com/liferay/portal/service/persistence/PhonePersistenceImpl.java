@@ -345,7 +345,7 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 		try {
 			session = openSession();
 
-			if (phone.isCachedModel()) {
+			if (!session.contains(phone)) {
 				phone = (Phone)session.get(PhoneImpl.class,
 						phone.getPrimaryKeyObj());
 			}

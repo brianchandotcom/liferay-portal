@@ -348,7 +348,7 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 		try {
 			session = openSession();
 
-			if (emailAddress.isCachedModel()) {
+			if (!session.contains(emailAddress)) {
 				emailAddress = (EmailAddress)session.get(EmailAddressImpl.class,
 						emailAddress.getPrimaryKeyObj());
 			}

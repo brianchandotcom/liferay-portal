@@ -257,7 +257,7 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 		try {
 			session = openSession();
 
-			if (release.isCachedModel()) {
+			if (!session.contains(release)) {
 				release = (Release)session.get(ReleaseImpl.class,
 						release.getPrimaryKeyObj());
 			}

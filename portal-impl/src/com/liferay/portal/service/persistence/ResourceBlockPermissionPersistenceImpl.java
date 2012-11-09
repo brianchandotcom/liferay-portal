@@ -298,7 +298,7 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 		try {
 			session = openSession();
 
-			if (resourceBlockPermission.isCachedModel()) {
+			if (!session.contains(resourceBlockPermission)) {
 				resourceBlockPermission = (ResourceBlockPermission)session.get(ResourceBlockPermissionImpl.class,
 						resourceBlockPermission.getPrimaryKeyObj());
 			}

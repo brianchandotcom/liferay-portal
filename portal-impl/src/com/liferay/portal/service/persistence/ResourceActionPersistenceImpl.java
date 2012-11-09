@@ -284,7 +284,7 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 		try {
 			session = openSession();
 
-			if (resourceAction.isCachedModel()) {
+			if (!session.contains(resourceAction)) {
 				resourceAction = (ResourceAction)session.get(ResourceActionImpl.class,
 						resourceAction.getPrimaryKeyObj());
 			}

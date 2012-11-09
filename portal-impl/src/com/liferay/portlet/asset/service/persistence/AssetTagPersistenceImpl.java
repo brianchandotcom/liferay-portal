@@ -300,7 +300,7 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 		try {
 			session = openSession();
 
-			if (assetTag.isCachedModel()) {
+			if (!session.contains(assetTag)) {
 				assetTag = (AssetTag)session.get(AssetTagImpl.class,
 						assetTag.getPrimaryKeyObj());
 			}

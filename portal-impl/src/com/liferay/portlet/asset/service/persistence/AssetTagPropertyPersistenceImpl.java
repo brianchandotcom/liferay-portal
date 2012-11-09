@@ -337,7 +337,7 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 		try {
 			session = openSession();
 
-			if (assetTagProperty.isCachedModel()) {
+			if (!session.contains(assetTagProperty)) {
 				assetTagProperty = (AssetTagProperty)session.get(AssetTagPropertyImpl.class,
 						assetTagProperty.getPrimaryKeyObj());
 			}

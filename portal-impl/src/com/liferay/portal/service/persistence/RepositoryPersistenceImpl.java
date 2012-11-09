@@ -367,7 +367,7 @@ public class RepositoryPersistenceImpl extends BasePersistenceImpl<Repository>
 		try {
 			session = openSession();
 
-			if (repository.isCachedModel()) {
+			if (!session.contains(repository)) {
 				repository = (Repository)session.get(RepositoryImpl.class,
 						repository.getPrimaryKeyObj());
 			}

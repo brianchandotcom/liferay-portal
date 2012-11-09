@@ -434,7 +434,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 		try {
 			session = openSession();
 
-			if (assetEntry.isCachedModel()) {
+			if (!session.contains(assetEntry)) {
 				assetEntry = (AssetEntry)session.get(AssetEntryImpl.class,
 						assetEntry.getPrimaryKeyObj());
 			}

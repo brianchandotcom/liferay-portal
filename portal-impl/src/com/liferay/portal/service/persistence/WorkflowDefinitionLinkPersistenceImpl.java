@@ -342,7 +342,7 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 		try {
 			session = openSession();
 
-			if (workflowDefinitionLink.isCachedModel()) {
+			if (!session.contains(workflowDefinitionLink)) {
 				workflowDefinitionLink = (WorkflowDefinitionLink)session.get(WorkflowDefinitionLinkImpl.class,
 						workflowDefinitionLink.getPrimaryKeyObj());
 			}

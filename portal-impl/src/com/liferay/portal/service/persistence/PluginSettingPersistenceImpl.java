@@ -303,7 +303,7 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 		try {
 			session = openSession();
 
-			if (pluginSetting.isCachedModel()) {
+			if (!session.contains(pluginSetting)) {
 				pluginSetting = (PluginSetting)session.get(PluginSettingImpl.class,
 						pluginSetting.getPrimaryKeyObj());
 			}

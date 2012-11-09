@@ -297,7 +297,7 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 		try {
 			session = openSession();
 
-			if (userTracker.isCachedModel()) {
+			if (!session.contains(userTracker)) {
 				userTracker = (UserTracker)session.get(UserTrackerImpl.class,
 						userTracker.getPrimaryKeyObj());
 			}

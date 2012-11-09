@@ -324,7 +324,7 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 		try {
 			session = openSession();
 
-			if (region.isCachedModel()) {
+			if (!session.contains(region)) {
 				region = (Region)session.get(RegionImpl.class,
 						region.getPrimaryKeyObj());
 			}

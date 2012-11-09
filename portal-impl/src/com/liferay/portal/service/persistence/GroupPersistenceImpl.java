@@ -552,7 +552,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		try {
 			session = openSession();
 
-			if (group.isCachedModel()) {
+			if (!session.contains(group)) {
 				group = (Group)session.get(GroupImpl.class,
 						group.getPrimaryKeyObj());
 			}

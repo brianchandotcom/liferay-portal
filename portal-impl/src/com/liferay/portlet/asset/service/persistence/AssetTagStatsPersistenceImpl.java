@@ -310,7 +310,7 @@ public class AssetTagStatsPersistenceImpl extends BasePersistenceImpl<AssetTagSt
 		try {
 			session = openSession();
 
-			if (assetTagStats.isCachedModel()) {
+			if (!session.contains(assetTagStats)) {
 				assetTagStats = (AssetTagStats)session.get(AssetTagStatsImpl.class,
 						assetTagStats.getPrimaryKeyObj());
 			}

@@ -294,7 +294,7 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 		try {
 			session = openSession();
 
-			if (contact.isCachedModel()) {
+			if (!session.contains(contact)) {
 				contact = (Contact)session.get(ContactImpl.class,
 						contact.getPrimaryKeyObj());
 			}

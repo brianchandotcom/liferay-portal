@@ -375,7 +375,7 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 		try {
 			session = openSession();
 
-			if (address.isCachedModel()) {
+			if (!session.contains(address)) {
 				address = (Address)session.get(AddressImpl.class,
 						address.getPrimaryKeyObj());
 			}

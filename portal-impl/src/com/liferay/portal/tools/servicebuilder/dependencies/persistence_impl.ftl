@@ -484,7 +484,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		try {
 			session = openSession();
 
-			if (${entity.varName}.isCachedModel()) {
+			if (!session.contains(${entity.varName})) {
 				${entity.varName} = (${entity.name})session.get(
 					${entity.name}Impl.class, ${entity.varName}.getPrimaryKeyObj());
 			}

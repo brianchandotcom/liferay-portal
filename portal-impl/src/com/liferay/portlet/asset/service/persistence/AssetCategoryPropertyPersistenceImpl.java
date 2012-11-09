@@ -343,7 +343,7 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 		try {
 			session = openSession();
 
-			if (assetCategoryProperty.isCachedModel()) {
+			if (!session.contains(assetCategoryProperty)) {
 				assetCategoryProperty = (AssetCategoryProperty)session.get(AssetCategoryPropertyImpl.class,
 						assetCategoryProperty.getPrimaryKeyObj());
 			}

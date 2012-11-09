@@ -454,7 +454,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 		try {
 			session = openSession();
 
-			if (calEvent.isCachedModel()) {
+			if (!session.contains(calEvent)) {
 				calEvent = (CalEvent)session.get(CalEventImpl.class,
 						calEvent.getPrimaryKeyObj());
 			}

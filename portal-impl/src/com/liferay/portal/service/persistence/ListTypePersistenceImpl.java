@@ -255,7 +255,7 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 		try {
 			session = openSession();
 
-			if (listType.isCachedModel()) {
+			if (!session.contains(listType)) {
 				listType = (ListType)session.get(ListTypeImpl.class,
 						listType.getPrimaryKeyObj());
 			}

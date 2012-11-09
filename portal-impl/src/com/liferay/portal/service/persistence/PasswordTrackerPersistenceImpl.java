@@ -262,7 +262,7 @@ public class PasswordTrackerPersistenceImpl extends BasePersistenceImpl<Password
 		try {
 			session = openSession();
 
-			if (passwordTracker.isCachedModel()) {
+			if (!session.contains(passwordTracker)) {
 				passwordTracker = (PasswordTracker)session.get(PasswordTrackerImpl.class,
 						passwordTracker.getPrimaryKeyObj());
 			}

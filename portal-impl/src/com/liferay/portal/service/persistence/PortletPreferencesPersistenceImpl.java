@@ -407,7 +407,7 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 		try {
 			session = openSession();
 
-			if (portletPreferences.isCachedModel()) {
+			if (!session.contains(portletPreferences)) {
 				portletPreferences = (PortletPreferences)session.get(PortletPreferencesImpl.class,
 						portletPreferences.getPrimaryKeyObj());
 			}

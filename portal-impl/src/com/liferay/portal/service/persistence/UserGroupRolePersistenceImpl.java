@@ -342,7 +342,7 @@ public class UserGroupRolePersistenceImpl extends BasePersistenceImpl<UserGroupR
 		try {
 			session = openSession();
 
-			if (userGroupRole.isCachedModel()) {
+			if (!session.contains(userGroupRole)) {
 				userGroupRole = (UserGroupRole)session.get(UserGroupRoleImpl.class,
 						userGroupRole.getPrimaryKeyObj());
 			}

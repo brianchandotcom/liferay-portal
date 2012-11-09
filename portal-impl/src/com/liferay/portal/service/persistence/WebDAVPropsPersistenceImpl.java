@@ -265,7 +265,7 @@ public class WebDAVPropsPersistenceImpl extends BasePersistenceImpl<WebDAVProps>
 		try {
 			session = openSession();
 
-			if (webDAVProps.isCachedModel()) {
+			if (!session.contains(webDAVProps)) {
 				webDAVProps = (WebDAVProps)session.get(WebDAVPropsImpl.class,
 						webDAVProps.getPrimaryKeyObj());
 			}

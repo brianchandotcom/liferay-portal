@@ -263,7 +263,7 @@ public class UserTrackerPathPersistenceImpl extends BasePersistenceImpl<UserTrac
 		try {
 			session = openSession();
 
-			if (userTrackerPath.isCachedModel()) {
+			if (!session.contains(userTrackerPath)) {
 				userTrackerPath = (UserTrackerPath)session.get(UserTrackerPathImpl.class,
 						userTrackerPath.getPrimaryKeyObj());
 			}

@@ -498,7 +498,7 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 		try {
 			session = openSession();
 
-			if (layoutRevision.isCachedModel()) {
+			if (!session.contains(layoutRevision)) {
 				layoutRevision = (LayoutRevision)session.get(LayoutRevisionImpl.class,
 						layoutRevision.getPrimaryKeyObj());
 			}

@@ -257,7 +257,7 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 		try {
 			session = openSession();
 
-			if (ticket.isCachedModel()) {
+			if (!session.contains(ticket)) {
 				ticket = (Ticket)session.get(TicketImpl.class,
 						ticket.getPrimaryKeyObj());
 			}

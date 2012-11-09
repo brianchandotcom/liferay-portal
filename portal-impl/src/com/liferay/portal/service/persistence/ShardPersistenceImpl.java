@@ -278,7 +278,7 @@ public class ShardPersistenceImpl extends BasePersistenceImpl<Shard>
 		try {
 			session = openSession();
 
-			if (shard.isCachedModel()) {
+			if (!session.contains(shard)) {
 				shard = (Shard)session.get(ShardImpl.class,
 						shard.getPrimaryKeyObj());
 			}

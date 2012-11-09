@@ -15,6 +15,7 @@
 package com.liferay.portalweb.portal.controlpanel.settings.portalsettings.enterdefaultuserassociationscommunity;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.controlpanel.settings.portalsettings.editgeneral.TearDownSettingsConfigurationTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

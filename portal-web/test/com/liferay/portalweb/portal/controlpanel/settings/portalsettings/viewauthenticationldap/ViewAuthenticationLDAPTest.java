@@ -25,14 +25,22 @@ public class ViewAuthenticationLDAPTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent("link=Control Panel");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
+		selenium.waitForVisible("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Portal Settings",
 			RuntimeVariables.replace("Portal Settings"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForVisible("//a[@id='_130_authenticationLink']");
+		assertTrue(selenium.isPartialText(
+				"//a[@id='_130_authenticationLink']", "Authentication"));
 		selenium.clickAt("//a[@id='_130_authenticationLink']",
 			RuntimeVariables.replace("Authentication"));
 		selenium.clickAt("link=LDAP", RuntimeVariables.replace("LDAP"));
@@ -48,11 +56,9 @@ public class ViewAuthenticationLDAPTest extends BaseTestCase {
 				"//input[@id='_130_ldapExportEnabledCheckbox']"));
 		assertTrue(selenium.isElementPresent(
 				"//input[@name='_130_settings--ldap.password.policy.enabled--Checkbox']"));
-		selenium.clickAt("//div/span/span/input",
+		selenium.clickAt("//input[@id='_130_addButton']",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals("ldap://localhost:10389",
-			selenium.getValue("//input[@id='_130_ldap.base.provider.url.0']"));
 		selenium.clickAt("//input[@name='_130_defaultLdap' and @value='microsoft']",
 			RuntimeVariables.replace("Microsoft Active Directory Server Button"));
 		selenium.clickAt("//div[2]/span/span/input",

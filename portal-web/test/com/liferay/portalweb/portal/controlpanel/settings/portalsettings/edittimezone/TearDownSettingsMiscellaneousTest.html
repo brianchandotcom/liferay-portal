@@ -14,7 +14,27 @@
 	<td></td>
 </tr>
 <tr>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
 	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
+	<td>AUI Editable Min</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>mouseOver</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
 	<td>link=Control Panel</td>
 	<td>Control Panel</td>
 </tr>
@@ -29,7 +49,7 @@
 	<td>Portal Settings</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
+	<td>assertPartialText</td>
 	<td>//a[@id='_130_displaySettingsLink']</td>
 	<td>Display Settings</td>
 </tr>
@@ -49,9 +69,9 @@
 	<td>label=English (United States)</td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>//input[@id='_130_locales']</td>
-	<td>ar_SA,eu_ES,bg_BG,ca_AD,ca_ES,zh_CN,zh_TW,cs_CZ,nl_NL,en_US,et_EE,fi_FI,fr_FR,gl_ES,de_DE,el_GR,iw_IL,hi_IN,hu_HU,it_IT,ja_JP,ko_KR,nb_NO,fa_IR,pl_PL,pt_BR,pt_PT,ru_RU,sk_SK,es_ES,sv_SE,tr_TR,uk_UA,vi_VN</td>
+	<td>assertElementNotPresent</td>
+	<td>//select[@id='_130_availableLanguageIds']/option</td>
+	<td>Available Languages</td>
 </tr>
 <tr>
 	<td>select</td>
@@ -103,7 +123,6 @@
 	<td>//input[@value='Save']</td>
 	<td>Save</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

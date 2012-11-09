@@ -20,22 +20,27 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * Maps servlet context names to/from the ServletContext's ClassLoader.
- *
- * <ul>
- * <li>
- * For an unknown context names are mapped to the PortalClassLoader.
- * </li>
- * <li>
- * For an unknown ClassLoaders are mapped to the ROOT context name
- * {@link com.liferay.portal.kernel.util.StringPool#BLANK}
- * </li>
- * </ul>
+ * Maps servlet context names to/from the servlet context's class loader.
  *
  * @author Shuyang Zhou
  */
 public class ClassLoaderPool {
 
+	/**
+	 * Returns the class loader associated with the context name.
+	 *
+	 * <p>
+	 * If no class loader is found for the context name, this method checks for
+	 * an initialized portal class loader to return. In cases where this method
+	 * is invoked from outside of a running portal, such as from a unit test or
+	 * from an external tool, no portal class loader will be found. If no portal
+	 * class loader is found, the thread's context class loader is returned as a
+	 * fallback.
+	 * </p>
+	 *
+	 * @param  contextName the servlet context's name
+	 * @return the class loader associated with the context name
+	 */
 	public static ClassLoader getClassLoader(String contextName) {
 		PortalRuntimePermission.checkGetBeanProperty(ClassLoaderPool.class);
 
@@ -54,6 +59,19 @@ public class ClassLoaderPool {
 		return classLoader;
 	}
 
+	 
+	/**
+	 * Returns the context name associated with the class loader.
+	 *
+	 * <p>
+	 * If the class loader is <code>null</code> or if no context name is
+	 * associated with the class loader, {@link
+	 * com.liferay.portal.kernel.util.StringPool#BLANK} is returned.
+	 * </p>
+	 *
+	 * @param  classLoader the class loader
+	 * @return the context name associated with the class loader
+	 */
 	public static String getContextName(ClassLoader classLoader) {
 		if (classLoader == null) {
 			return StringPool.BLANK;

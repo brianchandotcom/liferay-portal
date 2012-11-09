@@ -182,7 +182,7 @@ public class LayoutImporter {
 
 		// Layouts
 
-		Set<Long> existingLayoutIds = new HashSet<Long>();
+		Set<String> existingLayoutUuids = new HashSet<String>();
 
 		Group group = GroupLocalServiceUtil.getGroup(groupId);
 
@@ -196,22 +196,22 @@ public class LayoutImporter {
 					stagingGroup.getGroupId(), privateLayout);
 
 				for (Layout layout : layouts) {
-					existingLayoutIds.add(layout.getLayoutId());
+					existingLayoutUuids.add(layout.getUuid());
 				}
 			}
 		}
 		else {
 			for (Layout layout : newLayouts) {
-				existingLayoutIds.add(layout.getLayoutId());
+				existingLayoutUuids.add(layout.getUuid());
 			}
 		}
 
-		if (_log.isDebugEnabled() && !existingLayoutIds.isEmpty()) {
+		if (_log.isDebugEnabled() && !existingLayoutUuids.isEmpty()) {
 			_log.debug("Delete missing layouts");
 		}
 
 		for (Layout layout : previousLayouts) {
-			if (!existingLayoutIds.contains(layout.getLayoutId())) {
+			if (!existingLayoutUuids.contains(layout.getUuid())) {
 				try {
 					LayoutLocalServiceUtil.deleteLayout(
 						layout, privateLayout, serviceContext);

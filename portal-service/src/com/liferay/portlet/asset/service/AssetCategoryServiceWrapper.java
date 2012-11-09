@@ -188,6 +188,11 @@ public class AssetCategoryServiceWrapper implements AssetCategoryService,
 			vocabularyId, serviceContext);
 	}
 
+	public void rebuildTree(long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_assetCategoryService.rebuildTree(groupId);
+	}
+
 	public java.util.List<com.liferay.portlet.asset.model.AssetCategory> search(
 		long groupId, java.lang.String keywords, long vocabularyId, int start,
 		int end, com.liferay.portal.kernel.util.OrderByComparator obc)

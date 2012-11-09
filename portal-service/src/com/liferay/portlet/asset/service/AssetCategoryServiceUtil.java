@@ -197,6 +197,11 @@ public class AssetCategoryServiceUtil {
 			serviceContext);
 	}
 
+	public static void rebuildTree(long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().rebuildTree(groupId);
+	}
+
 	public static java.util.List<com.liferay.portlet.asset.model.AssetCategory> search(
 		long groupId, java.lang.String keywords, long vocabularyId, int start,
 		int end, com.liferay.portal.kernel.util.OrderByComparator obc)

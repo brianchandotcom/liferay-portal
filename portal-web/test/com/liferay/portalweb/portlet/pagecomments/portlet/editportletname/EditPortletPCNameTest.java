@@ -25,7 +25,6 @@ public class EditPortletPCNameTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Page Comments Test Page");
 		selenium.clickAt("link=Page Comments Test Page",
 			RuntimeVariables.replace("Page Comments Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -40,15 +39,14 @@ public class EditPortletPCNameTest extends BaseTestCase {
 		selenium.waitForVisible("//div[5]/div/div/div/span[1]/span/input");
 		selenium.type("//div[5]/div/div/div/span[1]/span/input",
 			RuntimeVariables.replace("Page Comments Edit"));
-		selenium.waitForVisible("//button[contains(@id,'Save')]");
-		selenium.clickAt("//button[contains(@id,'Save')]",
+		selenium.waitForVisible("//button[@id='save']");
+		selenium.clickAt("//button[@id='save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForText("//h1[@class='portlet-title']/span[2]",
 			"Page Comments Edit");
 		assertEquals(RuntimeVariables.replace("Page Comments Edit"),
 			selenium.getText("//h1[@class='portlet-title']/span[2]"));
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Page Comments Test Page");
 		selenium.clickAt("link=Page Comments Test Page",
 			RuntimeVariables.replace("Page Comments Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -63,15 +61,14 @@ public class EditPortletPCNameTest extends BaseTestCase {
 		selenium.waitForVisible("//div[5]/div/div/div/span[1]/span/input");
 		selenium.type("//div[5]/div/div/div/span[1]/span/input",
 			RuntimeVariables.replace("Page Comments"));
-		selenium.waitForVisible("//button[contains(@id,'Save')]");
-		selenium.clickAt("//button[contains(@id,'Save')]",
+		selenium.waitForVisible("//button[@id='save']");
+		selenium.clickAt("//button[@id='save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForText("//h1[@class='portlet-title']/span[2]",
 			"Page Comments");
 		assertEquals(RuntimeVariables.replace("Page Comments"),
 			selenium.getText("//h1[@class='portlet-title']/span[2]"));
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Page Comments Test Page");
 		selenium.clickAt("link=Page Comments Test Page",
 			RuntimeVariables.replace("Page Comments Test Page"));
 		selenium.waitForPageToLoad("30000");

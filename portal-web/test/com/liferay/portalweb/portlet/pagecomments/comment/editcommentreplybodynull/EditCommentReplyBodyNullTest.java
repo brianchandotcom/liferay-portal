@@ -25,7 +25,6 @@ public class EditCommentReplyBodyNullTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Page Comments Test Page");
 		selenium.clickAt("link=Page Comments Test Page",
 			RuntimeVariables.replace("Page Comments Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -41,8 +40,8 @@ public class EditCommentReplyBodyNullTest extends BaseTestCase {
 			RuntimeVariables.replace(""));
 		selenium.clickAt("xPath=(//input[@value='Publish'])[2]",
 			RuntimeVariables.replace("Publish"));
-		selenium.waitForText("//div[@class='lfr-message-response portlet-msg-error']",
-			"Please enter a valid message.");
+		selenium.waitForVisible(
+			"//div[@class='lfr-message-response portlet-msg-error']");
 		assertEquals(RuntimeVariables.replace("Please enter a valid message."),
 			selenium.getText(
 				"//div[@class='lfr-message-response portlet-msg-error']"));
@@ -51,7 +50,6 @@ public class EditCommentReplyBodyNullTest extends BaseTestCase {
 		assertFalse(selenium.isTextPresent(
 				"Your request processed successfully."));
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Page Comments Test Page");
 		selenium.clickAt("link=Page Comments Test Page",
 			RuntimeVariables.replace("Page Comments Test Page"));
 		selenium.waitForPageToLoad("30000");

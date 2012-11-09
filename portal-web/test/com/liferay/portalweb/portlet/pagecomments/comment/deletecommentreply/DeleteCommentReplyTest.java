@@ -25,7 +25,6 @@ public class DeleteCommentReplyTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Page Comments Test Page");
 		selenium.clickAt("link=Page Comments Test Page",
 			RuntimeVariables.replace("Page Comments Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -36,11 +35,11 @@ public class DeleteCommentReplyTest extends BaseTestCase {
 			selenium.getText("//div[2]/div[3]/div/div[2]/ul/li[4]/span/a/span"));
 		selenium.clickAt("//div[2]/div[3]/div/div[2]/ul/li[4]/span/a/span",
 			RuntimeVariables.replace("Delete"));
+		selenium.waitForConfirmation(
+			"Are you sure you want to delete this? It will be deleted immediately.");
 		Thread.sleep(5000);
-		assertTrue(selenium.getConfirmation()
-						   .matches("^Are you sure you want to delete this[\\s\\S]$"));
-		selenium.waitForText("//div[@class='lfr-message-response portlet-msg-success']",
-			"Your request processed successfully.");
+		selenium.waitForVisible(
+			"//div[@class='lfr-message-response portlet-msg-success']");
 		assertEquals(RuntimeVariables.replace(
 				"Your request processed successfully."),
 			selenium.getText(

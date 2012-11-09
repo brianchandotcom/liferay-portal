@@ -25,7 +25,6 @@ public class EditCommentReplyBodyTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Page Comments Test Page");
 		selenium.clickAt("link=Page Comments Test Page",
 			RuntimeVariables.replace("Page Comments Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -41,8 +40,8 @@ public class EditCommentReplyBodyTest extends BaseTestCase {
 			RuntimeVariables.replace("PC Comment Reply Edit"));
 		selenium.clickAt("xPath=(//input[@value='Publish'])[2]",
 			RuntimeVariables.replace("Publish"));
-		selenium.waitForText("//div[@class='lfr-message-response portlet-msg-success']",
-			"Your request processed successfully.");
+		selenium.waitForVisible(
+			"//div[@class='lfr-message-response portlet-msg-success']");
 		assertEquals(RuntimeVariables.replace(
 				"Your request processed successfully."),
 			selenium.getText(

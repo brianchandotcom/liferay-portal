@@ -25,13 +25,13 @@ public class AddComment2Test extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Page Comments Test Page");
 		selenium.clickAt("link=Page Comments Test Page",
 			RuntimeVariables.replace("Page Comments Test Page"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Add Comment"),
-			selenium.getText("//span[1]/a/span"));
-		selenium.clickAt("//span[1]/a/span",
+			selenium.getText(
+				"//fieldset[contains(@class,'add-comment')]/div/span/a/span"));
+		selenium.clickAt("//fieldset[contains(@class,'add-comment')]/div/span/a/span",
 			RuntimeVariables.replace("Add Comment"));
 		selenium.waitForVisible("//textarea[@name='_107_postReplyBody0']");
 		assertTrue(selenium.isVisible("//textarea[@name='_107_postReplyBody0']"));
@@ -39,8 +39,8 @@ public class AddComment2Test extends BaseTestCase {
 			RuntimeVariables.replace("PC Comment2"));
 		selenium.clickAt("//input[@value='Reply']",
 			RuntimeVariables.replace("Reply"));
-		selenium.waitForText("//div[@class='lfr-message-response portlet-msg-success']",
-			"Your request processed successfully.");
+		selenium.waitForVisible(
+			"//div[@class='lfr-message-response portlet-msg-success']");
 		assertEquals(RuntimeVariables.replace(
 				"Your request processed successfully."),
 			selenium.getText(

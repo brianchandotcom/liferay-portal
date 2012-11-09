@@ -25,22 +25,23 @@ public class EditCommentBodyNullTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Page Comments Test Page");
 		selenium.clickAt("link=Page Comments Test Page",
 			RuntimeVariables.replace("Page Comments Test Page"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("PC Comment"),
 			selenium.getText("//div[@class='lfr-discussion-message']"));
 		assertEquals(RuntimeVariables.replace("Edit"),
-			selenium.getText("//li[3]/span/a/span"));
-		selenium.clickAt("//li[3]/span/a/span", RuntimeVariables.replace("Edit"));
+			selenium.getText(
+				"//ul[@class='lfr-discussion-actions']/li[3]/span/a/span"));
+		selenium.clickAt("//ul[@class='lfr-discussion-actions']/li[3]/span/a/span",
+			RuntimeVariables.replace("Edit"));
 		selenium.waitForVisible("//textarea[@name='_107_editReplyBody1']");
 		selenium.type("//textarea[@name='_107_editReplyBody1']",
 			RuntimeVariables.replace(""));
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
-		selenium.waitForText("//div[@class='lfr-message-response portlet-msg-error']",
-			"Please enter a valid message.");
+		selenium.waitForVisible(
+			"//div[@class='lfr-message-response portlet-msg-error']");
 		assertEquals(RuntimeVariables.replace("Please enter a valid message."),
 			selenium.getText(
 				"//div[@class='lfr-message-response portlet-msg-error']"));
@@ -49,7 +50,6 @@ public class EditCommentBodyNullTest extends BaseTestCase {
 		assertTrue(selenium.isVisible("//textarea[@name='_107_editReplyBody1']"));
 		assertTrue(selenium.isVisible("//input[@value='Publish']"));
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Page Comments Test Page");
 		selenium.clickAt("link=Page Comments Test Page",
 			RuntimeVariables.replace("Page Comments Test Page"));
 		selenium.waitForPageToLoad("30000");

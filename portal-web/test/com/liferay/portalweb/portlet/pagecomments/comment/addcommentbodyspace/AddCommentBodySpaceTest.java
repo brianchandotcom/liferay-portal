@@ -25,7 +25,6 @@ public class AddCommentBodySpaceTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Page Comments Test Page");
 		selenium.clickAt("link=Page Comments Test Page",
 			RuntimeVariables.replace("Page Comments Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -39,15 +38,14 @@ public class AddCommentBodySpaceTest extends BaseTestCase {
 			RuntimeVariables.replace(" "));
 		selenium.clickAt("//input[@value='Reply']",
 			RuntimeVariables.replace("Reply"));
-		selenium.waitForText("//div[@class='lfr-message-response portlet-msg-error']",
-			"Please enter a valid message.");
+		selenium.waitForVisible(
+			"//div[@class='lfr-message-response portlet-msg-error']");
 		assertEquals(RuntimeVariables.replace("Please enter a valid message."),
 			selenium.getText(
 				"//div[@class='lfr-message-response portlet-msg-error']"));
 		assertFalse(selenium.isTextPresent(
 				"Your request completed successfully."));
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Page Comments Test Page");
 		selenium.clickAt("link=Page Comments Test Page",
 			RuntimeVariables.replace("Page Comments Test Page"));
 		selenium.waitForPageToLoad("30000");

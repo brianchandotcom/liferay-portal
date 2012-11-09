@@ -16,6 +16,7 @@ package com.liferay.portalweb.portlet.pagecomments.comment.addcommentmultiple;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
+import com.liferay.portalweb.portlet.pagecomments.comment.addcomment.TearDownPageCommentTest;
 import com.liferay.portalweb.portlet.pagecomments.portlet.addportletpc.AddPagePCTest;
 import com.liferay.portalweb.portlet.pagecomments.portlet.addportletpc.AddPortletPCTest;
 

@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Page Comments Test Page</td>
-	<td>Page Comments Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Page Comments Test Page</td>
 	<td>Page Comments Test Page</td>
@@ -30,12 +25,12 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//li[3]/span/a/span</td>
+	<td>//ul[@class='lfr-discussion-actions']/li[3]/span/a/span</td>
 	<td>Edit</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//li[3]/span/a/span</td>
+	<td>//ul[@class='lfr-discussion-actions']/li[3]/span/a/span</td>
 	<td>Edit</td>
 </tr>
 <tr>
@@ -54,7 +49,7 @@
 	<td>Publish</td>
 </tr>
 <tr>
-	<td>waitForText</td>
+	<td>waitForVisible</td>
 	<td>//div[@class='lfr-message-response portlet-msg-success']</td>
 	<td>Your request processed successfully.</td>
 </tr>
@@ -68,7 +63,6 @@
 	<td>//div[@class='lfr-discussion-message']</td>
 	<td>PC Comment Edit</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

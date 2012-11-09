@@ -4595,7 +4595,7 @@ public class SourceFormatter {
 	private static Pattern _jspIncludeFilePattern = Pattern.compile(
 		"/.*[.]jsp[f]?");
 	private static Pattern _languageKeyPattern = Pattern.compile(
-		"LanguageUtil.get\\([^;%]+");
+		"LanguageUtil.(?:get|format)\\([^;%]+");
 	private static Properties _lineLengthExclusionsProperties;
 	private static Properties _portalLanguageProperties;
 	private static boolean _portalSource;

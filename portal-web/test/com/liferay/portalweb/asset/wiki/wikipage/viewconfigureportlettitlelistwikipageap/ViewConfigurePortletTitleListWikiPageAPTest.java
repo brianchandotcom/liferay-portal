@@ -46,6 +46,6 @@ public class ViewConfigurePortletTitleListWikiPageAPTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("FrontPage"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace("Wiki FrontPage Content"),
-			selenium.getText("//div[@class='asset-content']/p"));
+			selenium.getText("//div[@class='wiki-body']/p"));
 	}
 }

@@ -36,7 +36,7 @@ public class TearDownBMFolderTest extends BaseTestCase {
 				Thread.sleep(5000);
 
 				boolean bookmarksFolder1Present = selenium.isElementPresent(
-						"//span[@title='Actions']/ul/li/strong/a");
+						"//td[4]/span[@title='Actions']/ul/li/strong/a/span");
 
 				if (!bookmarksFolder1Present) {
 					label = 2;
@@ -45,25 +45,24 @@ public class TearDownBMFolderTest extends BaseTestCase {
 				}
 
 				Thread.sleep(5000);
-				selenium.waitForVisible(
-					"//span[@title='Actions']/ul/li/strong/a");
 				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText("//span[@title='Actions']/ul/li/strong/a"));
-				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
+					selenium.getText(
+						"//td[4]/span[@title='Actions']/ul/li/strong/a/span"));
+				selenium.clickAt("//td[4]/span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a");
+					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]");
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
-				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]"));
+				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]",
+					RuntimeVariables.replace("Delete"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
+								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
 
 				boolean bookmarksFolder2Present = selenium.isElementPresent(
-						"//span[@title='Actions']/ul/li/strong/a");
+						"//td[4]/span[@title='Actions']/ul/li/strong/a/span");
 
 				if (!bookmarksFolder2Present) {
 					label = 3;
@@ -72,25 +71,24 @@ public class TearDownBMFolderTest extends BaseTestCase {
 				}
 
 				Thread.sleep(5000);
-				selenium.waitForVisible(
-					"//span[@title='Actions']/ul/li/strong/a");
 				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText("//span[@title='Actions']/ul/li/strong/a"));
-				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
+					selenium.getText(
+						"//td[4]/span[@title='Actions']/ul/li/strong/a/span"));
+				selenium.clickAt("//td[4]/span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a");
+					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]");
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
-				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]"));
+				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]",
+					RuntimeVariables.replace("Delete"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
+								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
 
 				boolean bookmarksFolder3Present = selenium.isElementPresent(
-						"//span[@title='Actions']/ul/li/strong/a");
+						"//td[4]/span[@title='Actions']/ul/li/strong/a/span");
 
 				if (!bookmarksFolder3Present) {
 					label = 4;
@@ -99,25 +97,24 @@ public class TearDownBMFolderTest extends BaseTestCase {
 				}
 
 				Thread.sleep(5000);
-				selenium.waitForVisible(
-					"//span[@title='Actions']/ul/li/strong/a");
 				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText("//span[@title='Actions']/ul/li/strong/a"));
-				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
+					selenium.getText(
+						"//td[4]/span[@title='Actions']/ul/li/strong/a/span"));
+				selenium.clickAt("//td[4]/span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a");
+					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]");
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
-				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]"));
+				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]",
+					RuntimeVariables.replace("Delete"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
+								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
 
 				boolean bookmarksFolder4Present = selenium.isElementPresent(
-						"//span[@title='Actions']/ul/li/strong/a");
+						"//td[4]/span[@title='Actions']/ul/li/strong/a/span");
 
 				if (!bookmarksFolder4Present) {
 					label = 5;
@@ -126,25 +123,24 @@ public class TearDownBMFolderTest extends BaseTestCase {
 				}
 
 				Thread.sleep(5000);
-				selenium.waitForVisible(
-					"//span[@title='Actions']/ul/li/strong/a");
 				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText("//span[@title='Actions']/ul/li/strong/a"));
-				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
+					selenium.getText(
+						"//td[4]/span[@title='Actions']/ul/li/strong/a/span"));
+				selenium.clickAt("//td[4]/span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a");
+					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]");
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
-				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]"));
+				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]",
+					RuntimeVariables.replace("Delete"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
+								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
 
 				boolean bookmarksFolder5Present = selenium.isElementPresent(
-						"//span[@title='Actions']/ul/li/strong/a");
+						"//td[4]/span[@title='Actions']/ul/li/strong/a/span");
 
 				if (!bookmarksFolder5Present) {
 					label = 6;
@@ -153,22 +149,21 @@ public class TearDownBMFolderTest extends BaseTestCase {
 				}
 
 				Thread.sleep(5000);
-				selenium.waitForVisible(
-					"//span[@title='Actions']/ul/li/strong/a");
 				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText("//span[@title='Actions']/ul/li/strong/a"));
-				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
+					selenium.getText(
+						"//td[4]/span[@title='Actions']/ul/li/strong/a/span"));
+				selenium.clickAt("//td[4]/span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a");
+					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]");
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
-				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]"));
+				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]",
+					RuntimeVariables.replace("Delete"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
+								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
 
 			case 2:
 			case 3:

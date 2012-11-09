@@ -19,38 +19,33 @@
 	<td>Asset Publisher Test Page</td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>//nav[@class='site-breadcrumbs aui-helper-hidden lfr-hudcrumbs']</td>
-	<td>AUI Help Hidden LFR Hudcrumbs</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//span[@title='Add New']/ul/li/strong/a</td>
-	<td>Add New</td>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//span[@title='Add New']/ul/li/strong/a</td>
+	<td>//span[@title='Add New']/ul/li/strong/a/span</td>
 	<td>Add New</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//span[@title='Add New']/ul/li/strong/a</td>
+	<td>//span[@title='Add New']/ul/li/strong/a/span</td>
 	<td>Add New</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Bookmarks Entry')]</td>
 	<td>Bookmarks Entry</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Bookmarks Entry')]</td>
 	<td>Bookmarks Entry</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Bookmarks Entry')]</td>
 	<td>Bookmarks Entry</td>
 </tr>
 <tr>
@@ -62,6 +57,11 @@
 	<td>selectFrame</td>
 	<td>//iframe[contains(@id,'editAsset')]</td>
 	<td>Bookmarks Entry</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/liferay/search_container.js')]</td>
+	<td>Search Container</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -84,57 +84,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('//td[4]/input'))</td>
-	<td>choose1Present</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>${choose1Present}</td>
-	<td>Choose1NotPresent</td>
-</tr>
-<tr>
-	<td>close</td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
-	<td>selectWindow</td>
-	<td>null</td>
-	<td></td>
-</tr>
-<tr>
-	<td>selectFrame</td>
-	<td>relative=top</td>
-	<td>top</td>
-</tr>
-<tr>
 	<td>waitForVisible</td>
-	<td>//iframe[contains(@id,'editAsset')]</td>
-	<td>Bookmarks Entry</td>
-</tr>
-<tr>
-	<td>selectFrame</td>
-	<td>//iframe[contains(@id,'editAsset')]</td>
-	<td>Bookmarks Entry</td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>Choose1NotPresent</td>
-	<td></td>
-</tr>
-<tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('//td[4]/input'))</td>
-	<td>choose2Present</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${choose2Present}</td>
-	<td>Choose2NotPresent</td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
 	<td>//input[@value='Choose']</td>
 	<td>Choose</td>
 </tr>
@@ -144,19 +94,9 @@
 	<td>Choose</td>
 </tr>
 <tr>
-	<td>label</td>
-	<td>Choose2NotPresent</td>
-	<td></td>
-</tr>
-<tr>
 	<td>selectWindow</td>
 	<td>null</td>
 	<td></td>
-</tr>
-<tr>
-	<td>selectFrame</td>
-	<td>relative=top</td>
-	<td>top</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -167,6 +107,11 @@
 	<td>selectFrame</td>
 	<td>//iframe[contains(@id,'editAsset')]</td>
 	<td>Bookmarks Entry</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/liferay/search_container.js')]</td>
+	<td>Search Container</td>
 </tr>
 <tr>
 	<td>waitForText</td>

@@ -349,7 +349,7 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 		try {
 			session = openSession();
 
-			if (dlContent.isCachedModel()) {
+			if (!session.contains(dlContent)) {
 				dlContent = (DLContent)session.get(DLContentImpl.class,
 						dlContent.getPrimaryKeyObj());
 			}

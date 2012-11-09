@@ -326,7 +326,7 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 		try {
 			session = openSession();
 
-			if (scFrameworkVersion.isCachedModel()) {
+			if (!session.contains(scFrameworkVersion)) {
 				scFrameworkVersion = (SCFrameworkVersion)session.get(SCFrameworkVersionImpl.class,
 						scFrameworkVersion.getPrimaryKeyObj());
 			}

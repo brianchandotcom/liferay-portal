@@ -359,7 +359,7 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 		try {
 			session = openSession();
 
-			if (mbMailingList.isCachedModel()) {
+			if (!session.contains(mbMailingList)) {
 				mbMailingList = (MBMailingList)session.get(MBMailingListImpl.class,
 						mbMailingList.getPrimaryKeyObj());
 			}

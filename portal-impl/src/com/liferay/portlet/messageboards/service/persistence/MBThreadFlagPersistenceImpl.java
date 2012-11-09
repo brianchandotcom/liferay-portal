@@ -305,7 +305,7 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 		try {
 			session = openSession();
 
-			if (mbThreadFlag.isCachedModel()) {
+			if (!session.contains(mbThreadFlag)) {
 				mbThreadFlag = (MBThreadFlag)session.get(MBThreadFlagImpl.class,
 						mbThreadFlag.getPrimaryKeyObj());
 			}

@@ -383,7 +383,7 @@ public class SocialActivitySettingPersistenceImpl extends BasePersistenceImpl<So
 		try {
 			session = openSession();
 
-			if (socialActivitySetting.isCachedModel()) {
+			if (!session.contains(socialActivitySetting)) {
 				socialActivitySetting = (SocialActivitySetting)session.get(SocialActivitySettingImpl.class,
 						socialActivitySetting.getPrimaryKeyObj());
 			}

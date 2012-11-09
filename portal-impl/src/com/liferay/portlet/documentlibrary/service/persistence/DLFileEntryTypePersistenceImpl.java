@@ -402,7 +402,7 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 		try {
 			session = openSession();
 
-			if (dlFileEntryType.isCachedModel()) {
+			if (!session.contains(dlFileEntryType)) {
 				dlFileEntryType = (DLFileEntryType)session.get(DLFileEntryTypeImpl.class,
 						dlFileEntryType.getPrimaryKeyObj());
 			}

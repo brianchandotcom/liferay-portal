@@ -273,7 +273,7 @@ public class WorkflowInstanceLinkPersistenceImpl extends BasePersistenceImpl<Wor
 		try {
 			session = openSession();
 
-			if (workflowInstanceLink.isCachedModel()) {
+			if (!session.contains(workflowInstanceLink)) {
 				workflowInstanceLink = (WorkflowInstanceLink)session.get(WorkflowInstanceLinkImpl.class,
 						workflowInstanceLink.getPrimaryKeyObj());
 			}

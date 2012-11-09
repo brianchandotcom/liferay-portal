@@ -872,7 +872,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		try {
 			session = openSession();
 
-			if (mbMessage.isCachedModel()) {
+			if (!session.contains(mbMessage)) {
 				mbMessage = (MBMessage)session.get(MBMessageImpl.class,
 						mbMessage.getPrimaryKeyObj());
 			}

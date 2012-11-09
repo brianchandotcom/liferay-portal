@@ -286,7 +286,7 @@ public class ExpandoRowPersistenceImpl extends BasePersistenceImpl<ExpandoRow>
 		try {
 			session = openSession();
 
-			if (expandoRow.isCachedModel()) {
+			if (!session.contains(expandoRow)) {
 				expandoRow = (ExpandoRow)session.get(ExpandoRowImpl.class,
 						expandoRow.getPrimaryKeyObj());
 			}

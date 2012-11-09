@@ -356,7 +356,7 @@ public class DDLRecordSetPersistenceImpl extends BasePersistenceImpl<DDLRecordSe
 		try {
 			session = openSession();
 
-			if (ddlRecordSet.isCachedModel()) {
+			if (!session.contains(ddlRecordSet)) {
 				ddlRecordSet = (DDLRecordSet)session.get(DDLRecordSetImpl.class,
 						ddlRecordSet.getPrimaryKeyObj());
 			}

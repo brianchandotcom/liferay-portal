@@ -355,7 +355,7 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 		try {
 			session = openSession();
 
-			if (journalFeed.isCachedModel()) {
+			if (!session.contains(journalFeed)) {
 				journalFeed = (JournalFeed)session.get(JournalFeedImpl.class,
 						journalFeed.getPrimaryKeyObj());
 			}

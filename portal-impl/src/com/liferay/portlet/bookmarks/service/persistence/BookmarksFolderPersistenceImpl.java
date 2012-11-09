@@ -410,7 +410,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 		try {
 			session = openSession();
 
-			if (bookmarksFolder.isCachedModel()) {
+			if (!session.contains(bookmarksFolder)) {
 				bookmarksFolder = (BookmarksFolder)session.get(BookmarksFolderImpl.class,
 						bookmarksFolder.getPrimaryKeyObj());
 			}

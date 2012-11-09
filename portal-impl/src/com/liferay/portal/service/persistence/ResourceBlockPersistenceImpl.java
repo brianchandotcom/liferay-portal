@@ -336,7 +336,7 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 		try {
 			session = openSession();
 
-			if (resourceBlock.isCachedModel()) {
+			if (!session.contains(resourceBlock)) {
 				resourceBlock = (ResourceBlock)session.get(ResourceBlockImpl.class,
 						resourceBlock.getPrimaryKeyObj());
 			}

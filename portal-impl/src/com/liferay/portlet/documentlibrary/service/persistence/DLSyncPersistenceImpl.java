@@ -277,7 +277,7 @@ public class DLSyncPersistenceImpl extends BasePersistenceImpl<DLSync>
 		try {
 			session = openSession();
 
-			if (dlSync.isCachedModel()) {
+			if (!session.contains(dlSync)) {
 				dlSync = (DLSync)session.get(DLSyncImpl.class,
 						dlSync.getPrimaryKeyObj());
 			}

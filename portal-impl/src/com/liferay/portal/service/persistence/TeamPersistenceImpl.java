@@ -305,7 +305,7 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 		try {
 			session = openSession();
 
-			if (team.isCachedModel()) {
+			if (!session.contains(team)) {
 				team = (Team)session.get(TeamImpl.class, team.getPrimaryKeyObj());
 			}
 

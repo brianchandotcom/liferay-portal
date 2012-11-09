@@ -365,7 +365,7 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 		try {
 			session = openSession();
 
-			if (blogsStatsUser.isCachedModel()) {
+			if (!session.contains(blogsStatsUser)) {
 				blogsStatsUser = (BlogsStatsUser)session.get(BlogsStatsUserImpl.class,
 						blogsStatsUser.getPrimaryKeyObj());
 			}

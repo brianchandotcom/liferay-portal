@@ -249,7 +249,7 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 		try {
 			session = openSession();
 
-			if (image.isCachedModel()) {
+			if (!session.contains(image)) {
 				image = (Image)session.get(ImageImpl.class,
 						image.getPrimaryKeyObj());
 			}

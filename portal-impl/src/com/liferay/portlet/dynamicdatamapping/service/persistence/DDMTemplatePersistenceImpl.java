@@ -510,7 +510,7 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 		try {
 			session = openSession();
 
-			if (ddmTemplate.isCachedModel()) {
+			if (!session.contains(ddmTemplate)) {
 				ddmTemplate = (DDMTemplate)session.get(DDMTemplateImpl.class,
 						ddmTemplate.getPrimaryKeyObj());
 			}

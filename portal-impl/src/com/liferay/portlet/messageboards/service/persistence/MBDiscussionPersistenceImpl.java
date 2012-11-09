@@ -303,7 +303,7 @@ public class MBDiscussionPersistenceImpl extends BasePersistenceImpl<MBDiscussio
 		try {
 			session = openSession();
 
-			if (mbDiscussion.isCachedModel()) {
+			if (!session.contains(mbDiscussion)) {
 				mbDiscussion = (MBDiscussion)session.get(MBDiscussionImpl.class,
 						mbDiscussion.getPrimaryKeyObj());
 			}

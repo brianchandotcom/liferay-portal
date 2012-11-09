@@ -316,7 +316,7 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 		try {
 			session = openSession();
 
-			if (ddlRecordVersion.isCachedModel()) {
+			if (!session.contains(ddlRecordVersion)) {
 				ddlRecordVersion = (DDLRecordVersion)session.get(DDLRecordVersionImpl.class,
 						ddlRecordVersion.getPrimaryKeyObj());
 			}

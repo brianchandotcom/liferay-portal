@@ -405,7 +405,7 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 		try {
 			session = openSession();
 
-			if (wikiNode.isCachedModel()) {
+			if (!session.contains(wikiNode)) {
 				wikiNode = (WikiNode)session.get(WikiNodeImpl.class,
 						wikiNode.getPrimaryKeyObj());
 			}

@@ -1033,7 +1033,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 		try {
 			session = openSession();
 
-			if (journalArticle.isCachedModel()) {
+			if (!session.contains(journalArticle)) {
 				journalArticle = (JournalArticle)session.get(JournalArticleImpl.class,
 						journalArticle.getPrimaryKeyObj());
 			}

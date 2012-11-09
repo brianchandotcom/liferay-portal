@@ -334,7 +334,7 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 		try {
 			session = openSession();
 
-			if (shoppingOrder.isCachedModel()) {
+			if (!session.contains(shoppingOrder)) {
 				shoppingOrder = (ShoppingOrder)session.get(ShoppingOrderImpl.class,
 						shoppingOrder.getPrimaryKeyObj());
 			}

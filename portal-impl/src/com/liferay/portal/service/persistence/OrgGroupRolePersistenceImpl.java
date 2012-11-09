@@ -275,7 +275,7 @@ public class OrgGroupRolePersistenceImpl extends BasePersistenceImpl<OrgGroupRol
 		try {
 			session = openSession();
 
-			if (orgGroupRole.isCachedModel()) {
+			if (!session.contains(orgGroupRole)) {
 				orgGroupRole = (OrgGroupRole)session.get(OrgGroupRoleImpl.class,
 						orgGroupRole.getPrimaryKeyObj());
 			}

@@ -348,7 +348,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 		try {
 			session = openSession();
 
-			if (userGroup.isCachedModel()) {
+			if (!session.contains(userGroup)) {
 				userGroup = (UserGroup)session.get(UserGroupImpl.class,
 						userGroup.getPrimaryKeyObj());
 			}

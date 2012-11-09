@@ -360,7 +360,7 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 		try {
 			session = openSession();
 
-			if (dlFileRank.isCachedModel()) {
+			if (!session.contains(dlFileRank)) {
 				dlFileRank = (DLFileRank)session.get(DLFileRankImpl.class,
 						dlFileRank.getPrimaryKeyObj());
 			}

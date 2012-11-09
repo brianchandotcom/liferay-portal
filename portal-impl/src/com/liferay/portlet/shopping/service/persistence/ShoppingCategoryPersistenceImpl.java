@@ -287,7 +287,7 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 		try {
 			session = openSession();
 
-			if (shoppingCategory.isCachedModel()) {
+			if (!session.contains(shoppingCategory)) {
 				shoppingCategory = (ShoppingCategory)session.get(ShoppingCategoryImpl.class,
 						shoppingCategory.getPrimaryKeyObj());
 			}

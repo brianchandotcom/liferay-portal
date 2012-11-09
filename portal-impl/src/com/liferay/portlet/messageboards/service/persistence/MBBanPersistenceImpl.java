@@ -321,7 +321,7 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 		try {
 			session = openSession();
 
-			if (mbBan.isCachedModel()) {
+			if (!session.contains(mbBan)) {
 				mbBan = (MBBan)session.get(MBBanImpl.class,
 						mbBan.getPrimaryKeyObj());
 			}

@@ -369,7 +369,7 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 		try {
 			session = openSession();
 
-			if (assetLink.isCachedModel()) {
+			if (!session.contains(assetLink)) {
 				assetLink = (AssetLink)session.get(AssetLinkImpl.class,
 						assetLink.getPrimaryKeyObj());
 			}

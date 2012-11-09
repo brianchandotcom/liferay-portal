@@ -361,7 +361,7 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 		try {
 			session = openSession();
 
-			if (scProductEntry.isCachedModel()) {
+			if (!session.contains(scProductEntry)) {
 				scProductEntry = (SCProductEntry)session.get(SCProductEntryImpl.class,
 						scProductEntry.getPrimaryKeyObj());
 			}

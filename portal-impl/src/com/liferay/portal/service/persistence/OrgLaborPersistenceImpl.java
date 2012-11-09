@@ -256,7 +256,7 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 		try {
 			session = openSession();
 
-			if (orgLabor.isCachedModel()) {
+			if (!session.contains(orgLabor)) {
 				orgLabor = (OrgLabor)session.get(OrgLaborImpl.class,
 						orgLabor.getPrimaryKeyObj());
 			}

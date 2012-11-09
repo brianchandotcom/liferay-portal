@@ -528,7 +528,7 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 		try {
 			session = openSession();
 
-			if (socialRequest.isCachedModel()) {
+			if (!session.contains(socialRequest)) {
 				socialRequest = (SocialRequest)session.get(SocialRequestImpl.class,
 						socialRequest.getPrimaryKeyObj());
 			}

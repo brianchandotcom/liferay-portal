@@ -293,7 +293,7 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 		try {
 			session = openSession();
 
-			if (serviceComponent.isCachedModel()) {
+			if (!session.contains(serviceComponent)) {
 				serviceComponent = (ServiceComponent)session.get(ServiceComponentImpl.class,
 						serviceComponent.getPrimaryKeyObj());
 			}

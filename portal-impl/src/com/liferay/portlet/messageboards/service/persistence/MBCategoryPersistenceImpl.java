@@ -378,7 +378,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 		try {
 			session = openSession();
 
-			if (mbCategory.isCachedModel()) {
+			if (!session.contains(mbCategory)) {
 				mbCategory = (MBCategory)session.get(MBCategoryImpl.class,
 						mbCategory.getPrimaryKeyObj());
 			}

@@ -299,7 +299,7 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 		try {
 			session = openSession();
 
-			if (wikiPageResource.isCachedModel()) {
+			if (!session.contains(wikiPageResource)) {
 				wikiPageResource = (WikiPageResource)session.get(WikiPageResourceImpl.class,
 						wikiPageResource.getPrimaryKeyObj());
 			}

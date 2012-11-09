@@ -496,7 +496,7 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 		try {
 			session = openSession();
 
-			if (socialRelation.isCachedModel()) {
+			if (!session.contains(socialRelation)) {
 				socialRelation = (SocialRelation)session.get(SocialRelationImpl.class,
 						socialRelation.getPrimaryKeyObj());
 			}

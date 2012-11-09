@@ -293,7 +293,7 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 		try {
 			session = openSession();
 
-			if (passwordPolicy.isCachedModel()) {
+			if (!session.contains(passwordPolicy)) {
 				passwordPolicy = (PasswordPolicy)session.get(PasswordPolicyImpl.class,
 						passwordPolicy.getPrimaryKeyObj());
 			}

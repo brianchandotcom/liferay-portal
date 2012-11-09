@@ -349,7 +349,7 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 		try {
 			session = openSession();
 
-			if (journalArticleResource.isCachedModel()) {
+			if (!session.contains(journalArticleResource)) {
 				journalArticleResource = (JournalArticleResource)session.get(JournalArticleResourceImpl.class,
 						journalArticleResource.getPrimaryKeyObj());
 			}

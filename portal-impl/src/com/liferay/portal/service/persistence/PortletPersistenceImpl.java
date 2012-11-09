@@ -286,7 +286,7 @@ public class PortletPersistenceImpl extends BasePersistenceImpl<Portlet>
 		try {
 			session = openSession();
 
-			if (portlet.isCachedModel()) {
+			if (!session.contains(portlet)) {
 				portlet = (Portlet)session.get(PortletImpl.class,
 						portlet.getPrimaryKeyObj());
 			}

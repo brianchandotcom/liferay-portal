@@ -296,7 +296,7 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 		try {
 			session = openSession();
 
-			if (scLicense.isCachedModel()) {
+			if (!session.contains(scLicense)) {
 				scLicense = (SCLicense)session.get(SCLicenseImpl.class,
 						scLicense.getPrimaryKeyObj());
 			}

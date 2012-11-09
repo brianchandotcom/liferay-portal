@@ -324,7 +324,7 @@ public class MDRRulePersistenceImpl extends BasePersistenceImpl<MDRRule>
 		try {
 			session = openSession();
 
-			if (mdrRule.isCachedModel()) {
+			if (!session.contains(mdrRule)) {
 				mdrRule = (MDRRule)session.get(MDRRuleImpl.class,
 						mdrRule.getPrimaryKeyObj());
 			}

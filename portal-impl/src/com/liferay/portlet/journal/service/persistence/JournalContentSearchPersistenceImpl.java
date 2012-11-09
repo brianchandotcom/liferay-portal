@@ -474,7 +474,7 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 		try {
 			session = openSession();
 
-			if (journalContentSearch.isCachedModel()) {
+			if (!session.contains(journalContentSearch)) {
 				journalContentSearch = (JournalContentSearch)session.get(JournalContentSearchImpl.class,
 						journalContentSearch.getPrimaryKeyObj());
 			}

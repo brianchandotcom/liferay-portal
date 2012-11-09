@@ -461,7 +461,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 		try {
 			session = openSession();
 
-			if (mbThread.isCachedModel()) {
+			if (!session.contains(mbThread)) {
 				mbThread = (MBThread)session.get(MBThreadImpl.class,
 						mbThread.getPrimaryKeyObj());
 			}

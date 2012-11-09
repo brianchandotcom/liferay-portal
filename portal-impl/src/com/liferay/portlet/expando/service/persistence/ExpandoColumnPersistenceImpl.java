@@ -291,7 +291,7 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 		try {
 			session = openSession();
 
-			if (expandoColumn.isCachedModel()) {
+			if (!session.contains(expandoColumn)) {
 				expandoColumn = (ExpandoColumn)session.get(ExpandoColumnImpl.class,
 						expandoColumn.getPrimaryKeyObj());
 			}

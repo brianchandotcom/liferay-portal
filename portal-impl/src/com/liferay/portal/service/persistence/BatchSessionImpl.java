@@ -30,7 +30,7 @@ public class BatchSessionImpl implements BatchSession {
 	public void delete(Session session, BaseModel<?> model)
 		throws ORMException {
 
-		if (model.isCachedModel()) {
+		if (!session.contains(model)) {
 			ClassedModel classedModel = model;
 
 			model = (BaseModel<?>)session.get(

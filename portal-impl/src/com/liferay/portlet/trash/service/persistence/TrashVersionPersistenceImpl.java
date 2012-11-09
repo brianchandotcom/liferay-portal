@@ -277,7 +277,7 @@ public class TrashVersionPersistenceImpl extends BasePersistenceImpl<TrashVersio
 		try {
 			session = openSession();
 
-			if (trashVersion.isCachedModel()) {
+			if (!session.contains(trashVersion)) {
 				trashVersion = (TrashVersion)session.get(TrashVersionImpl.class,
 						trashVersion.getPrimaryKeyObj());
 			}

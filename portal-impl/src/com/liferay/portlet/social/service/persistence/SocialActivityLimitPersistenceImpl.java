@@ -340,7 +340,7 @@ public class SocialActivityLimitPersistenceImpl extends BasePersistenceImpl<Soci
 		try {
 			session = openSession();
 
-			if (socialActivityLimit.isCachedModel()) {
+			if (!session.contains(socialActivityLimit)) {
 				socialActivityLimit = (SocialActivityLimit)session.get(SocialActivityLimitImpl.class,
 						socialActivityLimit.getPrimaryKeyObj());
 			}

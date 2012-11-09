@@ -299,7 +299,7 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 		try {
 			session = openSession();
 
-			if (announcementsDelivery.isCachedModel()) {
+			if (!session.contains(announcementsDelivery)) {
 				announcementsDelivery = (AnnouncementsDelivery)session.get(AnnouncementsDeliveryImpl.class,
 						announcementsDelivery.getPrimaryKeyObj());
 			}

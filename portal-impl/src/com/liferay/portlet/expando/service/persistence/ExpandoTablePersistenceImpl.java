@@ -298,7 +298,7 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 		try {
 			session = openSession();
 
-			if (expandoTable.isCachedModel()) {
+			if (!session.contains(expandoTable)) {
 				expandoTable = (ExpandoTable)session.get(ExpandoTableImpl.class,
 						expandoTable.getPrimaryKeyObj());
 			}

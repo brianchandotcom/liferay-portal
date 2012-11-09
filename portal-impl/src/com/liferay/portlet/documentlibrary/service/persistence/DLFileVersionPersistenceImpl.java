@@ -443,7 +443,7 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 		try {
 			session = openSession();
 
-			if (dlFileVersion.isCachedModel()) {
+			if (!session.contains(dlFileVersion)) {
 				dlFileVersion = (DLFileVersion)session.get(DLFileVersionImpl.class,
 						dlFileVersion.getPrimaryKeyObj());
 			}

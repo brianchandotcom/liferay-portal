@@ -308,7 +308,7 @@ public class LayoutSetPersistenceImpl extends BasePersistenceImpl<LayoutSet>
 		try {
 			session = openSession();
 
-			if (layoutSet.isCachedModel()) {
+			if (!session.contains(layoutSet)) {
 				layoutSet = (LayoutSet)session.get(LayoutSetImpl.class,
 						layoutSet.getPrimaryKeyObj());
 			}

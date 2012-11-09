@@ -330,7 +330,7 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 		try {
 			session = openSession();
 
-			if (mdrAction.isCachedModel()) {
+			if (!session.contains(mdrAction)) {
 				mdrAction = (MDRAction)session.get(MDRActionImpl.class,
 						mdrAction.getPrimaryKeyObj());
 			}

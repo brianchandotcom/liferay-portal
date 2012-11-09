@@ -262,7 +262,7 @@ public class BrowserTrackerPersistenceImpl extends BasePersistenceImpl<BrowserTr
 		try {
 			session = openSession();
 
-			if (browserTracker.isCachedModel()) {
+			if (!session.contains(browserTracker)) {
 				browserTracker = (BrowserTracker)session.get(BrowserTrackerImpl.class,
 						browserTracker.getPrimaryKeyObj());
 			}

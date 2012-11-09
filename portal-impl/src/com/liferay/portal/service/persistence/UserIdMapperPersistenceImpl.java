@@ -311,7 +311,7 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 		try {
 			session = openSession();
 
-			if (userIdMapper.isCachedModel()) {
+			if (!session.contains(userIdMapper)) {
 				userIdMapper = (UserIdMapper)session.get(UserIdMapperImpl.class,
 						userIdMapper.getPrimaryKeyObj());
 			}

@@ -359,7 +359,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 		try {
 			session = openSession();
 
-			if (organization.isCachedModel()) {
+			if (!session.contains(organization)) {
 				organization = (Organization)session.get(OrganizationImpl.class,
 						organization.getPrimaryKeyObj());
 			}

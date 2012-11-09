@@ -350,6 +350,17 @@ public class AssetCategoryServiceSoap {
 		}
 	}
 
+	public static void rebuildTree(long groupId) throws RemoteException {
+		try {
+			AssetCategoryServiceUtil.rebuildTree(groupId);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.portlet.asset.model.AssetCategorySoap[] search(
 		long groupId, java.lang.String keywords, long vocabularyId, int start,
 		int end, com.liferay.portal.kernel.util.OrderByComparator obc)

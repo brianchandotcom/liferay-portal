@@ -1156,8 +1156,6 @@ public class PortalImpl implements Portal {
 			cdnHost = getCDNHostHttp(company.getCompanyId());
 		}
 
-		cdnHost = ParamUtil.getString(request, "cdn_host", cdnHost);
-
 		if (Validator.isUrl(cdnHost)) {
 			return cdnHost;
 		}

@@ -62,20 +62,4 @@ else {
 }
 %>
 
-<c:if test="<%= !themeDisplay.isFacebook() && !themeDisplay.isStateExclusive() && !themeDisplay.isStatePopUp() && !themeDisplay.isWidget() %>">
-
-	<%
-	for (String portletId : PropsValues.LAYOUT_STATIC_PORTLETS_ALL) {
-		if (PortletLocalServiceUtil.hasPortlet(company.getCompanyId(), portletId)) {
-	%>
-
-			<liferay-portlet:runtime portletName="<%= portletId %>" />
-
-	<%
-		}
-	}
-	%>
-
-</c:if>
-
 <%@ include file="/html/portal/layout/view/common.jspf" %>

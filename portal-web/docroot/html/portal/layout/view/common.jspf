@@ -14,6 +14,22 @@
  */
 --%>
 
+<c:if test="<%= !themeDisplay.isFacebook() && !themeDisplay.isStateExclusive() && !themeDisplay.isStatePopUp() && !themeDisplay.isWidget() %>">
+
+	<%
+	for (String portletId : PropsValues.LAYOUT_STATIC_PORTLETS_ALL) {
+		if (PortletLocalServiceUtil.hasPortlet(company.getCompanyId(), portletId)) {
+	%>
+
+			<liferay-portlet:runtime portletName="<%= portletId %>" />
+
+	<%
+		}
+	}
+	%>
+
+</c:if>
+
 <c:if test="<%= PropsValues.WEB_SERVER_DISPLAY_NODE %>">
 	<div class="portlet-msg-info">
 		<liferay-ui:message key="node" />: <%= PortalUtil.getComputerName().toLowerCase() %>

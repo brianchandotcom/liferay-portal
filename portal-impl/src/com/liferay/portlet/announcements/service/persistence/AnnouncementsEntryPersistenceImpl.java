@@ -369,7 +369,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 		try {
 			session = openSession();
 
-			if (announcementsEntry.isCachedModel()) {
+			if (!session.contains(announcementsEntry)) {
 				announcementsEntry = (AnnouncementsEntry)session.get(AnnouncementsEntryImpl.class,
 						announcementsEntry.getPrimaryKeyObj());
 			}

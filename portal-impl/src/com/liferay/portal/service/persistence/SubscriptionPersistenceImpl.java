@@ -343,7 +343,7 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 		try {
 			session = openSession();
 
-			if (subscription.isCachedModel()) {
+			if (!session.contains(subscription)) {
 				subscription = (Subscription)session.get(SubscriptionImpl.class,
 						subscription.getPrimaryKeyObj());
 			}

@@ -346,7 +346,7 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 		try {
 			session = openSession();
 
-			if (website.isCachedModel()) {
+			if (!session.contains(website)) {
 				website = (Website)session.get(WebsiteImpl.class,
 						website.getPrimaryKeyObj());
 			}

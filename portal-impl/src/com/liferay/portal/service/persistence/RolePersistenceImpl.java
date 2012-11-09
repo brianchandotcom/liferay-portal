@@ -391,7 +391,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 		try {
 			session = openSession();
 
-			if (role.isCachedModel()) {
+			if (!session.contains(role)) {
 				role = (Role)session.get(RoleImpl.class, role.getPrimaryKeyObj());
 			}
 

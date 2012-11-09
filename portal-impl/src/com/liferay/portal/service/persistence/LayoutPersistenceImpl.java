@@ -582,7 +582,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		try {
 			session = openSession();
 
-			if (layout.isCachedModel()) {
+			if (!session.contains(layout)) {
 				layout = (Layout)session.get(LayoutImpl.class,
 						layout.getPrimaryKeyObj());
 			}

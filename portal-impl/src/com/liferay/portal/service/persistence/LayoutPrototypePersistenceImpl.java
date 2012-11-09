@@ -334,7 +334,7 @@ public class LayoutPrototypePersistenceImpl extends BasePersistenceImpl<LayoutPr
 		try {
 			session = openSession();
 
-			if (layoutPrototype.isCachedModel()) {
+			if (!session.contains(layoutPrototype)) {
 				layoutPrototype = (LayoutPrototype)session.get(LayoutPrototypeImpl.class,
 						layoutPrototype.getPrimaryKeyObj());
 			}

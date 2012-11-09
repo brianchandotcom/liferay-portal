@@ -329,7 +329,7 @@ public class SCProductScreenshotPersistenceImpl extends BasePersistenceImpl<SCPr
 		try {
 			session = openSession();
 
-			if (scProductScreenshot.isCachedModel()) {
+			if (!session.contains(scProductScreenshot)) {
 				scProductScreenshot = (SCProductScreenshot)session.get(SCProductScreenshotImpl.class,
 						scProductScreenshot.getPrimaryKeyObj());
 			}

@@ -570,7 +570,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 		try {
 			session = openSession();
 
-			if (dlFileEntry.isCachedModel()) {
+			if (!session.contains(dlFileEntry)) {
 				dlFileEntry = (DLFileEntry)session.get(DLFileEntryImpl.class,
 						dlFileEntry.getPrimaryKeyObj());
 			}

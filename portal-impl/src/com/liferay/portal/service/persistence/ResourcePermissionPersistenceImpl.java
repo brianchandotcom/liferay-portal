@@ -606,7 +606,7 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 		try {
 			session = openSession();
 
-			if (resourcePermission.isCachedModel()) {
+			if (!session.contains(resourcePermission)) {
 				resourcePermission = (ResourcePermission)session.get(ResourcePermissionImpl.class,
 						resourcePermission.getPrimaryKeyObj());
 			}

@@ -390,7 +390,7 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 		try {
 			session = openSession();
 
-			if (assetVocabulary.isCachedModel()) {
+			if (!session.contains(assetVocabulary)) {
 				assetVocabulary = (AssetVocabulary)session.get(AssetVocabularyImpl.class,
 						assetVocabulary.getPrimaryKeyObj());
 			}

@@ -367,7 +367,7 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 		try {
 			session = openSession();
 
-			if (dlFileEntryMetadata.isCachedModel()) {
+			if (!session.contains(dlFileEntryMetadata)) {
 				dlFileEntryMetadata = (DLFileEntryMetadata)session.get(DLFileEntryMetadataImpl.class,
 						dlFileEntryMetadata.getPrimaryKeyObj());
 			}

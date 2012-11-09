@@ -326,7 +326,7 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 		try {
 			session = openSession();
 
-			if (layoutSetBranch.isCachedModel()) {
+			if (!session.contains(layoutSetBranch)) {
 				layoutSetBranch = (LayoutSetBranch)session.get(LayoutSetBranchImpl.class,
 						layoutSetBranch.getPrimaryKeyObj());
 			}

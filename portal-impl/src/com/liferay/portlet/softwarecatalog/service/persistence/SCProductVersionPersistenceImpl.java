@@ -307,7 +307,7 @@ public class SCProductVersionPersistenceImpl extends BasePersistenceImpl<SCProdu
 		try {
 			session = openSession();
 
-			if (scProductVersion.isCachedModel()) {
+			if (!session.contains(scProductVersion)) {
 				scProductVersion = (SCProductVersion)session.get(SCProductVersionImpl.class,
 						scProductVersion.getPrimaryKeyObj());
 			}

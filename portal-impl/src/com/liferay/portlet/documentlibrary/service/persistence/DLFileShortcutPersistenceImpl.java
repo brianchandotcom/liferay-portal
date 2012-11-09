@@ -427,7 +427,7 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 		try {
 			session = openSession();
 
-			if (dlFileShortcut.isCachedModel()) {
+			if (!session.contains(dlFileShortcut)) {
 				dlFileShortcut = (DLFileShortcut)session.get(DLFileShortcutImpl.class,
 						dlFileShortcut.getPrimaryKeyObj());
 			}

@@ -347,7 +347,7 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 		try {
 			session = openSession();
 
-			if (layoutBranch.isCachedModel()) {
+			if (!session.contains(layoutBranch)) {
 				layoutBranch = (LayoutBranch)session.get(LayoutBranchImpl.class,
 						layoutBranch.getPrimaryKeyObj());
 			}

@@ -411,7 +411,7 @@ public class SocialActivityAchievementPersistenceImpl
 		try {
 			session = openSession();
 
-			if (socialActivityAchievement.isCachedModel()) {
+			if (!session.contains(socialActivityAchievement)) {
 				socialActivityAchievement = (SocialActivityAchievement)session.get(SocialActivityAchievementImpl.class,
 						socialActivityAchievement.getPrimaryKeyObj());
 			}

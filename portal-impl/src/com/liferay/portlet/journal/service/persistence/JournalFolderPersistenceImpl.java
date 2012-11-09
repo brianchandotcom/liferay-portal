@@ -440,7 +440,7 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 		try {
 			session = openSession();
 
-			if (journalFolder.isCachedModel()) {
+			if (!session.contains(journalFolder)) {
 				journalFolder = (JournalFolder)session.get(JournalFolderImpl.class,
 						journalFolder.getPrimaryKeyObj());
 			}

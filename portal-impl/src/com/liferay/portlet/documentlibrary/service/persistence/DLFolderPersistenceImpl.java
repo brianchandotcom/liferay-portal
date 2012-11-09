@@ -569,7 +569,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 		try {
 			session = openSession();
 
-			if (dlFolder.isCachedModel()) {
+			if (!session.contains(dlFolder)) {
 				dlFolder = (DLFolder)session.get(DLFolderImpl.class,
 						dlFolder.getPrimaryKeyObj());
 			}

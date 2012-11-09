@@ -327,7 +327,7 @@ public class TrashEntryPersistenceImpl extends BasePersistenceImpl<TrashEntry>
 		try {
 			session = openSession();
 
-			if (trashEntry.isCachedModel()) {
+			if (!session.contains(trashEntry)) {
 				trashEntry = (TrashEntry)session.get(TrashEntryImpl.class,
 						trashEntry.getPrimaryKeyObj());
 			}

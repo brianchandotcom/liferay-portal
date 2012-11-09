@@ -398,7 +398,7 @@ public class SocialActivityCounterPersistenceImpl extends BasePersistenceImpl<So
 		try {
 			session = openSession();
 
-			if (socialActivityCounter.isCachedModel()) {
+			if (!session.contains(socialActivityCounter)) {
 				socialActivityCounter = (SocialActivityCounter)session.get(SocialActivityCounterImpl.class,
 						socialActivityCounter.getPrimaryKeyObj());
 			}

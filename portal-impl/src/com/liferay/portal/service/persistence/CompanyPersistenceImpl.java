@@ -306,7 +306,7 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 		try {
 			session = openSession();
 
-			if (company.isCachedModel()) {
+			if (!session.contains(company)) {
 				company = (Company)session.get(CompanyImpl.class,
 						company.getPrimaryKeyObj());
 			}

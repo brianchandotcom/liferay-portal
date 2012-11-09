@@ -270,7 +270,7 @@ public class PortalPreferencesPersistenceImpl extends BasePersistenceImpl<Portal
 		try {
 			session = openSession();
 
-			if (portalPreferences.isCachedModel()) {
+			if (!session.contains(portalPreferences)) {
 				portalPreferences = (PortalPreferences)session.get(PortalPreferencesImpl.class,
 						portalPreferences.getPrimaryKeyObj());
 			}

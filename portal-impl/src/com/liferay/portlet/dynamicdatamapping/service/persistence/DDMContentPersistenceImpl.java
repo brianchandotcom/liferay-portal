@@ -348,7 +348,7 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 		try {
 			session = openSession();
 
-			if (ddmContent.isCachedModel()) {
+			if (!session.contains(ddmContent)) {
 				ddmContent = (DDMContent)session.get(DDMContentImpl.class,
 						ddmContent.getPrimaryKeyObj());
 			}

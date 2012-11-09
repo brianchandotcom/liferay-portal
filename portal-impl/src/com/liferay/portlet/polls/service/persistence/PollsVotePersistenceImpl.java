@@ -306,7 +306,7 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 		try {
 			session = openSession();
 
-			if (pollsVote.isCachedModel()) {
+			if (!session.contains(pollsVote)) {
 				pollsVote = (PollsVote)session.get(PollsVoteImpl.class,
 						pollsVote.getPrimaryKeyObj());
 			}

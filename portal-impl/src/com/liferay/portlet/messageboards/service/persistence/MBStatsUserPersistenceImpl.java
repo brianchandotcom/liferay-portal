@@ -325,7 +325,7 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 		try {
 			session = openSession();
 
-			if (mbStatsUser.isCachedModel()) {
+			if (!session.contains(mbStatsUser)) {
 				mbStatsUser = (MBStatsUser)session.get(MBStatsUserImpl.class,
 						mbStatsUser.getPrimaryKeyObj());
 			}

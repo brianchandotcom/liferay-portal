@@ -505,7 +505,7 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 		try {
 			session = openSession();
 
-			if (socialActivity.isCachedModel()) {
+			if (!session.contains(socialActivity)) {
 				socialActivity = (SocialActivity)session.get(SocialActivityImpl.class,
 						socialActivity.getPrimaryKeyObj());
 			}

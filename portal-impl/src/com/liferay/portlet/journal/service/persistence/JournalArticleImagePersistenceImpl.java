@@ -376,7 +376,7 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 		try {
 			session = openSession();
 
-			if (journalArticleImage.isCachedModel()) {
+			if (!session.contains(journalArticleImage)) {
 				journalArticleImage = (JournalArticleImage)session.get(JournalArticleImageImpl.class,
 						journalArticleImage.getPrimaryKeyObj());
 			}

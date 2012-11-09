@@ -285,7 +285,7 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 		try {
 			session = openSession();
 
-			if (shoppingCoupon.isCachedModel()) {
+			if (!session.contains(shoppingCoupon)) {
 				shoppingCoupon = (ShoppingCoupon)session.get(ShoppingCouponImpl.class,
 						shoppingCoupon.getPrimaryKeyObj());
 			}

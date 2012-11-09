@@ -264,7 +264,7 @@ public class ShoppingItemFieldPersistenceImpl extends BasePersistenceImpl<Shoppi
 		try {
 			session = openSession();
 
-			if (shoppingItemField.isCachedModel()) {
+			if (!session.contains(shoppingItemField)) {
 				shoppingItemField = (ShoppingItemField)session.get(ShoppingItemFieldImpl.class,
 						shoppingItemField.getPrimaryKeyObj());
 			}

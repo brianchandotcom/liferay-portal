@@ -340,7 +340,7 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 		try {
 			session = openSession();
 
-			if (resourceTypePermission.isCachedModel()) {
+			if (!session.contains(resourceTypePermission)) {
 				resourceTypePermission = (ResourceTypePermission)session.get(ResourceTypePermissionImpl.class,
 						resourceTypePermission.getPrimaryKeyObj());
 			}

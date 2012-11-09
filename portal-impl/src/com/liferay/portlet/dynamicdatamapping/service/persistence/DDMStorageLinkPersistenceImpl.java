@@ -312,7 +312,7 @@ public class DDMStorageLinkPersistenceImpl extends BasePersistenceImpl<DDMStorag
 		try {
 			session = openSession();
 
-			if (ddmStorageLink.isCachedModel()) {
+			if (!session.contains(ddmStorageLink)) {
 				ddmStorageLink = (DDMStorageLink)session.get(DDMStorageLinkImpl.class,
 						ddmStorageLink.getPrimaryKeyObj());
 			}

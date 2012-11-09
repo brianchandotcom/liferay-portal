@@ -452,7 +452,7 @@ public class JournalTemplatePersistenceImpl extends BasePersistenceImpl<JournalT
 		try {
 			session = openSession();
 
-			if (journalTemplate.isCachedModel()) {
+			if (!session.contains(journalTemplate)) {
 				journalTemplate = (JournalTemplate)session.get(JournalTemplateImpl.class,
 						journalTemplate.getPrimaryKeyObj());
 			}

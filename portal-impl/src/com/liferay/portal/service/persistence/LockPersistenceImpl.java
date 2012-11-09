@@ -340,7 +340,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 		try {
 			session = openSession();
 
-			if (lock.isCachedModel()) {
+			if (!session.contains(lock)) {
 				lock = (Lock)session.get(LockImpl.class, lock.getPrimaryKeyObj());
 			}
 

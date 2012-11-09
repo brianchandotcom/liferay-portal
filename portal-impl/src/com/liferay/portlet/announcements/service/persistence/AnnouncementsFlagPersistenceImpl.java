@@ -302,7 +302,7 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 		try {
 			session = openSession();
 
-			if (announcementsFlag.isCachedModel()) {
+			if (!session.contains(announcementsFlag)) {
 				announcementsFlag = (AnnouncementsFlag)session.get(AnnouncementsFlagImpl.class,
 						announcementsFlag.getPrimaryKeyObj());
 			}

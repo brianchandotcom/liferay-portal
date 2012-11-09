@@ -309,7 +309,7 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 		try {
 			session = openSession();
 
-			if (ddmStructureLink.isCachedModel()) {
+			if (!session.contains(ddmStructureLink)) {
 				ddmStructureLink = (DDMStructureLink)session.get(DDMStructureLinkImpl.class,
 						ddmStructureLink.getPrimaryKeyObj());
 			}

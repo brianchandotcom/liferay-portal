@@ -426,7 +426,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 		try {
 			session = openSession();
 
-			if (ddmStructure.isCachedModel()) {
+			if (!session.contains(ddmStructure)) {
 				ddmStructure = (DDMStructure)session.get(DDMStructureImpl.class,
 						ddmStructure.getPrimaryKeyObj());
 			}

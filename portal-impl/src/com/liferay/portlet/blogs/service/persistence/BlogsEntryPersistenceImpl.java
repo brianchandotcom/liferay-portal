@@ -732,7 +732,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 		try {
 			session = openSession();
 
-			if (blogsEntry.isCachedModel()) {
+			if (!session.contains(blogsEntry)) {
 				blogsEntry = (BlogsEntry)session.get(BlogsEntryImpl.class,
 						blogsEntry.getPrimaryKeyObj());
 			}

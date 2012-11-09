@@ -324,7 +324,7 @@ public class RatingsEntryPersistenceImpl extends BasePersistenceImpl<RatingsEntr
 		try {
 			session = openSession();
 
-			if (ratingsEntry.isCachedModel()) {
+			if (!session.contains(ratingsEntry)) {
 				ratingsEntry = (RatingsEntry)session.get(RatingsEntryImpl.class,
 						ratingsEntry.getPrimaryKeyObj());
 			}

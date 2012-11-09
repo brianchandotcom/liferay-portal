@@ -456,7 +456,7 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 		try {
 			session = openSession();
 
-			if (expandoValue.isCachedModel()) {
+			if (!session.contains(expandoValue)) {
 				expandoValue = (ExpandoValue)session.get(ExpandoValueImpl.class,
 						expandoValue.getPrimaryKeyObj());
 			}

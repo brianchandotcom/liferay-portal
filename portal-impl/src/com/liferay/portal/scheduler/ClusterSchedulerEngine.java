@@ -137,7 +137,10 @@ public class ClusterSchedulerEngine
 	public SchedulerResponse getScheduledJob(String jobName, String groupName)
 		throws SchedulerException {
 
-		StorageType storageType = getStorageType(groupName);
+		ObjectValuePair<String, StorageType> objectValuePair = resolveGroupName(
+			groupName);
+
+		StorageType storageType = objectValuePair.getValue();
 
 		if (storageType.equals(StorageType.MEMORY_CLUSTERED)) {
 			String masterAddressString = getMasterAddressString(false);
@@ -145,7 +148,7 @@ public class ClusterSchedulerEngine
 			if (!_localClusterNodeAddress.equals(masterAddressString)) {
 				return (SchedulerResponse)callMaster(
 					masterAddressString, _getScheduledJobMethodKey, jobName,
-					groupName);
+					objectValuePair.getKey(), storageType);
 			}
 		}
 
@@ -181,7 +184,10 @@ public class ClusterSchedulerEngine
 	public List<SchedulerResponse> getScheduledJobs(String groupName)
 		throws SchedulerException {
 
-		StorageType storageType = getStorageType(groupName);
+		ObjectValuePair<String, StorageType> objectValuePair = resolveGroupName(
+			groupName);
+
+		StorageType storageType = objectValuePair.getValue();
 
 		if (storageType.equals(StorageType.MEMORY_CLUSTERED)) {
 			String masterAddressString = getMasterAddressString(false);
@@ -189,7 +195,7 @@ public class ClusterSchedulerEngine
 			if (!_localClusterNodeAddress.equals(masterAddressString)) {
 				return callMaster(
 					masterAddressString, _getScheduledJobsMethodKey2,
-					groupName);
+					objectValuePair.getKey(), storageType);
 			}
 		}
 
@@ -515,8 +521,6 @@ public class ClusterSchedulerEngine
 		ClusterRequest clusterRequest = ClusterRequest.createUnicastRequest(
 			methodHandler, address);
 
-		clusterRequest.setBeanIdentifier(_beanIdentifier);
-
 		try {
 			FutureClusterResponses futureClusterResponses =
 				ClusterExecutorUtil.execute(clusterRequest);
@@ -645,14 +649,6 @@ public class ClusterSchedulerEngine
 		return Base64.encode(bytes);
 	}
 
-	protected StorageType getStorageType(String groupName) {
-		int pos = groupName.indexOf(CharPool.POUND);
-
-		String storageTypeString = groupName.substring(0, pos);
-
-		return StorageType.valueOf(storageTypeString);
-	}
-
 	protected void initMemoryClusteredJobs(
 			List<SchedulerResponse> schedulerResponses)
 		throws Exception {
@@ -688,7 +684,10 @@ public class ClusterSchedulerEngine
 	protected boolean isMemoryClusteredSlaveJob(String groupName)
 		throws SchedulerException {
 
-		StorageType storageType = getStorageType(groupName);
+		ObjectValuePair<String, StorageType> objectValuePair = resolveGroupName(
+			groupName);
+
+		StorageType storageType = objectValuePair.getValue();
 
 		if (!storageType.equals(StorageType.MEMORY_CLUSTERED)) {
 			return false;
@@ -716,8 +715,6 @@ public class ClusterSchedulerEngine
 
 			ClusterRequest clusterRequest = ClusterRequest.createUnicastRequest(
 				methodHandler, address);
-
-			clusterRequest.setBeanIdentifier(_beanIdentifier);
 
 			try {
 				ClusterExecutorUtil.execute(
@@ -766,10 +763,28 @@ public class ClusterSchedulerEngine
 		}
 	}
 
+	protected ObjectValuePair<String, StorageType> resolveGroupName(
+		String groupName) {
+
+		int pos = groupName.indexOf(CharPool.POUND);
+
+		String storageTypeString = groupName.substring(0, pos);
+
+		StorageType storageType = StorageType.valueOf(storageTypeString);
+
+		String orginalGroupName = groupName.substring(pos + 1);
+
+		return new ObjectValuePair<String, StorageType>(
+			orginalGroupName, storageType);
+	}
+
 	protected void skipClusterInvoking(String groupName)
 		throws SchedulerException {
 
-		StorageType storageType = getStorageType(groupName);
+		ObjectValuePair<String, StorageType> objectValuePair = resolveGroupName(
+			groupName);
+
+		StorageType storageType = objectValuePair.getValue();
 
 		if (storageType.equals(StorageType.PERSISTED) ||
 			PluginContextLifecycleThreadLocal.isDestroying()) {
@@ -897,11 +912,13 @@ public class ClusterSchedulerEngine
 		ClusterSchedulerEngine.class);
 
 	private static MethodKey _getScheduledJobMethodKey = new MethodKey(
-		SchedulerEngine.class, "getScheduledJob", String.class, String.class);
+		SchedulerEngineHelperUtil.class, "getScheduledJob", String.class,
+		String.class, StorageType.class);
 	private static MethodKey _getScheduledJobsMethodKey1 = new MethodKey(
-		SchedulerEngine.class, "getScheduledJobs");
+		SchedulerEngineHelperUtil.class, "getScheduledJobs");
 	private static MethodKey _getScheduledJobsMethodKey2 = new MethodKey(
-		SchedulerEngine.class, "getScheduledJobs", String.class);
+		SchedulerEngineHelperUtil.class, "getScheduledJobs", String.class,
+		StorageType.class);
 	private static MethodKey _getScheduledJobsMethodKey3 = new MethodKey(
 		SchedulerEngineHelperUtil.class, "getScheduledJobs", StorageType.class);
 

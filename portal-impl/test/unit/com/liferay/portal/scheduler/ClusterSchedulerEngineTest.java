@@ -942,11 +942,13 @@ public class ClusterSchedulerEngineTest {
 	private static final String _TEST_JOB_NAME_PREFIX = "test.job.";
 
 	private static MethodKey _getScheduledJobMethodKey = new MethodKey(
-		SchedulerEngine.class, "getScheduledJob", String.class, String.class);
+		SchedulerEngineHelperUtil.class, "getScheduledJob", String.class,
+		String.class, StorageType.class);
 	private static MethodKey _getScheduledJobsMethodKey1 = new MethodKey(
-		SchedulerEngine.class, "getScheduledJobs");
+		SchedulerEngineHelperUtil.class, "getScheduledJobs");
 	private static MethodKey _getScheduledJobsMethodKey2 = new MethodKey(
-		SchedulerEngine.class, "getScheduledJobs", String.class);
+		SchedulerEngineHelperUtil.class, "getScheduledJobs", String.class,
+		StorageType.class);
 	private static MethodKey _getScheduledJobsMethodKey3 = new MethodKey(
 		SchedulerEngineHelperUtil.class, "getScheduledJobs", StorageType.class);
 
@@ -1181,16 +1183,24 @@ public class ClusterSchedulerEngineTest {
 			MethodKey methodKey = methodHandler.getMethodKey();
 
 			if (methodKey.equals(_getScheduledJobMethodKey)) {
+				String groupName = (String)methodHandler.getArguments()[1];
+				StorageType storageType =
+					(StorageType)methodHandler.getArguments()[2];
+
 				return _mockSchedulerEngine.getScheduledJob(
 					(String)methodHandler.getArguments()[0],
-					(String)methodHandler.getArguments()[1]);
+					_namespaceGroupName(groupName, storageType));
 			}
 			else if (methodKey.equals(_getScheduledJobsMethodKey1)) {
 				return _mockSchedulerEngine.getScheduledJobs();
 			}
 			else if (methodKey.equals(_getScheduledJobsMethodKey2)) {
+				String groupName = (String)methodHandler.getArguments()[0];
+				StorageType storageType =
+					(StorageType)methodHandler.getArguments()[1];
+
 				return _mockSchedulerEngine.getScheduledJobs(
-					(String)methodHandler.getArguments()[0]);
+					_namespaceGroupName(groupName, storageType));
 			}
 			else if (methodKey.equals(_getScheduledJobsMethodKey3)) {
 				StorageType storageType =
@@ -1200,6 +1210,13 @@ public class ClusterSchedulerEngineTest {
 			}
 
 			return null;
+		}
+
+		private String _namespaceGroupName(
+			String groupName, StorageType storageType) {
+
+			return storageType.toString().concat(StringPool.POUND).concat(
+				groupName);
 		}
 
 		private static List<Address> _addresses = new ArrayList<Address>();

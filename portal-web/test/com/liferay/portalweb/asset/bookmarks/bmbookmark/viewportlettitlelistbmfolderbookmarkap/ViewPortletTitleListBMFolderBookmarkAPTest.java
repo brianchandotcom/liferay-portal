@@ -30,8 +30,8 @@ public class ViewPortletTitleListBMFolderBookmarkAPTest extends BaseTestCase {
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("BM Folder Bookmark Name"),
-			selenium.getText("//span/a/span"));
-		selenium.clickAt("//span/a/span",
+			selenium.getText("//li[@class='title-list bookmark']/span/a/span"));
+		selenium.clickAt("//li[@class='title-list bookmark']/span/a/span",
 			RuntimeVariables.replace("BM Folder Bookmark Name"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("BM Folder Bookmark Name"),
@@ -47,6 +47,6 @@ public class ViewPortletTitleListBMFolderBookmarkAPTest extends BaseTestCase {
 		selenium.clickAt("link=http://www.liferay.com",
 			RuntimeVariables.replace("http://www.liferay.com"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isElementPresent("//img[@alt='Liferay']"));
+		assertTrue(selenium.isVisible("//img[@alt='Liferay']"));
 	}
 }

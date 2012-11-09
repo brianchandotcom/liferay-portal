@@ -28,15 +28,12 @@ public class AddBMFolderTest extends BaseTestCase {
 		selenium.clickAt("link=Bookmarks Test Page",
 			RuntimeVariables.replace("Bookmarks Test Page"));
 		selenium.waitForPageToLoad("30000");
-		Thread.sleep(5000);
-		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[2]/a");
 		assertEquals(RuntimeVariables.replace("Add Folder"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[2]/a"));
-		selenium.click(
-			"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[2]/a");
-		selenium.waitForVisible("//input[@id='_28_name']");
+				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Add Folder')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Add Folder')]",
+			RuntimeVariables.replace("Add Folder"));
+		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_28_name']",
 			RuntimeVariables.replace("BM Folder Name"));
 		selenium.clickAt("//input[@value='Save']",

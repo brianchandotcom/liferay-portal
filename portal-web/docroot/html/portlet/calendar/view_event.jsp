@@ -95,7 +95,7 @@ request.setAttribute("view_event.jsp-event", event);
 						<liferay-ui:message key="end-date" />:
 					</c:when>
 					<c:otherwise>
-						<liferay-ui:message key="ocurrence-s" />:
+						<liferay-ui:message key="occurrence-s" />:
 					</c:otherwise>
 				</c:choose>
 			</dt>

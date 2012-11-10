@@ -353,6 +353,66 @@ public class SourceFormatter {
 		}
 	}
 
+	private static void _checkLanguageKeys(
+			String fileName, String content, Pattern pattern)
+		throws IOException {
+
+		String fileExtension = _fileUtil.getExtension(fileName);
+
+		if (!_portalSource || fileExtension.equals("vm")) {
+			return;
+		}
+
+		if (_portalLanguageKeysProperties == null) {
+			_portalLanguageKeysProperties = new Properties();
+
+			ClassLoader classLoader = SourceFormatter.class.getClassLoader();
+
+			InputStream inputStream = classLoader.getResourceAsStream(
+				"content/Language.properties");
+
+			_portalLanguageKeysProperties.load(inputStream);
+		}
+
+		Matcher matcher = pattern.matcher(content);
+
+		while (matcher.find()) {
+			String match = matcher.group();
+
+			String languageKey = _getLanguageKey(match);
+
+			if (Validator.isNull(languageKey)) {
+				return;
+			}
+
+			String[] languageKeys = new String[] {languageKey};
+
+			if (match.startsWith("names")) {
+				languageKeys = StringUtil.split(languageKey);
+			}
+
+			for (String key : languageKeys) {
+				if (Validator.isNumber(key) ||
+					key.endsWith(StringPool.DASH) ||
+					key.endsWith(StringPool.PERIOD) ||
+					key.endsWith(StringPool.UNDERLINE) ||
+					key.startsWith(StringPool.DASH) ||
+					key.startsWith(StringPool.PERIOD) ||
+					key.startsWith(StringPool.UNDERLINE)) {
+
+					continue;
+				}
+
+				if (!_portalLanguageKeysProperties.containsKey(key)) {
+					_sourceFormatterHelper.printError(
+						fileName,
+						"missing language key: " + key + StringPool.SPACE +
+							fileName);
+				}
+			}
+		}
+	}
+
 	private static void _checkIfClause(
 		String ifClause, String fileName, int lineCount) {
 
@@ -1356,6 +1416,8 @@ public class SourceFormatter {
 				}
 			}
 
+			_checkLanguageKeys(fileName, newContent, _languageKeyPattern);
+
 			String oldContent = newContent;
 
 			for (;;) {
@@ -2151,6 +2213,8 @@ public class SourceFormatter {
 				}
 			}
 
+			_checkLanguageKeys(fileName, newContent, _languageKeyPattern);
+			_checkLanguageKeys(fileName, newContent, _taglibLanguageKeyPattern);
 			_checkXSS(fileName, newContent);
 
 			if ((newContent != null) && !content.equals(newContent)) {
@@ -3554,6 +3618,49 @@ public class SourceFormatter {
 		return duplicateImports;
 	}
 
+	private static String _getLanguageKey(String s) {
+		StringBundler sb = new StringBundler();
+
+		int count = 0;
+
+		for (int i = 0; i < s.length(); i++) {
+			char c = s.charAt(i);
+
+			switch (c) {
+				case CharPool.CLOSE_PARENTHESIS:
+					if (count <= 1) {
+						return null;
+					}
+
+					count--;
+
+					break;
+
+				case CharPool.OPEN_PARENTHESIS:
+					count++;
+
+					break;
+
+				case CharPool.QUOTE:
+					if (count > 1) {
+						break;
+					}
+
+					while (i < s.length()) {
+						i++;
+
+						if (s.charAt(i) == CharPool.QUOTE) {
+							return sb.toString();
+						}
+
+						sb.append(s.charAt(i));
+					}
+			}
+		}
+
+		return null;
+	}
+
 	private static int _getLineLength(String line) {
 		int lineLength = 0;
 
@@ -4492,10 +4599,16 @@ public class SourceFormatter {
 		"(<.*\n*page.import=\".*>\n*)+", Pattern.MULTILINE);
 	private static Pattern _jspIncludeFilePattern = Pattern.compile(
 		"/.*[.]jsp[f]?");
+	private static Pattern _languageKeyPattern = Pattern.compile(
+		"LanguageUtil.(?:get|format)\\([^;%]+");
 	private static Properties _lineLengthExclusionsProperties;
+	private static Properties _portalLanguageKeysProperties;
 	private static boolean _portalSource;
 	private static SAXReaderImpl _saxReaderUtil = SAXReaderImpl.getInstance();
 	private static SourceFormatterHelper _sourceFormatterHelper;
+	private static Pattern _taglibLanguageKeyPattern = Pattern.compile(
+		"(?:confirmation|label|(?:M|m)essage|message key|names|title)=\"[^A-Z" +
+			"<=%\\[\\s]+\"");
 	private static Pattern _xssPattern = Pattern.compile(
 		"String\\s+([^\\s]+)\\s*=\\s*(Bean)?ParamUtil\\.getString\\(");
 

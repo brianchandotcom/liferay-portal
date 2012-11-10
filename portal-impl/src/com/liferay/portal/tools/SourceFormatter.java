@@ -353,49 +353,6 @@ public class SourceFormatter {
 		}
 	}
 
-	private static String _getLanguageKey(String s) {
-		StringBundler sb = new StringBundler();
-
-		int count = 0;
-
-		for (int i = 0; i < s.length(); i++) {
-			char c = s.charAt(i);
-
-			switch (c) {
-				case CharPool.CLOSE_PARENTHESIS:
-					if (count <= 1) {
-						return null;
-					}
-
-					count--;
-
-					break;
-
-				case CharPool.OPEN_PARENTHESIS:
-					count++;
-
-					break;
-
-				case CharPool.QUOTE:
-					if (count > 1) {
-						break;
-					}
-
-					while (i < s.length()) {
-						i++;
-
-						if (s.charAt(i) == CharPool.QUOTE) {
-							return sb.toString();
-						}
-
-						sb.append(s.charAt(i));
-					}
-			}
-		}
-
-		return null;
-	}
-
 	private static void _checkLanguageKeys(
 			String fileName, String content, Pattern pattern)
 		throws IOException {
@@ -3659,6 +3616,49 @@ public class SourceFormatter {
 		}
 
 		return duplicateImports;
+	}
+
+	private static String _getLanguageKey(String s) {
+		StringBundler sb = new StringBundler();
+
+		int count = 0;
+
+		for (int i = 0; i < s.length(); i++) {
+			char c = s.charAt(i);
+
+			switch (c) {
+				case CharPool.CLOSE_PARENTHESIS:
+					if (count <= 1) {
+						return null;
+					}
+
+					count--;
+
+					break;
+
+				case CharPool.OPEN_PARENTHESIS:
+					count++;
+
+					break;
+
+				case CharPool.QUOTE:
+					if (count > 1) {
+						break;
+					}
+
+					while (i < s.length()) {
+						i++;
+
+						if (s.charAt(i) == CharPool.QUOTE) {
+							return sb.toString();
+						}
+
+						sb.append(s.charAt(i));
+					}
+			}
+		}
+
+		return null;
 	}
 
 	private static int _getLineLength(String line) {

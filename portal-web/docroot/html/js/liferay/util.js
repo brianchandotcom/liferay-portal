@@ -1242,6 +1242,7 @@
 			ddmURL.setParameter('classPK', config.classPK);
 			ddmURL.setParameter('ddmResource', config.ddmResource);
 			ddmURL.setParameter('ddmResourceActionId', config.ddmResourceActionId);
+			ddmURL.setParameter('groupId', config.groupId);
 			ddmURL.setParameter('saveCallback', config.saveCallback);
 			ddmURL.setParameter('scopeAvailableFields', config.availableFields);
 			ddmURL.setParameter('scopeStorageType', config.storageType);

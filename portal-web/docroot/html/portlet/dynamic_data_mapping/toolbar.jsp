@@ -18,11 +18,14 @@
 
 <%
 String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all");
+
+long groupId = ParamUtil.getLong(request, "groupId", scopeGroupId);
 %>
 
 <div class="lfr-portlet-toolbar">
 	<portlet:renderURL var="viewStructuresURL">
 		<portlet:param name="struts_action" value="/dynamic_data_mapping/view" />
+		<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 	</portlet:renderURL>
 
 	<span class="lfr-toolbar-button view-button <%= toolbarItem.equals("view-all") ? "current" : StringPool.BLANK %>">
@@ -33,6 +36,7 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all");
 		<portlet:renderURL var="addStructureURL">
 			<portlet:param name="struts_action" value="/dynamic_data_mapping/edit_structure" />
 			<portlet:param name="redirect" value="<%= viewStructuresURL %>" />
+			<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 		</portlet:renderURL>
 
 		<span class="lfr-toolbar-button add-button <%= toolbarItem.equals("add") ? "current" : StringPool.BLANK %>">

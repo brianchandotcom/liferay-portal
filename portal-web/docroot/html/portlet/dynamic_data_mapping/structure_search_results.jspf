@@ -17,7 +17,7 @@
 <%
 StructureSearchTerms searchTerms = (StructureSearchTerms)searchContainer.getSearchTerms();
 
-long[] groupIds = new long[] {scopeGroupId};
+long[] groupIds = new long[] {groupId};
 
 if (showGlobalScope) {
 	groupIds = PortalUtil.getSiteAndCompanyGroupIds(themeDisplay);

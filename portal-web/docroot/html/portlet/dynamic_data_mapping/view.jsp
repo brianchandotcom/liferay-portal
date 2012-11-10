@@ -19,9 +19,12 @@
 <%
 String tabs1 = ParamUtil.getString(request, "tabs1", "structures");
 
+long groupId = ParamUtil.getLong(request, "groupId", scopeGroupId);
+
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("struts_action", "/dynamic_data_mapping/view");
+portletURL.setParameter("groupId", String.valueOf(groupId));
 portletURL.setParameter("tabs1", tabs1);
 %>
 

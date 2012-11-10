@@ -98,7 +98,7 @@ public class DDMStructureLocalServiceImpl
 		DDMStructure structure = ddmStructurePersistence.create(structureId);
 
 		structure.setUuid(serviceContext.getUuid());
-		structure.setGroupId(serviceContext.getScopeGroupId());
+		structure.setGroupId(groupId);
 		structure.setCompanyId(user.getCompanyId());
 		structure.setUserId(user.getUserId());
 		structure.setUserName(user.getFullName());

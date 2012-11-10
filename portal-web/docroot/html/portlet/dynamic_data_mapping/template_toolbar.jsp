@@ -19,6 +19,8 @@
 <%
 String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all");
 
+long groupId = ParamUtil.getLong(request, "groupId", scopeGroupId);
+
 long classNameId = ParamUtil.getLong(request, "classNameId");
 long classPK = ParamUtil.getLong(request, "classPK");
 %>
@@ -44,7 +46,7 @@ long classPK = ParamUtil.getLong(request, "classPK");
 				<portlet:renderURL var="addTemplateURL">
 					<portlet:param name="struts_action" value="/dynamic_data_mapping/edit_template" />
 					<portlet:param name="redirect" value="<%= viewTemplatesURL %>" />
-					<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
+					<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 					<portlet:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
 					<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
 					<portlet:param name="structureAvailableFields" value='<%= renderResponse.getNamespace() + "structureAvailableFields" %>' />
@@ -65,7 +67,7 @@ long classPK = ParamUtil.getLong(request, "classPK");
 				<portlet:renderURL var="addTemplateURL">
 					<portlet:param name="struts_action" value="/dynamic_data_mapping/edit_template" />
 					<portlet:param name="redirect" value="<%= viewTemplatesURL %>" />
-					<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
+					<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 					<portlet:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
 					<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
 					<portlet:param name="type" value="<%= DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY %>" />

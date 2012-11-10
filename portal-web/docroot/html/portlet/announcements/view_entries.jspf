@@ -30,10 +30,10 @@ int flagValue = AnnouncementsFlagConstants.NOT_HIDDEN;
 </div>
 
 <%
-boolean hasResults = total > 0;
+int visibleMessagesCount = total;
 %>
 
-<c:if test="<%= hasResults %>">
+<c:if test="<%= visibleMessagesCount > 0 %>">
 	<liferay-ui:search-paginator id="pageIteratorTop" searchContainer="<%= searchContainer %>" type="article" />
 </c:if>
 
@@ -48,12 +48,18 @@ searchContainer = new SearchContainer(renderRequest, null, null, "cur2", pageDel
 </div>
 
 <%
-hasResults = hasResults || (total > 0);
+int hiddenMessagesCount = total;
 %>
 
-<c:if test="<%= total > 0 %>">
+<c:if test="<%= hiddenMessagesCount > 0 %>">
 	<liferay-ui:search-paginator id="pageIteratorBottom" searchContainer="<%= searchContainer %>" type="article" />
 </c:if>
+
+<%
+if (((hiddenMessagesCount == 0) && (visibleMessagesCount == 0)) && portletName.equals(PortletKeys.ALERTS) && !AnnouncementsEntryPermission.contains(permissionChecker, layout, PortletKeys.ANNOUNCEMENTS, ActionKeys.ADD_ENTRY)) {
+	renderRequest.setAttribute(WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);
+}
+%>
 
 <aui:script>
 	Liferay.provide(
@@ -134,13 +140,3 @@ hasResults = hasResults || (total > 0);
 		['aui-base']
 	);
 </aui:script>
-
-<c:if test="<%= !hasResults && portletName.equals(PortletKeys.ALERTS) && !AnnouncementsEntryPermission.contains(permissionChecker, layout, PortletKeys.ANNOUNCEMENTS, ActionKeys.ADD_ENTRY) %>">
-	<aui:script use="aui-base">
-		var portlet = A.one('#p_p_id<portlet:namespace />');
-
-		if (portlet) {
-			portlet.hide();
-		}
-	</aui:script>
-</c:if>

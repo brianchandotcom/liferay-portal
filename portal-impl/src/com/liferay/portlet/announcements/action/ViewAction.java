@@ -15,8 +15,6 @@
 package com.liferay.portlet.announcements.action;
 
 import com.liferay.portal.struts.PortletAction;
-import com.liferay.portal.util.PortletKeys;
-import com.liferay.portal.util.WebKeys;
 
 import javax.portlet.PortletConfig;
 import javax.portlet.RenderRequest;
@@ -37,12 +35,6 @@ public class ViewAction extends PortletAction {
 			ActionMapping mapping, ActionForm form, PortletConfig portletConfig,
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws Exception {
-
-		String portletName = portletConfig.getPortletName();
-
-		if (portletName.equals(PortletKeys.ALERTS)) {
-			renderRequest.setAttribute(WebKeys.PORTLET_DECORATE, Boolean.FALSE);
-		}
 
 		return mapping.findForward("portlet.announcements.view");
 	}

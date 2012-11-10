@@ -15,8 +15,6 @@
 package com.liferay.portlet.announcements.action;
 
 import com.liferay.portal.struts.PortletAction;
-import com.liferay.portal.util.PortletKeys;
-import com.liferay.portal.util.WebKeys;
 
 import javax.portlet.PortletConfig;
 import javax.portlet.RenderRequest;

@@ -21,7 +21,7 @@ List<SocialRequest> requests = (List<SocialRequest>)request.getAttribute(WebKeys
 %>
 
 <c:choose>
-	<c:when test="<%= requests.size() == 0 %>">
+	<c:when test="<%= requests.isEmpty() %>">
 
 		<%
 		renderRequest.setAttribute(WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);

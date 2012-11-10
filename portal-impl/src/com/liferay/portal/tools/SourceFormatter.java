@@ -353,13 +353,12 @@ public class SourceFormatter {
 		}
 	}
 
-	private static String _checkLanguageKey(String s) {
+	private static String _getLanguageKey(String s) {
 		StringBundler sb = new StringBundler();
 
-		int length = s.length();
 		int count = 0;
 
-		for (int i = 0; i < length; i++) {
+		for (int i = 0; i < s.length(); i++) {
 			char c = s.charAt(i);
 
 			switch (c) {
@@ -378,7 +377,11 @@ public class SourceFormatter {
 					break;
 
 				case CharPool.QUOTE:
-					while ((count <= 1) && (i < length)) {
+					if (count > 1) {
+						break;
+					}
+
+					while (i < s.length()) {
 						i++;
 
 						if (s.charAt(i) == CharPool.QUOTE) {
@@ -397,19 +400,21 @@ public class SourceFormatter {
 			String fileName, String content, Pattern pattern)
 		throws IOException {
 
-		if (!_portalSource || fileName.endsWith("vm")) {
+		String fileExtension = _fileUtil.getExtension(fileName);
+
+		if (!_portalSource || fileExtension.equals("vm")) {
 			return;
 		}
 
-		if (_portalLanguageProperties == null) {
-			_portalLanguageProperties = new Properties();
+		if (_portalLanguageKeysProperties == null) {
+			_portalLanguageKeysProperties = new Properties();
 
 			ClassLoader classLoader = SourceFormatter.class.getClassLoader();
 
 			InputStream inputStream = classLoader.getResourceAsStream(
 				"content/Language.properties");
 
-			_portalLanguageProperties.load(inputStream);
+			_portalLanguageKeysProperties.load(inputStream);
 		}
 
 		Matcher matcher = pattern.matcher(content);
@@ -417,19 +422,19 @@ public class SourceFormatter {
 		while (matcher.find()) {
 			String match = matcher.group();
 
-			String s = _checkLanguageKey(match);
+			String languageKey = _getLanguageKey(match);
 
-			if (Validator.isNull(s)) {
+			if (Validator.isNull(languageKey)) {
 				return;
 			}
 
-			String[] keys = new String[] {s};
+			String[] languageKeys = new String[] {languageKey};
 
 			if (match.startsWith("names")) {
-				keys = StringUtil.split(s);
+				languageKeys = StringUtil.split(languageKey);
 			}
 
-			for (String key : keys) {
+			for (String key : languageKeys) {
 				if (Validator.isNumber(key) ||
 					key.endsWith(StringPool.DASH) ||
 					key.endsWith(StringPool.PERIOD) ||
@@ -441,7 +446,7 @@ public class SourceFormatter {
 					continue;
 				}
 
-				if ((_portalLanguageProperties.get(key) == null)) {
+				if (!_portalLanguageKeysProperties.containsKey(key)) {
 					_sourceFormatterHelper.printError(
 						fileName,
 						"missing language key: " + key + StringPool.SPACE +
@@ -4597,7 +4602,7 @@ public class SourceFormatter {
 	private static Pattern _languageKeyPattern = Pattern.compile(
 		"LanguageUtil.(?:get|format)\\([^;%]+");
 	private static Properties _lineLengthExclusionsProperties;
-	private static Properties _portalLanguageProperties;
+	private static Properties _portalLanguageKeysProperties;
 	private static boolean _portalSource;
 	private static SAXReaderImpl _saxReaderUtil = SAXReaderImpl.getInstance();
 	private static SourceFormatterHelper _sourceFormatterHelper;

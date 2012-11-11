@@ -15,6 +15,8 @@
 package com.liferay.portal.util;
 
 import com.liferay.portal.NoSuchCompanyException;
+import com.liferay.portal.dao.shard.ShardDataSourceTargetSource;
+import com.liferay.portal.dao.shard.ShardSessionFactoryTargetSource;
 import com.liferay.portal.events.EventsProcessorUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.shard.ShardUtil;
@@ -24,6 +26,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -291,10 +294,30 @@ public class PortalInstances {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
+		String currentShard = ShardUtil.getCurrentShardName();
+
+		ShardDataSourceTargetSource shardDataSourceTargetSource =
+			(ShardDataSourceTargetSource)
+				InfrastructureUtil.getShardDataSourceTargetSource();
+
+		shardDataSourceTargetSource.setDataSource(
+			PropsValues.SHARD_DEFAULT_NAME);
+
+		ShardSessionFactoryTargetSource shardSessionFactoryTargetSource =
+			(ShardSessionFactoryTargetSource)
+				InfrastructureUtil.getShardSessionFactoryTargetSource();
+
+		shardSessionFactoryTargetSource.setSessionFactory(
+			PropsValues.SHARD_DEFAULT_NAME);
+
+		ShardUtil.pushCompanyService(PropsValues.SHARD_DEFAULT_NAME);
+		
 		try {
 			con = DataAccess.getConnection();
 
 			ps = con.prepareStatement(_GET_COMPANY_IDS);
+
+			ps.setString(1, currentShard);
 
 			rs = ps.executeQuery();
 
@@ -306,6 +329,12 @@ public class PortalInstances {
 		}
 		finally {
 			DataAccess.cleanUp(con, ps, rs);
+
+			ShardUtil.popCompanyService();
+
+			shardSessionFactoryTargetSource.setSessionFactory(currentShard);
+
+			shardDataSourceTargetSource.setDataSource(currentShard);
 		}
 
 		return ArrayUtil.toArray(
@@ -513,7 +542,8 @@ public class PortalInstances {
 	}
 
 	private static final String _GET_COMPANY_IDS =
-		"select companyId from Company";
+		"select companyId from Company, Shard where Company.companyId = " +
+			"Shard.classPK and Shard.name = ?";
 
 	private static Log _log = LogFactoryUtil.getLog(PortalInstances.class);
 

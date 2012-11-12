@@ -33,14 +33,26 @@ public class AddPageFriendlyURLReservedWordsTest extends BaseTestCase {
 				selenium.clickAt("//div[@id='dockbar']",
 					RuntimeVariables.replace("Dockbar"));
 				selenium.waitForElementPresent(
+					"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+				selenium.waitForElementPresent(
 					"//li[contains(@class,'manage-page')]/a");
-				selenium.clickAt("//li[contains(@class,'manage-page')]/a",
-					RuntimeVariables.replace("Manage Pages"));
+				assertEquals(RuntimeVariables.replace("Manage"),
+					selenium.getText("//li[@id='_145_manageContent']/a/span"));
+				selenium.mouseOver("//li[@id='_145_manageContent']/a/span");
+				selenium.waitForVisible("//a[@title='Manage Page']");
+				assertEquals(RuntimeVariables.replace("Page"),
+					selenium.getText("//a[@title='Manage Page']"));
+				selenium.clickAt("//a[@title='Manage Page']",
+					RuntimeVariables.replace("Page"));
+				selenium.waitForVisible("//iframe[@id='manageContentDialog']");
+				selenium.selectFrame("//iframe[@id='manageContentDialog']");
+				selenium.waitForElementPresent(
+					"//script[contains(@src,'/liferay/search_container.js')]");
 				selenium.waitForText("//a[@class='layout-tree']", "Public Pages");
 				assertEquals(RuntimeVariables.replace("Public Pages"),
 					selenium.getText("//a[@class='layout-tree']"));
 
-				boolean welcomePresent = selenium.isElementPresent(
+				boolean welcomePresent = selenium.isVisible(
 						"//li/ul/li[1]/div/div[3]/a");
 
 				if (welcomePresent) {
@@ -76,7 +88,7 @@ public class AddPageFriendlyURLReservedWordsTest extends BaseTestCase {
 					selenium.getText(
 						"xPath=(//div[@class='portlet-msg-error'])[1]"));
 				assertEquals(RuntimeVariables.replace(
-						"Please enter a friendly URL that does not conflict with the keyword api."),
+						"Please enter a friendly URL that does not conflict with the keyword /api."),
 					selenium.getText(
 						"xPath=(//div[@class='portlet-msg-error'])[2]"));
 				selenium.type("//span[2]/input[@id='_88_friendlyURL']",
@@ -89,7 +101,7 @@ public class AddPageFriendlyURLReservedWordsTest extends BaseTestCase {
 					selenium.getText(
 						"xPath=(//div[@class='portlet-msg-error'])[1]"));
 				assertEquals(RuntimeVariables.replace(
-						"Please enter a friendly URL that does not conflict with the keyword c."),
+						"Please enter a friendly URL that does not conflict with the keyword /c."),
 					selenium.getText(
 						"xPath=(//div[@class='portlet-msg-error'])[2]"));
 				selenium.type("//span[2]/input[@id='_88_friendlyURL']",
@@ -102,7 +114,7 @@ public class AddPageFriendlyURLReservedWordsTest extends BaseTestCase {
 					selenium.getText(
 						"xPath=(//div[@class='portlet-msg-error'])[1]"));
 				assertEquals(RuntimeVariables.replace(
-						"Please enter a friendly URL that does not conflict with the keyword combo."),
+						"Please enter a friendly URL that does not conflict with the keyword /combo."),
 					selenium.getText(
 						"xPath=(//div[@class='portlet-msg-error'])[2]"));
 				selenium.type("//span[2]/input[@id='_88_friendlyURL']",
@@ -128,7 +140,7 @@ public class AddPageFriendlyURLReservedWordsTest extends BaseTestCase {
 					selenium.getText(
 						"xPath=(//div[@class='portlet-msg-error'])[1]"));
 				assertEquals(RuntimeVariables.replace(
-						"Please enter a friendly URL that does not conflict with the keyword display_chart."),
+						"Please enter a friendly URL that does not conflict with the keyword /display_chart."),
 					selenium.getText(
 						"xPath=(//div[@class='portlet-msg-error'])[2]"));
 				selenium.type("//span[2]/input[@id='_88_friendlyURL']",
@@ -141,11 +153,11 @@ public class AddPageFriendlyURLReservedWordsTest extends BaseTestCase {
 					selenium.getText(
 						"xPath=(//div[@class='portlet-msg-error'])[1]"));
 				assertEquals(RuntimeVariables.replace(
-						"Please enter a friendly URL that does not conflict with the keyword dtd."),
+						"Please enter a friendly URL that does not conflict with the keyword /dtd."),
 					selenium.getText(
 						"xPath=(//div[@class='portlet-msg-error'])[2]"));
 				selenium.type("//span[2]/input[@id='_88_friendlyURL']",
-					RuntimeVariables.replace("/elqNow"));
+					RuntimeVariables.replace("/elqnow"));
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
@@ -154,7 +166,7 @@ public class AddPageFriendlyURLReservedWordsTest extends BaseTestCase {
 					selenium.getText(
 						"xPath=(//div[@class='portlet-msg-error'])[1]"));
 				assertEquals(RuntimeVariables.replace(
-						"Please enter a friendly URL that does not conflict with the keyword elqNow."),
+						"Please enter a friendly URL that does not conflict with the keyword /elqnow."),
 					selenium.getText(
 						"xPath=(//div[@class='portlet-msg-error'])[2]"));
 				selenium.type("//span[2]/input[@id='_88_friendlyURL']",
@@ -167,7 +179,7 @@ public class AddPageFriendlyURLReservedWordsTest extends BaseTestCase {
 					selenium.getText(
 						"xPath=(//div[@class='portlet-msg-error'])[1]"));
 				assertEquals(RuntimeVariables.replace(
-						"Please enter a friendly URL that does not conflict with the keyword Facebook."),
+						"Please enter a friendly URL that does not conflict with the keyword /facebook."),
 					selenium.getText(
 						"xPath=(//div[@class='portlet-msg-error'])[2]"));
 				selenium.type("//span[2]/input[@id='_88_friendlyURL']",
@@ -180,7 +192,7 @@ public class AddPageFriendlyURLReservedWordsTest extends BaseTestCase {
 					selenium.getText(
 						"xPath=(//div[@class='portlet-msg-error'])[1]"));
 				assertEquals(RuntimeVariables.replace(
-						"Please enter a friendly URL that does not conflict with the keyword google_gadget."),
+						"Please enter a friendly URL that does not conflict with the keyword /google_gadget."),
 					selenium.getText(
 						"xPath=(//div[@class='portlet-msg-error'])[2]"));
 				selenium.type("//span[2]/input[@id='_88_friendlyURL']",
@@ -193,7 +205,7 @@ public class AddPageFriendlyURLReservedWordsTest extends BaseTestCase {
 					selenium.getText(
 						"xPath=(//div[@class='portlet-msg-error'])[1]"));
 				assertEquals(RuntimeVariables.replace(
-						"Please enter a friendly URL that does not conflict with the keyword Group."),
+						"Please enter a friendly URL that does not conflict with the keyword /group."),
 					selenium.getText(
 						"xPath=(//div[@class='portlet-msg-error'])[2]"));
 				selenium.type("//span[2]/input[@id='_88_friendlyURL']",
@@ -206,7 +218,7 @@ public class AddPageFriendlyURLReservedWordsTest extends BaseTestCase {
 					selenium.getText(
 						"xPath=(//div[@class='portlet-msg-error'])[1]"));
 				assertEquals(RuntimeVariables.replace(
-						"Please enter a friendly URL that does not conflict with the keyword HTML."),
+						"Please enter a friendly URL that does not conflict with the keyword /html."),
 					selenium.getText(
 						"xPath=(//div[@class='portlet-msg-error'])[2]"));
 				selenium.type("//span[2]/input[@id='_88_friendlyURL']",
@@ -219,7 +231,7 @@ public class AddPageFriendlyURLReservedWordsTest extends BaseTestCase {
 					selenium.getText(
 						"xPath=(//div[@class='portlet-msg-error'])[1]"));
 				assertEquals(RuntimeVariables.replace(
-						"Please enter a friendly URL that does not conflict with the keyword Image."),
+						"Please enter a friendly URL that does not conflict with the keyword /image."),
 					selenium.getText(
 						"xPath=(//div[@class='portlet-msg-error'])[2]"));
 				selenium.type("//span[2]/input[@id='_88_friendlyURL']",
@@ -232,7 +244,7 @@ public class AddPageFriendlyURLReservedWordsTest extends BaseTestCase {
 					selenium.getText(
 						"xPath=(//div[@class='portlet-msg-error'])[1]"));
 				assertEquals(RuntimeVariables.replace(
-						"Please enter a friendly URL that does not conflict with the keyword Language."),
+						"Please enter a friendly URL that does not conflict with the keyword /language."),
 					selenium.getText(
 						"xPath=(//div[@class='portlet-msg-error'])[2]"));
 				selenium.type("//span[2]/input[@id='_88_friendlyURL']",
@@ -245,7 +257,7 @@ public class AddPageFriendlyURLReservedWordsTest extends BaseTestCase {
 					selenium.getText(
 						"xPath=(//div[@class='portlet-msg-error'])[1]"));
 				assertEquals(RuntimeVariables.replace(
-						"Please enter a friendly URL that does not conflict with the keyword lucene."),
+						"Please enter a friendly URL that does not conflict with the keyword /lucene."),
 					selenium.getText(
 						"xPath=(//div[@class='portlet-msg-error'])[2]"));
 				selenium.type("//span[2]/input[@id='_88_friendlyURL']",
@@ -258,7 +270,7 @@ public class AddPageFriendlyURLReservedWordsTest extends BaseTestCase {
 					selenium.getText(
 						"xPath=(//div[@class='portlet-msg-error'])[1]"));
 				assertEquals(RuntimeVariables.replace(
-						"Please enter a friendly URL that does not conflict with the keyword Netvibes."),
+						"Please enter a friendly URL that does not conflict with the keyword /netvibes."),
 					selenium.getText(
 						"xPath=(//div[@class='portlet-msg-error'])[2]"));
 				selenium.type("//span[2]/input[@id='_88_friendlyURL']",
@@ -271,7 +283,7 @@ public class AddPageFriendlyURLReservedWordsTest extends BaseTestCase {
 					selenium.getText(
 						"xPath=(//div[@class='portlet-msg-error'])[1]"));
 				assertEquals(RuntimeVariables.replace(
-						"Please enter a friendly URL that does not conflict with the keyword osgi."),
+						"Please enter a friendly URL that does not conflict with the keyword /osgi."),
 					selenium.getText(
 						"xPath=(//div[@class='portlet-msg-error'])[2]"));
 				selenium.type("//span[2]/input[@id='_88_friendlyURL']",
@@ -284,7 +296,7 @@ public class AddPageFriendlyURLReservedWordsTest extends BaseTestCase {
 					selenium.getText(
 						"xPath=(//div[@class='portlet-msg-error'])[1]"));
 				assertEquals(RuntimeVariables.replace(
-						"Please enter a friendly URL that does not conflict with the keyword Page."),
+						"Please enter a friendly URL that does not conflict with the keyword /page."),
 					selenium.getText(
 						"xPath=(//div[@class='portlet-msg-error'])[2]"));
 				selenium.type("//span[2]/input[@id='_88_friendlyURL']",
@@ -297,7 +309,7 @@ public class AddPageFriendlyURLReservedWordsTest extends BaseTestCase {
 					selenium.getText(
 						"xPath=(//div[@class='portlet-msg-error'])[1]"));
 				assertEquals(RuntimeVariables.replace(
-						"Please enter a friendly URL that does not conflict with the keyword pbhs."),
+						"Please enter a friendly URL that does not conflict with the keyword /pbhs."),
 					selenium.getText(
 						"xPath=(//div[@class='portlet-msg-error'])[2]"));
 				selenium.type("//span[2]/input[@id='_88_friendlyURL']",
@@ -310,7 +322,7 @@ public class AddPageFriendlyURLReservedWordsTest extends BaseTestCase {
 					selenium.getText(
 						"xPath=(//div[@class='portlet-msg-error'])[1]"));
 				assertEquals(RuntimeVariables.replace(
-						"Please enter a friendly URL that does not conflict with the keyword poller."),
+						"Please enter a friendly URL that does not conflict with the keyword /poller."),
 					selenium.getText(
 						"xPath=(//div[@class='portlet-msg-error'])[2]"));
 				selenium.type("//span[2]/input[@id='_88_friendlyURL']",
@@ -323,7 +335,7 @@ public class AddPageFriendlyURLReservedWordsTest extends BaseTestCase {
 					selenium.getText(
 						"xPath=(//div[@class='portlet-msg-error'])[1]"));
 				assertEquals(RuntimeVariables.replace(
-						"Please enter a friendly URL that does not conflict with the keyword Private."),
+						"Please enter a friendly URL that does not conflict with the keyword /private."),
 					selenium.getText(
 						"xPath=(//div[@class='portlet-msg-error'])[2]"));
 				selenium.type("//span[2]/input[@id='_88_friendlyURL']",
@@ -336,7 +348,7 @@ public class AddPageFriendlyURLReservedWordsTest extends BaseTestCase {
 					selenium.getText(
 						"xPath=(//div[@class='portlet-msg-error'])[1]"));
 				assertEquals(RuntimeVariables.replace(
-						"Please enter a friendly URL that does not conflict with the keyword Public."),
+						"Please enter a friendly URL that does not conflict with the keyword /public."),
 					selenium.getText(
 						"xPath=(//div[@class='portlet-msg-error'])[2]"));
 				selenium.type("//span[2]/input[@id='_88_friendlyURL']",
@@ -349,7 +361,7 @@ public class AddPageFriendlyURLReservedWordsTest extends BaseTestCase {
 					selenium.getText(
 						"xPath=(//div[@class='portlet-msg-error'])[1]"));
 				assertEquals(RuntimeVariables.replace(
-						"Please enter a friendly URL that does not conflict with the keyword rest."),
+						"Please enter a friendly URL that does not conflict with the keyword /rest."),
 					selenium.getText(
 						"xPath=(//div[@class='portlet-msg-error'])[2]"));
 				selenium.type("//span[2]/input[@id='_88_friendlyURL']",
@@ -362,7 +374,7 @@ public class AddPageFriendlyURLReservedWordsTest extends BaseTestCase {
 					selenium.getText(
 						"xPath=(//div[@class='portlet-msg-error'])[1]"));
 				assertEquals(RuntimeVariables.replace(
-						"Please enter a friendly URL that does not conflict with the keyword robots.txt."),
+						"Please enter a friendly URL that does not conflict with the keyword /robots.txt."),
 					selenium.getText(
 						"xPath=(//div[@class='portlet-msg-error'])[2]"));
 				selenium.type("//span[2]/input[@id='_88_friendlyURL']",
@@ -375,7 +387,7 @@ public class AddPageFriendlyURLReservedWordsTest extends BaseTestCase {
 					selenium.getText(
 						"xPath=(//div[@class='portlet-msg-error'])[1]"));
 				assertEquals(RuntimeVariables.replace(
-						"Please enter a friendly URL that does not conflict with the keyword sharepoint."),
+						"Please enter a friendly URL that does not conflict with the keyword /sharepoint."),
 					selenium.getText(
 						"xPath=(//div[@class='portlet-msg-error'])[2]"));
 				selenium.type("//span[2]/input[@id='_88_friendlyURL']",
@@ -388,7 +400,7 @@ public class AddPageFriendlyURLReservedWordsTest extends BaseTestCase {
 					selenium.getText(
 						"xPath=(//div[@class='portlet-msg-error'])[1]"));
 				assertEquals(RuntimeVariables.replace(
-						"Please enter a friendly URL that does not conflict with the keyword sitemap.xml."),
+						"Please enter a friendly URL that does not conflict with the keyword /sitemap.xml."),
 					selenium.getText(
 						"xPath=(//div[@class='portlet-msg-error'])[2]"));
 				selenium.type("//span[2]/input[@id='_88_friendlyURL']",
@@ -401,7 +413,7 @@ public class AddPageFriendlyURLReservedWordsTest extends BaseTestCase {
 					selenium.getText(
 						"xPath=(//div[@class='portlet-msg-error'])[1]"));
 				assertEquals(RuntimeVariables.replace(
-						"Please enter a friendly URL that does not conflict with the keyword software_catalog."),
+						"Please enter a friendly URL that does not conflict with the keyword /software_catalog."),
 					selenium.getText(
 						"xPath=(//div[@class='portlet-msg-error'])[2]"));
 				selenium.type("//span[2]/input[@id='_88_friendlyURL']",
@@ -414,7 +426,7 @@ public class AddPageFriendlyURLReservedWordsTest extends BaseTestCase {
 					selenium.getText(
 						"xPath=(//div[@class='portlet-msg-error'])[1]"));
 				assertEquals(RuntimeVariables.replace(
-						"Please enter a friendly URL that does not conflict with the keyword tunnel-web."),
+						"Please enter a friendly URL that does not conflict with the keyword /tunnel-web."),
 					selenium.getText(
 						"xPath=(//div[@class='portlet-msg-error'])[2]"));
 				selenium.type("//span[2]/input[@id='_88_friendlyURL']",
@@ -427,7 +439,7 @@ public class AddPageFriendlyURLReservedWordsTest extends BaseTestCase {
 					selenium.getText(
 						"xPath=(//div[@class='portlet-msg-error'])[1]"));
 				assertEquals(RuntimeVariables.replace(
-						"Please enter a friendly URL that does not conflict with the keyword _vti_."),
+						"Please enter a friendly URL that does not conflict with the keyword /_vti_."),
 					selenium.getText(
 						"xPath=(//div[@class='portlet-msg-error'])[2]"));
 				selenium.type("//span[2]/input[@id='_88_friendlyURL']",
@@ -440,7 +452,7 @@ public class AddPageFriendlyURLReservedWordsTest extends BaseTestCase {
 					selenium.getText(
 						"xPath=(//div[@class='portlet-msg-error'])[1]"));
 				assertEquals(RuntimeVariables.replace(
-						"Please enter a friendly URL that does not conflict with the keyword wap."),
+						"Please enter a friendly URL that does not conflict with the keyword /wap."),
 					selenium.getText(
 						"xPath=(//div[@class='portlet-msg-error'])[2]"));
 				selenium.type("//span[2]/input[@id='_88_friendlyURL']",
@@ -453,7 +465,7 @@ public class AddPageFriendlyURLReservedWordsTest extends BaseTestCase {
 					selenium.getText(
 						"xPath=(//div[@class='portlet-msg-error'])[1]"));
 				assertEquals(RuntimeVariables.replace(
-						"Please enter a friendly URL that does not conflict with the keyword web."),
+						"Please enter a friendly URL that does not conflict with the keyword /web."),
 					selenium.getText(
 						"xPath=(//div[@class='portlet-msg-error'])[2]"));
 				selenium.type("//span[2]/input[@id='_88_friendlyURL']",
@@ -466,7 +478,7 @@ public class AddPageFriendlyURLReservedWordsTest extends BaseTestCase {
 					selenium.getText(
 						"xPath=(//div[@class='portlet-msg-error'])[1]"));
 				assertEquals(RuntimeVariables.replace(
-						"Please enter a friendly URL that does not conflict with the keyword widget."),
+						"Please enter a friendly URL that does not conflict with the keyword /widget."),
 					selenium.getText(
 						"xPath=(//div[@class='portlet-msg-error'])[2]"));
 				selenium.type("//span[2]/input[@id='_88_friendlyURL']",
@@ -479,9 +491,10 @@ public class AddPageFriendlyURLReservedWordsTest extends BaseTestCase {
 					selenium.getText(
 						"xPath=(//div[@class='portlet-msg-error'])[1]"));
 				assertEquals(RuntimeVariables.replace(
-						"Please enter a friendly URL that does not conflict with the keyword xmlrpc."),
+						"Please enter a friendly URL that does not conflict with the keyword /xmlrpc."),
 					selenium.getText(
 						"xPath=(//div[@class='portlet-msg-error'])[2]"));
+				selenium.selectFrame("relative=top");
 
 			case 100:
 				label = -1;

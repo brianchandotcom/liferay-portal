@@ -33,14 +33,26 @@ public class AddPage2Test extends BaseTestCase {
 				selenium.clickAt("//div[@id='dockbar']",
 					RuntimeVariables.replace("Dockbar"));
 				selenium.waitForElementPresent(
+					"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+				selenium.waitForElementPresent(
 					"//li[contains(@class,'manage-page')]/a");
-				selenium.clickAt("//li[contains(@class,'manage-page')]/a",
-					RuntimeVariables.replace("Manage Pages"));
+				assertEquals(RuntimeVariables.replace("Manage"),
+					selenium.getText("//li[@id='_145_manageContent']/a/span"));
+				selenium.mouseOver("//li[@id='_145_manageContent']/a/span");
+				selenium.waitForVisible("//a[@title='Manage Page']");
+				assertEquals(RuntimeVariables.replace("Page"),
+					selenium.getText("//a[@title='Manage Page']"));
+				selenium.clickAt("//a[@title='Manage Page']",
+					RuntimeVariables.replace("Page"));
+				selenium.waitForVisible("//iframe[@id='manageContentDialog']");
+				selenium.selectFrame("//iframe[@id='manageContentDialog']");
+				selenium.waitForElementPresent(
+					"//script[contains(@src,'/liferay/search_container.js')]");
 				selenium.waitForText("//a[@class='layout-tree']", "Public Pages");
 				assertEquals(RuntimeVariables.replace("Public Pages"),
 					selenium.getText("//a[@class='layout-tree']"));
 
-				boolean welcomePresent = selenium.isElementPresent(
+				boolean welcomePresent = selenium.isVisible(
 						"//li/ul/li[1]/div/div[3]/a");
 
 				if (welcomePresent) {
@@ -58,6 +70,7 @@ public class AddPage2Test extends BaseTestCase {
 					selenium.getText("//li/ul/li[1]/div/div[3]/a"));
 				selenium.clickAt("//a[@class='layout-tree']",
 					RuntimeVariables.replace("Public Pages"));
+				Thread.sleep(5000);
 				selenium.waitForText("//div/span/button[1]", "Add Page");
 				assertEquals(RuntimeVariables.replace("Add Page"),
 					selenium.getText("//div/span/button[1]"));
@@ -93,8 +106,8 @@ public class AddPage2Test extends BaseTestCase {
 					selenium.getText("//li/ul/li[2]/div/div[3]/a"));
 				assertEquals(RuntimeVariables.replace("Manage Pages Test Page2"),
 					selenium.getText("//li/ul/li[3]/div/div[3]/a"));
+				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
-				selenium.waitForVisible("link=Manage Pages Test Page2");
 				selenium.clickAt("link=Manage Pages Test Page2",
 					RuntimeVariables.replace("Manage Pages Test Page2"));
 				selenium.waitForPageToLoad("30000");

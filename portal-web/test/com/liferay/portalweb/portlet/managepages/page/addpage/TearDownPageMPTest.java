@@ -33,18 +33,21 @@ public class TearDownPageMPTest extends BaseTestCase {
 				selenium.clickAt("//div[@id='dockbar']",
 					RuntimeVariables.replace("Dockbar"));
 				selenium.waitForElementPresent(
-					"//div[@id='_145_manageContentContainer']");
+					"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+				selenium.waitForElementPresent(
+					"//li[contains(@class,'manage-page')]/a");
 				assertEquals(RuntimeVariables.replace("Manage"),
 					selenium.getText("//li[@id='_145_manageContent']/a/span"));
 				selenium.mouseOver("//li[@id='_145_manageContent']/a/span");
-				selenium.waitForVisible(
-					"//li[contains(@class,'manage-page')]/a");
+				selenium.waitForVisible("//a[@title='Manage Page']");
 				assertEquals(RuntimeVariables.replace("Page"),
-					selenium.getText("//li[contains(@class,'manage-page')]/a"));
-				selenium.clickAt("//li[contains(@class,'manage-page')]/a",
+					selenium.getText("//a[@title='Manage Page']"));
+				selenium.clickAt("//a[@title='Manage Page']",
 					RuntimeVariables.replace("Page"));
 				selenium.waitForVisible("//iframe[@id='manageContentDialog']");
 				selenium.selectFrame("//iframe[@id='manageContentDialog']");
+				selenium.waitForElementPresent(
+					"//script[contains(@src,'/liferay/search_container.js')]");
 				selenium.waitForText("//a[@class='layout-tree']", "Public Pages");
 
 				boolean tree1Collapsed = selenium.isElementPresent(
@@ -81,6 +84,7 @@ public class TearDownPageMPTest extends BaseTestCase {
 				selenium.waitForElementPresent(
 					"//script[contains(@src,'/aui/aui-dialog-iframe/aui-dialog-iframe-min.js')]");
 				selenium.waitForVisible("//span[.='Copy Portlets from Page']");
+				Thread.sleep(5000);
 				selenium.waitForVisible("//span[.='Delete']");
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText("//span[.='Delete']"));

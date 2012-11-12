@@ -30,7 +30,6 @@ public class SetDisplayOrderTest extends BaseTestCase {
 				selenium.selectWindow("null");
 				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
-				selenium.waitForVisible("link=Manage Pages Test Page");
 				selenium.mouseOver("link=Manage Pages Test Page");
 				assertEquals(RuntimeVariables.replace("Child Test Page1"),
 					selenium.getText("//li[2]/ul/li[1]"));
@@ -41,17 +40,29 @@ public class SetDisplayOrderTest extends BaseTestCase {
 				selenium.clickAt("//div[@id='dockbar']",
 					RuntimeVariables.replace("Dockbar"));
 				selenium.waitForElementPresent(
+					"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+				selenium.waitForElementPresent(
 					"//li[contains(@class,'manage-page')]/a");
-				selenium.clickAt("//li[contains(@class,'manage-page')]/a",
-					RuntimeVariables.replace("Manage Pages"));
+				assertEquals(RuntimeVariables.replace("Manage"),
+					selenium.getText("//li[@id='_145_manageContent']/a/span"));
+				selenium.mouseOver("//li[@id='_145_manageContent']/a/span");
+				selenium.waitForVisible("//a[@title='Manage Page']");
+				assertEquals(RuntimeVariables.replace("Page"),
+					selenium.getText("//a[@title='Manage Page']"));
+				selenium.clickAt("//a[@title='Manage Page']",
+					RuntimeVariables.replace("Page"));
+				selenium.waitForVisible("//iframe[@id='manageContentDialog']");
+				selenium.selectFrame("//iframe[@id='manageContentDialog']");
+				selenium.waitForElementPresent(
+					"//script[contains(@src,'/liferay/search_container.js')]");
 				selenium.waitForText("//a[@class='layout-tree']", "Public Pages");
 				assertEquals(RuntimeVariables.replace("Public Pages"),
 					selenium.getText("//a[@class='layout-tree']"));
 
-				boolean welcome1Present = selenium.isElementPresent(
+				boolean welcomePresent = selenium.isVisible(
 						"//li/ul/li[1]/div/div[3]/a");
 
-				if (welcome1Present) {
+				if (welcomePresent) {
 					label = 2;
 
 					continue;
@@ -87,8 +98,7 @@ public class SetDisplayOrderTest extends BaseTestCase {
 					RuntimeVariables.replace("Drop Down Arrow"));
 
 			case 3:
-				selenium.waitForText("//li[2]/ul/li[1]/div/div[3]/a",
-					"Child Test Page1");
+				selenium.waitForVisible("//li[2]/ul/li[1]/div/div[3]/a");
 				assertEquals(RuntimeVariables.replace("Child Test Page1"),
 					selenium.getText("//li[2]/ul/li[1]/div/div[3]/a"));
 				assertEquals(RuntimeVariables.replace("Child Test Page2"),
@@ -115,8 +125,8 @@ public class SetDisplayOrderTest extends BaseTestCase {
 					selenium.getText("//li[2]/ul/li[2]/div/div[3]/a"));
 				assertEquals(RuntimeVariables.replace("Child Test Page1"),
 					selenium.getText("//li[2]/ul/li[3]/div/div[3]/a"));
+				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
-				selenium.waitForVisible("link=Manage Pages Test Page");
 				selenium.mouseOver("link=Manage Pages Test Page");
 				assertEquals(RuntimeVariables.replace("Child Test Page2"),
 					selenium.getText("//li[2]/ul/li[1]"));

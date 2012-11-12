@@ -1910,10 +1910,16 @@ public class PortletImporter {
 
 			Enumeration<String> enu = jxPreferences.getNames();
 
+			String scopeLayoutUuid = portletDataContext.getScopeLayoutUuid();
+			String scopeType = portletDataContext.getScopeType();
+
 			while (enu.hasMoreElements()) {
 				String name = enu.nextElement();
 
-				if (!ArrayUtil.contains(dataPortletPreferences, name)) {
+				if (!ArrayUtil.contains(dataPortletPreferences, name) ||
+					(scopeType.equals("company") &&
+					Validator.isNull(scopeLayoutUuid))) {
+
 					String[] values = jxPreferences.getValues(name, null);
 
 					portletPreferences.setValues(name, values);

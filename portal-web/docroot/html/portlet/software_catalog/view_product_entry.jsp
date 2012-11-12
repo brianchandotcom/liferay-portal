@@ -339,7 +339,9 @@ portletURL.setParameter("struts_action", "/software_catalog/view_product");
 portletURL.setParameter("redirect", currentURL);
 portletURL.setParameter("productEntryId", String.valueOf(productEntry.getProductEntryId()));
 
-PortalUtil.addPortletBreadcrumbEntry(request, productEntry.getName(), portletURL.toString());
+SCProductEntry unescapedProductEnTry = productEntry.toUnescapedModel();
+
+PortalUtil.addPortletBreadcrumbEntry(request, unescapedProductEnTry.getName(), portletURL.toString());
 %>
 
 <%!

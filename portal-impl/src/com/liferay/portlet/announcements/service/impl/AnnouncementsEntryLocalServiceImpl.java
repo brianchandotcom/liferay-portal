@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Time;
@@ -375,7 +376,10 @@ public class AnnouncementsEntryLocalServiceImpl
 
 				toName = organization.getName();
 
-				params.put("usersOrgs", classPK);
+				params.put(
+					"usersOrgsTree", ListUtil.fromArray(new Organization[] {
+						organization}));
+
 			}
 			else if (className.equals(Role.class.getName())) {
 				Role role = rolePersistence.findByPrimaryKey(classPK);

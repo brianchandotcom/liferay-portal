@@ -406,6 +406,8 @@ public interface ${entity.name}Model extends
 
 	public ${entity.name} toEscapedModel();
 
+	public ${entity.name} toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

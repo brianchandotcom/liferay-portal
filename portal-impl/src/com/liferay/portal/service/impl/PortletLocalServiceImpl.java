@@ -82,9 +82,12 @@ import com.liferay.portlet.expando.model.CustomAttributesDisplay;
 import com.liferay.util.ContentUtil;
 import com.liferay.util.bridges.mvc.MVCPortlet;
 
+import java.io.InputStream;
+
 import java.net.URL;
 
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -107,6 +110,7 @@ import javax.servlet.ServletContext;
  * @author Eduardo Lundgren
  * @author Wesley Gong
  * @author Shuyang Zhou
+ * @author Tomas Polesovsky
  */
 public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 
@@ -663,11 +667,18 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 					servletContext, xmls[1], portletsPool, servletURLPatterns,
 					pluginPackage));
 
+			portletIds.addAll(
+					_readPortletExtXML(
+						servletContext, portletsPool, servletURLPatterns,
+						pluginPackage));
+
 			Set<String> liferayPortletIds = _readLiferayPortletXML(
 				xmls[2], portletsPool);
 
 			liferayPortletIds.addAll(
 				_readLiferayPortletXML(xmls[3], portletsPool));
+
+			liferayPortletIds.addAll(_readLiferayPortletExtXML(portletsPool));
 
 			// Check for missing entries in liferay-portlet.xml
 
@@ -1092,6 +1103,48 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		_readLiferayDisplay(
 			servletContextName, rootElement, portletCategory, portletIds);
 
+		if (servletContextName == null) {
+			ClassLoader classLoader = getClass().getClassLoader();
+			String resourceName = "WEB-INF/liferay-display-ext.xml";
+
+			Enumeration<URL> resources = classLoader.getResources(resourceName);
+
+			if (_log.isDebugEnabled() && !resources.hasMoreElements()) {
+				_log.debug("No " + resourceName + " has been found");
+			}
+
+			while (resources.hasMoreElements()) {
+				URL resource = resources.nextElement();
+				if (_log.isDebugEnabled()) {
+					_log.debug("Loading " + resourceName + " from: " +
+						resource);
+				}
+
+				if (resource == null) {
+					continue;
+				}
+
+				InputStream is = resource.openStream();
+				try {
+					String xmlExt = StringUtil.read(is);
+
+					Document extDoc = SAXReaderUtil.read(xmlExt, true);
+
+					Element extRootElement = extDoc.getRootElement();
+
+					_readLiferayDisplay(
+						servletContextName, extRootElement, portletCategory,
+						portletIds);
+
+				} catch(Exception e) {
+					_log.error("Problem while loading file " + resource, e);
+				} finally {
+					is.close();
+				}
+			}
+
+		}
+
 		// Portlets that do not belong to any categories should default to the
 		// Undefined category
 
@@ -1129,6 +1182,48 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		}
 
 		return portletCategory;
+	}
+
+	private Set<String> _readLiferayPortletExtXML(
+			Map<String, Portlet> portletsPool)
+		throws Exception {
+
+		Set<String> result = new HashSet<String>();
+		ClassLoader classLoader = getClass().getClassLoader();
+
+		// load xmls
+
+		String resourceName = "WEB-INF/liferay-portlet-ext.xml";
+		Enumeration<URL> resources = classLoader.getResources(resourceName);
+
+		if (_log.isDebugEnabled() && !resources.hasMoreElements()) {
+			_log.debug("No " + resourceName + " has been found");
+		}
+
+		while (resources.hasMoreElements()) {
+			URL resource = resources.nextElement();
+			if (_log.isDebugEnabled()) {
+				_log.debug("Loading " + resourceName + " from: " + resource);
+			}
+
+			if (resource == null) {
+				continue;
+			}
+
+			InputStream is = resource.openStream();
+			try {
+				String xmlExt = StringUtil.read(is);
+
+				result.addAll(_readLiferayPortletXML(xmlExt, portletsPool));
+
+			} catch(Exception e) {
+				_log.error("Problem while loading file " + resource, e);
+			} finally {
+				is.close();
+			}
+		}
+
+		return result;
 	}
 
 	private Set<String> _readLiferayPortletXML(
@@ -1717,6 +1812,54 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		}
 
 		return liferayPortletIds;
+	}
+
+	private Set<String> _readPortletExtXML(
+			ServletContext servletContext, Map<String, Portlet> portletsPool,
+			Set<String> servletURLPatterns, PluginPackage pluginPackage)
+		throws Exception {
+
+		Set<String> result = new HashSet<String>();
+
+		ClassLoader classLoader = getClass().getClassLoader();
+
+		// load xmls
+
+		String resourceName = "WEB-INF/portlet-ext.xml";
+		Enumeration<URL> resources = classLoader.getResources(resourceName);
+
+		if (_log.isDebugEnabled() && !resources.hasMoreElements()) {
+			_log.debug("No " + resourceName + " has been found");
+		}
+
+		while (resources.hasMoreElements()) {
+			URL resource = resources.nextElement();
+			if (_log.isDebugEnabled()) {
+				_log.debug("Loading " + resourceName + " from: " + resource);
+			}
+
+			if (resource == null) {
+				continue;
+			}
+
+			InputStream is = resource.openStream();
+			try {
+				String xmlExt = StringUtil.read(is);
+
+				Set<String> overridenPortletXML = _readPortletXML(
+					servletContext, xmlExt, portletsPool, servletURLPatterns,
+					pluginPackage);
+
+				result.addAll(overridenPortletXML);
+
+			} catch(Exception e) {
+				_log.error("Problem while loading file " + resource, e);
+			} finally {
+				is.close();
+			}
+		}
+
+		return result;
 	}
 
 	private Set<String> _readPortletXML(

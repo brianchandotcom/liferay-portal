@@ -1,0 +1,91 @@
+--- org/apache/struts/tiles/xmlDefinition/I18nFactorySet.java
++++ org/apache/struts/tiles/xmlDefinition/I18nFactorySet.java
+@@ -18,10 +18,14 @@
+ 
+ package org.apache.struts.tiles.xmlDefinition;
+ 
++import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
++
+ import java.io.FileNotFoundException;
+ import java.io.IOException;
+ import java.io.InputStream;
++import java.net.URL;
+ import java.util.ArrayList;
++import java.util.Enumeration;
+ import java.util.HashMap;
+ import java.util.Iterator;
+ import java.util.List;
+@@ -446,6 +450,73 @@
+             xmlDefinitions = parseXmlFile(servletContext, filename, xmlDefinitions);
+         }
+ 
++        xmlDefinitions = parseExtXmlFiles(xmlDefinitions);
++
++        return xmlDefinitions;
++    }
++
++    private XmlDefinitionsSet parseExtXmlFiles(XmlDefinitionsSet xmlDefinitions)
++        throws DefinitionsFactoryException {
++        String resourceName = "WEB-INF/tiles-defs-ext.xml";
++        try {
++            Enumeration<URL> urls = PortalClassLoaderUtil.getClassLoader().
++                getResources(resourceName);
++
++            if (log.isDebugEnabled() && !urls.hasMoreElements()) {
++                log.debug("No " + resourceName + " has been found");
++            }
++
++            while (urls.hasMoreElements()) {
++                URL url = urls.nextElement();
++
++                if (log.isDebugEnabled()) {
++                    log.debug("Loading " + resourceName + " from " + url);
++                }
++
++                InputStream resource = url.openStream();
++                try {
++
++                    // If still nothing found, this mean no config file is
++                    // associated
++
++                    if (resource == null) {
++                        if (log.isDebugEnabled()) {
++                            log.debug(
++                                "Can't open file '" + url.getPath() + "'");
++                        }
++                    }
++                    else {
++
++                        // Check if definition set already exist.
++
++                        if (xmlDefinitions == null) {
++                            xmlDefinitions = new XmlDefinitionsSet();
++                        }
++
++                        xmlParser = new XmlParser();
++                        xmlParser.setValidating(isValidatingParser);
++                        xmlParser.parse(resource, xmlDefinitions);
++                    }
++                } catch (Exception e) {
++                    log.error("Cannot load tiles ext file "+url, e);
++                } finally {
++                    if (resource != null) {
++                        try {
++                            resource.close();
++                        } catch (IOException e) {
++                            log.error(
++                                "Cannot close input stream for the "+url, e);
++                        }
++                    }
++                }
++            }
++
++        } catch (Exception ex) {
++            throw new DefinitionsFactoryException(
++                "IO Error while parsing file '" + resourceName + "'. " +
++                    ex.getMessage(), ex);
++        }
++
+         return xmlDefinitions;
+     }
+ 

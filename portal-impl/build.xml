@@ -714,6 +714,73 @@ public class Creole10Parser]]></replacevalue>
 		<antcall target="build-service-portlets" />
 	</target>
 
+	<target name="build-struts">
+		<tstamp>
+			<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
+		</tstamp>
+
+		<mkdir dir="${tstamp.value}" />
+
+		<get
+			dest="${tstamp.value}/struts-1.2.9-bin.zip"
+			src="http://archive.apache.org/dist/struts/binaries/struts-1.2.9-bin.zip"
+			verbose="true"
+			/>
+
+		<get
+			dest="${tstamp.value}/struts-1.2.9-src.zip"
+			src="http://archive.apache.org/dist/struts/source/struts-1.2.9-src.zip"
+			verbose="true"
+			/>
+
+		<unzip
+			dest="${tstamp.value}"
+			src="${tstamp.value}/struts-1.2.9-bin.zip"
+			>
+			<patternset includes="**/struts.jar" />
+			<flattenmapper />
+		</unzip>
+
+		<unzip
+			dest="${tstamp.value}"
+			src="${tstamp.value}/struts-1.2.9-src.zip"
+			>
+			<patternset includes="**/I18nFactorySet.java" />
+		</unzip>
+
+ 		<delete file="${tstamp.value}/struts-1.2.9-bin.zip" />
+ 		<delete file="${tstamp.value}/struts-1.2.9-src.zip" />
+
+		<mkdir dir="${tstamp.value}/src" />
+
+		<move file="${tstamp.value}/struts-1.2.9-src/src/share/org" todir="${tstamp.value}/src" />
+
+		<patch
+			failonerror="true"
+			originalfile="${tstamp.value}/src/org/apache/struts/tiles/xmlDefinition/I18nFactorySet.java"
+			patchfile="${project.dir}/tools/liferay-struts.patch"
+			dir="${tstamp.value}/src"
+			/>
+
+		<mkdir dir="${tstamp.value}/classes" />
+
+		<antcall target="compile-java">
+			<param name="javac.classpathref" value="project.classpath" />
+			<param name="javac.destdir" value="${tstamp.value}/classes" />
+			<param name="javac.srcdir" value="${tstamp.value}/src" />
+		</antcall>
+
+		<zip
+			basedir="${tstamp.value}/classes"
+			destfile="${tstamp.value}/struts.jar"
+			update="true"
+			/>
+
+		<copy file="${tstamp.value}/struts.jar" todir="${project.dir}/lib/portal" />
+
+		<delete dir="${tstamp.value}" />
+	</target>
+
 	<target name="build-themes">
 		<ant dir="../portal-web" target="build-themes" />
 	</target>

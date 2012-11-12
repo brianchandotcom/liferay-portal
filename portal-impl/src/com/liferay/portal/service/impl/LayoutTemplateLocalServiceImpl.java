@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
@@ -44,8 +45,12 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.layoutconfiguration.util.velocity.InitColumnProcessor;
 
 import java.io.IOException;
+import java.io.InputStream;
+
+import java.net.URL;
 
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -59,6 +64,7 @@ import javax.servlet.ServletContext;
  * @author Jorge Ferrer
  * @author Brian Wing Shun Chan
  * @author Raymond Augé
+ * @author Tomas Polesovsky
  */
 public class LayoutTemplateLocalServiceImpl
 	extends LayoutTemplateLocalServiceBaseImpl {
@@ -281,6 +287,58 @@ public class LayoutTemplateLocalServiceImpl
 					if (!layoutTemplateIdOVPs.contains(layoutTemplateIdOVP)) {
 						layoutTemplateIdOVPs.add(layoutTemplateIdOVP);
 					}
+				}
+			}
+
+			Set<ObjectValuePair<String, Boolean>> curLayoutTemplateIdOVPs =
+				new HashSet<ObjectValuePair<String, Boolean>>();
+
+			ClassLoader classLoader = getClass().getClassLoader();
+
+			// load xmls
+
+			String resourceName = "WEB-INF/liferay-layout-templates-ext.xml";
+			Enumeration<URL> resources = classLoader.getResources(resourceName);
+
+			if (_log.isDebugEnabled() && !resources.hasMoreElements()) {
+				_log.debug("No " + resourceName + " has been found");
+			}
+
+			while (resources.hasMoreElements()) {
+				URL resource = resources.nextElement();
+
+				if (_log.isDebugEnabled()) {
+					_log.debug("Loading " + resourceName + " from: " +
+						resource);
+				}
+
+				if (resource == null) {
+					continue;
+				}
+
+				InputStream is = resource.openStream();
+				try {
+					String xmlExt = StringUtil.read(is);
+
+					curLayoutTemplateIdOVPs.addAll(
+						_readLayoutTemplates(
+							servletContextName, servletContext, xmlExt,
+							pluginPackage));
+
+				} catch (Exception e) {
+					_log.error("Unable to load " + resource, e);
+				} finally {
+					if (is != null) {
+						is.close();
+					}
+				}
+			}
+
+			for (ObjectValuePair<String, Boolean> layoutTemplateIdOVP :
+					curLayoutTemplateIdOVPs) {
+
+				if (!layoutTemplateIdOVPs.contains(layoutTemplateIdOVP)) {
+					layoutTemplateIdOVPs.add(layoutTemplateIdOVP);
 				}
 			}
 		}

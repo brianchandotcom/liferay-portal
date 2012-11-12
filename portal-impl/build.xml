@@ -714,41 +714,52 @@ public class Creole10Parser]]></replacevalue>
 		<antcall target="build-service-portlets" />
 	</target>
 
-	<target name="build-themes">
-		<ant dir="../portal-web" target="build-themes" />
-	</target>
-
-	<target name="build-tiles" depends="compile">
+	<target name="build-struts">
 		<tstamp>
 			<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
 		</tstamp>
 
+		<mkdir dir="${tstamp.value}" />
+
 		<get
-			dest="struts-1.2.9-src.zip"
+			dest="${tstamp.value}/struts-1.2.9-bin.zip"
+			src="http://archive.apache.org/dist/struts/binaries/struts-1.2.9-bin.zip"
+			verbose="true"
+			/>
+
+		<get
+			dest="${tstamp.value}/struts-1.2.9-src.zip"
 			src="http://archive.apache.org/dist/struts/source/struts-1.2.9-src.zip"
 			verbose="true"
 			/>
 
 		<unzip
 			dest="${tstamp.value}"
-			src="struts-1.2.9-src.zip"
+			src="${tstamp.value}/struts-1.2.9-bin.zip"
 			>
-			<patternset includes="**/I18nFactorySet.java" />
+			<patternset includes="**/struts.jar" />
 			<flattenmapper />
 		</unzip>
 
-		<delete file="struts-1.2.9-src.zip" />
+		<unzip
+			dest="${tstamp.value}"
+			src="${tstamp.value}/struts-1.2.9-src.zip"
+			>
+			<patternset includes="**/I18nFactorySet.java" />
+		</unzip>
+
+ 		<delete file="${tstamp.value}/struts-1.2.9-bin.zip" />
+ 		<delete file="${tstamp.value}/struts-1.2.9-src.zip" />
+
+		<mkdir dir="${tstamp.value}/src" />
+
+		<move file="${tstamp.value}/struts-1.2.9-src/src/share/org" todir="${tstamp.value}/src" />
 
 		<patch
 			failonerror="true"
-			originalfile="${tstamp.value}/I18nFactorySet.java"
-			patchfile="${project.dir}/tools/liferay-tiles-I18nFactorySet.patch"
-			dir="${tstamp.value}"
-			/>
-
-		<move
-			file="${tstamp.value}/I18nFactorySet.java"
-			tofile="${tstamp.value}/src/com/liferay/portal/struts/PortalTilesDefinitionsFactory.java"
+			originalfile="${tstamp.value}/src/org/apache/struts/tiles/xmlDefinition/I18nFactorySet.java"
+			patchfile="${project.dir}/tools/liferay-struts.patch"
+			dir="${tstamp.value}/src"
 			/>
 
 		<mkdir dir="${tstamp.value}/classes" />
@@ -759,14 +770,19 @@ public class Creole10Parser]]></replacevalue>
 			<param name="javac.srcdir" value="${tstamp.value}/src" />
 		</antcall>
 
-		<jar
+		<zip
 			basedir="${tstamp.value}/classes"
-			destfile="${tstamp.value}/liferay-tiles.jar"
+			destfile="${tstamp.value}/struts.jar"
+			update="true"
 			/>
 
-		<copy file="${tstamp.value}/liferay-tiles.jar" todir="${project.dir}/lib/portal" />
+		<copy file="${tstamp.value}/struts.jar" todir="${project.dir}/lib/portal" />
 
 		<delete dir="${tstamp.value}" />
+	</target>
+
+	<target name="build-themes">
+		<ant dir="../portal-web" target="build-themes" />
 	</target>
 
 	<target name="build-upgrade-table">

@@ -16,14 +16,22 @@ package com.liferay.portal.security.pacl.checker;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.parsers.sql.parser.SqlParser;
+import com.liferay.portal.parsers.sql.statement.AlterTable;
+import com.liferay.portal.parsers.sql.statement.CreateIndex;
 
 import java.io.StringReader;
 
 import java.security.Permission;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
 import net.sf.jsqlparser.expression.Expression;
 import net.sf.jsqlparser.expression.operators.relational.ItemsList;
@@ -127,6 +135,16 @@ public class SQLChecker extends BaseChecker {
 		return false;
 	}
 
+	protected Set<TableNameWrapper> getWrappedPropertySet(String key) {
+		Set<TableNameWrapper> propertySet = new HashSet<TableNameWrapper>();
+
+		for (String property : getPropertyArray(key)) {
+			propertySet.add(new TableNameWrapper(property));
+		}
+
+		return propertySet;
+	}
+
 	protected boolean hasSQL(AlterTable alterTable) {
 		return isAllowedTable(alterTable.getTableName(), _alterTableNames);
 	}
@@ -188,39 +206,48 @@ public class SQLChecker extends BaseChecker {
 	}
 
 	protected void initTableNames() {
-		_allTableNames = getPropertySet("security-manager-sql-tables-all");
-		_alterTableNames = getPropertySet("security-manager-sql-tables-alter");
-		_createTableNames = getPropertySet(
+		_allTableNames = getWrappedPropertySet(
+			"security-manager-sql-tables-all");
+		_alterTableNames = getWrappedPropertySet(
+			"security-manager-sql-tables-alter");
+		_createTableNames = getWrappedPropertySet(
 			"security-manager-sql-tables-create");
-		_deleteTableNames = getPropertySet(
+		_deleteTableNames = getWrappedPropertySet(
 			"security-manager-sql-tables-delete");
-		_dropTableNames = getPropertySet("security-manager-sql-tables-drop");
-		_insertTableNames = getPropertySet(
+		_dropTableNames = getWrappedPropertySet(
+			"security-manager-sql-tables-drop");
+		_insertTableNames = getWrappedPropertySet(
 			"security-manager-sql-tables-insert");
-		_replaceTableNames = getPropertySet(
+		_replaceTableNames = getWrappedPropertySet(
 			"security-manager-sql-tables-replace");
-		_selectTableNames = getPropertySet(
+		_selectTableNames = getWrappedPropertySet(
 			"security-manager-sql-tables-select");
-		_truncateTableNames = getPropertySet(
+		_truncateTableNames = getWrappedPropertySet(
 			"security-manager-sql-tables-truncate");
-		_updateTableNames = getPropertySet(
+		_updateTableNames = getWrappedPropertySet(
 			"security-manager-sql-tables-update");
 	}
 
 	protected boolean isAllowedTable(
-		String tableName, Set<String> allowedTableNames) {
+		String tableName, Set<TableNameWrapper> allowedTableNames) {
 
-		if (_allTableNames.contains(tableName) ||
-			allowedTableNames.contains(tableName)) {
+		for (TableNameWrapper wrapper : _allTableNames) {
+			if (wrapper.equals(tableName)) {
+				return true;
+			}
+		}
 
-			return true;
+		for (TableNameWrapper wrapper : allowedTableNames) {
+			if (wrapper.equals(tableName)) {
+				return true;
+			}
 		}
 
 		return false;
 	}
 
 	protected boolean isAllowedTable(
-		Table table, Set<String> allowedTableNames) {
+		Table table, Set<TableNameWrapper> allowedTableNames) {
 
 		String tableName = table.getName();
 
@@ -228,7 +255,7 @@ public class SQLChecker extends BaseChecker {
 	}
 
 	protected boolean isAllowedTables(
-		List<String> tableNames, Set<String> allowedTableNames) {
+		List<String> tableNames, Set<TableNameWrapper> allowedTableNames) {
 
 		for (String tableName : tableNames) {
 			if (!isAllowedTable(tableName, allowedTableNames)) {
@@ -241,16 +268,16 @@ public class SQLChecker extends BaseChecker {
 
 	private static Log _log = LogFactoryUtil.getLog(SQLChecker.class);
 
-	private Set<String> _allTableNames;
-	private Set<String> _createTableNames;
-	private Set<String> _deleteTableNames;
-	private Set<String> _dropTableNames;
-	private Set<String> _insertTableNames;
-	private JSqlParser _jSqlParser = new CCJSqlParserManager();
-	private Set<String> _replaceTableNames;
-	private Set<String> _selectTableNames;
-	private Set<String> _truncateTableNames;
-	private Set<String> _updateTableNames;
+	private Set<TableNameWrapper> _allTableNames;
+	private Set<TableNameWrapper> _alterTableNames;
+	private Set<TableNameWrapper> _createTableNames;
+	private Set<TableNameWrapper> _deleteTableNames;
+	private Set<TableNameWrapper> _dropTableNames;
+	private Set<TableNameWrapper> _insertTableNames;
+	private Set<TableNameWrapper> _replaceTableNames;
+	private Set<TableNameWrapper> _selectTableNames;
+	private Set<TableNameWrapper> _truncateTableNames;
+	private Set<TableNameWrapper> _updateTableNames;
 
 	@SuppressWarnings("unchecked")
 	private class TableNamesFinder extends TablesNamesFinder {
@@ -314,6 +341,47 @@ public class SQLChecker extends BaseChecker {
 
 			return tables;
 		}
+
+	}
+
+	private class TableNameWrapper {
+
+		public TableNameWrapper(String tableName) {
+			if (tableName.contains(StringPool.STAR)) {
+				_wildCardCheck = true;
+
+				try {
+					_tableNamePattern = Pattern.compile(
+						tableName.replaceAll("\\*", ".*?"));
+				}
+				catch (PatternSyntaxException pse) {
+					_wildCardCheck = false;
+				}
+			}
+
+			_tableName = tableName;
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			if (!(obj instanceof String)) {
+				return false;
+			}
+
+			String tableName = (String)obj;
+
+			if (_wildCardCheck) {
+				Matcher m = _tableNamePattern.matcher(tableName);
+
+				return m.matches();
+			}
+
+			return _tableName.equals(tableName);
+		}
+
+		private String _tableName = null;
+		private Pattern _tableNamePattern = null;
+		private boolean _wildCardCheck = false;
 
 	}
 

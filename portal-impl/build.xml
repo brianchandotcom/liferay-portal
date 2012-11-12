@@ -714,6 +714,36 @@ public class Creole10Parser]]></replacevalue>
 		<antcall target="build-service-portlets" />
 	</target>
 
+	<target name="build-sql-parser">
+		<delete>
+			<fileset
+				dir="src/com/liferay/portal/parsers/sql/parser"
+				includes="*.*"
+			/>
+		</delete>
+
+		<java
+			classname="javacc"
+			classpathref="project.classpath"
+			fork="true"
+			newenvironment="true"
+		>
+			<arg line="-OUTPUT_DIRECTORY:src/com/liferay/portal/parsers/sql/parser src/com/liferay/portal/parsers/sql/grammar/SqlParser.jj" />
+		</java>
+
+		<replace file="src/com/liferay/portal/parsers/sql/parser/SqlParser.java">
+			<replacetoken>public class SqlParser</replacetoken>
+			<replacevalue><![CDATA[@SuppressWarnings("all")
+public class SqlParser]]></replacevalue>
+		</replace>
+
+		<replace file="src/com/liferay/portal/parsers/sql/parser/SqlParserTokenManager.java">
+			<replacetoken>public class SqlParserTokenManager</replacetoken>
+			<replacevalue><![CDATA[@SuppressWarnings("all")
+public class SqlParserTokenManager]]></replacevalue>
+		</replace>
+	</target>
+
 	<target name="build-themes">
 		<ant dir="../portal-web" target="build-themes" />
 	</target>

@@ -124,8 +124,10 @@ public class BookmarksUtil {
 		if (folder.getFolderId() !=
 				BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
+			BookmarksFolder unescapedFolder = folder.toUnescapedModel();
+
 			PortalUtil.addPortletBreadcrumbEntry(
-				request, folder.getName(), portletURL.toString());
+				request, unescapedFolder.getName(), portletURL.toString());
 		}
 	}
 

@@ -220,15 +220,16 @@ public class DLUtil {
 		if ((folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) &&
 			(folderId != defaultFolderId)) {
 
-			Map<String, Object> data = new HashMap<String, Object>();
-
 			Folder unescapedFolder = folder.toUnescapedModel();
+
+			Map<String, Object> data = new HashMap<String, Object>();
 
 			data.put("direction-right", Boolean.TRUE.toString());
 			data.put("folder-id", folderId);
 
 			PortalUtil.addPortletBreadcrumbEntry(
-				request, unescapedFolder.getName(), portletURL.toString(), data);
+				request, unescapedFolder.getName(), portletURL.toString(),
+				data);
 		}
 	}
 

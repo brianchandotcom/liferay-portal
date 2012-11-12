@@ -237,6 +237,8 @@ public class JournalUtil {
 			addPortletBreadcrumbEntries(folder, request, renderResponse);
 		}
 
+		JournalArticle unescapedArticle = article.toUnescapedModel();
+
 		PortletURL portletURL = renderResponse.createRenderURL();
 
 		portletURL.setParameter("struts_action", "/article/view_article");
@@ -244,8 +246,6 @@ public class JournalUtil {
 			"groupId", String.valueOf(article.getGroupId()));
 		portletURL.setParameter(
 			"articleId", String.valueOf(article.getArticleId()));
-
-		JournalArticle unescapedArticle = article.toUnescapedModel();
 
 		PortalUtil.addPortletBreadcrumbEntry(
 			request, unescapedArticle.getTitle(), portletURL.toString());
@@ -310,12 +310,12 @@ public class JournalUtil {
 			if (folder.getFolderId() !=
 				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
+				JournalFolder unescapedFolder = folder.toEscapedModel();
+
 				Map<String, Object> data = new HashMap<String, Object>();
 
 				data.put("direction-right", Boolean.TRUE.toString());
 				data.put("folder-id", folder.getFolderId());
-
-				JournalFolder unescapedFolder = folder.toEscapedModel();
 
 				PortalUtil.addPortletBreadcrumbEntry(
 					request, unescapedFolder.getName(), portletURL.toString(),

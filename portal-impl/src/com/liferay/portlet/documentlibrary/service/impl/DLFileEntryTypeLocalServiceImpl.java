@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.SortedArrayList;
@@ -531,6 +532,19 @@ public class DLFileEntryTypeLocalServiceImpl
 		DDMStructure ddmStructure = ddmStructureLocalService.fetchStructure(
 			groupId, ddmStructureKey);
 
+		if ((ddmStructure != null) && Validator.isNull(xsd)) {
+			xsd = ddmStructure.getXsd();
+		}
+
+		Locale[] contentAvailableLocales = LocaleUtil.fromLanguageIds(
+			LocalizationUtil.getAvailableLocales(xsd));
+
+		for (Locale contentAvailableLocale : contentAvailableLocales) {
+			nameMap.put(contentAvailableLocale, name);
+
+			descriptionMap.put(contentAvailableLocale, description);
+		}
+
 		try {
 			if (ddmStructure == null) {
 				ddmStructure = ddmStructureLocalService.addStructure(
@@ -541,10 +555,6 @@ public class DLFileEntryTypeLocalServiceImpl
 					DDMStructureConstants.TYPE_AUTO, serviceContext);
 			}
 			else {
-				if (Validator.isNull(xsd)) {
-					xsd = ddmStructure.getXsd();
-				}
-
 				ddmStructure = ddmStructureLocalService.updateStructure(
 					ddmStructure.getStructureId(),
 					ddmStructure.getParentStructureId(), nameMap,

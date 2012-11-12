@@ -19,9 +19,15 @@ import com.liferay.portal.kernel.events.SimpleAction;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.User;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
@@ -31,8 +37,10 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 
 import java.util.List;
+import java.util.Locale;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -92,6 +100,54 @@ public class DLFileEntryTypeServiceTest {
 	@After
 	public void tearDown() throws Exception {
 		DLAppLocalServiceUtil.deleteFolder(_folder.getFolderId());
+	}
+
+	@Test
+	public void testAddFileEntryType() throws Exception {
+		Class<?> clazz = getClass();
+
+		byte[] testFileBytes = FileUtil.getBytes(
+			clazz.getResourceAsStream(_TEST_DDM_STRUCTURE));
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		User user = TestPropsValues.getUser();
+
+		serviceContext.setLanguageId(LocaleUtil.toLanguageId(user.getLocale()));
+
+		serviceContext.setAttribute("xsd", new String(testFileBytes));
+
+		DLFileEntryType dlFileEntryType =
+			DLFileEntryTypeLocalServiceUtil.addFileEntryType(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				"Test Structure", StringPool.BLANK, new long[0],
+				serviceContext);
+
+		List<DDMStructure> ddmStructures = dlFileEntryType.getDDMStructures();
+
+		Assert.assertEquals(1, ddmStructures.size());
+
+		DDMStructure ddmStructure = ddmStructures.get(0);
+
+		Locale[] availableLocales = LocaleUtil.fromLanguageIds(
+			ddmStructure.getAvailableLanguageIds());
+
+		boolean hasDefaultLocale = ArrayUtil.contains(
+			availableLocales, LocaleUtil.getDefault());
+
+		Assert.assertTrue(hasDefaultLocale);
+
+		boolean hasHungarianLocale = ArrayUtil.contains(
+			availableLocales, new Locale("hu", "HU"));
+
+		Assert.assertTrue(hasHungarianLocale);
+
+		boolean hasUserLocale = ArrayUtil.contains(
+			availableLocales, user.getLocale());
+
+		Assert.assertTrue(hasUserLocale);
+
+		DLFileEntryTypeLocalServiceUtil.deleteDLFileEntryType(dlFileEntryType);
 	}
 
 	@Test
@@ -172,6 +228,9 @@ public class DLFileEntryTypeServiceTest {
 
 	private static final String _CONTENT =
 		"Content: Enterprise. Open Source. For Life.";
+
+	private static final String _TEST_DDM_STRUCTURE =
+		"dependencies/ddmstructure.xml";
 
 	private DLFileEntryType _basicDocumentDLFileEntryType;
 	private DLFileEntryType _contractDLFileEntryType;

@@ -374,6 +374,10 @@ public class CMISFolder extends CMISModel implements Folder {
 		return this;
 	}
 
+	public Folder toUnescapedModel() {
+		return this;
+	}
+
 	@Override
 	protected CMISRepository getCmisRepository() {
 		return _cmisRepository;

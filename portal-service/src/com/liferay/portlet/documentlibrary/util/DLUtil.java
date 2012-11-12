@@ -105,6 +105,8 @@ public class DLUtil {
 			addPortletBreadcrumbEntries(folder, request, renderResponse);
 		}
 
+		DLFileShortcut unescapedDLFS = dlFileShortcut.toUnescapedModel();
+
 		PortletURL portletURL = renderResponse.createRenderURL();
 
 		portletURL.setParameter(
@@ -113,7 +115,7 @@ public class DLUtil {
 			"fileEntryId", String.valueOf(dlFileShortcut.getToFileEntryId()));
 
 		PortalUtil.addPortletBreadcrumbEntry(
-			request, dlFileShortcut.getToTitle(), portletURL.toString());
+			request, unescapedDLFS.getToTitle(), portletURL.toString());
 	}
 
 	public static void addPortletBreadcrumbEntries(
@@ -131,13 +133,15 @@ public class DLUtil {
 
 		PortletURL portletURL = renderResponse.createRenderURL();
 
+		FileEntry unescapedFileEntry = fileEntry.toUnescapedModel();
+
 		portletURL.setParameter(
 			"struts_action", "/document_library/view_file_entry");
 		portletURL.setParameter(
 			"fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
 
 		PortalUtil.addPortletBreadcrumbEntry(
-			request, fileEntry.getTitle(), portletURL.toString());
+			request, unescapedFileEntry.getTitle(), portletURL.toString());
 	}
 
 	public static void addPortletBreadcrumbEntries(
@@ -218,11 +222,13 @@ public class DLUtil {
 
 			Map<String, Object> data = new HashMap<String, Object>();
 
+			Folder unescapedFolder = folder.toUnescapedModel();
+
 			data.put("direction-right", Boolean.TRUE.toString());
 			data.put("folder-id", folderId);
 
 			PortalUtil.addPortletBreadcrumbEntry(
-				request, folder.getName(), portletURL.toString(), data);
+				request, unescapedFolder.getName(), portletURL.toString(), data);
 		}
 	}
 

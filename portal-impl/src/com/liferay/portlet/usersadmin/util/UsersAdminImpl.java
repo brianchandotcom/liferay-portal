@@ -129,11 +129,14 @@ public class UsersAdminImpl implements UsersAdmin {
 				request, ancestorOrganization.getName(), portletURL.toString());
 		}
 
+		Organization unescapedOrganization = organization.toEscapedModel();
+
 		portletURL.setParameter(
-			"organizationId", String.valueOf(organization.getOrganizationId()));
+			"organizationId",
+			String.valueOf(unescapedOrganization.getOrganizationId()));
 
 		PortalUtil.addPortletBreadcrumbEntry(
-			request, organization.getName(), portletURL.toString());
+			request, unescapedOrganization.getName(), portletURL.toString());
 	}
 
 	public long[] addRequiredRoles(long userId, long[] roleIds)

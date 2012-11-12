@@ -245,8 +245,10 @@ public class JournalUtil {
 		portletURL.setParameter(
 			"articleId", String.valueOf(article.getArticleId()));
 
+		JournalArticle unescapedArticle = article.toUnescapedModel();
+
 		PortalUtil.addPortletBreadcrumbEntry(
-			request, article.getTitle(), portletURL.toString());
+			request, unescapedArticle.getTitle(), portletURL.toString());
 	}
 
 	public static void addPortletBreadcrumbEntries(
@@ -313,8 +315,11 @@ public class JournalUtil {
 				data.put("direction-right", Boolean.TRUE.toString());
 				data.put("folder-id", folder.getFolderId());
 
+				JournalFolder unescapedFolder = folder.toEscapedModel();
+
 				PortalUtil.addPortletBreadcrumbEntry(
-					request, folder.getName(), portletURL.toString(), data);
+					request, unescapedFolder.getName(), portletURL.toString(),
+					data);
 			}
 		}
 	}

@@ -260,7 +260,7 @@ String signature = ParamUtil.getString(request, "signature");
 				};
 			</aui:script>
 
-			<aui:form action="<%= invocationPath %>" enctype="<%= enctype %>" method="<%= jsonWebServiceActionMapping.getMethod() %>" name="execute">
+			<aui:form action="<%= jsonWSPath + invocationPath %>" enctype="<%= enctype %>" method="<%= jsonWebServiceActionMapping.getMethod() %>" name="execute">
 
 				<%
 				if (PropsValues.JSON_SERVICE_AUTH_TOKEN_ENABLED) {

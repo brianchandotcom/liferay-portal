@@ -200,7 +200,7 @@ public class EditArticleAction extends PortletAction {
 			Layout layout = themeDisplay.getLayout();
 
 			if (cmd.equals(Constants.DELETE) &&
-				ActionUtil.hasArticle(actionRequest)) {
+				!ActionUtil.hasArticle(actionRequest)) {
 
 				redirect = ParamUtil.getString(
 					actionRequest, "originalRedirect");

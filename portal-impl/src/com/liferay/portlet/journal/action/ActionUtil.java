@@ -415,10 +415,10 @@ public class ActionUtil {
 				themeDisplay.getScopeGroupId(), articleId);
 		}
 		catch (NoSuchArticleException nsae) {
-			return true;
+			return false;
 		}
 
-		return false;
+		return true;
 	}
 
 }

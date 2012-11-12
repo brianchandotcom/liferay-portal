@@ -76,7 +76,7 @@ public class EditEntryAction extends PortletAction {
 				ParamUtil.getString(actionRequest, "redirect"));
 
 			if (cmd.equals(Constants.DELETE_VERSIONS) &&
-				ActionUtil.hasArticle(actionRequest)) {
+				!ActionUtil.hasArticle(actionRequest)) {
 
 				redirect = ParamUtil.getString(
 					actionRequest, "originalRedirect");

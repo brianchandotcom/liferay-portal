@@ -3832,15 +3832,16 @@ public class SourceFormatter {
 			"**\\*_IW.java", "**\\PropsValues.java", "**\\bin\\**",
 			"**\\classes\\*", "**\\counter\\service\\**", "**\\jsp\\*",
 			"**\\model\\impl\\*BaseImpl.java", "**\\model\\impl\\*Model.java",
-			"**\\model\\impl\\*ModelImpl.java", "**\\portal\\service\\**",
-			"**\\portal-client\\**",
+			"**\\model\\impl\\*ModelImpl.java",
+			"**\\parsers\\sql\\parser\\*.java",
+			"**\\portal\\service\\**", "**\\portal-client\\**",
 			"**\\portal-service\\**\\model\\*Model.java",
 			"**\\portal-service\\**\\model\\*Soap.java",
 			"**\\portal-service\\**\\model\\*Wrapper.java",
 			"**\\portal-web\\classes\\**\\*.java",
 			"**\\portal-web\\test\\**\\*Test.java",
 			"**\\portal-web\\test\\**\\*Tests.java",
-			"**\\portlet\\**\\service\\**", "**\\tmp\\**", "**\\tools\\tck\\**"
+			"**\\portlet\\**\\service\\**",	"**\\tmp\\**", "**\\tools\\tck\\**"
 		};
 
 		excludes = ArrayUtil.append(excludes, _excludes);

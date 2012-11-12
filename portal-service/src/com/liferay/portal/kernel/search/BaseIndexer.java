@@ -75,6 +75,8 @@ import com.liferay.portlet.expando.util.ExpandoBridgeIndexerUtil;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.service.TrashEntryLocalServiceUtil;
 
+import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -737,9 +739,24 @@ public abstract class BaseIndexer implements Indexer {
 			return;
 		}
 
-		String value = String.valueOf(searchContext.getAttribute(field));
+		Serializable serializableValue = searchContext.getAttribute(field);
 
-		if (Validator.isNull(value)) {
+		String value = null;
+
+		if ((serializableValue != null) &&
+			serializableValue.getClass().isArray()) {
+
+			value = StringUtil.merge((Object[])serializableValue);
+		}
+		else {
+			value = GetterUtil.getString(serializableValue);
+		}
+
+		if (searchContext.getFacet(field) != null) {
+			if (Validator.isNotNull(value)) {
+				return;
+			}
+
 			value = searchContext.getKeywords();
 		}
 

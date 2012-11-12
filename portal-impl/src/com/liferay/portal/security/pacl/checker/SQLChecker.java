@@ -27,8 +27,6 @@ import java.util.Set;
 
 import net.sf.jsqlparser.expression.Expression;
 import net.sf.jsqlparser.expression.operators.relational.ItemsList;
-import net.sf.jsqlparser.parser.CCJSqlParserManager;
-import net.sf.jsqlparser.parser.JSqlParser;
 import net.sf.jsqlparser.schema.Table;
 import net.sf.jsqlparser.statement.Statement;
 import net.sf.jsqlparser.statement.create.table.CreateTable;
@@ -44,6 +42,7 @@ import net.sf.jsqlparser.test.tablesfinder.TablesNamesFinder;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Zsolt Berentey
  */
 public class SQLChecker extends BaseChecker {
 
@@ -59,7 +58,9 @@ public class SQLChecker extends BaseChecker {
 		Statement statement = null;
 
 		try {
-			statement = _jSqlParser.parse(new StringReader(sql));
+			SqlParser parser = new SqlParser(new StringReader(sql));
+
+			statement = parser.Parse();
 		}
 		catch (Exception e) {
 			_log.error("Unable to parse SQL " + sql);
@@ -67,7 +68,17 @@ public class SQLChecker extends BaseChecker {
 			return false;
 		}
 
-		if (statement instanceof CreateTable) {
+		if (statement instanceof AlterTable) {
+			AlterTable alterTable = (AlterTable)statement;
+
+			return hasSQL(alterTable);
+		}
+		else if (statement instanceof CreateIndex) {
+			CreateIndex createIndex = (CreateIndex)statement;
+
+			return hasSQL(createIndex);
+		}
+		else if (statement instanceof CreateTable) {
 			CreateTable createTable = (CreateTable)statement;
 
 			return hasSQL(createTable);
@@ -114,6 +125,14 @@ public class SQLChecker extends BaseChecker {
 		}
 
 		return false;
+	}
+
+	protected boolean hasSQL(AlterTable alterTable) {
+		return isAllowedTable(alterTable.getTableName(), _alterTableNames);
+	}
+
+	protected boolean hasSQL(CreateIndex createIndex) {
+		return isAllowedTable(createIndex.getTableName(), _createTableNames);
 	}
 
 	protected boolean hasSQL(CreateTable createTable) {
@@ -170,6 +189,7 @@ public class SQLChecker extends BaseChecker {
 
 	protected void initTableNames() {
 		_allTableNames = getPropertySet("security-manager-sql-tables-all");
+		_alterTableNames = getPropertySet("security-manager-sql-tables-alter");
 		_createTableNames = getPropertySet(
 			"security-manager-sql-tables-create");
 		_deleteTableNames = getPropertySet(
@@ -232,6 +252,7 @@ public class SQLChecker extends BaseChecker {
 	private Set<String> _truncateTableNames;
 	private Set<String> _updateTableNames;
 
+	@SuppressWarnings("unchecked")
 	private class TableNamesFinder extends TablesNamesFinder {
 
 		public TableNamesFinder() {

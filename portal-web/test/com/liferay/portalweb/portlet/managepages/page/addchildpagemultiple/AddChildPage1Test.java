@@ -33,14 +33,26 @@ public class AddChildPage1Test extends BaseTestCase {
 				selenium.clickAt("//div[@id='dockbar']",
 					RuntimeVariables.replace("Dockbar"));
 				selenium.waitForElementPresent(
+					"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+				selenium.waitForElementPresent(
 					"//li[contains(@class,'manage-page')]/a");
-				selenium.clickAt("//li[contains(@class,'manage-page')]/a",
-					RuntimeVariables.replace("Manage Pages"));
+				assertEquals(RuntimeVariables.replace("Manage"),
+					selenium.getText("//li[@id='_145_manageContent']/a/span"));
+				selenium.mouseOver("//li[@id='_145_manageContent']/a/span");
+				selenium.waitForVisible("//a[@title='Manage Page']");
+				assertEquals(RuntimeVariables.replace("Page"),
+					selenium.getText("//a[@title='Manage Page']"));
+				selenium.clickAt("//a[@title='Manage Page']",
+					RuntimeVariables.replace("Page"));
+				selenium.waitForVisible("//iframe[@id='manageContentDialog']");
+				selenium.selectFrame("//iframe[@id='manageContentDialog']");
+				selenium.waitForElementPresent(
+					"//script[contains(@src,'/liferay/search_container.js')]");
 				selenium.waitForText("//a[@class='layout-tree']", "Public Pages");
 				assertEquals(RuntimeVariables.replace("Public Pages"),
 					selenium.getText("//a[@class='layout-tree']"));
 
-				boolean welcome1Present = selenium.isElementPresent(
+				boolean welcome1Present = selenium.isVisible(
 						"//li/ul/li[1]/div/div[3]/a");
 
 				if (welcome1Present) {
@@ -65,6 +77,7 @@ public class AddChildPage1Test extends BaseTestCase {
 				assertEquals("Manage Pages Test Page",
 					selenium.getValue(
 						"//div[1]/fieldset/div/span[1]/span/span/span/input"));
+				Thread.sleep(5000);
 				selenium.waitForVisible("//div/span/button[1]");
 				assertEquals(RuntimeVariables.replace("Add Child Page"),
 					selenium.getText("//div/span/button[1]"));
@@ -117,8 +130,8 @@ public class AddChildPage1Test extends BaseTestCase {
 					"Child Test Page1");
 				assertEquals(RuntimeVariables.replace("Child Test Page1"),
 					selenium.getText("//li[2]/ul/li[1]/div/div[3]/a"));
+				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
-				selenium.waitForVisible("link=Manage Pages Test Page");
 				selenium.mouseOver("link=Manage Pages Test Page");
 				selenium.waitForVisible("link=Child Test Page1");
 				assertTrue(selenium.isVisible("link=Child Test Page1"));

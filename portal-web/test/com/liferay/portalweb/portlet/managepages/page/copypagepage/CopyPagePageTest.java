@@ -30,7 +30,6 @@ public class CopyPagePageTest extends BaseTestCase {
 				selenium.selectWindow("null");
 				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
-				selenium.waitForVisible("link=Manage Pages Test Page");
 				selenium.clickAt("link=Manage Pages Test Page",
 					RuntimeVariables.replace("Manage Pages Test Page"));
 				selenium.waitForPageToLoad("30000");
@@ -44,14 +43,26 @@ public class CopyPagePageTest extends BaseTestCase {
 				selenium.clickAt("//div[@id='dockbar']",
 					RuntimeVariables.replace("Dockbar"));
 				selenium.waitForElementPresent(
+					"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+				selenium.waitForElementPresent(
 					"//li[contains(@class,'manage-page')]/a");
-				selenium.clickAt("//li[contains(@class,'manage-page')]/a",
-					RuntimeVariables.replace("Manage Pages"));
+				assertEquals(RuntimeVariables.replace("Manage"),
+					selenium.getText("//li[@id='_145_manageContent']/a/span"));
+				selenium.mouseOver("//li[@id='_145_manageContent']/a/span");
+				selenium.waitForVisible("//a[@title='Manage Page']");
+				assertEquals(RuntimeVariables.replace("Page"),
+					selenium.getText("//a[@title='Manage Page']"));
+				selenium.clickAt("//a[@title='Manage Page']",
+					RuntimeVariables.replace("Page"));
+				selenium.waitForVisible("//iframe[@id='manageContentDialog']");
+				selenium.selectFrame("//iframe[@id='manageContentDialog']");
+				selenium.waitForElementPresent(
+					"//script[contains(@src,'/liferay/search_container.js')]");
 				selenium.waitForText("//a[@class='layout-tree']", "Public Pages");
 				assertEquals(RuntimeVariables.replace("Public Pages"),
 					selenium.getText("//a[@class='layout-tree']"));
 
-				boolean welcomePresent = selenium.isElementPresent(
+				boolean welcomePresent = selenium.isVisible(
 						"//li/ul/li[1]/div/div[3]/a");
 
 				if (welcomePresent) {
@@ -76,10 +87,13 @@ public class CopyPagePageTest extends BaseTestCase {
 				assertEquals("Manage Pages Test Page",
 					selenium.getValue(
 						"//div[1]/fieldset/div/span[1]/span/span/span/input"));
+				Thread.sleep(5000);
 				selenium.select("//select[@id='_88_type']",
 					RuntimeVariables.replace("Portlet"));
-				selenium.waitForVisible("//div/span/button[5]");
-				selenium.clickAt("//div/span/button[5]",
+				selenium.waitForVisible("//button[4]/span[2]");
+				assertEquals(RuntimeVariables.replace("Copy Portlets from Page"),
+					selenium.getText("//button[4]/span[2]"));
+				selenium.clickAt("//button[4]/span[2]",
 					RuntimeVariables.replace("Copy Portlets from Page"));
 				selenium.waitForVisible("//select[@id='_88_copyLayoutId']");
 				assertEquals(RuntimeVariables.replace(
@@ -93,8 +107,8 @@ public class CopyPagePageTest extends BaseTestCase {
 				assertEquals(RuntimeVariables.replace(
 						"Your request completed successfully. The page will be refreshed when you close this dialog. Alternatively you can hide this dialog."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
+				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
-				selenium.waitForVisible("link=Manage Pages Test Page");
 				selenium.clickAt("link=Manage Pages Test Page",
 					RuntimeVariables.replace("Manage Pages Test Page"));
 				selenium.waitForPageToLoad("30000");

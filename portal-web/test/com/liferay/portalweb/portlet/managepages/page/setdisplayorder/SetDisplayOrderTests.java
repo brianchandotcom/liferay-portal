@@ -16,6 +16,9 @@ package com.liferay.portalweb.portlet.managepages.page.setdisplayorder;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
+import com.liferay.portalweb.portlet.managepages.page.addchildpagemultiple.AddChildPage1Test;
+import com.liferay.portalweb.portlet.managepages.page.addchildpagemultiple.AddChildPage2Test;
+import com.liferay.portalweb.portlet.managepages.page.addchildpagemultiple.AddChildPage3Test;
 import com.liferay.portalweb.portlet.managepages.page.addpage.AddPageTest;
 
 import junit.framework.Test;

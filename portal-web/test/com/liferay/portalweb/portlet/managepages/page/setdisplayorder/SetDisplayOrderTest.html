@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Manage Pages Test Page</td>
-	<td>Manage Pages Test Page</td>
-</tr>
-<tr>
 	<td>mouseOver</td>
 	<td>link=Manage Pages Test Page</td>
 	<td>Manage Pages Test Page</td>
@@ -45,13 +40,53 @@
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
+	<td>AUI Editable Min</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
 	<td>//li[contains(@class,'manage-page')]/a</td>
 	<td>Manage Pages</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//li[@id='_145_manageContent']/a/span</td>
+	<td>Manage</td>
+</tr>
+<tr>
+	<td>mouseOver</td>
+	<td>//li[@id='_145_manageContent']/a/span</td>
+	<td>Manage</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//a[@title='Manage Page']</td>
+	<td>Page</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//a[@title='Manage Page']</td>
+	<td>Page</td>
+</tr>
+<tr>
 	<td>clickAt</td>
-	<td>//li[contains(@class,'manage-page')]/a</td>
-	<td>Manage Pages</td>
+	<td>//a[@title='Manage Page']</td>
+	<td>Page</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//iframe[@id='manageContentDialog']</td>
+	<td>Manage Page</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//iframe[@id='manageContentDialog']</td>
+	<td>Manage Page</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/liferay/search_container.js')]</td>
+	<td>Search Container</td>
 </tr>
 <tr>
 	<td>waitForText</td>
@@ -64,13 +99,13 @@
 	<td>Public Pages</td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('//li/ul/li[1]/div/div[3]/a'))</td>
-	<td>welcome1Present</td>
+	<td>storeVisible</td>
+	<td>//li/ul/li[1]/div/div[3]/a</td>
+	<td>welcomePresent</td>
 </tr>
 <tr>
 	<td>gotoIf</td>
-	<td>${welcome1Present}</td>
+	<td>${welcomePresent}</td>
 	<td>Welcome1Present</td>
 </tr>
 <tr>
@@ -134,7 +169,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForText</td>
+	<td>waitForVisible</td>
 	<td>//li[2]/ul/li[1]/div/div[3]/a</td>
 	<td>Child Test Page1</td>
 </tr>
@@ -214,14 +249,14 @@
 	<td>Child Test Page1</td>
 </tr>
 <tr>
+	<td>selectFrame</td>
+	<td>relative=top</td>
+	<td>top</td>
+</tr>
+<tr>
 	<td>open</td>
 	<td>/web/guest/home/</td>
 	<td></td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>link=Manage Pages Test Page</td>
-	<td>Manage Pages Test Page</td>
 </tr>
 <tr>
 	<td>mouseOver</td>

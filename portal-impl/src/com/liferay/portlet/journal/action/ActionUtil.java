@@ -36,6 +36,7 @@ import com.liferay.portlet.journal.model.JournalFolder;
 import com.liferay.portlet.journal.model.JournalFolderConstants;
 import com.liferay.portlet.journal.model.JournalStructure;
 import com.liferay.portlet.journal.model.JournalTemplate;
+import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalArticleServiceUtil;
 import com.liferay.portlet.journal.service.JournalFeedServiceUtil;
 import com.liferay.portlet.journal.service.JournalFolderServiceUtil;
@@ -399,6 +400,25 @@ public class ActionUtil {
 			WebKeys.JOURNAL_TEMPLATE);
 
 		JournalUtil.addRecentTemplate(portletRequest, template);
+	}
+
+	protected static boolean hasArticle(ActionRequest actionRequest)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String articleId = ParamUtil.getString(actionRequest, "articleId");
+
+		try {
+			JournalArticleLocalServiceUtil.getArticle(
+				themeDisplay.getScopeGroupId(), articleId);
+		}
+		catch (NoSuchArticleException nsae) {
+			return true;
+		}
+
+		return false;
 	}
 
 }

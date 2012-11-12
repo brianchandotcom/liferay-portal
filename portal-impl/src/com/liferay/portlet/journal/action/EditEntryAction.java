@@ -33,7 +33,6 @@ import com.liferay.portlet.journal.DuplicateFolderNameException;
 import com.liferay.portlet.journal.NoSuchArticleException;
 import com.liferay.portlet.journal.NoSuchFolderException;
 import com.liferay.portlet.journal.model.JournalArticle;
-import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalArticleServiceUtil;
 import com.liferay.portlet.journal.service.JournalFolderServiceUtil;
 
@@ -77,7 +76,7 @@ public class EditEntryAction extends PortletAction {
 				ParamUtil.getString(actionRequest, "redirect"));
 
 			if (cmd.equals(Constants.DELETE_VERSIONS) &&
-				hasArticle(actionRequest)) {
+				ActionUtil.hasArticle(actionRequest)) {
 
 				redirect = ParamUtil.getString(
 					actionRequest, "originalRedirect");
@@ -178,23 +177,6 @@ public class EditEntryAction extends PortletAction {
 		for (String expireArticleId : expireArticleIds) {
 			ActionUtil.expireArticle(actionRequest, expireArticleId);
 		}
-	}
-
-	protected boolean hasArticle(ActionRequest actionRequest) throws Exception {
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		String articleId = ParamUtil.getString(actionRequest, "articleId");
-
-		try {
-			JournalArticleLocalServiceUtil.getArticle(
-				themeDisplay.getScopeGroupId(), articleId);
-		}
-		catch (NoSuchArticleException nsae) {
-			return true;
-		}
-
-		return false;
 	}
 
 	protected void moveEntries(ActionRequest actionRequest) throws Exception {

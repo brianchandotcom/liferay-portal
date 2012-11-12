@@ -1895,6 +1895,10 @@ public interface PropsKeys {
 
 	public static final String RSS_CONNECTION_TIMEOUT = "rss.connection.timeout";
 
+	public static final String RSS_FEED_TYPE_DEFAULT = "rss.feed.type.default";
+
+	public static final String RSS_FEED_TYPES = "rss.feed.types";
+
 	public static final String RSS_FEEDS_ENABLED = "rss.feeds.enabled";
 
 	public static final String SANDBOX_DEPLOY_DIR = "sandbox.deploy.dir";

@@ -83,8 +83,10 @@ if (Validator.isNull(contentField) || ((structure == null) && !contentField.equa
 	contentField = JournalFeedConstants.WEB_CONTENT_DESCRIPTION;
 }
 
-String feedType = BeanParamUtil.getString(feed, request, "feedType", RSSUtil.TYPE_DEFAULT);
+String feedFormat = BeanParamUtil.getString(feed, request, "feedType", RSSUtil.FORMAT_DEFAULT);
 double feedVersion = BeanParamUtil.getDouble(feed, request, "feedVersion", RSSUtil.VERSION_DEFAULT);
+
+String feedType = RSSUtil.getFeedType(feedFormat, feedVersion);
 
 ResourceURL feedURL = null;
 
@@ -305,23 +307,13 @@ if (feed != null) {
 					</c:if>
 				</aui:select>
 
-				<aui:select label="feed-type" name="feedTypeAndVersion">
+				<aui:select label="feed-type" name="feedType">
 
 					<%
-					for (int i = 4; i < RSSUtil.RSS_VERSIONS.length; i++) {
+					for (String curFeedType : RSSUtil.FEED_TYPES) {
 					%>
 
-						<aui:option label="<%= LanguageUtil.get(pageContext, RSSUtil.RSS) + StringPool.SPACE + RSSUtil.RSS_VERSIONS[i] %>" selected="<%= feedType.equals(RSSUtil.RSS) && (feedVersion == RSSUtil.RSS_VERSIONS[i]) %>" value="<%= RSSUtil.RSS + StringPool.COLON + RSSUtil.RSS_VERSIONS[i]%>" />
-
-					<%
-					}
-					%>
-
-					<%
-					for (int i = 1; i < RSSUtil.ATOM_VERSIONS.length; i++) {
-					%>
-
-						<aui:option label="<%= LanguageUtil.get(pageContext, RSSUtil.ATOM) + StringPool.SPACE + RSSUtil.ATOM_VERSIONS[i] %>" selected="<%= feedType.equals(RSSUtil.ATOM) && (feedVersion == RSSUtil.ATOM_VERSIONS[i]) %>" value="<%= RSSUtil.ATOM + StringPool.COLON + RSSUtil.ATOM_VERSIONS[i]%>" />
+						<aui:option label="<%= RSSUtil.getFeedTypeName(curFeedType) %>" selected="<%= feedType.equals(curFeedType) %>" useModelValue="<%= false %>" value="<%= curFeedType %>" />
 
 					<%
 					}

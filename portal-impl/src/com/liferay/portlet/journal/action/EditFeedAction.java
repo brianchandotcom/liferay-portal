@@ -16,9 +16,7 @@ package com.liferay.portlet.journal.action;
 
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.PrincipalException;
@@ -165,28 +163,11 @@ public class EditFeedAction extends PortletAction {
 			actionRequest, "targetPortletId");
 		String contentField = ParamUtil.getString(
 			actionRequest, "contentField");
+		String feedType = ParamUtil.getString(
+			actionRequest, "feedType", RSSUtil.FEED_TYPE_DEFAULT);
 
-		String feedType = RSSUtil.TYPE_DEFAULT;
-		double feedVersion = RSSUtil.VERSION_DEFAULT;
-
-		String feedTypeAndVersion = ParamUtil.getString(
-			actionRequest, "feedTypeAndVersion");
-
-		if (Validator.isNotNull(feedTypeAndVersion)) {
-			String[] parts = feedTypeAndVersion.split(StringPool.COLON);
-
-			try {
-				feedType = parts[0];
-				feedVersion = GetterUtil.getDouble(parts[1]);
-			}
-			catch (Exception e) {
-			}
-		}
-		else {
-			feedType = ParamUtil.getString(actionRequest, "feedType", feedType);
-			feedVersion = ParamUtil.getDouble(
-				actionRequest, "feedVersion", feedVersion);
-		}
+		String feedFormat = RSSUtil.getFeedTypeFormat(feedType);
+		double feedVersion = RSSUtil.getFeedTypeVersion(feedType);
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			JournalFeed.class.getName(), actionRequest);
@@ -199,7 +180,7 @@ public class EditFeedAction extends PortletAction {
 				groupId, feedId, autoFeedId, name, description, type,
 				structureId, templateId, rendererTemplateId, delta, orderByCol,
 				orderByType, targetLayoutFriendlyUrl, targetPortletId,
-				contentField, feedType, feedVersion, serviceContext);
+				contentField, feedFormat, feedVersion, serviceContext);
 		}
 		else {
 
@@ -209,7 +190,7 @@ public class EditFeedAction extends PortletAction {
 				groupId, feedId, name, description, type, structureId,
 				templateId, rendererTemplateId, delta, orderByCol, orderByType,
 				targetLayoutFriendlyUrl, targetPortletId, contentField,
-				feedType, feedVersion, serviceContext);
+				feedFormat, feedVersion, serviceContext);
 		}
 	}
 

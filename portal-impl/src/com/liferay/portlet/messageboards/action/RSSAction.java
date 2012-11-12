@@ -44,7 +44,7 @@ public class RSSAction extends com.liferay.portal.struts.RSSAction {
 		int max = ParamUtil.getInteger(
 			request, "max", SearchContainer.DEFAULT_DELTA);
 		String type = ParamUtil.getString(
-			request, "type", RSSUtil.TYPE_DEFAULT);
+			request, "type", RSSUtil.FORMAT_DEFAULT);
 		double version = ParamUtil.getDouble(
 			request, "version", RSSUtil.VERSION_DEFAULT);
 		String displayStyle = ParamUtil.getString(

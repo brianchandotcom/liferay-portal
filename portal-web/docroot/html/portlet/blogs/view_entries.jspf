@@ -110,12 +110,12 @@ ResourceURL rssURL = liferayPortletResponse.createResourceURL();
 rssURL.setCacheability(ResourceURL.FULL);
 rssURL.setParameter("struts_action", "/blogs/rss");
 
-if ((rssDelta != SearchContainer.DEFAULT_DELTA) || !rssFormatType.equals(RSSUtil.TYPE_DEFAULT) || (rssFormatVersion != RSSUtil.VERSION_DEFAULT) || !rssDisplayStyle.equals(RSSUtil.DISPLAY_STYLE_FULL_CONTENT)) {
+if ((rssDelta != SearchContainer.DEFAULT_DELTA) || !rssFormatType.equals(RSSUtil.FORMAT_DEFAULT) || (rssFormatVersion != RSSUtil.VERSION_DEFAULT) || !rssDisplayStyle.equals(RSSUtil.DISPLAY_STYLE_FULL_CONTENT)) {
 	if (rssDelta != SearchContainer.DEFAULT_DELTA) {
 		rssURL.setParameter("max", String.valueOf(rssDelta));
 	}
 
-	if (!rssFormatType.equals(RSSUtil.TYPE_DEFAULT)) {
+	if (!rssFormatType.equals(RSSUtil.FORMAT_DEFAULT)) {
 		rssURL.setParameter("type", rssFormatType);
 	}
 

@@ -32,9 +32,21 @@ WorkflowDefinition workflowDefinition = (WorkflowDefinition)row.getObject();
 	</portlet:renderURL>
 
 	<liferay-ui:icon
-		image="edit"
+		image="post"
+		message='<%= LanguageUtil.format(pageContext, "add-new-x", "file") %>'
 		url="<%= editURL %>"
 	/>
+
+	<c:if test='<%= DeployManagerUtil.isDeployed("kaleo-designer-portlet") %>'>
+		<%
+		String taglibOnClick = "javascript:Liferay.Util.getOpener()." + renderResponse.getNamespace() + "openKaleoDesigner('" + workflowDefinition.getName() + "', '" + workflowDefinition.getVersion() + "', '', Liferay.Util.getWindowName());";
+		%>
+
+		<liferay-ui:icon
+			image="edit"
+			url="<%= taglibOnClick %>"
+		/>
+	</c:if>
 
 	<c:if test="<%= !workflowDefinition.isActive() %>">
 		<portlet:actionURL var="restoreWorkflowDefinitionURL">

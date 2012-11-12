@@ -37,7 +37,40 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all");
 		<portlet:param name="backURL" value="<%= viewDefinitionsURL %>" />
 	</portlet:renderURL>
 
-	<span class="lfr-toolbar-button add-button <%= toolbarItem.equals("add") ? "current" : StringPool.BLANK %>">
-		<a href="<%= addWorkflowDefinitionURL %>"><liferay-ui:message key="add" /></a>
+	<c:if test='<%= DeployManagerUtil.isDeployed("kaleo-designer-portlet") %>'>
+		<%
+		String kaleoDesignerURL = "javascript:Liferay.Util.getOpener()." + renderResponse.getNamespace() + "openKaleoDesigner('', '0', '', Liferay.Util.getWindowName());";
+		%>
+
+		<span class="lfr-toolbar-button add-button">
+			<a href="<%= kaleoDesignerURL %>"><liferay-ui:message key='<%= LanguageUtil.format(pageContext, "add-new-x", "definition") %>' /></a>
+		</span>
+	</c:if>
+
+	<span class="lfr-toolbar-button upload-button <%= toolbarItem.equals("add") ? "current" : StringPool.BLANK %>">
+		<a href="<%= addWorkflowDefinitionURL %>"><liferay-ui:message key="file-upload" /></a>
 	</span>
 </div>
+
+<c:if test='<%= DeployManagerUtil.isDeployed("kaleo-designer-portlet") %>'>
+	<aui:script>
+		Liferay.provide(
+			window,
+			'<portlet:namespace />openKaleoDesigner',
+			function(workflowDefinitionName, workflowDefinitionVersion, saveCallback, openerWindowName) {
+				Liferay.Util.openKaleoDesignerPortlet(
+					{
+						availablePropertyModels: 'Liferay.KaleoDesigner.AVAILABLE_PROPERTY_MODELS.KALEO_FORMS_EDIT',
+						name: workflowDefinitionName,
+						openerWindowName: openerWindowName,
+						portletResourceNamespace: '<%= renderResponse.getNamespace() %>',
+						saveCallback: saveCallback,
+						version: workflowDefinitionVersion,
+						versionLabel: '<liferay-ui:message key="version" />'
+					}
+				);
+			},
+			['aui-base']
+		);
+	</aui:script>
+</c:if>

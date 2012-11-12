@@ -16,7 +16,8 @@
 
 <%@ include file="/html/portlet/init.jsp" %>
 
-<%@ page import="com.liferay.portal.kernel.workflow.RequiredWorkflowDefinitionException" %><%@
+<%@page import="com.liferay.portal.kernel.deploy.DeployManagerUtil"%><%@
+page import="com.liferay.portal.kernel.workflow.RequiredWorkflowDefinitionException" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowDefinition" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowDefinitionFileException" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowDefinitionManagerUtil" %><%@

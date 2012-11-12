@@ -41,6 +41,7 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all");
 		<%
 		String kaleoDesignerURL = "javascript:Liferay.Util.getOpener()." + renderResponse.getNamespace() + "openKaleoDesigner('', '0', '', Liferay.Util.getWindowName());";
 		%>
+
 		<span class="lfr-toolbar-button add-button">
 			<a href="<%= kaleoDesignerURL %>"><liferay-ui:message key='<%= LanguageUtil.format(pageContext, "add-new-x", "definition") %>' /></a>
 		</span>

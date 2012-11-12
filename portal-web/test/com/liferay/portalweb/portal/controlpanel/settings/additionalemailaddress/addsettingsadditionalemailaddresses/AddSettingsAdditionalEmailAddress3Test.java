@@ -49,7 +49,7 @@ public class AddSettingsAdditionalEmailAddress3Test extends BaseTestCase {
 		selenium.clickAt("//div[2]/span/span/button",
 			RuntimeVariables.replace("Add"));
 		selenium.type("//input[@id='_130_emailAddressAddress3']",
-			RuntimeVariables.replace("Admin@Liferay.com"));
+			RuntimeVariables.replace("Admin3@Liferay.com"));
 		selenium.select("//select[@id='_130_emailAddressTypeId3']",
 			RuntimeVariables.replace("label=Email Address 3"));
 		selenium.clickAt("//input[@value='Save']",
@@ -60,6 +60,16 @@ public class AddSettingsAdditionalEmailAddress3Test extends BaseTestCase {
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals("Admin@Liferay.com",
+			selenium.getValue("//input[@id='_130_emailAddressAddress0']"));
+		assertEquals("Email Address",
+			selenium.getSelectedLabel(
+				"//select[@id='_130_emailAddressTypeId0']"));
+		assertEquals("Admin2@Liferay.com",
+			selenium.getValue("//input[@id='_130_emailAddressAddress1']"));
+		assertEquals("Email Address 2",
+			selenium.getSelectedLabel(
+				"//select[@id='_130_emailAddressTypeId1']"));
+		assertEquals("Admin3@Liferay.com",
 			selenium.getValue("//input[@id='_130_emailAddressAddress2']"));
 		assertEquals("Email Address 3",
 			selenium.getSelectedLabel(

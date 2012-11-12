@@ -48,17 +48,21 @@ public class AddSettingsAdditionalEmailAddress2Test extends BaseTestCase {
 		selenium.waitForVisible("//button");
 		selenium.clickAt("//button", RuntimeVariables.replace("Add"));
 		selenium.type("//input[@id='_130_emailAddressAddress2']",
-			RuntimeVariables.replace("Admin@Liferay.com"));
+			RuntimeVariables.replace("Admin2@Liferay.com"));
 		selenium.select("//select[@id='_130_emailAddressTypeId2']",
 			RuntimeVariables.replace("label=Email Address 2"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForVisible("//div[@class='portlet-msg-success']");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals("Admin@Liferay.com",
+			selenium.getValue("//input[@id='_130_emailAddressAddress0']"));
+		assertEquals("Email Address",
+			selenium.getSelectedLabel(
+				"//select[@id='_130_emailAddressTypeId0']"));
+		assertEquals("Admin2@Liferay.com",
 			selenium.getValue("//input[@id='_130_emailAddressAddress1']"));
 		assertEquals("Email Address 2",
 			selenium.getSelectedLabel(

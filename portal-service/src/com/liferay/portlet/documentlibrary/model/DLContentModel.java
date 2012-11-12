@@ -201,6 +201,8 @@ public interface DLContentModel extends BaseModel<DLContent> {
 
 	public DLContent toEscapedModel();
 
+	public DLContent toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

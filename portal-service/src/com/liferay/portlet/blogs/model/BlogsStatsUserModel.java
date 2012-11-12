@@ -243,6 +243,8 @@ public interface BlogsStatsUserModel extends BaseModel<BlogsStatsUser> {
 
 	public BlogsStatsUser toEscapedModel();
 
+	public BlogsStatsUser toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

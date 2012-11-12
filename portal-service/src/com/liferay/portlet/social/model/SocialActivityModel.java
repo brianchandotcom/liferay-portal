@@ -282,6 +282,8 @@ public interface SocialActivityModel extends AttachedModel,
 
 	public SocialActivity toEscapedModel();
 
+	public SocialActivity toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

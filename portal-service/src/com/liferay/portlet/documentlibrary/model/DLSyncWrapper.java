@@ -454,6 +454,10 @@ public class DLSyncWrapper implements DLSync, ModelWrapper<DLSync> {
 		return new DLSyncWrapper(_dlSync.toEscapedModel());
 	}
 
+	public com.liferay.portlet.documentlibrary.model.DLSync toUnescapedModel() {
+		return new DLSyncWrapper(_dlSync.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _dlSync.toString();

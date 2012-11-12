@@ -667,6 +667,10 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 		return new DLFileShortcutWrapper(_dlFileShortcut.toEscapedModel());
 	}
 
+	public com.liferay.portlet.documentlibrary.model.DLFileShortcut toUnescapedModel() {
+		return new DLFileShortcutWrapper(_dlFileShortcut.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _dlFileShortcut.toString();

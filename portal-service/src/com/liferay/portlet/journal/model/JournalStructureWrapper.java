@@ -699,6 +699,10 @@ public class JournalStructureWrapper implements JournalStructure,
 		return new JournalStructureWrapper(_journalStructure.toEscapedModel());
 	}
 
+	public com.liferay.portlet.journal.model.JournalStructure toUnescapedModel() {
+		return new JournalStructureWrapper(_journalStructure.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _journalStructure.toString();

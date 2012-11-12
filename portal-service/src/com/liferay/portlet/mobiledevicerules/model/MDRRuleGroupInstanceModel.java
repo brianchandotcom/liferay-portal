@@ -285,6 +285,8 @@ public interface MDRRuleGroupInstanceModel extends AttachedModel,
 
 	public MDRRuleGroupInstance toEscapedModel();
 
+	public MDRRuleGroupInstance toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

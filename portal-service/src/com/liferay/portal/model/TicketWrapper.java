@@ -364,6 +364,10 @@ public class TicketWrapper implements Ticket, ModelWrapper<Ticket> {
 		return new TicketWrapper(_ticket.toEscapedModel());
 	}
 
+	public com.liferay.portal.model.Ticket toUnescapedModel() {
+		return new TicketWrapper(_ticket.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _ticket.toString();

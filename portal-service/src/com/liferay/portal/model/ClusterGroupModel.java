@@ -148,6 +148,8 @@ public interface ClusterGroupModel extends BaseModel<ClusterGroup> {
 
 	public ClusterGroup toEscapedModel();
 
+	public ClusterGroup toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

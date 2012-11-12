@@ -240,6 +240,10 @@ public class PasswordPolicyRelWrapper implements PasswordPolicyRel,
 		return new PasswordPolicyRelWrapper(_passwordPolicyRel.toEscapedModel());
 	}
 
+	public com.liferay.portal.model.PasswordPolicyRel toUnescapedModel() {
+		return new PasswordPolicyRelWrapper(_passwordPolicyRel.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _passwordPolicyRel.toString();

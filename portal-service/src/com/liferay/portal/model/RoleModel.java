@@ -399,6 +399,8 @@ public interface RoleModel extends AttachedModel, BaseModel<Role> {
 
 	public Role toEscapedModel();
 
+	public Role toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

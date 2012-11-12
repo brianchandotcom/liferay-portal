@@ -263,6 +263,8 @@ public interface JournalFolderModel extends BaseModel<JournalFolder>,
 
 	public JournalFolder toEscapedModel();
 
+	public JournalFolder toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

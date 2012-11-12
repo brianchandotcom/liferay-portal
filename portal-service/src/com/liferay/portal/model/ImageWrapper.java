@@ -301,6 +301,10 @@ public class ImageWrapper implements Image, ModelWrapper<Image> {
 		return new ImageWrapper(_image.toEscapedModel());
 	}
 
+	public com.liferay.portal.model.Image toUnescapedModel() {
+		return new ImageWrapper(_image.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _image.toString();

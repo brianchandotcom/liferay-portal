@@ -304,6 +304,10 @@ public class SocialRelationWrapper implements SocialRelation,
 		return new SocialRelationWrapper(_socialRelation.toEscapedModel());
 	}
 
+	public com.liferay.portlet.social.model.SocialRelation toUnescapedModel() {
+		return new SocialRelationWrapper(_socialRelation.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _socialRelation.toString();

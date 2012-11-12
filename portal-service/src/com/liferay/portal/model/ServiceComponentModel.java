@@ -155,6 +155,8 @@ public interface ServiceComponentModel extends BaseModel<ServiceComponent> {
 
 	public ServiceComponent toEscapedModel();
 
+	public ServiceComponent toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

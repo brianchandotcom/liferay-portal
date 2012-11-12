@@ -370,6 +370,10 @@ public class PollsChoiceWrapper implements PollsChoice,
 		return new PollsChoiceWrapper(_pollsChoice.toEscapedModel());
 	}
 
+	public com.liferay.portlet.polls.model.PollsChoice toUnescapedModel() {
+		return new PollsChoiceWrapper(_pollsChoice.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _pollsChoice.toString();

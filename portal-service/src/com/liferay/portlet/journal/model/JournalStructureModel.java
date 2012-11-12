@@ -469,6 +469,8 @@ public interface JournalStructureModel extends BaseModel<JournalStructure>,
 
 	public JournalStructure toEscapedModel();
 
+	public JournalStructure toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

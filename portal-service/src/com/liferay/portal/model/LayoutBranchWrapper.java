@@ -405,6 +405,10 @@ public class LayoutBranchWrapper implements LayoutBranch,
 		return new LayoutBranchWrapper(_layoutBranch.toEscapedModel());
 	}
 
+	public com.liferay.portal.model.LayoutBranch toUnescapedModel() {
+		return new LayoutBranchWrapper(_layoutBranch.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _layoutBranch.toString();

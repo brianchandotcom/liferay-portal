@@ -275,6 +275,8 @@ public interface DLSyncModel extends BaseModel<DLSync> {
 
 	public DLSync toEscapedModel();
 
+	public DLSync toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

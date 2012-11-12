@@ -883,6 +883,10 @@ public class DLFileVersionWrapper implements DLFileVersion,
 		return new DLFileVersionWrapper(_dlFileVersion.toEscapedModel());
 	}
 
+	public com.liferay.portlet.documentlibrary.model.DLFileVersion toUnescapedModel() {
+		return new DLFileVersionWrapper(_dlFileVersion.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _dlFileVersion.toString();

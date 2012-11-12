@@ -259,6 +259,10 @@ public class RegionWrapper implements Region, ModelWrapper<Region> {
 		return new RegionWrapper(_region.toEscapedModel());
 	}
 
+	public com.liferay.portal.model.Region toUnescapedModel() {
+		return new RegionWrapper(_region.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _region.toString();

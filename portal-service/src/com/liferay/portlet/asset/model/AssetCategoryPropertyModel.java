@@ -234,6 +234,8 @@ public interface AssetCategoryPropertyModel extends AuditedModel,
 
 	public AssetCategoryProperty toEscapedModel();
 
+	public AssetCategoryProperty toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

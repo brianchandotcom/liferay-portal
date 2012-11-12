@@ -1153,6 +1153,10 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 		return new AssetEntryWrapper(_assetEntry.toEscapedModel());
 	}
 
+	public com.liferay.portlet.asset.model.AssetEntry toUnescapedModel() {
+		return new AssetEntryWrapper(_assetEntry.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _assetEntry.toString();

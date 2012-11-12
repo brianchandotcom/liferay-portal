@@ -295,6 +295,10 @@ public class MBStatsUserWrapper implements MBStatsUser,
 		return new MBStatsUserWrapper(_mbStatsUser.toEscapedModel());
 	}
 
+	public com.liferay.portlet.messageboards.model.MBStatsUser toUnescapedModel() {
+		return new MBStatsUserWrapper(_mbStatsUser.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _mbStatsUser.toString();

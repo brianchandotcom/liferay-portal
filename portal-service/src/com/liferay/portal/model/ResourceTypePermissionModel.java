@@ -168,6 +168,8 @@ public interface ResourceTypePermissionModel extends BaseModel<ResourceTypePermi
 
 	public ResourceTypePermission toEscapedModel();
 
+	public ResourceTypePermission toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

@@ -274,6 +274,8 @@ public interface WebsiteModel extends AttachedModel, AuditedModel,
 
 	public Website toEscapedModel();
 
+	public Website toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

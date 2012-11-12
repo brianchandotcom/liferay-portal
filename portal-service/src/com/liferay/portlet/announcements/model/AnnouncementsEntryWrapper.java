@@ -597,6 +597,10 @@ public class AnnouncementsEntryWrapper implements AnnouncementsEntry,
 		return new AnnouncementsEntryWrapper(_announcementsEntry.toEscapedModel());
 	}
 
+	public com.liferay.portlet.announcements.model.AnnouncementsEntry toUnescapedModel() {
+		return new AnnouncementsEntryWrapper(_announcementsEntry.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _announcementsEntry.toString();

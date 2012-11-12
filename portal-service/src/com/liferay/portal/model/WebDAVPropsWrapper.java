@@ -315,6 +315,10 @@ public class WebDAVPropsWrapper implements WebDAVProps,
 		return new WebDAVPropsWrapper(_webDAVProps.toEscapedModel());
 	}
 
+	public com.liferay.portal.model.WebDAVProps toUnescapedModel() {
+		return new WebDAVPropsWrapper(_webDAVProps.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _webDAVProps.toString();

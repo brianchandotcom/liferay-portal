@@ -347,6 +347,10 @@ public class UserTrackerWrapper implements UserTracker,
 		return new UserTrackerWrapper(_userTracker.toEscapedModel());
 	}
 
+	public com.liferay.portal.model.UserTracker toUnescapedModel() {
+		return new UserTrackerWrapper(_userTracker.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _userTracker.toString();

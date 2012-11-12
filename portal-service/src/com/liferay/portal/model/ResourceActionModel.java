@@ -141,6 +141,8 @@ public interface ResourceActionModel extends BaseModel<ResourceAction> {
 
 	public ResourceAction toEscapedModel();
 
+	public ResourceAction toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

@@ -507,6 +507,10 @@ public class SocialRequestWrapper implements SocialRequest,
 		return new SocialRequestWrapper(_socialRequest.toEscapedModel());
 	}
 
+	public com.liferay.portlet.social.model.SocialRequest toUnescapedModel() {
+		return new SocialRequestWrapper(_socialRequest.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _socialRequest.toString();

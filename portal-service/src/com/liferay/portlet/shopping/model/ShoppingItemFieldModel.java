@@ -158,6 +158,8 @@ public interface ShoppingItemFieldModel extends BaseModel<ShoppingItemField> {
 
 	public ShoppingItemField toEscapedModel();
 
+	public ShoppingItemField toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

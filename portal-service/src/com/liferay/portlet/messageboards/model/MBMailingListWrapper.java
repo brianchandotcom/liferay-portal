@@ -845,6 +845,10 @@ public class MBMailingListWrapper implements MBMailingList,
 		return new MBMailingListWrapper(_mbMailingList.toEscapedModel());
 	}
 
+	public com.liferay.portlet.messageboards.model.MBMailingList toUnescapedModel() {
+		return new MBMailingListWrapper(_mbMailingList.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _mbMailingList.toString();

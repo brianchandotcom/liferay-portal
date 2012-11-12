@@ -193,6 +193,8 @@ public interface WebDAVPropsModel extends AttachedModel, BaseModel<WebDAVProps> 
 
 	public WebDAVProps toEscapedModel();
 
+	public WebDAVProps toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

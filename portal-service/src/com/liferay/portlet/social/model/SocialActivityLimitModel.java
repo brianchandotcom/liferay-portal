@@ -240,6 +240,8 @@ public interface SocialActivityLimitModel extends AttachedModel,
 
 	public SocialActivityLimit toEscapedModel();
 
+	public SocialActivityLimit toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

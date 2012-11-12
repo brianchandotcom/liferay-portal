@@ -2,7 +2,7 @@
 
 <deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
 	<service name="Portlet_MB_MBMessageService" provider="java:RPC" style="rpc" use="encoded">
-		<arrayMapping xmlns:ns="urn:http.service.messageboards.portlet.liferay.com" xmlns:cmp-ns="http://model.messageboards.portlet.liferay.com" qname="ns:ArrayOf_tns6_MBMessageSoap" type="java:com.liferay.portlet.messageboards.model.MBMessageSoap[]" innerType="cmp-ns:MBMessageSoap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
+		<arrayMapping xmlns:ns="urn:http.service.messageboards.portlet.liferay.com" xmlns:cmp-ns="http://model.messageboards.portlet.liferay.com" qname="ns:ArrayOf_tns2_MBMessageSoap" type="java:com.liferay.portlet.messageboards.model.MBMessageSoap[]" innerType="cmp-ns:MBMessageSoap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
 		<arrayMapping xmlns:ns="urn:http.service.messageboards.portlet.liferay.com" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema" qname="ns:ArrayOf_xsd_anyType" type="java:java.lang.Object[]" innerType="cmp-ns:anyType" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
 		<arrayMapping xmlns:ns="urn:http.service.messageboards.portlet.liferay.com" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema" qname="ns:ArrayOf_xsd_long" type="java:long[]" innerType="cmp-ns:long" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
 		<arrayMapping xmlns:ns="urn:http.service.messageboards.portlet.liferay.com" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema" qname="ns:ArrayOf_xsd_string" type="java:java.lang.String[]" innerType="cmp-ns:string" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
@@ -49,6 +49,17 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="allowPingbacks" type="tns:boolean"></parameter>
 			<parameter xmlns:tns="http://service.portal.liferay.com" qname="serviceContext" type="tns:ServiceContext"></parameter>
 		</operation>
+		<operation xmlns:operNS="urn:http.service.messageboards.portlet.liferay.com" xmlns:rtns="http://model.messageboards.portlet.liferay.com" name="addMessage" qname="operNS:addMessage" returnQName="addMessageReturn" returnType="rtns:MBMessageSoap" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="parentMessageId" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="subject" type="tns:string"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="body" type="tns:string"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="format" type="tns:string"></parameter>
+			<parameter xmlns:tns="urn:http.service.messageboards.portlet.liferay.com" qname="inputStreamOVPs" type="tns:ArrayOf_xsd_anyType"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="anonymous" type="tns:boolean"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="priority" type="tns:double"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="allowPingbacks" type="tns:boolean"></parameter>
+			<parameter xmlns:tns="http://service.portal.liferay.com" qname="serviceContext" type="tns:ServiceContext"></parameter>
+		</operation>
 		<operation xmlns:operNS="urn:http.service.messageboards.portlet.liferay.com" name="deleteDiscussionMessage" qname="operNS:deleteDiscussionMessage" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="className" type="tns:string"></parameter>
@@ -56,6 +67,9 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="permissionClassName" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="permissionClassPK" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="permissionOwnerId" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="messageId" type="tns:long"></parameter>
+		</operation>
+		<operation xmlns:operNS="urn:http.service.messageboards.portlet.liferay.com" name="deleteMessageAttachments" qname="operNS:deleteMessageAttachments" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="messageId" type="tns:long"></parameter>
 		</operation>
 		<operation xmlns:operNS="urn:http.service.messageboards.portlet.liferay.com" name="deleteMessage" qname="operNS:deleteMessage" soapAction="">
@@ -66,7 +80,7 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="categoryId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="status" type="tns:int"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.messageboards.portlet.liferay.com" xmlns:rtns="urn:http.service.messageboards.portlet.liferay.com" xmlns:tns2="http://model.messageboards.portlet.liferay.com" name="getCategoryMessages" qname="operNS:getCategoryMessages" returnQName="getCategoryMessagesReturn" returnType="rtns:ArrayOf_tns6_MBMessageSoap" returnItemType="tns2:MBMessageSoap" soapAction="">
+		<operation xmlns:operNS="urn:http.service.messageboards.portlet.liferay.com" xmlns:rtns="urn:http.service.messageboards.portlet.liferay.com" xmlns:tns2="http://model.messageboards.portlet.liferay.com" name="getCategoryMessages" qname="operNS:getCategoryMessages" returnQName="getCategoryMessagesReturn" returnType="rtns:ArrayOf_tns2_MBMessageSoap" returnItemType="tns2:MBMessageSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="categoryId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="status" type="tns:int"></parameter>
@@ -91,7 +105,7 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="threadId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="status" type="tns:int"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.messageboards.portlet.liferay.com" xmlns:rtns="urn:http.service.messageboards.portlet.liferay.com" xmlns:tns2="http://model.messageboards.portlet.liferay.com" name="getThreadMessages" qname="operNS:getThreadMessages" returnQName="getThreadMessagesReturn" returnType="rtns:ArrayOf_tns6_MBMessageSoap" returnItemType="tns2:MBMessageSoap" soapAction="">
+		<operation xmlns:operNS="urn:http.service.messageboards.portlet.liferay.com" xmlns:rtns="urn:http.service.messageboards.portlet.liferay.com" xmlns:tns2="http://model.messageboards.portlet.liferay.com" name="getThreadMessages" qname="operNS:getThreadMessages" returnQName="getThreadMessagesReturn" returnType="rtns:ArrayOf_tns2_MBMessageSoap" returnItemType="tns2:MBMessageSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="categoryId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="threadId" type="tns:long"></parameter>
@@ -131,7 +145,7 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="allowPingbacks" type="tns:boolean"></parameter>
 			<parameter xmlns:tns="http://service.portal.liferay.com" qname="serviceContext" type="tns:ServiceContext"></parameter>
 		</operation>
-		<parameter name="allowedMethods" value="addDiscussionMessage addMessage deleteDiscussionMessage deleteMessage getCategoryMessages getCategoryMessagesCount getGroupMessagesCount getMessage getThreadAnswersCount getThreadMessages getThreadMessagesCount subscribeMessage unsubscribeMessage updateAnswer updateDiscussionMessage updateMessage" />
+		<parameter name="allowedMethods" value="addDiscussionMessage addMessage deleteDiscussionMessage deleteMessage deleteMessageAttachments getCategoryMessages getCategoryMessagesCount getGroupMessagesCount getMessage getThreadAnswersCount getThreadMessages getThreadMessagesCount subscribeMessage unsubscribeMessage updateAnswer updateDiscussionMessage updateMessage" />
 		<parameter name="className" value="com.liferay.portlet.messageboards.service.http.MBMessageServiceSoap" />
 		<parameter name="schemaUnqualified" value="http://model.messageboards.portlet.liferay.com,http://model.portal.liferay.com,http://service.portal.liferay.com,http://xml.apache.org/xml-soap,urn:http.service.messageboards.portlet.liferay.com" />
 		<parameter name="typeMappingVersion" value="1.2" />

@@ -424,6 +424,8 @@ public interface MDRRuleGroupModel extends BaseModel<MDRRuleGroup>, GroupedModel
 
 	public MDRRuleGroup toEscapedModel();
 
+	public MDRRuleGroup toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

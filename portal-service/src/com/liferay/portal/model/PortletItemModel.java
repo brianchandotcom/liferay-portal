@@ -253,6 +253,8 @@ public interface PortletItemModel extends BaseModel<PortletItem>, GroupedModel {
 
 	public PortletItem toEscapedModel();
 
+	public PortletItem toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

@@ -434,6 +434,8 @@ public interface MBThreadModel extends BaseModel<MBThread>, WorkflowedModel {
 
 	public MBThread toEscapedModel();
 
+	public MBThread toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

@@ -383,6 +383,8 @@ public interface AddressModel extends AttachedModel, AuditedModel,
 
 	public Address toEscapedModel();
 
+	public Address toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

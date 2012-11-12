@@ -140,6 +140,8 @@ public interface PortalPreferencesModel extends BaseModel<PortalPreferences> {
 
 	public PortalPreferences toEscapedModel();
 
+	public PortalPreferences toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

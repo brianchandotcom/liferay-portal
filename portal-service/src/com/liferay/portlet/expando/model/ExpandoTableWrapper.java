@@ -242,6 +242,10 @@ public class ExpandoTableWrapper implements ExpandoTable,
 		return new ExpandoTableWrapper(_expandoTable.toEscapedModel());
 	}
 
+	public com.liferay.portlet.expando.model.ExpandoTable toUnescapedModel() {
+		return new ExpandoTableWrapper(_expandoTable.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _expandoTable.toString();

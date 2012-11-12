@@ -327,6 +327,10 @@ public class ResourcePermissionWrapper implements ResourcePermission,
 		return new ResourcePermissionWrapper(_resourcePermission.toEscapedModel());
 	}
 
+	public com.liferay.portal.model.ResourcePermission toUnescapedModel() {
+		return new ResourcePermissionWrapper(_resourcePermission.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _resourcePermission.toString();

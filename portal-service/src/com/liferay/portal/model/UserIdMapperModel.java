@@ -172,6 +172,8 @@ public interface UserIdMapperModel extends BaseModel<UserIdMapper> {
 
 	public UserIdMapper toEscapedModel();
 
+	public UserIdMapper toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

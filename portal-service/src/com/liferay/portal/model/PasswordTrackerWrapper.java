@@ -248,6 +248,10 @@ public class PasswordTrackerWrapper implements PasswordTracker,
 		return new PasswordTrackerWrapper(_passwordTracker.toEscapedModel());
 	}
 
+	public com.liferay.portal.model.PasswordTracker toUnescapedModel() {
+		return new PasswordTrackerWrapper(_passwordTracker.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _passwordTracker.toString();

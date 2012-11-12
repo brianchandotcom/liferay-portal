@@ -230,6 +230,10 @@ public class ResourceBlockPermissionWrapper implements ResourceBlockPermission,
 		return new ResourceBlockPermissionWrapper(_resourceBlockPermission.toEscapedModel());
 	}
 
+	public com.liferay.portal.model.ResourceBlockPermission toUnescapedModel() {
+		return new ResourceBlockPermissionWrapper(_resourceBlockPermission.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _resourceBlockPermission.toString();

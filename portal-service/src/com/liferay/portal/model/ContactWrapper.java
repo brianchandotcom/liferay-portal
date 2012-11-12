@@ -993,6 +993,10 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 		return new ContactWrapper(_contact.toEscapedModel());
 	}
 
+	public com.liferay.portal.model.Contact toUnescapedModel() {
+		return new ContactWrapper(_contact.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _contact.toString();

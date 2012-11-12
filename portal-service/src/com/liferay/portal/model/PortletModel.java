@@ -162,6 +162,8 @@ public interface PortletModel extends BaseModel<Portlet> {
 
 	public Portlet toEscapedModel();
 
+	public Portlet toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

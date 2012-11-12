@@ -435,6 +435,8 @@ public interface LayoutSetBranchModel extends BaseModel<LayoutSetBranch>,
 
 	public LayoutSetBranch toEscapedModel();
 
+	public LayoutSetBranch toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

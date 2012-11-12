@@ -524,6 +524,10 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 		return new MBCategoryWrapper(_mbCategory.toEscapedModel());
 	}
 
+	public com.liferay.portlet.messageboards.model.MBCategory toUnescapedModel() {
+		return new MBCategoryWrapper(_mbCategory.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _mbCategory.toString();

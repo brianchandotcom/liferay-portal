@@ -142,6 +142,8 @@ public interface UserTrackerPathModel extends BaseModel<UserTrackerPath> {
 
 	public UserTrackerPath toEscapedModel();
 
+	public UserTrackerPath toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

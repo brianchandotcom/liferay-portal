@@ -143,6 +143,8 @@ public interface WikiPageResourceModel extends BaseModel<WikiPageResource> {
 
 	public WikiPageResource toEscapedModel();
 
+	public WikiPageResource toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

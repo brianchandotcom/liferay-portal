@@ -526,6 +526,10 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 		return new GroupWrapper(_group.toEscapedModel());
 	}
 
+	public com.liferay.portal.model.Group toUnescapedModel() {
+		return new GroupWrapper(_group.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _group.toString();

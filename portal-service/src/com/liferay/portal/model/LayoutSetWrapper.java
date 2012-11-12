@@ -583,6 +583,10 @@ public class LayoutSetWrapper implements LayoutSet, ModelWrapper<LayoutSet> {
 		return new LayoutSetWrapper(_layoutSet.toEscapedModel());
 	}
 
+	public com.liferay.portal.model.LayoutSet toUnescapedModel() {
+		return new LayoutSetWrapper(_layoutSet.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _layoutSet.toString();

@@ -285,6 +285,8 @@ public interface SCProductVersionModel extends AuditedModel,
 
 	public SCProductVersion toEscapedModel();
 
+	public SCProductVersion toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

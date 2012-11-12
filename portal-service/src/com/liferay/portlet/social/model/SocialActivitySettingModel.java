@@ -194,6 +194,8 @@ public interface SocialActivitySettingModel extends BaseModel<SocialActivitySett
 
 	public SocialActivitySetting toEscapedModel();
 
+	public SocialActivitySetting toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

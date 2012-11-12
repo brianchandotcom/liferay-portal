@@ -371,6 +371,8 @@ public interface ShoppingCouponModel extends BaseModel<ShoppingCoupon>,
 
 	public ShoppingCoupon toEscapedModel();
 
+	public ShoppingCoupon toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

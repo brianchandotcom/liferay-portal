@@ -2,7 +2,7 @@
 
 <deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
 	<service name="Portlet_Shopping_ShoppingCouponService" provider="java:RPC" style="rpc" use="encoded">
-		<arrayMapping xmlns:ns="urn:http.service.shopping.portlet.liferay.com" xmlns:cmp-ns="http://model.shopping.portlet.liferay.com" qname="ns:ArrayOf_tns6_ShoppingCouponSoap" type="java:com.liferay.portlet.shopping.model.ShoppingCouponSoap[]" innerType="cmp-ns:ShoppingCouponSoap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
+		<arrayMapping xmlns:ns="urn:http.service.shopping.portlet.liferay.com" xmlns:cmp-ns="http://model.shopping.portlet.liferay.com" qname="ns:ArrayOf_tns2_ShoppingCouponSoap" type="java:com.liferay.portlet.shopping.model.ShoppingCouponSoap[]" innerType="cmp-ns:ShoppingCouponSoap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
 		<arrayMapping xmlns:ns="urn:http.service.shopping.portlet.liferay.com" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema" qname="ns:ArrayOf_xsd_long" type="java:long[]" innerType="cmp-ns:long" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
 		<arrayMapping xmlns:ns="urn:http.service.shopping.portlet.liferay.com" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema" qname="ns:ArrayOf_xsd_string" type="java:java.lang.String[]" innerType="cmp-ns:string" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
 		<typeMapping xmlns:ns="http://model.portal.liferay.com" qname="ns:PortletPreferencesIds" type="java:com.liferay.portal.model.PortletPreferencesIds" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></typeMapping>
@@ -41,7 +41,7 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="couponId" type="tns:long"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.shopping.portlet.liferay.com" xmlns:rtns="urn:http.service.shopping.portlet.liferay.com" xmlns:tns2="http://model.shopping.portlet.liferay.com" name="search" qname="operNS:search" returnQName="searchReturn" returnType="rtns:ArrayOf_tns6_ShoppingCouponSoap" returnItemType="tns2:ShoppingCouponSoap" soapAction="">
+		<operation xmlns:operNS="urn:http.service.shopping.portlet.liferay.com" xmlns:rtns="urn:http.service.shopping.portlet.liferay.com" xmlns:tns2="http://model.shopping.portlet.liferay.com" name="search" qname="operNS:search" returnQName="searchReturn" returnType="rtns:ArrayOf_tns2_ShoppingCouponSoap" returnItemType="tns2:ShoppingCouponSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="companyId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="code" type="tns:string"></parameter>

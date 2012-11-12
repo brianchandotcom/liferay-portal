@@ -141,6 +141,8 @@ public interface UserGroupRoleModel extends BaseModel<UserGroupRole> {
 
 	public UserGroupRole toEscapedModel();
 
+	public UserGroupRole toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

@@ -423,6 +423,8 @@ public interface DLFileShortcutModel extends BaseModel<DLFileShortcut>,
 
 	public DLFileShortcut toEscapedModel();
 
+	public DLFileShortcut toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

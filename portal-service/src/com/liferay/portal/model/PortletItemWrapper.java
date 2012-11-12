@@ -410,6 +410,10 @@ public class PortletItemWrapper implements PortletItem,
 		return new PortletItemWrapper(_portletItem.toEscapedModel());
 	}
 
+	public com.liferay.portal.model.PortletItem toUnescapedModel() {
+		return new PortletItemWrapper(_portletItem.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _portletItem.toString();

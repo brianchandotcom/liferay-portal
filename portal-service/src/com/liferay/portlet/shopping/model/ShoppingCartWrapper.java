@@ -434,6 +434,10 @@ public class ShoppingCartWrapper implements ShoppingCart,
 		return new ShoppingCartWrapper(_shoppingCart.toEscapedModel());
 	}
 
+	public com.liferay.portlet.shopping.model.ShoppingCart toUnescapedModel() {
+		return new ShoppingCartWrapper(_shoppingCart.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _shoppingCart.toString();

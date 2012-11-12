@@ -80,8 +80,14 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="start" type="tns:int"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="end" type="tns:int"></parameter>
 		</operation>
+		<operation xmlns:operNS="urn:http.service.messageboards.portlet.liferay.com" xmlns:rtns="http://model.messageboards.portlet.liferay.com" name="moveThreadToTrash" qname="operNS:moveThreadToTrash" returnQName="moveThreadToTrashReturn" returnType="rtns:MBThreadSoap" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="threadId" type="tns:long"></parameter>
+		</operation>
 		<operation xmlns:operNS="urn:http.service.messageboards.portlet.liferay.com" xmlns:rtns="http://model.messageboards.portlet.liferay.com" name="moveThread" qname="operNS:moveThread" returnQName="moveThreadReturn" returnType="rtns:MBThreadSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="categoryId" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="threadId" type="tns:long"></parameter>
+		</operation>
+		<operation xmlns:operNS="urn:http.service.messageboards.portlet.liferay.com" name="restoreThreadFromTrash" qname="operNS:restoreThreadFromTrash" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="threadId" type="tns:long"></parameter>
 		</operation>
 		<operation xmlns:operNS="urn:http.service.messageboards.portlet.liferay.com" xmlns:rtns="http://model.messageboards.portlet.liferay.com" name="splitThread" qname="operNS:splitThread" returnQName="splitThreadReturn" returnType="rtns:MBThreadSoap" soapAction="">
@@ -92,7 +98,7 @@
 		<operation xmlns:operNS="urn:http.service.messageboards.portlet.liferay.com" name="unlockThread" qname="operNS:unlockThread" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="threadId" type="tns:long"></parameter>
 		</operation>
-		<parameter name="allowedMethods" value="deleteThread getGroupThreads getGroupThreadsCount getThreads getThreadsCount moveThread splitThread unlockThread" />
+		<parameter name="allowedMethods" value="deleteThread getGroupThreads getGroupThreadsCount getThreads getThreadsCount moveThread moveThreadToTrash restoreThreadFromTrash splitThread unlockThread" />
 		<parameter name="className" value="com.liferay.portlet.messageboards.service.http.MBThreadServiceSoap" />
 		<parameter name="schemaUnqualified" value="http://model.messageboards.portlet.liferay.com,http://model.portal.liferay.com,http://service.portal.liferay.com,http://xml.apache.org/xml-soap,urn:http.service.messageboards.portlet.liferay.com" />
 		<parameter name="typeMappingVersion" value="1.2" />

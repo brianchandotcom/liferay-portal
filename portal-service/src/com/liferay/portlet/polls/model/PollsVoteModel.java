@@ -231,6 +231,8 @@ public interface PollsVoteModel extends AuditedModel, BaseModel<PollsVote> {
 
 	public PollsVote toEscapedModel();
 
+	public PollsVote toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

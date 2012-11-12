@@ -274,6 +274,8 @@ public interface EmailAddressModel extends AttachedModel, AuditedModel,
 
 	public EmailAddress toEscapedModel();
 
+	public EmailAddress toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

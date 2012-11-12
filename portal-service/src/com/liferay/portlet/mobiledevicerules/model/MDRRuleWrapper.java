@@ -698,6 +698,10 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 		return new MDRRuleWrapper(_mdrRule.toEscapedModel());
 	}
 
+	public com.liferay.portlet.mobiledevicerules.model.MDRRule toUnescapedModel() {
+		return new MDRRuleWrapper(_mdrRule.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _mdrRule.toString();

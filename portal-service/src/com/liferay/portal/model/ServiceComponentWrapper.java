@@ -252,6 +252,10 @@ public class ServiceComponentWrapper implements ServiceComponent,
 		return new ServiceComponentWrapper(_serviceComponent.toEscapedModel());
 	}
 
+	public com.liferay.portal.model.ServiceComponent toUnescapedModel() {
+		return new ServiceComponentWrapper(_serviceComponent.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _serviceComponent.toString();

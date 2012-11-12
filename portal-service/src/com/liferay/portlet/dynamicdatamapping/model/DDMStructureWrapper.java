@@ -787,6 +787,10 @@ public class DDMStructureWrapper implements DDMStructure,
 		return new DDMStructureWrapper(_ddmStructure.toEscapedModel());
 	}
 
+	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure toUnescapedModel() {
+		return new DDMStructureWrapper(_ddmStructure.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _ddmStructure.toString();

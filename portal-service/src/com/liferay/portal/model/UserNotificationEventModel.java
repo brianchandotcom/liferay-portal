@@ -235,6 +235,8 @@ public interface UserNotificationEventModel extends BaseModel<UserNotificationEv
 
 	public UserNotificationEvent toEscapedModel();
 
+	public UserNotificationEvent toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

@@ -287,6 +287,10 @@ public class RepositoryEntryWrapper implements RepositoryEntry,
 		return new RepositoryEntryWrapper(_repositoryEntry.toEscapedModel());
 	}
 
+	public com.liferay.portal.model.RepositoryEntry toUnescapedModel() {
+		return new RepositoryEntryWrapper(_repositoryEntry.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _repositoryEntry.toString();

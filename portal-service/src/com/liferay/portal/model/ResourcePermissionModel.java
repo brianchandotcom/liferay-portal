@@ -197,6 +197,8 @@ public interface ResourcePermissionModel extends BaseModel<ResourcePermission> {
 
 	public ResourcePermission toEscapedModel();
 
+	public ResourcePermission toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

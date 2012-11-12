@@ -277,6 +277,10 @@ public class PortletPreferencesWrapper implements PortletPreferences,
 		return new PortletPreferencesWrapper(_portletPreferences.toEscapedModel());
 	}
 
+	public com.liferay.portal.model.PortletPreferences toUnescapedModel() {
+		return new PortletPreferencesWrapper(_portletPreferences.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _portletPreferences.toString();

@@ -158,6 +158,8 @@ public interface MBThreadFlagModel extends BaseModel<MBThreadFlag> {
 
 	public MBThreadFlag toEscapedModel();
 
+	public MBThreadFlag toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

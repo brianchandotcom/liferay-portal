@@ -858,6 +858,10 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 		return new BlogsEntryWrapper(_blogsEntry.toEscapedModel());
 	}
 
+	public com.liferay.portlet.blogs.model.BlogsEntry toUnescapedModel() {
+		return new BlogsEntryWrapper(_blogsEntry.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _blogsEntry.toString();

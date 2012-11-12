@@ -177,6 +177,8 @@ public interface PluginSettingModel extends BaseModel<PluginSetting> {
 
 	public PluginSetting toEscapedModel();
 
+	public PluginSetting toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

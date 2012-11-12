@@ -1089,6 +1089,8 @@ public interface LayoutRevisionModel extends BaseModel<LayoutRevision>,
 
 	public LayoutRevision toEscapedModel();
 
+	public LayoutRevision toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

@@ -519,6 +519,10 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 		return new DDLRecordWrapper(_ddlRecord.toEscapedModel());
 	}
 
+	public com.liferay.portlet.dynamicdatalists.model.DDLRecord toUnescapedModel() {
+		return new DDLRecordWrapper(_ddlRecord.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _ddlRecord.toString();

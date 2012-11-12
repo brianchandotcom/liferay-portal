@@ -353,6 +353,8 @@ public interface DDMContentModel extends BaseModel<DDMContent>, GroupedModel {
 
 	public DDMContent toEscapedModel();
 
+	public DDMContent toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

@@ -404,6 +404,8 @@ public interface WikiNodeModel extends BaseModel<WikiNode>, GroupedModel,
 
 	public WikiNode toEscapedModel();
 
+	public WikiNode toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

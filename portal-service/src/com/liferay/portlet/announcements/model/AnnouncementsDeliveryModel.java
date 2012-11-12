@@ -221,6 +221,8 @@ public interface AnnouncementsDeliveryModel extends BaseModel<AnnouncementsDeliv
 
 	public AnnouncementsDelivery toEscapedModel();
 
+	public AnnouncementsDelivery toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

@@ -250,6 +250,10 @@ public class MBThreadFlagWrapper implements MBThreadFlag,
 		return new MBThreadFlagWrapper(_mbThreadFlag.toEscapedModel());
 	}
 
+	public com.liferay.portlet.messageboards.model.MBThreadFlag toUnescapedModel() {
+		return new MBThreadFlagWrapper(_mbThreadFlag.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _mbThreadFlag.toString();

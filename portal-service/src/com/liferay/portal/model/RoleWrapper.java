@@ -587,6 +587,10 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 		return new RoleWrapper(_role.toEscapedModel());
 	}
 
+	public com.liferay.portal.model.Role toUnescapedModel() {
+		return new RoleWrapper(_role.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _role.toString();

@@ -856,6 +856,10 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 		return new DLFolderWrapper(_dlFolder.toEscapedModel());
 	}
 
+	public com.liferay.portlet.documentlibrary.model.DLFolder toUnescapedModel() {
+		return new DLFolderWrapper(_dlFolder.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _dlFolder.toString();

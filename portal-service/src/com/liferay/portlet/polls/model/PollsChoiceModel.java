@@ -251,6 +251,8 @@ public interface PollsChoiceModel extends BaseModel<PollsChoice> {
 
 	public PollsChoice toEscapedModel();
 
+	public PollsChoice toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

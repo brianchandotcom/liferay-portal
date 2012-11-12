@@ -965,6 +965,8 @@ public interface LayoutModel extends BaseModel<Layout> {
 
 	public Layout toEscapedModel();
 
+	public Layout toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

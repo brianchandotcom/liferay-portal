@@ -413,6 +413,10 @@ public class WorkflowInstanceLinkWrapper implements WorkflowInstanceLink,
 		return new WorkflowInstanceLinkWrapper(_workflowInstanceLink.toEscapedModel());
 	}
 
+	public com.liferay.portal.model.WorkflowInstanceLink toUnescapedModel() {
+		return new WorkflowInstanceLinkWrapper(_workflowInstanceLink.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _workflowInstanceLink.toString();

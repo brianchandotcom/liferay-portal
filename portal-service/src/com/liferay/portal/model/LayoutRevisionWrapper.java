@@ -1617,6 +1617,10 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 		return new LayoutRevisionWrapper(_layoutRevision.toEscapedModel());
 	}
 
+	public com.liferay.portal.model.LayoutRevision toUnescapedModel() {
+		return new LayoutRevisionWrapper(_layoutRevision.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _layoutRevision.toString();

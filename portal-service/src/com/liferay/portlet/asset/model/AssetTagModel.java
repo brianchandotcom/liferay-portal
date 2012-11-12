@@ -232,6 +232,8 @@ public interface AssetTagModel extends BaseModel<AssetTag>, GroupedModel {
 
 	public AssetTag toEscapedModel();
 
+	public AssetTag toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

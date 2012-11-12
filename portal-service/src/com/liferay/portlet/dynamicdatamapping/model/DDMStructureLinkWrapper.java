@@ -242,6 +242,10 @@ public class DDMStructureLinkWrapper implements DDMStructureLink,
 		return new DDMStructureLinkWrapper(_ddmStructureLink.toEscapedModel());
 	}
 
+	public com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink toUnescapedModel() {
+		return new DDMStructureLinkWrapper(_ddmStructureLink.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _ddmStructureLink.toString();

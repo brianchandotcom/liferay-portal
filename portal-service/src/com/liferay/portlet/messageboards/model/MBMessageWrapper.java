@@ -956,6 +956,10 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 		return new MBMessageWrapper(_mbMessage.toEscapedModel());
 	}
 
+	public com.liferay.portlet.messageboards.model.MBMessage toUnescapedModel() {
+		return new MBMessageWrapper(_mbMessage.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _mbMessage.toString();

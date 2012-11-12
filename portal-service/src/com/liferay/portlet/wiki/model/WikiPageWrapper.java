@@ -853,6 +853,10 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 		return new WikiPageWrapper(_wikiPage.toEscapedModel());
 	}
 
+	public com.liferay.portlet.wiki.model.WikiPage toUnescapedModel() {
+		return new WikiPageWrapper(_wikiPage.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _wikiPage.toString();

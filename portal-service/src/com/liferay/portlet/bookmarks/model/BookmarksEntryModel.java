@@ -320,6 +320,8 @@ public interface BookmarksEntryModel extends BaseModel<BookmarksEntry>,
 
 	public BookmarksEntry toEscapedModel();
 
+	public BookmarksEntry toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

@@ -150,6 +150,8 @@ public interface MBDiscussionModel extends AttachedModel, BaseModel<MBDiscussion
 
 	public MBDiscussion toEscapedModel();
 
+	public MBDiscussion toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

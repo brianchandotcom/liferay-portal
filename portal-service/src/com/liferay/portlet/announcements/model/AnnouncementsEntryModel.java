@@ -366,6 +366,8 @@ public interface AnnouncementsEntryModel extends AttachedModel, AuditedModel,
 
 	public AnnouncementsEntry toEscapedModel();
 
+	public AnnouncementsEntry toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

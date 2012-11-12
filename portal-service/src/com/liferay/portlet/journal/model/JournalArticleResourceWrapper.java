@@ -230,6 +230,10 @@ public class JournalArticleResourceWrapper implements JournalArticleResource,
 		return new JournalArticleResourceWrapper(_journalArticleResource.toEscapedModel());
 	}
 
+	public com.liferay.portlet.journal.model.JournalArticleResource toUnescapedModel() {
+		return new JournalArticleResourceWrapper(_journalArticleResource.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _journalArticleResource.toString();

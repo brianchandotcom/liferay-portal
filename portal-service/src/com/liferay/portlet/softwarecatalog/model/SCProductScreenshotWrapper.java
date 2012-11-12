@@ -304,6 +304,10 @@ public class SCProductScreenshotWrapper implements SCProductScreenshot,
 		return new SCProductScreenshotWrapper(_scProductScreenshot.toEscapedModel());
 	}
 
+	public com.liferay.portlet.softwarecatalog.model.SCProductScreenshot toUnescapedModel() {
+		return new SCProductScreenshotWrapper(_scProductScreenshot.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _scProductScreenshot.toString();

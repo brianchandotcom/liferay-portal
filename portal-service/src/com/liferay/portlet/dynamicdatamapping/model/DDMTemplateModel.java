@@ -609,6 +609,8 @@ public interface DDMTemplateModel extends AttachedModel, BaseModel<DDMTemplate>,
 
 	public DDMTemplate toEscapedModel();
 
+	public DDMTemplate toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

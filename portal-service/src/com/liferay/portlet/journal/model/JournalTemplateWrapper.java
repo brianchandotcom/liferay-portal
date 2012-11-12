@@ -842,6 +842,10 @@ public class JournalTemplateWrapper implements JournalTemplate,
 		return new JournalTemplateWrapper(_journalTemplate.toEscapedModel());
 	}
 
+	public com.liferay.portlet.journal.model.JournalTemplate toUnescapedModel() {
+		return new JournalTemplateWrapper(_journalTemplate.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _journalTemplate.toString();

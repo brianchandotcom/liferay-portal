@@ -268,6 +268,8 @@ public interface ShoppingCartModel extends BaseModel<ShoppingCart>, GroupedModel
 
 	public ShoppingCart toEscapedModel();
 
+	public ShoppingCart toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

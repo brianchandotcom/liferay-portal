@@ -275,6 +275,10 @@ public class AnnouncementsFlagWrapper implements AnnouncementsFlag,
 		return new AnnouncementsFlagWrapper(_announcementsFlag.toEscapedModel());
 	}
 
+	public com.liferay.portlet.announcements.model.AnnouncementsFlag toUnescapedModel() {
+		return new AnnouncementsFlagWrapper(_announcementsFlag.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _announcementsFlag.toString();

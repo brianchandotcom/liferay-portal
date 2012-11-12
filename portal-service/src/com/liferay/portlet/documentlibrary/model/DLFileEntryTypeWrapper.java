@@ -400,6 +400,10 @@ public class DLFileEntryTypeWrapper implements DLFileEntryType,
 		return new DLFileEntryTypeWrapper(_dlFileEntryType.toEscapedModel());
 	}
 
+	public com.liferay.portlet.documentlibrary.model.DLFileEntryType toUnescapedModel() {
+		return new DLFileEntryTypeWrapper(_dlFileEntryType.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _dlFileEntryType.toString();

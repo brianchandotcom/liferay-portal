@@ -633,6 +633,10 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 		return new DDLRecordVersionWrapper(_ddlRecordVersion.toEscapedModel());
 	}
 
+	public com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion toUnescapedModel() {
+		return new DDLRecordVersionWrapper(_ddlRecordVersion.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _ddlRecordVersion.toString();

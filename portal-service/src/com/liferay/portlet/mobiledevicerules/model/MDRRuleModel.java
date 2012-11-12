@@ -468,6 +468,8 @@ public interface MDRRuleModel extends BaseModel<MDRRule>, GroupedModel {
 
 	public MDRRule toEscapedModel();
 
+	public MDRRule toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

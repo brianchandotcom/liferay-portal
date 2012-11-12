@@ -214,6 +214,8 @@ public interface CountryModel extends BaseModel<Country> {
 
 	public Country toEscapedModel();
 
+	public Country toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

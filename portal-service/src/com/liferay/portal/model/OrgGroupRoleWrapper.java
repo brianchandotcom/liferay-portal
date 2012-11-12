@@ -202,6 +202,10 @@ public class OrgGroupRoleWrapper implements OrgGroupRole,
 		return new OrgGroupRoleWrapper(_orgGroupRole.toEscapedModel());
 	}
 
+	public com.liferay.portal.model.OrgGroupRole toUnescapedModel() {
+		return new OrgGroupRoleWrapper(_orgGroupRole.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _orgGroupRole.toString();

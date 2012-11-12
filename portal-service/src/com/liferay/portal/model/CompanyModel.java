@@ -241,6 +241,8 @@ public interface CompanyModel extends BaseModel<Company> {
 
 	public Company toEscapedModel();
 
+	public Company toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

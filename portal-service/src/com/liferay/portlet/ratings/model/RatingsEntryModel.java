@@ -242,6 +242,8 @@ public interface RatingsEntryModel extends AttachedModel, AuditedModel,
 
 	public RatingsEntry toEscapedModel();
 
+	public RatingsEntry toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

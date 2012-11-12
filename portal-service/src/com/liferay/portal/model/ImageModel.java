@@ -185,6 +185,8 @@ public interface ImageModel extends BaseModel<Image> {
 
 	public Image toEscapedModel();
 
+	public Image toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

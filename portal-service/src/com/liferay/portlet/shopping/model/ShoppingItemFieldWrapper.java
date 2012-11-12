@@ -254,6 +254,10 @@ public class ShoppingItemFieldWrapper implements ShoppingItemField,
 		return new ShoppingItemFieldWrapper(_shoppingItemField.toEscapedModel());
 	}
 
+	public com.liferay.portlet.shopping.model.ShoppingItemField toUnescapedModel() {
+		return new ShoppingItemFieldWrapper(_shoppingItemField.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _shoppingItemField.toString();

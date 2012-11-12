@@ -336,6 +336,10 @@ public class SocialActivityAchievementWrapper
 		return new SocialActivityAchievementWrapper(_socialActivityAchievement.toEscapedModel());
 	}
 
+	public com.liferay.portlet.social.model.SocialActivityAchievement toUnescapedModel() {
+		return new SocialActivityAchievementWrapper(_socialActivityAchievement.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _socialActivityAchievement.toString();

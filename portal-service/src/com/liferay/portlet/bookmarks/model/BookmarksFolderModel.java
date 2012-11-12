@@ -277,6 +277,8 @@ public interface BookmarksFolderModel extends BaseModel<BookmarksFolder>,
 
 	public BookmarksFolder toEscapedModel();
 
+	public BookmarksFolder toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

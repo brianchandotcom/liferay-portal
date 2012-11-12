@@ -320,6 +320,8 @@ public interface OrgLaborModel extends BaseModel<OrgLabor> {
 
 	public OrgLabor toEscapedModel();
 
+	public OrgLabor toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

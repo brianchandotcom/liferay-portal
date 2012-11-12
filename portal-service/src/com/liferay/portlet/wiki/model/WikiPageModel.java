@@ -537,6 +537,8 @@ public interface WikiPageModel extends BaseModel<WikiPage>, GroupedModel,
 
 	public WikiPage toEscapedModel();
 
+	public WikiPage toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

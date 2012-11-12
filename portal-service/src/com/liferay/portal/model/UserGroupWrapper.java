@@ -284,6 +284,10 @@ public class UserGroupWrapper implements UserGroup, ModelWrapper<UserGroup> {
 		return new UserGroupWrapper(_userGroup.toEscapedModel());
 	}
 
+	public com.liferay.portal.model.UserGroup toUnescapedModel() {
+		return new UserGroupWrapper(_userGroup.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _userGroup.toString();

@@ -238,6 +238,10 @@ public class ShardWrapper implements Shard, ModelWrapper<Shard> {
 		return new ShardWrapper(_shard.toEscapedModel());
 	}
 
+	public com.liferay.portal.model.Shard toUnescapedModel() {
+		return new ShardWrapper(_shard.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _shard.toString();

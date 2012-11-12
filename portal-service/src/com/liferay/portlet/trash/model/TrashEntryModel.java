@@ -255,6 +255,8 @@ public interface TrashEntryModel extends AttachedModel, BaseModel<TrashEntry> {
 
 	public TrashEntry toEscapedModel();
 
+	public TrashEntry toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

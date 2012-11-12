@@ -322,6 +322,8 @@ public interface GroupModel extends AttachedModel, BaseModel<Group> {
 
 	public Group toEscapedModel();
 
+	public Group toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

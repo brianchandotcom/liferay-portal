@@ -288,6 +288,8 @@ public interface PhoneModel extends AttachedModel, AuditedModel, BaseModel<Phone
 
 	public Phone toEscapedModel();
 
+	public Phone toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

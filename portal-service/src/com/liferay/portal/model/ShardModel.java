@@ -149,6 +149,8 @@ public interface ShardModel extends AttachedModel, BaseModel<Shard> {
 
 	public Shard toEscapedModel();
 
+	public Shard toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

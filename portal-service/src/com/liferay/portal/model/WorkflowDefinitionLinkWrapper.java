@@ -467,6 +467,10 @@ public class WorkflowDefinitionLinkWrapper implements WorkflowDefinitionLink,
 		return new WorkflowDefinitionLinkWrapper(_workflowDefinitionLink.toEscapedModel());
 	}
 
+	public com.liferay.portal.model.WorkflowDefinitionLink toUnescapedModel() {
+		return new WorkflowDefinitionLinkWrapper(_workflowDefinitionLink.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _workflowDefinitionLink.toString();

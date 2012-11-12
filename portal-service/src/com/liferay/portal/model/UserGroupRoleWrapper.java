@@ -222,6 +222,10 @@ public class UserGroupRoleWrapper implements UserGroupRole,
 		return new UserGroupRoleWrapper(_userGroupRole.toEscapedModel());
 	}
 
+	public com.liferay.portal.model.UserGroupRole toUnescapedModel() {
+		return new UserGroupRoleWrapper(_userGroupRole.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _userGroupRole.toString();

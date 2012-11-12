@@ -453,6 +453,8 @@ public interface CalEventModel extends BaseModel<CalEvent>, GroupedModel {
 
 	public CalEvent toEscapedModel();
 
+	public CalEvent toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

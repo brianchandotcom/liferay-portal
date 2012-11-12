@@ -385,6 +385,10 @@ public class SubscriptionWrapper implements Subscription,
 		return new SubscriptionWrapper(_subscription.toEscapedModel());
 	}
 
+	public com.liferay.portal.model.Subscription toUnescapedModel() {
+		return new SubscriptionWrapper(_subscription.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _subscription.toString();

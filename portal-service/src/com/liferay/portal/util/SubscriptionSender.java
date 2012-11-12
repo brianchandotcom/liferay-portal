@@ -152,13 +152,17 @@ public class SubscriptionSender implements Serializable {
 				String toAddress = ovp.getKey();
 				String toName = ovp.getValue();
 
+				if (Validator.isNull(toAddress)) {
+					continue;
+				}
+
 				if (_sentEmailAddresses.contains(toAddress)) {
 					if (_log.isDebugEnabled()) {
 						_log.debug(
 							"Do not send a duplicate email to " + toAddress);
 					}
 
-					return;
+					continue;
 				}
 				else {
 					if (_log.isDebugEnabled()) {

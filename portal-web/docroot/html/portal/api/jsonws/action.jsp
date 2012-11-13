@@ -369,7 +369,7 @@ String signature = ParamUtil.getString(request, "signature");
 				if (stringType[key]) {
 					value = '\'' + value + '\'';
 				}
-				else if (arrayType[key]) {
+				else if (value && arrayType[key]) {
 					value = '[' + value + ']';
 				}
 
@@ -415,7 +415,8 @@ String signature = ParamUtil.getString(request, "signature");
 
 					var formQueryString = A.IO.prototype._serialize(formEl);
 
-					var data = [];
+					var curlData = [];
+					var scriptData = [];
 
 					var ignoreFields = {
 						formDate: true,
@@ -425,8 +426,16 @@ String signature = ParamUtil.getString(request, "signature");
 					formQueryString.replace(
 						REGEX_QUERY_STRING,
 						function(match, key, value) {
+							if (!ignoreFields[key]) {
+								curlData.push(
+									{
+										key: key,
+										value: value
+									}
+								);
+							}
 							if (value && !ignoreFields[key]) {
-								data.push(
+								scriptData.push(
 									{
 										key: key,
 										value: value
@@ -436,12 +445,15 @@ String signature = ParamUtil.getString(request, "signature");
 						}
 					);
 
-					var tplData = {
-						data: data
+					var tplCurlData = {
+						data: curlData
+					};
+					var tplScriptData = {
+						data: scriptData
 					};
 
-					curlTpl.render(tplData, curlExample);
-					scriptTpl.render(tplData, jsExample);
+					curlTpl.render(tplCurlData, curlExample);
+					scriptTpl.render(tplScriptData, jsExample);
 
 					var urlTplData = {
 						data : [],

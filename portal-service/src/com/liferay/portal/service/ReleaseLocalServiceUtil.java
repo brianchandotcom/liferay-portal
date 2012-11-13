@@ -266,10 +266,10 @@ public class ReleaseLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.model.Release getRelease(
-		java.lang.String servletContextName, int buildNumber)
+		java.lang.String servletContextName)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getRelease(servletContextName, buildNumber);
+		return getService().getRelease(servletContextName);
 	}
 
 	public static com.liferay.portal.model.Release updateRelease(

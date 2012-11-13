@@ -283,7 +283,7 @@
 		<property name="beanDefinitions">
 			<map>
 				<entry key="com.liferay.portal.cache.ThreadLocalCacheAdvice" value="nextMethodInterceptor" />
-				<entry key="com.liferay.portal.cluster.ClusterableChainableMethodAdviceInjector" value="parentChainableMethodAdvice,servletContextName" />
+				<entry key="com.liferay.portal.cluster.ClusterableChainableMethodAdviceInjector" value="parentChainableMethodAdvice" />
 				<entry key="com.liferay.portal.dao.jdbc.aop.DynamicDataSourceTransactionInterceptor" value="transactionAttributeSource,transactionManager" />
 				<entry key="com.liferay.portal.dao.orm.hibernate.PortletSessionFactoryImpl" value="dataSource,sessionFactoryClassLoader,sessionFactoryImplementor" />
 				<entry key="com.liferay.portal.dao.shard.advice.ShardAdvice" value="" />

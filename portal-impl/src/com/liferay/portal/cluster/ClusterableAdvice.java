@@ -15,17 +15,28 @@
 package com.liferay.portal.cluster;
 
 import com.liferay.portal.kernel.bean.IdentifiableBean;
+import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
 import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
+import com.liferay.portal.kernel.cluster.ClusterInvokeAcceptor;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.cluster.Clusterable;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.spring.aop.Swallowable;
+import com.liferay.portal.kernel.util.ClassLoaderPool;
 import com.liferay.portal.kernel.util.MethodHandler;
+import com.liferay.portal.kernel.util.MethodKey;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 import com.liferay.portal.spring.aop.AnnotationChainableMethodAdvice;
 
+import java.io.Serializable;
+
 import java.lang.annotation.Annotation;
-import java.lang.reflect.Method;
+import java.lang.reflect.Constructor;
+
+import java.util.Map;
 
 import org.aopalliance.intercept.MethodInvocation;
 
@@ -60,19 +71,11 @@ public class ClusterableAdvice
 			return;
 		}
 
-		Method method = methodInvocation.getMethod();
-
-		MethodHandler methodHandler = new MethodHandler(
-			method, methodInvocation.getArguments());
+		MethodHandler methodHandler = createMethodHandler(
+			clusterable.acceptor(), methodInvocation);
 
 		ClusterRequest clusterRequest = ClusterRequest.createMulticastRequest(
 			methodHandler, true);
-
-		IdentifiableBean identifiableBean = (IdentifiableBean)thisObject;
-
-		clusterRequest.setBeanIdentifier(identifiableBean.getBeanIdentifier());
-
-		clusterRequest.setServletContextName(_servletContextName);
 
 		ClusterExecutorUtil.execute(clusterRequest);
 	}
@@ -101,12 +104,102 @@ public class ClusterableAdvice
 		return _nullClusterable;
 	}
 
-	public void setServletContextName(String servletContextName) {
-		_servletContextName = servletContextName;
+	protected MethodHandler createMethodHandler(
+		Class<? extends ClusterInvokeAcceptor> clusterInvokeAcceptorClass,
+		MethodInvocation methodInvocation) {
+
+		if (clusterInvokeAcceptorClass == ClusterInvokeAcceptor.class) {
+			clusterInvokeAcceptorClass = null;
+		}
+
+		MethodHandler methodHandler = new MethodHandler(
+			methodInvocation.getMethod(), methodInvocation.getArguments());
+
+		Object thisObject = methodInvocation.getThis();
+
+		IdentifiableBean identifiableBean = (IdentifiableBean)thisObject;
+
+		String beanIdentifier = identifiableBean.getBeanIdentifier();
+
+		Thread currentThread = Thread.currentThread();
+
+		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+
+		String servletContextName = ClassLoaderPool.getContextName(
+			contextClassLoader);
+
+		Map<String, Serializable> context =
+			ClusterableContextThreadLocal.collectThreadLocalContext();
+
+		return new MethodHandler(
+			_invokeMethodKey, methodHandler, beanIdentifier, servletContextName,
+			clusterInvokeAcceptorClass, context);
+	}
+
+	private static Object _invoke(
+			MethodHandler methodHandler, String servletContextName,
+			String beanIdentifier,
+			Class<? extends ClusterInvokeAcceptor> clusterInvokeAcceptorClass,
+			Map<String, Serializable> context)
+		throws Exception {
+
+		if (clusterInvokeAcceptorClass != null) {
+			Constructor<? extends ClusterInvokeAcceptor> constructor =
+				clusterInvokeAcceptorClass.getDeclaredConstructor();
+
+			if (!constructor.isAccessible()) {
+				constructor.setAccessible(true);
+			}
+
+			ClusterInvokeAcceptor clusterInvokeAcceptor =
+				constructor.newInstance();
+
+			if (!clusterInvokeAcceptor.accept(context)) {
+				return null;
+			}
+		}
+
+		if (servletContextName == null) {
+			if (Validator.isNull(beanIdentifier)) {
+				return methodHandler.invoke(true);
+			}
+			else {
+				Object bean = PortalBeanLocatorUtil.locate(beanIdentifier);
+
+				return methodHandler.invoke(bean);
+			}
+		}
+
+		ClassLoader contextClassLoader =
+			PACLClassLoaderUtil.getContextClassLoader();
+
+		try {
+			ClassLoader classLoader =
+				(ClassLoader)PortletBeanLocatorUtil.locate(
+					servletContextName, "portletClassLoader");
+
+			PACLClassLoaderUtil.setContextClassLoader(classLoader);
+
+			if (Validator.isNull(beanIdentifier)) {
+				return methodHandler.invoke(true);
+			}
+			else {
+				Object bean = PortletBeanLocatorUtil.locate(
+					servletContextName, beanIdentifier);
+
+				return methodHandler.invoke(bean);
+			}
+		}
+		finally {
+			PACLClassLoaderUtil.setContextClassLoader(contextClassLoader);
+		}
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(ClusterableAdvice.class);
 
+	private static MethodKey _invokeMethodKey = new MethodKey(
+		ClusterableAdvice.class, "_invoke", MethodHandler.class, String.class,
+		String.class, Class.class, Map.class);
 	private static Clusterable _nullClusterable =
 		new Clusterable() {
 
@@ -114,8 +207,10 @@ public class ClusterableAdvice
 				return Clusterable.class;
 			}
 
-		};
+			public Class<? extends ClusterInvokeAcceptor> acceptor() {
+				return null;
+			}
 
-	private String _servletContextName;
+		};
 
 }

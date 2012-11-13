@@ -24,24 +24,14 @@ import com.liferay.portal.util.PropsValues;
 public class ClusterableChainableMethodAdviceInjector
 	extends ChainableMethodAdviceInjector {
 
-	public void setServletContextName(String servletContextName) {
-		_servletContextName = servletContextName;
-	}
-
 	@Override
 	protected ChainableMethodAdvice getNewChainableMethodAdvice() {
-		ClusterableAdvice clusterableAdvice = new ClusterableAdvice();
-
-		clusterableAdvice.setServletContextName(_servletContextName);
-
-		return clusterableAdvice;
+		return new ClusterableAdvice();
 	}
 
 	@Override
 	protected boolean isInjectCondition() {
 		return PropsValues.CLUSTER_LINK_ENABLED;
 	}
-
-	private String _servletContextName;
 
 }

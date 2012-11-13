@@ -14,21 +14,15 @@
 
 package com.liferay.portal.kernel.cluster;
 
-import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import java.io.Serializable;
+
+import java.util.Map;
 
 /**
  * @author Shuyang Zhou
  */
-@Documented
-@Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.METHOD)
-public @interface Clusterable {
+public interface ClusterInvokeAcceptor {
 
-	Class<? extends ClusterInvokeAcceptor> acceptor()
-		default ClusterInvokeAcceptor.class;
+	public boolean accept(Map<String, Serializable> context);
 
 }

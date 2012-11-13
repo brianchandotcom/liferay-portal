@@ -14,8 +14,6 @@
 
 package com.liferay.portal.cluster;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
 import com.liferay.portal.kernel.cluster.Address;
 import com.liferay.portal.kernel.cluster.ClusterException;
 import com.liferay.portal.kernel.cluster.ClusterMessageType;
@@ -25,8 +23,6 @@ import com.liferay.portal.kernel.cluster.FutureClusterResponses;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -210,47 +206,6 @@ public class ClusterRequestReceiver extends BaseReceiver {
 		}
 	}
 
-	protected Object invoke(
-			String servletContextName, String beanIdentifier,
-			MethodHandler methodHandler)
-		throws Exception {
-
-		if (servletContextName == null) {
-			if (Validator.isNull(beanIdentifier)) {
-				return methodHandler.invoke(true);
-			}
-			else {
-				Object bean = PortalBeanLocatorUtil.locate(beanIdentifier);
-
-				return methodHandler.invoke(bean);
-			}
-		}
-
-		ClassLoader contextClassLoader =
-			PACLClassLoaderUtil.getContextClassLoader();
-
-		try {
-			ClassLoader classLoader =
-				(ClassLoader)PortletBeanLocatorUtil.locate(
-					servletContextName, "portletClassLoader");
-
-			PACLClassLoaderUtil.setContextClassLoader(classLoader);
-
-			if (Validator.isNull(beanIdentifier)) {
-				return methodHandler.invoke(true);
-			}
-			else {
-				Object bean = PortletBeanLocatorUtil.locate(
-					servletContextName, beanIdentifier);
-
-				return methodHandler.invoke(bean);
-			}
-		}
-		finally {
-			PACLClassLoaderUtil.setContextClassLoader(contextClassLoader);
-		}
-	}
-
 	protected void processClusterRequest(
 		ClusterRequest clusterRequest, Address sourceAddress) {
 
@@ -279,9 +234,7 @@ public class ClusterRequestReceiver extends BaseReceiver {
 			try {
 				ClusterInvokeThreadLocal.setEnabled(false);
 
-				returnValue = invoke(
-					clusterRequest.getServletContextName(),
-					clusterRequest.getBeanIdentifier(), methodHandler);
+				returnValue = methodHandler.invoke(true);
 			}
 			catch (Exception e) {
 				exception = e;

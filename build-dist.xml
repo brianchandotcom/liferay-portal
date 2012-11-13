@@ -1537,12 +1537,69 @@ set "CLASSPATH=%FMWCONFIG_CLASSPATH%"
 					<arg value="/c" />
 					<arg value="create-weblogic-domain.bat" />
 				</exec>
+
+				<replace file="${app.server.weblogic.instance.dir}/startWebLogic.cmd">
+					<replacetoken><![CDATA[SETLOCAL]]></replacetoken>
+					<replacevalue>
+						<![CDATA[
+							SETLOCAL
+
+							set "USER_MEM_ARGS=-Xmx1024m -XX:PermSize=512m"
+
+							set "MW_HOME=${app.server.weblogic.dir.windows}"
+
+							set "JAVA_OPTIONS=-da:org.aspectj... -da:org.apache.lucene..."
+						]]>
+					</replacevalue>
+				</replace>
+
+				<replace file="${app.server.weblogic.instance.dir}/startWebLogic.cmd">
+					<replacefilter token="$${app.server.weblogic.dir.windows}" value="${app.server.weblogic.dir.windows}" />
+				</replace>
+
+				<copy
+					file="${app.server.weblogic.instance.dir}/startWebLogic.cmd"
+					tofile="${app.server.weblogic.instance.dir}/stopWebLogic.cmd"
+				/>
+
+				<replace file="${app.server.weblogic.instance.dir}/stopWebLogic.cmd">
+					<replacefilter token="startWebLogic" value="stopWebLogic" />
+				</replace>
 			</then>
 			<else>
-				<exec dir="${app.server.weblogic.dir}" executable="sh">
-					<env key="MW_HOME" value="${app.server.weblogic.dir}" />
-					<arg value="configure.sh" />
-				</exec>
+				<var name="source.command" value="source" />
+
+				<if>
+					<os name="Linux" />
+					<then>
+						<replace file="${app.server.weblogic.dir}/configure.sh">
+							<replacefilter token="#!/bin/sh" value="#!/bin/bash" />
+						</replace>
+
+						<var name="source.command" value="." />
+					</then>
+				</if>
+
+				<chmod
+					dir="${app.server.weblogic.dir}"
+					includes="configure.sh"
+					perm="744"
+				/>
+
+				<if>
+					<os name="Linux" />
+					<then>
+						<exec dir="${app.server.weblogic.dir}" executable="./configure.sh">
+							<env key="MW_HOME" file="${app.server.weblogic.dir}" />
+						</exec>
+					</then>
+					<else>
+						<exec dir="${app.server.weblogic.dir}" executable="sh">
+							<env key="MW_HOME" file="${app.server.weblogic.dir}" />
+							<arg value="configure.sh" />
+						</exec>
+					</else>
+				</if>
 
 				<echo file="${tstamp.value}/create-weblogic-domain.sh">#!/bin/sh
 
@@ -1552,7 +1609,7 @@ export MW_HOME="${app.server.weblogic.dir}"
 
 export WL_HOME="${app.server.weblogic.wlserver.dir}"
 
-source ${WL_HOME}/common/bin/commEnv.sh
+${source.command} ${WL_HOME}/common/bin/commEnv.sh
 
 export CLASSPATH=${FMWCONFIG_CLASSPATH}
 
@@ -1566,65 +1623,42 @@ ${env.JAVA_HOME}/bin/java weblogic.WLST create-weblogic-domain.py</echo>
 				<exec dir="${tstamp.value}" executable="sh">
 					<arg value="create-weblogic-domain.sh" />
 				</exec>
+
+				<replace file="${app.server.weblogic.instance.dir}/startWebLogic.sh">
+					<replacetoken><![CDATA[# Any changes to this script may be lost when adding extensions to this configuration.]]></replacetoken>
+					<replacevalue>
+						<![CDATA[
+							# Any changes to this script may be lost when adding extensions to this configuration.
+
+							export USER_MEM_ARGS="-Xmx1024m -XX:PermSize=512m"
+
+							export MW_HOME="${app.server.weblogic.dir}"
+
+							export JAVA_OPTIONS="${JAVA_OPTIONS} -da:org.aspectj... -da:org.apache.lucene..."
+						]]>
+					</replacevalue>
+				</replace>
+
+				<replace file="${app.server.weblogic.instance.dir}/startWebLogic.sh">
+					<replacefilter token="$${app.server.weblogic.dir}" value="${app.server.weblogic.dir}" />
+				</replace>
+
+				<copy
+					file="${app.server.weblogic.instance.dir}/startWebLogic.sh"
+					tofile="${app.server.weblogic.instance.dir}/stopWebLogic.sh"
+				/>
+
+				<replace file="${app.server.weblogic.instance.dir}/stopWebLogic.sh">
+					<replacefilter token="startWebLogic" value="stopWebLogic" />
+				</replace>
+
+				<chmod
+					dir="${app.server.weblogic.instance.dir}"
+					includes="*.sh"
+					perm="744"
+				/>
 			</else>
 		</if>
-
-		<replace file="${app.server.weblogic.instance.dir}/startWebLogic.cmd">
-			<replacetoken><![CDATA[SETLOCAL]]></replacetoken>
-			<replacevalue>
-				<![CDATA[
-					SETLOCAL
-
-					set "USER_MEM_ARGS=-Xmx1024m -XX:PermSize=512m"
-
-					set "MW_HOME=${app.server.weblogic.dir.windows}"
-				]]>
-			</replacevalue>
-		</replace>
-
-		<replace file="${app.server.weblogic.instance.dir}/startWebLogic.cmd">
-			<replacefilter token="$${app.server.weblogic.dir.windows}" value="${app.server.weblogic.dir.windows}" />
-		</replace>
-
-		<replace file="${app.server.weblogic.instance.dir}/startWebLogic.sh">
-			<replacetoken><![CDATA[# Any changes to this script may be lost when adding extensions to this configuration.]]></replacetoken>
-			<replacevalue>
-				<![CDATA[
-					# Any changes to this script may be lost when adding extensions to this configuration.
-
-					export USER_MEM_ARGS="-Xmx1024m -XX:PermSize=512m"
-
-					export MW_HOME="${app.server.weblogic.dir}"
-				]]>
-			</replacevalue>
-		</replace>
-
-		<replace file="${app.server.weblogic.instance.dir}/startWebLogic.sh">
-			<replacefilter token="$${app.server.weblogic.dir}" value="${app.server.weblogic.dir}" />
-		</replace>
-
-		<copy
-			file="${app.server.weblogic.instance.dir}/startWebLogic.cmd"
-			tofile="${app.server.weblogic.instance.dir}/stopWebLogic.cmd"
-		/>
-
-		<replace file="${app.server.weblogic.instance.dir}/stopWebLogic.cmd">
-			<replacefilter token="startWebLogic" value="stopWebLogic" />
-		</replace>
-
-		<copy
-			file="${app.server.weblogic.instance.dir}/startWebLogic.sh"
-			tofile="${app.server.weblogic.instance.dir}/stopWebLogic.sh"
-		/>
-
-		<replace file="${app.server.weblogic.instance.dir}/stopWebLogic.sh">
-			<replacefilter token="startWebLogic" value="stopWebLogic" />
-		</replace>
-
-		<chmod
-			file="${app.server.weblogic.instance.dir}/stopWebLogic.sh"
-			perm="744"
-		/>
 
 		<delete dir="${tstamp.value}" />
 	</target>

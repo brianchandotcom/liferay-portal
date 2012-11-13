@@ -1918,7 +1918,7 @@ public class PortletImporter {
 
 				if (!ArrayUtil.contains(dataPortletPreferences, name) ||
 					(scopeType.equals("company") &&
-					Validator.isNull(scopeLayoutUuid))) {
+						Validator.isNull(scopeLayoutUuid))) {
 
 					String[] values = jxPreferences.getValues(name, null);
 

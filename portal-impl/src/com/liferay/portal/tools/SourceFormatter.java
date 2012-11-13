@@ -353,54 +353,6 @@ public class SourceFormatter {
 		}
 	}
 
-	private static void _checkLanguageKeys(
-			String fileName, String content, Pattern pattern)
-		throws IOException {
-
-		String fileExtension = _fileUtil.getExtension(fileName);
-
-		if (!_portalSource || fileExtension.equals("vm")) {
-			return;
-		}
-
-		if (_portalLanguageKeysProperties == null) {
-			_portalLanguageKeysProperties = new Properties();
-
-			ClassLoader classLoader = SourceFormatter.class.getClassLoader();
-
-			InputStream inputStream = classLoader.getResourceAsStream(
-				"content/Language.properties");
-
-			_portalLanguageKeysProperties.load(inputStream);
-		}
-
-		Matcher matcher = pattern.matcher(content);
-
-		while (matcher.find()) {
-			String[] languageKeys = _getLanguageKeys(matcher);
-
-			for (String languageKey : languageKeys) {
-				if (Validator.isNumber(languageKey) ||
-					languageKey.endsWith(StringPool.DASH) ||
-					languageKey.endsWith(StringPool.PERIOD) ||
-					languageKey.endsWith(StringPool.UNDERLINE) ||
-					languageKey.startsWith(StringPool.DASH) ||
-					languageKey.startsWith(StringPool.PERIOD) ||
-					languageKey.startsWith(StringPool.UNDERLINE)) {
-
-					continue;
-				}
-
-				if (!_portalLanguageKeysProperties.containsKey(languageKey)) {
-					_sourceFormatterHelper.printError(
-						fileName,
-						"missing language key: " + languageKey +
-							StringPool.SPACE + fileName);
-				}
-			}
-		}
-	}
-
 	private static void _checkIfClause(
 		String ifClause, String fileName, int lineCount) {
 
@@ -486,6 +438,54 @@ public class SourceFormatter {
 					}
 
 					level -= 1;
+				}
+			}
+		}
+	}
+
+	private static void _checkLanguageKeys(
+			String fileName, String content, Pattern pattern)
+		throws IOException {
+
+		String fileExtension = _fileUtil.getExtension(fileName);
+
+		if (!_portalSource || fileExtension.equals("vm")) {
+			return;
+		}
+
+		if (_portalLanguageKeysProperties == null) {
+			_portalLanguageKeysProperties = new Properties();
+
+			ClassLoader classLoader = SourceFormatter.class.getClassLoader();
+
+			InputStream inputStream = classLoader.getResourceAsStream(
+				"content/Language.properties");
+
+			_portalLanguageKeysProperties.load(inputStream);
+		}
+
+		Matcher matcher = pattern.matcher(content);
+
+		while (matcher.find()) {
+			String[] languageKeys = _getLanguageKeys(matcher);
+
+			for (String languageKey : languageKeys) {
+				if (Validator.isNumber(languageKey) ||
+					languageKey.endsWith(StringPool.DASH) ||
+					languageKey.endsWith(StringPool.PERIOD) ||
+					languageKey.endsWith(StringPool.UNDERLINE) ||
+					languageKey.startsWith(StringPool.DASH) ||
+					languageKey.startsWith(StringPool.PERIOD) ||
+					languageKey.startsWith(StringPool.UNDERLINE)) {
+
+					continue;
+				}
+
+				if (!_portalLanguageKeysProperties.containsKey(languageKey)) {
+					_sourceFormatterHelper.printError(
+						fileName,
+						"missing language key: " + languageKey +
+							StringPool.SPACE + fileName);
 				}
 			}
 		}

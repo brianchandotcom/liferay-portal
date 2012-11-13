@@ -25,6 +25,9 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import org.apache.commons.lang.exception.ExceptionUtils;
+import org.apache.pdfbox.exceptions.CryptographyException;
+import org.apache.poi.EncryptedDocumentException;
 import org.apache.tika.metadata.Metadata;
 import org.apache.tika.parser.ParseContext;
 import org.apache.tika.parser.Parser;
@@ -62,7 +65,18 @@ public class TikaRawMetadataProcessor extends XugglerRawMetadataProcessor {
 			_parser.parse(inputStream, contentHandler, metadata, parserContext);
 		}
 		catch (Exception e) {
-			_log.error("Unable to parse", e);
+			Throwable rootCause = ExceptionUtils.getRootCause(e);
+
+			if ((rootCause instanceof CryptographyException) ||
+				(rootCause instanceof EncryptedDocumentException)) {
+
+				if (_log.isWarnEnabled()) {
+					_log.warn("Cannot extract metadata from encrypted file!");
+				}
+			}
+			else {
+				_log.error(e, e);
+			}
 
 			throw new IOException(e.getMessage());
 		}

@@ -1,3 +1,12 @@
 <?xml version="1.0"?>
 
-<root />
+<root>
+	<template>
+		<template-key>asset-tags-navigation-color-by-popularity-ftl</template-key>
+		<name>Color by Popularity</name>
+		<description>Displays asset tags colored by popularity: red (high), yellow (medium), and green (low).</description>
+		<language>ftl</language>
+		<script-file>com/liferay/portlet/assettagsnavigation/dependencies/portlet_display_template_color_by_popularity.ftl</script-file>
+		<cacheable>false</cacheable>
+	</template>
+</root>

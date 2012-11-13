@@ -15,15 +15,19 @@
 package com.liferay.portal.scheduler;
 
 import com.liferay.portal.cluster.AddressImpl;
+import com.liferay.portal.cluster.ClusterInvokeThreadLocal;
+import com.liferay.portal.cluster.ClusterableContextThreadLocal;
 import com.liferay.portal.kernel.cluster.Address;
 import com.liferay.portal.kernel.cluster.ClusterEventListener;
 import com.liferay.portal.kernel.cluster.ClusterExecutor;
 import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
+import com.liferay.portal.kernel.cluster.ClusterInvokeAcceptor;
 import com.liferay.portal.kernel.cluster.ClusterMessageType;
 import com.liferay.portal.kernel.cluster.ClusterNode;
 import com.liferay.portal.kernel.cluster.ClusterNodeResponse;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.cluster.ClusterResponseCallback;
+import com.liferay.portal.kernel.cluster.Clusterable;
 import com.liferay.portal.kernel.cluster.FutureClusterResponses;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
@@ -37,6 +41,7 @@ import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
 import com.liferay.portal.kernel.scheduler.TriggerState;
 import com.liferay.portal.kernel.scheduler.TriggerType;
 import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
+import com.liferay.portal.kernel.servlet.PluginContextLifecycleThreadLocal;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
@@ -58,8 +63,11 @@ import java.io.DataOutput;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
+import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 
 import java.net.InetAddress;
 
@@ -99,6 +107,29 @@ public class ClusterSchedulerEngineTest {
 		LockLocalService lockLocalService = new MockLockLocalService();
 
 		field.set(null, lockLocalService);
+
+		field = ClusterableContextThreadLocal.class.getDeclaredField(
+			"_threadLocalContext");
+
+		field.setAccessible(true);
+
+		_threadLocalContext =
+			(ThreadLocal<HashMap<String, Serializable>>)field.get(null);
+
+		Method method = ClusterSchedulerEngine.class.getDeclaredMethod(
+			"delete", String.class);
+
+		Clusterable clusterable = method.getAnnotation(Clusterable.class);
+
+		Class<? extends ClusterInvokeAcceptor> clusterInvokeAcceptorClass =
+			clusterable.acceptor();
+
+		Constructor<? extends ClusterInvokeAcceptor> constructor =
+			clusterInvokeAcceptorClass.getDeclaredConstructor();
+
+		constructor.setAccessible(true);
+
+		_clusterInvokeAcceptor = constructor.newInstance();
 	}
 
 	@After
@@ -212,14 +243,7 @@ public class ClusterSchedulerEngineTest {
 		}
 
 		_clusterSchedulerEngine.delete(_MEMORY_CLUSTER_TEST_GROUP_NAME);
-
-		try {
-			_clusterSchedulerEngine.delete(_PERSISTENT_TEST_GROUP_NAME);
-
-			Assert.fail();
-		}
-		catch (Exception e) {
-		}
+		_clusterSchedulerEngine.delete(_PERSISTENT_TEST_GROUP_NAME);
 
 		try {
 			_clusterSchedulerEngine.getScheduledJobs();
@@ -496,6 +520,98 @@ public class ClusterSchedulerEngineTest {
 		schedulerResponses = _getMemoryClusteredJobs(_clusterSchedulerEngine);
 
 		Assert.assertEquals(2, schedulerResponses.size());
+	}
+
+	@Test
+	public void testSetClusterableThreadLocal1() throws Exception {
+		_clusterSchedulerEngine = _getClusterSchedulerEngine(false, 4, 2);
+
+		//Test when StorageType is StorageType.PERSISTED
+
+		_clusterSchedulerEngine.delete(
+			_TEST_JOB_NAME_PREFIX + CharPool.NUMBER_0,
+			_PERSISTENT_TEST_GROUP_NAME);
+
+		Map<String, Serializable> context = _collectThreadLocalContext();
+
+		ClusterInvokeThreadLocal.setEnabled(false);
+
+		Assert.assertFalse(_clusterInvokeAcceptor.accept(context));
+
+		ClusterInvokeThreadLocal.setEnabled(true);
+
+		//Test when plugin is initializing
+
+		PluginContextLifecycleThreadLocal.setInitializing(true);
+
+		_clusterSchedulerEngine.delete(
+			_TEST_JOB_NAME_PREFIX + CharPool.NUMBER_0,
+			_MEMORY_CLUSTER_TEST_GROUP_NAME);
+
+		PluginContextLifecycleThreadLocal.setInitializing(false);
+
+		context = _collectThreadLocalContext();
+
+		ClusterInvokeThreadLocal.setEnabled(false);
+
+		Assert.assertFalse(_clusterInvokeAcceptor.accept(context));
+
+		ClusterInvokeThreadLocal.setEnabled(true);
+
+		//Test when plugin is destorying
+
+		PluginContextLifecycleThreadLocal.setDestroying(true);
+
+		_clusterSchedulerEngine.delete(
+			_TEST_JOB_NAME_PREFIX + CharPool.NUMBER_1,
+			_MEMORY_CLUSTER_TEST_GROUP_NAME);
+
+		PluginContextLifecycleThreadLocal.setDestroying(false);
+
+		context = _collectThreadLocalContext();
+
+		ClusterInvokeThreadLocal.setEnabled(false);
+
+		Assert.assertFalse(_clusterInvokeAcceptor.accept(context));
+
+		ClusterInvokeThreadLocal.setEnabled(true);
+
+		//Test when portal is not ready
+
+		_clusterSchedulerEngine.shutdown();
+
+		_clusterSchedulerEngine.delete(
+			_TEST_JOB_NAME_PREFIX + CharPool.NUMBER_2,
+			_MEMORY_CLUSTER_TEST_GROUP_NAME);
+
+		context = _collectThreadLocalContext();
+
+		ClusterInvokeThreadLocal.setEnabled(false);
+
+		Assert.assertFalse(_clusterInvokeAcceptor.accept(context));
+
+		ClusterInvokeThreadLocal.setEnabled(true);
+	}
+
+	@Test
+	public void testSetClusterableThreadLocal2() throws Exception {
+		_clusterSchedulerEngine = _getClusterSchedulerEngine(false, 2, 2);
+
+		_clusterSchedulerEngine.delete(_PERSISTENT_TEST_GROUP_NAME);
+
+		Map<String, Serializable> context = _collectThreadLocalContext();
+
+		Assert.assertTrue(_clusterInvokeAcceptor.accept(context));
+
+		_clusterSchedulerEngine.delete(_MEMORY_CLUSTER_TEST_GROUP_NAME);
+
+		context = _collectThreadLocalContext();
+
+		ClusterInvokeThreadLocal.setEnabled(false);
+
+		Assert.assertTrue(_clusterInvokeAcceptor.accept(context));
+
+		ClusterInvokeThreadLocal.setEnabled(true);
 	}
 
 	@Test
@@ -785,6 +901,16 @@ public class ClusterSchedulerEngineTest {
 		Assert.assertEquals(expectedTriggerState, triggerState);
 	}
 
+	private Map<String, Serializable> _collectThreadLocalContext()
+		throws Exception {
+
+		Map<String, Serializable> context =  _threadLocalContext.get();
+
+		_threadLocalContext.remove();
+
+		return context;
+	}
+
 	private ClusterSchedulerEngine _getClusterSchedulerEngine(
 			boolean master, int memoryClusterJobs, int persistentJobs)
 		throws Exception {
@@ -941,6 +1067,7 @@ public class ClusterSchedulerEngineTest {
 
 	private static final String _TEST_JOB_NAME_PREFIX = "test.job.";
 
+	private static ClusterInvokeAcceptor _clusterInvokeAcceptor;
 	private static MethodKey _getScheduledJobMethodKey = new MethodKey(
 		SchedulerEngineHelperUtil.class, "getScheduledJob", String.class,
 		String.class, StorageType.class);
@@ -951,6 +1078,8 @@ public class ClusterSchedulerEngineTest {
 		StorageType.class);
 	private static MethodKey _getScheduledJobsMethodKey3 = new MethodKey(
 		SchedulerEngineHelperUtil.class, "getScheduledJobs", StorageType.class);
+	private static ThreadLocal<HashMap<String, Serializable>>
+		_threadLocalContext;
 
 	private ClusterSchedulerEngine _clusterSchedulerEngine;
 

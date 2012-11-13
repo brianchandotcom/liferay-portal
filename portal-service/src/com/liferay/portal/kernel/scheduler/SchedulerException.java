@@ -15,13 +15,12 @@
 package com.liferay.portal.kernel.scheduler;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.spring.aop.Swallowable;
 
 /**
  * @author Michael C. Han
  * @author Bruno Farache
  */
-public class SchedulerException extends PortalException implements Swallowable {
+public class SchedulerException extends PortalException {
 
 	public SchedulerException() {
 		super();
@@ -38,15 +37,5 @@ public class SchedulerException extends PortalException implements Swallowable {
 	public SchedulerException(Throwable cause) {
 		super(cause);
 	}
-
-	public boolean isSwallowable() {
-		return _swallowable;
-	}
-
-	public void setSwallowable(boolean swallowable) {
-		_swallowable = swallowable;
-	}
-
-	private boolean _swallowable;
 
 }

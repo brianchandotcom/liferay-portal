@@ -119,10 +119,6 @@ public class ClusterRequest implements Serializable {
 		}
 	}
 
-	public String getBeanIdentifier() {
-		return _beanIdentifier;
-	}
-
 	public ClusterMessageType getClusterMessageType() {
 		return _clusterMessageType;
 	}
@@ -133,10 +129,6 @@ public class ClusterRequest implements Serializable {
 
 	public ClusterNode getOriginatingClusterNode() {
 		return _originatingClusterNode;
-	}
-
-	public String getServletContextName() {
-		return _servletContextName;
 	}
 
 	public Collection<Address> getTargetClusterNodeAddresses() {
@@ -163,10 +155,6 @@ public class ClusterRequest implements Serializable {
 		return _skipLocal;
 	}
 
-	public void setBeanIdentifier(String beanIdentifier) {
-		_beanIdentifier = beanIdentifier;
-	}
-
 	public void setClusterMessageType(ClusterMessageType clusterMessageType) {
 		_clusterMessageType = clusterMessageType;
 	}
@@ -187,10 +175,6 @@ public class ClusterRequest implements Serializable {
 		_originatingClusterNode = originatingClusterNode;
 	}
 
-	public void setServletContextName(String servletContextName) {
-		_servletContextName = servletContextName;
-	}
-
 	public void setSkipLocal(boolean skipLocal) {
 		_skipLocal = skipLocal;
 	}
@@ -201,7 +185,7 @@ public class ClusterRequest implements Serializable {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(11);
 
 		sb.append("{clusterMessageType=");
 		sb.append(_clusterMessageType);
@@ -227,8 +211,6 @@ public class ClusterRequest implements Serializable {
 			sb.append(_originatingClusterNode);
 		}
 
-		sb.append(", servletContextName=");
-		sb.append(_servletContextName);
 		sb.append(", skipLocal=");
 		sb.append(_skipLocal);
 		sb.append(", uuid=");
@@ -241,13 +223,11 @@ public class ClusterRequest implements Serializable {
 	private ClusterRequest() {
 	}
 
-	private String _beanIdentifier;
 	private ClusterMessageType _clusterMessageType;
 	private boolean _fireAndForget;
 	private MethodHandler _methodHandler;
 	private boolean _multicast;
 	private ClusterNode _originatingClusterNode;
-	private String _servletContextName;
 	private boolean _skipLocal;
 	private Set<Address> _targetClusterNodeAddresses;
 	private Set<String> _targetClusterNodeIds;

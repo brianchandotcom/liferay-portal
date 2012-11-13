@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Image;
@@ -168,6 +169,12 @@ public class EditProductEntryAction extends PortletAction {
 				uploadPortletRequest, "preserveScreenshot" + priority);
 
 			byte[] bytes = null;
+
+			String mimeType = uploadPortletRequest.getContentType(name);
+
+			if (!MimeTypesUtil.isWebImage(mimeType)) {
+				throw new ProductEntryScreenshotsException();
+			}
 
 			if (preserveScreenshot) {
 				SCProductScreenshot productScreenshot = getProductScreenshot(

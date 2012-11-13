@@ -27,7 +27,7 @@ public class ClusterableChainableMethodAdviceInjector
 	@Deprecated
 	public void setServletContextName(String servletContextName) {
 	}
-	
+
 	@Override
 	protected ChainableMethodAdvice getNewChainableMethodAdvice() {
 		return new ClusterableAdvice();

@@ -123,6 +123,10 @@ for (int i = 0; i < results.size(); i++) {
 	rowURL.setParameter("title", wikiPage.getTitle());
 	rowURL.setParameter("fileName", shortFileName);
 
+	if (viewTrashAttachments) {
+		rowURL.setParameter("status", String.valueOf(WorkflowConstants.STATUS_IN_TRASH));
+	}
+
 	StringBundler sb = new StringBundler(6);
 
 	sb.append("<img align=\"left\" border=\"0\" src=\"");

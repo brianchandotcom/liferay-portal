@@ -85,6 +85,7 @@ iteratorURL.setParameter("viewTrashAttachments", Boolean.TRUE.toString());
 			<portlet:param name="nodeId" value="<%= String.valueOf(node.getNodeId()) %>" />
 			<portlet:param name="title" value="<%= wikiPage.getTitle() %>" />
 			<portlet:param name="fileName" value="<%= dlFileEntry.getTitle() %>" />
+			<portlet:param name="status" value="<%= String.valueOf(WorkflowConstants.STATUS_IN_TRASH) %>" />
 		</liferay-portlet:actionURL>
 
 		<liferay-ui:search-container-column-text

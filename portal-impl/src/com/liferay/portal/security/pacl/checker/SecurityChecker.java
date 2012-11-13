@@ -39,6 +39,12 @@ public class SecurityChecker extends BaseChecker {
 				throwSecurityException(_log, "Attempted to get the policy");
 			}
 		}
+		else if (name.startsWith(SECURITY_PERMISSION_INSERT_PROVIDER)) {
+			
+		}
+		else if (name.startsWith(SECURITY_PERMISSION_PUT_PROVIDER_PROPERTY)) {
+			
+		}
 		else if (name.equals(SECURITY_PERMISSION_SET_POLICY)) {
 			if (!hasSetPolicy()) {
 				throwSecurityException(_log, "Attempted to set the policy");

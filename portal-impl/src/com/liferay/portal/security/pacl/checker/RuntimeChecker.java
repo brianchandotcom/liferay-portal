@@ -28,6 +28,7 @@ import com.liferay.portal.security.lang.PortalSecurityManagerThreadLocal;
 import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 import com.liferay.portal.security.pacl.PACLClassUtil;
 
+import java.security.AccessController;
 import java.security.Permission;
 
 import java.util.Set;
@@ -103,6 +104,12 @@ public class RuntimeChecker extends BaseReflectChecker {
 			if (!hasGetEnv(envName)) {
 				throwSecurityException(
 					_log, "Attempted to get environment name " + envName);
+			}
+		}
+		else if (name.startsWith(RUNTIME_PERMISSION_LOAD_LIBRARY)) {
+			if (!hasLoadLibrary()) {
+
+				throwSecurityException(_log, "Attempted to load library");
 			}
 		}
 		else if (name.equals(RUNTIME_PERMISSION_READ_FILE_DESCRIPTOR)) {
@@ -383,11 +390,25 @@ public class RuntimeChecker extends BaseReflectChecker {
 	protected boolean hasGetProtectionDomain() {
 		Class<?> callerClass8 = Reflection.getCallerClass(8);
 
-		if (isDefaultMBeanServerInterceptor(
+		if (((callerClass8 == AccessController.class) &&
+				CheckerUtil.isAccessControllerDoPrivileged(8)) ||
+			(isDefaultMBeanServerInterceptor(
 				callerClass8.getEnclosingClass()) &&
-			CheckerUtil.isAccessControllerDoPrivileged(9)) {
+			CheckerUtil.isAccessControllerDoPrivileged(9))) {
 
 			logGetProtectionDomain(callerClass8, 8);
+
+			return true;
+		}
+
+		return false;
+	}
+
+	protected boolean hasLoadLibrary() {
+		Class<?> callerClass10 = Reflection.getCallerClass(10);
+
+		if ((callerClass10 == AccessController.class) &&
+			CheckerUtil.isAccessControllerDoPrivileged(10)) {
 
 			return true;
 		}

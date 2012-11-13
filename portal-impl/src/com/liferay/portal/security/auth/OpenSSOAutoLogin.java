@@ -187,10 +187,7 @@ public class OpenSSOAutoLogin implements AutoLogin {
 					redirect = PortalUtil.getPathMain();
 				}
 
-				if (Validator.isNotNull(redirect)) {
-					request.setAttribute(
-						AutoLogin.AUTO_LOGIN_REDIRECT, redirect);
-				}
+				request.setAttribute(AutoLogin.AUTO_LOGIN_REDIRECT, redirect);
 			}
 
 			credentials = new String[3];

@@ -295,7 +295,7 @@ public class ComboServlet extends HttpServlet {
 			return null;
 		}
 
-		String filePath = resourceURL.getPath();
+		String filePath = resourceURL.toString();
 
 		int pos = filePath.indexOf(
 			rootPath.concat(StringPool.SLASH).concat(_JAVASCRIPT_DIR));

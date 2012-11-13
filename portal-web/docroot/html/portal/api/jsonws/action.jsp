@@ -467,7 +467,10 @@ String signature = ParamUtil.getString(request, "signature");
 					formQueryString.replace(
 						REGEX_QUERY_STRING,
 						function(match, key, value) {
-							if (value && !ignoreFields[key]) {
+							if (!ignoreFields[key]) {
+								if (!value) {
+									key = '-' + key;
+								}
 								if (extraFields[key]) {
 									urlTplData.extraData.push(
 										{
@@ -517,7 +520,7 @@ curl <%= themeDisplay.getPortalURL() + jsonWSPath + invocationPath %> \\
 </textarea>
 
 <textarea class="aui-helper-hidden" id="urlTpl">
-<%= themeDisplay.getPortalURL() + jsonWSPath + invocationPath %><tpl if="data.length">/<tpl for="data">{key:this.toURIParam}/{value}<tpl if="!$last">/</tpl></tpl></tpl><tpl if="extraData.length">?<tpl for="extraData">{key:this.toURIParam}={value}<tpl if="!$last">&amp;</tpl></tpl></tpl>
+<%= themeDisplay.getPortalURL() + jsonWSPath + invocationPath %><tpl if="data.length">/<tpl for="data">{key:this.toURIParam}<tpl if="value.length">/{value}</tpl><tpl if="!$last">/</tpl></tpl></tpl><tpl if="extraData.length">?<tpl for="extraData">{key:this.toURIParam}={value}<tpl if="!$last">&amp;</tpl></tpl></tpl>
 </textarea>
 	</c:when>
 	<c:otherwise>

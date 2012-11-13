@@ -379,7 +379,14 @@ public class SourceFormatter {
 		while (matcher.find()) {
 			String match = matcher.group();
 
-			String languageKey = _getLanguageKey(match);
+			String languageKey = null;
+
+			if ((matcher.groupCount() > 0) && (matcher.group(1) != null)) {
+				languageKey = matcher.group(1);
+			}
+			else {
+				languageKey = _getLanguageKey(match);
+			}
 
 			if (Validator.isNull(languageKey)) {
 				return;
@@ -2038,6 +2045,8 @@ public class SourceFormatter {
 			if (newContent.endsWith("\n")) {
 				newContent = newContent.substring(0, newContent.length() - 1);
 			}
+
+			_checkLanguageKeys(fileName, newContent, _languageKeyPattern);
 
 			if ((newContent != null) && !content.equals(newContent)) {
 				_fileUtil.write(file, newContent);
@@ -4600,7 +4609,7 @@ public class SourceFormatter {
 	private static Pattern _jspIncludeFilePattern = Pattern.compile(
 		"/.*[.]jsp[f]?");
 	private static Pattern _languageKeyPattern = Pattern.compile(
-		"LanguageUtil.(?:get|format)\\([^;%]+");
+		"LanguageUtil.(?:get|format)\\([^;%]+|Liferay.Language.get\\('([^']+)");
 	private static Properties _lineLengthExclusionsProperties;
 	private static Properties _portalLanguageKeysProperties;
 	private static boolean _portalSource;

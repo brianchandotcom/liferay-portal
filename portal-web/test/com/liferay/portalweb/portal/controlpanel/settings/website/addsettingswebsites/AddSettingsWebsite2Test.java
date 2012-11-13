@@ -25,17 +25,25 @@ public class AddSettingsWebsite2Test extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent("link=Control Panel");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
+		selenium.waitForVisible("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Portal Settings",
 			RuntimeVariables.replace("Portal Settings"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForVisible("//a[@id='_130_websitesLink']");
+		assertTrue(selenium.isPartialText("//a[@id='_130_websitesLink']",
+				"Websites"));
 		selenium.clickAt("//a[@id='_130_websitesLink']",
 			RuntimeVariables.replace("Websites"));
-		selenium.clickAt("//div[9]/fieldset/div[2]/div/span/span/button[1]",
+		selenium.clickAt("//button[@type='button']",
 			RuntimeVariables.replace("Add Row"));
 		selenium.waitForVisible("//input[@id='_130_websiteUrl2']");
 		selenium.type("//input[@id='_130_websiteUrl2']",

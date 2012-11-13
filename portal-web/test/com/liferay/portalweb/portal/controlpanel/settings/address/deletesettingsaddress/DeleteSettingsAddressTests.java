@@ -15,6 +15,8 @@
 package com.liferay.portalweb.portal.controlpanel.settings.address.deletesettingsaddress;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.controlpanel.settings.additionalemailaddress.addsettingsadditionalemailaddress.TearDownSettingsIdentificationTest;
+import com.liferay.portalweb.portal.controlpanel.settings.address.addsettingsaddress.AddSettingsAddressTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

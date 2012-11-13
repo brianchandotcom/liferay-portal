@@ -15,6 +15,7 @@
 package com.liferay.portalweb.portal.controlpanel.settings.phonenumber.addsettingsphonenumbers;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.controlpanel.settings.additionalemailaddress.addsettingsadditionalemailaddress.TearDownSettingsIdentificationTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

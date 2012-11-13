@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.model.Contact;
+import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutSetBranch;
 import com.liferay.portal.model.PasswordPolicy;
 import com.liferay.portal.model.ResourceConstants;
@@ -64,6 +65,7 @@ import java.sql.ResultSet;
 
 /**
  * @author Raymond Augé
+ * @author James Lefeu
  */
 public class VerifyResourcePermissions extends VerifyProcess {
 
@@ -76,8 +78,41 @@ public class VerifyResourcePermissions extends VerifyProcess {
 				companyId, RoleConstants.OWNER);
 
 			for (String[] model : _MODELS) {
-				verifyModel(role, model[0], model[1], model[2]);
+				verifyModel(
+					role, model[_INDEX_NAME], model[_INDEX_MODEL_NAME],
+					model[_INDEX_PK_COL_NAME]);
 			}
+
+			verifyLayout(role);
+		}
+	}
+
+	protected void verifyLayout(Role role) throws Exception {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			String[] MODEL = _LAYOUT_MODELS[0];
+			long companyId = role.getCompanyId();
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			ps = con.prepareStatement(
+				"select * from " + MODEL[_INDEX_MODEL_NAME] +
+						" where companyId = " +
+						companyId);
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				long primKey = rs.getLong(MODEL[_INDEX_PK_COL_NAME]);
+
+				verifyModel(companyId, MODEL[_INDEX_NAME], primKey, role, 0);
+
+			}
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
 		}
 	}
 
@@ -170,6 +205,16 @@ public class VerifyResourcePermissions extends VerifyProcess {
 			DataAccess.cleanUp(con, ps, rs);
 		}
 	}
+
+	private static final int _INDEX_MODEL_NAME = 1;
+	private static final int _INDEX_NAME = 0;
+	private static final int _INDEX_PK_COL_NAME = 2;
+
+	private static final String[][] _LAYOUT_MODELS = new String[][] {
+		new String[] {
+				Layout.class.getName(), "Layout", "plid"
+			}
+	};
 
 	private static final String[][] _MODELS = new String[][] {
 		new String[] {

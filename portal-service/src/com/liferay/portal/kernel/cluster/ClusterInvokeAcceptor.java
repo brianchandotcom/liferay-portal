@@ -12,15 +12,17 @@
  * details.
  */
 
-package com.liferay.portal.kernel.spring.aop;
+package com.liferay.portal.kernel.cluster;
+
+import java.io.Serializable;
+
+import java.util.Map;
 
 /**
  * @author Shuyang Zhou
  */
-public interface Swallowable {
+public interface ClusterInvokeAcceptor {
 
-	public boolean isSwallowable();
-
-	public void setSwallowable(boolean swallowable);
+	public boolean accept(Map<String, Serializable> context);
 
 }

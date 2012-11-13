@@ -43,6 +43,10 @@ public class MethodCache {
 			method = declaringClass.getDeclaredMethod(
 				methodKey.getMethodName(), methodKey.getParameterTypes());
 
+			if (!method.isAccessible()) {
+				method.setAccessible(true);
+			}
+
 			_methods.put(methodKey, method);
 		}
 

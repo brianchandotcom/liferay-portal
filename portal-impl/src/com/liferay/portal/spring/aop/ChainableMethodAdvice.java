@@ -27,11 +27,9 @@ public abstract class ChainableMethodAdvice implements MethodInterceptor {
 		throws Throwable {
 	}
 
-	public boolean afterThrowing(
+	public void afterThrowing(
 			MethodInvocation methodInvocation, Throwable throwable)
 		throws Throwable {
-
-		return true;
 	}
 
 	public Object before(MethodInvocation methodInvocation) throws Throwable {
@@ -59,9 +57,9 @@ public abstract class ChainableMethodAdvice implements MethodInterceptor {
 			afterReturning(methodInvocation, returnValue);
 		}
 		catch (Throwable throwable) {
-			if (afterThrowing(methodInvocation, throwable)) {
-				throw throwable;
-			}
+			afterThrowing(methodInvocation, throwable);
+
+			throw throwable;
 		}
 		finally {
 			duringFinally(methodInvocation);

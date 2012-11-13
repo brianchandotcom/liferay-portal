@@ -34,11 +34,11 @@ public class InfrastructureUtil implements PACLConstants {
 		return _dataSource;
 	}
 
-	public static Object getDynamicDataSourceTargetSource() {
+	public static Object getDynamicDataSourceOperationSource() {
 		PortalRuntimePermission.checkGetBeanProperty(
-			InfrastructureUtil.class, "dynamicDataSourceTargetSource");
+			InfrastructureUtil.class, "dynamicDataSourceOperationSource");
 
-		return _dynamicDataSourceTargetSource;
+		return _dynamicDataSourceOperationSource;
 	}
 
 	public static Session getMailSession() {
@@ -75,13 +75,13 @@ public class InfrastructureUtil implements PACLConstants {
 		_dataSource = dataSource;
 	}
 
-	public void setDynamicDataSourceTargetSource(
-		Object dynamicDataSourceTargetSource) {
+	public void setDynamicDataSourceOperationSource(
+		Object dynamicDataSourceOperationSource) {
 
 		PortalRuntimePermission.checkSetBeanProperty(
-			getClass(), "dynamicDataSourceTargetSource");
+			getClass(), "dynamicDataSourceOperationSource");
 
-		_dynamicDataSourceTargetSource = dynamicDataSourceTargetSource;
+		_dynamicDataSourceOperationSource = dynamicDataSourceOperationSource;
 	}
 
 	public void setMailSession(Session mailSession) {
@@ -116,7 +116,7 @@ public class InfrastructureUtil implements PACLConstants {
 	}
 
 	private static DataSource _dataSource;
-	private static Object _dynamicDataSourceTargetSource;
+	private static Object _dynamicDataSourceOperationSource;
 	private static Session _mailSession;
 	private static Object _shardDataSourceTargetSource;
 	private static Object _shardSessionFactoryTargetSource;

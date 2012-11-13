@@ -17,8 +17,6 @@ package com.liferay.portal.dao.jdbc.aop;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
-import java.util.Stack;
-
 import javax.sql.DataSource;
 
 import org.springframework.aop.TargetSource;
@@ -28,32 +26,9 @@ import org.springframework.aop.TargetSource;
  */
 public class DynamicDataSourceTargetSource implements TargetSource {
 
-	public Stack<String> getMethodStack() {
-		Stack<String> methodStack = _methodStack.get();
-
-		if (methodStack == null) {
-			methodStack = new Stack<String>();
-
-			_methodStack.set(methodStack);
-		}
-
-		return methodStack;
-	}
-
-	public Operation getOperation() {
-		Operation operation = _operationType.get();
-
-		if (operation == null) {
-			operation = Operation.WRITE;
-
-			_operationType.set(operation);
-		}
-
-		return operation;
-	}
-
 	public Object getTarget() throws Exception {
-		Operation operationType = getOperation();
+		Operation operationType =
+			_dynamicDataSourceOperationSource.getOperation();
 
 		if (operationType == Operation.READ) {
 			if (_log.isTraceEnabled()) {
@@ -79,33 +54,13 @@ public class DynamicDataSourceTargetSource implements TargetSource {
 		return false;
 	}
 
-	public String popMethod() {
-		Stack<String> methodStack = getMethodStack();
-
-		String method = methodStack.pop();
-
-		setOperation(Operation.WRITE);
-
-		return method;
-	}
-
-	public void pushMethod(String method) {
-		Stack<String> methodStack = getMethodStack();
-
-		methodStack.push(method);
-	}
-
 	public void releaseTarget(Object target) throws Exception {
 	}
 
-	public void setOperation(Operation operation) {
-		if (_log.isDebugEnabled()) {
-			_log.debug("Method stack " + getMethodStack());
-		}
+	public void setDynamicDataSourceOperationSource(
+		DynamicDataSourceOperationSource dynamicDataSourceOperationSource) {
 
-		if (!inOperation() || (operation == Operation.WRITE)) {
-			_operationType.set(operation);
-		}
+		_dynamicDataSourceOperationSource = dynamicDataSourceOperationSource;
 	}
 
 	public void setReadDataSource(DataSource readDataSource) {
@@ -116,20 +71,10 @@ public class DynamicDataSourceTargetSource implements TargetSource {
 		_writeDataSource = writeDataSource;
 	}
 
-	protected boolean inOperation() {
-		Stack<String> methodStack = getMethodStack();
-
-		return !methodStack.empty();
-	}
-
 	private static Log _log = LogFactoryUtil.getLog(
 		DynamicDataSourceTargetSource.class);
 
-	private static ThreadLocal<Stack<String>> _methodStack =
-		new ThreadLocal<Stack<String>>();
-	private static ThreadLocal<Operation> _operationType =
-		new ThreadLocal<Operation>();
-
+	private DynamicDataSourceOperationSource _dynamicDataSourceOperationSource;
 	private DataSource _readDataSource;
 	private DataSource _writeDataSource;
 

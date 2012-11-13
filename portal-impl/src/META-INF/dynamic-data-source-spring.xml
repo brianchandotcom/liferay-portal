@@ -7,14 +7,17 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
 >
+	<bean name="dynamicDataSourceOperationSource" class="com.liferay.portal.dao.jdbc.aop.DynamicDataSourceOperationSource" />
+
 	<bean id="liferayDataSource" class="org.springframework.jdbc.datasource.LazyConnectionDataSourceProxy">
 		<property name="targetDataSource">
 			<bean class="org.springframework.aop.framework.ProxyFactoryBean">
-				<property name="targetSource" ref="dynamicDataSourceTargetSource" />
+				<property name="targetSource" ref="liferayDynamicDataSourceTargetSource" />
 			</bean>
 		</property>
 	</bean>
-	<bean name="dynamicDataSourceTargetSource" class="com.liferay.portal.dao.jdbc.aop.DynamicDataSourceTargetSource">
+	<bean name="liferayDynamicDataSourceTargetSource" class="com.liferay.portal.dao.jdbc.aop.DynamicDataSourceTargetSource">
+		<property name="dynamicDataSourceOperationSource" ref="dynamicDataSourceOperationSource" />
 		<property name="readDataSource">
 			<bean class="com.liferay.portal.dao.jdbc.spring.DataSourceFactoryBean">
 				<property name="propertyPrefix" value="jdbc.read." />
@@ -27,14 +30,36 @@
 		</property>
 	</bean>
 	<bean id="transactionAdvice" class="com.liferay.portal.dao.jdbc.aop.DynamicDataSourceTransactionInterceptor">
-		<property name="dynamicDataSourceTargetSource" ref="dynamicDataSourceTargetSource" />
+		<property name="dynamicDataSourceOperationSource" ref="dynamicDataSourceOperationSource" />
 		<property name="transactionAttributeSource" ref="transactionAttributeSource" />
 		<property name="transactionManager" ref="liferayTransactionManager" />
 	</bean>
 	<bean id="com.liferay.portal.kernel.util.InfrastructureUtil" class="com.liferay.portal.kernel.util.InfrastructureUtil">
 		<property name="dataSource" ref="liferayDataSource" />
-		<property name="dynamicDataSourceTargetSource" ref="dynamicDataSourceTargetSource" />
+		<property name="dynamicDataSourceOperationSource" ref="dynamicDataSourceOperationSource" />
 		<property name="mailSession" ref="mailSession" />
 		<property name="transactionManager" ref="liferayTransactionManager" />
+	</bean>
+
+	<bean id="counterDataSource" class="org.springframework.jdbc.datasource.LazyConnectionDataSourceProxy">
+		<property name="targetDataSource">
+			<bean class="org.springframework.aop.framework.ProxyFactoryBean">
+				<property name="targetSource" ref="counterDynamicDataSourceTargetSource" />
+			</bean>
+		</property>
+	</bean>
+
+	<bean name="counterDynamicDataSourceTargetSource" class="com.liferay.portal.dao.jdbc.aop.DynamicDataSourceTargetSource">
+		<property name="dynamicDataSourceOperationSource" ref="dynamicDataSourceOperationSource" />
+		<property name="readDataSource">
+			<bean class="com.liferay.portal.dao.jdbc.spring.DataSourceFactoryBean">
+				<property name="propertyPrefix" value="jdbc.read." />
+			</bean>
+		</property>
+		<property name="writeDataSource">
+			<bean class="com.liferay.portal.dao.jdbc.spring.DataSourceFactoryBean">
+				<property name="propertyPrefix" value="jdbc.write." />
+			</bean>
+		</property>
 	</bean>
 </beans>

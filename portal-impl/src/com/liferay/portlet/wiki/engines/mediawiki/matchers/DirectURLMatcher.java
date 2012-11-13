@@ -54,24 +54,25 @@ public class DirectURLMatcher extends CallbackMatcher {
 
 			try {
 				for (FileEntry fileEntry : _page.getAttachmentsFileEntries()) {
-					if (fileName.equals(fileEntry.getTitle())) {
-						return null;
+					if (!fileName.equals(fileEntry.getTitle())) {
+						continue;
 					}
+
+					StringBundler sb = new StringBundler(5);
+
+					sb.append("<a href=\"");
+					sb.append(url);
+					sb.append("\">");
+					sb.append(title);
+					sb.append("</a>");
+
+					return sb.toString();
 				}
 			}
 			catch (Exception e) {
-				return null;
 			}
 
-			StringBundler sb = new StringBundler(5);
-
-			sb.append("<a href=\"");
-			sb.append(url);
-			sb.append("\">");
-			sb.append(title);
-			sb.append("</a>");
-
-			return sb.toString();
+			return null;
 		}
 
 	};

@@ -23,6 +23,8 @@ String trashEntryId = ParamUtil.getString(request, "trashEntryId");
 
 String duplicateEntryId = ParamUtil.getString(request, "duplicateEntryId");
 String oldName = ParamUtil.getString(request, "oldName");
+
+String restoreEntryURL = ParamUtil.getString(request, "restoreEntryURL");
 %>
 
 <div class="portlet-msg-alert" id="<portlet:namespace />messageContainer">
@@ -34,7 +36,7 @@ String oldName = ParamUtil.getString(request, "oldName");
 	<portlet:param name="redirect" value="<%= redirect %>" />
 </portlet:actionURL>
 
-<aui:form action="<%= editActionURL %>" enctype="multipart/form-data" method="post" name="restoreTrashEntryFm" onSubmit="event.preventDefault();">
+<aui:form action="<%= Validator.isNotNull(restoreEntryURL) ? restoreEntryURL : editActionURL %>" enctype="multipart/form-data" method="post" name="restoreTrashEntryFm" onSubmit="event.preventDefault();">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="trashEntryId" type="hidden" value="<%= trashEntryId %>" />
 	<aui:input name="duplicateEntryId" type="hidden" value="<%= duplicateEntryId %>" />

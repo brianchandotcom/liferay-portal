@@ -30,19 +30,27 @@ WikiPage wikiPage = WikiPageAttachmentUtil.getPageByFileEntryId(attachmentsFileE
 	<c:choose>
 		<c:when test="<%= viewTrashAttachments %>">
 			<c:if test="<%= WikiNodePermission.contains(permissionChecker, wikiPage.getNodeId(), ActionKeys.ADD_ATTACHMENT) %>">
+
+				<%
+				TrashEntry trashEntry = TrashEntryLocalServiceUtil.getEntry(DLFileEntry.class.getName(), attachmentsFileEntry.getFileEntryId());
+				%>
+
 				<portlet:actionURL var="restoreEntryURL">
-					<portlet:param name="struts_action" value="/wiki/edit_page_attachment" />
-					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.MOVE_FROM_TRASH %>" />
+					<portlet:param name="struts_action" value="/wiki/restore_page_attachment" />
+					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
-					<portlet:param name="nodeId" value="<%= String.valueOf(wikiPage.getNodeId()) %>" />
-					<portlet:param name="title" value="<%= wikiPage.getTitle() %>" />
-					<portlet:param name="fileName" value="<%= attachmentsFileEntry.getTitle() %>" />
+					<portlet:param name="trashEntryId" value="<%= String.valueOf(trashEntry.getEntryId()) %>" />
 				</portlet:actionURL>
+
+				<%
+				String taglibOnClick = "Liferay.fire('" + renderResponse.getNamespace() + "checkEntry', {trashEntryId: " + trashEntry.getEntryId() + ", uri: '" + restoreEntryURL.toString() + "'});";
+				%>
 
 				<liferay-ui:icon
 					image="undo"
 					message="restore"
-					url="<%= restoreEntryURL %>"
+					onClick="<%= taglibOnClick %>"
+					url="javascript:;"
 				/>
 			</c:if>
 

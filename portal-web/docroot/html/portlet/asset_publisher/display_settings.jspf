@@ -52,7 +52,7 @@
 		<aui:option label="view-in-a-specific-portlet" selected='<%= assetLinkBehavior.equals("viewInPortlet") %>' value="viewInPortlet" />
 	</aui:select>
 
-	<aui:select label="maximum-items-to-display" name="preferences--delta--">
+	<aui:select helpMessage="number-of-items-to-display-help" label="number-of-items-to-display" name="preferences--delta--">
 
 		<%
 		int[] deltas = {1, 2, 3, 4, 5, 10, 15, 20, 25, 30, 40, 50, 60, 70, 80, 90, 100};

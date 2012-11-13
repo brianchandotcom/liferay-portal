@@ -238,7 +238,7 @@ public interface ReleaseLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.Release getRelease(
-		java.lang.String servletContextName, int buildNumber)
+		java.lang.String servletContextName)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 

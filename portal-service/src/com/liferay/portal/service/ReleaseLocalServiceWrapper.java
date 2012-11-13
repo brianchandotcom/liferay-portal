@@ -258,10 +258,10 @@ public class ReleaseLocalServiceWrapper implements ReleaseLocalService,
 	}
 
 	public com.liferay.portal.model.Release getRelease(
-		java.lang.String servletContextName, int buildNumber)
+		java.lang.String servletContextName)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _releaseLocalService.getRelease(servletContextName, buildNumber);
+		return _releaseLocalService.getRelease(servletContextName);
 	}
 
 	public com.liferay.portal.model.Release updateRelease(long releaseId,

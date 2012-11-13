@@ -165,8 +165,7 @@ public class ReleaseLocalServiceImpl extends ReleaseLocalServiceBaseImpl {
 			testSupportsStringCaseSensitiveQuery();
 
 			Release release = getRelease(
-				ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME,
-				ReleaseInfo.getParentBuildNumber());
+				ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME);
 
 			return release.getBuildNumber();
 		}
@@ -176,7 +175,7 @@ public class ReleaseLocalServiceImpl extends ReleaseLocalServiceBaseImpl {
 		}
 	}
 
-	public Release getRelease(String servletContextName, int buildNumber)
+	public Release getRelease(String servletContextName)
 		throws PortalException, SystemException {
 
 		if (Validator.isNull(servletContextName)) {

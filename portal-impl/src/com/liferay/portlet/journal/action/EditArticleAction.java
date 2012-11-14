@@ -205,7 +205,8 @@ public class EditArticleAction extends PortletAction {
 				redirect = ParamUtil.getString(
 					actionRequest, "originalRedirect");
 			}
-			else if (cmd.equals(Constants.DELETE_TRANSLATION) ||
+
+			if (cmd.equals(Constants.DELETE_TRANSLATION) ||
 					 cmd.equals(Constants.TRANSLATE)) {
 
 				setForward(

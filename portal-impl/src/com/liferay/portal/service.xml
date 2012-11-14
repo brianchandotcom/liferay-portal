@@ -381,6 +381,10 @@
 			<finder-column name="companyId" />
 			<finder-column name="friendlyURL" />
 		</finder>
+		<finder name="C_S" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="site" />
+		</finder>
 		<finder name="T_A" return-type="Collection">
 			<finder-column name="type" />
 			<finder-column name="active" />

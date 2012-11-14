@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portlet.wiki.PageContentException;
 import com.liferay.portlet.wiki.engines.WikiEngine;
+import com.liferay.portlet.wiki.engines.mediawiki.matchers.DirectTagMatcher;
 import com.liferay.portlet.wiki.engines.mediawiki.matchers.DirectURLMatcher;
 import com.liferay.portlet.wiki.engines.mediawiki.matchers.EditURLMatcher;
 import com.liferay.portlet.wiki.engines.mediawiki.matchers.ImageTagMatcher;
@@ -164,8 +165,19 @@ public class MediaWikiEngine implements WikiEngine {
 
 		String content = StringPool.BLANK;
 
+		boolean hasUnderscore = false;
+
 		try {
 			content = page.getContent();
+
+			DirectTagMatcher attachmentTagMatcher = new DirectTagMatcher(page);
+
+			String tagMatch = attachmentTagMatcher.replaceMatches(content);
+
+			if (tagMatch != null) {
+				content = tagMatch;
+				hasUnderscore = true;
+			}
 
 			ImageTagMatcher imageTagMatcher = new ImageTagMatcher();
 
@@ -183,7 +195,8 @@ public class MediaWikiEngine implements WikiEngine {
 			DirectURLMatcher attachmentURLMatcher =
 				new DirectURLMatcher(page, attachmentURLPrefix);
 
-			String result = attachmentURLMatcher.replaceMatches(content);
+			String result = attachmentURLMatcher.replaceMatches(
+				content, hasUnderscore);
 
 			if (result != null) {
 				content = result;

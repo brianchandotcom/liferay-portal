@@ -749,6 +749,10 @@ public class AssetCategoryWrapper implements AssetCategory,
 		return new AssetCategoryWrapper(_assetCategory.toEscapedModel());
 	}
 
+	public com.liferay.portlet.asset.model.AssetCategory toUnescapedModel() {
+		return new AssetCategoryWrapper(_assetCategory.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _assetCategory.toString();

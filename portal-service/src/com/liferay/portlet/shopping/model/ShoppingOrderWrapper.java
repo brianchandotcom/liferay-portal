@@ -1472,6 +1472,10 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 		return new ShoppingOrderWrapper(_shoppingOrder.toEscapedModel());
 	}
 
+	public com.liferay.portlet.shopping.model.ShoppingOrder toUnescapedModel() {
+		return new ShoppingOrderWrapper(_shoppingOrder.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _shoppingOrder.toString();

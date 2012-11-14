@@ -182,6 +182,8 @@ public interface SCProductScreenshotModel extends BaseModel<SCProductScreenshot>
 
 	public SCProductScreenshot toEscapedModel();
 
+	public SCProductScreenshot toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

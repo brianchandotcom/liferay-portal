@@ -226,6 +226,10 @@ public class VirtualHostWrapper implements VirtualHost,
 		return new VirtualHostWrapper(_virtualHost.toEscapedModel());
 	}
 
+	public com.liferay.portal.model.VirtualHost toUnescapedModel() {
+		return new VirtualHostWrapper(_virtualHost.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _virtualHost.toString();

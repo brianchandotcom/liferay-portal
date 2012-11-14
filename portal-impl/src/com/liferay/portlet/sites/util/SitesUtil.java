@@ -139,6 +139,8 @@ public class SitesUtil {
 			return;
 		}
 
+		Group unescapedGroup = group.toUnescapedModel();
+
 		Locale locale = themeDisplay.getLocale();
 
 		if (group.isLayoutPrototype()) {
@@ -146,11 +148,12 @@ public class SitesUtil {
 				request, LanguageUtil.get(locale, "page-template"), null);
 
 			PortalUtil.addPortletBreadcrumbEntry(
-				request, group.getDescriptiveName(), redirectURL.toString());
+				request, unescapedGroup.getDescriptiveName(),
+				redirectURL.toString());
 		}
 		else {
 			PortalUtil.addPortletBreadcrumbEntry(
-				request, group.getDescriptiveName(), null);
+				request, unescapedGroup.getDescriptiveName(), null);
 		}
 
 		if (!group.isLayoutPrototype()) {

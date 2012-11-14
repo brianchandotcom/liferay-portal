@@ -1029,6 +1029,10 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 		return new PasswordPolicyWrapper(_passwordPolicy.toEscapedModel());
 	}
 
+	public com.liferay.portal.model.PasswordPolicy toUnescapedModel() {
+		return new PasswordPolicyWrapper(_passwordPolicy.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _passwordPolicy.toString();

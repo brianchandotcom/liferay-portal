@@ -425,6 +425,10 @@ public class JournalFolderWrapper implements JournalFolder,
 		return new JournalFolderWrapper(_journalFolder.toEscapedModel());
 	}
 
+	public com.liferay.portlet.journal.model.JournalFolder toUnescapedModel() {
+		return new JournalFolderWrapper(_journalFolder.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _journalFolder.toString();

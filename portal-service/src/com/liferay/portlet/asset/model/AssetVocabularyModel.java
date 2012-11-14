@@ -455,6 +455,8 @@ public interface AssetVocabularyModel extends BaseModel<AssetVocabulary>,
 
 	public AssetVocabulary toEscapedModel();
 
+	public AssetVocabulary toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

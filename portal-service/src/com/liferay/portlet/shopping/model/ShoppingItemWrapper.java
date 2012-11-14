@@ -1082,6 +1082,10 @@ public class ShoppingItemWrapper implements ShoppingItem,
 		return new ShoppingItemWrapper(_shoppingItem.toEscapedModel());
 	}
 
+	public com.liferay.portlet.shopping.model.ShoppingItem toUnescapedModel() {
+		return new ShoppingItemWrapper(_shoppingItem.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _shoppingItem.toString();

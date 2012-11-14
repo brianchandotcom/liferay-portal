@@ -304,6 +304,10 @@ public class ExpandoColumnWrapper implements ExpandoColumn,
 		return new ExpandoColumnWrapper(_expandoColumn.toEscapedModel());
 	}
 
+	public com.liferay.portlet.expando.model.ExpandoColumn toUnescapedModel() {
+		return new ExpandoColumnWrapper(_expandoColumn.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _expandoColumn.toString();

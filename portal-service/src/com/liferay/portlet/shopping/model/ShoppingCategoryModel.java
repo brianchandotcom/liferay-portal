@@ -248,6 +248,8 @@ public interface ShoppingCategoryModel extends BaseModel<ShoppingCategory>,
 
 	public ShoppingCategory toEscapedModel();
 
+	public ShoppingCategory toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

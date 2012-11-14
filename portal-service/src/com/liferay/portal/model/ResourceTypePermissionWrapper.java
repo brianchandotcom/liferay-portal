@@ -279,6 +279,10 @@ public class ResourceTypePermissionWrapper implements ResourceTypePermission,
 		return new ResourceTypePermissionWrapper(_resourceTypePermission.toEscapedModel());
 	}
 
+	public com.liferay.portal.model.ResourceTypePermission toUnescapedModel() {
+		return new ResourceTypePermissionWrapper(_resourceTypePermission.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _resourceTypePermission.toString();

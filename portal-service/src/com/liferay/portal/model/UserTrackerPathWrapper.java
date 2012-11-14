@@ -228,6 +228,10 @@ public class UserTrackerPathWrapper implements UserTrackerPath,
 		return new UserTrackerPathWrapper(_userTrackerPath.toEscapedModel());
 	}
 
+	public com.liferay.portal.model.UserTrackerPath toUnescapedModel() {
+		return new UserTrackerPathWrapper(_userTrackerPath.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _userTrackerPath.toString();

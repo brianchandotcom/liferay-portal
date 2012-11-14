@@ -238,6 +238,8 @@ public interface ShoppingItemPriceModel extends BaseModel<ShoppingItemPrice> {
 
 	public ShoppingItemPrice toEscapedModel();
 
+	public ShoppingItemPrice toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

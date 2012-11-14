@@ -70,13 +70,15 @@ public class BookmarksUtil {
 			addPortletBreadcrumbEntries(folder, request, renderResponse);
 		}
 
+		BookmarksEntry unescapedEntry = entry.toUnescapedModel();
+
 		PortletURL portletURL = renderResponse.createRenderURL();
 
 		portletURL.setParameter("struts_action", "/bookmarks/view_entry");
 		portletURL.setParameter("entryId", String.valueOf(entry.getEntryId()));
 
 		PortalUtil.addPortletBreadcrumbEntry(
-			request, entry.getName(), portletURL.toString());
+			request, unescapedEntry.getName(), portletURL.toString());
 	}
 
 	public static void addPortletBreadcrumbEntries(
@@ -122,8 +124,10 @@ public class BookmarksUtil {
 		if (folder.getFolderId() !=
 				BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
+			BookmarksFolder unescapedFolder = folder.toUnescapedModel();
+
 			PortalUtil.addPortletBreadcrumbEntry(
-				request, folder.getName(), portletURL.toString());
+				request, unescapedFolder.getName(), portletURL.toString());
 		}
 	}
 

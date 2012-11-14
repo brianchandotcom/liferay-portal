@@ -343,6 +343,10 @@ public class CountryWrapper implements Country, ModelWrapper<Country> {
 		return new CountryWrapper(_country.toEscapedModel());
 	}
 
+	public com.liferay.portal.model.Country toUnescapedModel() {
+		return new CountryWrapper(_country.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _country.toString();

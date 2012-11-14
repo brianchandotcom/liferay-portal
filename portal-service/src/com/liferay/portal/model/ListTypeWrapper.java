@@ -200,6 +200,10 @@ public class ListTypeWrapper implements ListType, ModelWrapper<ListType> {
 		return new ListTypeWrapper(_listType.toEscapedModel());
 	}
 
+	public com.liferay.portal.model.ListType toUnescapedModel() {
+		return new ListTypeWrapper(_listType.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _listType.toString();

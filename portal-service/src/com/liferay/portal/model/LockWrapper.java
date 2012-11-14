@@ -430,6 +430,10 @@ public class LockWrapper implements Lock, ModelWrapper<Lock> {
 		return new LockWrapper(_lock.toEscapedModel());
 	}
 
+	public com.liferay.portal.model.Lock toUnescapedModel() {
+		return new LockWrapper(_lock.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _lock.toString();

@@ -459,6 +459,10 @@ public class SCProductVersionWrapper implements SCProductVersion,
 		return new SCProductVersionWrapper(_scProductVersion.toEscapedModel());
 	}
 
+	public com.liferay.portlet.softwarecatalog.model.SCProductVersion toUnescapedModel() {
+		return new SCProductVersionWrapper(_scProductVersion.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _scProductVersion.toString();

@@ -304,6 +304,10 @@ public class DLFileEntryMetadataWrapper implements DLFileEntryMetadata,
 		return new DLFileEntryMetadataWrapper(_dlFileEntryMetadata.toEscapedModel());
 	}
 
+	public com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata toUnescapedModel() {
+		return new DLFileEntryMetadataWrapper(_dlFileEntryMetadata.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _dlFileEntryMetadata.toString();

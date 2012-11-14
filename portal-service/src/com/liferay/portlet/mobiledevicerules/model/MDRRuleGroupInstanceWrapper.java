@@ -464,6 +464,10 @@ public class MDRRuleGroupInstanceWrapper implements MDRRuleGroupInstance,
 		return new MDRRuleGroupInstanceWrapper(_mdrRuleGroupInstance.toEscapedModel());
 	}
 
+	public com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance toUnescapedModel() {
+		return new MDRRuleGroupInstanceWrapper(_mdrRuleGroupInstance.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _mdrRuleGroupInstance.toString();

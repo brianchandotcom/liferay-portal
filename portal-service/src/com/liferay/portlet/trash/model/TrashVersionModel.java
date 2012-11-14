@@ -164,6 +164,8 @@ public interface TrashVersionModel extends AttachedModel, BaseModel<TrashVersion
 
 	public TrashVersion toEscapedModel();
 
+	public TrashVersion toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

@@ -930,6 +930,10 @@ public class DDMTemplateWrapper implements DDMTemplate,
 		return new DDMTemplateWrapper(_ddmTemplate.toEscapedModel());
 	}
 
+	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate toUnescapedModel() {
+		return new DDMTemplateWrapper(_ddmTemplate.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _ddmTemplate.toString();

@@ -192,6 +192,8 @@ public interface JournalContentSearchModel extends BaseModel<JournalContentSearc
 
 	public JournalContentSearch toEscapedModel();
 
+	public JournalContentSearch toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

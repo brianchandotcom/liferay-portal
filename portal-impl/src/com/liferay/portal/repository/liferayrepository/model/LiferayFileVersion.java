@@ -286,6 +286,16 @@ public class LiferayFileVersion extends LiferayModel implements FileVersion {
 		}
 	}
 
+	public FileVersion toUnescapedModel() {
+		if (isEscapedModel()) {
+			return new LiferayFileVersion(
+				_dlFileVersion.toUnescapedModel(), true);
+		}
+		else {
+			return this;
+		}
+	}
+
 	private DLFileVersion _dlFileVersion;
 	private boolean _escapedModel;
 

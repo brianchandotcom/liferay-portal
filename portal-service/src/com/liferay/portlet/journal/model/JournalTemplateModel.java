@@ -554,6 +554,8 @@ public interface JournalTemplateModel extends BaseModel<JournalTemplate>,
 
 	public JournalTemplate toEscapedModel();
 
+	public JournalTemplate toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

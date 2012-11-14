@@ -864,6 +864,8 @@ public interface JournalArticleModel extends AttachedModel,
 
 	public JournalArticle toEscapedModel();
 
+	public JournalArticle toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

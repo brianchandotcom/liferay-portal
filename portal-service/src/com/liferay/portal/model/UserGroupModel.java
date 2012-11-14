@@ -176,6 +176,8 @@ public interface UserGroupModel extends BaseModel<UserGroup> {
 
 	public UserGroup toEscapedModel();
 
+	public UserGroup toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

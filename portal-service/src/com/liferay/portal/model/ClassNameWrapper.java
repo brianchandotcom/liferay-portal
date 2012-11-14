@@ -188,6 +188,10 @@ public class ClassNameWrapper implements ClassName, ModelWrapper<ClassName> {
 		return new ClassNameWrapper(_className.toEscapedModel());
 	}
 
+	public com.liferay.portal.model.ClassName toUnescapedModel() {
+		return new ClassNameWrapper(_className.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _className.toString();

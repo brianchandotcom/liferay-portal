@@ -267,6 +267,10 @@ public class DDMStorageLinkWrapper implements DDMStorageLink,
 		return new DDMStorageLinkWrapper(_ddmStorageLink.toEscapedModel());
 	}
 
+	public com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink toUnescapedModel() {
+		return new DDMStorageLinkWrapper(_ddmStorageLink.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _ddmStorageLink.toString();

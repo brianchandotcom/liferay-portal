@@ -383,6 +383,10 @@ public class UserNotificationEventWrapper implements UserNotificationEvent,
 		return new UserNotificationEventWrapper(_userNotificationEvent.toEscapedModel());
 	}
 
+	public com.liferay.portal.model.UserNotificationEvent toUnescapedModel() {
+		return new UserNotificationEventWrapper(_userNotificationEvent.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _userNotificationEvent.toString();

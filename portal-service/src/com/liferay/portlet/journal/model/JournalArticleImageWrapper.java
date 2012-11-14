@@ -338,6 +338,10 @@ public class JournalArticleImageWrapper implements JournalArticleImage,
 		return new JournalArticleImageWrapper(_journalArticleImage.toEscapedModel());
 	}
 
+	public com.liferay.portlet.journal.model.JournalArticleImage toUnescapedModel() {
+		return new JournalArticleImageWrapper(_journalArticleImage.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _journalArticleImage.toString();

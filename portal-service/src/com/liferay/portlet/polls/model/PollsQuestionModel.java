@@ -453,6 +453,8 @@ public interface PollsQuestionModel extends BaseModel<PollsQuestion>,
 
 	public PollsQuestion toEscapedModel();
 
+	public PollsQuestion toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

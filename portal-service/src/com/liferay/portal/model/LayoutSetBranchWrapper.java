@@ -714,6 +714,10 @@ public class LayoutSetBranchWrapper implements LayoutSetBranch,
 		return new LayoutSetBranchWrapper(_layoutSetBranch.toEscapedModel());
 	}
 
+	public com.liferay.portal.model.LayoutSetBranch toUnescapedModel() {
+		return new LayoutSetBranchWrapper(_layoutSetBranch.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _layoutSetBranch.toString();

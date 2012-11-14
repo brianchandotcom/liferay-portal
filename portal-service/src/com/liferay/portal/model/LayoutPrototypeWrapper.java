@@ -425,6 +425,10 @@ public class LayoutPrototypeWrapper implements LayoutPrototype,
 		return new LayoutPrototypeWrapper(_layoutPrototype.toEscapedModel());
 	}
 
+	public com.liferay.portal.model.LayoutPrototype toUnescapedModel() {
+		return new LayoutPrototypeWrapper(_layoutPrototype.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _layoutPrototype.toString();

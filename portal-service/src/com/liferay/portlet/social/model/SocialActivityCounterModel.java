@@ -286,6 +286,8 @@ public interface SocialActivityCounterModel extends AttachedModel,
 
 	public SocialActivityCounter toEscapedModel();
 
+	public SocialActivityCounter toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

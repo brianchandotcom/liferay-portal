@@ -276,6 +276,10 @@ public class ResourceBlockWrapper implements ResourceBlock,
 		return new ResourceBlockWrapper(_resourceBlock.toEscapedModel());
 	}
 
+	public com.liferay.portal.model.ResourceBlock toUnescapedModel() {
+		return new ResourceBlockWrapper(_resourceBlock.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _resourceBlock.toString();

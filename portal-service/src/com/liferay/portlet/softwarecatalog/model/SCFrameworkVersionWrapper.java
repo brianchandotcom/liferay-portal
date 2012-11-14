@@ -434,6 +434,10 @@ public class SCFrameworkVersionWrapper implements SCFrameworkVersion,
 		return new SCFrameworkVersionWrapper(_scFrameworkVersion.toEscapedModel());
 	}
 
+	public com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion toUnescapedModel() {
+		return new SCFrameworkVersionWrapper(_scFrameworkVersion.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _scFrameworkVersion.toString();

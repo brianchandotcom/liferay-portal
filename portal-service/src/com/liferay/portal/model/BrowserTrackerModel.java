@@ -140,6 +140,8 @@ public interface BrowserTrackerModel extends BaseModel<BrowserTracker> {
 
 	public BrowserTracker toEscapedModel();
 
+	public BrowserTracker toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

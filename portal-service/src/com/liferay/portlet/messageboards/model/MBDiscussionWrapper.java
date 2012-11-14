@@ -242,6 +242,10 @@ public class MBDiscussionWrapper implements MBDiscussion,
 		return new MBDiscussionWrapper(_mbDiscussion.toEscapedModel());
 	}
 
+	public com.liferay.portlet.messageboards.model.MBDiscussion toUnescapedModel() {
+		return new MBDiscussionWrapper(_mbDiscussion.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _mbDiscussion.toString();

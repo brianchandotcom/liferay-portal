@@ -207,6 +207,8 @@ public interface SocialActivityAchievementModel extends BaseModel<SocialActivity
 
 	public SocialActivityAchievement toEscapedModel();
 
+	public SocialActivityAchievement toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

@@ -232,6 +232,8 @@ public interface MBBanModel extends BaseModel<MBBan>, GroupedModel {
 
 	public MBBan toEscapedModel();
 
+	public MBBan toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

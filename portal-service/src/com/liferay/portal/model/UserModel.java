@@ -721,6 +721,8 @@ public interface UserModel extends BaseModel<User> {
 
 	public User toEscapedModel();
 
+	public User toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

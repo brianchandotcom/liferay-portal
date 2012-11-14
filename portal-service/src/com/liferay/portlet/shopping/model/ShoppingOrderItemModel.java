@@ -232,6 +232,8 @@ public interface ShoppingOrderItemModel extends BaseModel<ShoppingOrderItem> {
 
 	public ShoppingOrderItem toEscapedModel();
 
+	public ShoppingOrderItem toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

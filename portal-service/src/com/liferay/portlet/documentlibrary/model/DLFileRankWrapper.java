@@ -333,6 +333,10 @@ public class DLFileRankWrapper implements DLFileRank, ModelWrapper<DLFileRank> {
 		return new DLFileRankWrapper(_dlFileRank.toEscapedModel());
 	}
 
+	public com.liferay.portlet.documentlibrary.model.DLFileRank toUnescapedModel() {
+		return new DLFileRankWrapper(_dlFileRank.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _dlFileRank.toString();

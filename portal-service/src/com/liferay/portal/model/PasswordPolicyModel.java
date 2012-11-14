@@ -616,6 +616,8 @@ public interface PasswordPolicyModel extends AuditedModel,
 
 	public PasswordPolicy toEscapedModel();
 
+	public PasswordPolicy toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

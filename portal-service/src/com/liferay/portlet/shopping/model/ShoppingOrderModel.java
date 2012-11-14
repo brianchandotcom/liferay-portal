@@ -887,6 +887,8 @@ public interface ShoppingOrderModel extends BaseModel<ShoppingOrder>,
 
 	public ShoppingOrder toEscapedModel();
 
+	public ShoppingOrder toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

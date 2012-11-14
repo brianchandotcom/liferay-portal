@@ -443,6 +443,10 @@ public class WebsiteWrapper implements Website, ModelWrapper<Website> {
 		return new WebsiteWrapper(_website.toEscapedModel());
 	}
 
+	public com.liferay.portal.model.Website toUnescapedModel() {
+		return new WebsiteWrapper(_website.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _website.toString();

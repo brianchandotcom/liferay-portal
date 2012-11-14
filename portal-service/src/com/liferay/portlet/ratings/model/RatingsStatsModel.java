@@ -178,6 +178,8 @@ public interface RatingsStatsModel extends AttachedModel, BaseModel<RatingsStats
 
 	public RatingsStats toEscapedModel();
 
+	public RatingsStats toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

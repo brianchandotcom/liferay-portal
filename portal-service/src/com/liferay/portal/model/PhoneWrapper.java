@@ -468,6 +468,10 @@ public class PhoneWrapper implements Phone, ModelWrapper<Phone> {
 		return new PhoneWrapper(_phone.toEscapedModel());
 	}
 
+	public com.liferay.portal.model.Phone toUnescapedModel() {
+		return new PhoneWrapper(_phone.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _phone.toString();

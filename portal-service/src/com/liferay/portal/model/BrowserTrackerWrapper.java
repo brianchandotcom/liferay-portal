@@ -221,6 +221,10 @@ public class BrowserTrackerWrapper implements BrowserTracker,
 		return new BrowserTrackerWrapper(_browserTracker.toEscapedModel());
 	}
 
+	public com.liferay.portal.model.BrowserTracker toUnescapedModel() {
+		return new BrowserTrackerWrapper(_browserTracker.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _browserTracker.toString();

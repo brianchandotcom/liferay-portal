@@ -125,6 +125,8 @@ public interface OrgGroupRoleModel extends BaseModel<OrgGroupRole> {
 
 	public OrgGroupRole toEscapedModel();
 
+	public OrgGroupRole toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

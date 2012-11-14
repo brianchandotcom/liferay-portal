@@ -184,6 +184,8 @@ public interface ExpandoColumnModel extends BaseModel<ExpandoColumn> {
 
 	public ExpandoColumn toEscapedModel();
 
+	public ExpandoColumn toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

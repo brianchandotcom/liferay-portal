@@ -352,6 +352,8 @@ public interface LayoutSetModel extends BaseModel<LayoutSet> {
 
 	public LayoutSet toEscapedModel();
 
+	public LayoutSet toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

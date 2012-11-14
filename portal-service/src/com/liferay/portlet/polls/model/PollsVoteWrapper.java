@@ -373,6 +373,10 @@ public class PollsVoteWrapper implements PollsVote, ModelWrapper<PollsVote> {
 		return new PollsVoteWrapper(_pollsVote.toEscapedModel());
 	}
 
+	public com.liferay.portlet.polls.model.PollsVote toUnescapedModel() {
+		return new PollsVoteWrapper(_pollsVote.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _pollsVote.toString();

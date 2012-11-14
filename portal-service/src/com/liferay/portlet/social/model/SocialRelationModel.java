@@ -184,6 +184,8 @@ public interface SocialRelationModel extends BaseModel<SocialRelation> {
 
 	public SocialRelation toEscapedModel();
 
+	public SocialRelation toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

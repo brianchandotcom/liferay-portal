@@ -283,6 +283,8 @@ public interface LayoutPrototypeModel extends BaseModel<LayoutPrototype> {
 
 	public LayoutPrototype toEscapedModel();
 
+	public LayoutPrototype toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

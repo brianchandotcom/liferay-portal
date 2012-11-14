@@ -222,6 +222,8 @@ public interface TicketModel extends AttachedModel, BaseModel<Ticket> {
 
 	public Ticket toEscapedModel();
 
+	public Ticket toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

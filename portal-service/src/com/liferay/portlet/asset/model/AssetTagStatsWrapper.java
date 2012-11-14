@@ -242,6 +242,10 @@ public class AssetTagStatsWrapper implements AssetTagStats,
 		return new AssetTagStatsWrapper(_assetTagStats.toEscapedModel());
 	}
 
+	public com.liferay.portlet.asset.model.AssetTagStats toUnescapedModel() {
+		return new AssetTagStatsWrapper(_assetTagStats.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _assetTagStats.toString();

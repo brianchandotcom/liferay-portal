@@ -1444,6 +1444,10 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 		return new LayoutWrapper(_layout.toEscapedModel());
 	}
 
+	public com.liferay.portal.model.Layout toUnescapedModel() {
+		return new LayoutWrapper(_layout.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _layout.toString();

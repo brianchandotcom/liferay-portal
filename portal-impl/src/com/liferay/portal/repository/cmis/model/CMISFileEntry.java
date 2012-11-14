@@ -530,6 +530,10 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 		return this;
 	}
 
+	public FileEntry toUnescapedModel() {
+		return this;
+	}
+
 	protected List<Document> getAllVersions() throws PortalException {
 		if (_allVersions == null) {
 			try {

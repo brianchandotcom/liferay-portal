@@ -330,6 +330,10 @@ public class DLContentWrapper implements DLContent, ModelWrapper<DLContent> {
 		return new DLContentWrapper(_dlContent.toEscapedModel());
 	}
 
+	public com.liferay.portlet.documentlibrary.model.DLContent toUnescapedModel() {
+		return new DLContentWrapper(_dlContent.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _dlContent.toString();

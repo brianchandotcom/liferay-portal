@@ -249,6 +249,8 @@ public interface DLFileEntryTypeModel extends BaseModel<DLFileEntryType>,
 
 	public DLFileEntryType toEscapedModel();
 
+	public DLFileEntryType toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

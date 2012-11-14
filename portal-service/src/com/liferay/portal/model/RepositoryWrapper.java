@@ -509,6 +509,10 @@ public class RepositoryWrapper implements Repository, ModelWrapper<Repository> {
 		return new RepositoryWrapper(_repository.toEscapedModel());
 	}
 
+	public com.liferay.portal.model.Repository toUnescapedModel() {
+		return new RepositoryWrapper(_repository.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _repository.toString();

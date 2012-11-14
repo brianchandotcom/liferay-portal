@@ -507,6 +507,8 @@ public interface MDRActionModel extends AttachedModel, BaseModel<MDRAction>,
 
 	public MDRAction toEscapedModel();
 
+	public MDRAction toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

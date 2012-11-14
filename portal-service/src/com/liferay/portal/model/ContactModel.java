@@ -600,6 +600,8 @@ public interface ContactModel extends AttachedModel, AuditedModel,
 
 	public Contact toEscapedModel();
 
+	public Contact toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

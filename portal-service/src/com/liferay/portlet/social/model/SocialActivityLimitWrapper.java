@@ -388,6 +388,10 @@ public class SocialActivityLimitWrapper implements SocialActivityLimit,
 		return new SocialActivityLimitWrapper(_socialActivityLimit.toEscapedModel());
 	}
 
+	public com.liferay.portlet.social.model.SocialActivityLimit toUnescapedModel() {
+		return new SocialActivityLimitWrapper(_socialActivityLimit.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _socialActivityLimit.toString();

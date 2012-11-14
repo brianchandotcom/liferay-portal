@@ -269,6 +269,8 @@ public interface SCFrameworkVersionModel extends BaseModel<SCFrameworkVersion>,
 
 	public SCFrameworkVersion toEscapedModel();
 
+	public SCFrameworkVersion toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

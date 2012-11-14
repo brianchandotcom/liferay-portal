@@ -397,6 +397,10 @@ public class BlogsStatsUserWrapper implements BlogsStatsUser,
 		return new BlogsStatsUserWrapper(_blogsStatsUser.toEscapedModel());
 	}
 
+	public com.liferay.portlet.blogs.model.BlogsStatsUser toUnescapedModel() {
+		return new BlogsStatsUserWrapper(_blogsStatsUser.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _blogsStatsUser.toString();

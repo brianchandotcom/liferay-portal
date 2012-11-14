@@ -480,6 +480,8 @@ public interface DDLRecordSetModel extends BaseModel<DDLRecordSet>, GroupedModel
 
 	public DDLRecordSet toEscapedModel();
 
+	public DDLRecordSet toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

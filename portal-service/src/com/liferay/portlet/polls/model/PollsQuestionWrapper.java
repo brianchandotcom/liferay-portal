@@ -674,6 +674,10 @@ public class PollsQuestionWrapper implements PollsQuestion,
 		return new PollsQuestionWrapper(_pollsQuestion.toEscapedModel());
 	}
 
+	public com.liferay.portlet.polls.model.PollsQuestion toUnescapedModel() {
+		return new PollsQuestionWrapper(_pollsQuestion.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _pollsQuestion.toString();

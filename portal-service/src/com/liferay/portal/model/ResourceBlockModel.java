@@ -169,6 +169,8 @@ public interface ResourceBlockModel extends BaseModel<ResourceBlock> {
 
 	public ResourceBlock toEscapedModel();
 
+	public ResourceBlock toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

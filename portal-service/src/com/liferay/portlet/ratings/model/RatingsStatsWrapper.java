@@ -292,6 +292,10 @@ public class RatingsStatsWrapper implements RatingsStats,
 		return new RatingsStatsWrapper(_ratingsStats.toEscapedModel());
 	}
 
+	public com.liferay.portlet.ratings.model.RatingsStats toUnescapedModel() {
+		return new RatingsStatsWrapper(_ratingsStats.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _ratingsStats.toString();

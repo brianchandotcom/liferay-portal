@@ -247,6 +247,8 @@ public interface OrganizationModel extends BaseModel<Organization> {
 
 	public Organization toEscapedModel();
 
+	public Organization toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

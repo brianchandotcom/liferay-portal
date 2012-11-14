@@ -631,6 +631,10 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 		return new WikiNodeWrapper(_wikiNode.toEscapedModel());
 	}
 
+	public com.liferay.portlet.wiki.model.WikiNode toUnescapedModel() {
+		return new WikiNodeWrapper(_wikiNode.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _wikiNode.toString();

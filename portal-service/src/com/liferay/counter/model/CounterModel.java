@@ -114,6 +114,8 @@ public interface CounterModel extends BaseModel<Counter> {
 
 	public Counter toEscapedModel();
 
+	public Counter toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

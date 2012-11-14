@@ -311,6 +311,8 @@ public interface SocialRequestModel extends AttachedModel,
 
 	public SocialRequest toEscapedModel();
 
+	public SocialRequest toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

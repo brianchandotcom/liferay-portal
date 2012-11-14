@@ -312,6 +312,8 @@ public interface RepositoryModel extends BaseModel<Repository>, GroupedModel {
 
 	public Repository toEscapedModel();
 
+	public Repository toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

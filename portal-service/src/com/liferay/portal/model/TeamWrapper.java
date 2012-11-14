@@ -371,6 +371,10 @@ public class TeamWrapper implements Team, ModelWrapper<Team> {
 		return new TeamWrapper(_team.toEscapedModel());
 	}
 
+	public com.liferay.portal.model.Team toUnescapedModel() {
+		return new TeamWrapper(_team.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _team.toString();

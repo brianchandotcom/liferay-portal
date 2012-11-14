@@ -541,6 +541,8 @@ public interface BlogsEntryModel extends BaseModel<BlogsEntry>, GroupedModel,
 
 	public BlogsEntry toEscapedModel();
 
+	public BlogsEntry toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

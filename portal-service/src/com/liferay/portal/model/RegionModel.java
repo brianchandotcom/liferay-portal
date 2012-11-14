@@ -162,6 +162,8 @@ public interface RegionModel extends BaseModel<Region> {
 
 	public Region toEscapedModel();
 
+	public Region toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

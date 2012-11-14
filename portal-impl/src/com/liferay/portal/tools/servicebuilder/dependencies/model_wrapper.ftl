@@ -104,8 +104,8 @@ public class ${entity.name}Wrapper implements ${entity.name}, ModelWrapper<${ent
 			{
 				<#if method.name == "clone" && (parameters?size == 0)>
 					return new ${entity.name}Wrapper((${entity.name})_${entity.varName}.clone());
-				<#elseif method.name == "toEscapedModel" && (parameters?size == 0)>
-					return new ${entity.name}Wrapper(_${entity.varName}.toEscapedModel());
+				<#elseif (method.name == "toEscapedModel" || method.name == "toUnescapedModel") && (parameters?size == 0)>
+					return new ${entity.name}Wrapper(_${entity.varName}.${method.name}());
 				<#else>
 					<#if method.returns.value != "void">
 						return

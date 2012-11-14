@@ -342,6 +342,10 @@ public class ExpandoValueWrapper implements ExpandoValue,
 		return new ExpandoValueWrapper(_expandoValue.toEscapedModel());
 	}
 
+	public com.liferay.portlet.expando.model.ExpandoValue toUnescapedModel() {
+		return new ExpandoValueWrapper(_expandoValue.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _expandoValue.toString();

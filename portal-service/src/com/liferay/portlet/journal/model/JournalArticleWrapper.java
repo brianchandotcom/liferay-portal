@@ -1342,6 +1342,10 @@ public class JournalArticleWrapper implements JournalArticle,
 		return new JournalArticleWrapper(_journalArticle.toEscapedModel());
 	}
 
+	public com.liferay.portlet.journal.model.JournalArticle toUnescapedModel() {
+		return new JournalArticleWrapper(_journalArticle.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _journalArticle.toString();

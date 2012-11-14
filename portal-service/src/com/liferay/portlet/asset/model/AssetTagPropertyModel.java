@@ -234,6 +234,8 @@ public interface AssetTagPropertyModel extends AuditedModel,
 
 	public AssetTagProperty toEscapedModel();
 
+	public AssetTagProperty toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

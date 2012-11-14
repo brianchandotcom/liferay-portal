@@ -207,6 +207,8 @@ public interface DLFileRankModel extends BaseModel<DLFileRank> {
 
 	public DLFileRank toEscapedModel();
 
+	public DLFileRank toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

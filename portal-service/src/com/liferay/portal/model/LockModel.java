@@ -267,6 +267,8 @@ public interface LockModel extends BaseModel<Lock> {
 
 	public Lock toEscapedModel();
 
+	public Lock toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

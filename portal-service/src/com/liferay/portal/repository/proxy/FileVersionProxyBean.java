@@ -253,6 +253,12 @@ public class FileVersionProxyBean
 		return newFileVersionProxyBean(fileVersion);
 	}
 
+	public FileVersion toUnescapedModel() {
+		FileVersion fileVersion = _fileVersion.toUnescapedModel();
+
+		return newFileVersionProxyBean(fileVersion);
+	}
+
 	private FileVersion _fileVersion;
 
 }

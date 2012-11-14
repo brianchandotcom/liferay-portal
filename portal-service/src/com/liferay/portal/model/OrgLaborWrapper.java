@@ -550,6 +550,10 @@ public class OrgLaborWrapper implements OrgLabor, ModelWrapper<OrgLabor> {
 		return new OrgLaborWrapper(_orgLabor.toEscapedModel());
 	}
 
+	public com.liferay.portal.model.OrgLabor toUnescapedModel() {
+		return new OrgLaborWrapper(_orgLabor.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _orgLabor.toString();

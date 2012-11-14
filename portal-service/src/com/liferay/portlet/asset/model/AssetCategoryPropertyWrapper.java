@@ -376,6 +376,10 @@ public class AssetCategoryPropertyWrapper implements AssetCategoryProperty,
 		return new AssetCategoryPropertyWrapper(_assetCategoryProperty.toEscapedModel());
 	}
 
+	public com.liferay.portlet.asset.model.AssetCategoryProperty toUnescapedModel() {
+		return new AssetCategoryPropertyWrapper(_assetCategoryProperty.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _assetCategoryProperty.toString();

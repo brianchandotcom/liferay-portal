@@ -373,6 +373,10 @@ public class AssetTagWrapper implements AssetTag, ModelWrapper<AssetTag> {
 		return new AssetTagWrapper(_assetTag.toEscapedModel());
 	}
 
+	public com.liferay.portlet.asset.model.AssetTag toUnescapedModel() {
+		return new AssetTagWrapper(_assetTag.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _assetTag.toString();

@@ -686,6 +686,10 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 		return new MBThreadWrapper(_mbThread.toEscapedModel());
 	}
 
+	public com.liferay.portlet.messageboards.model.MBThread toUnescapedModel() {
+		return new MBThreadWrapper(_mbThread.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _mbThread.toString();

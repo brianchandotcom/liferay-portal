@@ -187,6 +187,8 @@ public interface MBStatsUserModel extends BaseModel<MBStatsUser> {
 
 	public MBStatsUser toEscapedModel();
 
+	public MBStatsUser toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

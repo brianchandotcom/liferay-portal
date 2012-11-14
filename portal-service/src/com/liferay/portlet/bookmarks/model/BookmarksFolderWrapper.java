@@ -450,6 +450,10 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 		return new BookmarksFolderWrapper(_bookmarksFolder.toEscapedModel());
 	}
 
+	public com.liferay.portlet.bookmarks.model.BookmarksFolder toUnescapedModel() {
+		return new BookmarksFolderWrapper(_bookmarksFolder.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _bookmarksFolder.toString();

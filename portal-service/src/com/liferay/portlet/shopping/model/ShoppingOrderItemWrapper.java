@@ -380,6 +380,10 @@ public class ShoppingOrderItemWrapper implements ShoppingOrderItem,
 		return new ShoppingOrderItemWrapper(_shoppingOrderItem.toEscapedModel());
 	}
 
+	public com.liferay.portlet.shopping.model.ShoppingOrderItem toUnescapedModel() {
+		return new ShoppingOrderItemWrapper(_shoppingOrderItem.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _shoppingOrderItem.toString();

@@ -36,4 +36,6 @@ public interface RepositoryModel<T>
 
 	public T toEscapedModel();
 
+	public T toUnescapedModel();
+
 }

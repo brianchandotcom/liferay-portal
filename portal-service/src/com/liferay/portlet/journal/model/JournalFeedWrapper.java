@@ -727,6 +727,10 @@ public class JournalFeedWrapper implements JournalFeed,
 		return new JournalFeedWrapper(_journalFeed.toEscapedModel());
 	}
 
+	public com.liferay.portlet.journal.model.JournalFeed toUnescapedModel() {
+		return new JournalFeedWrapper(_journalFeed.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _journalFeed.toString();

@@ -373,6 +373,10 @@ public class AssetLinkWrapper implements AssetLink, ModelWrapper<AssetLink> {
 		return new AssetLinkWrapper(_assetLink.toEscapedModel());
 	}
 
+	public com.liferay.portlet.asset.model.AssetLink toUnescapedModel() {
+		return new AssetLinkWrapper(_assetLink.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _assetLink.toString();

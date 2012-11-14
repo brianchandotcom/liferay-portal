@@ -167,6 +167,8 @@ public interface DDMStorageLinkModel extends AttachedModel,
 
 	public DDMStorageLink toEscapedModel();
 
+	public DDMStorageLink toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

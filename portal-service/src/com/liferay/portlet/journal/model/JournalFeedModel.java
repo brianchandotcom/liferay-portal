@@ -438,6 +438,8 @@ public interface JournalFeedModel extends BaseModel<JournalFeed>, GroupedModel {
 
 	public JournalFeed toEscapedModel();
 
+	public JournalFeed toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

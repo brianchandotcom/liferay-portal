@@ -410,6 +410,10 @@ public class OrganizationWrapper implements Organization,
 		return new OrganizationWrapper(_organization.toEscapedModel());
 	}
 
+	public com.liferay.portal.model.Organization toUnescapedModel() {
+		return new OrganizationWrapper(_organization.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _organization.toString();

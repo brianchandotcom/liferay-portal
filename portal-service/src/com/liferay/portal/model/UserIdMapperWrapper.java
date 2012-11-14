@@ -271,6 +271,10 @@ public class UserIdMapperWrapper implements UserIdMapper,
 		return new UserIdMapperWrapper(_userIdMapper.toEscapedModel());
 	}
 
+	public com.liferay.portal.model.UserIdMapper toUnescapedModel() {
+		return new UserIdMapperWrapper(_userIdMapper.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _userIdMapper.toString();

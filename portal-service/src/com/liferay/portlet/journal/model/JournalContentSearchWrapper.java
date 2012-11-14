@@ -314,6 +314,10 @@ public class JournalContentSearchWrapper implements JournalContentSearch,
 		return new JournalContentSearchWrapper(_journalContentSearch.toEscapedModel());
 	}
 
+	public com.liferay.portlet.journal.model.JournalContentSearch toUnescapedModel() {
+		return new JournalContentSearchWrapper(_journalContentSearch.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _journalContentSearch.toString();

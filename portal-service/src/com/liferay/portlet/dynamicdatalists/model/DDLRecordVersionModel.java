@@ -401,6 +401,8 @@ public interface DDLRecordVersionModel extends BaseModel<DDLRecordVersion>,
 
 	public DDLRecordVersion toEscapedModel();
 
+	public DDLRecordVersion toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

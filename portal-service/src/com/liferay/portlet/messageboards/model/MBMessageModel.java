@@ -597,6 +597,8 @@ public interface MBMessageModel extends AttachedModel, BaseModel<MBMessage>,
 
 	public MBMessage toEscapedModel();
 
+	public MBMessage toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

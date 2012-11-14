@@ -230,6 +230,8 @@ public interface TeamModel extends BaseModel<Team>, GroupedModel {
 
 	public Team toEscapedModel();
 
+	public Team toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

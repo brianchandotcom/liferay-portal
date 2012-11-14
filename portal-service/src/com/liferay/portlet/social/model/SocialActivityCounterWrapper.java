@@ -477,6 +477,10 @@ public class SocialActivityCounterWrapper implements SocialActivityCounter,
 		return new SocialActivityCounterWrapper(_socialActivityCounter.toEscapedModel());
 	}
 
+	public com.liferay.portlet.social.model.SocialActivityCounter toUnescapedModel() {
+		return new SocialActivityCounterWrapper(_socialActivityCounter.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _socialActivityCounter.toString();

@@ -84,6 +84,10 @@ public abstract class BaseModelImpl<T> implements BaseModel<T> {
 		throw new UnsupportedOperationException();
 	}
 
+	public T toUnescapedModel() {
+		return (T) this;
+	}
+
 	protected Locale getLocale(String languageId) {
 		Locale locale = null;
 

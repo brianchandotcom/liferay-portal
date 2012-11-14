@@ -149,6 +149,8 @@ public interface AssetTagStatsModel extends BaseModel<AssetTagStats> {
 
 	public AssetTagStats toEscapedModel();
 
+	public AssetTagStats toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

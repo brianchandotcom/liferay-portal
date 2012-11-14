@@ -339,6 +339,8 @@ public interface SCProductEntryModel extends BaseModel<SCProductEntry>,
 
 	public SCProductEntry toEscapedModel();
 
+	public SCProductEntry toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

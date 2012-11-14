@@ -121,6 +121,8 @@ public interface ClassNameModel extends BaseModel<ClassName> {
 
 	public ClassName toEscapedModel();
 
+	public ClassName toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

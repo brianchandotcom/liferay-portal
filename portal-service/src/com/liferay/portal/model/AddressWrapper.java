@@ -627,6 +627,10 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 		return new AddressWrapper(_address.toEscapedModel());
 	}
 
+	public com.liferay.portal.model.Address toUnescapedModel() {
+		return new AddressWrapper(_address.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _address.toString();

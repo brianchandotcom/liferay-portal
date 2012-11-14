@@ -444,6 +444,10 @@ public class EmailAddressWrapper implements EmailAddress,
 		return new EmailAddressWrapper(_emailAddress.toEscapedModel());
 	}
 
+	public com.liferay.portal.model.EmailAddress toUnescapedModel() {
+		return new EmailAddressWrapper(_emailAddress.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _emailAddress.toString();

@@ -177,6 +177,10 @@ public class CounterWrapper implements Counter, ModelWrapper<Counter> {
 		return new CounterWrapper(_counter.toEscapedModel());
 	}
 
+	public com.liferay.counter.model.Counter toUnescapedModel() {
+		return new CounterWrapper(_counter.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _counter.toString();

@@ -172,6 +172,8 @@ public interface AnnouncementsFlagModel extends BaseModel<AnnouncementsFlag> {
 
 	public AnnouncementsFlag toEscapedModel();
 
+	public AnnouncementsFlag toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

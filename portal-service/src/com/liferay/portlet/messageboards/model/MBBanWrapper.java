@@ -368,6 +368,10 @@ public class MBBanWrapper implements MBBan, ModelWrapper<MBBan> {
 		return new MBBanWrapper(_mbBan.toEscapedModel());
 	}
 
+	public com.liferay.portlet.messageboards.model.MBBan toUnescapedModel() {
+		return new MBBanWrapper(_mbBan.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _mbBan.toString();

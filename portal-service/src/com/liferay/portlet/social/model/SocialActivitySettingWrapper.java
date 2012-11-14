@@ -318,6 +318,10 @@ public class SocialActivitySettingWrapper implements SocialActivitySetting,
 		return new SocialActivitySettingWrapper(_socialActivitySetting.toEscapedModel());
 	}
 
+	public com.liferay.portlet.social.model.SocialActivitySetting toUnescapedModel() {
+		return new SocialActivitySettingWrapper(_socialActivitySetting.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _socialActivitySetting.toString();

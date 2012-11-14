@@ -143,6 +143,8 @@ public interface JournalArticleResourceModel extends BaseModel<JournalArticleRes
 
 	public JournalArticleResource toEscapedModel();
 
+	public JournalArticleResource toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

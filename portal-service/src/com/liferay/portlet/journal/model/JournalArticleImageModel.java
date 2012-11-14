@@ -208,6 +208,8 @@ public interface JournalArticleImageModel extends BaseModel<JournalArticleImage>
 
 	public JournalArticleImage toEscapedModel();
 
+	public JournalArticleImage toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

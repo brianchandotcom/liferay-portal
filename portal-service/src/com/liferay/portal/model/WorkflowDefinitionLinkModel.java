@@ -281,6 +281,8 @@ public interface WorkflowDefinitionLinkModel extends AttachedModel,
 
 	public WorkflowDefinitionLink toEscapedModel();
 
+	public WorkflowDefinitionLink toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

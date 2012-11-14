@@ -400,6 +400,10 @@ public class ShoppingCategoryWrapper implements ShoppingCategory,
 		return new ShoppingCategoryWrapper(_shoppingCategory.toEscapedModel());
 	}
 
+	public com.liferay.portlet.shopping.model.ShoppingCategory toUnescapedModel() {
+		return new ShoppingCategoryWrapper(_shoppingCategory.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _shoppingCategory.toString();

@@ -140,6 +140,8 @@ public interface VirtualHostModel extends BaseModel<VirtualHost> {
 
 	public VirtualHost toEscapedModel();
 
+	public VirtualHost toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

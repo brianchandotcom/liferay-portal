@@ -674,6 +674,10 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 		return new AssetVocabularyWrapper(_assetVocabulary.toEscapedModel());
 	}
 
+	public com.liferay.portlet.asset.model.AssetVocabulary toUnescapedModel() {
+		return new AssetVocabularyWrapper(_assetVocabulary.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _assetVocabulary.toString();

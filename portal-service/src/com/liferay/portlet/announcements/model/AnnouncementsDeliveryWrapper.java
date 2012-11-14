@@ -352,6 +352,10 @@ public class AnnouncementsDeliveryWrapper implements AnnouncementsDelivery,
 		return new AnnouncementsDeliveryWrapper(_announcementsDelivery.toEscapedModel());
 	}
 
+	public com.liferay.portlet.announcements.model.AnnouncementsDelivery toUnescapedModel() {
+		return new AnnouncementsDeliveryWrapper(_announcementsDelivery.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _announcementsDelivery.toString();

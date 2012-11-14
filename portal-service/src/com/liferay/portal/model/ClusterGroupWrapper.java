@@ -235,6 +235,10 @@ public class ClusterGroupWrapper implements ClusterGroup,
 		return new ClusterGroupWrapper(_clusterGroup.toEscapedModel());
 	}
 
+	public com.liferay.portal.model.ClusterGroup toUnescapedModel() {
+		return new ClusterGroupWrapper(_clusterGroup.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _clusterGroup.toString();

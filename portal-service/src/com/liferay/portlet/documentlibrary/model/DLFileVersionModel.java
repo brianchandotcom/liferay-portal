@@ -550,6 +550,8 @@ public interface DLFileVersionModel extends BaseModel<DLFileVersion>,
 
 	public DLFileVersion toEscapedModel();
 
+	public DLFileVersion toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

@@ -550,6 +550,10 @@ public class SCProductEntryWrapper implements SCProductEntry,
 		return new SCProductEntryWrapper(_scProductEntry.toEscapedModel());
 	}
 
+	public com.liferay.portlet.softwarecatalog.model.SCProductEntry toUnescapedModel() {
+		return new SCProductEntryWrapper(_scProductEntry.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _scProductEntry.toString();

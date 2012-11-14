@@ -127,6 +127,8 @@ public interface ListTypeModel extends BaseModel<ListType> {
 
 	public ListType toEscapedModel();
 
+	public ListType toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

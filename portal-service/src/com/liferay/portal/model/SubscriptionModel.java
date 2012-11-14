@@ -239,6 +239,8 @@ public interface SubscriptionModel extends AttachedModel, AuditedModel,
 
 	public Subscription toEscapedModel();
 
+	public Subscription toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

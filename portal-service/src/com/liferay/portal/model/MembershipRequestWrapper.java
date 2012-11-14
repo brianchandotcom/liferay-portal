@@ -418,6 +418,10 @@ public class MembershipRequestWrapper implements MembershipRequest,
 		return new MembershipRequestWrapper(_membershipRequest.toEscapedModel());
 	}
 
+	public com.liferay.portal.model.MembershipRequest toUnescapedModel() {
+		return new MembershipRequestWrapper(_membershipRequest.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _membershipRequest.toString();

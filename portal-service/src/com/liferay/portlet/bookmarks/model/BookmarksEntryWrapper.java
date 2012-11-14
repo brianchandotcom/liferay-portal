@@ -525,6 +525,10 @@ public class BookmarksEntryWrapper implements BookmarksEntry,
 		return new BookmarksEntryWrapper(_bookmarksEntry.toEscapedModel());
 	}
 
+	public com.liferay.portlet.bookmarks.model.BookmarksEntry toUnescapedModel() {
+		return new BookmarksEntryWrapper(_bookmarksEntry.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _bookmarksEntry.toString();

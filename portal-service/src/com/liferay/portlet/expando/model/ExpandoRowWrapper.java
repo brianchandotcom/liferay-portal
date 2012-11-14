@@ -254,6 +254,10 @@ public class ExpandoRowWrapper implements ExpandoRow, ModelWrapper<ExpandoRow> {
 		return new ExpandoRowWrapper(_expandoRow.toEscapedModel());
 	}
 
+	public com.liferay.portlet.expando.model.ExpandoRow toUnescapedModel() {
+		return new ExpandoRowWrapper(_expandoRow.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _expandoRow.toString();

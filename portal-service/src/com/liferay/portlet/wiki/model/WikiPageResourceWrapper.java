@@ -229,6 +229,10 @@ public class WikiPageResourceWrapper implements WikiPageResource,
 		return new WikiPageResourceWrapper(_wikiPageResource.toEscapedModel());
 	}
 
+	public com.liferay.portlet.wiki.model.WikiPageResource toUnescapedModel() {
+		return new WikiPageResourceWrapper(_wikiPageResource.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _wikiPageResource.toString();

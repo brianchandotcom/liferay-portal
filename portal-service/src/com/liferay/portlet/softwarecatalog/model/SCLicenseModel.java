@@ -192,6 +192,8 @@ public interface SCLicenseModel extends BaseModel<SCLicense> {
 
 	public SCLicense toEscapedModel();
 
+	public SCLicense toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

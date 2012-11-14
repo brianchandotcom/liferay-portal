@@ -227,6 +227,10 @@ public class PortalPreferencesWrapper implements PortalPreferences,
 		return new PortalPreferencesWrapper(_portalPreferences.toEscapedModel());
 	}
 
+	public com.liferay.portal.model.PortalPreferences toUnescapedModel() {
+		return new PortalPreferencesWrapper(_portalPreferences.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _portalPreferences.toString();

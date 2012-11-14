@@ -249,6 +249,8 @@ public interface LayoutBranchModel extends BaseModel<LayoutBranch> {
 
 	public LayoutBranch toEscapedModel();
 
+	public LayoutBranch toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

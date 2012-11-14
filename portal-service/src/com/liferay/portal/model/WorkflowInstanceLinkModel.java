@@ -252,6 +252,8 @@ public interface WorkflowInstanceLinkModel extends AttachedModel,
 
 	public WorkflowInstanceLink toEscapedModel();
 
+	public WorkflowInstanceLink toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

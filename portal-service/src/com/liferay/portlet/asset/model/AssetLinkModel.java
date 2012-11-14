@@ -230,6 +230,8 @@ public interface AssetLinkModel extends BaseModel<AssetLink> {
 
 	public AssetLink toEscapedModel();
 
+	public AssetLink toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

@@ -755,6 +755,8 @@ public interface AssetEntryModel extends AttachedModel, BaseModel<AssetEntry>,
 
 	public AssetEntry toEscapedModel();
 
+	public AssetEntry toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

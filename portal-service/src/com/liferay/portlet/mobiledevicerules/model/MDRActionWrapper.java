@@ -761,6 +761,10 @@ public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {
 		return new MDRActionWrapper(_mdrAction.toEscapedModel());
 	}
 
+	public com.liferay.portlet.mobiledevicerules.model.MDRAction toUnescapedModel() {
+		return new MDRActionWrapper(_mdrAction.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _mdrAction.toString();

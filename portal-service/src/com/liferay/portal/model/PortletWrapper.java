@@ -259,6 +259,10 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 		return new PortletWrapper(_portlet.toEscapedModel());
 	}
 
+	public com.liferay.portal.model.Portlet toUnescapedModel() {
+		return new PortletWrapper(_portlet.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _portlet.toString();

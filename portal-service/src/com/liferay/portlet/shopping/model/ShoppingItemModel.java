@@ -652,6 +652,8 @@ public interface ShoppingItemModel extends BaseModel<ShoppingItem>, GroupedModel
 
 	public ShoppingItem toEscapedModel();
 
+	public ShoppingItem toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

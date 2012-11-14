@@ -267,6 +267,10 @@ public class TrashVersionWrapper implements TrashVersion,
 		return new TrashVersionWrapper(_trashVersion.toEscapedModel());
 	}
 
+	public com.liferay.portlet.trash.model.TrashVersion toUnescapedModel() {
+		return new TrashVersionWrapper(_trashVersion.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _trashVersion.toString();

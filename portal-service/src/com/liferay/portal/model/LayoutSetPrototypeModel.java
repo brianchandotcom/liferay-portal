@@ -312,6 +312,8 @@ public interface LayoutSetPrototypeModel extends BaseModel<LayoutSetPrototype> {
 
 	public LayoutSetPrototype toEscapedModel();
 
+	public LayoutSetPrototype toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

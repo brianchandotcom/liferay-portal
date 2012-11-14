@@ -258,6 +258,8 @@ public interface MembershipRequestModel extends BaseModel<MembershipRequest> {
 
 	public MembershipRequest toEscapedModel();
 
+	public MembershipRequest toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

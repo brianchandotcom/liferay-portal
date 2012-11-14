@@ -151,6 +151,8 @@ public interface DDMStructureLinkModel extends AttachedModel,
 
 	public DDMStructureLink toEscapedModel();
 
+	public DDMStructureLink toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

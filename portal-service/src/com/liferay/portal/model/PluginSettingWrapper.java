@@ -285,6 +285,10 @@ public class PluginSettingWrapper implements PluginSetting,
 		return new PluginSettingWrapper(_pluginSetting.toEscapedModel());
 	}
 
+	public com.liferay.portal.model.PluginSetting toUnescapedModel() {
+		return new PluginSettingWrapper(_pluginSetting.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _pluginSetting.toString();

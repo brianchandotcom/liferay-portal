@@ -305,6 +305,10 @@ public class SCLicenseWrapper implements SCLicense, ModelWrapper<SCLicense> {
 		return new SCLicenseWrapper(_scLicense.toEscapedModel());
 	}
 
+	public com.liferay.portlet.softwarecatalog.model.SCLicense toUnescapedModel() {
+		return new SCLicenseWrapper(_scLicense.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _scLicense.toString();

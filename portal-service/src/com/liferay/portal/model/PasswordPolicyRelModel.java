@@ -148,6 +148,8 @@ public interface PasswordPolicyRelModel extends AttachedModel,
 
 	public PasswordPolicyRel toEscapedModel();
 
+	public PasswordPolicyRel toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

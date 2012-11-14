@@ -206,6 +206,8 @@ public interface ExpandoValueModel extends AttachedModel, BaseModel<ExpandoValue
 
 	public ExpandoValue toEscapedModel();
 
+	public ExpandoValue toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

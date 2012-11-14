@@ -538,6 +538,10 @@ public class DDMContentWrapper implements DDMContent, ModelWrapper<DDMContent> {
 		return new DDMContentWrapper(_ddmContent.toEscapedModel());
 	}
 
+	public com.liferay.portlet.dynamicdatamapping.model.DDMContent toUnescapedModel() {
+		return new DDMContentWrapper(_ddmContent.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _ddmContent.toString();

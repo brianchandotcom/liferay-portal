@@ -398,6 +398,10 @@ public class ShoppingItemPriceWrapper implements ShoppingItemPrice,
 		return new ShoppingItemPriceWrapper(_shoppingItemPrice.toEscapedModel());
 	}
 
+	public com.liferay.portlet.shopping.model.ShoppingItemPrice toUnescapedModel() {
+		return new ShoppingItemPriceWrapper(_shoppingItemPrice.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _shoppingItemPrice.toString();

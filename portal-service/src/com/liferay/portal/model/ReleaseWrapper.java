@@ -360,6 +360,10 @@ public class ReleaseWrapper implements Release, ModelWrapper<Release> {
 		return new ReleaseWrapper(_release.toEscapedModel());
 	}
 
+	public com.liferay.portal.model.Release toUnescapedModel() {
+		return new ReleaseWrapper(_release.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _release.toString();

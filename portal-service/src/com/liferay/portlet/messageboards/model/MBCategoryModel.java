@@ -319,6 +319,8 @@ public interface MBCategoryModel extends BaseModel<MBCategory>, GroupedModel {
 
 	public MBCategory toEscapedModel();
 
+	public MBCategory toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

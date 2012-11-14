@@ -138,6 +138,8 @@ public interface ResourceBlockPermissionModel extends BaseModel<ResourceBlockPer
 
 	public ResourceBlockPermission toEscapedModel();
 
+	public ResourceBlockPermission toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

@@ -319,6 +319,8 @@ public interface DDLRecordModel extends BaseModel<DDLRecord>, GroupedModel {
 
 	public DDLRecord toEscapedModel();
 
+	public DDLRecord toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

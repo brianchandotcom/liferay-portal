@@ -496,6 +496,8 @@ public interface AssetCategoryModel extends BaseModel<AssetCategory>,
 
 	public AssetCategory toEscapedModel();
 
+	public AssetCategory toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

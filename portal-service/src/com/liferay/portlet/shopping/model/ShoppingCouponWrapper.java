@@ -609,6 +609,10 @@ public class ShoppingCouponWrapper implements ShoppingCoupon,
 		return new ShoppingCouponWrapper(_shoppingCoupon.toEscapedModel());
 	}
 
+	public com.liferay.portlet.shopping.model.ShoppingCoupon toUnescapedModel() {
+		return new ShoppingCouponWrapper(_shoppingCoupon.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _shoppingCoupon.toString();

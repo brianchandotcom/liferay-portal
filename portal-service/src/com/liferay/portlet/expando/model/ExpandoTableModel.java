@@ -149,6 +149,8 @@ public interface ExpandoTableModel extends BaseModel<ExpandoTable> {
 
 	public ExpandoTable toEscapedModel();
 
+	public ExpandoTable toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

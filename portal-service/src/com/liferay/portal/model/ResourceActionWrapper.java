@@ -226,6 +226,10 @@ public class ResourceActionWrapper implements ResourceAction,
 		return new ResourceActionWrapper(_resourceAction.toEscapedModel());
 	}
 
+	public com.liferay.portal.model.ResourceAction toUnescapedModel() {
+		return new ResourceActionWrapper(_resourceAction.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _resourceAction.toString();

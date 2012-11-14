@@ -217,6 +217,8 @@ public interface UserTrackerModel extends BaseModel<UserTracker> {
 
 	public UserTracker toEscapedModel();
 
+	public UserTracker toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

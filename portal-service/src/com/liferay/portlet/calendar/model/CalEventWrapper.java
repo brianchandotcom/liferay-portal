@@ -750,6 +750,10 @@ public class CalEventWrapper implements CalEvent, ModelWrapper<CalEvent> {
 		return new CalEventWrapper(_calEvent.toEscapedModel());
 	}
 
+	public com.liferay.portlet.calendar.model.CalEvent toUnescapedModel() {
+		return new CalEventWrapper(_calEvent.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _calEvent.toString();

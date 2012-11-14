@@ -154,6 +154,8 @@ public interface ExpandoRowModel extends BaseModel<ExpandoRow> {
 
 	public ExpandoRow toEscapedModel();
 
+	public ExpandoRow toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

@@ -230,6 +230,12 @@ public class FolderProxyBean
 		return newFolderProxyBean(folder);
 	}
 
+	public Folder toUnescapedModel() {
+		Folder folder = _folder.toUnescapedModel();
+
+		return newFolderProxyBean(folder);
+	}
+
 	private Folder _folder;
 
 }

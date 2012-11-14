@@ -411,6 +411,10 @@ public class TrashEntryWrapper implements TrashEntry, ModelWrapper<TrashEntry> {
 		return new TrashEntryWrapper(_trashEntry.toEscapedModel());
 	}
 
+	public com.liferay.portlet.trash.model.TrashEntry toUnescapedModel() {
+		return new TrashEntryWrapper(_trashEntry.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _trashEntry.toString();

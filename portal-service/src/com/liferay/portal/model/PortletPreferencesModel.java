@@ -169,6 +169,8 @@ public interface PortletPreferencesModel extends BaseModel<PortletPreferences> {
 
 	public PortletPreferences toEscapedModel();
 
+	public PortletPreferences toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

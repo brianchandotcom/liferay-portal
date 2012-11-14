@@ -220,6 +220,8 @@ public interface ReleaseModel extends BaseModel<Release> {
 
 	public Release toEscapedModel();
 
+	public Release toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

@@ -158,6 +158,8 @@ public interface PasswordTrackerModel extends BaseModel<PasswordTracker> {
 
 	public PasswordTracker toEscapedModel();
 
+	public PasswordTracker toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

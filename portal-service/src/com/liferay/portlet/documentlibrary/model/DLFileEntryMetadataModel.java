@@ -184,6 +184,8 @@ public interface DLFileEntryMetadataModel extends BaseModel<DLFileEntryMetadata>
 
 	public DLFileEntryMetadata toEscapedModel();
 
+	public DLFileEntryMetadata toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

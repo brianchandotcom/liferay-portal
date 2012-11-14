@@ -515,6 +515,8 @@ public interface MBMailingListModel extends BaseModel<MBMailingList>,
 
 	public MBMailingList toEscapedModel();
 
+	public MBMailingList toUnescapedModel();
+
 	public String toString();
 
 	public String toXmlString();

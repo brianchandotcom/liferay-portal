@@ -388,6 +388,10 @@ public class RatingsEntryWrapper implements RatingsEntry,
 		return new RatingsEntryWrapper(_ratingsEntry.toEscapedModel());
 	}
 
+	public com.liferay.portlet.ratings.model.RatingsEntry toUnescapedModel() {
+		return new RatingsEntryWrapper(_ratingsEntry.toUnescapedModel());
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _ratingsEntry.toString();

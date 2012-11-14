@@ -162,6 +162,12 @@ public class EditProductEntryAction extends PortletAction {
 		for (String name :
 				getSortedParameterNames(uploadPortletRequest, imagePrefix)) {
 
+			String mimeType = uploadPortletRequest.getContentType(name);
+
+			if (!MimeTypesUtil.isWebImage(mimeType)) {
+				throw new ProductEntryScreenshotsException();
+			}
+
 			int priority = GetterUtil.getInteger(
 				name.substring(imagePrefix.length()));
 
@@ -169,12 +175,6 @@ public class EditProductEntryAction extends PortletAction {
 				uploadPortletRequest, "preserveScreenshot" + priority);
 
 			byte[] bytes = null;
-
-			String mimeType = uploadPortletRequest.getContentType(name);
-
-			if (!MimeTypesUtil.isWebImage(mimeType)) {
-				throw new ProductEntryScreenshotsException();
-			}
 
 			if (preserveScreenshot) {
 				SCProductScreenshot productScreenshot = getProductScreenshot(

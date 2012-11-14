@@ -353,66 +353,6 @@ public class SourceFormatter {
 		}
 	}
 
-	private static void _checkLanguageKeys(
-			String fileName, String content, Pattern pattern)
-		throws IOException {
-
-		String fileExtension = _fileUtil.getExtension(fileName);
-
-		if (!_portalSource || fileExtension.equals("vm")) {
-			return;
-		}
-
-		if (_portalLanguageKeysProperties == null) {
-			_portalLanguageKeysProperties = new Properties();
-
-			ClassLoader classLoader = SourceFormatter.class.getClassLoader();
-
-			InputStream inputStream = classLoader.getResourceAsStream(
-				"content/Language.properties");
-
-			_portalLanguageKeysProperties.load(inputStream);
-		}
-
-		Matcher matcher = pattern.matcher(content);
-
-		while (matcher.find()) {
-			String match = matcher.group();
-
-			String languageKey = _getLanguageKey(match);
-
-			if (Validator.isNull(languageKey)) {
-				return;
-			}
-
-			String[] languageKeys = new String[] {languageKey};
-
-			if (match.startsWith("names")) {
-				languageKeys = StringUtil.split(languageKey);
-			}
-
-			for (String key : languageKeys) {
-				if (Validator.isNumber(key) ||
-					key.endsWith(StringPool.DASH) ||
-					key.endsWith(StringPool.PERIOD) ||
-					key.endsWith(StringPool.UNDERLINE) ||
-					key.startsWith(StringPool.DASH) ||
-					key.startsWith(StringPool.PERIOD) ||
-					key.startsWith(StringPool.UNDERLINE)) {
-
-					continue;
-				}
-
-				if (!_portalLanguageKeysProperties.containsKey(key)) {
-					_sourceFormatterHelper.printError(
-						fileName,
-						"missing language key: " + key + StringPool.SPACE +
-							fileName);
-				}
-			}
-		}
-	}
-
 	private static void _checkIfClause(
 		String ifClause, String fileName, int lineCount) {
 
@@ -498,6 +438,54 @@ public class SourceFormatter {
 					}
 
 					level -= 1;
+				}
+			}
+		}
+	}
+
+	private static void _checkLanguageKeys(
+			String fileName, String content, Pattern pattern)
+		throws IOException {
+
+		String fileExtension = _fileUtil.getExtension(fileName);
+
+		if (!_portalSource || fileExtension.equals("vm")) {
+			return;
+		}
+
+		if (_portalLanguageKeysProperties == null) {
+			_portalLanguageKeysProperties = new Properties();
+
+			ClassLoader classLoader = SourceFormatter.class.getClassLoader();
+
+			InputStream inputStream = classLoader.getResourceAsStream(
+				"content/Language.properties");
+
+			_portalLanguageKeysProperties.load(inputStream);
+		}
+
+		Matcher matcher = pattern.matcher(content);
+
+		while (matcher.find()) {
+			String[] languageKeys = _getLanguageKeys(matcher);
+
+			for (String languageKey : languageKeys) {
+				if (Validator.isNumber(languageKey) ||
+					languageKey.endsWith(StringPool.DASH) ||
+					languageKey.endsWith(StringPool.PERIOD) ||
+					languageKey.endsWith(StringPool.UNDERLINE) ||
+					languageKey.startsWith(StringPool.DASH) ||
+					languageKey.startsWith(StringPool.PERIOD) ||
+					languageKey.startsWith(StringPool.UNDERLINE)) {
+
+					continue;
+				}
+
+				if (!_portalLanguageKeysProperties.containsKey(languageKey)) {
+					_sourceFormatterHelper.printError(
+						fileName,
+						"missing language key: " + languageKey +
+							StringPool.SPACE + fileName);
 				}
 			}
 		}
@@ -2038,6 +2026,8 @@ public class SourceFormatter {
 			if (newContent.endsWith("\n")) {
 				newContent = newContent.substring(0, newContent.length() - 1);
 			}
+
+			_checkLanguageKeys(fileName, newContent, _languageKeyPattern);
 
 			if ((newContent != null) && !content.equals(newContent)) {
 				_fileUtil.write(file, newContent);
@@ -3618,18 +3608,28 @@ public class SourceFormatter {
 		return duplicateImports;
 	}
 
-	private static String _getLanguageKey(String s) {
+	private static String[] _getLanguageKeys(Matcher matcher) {
+		if (matcher.groupCount() > 0) {
+			String languageKey = matcher.group(1);
+
+			if (Validator.isNotNull(languageKey)) {
+				return new String[] {languageKey};
+			}
+		}
+
 		StringBundler sb = new StringBundler();
+
+		String match = matcher.group();
 
 		int count = 0;
 
-		for (int i = 0; i < s.length(); i++) {
-			char c = s.charAt(i);
+		for (int i = 0; i < match.length(); i++) {
+			char c = match.charAt(i);
 
 			switch (c) {
 				case CharPool.CLOSE_PARENTHESIS:
 					if (count <= 1) {
-						return null;
+						return new String[0];
 					}
 
 					count--;
@@ -3646,19 +3646,27 @@ public class SourceFormatter {
 						break;
 					}
 
-					while (i < s.length()) {
+					while (i < match.length()) {
 						i++;
 
-						if (s.charAt(i) == CharPool.QUOTE) {
-							return sb.toString();
+						if (match.charAt(i) == CharPool.QUOTE) {
+							String languageKey = sb.toString();
+
+							if (match.startsWith("names")) {
+								return StringUtil.split(languageKey);
+							}
+							else {
+								return new String[] {languageKey};
+							}
+
 						}
 
-						sb.append(s.charAt(i));
+						sb.append(match.charAt(i));
 					}
 			}
 		}
 
-		return null;
+		return new String[0];
 	}
 
 	private static int _getLineLength(String line) {
@@ -4600,7 +4608,7 @@ public class SourceFormatter {
 	private static Pattern _jspIncludeFilePattern = Pattern.compile(
 		"/.*[.]jsp[f]?");
 	private static Pattern _languageKeyPattern = Pattern.compile(
-		"LanguageUtil.(?:get|format)\\([^;%]+");
+		"LanguageUtil.(?:get|format)\\([^;%]+|Liferay.Language.get\\('([^']+)");
 	private static Properties _lineLengthExclusionsProperties;
 	private static Properties _portalLanguageKeysProperties;
 	private static boolean _portalSource;

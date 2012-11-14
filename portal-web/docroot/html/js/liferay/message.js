@@ -75,7 +75,7 @@ AUI.add(
 							var hideNoticesControl = A.Node.create(tplHideNotices);
 
 							if (instance.get('persistenceCategory')) {
-								var dismissAllText = instance.get('strings.dismissAll') || '<a href="javascript:;">' + Liferay.Language.get('hide-all-messages') + '</a>';
+								var dismissAllText = instance.get('strings.dismissAll') || '<a href="javascript:;">' + Liferay.Language.get('hide-all-messages-like-this') + '</a>';
 
 								var tplHideNoticesAll = Lang.sub(TPL_HIDE_NOTICES_ALL, [dismissAllText]);
 

@@ -375,6 +375,7 @@ String signature = ParamUtil.getString(request, "signature");
 
 				return value;
 			};
+
 			scriptTpl.formatDataType = function(key, value) {
 				value = decodeURIComponent(value.replace(/\+/g, ' '));
 

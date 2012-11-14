@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import java.io.IOException;
 
 import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
 
@@ -143,13 +145,45 @@ public class ServletContextUtil {
 	public static String getRootPath(ServletContext servletContext)
 		throws MalformedURLException {
 
-		URL rootURL = servletContext.getResource(_PATH_WEB_XML);
+		return getRootURI(servletContext).toString();
+	}
 
-		String rootPath = rootURL.getPath();
+	public static URI getRootURI(ServletContext servletContext)
+		throws MalformedURLException {
 
-		int pos = rootPath.indexOf(_PATH_WEB_XML);
+		URI rootURI = (URI)servletContext.getAttribute(_URI_ATTRIBUTE);
 
-		return rootPath.substring(0, pos);
+		if (rootURI != null) {
+			return rootURI;
+		}
+
+		try {
+			URL rootURL = servletContext.getResource(_PATH_WEB_XML);
+
+			URI uri = rootURL.toURI();
+
+			String scheme = uri.getScheme();
+			String authority = uri.getAuthority();
+			String path = uri.getPath();
+
+			int pos = path.indexOf(_PATH_WEB_XML);
+
+			if (pos == 0) {
+				path = StringPool.SLASH;
+			}
+			else {
+				path = path.substring(0, pos);
+			}
+
+			rootURI = new URI(scheme, authority, path, null, null);
+
+			servletContext.setAttribute(_URI_ATTRIBUTE, rootURI);
+		}
+		catch (URISyntaxException urise) {
+			throw new MalformedURLException(urise.getMessage());
+		}
+
+		return rootURI;
 	}
 
 	private static String _getClassName(String path) {
@@ -232,6 +266,9 @@ public class ServletContextUtil {
 	private static final String _EXT_JAR = ".jar";
 
 	private static final String _PATH_WEB_XML = "/WEB-INF/web.xml";
+
+	private static final String _URI_ATTRIBUTE =
+		ServletContextUtil.class.getName().concat(".rootURI");
 
 	private static Log _log = LogFactoryUtil.getLog(ServletContextUtil.class);
 

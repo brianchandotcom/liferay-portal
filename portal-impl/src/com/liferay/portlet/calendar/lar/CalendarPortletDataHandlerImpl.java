@@ -21,11 +21,15 @@ import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.portal.kernel.lar.PortletDataHandlerControl;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.TimeZoneUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.calendar.model.CalEvent;
 import com.liferay.portlet.calendar.service.CalEventLocalServiceUtil;
@@ -34,6 +38,8 @@ import com.liferay.portlet.calendar.service.persistence.CalEventUtil;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import javax.portlet.PortletPreferences;
 
@@ -207,7 +213,22 @@ public class CalendarPortletDataHandlerImpl extends BasePortletDataHandler {
 		int startDateMinute = 0;
 
 		if (startDate != null) {
-			Calendar startCal = CalendarFactoryUtil.getCalendar();
+			Locale locale = null;
+			TimeZone timeZone = null;
+
+			if (event.getTimeZoneSensitive()) {
+				User user = UserLocalServiceUtil.getUser(userId);
+
+				locale = user.getLocale();
+				timeZone = user.getTimeZone();
+			}
+			else {
+				locale = LocaleUtil.getDefault();
+				timeZone = TimeZoneUtil.getDefault();
+			}
+
+			Calendar startCal = CalendarFactoryUtil.getCalendar(
+				timeZone, locale);
 
 			startCal.setTime(startDate);
 

@@ -998,7 +998,7 @@ public class SourceFormatter {
 	}
 
 	private static String _formatFriendlyURLRoutesXML(String content)
-	 	throws DocumentException {
+		throws DocumentException {
 
 		Document document = _saxReaderUtil.read(content);
 
@@ -2851,7 +2851,7 @@ public class SourceFormatter {
 	}
 
 	private static void _formatStrutsConfigXML()
-		throws IOException, DocumentException {
+		throws DocumentException, IOException {
 
 		String basedir = "./";
 
@@ -2961,7 +2961,7 @@ public class SourceFormatter {
 	}
 
 	private static void _formatTilesDefsXML()
-		throws IOException, DocumentException {
+		throws DocumentException, IOException {
 
 		String basedir = "./";
 
@@ -3388,9 +3388,7 @@ public class SourceFormatter {
 		return copyright;
 	}
 
-	private static String _getCustomCopyright(File file)
-		throws IOException {
-
+	private static String _getCustomCopyright(File file) throws IOException {
 		String absolutePath = _fileUtil.getAbsolutePath(file);
 
 		for (int x = absolutePath.length();;) {
@@ -4380,6 +4378,22 @@ public class SourceFormatter {
 		return content;
 	}
 
+	private static String _stripQuotes(String s) {
+		String[] parts = StringUtil.split(s, CharPool.QUOTE);
+
+		int i = 1;
+
+		while (i < parts.length) {
+			s = StringUtil.replaceFirst(
+				s, StringPool.QUOTE + parts[i] + StringPool.QUOTE,
+				StringPool.BLANK);
+
+			i = i + 2;
+		}
+
+		return s;
+	}
+
 	private static String _stripRedundantParentheses(String s) {
 		for (int x = 0;;) {
 			x = s.indexOf(StringPool.OPEN_PARENTHESIS, x + 1);
@@ -4400,22 +4414,6 @@ public class SourceFormatter {
 				s = s.substring(0, x) + s.substring(y + 1);
 			}
 		}
-	}
-
-	private static String _stripQuotes(String s) {
-		String[] parts = StringUtil.split(s, CharPool.QUOTE);
-
-		int i = 1;
-
-		while (i < parts.length) {
-			s = StringUtil.replaceFirst(
-				s, StringPool.QUOTE + parts[i] + StringPool.QUOTE,
-				StringPool.BLANK);
-
-			i = i + 2;
-		}
-
-		return s;
 	}
 
 	private static Properties _stripTopLevelDirectories(

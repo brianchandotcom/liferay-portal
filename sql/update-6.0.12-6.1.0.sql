@@ -7,7 +7,7 @@ update AssetEntry set classUuid = (select uuid_ from JournalArticleResource wher
 
 alter table BlogsEntry add description STRING null;
 alter table BlogsEntry add smallImage BOOLEAN;
-alter table BlogsEntry add smallImageId VARCHAR(75) null;
+alter table BlogsEntry add smallImageId LONG;
 alter table BlogsEntry add smallImageURL STRING null;
 
 alter table BookmarksEntry add resourceBlockId LONG;

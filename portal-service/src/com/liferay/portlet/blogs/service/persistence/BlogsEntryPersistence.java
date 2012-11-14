@@ -949,7 +949,7 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	* @return the matching blogs entries
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByC_NeS(
+	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByC_NotS(
 		long companyId, int status)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
@@ -967,7 +967,7 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	* @return the range of matching blogs entries
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByC_NeS(
+	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByC_NotS(
 		long companyId, int status, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
@@ -986,7 +986,7 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	* @return the ordered range of matching blogs entries
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByC_NeS(
+	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByC_NotS(
 		long companyId, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -1001,7 +1001,7 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	* @throws com.liferay.portlet.blogs.NoSuchEntryException if a matching blogs entry could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.blogs.model.BlogsEntry findByC_NeS_First(
+	public com.liferay.portlet.blogs.model.BlogsEntry findByC_NotS_First(
 		long companyId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
@@ -1016,7 +1016,7 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	* @return the first matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.blogs.model.BlogsEntry fetchByC_NeS_First(
+	public com.liferay.portlet.blogs.model.BlogsEntry fetchByC_NotS_First(
 		long companyId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -1031,7 +1031,7 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	* @throws com.liferay.portlet.blogs.NoSuchEntryException if a matching blogs entry could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.blogs.model.BlogsEntry findByC_NeS_Last(
+	public com.liferay.portlet.blogs.model.BlogsEntry findByC_NotS_Last(
 		long companyId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
@@ -1046,7 +1046,7 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	* @return the last matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.blogs.model.BlogsEntry fetchByC_NeS_Last(
+	public com.liferay.portlet.blogs.model.BlogsEntry fetchByC_NotS_Last(
 		long companyId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -1062,7 +1062,7 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	* @throws com.liferay.portlet.blogs.NoSuchEntryException if a blogs entry with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.blogs.model.BlogsEntry[] findByC_NeS_PrevAndNext(
+	public com.liferay.portlet.blogs.model.BlogsEntry[] findByC_NotS_PrevAndNext(
 		long entryId, long companyId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
@@ -1436,7 +1436,7 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	* @return the matching blogs entries
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByG_NeS(
+	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByG_NotS(
 		long groupId, int status)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
@@ -1454,7 +1454,7 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	* @return the range of matching blogs entries
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByG_NeS(
+	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByG_NotS(
 		long groupId, int status, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
@@ -1473,7 +1473,7 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	* @return the ordered range of matching blogs entries
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByG_NeS(
+	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByG_NotS(
 		long groupId, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -1488,7 +1488,7 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	* @throws com.liferay.portlet.blogs.NoSuchEntryException if a matching blogs entry could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.blogs.model.BlogsEntry findByG_NeS_First(
+	public com.liferay.portlet.blogs.model.BlogsEntry findByG_NotS_First(
 		long groupId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
@@ -1503,7 +1503,7 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	* @return the first matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.blogs.model.BlogsEntry fetchByG_NeS_First(
+	public com.liferay.portlet.blogs.model.BlogsEntry fetchByG_NotS_First(
 		long groupId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -1518,7 +1518,7 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	* @throws com.liferay.portlet.blogs.NoSuchEntryException if a matching blogs entry could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.blogs.model.BlogsEntry findByG_NeS_Last(
+	public com.liferay.portlet.blogs.model.BlogsEntry findByG_NotS_Last(
 		long groupId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
@@ -1533,7 +1533,7 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	* @return the last matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.blogs.model.BlogsEntry fetchByG_NeS_Last(
+	public com.liferay.portlet.blogs.model.BlogsEntry fetchByG_NotS_Last(
 		long groupId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -1549,7 +1549,7 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	* @throws com.liferay.portlet.blogs.NoSuchEntryException if a blogs entry with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.blogs.model.BlogsEntry[] findByG_NeS_PrevAndNext(
+	public com.liferay.portlet.blogs.model.BlogsEntry[] findByG_NotS_PrevAndNext(
 		long entryId, long groupId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
@@ -1563,7 +1563,7 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	* @return the matching blogs entries that the user has permission to view
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> filterFindByG_NeS(
+	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> filterFindByG_NotS(
 		long groupId, int status)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
@@ -1581,7 +1581,7 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	* @return the range of matching blogs entries that the user has permission to view
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> filterFindByG_NeS(
+	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> filterFindByG_NotS(
 		long groupId, int status, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
@@ -1600,7 +1600,7 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	* @return the ordered range of matching blogs entries that the user has permission to view
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> filterFindByG_NeS(
+	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> filterFindByG_NotS(
 		long groupId, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -1616,7 +1616,7 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	* @throws com.liferay.portlet.blogs.NoSuchEntryException if a blogs entry with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.blogs.model.BlogsEntry[] filterFindByG_NeS_PrevAndNext(
+	public com.liferay.portlet.blogs.model.BlogsEntry[] filterFindByG_NotS_PrevAndNext(
 		long entryId, long groupId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
@@ -1952,7 +1952,7 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	* @return the matching blogs entries
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByC_U_NeS(
+	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByC_U_NotS(
 		long companyId, long userId, int status)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
@@ -1971,7 +1971,7 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	* @return the range of matching blogs entries
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByC_U_NeS(
+	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByC_U_NotS(
 		long companyId, long userId, int status, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
@@ -1991,7 +1991,7 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	* @return the ordered range of matching blogs entries
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByC_U_NeS(
+	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByC_U_NotS(
 		long companyId, long userId, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -2007,7 +2007,7 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	* @throws com.liferay.portlet.blogs.NoSuchEntryException if a matching blogs entry could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.blogs.model.BlogsEntry findByC_U_NeS_First(
+	public com.liferay.portlet.blogs.model.BlogsEntry findByC_U_NotS_First(
 		long companyId, long userId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
@@ -2023,7 +2023,7 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	* @return the first matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.blogs.model.BlogsEntry fetchByC_U_NeS_First(
+	public com.liferay.portlet.blogs.model.BlogsEntry fetchByC_U_NotS_First(
 		long companyId, long userId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -2039,7 +2039,7 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	* @throws com.liferay.portlet.blogs.NoSuchEntryException if a matching blogs entry could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.blogs.model.BlogsEntry findByC_U_NeS_Last(
+	public com.liferay.portlet.blogs.model.BlogsEntry findByC_U_NotS_Last(
 		long companyId, long userId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
@@ -2055,7 +2055,7 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	* @return the last matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.blogs.model.BlogsEntry fetchByC_U_NeS_Last(
+	public com.liferay.portlet.blogs.model.BlogsEntry fetchByC_U_NotS_Last(
 		long companyId, long userId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -2072,7 +2072,7 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	* @throws com.liferay.portlet.blogs.NoSuchEntryException if a blogs entry with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.blogs.model.BlogsEntry[] findByC_U_NeS_PrevAndNext(
+	public com.liferay.portlet.blogs.model.BlogsEntry[] findByC_U_NotS_PrevAndNext(
 		long entryId, long companyId, long userId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
@@ -2222,7 +2222,7 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	* @return the matching blogs entries
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByC_LtD_NeS(
+	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByC_LtD_NotS(
 		long companyId, java.util.Date displayDate, int status)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
@@ -2241,7 +2241,7 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	* @return the range of matching blogs entries
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByC_LtD_NeS(
+	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByC_LtD_NotS(
 		long companyId, java.util.Date displayDate, int status, int start,
 		int end) throws com.liferay.portal.kernel.exception.SystemException;
 
@@ -2261,7 +2261,7 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	* @return the ordered range of matching blogs entries
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByC_LtD_NeS(
+	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByC_LtD_NotS(
 		long companyId, java.util.Date displayDate, int status, int start,
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
@@ -2278,7 +2278,7 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	* @throws com.liferay.portlet.blogs.NoSuchEntryException if a matching blogs entry could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.blogs.model.BlogsEntry findByC_LtD_NeS_First(
+	public com.liferay.portlet.blogs.model.BlogsEntry findByC_LtD_NotS_First(
 		long companyId, java.util.Date displayDate, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
@@ -2294,7 +2294,7 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	* @return the first matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.blogs.model.BlogsEntry fetchByC_LtD_NeS_First(
+	public com.liferay.portlet.blogs.model.BlogsEntry fetchByC_LtD_NotS_First(
 		long companyId, java.util.Date displayDate, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -2310,7 +2310,7 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	* @throws com.liferay.portlet.blogs.NoSuchEntryException if a matching blogs entry could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.blogs.model.BlogsEntry findByC_LtD_NeS_Last(
+	public com.liferay.portlet.blogs.model.BlogsEntry findByC_LtD_NotS_Last(
 		long companyId, java.util.Date displayDate, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
@@ -2326,7 +2326,7 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	* @return the last matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.blogs.model.BlogsEntry fetchByC_LtD_NeS_Last(
+	public com.liferay.portlet.blogs.model.BlogsEntry fetchByC_LtD_NotS_Last(
 		long companyId, java.util.Date displayDate, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -2343,7 +2343,7 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	* @throws com.liferay.portlet.blogs.NoSuchEntryException if a blogs entry with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.blogs.model.BlogsEntry[] findByC_LtD_NeS_PrevAndNext(
+	public com.liferay.portlet.blogs.model.BlogsEntry[] findByC_LtD_NotS_PrevAndNext(
 		long entryId, long companyId, java.util.Date displayDate, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
@@ -2702,7 +2702,7 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	* @return the matching blogs entries
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByG_U_NeS(
+	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByG_U_NotS(
 		long groupId, long userId, int status)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
@@ -2721,7 +2721,7 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	* @return the range of matching blogs entries
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByG_U_NeS(
+	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByG_U_NotS(
 		long groupId, long userId, int status, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
@@ -2741,7 +2741,7 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	* @return the ordered range of matching blogs entries
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByG_U_NeS(
+	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByG_U_NotS(
 		long groupId, long userId, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -2757,7 +2757,7 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	* @throws com.liferay.portlet.blogs.NoSuchEntryException if a matching blogs entry could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.blogs.model.BlogsEntry findByG_U_NeS_First(
+	public com.liferay.portlet.blogs.model.BlogsEntry findByG_U_NotS_First(
 		long groupId, long userId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
@@ -2773,7 +2773,7 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	* @return the first matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.blogs.model.BlogsEntry fetchByG_U_NeS_First(
+	public com.liferay.portlet.blogs.model.BlogsEntry fetchByG_U_NotS_First(
 		long groupId, long userId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -2789,7 +2789,7 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	* @throws com.liferay.portlet.blogs.NoSuchEntryException if a matching blogs entry could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.blogs.model.BlogsEntry findByG_U_NeS_Last(
+	public com.liferay.portlet.blogs.model.BlogsEntry findByG_U_NotS_Last(
 		long groupId, long userId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
@@ -2805,7 +2805,7 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	* @return the last matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.blogs.model.BlogsEntry fetchByG_U_NeS_Last(
+	public com.liferay.portlet.blogs.model.BlogsEntry fetchByG_U_NotS_Last(
 		long groupId, long userId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -2822,7 +2822,7 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	* @throws com.liferay.portlet.blogs.NoSuchEntryException if a blogs entry with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.blogs.model.BlogsEntry[] findByG_U_NeS_PrevAndNext(
+	public com.liferay.portlet.blogs.model.BlogsEntry[] findByG_U_NotS_PrevAndNext(
 		long entryId, long groupId, long userId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
@@ -2837,7 +2837,7 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	* @return the matching blogs entries that the user has permission to view
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> filterFindByG_U_NeS(
+	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> filterFindByG_U_NotS(
 		long groupId, long userId, int status)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
@@ -2856,7 +2856,7 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	* @return the range of matching blogs entries that the user has permission to view
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> filterFindByG_U_NeS(
+	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> filterFindByG_U_NotS(
 		long groupId, long userId, int status, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
@@ -2876,7 +2876,7 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	* @return the ordered range of matching blogs entries that the user has permission to view
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> filterFindByG_U_NeS(
+	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> filterFindByG_U_NotS(
 		long groupId, long userId, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -2893,7 +2893,7 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	* @throws com.liferay.portlet.blogs.NoSuchEntryException if a blogs entry with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.blogs.model.BlogsEntry[] filterFindByG_U_NeS_PrevAndNext(
+	public com.liferay.portlet.blogs.model.BlogsEntry[] filterFindByG_U_NotS_PrevAndNext(
 		long entryId, long groupId, long userId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
@@ -3114,7 +3114,7 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	* @return the matching blogs entries
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByG_LtD_NeS(
+	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByG_LtD_NotS(
 		long groupId, java.util.Date displayDate, int status)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
@@ -3133,7 +3133,7 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	* @return the range of matching blogs entries
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByG_LtD_NeS(
+	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByG_LtD_NotS(
 		long groupId, java.util.Date displayDate, int status, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
@@ -3153,7 +3153,7 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	* @return the ordered range of matching blogs entries
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByG_LtD_NeS(
+	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByG_LtD_NotS(
 		long groupId, java.util.Date displayDate, int status, int start,
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
@@ -3170,7 +3170,7 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	* @throws com.liferay.portlet.blogs.NoSuchEntryException if a matching blogs entry could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.blogs.model.BlogsEntry findByG_LtD_NeS_First(
+	public com.liferay.portlet.blogs.model.BlogsEntry findByG_LtD_NotS_First(
 		long groupId, java.util.Date displayDate, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
@@ -3186,7 +3186,7 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	* @return the first matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.blogs.model.BlogsEntry fetchByG_LtD_NeS_First(
+	public com.liferay.portlet.blogs.model.BlogsEntry fetchByG_LtD_NotS_First(
 		long groupId, java.util.Date displayDate, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -3202,7 +3202,7 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	* @throws com.liferay.portlet.blogs.NoSuchEntryException if a matching blogs entry could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.blogs.model.BlogsEntry findByG_LtD_NeS_Last(
+	public com.liferay.portlet.blogs.model.BlogsEntry findByG_LtD_NotS_Last(
 		long groupId, java.util.Date displayDate, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
@@ -3218,7 +3218,7 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	* @return the last matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.blogs.model.BlogsEntry fetchByG_LtD_NeS_Last(
+	public com.liferay.portlet.blogs.model.BlogsEntry fetchByG_LtD_NotS_Last(
 		long groupId, java.util.Date displayDate, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -3235,7 +3235,7 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	* @throws com.liferay.portlet.blogs.NoSuchEntryException if a blogs entry with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.blogs.model.BlogsEntry[] findByG_LtD_NeS_PrevAndNext(
+	public com.liferay.portlet.blogs.model.BlogsEntry[] findByG_LtD_NotS_PrevAndNext(
 		long entryId, long groupId, java.util.Date displayDate, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
@@ -3250,7 +3250,7 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	* @return the matching blogs entries that the user has permission to view
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> filterFindByG_LtD_NeS(
+	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> filterFindByG_LtD_NotS(
 		long groupId, java.util.Date displayDate, int status)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
@@ -3269,7 +3269,7 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	* @return the range of matching blogs entries that the user has permission to view
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> filterFindByG_LtD_NeS(
+	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> filterFindByG_LtD_NotS(
 		long groupId, java.util.Date displayDate, int status, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
@@ -3289,7 +3289,7 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	* @return the ordered range of matching blogs entries that the user has permission to view
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> filterFindByG_LtD_NeS(
+	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> filterFindByG_LtD_NotS(
 		long groupId, java.util.Date displayDate, int status, int start,
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
@@ -3307,7 +3307,7 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	* @throws com.liferay.portlet.blogs.NoSuchEntryException if a blogs entry with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.blogs.model.BlogsEntry[] filterFindByG_LtD_NeS_PrevAndNext(
+	public com.liferay.portlet.blogs.model.BlogsEntry[] filterFindByG_LtD_NotS_PrevAndNext(
 		long entryId, long groupId, java.util.Date displayDate, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
@@ -3531,7 +3531,7 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	* @return the matching blogs entries
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByG_U_LtD_NeS(
+	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByG_U_LtD_NotS(
 		long groupId, long userId, java.util.Date displayDate, int status)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
@@ -3551,7 +3551,7 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	* @return the range of matching blogs entries
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByG_U_LtD_NeS(
+	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByG_U_LtD_NotS(
 		long groupId, long userId, java.util.Date displayDate, int status,
 		int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -3573,7 +3573,7 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	* @return the ordered range of matching blogs entries
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByG_U_LtD_NeS(
+	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByG_U_LtD_NotS(
 		long groupId, long userId, java.util.Date displayDate, int status,
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
@@ -3591,7 +3591,7 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	* @throws com.liferay.portlet.blogs.NoSuchEntryException if a matching blogs entry could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.blogs.model.BlogsEntry findByG_U_LtD_NeS_First(
+	public com.liferay.portlet.blogs.model.BlogsEntry findByG_U_LtD_NotS_First(
 		long groupId, long userId, java.util.Date displayDate, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
@@ -3608,7 +3608,7 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	* @return the first matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.blogs.model.BlogsEntry fetchByG_U_LtD_NeS_First(
+	public com.liferay.portlet.blogs.model.BlogsEntry fetchByG_U_LtD_NotS_First(
 		long groupId, long userId, java.util.Date displayDate, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -3625,7 +3625,7 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	* @throws com.liferay.portlet.blogs.NoSuchEntryException if a matching blogs entry could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.blogs.model.BlogsEntry findByG_U_LtD_NeS_Last(
+	public com.liferay.portlet.blogs.model.BlogsEntry findByG_U_LtD_NotS_Last(
 		long groupId, long userId, java.util.Date displayDate, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
@@ -3642,7 +3642,7 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	* @return the last matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.blogs.model.BlogsEntry fetchByG_U_LtD_NeS_Last(
+	public com.liferay.portlet.blogs.model.BlogsEntry fetchByG_U_LtD_NotS_Last(
 		long groupId, long userId, java.util.Date displayDate, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -3660,7 +3660,7 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	* @throws com.liferay.portlet.blogs.NoSuchEntryException if a blogs entry with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.blogs.model.BlogsEntry[] findByG_U_LtD_NeS_PrevAndNext(
+	public com.liferay.portlet.blogs.model.BlogsEntry[] findByG_U_LtD_NotS_PrevAndNext(
 		long entryId, long groupId, long userId, java.util.Date displayDate,
 		int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
@@ -3677,7 +3677,7 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	* @return the matching blogs entries that the user has permission to view
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> filterFindByG_U_LtD_NeS(
+	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> filterFindByG_U_LtD_NotS(
 		long groupId, long userId, java.util.Date displayDate, int status)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
@@ -3697,7 +3697,7 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	* @return the range of matching blogs entries that the user has permission to view
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> filterFindByG_U_LtD_NeS(
+	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> filterFindByG_U_LtD_NotS(
 		long groupId, long userId, java.util.Date displayDate, int status,
 		int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -3719,7 +3719,7 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	* @return the ordered range of matching blogs entries that the user has permission to view
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> filterFindByG_U_LtD_NeS(
+	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> filterFindByG_U_LtD_NotS(
 		long groupId, long userId, java.util.Date displayDate, int status,
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
@@ -3738,7 +3738,7 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	* @throws com.liferay.portlet.blogs.NoSuchEntryException if a blogs entry with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portlet.blogs.model.BlogsEntry[] filterFindByG_U_LtD_NeS_PrevAndNext(
+	public com.liferay.portlet.blogs.model.BlogsEntry[] filterFindByG_U_LtD_NotS_PrevAndNext(
 		long entryId, long groupId, long userId, java.util.Date displayDate,
 		int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
@@ -4089,7 +4089,7 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	* @param status the status
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByC_NeS(long companyId, int status)
+	public void removeByC_NotS(long companyId, int status)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
@@ -4132,7 +4132,7 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	* @param status the status
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByG_NeS(long groupId, int status)
+	public void removeByG_NotS(long groupId, int status)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
@@ -4163,7 +4163,7 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	* @param status the status
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByC_U_NeS(long companyId, long userId, int status)
+	public void removeByC_U_NotS(long companyId, long userId, int status)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
@@ -4185,7 +4185,7 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	* @param status the status
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByC_LtD_NeS(long companyId, java.util.Date displayDate,
+	public void removeByC_LtD_NotS(long companyId, java.util.Date displayDate,
 		int status) throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
@@ -4219,7 +4219,7 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	* @param status the status
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByG_U_NeS(long groupId, long userId, int status)
+	public void removeByG_U_NotS(long groupId, long userId, int status)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
@@ -4241,7 +4241,7 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	* @param status the status
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByG_LtD_NeS(long groupId, java.util.Date displayDate,
+	public void removeByG_LtD_NotS(long groupId, java.util.Date displayDate,
 		int status) throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
@@ -4264,7 +4264,7 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	* @param status the status
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByG_U_LtD_NeS(long groupId, long userId,
+	public void removeByG_U_LtD_NotS(long groupId, long userId,
 		java.util.Date displayDate, int status)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
@@ -4381,7 +4381,7 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	* @return the number of matching blogs entries
 	* @throws SystemException if a system exception occurred
 	*/
-	public int countByC_NeS(long companyId, int status)
+	public int countByC_NotS(long companyId, int status)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
@@ -4436,7 +4436,7 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	* @return the number of matching blogs entries
 	* @throws SystemException if a system exception occurred
 	*/
-	public int countByG_NeS(long groupId, int status)
+	public int countByG_NotS(long groupId, int status)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
@@ -4447,7 +4447,7 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	* @return the number of matching blogs entries that the user has permission to view
 	* @throws SystemException if a system exception occurred
 	*/
-	public int filterCountByG_NeS(long groupId, int status)
+	public int filterCountByG_NotS(long groupId, int status)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
@@ -4492,7 +4492,7 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	* @return the number of matching blogs entries
 	* @throws SystemException if a system exception occurred
 	*/
-	public int countByC_U_NeS(long companyId, long userId, int status)
+	public int countByC_U_NotS(long companyId, long userId, int status)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
@@ -4516,7 +4516,7 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	* @return the number of matching blogs entries
 	* @throws SystemException if a system exception occurred
 	*/
-	public int countByC_LtD_NeS(long companyId, java.util.Date displayDate,
+	public int countByC_LtD_NotS(long companyId, java.util.Date displayDate,
 		int status) throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
@@ -4566,7 +4566,7 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	* @return the number of matching blogs entries
 	* @throws SystemException if a system exception occurred
 	*/
-	public int countByG_U_NeS(long groupId, long userId, int status)
+	public int countByG_U_NotS(long groupId, long userId, int status)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
@@ -4578,7 +4578,7 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	* @return the number of matching blogs entries that the user has permission to view
 	* @throws SystemException if a system exception occurred
 	*/
-	public int filterCountByG_U_NeS(long groupId, long userId, int status)
+	public int filterCountByG_U_NotS(long groupId, long userId, int status)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
@@ -4614,7 +4614,7 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	* @return the number of matching blogs entries
 	* @throws SystemException if a system exception occurred
 	*/
-	public int countByG_LtD_NeS(long groupId, java.util.Date displayDate,
+	public int countByG_LtD_NotS(long groupId, java.util.Date displayDate,
 		int status) throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
@@ -4626,8 +4626,9 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	* @return the number of matching blogs entries that the user has permission to view
 	* @throws SystemException if a system exception occurred
 	*/
-	public int filterCountByG_LtD_NeS(long groupId, java.util.Date displayDate,
-		int status) throws com.liferay.portal.kernel.exception.SystemException;
+	public int filterCountByG_LtD_NotS(long groupId,
+		java.util.Date displayDate, int status)
+		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
 	* Returns the number of blogs entries where groupId = &#63; and displayDate &lt; &#63; and status = &#63;.
@@ -4663,7 +4664,7 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	* @return the number of matching blogs entries
 	* @throws SystemException if a system exception occurred
 	*/
-	public int countByG_U_LtD_NeS(long groupId, long userId,
+	public int countByG_U_LtD_NotS(long groupId, long userId,
 		java.util.Date displayDate, int status)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
@@ -4677,7 +4678,7 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	* @return the number of matching blogs entries that the user has permission to view
 	* @throws SystemException if a system exception occurred
 	*/
-	public int filterCountByG_U_LtD_NeS(long groupId, long userId,
+	public int filterCountByG_U_LtD_NotS(long groupId, long userId,
 		java.util.Date displayDate, int status)
 		throws com.liferay.portal.kernel.exception.SystemException;
 

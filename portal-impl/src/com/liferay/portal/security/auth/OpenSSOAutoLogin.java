@@ -178,9 +178,15 @@ public class OpenSSOAutoLogin implements AutoLogin {
 					locale);
 			}
 
-			String redirect = ParamUtil.getString(request, "redirect");
+			String currentURL = PortalUtil.getCurrentURL(request);
 
-			if (Validator.isNotNull(redirect)) {
+			if (currentURL.contains("/portal/login")) {
+				String redirect = ParamUtil.getString(request, "redirect");
+
+				if (Validator.isNull(redirect)) {
+					redirect = PortalUtil.getPathMain();
+				}
+
 				request.setAttribute(AutoLogin.AUTO_LOGIN_REDIRECT, redirect);
 			}
 

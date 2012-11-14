@@ -918,12 +918,12 @@ public class PortalImpl implements Portal {
 		int pos = canonicalURL.indexOf(virtualHost);
 
 		if (pos > 0) {
-			pos += virtualHost.length();
-
-			pos = canonicalURL.indexOf(CharPool.SLASH, pos);
+			pos = canonicalURL.indexOf(
+				CharPool.SLASH, pos + virtualHost.length());
 
 			if (Validator.isNotNull(_pathContext)) {
-				pos = canonicalURL.indexOf(CharPool.SLASH, pos + 1);
+				pos = canonicalURL.indexOf(
+					CharPool.SLASH, pos + _pathContext.length());
 			}
 
 			if ((pos > 0) && (pos < canonicalURL.length())) {

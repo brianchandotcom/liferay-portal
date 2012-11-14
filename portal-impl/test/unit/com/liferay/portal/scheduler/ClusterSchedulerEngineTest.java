@@ -109,7 +109,7 @@ public class ClusterSchedulerEngineTest {
 		field.set(null, lockLocalService);
 
 		field = ClusterableContextThreadLocal.class.getDeclaredField(
-			"_threadLocalContext");
+			"_contextThreadLocal");
 
 		field.setAccessible(true);
 

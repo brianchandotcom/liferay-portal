@@ -131,9 +131,14 @@ boolean useAssetEntryQuery = false;
 		long defaultFolderId = GetterUtil.getLong(preferences.getValue("rootFolderId", StringPool.BLANK), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		long folderId = BeanParamUtil.getLong(folder, request, "folderId", defaultFolderId);
+
+		request.setAttribute("view.jsp-folderId", folderId);
+		request.setAttribute("view.jsp-mediaGalleryMimeTypes", mediaGalleryMimeTypes);
+		request.setAttribute("view.jsp-results", results);
+		request.setAttribute("view.jsp-searchContainer", searchContainer);
 		%>
 
-		<%@ include file="/html/portlet/image_gallery_display/view_images.jspf" %>
+		<liferay-util:include page="/html/portlet/image_gallery_display/view_images.jsp" />
 	</div>
 
 	<%

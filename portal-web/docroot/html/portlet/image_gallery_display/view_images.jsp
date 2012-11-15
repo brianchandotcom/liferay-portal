@@ -14,6 +14,15 @@
  */
 --%>
 
+<%@ include file="/html/portlet/image_gallery_display/init.jsp" %>
+
+<%
+Long folderId = (Long) request.getAttribute("view.jsp-folderId");
+String[] mediaGalleryMimeTypes = (String []) request.getAttribute("view.jsp-mediaGalleryMimeTypes");
+List results = (List) request.getAttribute("view.jsp-results");
+SearchContainer searchContainer = (SearchContainer) request.getAttribute("view.jsp-searchContainer");
+%>
+
 <c:choose>
 	<c:when test="<%= results.isEmpty() %>">
 		<div class="portlet-msg-info">

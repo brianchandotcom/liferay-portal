@@ -17,41 +17,8 @@
 <%@ include file="/html/taglib/init.jsp" %>
 
 <%
-String bulletStyle = ((String)request.getAttribute("liferay-ui:sites-directory:bulletStyle")).toLowerCase();
 String displayStyle = (String)request.getAttribute("liferay-ui:sites-directory:displayStyle");
-
-String headerType = null;
-String includedGroups = null;
-boolean nestedChildren = true;
-int rootGroupLevel = 0;
-String rootGroupType = null;
-
-String[] displayStyleDefinition = _getDisplayStyleDefinition(displayStyle);
-
-if ((displayStyleDefinition != null) && (displayStyleDefinition.length != 0)) {
-	headerType = displayStyleDefinition[0];
-	includedGroups = displayStyleDefinition[3];
-
-	if (displayStyleDefinition.length > 4) {
-		nestedChildren = GetterUtil.getBoolean(displayStyleDefinition[4]);
-	}
-
-	rootGroupLevel = GetterUtil.getInteger(displayStyleDefinition[2]);
-	rootGroupType = displayStyleDefinition[1];
-}
-else {
-	headerType = (String)request.getAttribute("liferay-ui:sites-directory:headerType");
-	includedGroups = (String)request.getAttribute("liferay-ui:sites-directory:includedGroups");
-	nestedChildren = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:sites-directory:nestedChildren"));
-	rootGroupLevel = GetterUtil.getInteger((String)request.getAttribute("liferay-ui:sites-directory:rootGroupLevel"));
-	rootGroupType = (String)request.getAttribute("liferay-ui:sites-directory:rootGroupType");
-}
+String sites = (String)request.getAttribute("liferay-ui:sites-directory:sites");
 
 Group group = GroupLocalServiceUtil.getGroup(scopeGroupId);
-%>
-
-<%!
-private String[] _getDisplayStyleDefinition(String displayStyle) {
-	return PropsUtil.getArray("sites.directory.display.style", new Filter(displayStyle));
-}
 %>

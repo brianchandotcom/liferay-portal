@@ -17,11 +17,6 @@
 <%@ include file="/html/portlet/sites_directory/init.jsp" %>
 
 <liferay-ui:sites-directory
-	bulletStyle="<%= bulletStyle %>"
 	displayStyle="<%= displayStyle %>"
-	headerType="<%= headerType %>"
-	includedGroups="<%= includedGroups %>"
-	nestedChildren="<%= nestedChildren %>"
-	rootGroupLevel="<%= rootGroupLevel %>"
-	rootGroupType="<%= rootGroupType %>"
+	sites="<%= sites %>"
 />

@@ -1,3 +1,5 @@
+<%@ page import="com.liferay.taglib.ui.SitesDirectoryTag" %>
+
 <%--
 /**
  * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
@@ -27,44 +29,24 @@
 	branchGroups.add(group);
 	branchGroups.addAll(group.getAncestors());
 
-	if (rootGroupType.equals("relative")) {
-		if ((rootGroupLevel >= 0) && (rootGroupLevel < branchGroups.size())) {
-			rootGroup = branchGroups.get(rootGroupLevel);
-		}
-		else {
-			rootGroup = null;
-		}
+	if (sites.equals(SitesDirectoryTag.TOP_LEVEL)) {
+		rootGroup = null;
 	}
-	else if (rootGroupType.equals("absolute")) {
-		int ancestorIndex = branchGroups.size() - rootGroupLevel;
-
-		if ((ancestorIndex >= 0) && (ancestorIndex < branchGroups.size())) {
-			rootGroup = branchGroups.get(ancestorIndex);
-		}
-		else if (ancestorIndex == branchGroups.size()) {
-			rootGroup = null;
-		}
-		else {
-			hidden = true;
-		}
+	else if (sites.equals(SitesDirectoryTag.CHILDREN) && (branchGroups.size() > 0)) {
+		rootGroup = branchGroups.get(0);
+	}
+	else if (sites.equals(SitesDirectoryTag.SIBLINGS) && (branchGroups.size() > 1)) {
+		rootGroup = branchGroups.get(1);
+	}
+	else if (sites.equals(SitesDirectoryTag.PARENT) && (branchGroups.size() > 2)) {
+		rootGroup = branchGroups.get(2);
+	}
+	else {
+		hidden = true;
 	}
 	%>
 
-	<div class="sites-directory-taglib nav-menu nav-menu-style-<%= bulletStyle %>">
-		<c:choose>
-			<c:when test='<%= headerType.equals("root-group") && (rootGroup != null) %>'>
-				<h2>
-					<a href="<%= PortalUtil.getGroupFriendlyURL(rootGroup, !rootGroup.hasPublicLayouts(), themeDisplay) %>"><%= rootGroup.getDescriptiveName(locale) %></a>
-				</h2>
-			</c:when>
-			<c:when test='<%= headerType.equals("portlet-title") %>'>
-				<h2><%= portletDisplay.getTitle() %></h2>
-			</c:when>
-			<c:when test='<%= headerType.equals("breadcrumb") %>'>
-				<liferay-ui:breadcrumb />
-			</c:when>
-		</c:choose>
-
+	<div class="sites-directory-taglib nav-menu">
 		<c:if test="<%= !hidden %>">
 			<c:choose>
 				<c:when test='<%= displayStyle.equals("descriptive") || displayStyle.equals("icon") %>'>
@@ -149,7 +131,13 @@
 					<%
 					StringBundler sb = new StringBundler();
 
-					_buildSitesDirectory(rootGroup, group, branchGroups, themeDisplay, 1, includedGroups, nestedChildren, sb);
+					boolean showHierarchy = false;
+
+					if (displayStyle.equals("list-hierarchy")) {
+						showHierarchy = true;
+					}
+
+					_buildSitesList(rootGroup, group, branchGroups, themeDisplay, 1, showHierarchy, true, sb);
 
 					String content = sb.toString();
 					%>
@@ -163,14 +151,14 @@
 </c:if>
 
 <%!
-private void _buildSitesDirectory(Group rootGroup, Group selGroup, List<Group> branchGroups, ThemeDisplay themeDisplay, int groupLevel, String includedGroups, boolean nestedChildren, StringBundler sb) throws Exception {
+private void _buildSitesList(Group rootGroup, Group curGroup, List<Group> branchGroups, ThemeDisplay themeDisplay, int groupLevel, boolean showHierarchy, boolean nestedChildren, StringBundler sb) throws Exception {
 	List<Group> childGroups = null;
 
 	if (rootGroup != null) {
 		childGroups = rootGroup.getChildrenWithLayouts(true, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
 	else {
-		childGroups = GroupLocalServiceUtil.getLayoutsGroups(selGroup.getCompanyId(), GroupConstants.DEFAULT_LIVE_GROUP_ID, true, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		childGroups = GroupLocalServiceUtil.getLayoutsGroups(curGroup.getCompanyId(), GroupConstants.DEFAULT_LIVE_GROUP_ID, true, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
 
 	List<Group> visibleGroups = new UniqueList<Group>();
@@ -207,11 +195,7 @@ private void _buildSitesDirectory(Group rootGroup, Group selGroup, List<Group> b
 	for (Group childGroup : childGroups) {
 		boolean open = false;
 
-		if (includedGroups.equals("auto") && branchGroups.contains(childGroup) && !childGroup.getChildren(true).isEmpty()) {
-			open = true;
-		}
-
-		if (includedGroups.equals("all")) {
+		if (showHierarchy) {
 			open = true;
 		}
 
@@ -221,7 +205,7 @@ private void _buildSitesDirectory(Group rootGroup, Group selGroup, List<Group> b
 			className += "open ";
 		}
 
-		if (selGroup.getGroupId() == childGroup.getGroupId()) {
+		if (curGroup.getGroupId() == childGroup.getGroupId()) {
 			className += "selected ";
 		}
 
@@ -259,7 +243,7 @@ private void _buildSitesDirectory(Group rootGroup, Group selGroup, List<Group> b
 				childGroupSB = tailSB;
 			}
 
-			_buildSitesDirectory(childGroup, selGroup, branchGroups, themeDisplay, groupLevel + 1, includedGroups, nestedChildren, childGroupSB);
+			_buildSitesList(childGroup, curGroup, branchGroups, themeDisplay, groupLevel + 1, showHierarchy, nestedChildren, childGroupSB);
 		}
 
 		sb.append("</li>");

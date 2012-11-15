@@ -891,9 +891,7 @@ public class VelocityTaglib {
 		sitesDirectoryTag.runTag();
 	}
 
-	public void sitesDirectory(
-			String displayStyle, String headerType, int rootGroupLevel,
-			String rootGroupType)
+	public void sitesDirectory(String displayStyle, String sites)
 		throws Exception {
 
 		SitesDirectoryTag sitesDirectoryTag = new SitesDirectoryTag();
@@ -901,30 +899,7 @@ public class VelocityTaglib {
 		setUp(sitesDirectoryTag);
 
 		sitesDirectoryTag.setDisplayStyle(displayStyle);
-		sitesDirectoryTag.setHeaderType(headerType);
-		sitesDirectoryTag.setRootGroupLevel(rootGroupLevel);
-		sitesDirectoryTag.setRootGroupType(rootGroupType);
-
-		sitesDirectoryTag.runTag();
-	}
-
-	public void sitesDirectory(
-			String displayStyle, String headerType, int rootGroupLevel,
-			String rootGroupType, String bulletStyle, String includedGroups,
-			boolean nestedChildren)
-		throws Exception {
-
-		SitesDirectoryTag sitesDirectoryTag = new SitesDirectoryTag();
-
-		setUp(sitesDirectoryTag);
-
-		sitesDirectoryTag.setDisplayStyle(displayStyle);
-		sitesDirectoryTag.setHeaderType(headerType);
-		sitesDirectoryTag.setRootGroupLevel(rootGroupLevel);
-		sitesDirectoryTag.setRootGroupType(rootGroupType);
-		sitesDirectoryTag.setBulletStyle(bulletStyle);
-		sitesDirectoryTag.setIncludedGroups(includedGroups);
-		sitesDirectoryTag.setNestedChildren(nestedChildren);
+		sitesDirectoryTag.setSites(sites);
 
 		sitesDirectoryTag.runTag();
 	}

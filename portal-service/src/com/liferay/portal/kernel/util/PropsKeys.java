@@ -2077,10 +2077,6 @@ public interface PropsKeys {
 
 	public static final String SITES_CONTROL_PANEL_MEMBERS_VISIBLE = "sites.control.panel.members.visible";
 
-	public static final String SITES_DIRECTORY_DISPLAY_STYLE_DEFAULT = "sites.directory.display.style.default";
-
-	public static final String SITES_DIRECTORY_DISPLAY_STYLE_OPTIONS = "sites.directory.display.style.options";
-
 	public static final String SITES_EMAIL_FROM_ADDRESS = "sites.email.from.address";
 
 	public static final String SITES_EMAIL_FROM_NAME = "sites.email.from.name";

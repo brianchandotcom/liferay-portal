@@ -105,7 +105,8 @@ public class DLUtil {
 			addPortletBreadcrumbEntries(folder, request, renderResponse);
 		}
 
-		DLFileShortcut unescapedDLFS = dlFileShortcut.toUnescapedModel();
+		DLFileShortcut unescapedDLFileShortcut =
+			dlFileShortcut.toUnescapedModel();
 
 		PortletURL portletURL = renderResponse.createRenderURL();
 
@@ -115,7 +116,8 @@ public class DLUtil {
 			"fileEntryId", String.valueOf(dlFileShortcut.getToFileEntryId()));
 
 		PortalUtil.addPortletBreadcrumbEntry(
-			request, unescapedDLFS.getToTitle(), portletURL.toString());
+			request, unescapedDLFileShortcut.getToTitle(),
+			portletURL.toString());
 	}
 
 	public static void addPortletBreadcrumbEntries(

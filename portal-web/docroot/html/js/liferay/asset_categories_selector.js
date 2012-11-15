@@ -50,6 +50,7 @@ AUI.add(
 		 * vocabularyGroupIds (string): The groupIds of the vocabularies.
 		 *
 		 * Optional
+		 * pageSize {object}: the page size in case of pagination. -1 indicates no pagination.
 		 * portalModelResource {boolean}: Whether the asset model is on the portal level.
 		 */
 
@@ -85,6 +86,9 @@ AUI.add(
 							return A.one(value) || A.Attribute.INVALID_VALUE;
 						},
 						value: null
+					},
+					pageSize: {
+						value: false
 					},
 					singleSelect: {
 						validator: Lang.isBoolean,
@@ -560,6 +564,22 @@ AUI.add(
 							type: 'io'
 						};
 
+						var paginatorParams = {};
+						var pageSize = instance.get('pageSize');
+
+						if (!pageSize || pageSize === -1 ) {
+							paginatorParams = {
+								end: -1,
+								offsetParam: 'start',
+								start: -1
+							}
+						} else {
+							paginatorParams = {
+								offsetParam: 'start',
+								limit: pageSize
+							}
+						}
+
 						instance.TREEVIEWS[vocabularyId] = new A.TreeView(
 							{
 								children: [vocabularyRootNode],
@@ -585,11 +605,7 @@ AUI.add(
 									formatter: A.bind(instance._formatJSONResult, instance),
 									url: themeDisplay.getPathMain() + '/asset/get_categories'
 								},
-								paginator: {
-									end: -1,
-									offsetParam: 'start',
-									start: -1
-								}
+								paginator: paginatorParams
 							}
 						).render(popup.entriesNode);
 					}

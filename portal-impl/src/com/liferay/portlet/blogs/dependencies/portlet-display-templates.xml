@@ -1,3 +1,12 @@
 <?xml version="1.0"?>
 
-<root />
+<root>
+	<template>
+		<template-key>blogs-basic-ftl</template-key>
+		<name>Basic</name>
+		<description>Displays titles, authors, and abstracts compactly for blog entries.</description>
+		<language>ftl</language>
+		<script-file>com/liferay/portlet/blogs/dependencies/portlet_display_template_basic.ftl</script-file>
+		<cacheable>false</cacheable>
+	</template>
+</root>

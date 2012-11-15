@@ -1566,7 +1566,7 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 		// Description
 
 		Description description = new Description(
-			HtmlUtil.extractText(event.getDescription()));
+			HtmlUtil.extractTextForEmail(event.getDescription()));
 
 		eventProps.add(description);
 

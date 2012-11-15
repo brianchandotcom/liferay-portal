@@ -473,6 +473,8 @@
 							PortletItem.superclass._onDragStart.apply(this, arguments);
 
 							instance._syncProxyTitle();
+
+							instance.lazyEvents = false;
 						},
 
 						_onPlaceholderAlign: function(event) {

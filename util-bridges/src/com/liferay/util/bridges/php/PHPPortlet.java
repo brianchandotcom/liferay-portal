@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.BufferCacheServletResponse;
 import com.liferay.portal.kernel.servlet.DynamicServletConfig;
 import com.liferay.portal.kernel.servlet.PortletServletObjectsFactory;
+import com.liferay.portal.kernel.servlet.ServletContextUtil;
 import com.liferay.portal.kernel.servlet.ServletObjectsFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -26,6 +27,8 @@ import com.liferay.util.bridges.common.ScriptPostProcess;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+
+import java.net.URI;
 
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -143,6 +146,18 @@ public class PHPPortlet extends GenericPortlet {
 
 		if (quercusServlet == null) {
 			try {
+				com.caucho.vfs.SchemeMap defaultSchemeMap =
+					com.caucho.vfs.Vfs.getDefaultScheme();
+
+				URI rootURI = ServletContextUtil.getRootURI(
+					servletConfig.getServletContext());
+
+				defaultSchemeMap.put(
+					rootURI.getScheme(),
+					new ServletContextPath(servletConfig.getServletContext()));
+
+				com.caucho.vfs.Path.setDefaultSchemeMap(defaultSchemeMap);
+
 				quercusServlet = (HttpServlet)Class.forName(
 					_QUERCUS_SERVLET).newInstance();
 

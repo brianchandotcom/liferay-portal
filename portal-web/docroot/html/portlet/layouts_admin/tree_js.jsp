@@ -578,7 +578,9 @@ if (!selectableTree) {
 								instance.syncUI();
 							}
 
-							TreeUtil.updatePagination(instance);
+							<c:if test="<%= saveState %>">
+								TreeUtil.updatePagination(instance);
+							</c:if>
 						}
 					}
 				},

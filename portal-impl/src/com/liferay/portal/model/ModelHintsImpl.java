@@ -203,6 +203,18 @@ public class ModelHintsImpl implements ModelHints {
 		}
 	}
 
+	public String getValue(
+		String model, String field, String name, String defaultValue) {
+
+		Map<String, String> hints = getHints(model, field);
+
+		if (hints == null) {
+			return defaultValue;
+		}
+
+		return GetterUtil.getString(hints.get(name), defaultValue);
+	}
+
 	public boolean isCustomValidator(String validatorName) {
 		if (validatorName.equals("custom")) {
 			return true;

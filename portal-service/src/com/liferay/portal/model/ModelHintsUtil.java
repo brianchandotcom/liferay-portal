@@ -68,6 +68,11 @@ public class ModelHintsUtil {
 		return getModelHints().getValidators(model, field);
 	}
 
+	public static String getValue(
+			String model, String field, String name, String defaultValue) {
+		return getModelHints().getValue(model, field, name, defaultValue);
+	}
+
 	public static boolean isCustomValidator(String validatorName) {
 		return getModelHints().isCustomValidator(validatorName);
 	}

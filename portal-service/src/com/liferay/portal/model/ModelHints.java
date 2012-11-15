@@ -43,6 +43,9 @@ public interface ModelHints {
 
 	public List<Tuple> getValidators(String model, String field);
 
+	public String getValue(
+		String model, String field, String name, String defaultValue);
+
 	public boolean isCustomValidator(String validatorName);
 
 	public boolean isLocalized(String model, String field);

@@ -134,9 +134,15 @@ if (Validator.isNull(redirect)) {
 	String classHoverName = "portlet-section-body-hover results-row hover";
 
 	request.setAttribute("edit_message.jsp-assetTagNames", ParamUtil.getString(request, "assetTagNames"));
+	request.setAttribute("edit_message.jsp-category", category);
+	request.setAttribute("edit_message.jsp-className", className);
+	request.setAttribute("edit_message.jsp-depth", depth);
+	request.setAttribute("edit_message.jsp-editable", editable);
+	request.setAttribute("edit_message.jsp-message", message);
+	request.setAttribute("edit_message.jsp-thread", thread);
 	%>
 
-	<%@ include file="/html/portlet/message_boards/view_thread_message.jspf" %>
+	<liferay-util:include page="/html/portlet/message_boards/view_thread_message.jsp" />
 
 	<%
 	request.removeAttribute("edit_message.jsp-assetTagNames");
@@ -479,9 +485,16 @@ if (Validator.isNull(redirect)) {
 
 		String className = "portlet-section-body results-row";
 		String classHoverName = "portlet-section-body-hover results-row hover";
+
+		request.setAttribute("edit_message.jsp-category", category);
+		request.setAttribute("edit_message.jsp-className", className);
+		request.setAttribute("edit_message.jsp-depth", depth);
+		request.setAttribute("edit_message.jsp-editable", editable);
+		request.setAttribute("edit_message.jsp-message", message);
+		request.setAttribute("edit_message.jsp-thread", thread);
 		%>
 
-		<%@ include file="/html/portlet/message_boards/view_thread_message.jspf" %>
+		<liferay-util:include page="/html/portlet/message_boards/view_thread_message.jsp" />
 	</c:if>
 </aui:form>
 

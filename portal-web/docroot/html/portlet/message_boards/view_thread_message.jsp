@@ -14,6 +14,17 @@
  */
 --%>
 
+<%@ include file="/html/portlet/message_boards/init.jsp" %>
+
+<%
+MBCategory category = (MBCategory) request.getAttribute("edit_message.jsp-category");
+String className = (String) request.getAttribute("edit_message.jsp-className");
+Integer depth = (Integer) request.getAttribute("edit_message.jsp-depth");
+Boolean editable = (Boolean) request.getAttribute("edit_message.jsp-editable");
+MBMessage message = (MBMessage) request.getAttribute("edit_message.jsp-message");
+MBThread thread = (MBThread) request.getAttribute("edit_message.jsp-thread");
+%>
+
 <div class="message-container" style="margin-left: <%= depth * 10 %>px;">
 	<a id="<portlet:namespace />message_<%= message.getMessageId() %>"></a>
 

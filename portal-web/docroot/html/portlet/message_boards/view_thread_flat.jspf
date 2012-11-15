@@ -76,9 +76,16 @@ for (int i = 0; i < messages.size(); i++) {
 	}
 
 	viewableThread = true;
+
+	request.setAttribute("edit_message.jsp-category", category);
+	request.setAttribute("edit_message.jsp-className", className);
+	request.setAttribute("edit_message.jsp-depth", depth);
+	request.setAttribute("edit_message.jsp-editable", editable);
+	request.setAttribute("edit_message.jsp-message", message);
+	request.setAttribute("edit_message.jsp-thread", thread);
 %>
 
-	<%@ include file="/html/portlet/message_boards/view_thread_message.jspf" %>
+	<liferay-util:include page="/html/portlet/message_boards/view_thread_message.jsp" />
 
 <%
 }

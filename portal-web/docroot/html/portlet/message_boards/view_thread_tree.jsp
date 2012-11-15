@@ -37,7 +37,16 @@ if (treeWalker.isOdd()) {
 %>
 
 <c:if test="<%= !Validator.equals(message.getMessageId(), selMessage.getMessageId()) || MBUtil.isViewableMessage(themeDisplay, message) %>">
-	<%@ include file="/html/portlet/message_boards/view_thread_message.jspf" %>
+	<%
+	request.setAttribute("edit_message.jsp-category", category);
+	request.setAttribute("edit_message.jsp-className", className);
+	request.setAttribute("edit_message.jsp-depth", depth);
+	request.setAttribute("edit_message.jsp-editable", editable);
+	request.setAttribute("edit_message.jsp-message", message);
+	request.setAttribute("edit_message.jsp-thread", thread);
+	%>
+
+	<liferay-util:include page="/html/portlet/message_boards/view_thread_message.jsp" />
 
 	<%
 	request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_VIEWABLE_THREAD, Boolean.TRUE.toString());

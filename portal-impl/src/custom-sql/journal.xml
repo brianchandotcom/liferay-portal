@@ -223,7 +223,7 @@
 	<sql id="com.liferay.portlet.journal.service.persistence.JournalFolderFinder.findF_ByG_F">
 		<![CDATA[
 			SELECT
-				DISTINCT folderId AS modelFolderId, 0 AS articleId, 0 AS version, JournalFolder.createDate as displayDate, 1 AS modelFolder
+				DISTINCT folderId AS modelFolderId, '' AS articleId, 0 AS version, JournalFolder.createDate as displayDate, 1 AS modelFolder
 			FROM
 				JournalFolder
 			WHERE

@@ -18,6 +18,7 @@ import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
 import com.liferay.portalweb.portlet.pollsdisplay.portlet.addportletpd.AddPagePDTest;
 import com.liferay.portalweb.portlet.pollsdisplay.portlet.addportletpd.AddPortletPDTest;
+import com.liferay.portalweb.portlet.pollsdisplay.question.selectquestion.TearDownQuestionTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

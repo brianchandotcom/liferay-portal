@@ -25,7 +25,6 @@ public class VoteQuestionTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Polls Display Test Page");
 		selenium.clickAt("link=Polls Display Test Page",
 			RuntimeVariables.replace("Polls Display Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -47,7 +46,7 @@ public class VoteQuestionTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("1"),
 			selenium.getText("//tr[3]/td[2]"));
 		assertEquals(RuntimeVariables.replace("PD Question ChoiceB"),
-			selenium.getText("//tr[3]/td[7]"));
+			selenium.getText("//tr[3]/td[5]"));
 		assertEquals(RuntimeVariables.replace("0%"),
 			selenium.getText("//tr[4]/td[1]"));
 		assertEquals(RuntimeVariables.replace("0"),

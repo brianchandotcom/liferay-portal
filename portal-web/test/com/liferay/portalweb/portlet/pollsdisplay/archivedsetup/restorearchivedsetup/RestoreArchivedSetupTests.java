@@ -16,8 +16,13 @@ package com.liferay.portalweb.portlet.pollsdisplay.archivedsetup.restorearchived
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
+import com.liferay.portalweb.portlet.pollsdisplay.archivedsetup.savearchivedsetup.SaveArchivedSetupTest;
+import com.liferay.portalweb.portlet.pollsdisplay.archivedsetup.savearchivedsetup.TearDownArchivedSetupTest;
 import com.liferay.portalweb.portlet.pollsdisplay.portlet.addportletpd.AddPagePDTest;
 import com.liferay.portalweb.portlet.pollsdisplay.portlet.addportletpd.AddPortletPDTest;
+import com.liferay.portalweb.portlet.pollsdisplay.question.selectquestion.AddQuestionTest;
+import com.liferay.portalweb.portlet.pollsdisplay.question.selectquestion.SelectQuestionTest;
+import com.liferay.portalweb.portlet.pollsdisplay.question.selectquestion.TearDownQuestionTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

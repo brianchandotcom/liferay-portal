@@ -60,8 +60,6 @@ JournalArticle article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_AR
 			List headerNames = searchContainer.getHeaderNames();
 
 			headerNames.add(2, "version");
-			headerNames.add(3, "status");
-			headerNames.add(StringPool.BLANK);
 
 			Map<String, String> orderableHeaders = searchContainer.getOrderableHeaders();
 

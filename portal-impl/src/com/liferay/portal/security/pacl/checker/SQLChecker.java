@@ -14,21 +14,6 @@
 
 package com.liferay.portal.security.pacl.checker;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.StringPool;
-
-import java.security.Permission;
-
-import java.sql.DriverManager;
-
-import java.util.HashSet;
-import java.util.Set;
-import java.util.Stack;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.util.regex.PatternSyntaxException;
-
 import com.liferay.apache.derby.iapi.error.StandardException;
 import com.liferay.apache.derby.iapi.services.context.ContextManager;
 import com.liferay.apache.derby.iapi.services.context.ContextService;
@@ -63,6 +48,20 @@ import com.liferay.apache.derby.impl.sql.compile.TableName;
 import com.liferay.apache.derby.impl.sql.compile.TypeCompilerFactoryImpl;
 import com.liferay.apache.derby.impl.sql.compile.UpdateNode;
 import com.liferay.apache.derby.jdbc.EmbeddedDriver;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StringPool;
+
+import java.security.Permission;
+
+import java.sql.DriverManager;
+
+import java.util.HashSet;
+import java.util.Set;
+import java.util.Stack;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
 /**
  * @author Brian Wing Shun Chan
@@ -142,33 +141,38 @@ public class SQLChecker extends BaseChecker {
 	}
 
 	protected void initParser() {
-		if (_parser == null) {
-			try {
-				new EmbeddedDriver();
+		if (_parser != null) {
+			return;
+		}
 
-				EmbedConnection conn =
-					(EmbedConnection)DriverManager.getConnection(
-						_CONNECTION_URL);
+		try {
+			new EmbeddedDriver();
 
-				ContextManager contextManager = conn.getContextManager();
+			EmbedConnection conn = (EmbedConnection)DriverManager.getConnection(
+				_CONNECTION_URL);
 
-				LanguageConnectionContext languageConnectionContext =
-					(LanguageConnectionContext)contextManager.getContext(
-						_LANGUAGE_CONNECTION_CONTEXT);
+			ContextManager contextManager = conn.getContextManager();
 
-				ContextService contextService = ContextService.getFactory();
+			LanguageConnectionContext languageConnectionContext =
+				(LanguageConnectionContext)contextManager.getContext(
+					_LANGUAGE_CONNECTION_CONTEXT);
 
-				contextService.setCurrentContextManager(contextManager);
+			ContextService contextService = ContextService.getFactory();
 
-				CompilerContext compilerContext = new CompilerContextImpl(
-					contextManager, languageConnectionContext,
-					new TypeCompilerFactoryImpl());
+			contextService.setCurrentContextManager(contextManager);
 
-				_parser = new ParserImpl(compilerContext);
-			}
-			catch (Exception e) {
-				_log.error("Unable to initialize SQL parser.", e);
-			}
+			CompilerContext compilerContext = new CompilerContextImpl(
+				contextManager, languageConnectionContext,
+				new TypeCompilerFactoryImpl());
+
+			_parser = new ParserImpl(compilerContext);
+		}
+		catch (Exception e) {
+
+			// This is initialization with no external dependencies. Nothing
+			// should ever go wrong, so fail loudly.
+
+			throw new IllegalStateException(e);
 		}
 	}
 
@@ -295,10 +299,10 @@ public class SQLChecker extends BaseChecker {
 				}
 			}
 			else if ((node instanceof CreateTableNode) ||
-					(node instanceof CreateIndexNode) ||
-					(node instanceof CreateViewNode) ||
-					(node instanceof CreateTriggerNode) ||
-					(node instanceof CreateAliasNode)) {
+					 (node instanceof CreateIndexNode) ||
+					 (node instanceof CreateViewNode) ||
+					 (node instanceof CreateTriggerNode) ||
+					 (node instanceof CreateAliasNode)) {
 
 				state = ST_CREATE;
 			}

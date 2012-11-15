@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.wiki.model.impl;
 
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -43,9 +44,15 @@ public class WikiPageImpl extends WikiPageBaseImpl {
 	public List<FileEntry> getAttachmentsFileEntries()
 		throws PortalException, SystemException {
 
+		return getAttachmentsFileEntries(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+	}
+
+	public List<FileEntry> getAttachmentsFileEntries(int start, int end)
+		throws PortalException, SystemException {
+
 		return PortletFileRepositoryUtil.getPortletFileEntries(
 			getGroupId(), getAttachmentsFolderId(),
-			WorkflowConstants.STATUS_APPROVED);
+			WorkflowConstants.STATUS_APPROVED, start, end, null);
 	}
 
 	public int getAttachmentsFilesCount()
@@ -86,15 +93,22 @@ public class WikiPageImpl extends WikiPageBaseImpl {
 	}
 
 	public List<FileEntry> getDeletedAttachmentsFileEntries()
-			throws PortalException, SystemException {
+		throws PortalException, SystemException {
+
+		return getDeletedAttachmentsFileEntries(
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+	}
+
+	public List<FileEntry> getDeletedAttachmentsFileEntries(int start, int end)
+		throws PortalException, SystemException {
 
 		return PortletFileRepositoryUtil.getPortletFileEntries(
 			getGroupId(), getAttachmentsFolderId(),
-			WorkflowConstants.STATUS_IN_TRASH);
+			WorkflowConstants.STATUS_IN_TRASH, start, end, null);
 	}
 
 	public int getDeletedAttachmentsFileEntriesCount()
-			throws PortalException, SystemException {
+		throws PortalException, SystemException {
 
 		return PortletFileRepositoryUtil.getPortletFileEntriesCount(
 			getGroupId(), getAttachmentsFolderId(),

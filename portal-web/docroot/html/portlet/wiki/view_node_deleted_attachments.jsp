@@ -92,7 +92,7 @@ iteratorURL.setParameter("viewTrashAttachments", Boolean.TRUE.toString());
 			href="<%= rowURL %>"
 			name="file-name"
 		>
-			<img align="left" border="0" src="<%= themeDisplay.getPathThemeImages() %>/file_system/small/<%= DLUtil.getFileIcon(dlFileEntry.getExtension()) %>.png"> <%= TrashUtil.stripTrashNamespace(dlFileEntry.getTitle()) %>
+			<img align="left" alt="" border="0" src="<%= themeDisplay.getPathThemeImages() %>/file_system/small/<%= DLUtil.getFileIcon(dlFileEntry.getExtension()) %>.png"> <%= TrashUtil.stripTrashNamespace(dlFileEntry.getTitle()) %>
 		</liferay-ui:search-container-column-text>
 
 		<liferay-ui:search-container-column-text

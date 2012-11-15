@@ -384,7 +384,6 @@ public class MetaInfoCacheServletResponseTest extends TestCase {
 			metaInfoCacheServletResponse.getResponse());
 	}
 
-	@SuppressWarnings("deprecation")
 	public void testFinishResponse() throws IOException {
 		final AtomicLong contentLengthReference = new AtomicLong();
 		final AtomicReference<String> locationReference =
@@ -1284,7 +1283,6 @@ public class MetaInfoCacheServletResponseTest extends TestCase {
 			objectValuePairs.get(2));
 	}
 
-	@SuppressWarnings("deprecation")
 	public void testSetGetStatus() throws IOException {
 		final AtomicReference<String> messageReference =
 			new AtomicReference<String>();

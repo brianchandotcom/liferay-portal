@@ -242,7 +242,6 @@ public class MetaInfoCacheServletResponse extends HttpServletResponseWrapper {
 	 * "Cookie" is application server specific. The only safe way to add the
 	 * header is to call {@link HttpServletResponse#addCookie(Cookie)}.
 	 */
-	@Override
 	public String getHeader(String name) {
 		Set<Header> values = _metaData._headers.get(name);
 
@@ -255,7 +254,6 @@ public class MetaInfoCacheServletResponse extends HttpServletResponseWrapper {
 		return header.toString();
 	}
 
-	@Override
 	public Collection<String> getHeaderNames() {
 		return _metaData._headers.keySet();
 	}
@@ -270,7 +268,6 @@ public class MetaInfoCacheServletResponse extends HttpServletResponseWrapper {
 	 * "Cookie" is application server specific. The only safe way to add the
 	 * header is to call {@link HttpServletResponse#addCookie(Cookie)}.
 	 */
-	@Override
 	public Collection<String> getHeaders(String name) {
 		Set<Header> values = _metaData._headers.get(name);
 
@@ -303,7 +300,6 @@ public class MetaInfoCacheServletResponse extends HttpServletResponseWrapper {
 		return super.getOutputStream();
 	}
 
-	@Override
 	public int getStatus() {
 		return _metaData._status;
 	}
@@ -534,9 +530,6 @@ public class MetaInfoCacheServletResponse extends HttpServletResponseWrapper {
 		setStatus(status, null);
 	}
 
-	/**
-	 * @deprecated
-	 */
 	@Override
 	public void setStatus(int status, String statusMessage) {
 		if (isCommitted()) {

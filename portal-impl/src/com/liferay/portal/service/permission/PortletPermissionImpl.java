@@ -269,10 +269,6 @@ public class PortletPermissionImpl implements PortletPermission {
 			return hasPermission.booleanValue();
 		}
 
-		if (actionId.equals(ActionKeys.VIEW) && group.isControlPanel()) {
-			return true;
-		}
-
 		if (strict) {
 			return permissionChecker.hasPermission(
 				groupId, name, primKey, actionId);

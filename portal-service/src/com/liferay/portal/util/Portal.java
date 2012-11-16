@@ -644,6 +644,11 @@ public interface Portal {
 			Group group, boolean privateLayoutSet, ThemeDisplay themeDisplay)
 		throws PortalException, SystemException;
 
+	public String getGroupFriendlyURL(
+			Group group, boolean privateLayoutSet, ThemeDisplay themeDisplay,
+			Locale locale)
+		throws PortalException, SystemException;
+
 	public String[] getGroupPermissions(HttpServletRequest request);
 
 	public String[] getGroupPermissions(PortletRequest portletRequest);
@@ -1071,6 +1076,9 @@ public interface Portal {
 		throws SystemException;
 
 	public boolean isGroupAdmin(User user, long groupId) throws Exception;
+
+	public boolean isGroupFriendlyURL(
+		String fullURL, String groupFriendlyURL, String layoutFriendlyURL);
 
 	public boolean isGroupOwner(User user, long groupId) throws Exception;
 

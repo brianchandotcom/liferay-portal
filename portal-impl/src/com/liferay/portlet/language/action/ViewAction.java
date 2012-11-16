@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Contact;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.User;
 import com.liferay.portal.struts.PortletAction;
@@ -68,8 +69,6 @@ public class ViewAction extends PortletAction {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Layout layout = themeDisplay.getLayout();
-
 		String languageId = ParamUtil.getString(actionRequest, "languageId");
 
 		Locale locale = LocaleUtil.fromLanguageId(languageId);
@@ -106,6 +105,8 @@ public class ViewAction extends PortletAction {
 
 		String queryString = StringPool.BLANK;
 
+		String layoutURL = StringPool.BLANK;
+
 		int pos = redirect.indexOf(Portal.FRIENDLY_URL_SEPARATOR);
 
 		if (pos == -1) {
@@ -114,18 +115,42 @@ public class ViewAction extends PortletAction {
 
 		if (pos != -1) {
 			queryString = redirect.substring(pos);
+
+			layoutURL = redirect.substring(0, pos);
 		}
 
-		if (PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE == 0) {
-			redirect = PortalUtil.getLayoutURL(layout, themeDisplay);
+		Layout layout = themeDisplay.getLayout();
 
-			if (themeDisplay.isI18n()) {
-				redirect = layout.getFriendlyURL();
+		Group group = layout.getGroup();
+
+		if (PortalUtil.isGroupFriendlyURL(
+				layoutURL, group.getFriendlyURL(),
+				layout.getFriendlyURL())) {
+
+			// See LPS-30648
+
+			if (PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE == 0) {
+				redirect = layoutURL;
+			}
+			else {
+				redirect = PortalUtil.getGroupFriendlyURL(
+					themeDisplay.getScopeGroup(), layout.isPrivateLayout(),
+					themeDisplay, locale);
 			}
 		}
 		else {
-			redirect = PortalUtil.getLayoutFriendlyURL(
-				layout, themeDisplay, locale);
+			if (PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE == 0) {
+				if (themeDisplay.isI18n()) {
+					redirect = layout.getFriendlyURL();
+				}
+				else {
+					redirect = PortalUtil.getLayoutURL(layout, themeDisplay);
+				}
+			}
+			else {
+				redirect = PortalUtil.getLayoutFriendlyURL(
+					layout, themeDisplay, locale);
+			}
 		}
 
 		redirect = redirect + queryString;

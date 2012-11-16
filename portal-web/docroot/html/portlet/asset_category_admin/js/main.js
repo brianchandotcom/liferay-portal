@@ -802,6 +802,8 @@ AUI.add(
 						instance._getVocabularyCategories(
 							vocabularyId,
 							function(result) {
+								var hasChild = instance._filterCategory(result.categories, categoryId).length;
+
 								Liferay.Service(
 									'/assetcategory/delete-category',
 									{
@@ -810,19 +812,13 @@ AUI.add(
 									callback
 								);
 
-								var hasChild = A.Array.some(
-									result.categories,
-									function(item, index, collection) {
-										return (item.parentCategoryId == categoryId);
-									}
-								);
-
 								if (hasChild) {
 									Liferay.Service(
 										'/assetcategory/rebuild-tree',
 										{
 											groupId: themeDisplay.getScopeGroupId()
-										}
+										},
+										callback
 									);
 								}
 							}

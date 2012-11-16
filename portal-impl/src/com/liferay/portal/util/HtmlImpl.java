@@ -299,7 +299,11 @@ public class HtmlImpl implements Html {
 		return textExtractor.toString();
 	}
 
-	public String extractTextForEmail(String html) {
+	public String fromInputSafe(String text) {
+		return StringUtil.replace(text, "&amp;", "&");
+	}
+
+	public String render(String html) {
 		if (html == null) {
 			return null;
 		}
@@ -309,10 +313,6 @@ public class HtmlImpl implements Html {
 		Renderer renderer = source.getRenderer();
 
 		return renderer.toString();
-	}
-
-	public String fromInputSafe(String text) {
-		return StringUtil.replace(text, "&amp;", "&");
 	}
 
 	public String replaceMsWordCharacters(String text) {

@@ -64,10 +64,6 @@ public class HtmlUtil {
 		return getHtml().extractText(html);
 	}
 
-	public static String extractTextForEmail(String html) {
-		return getHtml().extractTextForEmail(html);
-	}
-
 	public static String fromInputSafe(String html) {
 		return getHtml().fromInputSafe(html);
 	}
@@ -76,6 +72,10 @@ public class HtmlUtil {
 		PortalRuntimePermission.checkGetBeanProperty(HtmlUtil.class);
 
 		return _html;
+	}
+
+	public static String render(String html) {
+		return getHtml().render(html);
 	}
 
 	public static String replaceMsWordCharacters(String html) {

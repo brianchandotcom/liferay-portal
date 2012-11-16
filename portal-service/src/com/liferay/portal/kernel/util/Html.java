@@ -42,9 +42,9 @@ public interface Html {
 
 	public String extractText(String html);
 
-	public String extractTextForEmail(String html);
-
 	public String fromInputSafe(String text);
+
+	public String render(String html);
 
 	public String replaceMsWordCharacters(String text);
 

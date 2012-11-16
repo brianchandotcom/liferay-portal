@@ -269,10 +269,6 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 			categoryId, parentCategoryId, vocabularyId, serviceContext);
 	}
 
-	public void rebuildTree(long groupId) throws SystemException {
-		assetCategoryPersistence.rebuildTree(groupId, true);
-	}
-
 	public List<AssetCategory> search(
 			long groupId, String keywords, long vocabularyId, int start,
 			int end, OrderByComparator obc)

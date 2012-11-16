@@ -796,36 +796,15 @@ AUI.add(
 						return url;
 					},
 
-					_deleteCategory: function(categoryId, vocabularyId, callback) {
+					_deleteCategory: function(categoryId, callback) {
 						var instance = this;
 
-						instance._getVocabularyCategories(
-							vocabularyId,
-							function(result) {
-								Liferay.Service(
-									'/assetcategory/delete-category',
-									{
-										categoryId: categoryId
-									},
-									callback
-								);
-
-								var hasChild = A.Array.some(
-									result.categories,
-									function(item, index, collection) {
-										return (item.parentCategoryId == categoryId);
-									}
-								);
-
-								if (hasChild) {
-									Liferay.Service(
-										'/assetcategory/rebuild-tree',
-										{
-											groupId: themeDisplay.getScopeGroupId()
-										}
-									);
-								}
-							}
+						Liferay.Service(
+							'/assetcategory/delete-category',
+							{
+								categoryId: categoryId
+							},
+							callback
 						);
 					},
 
@@ -1720,7 +1699,6 @@ AUI.add(
 						if (confirm(Liferay.Language.get('are-you-sure-you-want-to-delete-this-category'))) {
 							instance._deleteCategory(
 								instance._selectedCategoryId,
-								instance._selectedVocabularyId,
 								A.bind(instance._processCategoryDeletion, instance)
 							);
 						}

@@ -386,7 +386,7 @@ if (Validator.isNotNull(content)) {
 								</aui:select>
 							</span>
 
-							<c:if test="<%= Validator.isNotNull(articleId) %>">
+							<c:if test="<%= (article != null) %>">
 								<span class="lfr-translation-manager-add-menu">
 									<liferay-ui:icon-menu
 										align="left"
@@ -430,7 +430,7 @@ if (Validator.isNotNull(content)) {
 					</c:choose>
 				</div>
 
-				<c:if test="<%= Validator.isNotNull(articleId) %>">
+				<c:if test="<%= (article != null) %>">
 
 					<%
 					String[] translations = article.getAvailableLocales();
@@ -768,7 +768,7 @@ if (Validator.isNotNull(content)) {
 	Liferay.Portlet.Journal.PROXY.pathThemeCss = '<%= HttpUtil.encodeURL(themeDisplay.getPathThemeCss()) %>';
 	Liferay.Portlet.Journal.PROXY.portletNamespace = '<portlet:namespace />';
 
-	new Liferay.Portlet.Journal(Liferay.Portlet.Journal.PROXY.portletNamespace, '<%= HtmlUtil.escape(articleId) %>');
+	new Liferay.Portlet.Journal(Liferay.Portlet.Journal.PROXY.portletNamespace, '<%= (article != null) ? HtmlUtil.escape(articleId) : StringPool.BLANK %>');
 
 	var defaultLocaleSelector = A.one('#<portlet:namespace/>defaultLocale');
 

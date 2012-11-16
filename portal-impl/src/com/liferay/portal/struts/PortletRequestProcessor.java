@@ -581,11 +581,13 @@ public class PortletRequestProcessor extends TilesRequestProcessor {
 					WebKeys.THEME_DISPLAY);
 
 				Layout layout = themeDisplay.getLayout();
+
 				PermissionChecker permissionChecker =
 					themeDisplay.getPermissionChecker();
 
 				if (!PortletPermissionUtil.contains(
-						permissionChecker, layout, portlet, ActionKeys.VIEW)) {
+						permissionChecker, themeDisplay.getScopeGroupId(),
+						layout, portlet, ActionKeys.VIEW)) {
 
 					throw new PrincipalException();
 				}

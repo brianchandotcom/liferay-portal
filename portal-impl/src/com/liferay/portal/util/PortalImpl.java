@@ -4050,8 +4050,16 @@ public class PortalImpl implements Portal {
 			while (uniqueElementIds.contains(
 						namespace.concat(uniqueElementId))) {
 
-				uniqueElementId = elementId.concat(StringPool.UNDERLINE).concat(
-					String.valueOf(i));
+				if (Validator.isNull(elementId) ||
+						elementId.endsWith(StringPool.UNDERLINE)) {
+
+					uniqueElementId = elementId.concat(String.valueOf(i));
+				}
+				else {
+					uniqueElementId =
+						elementId.concat(StringPool.UNDERLINE).concat(
+							String.valueOf(i));
+				}
 
 				i++;
 			}

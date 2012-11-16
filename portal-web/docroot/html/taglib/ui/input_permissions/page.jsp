@@ -26,7 +26,11 @@ ServiceContext#deriveDefaultPermissions(long, String).
 <%@ page import="com.liferay.taglib.ui.InputPermissionsParamsTag" %>
 
 <%
-String uniqueNamespace = PortalUtil.getUniqueElementId(request, namespace, namespace) + StringPool.UNDERLINE;
+String uniqueNamespace = namespace + PortalUtil.getUniqueElementId(request, namespace, StringPool.BLANK);
+
+if (!uniqueNamespace.endsWith(StringPool.UNDERLINE)) {
+	uniqueNamespace = uniqueNamespace.concat(StringPool.UNDERLINE);
+}
 
 String formName = namespace + request.getAttribute("liferay-ui:input-permissions:formName");
 String modelName = (String)request.getAttribute("liferay-ui:input-permissions:modelName");

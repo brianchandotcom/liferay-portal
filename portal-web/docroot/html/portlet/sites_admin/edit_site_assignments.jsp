@@ -270,6 +270,6 @@ request.setAttribute("edit_site_assignments.jsp-portletURL", portletURL);
 </aui:script>
 
 <%
-PortalUtil.addPortletBreadcrumbEntry(request, HtmlUtil.escape(group.getDescriptiveName(locale)), null);
+PortalUtil.addPortletBreadcrumbEntry(request, group.getDescriptiveName(locale), null);
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "assign-members"), currentURL);
 %>

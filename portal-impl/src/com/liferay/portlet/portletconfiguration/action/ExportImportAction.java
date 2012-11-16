@@ -251,14 +251,9 @@ public class ExportImportAction extends EditConfigurationAction {
 						"last-publish-date", StringPool.BLANK));
 
 				if (lastPublishDate > 0) {
-					Calendar cal = Calendar.getInstance(
-						themeDisplay.getTimeZone(), themeDisplay.getLocale());
+					endDate = new Date();
 
-					endDate = cal.getTime();
-
-					cal.setTimeInMillis(lastPublishDate);
-
-					startDate = cal.getTime();
+					startDate = new Date(lastPublishDate);
 				}
 			}
 

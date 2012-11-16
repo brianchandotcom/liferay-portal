@@ -350,7 +350,9 @@ public class AssetCategoryFinderImpl
 			throw new SystemException(e);
 		}
 		finally {
-			closeSession(session);
+			if (session != null) {
+				closeSession(session);
+			}
 		}
 	}
 

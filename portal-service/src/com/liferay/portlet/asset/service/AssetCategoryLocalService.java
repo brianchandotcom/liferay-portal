@@ -305,6 +305,12 @@ public interface AssetCategoryLocalService extends BaseLocalService,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portlet.asset.model.AssetCategory getCategory(
+		java.lang.String categoryUuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long[] getCategoryIds(java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.SystemException;
 

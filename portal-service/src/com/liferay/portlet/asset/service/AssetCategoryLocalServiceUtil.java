@@ -349,6 +349,13 @@ public class AssetCategoryLocalServiceUtil {
 		return getService().getCategory(categoryId);
 	}
 
+	public static com.liferay.portlet.asset.model.AssetCategory getCategory(
+		java.lang.String categoryUuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getCategory(categoryUuid, groupId);
+	}
+
 	public static long[] getCategoryIds(java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getCategoryIds(className, classPK);

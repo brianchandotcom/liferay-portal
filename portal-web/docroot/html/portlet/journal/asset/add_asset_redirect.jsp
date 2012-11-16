@@ -28,7 +28,7 @@ Portlet selPortlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId
 		{
 			id: '_<%= selPortlet.getPortletId() %>_editAsset',
 			portletAjaxable: <%= selPortlet.isAjaxable() %>,
-			refresh: '<%= selPortlet.getId() %>'
+			refresh: '<%= selPortlet.getPortletId() %>'
 		}
 	);
 </aui:script>

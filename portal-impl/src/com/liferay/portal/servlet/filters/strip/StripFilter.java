@@ -390,7 +390,7 @@ public class StripFilter extends BasePortalFilter {
 
 				unsyncByteArrayOutputStream.writeTo(response.getOutputStream());
 			}
-			else {
+			else if (!response.isCommitted()) {
 				strip(request, response, oldCharBuffer, response.getWriter());
 			}
 		}

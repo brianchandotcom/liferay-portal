@@ -386,7 +386,7 @@ if (Validator.isNotNull(content)) {
 								</aui:select>
 							</span>
 
-							<c:if test="<%= (article != null) %>">
+							<c:if test="<%= article != null %>">
 								<span class="lfr-translation-manager-add-menu">
 									<liferay-ui:icon-menu
 										align="left"
@@ -430,7 +430,7 @@ if (Validator.isNotNull(content)) {
 					</c:choose>
 				</div>
 
-				<c:if test="<%= (article != null) %>">
+				<c:if test="<%= article != null %>">
 
 					<%
 					String[] translations = article.getAvailableLocales();

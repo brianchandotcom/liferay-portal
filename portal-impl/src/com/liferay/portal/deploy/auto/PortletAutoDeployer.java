@@ -80,6 +80,30 @@ public class PortletAutoDeployer
 		}
 	}
 
+	@Override
+	public AutoDeployer copy() {
+		PortletAutoDeployer deployer = new PortletAutoDeployer();
+
+		deployer.setAppServerType(appServerType);
+		deployer.setAuiTaglibDTD(auiTaglibDTD);
+		deployer.setBaseDir(baseDir);
+		deployer.setDestDir(destDir);
+		deployer.setFilePattern(filePattern);
+		deployer.setJars(jars);
+		deployer.setJbossPrefix(jbossPrefix);
+		deployer.setPortletExtTaglibDTD(portletExtTaglibDTD);
+		deployer.setPortletTaglibDTD(portletTaglibDTD);
+		deployer.setSecurityTaglibDTD(securityTaglibDTD);
+		deployer.setThemeTaglibDTD(themeTaglibDTD);
+		deployer.setTomcatLibDir(tomcatLibDir);
+		deployer.setUiTaglibDTD(uiTaglibDTD);
+		deployer.setUnpackWar(unpackWar);
+		deployer.setUtilTaglibDTD(utilTaglibDTD);
+		deployer.setWars(wars);
+
+		return deployer;
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(PortletAutoDeployer.class);
 
 }

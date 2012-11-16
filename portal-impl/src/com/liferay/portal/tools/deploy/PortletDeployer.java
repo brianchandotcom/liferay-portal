@@ -14,6 +14,7 @@
 
 package com.liferay.portal.tools.deploy;
 
+import com.liferay.portal.deploy.auto.AutoDeployer;
 import com.liferay.portal.kernel.plugin.PluginPackage;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -94,6 +95,30 @@ public class PortletDeployer extends BaseDeployer {
 			throw new IllegalArgumentException(
 				"The system property deployer.portlet.taglib.dtd is not set");
 		}
+	}
+
+	@Override
+	public AutoDeployer copy() {
+		PortletDeployer deployer = new PortletDeployer();
+
+		deployer.setAppServerType(appServerType);
+		deployer.setAuiTaglibDTD(auiTaglibDTD);
+		deployer.setBaseDir(baseDir);
+		deployer.setDestDir(destDir);
+		deployer.setFilePattern(filePattern);
+		deployer.setJars(jars);
+		deployer.setJbossPrefix(jbossPrefix);
+		deployer.setPortletExtTaglibDTD(portletExtTaglibDTD);
+		deployer.setPortletTaglibDTD(portletTaglibDTD);
+		deployer.setSecurityTaglibDTD(securityTaglibDTD);
+		deployer.setThemeTaglibDTD(themeTaglibDTD);
+		deployer.setTomcatLibDir(tomcatLibDir);
+		deployer.setUiTaglibDTD(uiTaglibDTD);
+		deployer.setUnpackWar(unpackWar);
+		deployer.setUtilTaglibDTD(utilTaglibDTD);
+		deployer.setWars(wars);
+
+		return deployer;
 	}
 
 	@Override

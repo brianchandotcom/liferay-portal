@@ -44,6 +44,8 @@ public interface Html {
 
 	public String fromInputSafe(String text);
 
+	public String render(String html);
+
 	public String replaceMsWordCharacters(String text);
 
 	public String stripBetween(String text, String tag);

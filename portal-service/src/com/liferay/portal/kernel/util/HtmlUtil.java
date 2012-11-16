@@ -74,6 +74,10 @@ public class HtmlUtil {
 		return _html;
 	}
 
+	public static String render(String html) {
+		return getHtml().render(html);
+	}
+
 	public static String replaceMsWordCharacters(String html) {
 		return getHtml().replaceMsWordCharacters(html);
 	}

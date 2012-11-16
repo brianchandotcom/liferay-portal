@@ -270,7 +270,6 @@ for (int i = 0; i < results.size(); i++) {
 
 					tempRowURL.setParameter("struts_action", "/journal/edit_article");
 					tempRowURL.setParameter("redirect", currentURL);
-					tempRowURL.setParameter("originalRedirect", currentURL);
 					tempRowURL.setParameter("groupId", String.valueOf(curArticle.getGroupId()));
 					tempRowURL.setParameter("folderId", String.valueOf(curArticle.getFolderId()));
 					tempRowURL.setParameter("articleId", curArticle.getArticleId());
@@ -297,7 +296,6 @@ for (int i = 0; i < results.size(); i++) {
 
 						rowURL.setParameter("struts_action", "/journal/edit_article");
 						rowURL.setParameter("redirect", currentURL);
-						rowURL.setParameter("originalRedirect", currentURL);
 						rowURL.setParameter("groupId", String.valueOf(curArticle.getGroupId()));
 						rowURL.setParameter("folderId", String.valueOf(curArticle.getFolderId()));
 						rowURL.setParameter("articleId", curArticle.getArticleId());
@@ -372,7 +370,6 @@ for (int i = 0; i < results.size(); i++) {
 
 					tempRowURL.setParameter("struts_action", "/journal/view");
 					tempRowURL.setParameter("redirect", currentURL);
-					tempRowURL.setParameter("originalRedirect", currentURL);
 					tempRowURL.setParameter("groupId", String.valueOf(curFolder.getGroupId()));
 					tempRowURL.setParameter("folderId", String.valueOf(curFolder.getFolderId()));
 
@@ -405,7 +402,6 @@ for (int i = 0; i < results.size(); i++) {
 
 						rowURL.setParameter("struts_action", "/journal/view");
 						rowURL.setParameter("redirect", currentURL);
-						rowURL.setParameter("originalRedirect", currentURL);
 						rowURL.setParameter("groupId", String.valueOf(curFolder.getGroupId()));
 						rowURL.setParameter("folderId", String.valueOf(curFolder.getFolderId()));
 						%>

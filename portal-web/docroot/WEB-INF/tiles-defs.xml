@@ -640,6 +640,10 @@
 
 	<definition name="portlet.journal" extends="portlet" />
 
+	<definition name="portlet.journal.asset.add_asset_redirect" extends="portlet.journal">
+		<put name="portlet_content" value="/portlet/journal/asset/add_asset_redirect.jsp" />
+	</definition>
+
 	<definition name="portlet.journal.copy_article" extends="portlet.journal">
 		<put name="portlet_content" value="/portlet/journal/copy_article.jsp" />
 	</definition>

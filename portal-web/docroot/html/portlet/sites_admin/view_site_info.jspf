@@ -28,6 +28,7 @@ int usersCount = UserLocalServiceUtil.searchCount(company.getCompanyId(), null, 
 
 LinkedHashMap<String, Object> organizationParams = new LinkedHashMap<String, Object>();
 
+organizationParams.put("groupOrganization", new Long(groupId));
 organizationParams.put("organizationsGroups", new Long(groupId));
 
 int organizationsCount = OrganizationLocalServiceUtil.searchCount(company.getCompanyId(), OrganizationConstants.ANY_PARENT_ORGANIZATION_ID, null, null, null, null, organizationParams);
@@ -44,6 +45,17 @@ if (group.getType() == GroupConstants.TYPE_SITE_RESTRICTED) {
 	pendingRequests = MembershipRequestLocalServiceUtil.searchCount(group.getGroupId(), MembershipRequestConstants.STATUS_PENDING);
 }
 %>
+
+<c:if test="<%= group.isOrganization() %>">
+
+	<%
+	Organization groupOrganization = OrganizationLocalServiceUtil.getOrganization(group.getOrganizationId());
+	%>
+
+	<div class="organizations-msg-info portlet-msg">
+		<liferay-ui:message arguments="<%= new String[] {groupOrganization.getName(), LanguageUtil.get(pageContext, groupOrganization.getType())} %>" key="this-site-belongs-to-x-which-is-an-organization-of-type-x" />
+	</div>
+</c:if>
 
 <div class="membership-info">
 	<dl>

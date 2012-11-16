@@ -346,7 +346,6 @@
 	}
 
 	.membership-info {
-		margin-top: -1em;
 
 		.members-info a {
 			padding-right: 5px;
@@ -390,6 +389,12 @@
 
 	.layout-set-info {
 		margin-bottom: 15px;
+	}
+
+	.organizations-msg-info {
+		background-color: #FEFEFE;
+		background-image: url(@theme_image_path@/common/organization_icon.png);
+		border-color: #BBB;
 	}
 }
 

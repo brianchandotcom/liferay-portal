@@ -102,13 +102,10 @@
 
 	LinkedHashMap<String, Object> organizationParams = new LinkedHashMap<String, Object>();
 
+	organizationParams.put("groupOrganization", new Long(curGroup.getGroupId()));
 	organizationParams.put("organizationsGroups", new Long(curGroup.getGroupId()));
 
 	int organizationsCount = OrganizationLocalServiceUtil.searchCount(company.getCompanyId(), OrganizationConstants.ANY_PARENT_ORGANIZATION_ID, searchTerms.getKeywords(), null, null, null, organizationParams);
-
-	if (curGroup.isOrganization()) {
-		organizationsCount += 1;
-	}
 
 	if (organizationsCount > 0) {
 		buffer.append("<div class=\"organization-count\">");

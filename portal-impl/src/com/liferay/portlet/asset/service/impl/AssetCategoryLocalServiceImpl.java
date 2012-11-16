@@ -17,6 +17,7 @@ package com.liferay.portlet.asset.service.impl;
 import com.liferay.portal.kernel.cache.ThreadLocalCachable;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.transaction.TransactionCommitCallbackRegistryUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -44,6 +45,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.Callable;
 
 /**
  * @author Brian Wing Shun Chan
@@ -167,6 +169,12 @@ public class AssetCategoryLocalServiceImpl
 	public void deleteCategory(AssetCategory category)
 		throws PortalException, SystemException {
 
+		deleteCategory(category, false);
+	}
+
+	protected void deleteCategory(AssetCategory category, boolean childCategory)
+		throws PortalException, SystemException {
+
 		// Categories
 
 		List<AssetCategory> categories =
@@ -174,7 +182,22 @@ public class AssetCategoryLocalServiceImpl
 				category.getCategoryId());
 
 		for (AssetCategory curCategory : categories) {
-			deleteCategory(curCategory);
+			deleteCategory(curCategory, false);
+		}
+
+		if (!categories.isEmpty() && !childCategory) {
+			final long groupId = category.getGroupId();
+
+			TransactionCommitCallbackRegistryUtil.registerCallback(
+				new Callable<Void>() {
+
+					public Void call() throws Exception {
+						assetCategoryLocalService.rebuildTree(groupId, false);
+
+						return null;
+					}
+
+				});
 		}
 
 		// Category

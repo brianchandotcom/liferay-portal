@@ -210,6 +210,14 @@ public class PortletPermissionImpl implements PortletPermission {
 			return true;
 		}
 
+		if ((layout != null) && layout.isTypeControlPanel()) {
+			String category = portlet.getControlPanelEntryCategory();
+
+			if (Validator.equals(category, PortletCategoryKeys.CONTENT)) {
+				layout = null;
+			}
+		}
+
 		return contains(
 			permissionChecker, groupId, layout, portlet.getPortletId(),
 			actionId, strict);
@@ -409,14 +417,6 @@ public class PortletPermissionImpl implements PortletPermission {
 			PermissionChecker permissionChecker, long scopeGroupId,
 			Layout layout, Portlet portlet, PortletMode portletMode)
 		throws PortalException, SystemException {
-
-		if ((layout != null) && layout.isTypeControlPanel()) {
-			String category = portlet.getControlPanelEntryCategory();
-
-			if (Validator.equals(category, PortletCategoryKeys.CONTENT)) {
-				layout = null;
-			}
-		}
 
 		boolean access = contains(
 			permissionChecker, scopeGroupId, layout, portlet, ActionKeys.VIEW);

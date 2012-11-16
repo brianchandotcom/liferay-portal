@@ -17,6 +17,8 @@
 <%@ include file="/html/portlet/journal/init.jsp" %>
 
 <%
+String referringPortletResource = ParamUtil.getString(request, "referringPortletResource");
+
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 JournalArticle article = null;
@@ -35,8 +37,8 @@ else {
 			<portlet:renderURL var="editURL">
 				<portlet:param name="struts_action" value="/journal/edit_article" />
 				<portlet:param name="redirect" value="<%= currentURL %>" />
-				<portlet:param name="originalRedirect" value="<%= currentURL %>" />
 				<portlet:param name="backURL" value="<%= currentURL %>" />
+				<portlet:param name="referringPortletResource" value="<%= referringPortletResource %>" />
 				<portlet:param name="groupId" value="<%= String.valueOf(article.getGroupId()) %>" />
 				<portlet:param name="folderId" value="<%= String.valueOf(article.getFolderId()) %>" />
 				<portlet:param name="articleId" value="<%= article.getArticleId() %>" />
@@ -53,8 +55,8 @@ else {
 			<portlet:renderURL var="moveURL">
 				<portlet:param name="struts_action" value="/journal/move_article" />
 				<portlet:param name="redirect" value="<%= currentURL %>" />
-				<portlet:param name="originalRedirect" value="<%= currentURL %>" />
 				<portlet:param name="backURL" value="<%= currentURL %>" />
+				<portlet:param name="referringPortletResource" value="<%= referringPortletResource %>" />
 				<portlet:param name="articleId" value="<%= article.getArticleId() %>" />
 			</portlet:renderURL>
 

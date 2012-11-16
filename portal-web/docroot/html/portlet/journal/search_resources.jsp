@@ -241,7 +241,6 @@ boolean advancedSearch = ParamUtil.getBoolean(liferayPortletRequest, ArticleDisp
 
 									tempRowURL.setParameter("struts_action", "/journal/edit_article");
 									tempRowURL.setParameter("redirect", currentURL);
-									tempRowURL.setParameter("originalRedirect", currentURL);
 									tempRowURL.setParameter("groupId", String.valueOf(curArticle.getGroupId()));
 									tempRowURL.setParameter("folderId", String.valueOf(curArticle.getFolderId()));
 									tempRowURL.setParameter("articleId", curArticle.getArticleId());
@@ -282,7 +281,6 @@ boolean advancedSearch = ParamUtil.getBoolean(liferayPortletRequest, ArticleDisp
 
 							rowURL.setParameter("struts_action", "/journal/edit_article");
 							rowURL.setParameter("redirect", currentURL);
-							rowURL.setParameter("originalRedirect", currentURL);
 							rowURL.setParameter("groupId", String.valueOf(curArticle.getGroupId()));
 							rowURL.setParameter("folderId", String.valueOf(curArticle.getFolderId()));
 							rowURL.setParameter("articleId", curArticle.getArticleId());
@@ -295,7 +293,6 @@ boolean advancedSearch = ParamUtil.getBoolean(liferayPortletRequest, ArticleDisp
 
 								editURL.setParameter("struts_action", "/journal/edit_article");
 								editURL.setParameter("redirect", currentURL);
-								editURL.setParameter("originalRedirect", currentURL);
 								editURL.setParameter("groupId", String.valueOf(curArticle.getGroupId()));
 								editURL.setParameter("folderId", String.valueOf(curArticle.getFolderId()));
 								editURL.setParameter("articleId", curArticle.getArticleId());

@@ -34,13 +34,11 @@ public class OpenIdAutoLogin implements AutoLogin {
 	public String[] login(
 		HttpServletRequest request, HttpServletResponse response) {
 
-		String[] credentials = null;
-
 		try {
 			long companyId = PortalUtil.getCompanyId(request);
 
 			if (!OpenIdUtil.isEnabled(companyId)) {
-				return credentials;
+				return null;
 			}
 
 			HttpSession session = request.getSession();
@@ -48,24 +46,26 @@ public class OpenIdAutoLogin implements AutoLogin {
 			Long userId = (Long)session.getAttribute(WebKeys.OPEN_ID_LOGIN);
 
 			if (userId == null) {
-				return credentials;
+				return null;
 			}
 
 			session.removeAttribute(WebKeys.OPEN_ID_LOGIN);
 
 			User user = UserLocalServiceUtil.getUserById(userId);
 
-			credentials = new String[3];
+			String[] credentials = new String[3];
 
 			credentials[0] = String.valueOf(user.getUserId());
 			credentials[1] = user.getPassword();
 			credentials[2] = Boolean.TRUE.toString();
+
+			return credentials;
 		}
 		catch (Exception e) {
 			_log.error(e, e);
-		}
 
-		return credentials;
+			return null;
+		}
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(OpenIdAutoLogin.class);

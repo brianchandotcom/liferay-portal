@@ -40,8 +40,6 @@ public class RememberMeAutoLogin implements AutoLogin {
 		throws AutoLoginException {
 
 		try {
-			String[] credentials = null;
-
 			String autoUserId = CookieKeys.getCookie(
 				request, CookieKeys.ID, false);
 			String autoPassword = CookieKeys.getCookie(
@@ -64,6 +62,8 @@ public class RememberMeAutoLogin implements AutoLogin {
 					rememberMe = Boolean.TRUE.toString();
 				}
 			}
+
+			String[] credentials = null;
 
 			if (Validator.isNotNull(autoUserId) &&
 				Validator.isNotNull(autoPassword) &&
@@ -96,9 +96,9 @@ public class RememberMeAutoLogin implements AutoLogin {
 				long userId = GetterUtil.getLong(credentials[0]);
 
 				if (defaultUser.getUserId() == userId) {
-					credentials = null;
-
 					removeCookies(request, response);
+
+					return null;
 				}
 			}
 

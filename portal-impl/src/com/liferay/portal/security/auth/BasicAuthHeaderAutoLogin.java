@@ -74,20 +74,19 @@ public class BasicAuthHeaderAutoLogin implements AuthVerifier, AutoLogin {
 		throws AutoLoginException {
 
 		try {
-			String[] credentials = null;
 
 			// Get the Authorization header, if one was supplied
 
 			String authorization = request.getHeader("Authorization");
 
 			if (authorization == null) {
-				return credentials;
+				return null;
 			}
 
 			StringTokenizer st = new StringTokenizer(authorization);
 
 			if (!st.hasMoreTokens()) {
-				return credentials;
+				return null;
 			}
 
 			String basic = st.nextToken();
@@ -95,7 +94,7 @@ public class BasicAuthHeaderAutoLogin implements AuthVerifier, AutoLogin {
 			// We only handle HTTP Basic authentication
 
 			if (!basic.equalsIgnoreCase(HttpServletRequest.BASIC_AUTH)) {
-				return credentials;
+				return null;
 			}
 
 			String encodedCredentials = st.nextToken();
@@ -114,12 +113,14 @@ public class BasicAuthHeaderAutoLogin implements AuthVerifier, AutoLogin {
 			int pos = decodedCredentials.indexOf(CharPool.COLON);
 
 			if (pos == -1) {
-				return credentials;
+				return null;
 			}
 
 			String login = GetterUtil.getString(
 				decodedCredentials.substring(0, pos));
 			String password = decodedCredentials.substring(pos + 1);
+
+			String[] credentials = null;
 
 			try {
 				long userId = LoginUtil.getAuthenticatedUserId(

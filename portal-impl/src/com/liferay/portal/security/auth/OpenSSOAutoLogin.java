@@ -52,8 +52,6 @@ public class OpenSSOAutoLogin implements AutoLogin {
 	public String[] login(
 		HttpServletRequest request, HttpServletResponse response) {
 
-		String[] credentials = null;
-
 		try {
 			long companyId = PortalUtil.getCompanyId(request);
 
@@ -61,14 +59,14 @@ public class OpenSSOAutoLogin implements AutoLogin {
 					companyId, PropsKeys.OPEN_SSO_AUTH_ENABLED,
 					PropsValues.OPEN_SSO_AUTH_ENABLED)) {
 
-				return credentials;
+				return null;
 			}
 
 			String serviceUrl = PrefsPropsUtil.getString(
 				companyId, PropsKeys.OPEN_SSO_SERVICE_URL);
 
 			if (!OpenSSOUtil.isAuthenticated(request, serviceUrl)) {
-				return credentials;
+				return null;
 			}
 
 			boolean ldapImportEnabled = PrefsPropsUtil.getBoolean(
@@ -190,17 +188,19 @@ public class OpenSSOAutoLogin implements AutoLogin {
 				request.setAttribute(AutoLogin.AUTO_LOGIN_REDIRECT, redirect);
 			}
 
-			credentials = new String[3];
+			String[] credentials = new String[3];
 
 			credentials[0] = String.valueOf(user.getUserId());
 			credentials[1] = user.getPassword();
 			credentials[2] = Boolean.TRUE.toString();
+
+			return credentials;
 		}
 		catch (Exception e) {
 			_log.error(e, e);
-		}
 
-		return credentials;
+			return null;
+		}
 	}
 
 	protected User addUser(

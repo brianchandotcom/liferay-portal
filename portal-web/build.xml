@@ -1129,6 +1129,33 @@
 			</then>
 		</if>
 
+		<fileset dir="${jspc.classes.dir}" id="oversize.files">
+			<include name="**/*.java" />
+			<size value="700" units="K" when="more" />
+		</fileset>
+
+		<pathconvert refid="oversize.files" dirsep="/" pathsep="${line.separator}" property="oversize.files.java" />
+
+		<if>
+			<not>
+				<equals arg1="${oversize.files.java}" arg2="" />
+			</not>
+			<then>
+				<antelope:stringutil string="${oversize.files.java}" property="oversize.files.jsp">
+					<replace regex="\.java" replacement="" />
+					<replace regex="${jspc.classes.dir}/org/apache/jsp" replacement="docroot" />
+					<replace regex="_jsp" replacement=".jsp" />
+					<replace regex="_002d" replacement="-" />
+					<replace regex="_005f" replacement="_" />
+				</antelope:stringutil>
+
+				<fail>
+Compiled JSP servlets for the following JSPs may be too large for some application servers (see LPS-27841).
+
+${oversize.files.jsp}</fail>
+			</then>
+		</if>
+
 		<javac
 			classpathref="jspc.classpath"
 			compiler="${javac.compiler}"

@@ -1129,6 +1129,22 @@
 			</then>
 		</if>
 
+		<fileset dir="${jspc.classes.dir}" id="oversize.files">
+			<include name="**/*.java" />
+			<size value="700" units="K" when="more" />
+		</fileset>
+
+		<pathconvert refid="oversize.files" property="oversize.files.list" />
+
+		<if>
+			<not>
+				<equals arg1="${oversize.files.list}" arg2="" />
+			</not>
+			<then>
+				<fail>Compiled JSP servlets may be too large for some application servers (see LPS-27841).</fail>
+			</then>
+		</if>
+
 		<javac
 			classpathref="jspc.classpath"
 			compiler="${javac.compiler}"

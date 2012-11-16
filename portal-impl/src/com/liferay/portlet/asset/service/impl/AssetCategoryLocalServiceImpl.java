@@ -172,59 +172,6 @@ public class AssetCategoryLocalServiceImpl
 		deleteCategory(category, false);
 	}
 
-	protected void deleteCategory(AssetCategory category, boolean childCategory)
-		throws PortalException, SystemException {
-
-		// Categories
-
-		List<AssetCategory> categories =
-			assetCategoryPersistence.findByParentCategoryId(
-				category.getCategoryId());
-
-		for (AssetCategory curCategory : categories) {
-			deleteCategory(curCategory, false);
-		}
-
-		if (!categories.isEmpty() && !childCategory) {
-			final long groupId = category.getGroupId();
-
-			TransactionCommitCallbackRegistryUtil.registerCallback(
-				new Callable<Void>() {
-
-					public Void call() throws Exception {
-						assetCategoryLocalService.rebuildTree(groupId, false);
-
-						return null;
-					}
-
-				});
-		}
-
-		// Category
-
-		assetCategoryPersistence.remove(category);
-
-		// Resources
-
-		resourceLocalService.deleteResource(
-			category.getCompanyId(), AssetCategory.class.getName(),
-			ResourceConstants.SCOPE_INDIVIDUAL, category.getCategoryId());
-
-		// Entries
-
-		List<AssetEntry> entries = assetTagPersistence.getAssetEntries(
-			category.getCategoryId());
-
-		// Properties
-
-		assetCategoryPropertyLocalService.deleteCategoryProperties(
-			category.getCategoryId());
-
-		// Indexer
-
-		assetEntryLocalService.reindex(entries);
-	}
-
 	public void deleteCategory(long categoryId)
 		throws PortalException, SystemException {
 
@@ -545,6 +492,59 @@ public class AssetCategoryLocalServiceImpl
 		}
 
 		return category;
+	}
+
+	protected void deleteCategory(AssetCategory category, boolean childCategory)
+		throws PortalException, SystemException {
+
+		// Categories
+
+		List<AssetCategory> categories =
+			assetCategoryPersistence.findByParentCategoryId(
+				category.getCategoryId());
+
+		for (AssetCategory curCategory : categories) {
+			deleteCategory(curCategory, false);
+		}
+
+		if (!categories.isEmpty() && !childCategory) {
+			final long groupId = category.getGroupId();
+
+			TransactionCommitCallbackRegistryUtil.registerCallback(
+				new Callable<Void>() {
+
+					public Void call() throws Exception {
+						assetCategoryLocalService.rebuildTree(groupId, false);
+
+						return null;
+					}
+
+				});
+		}
+
+		// Category
+
+		assetCategoryPersistence.remove(category);
+
+		// Resources
+
+		resourceLocalService.deleteResource(
+			category.getCompanyId(), AssetCategory.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL, category.getCategoryId());
+
+		// Entries
+
+		List<AssetEntry> entries = assetTagPersistence.getAssetEntries(
+			category.getCategoryId());
+
+		// Properties
+
+		assetCategoryPropertyLocalService.deleteCategoryProperties(
+			category.getCategoryId());
+
+		// Indexer
+
+		assetEntryLocalService.reindex(entries);
 	}
 
 	protected long[] getCategoryIds(List<AssetCategory> categories) {

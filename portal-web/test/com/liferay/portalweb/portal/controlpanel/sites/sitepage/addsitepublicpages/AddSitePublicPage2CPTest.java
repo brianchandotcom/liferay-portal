@@ -49,7 +49,7 @@ public class AddSitePublicPage2CPTest extends BaseTestCase {
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace("Site Name"),
-					selenium.getText("//td[1]/a"));
+					selenium.getText("//tr[contains(.,'Site Name')]/td[2]/a"));
 				assertEquals(RuntimeVariables.replace("Actions"),
 					selenium.getText(
 						"//span[@title='Actions']/ul/li/strong/a/span"));
@@ -60,8 +60,8 @@ public class AddSitePublicPage2CPTest extends BaseTestCase {
 				assertEquals(RuntimeVariables.replace("Manage Pages"),
 					selenium.getText(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Pages')]"));
-				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Pages')]"));
+				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Pages')]",
+					RuntimeVariables.replace("Manage Pages"));
 				selenium.waitForPageToLoad("30000");
 				selenium.clickAt("link=Public Pages",
 					RuntimeVariables.replace("Public Pages"));

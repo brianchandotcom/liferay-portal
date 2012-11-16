@@ -56,8 +56,8 @@ public class AddMembersSite3UserTest extends BaseTestCase {
 				assertEquals(RuntimeVariables.replace("Manage Memberships"),
 					selenium.getText(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Manage Memberships')]/a"));
-				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Manage Memberships')]/a"));
+				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Manage Memberships')]/a",
+					RuntimeVariables.replace("Manage Memberships"));
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace("Add Members"),
 					selenium.getText(
@@ -69,8 +69,8 @@ public class AddMembersSite3UserTest extends BaseTestCase {
 				assertEquals(RuntimeVariables.replace("User"),
 					selenium.getText(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'User')]/a"));
-				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'User')]/a"));
+				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'User')]/a",
+					RuntimeVariables.replace("User"));
 				selenium.waitForPageToLoad("30000");
 
 				boolean basicVisible = selenium.isVisible("link=\u00ab Basic");

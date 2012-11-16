@@ -15,6 +15,7 @@
 package com.liferay.portalweb.portal.controlpanel.sites.site.addsitenamenull;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.controlpanel.sites.site.addsite.TearDownSiteTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -26,7 +27,7 @@ public class AddSiteNameNullTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddSitesNameNullTest.class);
-		testSuite.addTestSuite(TearDownSitesTest.class);
+		testSuite.addTestSuite(TearDownSiteTest.class);
 
 		return testSuite;
 	}

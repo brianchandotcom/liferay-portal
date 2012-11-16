@@ -14,6 +14,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
+	<td>AUI Editable Min</td>
+</tr>
+<tr>
 	<td>assertText</td>
 	<td>//li[@id='_145_mySites']/a/span</td>
 	<td>Go to</td>
@@ -40,7 +50,7 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>//input[@id='_134_name']</td>
+	<td>//input[@name='_134_keywords']</td>
 	<td>guest</td>
 </tr>
 <tr>
@@ -49,8 +59,8 @@
 	<td>Search</td>
 </tr>
 <tr>
-	<td>assertPartialText</td>
-	<td>//tr[3]/td[1]/a</td>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Liferay')]/td[2]/a</td>
 	<td>Liferay</td>
 </tr>
 <tr>
@@ -65,17 +75,17 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Manage Memberships')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Memberships')]</td>
 	<td>Manage Memberships</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Manage Memberships')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Memberships')]</td>
 	<td>Manage Memberships</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Manage Memberships')]/a</td>
+	<td>clickAtAndWait</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Memberships')]</td>
 	<td>Manage Memberships</td>
 </tr>
 <tr>
@@ -90,22 +100,22 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'User')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'User')]</td>
 	<td>User</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'User')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'User')]</td>
 	<td>User</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'User')]/a</td>
+	<td>clickAtAndWait</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'User')]</td>
 	<td>User</td>
 </tr>
 <tr>
 	<td>storeVisible</td>
-	<td>link=« Basic</td>
+	<td>//a[.='« Basic']</td>
 	<td>basicVisible</td>
 </tr>
 <tr>
@@ -115,7 +125,7 @@
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>link=« Basic</td>
+	<td>//a[.='« Basic']</td>
 	<td>« Basic</td>
 </tr>
 <tr>
@@ -135,18 +145,28 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[3]/td[2]</td>
+	<td>//tr[contains(.,'userfn userln')]/td[2]</td>
 	<td>userfn userln</td>
 </tr>
 <tr>
-	<td>assertNotChecked</td>
+	<td>storeChecked</td>
 	<td>//input[@name='_174_rowIds']</td>
-	<td>Entry Check Box</td>
+	<td>entryCheckbox</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${entryCheckbox}</td>
+	<td>EntryCheckbox</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>//input[@name='_174_rowIds']</td>
 	<td>Entry Check Box</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>EntryCheckbox</td>
+	<td></td>
 </tr>
 <tr>
 	<td>assertChecked</td>
@@ -175,7 +195,7 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[3]/td[1]</td>
+	<td>//tr[contains(.,'userfn userln')]/td[1]</td>
 	<td>userfn userln</td>
 </tr>
 </tbody></table>

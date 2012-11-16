@@ -14,19 +14,39 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForText</td>
-	<td>//li[6]/a/span</td>
-	<td>Community Name</td>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
+	<td>AUI Editable Min</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//li[6]/a/span</td>
-	<td>Community Name</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>mouseOver</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>link=Site Name</td>
+	<td>Site Name</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//li[6]/a/span</td>
-	<td>Community Name</td>
+	<td>link=Site Name</td>
+	<td>Site Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//h1[@class='site-title']/span</td>
+	<td>Site Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -40,10 +60,9 @@
 </tr>
 <tr>
 	<td>assertLocation</td>
-	<td>http://localhost:8080/web/community-name/public-page</td>
+	<td>http://localhost:8080/web/site-name/public-page</td>
 	<td></td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

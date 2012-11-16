@@ -24,19 +24,17 @@ public class User_JoinSitesPrivateTest extends BaseTestCase {
 	public void testUser_JoinSitesPrivate() throws Exception {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
-		selenium.open("/user/selenium01/home/");
-		selenium.waitForVisible("link=My Sites");
+		selenium.open("/user/usersn/home/");
 		selenium.clickAt("link=My Sites", RuntimeVariables.replace("My Sites"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("No sites were found."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
-		selenium.open("/user/selenium01/home/");
-		selenium.waitForVisible("link=Available Sites");
+		selenium.open("/user/usersn/home/");
 		selenium.clickAt("link=Available Sites",
 			RuntimeVariables.replace("Available Sites"));
 		selenium.waitForPageToLoad("30000");
-		selenium.type("//input[@id='_29_name']",
-			RuntimeVariables.replace("Test Private Community"));
+		selenium.type("//input[@name='_29_keywords']",
+			RuntimeVariables.replace("Name"));
 		selenium.clickAt("xPath=(//input[@value='Search'])[3]",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");

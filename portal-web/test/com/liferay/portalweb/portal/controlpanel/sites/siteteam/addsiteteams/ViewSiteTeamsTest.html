@@ -50,12 +50,17 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>link=Site Name</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Site Name')]</td>
+	<td>Site Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Site Name')]</td>
 	<td>Site Name</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Site Name</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Site Name')]</td>
 	<td>Site Name</td>
 </tr>
 <tr>
@@ -85,22 +90,22 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-portlet-toolbar']/span[1]</td>
+	<td>//div[@class='lfr-portlet-toolbar']/span[@class='lfr-toolbar-button view-button ']</td>
 	<td>View Members</td>
 </tr>
 <tr>
 	<td>assertPartialText</td>
-	<td>//div[@class='lfr-portlet-toolbar']/span[2]</td>
+	<td>//div[@class='lfr-portlet-toolbar']/span[@title='Add Members']</td>
 	<td>Add Members</td>
 </tr>
 <tr>
 	<td>assertPartialText</td>
-	<td>//div[@class='lfr-portlet-toolbar']/span[3]</td>
+	<td>//div[@class='lfr-portlet-toolbar']/span[@title='Add Site Roles to']</td>
 	<td>Add Site Roles to</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-portlet-toolbar']/span[4]</td>
+	<td>//div[@class='lfr-portlet-toolbar']/span[@class='lfr-toolbar-button teams-button current']</td>
 	<td>View Teams</td>
 </tr>
 <tr>

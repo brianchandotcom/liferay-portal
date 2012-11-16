@@ -25,7 +25,11 @@ public class DeactivateStagingSitesNavigatingStagingTest extends BaseTestCase {
 		throws Exception {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
-		selenium.open("/web/community-name-staging/public-page");
+		selenium.open("/web/site-name-staging/public-page");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
@@ -35,8 +39,8 @@ public class DeactivateStagingSitesNavigatingStagingTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Sites", RuntimeVariables.replace("Sites"));
 		selenium.waitForPageToLoad("30000");
-		selenium.type("//input[@id='_134_name']",
-			RuntimeVariables.replace("Community"));
+		selenium.type("//input[@name='_134_keywords']",
+			RuntimeVariables.replace("Site Name"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
@@ -45,12 +49,12 @@ public class DeactivateStagingSitesNavigatingStagingTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit Settings')]/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit Settings')]");
 		assertEquals(RuntimeVariables.replace("Edit Settings"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit Settings')]/a"));
-		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit Settings')]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit Settings')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit Settings')]",
+			RuntimeVariables.replace("Edit Settings"));
 		selenium.waitForPageToLoad("30000");
 		selenium.waitForVisible("//a[@id='_165_stagingLink']");
 		assertTrue(selenium.isPartialText("//a[@id='_165_stagingLink']",
@@ -66,6 +70,10 @@ public class DeactivateStagingSitesNavigatingStagingTest extends BaseTestCase {
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		selenium.open("/web/guest/home/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
@@ -75,8 +83,8 @@ public class DeactivateStagingSitesNavigatingStagingTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Sites", RuntimeVariables.replace("Sites"));
 		selenium.waitForPageToLoad("30000");
-		selenium.type("//input[@id='_134_name']",
-			RuntimeVariables.replace("Community"));
+		selenium.type("//input[@name='_134_keywords']",
+			RuntimeVariables.replace("Site Name"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
@@ -89,8 +97,8 @@ public class DeactivateStagingSitesNavigatingStagingTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Edit Settings"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit Settings')]/a"));
-		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit Settings')]/a"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit Settings')]/a",
+			RuntimeVariables.replace("Edit Settings"));
 		selenium.waitForPageToLoad("30000");
 		selenium.waitForVisible("//a[@id='_165_stagingLink']");
 		assertTrue(selenium.isPartialText("//a[@id='_165_stagingLink']",

@@ -43,8 +43,8 @@ public class AssignMembersSitesTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				selenium.clickAt("link=Sites", RuntimeVariables.replace("Sites"));
 				selenium.waitForPageToLoad("30000");
-				selenium.type("//input[@id='_134_name']",
-					RuntimeVariables.replace("Site Name"));
+				selenium.type("//input[@name='_134_keywords']",
+					RuntimeVariables.replace("Name"));
 				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
@@ -58,8 +58,8 @@ public class AssignMembersSitesTest extends BaseTestCase {
 				assertEquals(RuntimeVariables.replace("Manage Memberships"),
 					selenium.getText(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Memberships')]"));
-				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Memberships')]"));
+				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Memberships')]",
+					RuntimeVariables.replace("Manage Memberships"));
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace("Add Members"),
 					selenium.getText(
@@ -71,8 +71,8 @@ public class AssignMembersSitesTest extends BaseTestCase {
 				assertEquals(RuntimeVariables.replace("User"),
 					selenium.getText(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'User')]"));
-				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'User')]"));
+				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'User')]",
+					RuntimeVariables.replace("User"));
 				selenium.waitForPageToLoad("30000");
 				selenium.waitForElementPresent("//a[.='\u00ab Basic']");
 
@@ -95,9 +95,20 @@ public class AssignMembersSitesTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
-				assertFalse(selenium.isChecked("//input[@name='_174_rowIds']"));
+
+				boolean entryCheckbox = selenium.isChecked(
+						"//input[@name='_174_rowIds']");
+
+				if (entryCheckbox) {
+					label = 3;
+
+					continue;
+				}
+
 				selenium.clickAt("//input[@name='_174_rowIds']",
 					RuntimeVariables.replace("Checkbox"));
+
+			case 3:
 				assertTrue(selenium.isChecked("//input[@name='_174_rowIds']"));
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));

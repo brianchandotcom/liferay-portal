@@ -47,8 +47,8 @@ public class AddSiteTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Blank Site"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Blank Site')]"));
-		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Blank Site')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Blank Site')]",
+			RuntimeVariables.replace("Blank Site"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_134_name']",
 			RuntimeVariables.replace("Site Name"));
@@ -81,5 +81,18 @@ public class AddSiteTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Site Name"),
 			selenium.getText("//tr[contains(.,'Site Name')]/td[2]/a"));
+		assertEquals(RuntimeVariables.replace("Open"),
+			selenium.getText("//tr[contains(.,'Site Name')]/td[3]/a"));
+		assertEquals(RuntimeVariables.replace("1 User"),
+			selenium.getText("//tr[contains(.,'Site Name')]/td[4]"));
+		assertEquals(RuntimeVariables.replace("Yes"),
+			selenium.getText("//tr[contains(.,'Site Name')]/td[5]"));
+		assertEquals(RuntimeVariables.replace(""),
+			selenium.getText("//tr[contains(.,'Site Name')]/td[6]"));
+		assertEquals(RuntimeVariables.replace(""),
+			selenium.getText("//tr[contains(.,'Site Name')]/td[7]"));
+		assertEquals(RuntimeVariables.replace("Actions"),
+			selenium.getText(
+				"//tr[contains(.,'Site Name')]/td[8]/span[@title='Actions']/ul/li/strong/a/span"));
 	}
 }

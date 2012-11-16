@@ -40,8 +40,8 @@ public class AddSitesRestrictedTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Blank Site"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
-		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a",
+			RuntimeVariables.replace("Blank Site"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_134_name']",
 			RuntimeVariables.replace("Test Restricted Community"));

@@ -24,8 +24,7 @@ public class AddSitesPublicPagePortletTest extends BaseTestCase {
 	public void testAddSitesPublicPagePortlet() throws Exception {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
-		selenium.open("/web/community-name/public-page");
-		selenium.waitForVisible("link=Public Page");
+		selenium.open("/web/site-name/public-page");
 		selenium.clickAt("link=Public Page",
 			RuntimeVariables.replace("Public Page"));
 		selenium.waitForPageToLoad("30000");
@@ -44,14 +43,10 @@ public class AddSitesPublicPagePortletTest extends BaseTestCase {
 		selenium.waitForElementPresent(
 			"//script[contains(@src,'/aui/aui-live-search/aui-live-search-min.js')]");
 		selenium.waitForVisible("//input[@id='layout_configuration_content']");
-		selenium.type("//input[@id='layout_configuration_content']",
+		selenium.sendKeys("//input[@id='layout_configuration_content']",
 			RuntimeVariables.replace("b"));
-		selenium.keyDown("//input[@id='layout_configuration_content']",
-			RuntimeVariables.replace("\\13"));
-		selenium.keyUp("//input[@id='layout_configuration_content']",
-			RuntimeVariables.replace("\\13"));
-		selenium.waitForVisible("//div[@title='Blogs']/p/a");
-		selenium.clickAt("//div[@title='Blogs']/p/a",
+		selenium.waitForVisible("//li[@title='Blogs']/p/a");
+		selenium.clickAt("//li[@title='Blogs']/p/a",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible("//section");
 		assertTrue(selenium.isVisible("//section"));

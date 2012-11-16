@@ -38,8 +38,13 @@ public class AddSiteTeam1Test extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("//a[contains(@id,'groupSelectorButton')]/span",
 			RuntimeVariables.replace("Site Selector"));
-		selenium.waitForVisible("link=Site Name");
-		selenium.clickAt("link=Site Name", RuntimeVariables.replace("Site Name"));
+		selenium.waitForVisible(
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Site Name')]");
+		assertEquals(RuntimeVariables.replace("Site Name"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Site Name')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Site Name')]",
+			RuntimeVariables.replace("Site Name"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Site Memberships",
 			RuntimeVariables.replace("Site Memberships"));

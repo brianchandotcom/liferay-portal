@@ -25,6 +25,10 @@ public class ApproveUserJoinSitesTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
@@ -34,8 +38,8 @@ public class ApproveUserJoinSitesTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Sites", RuntimeVariables.replace("Sites"));
 		selenium.waitForPageToLoad("30000");
-		selenium.type("//input[@id='_134_name']",
-			RuntimeVariables.replace("Restricted"));
+		selenium.type("//input[@name='_134_keywords']",
+			RuntimeVariables.replace("Site Name"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
@@ -44,12 +48,12 @@ public class ApproveUserJoinSitesTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Manage Memberships')]/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Memberships')]");
 		assertEquals(RuntimeVariables.replace("Manage Memberships"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Manage Memberships')]/a"));
-		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Manage Memberships')]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Memberships')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Memberships')]",
+			RuntimeVariables.replace("Manage Memberships"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"There are 1 membership requests pending."),
@@ -58,8 +62,9 @@ public class ApproveUserJoinSitesTest extends BaseTestCase {
 			RuntimeVariables.replace("There are 1 membership requests pending."));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Reply"),
-			selenium.getText("//span/a/span"));
-		selenium.clickAt("//span/a/span", RuntimeVariables.replace("Reply"));
+			selenium.getText("//td[4]/span/a/span"));
+		selenium.clickAt("//td[4]/span/a/span",
+			RuntimeVariables.replace("Reply"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//textarea[@id='_174_replyComments']",
 			RuntimeVariables.replace("You are welcome"));
@@ -76,7 +81,7 @@ public class ApproveUserJoinSitesTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isElementPresent("//tr[3]/td[1]"));
 		assertEquals(RuntimeVariables.replace(
-				"selen01 lenn nium01 (test01@selenium.com)"),
+				"userfn userln (userea@liferay.com)"),
 			selenium.getText("//tr[3]/td[2]"));
 		assertEquals(RuntimeVariables.replace(
 				"I want to join this really cool community please."),

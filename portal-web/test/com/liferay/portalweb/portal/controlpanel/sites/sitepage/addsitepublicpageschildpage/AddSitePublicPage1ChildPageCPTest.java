@@ -49,7 +49,7 @@ public class AddSitePublicPage1ChildPageCPTest extends BaseTestCase {
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace("Site Name"),
-					selenium.getText("//td[1]/a"));
+					selenium.getText("//tr[contains(.,'Site Name')]/td[2]/a"));
 				assertEquals(RuntimeVariables.replace("Actions"),
 					selenium.getText(
 						"//span[@title='Actions']/ul/li/strong/a/span"));
@@ -82,8 +82,8 @@ public class AddSitePublicPage1ChildPageCPTest extends BaseTestCase {
 					"//input[@id='_156_addLayoutName_en_US']");
 				selenium.type("//input[@id='_156_addLayoutName_en_US']",
 					RuntimeVariables.replace("Public Page1 Child Page"));
-				selenium.click(RuntimeVariables.replace(
-						"//input[@value='Add Page']"));
+				selenium.clickAt("//input[@value='Add Page']",
+					RuntimeVariables.replace("Add Page"));
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace(
 						"Your request completed successfully."),

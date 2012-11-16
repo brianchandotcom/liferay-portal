@@ -15,6 +15,12 @@
 package com.liferay.portalweb.portal.controlpanel.sites.site.deletesiteassignmembers;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.controlpanel.sites.site.addsite.AddSiteTest;
+import com.liferay.portalweb.portal.controlpanel.sites.site.addsite.TearDownSiteTest;
+import com.liferay.portalweb.portal.controlpanel.sites.site.assignmemberssite.AssertAssignMembersSitesTest;
+import com.liferay.portalweb.portal.controlpanel.sites.site.assignmemberssite.AssignMembersSitesTest;
+import com.liferay.portalweb.portal.controlpanel.users.user.adduser.AddUserTest;
+import com.liferay.portalweb.portal.controlpanel.users.user.adduser.TearDownUserTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -26,11 +32,11 @@ public class DeleteSiteAssignMembersTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddUserTest.class);
-		testSuite.addTestSuite(AddSitesTest.class);
+		testSuite.addTestSuite(AddSiteTest.class);
 		testSuite.addTestSuite(AssignMembersSitesTest.class);
 		testSuite.addTestSuite(AssertAssignMembersSitesTest.class);
 		testSuite.addTestSuite(DeleteSitesAssignMembersTest.class);
-		testSuite.addTestSuite(TearDownSitesTest.class);
+		testSuite.addTestSuite(TearDownSiteTest.class);
 		testSuite.addTestSuite(TearDownUserTest.class);
 
 		return testSuite;

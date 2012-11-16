@@ -10,13 +10,8 @@
 </thead><tbody>
 <tr>
 	<td>open</td>
-	<td>/user/selenium01/home/</td>
+	<td>/user/usersn/home/</td>
 	<td></td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>link=My Sites</td>
-	<td>My Sites</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -30,13 +25,8 @@
 </tr>
 <tr>
 	<td>open</td>
-	<td>/user/selenium01/home/</td>
+	<td>/user/usersn/home/</td>
 	<td></td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>link=Available Sites</td>
-	<td>Available Sites</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -45,32 +35,42 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>//input[@id='_29_name']</td>
-	<td>Test Restricted Community</td>
+	<td>//input[@name='_29_keywords']</td>
+	<td>Site Name</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//input[@value='Search']</td>
+	<td>xPath=(//input[@value='Search'])[3]</td>
 	<td>Search</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[1]/div/table/tbody/tr[4]/td[1]</td>
-	<td>Test Restricted Community<br />This is an restricted test community!</td>
+	<td>assertPartialText</td>
+	<td>//tr[contains(.,'Site Name')]/td[1]</td>
+	<td>Site Name</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//tr[contains(.,'Site Name')]/td[1]</td>
+	<td>Site Description</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[1]/div/table/tbody/tr[4]/td[2]</td>
+	<td>//tr[contains(.,'Site Name')]/td[2]</td>
 	<td>1</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[4]/td[4]/span/a/span</td>
+	<td>//tr[contains(.,'Site Name')]/td[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Site Name')]/td[4]/span/a/span</td>
 	<td>Request Membership</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//tr[4]/td[4]/span/a/span</td>
+	<td>//tr[contains(.,'Site Name')]/td[4]/span/a/span</td>
 	<td>Request Membership</td>
 </tr>
 <tr>
@@ -94,21 +94,30 @@
 	<td>Your request was sent. You will receive a reply by email.</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[1]/div/table/tbody/tr[4]/td[1]</td>
-	<td>Test Restricted Community<br />This is an restricted test community!</td>
+	<td>assertPartialText</td>
+	<td>//tr[contains(.,'Site Name')]/td[1]</td>
+	<td>Site Name</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//tr[contains(.,'Site Name')]/td[1]</td>
+	<td>Site Description</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[1]/div/table/tbody/tr[4]/td[2]</td>
+	<td>//tr[contains(.,'Site Name')]/td[2]</td>
 	<td>1</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[4]/span/span</td>
+	<td>//tr[contains(.,'Site Name')]/td[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Site Name')]/td[4]/span/span</td>
 	<td>Membership Requested</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

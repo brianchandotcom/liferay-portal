@@ -25,18 +25,24 @@ public class ViewSitesPrivatePageDropDownTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForText("//li[6]/a/span", "Community Name");
-		assertEquals(RuntimeVariables.replace("Community Name"),
-			selenium.getText("//li[6]/a/span"));
-		selenium.clickAt("//li[6]/a/span",
-			RuntimeVariables.replace("Community Name"));
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
+		selenium.waitForVisible("link=Site Name");
+		selenium.clickAt("link=Site Name", RuntimeVariables.replace("Site Name"));
 		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("Site Name"),
+			selenium.getText("//h1[@class='site-title']/span"));
 		assertEquals(RuntimeVariables.replace("Private Page"),
 			selenium.getText("//nav/ul/li/a/span"));
 		assertEquals(RuntimeVariables.replace("Private Page"),
 			selenium.getText("//nav/ul/li[3]/span/a"));
 		assertEquals(RuntimeVariables.replace(
-				"http://localhost:8080/group/community-name/private-page"),
+				"http://localhost:8080/group/site-name/private-page"),
 			selenium.getLocation());
 	}
 }

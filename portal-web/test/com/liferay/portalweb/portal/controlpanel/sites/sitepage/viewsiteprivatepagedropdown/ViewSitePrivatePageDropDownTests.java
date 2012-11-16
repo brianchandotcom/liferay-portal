@@ -15,6 +15,9 @@
 package com.liferay.portalweb.portal.controlpanel.sites.sitepage.viewsiteprivatepagedropdown;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.controlpanel.sites.site.addsite.AddSiteTest;
+import com.liferay.portalweb.portal.controlpanel.sites.site.addsite.TearDownSiteTest;
+import com.liferay.portalweb.portal.controlpanel.sites.sitepage.addsiteprivatepage.AddSitesPrivatePageTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -25,10 +28,10 @@ import junit.framework.TestSuite;
 public class ViewSitePrivatePageDropDownTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
-		testSuite.addTestSuite(AddSitesTest.class);
+		testSuite.addTestSuite(AddSiteTest.class);
 		testSuite.addTestSuite(AddSitesPrivatePageTest.class);
 		testSuite.addTestSuite(ViewSitesPrivatePageDropDownTest.class);
-		testSuite.addTestSuite(TearDownSitesTest.class);
+		testSuite.addTestSuite(TearDownSiteTest.class);
 
 		return testSuite;
 	}

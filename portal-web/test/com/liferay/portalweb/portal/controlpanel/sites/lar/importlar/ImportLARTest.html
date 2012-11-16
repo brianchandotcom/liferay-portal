@@ -14,6 +14,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
+	<td>AUI Editable Min</td>
+</tr>
+<tr>
 	<td>assertText</td>
 	<td>//li[@id='_145_mySites']/a/span</td>
 	<td>Go to</td>
@@ -40,8 +50,8 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>//input[@id='_134_name']</td>
-	<td>Community Name</td>
+	<td>//input[@name='_134_keywords']</td>
+	<td>Site Name</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -60,17 +70,17 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Manage Pages')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Pages')]</td>
 	<td>Manage Pages</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Manage Pages')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Pages')]</td>
 	<td>Manage Pages</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Manage Pages')]/a</td>
+	<td>clickAtAndWait</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Pages')]</td>
 	<td>Manage Pages</td>
 </tr>
 <tr>
@@ -80,18 +90,33 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
+	<td>//iframe</td>
+	<td>Import</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//iframe</td>
+	<td>Import</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
 	<td>//input[@id='_156_importFileName']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>type</td>
+	<td>uploadFile</td>
 	<td>//input[@id='_156_importFileName']</td>
 	<td>L:\portal\build\portal-web\test\com\liferay\portalweb\portal\controlpanel\sites\lar\importlar\dependencies\Sites_Public_Pages.lar</td>
 </tr>
 <tr>
-	<td>assertNotChecked</td>
+	<td>storeChecked</td>
 	<td>//input[@id='_156_DELETE_MISSING_LAYOUTSCheckbox']</td>
-	<td>Delete Missing Pages Checkbox</td>
+	<td>deleteMissingPagesCheckbox</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${deleteMissingPagesCheckbox}</td>
+	<td>DeleteMissingPagesCheckbox</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -99,14 +124,24 @@
 	<td>Delete Missing Pages Checkbox</td>
 </tr>
 <tr>
+	<td>label</td>
+	<td>DeleteMissingPagesCheckbox</td>
+	<td></td>
+</tr>
+<tr>
 	<td>assertChecked</td>
 	<td>//input[@id='_156_DELETE_MISSING_LAYOUTSCheckbox']</td>
 	<td>Delete Missing Pages Checkbox</td>
 </tr>
 <tr>
-	<td>assertNotChecked</td>
+	<td>storeChecked</td>
 	<td>//input[@id='_156_PERMISSIONSCheckbox']</td>
-	<td>Permissions Checkbox</td>
+	<td>permissionsCheckbox</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${permissionsCheckbox}</td>
+	<td>PermissionsCheckbox</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -114,14 +149,24 @@
 	<td>Permissions Checkbox</td>
 </tr>
 <tr>
+	<td>label</td>
+	<td>PermissionsCheckbox</td>
+	<td></td>
+</tr>
+<tr>
 	<td>assertChecked</td>
 	<td>//input[@id='_156_PERMISSIONSCheckbox']</td>
 	<td>Permissions Checkbox</td>
 </tr>
 <tr>
-	<td>assertNotChecked</td>
+	<td>storeChecked</td>
 	<td>//input[@id='_156_CATEGORIESCheckbox']</td>
-	<td>Categories Checkbox</td>
+	<td>categoriesCheckbox</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${categoriesCheckbox}</td>
+	<td>CategoriesCheckbox</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -129,19 +174,34 @@
 	<td>Categories Checkbox</td>
 </tr>
 <tr>
+	<td>label</td>
+	<td>CategoriesCheckbox</td>
+	<td></td>
+</tr>
+<tr>
 	<td>assertChecked</td>
 	<td>//input[@id='_156_CATEGORIESCheckbox']</td>
 	<td>Categories Checkbox</td>
 </tr>
 <tr>
-	<td>assertNotChecked</td>
+	<td>storeChecked</td>
+	<td>//input[@id='_156_DELETE_PORTLET_DATACheckbox']</td>
+	<td>deletePortletDataBeforeImportingCheckbox</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${deletePortletDataBeforeImportingCheckbox}</td>
+	<td>DeletePortletDataBeforeImportingCheckbox</td>
+</tr>
+<tr>
+	<td>clickAt</td>
 	<td>//input[@id='_156_DELETE_PORTLET_DATACheckbox']</td>
 	<td>Delete portlet data before importing Checkbox</td>
 </tr>
 <tr>
-	<td>clickAt</td>
-	<td>//input[@id='_156_DELETE_PORTLET_DATACheckbox']</td>
-	<td>Delete portlet data before importing Checkbox</td>
+	<td>label</td>
+	<td>DeletePortletDataBeforeImportingCheckbox</td>
+	<td></td>
 </tr>
 <tr>
 	<td>assertChecked</td>
@@ -162,6 +222,11 @@
 	<td>assertText</td>
 	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>relative=top</td>
+	<td>top</td>
 </tr>
 </tbody></table>
 </body>

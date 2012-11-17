@@ -1210,7 +1210,8 @@ public class DLAppHelperLocalServiceImpl
 			new Callable<Void>() {
 
 				public Void call() throws Exception {
-					DLProcessorRegistryUtil.trigger(fileEntry, fileVersion);
+					DLProcessorRegistryUtil.trigger(
+						fileEntry, fileVersion, true);
 
 					return null;
 				}

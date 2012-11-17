@@ -14,6 +14,7 @@
 
 package com.liferay.portal.deploy.sandbox;
 
+import com.liferay.portal.deploy.auto.AutoDeployer;
 import com.liferay.portal.kernel.deploy.sandbox.SandboxDeployException;
 import com.liferay.portal.kernel.deploy.sandbox.SandboxDeployListener;
 import com.liferay.portal.kernel.util.ServerDetector;
@@ -56,6 +57,31 @@ public class PortletSandboxDeployListener
 		jars.add(portalLibDir + "/util-bridges.jar");
 		jars.add(portalLibDir + "/util-java.jar");
 		jars.add(portalLibDir + "/util-taglib.jar");
+	}
+
+	@Override
+	public AutoDeployer copy() {
+		PortletSandboxDeployListener deployer =
+			new PortletSandboxDeployListener();
+
+		deployer.setAppServerType(appServerType);
+		deployer.setAuiTaglibDTD(auiTaglibDTD);
+		deployer.setBaseDir(baseDir);
+		deployer.setDestDir(destDir);
+		deployer.setFilePattern(filePattern);
+		deployer.setJars(jars);
+		deployer.setJbossPrefix(jbossPrefix);
+		deployer.setPortletExtTaglibDTD(portletExtTaglibDTD);
+		deployer.setPortletTaglibDTD(portletTaglibDTD);
+		deployer.setSecurityTaglibDTD(securityTaglibDTD);
+		deployer.setThemeTaglibDTD(themeTaglibDTD);
+		deployer.setTomcatLibDir(tomcatLibDir);
+		deployer.setUiTaglibDTD(uiTaglibDTD);
+		deployer.setUnpackWar(unpackWar);
+		deployer.setUtilTaglibDTD(utilTaglibDTD);
+		deployer.setWars(wars);
+
+		return deployer;
 	}
 
 	public void deploy(File dir) throws SandboxDeployException {

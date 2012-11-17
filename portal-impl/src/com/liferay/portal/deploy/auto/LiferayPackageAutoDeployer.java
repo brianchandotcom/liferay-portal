@@ -55,9 +55,7 @@ public class LiferayPackageAutoDeployer implements AutoDeployer {
 		}
 	}
 
-	public int autoDeploy(AutoDeploymentContext autoDeploymentContext)
-		throws AutoDeployException {
-
+	public int autoDeploy() throws AutoDeployException {
 		ZipFile zipFile = null;
 
 		try {
@@ -141,6 +139,38 @@ public class LiferayPackageAutoDeployer implements AutoDeployer {
 			}
 		}
 	}
+
+	public int autoDeployWithCopyAndContext(
+			AutoDeploymentContext autoDeploymentContext)
+		throws AutoDeployException {
+
+		AutoDeployer deployerCopy = copy();
+
+		deployerCopy.setAutoDeploymentContext(autoDeploymentContext);
+
+		return deployerCopy.autoDeploy();
+	}
+
+	public void setBaseDir(String baseDir) {
+		this.baseDir = baseDir;
+	}
+
+	public AutoDeployer copy() {
+		LiferayPackageAutoDeployer autoDeployer =
+			new LiferayPackageAutoDeployer();
+
+		autoDeployer.setBaseDir(baseDir);
+
+		return autoDeployer;
+	}
+
+	public void setAutoDeploymentContext(
+		AutoDeploymentContext autoDeploymentContext) {
+
+		this.autoDeploymentContext = autoDeploymentContext;
+	}
+
+	private AutoDeploymentContext autoDeploymentContext;
 
 	protected String baseDir;
 

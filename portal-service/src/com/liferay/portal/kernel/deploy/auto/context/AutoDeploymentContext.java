@@ -18,8 +18,13 @@ import java.io.File;
 
 /**
  * @author Miguel Pastor
+ * @author Raymond Augé
  */
 public class AutoDeploymentContext {
+
+	public String getAppServerType() {
+		return _appServerType;
+	}
 
 	public String getContext() {
 		return _context;
@@ -37,6 +42,10 @@ public class AutoDeploymentContext {
 		return _file;
 	}
 
+	public void setAppServerType(String appServerType) {
+		_appServerType = appServerType;
+	}
+
 	public void setContext(String context) {
 		_context = context;
 	}
@@ -49,6 +58,7 @@ public class AutoDeploymentContext {
 		_file = file;
 	}
 
+	private String _appServerType;
 	private String _context;
 	private String _destDir;
 	private File _file;

@@ -49,7 +49,8 @@ public class ThemeAutoDeployListener extends BaseAutoDeployListener {
 			_log.info("Copying themes for " + file.getPath());
 		}
 
-		int code = _autoDeployer.autoDeploy(autoDeploymentContext);
+		int code = _autoDeployer.autoDeployWithCopyAndContext(
+			autoDeploymentContext);
 
 		if ((code == AutoDeployer.CODE_DEFAULT) && _log.isInfoEnabled()) {
 			_log.info(

@@ -27,7 +27,15 @@ public interface AutoDeployer {
 
 	public static final int CODE_SKIP_NEWER_VERSION = 2;
 
-	public int autoDeploy(AutoDeploymentContext autoDeploymentContext)
+	public int autoDeploy() throws AutoDeployException;
+
+	public int autoDeployWithCopyAndContext(
+			AutoDeploymentContext autoDeploymentContext)
 		throws AutoDeployException;
+
+	public AutoDeployer copy();
+
+	public void setAutoDeploymentContext(
+		AutoDeploymentContext autoDeploymentContext);
 
 }

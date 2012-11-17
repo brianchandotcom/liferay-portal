@@ -14,6 +14,7 @@
 
 package com.liferay.portal.tools.deploy;
 
+import com.liferay.portal.deploy.auto.AutoDeployer;
 import com.liferay.portal.kernel.plugin.PluginPackage;
 import com.liferay.portal.model.Plugin;
 import com.liferay.portal.util.InitUtil;
@@ -51,6 +52,30 @@ public class HookDeployer extends BaseDeployer {
 
 	public HookDeployer(List<String> wars, List<String> jars) {
 		super(wars, jars);
+	}
+
+	@Override
+	public AutoDeployer copy() {
+		HookDeployer deployer = new HookDeployer();
+
+		deployer.setAppServerType(appServerType);
+		deployer.setAuiTaglibDTD(auiTaglibDTD);
+		deployer.setBaseDir(baseDir);
+		deployer.setDestDir(destDir);
+		deployer.setFilePattern(filePattern);
+		deployer.setJars(jars);
+		deployer.setJbossPrefix(jbossPrefix);
+		deployer.setPortletExtTaglibDTD(portletExtTaglibDTD);
+		deployer.setPortletTaglibDTD(portletTaglibDTD);
+		deployer.setSecurityTaglibDTD(securityTaglibDTD);
+		deployer.setThemeTaglibDTD(themeTaglibDTD);
+		deployer.setTomcatLibDir(tomcatLibDir);
+		deployer.setUiTaglibDTD(uiTaglibDTD);
+		deployer.setUnpackWar(unpackWar);
+		deployer.setUtilTaglibDTD(utilTaglibDTD);
+		deployer.setWars(wars);
+
+		return deployer;
 	}
 
 	@Override

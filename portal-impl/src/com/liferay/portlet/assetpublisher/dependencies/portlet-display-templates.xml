@@ -1,3 +1,12 @@
 <?xml version="1.0"?>
 
-<root />
+<root>
+	<template>
+		<template-key>asset-publisher-rich-summary-ftl</template-key>
+		<name>Rich Summary</name>
+		<description>Displays abstracts, icons, related assets, and print/edit actions for assets. Optionally include asset bookmarks and ratings.</description>
+		<language>ftl</language>
+		<script-file>com/liferay/portlet/assetpublisher/dependencies/portlet_display_template_rich_summary.ftl</script-file>
+		<cacheable>false</cacheable>
+	</template>
+</root>

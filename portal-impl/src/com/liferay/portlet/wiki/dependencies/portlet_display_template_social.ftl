@@ -5,18 +5,20 @@
 </div>
 
 <div style="float: right;">
+	<#assign assetEntryLocalService = serviceLocator.findService("com.liferay.portlet.asset.service.AssetEntryLocalService") />
+
+	<#assign wikiPageClassName = "com.liferay.portlet.wiki.model.WikiPage" />
+
+	<#assign assetEntry = assetEntryLocalService.getEntry(wikiPageClassName, entry.getResourcePrimKey()) />
+
+	<#assign assetRenderer = assetEntry.getAssetRenderer() />
+
 	<@getEditIcon />
 
 	<@getPageDetailsIcon />
 
 	<@getPrintIcon />
 </div>
-
-<#assign assetEntryLocalService = serviceLocator.findService("com.liferay.portlet.asset.service.AssetEntryLocalService") />
-
-<#assign wikiPageClassName = "com.liferay.portlet.wiki.model.WikiPage" />
-
-<#assign assetEntry = assetEntryLocalService.getEntry(wikiPageClassName, entry.getResourcePrimKey()) />
 
 <div class="wiki-body">
 	<div class="wiki-info">
@@ -112,7 +114,6 @@
 					<#assign childNode = childPage.getNode() />
 
 					${viewPageURL.setParameter("nodeName", childNode.getName())}
-
 					${viewPageURL.setParameter("title", childPage.getTitle())}
 
 					<td>
@@ -134,8 +135,6 @@
 </#if>
 
 <@getDiscussion />
-
-<#assign assetRenderer = assetEntry.getAssetRenderer() />
 
 <#macro getAddChildPageIcon>
 	<#if assetRenderer.hasEditPermission(themeDisplay.getPermissionChecker())>
@@ -167,19 +166,6 @@
 		label=true
 		message='${entry.getAttachmentsFilesCount() + languageUtil.get(locale, "attachments")}'
 		url=viewPageAttachmentsURL?string
-	/>
-</#macro>
-
-<#macro getDetailsIcon>
-	<#assign viewPageDetailsURL = renderResponse.createRenderURL() />
-
-	${viewPageDetailsURL.setParameter("struts_action", "/wiki/view_page_details")}
-	${viewPageDetailsURL.setParameter("redirect", currentURL)}
-
-	<@liferay_ui["icon"]
-		image="history"
-		message="details"
-		url=viewPageDetailsURL?string
 	/>
 </#macro>
 
@@ -219,6 +205,19 @@
 			url=editPageURL?string
 		/>
 	</#if>
+</#macro>
+
+<#macro getPageDetailsIcon>
+	<#assign viewPageDetailsURL = renderResponse.createRenderURL() />
+
+	${viewPageDetailsURL.setParameter("struts_action", "/wiki/view_page_details")}
+	${viewPageDetailsURL.setParameter("redirect", currentURL)}
+
+	<@liferay_ui["icon"]
+		image="history"
+		message="details"
+		url=viewPageDetailsURL?string
+	/>
 </#macro>
 
 <#macro getPrintIcon>

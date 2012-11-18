@@ -146,7 +146,7 @@ if (portlet.isUndeployedPortlet()) {
 	access = true;
 }
 else if (allowAddPortletDefaultResource) {
-	access = PortletPermissionUtil.hasAccessPermission(permissionChecker, themeDisplay.getScopeGroupId(), layout, portlet, portletMode);
+	access = PortletPermissionUtil.hasAccessPermission(permissionChecker, scopeGroupId, layout, portlet, portletMode);
 }
 
 InvokerPortlet invokerPortlet = null;
@@ -243,7 +243,7 @@ if (group.isLayoutPrototype()) {
 }
 
 if (portlet.hasPortletMode(responseContentType, PortletMode.EDIT)) {
-	if (PortletPermissionUtil.contains(permissionChecker, layout, portletId, ActionKeys.PREFERENCES)) {
+	if (PortletPermissionUtil.contains(permissionChecker, layout, portlet, ActionKeys.PREFERENCES)) {
 		showEditIcon = true;
 	}
 }
@@ -261,7 +261,7 @@ if (portlet.hasPortletMode(responseContentType, LiferayPortletMode.EDIT_GUEST)) 
 }
 
 if (portlet.hasPortletMode(responseContentType, PortletMode.HELP)) {
-	if (PortletPermissionUtil.contains(permissionChecker, layout, portletId, ActionKeys.HELP)) {
+	if (PortletPermissionUtil.contains(permissionChecker, layout, portlet, ActionKeys.HELP)) {
 		showHelpIcon = true;
 	}
 }
@@ -455,7 +455,7 @@ urlConfiguration.setEscapeXml(false);
 if (Validator.isNotNull(portlet.getConfigurationActionClass())) {
 	urlConfiguration.setParameter("struts_action", "/portlet_configuration/edit_configuration");
 }
-else if (PortletPermissionUtil.contains(permissionChecker, layout, portletDisplay.getId(), ActionKeys.PERMISSIONS)) {
+else if (PortletPermissionUtil.contains(permissionChecker, layout, portlet, ActionKeys.PERMISSIONS)) {
 	urlConfiguration.setParameter("struts_action", "/portlet_configuration/edit_permissions");
 }
 else {

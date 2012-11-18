@@ -48,9 +48,10 @@ response.setStatus(HttpServletResponse.SC_NOT_FOUND);
 
 if (_log.isWarnEnabled()) {
 	Object msg = request.getAttribute(JavaConstants.JAVAX_SERVLET_ERROR_MESSAGE);
+	String uri = (String)request.getAttribute(JavaConstants.JAVAX_SERVLET_ERROR_REQUEST_URI);
 	Throwable t = (Throwable)request.getAttribute(JavaConstants.JAVAX_SERVLET_ERROR_EXCEPTION);
 
-	_log.warn(msg, t);
+	_log.warn("{msg=\"" + msg + "\", uri=" + uri + "}", t);
 }
 %>
 

@@ -33,6 +33,7 @@ import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.WorkflowInstanceLink;
+import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.documentlibrary.DuplicateDirectoryException;
 import com.liferay.portlet.documentlibrary.NoSuchDirectoryException;
@@ -140,15 +141,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 		// Attachments
 
-		long companyId = rootMessage.getCompanyId();
-		long repositoryId = CompanyConstants.SYSTEM;
-		String dirName = thread.getAttachmentsDir();
-
-		try {
-			DLStoreUtil.deleteDirectory(companyId, repositoryId, dirName);
-		}
-		catch (NoSuchDirectoryException nsde) {
-		}
+		PortletFileRepositoryUtil.deleteFolder(thread.getAttachmentsFolderId());
 
 		// Subscriptions
 

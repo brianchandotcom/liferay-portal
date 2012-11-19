@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.parsers.bbcode.BBCodeTranslatorUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
@@ -42,11 +43,11 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.model.Company;
-import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.ModelHintsUtil;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
+import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextUtil;
@@ -61,10 +62,6 @@ import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetLinkConstants;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.util.LinkbackProducerUtil;
-import com.liferay.portlet.documentlibrary.DuplicateDirectoryException;
-import com.liferay.portlet.documentlibrary.DuplicateFileException;
-import com.liferay.portlet.documentlibrary.NoSuchDirectoryException;
-import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.messageboards.MessageBodyException;
 import com.liferay.portlet.messageboards.MessageSubjectException;
@@ -327,39 +324,9 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		// Attachments
 
 		if (!inputStreamOVPs.isEmpty()) {
-			long companyId = message.getCompanyId();
-			long repositoryId = CompanyConstants.SYSTEM;
-			String dirName = message.getAttachmentsDir();
-
-			try {
-				DLStoreUtil.deleteDirectory(companyId, repositoryId, dirName);
-			}
-			catch (NoSuchDirectoryException nsde) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(nsde.getMessage());
-				}
-			}
-
-			DLStoreUtil.addDirectory(companyId, repositoryId, dirName);
-
-			for (int i = 0; i < inputStreamOVPs.size(); i++) {
-				ObjectValuePair<String, InputStream> inputStreamOVP =
-					inputStreamOVPs.get(i);
-
-				String fileName = inputStreamOVP.getKey();
-				InputStream inputStream = inputStreamOVP.getValue();
-
-				try {
-					DLStoreUtil.addFile(
-						companyId, repositoryId, dirName + "/" + fileName,
-						inputStream);
-				}
-				catch (DuplicateFileException dfe) {
-					if (_log.isDebugEnabled()) {
-						_log.debug(dfe.getMessage());
-					}
-				}
-			}
+			PortletFileRepositoryUtil.addPortletFileEntries(
+				message.getGroupId(), userId, PortletKeys.MESSAGE_BOARDS,
+				message.getAttachmentsFolderId(), inputStreamOVPs);
 		}
 
 		// Resources
@@ -529,18 +496,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		// Attachments
 
 		if (message.isAttachments()) {
-			long companyId = message.getCompanyId();
-			long repositoryId = CompanyConstants.SYSTEM;
-			String dirName = message.getAttachmentsDir();
-
-			try {
-				DLStoreUtil.deleteDirectory(companyId, repositoryId, dirName);
-			}
-			catch (NoSuchDirectoryException nsde) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(nsde.getMessage());
-				}
-			}
+			PortletFileRepositoryUtil.deleteFolder(
+				message.getAttachmentsFolderId());
 		}
 
 		// Thread
@@ -551,18 +508,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 			// Attachments
 
-			long companyId = message.getCompanyId();
-			long repositoryId = CompanyConstants.SYSTEM;
-			String dirName = message.getThreadAttachmentsDir();
-
-			try {
-				DLStoreUtil.deleteDirectory(companyId, repositoryId, dirName);
-			}
-			catch (NoSuchDirectoryException nsde) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(nsde.getMessage());
-				}
-			}
+			PortletFileRepositoryUtil.deleteFolder(
+				message.getThreadAttachmentsFolderId());
 
 			// Subscriptions
 
@@ -748,8 +695,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		MBMessage message = getMessage(messageId);
 
-		DLStoreUtil.deleteFile(
-			message.getCompanyId(), CompanyConstants.SYSTEM, fileName);
+		PortletFileRepositoryUtil.deletePortletFileEntry(
+			message.getGroupId(), message.getAttachmentsFolderId(), fileName);
 	}
 
 	public void deleteMessageAttachments(long messageId)
@@ -757,18 +704,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		MBMessage message = getMessage(messageId);
 
-		long companyId = message.getCompanyId();
-		long repositoryId = CompanyConstants.SYSTEM;
-		String dirName = message.getDeletedAttachmentsDir();
-
-		try {
-			DLStoreUtil.deleteDirectory(companyId, repositoryId, dirName);
-		}
-		catch (NoSuchDirectoryException nsde) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(nsde.getMessage());
-			}
-		}
+		PortletFileRepositoryUtil.deletePortletFileEntries(
+			message.getGroupId(), message.getAttachmentsFolderId());
 	}
 
 	public List<MBMessage> getCategoryMessages(
@@ -1292,24 +1229,27 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 	}
 
 	public void moveMessageAttachmentFromTrash(
-			long messageId, String deletedFileName)
+			long userId, long messageId, String deletedFileName)
 		throws PortalException, SystemException {
 
 		MBMessage message = getMessage(messageId);
 
-		TrashUtil.moveAttachmentFromTrash(
-			message.getCompanyId(), CompanyConstants.SYSTEM, deletedFileName,
-			message.getAttachmentsDir());
+		PortletFileRepositoryUtil.restorePortletFileEntryFromTrash(
+			message.getGroupId(), userId, message.getAttachmentsFolderId(),
+			deletedFileName);
 	}
 
-	public String moveMessageAttachmentToTrash(long messageId, String fileName)
+	public String moveMessageAttachmentToTrash(
+			long userId, long messageId, String fileName)
 		throws PortalException, SystemException {
 
 		MBMessage message = getMessage(messageId);
 
-		return TrashUtil.moveAttachmentToTrash(
-			message.getCompanyId(), CompanyConstants.SYSTEM, fileName,
-			message.getDeletedAttachmentsDir());
+		PortletFileRepositoryUtil.movePortletFileEntryToTrash(
+			message.getGroupId(), userId, message.getAttachmentsFolderId(),
+			fileName);
+
+		return StringPool.BLANK;
 	}
 
 	public void subscribeMessage(long userId, long messageId)
@@ -1471,61 +1411,35 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		// Attachments
 
-		long companyId = message.getCompanyId();
-		long repositoryId = CompanyConstants.SYSTEM;
-		String dirName = message.getAttachmentsDir();
-
 		if (!inputStreamOVPs.isEmpty() || !existingFiles.isEmpty()) {
-			try {
-				DLStoreUtil.addDirectory(companyId, repositoryId, dirName);
-			}
-			catch (DuplicateDirectoryException dde) {
-			}
+			List<FileEntry> dlFileEntries = message.getAttachmentsFileEntries();
 
-			String[] fileNames = DLStoreUtil.getFileNames(
-				companyId, repositoryId, dirName);
-
-			for (String fileName : fileNames) {
-				if (!existingFiles.contains(fileName)) {
+			for (FileEntry fileEntry : dlFileEntries) {
+				if (!existingFiles.contains(fileEntry.getTitle())) {
 					if (!TrashUtil.isTrashEnabled(message.getGroupId())) {
-						deleteMessageAttachment(messageId, fileName);
+						deleteMessageAttachment(
+							messageId, fileEntry.getTitle());
 					}
 					else {
-						moveMessageAttachmentToTrash(messageId, fileName);
+						moveMessageAttachmentToTrash(
+							userId, messageId, fileEntry.getTitle());
 					}
 				}
 			}
 
-			for (int i = 0; i < inputStreamOVPs.size(); i++) {
-				ObjectValuePair<String, InputStream> inputStreamOVP =
-					inputStreamOVPs.get(i);
-
-				String fileName = inputStreamOVP.getKey();
-				InputStream inputStream = inputStreamOVP.getValue();
-
-				try {
-					DLStoreUtil.addFile(
-						companyId, repositoryId, dirName + "/" + fileName,
-						inputStream);
-				}
-				catch (DuplicateFileException dfe) {
-				}
-			}
+			PortletFileRepositoryUtil.addPortletFileEntries(
+				message.getGroupId(), userId, PortletKeys.MESSAGE_BOARDS,
+				message.getAttachmentsFolderId(), inputStreamOVPs);
 		}
 		else {
-			try {
-				if (TrashUtil.isTrashEnabled(message.getGroupId())) {
-					String[] fileNames = DLStoreUtil.getFileNames(
-						companyId, repositoryId, dirName);
+			if (TrashUtil.isTrashEnabled(message.getGroupId())) {
+				List<FileEntry> fileEntries =
+					message.getAttachmentsFileEntries();
 
-					for (String fileName : fileNames) {
-						moveMessageAttachmentToTrash(messageId, fileName);
-					}
+				for (FileEntry fileEntry : fileEntries) {
+					moveMessageAttachmentToTrash(
+						userId, messageId, fileEntry.getTitle());
 				}
-
-				DLStoreUtil.deleteDirectory(companyId, repositoryId, dirName);
-			}
-			catch (NoSuchDirectoryException nsde) {
 			}
 		}
 
@@ -1559,7 +1473,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		// Workflow
 
 		WorkflowHandlerRegistryUtil.startWorkflowInstance(
-			companyId, message.getGroupId(), userId,
+			message.getCompanyId(), message.getGroupId(), userId,
 			message.getWorkflowClassName(), message.getMessageId(), message,
 			serviceContext);
 

@@ -209,15 +209,13 @@ public class PortletExportImportTest extends BaseExportImportTestCase {
 		JournalArticle globalScopeArticle = addJournalArticle(
 			companyGroup.getGroupId(), 0, "Global article", "Global content");
 
-		layoutSetprototypeJxPreferences.setValue("lfrScopeType", "company");
-		layoutSetprototypeJxPreferences.setValue(
-			"lfrScopeLayoutUuid", StringPool.BLANK);
-
-		layoutSetprototypeJxPreferences.setValue(
-			"groupId", Long.toString(companyGroup.getGroupId()));
-
 		layoutSetprototypeJxPreferences.setValue(
 			"articleId", globalScopeArticle.getArticleId());
+		layoutSetprototypeJxPreferences.setValue(
+			"groupId", Long.toString(companyGroup.getGroupId()));
+		layoutSetprototypeJxPreferences.setValue(
+			"lfrScopeLayoutUuid", StringPool.BLANK);
+		layoutSetprototypeJxPreferences.setValue("lfrScopeType", "company");
 
 		updatePortletPreferences(
 			_layoutSetPrototypeLayout.getPlid(),
@@ -237,11 +235,11 @@ public class PortletExportImportTest extends BaseExportImportTestCase {
 			String.valueOf(companyGroup.getGroupId()),
 			jxPreferences.getValue("groupId", StringPool.BLANK));
 		Assert.assertEquals(
-			"company",
-			jxPreferences.getValue("lfrScopeType", StringPool.BLANK));
-		Assert.assertEquals(
 			StringPool.BLANK,
 			jxPreferences.getValue("lfrScopeLayoutUuid", StringPool.BLANK));
+		Assert.assertEquals(
+			"company",
+			jxPreferences.getValue("lfrScopeType", StringPool.BLANK));
 	}
 
 	protected JournalArticle addJournalArticle(

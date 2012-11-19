@@ -166,7 +166,7 @@ public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 	}
 
 	private FileVersion _getLatestFileVersion(
-			FileEntry fileEntry, boolean trusted) {
+		FileEntry fileEntry, boolean trusted) {
 
 		FileVersion latestFileVersion = null;
 

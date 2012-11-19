@@ -158,7 +158,7 @@ portletsList = ListUtil.sort(portletsList, new PortletTitleComparator(applicatio
 	</c:choose>
 </aui:form>
 
-<c:if test='<%= cmd.equals(Constants.IMPORT) && SessionMessages.contains(renderRequest, "request_processed") %>'>
+<c:if test='<%= cmd.equals(Constants.IMPORT) && SessionMessages.contains(renderRequest, "requestProcessed") %>'>
 	<aui:script>
 		var opener = Liferay.Util.getOpener();
 

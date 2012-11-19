@@ -56,7 +56,7 @@ public class PostMembershipRequestAction extends PortletAction {
 			MembershipRequestServiceUtil.addMembershipRequest(
 				groupId, comments, serviceContext);
 
-			SessionMessages.add(actionRequest, "membership_request_sent");
+			SessionMessages.add(actionRequest, "membershipRequestSent");
 
 			sendRedirect(actionRequest, actionResponse);
 		}

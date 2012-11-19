@@ -236,9 +236,9 @@ public class CreateAnonymousAccountAction extends PortletAction {
 
 		// Session messages
 
-		SessionMessages.add(request, "user_added", user.getEmailAddress());
+		SessionMessages.add(request, "userAdded", user.getEmailAddress());
 		SessionMessages.add(
-			request, "user_added_password", user.getPasswordUnencrypted());
+			request, "userAddedPassword", user.getPasswordUnencrypted());
 	}
 
 	@Override

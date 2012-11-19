@@ -499,7 +499,7 @@ public class LoginUtil {
 			company.getCompanyId(), toAddress, fromName, fromAddress, subject,
 			body, serviceContext);
 
-		SessionMessages.add(actionRequest, "request_processed", toAddress);
+		SessionMessages.add(actionRequest, "requestProcessed", toAddress);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(LoginUtil.class);

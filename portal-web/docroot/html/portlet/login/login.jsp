@@ -53,11 +53,11 @@
 			<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 
 			<c:choose>
-				<c:when test='<%= SessionMessages.contains(request, "user_added") %>'>
+				<c:when test='<%= SessionMessages.contains(request, "userAdded") %>'>
 
 					<%
-					String userEmailAddress = (String)SessionMessages.get(request, "user_added");
-					String userPassword = (String)SessionMessages.get(request, "user_added_password");
+					String userEmailAddress = (String)SessionMessages.get(request, "userAdded");
+					String userPassword = (String)SessionMessages.get(request, "userAddedPassword");
 					%>
 
 					<div class="portlet-msg-success">
@@ -79,10 +79,10 @@
 						</c:if>
 					</div>
 				</c:when>
-				<c:when test='<%= SessionMessages.contains(request, "user_pending") %>'>
+				<c:when test='<%= SessionMessages.contains(request, "userPending") %>'>
 
 					<%
-					String userEmailAddress = (String)SessionMessages.get(request, "user_pending");
+					String userEmailAddress = (String)SessionMessages.get(request, "userPending");
 					%>
 
 					<div class="portlet-msg-success">

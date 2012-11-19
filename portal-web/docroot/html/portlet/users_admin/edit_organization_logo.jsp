@@ -30,7 +30,7 @@ if (publicLayoutSetId != 0) {
 %>
 
 <c:choose>
-	<c:when test='<%= SessionMessages.contains(renderRequest, "request_processed") %>'>
+	<c:when test='<%= SessionMessages.contains(renderRequest, "requestProcessed") %>'>
 		<aui:script>
 			opener.<portlet:namespace />changeLogo('<%= logoURL %>');
 

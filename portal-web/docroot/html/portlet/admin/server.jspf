@@ -701,7 +701,7 @@ serverURL.setParameter("tabs3", tabs3);
 					script = (String)SessionMessages.get(renderRequest, "script");
 				}
 
-				String scriptOutput = (String)SessionMessages.get(renderRequest, "script_output");
+				String scriptOutput = (String)SessionMessages.get(renderRequest, "scriptOutput");
 				%>
 
 				<aui:fieldset>

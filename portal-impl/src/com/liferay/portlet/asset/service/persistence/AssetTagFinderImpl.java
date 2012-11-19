@@ -163,15 +163,15 @@ public class AssetTagFinderImpl
 	public List<AssetTag> findByC_C(long classNameId, long classPK)
 		throws SystemException {
 
+		AssetEntry entry = AssetEntryUtil.fetchByC_C(classNameId, classPK);
+
+		if (entry == null) {
+			return Collections.emptyList();
+		}
+
 		Session session = null;
 
 		try {
-			AssetEntry entry = AssetEntryUtil.fetchByC_C(classNameId, classPK);
-
-			if (entry == null) {
-				return Collections.emptyList();
-			}
-
 			session = openSession();
 
 			String sql = CustomSQLUtil.get(FIND_BY_C_C);
@@ -191,9 +191,7 @@ public class AssetTagFinderImpl
 			throw new SystemException(e);
 		}
 		finally {
-			if (session != null) {
-				closeSession(session);
-			}
+			closeSession(session);
 		}
 	}
 

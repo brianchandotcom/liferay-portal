@@ -259,9 +259,15 @@ public class ConvertDocumentLibrary extends ConvertProcess {
 
 				MBMessage mbMessage = (MBMessage)object;
 
-				migrateFiles(
-					mbMessage.getCompanyId(), mbMessage.getAttachmentsDir(),
-					mbMessage.getAttachmentsFiles());
+				for (FileEntry fileEntry :
+						mbMessage.getAttachmentsFileEntries()) {
+
+					DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
+
+					migrateDLFileEntry(
+						mbMessage.getCompanyId(), dlFileEntry.getRepositoryId(),
+						dlFileEntry);
+				}
 			}
 
 		};

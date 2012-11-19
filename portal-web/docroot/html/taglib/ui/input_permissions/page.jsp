@@ -26,23 +26,22 @@ ServiceContext#deriveDefaultPermissions(long, String).
 <%@ page import="com.liferay.taglib.ui.InputPermissionsParamsTag" %>
 
 <%
-String guestPermissionsName = "guestPermissions";
-String groupPermissionsName = "groupPermissions";
-
-String modelName = (String)request.getAttribute("liferay-ui:input-permissions:modelName");
-
 String uniqueNamespace = namespace + PortalUtil.getUniqueElementId(request, namespace, StringPool.BLANK);
-
-if (!uniqueNamespace.equals(namespace)) {
-	guestPermissionsName = guestPermissionsName + StringPool.UNDERLINE + modelName;
-	groupPermissionsName = groupPermissionsName + StringPool.UNDERLINE + modelName;
-}
 
 if (!uniqueNamespace.endsWith(StringPool.UNDERLINE)) {
 	uniqueNamespace = uniqueNamespace.concat(StringPool.UNDERLINE);
 }
 
 String formName = namespace + request.getAttribute("liferay-ui:input-permissions:formName");
+String modelName = (String)request.getAttribute("liferay-ui:input-permissions:modelName");
+
+String guestPermissionsName = "guestPermissions";
+String groupPermissionsName = "groupPermissions";
+
+if (!uniqueNamespace.equals(namespace)) {
+	guestPermissionsName = guestPermissionsName + StringPool.UNDERLINE + modelName;
+	groupPermissionsName = groupPermissionsName + StringPool.UNDERLINE + modelName;
+}
 %>
 
 <c:choose>

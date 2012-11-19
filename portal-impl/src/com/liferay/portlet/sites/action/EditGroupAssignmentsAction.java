@@ -16,6 +16,7 @@ package com.liferay.portlet.sites.action;
 
 import com.liferay.portal.NoSuchGroupException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -29,6 +30,7 @@ import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.service.UserGroupGroupRoleServiceUtil;
 import com.liferay.portal.service.UserGroupRoleServiceUtil;
 import com.liferay.portal.service.UserGroupServiceUtil;
+import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.service.UserServiceUtil;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -44,6 +46,9 @@ import javax.portlet.RenderResponse;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author Brian Wing Shun Chan
@@ -127,6 +132,21 @@ public class EditGroupAssignmentsAction extends PortletAction {
 				renderRequest, "portlet.sites_admin.edit_site_assignments"));
 	}
 
+	protected long[] filterUserIds(long groupId, long[] userIds)
+		throws Exception {
+
+		Set<Long> filteredUserIds = new HashSet<Long>(userIds.length);
+
+		for (long userId : userIds) {
+			if (!UserLocalServiceUtil.hasGroupUser(groupId, userId)) {
+				filteredUserIds.add(userId);
+			}
+		}
+
+		return ArrayUtil.toArray(
+			filteredUserIds.toArray(new Long[filteredUserIds.size()]));
+	}
+
 	protected void updateGroupOrganizations(ActionRequest actionRequest)
 		throws Exception {
 
@@ -172,6 +192,8 @@ public class EditGroupAssignmentsAction extends PortletAction {
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
+
+		addUserIds = filterUserIds(groupId, addUserIds);
 
 		UserServiceUtil.addGroupUsers(groupId, addUserIds, serviceContext);
 		UserServiceUtil.unsetGroupUsers(groupId, removeUserIds, serviceContext);

@@ -28,7 +28,7 @@ public interface Patcher {
 
 	public static final String INSTALLED_PATCHES = "installed.patches";
 
-	public static final String PATCHES_FOLDER = "patches.folder";
+	public static final String PATCH_FOLDER = "patch.folder";
 
 	public static final String PATCHING_INFO_PROPERTIES = "patching.properties";
 
@@ -38,7 +38,7 @@ public interface Patcher {
 
 	public String[] getInstalledPatches();
 
-	public File getPatchesFolder();
+	public File getPatchFolder();
 
 	public Properties getProperties();
 

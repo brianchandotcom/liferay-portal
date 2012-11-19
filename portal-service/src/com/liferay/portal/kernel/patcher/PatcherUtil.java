@@ -40,8 +40,8 @@ public class PatcherUtil {
 		return _patcher;
 	}
 
-	public static File getPatchesFolder() {
-		return getPatcher().getPatchesFolder();
+	public static File getPatchFolder() {
+		return getPatcher().getPatchFolder();
 	}
 
 	public static Properties getProperties() {

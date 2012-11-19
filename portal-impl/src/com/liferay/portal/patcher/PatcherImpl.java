@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.patcher.Patcher;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.File;
@@ -34,19 +35,19 @@ import java.util.Properties;
 public class PatcherImpl implements Patcher {
 
 	public boolean applyPatch(File patch) {
-		File patchesFolder = getPatchesFolder();
+		File patchFolder = getPatchFolder();
 
 		try {
 			FileUtil.copyFile(
-				patch, new File(patchesFolder + StringPool.SLASH +
-					patch.getName()));
+				patch,
+				new File(patchFolder + StringPool.SLASH + patch.getName()));
 
 			return true;
 		}
 		catch (Exception e) {
 			_log.error(
-				"Couldn't copy " + patch.getAbsolutePath() + " patch to the " +
-					"patches folder: " + patchesFolder);
+				"Could not copy " + patch.getAbsolutePath() + " patch to the " +
+					"patch folder: " + patchFolder);
 
 			return false;
 		}
@@ -57,9 +58,10 @@ public class PatcherImpl implements Patcher {
 			return _fixedIssues;
 		}
 
-		String property = getProperties().getProperty(Patcher.FIXED_ISSUES, "");
+		Properties properties = getProperties();
 
-		_fixedIssues = property.split(",");
+		_fixedIssues = StringUtil.split(
+			properties.getProperty(Patcher.FIXED_ISSUES));
 
 		return _fixedIssues;
 	}
@@ -69,26 +71,28 @@ public class PatcherImpl implements Patcher {
 			return _installedPatches;
 		}
 
-		String property = getProperties().getProperty(
-			Patcher.INSTALLED_PATCHES);
+		Properties properties = getProperties();
 
-		_installedPatches = property.split(",");
+		_installedPatches = StringUtil.split(
+			properties.getProperty(Patcher.INSTALLED_PATCHES));
 
 		return _installedPatches;
 	}
 
-	public File getPatchesFolder() {
-		if (_patchesFolder != null) {
-			return _patchesFolder;
+	public File getPatchFolder() {
+		if (_patchFolder != null) {
+			return _patchFolder;
 		}
 
-		String property = getProperties().getProperty(Patcher.PATCHES_FOLDER);
+		Properties properties = getProperties();
+
+		String property = properties.getProperty(Patcher.PATCH_FOLDER);
 
 		if (Validator.isNotNull(property)) {
-			_patchesFolder = new File(property);
+			_patchFolder = new File(property);
 		}
 
-		return _patchesFolder;
+		return _patchFolder;
 	}
 
 	public Properties getProperties() {
@@ -98,22 +102,32 @@ public class PatcherImpl implements Patcher {
 
 		_properties = new Properties();
 
-		InputStream is = this.getClass().getClassLoader().getResourceAsStream(
+		ClassLoader classLoader = PatcherImpl.class.getClassLoader();
+
+		InputStream inputStream = classLoader.getResourceAsStream(
 			Patcher.PATCHING_INFO_PROPERTIES);
 
-		if (is != null) {
-			try {
-				_properties.load(is);
-				is.close();
-
-				_configured = true;
-			} catch (IOException e) {
-				_log.error(e, e);
-			}
-		}
-		else {
+		if (inputStream == null) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Couldn't load patching.properties");
+				_log.debug("Could not load patching.properties");
+			}
+
+			return _properties;
+		}
+
+		try {
+			_properties.load(inputStream);
+
+			_configured = true;
+		}
+		catch (IOException ioe) {
+			_log.error(ioe, ioe);
+		}
+		finally {
+			try {
+				inputStream.close();
+			}
+			catch (IOException ioe) {
 			}
 		}
 
@@ -129,7 +143,7 @@ public class PatcherImpl implements Patcher {
 	private static boolean _configured;
 	private static String[] _fixedIssues;
 	private static String[] _installedPatches;
-	private static File _patchesFolder;
+	private static File _patchFolder;
 	private static Properties _properties;
 
 }

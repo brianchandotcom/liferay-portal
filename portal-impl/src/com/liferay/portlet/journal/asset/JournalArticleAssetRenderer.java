@@ -16,7 +16,6 @@ package com.liferay.portlet.journal.asset;
 
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
@@ -167,7 +166,7 @@ public class JournalArticleAssetRenderer extends BaseAssetRenderer {
 
 			return groupFriendlyURL.concat(
 				JournalArticleConstants.CANONICAL_URL_SEPARATOR).concat(
-					HtmlUtil.escape(_article.getUrlTitle()));
+					_article.getUrlTitle());
 		}
 
 		Layout layout = themeDisplay.getLayout();

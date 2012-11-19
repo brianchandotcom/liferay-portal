@@ -70,6 +70,12 @@ public class DLProcessorRegistryUtil {
 		getDLProcessorRegistry().trigger(fileEntry, fileVersion);
 	}
 
+	public static void trigger(
+		FileEntry fileEntry, FileVersion fileVersion, boolean trusted) {
+
+		getDLProcessorRegistry().trigger(fileEntry, fileVersion, trusted);
+	}
+
 	public static void unregister(DLProcessor dlProcessor) {
 		getDLProcessorRegistry().unregister(dlProcessor);
 	}

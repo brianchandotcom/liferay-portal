@@ -42,6 +42,9 @@ public class DLFileVersionServiceImpl extends DLFileVersionServiceBaseImpl {
 	public DLFileVersion getLatestFileVersion(long fileEntryId)
 		throws PortalException, SystemException {
 
+		DLFileEntryPermission.check(
+			getPermissionChecker(), fileEntryId, ActionKeys.VIEW);
+
 		return dlFileVersionLocalService.getLatestFileVersion(
 			getGuestOrUserId(), fileEntryId);
 	}

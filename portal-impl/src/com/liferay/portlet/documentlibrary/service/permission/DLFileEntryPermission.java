@@ -83,7 +83,7 @@ public class DLFileEntryPermission {
 		}
 
 		DLFileVersion latestDLFileVersion = dlFileEntry.getLatestFileVersion(
-			false);
+			true);
 
 		if (latestDLFileVersion.isPending()) {
 			hasPermission = WorkflowPermissionUtil.hasPermission(

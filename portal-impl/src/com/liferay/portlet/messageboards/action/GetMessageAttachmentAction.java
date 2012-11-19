@@ -17,6 +17,7 @@ package com.liferay.portlet.messageboards.action;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.struts.ActionConstants;
 import com.liferay.portal.struts.PortletAction;
@@ -52,13 +53,15 @@ public class GetMessageAttachmentAction extends PortletAction {
 		try {
 			long messageId = ParamUtil.getLong(actionRequest, "messageId");
 			String fileName = ParamUtil.getString(actionRequest, "attachment");
+			int status = ParamUtil.getInteger(
+				actionRequest, "status", WorkflowConstants.STATUS_APPROVED);
 
 			HttpServletRequest request = PortalUtil.getHttpServletRequest(
 				actionRequest);
 			HttpServletResponse response = PortalUtil.getHttpServletResponse(
 				actionResponse);
 
-			getFile(messageId, fileName, request, response);
+			getFile(messageId, fileName, status, request, response);
 
 			setForward(actionRequest, ActionConstants.COMMON_NULL);
 		}
@@ -76,8 +79,10 @@ public class GetMessageAttachmentAction extends PortletAction {
 		try {
 			long messageId = ParamUtil.getLong(request, "messageId");
 			String fileName = ParamUtil.getString(request, "attachment");
+			int status = ParamUtil.getInteger(
+				request, "status", WorkflowConstants.STATUS_APPROVED);
 
-			getFile(messageId, fileName, request, response);
+			getFile(messageId, fileName, status, request, response);
 
 			return null;
 		}
@@ -89,14 +94,28 @@ public class GetMessageAttachmentAction extends PortletAction {
 	}
 
 	protected void getFile(
-			long messageId, String fileName, HttpServletRequest request,
-			HttpServletResponse response)
+			long messageId, String fileName, int status,
+			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
 		MBMessage message = MBMessageServiceUtil.getMessage(messageId);
 
 		FileEntry fileEntry = PortletFileRepositoryUtil.getPortletFileEntry(
 			message.getGroupId(), message.getAttachmentsFolderId(), fileName);
+
+		DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
+
+		DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
+
+		if ((status != WorkflowConstants.STATUS_IN_TRASH) &&
+			(dlFileVersion.isInTrash() || dlFileEntry.isInTrashFolder())) {
+
+			return;
+		}
+
+		if (dlFileVersion.isInTrash()) {
+			fileName = TrashUtil.stripTrashNamespace(dlFileEntry.getTitle());
+		}
 
 		ServletResponseUtil.sendFile(
 			request, response, fileName, fileEntry.getContentStream(),

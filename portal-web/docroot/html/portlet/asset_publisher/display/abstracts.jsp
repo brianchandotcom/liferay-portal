@@ -59,8 +59,6 @@ if (viewInContext) {
 	viewFullContentURLString = HttpUtil.setParameter(viewFullContentURLString, "redirect", currentURL);
 
 	viewURL = assetRenderer.getURLViewInContext(liferayPortletRequest, liferayPortletResponse, viewFullContentURLString);
-
-	viewURL = HttpUtil.setParameter(viewURL, "redirect", currentURL);
 }
 else {
 	viewURL = viewFullContentURL.toString();

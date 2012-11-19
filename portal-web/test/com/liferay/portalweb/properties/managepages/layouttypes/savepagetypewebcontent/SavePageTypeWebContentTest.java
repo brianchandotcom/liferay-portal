@@ -30,29 +30,55 @@ public class SavePageTypeWebContentTest extends BaseTestCase {
 				selenium.selectWindow("null");
 				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
-				selenium.waitForElementPresent("link=Control Panel");
+				selenium.clickAt("//div[@id='dockbar']",
+					RuntimeVariables.replace("Dockbar"));
+				selenium.waitForElementPresent(
+					"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+				assertEquals(RuntimeVariables.replace("Go to"),
+					selenium.getText("//li[@id='_145_mySites']/a/span"));
+				selenium.mouseOver("//li[@id='_145_mySites']/a/span");
+				selenium.waitForVisible("link=Control Panel");
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
 				selenium.clickAt("link=Web Content",
 					RuntimeVariables.replace("Web Content"));
 				selenium.waitForPageToLoad("30000");
+				selenium.clickAt("//button[@title='List View']",
+					RuntimeVariables.replace("List View"));
+				Thread.sleep(5000);
+				selenium.waitForVisible(
+					"//tr[contains(.,'WC WebContent Title')]/td[2]");
 
-				String articleID = selenium.getText("//td[2]/a");
+				String articleID = selenium.getText(
+						"//tr[contains(.,'WC WebContent Title')]/td[2]");
 				RuntimeVariables.setValue("articleID", articleID);
+				selenium.clickAt("//button[@title='Icon View']",
+					RuntimeVariables.replace("Icon View"));
+				Thread.sleep(5000);
 				selenium.open("/web/guest/home/");
 				selenium.clickAt("//div[@id='dockbar']",
 					RuntimeVariables.replace("Dockbar"));
 				selenium.waitForElementPresent(
-					"//li[contains(@class,'manage-page')]/a");
-				selenium.clickAt("//li[contains(@class,'manage-page')]/a",
-					RuntimeVariables.replace("Manage Pages"));
+					"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+				assertEquals(RuntimeVariables.replace("Manage"),
+					selenium.getText("//li[@id='_145_manageContent']/a/span"));
+				selenium.mouseOver("//li[@id='_145_manageContent']/a/span");
+				selenium.waitForVisible("//a[@title='Manage Page']");
+				selenium.clickAt("//a[@title='Manage Page']",
+					RuntimeVariables.replace("Page"));
+				selenium.waitForElementPresent(
+					"//script[contains(@src,'/liferay/util_window.js')]");
+				selenium.waitForElementPresent(
+					"//iframe[contains(@id,'manageContentDialog')]");
+				selenium.selectFrame(
+					"//iframe[contains(@id,'manageContentDialog')]");
 				selenium.waitForText("//a[@class='layout-tree']", "Public Pages");
 				assertEquals(RuntimeVariables.replace("Public Pages"),
 					selenium.getText("//a[@class='layout-tree']"));
 
 				boolean welcomePresent = selenium.isElementPresent(
-						"//li/ul/li[1]/div/div[3]/a");
+						"//div[@id='_88_layoutsTreeOutput']/ul/li/div/div[1]");
 
 				if (welcomePresent) {
 					label = 2;
@@ -60,27 +86,28 @@ public class SavePageTypeWebContentTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//div[3]/ul/li/div/div[1]",
+				selenium.clickAt("//div[@id='_88_layoutsTreeOutput']/ul/li/div/div[1]",
 					RuntimeVariables.replace("Drop Down Arrow"));
 
 			case 2:
-				selenium.waitForVisible("//li/ul/li[1]/div/div[3]/a");
+				selenium.waitForText("//a[@id='layoutsTree_layout_home']",
+					"Welcome");
 				assertEquals(RuntimeVariables.replace("Welcome"),
-					selenium.getText("//li/ul/li[1]/div/div[3]/a"));
+					selenium.getText("//a[@id='layoutsTree_layout_home']"));
 				assertEquals(RuntimeVariables.replace("Manage Pages Test Page"),
-					selenium.getText("//li/ul/li[2]/div/div[3]/a"));
-				selenium.clickAt("//li/ul/li[2]/div/div[3]/a",
+					selenium.getText(
+						"//a[@id='layoutsTree_layout_manage-pages-test-page']"));
+				selenium.clickAt("//a[@id='layoutsTree_layout_manage-pages-test-page']",
 					RuntimeVariables.replace("Manage Pages Test Page"));
-				selenium.waitForValue("//div[1]/fieldset/div/span[1]/span/span/span/input",
-					"Manage Pages Test Page");
-				assertEquals("Manage Pages Test Page",
-					selenium.getValue(
-						"//div[1]/fieldset/div/span[1]/span/span/span/input"));
 				Thread.sleep(5000);
-				selenium.waitForText("//select[@id='_88_type']",
-					"Portlet Panel Embedded Web Content URL Link to Page");
+				selenium.waitForVisible("//div[@id='_88_layoutToolbar']/span");
+				assertTrue(selenium.isVisible("//select[@id='_88_type']"));
+				assertEquals("Portlet",
+					selenium.getSelectedLabel("//select[@id='_88_type']"));
 				selenium.select("//select[@id='_88_type']",
 					RuntimeVariables.replace("Web Content"));
+				assertEquals("Web Content",
+					selenium.getSelectedLabel("//select[@id='_88_type']"));
 				selenium.waitForVisible("//input[@id='_88_article-id']");
 				selenium.type("//input[@id='_88_article-id']",
 					RuntimeVariables.replace(RuntimeVariables.getValue(
@@ -91,8 +118,8 @@ public class SavePageTypeWebContentTest extends BaseTestCase {
 				assertEquals(RuntimeVariables.replace(
 						"Your request completed successfully. The page will be refreshed when you close this dialog. Alternatively you can hide this dialog."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
+				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
-				selenium.waitForVisible("link=Manage Pages Test Page");
 				selenium.clickAt("link=Manage Pages Test Page",
 					RuntimeVariables.replace("Manage Pages Test Page"));
 				selenium.waitForPageToLoad("30000");

@@ -5739,6 +5739,10 @@ public class PortalImpl implements Portal {
 			boolean portletActions)
 		throws PortalException, SystemException {
 
+		if ((layout != null) && layout.isTypeControlPanel()) {
+			groupId = layout.getGroupId();
+		}
+
 		String rootPortletId = portlet.getRootPortletId();
 
 		String portletPrimaryKey = PortletPermissionUtil.getPrimaryKey(

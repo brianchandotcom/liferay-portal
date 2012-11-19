@@ -20,11 +20,11 @@
 String redirect = ParamUtil.getString(request, "redirect");
 
 if (Validator.isNull(redirect)) {
-	PortletURL viewJounralArticleContentURL = renderResponse.createRenderURL();
+	PortletURL portletURL = renderResponse.createRenderURL();
 
-	viewJounralArticleContentURL.setParameter("struts_action", "/asset_publisher/view");
+	portletURL.setParameter("struts_action", "/asset_publisher/view");
 
-	redirect = viewJounralArticleContentURL.toString();
+	redirect = portletURL.toString();
 }
 
 List results = (List)request.getAttribute("view.jsp-results");

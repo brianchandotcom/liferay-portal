@@ -14,8 +14,8 @@
 				<#assign count = assetTagService.getTagsCount(themeDisplay.getScopeGroupId(), entry.getName()) />
 			</#if>
 
-			<#assign maxCount = max(maxCount, count) />
-			<#assign minCount = max(minCount, count) />
+			<#assign maxCount = liferay.max(maxCount, count) />
+			<#assign minCount = liferay.min(minCount, count) />
 		</#list>
 
 		<#assign multiplier = 1 />
@@ -34,7 +34,7 @@
 					<#assign count = assetTagService.getTagsCount(themeDisplay.getScopeGroupId(), entry.getName()) />
 				</#if>
 
-				<#assign popularity = (1 + ((maxCount - (maxCount - (count - minCount))) * multiplier)) />
+				<#assign popularity = (maxCount - (maxCount - (count - minCount))) * multiplier />
 
 				<#if popularity < 1>
 					<#assign color = "green" />

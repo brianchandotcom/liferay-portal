@@ -14,18 +14,18 @@
 
 package com.liferay.portlet.messageboards.action;
 
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
-import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.model.CompanyConstants;
+import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.struts.ActionConstants;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
+import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.MBMessageServiceUtil;
-
-import java.io.InputStream;
+import com.liferay.portlet.trash.util.TrashUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -95,16 +95,12 @@ public class GetMessageAttachmentAction extends PortletAction {
 
 		MBMessage message = MBMessageServiceUtil.getMessage(messageId);
 
-		String path = message.getAttachmentsDir() + "/" + fileName;
-
-		InputStream is = DLStoreUtil.getFileAsStream(
-			message.getCompanyId(), CompanyConstants.SYSTEM, path);
-		long contentLength = DLStoreUtil.getFileSize(
-			message.getCompanyId(), CompanyConstants.SYSTEM, path);
-		String contentType = MimeTypesUtil.getContentType(fileName);
+		FileEntry fileEntry = PortletFileRepositoryUtil.getPortletFileEntry(
+			message.getGroupId(), message.getAttachmentsFolderId(), fileName);
 
 		ServletResponseUtil.sendFile(
-			request, response, fileName, is, contentLength, contentType);
+			request, response, fileName, fileEntry.getContentStream(),
+			fileEntry.getSize(), fileEntry.getMimeType());
 	}
 
 	@Override

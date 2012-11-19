@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.struts.PortletAction;
+import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.messageboards.NoSuchMessageException;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
@@ -127,12 +129,15 @@ public class EditMessageAttachmentsAction extends PortletAction {
 	protected void moveAttachmentFromTrash(ActionRequest actionRequest)
 		throws PortalException, SystemException {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		long messageId = ParamUtil.getLong(actionRequest, "messageId");
 
 		String fileName = ParamUtil.getString(actionRequest, "fileName");
 
 		MBMessageLocalServiceUtil.moveMessageAttachmentFromTrash(
-			messageId, fileName);
+			themeDisplay.getUserId(), messageId, fileName);
 
 		MBMessage message = MBMessageServiceUtil.getMessage(messageId);
 

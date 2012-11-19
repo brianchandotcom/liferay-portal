@@ -25,8 +25,6 @@ long messageId = BeanParamUtil.getLong(message, request, "messageId");
 
 long categoryId = MBUtil.getCategoryId(request, message);
 
-List<String> attachments = ListUtil.fromArray(message.getDeletedAttachmentsFiles());
-
 MBUtil.addPortletBreadcrumbEntries(message, request, renderResponse);
 
 PortletURL portletURL = renderResponse.createRenderURL();
@@ -60,7 +58,7 @@ iteratorURL.setParameter("messageId", String.valueOf(messageId));
 	emptyMessage="remove-the-attachments-for-this-message"
 	infoMessage="attachments-that-have-been-removed-for-more-than-x-days-will-be-automatically-deleted"
 	portletURL="<%= emptyTrashURL.toString() %>"
-	totalEntries="<%= attachments.size() %>"
+	totalEntries="<%= message.getDeletedAttachmentsFileEntriesCount() %>"
 />
 
 <liferay-ui:search-container
@@ -69,41 +67,39 @@ iteratorURL.setParameter("messageId", String.valueOf(messageId));
 >
 
 	<liferay-ui:search-container-results
-		results="<%= ListUtil.subList(attachments, searchContainer.getStart(), searchContainer.getEnd()) %>"
-		total="<%= attachments.size() %>"
+		results="<%= message.getDeletedAttachmentsFileEntries(searchContainer.getStart(), searchContainer.getEnd()) %>"
+		total="<%= message.getDeletedAttachmentsFileEntriesCount() %>"
 	/>
 
 	<liferay-ui:search-container-row
-		className="java.lang.String"
-		modelVar="fileName"
+		className="com.liferay.portal.kernel.repository.model.FileEntry"
+		escapedModel="<%= true %>"
+		keyProperty="fileEntryId"
+		modelVar="fileEntry"
 		rowVar="row"
 	>
 
 		<%
-		String shortFileName = FileUtil.getShortFileName(fileName);
+		DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
 
-		long fileSize = DLStoreUtil.getFileSize(company.getCompanyId(), CompanyConstants.SYSTEM, fileName);
+		row.setObject(new Object[] {categoryId, messageId, dlFileEntry.getTitle()});
 
-		row.setObject(new Object[] {categoryId, messageId, fileName});
-
-		row.setPrimaryKey(fileName);
-
-		String displayName = TrashUtil.stripTrashNamespace(shortFileName, StringPool.UNDERLINE);
+		row.setPrimaryKey(dlFileEntry.getTitle());
 		%>
 
 		<liferay-ui:search-container-column-text
 			name="file-name"
 		>
 			<liferay-ui:icon
-				image='<%= "../file_system/small/" + DLUtil.getFileIcon(FileUtil.getExtension(displayName)) %>'
+				image='<%= "../file_system/small/" + DLUtil.getFileIcon(dlFileEntry.getExtension()) %>'
 				label="<%= true %>"
-				message="<%= displayName %>"
+				message="<%= TrashUtil.stripTrashNamespace(dlFileEntry.getTitle()) %>"
 			/>
 		</liferay-ui:search-container-column-text>
 
 		<liferay-ui:search-container-column-text
 			name="size"
-			value="<%= TextFormatter.formatStorageSize(fileSize, locale) %>"
+			value="<%= TextFormatter.formatStorageSize(dlFileEntry.getSize(), locale) %>"
 		/>
 
 		<liferay-ui:search-container-column-jsp

@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.portal.kernel.lar.PortletDataHandlerControl;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
@@ -32,13 +32,11 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
-import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.persistence.UserUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 import com.liferay.portlet.messageboards.model.MBBan;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
@@ -370,10 +368,8 @@ public class MBPortletDataHandlerImpl extends BasePortletDataHandler {
 		if (portletDataContext.getBooleanParameter(_NAMESPACE, "attachments") &&
 			message.isAttachments()) {
 
-			for (String attachment : message.getAttachmentsFiles()) {
-				int pos = attachment.lastIndexOf(CharPool.FORWARD_SLASH);
-
-				String name = attachment.substring(pos + 1);
+			for (FileEntry attachment : message.getAttachmentsFileEntries()) {
+				String name = attachment.getTitle();
 				String binPath = getMessageAttachementBinPath(
 					portletDataContext, message, name);
 
@@ -383,14 +379,11 @@ public class MBPortletDataHandlerImpl extends BasePortletDataHandler {
 				attachmentElement.addAttribute("name", name);
 				attachmentElement.addAttribute("bin-path", binPath);
 
-				byte[] bytes = DLStoreUtil.getFileAsBytes(
-					portletDataContext.getCompanyId(), CompanyConstants.SYSTEM,
-					attachment);
-
-				portletDataContext.addZipEntry(binPath, bytes);
+				portletDataContext.addZipEntry(
+					binPath, attachment.getContentStream());
 			}
 
-			message.setAttachmentsDir(message.getAttachmentsDir());
+			message.setAttachmentsFolderId(message.getAttachmentsFolderId());
 		}
 
 		if (portletDataContext.getBooleanParameter(

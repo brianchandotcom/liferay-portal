@@ -19,27 +19,40 @@
 <%
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
-Object[] objArray = (Object[])row.getObject();
+FileEntry attachmentsFileEntry = (FileEntry)row.getObject();
 
-long categoryId = (Long)objArray[0];
-long messageId = (Long)objArray[1];
-String fileName = (String)objArray[2];
+long folderId = attachmentsFileEntry.getFolderId();
+
+Folder folder = PortletFileRepositoryUtil.getPortletFolder(folderId);
+
+long messageId = GetterUtil.getLong(folder.getName());
+
+MBMessage message = MBMessageLocalServiceUtil.getMBMessage(messageId);
 %>
 
 <liferay-ui:icon-menu>
-	<c:if test="<%= MBCategoryPermission.contains(permissionChecker, scopeGroupId, categoryId, ActionKeys.ADD_FILE) %>">
+	<c:if test="<%= MBCategoryPermission.contains(permissionChecker, scopeGroupId, message.getCategoryId(), ActionKeys.ADD_FILE) %>">
+
+		<%
+		TrashEntry trashEntry = TrashEntryLocalServiceUtil.getEntry(DLFileEntry.class.getName(), attachmentsFileEntry.getFileEntryId());
+		%>
+
 		<portlet:actionURL var="restoreEntryURL">
-			<portlet:param name="struts_action" value="/message_boards/edit_message_attachments" />
-			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.MOVE_FROM_TRASH %>" />
+			<portlet:param name="struts_action" value="/message_boards/restore_page_attachment" />
+			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="messageId" value="<%= String.valueOf(messageId) %>" />
-			<portlet:param name="fileName" value="<%= fileName %>" />
+			<portlet:param name="trashEntryId" value="<%= String.valueOf(trashEntry.getEntryId()) %>" />
 		</portlet:actionURL>
+
+		<%
+		String taglibOnClick = "Liferay.fire('" + renderResponse.getNamespace() + "checkEntry', {trashEntryId: " + trashEntry.getEntryId() + ", uri: '" + restoreEntryURL.toString() + "'});";
+		%>
 
 		<liferay-ui:icon
 			image="undo"
 			message="restore"
-			url="<%= restoreEntryURL %>"
+			onClick="<%= taglibOnClick %>"
+			url="javascript:;"
 		/>
 
 		<portlet:actionURL var="deleteURL">
@@ -47,7 +60,7 @@ String fileName = (String)objArray[2];
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="messageId" value="<%= String.valueOf(messageId) %>" />
-			<portlet:param name="fileName" value="<%= fileName %>" />
+			<portlet:param name="fileName" value="<%= attachmentsFileEntry.getTitle() %>" />
 		</portlet:actionURL>
 
 		<liferay-ui:icon-delete

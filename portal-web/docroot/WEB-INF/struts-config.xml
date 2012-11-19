@@ -1173,6 +1173,12 @@
 			<forward name="portlet.message_boards.move_thread" path="portlet.message_boards.move_thread" />
 		</action>
 
+		<action path="/message_boards/restore_entry" forward="portlet.trash.restore_entry" />
+
+		<action path="/message_boards/restore_page_attachment" type="com.liferay.portlet.trash.action.EditEntryAction">
+			<forward name="portlet.trash.view" path="portlet.message_boards.view_message" />
+		</action>
+
 		<action path="/message_boards/restore_thread" type="com.liferay.portlet.messageboards.action.RestoreThreadAction">
 			<forward name="portlet.message_boards.error" path="portlet.message_boards.error" />
 		</action>
@@ -1249,6 +1255,12 @@
 		<action path="/message_boards_admin/move_thread" type="com.liferay.portlet.messageboards.action.MoveThreadAction">
 			<forward name="portlet.message_boards.error" path="portlet.message_boards.error" />
 			<forward name="portlet.message_boards.move_thread" path="portlet.message_boards.move_thread" />
+		</action>
+
+		<action path="/message_boards_admin/restore_entry" forward="portlet.trash.restore_entry" />
+
+		<action path="/message_boards_admin/restore_page_attachment" type="com.liferay.portlet.trash.action.EditEntryAction">
+			<forward name="portlet.trash.view" path="portlet.message_boards.view_message" />
 		</action>
 
 		<action path="/message_boards_admin/restore_thread" type="com.liferay.portlet.messageboards.action.RestoreThreadAction">

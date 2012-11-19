@@ -76,15 +76,10 @@ iteratorURL.setParameter("messageId", String.valueOf(messageId));
 		escapedModel="<%= true %>"
 		keyProperty="fileEntryId"
 		modelVar="fileEntry"
-		rowVar="row"
 	>
 
 		<%
 		DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
-
-		row.setObject(new Object[] {categoryId, messageId, dlFileEntry.getTitle()});
-
-		row.setPrimaryKey(dlFileEntry.getTitle());
 		%>
 
 		<portlet:actionURL var="rowURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
@@ -119,3 +114,18 @@ iteratorURL.setParameter("messageId", String.valueOf(messageId));
 
 	<liferay-ui:search-iterator />
 </liferay-ui:search-container>
+
+<aui:script use="liferay-restore-entry">
+	<portlet:actionURL var="restoreEntryURL">
+		<portlet:param name="struts_action" value="/message_boards/restore_page_attachment" />
+		<portlet:param name="redirect" value="<%= redirect %>" />
+	</portlet:actionURL>
+
+	new Liferay.RestoreEntry(
+		{
+			checkEntryURL: '<portlet:actionURL><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.CHECK %>" /><portlet:param name="struts_action" value="/message_boards/restore_page_attachment" /></portlet:actionURL>',
+			namespace: '<portlet:namespace />',
+			restoreEntryURL: '<portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="struts_action" value="/message_boards/restore_entry" /><portlet:param name="redirect" value="<%= currentURL %>" /><portlet:param name="restoreEntryURL" value="<%= restoreEntryURL %>" /></portlet:renderURL>'
+		}
+	);
+</aui:script>

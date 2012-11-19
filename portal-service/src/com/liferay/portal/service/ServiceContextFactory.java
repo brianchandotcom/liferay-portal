@@ -458,6 +458,21 @@ public class ServiceContextFactory {
 
 		ServiceContext serviceContext = getInstance(portletRequest);
 
+		// Permissions
+
+		String[] groupPermissions = PortalUtil.getGroupPermissions(
+			portletRequest, className);
+		String[] guestPermissions = PortalUtil.getGuestPermissions(
+			portletRequest, className);
+
+		if (groupPermissions != null) {
+			serviceContext.setGroupPermissions(groupPermissions);
+		}
+
+		if (guestPermissions != null) {
+			serviceContext.setGuestPermissions(guestPermissions);
+		}
+
 		// Expando
 
 		Map<String, Serializable> expandoBridgeAttributes =
@@ -476,6 +491,21 @@ public class ServiceContextFactory {
 		throws PortalException, SystemException {
 
 		ServiceContext serviceContext = getInstance(uploadPortletRequest);
+
+		// Permissions
+
+		String[] groupPermissions = PortalUtil.getGroupPermissions(
+			uploadPortletRequest, className);
+		String[] guestPermissions = PortalUtil.getGuestPermissions(
+			uploadPortletRequest, className);
+
+		if (groupPermissions != null) {
+			serviceContext.setGroupPermissions(groupPermissions);
+		}
+
+		if (guestPermissions != null) {
+			serviceContext.setGuestPermissions(guestPermissions);
+		}
 
 		// Expando
 

@@ -651,11 +651,23 @@ public interface Portal {
 
 	public String[] getGroupPermissions(HttpServletRequest request);
 
+	public String[] getGroupPermissions(
+		HttpServletRequest request, String className);
+
 	public String[] getGroupPermissions(PortletRequest portletRequest);
+
+	public String[] getGroupPermissions(
+		PortletRequest portletRequest, String className);
 
 	public String[] getGuestPermissions(HttpServletRequest request);
 
+	public String[] getGuestPermissions(
+		HttpServletRequest request, String className);
+
 	public String[] getGuestPermissions(PortletRequest portletRequest);
+
+	public String[] getGuestPermissions(
+		PortletRequest portletRequest, String className);
 
 	public String getHomeURL(HttpServletRequest request)
 		throws PortalException, SystemException;

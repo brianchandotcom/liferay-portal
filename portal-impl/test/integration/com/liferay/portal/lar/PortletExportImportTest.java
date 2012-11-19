@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutSetPrototype;
@@ -30,6 +31,7 @@ import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.service.persistence.CompanyUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.TransactionalCallbackAwareExecutionTestListener;
@@ -197,6 +199,49 @@ public class PortletExportImportTest extends BaseExportImportTestCase {
 			Boolean.FALSE.toString(),
 			jxPreferences.getValue("showAvailableLocales", StringPool.BLANK));
 
+		// Update display portlet with a new globally scoped article
+
+		Company company = CompanyUtil.fetchByPrimaryKey(
+			_layoutSetPrototypeLayout.getCompanyId());
+
+		Group companyGroup = company.getGroup();
+
+		JournalArticle globalScopeArticle = addJournalArticle(
+			companyGroup.getGroupId(), 0, "Global article", "Global content");
+
+		layoutSetprototypeJxPreferences.setValue("lfrScopeType", "company");
+		layoutSetprototypeJxPreferences.setValue(
+			"lfrScopeLayoutUuid", StringPool.BLANK);
+
+		layoutSetprototypeJxPreferences.setValue(
+			"groupId", Long.toString(companyGroup.getGroupId()));
+
+		layoutSetprototypeJxPreferences.setValue(
+			"articleId", globalScopeArticle.getArticleId());
+
+		updatePortletPreferences(
+			_layoutSetPrototypeLayout.getPlid(),
+			_layoutSetPrototypeJournalContentPortletId,
+			layoutSetprototypeJxPreferences);
+
+		jxPreferences = getPortletPreferences(
+			_group.getCompanyId(), layout.getPlid(),
+			_layoutSetPrototypeJournalContentPortletId);
+
+		// Check preferences when journal article is from global scope
+
+		Assert.assertEquals(
+			globalScopeArticle.getArticleId(),
+			jxPreferences.getValue("articleId", StringPool.BLANK));
+		Assert.assertEquals(
+			String.valueOf(companyGroup.getGroupId()),
+			jxPreferences.getValue("groupId", StringPool.BLANK));
+		Assert.assertEquals(
+			"company",
+			jxPreferences.getValue("lfrScopeType", StringPool.BLANK));
+		Assert.assertEquals(
+			StringPool.BLANK,
+			jxPreferences.getValue("lfrScopeLayoutUuid", StringPool.BLANK));
 	}
 
 	protected JournalArticle addJournalArticle(

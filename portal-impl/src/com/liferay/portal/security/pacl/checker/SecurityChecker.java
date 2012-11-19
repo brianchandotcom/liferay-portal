@@ -17,6 +17,8 @@ package com.liferay.portal.security.pacl.checker;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ServerDetector;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.security.pacl.PACLClassUtil;
 
 import java.security.Permission;
@@ -33,6 +35,26 @@ public class SecurityChecker extends BaseChecker {
 
 	public void checkPermission(Permission permission) {
 		String name = permission.getName();
+
+		String propertyName = name;
+
+		if (propertyName.indexOf(StringPool.PERIOD) > 0) {
+			propertyName = propertyName.substring(
+				0, propertyName.indexOf(StringPool.PERIOD));
+		}
+
+		String key = TextFormatter.format(propertyName, TextFormatter.K);
+
+		String[] classNames = getPropertyArray(
+			"security-manager-security-permission-" + key);
+
+		if (classNames.length != 0) {
+			for (String className : classNames) {
+				if (hasClassInCallTree(className)) {
+					return ;
+				}
+			}
+		}
 
 		if (name.equals(SECURITY_PERMISSION_GET_POLICY)) {
 			if (!hasGetPolicy()) {

@@ -335,19 +335,10 @@
 .aui-paginator-link {
 }
 
-.ie7 .aui-paginator-link {
-}
-
 .aui-paginator-page-link {
 }
 
-.ie7 .aui-paginator-page-link {
-}
-
 .aui-paginator-current-page {
-}
-
-.ie7 .aui-paginator-current-page {
 }
 
 .aui-paginator-first-link {
@@ -423,6 +414,15 @@
 	}
 
 	.aui-menu-content li {
+	}
+
+	.aui-paginator-link {
+	}
+
+	.aui-paginator-page-link {
+	}
+
+	.aui-paginator-current-page {
 	}
 }
 

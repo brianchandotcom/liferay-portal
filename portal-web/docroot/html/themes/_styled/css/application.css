@@ -599,25 +599,8 @@
 	width: 20px;
 }
 
-.ie7 .aui-paginator-link {
-	color: transparent;
-	font-size: 0;
-	overflow: hidden;
-	text-indent: 0;
-	vertical-align: middle;
-}
-
 .aui-paginator-page-link {
 	height: auto;
-	text-indent: 0;
-}
-
-.ie7 .aui-paginator-page-link {
-	color: #1F1E1E;
-	font-size: 1em;
-	height: auto;
-	line-height: 1.4;
-	overflow: visible;
 	text-indent: 0;
 }
 
@@ -626,10 +609,6 @@
 	border-color: #38B6EF #006D9E #006D9E #46B4E6;
 	color: #FFF;
 	text-shadow: -1px -1px #003C57;
-}
-
-.ie7 .aui-paginator-current-page {
-	color: #FFF;
 }
 
 .aui-paginator-first-link {
@@ -727,6 +706,27 @@
 
 	.aui-menu-content li {
 		z-index: 10;
+	}
+
+	.aui-paginator-link {
+		color: transparent;
+		font-size: 0;
+		overflow: hidden;
+		text-indent: 0;
+		vertical-align: middle;
+	}
+
+	.aui-paginator-page-link {
+		color: #1F1E1E;
+		font-size: 1em;
+		height: auto;
+		line-height: 1.4;
+		overflow: visible;
+		text-indent: 0;
+	}
+
+	.aui-paginator-current-page {
+		color: #FFF;
 	}
 }
 

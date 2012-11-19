@@ -37,6 +37,10 @@ public class PatcherImpl implements Patcher {
 	public boolean applyPatch(File patch) {
 		File patchFolder = getPatchFolder();
 
+		if (patchFolder == null) {
+			return false;
+		}
+
 		try {
 			FileUtil.copyFile(
 				patch,
@@ -47,7 +51,7 @@ public class PatcherImpl implements Patcher {
 		catch (Exception e) {
 			_log.error(
 				"Could not copy " + patch.getAbsolutePath() + " patch to the " +
-					"patch folder: " + patchFolder);
+					"patch folder: " + patchFolder.getAbsolutePath());
 
 			return false;
 		}
@@ -90,6 +94,10 @@ public class PatcherImpl implements Patcher {
 
 		if (Validator.isNotNull(property)) {
 			_patchFolder = new File(property);
+		}
+
+		if ((_patchFolder == null) || !_patchFolder.exists()) {
+			_log.error("There is no valid patch folder configured");
 		}
 
 		return _patchFolder;

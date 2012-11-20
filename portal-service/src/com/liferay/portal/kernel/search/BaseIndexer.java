@@ -757,8 +757,8 @@ public abstract class BaseIndexer implements Indexer {
 			value = GetterUtil.getString(serializable);
 		}
 
-		if ((searchContext.getFacet(field) != null) &&
-			Validator.isNotNull(value)) {
+		if (Validator.isNotNull(value) &&
+			(searchContext.getFacet(field) != null)) {
 
 			return;
 		}

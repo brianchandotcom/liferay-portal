@@ -33,6 +33,8 @@ public interface ModelHints {
 
 	public Map<String, String> getHints(String model, String field);
 
+	public int getMaxLength(String model, String field);
+
 	public List<String> getModels();
 
 	public Tuple getSanitizeTuple(String model, String field);

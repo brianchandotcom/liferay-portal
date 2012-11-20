@@ -137,6 +137,21 @@ public class ModelHintsImpl implements ModelHints {
 		}
 	}
 
+	public int getMaxLength(String model, String field) {
+		Map<String, String> hints = getHints(model, field);
+
+		if (hints == null) {
+			return Integer.MAX_VALUE;
+		}
+
+		int maxLength = GetterUtil.getInteger(
+			ModelHintsConstants.TEXT_MAX_LENGTH);
+
+		maxLength = GetterUtil.getInteger(hints.get("max-length"), maxLength);
+
+		return maxLength;
+	}
+
 	public List<String> getModels() {
 		return ListUtil.fromCollection(_models);
 	}
@@ -429,16 +444,7 @@ public class ModelHintsImpl implements ModelHints {
 			return value;
 		}
 
-		Map<String, String> hints = getHints(model, field);
-
-		if (hints == null) {
-			return value;
-		}
-
-		int maxLength = GetterUtil.getInteger(
-			ModelHintsConstants.TEXT_MAX_LENGTH);
-
-		maxLength = GetterUtil.getInteger(hints.get("max-length"), maxLength);
+		int maxLength = getMaxLength(model, field);
 
 		if (value.length() > maxLength) {
 			return value.substring(0, maxLength);

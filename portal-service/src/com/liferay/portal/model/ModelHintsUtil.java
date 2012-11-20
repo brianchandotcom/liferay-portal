@@ -42,6 +42,10 @@ public class ModelHintsUtil {
 		return getModelHints().getHints(model, field);
 	}
 
+	public static int getMaxLength(String model, String field) {
+		return getModelHints().getMaxLength(model, field);
+	}
+
 	public static ModelHints getModelHints() {
 		PortalRuntimePermission.checkGetBeanProperty(ModelHintsUtil.class);
 

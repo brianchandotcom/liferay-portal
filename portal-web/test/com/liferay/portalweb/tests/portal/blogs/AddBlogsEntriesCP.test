@@ -1,4 +1,7 @@
-<test>
+<test
+	name="AddBlogsEntriesCP"
+	description="In the Control Panel Blogs Portlet, add 3 different Blogs Entries."
+>
 	<setup>
 	</setup>
 	<steps>

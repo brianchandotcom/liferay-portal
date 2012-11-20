@@ -1,26 +1,29 @@
-<xml>
+<test
+	name="AddBlogsEntryAutoDraftCP"
+	description="In the Control Panel Blogs Portlet, add a Blogs Entry Draft through auto-draft."
+>
 	<setup>
 	</setup>
 	<steps>
 		<macro name="Navigation" command="navigateControlPanelPage">
-			<param name="page" value="Blogs" />
+			<param name="portlet" value="Blogs" />
 		</macro>
 
-		<action name="CPBlogsPortlet" command="click" path="PORTLET_LINK_ADD" />
+		<action name="CPBlogsPortlet" command="click" path="PORTLET_LINK_ADD" value="Add" />
 
 		<action name="CPBlogsEntryAdd" command="type" path="CONTENT_FIELD_TITLE" value="Blogs Entry Title" />
 		<action name="CPBlogsEntryAdd" command="type" path="CONTENT_FIELD_CONTENT" value="Blogs Entry Content" />
 		<action name="CPBlogsEntryAdd" command="assertTextEquals" path="CONTENT_TEXT_SAVE_STATUS" value="Draft saved" />
 
 		<macro name="Navigation" command="navigateControlPanelPage">
-			<param name="page" value="Blogs" />
+			<param name="portlet" value="Blogs" />
 		</macro>
 
 		<action name="CPBlogsPortlet" command="assertTextEquals" path="BLOGS_ENTRY_LINK_TITLE" value="Blogs Entry Title" />
 		<action name="CPBlogsPortlet" command="assertTextEquals" path="BLOGS_ENTRY_LINK_STATUS" value="Draft" />
 		<action name="CPBlogsPortlet" command="click" path="BLOGS_ENTRY_LINK_TITLE" value="Blogs Entry Title" />
 
-		<action name="CPBlogsEntryView" command="assertTextEquals" path="BLOGS_ENTRY_TEXT_DRAFT" />
+		<action name="CPBlogsEntryView" command="assertTextEquals" path="BLOGS_ENTRY_TEXT_DRAFT" value="Draft" />
 		<action name="CPBlogsEntryView" command="assertTextEquals" path="BLOGS_ENTRY_TEXT_TITLE" value="Blogs Entry Title" />
 		<action name="CPBlogsEntryView" command="assertTextEquals" path="BLOGS_ENTRY_TEXT_CONTENT" value="Blogs Entry Content" />
 	</steps>
@@ -28,4 +31,4 @@
 		<macro name="CPBlogsEntry" command="tearDownBlogsEntry" />
 		<macro name="CPRecycleBin" command="emptyRecycleBin" />
 	</teardown>
-</xml>
+</test>

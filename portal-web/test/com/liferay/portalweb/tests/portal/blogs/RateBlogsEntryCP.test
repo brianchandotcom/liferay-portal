@@ -1,4 +1,7 @@
-<xml>
+<test
+	name="RateBlogsEntryCP"
+	description="In the Control Panel Blogs Portlet, rate a Blogs Entry."
+>
 	<setup>
 		<macro name="CPBlogsEntry" command="addBlogsEntry">
 			<param name="title" value="Blogs Entry Title" />
@@ -7,7 +10,7 @@
 	</setup>
 	<steps>
 		<macro name="Navigation" command="navigateControlPanelPage">
-			<param name="page" value="Blogs" />
+			<param name="portlet" value="Blogs" />
 		</macro>
 
 		<action name="CPBlogsPortlet" command="click" path="BLOGS_ENTRY_LINK_TITLE" value="Blogs Entry Title" />
@@ -15,11 +18,11 @@
 		<action name="CPBlogsEntryView" command="assertTextEquals" path="BLOGS_ENTRY_TEXT_TITLE" value="Blogs Entry Title" />
 		<action name="CPBlogsEntryView" command="assertTextEquals" path="BLOGS_ENTRY_TEXT_CONTENT" value="Blogs Entry Content" />
 		<action name="CPBlogsEntryView" command="assertTextEquals" path="BLOGS_ENTRY_TEXT_RATING_AVERAGE" value="0 Votes" />
-		<action name="CPBlogsEntryView" command="click" path="BLOGS_ENTRY_LINK_RATE_STAR_5" />
+		<action name="CPBlogsEntryView" command="click" path="BLOGS_ENTRY_LINK_RATE_STAR_5" value="" />
 		<action name="CPBlogsEntryView" command="assertTextEquals" path="BLOGS_ENTRY_TEXT_RATING_AVERAGE" value="1 Vote" />
 	</steps>
 	<teardown>
 		<macro name="CPBlogsEntry" command="tearDownBlogsEntry" />
 		<macro name="CPRecycleBin" command="emptyRecycleBin" />
 	</teardown>
-</xml>
+</test>

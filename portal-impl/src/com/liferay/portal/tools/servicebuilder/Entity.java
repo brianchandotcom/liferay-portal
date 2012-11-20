@@ -689,6 +689,14 @@ public class Entity {
 		}
 	}
 
+	public boolean isStagedModel() {
+		if (isGroupedModel() && hasUuid()) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isWorkflowEnabled() {
 		if (hasColumn("status") && hasColumn("statusByUserId") &&
 			hasColumn("statusByUserName") && hasColumn("statusDate")) {

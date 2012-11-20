@@ -137,7 +137,7 @@ public class DLFileEntryLocalServiceImpl
 		throws PortalException, SystemException {
 
 		if (Validator.isNull(title)) {
-			if (size == 0) {
+			if (Validator.isNull(sourceFileName)) {
 				throw new FileNameException();
 			}
 			else {
@@ -2274,7 +2274,7 @@ public class DLFileEntryLocalServiceImpl
 
 			String version = dlFileVersion.getVersion();
 
-			if (size == 0) {
+			if ((is == null) && (size == 0)) {
 				size = dlFileVersion.getSize();
 			}
 

@@ -179,20 +179,25 @@ public class CompanyImpl extends CompanyBaseImpl {
 	}
 
 	public String getVirtualHostname() {
-		try {
-			VirtualHost virtualHost =
-				VirtualHostLocalServiceUtil.fetchVirtualHost(getCompanyId(), 0);
+		if (_virtualHostname == null) {
+			try {
+				VirtualHost virtualHost =
+					VirtualHostLocalServiceUtil.fetchVirtualHost(
+						getCompanyId(), 0);
 
-			if (virtualHost == null) {
-				return StringPool.BLANK;
+				if (virtualHost == null) {
+					_virtualHostname = StringPool.BLANK;
+				}
+				else {
+					_virtualHostname = virtualHost.getHostname();
+				}
 			}
-			else {
-				return virtualHost.getHostname();
+			catch (Exception e) {
+				_virtualHostname = StringPool.BLANK;
 			}
 		}
-		catch (Exception e) {
-			return StringPool.BLANK;
-		}
+
+		return _virtualHostname;
 	}
 
 	public boolean hasCompanyMx(String emailAddress) throws SystemException {
@@ -277,7 +282,15 @@ public class CompanyImpl extends CompanyBaseImpl {
 		_keyObj = keyObj;
 	}
 
+	@Override
+	public void setVirtualHostname(String virtualHostname) {
+		_virtualHostname = virtualHostname;
+	}
+
 	@CacheField
 	private Key _keyObj;
+
+	@CacheField
+	private String _virtualHostname;
 
 }

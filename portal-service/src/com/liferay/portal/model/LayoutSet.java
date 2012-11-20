@@ -69,4 +69,6 @@ public interface LayoutSet extends LayoutSetModel, PersistedModel {
 
 	public void setSettingsProperties(
 		com.liferay.portal.kernel.util.UnicodeProperties settingsProperties);
+
+	public void setVirtualHostname(java.lang.String virtualHostname);
 }

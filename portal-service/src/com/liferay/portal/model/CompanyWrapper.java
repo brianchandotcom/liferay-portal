@@ -534,6 +534,10 @@ public class CompanyWrapper implements Company, ModelWrapper<Company> {
 		_company.setKeyObj(keyObj);
 	}
 
+	public void setVirtualHostname(java.lang.String virtualHostname) {
+		_company.setVirtualHostname(virtualHostname);
+	}
+
 	/**
 	 * @deprecated Renamed to {@link #getWrappedModel}
 	 */

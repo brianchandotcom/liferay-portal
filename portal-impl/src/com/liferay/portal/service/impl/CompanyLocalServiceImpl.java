@@ -1158,26 +1158,27 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		throws CompanyVirtualHostException, SystemException {
 
 		if (Validator.isNotNull(virtualHostname)) {
-			try {
-				VirtualHost virtualHost = virtualHostPersistence.findByHostname(
-					virtualHostname);
+			VirtualHost virtualHost = virtualHostPersistence.fetchByHostname(
+				virtualHostname);
 
+			if (virtualHost == null) {
+				virtualHostLocalService.updateVirtualHost(
+					companyId, 0, virtualHostname);
+			}
+			else {
 				if ((virtualHost.getCompanyId() != companyId) ||
 					(virtualHost.getLayoutSetId() != 0)) {
 
 					throw new CompanyVirtualHostException();
 				}
 			}
-			catch (NoSuchVirtualHostException nsvhe) {
-				virtualHostLocalService.updateVirtualHost(
-					companyId, 0, virtualHostname);
-			}
 		}
 		else {
-			try {
-				virtualHostPersistence.removeByC_L(companyId, 0);
-			}
-			catch (NoSuchVirtualHostException nsvhe) {
+			VirtualHost virtualHost = virtualHostPersistence.fetchByC_L(
+				companyId, 0);
+
+			if (virtualHost != null) {
+				virtualHostPersistence.remove(virtualHost);
 			}
 		}
 	}

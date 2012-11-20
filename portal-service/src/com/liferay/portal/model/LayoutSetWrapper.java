@@ -664,6 +664,10 @@ public class LayoutSetWrapper implements LayoutSet, ModelWrapper<LayoutSet> {
 		_layoutSet.setSettingsProperties(settingsProperties);
 	}
 
+	public void setVirtualHostname(java.lang.String virtualHostname) {
+		_layoutSet.setVirtualHostname(virtualHostname);
+	}
+
 	/**
 	 * @deprecated Renamed to {@link #getWrappedModel}
 	 */

@@ -839,7 +839,7 @@ public class SourceFormatter {
 		return content;
 	}
 
-	private static String _fixSessionMessageKey(
+	private static String _fixSessionKey(
 		String fileName, String content, Pattern pattern) {
 
 		Matcher matcher = pattern.matcher(content);
@@ -855,10 +855,10 @@ public class SourceFormatter {
 
 			int x = -1;
 
-			if (pattern.equals(_sessionMessageKeyPattern)) {
+			if (pattern.equals(_sessionKeyPattern)) {
 				x = match.indexOf(StringPool.COMMA);
 			}
-			else if (pattern.equals(_taglibSuccessKeyPattern)) {
+			else if (pattern.equals(_taglibSessionKeyPattern)) {
 				x = match.indexOf("key=");
 			}
 
@@ -1394,8 +1394,8 @@ public class SourceFormatter {
 			}
 
 			newContent = _fixDataAccessConnection(className, newContent);
-			newContent = _fixSessionMessageKey(
-				fileName, newContent, _sessionMessageKeyPattern);
+			newContent = _fixSessionKey(
+				fileName, newContent, _sessionKeyPattern);
 
 			newContent = StringUtil.replace(
 				newContent,
@@ -2280,10 +2280,10 @@ public class SourceFormatter {
 				}
 			}
 
-			newContent = _fixSessionMessageKey(
-				fileName, newContent, _sessionMessageKeyPattern);
-			newContent = _fixSessionMessageKey(
-				fileName, newContent, _taglibSuccessKeyPattern);
+			newContent = _fixSessionKey(
+				fileName, newContent, _sessionKeyPattern);
+			newContent = _fixSessionKey(
+				fileName, newContent, _taglibSessionKeyPattern);
 
 			_checkLanguageKeys(fileName, newContent, _languageKeyPattern);
 			_checkLanguageKeys(fileName, newContent, _taglibLanguageKeyPattern);
@@ -4689,18 +4689,21 @@ public class SourceFormatter {
 		"/.*[.]jsp[f]?");
 	private static Pattern _languageKeyPattern = Pattern.compile(
 		"LanguageUtil.(?:get|format)\\([^;%]+|Liferay.Language.get\\('([^']+)");
-	private static Pattern _sessionMessageKeyPattern = Pattern.compile(
-		"SessionMessages.(?:add|contains|get)\\([^;%&|!]+", Pattern.MULTILINE);
 	private static Properties _lineLengthExclusionsProperties;
 	private static Properties _portalLanguageKeysProperties;
 	private static boolean _portalSource;
 	private static SAXReaderImpl _saxReaderUtil = SAXReaderImpl.getInstance();
+	private static Pattern _sessionKeyPattern = Pattern.compile(
+		"SessionErrors.(?:add|contains|get)\\([^;%&|!]+|".concat(
+			"SessionMessages.(?:add|contains|get)\\([^;%&|!]+"),
+		Pattern.MULTILINE);
 	private static SourceFormatterHelper _sourceFormatterHelper;
 	private static Pattern _taglibLanguageKeyPattern = Pattern.compile(
 		"(?:confirmation|label|(?:M|m)essage|message key|names|title)=\"[^A-Z" +
 			"<=%\\[\\s]+\"");
-	private static Pattern _taglibSuccessKeyPattern = Pattern.compile(
-		"<liferay-ui:success [^>]+>", Pattern.MULTILINE);
+	private static Pattern _taglibSessionKeyPattern = Pattern.compile(
+		"<liferay-ui:success [^>]+>|<liferay-ui:error [^>]+>",
+		Pattern.MULTILINE);
 	private static Pattern _xssPattern = Pattern.compile(
 		"String\\s+([^\\s]+)\\s*=\\s*(Bean)?ParamUtil\\.getString\\(");
 

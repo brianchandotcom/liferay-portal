@@ -28,14 +28,12 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.model.Image;
 import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 import com.liferay.portal.service.ImageLocalServiceUtil;
 import com.liferay.portal.service.persistence.ImageActionableDynamicQuery;
 import com.liferay.portal.util.MaintenanceUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.documentlibrary.DuplicateDirectoryException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
@@ -196,28 +194,6 @@ public class ConvertDocumentLibrary extends ConvertProcess {
 		}
 		catch (Exception e) {
 			_log.error("Migration failed for " + fileName, e);
-		}
-	}
-
-	protected void migrateFiles(
-			long companyId, String dirName, String[] fileNames)
-		throws PortalException, SystemException {
-
-		long repositoryId = CompanyConstants.SYSTEM;
-		String versionNumber = Store.VERSION_DEFAULT;
-
-		try {
-			_targetStore.addDirectory(companyId, repositoryId, dirName);
-		}
-		catch (DuplicateDirectoryException dde) {
-		}
-
-		for (String fileName : fileNames) {
-			if (fileName.startsWith(StringPool.SLASH)) {
-				fileName = fileName.substring(1);
-			}
-
-			migrateFile(companyId, repositoryId, fileName, versionNumber);
 		}
 	}
 

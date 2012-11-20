@@ -285,15 +285,6 @@
 	}
 }
 
-.tag-cloud {
-	line-height: 2.5em;
-
-	.tag-asset-count {
-		clip: rect(0 0 0 0);
-		position: absolute;
-	}
-}
-
 .tag-selected {
 	color: #000;
 	font-weight: bold;
@@ -302,11 +293,6 @@
 
 .tag-cloud {
 	line-height: 2.5em;
-
-	.tag-asset-count {
-		clip: rect(0 0 0 0);
-		position: absolute;
-	}
 
 	$tag-popularity-font-size: 0.7em;
 

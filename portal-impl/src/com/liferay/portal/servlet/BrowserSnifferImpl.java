@@ -332,9 +332,13 @@ public class BrowserSnifferImpl implements BrowserSniffer {
 		String accept = StringPool.BLANK;
 
 		if (request != null) {
-			accept = (String)request.getAttribute(HttpHeaders.ACCEPT);
+			Object acceptAttribute = request.getAttribute(HttpHeaders.ACCEPT);
 
-			if (accept == null) {
+			if (acceptAttribute instanceof String) {
+				accept = (String)acceptAttribute;
+			}
+
+			if (Validator.isNull(accept)) {
 				String acceptHeader = request.getHeader(HttpHeaders.ACCEPT);
 
 				if (acceptHeader != null) {

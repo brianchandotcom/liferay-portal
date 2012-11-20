@@ -25,7 +25,6 @@ public class AssertDeletedTagDoesNotPersistTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Blogs Tags Test Page");
 		selenium.clickAt("link=Blogs Tags Test Page",
 			RuntimeVariables.replace("Blogs Tags Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -35,7 +34,6 @@ public class AssertDeletedTagDoesNotPersistTest extends BaseTestCase {
 			RuntimeVariables.replace("Tags Blog Entry1 Title"));
 		selenium.waitForPageToLoad("30000");
 		assertFalse(selenium.isTextPresent("selenium2 liferay2"));
-		selenium.waitForVisible("link=Blogs Tags Test Page");
 		selenium.clickAt("link=Blogs Tags Test Page",
 			RuntimeVariables.replace("Blogs Tags Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -47,7 +45,6 @@ public class AssertDeletedTagDoesNotPersistTest extends BaseTestCase {
 			RuntimeVariables.replace("Tags Blog Entry2 Title"));
 		selenium.waitForPageToLoad("30000");
 		assertFalse(selenium.isTextPresent("selenium2 liferay2"));
-		selenium.waitForVisible("link=Blogs Tags Test Page");
 		selenium.clickAt("link=Blogs Tags Test Page",
 			RuntimeVariables.replace("Blogs Tags Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -60,7 +57,6 @@ public class AssertDeletedTagDoesNotPersistTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertFalse(selenium.isTextPresent("selenium2 liferay2"));
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Blogs Tags Test Page");
 		selenium.clickAt("link=Blogs Tags Test Page",
 			RuntimeVariables.replace("Blogs Tags Test Page"));
 		selenium.waitForPageToLoad("30000");

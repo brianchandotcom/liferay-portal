@@ -25,7 +25,14 @@ public class AssertTagsInTagsAdminTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent("link=Control Panel");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
+		selenium.waitForVisible("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
@@ -40,5 +47,7 @@ public class AssertTagsInTagsAdminTest extends BaseTestCase {
 			selenium.getText("xPath=(//span[@class='tag-item']/a)[3]"));
 		assertEquals(RuntimeVariables.replace("selenium4 liferay4"),
 			selenium.getText("xPath=(//span[@class='tag-item']/a)[4]"));
+		assertEquals(RuntimeVariables.replace("test"),
+			selenium.getText("xPath=(//span[@class='tag-item']/a)[5]"));
 	}
 }

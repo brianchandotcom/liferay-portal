@@ -2959,9 +2959,15 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 	private static final String _FINDER_COLUMN_UUID_UUID_1 = "lock.uuid IS NULL";
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "lock.uuid = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(lock.uuid IS NULL OR lock.uuid = ?)";
+	private static final String _FINDER_COLUMN_UUID_UUID_1_ = "lock.uuid_ IS NULL";
+	private static final String _FINDER_COLUMN_UUID_UUID_2_ = "lock.uuid_ = ?";
+	private static final String _FINDER_COLUMN_UUID_UUID_3_ = "(lock.uuid_ IS NULL OR lock.uuid_ = ?)";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "lock.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "lock.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(lock.uuid IS NULL OR lock.uuid = ?) AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_1_ = "lock.uuid_ IS NULL AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_2_ = "lock.uuid_ = ? AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_3_ = "(lock.uuid_ IS NULL OR lock.uuid_ = ?) AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "lock.companyId = ?";
 	private static final String _FINDER_COLUMN_LTEXPIRATIONDATE_EXPIRATIONDATE_1 =
 		"lock.expirationDate < NULL";
@@ -2973,12 +2979,18 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 	private static final String _FINDER_COLUMN_C_K_KEY_1 = "lock.key IS NULL";
 	private static final String _FINDER_COLUMN_C_K_KEY_2 = "lock.key = ?";
 	private static final String _FINDER_COLUMN_C_K_KEY_3 = "(lock.key IS NULL OR lock.key = ?)";
+	private static final String _FINDER_COLUMN_C_K_KEY_1_ = "lock.key_ IS NULL";
+	private static final String _FINDER_COLUMN_C_K_KEY_2_ = "lock.key_ = ?";
+	private static final String _FINDER_COLUMN_C_K_KEY_3_ = "(lock.key_ IS NULL OR lock.key_ = ?)";
 	private static final String _FINDER_COLUMN_C_K_O_CLASSNAME_1 = "lock.className IS NULL AND ";
 	private static final String _FINDER_COLUMN_C_K_O_CLASSNAME_2 = "lock.className = ? AND ";
 	private static final String _FINDER_COLUMN_C_K_O_CLASSNAME_3 = "(lock.className IS NULL OR lock.className = ?) AND ";
 	private static final String _FINDER_COLUMN_C_K_O_KEY_1 = "lock.key IS NULL AND ";
 	private static final String _FINDER_COLUMN_C_K_O_KEY_2 = "lock.key = ? AND ";
 	private static final String _FINDER_COLUMN_C_K_O_KEY_3 = "(lock.key IS NULL OR lock.key = ?) AND ";
+	private static final String _FINDER_COLUMN_C_K_O_KEY_1_ = "lock.key_ IS NULL AND ";
+	private static final String _FINDER_COLUMN_C_K_O_KEY_2_ = "lock.key_ = ? AND ";
+	private static final String _FINDER_COLUMN_C_K_O_KEY_3_ = "(lock.key_ IS NULL OR lock.key_ = ?) AND ";
 	private static final String _FINDER_COLUMN_C_K_O_OWNER_1 = "lock.owner IS NULL";
 	private static final String _FINDER_COLUMN_C_K_O_OWNER_2 = "lock.owner = ?";
 	private static final String _FINDER_COLUMN_C_K_O_OWNER_3 = "(lock.owner IS NULL OR lock.owner = ?)";

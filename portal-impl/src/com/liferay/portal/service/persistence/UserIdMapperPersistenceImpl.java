@@ -1857,9 +1857,15 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 	private static final String _FINDER_COLUMN_U_T_TYPE_1 = "userIdMapper.type IS NULL";
 	private static final String _FINDER_COLUMN_U_T_TYPE_2 = "userIdMapper.type = ?";
 	private static final String _FINDER_COLUMN_U_T_TYPE_3 = "(userIdMapper.type IS NULL OR userIdMapper.type = ?)";
+	private static final String _FINDER_COLUMN_U_T_TYPE_1_ = "userIdMapper.type_ IS NULL";
+	private static final String _FINDER_COLUMN_U_T_TYPE_2_ = "userIdMapper.type_ = ?";
+	private static final String _FINDER_COLUMN_U_T_TYPE_3_ = "(userIdMapper.type_ IS NULL OR userIdMapper.type_ = ?)";
 	private static final String _FINDER_COLUMN_T_E_TYPE_1 = "userIdMapper.type IS NULL AND ";
 	private static final String _FINDER_COLUMN_T_E_TYPE_2 = "userIdMapper.type = ? AND ";
 	private static final String _FINDER_COLUMN_T_E_TYPE_3 = "(userIdMapper.type IS NULL OR userIdMapper.type = ?) AND ";
+	private static final String _FINDER_COLUMN_T_E_TYPE_1_ = "userIdMapper.type_ IS NULL AND ";
+	private static final String _FINDER_COLUMN_T_E_TYPE_2_ = "userIdMapper.type_ = ? AND ";
+	private static final String _FINDER_COLUMN_T_E_TYPE_3_ = "(userIdMapper.type_ IS NULL OR userIdMapper.type_ = ?) AND ";
 	private static final String _FINDER_COLUMN_T_E_EXTERNALUSERID_1 = "userIdMapper.externalUserId IS NULL";
 	private static final String _FINDER_COLUMN_T_E_EXTERNALUSERID_2 = "userIdMapper.externalUserId = ?";
 	private static final String _FINDER_COLUMN_T_E_EXTERNALUSERID_3 = "(userIdMapper.externalUserId IS NULL OR userIdMapper.externalUserId = ?)";

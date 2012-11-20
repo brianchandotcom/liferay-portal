@@ -2528,10 +2528,16 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 	private static final String _FINDER_COLUMN_C_K_KEY_1 = "assetCategoryProperty.key IS NULL";
 	private static final String _FINDER_COLUMN_C_K_KEY_2 = "assetCategoryProperty.key = ?";
 	private static final String _FINDER_COLUMN_C_K_KEY_3 = "(assetCategoryProperty.key IS NULL OR assetCategoryProperty.key = ?)";
+	private static final String _FINDER_COLUMN_C_K_KEY_1_ = "assetCategoryProperty.key_ IS NULL";
+	private static final String _FINDER_COLUMN_C_K_KEY_2_ = "assetCategoryProperty.key_ = ?";
+	private static final String _FINDER_COLUMN_C_K_KEY_3_ = "(assetCategoryProperty.key_ IS NULL OR assetCategoryProperty.key_ = ?)";
 	private static final String _FINDER_COLUMN_CA_K_CATEGORYID_2 = "assetCategoryProperty.categoryId = ? AND ";
 	private static final String _FINDER_COLUMN_CA_K_KEY_1 = "assetCategoryProperty.key IS NULL";
 	private static final String _FINDER_COLUMN_CA_K_KEY_2 = "assetCategoryProperty.key = ?";
 	private static final String _FINDER_COLUMN_CA_K_KEY_3 = "(assetCategoryProperty.key IS NULL OR assetCategoryProperty.key = ?)";
+	private static final String _FINDER_COLUMN_CA_K_KEY_1_ = "assetCategoryProperty.key_ IS NULL";
+	private static final String _FINDER_COLUMN_CA_K_KEY_2_ = "assetCategoryProperty.key_ = ?";
+	private static final String _FINDER_COLUMN_CA_K_KEY_3_ = "(assetCategoryProperty.key_ IS NULL OR assetCategoryProperty.key_ = ?)";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "assetCategoryProperty.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No AssetCategoryProperty exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No AssetCategoryProperty exists with the key {";

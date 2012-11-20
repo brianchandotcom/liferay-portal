@@ -1436,6 +1436,9 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 	private static final String _FINDER_COLUMN_U_T_TYPE_1 = "announcementsDelivery.type IS NULL";
 	private static final String _FINDER_COLUMN_U_T_TYPE_2 = "announcementsDelivery.type = ?";
 	private static final String _FINDER_COLUMN_U_T_TYPE_3 = "(announcementsDelivery.type IS NULL OR announcementsDelivery.type = ?)";
+	private static final String _FINDER_COLUMN_U_T_TYPE_1_ = "announcementsDelivery.type_ IS NULL";
+	private static final String _FINDER_COLUMN_U_T_TYPE_2_ = "announcementsDelivery.type_ = ?";
+	private static final String _FINDER_COLUMN_U_T_TYPE_3_ = "(announcementsDelivery.type_ IS NULL OR announcementsDelivery.type_ = ?)";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "announcementsDelivery.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No AnnouncementsDelivery exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No AnnouncementsDelivery exists with the key {";

@@ -6524,14 +6524,14 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		query.append(_FINDER_COLUMN_G_P_T_PRIVATELAYOUT_2);
 
 		if (type == null) {
-			query.append(_FINDER_COLUMN_G_P_T_TYPE_1);
+			query.append(_FINDER_COLUMN_G_P_T_TYPE_1_);
 		}
 		else {
 			if (type.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_G_P_T_TYPE_3);
+				query.append(_FINDER_COLUMN_G_P_T_TYPE_3_);
 			}
 			else {
-				query.append(_FINDER_COLUMN_G_P_T_TYPE_2);
+				query.append(_FINDER_COLUMN_G_P_T_TYPE_2_);
 			}
 		}
 
@@ -6669,14 +6669,14 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		query.append(_FINDER_COLUMN_G_P_T_PRIVATELAYOUT_2);
 
 		if (type == null) {
-			query.append(_FINDER_COLUMN_G_P_T_TYPE_1);
+			query.append(_FINDER_COLUMN_G_P_T_TYPE_1_);
 		}
 		else {
 			if (type.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_G_P_T_TYPE_3);
+				query.append(_FINDER_COLUMN_G_P_T_TYPE_3_);
 			}
 			else {
-				query.append(_FINDER_COLUMN_G_P_T_TYPE_2);
+				query.append(_FINDER_COLUMN_G_P_T_TYPE_2_);
 			}
 		}
 
@@ -8337,14 +8337,14 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		query.append(_FINDER_COLUMN_G_P_T_PRIVATELAYOUT_2);
 
 		if (type == null) {
-			query.append(_FINDER_COLUMN_G_P_T_TYPE_1);
+			query.append(_FINDER_COLUMN_G_P_T_TYPE_1_);
 		}
 		else {
 			if (type.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_G_P_T_TYPE_3);
+				query.append(_FINDER_COLUMN_G_P_T_TYPE_3_);
 			}
 			else {
-				query.append(_FINDER_COLUMN_G_P_T_TYPE_2);
+				query.append(_FINDER_COLUMN_G_P_T_TYPE_2_);
 			}
 		}
 
@@ -8672,13 +8672,22 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	private static final String _FINDER_COLUMN_UUID_UUID_1 = "layout.uuid IS NULL";
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "layout.uuid = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(layout.uuid IS NULL OR layout.uuid = ?)";
+	private static final String _FINDER_COLUMN_UUID_UUID_1_ = "layout.uuid_ IS NULL";
+	private static final String _FINDER_COLUMN_UUID_UUID_2_ = "layout.uuid_ = ?";
+	private static final String _FINDER_COLUMN_UUID_UUID_3_ = "(layout.uuid_ IS NULL OR layout.uuid_ = ?)";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_1 = "layout.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_2 = "layout.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_3 = "(layout.uuid IS NULL OR layout.uuid = ?) AND ";
+	private static final String _FINDER_COLUMN_UUID_G_UUID_1_ = "layout.uuid_ IS NULL AND ";
+	private static final String _FINDER_COLUMN_UUID_G_UUID_2_ = "layout.uuid_ = ? AND ";
+	private static final String _FINDER_COLUMN_UUID_G_UUID_3_ = "(layout.uuid_ IS NULL OR layout.uuid_ = ?) AND ";
 	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 = "layout.groupId = ?";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "layout.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "layout.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(layout.uuid IS NULL OR layout.uuid = ?) AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_1_ = "layout.uuid_ IS NULL AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_2_ = "layout.uuid_ = ? AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_3_ = "(layout.uuid_ IS NULL OR layout.uuid_ = ?) AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "layout.companyId = ?";
 	private static final String _FINDER_COLUMN_GROUPID_GROUPID_2 = "layout.groupId = ?";
 	private static final String _FINDER_COLUMN_COMPANYID_COMPANYID_2 = "layout.companyId = ?";
@@ -8713,6 +8722,9 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	private static final String _FINDER_COLUMN_G_P_T_TYPE_1 = "layout.type IS NULL";
 	private static final String _FINDER_COLUMN_G_P_T_TYPE_2 = "layout.type = ?";
 	private static final String _FINDER_COLUMN_G_P_T_TYPE_3 = "(layout.type IS NULL OR layout.type = ?)";
+	private static final String _FINDER_COLUMN_G_P_T_TYPE_1_ = "layout.type_ IS NULL";
+	private static final String _FINDER_COLUMN_G_P_T_TYPE_2_ = "layout.type_ = ?";
+	private static final String _FINDER_COLUMN_G_P_T_TYPE_3_ = "(layout.type_ IS NULL OR layout.type_ = ?)";
 	private static final String _FINDER_COLUMN_G_P_SPLU_GROUPID_2 = "layout.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_P_SPLU_PRIVATELAYOUT_2 = "layout.privateLayout = ? AND ";
 	private static final String _FINDER_COLUMN_G_P_SPLU_SOURCEPROTOTYPELAYOUTUUID_1 =

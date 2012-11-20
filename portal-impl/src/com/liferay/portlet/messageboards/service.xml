@@ -512,7 +512,7 @@
 		<finder name="ThreadId" return-type="Collection">
 			<finder-column name="threadId" />
 		</finder>
-		<finder name="U_T" return-type="MBThreadFlag">
+		<finder name="U_T" return-type="MBThreadFlag" unique="true">
 			<finder-column name="userId" />
 			<finder-column name="threadId" />
 		</finder>

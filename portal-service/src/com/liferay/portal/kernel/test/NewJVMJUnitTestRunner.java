@@ -88,6 +88,8 @@ public class NewJVMJUnitTestRunner extends BlockJUnit4ClassRunner {
 			arguments.add("-Dnet.sourceforge.cobertura.datafile=" + fileName);
 		}
 
+		arguments.add("-Djava.net.preferIPv4Stack=true");
+
 		return arguments;
 	}
 

@@ -26,20 +26,21 @@ public class NavigationMacros extends BaseMacros {
 		super(liferaySelenium);
 	}
 
-	public void navigateControlPanelPage(String page) throws Exception {
+	public void navigateControlPanelPage(String portlet)
+		throws Exception {
 		HomeActions homeActions = new HomeActions(selenium);
 
 		homeActions.open("URL_GUEST", null);
 		homeActions.mouseOver("GOTO_LINK", null);
 		homeActions.click("GOTO_LINK_CONTROL_PANEL", null);
-		homeActions.click("link=" + page + "", page);
+		homeActions.click("link=" + portlet + "", portlet);
 	}
 
-	public void navigatePortletPage(String page) throws Exception {
+	public void navigatePortletPage(String portlet) throws Exception {
 		HomeActions homeActions = new HomeActions(selenium);
 
 		homeActions.open("URL_GUEST", null);
-		homeActions.click("link=" + page + " Test Page",
-			"" + page + " Test Page");
+		homeActions.click("link=" + portlet + " Test Page",
+			"" + portlet + " Test Page");
 	}
 }

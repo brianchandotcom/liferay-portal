@@ -1,13 +1,21 @@
 <macros>
-	<macrodef name="navigateControlPanelPage" params="page">
+	<macrodef
+		name="navigateControlPanelPage"
+		description="Navigate to the Control Panel ${portlet} Portlet in the Guest Community."
+		params="portlet"
+	>
 		<action name="Home" command="open" path="URL_GUEST" />
 		<action name="Home" command="mouseOver" path="GOTO_LINK" />
 		<action name="Home" command="click" path="GOTO_LINK_CONTROL_PANEL" />
-		<action name="Home" command="click" locator="link=${page}" value="${page}" />
+		<action name="Home" command="click" locator="link=${portlet}" value="${portlet}" />
 	</macrodef>
 
-	<macrodef name="navigatePortletPage" params="page">
+	<macrodef
+		name="navigatePortletPage"
+		description="Navigate to the ${portlet} Portlet in the Guest Community."
+		params="portlet"
+	>
 		<action name="Home" command="open" path="URL_GUEST" />
-		<action name="Home" command="click" locator="link=${page} Test Page" value="${page} Test Page" />
+		<action name="Home" command="click" locator="link=${portlet} Test Page" value="${portlet} Test Page" />
 	</macrodef>
 </macros>

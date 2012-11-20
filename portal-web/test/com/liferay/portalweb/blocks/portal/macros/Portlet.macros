@@ -1,5 +1,9 @@
 <macros>
-	<macrodef name="addPortlet" params="portlet">
+	<macrodef
+		name="addPortlet"
+		description="Add the ${portlet} Portlet to the ${portlet} Test Page in the Guest Community."
+		params="portlet"
+	>
 		<macro name="Navigation" command="navigatePortletPage">
 			<param name="page" value="${portlet}" />
 		</macro>

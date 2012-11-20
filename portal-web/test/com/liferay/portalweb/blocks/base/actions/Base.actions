@@ -1,0 +1,96 @@
+<actions>
+	<actiondef
+		name="assertChecked"
+		description="In the ${PATH.PAGE_NAME}, assert that the ${PATH.DESCRIPTION} is checked."
+	/>
+
+	<actiondef
+		name="assertElementNotPresent"
+		description="In the ${PATH.PAGE_NAME}, assert that the ${PATH.DESCRIPTION} is NOT present."
+	/>
+
+	<actiondef
+		name="assertElementPresent"
+		description="In the ${PATH.PAGE_NAME}, assert that the ${PATH.DESCRIPTION} is present."
+	/>
+
+	<actiondef
+		name="assertNotChecked"
+		description="In the ${PATH.PAGE_NAME}, assert that the ${PATH.DESCRIPTION} is NOT checked."
+	/>
+
+	<actiondef
+		name="assertTextEquals"
+		description="In the ${PATH.PAGE_NAME}, assert that the ${PATH.DESCRIPTION} has the text value ${PATH.VALUE}."
+	/>
+
+	<actiondef
+		name="assertTextNotEquals"
+		description="In the ${PATH.PAGE_NAME}, assert that the ${PATH.DESCRIPTION} DOES NOT have the text value ${PATH.VALUE}."
+	/>
+
+	<actiondef
+		name="assertTextNotPresent"
+		description="In the ${PATH.PAGE_NAME}, assert that the value ${PATH.VALUE} DOES NOT show up on the page."
+	/>
+
+	<actiondef
+		name="assertTextPresent"
+		description="In the ${PATH.PAGE_NAME}, assert that the value ${PATH.VALUE} shows up on the page."
+	/>
+
+	<actiondef
+		name="check"
+		description="In the ${PATH.PAGE_NAME}, checks off the ${PATH.DESCRIPTION}."
+	/>
+
+	<actiondef
+		name="click"
+		description="In the ${PATH.PAGE_NAME}, click on the ${PATH.DESCRIPTION} which should have a text value of ${PATH.VALUE}."
+	/>
+
+	<actiondef
+		name="close"
+		description="While navigating the ${PATH.PAGE_NAME}, close selected window."
+	/>
+
+	<actiondef
+		name="copy"
+		description="In the ${PATH.PAGE_NAME}, copy the text found at the ${PATH.DESCRIPTION}."
+	/>
+
+	<actiondef
+		name="confirm"
+		description="In the ${PATH.PAGE_NAME}, click okay on the confirmation window which should state the following: ${PATH.DESCRIPTION}."
+	/>
+
+	<actiondef
+		name="mouseOver"
+		description="In the ${PATH.PAGE_NAME}, mouse over the ${PATH.DESCRIPTION} which should have a text value of ${PATH.VALUE}."
+	/>
+
+	<actiondef
+		name="open"
+		description="While navigating the ${PATH.PAGE_NAME}, open a window to the URL: ${PATH.TARGET}."
+	/>
+
+	<actiondef
+		name="paste"
+		description="In the ${PATH.PAGE_NAME}, paste the copied text to the ${PATH.DESCRIPTION}."
+	/>
+
+	<actiondef
+		name="select"
+		description="In the ${PATH.PAGE_NAME}, select ${PATH.VALUE} from the ${PATH.DESCRIPTION}."
+	/>
+
+	<actiondef
+		name="type"
+		description="In the ${PATH.PAGE_NAME}, type ${PATH.VALUE} into the ${PATH.DESCRIPTION}."
+	/>
+
+	<actiondef
+		name="uncheck"
+		description="In the ${PATH.PAGE_NAME}, unchecks the ${PATH.DESCRIPTION}."
+	/>
+</actions>

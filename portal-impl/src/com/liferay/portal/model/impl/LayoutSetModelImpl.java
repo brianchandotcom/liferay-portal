@@ -550,6 +550,13 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 		_layoutSetPrototypeLinkEnabled = layoutSetPrototypeLinkEnabled;
 	}
 
+	public java.lang.String getVirtualHostname() {
+		return null;
+	}
+
+	public void setVirtualHostname(java.lang.String virtualHostname) {
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -759,6 +766,8 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 		}
 
 		layoutSetCacheModel.layoutSetPrototypeLinkEnabled = getLayoutSetPrototypeLinkEnabled();
+
+		layoutSetCacheModel._virtualHostname = getVirtualHostname();
 
 		return layoutSetCacheModel;
 	}

@@ -107,4 +107,6 @@ public interface Company extends CompanyModel, PersistedModel {
 	public void setKey(java.lang.String key);
 
 	public void setKeyObj(java.security.Key keyObj);
+
+	public void setVirtualHostname(java.lang.String virtualHostname);
 }

@@ -133,6 +133,7 @@
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
+			<transient name="virtualHostname" />
 		</attributes>
 	</mapped-superclass>
 	<mapped-superclass class="com.liferay.portal.model.impl.ContactModelImpl">
@@ -459,6 +460,7 @@
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
+			<transient name="virtualHostname" />
 		</attributes>
 	</mapped-superclass>
 	<mapped-superclass class="com.liferay.portal.model.impl.LayoutSetBranchModelImpl">
@@ -3702,6 +3704,7 @@
 		<table name="Company" />
 		<attributes>
 			<transient name="keyObj" />
+			<transient name="virtualHostname" />
 		</attributes>
 	</entity>
 	<entity class="com.liferay.portal.model.impl.ContactImpl" name="Contact">
@@ -3755,6 +3758,7 @@
 		<table name="LayoutSet" />
 		<attributes>
 			<transient name="settingsProperties" />
+			<transient name="virtualHostname" />
 		</attributes>
 	</entity>
 	<entity class="com.liferay.portal.model.impl.LayoutSetBranchImpl" name="LayoutSetBranch">

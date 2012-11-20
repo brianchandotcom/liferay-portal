@@ -484,21 +484,21 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 			groupId, privateLayout);
 
 		if (Validator.isNotNull(virtualHostname)) {
-			try {
-				VirtualHost virtualHost = virtualHostPersistence.findByHostname(
-					virtualHostname);
+			VirtualHost virtualHost = virtualHostPersistence.fetchByHostname(
+				virtualHostname);
 
+			if (virtualHost == null) {
+				virtualHostLocalService.updateVirtualHost(
+					layoutSet.getCompanyId(), layoutSet.getLayoutSetId(),
+					virtualHostname);
+			}
+			else {
 				if ((virtualHost.getCompanyId() != layoutSet.getCompanyId()) ||
 					(virtualHost.getLayoutSetId() !=
 						layoutSet.getLayoutSetId())) {
 
 					throw new LayoutSetVirtualHostException();
 				}
-			}
-			catch (NoSuchVirtualHostException nsvhe) {
-				virtualHostLocalService.updateVirtualHost(
-					layoutSet.getCompanyId(), layoutSet.getLayoutSetId(),
-					virtualHostname);
 			}
 		}
 		else {

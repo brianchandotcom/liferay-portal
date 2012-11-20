@@ -158,10 +158,13 @@ public class LayoutSetCacheModel implements CacheModel<LayoutSet>,
 
 		layoutSetImpl.resetOriginalValues();
 
+		layoutSetImpl.setVirtualHostname(_virtualHostname);
+
 		return layoutSetImpl;
 	}
 
-	public void readExternal(ObjectInput objectInput) throws IOException {
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
 		layoutSetId = objectInput.readLong();
 		groupId = objectInput.readLong();
 		companyId = objectInput.readLong();
@@ -179,6 +182,8 @@ public class LayoutSetCacheModel implements CacheModel<LayoutSet>,
 		settings = objectInput.readUTF();
 		layoutSetPrototypeUuid = objectInput.readUTF();
 		layoutSetPrototypeLinkEnabled = objectInput.readBoolean();
+
+		_virtualHostname = (java.lang.String)objectInput.readObject();
 	}
 
 	public void writeExternal(ObjectOutput objectOutput)
@@ -244,6 +249,8 @@ public class LayoutSetCacheModel implements CacheModel<LayoutSet>,
 		}
 
 		objectOutput.writeBoolean(layoutSetPrototypeLinkEnabled);
+
+		objectOutput.writeObject(_virtualHostname);
 	}
 
 	public long layoutSetId;
@@ -263,4 +270,5 @@ public class LayoutSetCacheModel implements CacheModel<LayoutSet>,
 	public String settings;
 	public String layoutSetPrototypeUuid;
 	public boolean layoutSetPrototypeLinkEnabled;
+	public java.lang.String _virtualHostname;
 }

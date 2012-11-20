@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.CacheField;
 import com.liferay.portal.model.ColorScheme;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.LayoutSet;
@@ -157,21 +158,25 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 	}
 
 	public String getVirtualHostname() {
-		try {
-			VirtualHost virtualHost =
-				VirtualHostLocalServiceUtil.fetchVirtualHost(
-					getCompanyId(), getLayoutSetId());
+		if (_virtualHostname == null) {
+			try {
+				VirtualHost virtualHost =
+					VirtualHostLocalServiceUtil.fetchVirtualHost(
+						getCompanyId(), getLayoutSetId());
 
-			if (virtualHost == null) {
-				return StringPool.BLANK;
+				if (virtualHost == null) {
+					_virtualHostname = StringPool.BLANK;
+				}
+				else {
+					_virtualHostname = virtualHost.getHostname();
+				}
 			}
-			else {
-				return virtualHost.getHostname();
+			catch (Exception e) {
+				_virtualHostname = StringPool.BLANK;
 			}
 		}
-		catch (Exception e) {
-			return StringPool.BLANK;
-		}
+
+		return _virtualHostname;
 	}
 
 	public ColorScheme getWapColorScheme() throws SystemException {
@@ -208,6 +213,11 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 		super.setSettings(_settingsProperties.toString());
 	}
 
+	@Override
+	public void setVirtualHostname(String virtualHostname) {
+		_virtualHostname = virtualHostname;
+	}
+
 	protected Theme getTheme(String device) throws SystemException {
 		boolean controlPanel = false;
 
@@ -238,5 +248,8 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 	private static Log _log = LogFactoryUtil.getLog(LayoutSetImpl.class);
 
 	private UnicodeProperties _settingsProperties;
+
+	@CacheField
+	private String _virtualHostname;
 
 }

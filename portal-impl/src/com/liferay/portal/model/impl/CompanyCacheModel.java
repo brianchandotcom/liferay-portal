@@ -104,6 +104,8 @@ public class CompanyCacheModel implements CacheModel<Company>, Externalizable {
 
 		companyImpl.setKeyObj(_keyObj);
 
+		companyImpl.setVirtualHostname(_virtualHostname);
+
 		return companyImpl;
 	}
 
@@ -121,6 +123,7 @@ public class CompanyCacheModel implements CacheModel<Company>, Externalizable {
 		active = objectInput.readBoolean();
 
 		_keyObj = (java.security.Key)objectInput.readObject();
+		_virtualHostname = (java.lang.String)objectInput.readObject();
 	}
 
 	public void writeExternal(ObjectOutput objectOutput)
@@ -162,6 +165,7 @@ public class CompanyCacheModel implements CacheModel<Company>, Externalizable {
 		objectOutput.writeBoolean(active);
 
 		objectOutput.writeObject(_keyObj);
+		objectOutput.writeObject(_virtualHostname);
 	}
 
 	public long companyId;
@@ -175,4 +179,5 @@ public class CompanyCacheModel implements CacheModel<Company>, Externalizable {
 	public int maxUsers;
 	public boolean active;
 	public java.security.Key _keyObj;
+	public java.lang.String _virtualHostname;
 }

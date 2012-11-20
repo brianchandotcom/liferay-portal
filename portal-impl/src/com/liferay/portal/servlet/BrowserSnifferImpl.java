@@ -354,9 +354,12 @@ public class BrowserSnifferImpl implements BrowserSniffer {
 		String userAgent = StringPool.BLANK;
 
 		if (request != null) {
-			userAgent = (String)request.getAttribute(HttpHeaders.USER_AGENT);
+			Object userAgentAttribute = request.getAttribute(
+				HttpHeaders.USER_AGENT);
 
-			if (userAgent == null) {
+			if ((userAgentAttribute == null) ||
+				!(userAgentAttribute instanceof String)) {
+
 				String userAgentHeader = request.getHeader(
 					HttpHeaders.USER_AGENT);
 

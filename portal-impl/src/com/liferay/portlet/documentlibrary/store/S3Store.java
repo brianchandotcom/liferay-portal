@@ -595,7 +595,11 @@ public class S3Store extends BaseStore {
 		sb.append(companyId);
 		sb.append(StringPool.SLASH);
 		sb.append(repositoryId);
-		sb.append(StringPool.SLASH);
+
+		if (!fileName.startsWith(StringPool.SLASH)) {
+			sb.append(StringPool.SLASH);
+		}
+
 		sb.append(fileName);
 		sb.append(StringPool.SLASH);
 
@@ -611,7 +615,11 @@ public class S3Store extends BaseStore {
 		sb.append(companyId);
 		sb.append(StringPool.SLASH);
 		sb.append(repositoryId);
-		sb.append(StringPool.SLASH);
+
+		if (!fileName.startsWith(StringPool.SLASH)) {
+			sb.append(StringPool.SLASH);
+		}
+
 		sb.append(fileName);
 		sb.append(StringPool.SLASH);
 		sb.append(versionLabel);

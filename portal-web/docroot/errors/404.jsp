@@ -14,8 +14,14 @@
  */
 --%>
 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<%@ page contentType="text/html; charset=UTF-8" %>
+
+<%@ page import="com.liferay.portal.kernel.language.LanguageUtil" %>
 <%@ page import="com.liferay.portal.kernel.log.Log" %>
 <%@ page import="com.liferay.portal.kernel.log.LogFactoryUtil" %>
+<%@ page import="com.liferay.portal.kernel.servlet.HttpHeaders" %>
 <%@ page import="com.liferay.portal.kernel.util.JavaConstants" %>
 <%@ page import="com.liferay.portal.model.LayoutSet" %>
 <%@ page import="com.liferay.portal.util.PortalUtil" %>
@@ -29,7 +35,11 @@
 // To work around this issue, we use a URL without a session id for meta-refresh
 // and rely on the load event on the body element to properly rewrite the URL.
 
+// However, if the original request was an AJAX request, sending a redirect is
+// less than ideal. In this case we'll simply print our simple error output.
+
 String redirect = null;
+boolean doRedirect = true;
 
 LayoutSet layoutSet = (LayoutSet)request.getAttribute(WebKeys.VIRTUAL_HOST_LAYOUT_SET);
 
@@ -44,37 +54,64 @@ if (!request.isRequestedSessionIdFromCookie()) {
 	redirect = PortalUtil.getURLWithSessionId(redirect, session.getId());
 }
 
+String xRequestWith = request.getHeader(HttpHeaders.X_REQUESTED_WITH);
+
+if (HttpHeaders.XML_HTTP_REQUEST.equalsIgnoreCase(xRequestWith)) {
+	//doRedirect = false;
+}
+
 response.setStatus(HttpServletResponse.SC_NOT_FOUND);
 
-if (_log.isWarnEnabled()) {
-	Throwable t = (Throwable)request.getAttribute(JavaConstants.JAVAX_SERVLET_ERROR_EXCEPTION);
-	Object msg = request.getAttribute(JavaConstants.JAVAX_SERVLET_ERROR_MESSAGE);
-	String uri = (String)request.getAttribute(JavaConstants.JAVAX_SERVLET_ERROR_REQUEST_URI);
+Throwable t = (Throwable)request.getAttribute(JavaConstants.JAVAX_SERVLET_ERROR_EXCEPTION);
+Object msg = request.getAttribute(JavaConstants.JAVAX_SERVLET_ERROR_MESSAGE);
+String uri = (String)request.getAttribute(JavaConstants.JAVAX_SERVLET_ERROR_REQUEST_URI);
 
+if (_log.isWarnEnabled()) {
 	_log.warn("{msg=\"" + msg + "\", uri=" + uri + "}", t);
 }
 %>
 
 <html>
 
-<head>
-	<title></title>
-	<meta content="1; url=<%= redirect %>" http-equiv="refresh" />
-</head>
+<c:if test="<%= doRedirect %>">
 
-<body onload="javascript:location.replace('<%= redirect %>')">
+	<head>
+		<title></title>
+		<meta content="1; url=<%= redirect %>" http-equiv="refresh" />
+	</head>
 
-<!--
-The numbers below are used to fill up space so that this works properly in IE.
-See http://support.microsoft.com/default.aspx?scid=kb;en-us;Q294807 for more
-information on why this is necessary.
+	<body onload="javascript:location.replace('<%= redirect %>')">
 
-12345678901234567890123456789012345678901234567890123456789012345678901234567890
-12345678901234567890123456789012345678901234567890123456789012345678901234567890
-12345678901234567890123456789012345678901234567890123456789012345678901234567890
--->
+	<!--
+	The numbers below are used to fill up space so that this works properly in IE.
+	See http://support.microsoft.com/default.aspx?scid=kb;en-us;Q294807 for more
+	information on why this is necessary.
 
-</body>
+	12345678901234567890123456789012345678901234567890123456789012345678901234567890
+	12345678901234567890123456789012345678901234567890123456789012345678901234567890
+	12345678901234567890123456789012345678901234567890123456789012345678901234567890
+	-->
+
+	</body>
+
+</c:if>
+<c:if test="<%= !doRedirect %>">
+
+	<head>
+		<title>Http Status 404 - <%= LanguageUtil.get(pageContext, "not-found") %></title>
+	</head>
+
+	<body>
+
+		<h1>Http Status 404 - <%= LanguageUtil.get(pageContext, "not-found") %></h1>
+
+		<p><%= LanguageUtil.get(pageContext, "message") %>: <%= msg %></p>
+
+		<p><%= LanguageUtil.get(pageContext, "resource") %>: <%= uri %></p>
+
+	</body>
+
+</c:if>
 
 </html>
 

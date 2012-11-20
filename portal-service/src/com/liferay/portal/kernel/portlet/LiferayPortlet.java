@@ -124,7 +124,7 @@ public class LiferayPortlet extends GenericPortlet {
 		String successMessage = ParamUtil.getString(
 			actionRequest, "successMessage");
 
-		SessionMessages.add(actionRequest, "request_processed", successMessage);
+		SessionMessages.add(actionRequest, "requestProcessed", successMessage);
 	}
 
 	protected boolean callActionMethod(

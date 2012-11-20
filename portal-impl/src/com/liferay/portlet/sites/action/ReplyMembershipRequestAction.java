@@ -78,7 +78,7 @@ public class ReplyMembershipRequestAction extends PortletAction {
 					new long[] {membershipRequest.getUserId()});
 			}
 
-			SessionMessages.add(actionRequest, "membership_reply_sent");
+			SessionMessages.add(actionRequest, "membershipReplySent");
 
 			sendRedirect(actionRequest, actionResponse);
 		}

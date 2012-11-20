@@ -172,8 +172,7 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 		String successMessage = ParamUtil.getString(
 			portletRequest, "successMessage");
 
-		SessionMessages.add(
-			portletRequest, "request_processed", successMessage);
+		SessionMessages.add(portletRequest, "requestProcessed", successMessage);
 	}
 
 	protected String buildIncludePath(String viewPath) {

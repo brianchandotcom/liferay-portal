@@ -307,14 +307,14 @@ public class CreateAccountAction extends PortletAction {
 
 			if (user.getStatus() == WorkflowConstants.STATUS_APPROVED) {
 				SessionMessages.add(
-					request, "user_added", user.getEmailAddress());
+					request, "userAdded", user.getEmailAddress());
 				SessionMessages.add(
-					request, "user_added_password",
+					request, "userAddedPassword",
 					user.getPasswordUnencrypted());
 			}
 			else {
 				SessionMessages.add(
-					request, "user_pending", user.getEmailAddress());
+					request, "userPending", user.getEmailAddress());
 			}
 		}
 
@@ -443,13 +443,12 @@ public class CreateAccountAction extends PortletAction {
 		// Session messages
 
 		if (user.getStatus() == WorkflowConstants.STATUS_APPROVED) {
-			SessionMessages.add(request, "user_added", user.getEmailAddress());
+			SessionMessages.add(request, "userAdded", user.getEmailAddress());
 			SessionMessages.add(
-				request, "user_added_password", user.getPasswordUnencrypted());
+				request, "userAddedPassword", user.getPasswordUnencrypted());
 		}
 		else {
-			SessionMessages.add(
-				request, "user_pending", user.getEmailAddress());
+			SessionMessages.add(request, "userPending", user.getEmailAddress());
 		}
 
 		// Send redirect

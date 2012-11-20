@@ -203,7 +203,7 @@ public class PortletAction extends Action {
 		String successMessage = ParamUtil.getString(
 			actionRequest, "successMessage");
 
-		SessionMessages.add(actionRequest, "request_processed", successMessage);
+		SessionMessages.add(actionRequest, "requestProcessed", successMessage);
 	}
 
 	protected String getForward(PortletRequest portletRequest) {

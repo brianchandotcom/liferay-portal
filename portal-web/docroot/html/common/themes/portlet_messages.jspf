@@ -58,11 +58,11 @@ else if (group.isStagingGroup()) {
 	</c:choose>
 </c:if>
 
-<c:if test='<%= SessionMessages.contains(renderRequest, "request_processed") && !SessionMessages.contains(renderRequest, portlet.getPortletId() + SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_SUCCESS_MESSAGE) %>'>
+<c:if test='<%= SessionMessages.contains(renderRequest, "requestProcessed") && !SessionMessages.contains(renderRequest, portlet.getPortletId() + SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_SUCCESS_MESSAGE) %>'>
 	<div class="portlet-msg-success">
 
 		<%
-		String successMessage = (String)SessionMessages.get(renderRequest, "request_processed");
+		String successMessage = (String)SessionMessages.get(renderRequest, "requestProcessed");
 		%>
 
 		<c:choose>

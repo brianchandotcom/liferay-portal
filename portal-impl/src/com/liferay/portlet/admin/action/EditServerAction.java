@@ -480,7 +480,7 @@ public class EditServerAction extends PortletAction {
 			unsyncPrintWriter.flush();
 
 			SessionMessages.add(
-				actionRequest, "script_output",
+				actionRequest, "scriptOutput",
 				unsyncByteArrayOutputStream.toString());
 		}
 		catch (ScriptingException se) {

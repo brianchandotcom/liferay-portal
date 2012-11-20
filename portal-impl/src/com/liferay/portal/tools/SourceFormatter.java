@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
@@ -838,6 +839,80 @@ public class SourceFormatter {
 		return content;
 	}
 
+	private static String _fixSessionMessageKey(
+		String fileName, String content, Pattern pattern) {
+
+		Matcher matcher = pattern.matcher(content);
+
+		if (!matcher.find()) {
+			return content;
+		}
+
+		String newContent = content;
+
+		do {
+			String match = matcher.group();
+
+			int x = -1;
+
+			if (pattern.equals(_sessionMessageKeyPattern)) {
+				x = match.indexOf(StringPool.COMMA);
+			}
+			else if (pattern.equals(_taglibSuccessKeyPattern)) {
+				x = match.indexOf("key=");
+			}
+
+			String substring = match.substring(x + 1).trim();
+
+			String quote = StringPool.BLANK;
+
+			if (substring.startsWith(StringPool.APOSTROPHE)) {
+				quote = StringPool.APOSTROPHE;
+			}
+			else if (substring.startsWith(StringPool.QUOTE)) {
+				quote = StringPool.QUOTE;
+			}
+			else {
+				continue;
+			}
+
+			int y = match.indexOf(quote, x + 1);
+			int z = match.indexOf(quote, y + 1);
+
+			if ((x == -1) || (y == -1) || (z == -1)) {
+				continue;
+			}
+
+			String prefix = match.substring(0, y + 1);
+			String suffix = match.substring(z);
+			String oldKey = match.substring(y + 1, z);
+
+			for (char c : oldKey.toCharArray()) {
+				if (!Validator.isChar(c) || !Validator.isDigit(c) ||
+					(c != CharPool.DASH) || (c != CharPool.UNDERLINE)) {
+
+					continue;
+				}
+			}
+
+			String newKey = TextFormatter.format(oldKey, TextFormatter.O);
+
+			newKey = TextFormatter.format(newKey, TextFormatter.M);
+
+			if (newKey.equals(oldKey)) {
+				continue;
+			}
+
+			String oldSub = prefix.concat(oldKey).concat(suffix);
+			String newSub = prefix.concat(newKey).concat(suffix);
+
+			newContent = StringUtil.replaceFirst(newContent, oldSub, newSub);
+		}
+		while (matcher.find());
+
+		return newContent;
+	}
+
 	private static void _formatAntXML() throws DocumentException, IOException {
 		String basedir = "./";
 
@@ -1319,6 +1394,8 @@ public class SourceFormatter {
 			}
 
 			newContent = _fixDataAccessConnection(className, newContent);
+			newContent = _fixSessionMessageKey(
+				fileName, newContent, _sessionMessageKeyPattern);
 
 			newContent = StringUtil.replace(
 				newContent,
@@ -2202,6 +2279,11 @@ public class SourceFormatter {
 					}
 				}
 			}
+
+			newContent = _fixSessionMessageKey(
+				fileName, newContent, _sessionMessageKeyPattern);
+			newContent = _fixSessionMessageKey(
+				fileName, newContent, _taglibSuccessKeyPattern);
 
 			_checkLanguageKeys(fileName, newContent, _languageKeyPattern);
 			_checkLanguageKeys(fileName, newContent, _taglibLanguageKeyPattern);
@@ -4607,6 +4689,8 @@ public class SourceFormatter {
 		"/.*[.]jsp[f]?");
 	private static Pattern _languageKeyPattern = Pattern.compile(
 		"LanguageUtil.(?:get|format)\\([^;%]+|Liferay.Language.get\\('([^']+)");
+	private static Pattern _sessionMessageKeyPattern = Pattern.compile(
+		"SessionMessages.(?:add|contains|get)\\([^;%&|!]+", Pattern.MULTILINE);
 	private static Properties _lineLengthExclusionsProperties;
 	private static Properties _portalLanguageKeysProperties;
 	private static boolean _portalSource;
@@ -4615,6 +4699,8 @@ public class SourceFormatter {
 	private static Pattern _taglibLanguageKeyPattern = Pattern.compile(
 		"(?:confirmation|label|(?:M|m)essage|message key|names|title)=\"[^A-Z" +
 			"<=%\\[\\s]+\"");
+	private static Pattern _taglibSuccessKeyPattern = Pattern.compile(
+		"<liferay-ui:success [^>]+>", Pattern.MULTILINE);
 	private static Pattern _xssPattern = Pattern.compile(
 		"String\\s+([^\\s]+)\\s*=\\s*(Bean)?ParamUtil\\.getString\\(");
 

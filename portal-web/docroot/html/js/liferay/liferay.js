@@ -1,17 +1,11 @@
 Liferay = window.Liferay || {};
 
-;(function(A, Liferay) {
+(function(A, Liferay) {
 	var Lang = A.Lang;
 
 	var owns = A.Object.owns;
 
-	var CONTEXT = themeDisplay.getPathContext();
-
-	var PREFIX_PARAM_NULL_VALUE = '-';
-
-	var REGEX_SELECTOR_ID = /^#/;
-
-	var REGEX_TRIM_SLASH = /^\/|\/$/g;
+	var REGEX_METHOD_GET = /^get$/i;
 
 	Liferay.namespace = A.namespace;
 
@@ -26,353 +20,119 @@ Liferay = window.Liferay || {};
 		true
 	);
 
-	/**
-	 * OPTIONS
-	 *
-	 * Required
-	 * service {string|object}: Either the service name, or an IO configuration object containing a property named service.
-	 *
-	 * Optional
-	 * data {object|node|string}: The data to send to the service. If the object passed is the ID of a form or a form element, the form fields will be serialized and used as the data.
-	 * successCallback {function}: A function to execute when the server returns a response. It receives a JSON object as it's first parameter.
-	 * exceptionCallback {function}: A function to execute when the response from the server contains a service exception. It receives a the exception message as it's first parameter.
-	 */
+	var ServiceUtil = {
+		invoke: function(payload, ioConfig) {
+			var instance = this;
 
-	var Service = function(service, data, successCallback, exceptionCallback, methodType) {
-		var config = {
-			dataType: 'json'
-		};
-
-		var argLength = arguments.length;
-
-		var lastArg = arguments[argLength - 1];
-
-		var method;
-
-		if (argLength >= 1 && Lang.isObject(lastArg, true)) {
-			methodType = lastArg.method || null;
-
-			method = methodType;
-		}
-
-		if (service) {
-			var serviceData = data;
-
-			if (Lang.isObject(service, true)) {
-				var serviceConfig = service;
-
-				var ioConfig = serviceConfig.io;
-
-				if (ioConfig) {
-					A.mix(config, ioConfig, true);
-
-					delete serviceConfig.io;
+			if (ioConfig) {
+				if (!owns(ioConfig, 'cache') && REGEX_METHOD_GET.test(ioConfig.method)) {
+					ioConfig.cache = false;
 				}
-
-				for (var i in serviceConfig) {
-					if (owns(serviceConfig, i)) {
-						service = i;
-						serviceData = serviceConfig[i];
-
-						break;
-					}
-				}
-			}
-
-			if (data) {
-				var typeString = Lang.isString(data);
-
-				if (!typeString && Lang.isFunction(data)) {
-					if (Lang.isFunction(successCallback)) {
-						exceptionCallback = successCallback;
-					}
-
-					successCallback = data;
-
-					serviceData = null;
-				}
-				else if (typeString || (data.nodeType || data._node)) {
-					var formConfig = A.namespace.call(config, 'form');
-
-					if (typeString) {
-						data = data.replace(REGEX_SELECTOR_ID, '');
-					}
-
-					formConfig.id = data._node || data;
-
-					serviceData = null;
-				}
-			}
-
-			config.data = serviceData;
-
-			if (Liferay.PropsValues.NTLM_AUTH_ENABLED && Liferay.Browser.isIe()) {
-				method = 'GET';
-			}
-
-			var callbackConfig = A.namespace.call(config, 'on');
-
-			if (!Lang.isFunction(successCallback)) {
-				successCallback = null;
-			}
-
-			if (!Lang.isFunction(exceptionCallback)) {
-				exceptionCallback = null;
-			}
-
-			if (!callbackConfig.success && successCallback) {
-				callbackConfig.success = function(event) {
-					var responseData = this.get('responseData');
-
-					if ((!responseData || responseData.exception) && exceptionCallback) {
-						var exception = responseData ? responseData.exception : 'The server returned an empty response';
-
-						exceptionCallback.call(this, exception, responseData);
-					}
-					else {
-						successCallback.call(this, responseData);
-					}
-				};
-			}
-		}
-
-		if (service) {
-			service = service.replace(REGEX_TRIM_SLASH, '');
-		}
-
-		if (!service) {
-			throw 'You must specify a service.';
-		}
-
-		if (String(method).toUpperCase() == 'GET') {
-			config.cache = false;
-		}
-
-		config.method = method;
-
-		var prefixedData = {};
-
-		A.Object.each(
-			config.data,
-			function(item, index, collection) {
-				if (Lang.isNull(item) && index.charAt(0) != PREFIX_PARAM_NULL_VALUE) {
-					index = PREFIX_PARAM_NULL_VALUE + index;
-				}
-
-				prefixedData[index] = item;
-			}
-		);
-
-		config.data = prefixedData;
-
-		return Service._ioRequest(Service.URL_BASE + service, config);
-	};
-
-	Service.URL_BASE = CONTEXT + '/api/jsonws/';
-
-	A.mix(
-		Service,
-		{
-			actionUrl: themeDisplay.getPathMain() + '/portal/json_service',
-
-			classNameSuffix: 'ServiceUtil',
-
-			ajax: function(options, callback) {
-				var instance = this;
-
-				options.serviceParameters = Service.getParameters(options);
-
-				options.doAsUserId = themeDisplay.getDoAsUserIdEncoded();
-				options.p_auth = Liferay.authToken;
-
-				var config = {
-					cache: false,
-					data: options,
-					dataType: 'json',
-					on: {}
-				};
-
-				var xHR = null;
 
 				if (Liferay.PropsValues.NTLM_AUTH_ENABLED && Liferay.Browser.isIe()) {
-					config.method = 'GET';
-				}
-
-				if (callback) {
-					config.on.success = function(event, id, obj) {
-						callback.call(this, this.get('responseData'), obj);
-					};
-				}
-				else {
-					config.on.success = function(event, id, obj) {
-						xHR = obj;
-					};
-
-					config.sync = true;
-				}
-
-				instance._ioRequest(instance.actionUrl, config);
-
-				if (xHR) {
-					var value;
-
-					if (typeof xHR.responseText == 'unknown') {
-						var data = config.data;
-
-						value = 'IE6 could not access the response for: ' + data.serviceMethodName;
-					}
-					else {
-						value = eval('(' + xHR.responseText + ')');
-					}
-
-					return value;
-				}
-			},
-
-			bind: function() {
-				var instance = this;
-
-				var args = A.Array(arguments, 0, true);
-
-				args.unshift(Liferay.Service, Liferay);
-
-				return A.bind.apply(A, args);
-			},
-
-			getParameters: function(options) {
-				var instance = this;
-
-				var serviceParameters = [];
-
-				for (var key in options) {
-					if ((key != 'servletContextName') && (key != 'serviceClassName') && (key != 'serviceMethodName') && (key != 'serviceParameterTypes')) {
-						serviceParameters.push(key);
-					}
-				}
-
-				return instance._getJSONParser().stringify(serviceParameters);
-			},
-
-			namespace: function(namespace) {
-				var curLevel = Liferay || {};
-
-				if (typeof namespace == 'string') {
-					var levels = namespace.split('.');
-
-					for (var i = (levels[0] == 'Liferay') ? 1 : 0; i < levels.length; i++) {
-						curLevel[levels[i]] = curLevel[levels[i]] || {};
-						curLevel = curLevel[levels[i]];
-					}
-				}
-				else {
-					curLevel = namespace || {};
-				}
-
-				return curLevel;
-			},
-
-			register: function(serviceName, servicePackage, servletContextName) {
-				var module = Service.namespace(serviceName);
-
-				module.servicePackage = servicePackage.replace(/[.]$/, '') + '.';
-
-				if (servletContextName) {
-					module.servletContextName = servletContextName;
-				}
-
-				return module;
-			},
-
-			registerClass: function(serviceName, className, prototype) {
-				var module = serviceName || {};
-				var moduleClassName = module[className] = {};
-
-				moduleClassName.serviceClassName = module.servicePackage + className + Service.classNameSuffix;
-
-				A.Object.each(
-					prototype,
-					function(item, index, collection) {
-						var handler = item;
-
-						if (!Lang.isFunction(handler)) {
-							handler = function(params, callback) {
-								params.serviceClassName = moduleClassName.serviceClassName;
-								params.serviceMethodName = index;
-
-								if (module.servletContextName) {
-									params.servletContextName = module.servletContextName;
-								}
-
-								return Service.ajax(params, callback);
-							};
-						}
-
-						moduleClassName[index] = handler;
-					}
-				);
-			},
-
-			_getJSONParser: function() {
-				var instance = this;
-
-				if (!instance._JSONParser) {
-					var JSONParser = A.JSON;
-
-					if (!JSONParser) {
-						JSONParser = AUI({}).use('json').JSON;
-					}
-
-					instance._JSONParser = JSONParser;
-				}
-
-				return instance._JSONParser;
-			},
-
-			_ioRequest: function(uri, config) {
-				var instance = this;
-
-				var data = config.data;
-
-				if (!A.Object.owns(data, 'p_auth')) {
-					data.p_auth = Liferay.authToken;
-				}
-
-				if (A.io && A.io.request) {
-					A.io.request(uri, config);
-				}
-				else {
-					A.use(
-						'aui-io-request',
-						function(A) {
-							A.io.request(uri, config);
-						}
-					);
+					ioConfig.method = 'GET';
 				}
 			}
-		},
-		true
-	);
 
-	A.each(
-		['get', 'delete', 'post', 'put', 'update'],
-		function(item, index, collection) {
-			var methodName = item;
-
-			if (item === 'delete') {
-				methodName = 'del';
-			}
-
-			Service[methodName] = A.rbind(
-				'Service',
-				Liferay,
-				{
-					method: item
-				}
+			return A.io.request(
+				themeDisplay.getPathContext() + '/api/jsonws/invoke',
+				A.merge(
+					{
+						data: {
+							cmd: A.JSON.stringify(payload),
+							p_auth: Liferay.authToken
+						},
+						dataType: 'json'
+					},
+					ioConfig
+				)
 			);
-		}
-	);
+		},
 
-	Liferay.Service = Service;
+		parseInvokeArgs: function(args) {
+			var instance = this;
+
+			var payload = args[0];
+
+			var ioConfig = instance.parseIOConfig(args);
+
+			if (Lang.isString(payload)) {
+				payload = instance.parseStringPayload(args);
+			}
+
+			return [ payload, ioConfig ];
+		},
+
+		parseIOConfig: function(args) {
+			var instance = this;
+
+			var payload = args[0];
+
+			var ioConfig = payload.io;
+
+			payload.io = undefined;
+
+			if (!ioConfig) {
+				var callbacks = [];
+				var callbackIndex = 0;
+
+				while (args[callbackIndex++]) {
+					var callback = args[callbackIndex++];
+
+					if (Lang.isFunction(callback)) {
+						callbacks.push(callback);
+					}
+				}
+
+				var callbackSuccess = callbacks[0];
+				var callbackException = callbacks[1];
+
+				ioConfig = {
+					on: {
+						success: function(event) {
+							var responseData = this.get('responseData');
+
+							if (responseData && !owns(responseData, 'exception')) {
+								if (callbackSuccess) {
+									callbackSuccess.call(this, responseData);
+								}
+							}
+							else if (callbackException) {
+								var exception = responseData ? responseData.exception : 'The server returned an empty response';
+
+								callbackException.call(this, exception, responseData);
+							}
+						}
+					}
+				};
+			}
+
+			return ioConfig;
+		},
+
+		parseStringPayload: function(args) {
+			var instance = this;
+
+			var params = {};
+			var payload = {};
+
+			if (!Lang.isFunction(args[1])) {
+				params = args[1];
+			}
+
+			payload[args[0]] = params;
+
+			return payload;
+		}
+	};
+
+	Liferay.Service = function() {
+		var instance = this;
+
+		var args = ServiceUtil.parseInvokeArgs(arguments);
+
+		ServiceUtil.invoke.apply(ServiceUtil, args);
+	};
 
 	var components = {};
 	var componentsFn = {};
@@ -380,7 +140,7 @@ Liferay = window.Liferay || {};
 	Liferay.component = function(id, value) {
 		var retVal;
 
-		if (arguments.length == 1) {
+		if (arguments.length === 1) {
 			var component = components[id];
 
 			if (component && Lang.isFunction(component)) {
@@ -406,4 +166,4 @@ Liferay = window.Liferay || {};
 	Liferay.Template = {
 		PORTLET: '<div class="portlet"><div class="portlet-topper"><div class="portlet-title"></div></div><div class="portlet-content"></div><div class="forbidden-action"></div></div>'
 	};
-})(AUI(), Liferay);
+}(AUI(), Liferay));

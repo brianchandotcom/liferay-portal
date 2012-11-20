@@ -9,34 +9,45 @@
 <tr><td rowspan="1" colspan="3">ControlPanelBlogsEntryCommentAdd</td></tr>
 </thead><tbody>
 <tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>Control Panel Blogs Entry Comment Add</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--BLOG ENTRY COMMENT ADD-->
+<tr>
 	<td>BLOGS_COMMENT_FIELD_BODY</td>
 	<td>//textarea[contains(@id,'_postReplyBody0')]</td>
-	<td></td>
+	<td>Comment Content Field</td>
 </tr>
 <tr>
 	<td>BLOGS_COMMENT_LINK_CANCEL</td>
 	<td>//input[@value='Cancel']</td>
-	<td>Cancel</td>
+	<td>Comment Cancel Button</td>
 </tr>
 <tr>
 	<td>BLOGS_COMMENT_LINK_SAVE</td>
 	<td>//input[@value='Reply']</td>
-	<td>Reply</td>
+	<td>Comment Reply Butotn</td>
 </tr>
 <tr>
 	<td>BLOGS_COMMENT_LINK_SUBSCRIBE_ME</td>
 	<td>_161_subscribeCheckbox</td>
-	<td></td>
+	<td>Comment &quot;Subscribe Me&quot; Checkbox</td>
 </tr>
 <tr>
 	<td>BLOGS_COMMENT_TEXT_SUBSCRIBE_ME</td>
 	<td>//label[@for='_161_subscribeCheckbox']</td>
-	<td>Suscribe Checkbox</td>
+	<td>Comment &quot;Subscribe Me&quot; Label</td>
 </tr>
 <tr>
 	<td>BLOGS_COMMENT_TEXT_SUCCESS</td>
 	<td>_161_discussion-status-messages</td>
-	<td>Your request processed successfully.</td>
+	<td>Comment &quot;Your request processed successfully.&quot; Success Message</td>
 </tr>
 </tbody></table>
 </body>

@@ -9,24 +9,35 @@
 <tr><td rowspan="1" colspan="3">ControlPanelBlogsEntryCommentEdit</td></tr>
 </thead><tbody>
 <tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>Control Panel Blogs Entry Comment Edit</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--BLOG COMMENT EDIT-->
+<tr>
 	<td>BLOGS_COMMENT_FIELD_BODY</td>
 	<td>//textarea[contains(@id,'_editReplyBody1')]</td>
-	<td></td>
+	<td>Comment Content Body Editor Field</td>
 </tr>
 <tr>
 	<td>BLOGS_COMMENT_LINK_CANCEL</td>
 	<td>//input[@value='Cancel']</td>
-	<td>Cancel</td>
+	<td>Cancel Button</td>
 </tr>
 <tr>
 	<td>BLOGS_COMMENT_LINK_SAVE</td>
 	<td>//input[@value='Publish']</td>
-	<td>Publish</td>
+	<td>Publish Button</td>
 </tr>
 <tr>
 	<td>BLOGS_COMMENT_TEXT_SUCCESS</td>
 	<td>_161_discussion-status-messages</td>
-	<td>Your request processed successfully.</td>
+	<td>&quot;Your request processed successfully.&quot; Success Message</td>
 </tr>
 </tbody></table>
 </body>

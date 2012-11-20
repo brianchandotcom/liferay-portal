@@ -155,7 +155,7 @@ Element contentEl = (Element)request.getAttribute(WebKeys.JOURNAL_ARTICLE_CONTEN
 				<c:if test='<%= elType.equals("text_area") %>'>
 
 					<%
-					String textAreaInputName = "structure_el_" + elName + elRepeatCount + "_content";
+					String textAreaInputName = "structure_el_" + elInstanceId + elName + elRepeatCount + "_content";
 
 					if (Validator.isNull(elContent)) {
 						elContent = ParamUtil.getString(request, textAreaInputName);

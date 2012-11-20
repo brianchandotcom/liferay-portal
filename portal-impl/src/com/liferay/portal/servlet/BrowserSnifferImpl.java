@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.servlet.BrowserSniffer;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -330,22 +331,30 @@ public class BrowserSnifferImpl implements BrowserSniffer {
 	protected String getAccept(HttpServletRequest request) {
 		String accept = StringPool.BLANK;
 
-		if (request != null) {
-			accept = (String)request.getAttribute(HttpHeaders.ACCEPT);
-
-			if (accept == null) {
-				String acceptHeader = request.getHeader(HttpHeaders.ACCEPT);
-
-				if (acceptHeader != null) {
-					accept = acceptHeader.toLowerCase();
-				}
-				else {
-					accept = StringPool.BLANK;
-				}
-
-				request.setAttribute(HttpHeaders.ACCEPT, accept);
-			}
+		if (request == null) {
+			return accept;
 		}
+
+		Object acceptAttribute = request.getAttribute(HttpHeaders.ACCEPT);
+
+		if (acceptAttribute instanceof String) {
+			accept = (String)acceptAttribute;
+		}
+
+		if (Validator.isNotNull(accept)) {
+			return accept;
+		}
+
+		String acceptHeader = request.getHeader(HttpHeaders.ACCEPT);
+
+		if (acceptHeader != null) {
+			accept = acceptHeader.toLowerCase();
+		}
+		else {
+			accept = StringPool.BLANK;
+		}
+
+		request.setAttribute(HttpHeaders.ACCEPT, accept);
 
 		return accept;
 	}
@@ -353,23 +362,31 @@ public class BrowserSnifferImpl implements BrowserSniffer {
 	protected String getUserAgent(HttpServletRequest request) {
 		String userAgent = StringPool.BLANK;
 
-		if (request != null) {
-			userAgent = (String)request.getAttribute(HttpHeaders.USER_AGENT);
-
-			if (userAgent == null) {
-				String userAgentHeader = request.getHeader(
-					HttpHeaders.USER_AGENT);
-
-				if (userAgentHeader != null) {
-					userAgent = userAgentHeader.toLowerCase();
-				}
-				else {
-					userAgent = StringPool.BLANK;
-				}
-
-				request.setAttribute(HttpHeaders.USER_AGENT, userAgent);
-			}
+		if (request == null) {
+			return userAgent;
 		}
+
+		Object userAgentAttribute = request.getAttribute(
+			HttpHeaders.USER_AGENT);
+
+		if (userAgentAttribute instanceof String) {
+			userAgent = (String)userAgentAttribute;
+		}
+
+		if (Validator.isNotNull(userAgent)) {
+			return userAgent;
+		}
+
+		String userAgentHeader = request.getHeader(HttpHeaders.USER_AGENT);
+
+		if (userAgentHeader != null) {
+			userAgent = userAgentHeader.toLowerCase();
+		}
+		else {
+			userAgent = StringPool.BLANK;
+		}
+
+		request.setAttribute(HttpHeaders.USER_AGENT, userAgent);
 
 		return userAgent;
 	}

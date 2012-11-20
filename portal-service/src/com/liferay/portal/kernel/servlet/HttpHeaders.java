@@ -77,6 +77,8 @@ public interface HttpHeaders {
 
 	public static final String WWW_AUTHENTICATE = "WWW-Authenticate";
 
+	public static final String X_REQUESTED_WITH = "X-Requested-With";
+
 	// Values
 
 	public static final String ACCEPT_RANGES_BYTES_VALUE = "bytes";
@@ -108,5 +110,7 @@ public interface HttpHeaders {
 	 * @deprecated Use <code>CACHE_CONTROL_PUBLIC_VALUE</code>.
 	 */
 	public static final String PUBLIC = CACHE_CONTROL_PUBLIC_VALUE;
+
+	public static final String XML_HTTP_REQUEST = "XMLHttpRequest";
 
 }

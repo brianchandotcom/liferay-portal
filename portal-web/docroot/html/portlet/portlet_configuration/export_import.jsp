@@ -131,99 +131,88 @@ if (layout.isTypeControlPanel()) {
 			<aui:input name="portletResource" type="hidden" value="<%= portletResource %>" />
 			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
+			<%
+			String errorMessageKey = StringPool.BLANK;
+
+			if (tabs2.equals("staging")) {
+				Group stagingGroup = themeDisplay.getScopeGroup();
+				Group liveGroup = stagingGroup.getLiveGroup();
+
+				Layout targetLayout = null;
+
+				if (!controlPanel) {
+					if (liveGroup == null) {
+						errorMessageKey = "this-portlet-is-placed-in-a-page-that-does-not-exist-in-the-live-site-publish-the-page-first";
+					}
+					else {
+						try {
+							if (stagingGroup.isLayout()) {
+								targetLayout = LayoutLocalServiceUtil.getLayout(liveGroup.getClassPK());
+							}
+							else {
+								targetLayout = LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(layout.getUuid(), liveGroup.getGroupId());
+							}
+						}
+						catch (NoSuchLayoutException nsle) {
+							errorMessageKey = "this-portlet-is-placed-in-a-page-that-does-not-exist-in-the-live-site-publish-the-page-first";
+						}
+
+						if (targetLayout != null) {
+							LayoutType layoutType = targetLayout.getLayoutType();
+
+							if (!(layoutType instanceof LayoutTypePortlet) || !((LayoutTypePortlet)layoutType).hasPortletId(selPortlet.getPortletId())) {
+								errorMessageKey = "this-portlet-has-not-been-added-to-the-live-page-publish-the-page-first";
+							}
+						}
+					}
+				}
+				else if (stagingGroup.isLayout()) {
+					if (liveGroup == null) {
+						errorMessageKey = "a-portlet-is-placed-in-this-page-of-scope-that-does-not-exist-in-the-live-site-publish-the-page-first";
+					}
+					else {
+						try {
+							targetLayout = LayoutLocalServiceUtil.getLayout(liveGroup.getClassPK());
+						}
+						catch (NoSuchLayoutException nsle) {
+							errorMessageKey = "a-portlet-is-placed-in-this-page-of-scope-that-does-not-exist-in-the-live-site-publish-the-page-first";
+						}
+					}
+				}
+			}
+			%>
+
 			<c:choose>
-				<c:when test='<%= tabs2.equals("export") %>'>
-				<aui:fieldset>
-					<%@ include file="/html/portlet/portlet_configuration/export_import_options.jspf" %>
-
-					<aui:button-row>
-						<aui:button onClick='<%= renderResponse.getNamespace() + "exportData();" %>' value="export" />
-
-						<aui:button href="<%= redirect %>" type="cancel" />
-					</aui:button-row>
-				</aui:fieldset>
-				</c:when>
-				<c:when test='<%= tabs2.equals("import") %>'>
+				<c:when test="<%= Validator.isNull(errorMessageKey) %>">
 					<aui:fieldset>
 						<%@ include file="/html/portlet/portlet_configuration/export_import_options.jspf" %>
 
 						<aui:button-row>
-							<aui:button onClick='<%= renderResponse.getNamespace() + "importData();" %>' value="import" />
+							<c:choose>
+								<c:when test='<%= tabs2.equals("export") %>'>
+									<aui:button onClick='<%= renderResponse.getNamespace() + "exportData();" %>' value="export" />
 
-							<aui:button href="<%= redirect %>" type="cancel" />
-						</aui:button-row>
-					</aui:fieldset>
-				</c:when>
-				<c:when test='<%= tabs2.equals("staging") %>'>
+									<aui:button href="<%= redirect %>" type="cancel" />
+								</c:when>
+								<c:when test='<%= tabs2.equals("import") %>'>
+									<aui:button onClick='<%= renderResponse.getNamespace() + "importData();" %>' value="import" />
 
-					<%
-					String errorMessageKey = StringPool.BLANK;
-
-					Group stagingGroup = themeDisplay.getScopeGroup();
-					Group liveGroup = stagingGroup.getLiveGroup();
-
-					Layout targetLayout = null;
-
-					if (!controlPanel) {
-						if (liveGroup == null) {
-							errorMessageKey = "this-portlet-is-placed-in-a-page-that-does-not-exist-in-the-live-site-publish-the-page-first";
-						}
-						else {
-							try {
-								if (stagingGroup.isLayout()) {
-									targetLayout = LayoutLocalServiceUtil.getLayout(liveGroup.getClassPK());
-								}
-								else {
-									targetLayout = LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(layout.getUuid(), liveGroup.getGroupId());
-								}
-							}
-							catch (NoSuchLayoutException nsle) {
-								errorMessageKey = "this-portlet-is-placed-in-a-page-that-does-not-exist-in-the-live-site-publish-the-page-first";
-							}
-
-							if (targetLayout != null) {
-								LayoutType layoutType = targetLayout.getLayoutType();
-
-								if (!(layoutType instanceof LayoutTypePortlet) || !((LayoutTypePortlet)layoutType).hasPortletId(selPortlet.getPortletId())) {
-									errorMessageKey = "this-portlet-has-not-been-added-to-the-live-page-publish-the-page-first";
-								}
-							}
-						}
-					}
-					else if (stagingGroup.isLayout()) {
-						if (liveGroup == null) {
-							errorMessageKey = "a-portlet-is-placed-in-this-page-of-scope-that-does-not-exist-in-the-live-site-publish-the-page-first";
-						}
-						else {
-							try {
-								targetLayout = LayoutLocalServiceUtil.getLayout(liveGroup.getClassPK());
-							}
-							catch (NoSuchLayoutException nsle) {
-								errorMessageKey = "a-portlet-is-placed-in-this-page-of-scope-that-does-not-exist-in-the-live-site-publish-the-page-first";
-							}
-						}
-					}
-					%>
-
-					<c:choose>
-						<c:when test="<%= Validator.isNull(errorMessageKey) %>">
-							<aui:fieldset>
-								<%@ include file="/html/portlet/portlet_configuration/export_import_options.jspf" %>
-
-								<c:if test="<%= (themeDisplay.getURLPublishToLive() != null) || controlPanel %>">
-									<aui:button-row>
+									<aui:button href="<%= redirect %>" type="cancel" />
+								</c:when>
+								<c:when test='<%= tabs2.equals("staging") %>'>
+									<c:if test="<%= (themeDisplay.getURLPublishToLive() != null) || controlPanel %>">
 										<aui:button onClick='<%= renderResponse.getNamespace() + "publishToLive();" %>' value="publish-to-live" />
 
 										<aui:button onClick='<%= renderResponse.getNamespace() + "copyFromLive();" %>' value="copy-from-live" />
-									</aui:button-row>
-								</c:if>
-							</aui:fieldset>
-						</c:when>
-						<c:otherwise>
-							<liferay-ui:message key="<%= errorMessageKey %>" />
-						</c:otherwise>
-					</c:choose>
+									</c:if>
+								</c:when>
+							</c:choose>
+						</aui:button-row>
+					</aui:fieldset>
 				</c:when>
+				<c:otherwise>
+					<liferay-ui:message key="<%= errorMessageKey %>" />
+				</c:otherwise>
 			</c:choose>
 		</aui:form>
 	</c:when>

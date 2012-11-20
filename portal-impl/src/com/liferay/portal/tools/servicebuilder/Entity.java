@@ -535,11 +535,22 @@ public class Entity {
 			hasColumn("modifiedDate") && hasColumn("userId") &&
 			hasColumn("userName")) {
 
-			return true;
+			EntityColumn createdDateCol = getColumn("createDate");
+
+			String createdDateColType = createdDateCol.getType();
+
+			EntityColumn modifiedDateCol = getColumn("modifiedDate");
+
+			String modifiedDateColType = modifiedDateCol.getType();
+
+			if (createdDateColType.equals("Date") &&
+				modifiedDateColType.equals("Date")) {
+
+				return true;
+			}
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	public boolean isCacheEnabled() {

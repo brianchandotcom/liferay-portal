@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.model.Contact;
+import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutSetBranch;
 import com.liferay.portal.model.PasswordPolicy;
 import com.liferay.portal.model.ResourceConstants;
@@ -64,6 +65,7 @@ import java.sql.ResultSet;
 
 /**
  * @author Raymond Augé
+ * @author James Lefeu
  */
 public class VerifyResourcePermissions extends VerifyProcess {
 
@@ -78,6 +80,34 @@ public class VerifyResourcePermissions extends VerifyProcess {
 			for (String[] model : _MODELS) {
 				verifyModel(role, model[0], model[1], model[2]);
 			}
+
+			verifyLayout(role);
+		}
+	}
+
+	protected void verifyLayout(Role role) throws Exception {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			ps = con.prepareStatement(
+				"select * from Layout where companyId = " +
+					role.getCompanyId());
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				long plid = rs.getLong("plid");
+
+				verifyModel(
+					role.getCompanyId(), Layout.class.getName(), plid, role, 0);
+			}
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
 		}
 	}
 

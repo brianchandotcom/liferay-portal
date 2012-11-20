@@ -1,5 +1,9 @@
 <macros>
-	<macrodef name="addPage" params="portlet">
+	<macrodef
+		name="addPage"
+		description="Add a page called ${portlet} Test Page in the Guest Community."
+		params="portlet"
+	>
 		<action name="Home" command="open" path="URL_GUEST" />
 		<action name="Home" command="mouseOver" path="ADD_LINK" />
 		<action name="Home" command="click" path="ADD_LINK_PAGE" />

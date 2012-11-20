@@ -1,7 +1,11 @@
 <macros>
-	<macrodef name="addBlogsEntry" params="title,content">
+	<macrodef
+		name="addBlogsEntry"
+		description="In the Control Panel Blogs Portlet, add a Blogs Entry with a title of ${title} and the content ${content}."
+		params="title,content"
+	>
 		<macro name="Navigation" command="navigateControlPanelPage">
-			<param name="page" value="Blogs" />
+			<param name="portlet" value="Blogs" />
 		</macro>
 
 		<action name="CPBlogsPortlet" command="click" path="PORTLET_LINK_ADD" />
@@ -17,16 +21,13 @@
 		<action name="CPBlogsEntryView" command="assertTextEquals" path="BLOGS_ENTRY_TEXT_CONTENT" value="${content}" />
 	</macrodef>
 
-	<macrodef name="addBlogsEntry">
-		<macro name="CPBlogsEntry" command="addBlogsEntry">
-			<param name="title" value="Blogs Entry Title" />
-			<param name="content" value="Blogs Entry Content" />
-		</macro>
-	</macrodef>
-
-	<macrodef name="saveAsDraftBlogsEntry" params="title,content">
+	<macrodef
+		name="saveAsDraftBlogsEntry"
+		description="In the Control Panel Blogs Portlet, Save a Blogs Entry as a Draft with a title of ${title} and the content ${content}."
+		params="title,content"
+	>
 		<macro name="Navigation" command="navigateControlPanelPage">
-			<param name="page" value="Blogs" />
+			<param name="portlet" value="Blogs" />
 		</macro>
 
 		<action name="CPBlogsPortlet" command="click" path="PORTLET_LINK_ADD" />
@@ -39,7 +40,7 @@
 		<action name="CPBlogsEntryEdit" command="assertTextEquals" path="CONTENT_TEXT_STATUS" value="Draft" />
 
 		<macro name="Navigation" command="navigateControlPanelPage">
-			<param name="page" value="Blogs" />
+			<param name="portlet" value="Blogs" />
 		</macro>
 
 		<action name="CPBlogsPortlet" command="assertTextEquals" path="BLOGS_ENTRY_LINK_TITLE" value="${title}" />
@@ -51,9 +52,12 @@
 		<action name="CPBlogsEntryView" command="assertTextEquals" path="BLOGS_ENTRY_TEXT_CONTENT" value="${content}" />
 	</macrodef>
 
-	<macrodef name="tearDownBlogsEntry">
+	<macrodef
+		name="tearDownBlogsEntry"
+		description="In the Control Panel Blogs Portlet, Delete all the Blogs Entries."
+	>
 		<macro name="Navigation" command="navigateControlPanelPage">
-			<param name="page" value="Blogs" />
+			<param name="portlet" value="Blogs" />
 		</macro>
 
 		<while name="CPBlogsPortlet" command="isElementPresent" path="BLOGS_ENTRY_LINK_CHECKBOX_1">

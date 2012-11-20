@@ -49,13 +49,6 @@ public class CPBlogsEntryMacros extends BaseMacros {
 			content);
 	}
 
-	public void addBlogsEntry() throws Exception {
-		CPBlogsEntryMacros cPBlogsEntryMacros = new CPBlogsEntryMacros(selenium);
-
-		cPBlogsEntryMacros.addBlogsEntry("Blogs Entry Title",
-			"Blogs Entry Content");
-	}
-
 	public void saveAsDraftBlogsEntry(String title, String content)
 		throws Exception {
 		CPBlogsEntryAddActions cPBlogsEntryAddActions = new CPBlogsEntryAddActions(selenium);

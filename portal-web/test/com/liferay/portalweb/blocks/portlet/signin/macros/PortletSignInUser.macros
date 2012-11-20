@@ -1,5 +1,9 @@
 <macros>
-	<macrodef name="signIn" params="email,password">
+	<macrodef
+		name="signIn"
+		description="Log into the portal as ${email} with the password ${password}."
+		params="email,password"
+	>
 		<action name="Home" command="open" path="URL_GUEST" />
 
 		<action name="PortletSignIn" command="type" path="EMAIL_ADDRESS_FIELD" value="${email}" />
@@ -17,7 +21,10 @@
 		</if>
 	</macrodef>
 
-	<macrodef name="signOut">
+	<macrodef
+		name="signOut"
+		description="Log out of the portal."
+	>
 		<action name="Home" command="open" path="URL_GUEST" />
 
 		<action name="PortletSignIn" command="click" path="SIGN_OUT_LINK" />

@@ -1,7 +1,11 @@
 <macros>
-	<macrodef name="addBlogsEntryComment1" params="blogsEntry,blogsEntryComment">
+	<macrodef
+		name="addBlogsEntryComment1"
+		description="In the Control Panel Blogs Portlet, add the first Blogs Comment with the value ${blogsEntryComment} to the Blogs Entry ${blogsEntry}."
+		params="blogsEntry,blogsEntryComment"
+	>
 		<macro name="Navigation" command="navigateControlPanelPage">
-			<param name="page" value="Blogs" />
+			<param name="portlet" value="Blogs" />
 		</macro>
 
 		<action name="CPBlogsPortlet" command="click" path="BLOGS_ENTRY_LINK_TITLE" value="${blogsEntry}" />
@@ -17,9 +21,13 @@
 		<action name="CPBlogsEntryView" command="assertTextNotPresent" value="No comments yet." />
 	</macrodef>
 
-	<macrodef name="addBlogsEntryComment2" params="blogsEntry,blogsEntryComment">
+	<macrodef
+		name="addBlogsEntryComment2"
+		description="In the Control Panel Blogs Portlet, add another Blogs Comment with the value ${blogsEntryComment} to the Blogs Entry ${blogsEntry}."
+		params="blogsEntry,blogsEntryComment"
+	>
 		<macro name="Navigation" command="navigateControlPanelPage">
-			<param name="page" value="Blogs" />
+			<param name="portlet" value="Blogs" />
 		</macro>
 
 		<action name="CPBlogsPortlet" command="click" path="BLOGS_ENTRY_LINK_TITLE" value="${blogsEntry}" />

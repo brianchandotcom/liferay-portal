@@ -54,6 +54,8 @@ public class TearDownWCWebContentTest extends BaseTestCase {
 					continue;
 				}
 
+				assertFalse(selenium.isChecked(
+						"//input[@id='_15_allRowIdsCheckbox']"));
 				selenium.clickAt("//input[@id='_15_allRowIdsCheckbox']",
 					RuntimeVariables.replace("Select All"));
 				assertTrue(selenium.isChecked(

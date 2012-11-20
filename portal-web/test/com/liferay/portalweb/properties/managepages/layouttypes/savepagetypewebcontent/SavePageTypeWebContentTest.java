@@ -46,7 +46,6 @@ public class SavePageTypeWebContentTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				selenium.clickAt("//button[@title='List View']",
 					RuntimeVariables.replace("List View"));
-				Thread.sleep(5000);
 				selenium.waitForVisible(
 					"//tr[contains(.,'WC WebContent Title')]/td[2]");
 
@@ -55,7 +54,7 @@ public class SavePageTypeWebContentTest extends BaseTestCase {
 				RuntimeVariables.setValue("articleID", articleID);
 				selenium.clickAt("//button[@title='Icon View']",
 					RuntimeVariables.replace("Icon View"));
-				Thread.sleep(5000);
+				selenium.waitForVisible("//div[@class='entry-thumbnail']/img");
 				selenium.open("/web/guest/home/");
 				selenium.clickAt("//div[@id='dockbar']",
 					RuntimeVariables.replace("Dockbar"));
@@ -73,6 +72,8 @@ public class SavePageTypeWebContentTest extends BaseTestCase {
 					"//iframe[contains(@id,'manageContentDialog')]");
 				selenium.selectFrame(
 					"//iframe[contains(@id,'manageContentDialog')]");
+				selenium.waitForElementPresent(
+					"//script[contains(@src,'/liferay/search_container.js')]");
 				selenium.waitForText("//a[@class='layout-tree']", "Public Pages");
 				assertEquals(RuntimeVariables.replace("Public Pages"),
 					selenium.getText("//a[@class='layout-tree']"));

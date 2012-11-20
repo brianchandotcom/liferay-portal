@@ -46,6 +46,8 @@ public class AddPageTest extends BaseTestCase {
 					"//iframe[contains(@id,'manageContentDialog')]");
 				selenium.selectFrame(
 					"//iframe[contains(@id,'manageContentDialog')]");
+				selenium.waitForElementPresent(
+					"//script[contains(@src,'/liferay/search_container.js')]");
 				selenium.waitForText("//a[@class='layout-tree']", "Public Pages");
 				assertEquals(RuntimeVariables.replace("Public Pages"),
 					selenium.getText("//a[@class='layout-tree']"));
@@ -70,12 +72,11 @@ public class AddPageTest extends BaseTestCase {
 				selenium.clickAt("//a[@class='layout-tree']",
 					RuntimeVariables.replace("Public Pages"));
 				selenium.waitForVisible(
-					"//div[@id='_88_layoutSetToolbar']/span/button[1]");
+					"//div[@id='_88_layoutSetToolbar']/span/button[contains(.,'Add Page')]");
 				assertEquals(RuntimeVariables.replace("Add Page"),
 					selenium.getText(
-						"//div[@id='_88_layoutSetToolbar']/span/button[1]"));
-				Thread.sleep(5000);
-				selenium.clickAt("//div[@id='_88_layoutSetToolbar']/span/button[1]",
+						"//div[@id='_88_layoutSetToolbar']/span/button[contains(.,'Add Page')]"));
+				selenium.clickAt("//div[@id='_88_layoutSetToolbar']/span/button[contains(.,'Add Page')]",
 					RuntimeVariables.replace("Add Page"));
 				selenium.waitForVisible(
 					"//input[@id='_88_addLayoutName_en_US']");

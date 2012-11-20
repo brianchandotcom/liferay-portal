@@ -51,12 +51,17 @@
 <tr>
 	<td>waitForElementPresent</td>
 	<td>//iframe[contains(@id,'manageContentDialog')]</td>
-	<td>Manage Page iFrame</td>
+	<td>Manage Page</td>
 </tr>
 <tr>
 	<td>selectFrame</td>
 	<td>//iframe[contains(@id,'manageContentDialog')]</td>
-	<td>Manage Page iFrame</td>
+	<td>Manage Page</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/liferay/search_container.js')]</td>
+	<td>Search Container</td>
 </tr>
 <tr>
 	<td>waitForText</td>
@@ -105,22 +110,17 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@id='_88_layoutSetToolbar']/span/button[1]</td>
+	<td>//div[@id='_88_layoutSetToolbar']/span/button[contains(.,'Add Page')]</td>
 	<td>Add Page</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@id='_88_layoutSetToolbar']/span/button[1]</td>
+	<td>//div[@id='_88_layoutSetToolbar']/span/button[contains(.,'Add Page')]</td>
 	<td>Add Page</td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
-</tr>
-<tr>
 	<td>clickAt</td>
-	<td>//div[@id='_88_layoutSetToolbar']/span/button[1]</td>
+	<td>//div[@id='_88_layoutSetToolbar']/span/button[contains(.,'Add Page')]</td>
 	<td>Add Page</td>
 </tr>
 <tr>

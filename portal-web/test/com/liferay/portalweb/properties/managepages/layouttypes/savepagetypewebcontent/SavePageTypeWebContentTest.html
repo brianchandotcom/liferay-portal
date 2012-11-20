@@ -54,11 +54,6 @@
 	<td>List View</td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
-</tr>
-<tr>
 	<td>waitForVisible</td>
 	<td>//tr[contains(.,'WC WebContent Title')]/td[2]</td>
 	<td>articleID</td>
@@ -74,9 +69,9 @@
 	<td>Icon View</td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
+	<td>waitForVisible</td>
+	<td>//div[@class='entry-thumbnail']/img</td>
+	<td>Web Content Thumbnail</td>
 </tr>
 <tr>
 	<td>open</td>
@@ -121,12 +116,17 @@
 <tr>
 	<td>waitForElementPresent</td>
 	<td>//iframe[contains(@id,'manageContentDialog')]</td>
-	<td>Manage Page iFrame</td>
+	<td>Manage Page</td>
 </tr>
 <tr>
 	<td>selectFrame</td>
 	<td>//iframe[contains(@id,'manageContentDialog')]</td>
-	<td>Manage Page iFrame</td>
+	<td>Manage Page</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/liferay/search_container.js')]</td>
+	<td>Search Container</td>
 </tr>
 <tr>
 	<td>waitForText</td>

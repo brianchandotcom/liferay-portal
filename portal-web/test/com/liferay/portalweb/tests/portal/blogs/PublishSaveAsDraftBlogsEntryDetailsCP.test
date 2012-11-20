@@ -1,4 +1,7 @@
-<xml>
+<test
+	name="PublishSaveAsDraftBlogsEntryDetailsCP"
+	description="In the Control Panel Blogs Portlet, approve a Blogs Entry draft."
+>
 	<setup>
 		<macro name="CPBlogsEntry" command="saveAsDraftBlogsEntry">
 			<param name="title" value="Blogs Entry Title" />
@@ -7,16 +10,16 @@
 	</setup>
 	<steps>
 		<macro name="Navigation" command="navigateControlPanelPage">
-			<param name="page" value="Blogs" />
+			<param name="portlet" value="Blogs" />
 		</macro>
 
 		<action name="CPBlogsPortlet" command="assertTextEquals" path="BLOGS_ENTRY_LINK_TITLE" value="Blogs Entry Title" />
 		<action name="CPBlogsPortlet" command="assertTextEquals" path="BLOGS_ENTRY_LINK_STATUS" value="Draft" />
-		<action name="CPBlogsPortlet" command="click" path="BLOGS_ENTRY_LINK_ACTIONS" />
-		<action name="CPBlogsPortlet" command="click" path="BLOGS_ENTRY_LINK_ACTIONS_EDIT" />
+		<action name="CPBlogsPortlet" command="click" path="BLOGS_ENTRY_LINK_ACTIONS" value="Actions" />
+		<action name="CPBlogsPortlet" command="click" path="BLOGS_ENTRY_LINK_ACTIONS_EDIT" value="Edit" />
 
-		<action name="CPBlogsEntryEdit" command="click" path="CONTENT_LINK_SAVE" />
-		<action name="CPBlogsEntryEdit" command="assertTextEquals" path="PORTLET_TEXT_SUCCESS" />
+		<action name="CPBlogsEntryEdit" command="click" path="CONTENT_LINK_SAVE" value="Publish" />
+		<action name="CPBlogsEntryEdit" command="assertTextEquals" path="PORTLET_TEXT_SUCCESS" value="Your request completed successfully." />
 
 		<action name="CPBlogsPortlet" command="assertTextEquals" path="BLOGS_ENTRY_LINK_TITLE" value="Blogs Entry Title" />
 		<action name="CPBlogsPortlet" command="assertTextEquals" path="BLOGS_ENTRY_LINK_STATUS" value="Approved" />
@@ -25,4 +28,4 @@
 		<macro name="CPBlogsEntry" command="tearDownBlogsEntry" />
 		<macro name="CPRecycleBin" command="emptyRecycleBin" />
 	</teardown>
-</xml>
+</test>

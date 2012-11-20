@@ -1,4 +1,7 @@
-<xml>
+<test
+	name="DeleteBlogsEntryListCP"
+	description="In the Control Panel Blogs Portlet, delete a Blogs Entry using the checkbox."
+>
 	<setup>
 		<macro name="CPBlogsEntry" command="addBlogsEntry">
 			<param name="title" value="Blogs Entry Title" />
@@ -7,16 +10,16 @@
 	</setup>
 	<steps>
 		<macro name="Navigation" command="navigateControlPanelPage">
-			<param name="page" value="Blogs" />
+			<param name="portlet" value="Blogs" />
 		</macro>
 
 		<action name="CPBlogsPortlet" command="assertTextEquals" path="BLOGS_ENTRY_LINK_TITLE" value="Blogs Entry Title" />
 		<action name="CPBlogsPortlet" command="assertTextEquals" path="BLOGS_ENTRY_LINK_AUTHOR" value="Joe Bloggs" />
 		<action name="CPBlogsPortlet" command="assertTextEquals" path="BLOGS_ENTRY_LINK_STATUS" value="Approved" />
-		<action name="CPBlogsPortlet" command="check" path="BLOGS_ENTRY_LINK_CHECKBOX" />
-		<action name="CPBlogsPortlet" command="click" path="PORTLET_LINK_DELETE" />
-		<action name="CPBlogsPortlet" command="assertTextEquals" path="PORTLET_TEXT_SUCCESS_UNDO" />
-		<action name="CPBlogsPortlet" command="assertTextEquals" path="PORTLET_TEXT_INFO" />
+		<action name="CPBlogsPortlet" command="check" path="BLOGS_ENTRY_LINK_CHECKBOX" value="" />
+		<action name="CPBlogsPortlet" command="click" path="PORTLET_LINK_DELETE" value="Move to the Recycle Bin" />
+		<action name="CPBlogsPortlet" command="assertTextEquals" path="PORTLET_TEXT_SUCCESS_UNDO" value="The selected item was moved to the Recycle Bin. Undo" />
+		<action name="CPBlogsPortlet" command="assertTextEquals" path="PORTLET_TEXT_INFO" value="No entries were found." />
 		<action name="CPBlogsPortlet" command="assertTextNotPresent" value="Blogs Entry Title" />
 		<action name="CPBlogsPortlet" command="assertTextNotPresent" value="Blogs Entry Content" />
 	</steps>
@@ -24,4 +27,4 @@
 		<macro name="CPBlogsEntry" command="tearDownBlogsEntry" />
 		<macro name="CPRecycleBin" command="emptyRecycleBin" />
 	</teardown>
-</xml>
+</test>

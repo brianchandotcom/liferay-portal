@@ -1,4 +1,7 @@
-<xml>
+<test
+	name="AddBlogsEntryAutoDraftCP"
+	description="In the Control Panel Blogs Portlet, add a Blogs Entry draft."
+>
 	<setup>
 	</setup>
 	<steps>
@@ -11,4 +14,4 @@
 		<macro name="CPBlogsEntry" command="tearDownBlogsEntry" />
 		<macro name="CPRecycleBin" command="emptyRecycleBin" />
 	</teardown>
-</xml>
+</test>

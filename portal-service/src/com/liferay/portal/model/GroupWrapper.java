@@ -591,6 +591,15 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 		return _group.getLiveGroup();
 	}
 
+	public com.liferay.portal.kernel.util.UnicodeProperties getLiveParentTypeSettingsProperties() {
+		return _group.getLiveParentTypeSettingsProperties();
+	}
+
+	public java.lang.String getLiveParentTypeSettingsProperty(
+		java.lang.String key) {
+		return _group.getLiveParentTypeSettingsProperty(key);
+	}
+
 	public long getOrganizationId() {
 		return _group.getOrganizationId();
 	}

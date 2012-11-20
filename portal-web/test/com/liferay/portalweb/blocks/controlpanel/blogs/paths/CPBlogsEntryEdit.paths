@@ -9,334 +9,387 @@
 <tr><td rowspan="1" colspan="3">ControlPanelBlogsEntryCommentEdit</td></tr>
 </thead><tbody>
 <tr>
-	<td>ABSTRACT_FIELD_DESCRIPTION</td>
-	<td>_161_description</td>
+	<td>PAGE_NAME</td>
 	<td></td>
+	<td>Control Panel Blogs Entry Add</td>
 </tr>
 <tr>
-	<td>ABSTRACT_FIELD_SMALL_IMAGE</td>
-	<td>_161_smallFile</td>
 	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ABSTRACT PANEL-->
+<tr>
+	<td>ABSTRACT_FIELD_DESCRIPTION</td>
+	<td>_161_description</td>
+	<td>Abstract Field Description</td>
 </tr>
 <tr>
 	<td>ABSTRACT_FIELD_SMALL_IMAGE_CHECKBOX</td>
 	<td>_161_smallImageCheckbox</td>
-	<td></td>
+	<td>Abstract &quot;Use Small Image&quot; checkbox</td>
 </tr>
 <tr>
 	<td>ABSTRACT_FIELD_SMALL_IMAGE_URL</td>
 	<td>_161_smallImageURL</td>
+	<td>Abstract Small Image URL</td>
+</tr>
+<tr>
+	<td>ABSTRACT_FIELD_SMALL_IMAGE</td>
+	<td>_161_smallFile</td>
+	<td>Abstract Small Image upload field</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
 	<td></td>
 </tr>
+<!--ASSETS  PANEL-->
 <tr>
 	<td>ASSETS_LINK_SELECT</td>
 	<td>//span[@title='Select']/ul/li/strong/a/span</td>
-	<td></td>
+	<td>Related Assets Select Button</td>
 </tr>
 <tr>
 	<td>ASSETS_LINK_SELECT_BLOGS_ENTRY</td>
 	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Blogs Entry')]</td>
-	<td>Blogs Entry</td>
+	<td>Related Assets Menu Blogs Entry tab</td>
 </tr>
 <tr>
 	<td>ASSETS_LINK_SELECT_BOOKMARKS_ENTRY</td>
 	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Bookmarks Entry')]</td>
-	<td>Bookmarks Entry</td>
+	<td>Related Assets Menu Bookmarks Entry tab</td>
 </tr>
 <tr>
 	<td>ASSETS_LINK_SELECT_CALENDAR_EVENT</td>
 	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Calendar Event')]</td>
-	<td>Calendar Event</td>
+	<td>Related Assets Menu Calendar Event Tab</td>
 </tr>
 <tr>
 	<td>ASSETS_LINK_SELECT_DOCUMENT_LIBRARY_DOCUMENT</td>
 	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Documents and Media Document')]</td>
-	<td>Documents and Media Document</td>
+	<td>Related Assets Menu Documents and Media Document Tab</td>
 </tr>
 <tr>
 	<td>ASSETS_LINK_SELECT_MESSAGE_BOARDS_MESSAGE</td>
 	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Message Boards Message')]</td>
-	<td>Message Boards Message</td>
+	<td>Related Assets Menu Message Boards Message tab</td>
 </tr>
 <tr>
 	<td>ASSETS_LINK_SELECT_WEB_CONTENT</td>
 	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Web Content')]</td>
-	<td>Web Content</td>
+	<td>Related Assets Menu Web Content tab</td>
 </tr>
 <tr>
 	<td>ASSETS_LINK_SELECT_WIKI_PAGE</td>
 	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Wiki Page')]</td>
-	<td>Wiki Page</td>
+	<td>Related Assets Menu Wiki Page tab</td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--CATEGORIZATION PANEL-->
 <tr>
 	<td>CATEGORIZATION_FIELD_TAG_FIELD</td>
 	<td>//input[@title='Add Tags']</td>
-	<td>Add Tags</td>
+	<td>Categorization Tag Field input</td>
 </tr>
 <tr>
 	<td>CATEGORIZATION_LINK_ADD_TAG</td>
 	<td>//button[@id='add']/span[.='Add']</td>
-	<td>Add</td>
+	<td>Categorization Add Tag button</td>
 </tr>
 <tr>
 	<td>CATEGORIZATION_LINK_SELECT_TAG</td>
 	<td>//button[@id='select']/span[.='Select']</td>
-	<td>Select</td>
+	<td>Categorization Select Tag button</td>
 </tr>
 <tr>
 	<td>CATEGORIZATION_LINK_SUGGEST_TAG</td>
 	<td>//button[@id='suggest']/span[.='Suggestions']</td>
-	<td>Suggestions</td>
+	<td>Categorization Tag Suggestions button</td>
 </tr>
 <tr>
-	<td>CONTENT_LINK_ALLOW_PINGBACKS</td>
-	<td>_161_allowPingbacksCheckbox</td>
+	<td></td>
+	<td></td>
 	<td></td>
 </tr>
-<tr>
-	<td>CONTENT_LINK_ALLOW_TRACKBACKS</td>
-	<td>_161_allowTrackbacksCheckbox</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CONTENT_FIELD_CONTENT</td>
-	<td>_161_editor</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CONTENT_FIELD_DISPLAY_DATE_AM_PM</td>
-	<td>_161_displayDateAmPm</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CONTENT_FIELD_DISPLAY_DATE_DAY</td>
-	<td>_161_displayDateDay</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CONTENT_FIELD_DISPLAY_DATE_HOUR</td>
-	<td>_161_displayDateHour</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CONTENT_FIELD_DISPLAY_DATE_MINUTE</td>
-	<td>_161_displayDateMinute</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CONTENT_FIELD_DISPLAY_DATE_MONTH</td>
-	<td>_161_displayDateMonth</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CONTENT_FIELD_DISPLAY_DATE_YEAR</td>
-	<td>_161_displayDateYear</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CONTENT_FIELD_TITLE</td>
-	<td>_161_title</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CONTENT_FIELD_TITLE_ALERT</td>
-	<td>//div[@role='alert']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CONTENT_FIELD_TRACKBACKS</td>
-	<td>_161_trackbacks</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CONTENT_FIELD_VIEWABLE_BY</td>
-	<td>_161__inputPermissionsViewRole</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CONTENT_LINK_BACK</td>
-	<td>_161_TabsBack</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CONTENT_LINK_CALENDAR</td>
-	<td>buttonTest</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CONTENT_LINK_CANCEL</td>
-	<td>//input[@value='Cancel']</td>
-	<td>Cancel</td>
-</tr>
-<tr>
-	<td>CONTENT_LINK_DRAFT</td>
-	<td>//input[@value='Save as Draft']</td>
-	<td>Save as Draft</td>
-</tr>
-<tr>
-	<td>CONTENT_LINK_PREVIEW</td>
-	<td>//input[@value='Preview']</td>
-	<td>Preview</td>
-</tr>
-<tr>
-	<td>CONTENT_LINK_SAVE</td>
-	<td>//input[@value='Publish']</td>
-	<td>Publish</td>
-</tr>
-<tr>
-	<td>CONTENT_TEXT_ALLOW_PINGBACKS_LABEL</td>
-	<td>//label[@for='_161_allowPingbacksCheckbox']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CONTENT_TEXT_ALLOW_TRACKBACKS_LABEL</td>
-	<td>//label[@for='_161_allowTrackbacksCheckbox']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CONTENT_TEXT_CONTENT_LABEL</td>
-	<td>//label[contains(.,'Content')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CONTENT_TEXT_DISPLAY_DATE_LABEL</td>
-	<td>//label[@for='_161_displayDate']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CONTENT_TEXT_ERROR_MESSAGE_1</td>
-	<td>xpath=(//div[@class='portlet-msg-error'])[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CONTENT_TEXT_ERROR_MESSAGE_2</td>
-	<td>xpath=(//div[@class='portlet-msg-error'])[2]</td>
-	<td></td>
-</tr>
+<!--ENTRY CONTENT EDITOR-->
 <tr>
 	<td>CONTENT_TEXT_HEADER</td>
 	<td>//h1[@class='header-title']/span</td>
-	<td></td>
+	<td>Entry Content Header</td>
 </tr>
 <tr>
 	<td>CONTENT_TEXT_ID</td>
 	<td>//span[@class='workflow-id']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CONTENT_TEXT_PREVIEW</td>
-	<td>//div[@class='preview']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CONTENT_TEXT_SAVE_STATUS</td>
-	<td>_161_saveStatus</td>
-	<td></td>
+	<td>Entry Workflow ID</td>
 </tr>
 <tr>
 	<td>CONTENT_TEXT_STATUS</td>
 	<td>//span[@class='workflow-status']</td>
-	<td></td>
+	<td>Entry Content Workflow Status</td>
 </tr>
 <tr>
 	<td>CONTENT_TEXT_TITLE_LABEL</td>
 	<td>//label[@for='_161_title']</td>
-	<td></td>
+	<td>Entry Title Label</td>
+</tr>
+<tr>
+	<td>CONTENT_FIELD_TITLE</td>
+	<td>_161_title</td>
+	<td>Entry Title Field</td>
+</tr>
+<tr>
+	<td>CONTENT_FIELD_TITLE_ALERT</td>
+	<td>//div[@role='alert']</td>
+	<td>Entry Title Field Invalid Input Alert</td>
+</tr>
+<tr>
+	<td>CONTENT_TEXT_DISPLAY_DATE_LABEL</td>
+	<td>//label[@for='_161_displayDate']</td>
+	<td>Entry Content Display Date Label</td>
+</tr>
+<tr>
+	<td>CONTENT_FIELD_DISPLAY_DATE_DAY</td>
+	<td>_161_displayDateDay</td>
+	<td>Entry Content Display Date AM/PM select</td>
+</tr>
+<tr>
+	<td>CONTENT_FIELD_DISPLAY_DATE_MONTH</td>
+	<td>_161_displayDateMonth</td>
+	<td>Entry Content Display Date Month select</td>
+</tr>
+<tr>
+	<td>CONTENT_FIELD_DISPLAY_DATE_YEAR</td>
+	<td>_161_displayDateYear</td>
+	<td>Entry Content Display Date Year select</td>
+</tr>
+<tr>
+	<td>CONTENT_LINK_CALENDAR</td>
+	<td>buttonTest</td>
+	<td>Entry Content Display Date Open Calendar Button</td>
+</tr>
+<tr>
+	<td>CONTENT_FIELD_DISPLAY_DATE_MINUTE</td>
+	<td>_161_displayDateMinute</td>
+	<td>Entry Content Display Date Minute select</td>
+</tr>
+<tr>
+	<td>CONTENT_FIELD_DISPLAY_DATE_HOUR</td>
+	<td>_161_displayDateHour</td>
+	<td>Entry Content Display Date Hour select</td>
+</tr>
+<tr>
+	<td>CONTENT_FIELD_DISPLAY_DATE_AM_PM</td>
+	<td>_161_displayDateAmPm</td>
+	<td>Entry Content Display Date AM/PM selec</td>
+</tr>
+<tr>
+	<td>CONTENT_FIELD_CONTENT</td>
+	<td>_161_editor</td>
+	<td>Entry Content Editor Field</td>
+</tr>
+<tr>
+	<td>CONTENT_LINK_ALLOW_PINGBACKS</td>
+	<td>_161_allowPingbacksCheckbox</td>
+	<td>Entry Content Allow Pingbacks Checkbox</td>
+</tr>
+<tr>
+	<td>CONTENT_TEXT_ALLOW_PINGBACKS_LABEL</td>
+	<td>//label[@for='_161_allowPingbacksCheckbox']</td>
+	<td>Entry Content Allow Pingbacks Checkbox Label</td>
+</tr>
+<tr>
+	<td>CONTENT_LINK_ALLOW_TRACKBACKS</td>
+	<td>_161_allowTrackbacksCheckbox</td>
+	<td>Entry Content Allow Trackbacks Checkbox</td>
+</tr>
+<tr>
+	<td>CONTENT_TEXT_ALLOW_TRACKBACKS_LABEL</td>
+	<td>//label[@for='_161_allowTrackbacksCheckbox']</td>
+	<td>Entry Content Allow Trackbacks Checkbox Label</td>
+</tr>
+<tr>
+	<td>CONTENT_FIELD_TRACKBACKS</td>
+	<td>_161_trackbacks</td>
+	<td>Entry Content &quot;Trackbacks to Send&quot; Field</td>
+</tr>
+<tr>
+	<td>CONTENT_FIELD_VIEWABLE_BY</td>
+	<td>_161__inputPermissionsViewRole</td>
+	<td>Entry Content &quot;Viewable by&quot; Permissions Select (Dropdown)</td>
+</tr>
+<tr>
+	<td>CONTENT_LINK_BACK</td>
+	<td>_161_TabsBack</td>
+	<td>Back Button</td>
+</tr>
+<tr>
+	<td>CONTENT_LINK_SAVE</td>
+	<td>//input[@value='Publish']</td>
+	<td>Entry Content Publish Button</td>
+</tr>
+<tr>
+	<td>CONTENT_LINK_DRAFT</td>
+	<td>//input[@value='Save as Draft']</td>
+	<td>Entry Content Save as Draft Button</td>
+</tr>
+<tr>
+	<td>CONTENT_LINK_CANCEL</td>
+	<td>//input[@value='Cancel']</td>
+	<td>Entry Content Cancel Button</td>
+</tr>
+<tr>
+	<td>CONTENT_LINK_PREVIEW</td>
+	<td>//input[@value='Preview']</td>
+	<td>Entry Content Preview Button</td>
+</tr>
+<tr>
+	<td>CONTENT_TEXT_CONTENT_LABEL</td>
+	<td>//label[contains(.,'Content')]</td>
+	<td>Entry Content Editor Label</td>
+</tr>
+<tr>
+	<td>CONTENT_TEXT_ERROR_MESSAGE_1</td>
+	<td>xpath=(//div[@class='portlet-msg-error'])[1]</td>
+	<td>Entry Content &quot;Your request failed to complete.&quot; Error Message</td>
+</tr>
+<tr>
+	<td>CONTENT_TEXT_ERROR_MESSAGE_2</td>
+	<td>xpath=(//div[@class='portlet-msg-error'])[2]</td>
+	<td>Entry Content &quot;Please enter valid content.&quot; Error Message</td>
+</tr>
+<tr>
+	<td>CONTENT_TEXT_PREVIEW</td>
+	<td>//div[@class='preview']</td>
+	<td>Entry Text Preview</td>
+</tr>
+<tr>
+	<td>CONTENT_TEXT_SAVE_STATUS</td>
+	<td>_161_saveStatus</td>
+	<td>Entry Content Save Status</td>
 </tr>
 <tr>
 	<td>CONTENT_TEXT_TRACKBACKS_LABEL</td>
 	<td>//label[@for='_161_trackbacks']</td>
-	<td></td>
+	<td>Entry Content &quot;Trackbacks to Send&quot; Label</td>
 </tr>
 <tr>
 	<td>CONTENT_TEXT_VIEWABLE_BY_LABEL</td>
 	<td>//label[@for='_161__inputPermissionsViewRole']</td>
+	<td>Entry Content &quot;Viewable By&quot; Label</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
 	<td></td>
 </tr>
+<!--PANEL EXPAND LINKS-->
 <tr>
 	<td>PANEL_LINK_ABSTRACT</td>
 	<td>blogsEntryAbstractPanel</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PANEL_LINK_ASSETS</td>
-	<td>blogsEntryAssetLinksPanel</td>
-	<td></td>
+	<td>Abstract Section Expand</td>
 </tr>
 <tr>
 	<td>PANEL_LINK_CATEGORIZATION</td>
 	<td>blogsEntryCategorizationPanel</td>
+	<td>Categorization Expand</td>
+</tr>
+<tr>
+	<td>PANEL_LINK_ASSETS</td>
+	<td>blogsEntryAssetLinksPanel</td>
+	<td>Related Assets Expand</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
 	<td></td>
 </tr>
+<!--PORTLET-->
 <tr>
 	<td>PORTLET_LINK_BREADCRUMB_1</td>
 	<td>//nav[@id='breadcrumbs']/ul/li[1]/span/a</td>
-	<td></td>
+	<td>Portlet 1st Breadcrumb &amp;quot;Control Panel&amp;quot; Link</td>
 </tr>
 <tr>
 	<td>PORTLET_LINK_BREADCRUMB_2</td>
 	<td>//nav[@id='breadcrumbs']/ul/li[2]/span/a</td>
-	<td></td>
+	<td>Portlet 2nd Breadcrumb &amp;quot;Blogs&amp;quot; Link</td>
 </tr>
 <tr>
 	<td>PORTLET_LINK_BREADCRUMB_3</td>
 	<td>//nav[@id='breadcrumbs']/ul/li[3]/span/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PORTLET_TEXT_DESCRIPTION</td>
-	<td>cpContextPanelTemplate</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PORTLET_LINK_OPTIONS</td>
-	<td>//span[@title='Options']/ul/li/strong/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PORTLET_LINK_OPTIONS_EXPORT_IMPORT</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Export / Import')]</td>
-	<td></td>
+	<td>Portlet 3rd Breadcrumb Entry Title Link</td>
 </tr>
 <tr>
 	<td>PORTLET_TEXT_PORTLET_TITLE</td>
 	<td>cpPortletTitle</td>
-	<td></td>
+	<td>Portlet Title</td>
+</tr>
+<tr>
+	<td>PORTLET_LINK_OPTIONS</td>
+	<td>//span[@title='Options']/ul/li/strong/a</td>
+	<td>Portlet Configuration Options Button</td>
+</tr>
+<tr>
+	<td>PORTLET_LINK_OPTIONS_EXPORT_IMPORT</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Export / Import')]</td>
+	<td>Portlet Configuration Options Menu Export/Import tab</td>
+</tr>
+<tr>
+	<td>PORTLET_TEXT_DESCRIPTION</td>
+	<td>cpContextPanelTemplate</td>
+	<td>Portlet Description</td>
 </tr>
 <tr>
 	<td>PORTLET_TEXT_SUCCESS</td>
 	<td>//div[@class='portlet-msg-success']</td>
-	<td>Your request completed successfully.</td>
+	<td>Portlet &quot;Your request completed successfully.&quot; Success Message</td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--TAGS-->
 <tr>
 	<td>TAG_TEXT_1</td>
 	<td>xpath=(//span[@class='aui-textboxlistentry-text'])[1]</td>
-	<td></td>
+	<td>Categorization Tag 1</td>
 </tr>
 <tr>
 	<td>TAG_TEXT_2</td>
 	<td>xpath=(//span[@class='aui-textboxlistentry-text'])[2]</td>
-	<td></td>
+	<td>Categorization Tag 2</td>
 </tr>
 <tr>
 	<td>TAG_TEXT_3</td>
 	<td>xpath=(//span[@class='aui-textboxlistentry-text'])[3]</td>
+	<td>Categorization Tag 3</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
 	<td></td>
 </tr>
+<!--TAG DELETE-->
 <tr>
 	<td>TAG_LINK_DELETE_1</td>
 	<td>xpath=(//span[contains(@class,'aui-textboxlistentry-close')])[1]</td>
-	<td></td>
+	<td>Categorization Tag 1 Delete Button</td>
 </tr>
 <tr>
 	<td>TAG_LINK_DELETE_2</td>
 	<td>xpath=(//span[contains(@class,'aui-textboxlistentry-close')])[2]</td>
-	<td></td>
+	<td>Categorization Tag 2 Delete Button</td>
 </tr>
 <tr>
 	<td>TAG_LINK_DELETE_3</td>
 	<td>xpath=(//span[contains(@class,'aui-textboxlistentry-close')])[3]</td>
-	<td></td>
+	<td>Categorization Tag 3 Delete Button</td>
 </tr>
 </tbody></table>
 </body>

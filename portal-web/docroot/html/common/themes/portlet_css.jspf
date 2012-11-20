@@ -304,7 +304,7 @@ customCSS = StringUtil.replace(
 
 JSONObject portletData = jsonObject.getJSONObject("portletData");
 
-boolean showBorders = portletData.getBoolean("showBorders");
+boolean showBorders = portletData.getBoolean("showBorders", PropsValues.THEME_PORTLET_DECORATE_DEFAULT);
 
 // Generated CSS
 

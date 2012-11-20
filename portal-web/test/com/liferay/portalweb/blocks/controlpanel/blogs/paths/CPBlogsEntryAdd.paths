@@ -353,7 +353,7 @@
 <tr>
 	<td>TAG_TEXT_2</td>
 	<td>xpath=(//span[@class='aui-textboxlistentry-text'])[2]</td>
-	<td>Categorization&nbsp;&nbsp;Tag 2</td>
+	<td>Categorization Tag 2</td>
 </tr>
 <tr>
 	<td>TAG_TEXT_3</td>

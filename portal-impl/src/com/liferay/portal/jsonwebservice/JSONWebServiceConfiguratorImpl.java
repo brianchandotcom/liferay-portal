@@ -151,22 +151,17 @@ public class JSONWebServiceConfiguratorImpl extends ClassFinder
 
 		findFile.searchPath(libDir);
 
-		File file = findFile.nextFile();
+		File file = null;
 
-		while (file != null) {
+		while ((file = findFile.nextFile()) != null) {
 			classPathList.add(file);
-
-			file = findFile.nextFile();
 		}
 
 		File classesDir = new File(libDir.getParent(), "classes");
 
 		classPathList.add(classesDir);
 
-		File[] classPathFiles = classPathList.toArray(
-			new File[classPathList.size()]);
-
-		return classPathFiles;
+		return classPathList.toArray(new File[classPathList.size()]);
 	}
 
 	protected File[] getPortalClassPathFiles() {

@@ -307,8 +307,24 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 
 				}
 				else {
-					parameterValue = TypeConverterManager.convertType(
-						value, parameterType);
+					try {
+						parameterValue = TypeConverterManager.convertType(
+							value, parameterType);
+					}
+					catch (ClassCastException e) {
+						String stringValue = value.toString().trim();
+
+						if (stringValue.startsWith(
+							StringPool.OPEN_CURLY_BRACE)) {
+
+							parameterValue =
+								JSONFactoryUtil.looseDeserializeSafe
+									(stringValue, parameterType);
+						}
+						else {
+							throw e;
+						}
+					}
 				}
 			}
 

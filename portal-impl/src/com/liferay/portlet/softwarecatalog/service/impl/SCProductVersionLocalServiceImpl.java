@@ -144,7 +144,7 @@ public class SCProductVersionLocalServiceImpl
 			String directDownloadURL)
 		throws PortalException, SystemException {
 
-		return scProductVersionPersistence.findByDirectDownloadURL(
+		return scProductVersionPersistence.findByDirectDownloadURL_First(
 			directDownloadURL);
 	}
 
@@ -260,7 +260,7 @@ public class SCProductVersionLocalServiceImpl
 		}
 		else if (Validator.isNotNull(directDownloadURL)) {
 			SCProductVersion productVersion =
-				scProductVersionPersistence.fetchByDirectDownloadURL(
+				scProductVersionPersistence.fetchByDirectDownloadURL_First(
 					directDownloadURL);
 
 			if ((productVersion != null) &&

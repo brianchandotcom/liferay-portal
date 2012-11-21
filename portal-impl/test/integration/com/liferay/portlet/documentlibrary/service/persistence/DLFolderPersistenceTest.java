@@ -330,9 +330,6 @@ public class DLFolderPersistenceTest {
 		Assert.assertEquals(existingDLFolderModelImpl.getGroupId(),
 			existingDLFolderModelImpl.getOriginalGroupId());
 
-		Assert.assertEquals(existingDLFolderModelImpl.getRepositoryId(),
-			existingDLFolderModelImpl.getOriginalRepositoryId());
-
 		Assert.assertEquals(existingDLFolderModelImpl.getGroupId(),
 			existingDLFolderModelImpl.getOriginalGroupId());
 		Assert.assertEquals(existingDLFolderModelImpl.getParentFolderId(),

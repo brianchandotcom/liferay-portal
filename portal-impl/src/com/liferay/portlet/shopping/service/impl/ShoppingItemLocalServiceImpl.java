@@ -358,19 +358,19 @@ public class ShoppingItemLocalServiceImpl
 	public ShoppingItem getItemByLargeImageId(long largeImageId)
 		throws PortalException, SystemException {
 
-		return shoppingItemPersistence.findByLargeImageId(largeImageId);
+		return shoppingItemPersistence.findByLargeImageId_First(largeImageId);
 	}
 
 	public ShoppingItem getItemByMediumImageId(long mediumImageId)
 		throws PortalException, SystemException {
 
-		return shoppingItemPersistence.findByMediumImageId(mediumImageId);
+		return shoppingItemPersistence.findByMediumImageId_First(mediumImageId);
 	}
 
 	public ShoppingItem getItemBySmallImageId(long smallImageId)
 		throws PortalException, SystemException {
 
-		return shoppingItemPersistence.findBySmallImageId(smallImageId);
+		return shoppingItemPersistence.findBySmallImageId_First(smallImageId);
 	}
 
 	public List<ShoppingItem> getItems(long groupId, long categoryId)

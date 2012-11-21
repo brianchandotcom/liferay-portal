@@ -429,7 +429,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	public DLFolder getMountFolder(long repositoryId)
 		throws PortalException, SystemException {
 
-		return dlFolderPersistence.findByRepositoryId(repositoryId);
+		return dlFolderPersistence.findByRepositoryId_First(repositoryId);
 	}
 
 	public List<DLFolder> getMountFolders(

@@ -2590,7 +2590,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	public User getUserByFacebookId(long companyId, long facebookId)
 		throws PortalException, SystemException {
 
-		return userPersistence.findByC_FID(companyId, facebookId);
+		return userPersistence.findByC_FID_First(companyId, facebookId);
 	}
 
 	/**
@@ -2635,7 +2635,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	public User getUserByOpenId(long companyId, String openId)
 		throws PortalException, SystemException {
 
-		return userPersistence.findByC_O(companyId, openId);
+		return userPersistence.findByC_O_First(companyId, openId);
 	}
 
 	/**
@@ -2649,7 +2649,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	public User getUserByPortraitId(long portraitId)
 		throws PortalException, SystemException {
 
-		return userPersistence.findByPortraitId(portraitId);
+		return userPersistence.findByPortraitId_First(portraitId);
 	}
 
 	/**
@@ -3011,7 +3011,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	public User loadGetDefaultUser(long companyId)
 		throws PortalException, SystemException {
 
-		return userPersistence.findByC_DU(companyId, true);
+		return userPersistence.findByC_DU_First(companyId, true);
 	}
 
 	/**
@@ -5954,7 +5954,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			return;
 		}
 
-		User user = userPersistence.fetchByC_O(companyId, openId);
+		User user = userPersistence.fetchByC_O_First(companyId, openId);
 
 		if ((user != null) && (user.getUserId() != userId)) {
 			throw new DuplicateOpenIdException();

@@ -317,9 +317,6 @@ public class JournalTemplatePersistenceTest {
 		Assert.assertEquals(existingJournalTemplateModelImpl.getGroupId(),
 			existingJournalTemplateModelImpl.getOriginalGroupId());
 
-		Assert.assertEquals(existingJournalTemplateModelImpl.getSmallImageId(),
-			existingJournalTemplateModelImpl.getOriginalSmallImageId());
-
 		Assert.assertEquals(existingJournalTemplateModelImpl.getGroupId(),
 			existingJournalTemplateModelImpl.getOriginalGroupId());
 		Assert.assertTrue(Validator.equals(

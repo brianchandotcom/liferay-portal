@@ -104,7 +104,7 @@ public class WorkflowDefinitionLinkLocalServiceImpl
 
 		long classNameId = PortalUtil.getClassNameId(className);
 
-		return workflowDefinitionLinkPersistence.findByG_C_C_C_T(
+		return workflowDefinitionLinkPersistence.findByG_C_C_C_T_First(
 			WorkflowConstants.DEFAULT_GROUP_ID, companyId, classNameId, classPK,
 			typePK);
 	}
@@ -136,12 +136,12 @@ public class WorkflowDefinitionLinkLocalServiceImpl
 		}
 
 		workflowDefinitionLink =
-			workflowDefinitionLinkPersistence.fetchByG_C_C_C_T(
+			workflowDefinitionLinkPersistence.fetchByG_C_C_C_T_First(
 				groupId, companyId, classNameId, classPK, typePK);
 
 		if (!strict && (workflowDefinitionLink == null)) {
 			workflowDefinitionLink =
-				workflowDefinitionLinkPersistence.fetchByG_C_C_C_T(
+				workflowDefinitionLinkPersistence.fetchByG_C_C_C_T_First(
 					WorkflowConstants.DEFAULT_GROUP_ID, companyId, classNameId,
 					classPK, typePK);
 		}
@@ -240,7 +240,7 @@ public class WorkflowDefinitionLinkLocalServiceImpl
 		Date now = new Date();
 
 		WorkflowDefinitionLink workflowDefinitionLink =
-			workflowDefinitionLinkPersistence.fetchByG_C_C_C_T(
+			workflowDefinitionLinkPersistence.fetchByG_C_C_C_T_First(
 				groupId, companyId, classNameId, classPK, typePK);
 
 		if (workflowDefinitionLink == null) {

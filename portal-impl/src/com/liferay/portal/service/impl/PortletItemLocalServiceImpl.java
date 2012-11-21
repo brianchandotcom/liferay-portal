@@ -70,7 +70,7 @@ public class PortletItemLocalServiceImpl
 
 		long classNameId = PortalUtil.getClassNameId(className);
 
-		return portletItemPersistence.findByG_N_P_C(
+		return portletItemPersistence.findByG_N_P_C_First(
 			groupId, name, portletId, classNameId);
 	}
 

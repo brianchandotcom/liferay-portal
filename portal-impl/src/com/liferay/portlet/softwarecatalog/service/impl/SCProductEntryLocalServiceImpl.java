@@ -598,7 +598,7 @@ public class SCProductEntryLocalServiceImpl
 			byte[] fullImage = fullImages.get(i);
 
 			SCProductScreenshot productScreenshot =
-				scProductScreenshotPersistence.fetchByP_P(
+				scProductScreenshotPersistence.fetchByP_P_First(
 					productEntryId, priority);
 
 			if (productScreenshot == null) {
@@ -656,8 +656,9 @@ public class SCProductEntryLocalServiceImpl
 			throw new ProductEntryAuthorException();
 		}
 
-		SCProductEntry productEntry = scProductEntryPersistence.fetchByRG_RA(
-			repoGroupId, repoArtifactId);
+		SCProductEntry productEntry =
+			scProductEntryPersistence.fetchByRG_RA_First(
+				repoGroupId, repoArtifactId);
 
 		if ((productEntry != null) &&
 			(productEntry.getProductEntryId() != productEntryId)) {

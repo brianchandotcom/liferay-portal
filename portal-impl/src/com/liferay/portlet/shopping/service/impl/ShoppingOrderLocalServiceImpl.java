@@ -299,7 +299,7 @@ public class ShoppingOrderLocalServiceImpl
 	public ShoppingOrder getPayPalTxnIdOrder(String ppTxnId)
 		throws PortalException, SystemException {
 
-		return shoppingOrderPersistence.findByPPTxnId(ppTxnId);
+		return shoppingOrderPersistence.findByPPTxnId_First(ppTxnId);
 	}
 
 	public ShoppingOrder saveLatestOrder(ShoppingCart cart)

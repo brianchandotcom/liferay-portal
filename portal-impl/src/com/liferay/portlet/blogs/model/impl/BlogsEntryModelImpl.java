@@ -114,6 +114,7 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 	public static long URLTITLE_COLUMN_BITMASK = 16L;
 	public static long USERID_COLUMN_BITMASK = 32L;
 	public static long UUID_COLUMN_BITMASK = 64L;
+	public static long CREATEDATE_COLUMN_BITMASK = 128L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.

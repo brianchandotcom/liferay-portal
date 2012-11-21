@@ -251,7 +251,7 @@ public class LayoutRevisionLocalServiceImpl
 			long layoutSetBranchId, long plid, boolean head)
 		throws PortalException, SystemException {
 
-		return layoutRevisionPersistence.findByL_H_P(
+		return layoutRevisionPersistence.findByL_H_P_First(
 			layoutSetBranchId, head, plid);
 	}
 

@@ -65,7 +65,7 @@ public class MBThreadFlagLocalServiceImpl
 				}
 
 				threadFlag = mbThreadFlagPersistence.fetchByU_T(
-					userId, threadId, false);
+					userId, threadId);
 
 				if (threadFlag == null) {
 					throw se;

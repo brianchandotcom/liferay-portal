@@ -22,17 +22,14 @@ import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.persistence.BasePersistence;
 import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
 import com.liferay.portal.test.LiferayPersistenceIntegrationJUnitTestRunner;
 import com.liferay.portal.test.persistence.TransactionalPersistenceAdvice;
-import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.social.NoSuchActivitySettingException;
 import com.liferay.portlet.social.model.SocialActivitySetting;
-import com.liferay.portlet.social.model.impl.SocialActivitySettingModelImpl;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -257,29 +254,6 @@ public class SocialActivitySettingPersistenceTest {
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
-	}
-
-	@Test
-	public void testResetOriginalValues() throws Exception {
-		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
-			return;
-		}
-
-		SocialActivitySetting newSocialActivitySetting = addSocialActivitySetting();
-
-		_persistence.clearCache();
-
-		SocialActivitySettingModelImpl existingSocialActivitySettingModelImpl = (SocialActivitySettingModelImpl)_persistence.findByPrimaryKey(newSocialActivitySetting.getPrimaryKey());
-
-		Assert.assertEquals(existingSocialActivitySettingModelImpl.getGroupId(),
-			existingSocialActivitySettingModelImpl.getOriginalGroupId());
-		Assert.assertEquals(existingSocialActivitySettingModelImpl.getClassNameId(),
-			existingSocialActivitySettingModelImpl.getOriginalClassNameId());
-		Assert.assertEquals(existingSocialActivitySettingModelImpl.getActivityType(),
-			existingSocialActivitySettingModelImpl.getOriginalActivityType());
-		Assert.assertTrue(Validator.equals(
-				existingSocialActivitySettingModelImpl.getName(),
-				existingSocialActivitySettingModelImpl.getOriginalName()));
 	}
 
 	protected SocialActivitySetting addSocialActivitySetting()

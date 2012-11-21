@@ -384,14 +384,6 @@ public class JournalArticlePersistenceTest {
 
 		Assert.assertEquals(existingJournalArticleModelImpl.getGroupId(),
 			existingJournalArticleModelImpl.getOriginalGroupId());
-		Assert.assertEquals(existingJournalArticleModelImpl.getClassNameId(),
-			existingJournalArticleModelImpl.getOriginalClassNameId());
-		Assert.assertTrue(Validator.equals(
-				existingJournalArticleModelImpl.getStructureId(),
-				existingJournalArticleModelImpl.getOriginalStructureId()));
-
-		Assert.assertEquals(existingJournalArticleModelImpl.getGroupId(),
-			existingJournalArticleModelImpl.getOriginalGroupId());
 		Assert.assertTrue(Validator.equals(
 				existingJournalArticleModelImpl.getArticleId(),
 				existingJournalArticleModelImpl.getOriginalArticleId()));

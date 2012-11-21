@@ -38,6 +38,571 @@ public interface SCProductScreenshotPersistence extends BasePersistence<SCProduc
 	 */
 
 	/**
+	* Returns all the s c product screenshots where productEntryId = &#63;.
+	*
+	* @param productEntryId the product entry ID
+	* @return the matching s c product screenshots
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductScreenshot> findByProductEntryId(
+		long productEntryId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns a range of all the s c product screenshots where productEntryId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from SCProductScreenshotModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted in portal side by PK ASC order.
+	* </p>
+	*
+	* @param productEntryId the product entry ID
+	* @param start the lower bound of the range of s c product screenshots
+	* @param end the upper bound of the range of s c product screenshots (not inclusive)
+	* @return the range of matching s c product screenshots
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductScreenshot> findByProductEntryId(
+		long productEntryId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the s c product screenshots before and after the current s c product screenshot in the ordered set where productEntryId = &#63;.
+	*
+	* @param productScreenshotId the primary key of the current s c product screenshot
+	* @param productEntryId the product entry ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next s c product screenshot
+	* @throws com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException if a s c product screenshot with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.softwarecatalog.model.SCProductScreenshot[] findByProductEntryId_PrevAndNext(
+		long productScreenshotId, long productEntryId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException;
+
+	/**
+	* Returns an ordered range of all the s c product screenshots where productEntryId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from SCProductScreenshotModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted in portal side by PK ASC order.
+	* </p>
+	*
+	* @param productEntryId the product entry ID
+	* @param start the lower bound of the range of s c product screenshots
+	* @param end the upper bound of the range of s c product screenshots (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching s c product screenshots
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductScreenshot> findByProductEntryId(
+		long productEntryId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first s c product screenshot in the default ordered set defined by {@link SCProductScreenshotModelImpl#ORDER_BY_JPQL} where productEntryId = &#63;.
+	*
+	* @param productEntryId the product entry ID
+	* @return the first matching s c product screenshot
+	* @throws com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException if a matching s c product screenshot could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.softwarecatalog.model.SCProductScreenshot findByProductEntryId_First(
+		long productEntryId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException;
+
+	/**
+	* Returns the first s c product screenshot in the ordered set where productEntryId = &#63;.
+	*
+	* @param productEntryId the product entry ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching s c product screenshot
+	* @throws com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException if a matching s c product screenshot could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.softwarecatalog.model.SCProductScreenshot findByProductEntryId_First(
+		long productEntryId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException;
+
+	/**
+	* Returns the first s c product screenshot in the default ordered set defined by {@link SCProductScreenshotModelImpl#ORDER_BY_JPQL} where productEntryId = &#63;.
+	*
+	* @param productEntryId the product entry ID
+	* @return the first matching s c product screenshot, or <code>null</code> if a matching s c product screenshot could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.softwarecatalog.model.SCProductScreenshot fetchByProductEntryId_First(
+		long productEntryId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first s c product screenshot in the ordered set where productEntryId = &#63;.
+	*
+	* @param productEntryId the product entry ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching s c product screenshot, or <code>null</code> if a matching s c product screenshot could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.softwarecatalog.model.SCProductScreenshot fetchByProductEntryId_First(
+		long productEntryId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last s c product screenshot in the default ordered set defined by {@link SCProductScreenshotModelImpl#ORDER_BY_JPQL} where productEntryId = &#63;.
+	*
+	* @param productEntryId the product entry ID
+	* @return the last matching s c product screenshot
+	* @throws com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException if a matching s c product screenshot could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.softwarecatalog.model.SCProductScreenshot findByProductEntryId_Last(
+		long productEntryId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException;
+
+	/**
+	* Returns the last s c product screenshot in the ordered set where productEntryId = &#63;.
+	*
+	* @param productEntryId the product entry ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching s c product screenshot
+	* @throws com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException if a matching s c product screenshot could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.softwarecatalog.model.SCProductScreenshot findByProductEntryId_Last(
+		long productEntryId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException;
+
+	/**
+	* Returns the last s c product screenshot in the default ordered set defined by {@link SCProductScreenshotModelImpl#ORDER_BY_JPQL} where productEntryId = &#63;.
+	*
+	* @param productEntryId the product entry ID
+	* @return the last matching s c product screenshot, or <code>null</code> if a matching s c product screenshot could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.softwarecatalog.model.SCProductScreenshot fetchByProductEntryId_Last(
+		long productEntryId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last s c product screenshot in the ordered set where productEntryId = &#63;.
+	*
+	* @param productEntryId the product entry ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching s c product screenshot, or <code>null</code> if a matching s c product screenshot could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.softwarecatalog.model.SCProductScreenshot fetchByProductEntryId_Last(
+		long productEntryId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Removes all the s c product screenshots where productEntryId = &#63; from the database.
+	*
+	* @param productEntryId the product entry ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeByProductEntryId(long productEntryId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of s c product screenshots where productEntryId = &#63;.
+	*
+	* @param productEntryId the product entry ID
+	* @return the number of matching s c product screenshots
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByProductEntryId(long productEntryId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first s c product screenshot in the default ordered set defined by {@link SCProductScreenshotModelImpl#ORDER_BY_JPQL} where thumbnailId = &#63;.
+	*
+	* @param thumbnailId the thumbnail ID
+	* @return the first matching s c product screenshot
+	* @throws com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException if a matching s c product screenshot could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.softwarecatalog.model.SCProductScreenshot findByThumbnailId_First(
+		long thumbnailId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException;
+
+	/**
+	* Returns the first s c product screenshot in the ordered set where thumbnailId = &#63;.
+	*
+	* @param thumbnailId the thumbnail ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching s c product screenshot
+	* @throws com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException if a matching s c product screenshot could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.softwarecatalog.model.SCProductScreenshot findByThumbnailId_First(
+		long thumbnailId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException;
+
+	/**
+	* Returns the first s c product screenshot in the default ordered set defined by {@link SCProductScreenshotModelImpl#ORDER_BY_JPQL} where thumbnailId = &#63;.
+	*
+	* @param thumbnailId the thumbnail ID
+	* @return the first matching s c product screenshot, or <code>null</code> if a matching s c product screenshot could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.softwarecatalog.model.SCProductScreenshot fetchByThumbnailId_First(
+		long thumbnailId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first s c product screenshot in the ordered set where thumbnailId = &#63;.
+	*
+	* @param thumbnailId the thumbnail ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching s c product screenshot, or <code>null</code> if a matching s c product screenshot could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.softwarecatalog.model.SCProductScreenshot fetchByThumbnailId_First(
+		long thumbnailId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last s c product screenshot in the default ordered set defined by {@link SCProductScreenshotModelImpl#ORDER_BY_JPQL} where thumbnailId = &#63;.
+	*
+	* @param thumbnailId the thumbnail ID
+	* @return the last matching s c product screenshot
+	* @throws com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException if a matching s c product screenshot could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.softwarecatalog.model.SCProductScreenshot findByThumbnailId_Last(
+		long thumbnailId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException;
+
+	/**
+	* Returns the last s c product screenshot in the ordered set where thumbnailId = &#63;.
+	*
+	* @param thumbnailId the thumbnail ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching s c product screenshot
+	* @throws com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException if a matching s c product screenshot could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.softwarecatalog.model.SCProductScreenshot findByThumbnailId_Last(
+		long thumbnailId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException;
+
+	/**
+	* Returns the last s c product screenshot in the default ordered set defined by {@link SCProductScreenshotModelImpl#ORDER_BY_JPQL} where thumbnailId = &#63;.
+	*
+	* @param thumbnailId the thumbnail ID
+	* @return the last matching s c product screenshot, or <code>null</code> if a matching s c product screenshot could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.softwarecatalog.model.SCProductScreenshot fetchByThumbnailId_Last(
+		long thumbnailId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last s c product screenshot in the ordered set where thumbnailId = &#63;.
+	*
+	* @param thumbnailId the thumbnail ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching s c product screenshot, or <code>null</code> if a matching s c product screenshot could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.softwarecatalog.model.SCProductScreenshot fetchByThumbnailId_Last(
+		long thumbnailId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Removes all the s c product screenshots where thumbnailId = &#63; from the database.
+	*
+	* @param thumbnailId the thumbnail ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeByThumbnailId(long thumbnailId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of s c product screenshots where thumbnailId = &#63;.
+	*
+	* @param thumbnailId the thumbnail ID
+	* @return the number of matching s c product screenshots
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByThumbnailId(long thumbnailId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first s c product screenshot in the default ordered set defined by {@link SCProductScreenshotModelImpl#ORDER_BY_JPQL} where fullImageId = &#63;.
+	*
+	* @param fullImageId the full image ID
+	* @return the first matching s c product screenshot
+	* @throws com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException if a matching s c product screenshot could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.softwarecatalog.model.SCProductScreenshot findByFullImageId_First(
+		long fullImageId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException;
+
+	/**
+	* Returns the first s c product screenshot in the ordered set where fullImageId = &#63;.
+	*
+	* @param fullImageId the full image ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching s c product screenshot
+	* @throws com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException if a matching s c product screenshot could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.softwarecatalog.model.SCProductScreenshot findByFullImageId_First(
+		long fullImageId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException;
+
+	/**
+	* Returns the first s c product screenshot in the default ordered set defined by {@link SCProductScreenshotModelImpl#ORDER_BY_JPQL} where fullImageId = &#63;.
+	*
+	* @param fullImageId the full image ID
+	* @return the first matching s c product screenshot, or <code>null</code> if a matching s c product screenshot could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.softwarecatalog.model.SCProductScreenshot fetchByFullImageId_First(
+		long fullImageId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first s c product screenshot in the ordered set where fullImageId = &#63;.
+	*
+	* @param fullImageId the full image ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching s c product screenshot, or <code>null</code> if a matching s c product screenshot could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.softwarecatalog.model.SCProductScreenshot fetchByFullImageId_First(
+		long fullImageId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last s c product screenshot in the default ordered set defined by {@link SCProductScreenshotModelImpl#ORDER_BY_JPQL} where fullImageId = &#63;.
+	*
+	* @param fullImageId the full image ID
+	* @return the last matching s c product screenshot
+	* @throws com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException if a matching s c product screenshot could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.softwarecatalog.model.SCProductScreenshot findByFullImageId_Last(
+		long fullImageId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException;
+
+	/**
+	* Returns the last s c product screenshot in the ordered set where fullImageId = &#63;.
+	*
+	* @param fullImageId the full image ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching s c product screenshot
+	* @throws com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException if a matching s c product screenshot could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.softwarecatalog.model.SCProductScreenshot findByFullImageId_Last(
+		long fullImageId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException;
+
+	/**
+	* Returns the last s c product screenshot in the default ordered set defined by {@link SCProductScreenshotModelImpl#ORDER_BY_JPQL} where fullImageId = &#63;.
+	*
+	* @param fullImageId the full image ID
+	* @return the last matching s c product screenshot, or <code>null</code> if a matching s c product screenshot could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.softwarecatalog.model.SCProductScreenshot fetchByFullImageId_Last(
+		long fullImageId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last s c product screenshot in the ordered set where fullImageId = &#63;.
+	*
+	* @param fullImageId the full image ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching s c product screenshot, or <code>null</code> if a matching s c product screenshot could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.softwarecatalog.model.SCProductScreenshot fetchByFullImageId_Last(
+		long fullImageId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Removes all the s c product screenshots where fullImageId = &#63; from the database.
+	*
+	* @param fullImageId the full image ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeByFullImageId(long fullImageId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of s c product screenshots where fullImageId = &#63;.
+	*
+	* @param fullImageId the full image ID
+	* @return the number of matching s c product screenshots
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByFullImageId(long fullImageId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first s c product screenshot in the default ordered set defined by {@link SCProductScreenshotModelImpl#ORDER_BY_JPQL} where productEntryId = &#63; and priority = &#63;.
+	*
+	* @param productEntryId the product entry ID
+	* @param priority the priority
+	* @return the first matching s c product screenshot
+	* @throws com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException if a matching s c product screenshot could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.softwarecatalog.model.SCProductScreenshot findByP_P_First(
+		long productEntryId, int priority)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException;
+
+	/**
+	* Returns the first s c product screenshot in the ordered set where productEntryId = &#63; and priority = &#63;.
+	*
+	* @param productEntryId the product entry ID
+	* @param priority the priority
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching s c product screenshot
+	* @throws com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException if a matching s c product screenshot could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.softwarecatalog.model.SCProductScreenshot findByP_P_First(
+		long productEntryId, int priority,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException;
+
+	/**
+	* Returns the first s c product screenshot in the default ordered set defined by {@link SCProductScreenshotModelImpl#ORDER_BY_JPQL} where productEntryId = &#63; and priority = &#63;.
+	*
+	* @param productEntryId the product entry ID
+	* @param priority the priority
+	* @return the first matching s c product screenshot, or <code>null</code> if a matching s c product screenshot could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.softwarecatalog.model.SCProductScreenshot fetchByP_P_First(
+		long productEntryId, int priority)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first s c product screenshot in the ordered set where productEntryId = &#63; and priority = &#63;.
+	*
+	* @param productEntryId the product entry ID
+	* @param priority the priority
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching s c product screenshot, or <code>null</code> if a matching s c product screenshot could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.softwarecatalog.model.SCProductScreenshot fetchByP_P_First(
+		long productEntryId, int priority,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last s c product screenshot in the default ordered set defined by {@link SCProductScreenshotModelImpl#ORDER_BY_JPQL} where productEntryId = &#63; and priority = &#63;.
+	*
+	* @param productEntryId the product entry ID
+	* @param priority the priority
+	* @return the last matching s c product screenshot
+	* @throws com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException if a matching s c product screenshot could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.softwarecatalog.model.SCProductScreenshot findByP_P_Last(
+		long productEntryId, int priority)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException;
+
+	/**
+	* Returns the last s c product screenshot in the ordered set where productEntryId = &#63; and priority = &#63;.
+	*
+	* @param productEntryId the product entry ID
+	* @param priority the priority
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching s c product screenshot
+	* @throws com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException if a matching s c product screenshot could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.softwarecatalog.model.SCProductScreenshot findByP_P_Last(
+		long productEntryId, int priority,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException;
+
+	/**
+	* Returns the last s c product screenshot in the default ordered set defined by {@link SCProductScreenshotModelImpl#ORDER_BY_JPQL} where productEntryId = &#63; and priority = &#63;.
+	*
+	* @param productEntryId the product entry ID
+	* @param priority the priority
+	* @return the last matching s c product screenshot, or <code>null</code> if a matching s c product screenshot could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.softwarecatalog.model.SCProductScreenshot fetchByP_P_Last(
+		long productEntryId, int priority)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last s c product screenshot in the ordered set where productEntryId = &#63; and priority = &#63;.
+	*
+	* @param productEntryId the product entry ID
+	* @param priority the priority
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching s c product screenshot, or <code>null</code> if a matching s c product screenshot could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.softwarecatalog.model.SCProductScreenshot fetchByP_P_Last(
+		long productEntryId, int priority,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Removes all the s c product screenshots where productEntryId = &#63; and priority = &#63; from the database.
+	*
+	* @param productEntryId the product entry ID
+	* @param priority the priority
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeByP_P(long productEntryId, int priority)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of s c product screenshots where productEntryId = &#63; and priority = &#63;.
+	*
+	* @param productEntryId the product entry ID
+	* @param priority the priority
+	* @return the number of matching s c product screenshots
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByP_P(long productEntryId, int priority)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Caches the s c product screenshot in the entity cache if it is enabled.
 	*
 	* @param scProductScreenshot the s c product screenshot
@@ -104,236 +669,6 @@ public interface SCProductScreenshotPersistence extends BasePersistence<SCProduc
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns all the s c product screenshots where productEntryId = &#63;.
-	*
-	* @param productEntryId the product entry ID
-	* @return the matching s c product screenshots
-	* @throws SystemException if a system exception occurred
-	*/
-	public java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductScreenshot> findByProductEntryId(
-		long productEntryId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns a range of all the s c product screenshots where productEntryId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
-	* @param productEntryId the product entry ID
-	* @param start the lower bound of the range of s c product screenshots
-	* @param end the upper bound of the range of s c product screenshots (not inclusive)
-	* @return the range of matching s c product screenshots
-	* @throws SystemException if a system exception occurred
-	*/
-	public java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductScreenshot> findByProductEntryId(
-		long productEntryId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns an ordered range of all the s c product screenshots where productEntryId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
-	* @param productEntryId the product entry ID
-	* @param start the lower bound of the range of s c product screenshots
-	* @param end the upper bound of the range of s c product screenshots (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching s c product screenshots
-	* @throws SystemException if a system exception occurred
-	*/
-	public java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductScreenshot> findByProductEntryId(
-		long productEntryId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the first s c product screenshot in the ordered set where productEntryId = &#63;.
-	*
-	* @param productEntryId the product entry ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching s c product screenshot
-	* @throws com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException if a matching s c product screenshot could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portlet.softwarecatalog.model.SCProductScreenshot findByProductEntryId_First(
-		long productEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException;
-
-	/**
-	* Returns the first s c product screenshot in the ordered set where productEntryId = &#63;.
-	*
-	* @param productEntryId the product entry ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching s c product screenshot, or <code>null</code> if a matching s c product screenshot could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portlet.softwarecatalog.model.SCProductScreenshot fetchByProductEntryId_First(
-		long productEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the last s c product screenshot in the ordered set where productEntryId = &#63;.
-	*
-	* @param productEntryId the product entry ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching s c product screenshot
-	* @throws com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException if a matching s c product screenshot could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portlet.softwarecatalog.model.SCProductScreenshot findByProductEntryId_Last(
-		long productEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException;
-
-	/**
-	* Returns the last s c product screenshot in the ordered set where productEntryId = &#63;.
-	*
-	* @param productEntryId the product entry ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching s c product screenshot, or <code>null</code> if a matching s c product screenshot could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portlet.softwarecatalog.model.SCProductScreenshot fetchByProductEntryId_Last(
-		long productEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the s c product screenshots before and after the current s c product screenshot in the ordered set where productEntryId = &#63;.
-	*
-	* @param productScreenshotId the primary key of the current s c product screenshot
-	* @param productEntryId the product entry ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next s c product screenshot
-	* @throws com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException if a s c product screenshot with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portlet.softwarecatalog.model.SCProductScreenshot[] findByProductEntryId_PrevAndNext(
-		long productScreenshotId, long productEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException;
-
-	/**
-	* Returns the s c product screenshot where thumbnailId = &#63; or throws a {@link com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException} if it could not be found.
-	*
-	* @param thumbnailId the thumbnail ID
-	* @return the matching s c product screenshot
-	* @throws com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException if a matching s c product screenshot could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portlet.softwarecatalog.model.SCProductScreenshot findByThumbnailId(
-		long thumbnailId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException;
-
-	/**
-	* Returns the s c product screenshot where thumbnailId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	*
-	* @param thumbnailId the thumbnail ID
-	* @return the matching s c product screenshot, or <code>null</code> if a matching s c product screenshot could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portlet.softwarecatalog.model.SCProductScreenshot fetchByThumbnailId(
-		long thumbnailId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the s c product screenshot where thumbnailId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	*
-	* @param thumbnailId the thumbnail ID
-	* @param retrieveFromCache whether to use the finder cache
-	* @return the matching s c product screenshot, or <code>null</code> if a matching s c product screenshot could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portlet.softwarecatalog.model.SCProductScreenshot fetchByThumbnailId(
-		long thumbnailId, boolean retrieveFromCache)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the s c product screenshot where fullImageId = &#63; or throws a {@link com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException} if it could not be found.
-	*
-	* @param fullImageId the full image ID
-	* @return the matching s c product screenshot
-	* @throws com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException if a matching s c product screenshot could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portlet.softwarecatalog.model.SCProductScreenshot findByFullImageId(
-		long fullImageId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException;
-
-	/**
-	* Returns the s c product screenshot where fullImageId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	*
-	* @param fullImageId the full image ID
-	* @return the matching s c product screenshot, or <code>null</code> if a matching s c product screenshot could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portlet.softwarecatalog.model.SCProductScreenshot fetchByFullImageId(
-		long fullImageId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the s c product screenshot where fullImageId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	*
-	* @param fullImageId the full image ID
-	* @param retrieveFromCache whether to use the finder cache
-	* @return the matching s c product screenshot, or <code>null</code> if a matching s c product screenshot could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portlet.softwarecatalog.model.SCProductScreenshot fetchByFullImageId(
-		long fullImageId, boolean retrieveFromCache)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the s c product screenshot where productEntryId = &#63; and priority = &#63; or throws a {@link com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException} if it could not be found.
-	*
-	* @param productEntryId the product entry ID
-	* @param priority the priority
-	* @return the matching s c product screenshot
-	* @throws com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException if a matching s c product screenshot could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portlet.softwarecatalog.model.SCProductScreenshot findByP_P(
-		long productEntryId, int priority)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException;
-
-	/**
-	* Returns the s c product screenshot where productEntryId = &#63; and priority = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	*
-	* @param productEntryId the product entry ID
-	* @param priority the priority
-	* @return the matching s c product screenshot, or <code>null</code> if a matching s c product screenshot could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portlet.softwarecatalog.model.SCProductScreenshot fetchByP_P(
-		long productEntryId, int priority)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the s c product screenshot where productEntryId = &#63; and priority = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	*
-	* @param productEntryId the product entry ID
-	* @param priority the priority
-	* @param retrieveFromCache whether to use the finder cache
-	* @return the matching s c product screenshot, or <code>null</code> if a matching s c product screenshot could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portlet.softwarecatalog.model.SCProductScreenshot fetchByP_P(
-		long productEntryId, int priority, boolean retrieveFromCache)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
 	* Returns all the s c product screenshots.
 	*
 	* @return the s c product screenshots
@@ -346,7 +681,7 @@ public interface SCProductScreenshotPersistence extends BasePersistence<SCProduc
 	* Returns a range of all the s c product screenshots.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from SCProductScreenshotModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted in portal side by PK ASC order.
 	* </p>
 	*
 	* @param start the lower bound of the range of s c product screenshots
@@ -362,7 +697,7 @@ public interface SCProductScreenshotPersistence extends BasePersistence<SCProduc
 	* Returns an ordered range of all the s c product screenshots.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from SCProductScreenshotModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted in portal side by PK ASC order.
 	* </p>
 	*
 	* @param start the lower bound of the range of s c product screenshots
@@ -377,98 +712,11 @@ public interface SCProductScreenshotPersistence extends BasePersistence<SCProduc
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Removes all the s c product screenshots where productEntryId = &#63; from the database.
-	*
-	* @param productEntryId the product entry ID
-	* @throws SystemException if a system exception occurred
-	*/
-	public void removeByProductEntryId(long productEntryId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Removes the s c product screenshot where thumbnailId = &#63; from the database.
-	*
-	* @param thumbnailId the thumbnail ID
-	* @return the s c product screenshot that was removed
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portlet.softwarecatalog.model.SCProductScreenshot removeByThumbnailId(
-		long thumbnailId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException;
-
-	/**
-	* Removes the s c product screenshot where fullImageId = &#63; from the database.
-	*
-	* @param fullImageId the full image ID
-	* @return the s c product screenshot that was removed
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portlet.softwarecatalog.model.SCProductScreenshot removeByFullImageId(
-		long fullImageId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException;
-
-	/**
-	* Removes the s c product screenshot where productEntryId = &#63; and priority = &#63; from the database.
-	*
-	* @param productEntryId the product entry ID
-	* @param priority the priority
-	* @return the s c product screenshot that was removed
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portlet.softwarecatalog.model.SCProductScreenshot removeByP_P(
-		long productEntryId, int priority)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException;
-
-	/**
 	* Removes all the s c product screenshots from the database.
 	*
 	* @throws SystemException if a system exception occurred
 	*/
 	public void removeAll()
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the number of s c product screenshots where productEntryId = &#63;.
-	*
-	* @param productEntryId the product entry ID
-	* @return the number of matching s c product screenshots
-	* @throws SystemException if a system exception occurred
-	*/
-	public int countByProductEntryId(long productEntryId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the number of s c product screenshots where thumbnailId = &#63;.
-	*
-	* @param thumbnailId the thumbnail ID
-	* @return the number of matching s c product screenshots
-	* @throws SystemException if a system exception occurred
-	*/
-	public int countByThumbnailId(long thumbnailId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the number of s c product screenshots where fullImageId = &#63;.
-	*
-	* @param fullImageId the full image ID
-	* @return the number of matching s c product screenshots
-	* @throws SystemException if a system exception occurred
-	*/
-	public int countByFullImageId(long fullImageId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the number of s c product screenshots where productEntryId = &#63; and priority = &#63;.
-	*
-	* @param productEntryId the product entry ID
-	* @param priority the priority
-	* @return the number of matching s c product screenshots
-	* @throws SystemException if a system exception occurred
-	*/
-	public int countByP_P(long productEntryId, int priority)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

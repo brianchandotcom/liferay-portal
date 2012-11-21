@@ -51,7 +51,7 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 	public Lock getLock(String className, String key)
 		throws PortalException, SystemException {
 
-		Lock lock = lockPersistence.findByC_K(className, key);
+		Lock lock = lockPersistence.findByC_K_First(className, key);
 
 		if (lock.isExpired()) {
 			expireLock(lock);
@@ -127,7 +127,7 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 
 		Date now = new Date();
 
-		Lock lock = lockPersistence.fetchByC_K(className, key);
+		Lock lock = lockPersistence.fetchByC_K_First(className, key);
 
 		if (lock != null) {
 			if (lock.isExpired()) {
@@ -268,11 +268,7 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 	}
 
 	public void unlock(String className, String key) throws SystemException {
-		try {
-			lockPersistence.removeByC_K(className, key);
-		}
-		catch (NoSuchLockException nsle) {
-		}
+		lockPersistence.removeByC_K(className, key);
 	}
 
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
@@ -316,7 +312,7 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 	protected Lock fetchLock(String className, String key)
 		throws SystemException {
 
-		Lock lock = lockPersistence.fetchByC_K(className, key);
+		Lock lock = lockPersistence.fetchByC_K_First(className, key);
 
 		if (lock != null) {
 			if (lock.isExpired()) {

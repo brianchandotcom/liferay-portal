@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnmodifiableList;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
@@ -72,6 +73,17 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 		".List1";
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY +
 		".List2";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_ALL = new FinderPath(PortletPreferencesModelImpl.ENTITY_CACHE_ENABLED,
+			PortletPreferencesModelImpl.FINDER_CACHE_ENABLED,
+			PortletPreferencesImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL = new FinderPath(PortletPreferencesModelImpl.ENTITY_CACHE_ENABLED,
+			PortletPreferencesModelImpl.FINDER_CACHE_ENABLED,
+			PortletPreferencesImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0]);
+	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(PortletPreferencesModelImpl.ENTITY_CACHE_ENABLED,
+			PortletPreferencesModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_PLID = new FinderPath(PortletPreferencesModelImpl.ENTITY_CACHE_ENABLED,
 			PortletPreferencesModelImpl.FINDER_CACHE_ENABLED,
 			PortletPreferencesImpl.class,
@@ -79,8 +91,8 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 			new String[] {
 				Long.class.getName(),
 				
-			"java.lang.Integer", "java.lang.Integer",
-				"com.liferay.portal.kernel.util.OrderByComparator"
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
 			});
 	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_PLID = new FinderPath(PortletPreferencesModelImpl.ENTITY_CACHE_ENABLED,
 			PortletPreferencesModelImpl.FINDER_CACHE_ENABLED,
@@ -92,6 +104,512 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 			PortletPreferencesModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByPlid",
 			new String[] { Long.class.getName() });
+
+	/**
+	 * Returns all the portlet preferenceses where plid = &#63;.
+	 *
+	 * @param plid the plid
+	 * @return the matching portlet preferenceses
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<PortletPreferences> findByPlid(long plid)
+		throws SystemException {
+		return findByPlid(plid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the portlet preferenceses where plid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from PortletPreferencesModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted in portal side by PK ASC order.
+	 * </p>
+	 *
+	 * @param plid the plid
+	 * @param start the lower bound of the range of portlet preferenceses
+	 * @param end the upper bound of the range of portlet preferenceses (not inclusive)
+	 * @return the range of matching portlet preferenceses
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<PortletPreferences> findByPlid(long plid, int start, int end)
+		throws SystemException {
+		return findByPlid(plid, start, end, null);
+	}
+
+	/**
+	 * Returns the portlet preferenceses before and after the current portlet preferences in the ordered set where plid = &#63;.
+	 *
+	 * @param portletPreferencesId the primary key of the current portlet preferences
+	 * @param plid the plid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next portlet preferences
+	 * @throws com.liferay.portal.NoSuchPortletPreferencesException if a portlet preferences with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public PortletPreferences[] findByPlid_PrevAndNext(
+		long portletPreferencesId, long plid,
+		OrderByComparator orderByComparator)
+		throws NoSuchPortletPreferencesException, SystemException {
+		PortletPreferences portletPreferences = findByPrimaryKey(portletPreferencesId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			PortletPreferences[] array = new PortletPreferencesImpl[3];
+
+			array[0] = getByPlid_PrevAndNext(session, portletPreferences, plid,
+					orderByComparator, true);
+
+			array[1] = portletPreferences;
+
+			array[2] = getByPlid_PrevAndNext(session, portletPreferences, plid,
+					orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected PortletPreferences getByPlid_PrevAndNext(Session session,
+		PortletPreferences portletPreferences, long plid,
+		OrderByComparator orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_PORTLETPREFERENCES_WHERE);
+
+		query.append(_FINDER_COLUMN_PLID_PLID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(PortletPreferencesModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(plid);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(portletPreferences);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<PortletPreferences> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Returns an ordered range of all the portlet preferenceses where plid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from PortletPreferencesModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted in portal side by PK ASC order.
+	 * </p>
+	 *
+	 * @param plid the plid
+	 * @param start the lower bound of the range of portlet preferenceses
+	 * @param end the upper bound of the range of portlet preferenceses (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching portlet preferenceses
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<PortletPreferences> findByPlid(long plid, int start, int end,
+		OrderByComparator orderByComparator) throws SystemException {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_PLID;
+			finderArgs = new Object[] { plid };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_PLID;
+			finderArgs = new Object[] { plid, start, end, orderByComparator };
+		}
+
+		List<PortletPreferences> list = (List<PortletPreferences>)FinderCacheUtil.getResult(finderPath,
+				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (PortletPreferences portletPreferences : list) {
+				if ((plid != portletPreferences.getPlid())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(3 +
+						(orderByComparator.getOrderByFields().length * 3));
+			}
+			else {
+				query = new StringBundler(3);
+			}
+
+			query.append(_SQL_SELECT_PORTLETPREFERENCES_WHERE);
+
+			query.append(_FINDER_COLUMN_PLID_PLID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else if (pagination) {
+				query.append(PortletPreferencesModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(plid);
+
+				if (!pagination) {
+					list = (List<PortletPreferences>)QueryUtil.list(q,
+							getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = new UnmodifiableList(list);
+				}
+				else {
+					list = (List<PortletPreferences>)QueryUtil.list(q,
+							getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first portlet preferences in the default ordered set defined by {@link PortletPreferencesModelImpl#ORDER_BY_JPQL} where plid = &#63;.
+	 *
+	 * @param plid the plid
+	 * @return the first matching portlet preferences
+	 * @throws com.liferay.portal.NoSuchPortletPreferencesException if a matching portlet preferences could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public PortletPreferences findByPlid_First(long plid)
+		throws NoSuchPortletPreferencesException, SystemException {
+		return findByPlid_First(plid, null);
+	}
+
+	/**
+	 * Returns the first portlet preferences in the ordered set where plid = &#63;.
+	 *
+	 * @param plid the plid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching portlet preferences
+	 * @throws com.liferay.portal.NoSuchPortletPreferencesException if a matching portlet preferences could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public PortletPreferences findByPlid_First(long plid,
+		OrderByComparator orderByComparator)
+		throws NoSuchPortletPreferencesException, SystemException {
+		PortletPreferences portletPreferences = fetchByPlid_First(plid,
+				orderByComparator);
+
+		if (portletPreferences != null) {
+			return portletPreferences;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("plid=");
+		msg.append(plid);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchPortletPreferencesException(msg.toString());
+	}
+
+	/**
+	 * Returns the first portlet preferences in the default ordered set defined by {@link PortletPreferencesModelImpl#ORDER_BY_JPQL} where plid = &#63;.
+	 *
+	 * @param plid the plid
+	 * @return the first matching portlet preferences, or <code>null</code> if a matching portlet preferences could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public PortletPreferences fetchByPlid_First(long plid)
+		throws SystemException {
+		return fetchByPlid_First(plid, null);
+	}
+
+	/**
+	 * Returns the first portlet preferences in the ordered set where plid = &#63;.
+	 *
+	 * @param plid the plid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching portlet preferences, or <code>null</code> if a matching portlet preferences could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public PortletPreferences fetchByPlid_First(long plid,
+		OrderByComparator orderByComparator) throws SystemException {
+		List<PortletPreferences> list = findByPlid(plid, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last portlet preferences in the default ordered set defined by {@link PortletPreferencesModelImpl#ORDER_BY_JPQL} where plid = &#63;.
+	 *
+	 * @param plid the plid
+	 * @return the last matching portlet preferences
+	 * @throws com.liferay.portal.NoSuchPortletPreferencesException if a matching portlet preferences could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public PortletPreferences findByPlid_Last(long plid)
+		throws NoSuchPortletPreferencesException, SystemException {
+		return findByPlid_Last(plid, null);
+	}
+
+	/**
+	 * Returns the last portlet preferences in the ordered set where plid = &#63;.
+	 *
+	 * @param plid the plid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching portlet preferences
+	 * @throws com.liferay.portal.NoSuchPortletPreferencesException if a matching portlet preferences could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public PortletPreferences findByPlid_Last(long plid,
+		OrderByComparator orderByComparator)
+		throws NoSuchPortletPreferencesException, SystemException {
+		PortletPreferences portletPreferences = fetchByPlid_Last(plid,
+				orderByComparator);
+
+		if (portletPreferences != null) {
+			return portletPreferences;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("plid=");
+		msg.append(plid);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchPortletPreferencesException(msg.toString());
+	}
+
+	/**
+	 * Returns the last portlet preferences in the default ordered set defined by {@link PortletPreferencesModelImpl#ORDER_BY_JPQL} where plid = &#63;.
+	 *
+	 * @param plid the plid
+	 * @return the last matching portlet preferences, or <code>null</code> if a matching portlet preferences could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public PortletPreferences fetchByPlid_Last(long plid)
+		throws SystemException {
+		return fetchByPlid_Last(plid, null);
+	}
+
+	/**
+	 * Returns the last portlet preferences in the ordered set where plid = &#63;.
+	 *
+	 * @param plid the plid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching portlet preferences, or <code>null</code> if a matching portlet preferences could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public PortletPreferences fetchByPlid_Last(long plid,
+		OrderByComparator orderByComparator) throws SystemException {
+		int count = countByPlid(plid);
+
+		List<PortletPreferences> list = findByPlid(plid, count - 1, count,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Removes all the portlet preferenceses where plid = &#63; from the database.
+	 *
+	 * @param plid the plid
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void removeByPlid(long plid) throws SystemException {
+		for (PortletPreferences portletPreferences : findByPlid(plid,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(portletPreferences);
+		}
+	}
+
+	/**
+	 * Returns the number of portlet preferenceses where plid = &#63;.
+	 *
+	 * @param plid the plid
+	 * @return the number of matching portlet preferenceses
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int countByPlid(long plid) throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_PLID;
+
+		Object[] finderArgs = new Object[] { plid };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_PORTLETPREFERENCES_WHERE);
+
+			query.append(_FINDER_COLUMN_PLID_PLID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(plid);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_PLID_PLID_2 = "portletPreferences.plid = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_PORTLETID =
 		new FinderPath(PortletPreferencesModelImpl.ENTITY_CACHE_ENABLED,
 			PortletPreferencesModelImpl.FINDER_CACHE_ENABLED,
@@ -100,8 +618,8 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 			new String[] {
 				String.class.getName(),
 				
-			"java.lang.Integer", "java.lang.Integer",
-				"com.liferay.portal.kernel.util.OrderByComparator"
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
 			});
 	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_PORTLETID =
 		new FinderPath(PortletPreferencesModelImpl.ENTITY_CACHE_ENABLED,
@@ -114,6 +632,554 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 			PortletPreferencesModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByPortletId",
 			new String[] { String.class.getName() });
+
+	/**
+	 * Returns all the portlet preferenceses where portletId = &#63;.
+	 *
+	 * @param portletId the portlet ID
+	 * @return the matching portlet preferenceses
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<PortletPreferences> findByPortletId(String portletId)
+		throws SystemException {
+		return findByPortletId(portletId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			null);
+	}
+
+	/**
+	 * Returns a range of all the portlet preferenceses where portletId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from PortletPreferencesModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted in portal side by PK ASC order.
+	 * </p>
+	 *
+	 * @param portletId the portlet ID
+	 * @param start the lower bound of the range of portlet preferenceses
+	 * @param end the upper bound of the range of portlet preferenceses (not inclusive)
+	 * @return the range of matching portlet preferenceses
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<PortletPreferences> findByPortletId(String portletId,
+		int start, int end) throws SystemException {
+		return findByPortletId(portletId, start, end, null);
+	}
+
+	/**
+	 * Returns the portlet preferenceses before and after the current portlet preferences in the ordered set where portletId = &#63;.
+	 *
+	 * @param portletPreferencesId the primary key of the current portlet preferences
+	 * @param portletId the portlet ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next portlet preferences
+	 * @throws com.liferay.portal.NoSuchPortletPreferencesException if a portlet preferences with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public PortletPreferences[] findByPortletId_PrevAndNext(
+		long portletPreferencesId, String portletId,
+		OrderByComparator orderByComparator)
+		throws NoSuchPortletPreferencesException, SystemException {
+		PortletPreferences portletPreferences = findByPrimaryKey(portletPreferencesId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			PortletPreferences[] array = new PortletPreferencesImpl[3];
+
+			array[0] = getByPortletId_PrevAndNext(session, portletPreferences,
+					portletId, orderByComparator, true);
+
+			array[1] = portletPreferences;
+
+			array[2] = getByPortletId_PrevAndNext(session, portletPreferences,
+					portletId, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected PortletPreferences getByPortletId_PrevAndNext(Session session,
+		PortletPreferences portletPreferences, String portletId,
+		OrderByComparator orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_PORTLETPREFERENCES_WHERE);
+
+		if (portletId == null) {
+			query.append(_FINDER_COLUMN_PORTLETID_PORTLETID_1);
+		}
+		else {
+			if (portletId.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_PORTLETID_PORTLETID_3);
+			}
+			else {
+				query.append(_FINDER_COLUMN_PORTLETID_PORTLETID_2);
+			}
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(PortletPreferencesModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		if (portletId != null) {
+			qPos.add(portletId);
+		}
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(portletPreferences);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<PortletPreferences> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Returns an ordered range of all the portlet preferenceses where portletId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from PortletPreferencesModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted in portal side by PK ASC order.
+	 * </p>
+	 *
+	 * @param portletId the portlet ID
+	 * @param start the lower bound of the range of portlet preferenceses
+	 * @param end the upper bound of the range of portlet preferenceses (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching portlet preferenceses
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<PortletPreferences> findByPortletId(String portletId,
+		int start, int end, OrderByComparator orderByComparator)
+		throws SystemException {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_PORTLETID;
+			finderArgs = new Object[] { portletId };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_PORTLETID;
+			finderArgs = new Object[] { portletId, start, end, orderByComparator };
+		}
+
+		List<PortletPreferences> list = (List<PortletPreferences>)FinderCacheUtil.getResult(finderPath,
+				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (PortletPreferences portletPreferences : list) {
+				if (!Validator.equals(portletId,
+							portletPreferences.getPortletId())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(3 +
+						(orderByComparator.getOrderByFields().length * 3));
+			}
+			else {
+				query = new StringBundler(3);
+			}
+
+			query.append(_SQL_SELECT_PORTLETPREFERENCES_WHERE);
+
+			if (portletId == null) {
+				query.append(_FINDER_COLUMN_PORTLETID_PORTLETID_1);
+			}
+			else {
+				if (portletId.equals(StringPool.BLANK)) {
+					query.append(_FINDER_COLUMN_PORTLETID_PORTLETID_3);
+				}
+				else {
+					query.append(_FINDER_COLUMN_PORTLETID_PORTLETID_2);
+				}
+			}
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else if (pagination) {
+				query.append(PortletPreferencesModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (portletId != null) {
+					qPos.add(portletId);
+				}
+
+				if (!pagination) {
+					list = (List<PortletPreferences>)QueryUtil.list(q,
+							getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = new UnmodifiableList(list);
+				}
+				else {
+					list = (List<PortletPreferences>)QueryUtil.list(q,
+							getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first portlet preferences in the default ordered set defined by {@link PortletPreferencesModelImpl#ORDER_BY_JPQL} where portletId = &#63;.
+	 *
+	 * @param portletId the portlet ID
+	 * @return the first matching portlet preferences
+	 * @throws com.liferay.portal.NoSuchPortletPreferencesException if a matching portlet preferences could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public PortletPreferences findByPortletId_First(String portletId)
+		throws NoSuchPortletPreferencesException, SystemException {
+		return findByPortletId_First(portletId, null);
+	}
+
+	/**
+	 * Returns the first portlet preferences in the ordered set where portletId = &#63;.
+	 *
+	 * @param portletId the portlet ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching portlet preferences
+	 * @throws com.liferay.portal.NoSuchPortletPreferencesException if a matching portlet preferences could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public PortletPreferences findByPortletId_First(String portletId,
+		OrderByComparator orderByComparator)
+		throws NoSuchPortletPreferencesException, SystemException {
+		PortletPreferences portletPreferences = fetchByPortletId_First(portletId,
+				orderByComparator);
+
+		if (portletPreferences != null) {
+			return portletPreferences;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("portletId=");
+		msg.append(portletId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchPortletPreferencesException(msg.toString());
+	}
+
+	/**
+	 * Returns the first portlet preferences in the default ordered set defined by {@link PortletPreferencesModelImpl#ORDER_BY_JPQL} where portletId = &#63;.
+	 *
+	 * @param portletId the portlet ID
+	 * @return the first matching portlet preferences, or <code>null</code> if a matching portlet preferences could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public PortletPreferences fetchByPortletId_First(String portletId)
+		throws SystemException {
+		return fetchByPortletId_First(portletId, null);
+	}
+
+	/**
+	 * Returns the first portlet preferences in the ordered set where portletId = &#63;.
+	 *
+	 * @param portletId the portlet ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching portlet preferences, or <code>null</code> if a matching portlet preferences could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public PortletPreferences fetchByPortletId_First(String portletId,
+		OrderByComparator orderByComparator) throws SystemException {
+		List<PortletPreferences> list = findByPortletId(portletId, 0, 1,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last portlet preferences in the default ordered set defined by {@link PortletPreferencesModelImpl#ORDER_BY_JPQL} where portletId = &#63;.
+	 *
+	 * @param portletId the portlet ID
+	 * @return the last matching portlet preferences
+	 * @throws com.liferay.portal.NoSuchPortletPreferencesException if a matching portlet preferences could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public PortletPreferences findByPortletId_Last(String portletId)
+		throws NoSuchPortletPreferencesException, SystemException {
+		return findByPortletId_Last(portletId, null);
+	}
+
+	/**
+	 * Returns the last portlet preferences in the ordered set where portletId = &#63;.
+	 *
+	 * @param portletId the portlet ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching portlet preferences
+	 * @throws com.liferay.portal.NoSuchPortletPreferencesException if a matching portlet preferences could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public PortletPreferences findByPortletId_Last(String portletId,
+		OrderByComparator orderByComparator)
+		throws NoSuchPortletPreferencesException, SystemException {
+		PortletPreferences portletPreferences = fetchByPortletId_Last(portletId,
+				orderByComparator);
+
+		if (portletPreferences != null) {
+			return portletPreferences;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("portletId=");
+		msg.append(portletId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchPortletPreferencesException(msg.toString());
+	}
+
+	/**
+	 * Returns the last portlet preferences in the default ordered set defined by {@link PortletPreferencesModelImpl#ORDER_BY_JPQL} where portletId = &#63;.
+	 *
+	 * @param portletId the portlet ID
+	 * @return the last matching portlet preferences, or <code>null</code> if a matching portlet preferences could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public PortletPreferences fetchByPortletId_Last(String portletId)
+		throws SystemException {
+		return fetchByPortletId_Last(portletId, null);
+	}
+
+	/**
+	 * Returns the last portlet preferences in the ordered set where portletId = &#63;.
+	 *
+	 * @param portletId the portlet ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching portlet preferences, or <code>null</code> if a matching portlet preferences could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public PortletPreferences fetchByPortletId_Last(String portletId,
+		OrderByComparator orderByComparator) throws SystemException {
+		int count = countByPortletId(portletId);
+
+		List<PortletPreferences> list = findByPortletId(portletId, count - 1,
+				count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Removes all the portlet preferenceses where portletId = &#63; from the database.
+	 *
+	 * @param portletId the portlet ID
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void removeByPortletId(String portletId) throws SystemException {
+		for (PortletPreferences portletPreferences : findByPortletId(
+				portletId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(portletPreferences);
+		}
+	}
+
+	/**
+	 * Returns the number of portlet preferenceses where portletId = &#63;.
+	 *
+	 * @param portletId the portlet ID
+	 * @return the number of matching portlet preferenceses
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int countByPortletId(String portletId) throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_PORTLETID;
+
+		Object[] finderArgs = new Object[] { portletId };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_PORTLETPREFERENCES_WHERE);
+
+			if (portletId == null) {
+				query.append(_FINDER_COLUMN_PORTLETID_PORTLETID_1);
+			}
+			else {
+				if (portletId.equals(StringPool.BLANK)) {
+					query.append(_FINDER_COLUMN_PORTLETID_PORTLETID_3);
+				}
+				else {
+					query.append(_FINDER_COLUMN_PORTLETID_PORTLETID_2);
+				}
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (portletId != null) {
+					qPos.add(portletId);
+				}
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_PORTLETID_PORTLETID_1 = "portletPreferences.portletId IS NULL";
+	private static final String _FINDER_COLUMN_PORTLETID_PORTLETID_2 = "portletPreferences.portletId = ?";
+	private static final String _FINDER_COLUMN_PORTLETID_PORTLETID_3 = "(portletPreferences.portletId IS NULL OR portletPreferences.portletId = ?)";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_P_P = new FinderPath(PortletPreferencesModelImpl.ENTITY_CACHE_ENABLED,
 			PortletPreferencesModelImpl.FINDER_CACHE_ENABLED,
 			PortletPreferencesImpl.class,
@@ -121,8 +1187,8 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				
-			"java.lang.Integer", "java.lang.Integer",
-				"com.liferay.portal.kernel.util.OrderByComparator"
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
 			});
 	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_P_P = new FinderPath(PortletPreferencesModelImpl.ENTITY_CACHE_ENABLED,
 			PortletPreferencesModelImpl.FINDER_CACHE_ENABLED,
@@ -135,6 +1201,594 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 			PortletPreferencesModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByP_P",
 			new String[] { Long.class.getName(), String.class.getName() });
+
+	/**
+	 * Returns all the portlet preferenceses where plid = &#63; and portletId = &#63;.
+	 *
+	 * @param plid the plid
+	 * @param portletId the portlet ID
+	 * @return the matching portlet preferenceses
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<PortletPreferences> findByP_P(long plid, String portletId)
+		throws SystemException {
+		return findByP_P(plid, portletId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			null);
+	}
+
+	/**
+	 * Returns a range of all the portlet preferenceses where plid = &#63; and portletId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from PortletPreferencesModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted in portal side by PK ASC order.
+	 * </p>
+	 *
+	 * @param plid the plid
+	 * @param portletId the portlet ID
+	 * @param start the lower bound of the range of portlet preferenceses
+	 * @param end the upper bound of the range of portlet preferenceses (not inclusive)
+	 * @return the range of matching portlet preferenceses
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<PortletPreferences> findByP_P(long plid, String portletId,
+		int start, int end) throws SystemException {
+		return findByP_P(plid, portletId, start, end, null);
+	}
+
+	/**
+	 * Returns the portlet preferenceses before and after the current portlet preferences in the ordered set where plid = &#63; and portletId = &#63;.
+	 *
+	 * @param portletPreferencesId the primary key of the current portlet preferences
+	 * @param plid the plid
+	 * @param portletId the portlet ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next portlet preferences
+	 * @throws com.liferay.portal.NoSuchPortletPreferencesException if a portlet preferences with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public PortletPreferences[] findByP_P_PrevAndNext(
+		long portletPreferencesId, long plid, String portletId,
+		OrderByComparator orderByComparator)
+		throws NoSuchPortletPreferencesException, SystemException {
+		PortletPreferences portletPreferences = findByPrimaryKey(portletPreferencesId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			PortletPreferences[] array = new PortletPreferencesImpl[3];
+
+			array[0] = getByP_P_PrevAndNext(session, portletPreferences, plid,
+					portletId, orderByComparator, true);
+
+			array[1] = portletPreferences;
+
+			array[2] = getByP_P_PrevAndNext(session, portletPreferences, plid,
+					portletId, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected PortletPreferences getByP_P_PrevAndNext(Session session,
+		PortletPreferences portletPreferences, long plid, String portletId,
+		OrderByComparator orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_PORTLETPREFERENCES_WHERE);
+
+		query.append(_FINDER_COLUMN_P_P_PLID_2);
+
+		if (portletId == null) {
+			query.append(_FINDER_COLUMN_P_P_PORTLETID_1);
+		}
+		else {
+			if (portletId.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_P_P_PORTLETID_3);
+			}
+			else {
+				query.append(_FINDER_COLUMN_P_P_PORTLETID_2);
+			}
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(PortletPreferencesModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(plid);
+
+		if (portletId != null) {
+			qPos.add(portletId);
+		}
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(portletPreferences);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<PortletPreferences> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Returns an ordered range of all the portlet preferenceses where plid = &#63; and portletId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from PortletPreferencesModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted in portal side by PK ASC order.
+	 * </p>
+	 *
+	 * @param plid the plid
+	 * @param portletId the portlet ID
+	 * @param start the lower bound of the range of portlet preferenceses
+	 * @param end the upper bound of the range of portlet preferenceses (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching portlet preferenceses
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<PortletPreferences> findByP_P(long plid, String portletId,
+		int start, int end, OrderByComparator orderByComparator)
+		throws SystemException {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_P_P;
+			finderArgs = new Object[] { plid, portletId };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_P_P;
+			finderArgs = new Object[] {
+					plid, portletId,
+					
+					start, end, orderByComparator
+				};
+		}
+
+		List<PortletPreferences> list = (List<PortletPreferences>)FinderCacheUtil.getResult(finderPath,
+				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (PortletPreferences portletPreferences : list) {
+				if ((plid != portletPreferences.getPlid()) ||
+						!Validator.equals(portletId,
+							portletPreferences.getPortletId())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(4 +
+						(orderByComparator.getOrderByFields().length * 3));
+			}
+			else {
+				query = new StringBundler(4);
+			}
+
+			query.append(_SQL_SELECT_PORTLETPREFERENCES_WHERE);
+
+			query.append(_FINDER_COLUMN_P_P_PLID_2);
+
+			if (portletId == null) {
+				query.append(_FINDER_COLUMN_P_P_PORTLETID_1);
+			}
+			else {
+				if (portletId.equals(StringPool.BLANK)) {
+					query.append(_FINDER_COLUMN_P_P_PORTLETID_3);
+				}
+				else {
+					query.append(_FINDER_COLUMN_P_P_PORTLETID_2);
+				}
+			}
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else if (pagination) {
+				query.append(PortletPreferencesModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(plid);
+
+				if (portletId != null) {
+					qPos.add(portletId);
+				}
+
+				if (!pagination) {
+					list = (List<PortletPreferences>)QueryUtil.list(q,
+							getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = new UnmodifiableList(list);
+				}
+				else {
+					list = (List<PortletPreferences>)QueryUtil.list(q,
+							getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first portlet preferences in the default ordered set defined by {@link PortletPreferencesModelImpl#ORDER_BY_JPQL} where plid = &#63; and portletId = &#63;.
+	 *
+	 * @param plid the plid
+	 * @param portletId the portlet ID
+	 * @return the first matching portlet preferences
+	 * @throws com.liferay.portal.NoSuchPortletPreferencesException if a matching portlet preferences could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public PortletPreferences findByP_P_First(long plid, String portletId)
+		throws NoSuchPortletPreferencesException, SystemException {
+		return findByP_P_First(plid, portletId, null);
+	}
+
+	/**
+	 * Returns the first portlet preferences in the ordered set where plid = &#63; and portletId = &#63;.
+	 *
+	 * @param plid the plid
+	 * @param portletId the portlet ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching portlet preferences
+	 * @throws com.liferay.portal.NoSuchPortletPreferencesException if a matching portlet preferences could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public PortletPreferences findByP_P_First(long plid, String portletId,
+		OrderByComparator orderByComparator)
+		throws NoSuchPortletPreferencesException, SystemException {
+		PortletPreferences portletPreferences = fetchByP_P_First(plid,
+				portletId, orderByComparator);
+
+		if (portletPreferences != null) {
+			return portletPreferences;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("plid=");
+		msg.append(plid);
+
+		msg.append(", portletId=");
+		msg.append(portletId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchPortletPreferencesException(msg.toString());
+	}
+
+	/**
+	 * Returns the first portlet preferences in the default ordered set defined by {@link PortletPreferencesModelImpl#ORDER_BY_JPQL} where plid = &#63; and portletId = &#63;.
+	 *
+	 * @param plid the plid
+	 * @param portletId the portlet ID
+	 * @return the first matching portlet preferences, or <code>null</code> if a matching portlet preferences could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public PortletPreferences fetchByP_P_First(long plid, String portletId)
+		throws SystemException {
+		return fetchByP_P_First(plid, portletId, null);
+	}
+
+	/**
+	 * Returns the first portlet preferences in the ordered set where plid = &#63; and portletId = &#63;.
+	 *
+	 * @param plid the plid
+	 * @param portletId the portlet ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching portlet preferences, or <code>null</code> if a matching portlet preferences could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public PortletPreferences fetchByP_P_First(long plid, String portletId,
+		OrderByComparator orderByComparator) throws SystemException {
+		List<PortletPreferences> list = findByP_P(plid, portletId, 0, 1,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last portlet preferences in the default ordered set defined by {@link PortletPreferencesModelImpl#ORDER_BY_JPQL} where plid = &#63; and portletId = &#63;.
+	 *
+	 * @param plid the plid
+	 * @param portletId the portlet ID
+	 * @return the last matching portlet preferences
+	 * @throws com.liferay.portal.NoSuchPortletPreferencesException if a matching portlet preferences could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public PortletPreferences findByP_P_Last(long plid, String portletId)
+		throws NoSuchPortletPreferencesException, SystemException {
+		return findByP_P_Last(plid, portletId, null);
+	}
+
+	/**
+	 * Returns the last portlet preferences in the ordered set where plid = &#63; and portletId = &#63;.
+	 *
+	 * @param plid the plid
+	 * @param portletId the portlet ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching portlet preferences
+	 * @throws com.liferay.portal.NoSuchPortletPreferencesException if a matching portlet preferences could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public PortletPreferences findByP_P_Last(long plid, String portletId,
+		OrderByComparator orderByComparator)
+		throws NoSuchPortletPreferencesException, SystemException {
+		PortletPreferences portletPreferences = fetchByP_P_Last(plid,
+				portletId, orderByComparator);
+
+		if (portletPreferences != null) {
+			return portletPreferences;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("plid=");
+		msg.append(plid);
+
+		msg.append(", portletId=");
+		msg.append(portletId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchPortletPreferencesException(msg.toString());
+	}
+
+	/**
+	 * Returns the last portlet preferences in the default ordered set defined by {@link PortletPreferencesModelImpl#ORDER_BY_JPQL} where plid = &#63; and portletId = &#63;.
+	 *
+	 * @param plid the plid
+	 * @param portletId the portlet ID
+	 * @return the last matching portlet preferences, or <code>null</code> if a matching portlet preferences could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public PortletPreferences fetchByP_P_Last(long plid, String portletId)
+		throws SystemException {
+		return fetchByP_P_Last(plid, portletId, null);
+	}
+
+	/**
+	 * Returns the last portlet preferences in the ordered set where plid = &#63; and portletId = &#63;.
+	 *
+	 * @param plid the plid
+	 * @param portletId the portlet ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching portlet preferences, or <code>null</code> if a matching portlet preferences could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public PortletPreferences fetchByP_P_Last(long plid, String portletId,
+		OrderByComparator orderByComparator) throws SystemException {
+		int count = countByP_P(plid, portletId);
+
+		List<PortletPreferences> list = findByP_P(plid, portletId, count - 1,
+				count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Removes all the portlet preferenceses where plid = &#63; and portletId = &#63; from the database.
+	 *
+	 * @param plid the plid
+	 * @param portletId the portlet ID
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void removeByP_P(long plid, String portletId)
+		throws SystemException {
+		for (PortletPreferences portletPreferences : findByP_P(plid, portletId,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(portletPreferences);
+		}
+	}
+
+	/**
+	 * Returns the number of portlet preferenceses where plid = &#63; and portletId = &#63;.
+	 *
+	 * @param plid the plid
+	 * @param portletId the portlet ID
+	 * @return the number of matching portlet preferenceses
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int countByP_P(long plid, String portletId)
+		throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_P_P;
+
+		Object[] finderArgs = new Object[] { plid, portletId };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_PORTLETPREFERENCES_WHERE);
+
+			query.append(_FINDER_COLUMN_P_P_PLID_2);
+
+			if (portletId == null) {
+				query.append(_FINDER_COLUMN_P_P_PORTLETID_1);
+			}
+			else {
+				if (portletId.equals(StringPool.BLANK)) {
+					query.append(_FINDER_COLUMN_P_P_PORTLETID_3);
+				}
+				else {
+					query.append(_FINDER_COLUMN_P_P_PORTLETID_2);
+				}
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(plid);
+
+				if (portletId != null) {
+					qPos.add(portletId);
+				}
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_P_P_PLID_2 = "portletPreferences.plid = ? AND ";
+	private static final String _FINDER_COLUMN_P_P_PORTLETID_1 = "portletPreferences.portletId IS NULL";
+	private static final String _FINDER_COLUMN_P_P_PORTLETID_2 = "portletPreferences.portletId = ?";
+	private static final String _FINDER_COLUMN_P_P_PORTLETID_3 = "(portletPreferences.portletId IS NULL OR portletPreferences.portletId = ?)";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_O_O_P = new FinderPath(PortletPreferencesModelImpl.ENTITY_CACHE_ENABLED,
 			PortletPreferencesModelImpl.FINDER_CACHE_ENABLED,
 			PortletPreferencesImpl.class,
@@ -143,8 +1797,8 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 				Long.class.getName(), Integer.class.getName(),
 				Long.class.getName(),
 				
-			"java.lang.Integer", "java.lang.Integer",
-				"com.liferay.portal.kernel.util.OrderByComparator"
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
 			});
 	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_O_O_P = new FinderPath(PortletPreferencesModelImpl.ENTITY_CACHE_ENABLED,
 			PortletPreferencesModelImpl.FINDER_CACHE_ENABLED,
@@ -164,6 +1818,591 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 				Long.class.getName(), Integer.class.getName(),
 				Long.class.getName()
 			});
+
+	/**
+	 * Returns all the portlet preferenceses where ownerId = &#63; and ownerType = &#63; and plid = &#63;.
+	 *
+	 * @param ownerId the owner ID
+	 * @param ownerType the owner type
+	 * @param plid the plid
+	 * @return the matching portlet preferenceses
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<PortletPreferences> findByO_O_P(long ownerId, int ownerType,
+		long plid) throws SystemException {
+		return findByO_O_P(ownerId, ownerType, plid, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the portlet preferenceses where ownerId = &#63; and ownerType = &#63; and plid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from PortletPreferencesModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted in portal side by PK ASC order.
+	 * </p>
+	 *
+	 * @param ownerId the owner ID
+	 * @param ownerType the owner type
+	 * @param plid the plid
+	 * @param start the lower bound of the range of portlet preferenceses
+	 * @param end the upper bound of the range of portlet preferenceses (not inclusive)
+	 * @return the range of matching portlet preferenceses
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<PortletPreferences> findByO_O_P(long ownerId, int ownerType,
+		long plid, int start, int end) throws SystemException {
+		return findByO_O_P(ownerId, ownerType, plid, start, end, null);
+	}
+
+	/**
+	 * Returns the portlet preferenceses before and after the current portlet preferences in the ordered set where ownerId = &#63; and ownerType = &#63; and plid = &#63;.
+	 *
+	 * @param portletPreferencesId the primary key of the current portlet preferences
+	 * @param ownerId the owner ID
+	 * @param ownerType the owner type
+	 * @param plid the plid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next portlet preferences
+	 * @throws com.liferay.portal.NoSuchPortletPreferencesException if a portlet preferences with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public PortletPreferences[] findByO_O_P_PrevAndNext(
+		long portletPreferencesId, long ownerId, int ownerType, long plid,
+		OrderByComparator orderByComparator)
+		throws NoSuchPortletPreferencesException, SystemException {
+		PortletPreferences portletPreferences = findByPrimaryKey(portletPreferencesId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			PortletPreferences[] array = new PortletPreferencesImpl[3];
+
+			array[0] = getByO_O_P_PrevAndNext(session, portletPreferences,
+					ownerId, ownerType, plid, orderByComparator, true);
+
+			array[1] = portletPreferences;
+
+			array[2] = getByO_O_P_PrevAndNext(session, portletPreferences,
+					ownerId, ownerType, plid, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected PortletPreferences getByO_O_P_PrevAndNext(Session session,
+		PortletPreferences portletPreferences, long ownerId, int ownerType,
+		long plid, OrderByComparator orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_PORTLETPREFERENCES_WHERE);
+
+		query.append(_FINDER_COLUMN_O_O_P_OWNERID_2);
+
+		query.append(_FINDER_COLUMN_O_O_P_OWNERTYPE_2);
+
+		query.append(_FINDER_COLUMN_O_O_P_PLID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(PortletPreferencesModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(ownerId);
+
+		qPos.add(ownerType);
+
+		qPos.add(plid);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(portletPreferences);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<PortletPreferences> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Returns an ordered range of all the portlet preferenceses where ownerId = &#63; and ownerType = &#63; and plid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from PortletPreferencesModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted in portal side by PK ASC order.
+	 * </p>
+	 *
+	 * @param ownerId the owner ID
+	 * @param ownerType the owner type
+	 * @param plid the plid
+	 * @param start the lower bound of the range of portlet preferenceses
+	 * @param end the upper bound of the range of portlet preferenceses (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching portlet preferenceses
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<PortletPreferences> findByO_O_P(long ownerId, int ownerType,
+		long plid, int start, int end, OrderByComparator orderByComparator)
+		throws SystemException {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_O_O_P;
+			finderArgs = new Object[] { ownerId, ownerType, plid };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_O_O_P;
+			finderArgs = new Object[] {
+					ownerId, ownerType, plid,
+					
+					start, end, orderByComparator
+				};
+		}
+
+		List<PortletPreferences> list = (List<PortletPreferences>)FinderCacheUtil.getResult(finderPath,
+				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (PortletPreferences portletPreferences : list) {
+				if ((ownerId != portletPreferences.getOwnerId()) ||
+						(ownerType != portletPreferences.getOwnerType()) ||
+						(plid != portletPreferences.getPlid())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(5 +
+						(orderByComparator.getOrderByFields().length * 3));
+			}
+			else {
+				query = new StringBundler(5);
+			}
+
+			query.append(_SQL_SELECT_PORTLETPREFERENCES_WHERE);
+
+			query.append(_FINDER_COLUMN_O_O_P_OWNERID_2);
+
+			query.append(_FINDER_COLUMN_O_O_P_OWNERTYPE_2);
+
+			query.append(_FINDER_COLUMN_O_O_P_PLID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else if (pagination) {
+				query.append(PortletPreferencesModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(ownerId);
+
+				qPos.add(ownerType);
+
+				qPos.add(plid);
+
+				if (!pagination) {
+					list = (List<PortletPreferences>)QueryUtil.list(q,
+							getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = new UnmodifiableList(list);
+				}
+				else {
+					list = (List<PortletPreferences>)QueryUtil.list(q,
+							getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first portlet preferences in the default ordered set defined by {@link PortletPreferencesModelImpl#ORDER_BY_JPQL} where ownerId = &#63; and ownerType = &#63; and plid = &#63;.
+	 *
+	 * @param ownerId the owner ID
+	 * @param ownerType the owner type
+	 * @param plid the plid
+	 * @return the first matching portlet preferences
+	 * @throws com.liferay.portal.NoSuchPortletPreferencesException if a matching portlet preferences could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public PortletPreferences findByO_O_P_First(long ownerId, int ownerType,
+		long plid) throws NoSuchPortletPreferencesException, SystemException {
+		return findByO_O_P_First(ownerId, ownerType, plid, null);
+	}
+
+	/**
+	 * Returns the first portlet preferences in the ordered set where ownerId = &#63; and ownerType = &#63; and plid = &#63;.
+	 *
+	 * @param ownerId the owner ID
+	 * @param ownerType the owner type
+	 * @param plid the plid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching portlet preferences
+	 * @throws com.liferay.portal.NoSuchPortletPreferencesException if a matching portlet preferences could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public PortletPreferences findByO_O_P_First(long ownerId, int ownerType,
+		long plid, OrderByComparator orderByComparator)
+		throws NoSuchPortletPreferencesException, SystemException {
+		PortletPreferences portletPreferences = fetchByO_O_P_First(ownerId,
+				ownerType, plid, orderByComparator);
+
+		if (portletPreferences != null) {
+			return portletPreferences;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("ownerId=");
+		msg.append(ownerId);
+
+		msg.append(", ownerType=");
+		msg.append(ownerType);
+
+		msg.append(", plid=");
+		msg.append(plid);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchPortletPreferencesException(msg.toString());
+	}
+
+	/**
+	 * Returns the first portlet preferences in the default ordered set defined by {@link PortletPreferencesModelImpl#ORDER_BY_JPQL} where ownerId = &#63; and ownerType = &#63; and plid = &#63;.
+	 *
+	 * @param ownerId the owner ID
+	 * @param ownerType the owner type
+	 * @param plid the plid
+	 * @return the first matching portlet preferences, or <code>null</code> if a matching portlet preferences could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public PortletPreferences fetchByO_O_P_First(long ownerId, int ownerType,
+		long plid) throws SystemException {
+		return fetchByO_O_P_First(ownerId, ownerType, plid, null);
+	}
+
+	/**
+	 * Returns the first portlet preferences in the ordered set where ownerId = &#63; and ownerType = &#63; and plid = &#63;.
+	 *
+	 * @param ownerId the owner ID
+	 * @param ownerType the owner type
+	 * @param plid the plid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching portlet preferences, or <code>null</code> if a matching portlet preferences could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public PortletPreferences fetchByO_O_P_First(long ownerId, int ownerType,
+		long plid, OrderByComparator orderByComparator)
+		throws SystemException {
+		List<PortletPreferences> list = findByO_O_P(ownerId, ownerType, plid,
+				0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last portlet preferences in the default ordered set defined by {@link PortletPreferencesModelImpl#ORDER_BY_JPQL} where ownerId = &#63; and ownerType = &#63; and plid = &#63;.
+	 *
+	 * @param ownerId the owner ID
+	 * @param ownerType the owner type
+	 * @param plid the plid
+	 * @return the last matching portlet preferences
+	 * @throws com.liferay.portal.NoSuchPortletPreferencesException if a matching portlet preferences could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public PortletPreferences findByO_O_P_Last(long ownerId, int ownerType,
+		long plid) throws NoSuchPortletPreferencesException, SystemException {
+		return findByO_O_P_Last(ownerId, ownerType, plid, null);
+	}
+
+	/**
+	 * Returns the last portlet preferences in the ordered set where ownerId = &#63; and ownerType = &#63; and plid = &#63;.
+	 *
+	 * @param ownerId the owner ID
+	 * @param ownerType the owner type
+	 * @param plid the plid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching portlet preferences
+	 * @throws com.liferay.portal.NoSuchPortletPreferencesException if a matching portlet preferences could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public PortletPreferences findByO_O_P_Last(long ownerId, int ownerType,
+		long plid, OrderByComparator orderByComparator)
+		throws NoSuchPortletPreferencesException, SystemException {
+		PortletPreferences portletPreferences = fetchByO_O_P_Last(ownerId,
+				ownerType, plid, orderByComparator);
+
+		if (portletPreferences != null) {
+			return portletPreferences;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("ownerId=");
+		msg.append(ownerId);
+
+		msg.append(", ownerType=");
+		msg.append(ownerType);
+
+		msg.append(", plid=");
+		msg.append(plid);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchPortletPreferencesException(msg.toString());
+	}
+
+	/**
+	 * Returns the last portlet preferences in the default ordered set defined by {@link PortletPreferencesModelImpl#ORDER_BY_JPQL} where ownerId = &#63; and ownerType = &#63; and plid = &#63;.
+	 *
+	 * @param ownerId the owner ID
+	 * @param ownerType the owner type
+	 * @param plid the plid
+	 * @return the last matching portlet preferences, or <code>null</code> if a matching portlet preferences could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public PortletPreferences fetchByO_O_P_Last(long ownerId, int ownerType,
+		long plid) throws SystemException {
+		return fetchByO_O_P_Last(ownerId, ownerType, plid, null);
+	}
+
+	/**
+	 * Returns the last portlet preferences in the ordered set where ownerId = &#63; and ownerType = &#63; and plid = &#63;.
+	 *
+	 * @param ownerId the owner ID
+	 * @param ownerType the owner type
+	 * @param plid the plid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching portlet preferences, or <code>null</code> if a matching portlet preferences could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public PortletPreferences fetchByO_O_P_Last(long ownerId, int ownerType,
+		long plid, OrderByComparator orderByComparator)
+		throws SystemException {
+		int count = countByO_O_P(ownerId, ownerType, plid);
+
+		List<PortletPreferences> list = findByO_O_P(ownerId, ownerType, plid,
+				count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Removes all the portlet preferenceses where ownerId = &#63; and ownerType = &#63; and plid = &#63; from the database.
+	 *
+	 * @param ownerId the owner ID
+	 * @param ownerType the owner type
+	 * @param plid the plid
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void removeByO_O_P(long ownerId, int ownerType, long plid)
+		throws SystemException {
+		for (PortletPreferences portletPreferences : findByO_O_P(ownerId,
+				ownerType, plid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(portletPreferences);
+		}
+	}
+
+	/**
+	 * Returns the number of portlet preferenceses where ownerId = &#63; and ownerType = &#63; and plid = &#63;.
+	 *
+	 * @param ownerId the owner ID
+	 * @param ownerType the owner type
+	 * @param plid the plid
+	 * @return the number of matching portlet preferenceses
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int countByO_O_P(long ownerId, int ownerType, long plid)
+		throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_O_O_P;
+
+		Object[] finderArgs = new Object[] { ownerId, ownerType, plid };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(4);
+
+			query.append(_SQL_COUNT_PORTLETPREFERENCES_WHERE);
+
+			query.append(_FINDER_COLUMN_O_O_P_OWNERID_2);
+
+			query.append(_FINDER_COLUMN_O_O_P_OWNERTYPE_2);
+
+			query.append(_FINDER_COLUMN_O_O_P_PLID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(ownerId);
+
+				qPos.add(ownerType);
+
+				qPos.add(plid);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_O_O_P_OWNERID_2 = "portletPreferences.ownerId = ? AND ";
+	private static final String _FINDER_COLUMN_O_O_P_OWNERTYPE_2 = "portletPreferences.ownerType = ? AND ";
+	private static final String _FINDER_COLUMN_O_O_P_PLID_2 = "portletPreferences.plid = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_O_P_P = new FinderPath(PortletPreferencesModelImpl.ENTITY_CACHE_ENABLED,
 			PortletPreferencesModelImpl.FINDER_CACHE_ENABLED,
 			PortletPreferencesImpl.class,
@@ -172,8 +2411,8 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 				Integer.class.getName(), Long.class.getName(),
 				String.class.getName(),
 				
-			"java.lang.Integer", "java.lang.Integer",
-				"com.liferay.portal.kernel.util.OrderByComparator"
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
 			});
 	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_O_P_P = new FinderPath(PortletPreferencesModelImpl.ENTITY_CACHE_ENABLED,
 			PortletPreferencesModelImpl.FINDER_CACHE_ENABLED,
@@ -193,6 +2432,632 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 				Integer.class.getName(), Long.class.getName(),
 				String.class.getName()
 			});
+
+	/**
+	 * Returns all the portlet preferenceses where ownerType = &#63; and plid = &#63; and portletId = &#63;.
+	 *
+	 * @param ownerType the owner type
+	 * @param plid the plid
+	 * @param portletId the portlet ID
+	 * @return the matching portlet preferenceses
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<PortletPreferences> findByO_P_P(int ownerType, long plid,
+		String portletId) throws SystemException {
+		return findByO_P_P(ownerType, plid, portletId, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the portlet preferenceses where ownerType = &#63; and plid = &#63; and portletId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from PortletPreferencesModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted in portal side by PK ASC order.
+	 * </p>
+	 *
+	 * @param ownerType the owner type
+	 * @param plid the plid
+	 * @param portletId the portlet ID
+	 * @param start the lower bound of the range of portlet preferenceses
+	 * @param end the upper bound of the range of portlet preferenceses (not inclusive)
+	 * @return the range of matching portlet preferenceses
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<PortletPreferences> findByO_P_P(int ownerType, long plid,
+		String portletId, int start, int end) throws SystemException {
+		return findByO_P_P(ownerType, plid, portletId, start, end, null);
+	}
+
+	/**
+	 * Returns the portlet preferenceses before and after the current portlet preferences in the ordered set where ownerType = &#63; and plid = &#63; and portletId = &#63;.
+	 *
+	 * @param portletPreferencesId the primary key of the current portlet preferences
+	 * @param ownerType the owner type
+	 * @param plid the plid
+	 * @param portletId the portlet ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next portlet preferences
+	 * @throws com.liferay.portal.NoSuchPortletPreferencesException if a portlet preferences with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public PortletPreferences[] findByO_P_P_PrevAndNext(
+		long portletPreferencesId, int ownerType, long plid, String portletId,
+		OrderByComparator orderByComparator)
+		throws NoSuchPortletPreferencesException, SystemException {
+		PortletPreferences portletPreferences = findByPrimaryKey(portletPreferencesId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			PortletPreferences[] array = new PortletPreferencesImpl[3];
+
+			array[0] = getByO_P_P_PrevAndNext(session, portletPreferences,
+					ownerType, plid, portletId, orderByComparator, true);
+
+			array[1] = portletPreferences;
+
+			array[2] = getByO_P_P_PrevAndNext(session, portletPreferences,
+					ownerType, plid, portletId, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected PortletPreferences getByO_P_P_PrevAndNext(Session session,
+		PortletPreferences portletPreferences, int ownerType, long plid,
+		String portletId, OrderByComparator orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_PORTLETPREFERENCES_WHERE);
+
+		query.append(_FINDER_COLUMN_O_P_P_OWNERTYPE_2);
+
+		query.append(_FINDER_COLUMN_O_P_P_PLID_2);
+
+		if (portletId == null) {
+			query.append(_FINDER_COLUMN_O_P_P_PORTLETID_1);
+		}
+		else {
+			if (portletId.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_O_P_P_PORTLETID_3);
+			}
+			else {
+				query.append(_FINDER_COLUMN_O_P_P_PORTLETID_2);
+			}
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(PortletPreferencesModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(ownerType);
+
+		qPos.add(plid);
+
+		if (portletId != null) {
+			qPos.add(portletId);
+		}
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(portletPreferences);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<PortletPreferences> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Returns an ordered range of all the portlet preferenceses where ownerType = &#63; and plid = &#63; and portletId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from PortletPreferencesModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted in portal side by PK ASC order.
+	 * </p>
+	 *
+	 * @param ownerType the owner type
+	 * @param plid the plid
+	 * @param portletId the portlet ID
+	 * @param start the lower bound of the range of portlet preferenceses
+	 * @param end the upper bound of the range of portlet preferenceses (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching portlet preferenceses
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<PortletPreferences> findByO_P_P(int ownerType, long plid,
+		String portletId, int start, int end,
+		OrderByComparator orderByComparator) throws SystemException {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_O_P_P;
+			finderArgs = new Object[] { ownerType, plid, portletId };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_O_P_P;
+			finderArgs = new Object[] {
+					ownerType, plid, portletId,
+					
+					start, end, orderByComparator
+				};
+		}
+
+		List<PortletPreferences> list = (List<PortletPreferences>)FinderCacheUtil.getResult(finderPath,
+				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (PortletPreferences portletPreferences : list) {
+				if ((ownerType != portletPreferences.getOwnerType()) ||
+						(plid != portletPreferences.getPlid()) ||
+						!Validator.equals(portletId,
+							portletPreferences.getPortletId())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(5 +
+						(orderByComparator.getOrderByFields().length * 3));
+			}
+			else {
+				query = new StringBundler(5);
+			}
+
+			query.append(_SQL_SELECT_PORTLETPREFERENCES_WHERE);
+
+			query.append(_FINDER_COLUMN_O_P_P_OWNERTYPE_2);
+
+			query.append(_FINDER_COLUMN_O_P_P_PLID_2);
+
+			if (portletId == null) {
+				query.append(_FINDER_COLUMN_O_P_P_PORTLETID_1);
+			}
+			else {
+				if (portletId.equals(StringPool.BLANK)) {
+					query.append(_FINDER_COLUMN_O_P_P_PORTLETID_3);
+				}
+				else {
+					query.append(_FINDER_COLUMN_O_P_P_PORTLETID_2);
+				}
+			}
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else if (pagination) {
+				query.append(PortletPreferencesModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(ownerType);
+
+				qPos.add(plid);
+
+				if (portletId != null) {
+					qPos.add(portletId);
+				}
+
+				if (!pagination) {
+					list = (List<PortletPreferences>)QueryUtil.list(q,
+							getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = new UnmodifiableList(list);
+				}
+				else {
+					list = (List<PortletPreferences>)QueryUtil.list(q,
+							getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first portlet preferences in the default ordered set defined by {@link PortletPreferencesModelImpl#ORDER_BY_JPQL} where ownerType = &#63; and plid = &#63; and portletId = &#63;.
+	 *
+	 * @param ownerType the owner type
+	 * @param plid the plid
+	 * @param portletId the portlet ID
+	 * @return the first matching portlet preferences
+	 * @throws com.liferay.portal.NoSuchPortletPreferencesException if a matching portlet preferences could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public PortletPreferences findByO_P_P_First(int ownerType, long plid,
+		String portletId)
+		throws NoSuchPortletPreferencesException, SystemException {
+		return findByO_P_P_First(ownerType, plid, portletId, null);
+	}
+
+	/**
+	 * Returns the first portlet preferences in the ordered set where ownerType = &#63; and plid = &#63; and portletId = &#63;.
+	 *
+	 * @param ownerType the owner type
+	 * @param plid the plid
+	 * @param portletId the portlet ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching portlet preferences
+	 * @throws com.liferay.portal.NoSuchPortletPreferencesException if a matching portlet preferences could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public PortletPreferences findByO_P_P_First(int ownerType, long plid,
+		String portletId, OrderByComparator orderByComparator)
+		throws NoSuchPortletPreferencesException, SystemException {
+		PortletPreferences portletPreferences = fetchByO_P_P_First(ownerType,
+				plid, portletId, orderByComparator);
+
+		if (portletPreferences != null) {
+			return portletPreferences;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("ownerType=");
+		msg.append(ownerType);
+
+		msg.append(", plid=");
+		msg.append(plid);
+
+		msg.append(", portletId=");
+		msg.append(portletId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchPortletPreferencesException(msg.toString());
+	}
+
+	/**
+	 * Returns the first portlet preferences in the default ordered set defined by {@link PortletPreferencesModelImpl#ORDER_BY_JPQL} where ownerType = &#63; and plid = &#63; and portletId = &#63;.
+	 *
+	 * @param ownerType the owner type
+	 * @param plid the plid
+	 * @param portletId the portlet ID
+	 * @return the first matching portlet preferences, or <code>null</code> if a matching portlet preferences could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public PortletPreferences fetchByO_P_P_First(int ownerType, long plid,
+		String portletId) throws SystemException {
+		return fetchByO_P_P_First(ownerType, plid, portletId, null);
+	}
+
+	/**
+	 * Returns the first portlet preferences in the ordered set where ownerType = &#63; and plid = &#63; and portletId = &#63;.
+	 *
+	 * @param ownerType the owner type
+	 * @param plid the plid
+	 * @param portletId the portlet ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching portlet preferences, or <code>null</code> if a matching portlet preferences could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public PortletPreferences fetchByO_P_P_First(int ownerType, long plid,
+		String portletId, OrderByComparator orderByComparator)
+		throws SystemException {
+		List<PortletPreferences> list = findByO_P_P(ownerType, plid, portletId,
+				0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last portlet preferences in the default ordered set defined by {@link PortletPreferencesModelImpl#ORDER_BY_JPQL} where ownerType = &#63; and plid = &#63; and portletId = &#63;.
+	 *
+	 * @param ownerType the owner type
+	 * @param plid the plid
+	 * @param portletId the portlet ID
+	 * @return the last matching portlet preferences
+	 * @throws com.liferay.portal.NoSuchPortletPreferencesException if a matching portlet preferences could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public PortletPreferences findByO_P_P_Last(int ownerType, long plid,
+		String portletId)
+		throws NoSuchPortletPreferencesException, SystemException {
+		return findByO_P_P_Last(ownerType, plid, portletId, null);
+	}
+
+	/**
+	 * Returns the last portlet preferences in the ordered set where ownerType = &#63; and plid = &#63; and portletId = &#63;.
+	 *
+	 * @param ownerType the owner type
+	 * @param plid the plid
+	 * @param portletId the portlet ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching portlet preferences
+	 * @throws com.liferay.portal.NoSuchPortletPreferencesException if a matching portlet preferences could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public PortletPreferences findByO_P_P_Last(int ownerType, long plid,
+		String portletId, OrderByComparator orderByComparator)
+		throws NoSuchPortletPreferencesException, SystemException {
+		PortletPreferences portletPreferences = fetchByO_P_P_Last(ownerType,
+				plid, portletId, orderByComparator);
+
+		if (portletPreferences != null) {
+			return portletPreferences;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("ownerType=");
+		msg.append(ownerType);
+
+		msg.append(", plid=");
+		msg.append(plid);
+
+		msg.append(", portletId=");
+		msg.append(portletId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchPortletPreferencesException(msg.toString());
+	}
+
+	/**
+	 * Returns the last portlet preferences in the default ordered set defined by {@link PortletPreferencesModelImpl#ORDER_BY_JPQL} where ownerType = &#63; and plid = &#63; and portletId = &#63;.
+	 *
+	 * @param ownerType the owner type
+	 * @param plid the plid
+	 * @param portletId the portlet ID
+	 * @return the last matching portlet preferences, or <code>null</code> if a matching portlet preferences could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public PortletPreferences fetchByO_P_P_Last(int ownerType, long plid,
+		String portletId) throws SystemException {
+		return fetchByO_P_P_Last(ownerType, plid, portletId, null);
+	}
+
+	/**
+	 * Returns the last portlet preferences in the ordered set where ownerType = &#63; and plid = &#63; and portletId = &#63;.
+	 *
+	 * @param ownerType the owner type
+	 * @param plid the plid
+	 * @param portletId the portlet ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching portlet preferences, or <code>null</code> if a matching portlet preferences could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public PortletPreferences fetchByO_P_P_Last(int ownerType, long plid,
+		String portletId, OrderByComparator orderByComparator)
+		throws SystemException {
+		int count = countByO_P_P(ownerType, plid, portletId);
+
+		List<PortletPreferences> list = findByO_P_P(ownerType, plid, portletId,
+				count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Removes all the portlet preferenceses where ownerType = &#63; and plid = &#63; and portletId = &#63; from the database.
+	 *
+	 * @param ownerType the owner type
+	 * @param plid the plid
+	 * @param portletId the portlet ID
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void removeByO_P_P(int ownerType, long plid, String portletId)
+		throws SystemException {
+		for (PortletPreferences portletPreferences : findByO_P_P(ownerType,
+				plid, portletId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(portletPreferences);
+		}
+	}
+
+	/**
+	 * Returns the number of portlet preferenceses where ownerType = &#63; and plid = &#63; and portletId = &#63;.
+	 *
+	 * @param ownerType the owner type
+	 * @param plid the plid
+	 * @param portletId the portlet ID
+	 * @return the number of matching portlet preferenceses
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int countByO_P_P(int ownerType, long plid, String portletId)
+		throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_O_P_P;
+
+		Object[] finderArgs = new Object[] { ownerType, plid, portletId };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(4);
+
+			query.append(_SQL_COUNT_PORTLETPREFERENCES_WHERE);
+
+			query.append(_FINDER_COLUMN_O_P_P_OWNERTYPE_2);
+
+			query.append(_FINDER_COLUMN_O_P_P_PLID_2);
+
+			if (portletId == null) {
+				query.append(_FINDER_COLUMN_O_P_P_PORTLETID_1);
+			}
+			else {
+				if (portletId.equals(StringPool.BLANK)) {
+					query.append(_FINDER_COLUMN_O_P_P_PORTLETID_3);
+				}
+				else {
+					query.append(_FINDER_COLUMN_O_P_P_PORTLETID_2);
+				}
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(ownerType);
+
+				qPos.add(plid);
+
+				if (portletId != null) {
+					qPos.add(portletId);
+				}
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_O_P_P_OWNERTYPE_2 = "portletPreferences.ownerType = ? AND ";
+	private static final String _FINDER_COLUMN_O_P_P_PLID_2 = "portletPreferences.plid = ? AND ";
+	private static final String _FINDER_COLUMN_O_P_P_PORTLETID_1 = "portletPreferences.portletId IS NULL";
+	private static final String _FINDER_COLUMN_O_P_P_PORTLETID_2 = "portletPreferences.portletId = ?";
+	private static final String _FINDER_COLUMN_O_P_P_PORTLETID_3 = "(portletPreferences.portletId IS NULL OR portletPreferences.portletId = ?)";
 	public static final FinderPath FINDER_PATH_FETCH_BY_O_O_P_P = new FinderPath(PortletPreferencesModelImpl.ENTITY_CACHE_ENABLED,
 			PortletPreferencesModelImpl.FINDER_CACHE_ENABLED,
 			PortletPreferencesImpl.class, FINDER_CLASS_NAME_ENTITY,
@@ -212,17 +3077,294 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 				Long.class.getName(), Integer.class.getName(),
 				Long.class.getName(), String.class.getName()
 			});
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_ALL = new FinderPath(PortletPreferencesModelImpl.ENTITY_CACHE_ENABLED,
-			PortletPreferencesModelImpl.FINDER_CACHE_ENABLED,
-			PortletPreferencesImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL = new FinderPath(PortletPreferencesModelImpl.ENTITY_CACHE_ENABLED,
-			PortletPreferencesModelImpl.FINDER_CACHE_ENABLED,
-			PortletPreferencesImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0]);
-	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(PortletPreferencesModelImpl.ENTITY_CACHE_ENABLED,
-			PortletPreferencesModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
+
+	/**
+	 * Returns the portlet preferences where ownerId = &#63; and ownerType = &#63; and plid = &#63; and portletId = &#63; or throws a {@link com.liferay.portal.NoSuchPortletPreferencesException} if it could not be found.
+	 *
+	 * @param ownerId the owner ID
+	 * @param ownerType the owner type
+	 * @param plid the plid
+	 * @param portletId the portlet ID
+	 * @return the matching portlet preferences
+	 * @throws com.liferay.portal.NoSuchPortletPreferencesException if a matching portlet preferences could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public PortletPreferences findByO_O_P_P(long ownerId, int ownerType,
+		long plid, String portletId)
+		throws NoSuchPortletPreferencesException, SystemException {
+		PortletPreferences portletPreferences = fetchByO_O_P_P(ownerId,
+				ownerType, plid, portletId);
+
+		if (portletPreferences == null) {
+			StringBundler msg = new StringBundler(10);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("ownerId=");
+			msg.append(ownerId);
+
+			msg.append(", ownerType=");
+			msg.append(ownerType);
+
+			msg.append(", plid=");
+			msg.append(plid);
+
+			msg.append(", portletId=");
+			msg.append(portletId);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(msg.toString());
+			}
+
+			throw new NoSuchPortletPreferencesException(msg.toString());
+		}
+
+		return portletPreferences;
+	}
+
+	/**
+	 * Returns the portlet preferences where ownerId = &#63; and ownerType = &#63; and plid = &#63; and portletId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param ownerId the owner ID
+	 * @param ownerType the owner type
+	 * @param plid the plid
+	 * @param portletId the portlet ID
+	 * @return the matching portlet preferences, or <code>null</code> if a matching portlet preferences could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public PortletPreferences fetchByO_O_P_P(long ownerId, int ownerType,
+		long plid, String portletId) throws SystemException {
+		return fetchByO_O_P_P(ownerId, ownerType, plid, portletId, true);
+	}
+
+	/**
+	 * Returns the portlet preferences where ownerId = &#63; and ownerType = &#63; and plid = &#63; and portletId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param ownerId the owner ID
+	 * @param ownerType the owner type
+	 * @param plid the plid
+	 * @param portletId the portlet ID
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the matching portlet preferences, or <code>null</code> if a matching portlet preferences could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public PortletPreferences fetchByO_O_P_P(long ownerId, int ownerType,
+		long plid, String portletId, boolean retrieveFromCache)
+		throws SystemException {
+		Object[] finderArgs = new Object[] { ownerId, ownerType, plid, portletId };
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_O_O_P_P,
+					finderArgs, this);
+		}
+
+		if (result instanceof PortletPreferences) {
+			PortletPreferences portletPreferences = (PortletPreferences)result;
+
+			if ((ownerId != portletPreferences.getOwnerId()) ||
+					(ownerType != portletPreferences.getOwnerType()) ||
+					(plid != portletPreferences.getPlid()) ||
+					!Validator.equals(portletId,
+						portletPreferences.getPortletId())) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(6);
+
+			query.append(_SQL_SELECT_PORTLETPREFERENCES_WHERE);
+
+			query.append(_FINDER_COLUMN_O_O_P_P_OWNERID_2);
+
+			query.append(_FINDER_COLUMN_O_O_P_P_OWNERTYPE_2);
+
+			query.append(_FINDER_COLUMN_O_O_P_P_PLID_2);
+
+			if (portletId == null) {
+				query.append(_FINDER_COLUMN_O_O_P_P_PORTLETID_1);
+			}
+			else {
+				if (portletId.equals(StringPool.BLANK)) {
+					query.append(_FINDER_COLUMN_O_O_P_P_PORTLETID_3);
+				}
+				else {
+					query.append(_FINDER_COLUMN_O_O_P_P_PORTLETID_2);
+				}
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(ownerId);
+
+				qPos.add(ownerType);
+
+				qPos.add(plid);
+
+				if (portletId != null) {
+					qPos.add(portletId);
+				}
+
+				List<PortletPreferences> list = q.list();
+
+				if (list.isEmpty()) {
+					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_O_O_P_P,
+						finderArgs, list);
+				}
+				else {
+					PortletPreferences portletPreferences = list.get(0);
+
+					result = portletPreferences;
+
+					cacheResult(portletPreferences);
+
+					if ((portletPreferences.getOwnerId() != ownerId) ||
+							(portletPreferences.getOwnerType() != ownerType) ||
+							(portletPreferences.getPlid() != plid) ||
+							(portletPreferences.getPortletId() == null) ||
+							!portletPreferences.getPortletId().equals(portletId)) {
+						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_O_O_P_P,
+							finderArgs, portletPreferences);
+					}
+				}
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_O_O_P_P,
+					finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (PortletPreferences)result;
+		}
+	}
+
+	/**
+	 * Removes the portlet preferences where ownerId = &#63; and ownerType = &#63; and plid = &#63; and portletId = &#63; from the database.
+	 *
+	 * @param ownerId the owner ID
+	 * @param ownerType the owner type
+	 * @param plid the plid
+	 * @param portletId the portlet ID
+	 * @return the portlet preferences that was removed
+	 * @throws SystemException if a system exception occurred
+	 */
+	public PortletPreferences removeByO_O_P_P(long ownerId, int ownerType,
+		long plid, String portletId)
+		throws NoSuchPortletPreferencesException, SystemException {
+		PortletPreferences portletPreferences = findByO_O_P_P(ownerId,
+				ownerType, plid, portletId);
+
+		return remove(portletPreferences);
+	}
+
+	/**
+	 * Returns the number of portlet preferenceses where ownerId = &#63; and ownerType = &#63; and plid = &#63; and portletId = &#63;.
+	 *
+	 * @param ownerId the owner ID
+	 * @param ownerType the owner type
+	 * @param plid the plid
+	 * @param portletId the portlet ID
+	 * @return the number of matching portlet preferenceses
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int countByO_O_P_P(long ownerId, int ownerType, long plid,
+		String portletId) throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_O_O_P_P;
+
+		Object[] finderArgs = new Object[] { ownerId, ownerType, plid, portletId };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(5);
+
+			query.append(_SQL_COUNT_PORTLETPREFERENCES_WHERE);
+
+			query.append(_FINDER_COLUMN_O_O_P_P_OWNERID_2);
+
+			query.append(_FINDER_COLUMN_O_O_P_P_OWNERTYPE_2);
+
+			query.append(_FINDER_COLUMN_O_O_P_P_PLID_2);
+
+			if (portletId == null) {
+				query.append(_FINDER_COLUMN_O_O_P_P_PORTLETID_1);
+			}
+			else {
+				if (portletId.equals(StringPool.BLANK)) {
+					query.append(_FINDER_COLUMN_O_O_P_P_PORTLETID_3);
+				}
+				else {
+					query.append(_FINDER_COLUMN_O_O_P_P_PORTLETID_2);
+				}
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(ownerId);
+
+				qPos.add(ownerType);
+
+				qPos.add(plid);
+
+				if (portletId != null) {
+					qPos.add(portletId);
+				}
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_O_O_P_P_OWNERID_2 = "portletPreferences.ownerId = ? AND ";
+	private static final String _FINDER_COLUMN_O_O_P_P_OWNERTYPE_2 = "portletPreferences.ownerType = ? AND ";
+	private static final String _FINDER_COLUMN_O_O_P_P_PLID_2 = "portletPreferences.plid = ? AND ";
+	private static final String _FINDER_COLUMN_O_O_P_P_PORTLETID_1 = "portletPreferences.portletId IS NULL";
+	private static final String _FINDER_COLUMN_O_O_P_P_PORTLETID_2 = "portletPreferences.portletId = ?";
+	private static final String _FINDER_COLUMN_O_O_P_P_PORTLETID_3 = "(portletPreferences.portletId IS NULL OR portletPreferences.portletId = ?)";
 
 	/**
 	 * Caches the portlet preferences in the entity cache if it is enabled.
@@ -713,2311 +3855,33 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 		if (portletPreferences == null) {
 			Session session = null;
 
-			boolean hasException = false;
-
 			try {
 				session = openSession();
 
 				portletPreferences = (PortletPreferences)session.get(PortletPreferencesImpl.class,
 						Long.valueOf(portletPreferencesId));
-			}
-			catch (Exception e) {
-				hasException = true;
 
-				throw processException(e);
-			}
-			finally {
 				if (portletPreferences != null) {
 					cacheResult(portletPreferences);
 				}
-				else if (!hasException) {
+				else {
 					EntityCacheUtil.putResult(PortletPreferencesModelImpl.ENTITY_CACHE_ENABLED,
 						PortletPreferencesImpl.class, portletPreferencesId,
 						_nullPortletPreferences);
 				}
+			}
+			catch (Exception e) {
+				EntityCacheUtil.removeResult(PortletPreferencesModelImpl.ENTITY_CACHE_ENABLED,
+					PortletPreferencesImpl.class, portletPreferencesId);
 
+				throw processException(e);
+			}
+			finally {
 				closeSession(session);
 			}
 		}
 
 		return portletPreferences;
-	}
-
-	/**
-	 * Returns all the portlet preferenceses where plid = &#63;.
-	 *
-	 * @param plid the plid
-	 * @return the matching portlet preferenceses
-	 * @throws SystemException if a system exception occurred
-	 */
-	public List<PortletPreferences> findByPlid(long plid)
-		throws SystemException {
-		return findByPlid(plid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the portlet preferenceses where plid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
-	 * @param plid the plid
-	 * @param start the lower bound of the range of portlet preferenceses
-	 * @param end the upper bound of the range of portlet preferenceses (not inclusive)
-	 * @return the range of matching portlet preferenceses
-	 * @throws SystemException if a system exception occurred
-	 */
-	public List<PortletPreferences> findByPlid(long plid, int start, int end)
-		throws SystemException {
-		return findByPlid(plid, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the portlet preferenceses where plid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
-	 * @param plid the plid
-	 * @param start the lower bound of the range of portlet preferenceses
-	 * @param end the upper bound of the range of portlet preferenceses (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching portlet preferenceses
-	 * @throws SystemException if a system exception occurred
-	 */
-	public List<PortletPreferences> findByPlid(long plid, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_PLID;
-			finderArgs = new Object[] { plid };
-		}
-		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_PLID;
-			finderArgs = new Object[] { plid, start, end, orderByComparator };
-		}
-
-		List<PortletPreferences> list = (List<PortletPreferences>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
-
-		if ((list != null) && !list.isEmpty()) {
-			for (PortletPreferences portletPreferences : list) {
-				if ((plid != portletPreferences.getPlid())) {
-					list = null;
-
-					break;
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler query = null;
-
-			if (orderByComparator != null) {
-				query = new StringBundler(3 +
-						(orderByComparator.getOrderByFields().length * 3));
-			}
-			else {
-				query = new StringBundler(2);
-			}
-
-			query.append(_SQL_SELECT_PORTLETPREFERENCES_WHERE);
-
-			query.append(_FINDER_COLUMN_PLID_PLID_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
-			}
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(plid);
-
-				list = (List<PortletPreferences>)QueryUtil.list(q,
-						getDialect(), start, end);
-			}
-			catch (Exception e) {
-				throw processException(e);
-			}
-			finally {
-				if (list == null) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
-				else {
-					cacheResult(list);
-
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
-
-				closeSession(session);
-			}
-		}
-
-		return list;
-	}
-
-	/**
-	 * Returns the first portlet preferences in the ordered set where plid = &#63;.
-	 *
-	 * @param plid the plid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching portlet preferences
-	 * @throws com.liferay.portal.NoSuchPortletPreferencesException if a matching portlet preferences could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public PortletPreferences findByPlid_First(long plid,
-		OrderByComparator orderByComparator)
-		throws NoSuchPortletPreferencesException, SystemException {
-		PortletPreferences portletPreferences = fetchByPlid_First(plid,
-				orderByComparator);
-
-		if (portletPreferences != null) {
-			return portletPreferences;
-		}
-
-		StringBundler msg = new StringBundler(4);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("plid=");
-		msg.append(plid);
-
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-		throw new NoSuchPortletPreferencesException(msg.toString());
-	}
-
-	/**
-	 * Returns the first portlet preferences in the ordered set where plid = &#63;.
-	 *
-	 * @param plid the plid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching portlet preferences, or <code>null</code> if a matching portlet preferences could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public PortletPreferences fetchByPlid_First(long plid,
-		OrderByComparator orderByComparator) throws SystemException {
-		List<PortletPreferences> list = findByPlid(plid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last portlet preferences in the ordered set where plid = &#63;.
-	 *
-	 * @param plid the plid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching portlet preferences
-	 * @throws com.liferay.portal.NoSuchPortletPreferencesException if a matching portlet preferences could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public PortletPreferences findByPlid_Last(long plid,
-		OrderByComparator orderByComparator)
-		throws NoSuchPortletPreferencesException, SystemException {
-		PortletPreferences portletPreferences = fetchByPlid_Last(plid,
-				orderByComparator);
-
-		if (portletPreferences != null) {
-			return portletPreferences;
-		}
-
-		StringBundler msg = new StringBundler(4);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("plid=");
-		msg.append(plid);
-
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-		throw new NoSuchPortletPreferencesException(msg.toString());
-	}
-
-	/**
-	 * Returns the last portlet preferences in the ordered set where plid = &#63;.
-	 *
-	 * @param plid the plid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching portlet preferences, or <code>null</code> if a matching portlet preferences could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public PortletPreferences fetchByPlid_Last(long plid,
-		OrderByComparator orderByComparator) throws SystemException {
-		int count = countByPlid(plid);
-
-		List<PortletPreferences> list = findByPlid(plid, count - 1, count,
-				orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the portlet preferenceses before and after the current portlet preferences in the ordered set where plid = &#63;.
-	 *
-	 * @param portletPreferencesId the primary key of the current portlet preferences
-	 * @param plid the plid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next portlet preferences
-	 * @throws com.liferay.portal.NoSuchPortletPreferencesException if a portlet preferences with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public PortletPreferences[] findByPlid_PrevAndNext(
-		long portletPreferencesId, long plid,
-		OrderByComparator orderByComparator)
-		throws NoSuchPortletPreferencesException, SystemException {
-		PortletPreferences portletPreferences = findByPrimaryKey(portletPreferencesId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			PortletPreferences[] array = new PortletPreferencesImpl[3];
-
-			array[0] = getByPlid_PrevAndNext(session, portletPreferences, plid,
-					orderByComparator, true);
-
-			array[1] = portletPreferences;
-
-			array[2] = getByPlid_PrevAndNext(session, portletPreferences, plid,
-					orderByComparator, false);
-
-			return array;
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	protected PortletPreferences getByPlid_PrevAndNext(Session session,
-		PortletPreferences portletPreferences, long plid,
-		OrderByComparator orderByComparator, boolean previous) {
-		StringBundler query = null;
-
-		if (orderByComparator != null) {
-			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
-		}
-		else {
-			query = new StringBundler(3);
-		}
-
-		query.append(_SQL_SELECT_PORTLETPREFERENCES_WHERE);
-
-		query.append(_FINDER_COLUMN_PLID_PLID_2);
-
-		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
-
-			if (orderByConditionFields.length > 0) {
-				query.append(WHERE_AND);
-			}
-
-			for (int i = 0; i < orderByConditionFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByConditionFields[i]);
-
-				if ((i + 1) < orderByConditionFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN_HAS_NEXT);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN);
-					}
-				}
-			}
-
-			query.append(ORDER_BY_CLAUSE);
-
-			String[] orderByFields = orderByComparator.getOrderByFields();
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC_HAS_NEXT);
-					}
-					else {
-						query.append(ORDER_BY_DESC_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC);
-					}
-					else {
-						query.append(ORDER_BY_DESC);
-					}
-				}
-			}
-		}
-
-		String sql = query.toString();
-
-		Query q = session.createQuery(sql);
-
-		q.setFirstResult(0);
-		q.setMaxResults(2);
-
-		QueryPos qPos = QueryPos.getInstance(q);
-
-		qPos.add(plid);
-
-		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(portletPreferences);
-
-			for (Object value : values) {
-				qPos.add(value);
-			}
-		}
-
-		List<PortletPreferences> list = q.list();
-
-		if (list.size() == 2) {
-			return list.get(1);
-		}
-		else {
-			return null;
-		}
-	}
-
-	/**
-	 * Returns all the portlet preferenceses where portletId = &#63;.
-	 *
-	 * @param portletId the portlet ID
-	 * @return the matching portlet preferenceses
-	 * @throws SystemException if a system exception occurred
-	 */
-	public List<PortletPreferences> findByPortletId(String portletId)
-		throws SystemException {
-		return findByPortletId(portletId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the portlet preferenceses where portletId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
-	 * @param portletId the portlet ID
-	 * @param start the lower bound of the range of portlet preferenceses
-	 * @param end the upper bound of the range of portlet preferenceses (not inclusive)
-	 * @return the range of matching portlet preferenceses
-	 * @throws SystemException if a system exception occurred
-	 */
-	public List<PortletPreferences> findByPortletId(String portletId,
-		int start, int end) throws SystemException {
-		return findByPortletId(portletId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the portlet preferenceses where portletId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
-	 * @param portletId the portlet ID
-	 * @param start the lower bound of the range of portlet preferenceses
-	 * @param end the upper bound of the range of portlet preferenceses (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching portlet preferenceses
-	 * @throws SystemException if a system exception occurred
-	 */
-	public List<PortletPreferences> findByPortletId(String portletId,
-		int start, int end, OrderByComparator orderByComparator)
-		throws SystemException {
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_PORTLETID;
-			finderArgs = new Object[] { portletId };
-		}
-		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_PORTLETID;
-			finderArgs = new Object[] { portletId, start, end, orderByComparator };
-		}
-
-		List<PortletPreferences> list = (List<PortletPreferences>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
-
-		if ((list != null) && !list.isEmpty()) {
-			for (PortletPreferences portletPreferences : list) {
-				if (!Validator.equals(portletId,
-							portletPreferences.getPortletId())) {
-					list = null;
-
-					break;
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler query = null;
-
-			if (orderByComparator != null) {
-				query = new StringBundler(3 +
-						(orderByComparator.getOrderByFields().length * 3));
-			}
-			else {
-				query = new StringBundler(2);
-			}
-
-			query.append(_SQL_SELECT_PORTLETPREFERENCES_WHERE);
-
-			if (portletId == null) {
-				query.append(_FINDER_COLUMN_PORTLETID_PORTLETID_1);
-			}
-			else {
-				if (portletId.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_PORTLETID_PORTLETID_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_PORTLETID_PORTLETID_2);
-				}
-			}
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
-			}
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				if (portletId != null) {
-					qPos.add(portletId);
-				}
-
-				list = (List<PortletPreferences>)QueryUtil.list(q,
-						getDialect(), start, end);
-			}
-			catch (Exception e) {
-				throw processException(e);
-			}
-			finally {
-				if (list == null) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
-				else {
-					cacheResult(list);
-
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
-
-				closeSession(session);
-			}
-		}
-
-		return list;
-	}
-
-	/**
-	 * Returns the first portlet preferences in the ordered set where portletId = &#63;.
-	 *
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching portlet preferences
-	 * @throws com.liferay.portal.NoSuchPortletPreferencesException if a matching portlet preferences could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public PortletPreferences findByPortletId_First(String portletId,
-		OrderByComparator orderByComparator)
-		throws NoSuchPortletPreferencesException, SystemException {
-		PortletPreferences portletPreferences = fetchByPortletId_First(portletId,
-				orderByComparator);
-
-		if (portletPreferences != null) {
-			return portletPreferences;
-		}
-
-		StringBundler msg = new StringBundler(4);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("portletId=");
-		msg.append(portletId);
-
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-		throw new NoSuchPortletPreferencesException(msg.toString());
-	}
-
-	/**
-	 * Returns the first portlet preferences in the ordered set where portletId = &#63;.
-	 *
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching portlet preferences, or <code>null</code> if a matching portlet preferences could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public PortletPreferences fetchByPortletId_First(String portletId,
-		OrderByComparator orderByComparator) throws SystemException {
-		List<PortletPreferences> list = findByPortletId(portletId, 0, 1,
-				orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last portlet preferences in the ordered set where portletId = &#63;.
-	 *
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching portlet preferences
-	 * @throws com.liferay.portal.NoSuchPortletPreferencesException if a matching portlet preferences could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public PortletPreferences findByPortletId_Last(String portletId,
-		OrderByComparator orderByComparator)
-		throws NoSuchPortletPreferencesException, SystemException {
-		PortletPreferences portletPreferences = fetchByPortletId_Last(portletId,
-				orderByComparator);
-
-		if (portletPreferences != null) {
-			return portletPreferences;
-		}
-
-		StringBundler msg = new StringBundler(4);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("portletId=");
-		msg.append(portletId);
-
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-		throw new NoSuchPortletPreferencesException(msg.toString());
-	}
-
-	/**
-	 * Returns the last portlet preferences in the ordered set where portletId = &#63;.
-	 *
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching portlet preferences, or <code>null</code> if a matching portlet preferences could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public PortletPreferences fetchByPortletId_Last(String portletId,
-		OrderByComparator orderByComparator) throws SystemException {
-		int count = countByPortletId(portletId);
-
-		List<PortletPreferences> list = findByPortletId(portletId, count - 1,
-				count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the portlet preferenceses before and after the current portlet preferences in the ordered set where portletId = &#63;.
-	 *
-	 * @param portletPreferencesId the primary key of the current portlet preferences
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next portlet preferences
-	 * @throws com.liferay.portal.NoSuchPortletPreferencesException if a portlet preferences with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public PortletPreferences[] findByPortletId_PrevAndNext(
-		long portletPreferencesId, String portletId,
-		OrderByComparator orderByComparator)
-		throws NoSuchPortletPreferencesException, SystemException {
-		PortletPreferences portletPreferences = findByPrimaryKey(portletPreferencesId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			PortletPreferences[] array = new PortletPreferencesImpl[3];
-
-			array[0] = getByPortletId_PrevAndNext(session, portletPreferences,
-					portletId, orderByComparator, true);
-
-			array[1] = portletPreferences;
-
-			array[2] = getByPortletId_PrevAndNext(session, portletPreferences,
-					portletId, orderByComparator, false);
-
-			return array;
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	protected PortletPreferences getByPortletId_PrevAndNext(Session session,
-		PortletPreferences portletPreferences, String portletId,
-		OrderByComparator orderByComparator, boolean previous) {
-		StringBundler query = null;
-
-		if (orderByComparator != null) {
-			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
-		}
-		else {
-			query = new StringBundler(3);
-		}
-
-		query.append(_SQL_SELECT_PORTLETPREFERENCES_WHERE);
-
-		if (portletId == null) {
-			query.append(_FINDER_COLUMN_PORTLETID_PORTLETID_1);
-		}
-		else {
-			if (portletId.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_PORTLETID_PORTLETID_3);
-			}
-			else {
-				query.append(_FINDER_COLUMN_PORTLETID_PORTLETID_2);
-			}
-		}
-
-		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
-
-			if (orderByConditionFields.length > 0) {
-				query.append(WHERE_AND);
-			}
-
-			for (int i = 0; i < orderByConditionFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByConditionFields[i]);
-
-				if ((i + 1) < orderByConditionFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN_HAS_NEXT);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN);
-					}
-				}
-			}
-
-			query.append(ORDER_BY_CLAUSE);
-
-			String[] orderByFields = orderByComparator.getOrderByFields();
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC_HAS_NEXT);
-					}
-					else {
-						query.append(ORDER_BY_DESC_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC);
-					}
-					else {
-						query.append(ORDER_BY_DESC);
-					}
-				}
-			}
-		}
-
-		String sql = query.toString();
-
-		Query q = session.createQuery(sql);
-
-		q.setFirstResult(0);
-		q.setMaxResults(2);
-
-		QueryPos qPos = QueryPos.getInstance(q);
-
-		if (portletId != null) {
-			qPos.add(portletId);
-		}
-
-		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(portletPreferences);
-
-			for (Object value : values) {
-				qPos.add(value);
-			}
-		}
-
-		List<PortletPreferences> list = q.list();
-
-		if (list.size() == 2) {
-			return list.get(1);
-		}
-		else {
-			return null;
-		}
-	}
-
-	/**
-	 * Returns all the portlet preferenceses where plid = &#63; and portletId = &#63;.
-	 *
-	 * @param plid the plid
-	 * @param portletId the portlet ID
-	 * @return the matching portlet preferenceses
-	 * @throws SystemException if a system exception occurred
-	 */
-	public List<PortletPreferences> findByP_P(long plid, String portletId)
-		throws SystemException {
-		return findByP_P(plid, portletId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the portlet preferenceses where plid = &#63; and portletId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
-	 * @param plid the plid
-	 * @param portletId the portlet ID
-	 * @param start the lower bound of the range of portlet preferenceses
-	 * @param end the upper bound of the range of portlet preferenceses (not inclusive)
-	 * @return the range of matching portlet preferenceses
-	 * @throws SystemException if a system exception occurred
-	 */
-	public List<PortletPreferences> findByP_P(long plid, String portletId,
-		int start, int end) throws SystemException {
-		return findByP_P(plid, portletId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the portlet preferenceses where plid = &#63; and portletId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
-	 * @param plid the plid
-	 * @param portletId the portlet ID
-	 * @param start the lower bound of the range of portlet preferenceses
-	 * @param end the upper bound of the range of portlet preferenceses (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching portlet preferenceses
-	 * @throws SystemException if a system exception occurred
-	 */
-	public List<PortletPreferences> findByP_P(long plid, String portletId,
-		int start, int end, OrderByComparator orderByComparator)
-		throws SystemException {
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_P_P;
-			finderArgs = new Object[] { plid, portletId };
-		}
-		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_P_P;
-			finderArgs = new Object[] {
-					plid, portletId,
-					
-					start, end, orderByComparator
-				};
-		}
-
-		List<PortletPreferences> list = (List<PortletPreferences>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
-
-		if ((list != null) && !list.isEmpty()) {
-			for (PortletPreferences portletPreferences : list) {
-				if ((plid != portletPreferences.getPlid()) ||
-						!Validator.equals(portletId,
-							portletPreferences.getPortletId())) {
-					list = null;
-
-					break;
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler query = null;
-
-			if (orderByComparator != null) {
-				query = new StringBundler(4 +
-						(orderByComparator.getOrderByFields().length * 3));
-			}
-			else {
-				query = new StringBundler(3);
-			}
-
-			query.append(_SQL_SELECT_PORTLETPREFERENCES_WHERE);
-
-			query.append(_FINDER_COLUMN_P_P_PLID_2);
-
-			if (portletId == null) {
-				query.append(_FINDER_COLUMN_P_P_PORTLETID_1);
-			}
-			else {
-				if (portletId.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_P_P_PORTLETID_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_P_P_PORTLETID_2);
-				}
-			}
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
-			}
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(plid);
-
-				if (portletId != null) {
-					qPos.add(portletId);
-				}
-
-				list = (List<PortletPreferences>)QueryUtil.list(q,
-						getDialect(), start, end);
-			}
-			catch (Exception e) {
-				throw processException(e);
-			}
-			finally {
-				if (list == null) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
-				else {
-					cacheResult(list);
-
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
-
-				closeSession(session);
-			}
-		}
-
-		return list;
-	}
-
-	/**
-	 * Returns the first portlet preferences in the ordered set where plid = &#63; and portletId = &#63;.
-	 *
-	 * @param plid the plid
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching portlet preferences
-	 * @throws com.liferay.portal.NoSuchPortletPreferencesException if a matching portlet preferences could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public PortletPreferences findByP_P_First(long plid, String portletId,
-		OrderByComparator orderByComparator)
-		throws NoSuchPortletPreferencesException, SystemException {
-		PortletPreferences portletPreferences = fetchByP_P_First(plid,
-				portletId, orderByComparator);
-
-		if (portletPreferences != null) {
-			return portletPreferences;
-		}
-
-		StringBundler msg = new StringBundler(6);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("plid=");
-		msg.append(plid);
-
-		msg.append(", portletId=");
-		msg.append(portletId);
-
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-		throw new NoSuchPortletPreferencesException(msg.toString());
-	}
-
-	/**
-	 * Returns the first portlet preferences in the ordered set where plid = &#63; and portletId = &#63;.
-	 *
-	 * @param plid the plid
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching portlet preferences, or <code>null</code> if a matching portlet preferences could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public PortletPreferences fetchByP_P_First(long plid, String portletId,
-		OrderByComparator orderByComparator) throws SystemException {
-		List<PortletPreferences> list = findByP_P(plid, portletId, 0, 1,
-				orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last portlet preferences in the ordered set where plid = &#63; and portletId = &#63;.
-	 *
-	 * @param plid the plid
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching portlet preferences
-	 * @throws com.liferay.portal.NoSuchPortletPreferencesException if a matching portlet preferences could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public PortletPreferences findByP_P_Last(long plid, String portletId,
-		OrderByComparator orderByComparator)
-		throws NoSuchPortletPreferencesException, SystemException {
-		PortletPreferences portletPreferences = fetchByP_P_Last(plid,
-				portletId, orderByComparator);
-
-		if (portletPreferences != null) {
-			return portletPreferences;
-		}
-
-		StringBundler msg = new StringBundler(6);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("plid=");
-		msg.append(plid);
-
-		msg.append(", portletId=");
-		msg.append(portletId);
-
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-		throw new NoSuchPortletPreferencesException(msg.toString());
-	}
-
-	/**
-	 * Returns the last portlet preferences in the ordered set where plid = &#63; and portletId = &#63;.
-	 *
-	 * @param plid the plid
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching portlet preferences, or <code>null</code> if a matching portlet preferences could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public PortletPreferences fetchByP_P_Last(long plid, String portletId,
-		OrderByComparator orderByComparator) throws SystemException {
-		int count = countByP_P(plid, portletId);
-
-		List<PortletPreferences> list = findByP_P(plid, portletId, count - 1,
-				count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the portlet preferenceses before and after the current portlet preferences in the ordered set where plid = &#63; and portletId = &#63;.
-	 *
-	 * @param portletPreferencesId the primary key of the current portlet preferences
-	 * @param plid the plid
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next portlet preferences
-	 * @throws com.liferay.portal.NoSuchPortletPreferencesException if a portlet preferences with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public PortletPreferences[] findByP_P_PrevAndNext(
-		long portletPreferencesId, long plid, String portletId,
-		OrderByComparator orderByComparator)
-		throws NoSuchPortletPreferencesException, SystemException {
-		PortletPreferences portletPreferences = findByPrimaryKey(portletPreferencesId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			PortletPreferences[] array = new PortletPreferencesImpl[3];
-
-			array[0] = getByP_P_PrevAndNext(session, portletPreferences, plid,
-					portletId, orderByComparator, true);
-
-			array[1] = portletPreferences;
-
-			array[2] = getByP_P_PrevAndNext(session, portletPreferences, plid,
-					portletId, orderByComparator, false);
-
-			return array;
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	protected PortletPreferences getByP_P_PrevAndNext(Session session,
-		PortletPreferences portletPreferences, long plid, String portletId,
-		OrderByComparator orderByComparator, boolean previous) {
-		StringBundler query = null;
-
-		if (orderByComparator != null) {
-			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
-		}
-		else {
-			query = new StringBundler(3);
-		}
-
-		query.append(_SQL_SELECT_PORTLETPREFERENCES_WHERE);
-
-		query.append(_FINDER_COLUMN_P_P_PLID_2);
-
-		if (portletId == null) {
-			query.append(_FINDER_COLUMN_P_P_PORTLETID_1);
-		}
-		else {
-			if (portletId.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_P_P_PORTLETID_3);
-			}
-			else {
-				query.append(_FINDER_COLUMN_P_P_PORTLETID_2);
-			}
-		}
-
-		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
-
-			if (orderByConditionFields.length > 0) {
-				query.append(WHERE_AND);
-			}
-
-			for (int i = 0; i < orderByConditionFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByConditionFields[i]);
-
-				if ((i + 1) < orderByConditionFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN_HAS_NEXT);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN);
-					}
-				}
-			}
-
-			query.append(ORDER_BY_CLAUSE);
-
-			String[] orderByFields = orderByComparator.getOrderByFields();
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC_HAS_NEXT);
-					}
-					else {
-						query.append(ORDER_BY_DESC_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC);
-					}
-					else {
-						query.append(ORDER_BY_DESC);
-					}
-				}
-			}
-		}
-
-		String sql = query.toString();
-
-		Query q = session.createQuery(sql);
-
-		q.setFirstResult(0);
-		q.setMaxResults(2);
-
-		QueryPos qPos = QueryPos.getInstance(q);
-
-		qPos.add(plid);
-
-		if (portletId != null) {
-			qPos.add(portletId);
-		}
-
-		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(portletPreferences);
-
-			for (Object value : values) {
-				qPos.add(value);
-			}
-		}
-
-		List<PortletPreferences> list = q.list();
-
-		if (list.size() == 2) {
-			return list.get(1);
-		}
-		else {
-			return null;
-		}
-	}
-
-	/**
-	 * Returns all the portlet preferenceses where ownerId = &#63; and ownerType = &#63; and plid = &#63;.
-	 *
-	 * @param ownerId the owner ID
-	 * @param ownerType the owner type
-	 * @param plid the plid
-	 * @return the matching portlet preferenceses
-	 * @throws SystemException if a system exception occurred
-	 */
-	public List<PortletPreferences> findByO_O_P(long ownerId, int ownerType,
-		long plid) throws SystemException {
-		return findByO_O_P(ownerId, ownerType, plid, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the portlet preferenceses where ownerId = &#63; and ownerType = &#63; and plid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
-	 * @param ownerId the owner ID
-	 * @param ownerType the owner type
-	 * @param plid the plid
-	 * @param start the lower bound of the range of portlet preferenceses
-	 * @param end the upper bound of the range of portlet preferenceses (not inclusive)
-	 * @return the range of matching portlet preferenceses
-	 * @throws SystemException if a system exception occurred
-	 */
-	public List<PortletPreferences> findByO_O_P(long ownerId, int ownerType,
-		long plid, int start, int end) throws SystemException {
-		return findByO_O_P(ownerId, ownerType, plid, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the portlet preferenceses where ownerId = &#63; and ownerType = &#63; and plid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
-	 * @param ownerId the owner ID
-	 * @param ownerType the owner type
-	 * @param plid the plid
-	 * @param start the lower bound of the range of portlet preferenceses
-	 * @param end the upper bound of the range of portlet preferenceses (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching portlet preferenceses
-	 * @throws SystemException if a system exception occurred
-	 */
-	public List<PortletPreferences> findByO_O_P(long ownerId, int ownerType,
-		long plid, int start, int end, OrderByComparator orderByComparator)
-		throws SystemException {
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_O_O_P;
-			finderArgs = new Object[] { ownerId, ownerType, plid };
-		}
-		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_O_O_P;
-			finderArgs = new Object[] {
-					ownerId, ownerType, plid,
-					
-					start, end, orderByComparator
-				};
-		}
-
-		List<PortletPreferences> list = (List<PortletPreferences>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
-
-		if ((list != null) && !list.isEmpty()) {
-			for (PortletPreferences portletPreferences : list) {
-				if ((ownerId != portletPreferences.getOwnerId()) ||
-						(ownerType != portletPreferences.getOwnerType()) ||
-						(plid != portletPreferences.getPlid())) {
-					list = null;
-
-					break;
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler query = null;
-
-			if (orderByComparator != null) {
-				query = new StringBundler(5 +
-						(orderByComparator.getOrderByFields().length * 3));
-			}
-			else {
-				query = new StringBundler(4);
-			}
-
-			query.append(_SQL_SELECT_PORTLETPREFERENCES_WHERE);
-
-			query.append(_FINDER_COLUMN_O_O_P_OWNERID_2);
-
-			query.append(_FINDER_COLUMN_O_O_P_OWNERTYPE_2);
-
-			query.append(_FINDER_COLUMN_O_O_P_PLID_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
-			}
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(ownerId);
-
-				qPos.add(ownerType);
-
-				qPos.add(plid);
-
-				list = (List<PortletPreferences>)QueryUtil.list(q,
-						getDialect(), start, end);
-			}
-			catch (Exception e) {
-				throw processException(e);
-			}
-			finally {
-				if (list == null) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
-				else {
-					cacheResult(list);
-
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
-
-				closeSession(session);
-			}
-		}
-
-		return list;
-	}
-
-	/**
-	 * Returns the first portlet preferences in the ordered set where ownerId = &#63; and ownerType = &#63; and plid = &#63;.
-	 *
-	 * @param ownerId the owner ID
-	 * @param ownerType the owner type
-	 * @param plid the plid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching portlet preferences
-	 * @throws com.liferay.portal.NoSuchPortletPreferencesException if a matching portlet preferences could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public PortletPreferences findByO_O_P_First(long ownerId, int ownerType,
-		long plid, OrderByComparator orderByComparator)
-		throws NoSuchPortletPreferencesException, SystemException {
-		PortletPreferences portletPreferences = fetchByO_O_P_First(ownerId,
-				ownerType, plid, orderByComparator);
-
-		if (portletPreferences != null) {
-			return portletPreferences;
-		}
-
-		StringBundler msg = new StringBundler(8);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("ownerId=");
-		msg.append(ownerId);
-
-		msg.append(", ownerType=");
-		msg.append(ownerType);
-
-		msg.append(", plid=");
-		msg.append(plid);
-
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-		throw new NoSuchPortletPreferencesException(msg.toString());
-	}
-
-	/**
-	 * Returns the first portlet preferences in the ordered set where ownerId = &#63; and ownerType = &#63; and plid = &#63;.
-	 *
-	 * @param ownerId the owner ID
-	 * @param ownerType the owner type
-	 * @param plid the plid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching portlet preferences, or <code>null</code> if a matching portlet preferences could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public PortletPreferences fetchByO_O_P_First(long ownerId, int ownerType,
-		long plid, OrderByComparator orderByComparator)
-		throws SystemException {
-		List<PortletPreferences> list = findByO_O_P(ownerId, ownerType, plid,
-				0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last portlet preferences in the ordered set where ownerId = &#63; and ownerType = &#63; and plid = &#63;.
-	 *
-	 * @param ownerId the owner ID
-	 * @param ownerType the owner type
-	 * @param plid the plid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching portlet preferences
-	 * @throws com.liferay.portal.NoSuchPortletPreferencesException if a matching portlet preferences could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public PortletPreferences findByO_O_P_Last(long ownerId, int ownerType,
-		long plid, OrderByComparator orderByComparator)
-		throws NoSuchPortletPreferencesException, SystemException {
-		PortletPreferences portletPreferences = fetchByO_O_P_Last(ownerId,
-				ownerType, plid, orderByComparator);
-
-		if (portletPreferences != null) {
-			return portletPreferences;
-		}
-
-		StringBundler msg = new StringBundler(8);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("ownerId=");
-		msg.append(ownerId);
-
-		msg.append(", ownerType=");
-		msg.append(ownerType);
-
-		msg.append(", plid=");
-		msg.append(plid);
-
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-		throw new NoSuchPortletPreferencesException(msg.toString());
-	}
-
-	/**
-	 * Returns the last portlet preferences in the ordered set where ownerId = &#63; and ownerType = &#63; and plid = &#63;.
-	 *
-	 * @param ownerId the owner ID
-	 * @param ownerType the owner type
-	 * @param plid the plid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching portlet preferences, or <code>null</code> if a matching portlet preferences could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public PortletPreferences fetchByO_O_P_Last(long ownerId, int ownerType,
-		long plid, OrderByComparator orderByComparator)
-		throws SystemException {
-		int count = countByO_O_P(ownerId, ownerType, plid);
-
-		List<PortletPreferences> list = findByO_O_P(ownerId, ownerType, plid,
-				count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the portlet preferenceses before and after the current portlet preferences in the ordered set where ownerId = &#63; and ownerType = &#63; and plid = &#63;.
-	 *
-	 * @param portletPreferencesId the primary key of the current portlet preferences
-	 * @param ownerId the owner ID
-	 * @param ownerType the owner type
-	 * @param plid the plid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next portlet preferences
-	 * @throws com.liferay.portal.NoSuchPortletPreferencesException if a portlet preferences with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public PortletPreferences[] findByO_O_P_PrevAndNext(
-		long portletPreferencesId, long ownerId, int ownerType, long plid,
-		OrderByComparator orderByComparator)
-		throws NoSuchPortletPreferencesException, SystemException {
-		PortletPreferences portletPreferences = findByPrimaryKey(portletPreferencesId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			PortletPreferences[] array = new PortletPreferencesImpl[3];
-
-			array[0] = getByO_O_P_PrevAndNext(session, portletPreferences,
-					ownerId, ownerType, plid, orderByComparator, true);
-
-			array[1] = portletPreferences;
-
-			array[2] = getByO_O_P_PrevAndNext(session, portletPreferences,
-					ownerId, ownerType, plid, orderByComparator, false);
-
-			return array;
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	protected PortletPreferences getByO_O_P_PrevAndNext(Session session,
-		PortletPreferences portletPreferences, long ownerId, int ownerType,
-		long plid, OrderByComparator orderByComparator, boolean previous) {
-		StringBundler query = null;
-
-		if (orderByComparator != null) {
-			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
-		}
-		else {
-			query = new StringBundler(3);
-		}
-
-		query.append(_SQL_SELECT_PORTLETPREFERENCES_WHERE);
-
-		query.append(_FINDER_COLUMN_O_O_P_OWNERID_2);
-
-		query.append(_FINDER_COLUMN_O_O_P_OWNERTYPE_2);
-
-		query.append(_FINDER_COLUMN_O_O_P_PLID_2);
-
-		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
-
-			if (orderByConditionFields.length > 0) {
-				query.append(WHERE_AND);
-			}
-
-			for (int i = 0; i < orderByConditionFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByConditionFields[i]);
-
-				if ((i + 1) < orderByConditionFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN_HAS_NEXT);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN);
-					}
-				}
-			}
-
-			query.append(ORDER_BY_CLAUSE);
-
-			String[] orderByFields = orderByComparator.getOrderByFields();
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC_HAS_NEXT);
-					}
-					else {
-						query.append(ORDER_BY_DESC_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC);
-					}
-					else {
-						query.append(ORDER_BY_DESC);
-					}
-				}
-			}
-		}
-
-		String sql = query.toString();
-
-		Query q = session.createQuery(sql);
-
-		q.setFirstResult(0);
-		q.setMaxResults(2);
-
-		QueryPos qPos = QueryPos.getInstance(q);
-
-		qPos.add(ownerId);
-
-		qPos.add(ownerType);
-
-		qPos.add(plid);
-
-		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(portletPreferences);
-
-			for (Object value : values) {
-				qPos.add(value);
-			}
-		}
-
-		List<PortletPreferences> list = q.list();
-
-		if (list.size() == 2) {
-			return list.get(1);
-		}
-		else {
-			return null;
-		}
-	}
-
-	/**
-	 * Returns all the portlet preferenceses where ownerType = &#63; and plid = &#63; and portletId = &#63;.
-	 *
-	 * @param ownerType the owner type
-	 * @param plid the plid
-	 * @param portletId the portlet ID
-	 * @return the matching portlet preferenceses
-	 * @throws SystemException if a system exception occurred
-	 */
-	public List<PortletPreferences> findByO_P_P(int ownerType, long plid,
-		String portletId) throws SystemException {
-		return findByO_P_P(ownerType, plid, portletId, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the portlet preferenceses where ownerType = &#63; and plid = &#63; and portletId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
-	 * @param ownerType the owner type
-	 * @param plid the plid
-	 * @param portletId the portlet ID
-	 * @param start the lower bound of the range of portlet preferenceses
-	 * @param end the upper bound of the range of portlet preferenceses (not inclusive)
-	 * @return the range of matching portlet preferenceses
-	 * @throws SystemException if a system exception occurred
-	 */
-	public List<PortletPreferences> findByO_P_P(int ownerType, long plid,
-		String portletId, int start, int end) throws SystemException {
-		return findByO_P_P(ownerType, plid, portletId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the portlet preferenceses where ownerType = &#63; and plid = &#63; and portletId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
-	 * @param ownerType the owner type
-	 * @param plid the plid
-	 * @param portletId the portlet ID
-	 * @param start the lower bound of the range of portlet preferenceses
-	 * @param end the upper bound of the range of portlet preferenceses (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching portlet preferenceses
-	 * @throws SystemException if a system exception occurred
-	 */
-	public List<PortletPreferences> findByO_P_P(int ownerType, long plid,
-		String portletId, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_O_P_P;
-			finderArgs = new Object[] { ownerType, plid, portletId };
-		}
-		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_O_P_P;
-			finderArgs = new Object[] {
-					ownerType, plid, portletId,
-					
-					start, end, orderByComparator
-				};
-		}
-
-		List<PortletPreferences> list = (List<PortletPreferences>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
-
-		if ((list != null) && !list.isEmpty()) {
-			for (PortletPreferences portletPreferences : list) {
-				if ((ownerType != portletPreferences.getOwnerType()) ||
-						(plid != portletPreferences.getPlid()) ||
-						!Validator.equals(portletId,
-							portletPreferences.getPortletId())) {
-					list = null;
-
-					break;
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler query = null;
-
-			if (orderByComparator != null) {
-				query = new StringBundler(5 +
-						(orderByComparator.getOrderByFields().length * 3));
-			}
-			else {
-				query = new StringBundler(4);
-			}
-
-			query.append(_SQL_SELECT_PORTLETPREFERENCES_WHERE);
-
-			query.append(_FINDER_COLUMN_O_P_P_OWNERTYPE_2);
-
-			query.append(_FINDER_COLUMN_O_P_P_PLID_2);
-
-			if (portletId == null) {
-				query.append(_FINDER_COLUMN_O_P_P_PORTLETID_1);
-			}
-			else {
-				if (portletId.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_O_P_P_PORTLETID_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_O_P_P_PORTLETID_2);
-				}
-			}
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
-			}
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(ownerType);
-
-				qPos.add(plid);
-
-				if (portletId != null) {
-					qPos.add(portletId);
-				}
-
-				list = (List<PortletPreferences>)QueryUtil.list(q,
-						getDialect(), start, end);
-			}
-			catch (Exception e) {
-				throw processException(e);
-			}
-			finally {
-				if (list == null) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
-				else {
-					cacheResult(list);
-
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
-
-				closeSession(session);
-			}
-		}
-
-		return list;
-	}
-
-	/**
-	 * Returns the first portlet preferences in the ordered set where ownerType = &#63; and plid = &#63; and portletId = &#63;.
-	 *
-	 * @param ownerType the owner type
-	 * @param plid the plid
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching portlet preferences
-	 * @throws com.liferay.portal.NoSuchPortletPreferencesException if a matching portlet preferences could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public PortletPreferences findByO_P_P_First(int ownerType, long plid,
-		String portletId, OrderByComparator orderByComparator)
-		throws NoSuchPortletPreferencesException, SystemException {
-		PortletPreferences portletPreferences = fetchByO_P_P_First(ownerType,
-				plid, portletId, orderByComparator);
-
-		if (portletPreferences != null) {
-			return portletPreferences;
-		}
-
-		StringBundler msg = new StringBundler(8);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("ownerType=");
-		msg.append(ownerType);
-
-		msg.append(", plid=");
-		msg.append(plid);
-
-		msg.append(", portletId=");
-		msg.append(portletId);
-
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-		throw new NoSuchPortletPreferencesException(msg.toString());
-	}
-
-	/**
-	 * Returns the first portlet preferences in the ordered set where ownerType = &#63; and plid = &#63; and portletId = &#63;.
-	 *
-	 * @param ownerType the owner type
-	 * @param plid the plid
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching portlet preferences, or <code>null</code> if a matching portlet preferences could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public PortletPreferences fetchByO_P_P_First(int ownerType, long plid,
-		String portletId, OrderByComparator orderByComparator)
-		throws SystemException {
-		List<PortletPreferences> list = findByO_P_P(ownerType, plid, portletId,
-				0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last portlet preferences in the ordered set where ownerType = &#63; and plid = &#63; and portletId = &#63;.
-	 *
-	 * @param ownerType the owner type
-	 * @param plid the plid
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching portlet preferences
-	 * @throws com.liferay.portal.NoSuchPortletPreferencesException if a matching portlet preferences could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public PortletPreferences findByO_P_P_Last(int ownerType, long plid,
-		String portletId, OrderByComparator orderByComparator)
-		throws NoSuchPortletPreferencesException, SystemException {
-		PortletPreferences portletPreferences = fetchByO_P_P_Last(ownerType,
-				plid, portletId, orderByComparator);
-
-		if (portletPreferences != null) {
-			return portletPreferences;
-		}
-
-		StringBundler msg = new StringBundler(8);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("ownerType=");
-		msg.append(ownerType);
-
-		msg.append(", plid=");
-		msg.append(plid);
-
-		msg.append(", portletId=");
-		msg.append(portletId);
-
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-		throw new NoSuchPortletPreferencesException(msg.toString());
-	}
-
-	/**
-	 * Returns the last portlet preferences in the ordered set where ownerType = &#63; and plid = &#63; and portletId = &#63;.
-	 *
-	 * @param ownerType the owner type
-	 * @param plid the plid
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching portlet preferences, or <code>null</code> if a matching portlet preferences could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public PortletPreferences fetchByO_P_P_Last(int ownerType, long plid,
-		String portletId, OrderByComparator orderByComparator)
-		throws SystemException {
-		int count = countByO_P_P(ownerType, plid, portletId);
-
-		List<PortletPreferences> list = findByO_P_P(ownerType, plid, portletId,
-				count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the portlet preferenceses before and after the current portlet preferences in the ordered set where ownerType = &#63; and plid = &#63; and portletId = &#63;.
-	 *
-	 * @param portletPreferencesId the primary key of the current portlet preferences
-	 * @param ownerType the owner type
-	 * @param plid the plid
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next portlet preferences
-	 * @throws com.liferay.portal.NoSuchPortletPreferencesException if a portlet preferences with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public PortletPreferences[] findByO_P_P_PrevAndNext(
-		long portletPreferencesId, int ownerType, long plid, String portletId,
-		OrderByComparator orderByComparator)
-		throws NoSuchPortletPreferencesException, SystemException {
-		PortletPreferences portletPreferences = findByPrimaryKey(portletPreferencesId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			PortletPreferences[] array = new PortletPreferencesImpl[3];
-
-			array[0] = getByO_P_P_PrevAndNext(session, portletPreferences,
-					ownerType, plid, portletId, orderByComparator, true);
-
-			array[1] = portletPreferences;
-
-			array[2] = getByO_P_P_PrevAndNext(session, portletPreferences,
-					ownerType, plid, portletId, orderByComparator, false);
-
-			return array;
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	protected PortletPreferences getByO_P_P_PrevAndNext(Session session,
-		PortletPreferences portletPreferences, int ownerType, long plid,
-		String portletId, OrderByComparator orderByComparator, boolean previous) {
-		StringBundler query = null;
-
-		if (orderByComparator != null) {
-			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
-		}
-		else {
-			query = new StringBundler(3);
-		}
-
-		query.append(_SQL_SELECT_PORTLETPREFERENCES_WHERE);
-
-		query.append(_FINDER_COLUMN_O_P_P_OWNERTYPE_2);
-
-		query.append(_FINDER_COLUMN_O_P_P_PLID_2);
-
-		if (portletId == null) {
-			query.append(_FINDER_COLUMN_O_P_P_PORTLETID_1);
-		}
-		else {
-			if (portletId.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_O_P_P_PORTLETID_3);
-			}
-			else {
-				query.append(_FINDER_COLUMN_O_P_P_PORTLETID_2);
-			}
-		}
-
-		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
-
-			if (orderByConditionFields.length > 0) {
-				query.append(WHERE_AND);
-			}
-
-			for (int i = 0; i < orderByConditionFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByConditionFields[i]);
-
-				if ((i + 1) < orderByConditionFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN_HAS_NEXT);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN);
-					}
-				}
-			}
-
-			query.append(ORDER_BY_CLAUSE);
-
-			String[] orderByFields = orderByComparator.getOrderByFields();
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC_HAS_NEXT);
-					}
-					else {
-						query.append(ORDER_BY_DESC_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC);
-					}
-					else {
-						query.append(ORDER_BY_DESC);
-					}
-				}
-			}
-		}
-
-		String sql = query.toString();
-
-		Query q = session.createQuery(sql);
-
-		q.setFirstResult(0);
-		q.setMaxResults(2);
-
-		QueryPos qPos = QueryPos.getInstance(q);
-
-		qPos.add(ownerType);
-
-		qPos.add(plid);
-
-		if (portletId != null) {
-			qPos.add(portletId);
-		}
-
-		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(portletPreferences);
-
-			for (Object value : values) {
-				qPos.add(value);
-			}
-		}
-
-		List<PortletPreferences> list = q.list();
-
-		if (list.size() == 2) {
-			return list.get(1);
-		}
-		else {
-			return null;
-		}
-	}
-
-	/**
-	 * Returns the portlet preferences where ownerId = &#63; and ownerType = &#63; and plid = &#63; and portletId = &#63; or throws a {@link com.liferay.portal.NoSuchPortletPreferencesException} if it could not be found.
-	 *
-	 * @param ownerId the owner ID
-	 * @param ownerType the owner type
-	 * @param plid the plid
-	 * @param portletId the portlet ID
-	 * @return the matching portlet preferences
-	 * @throws com.liferay.portal.NoSuchPortletPreferencesException if a matching portlet preferences could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public PortletPreferences findByO_O_P_P(long ownerId, int ownerType,
-		long plid, String portletId)
-		throws NoSuchPortletPreferencesException, SystemException {
-		PortletPreferences portletPreferences = fetchByO_O_P_P(ownerId,
-				ownerType, plid, portletId);
-
-		if (portletPreferences == null) {
-			StringBundler msg = new StringBundler(10);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("ownerId=");
-			msg.append(ownerId);
-
-			msg.append(", ownerType=");
-			msg.append(ownerType);
-
-			msg.append(", plid=");
-			msg.append(plid);
-
-			msg.append(", portletId=");
-			msg.append(portletId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			if (_log.isWarnEnabled()) {
-				_log.warn(msg.toString());
-			}
-
-			throw new NoSuchPortletPreferencesException(msg.toString());
-		}
-
-		return portletPreferences;
-	}
-
-	/**
-	 * Returns the portlet preferences where ownerId = &#63; and ownerType = &#63; and plid = &#63; and portletId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param ownerId the owner ID
-	 * @param ownerType the owner type
-	 * @param plid the plid
-	 * @param portletId the portlet ID
-	 * @return the matching portlet preferences, or <code>null</code> if a matching portlet preferences could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public PortletPreferences fetchByO_O_P_P(long ownerId, int ownerType,
-		long plid, String portletId) throws SystemException {
-		return fetchByO_O_P_P(ownerId, ownerType, plid, portletId, true);
-	}
-
-	/**
-	 * Returns the portlet preferences where ownerId = &#63; and ownerType = &#63; and plid = &#63; and portletId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param ownerId the owner ID
-	 * @param ownerType the owner type
-	 * @param plid the plid
-	 * @param portletId the portlet ID
-	 * @param retrieveFromCache whether to use the finder cache
-	 * @return the matching portlet preferences, or <code>null</code> if a matching portlet preferences could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public PortletPreferences fetchByO_O_P_P(long ownerId, int ownerType,
-		long plid, String portletId, boolean retrieveFromCache)
-		throws SystemException {
-		Object[] finderArgs = new Object[] { ownerId, ownerType, plid, portletId };
-
-		Object result = null;
-
-		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_O_O_P_P,
-					finderArgs, this);
-		}
-
-		if (result instanceof PortletPreferences) {
-			PortletPreferences portletPreferences = (PortletPreferences)result;
-
-			if ((ownerId != portletPreferences.getOwnerId()) ||
-					(ownerType != portletPreferences.getOwnerType()) ||
-					(plid != portletPreferences.getPlid()) ||
-					!Validator.equals(portletId,
-						portletPreferences.getPortletId())) {
-				result = null;
-			}
-		}
-
-		if (result == null) {
-			StringBundler query = new StringBundler(5);
-
-			query.append(_SQL_SELECT_PORTLETPREFERENCES_WHERE);
-
-			query.append(_FINDER_COLUMN_O_O_P_P_OWNERID_2);
-
-			query.append(_FINDER_COLUMN_O_O_P_P_OWNERTYPE_2);
-
-			query.append(_FINDER_COLUMN_O_O_P_P_PLID_2);
-
-			if (portletId == null) {
-				query.append(_FINDER_COLUMN_O_O_P_P_PORTLETID_1);
-			}
-			else {
-				if (portletId.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_O_O_P_P_PORTLETID_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_O_O_P_P_PORTLETID_2);
-				}
-			}
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(ownerId);
-
-				qPos.add(ownerType);
-
-				qPos.add(plid);
-
-				if (portletId != null) {
-					qPos.add(portletId);
-				}
-
-				List<PortletPreferences> list = q.list();
-
-				result = list;
-
-				PortletPreferences portletPreferences = null;
-
-				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_O_O_P_P,
-						finderArgs, list);
-				}
-				else {
-					portletPreferences = list.get(0);
-
-					cacheResult(portletPreferences);
-
-					if ((portletPreferences.getOwnerId() != ownerId) ||
-							(portletPreferences.getOwnerType() != ownerType) ||
-							(portletPreferences.getPlid() != plid) ||
-							(portletPreferences.getPortletId() == null) ||
-							!portletPreferences.getPortletId().equals(portletId)) {
-						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_O_O_P_P,
-							finderArgs, portletPreferences);
-					}
-				}
-
-				return portletPreferences;
-			}
-			catch (Exception e) {
-				throw processException(e);
-			}
-			finally {
-				if (result == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_O_O_P_P,
-						finderArgs);
-				}
-
-				closeSession(session);
-			}
-		}
-		else {
-			if (result instanceof List<?>) {
-				return null;
-			}
-			else {
-				return (PortletPreferences)result;
-			}
-		}
 	}
 
 	/**
@@ -3034,7 +3898,7 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	 * Returns a range of all the portlet preferenceses.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from PortletPreferencesModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted in portal side by PK ASC order.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of portlet preferenceses
@@ -3051,7 +3915,7 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	 * Returns an ordered range of all the portlet preferenceses.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from PortletPreferencesModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted in portal side by PK ASC order.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of portlet preferenceses
@@ -3062,11 +3926,13 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	 */
 	public List<PortletPreferences> findAll(int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
+		boolean pagination = true;
 		FinderPath finderPath = null;
-		Object[] finderArgs = new Object[] { start, end, orderByComparator };
+		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 				(orderByComparator == null)) {
+			pagination = false;
 			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL;
 			finderArgs = FINDER_ARGS_EMPTY;
 		}
@@ -3095,6 +3961,10 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 			}
 			else {
 				sql = _SQL_SELECT_PORTLETPREFERENCES;
+
+				if (pagination) {
+					sql = sql.concat(PortletPreferencesModelImpl.ORDER_BY_JPQL);
+				}
 			}
 
 			Session session = null;
@@ -3104,124 +3974,34 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 
 				Query q = session.createQuery(sql);
 
-				if (orderByComparator == null) {
+				if (!pagination) {
 					list = (List<PortletPreferences>)QueryUtil.list(q,
 							getDialect(), start, end, false);
 
 					Collections.sort(list);
+
+					list = new UnmodifiableList(list);
 				}
 				else {
 					list = (List<PortletPreferences>)QueryUtil.list(q,
 							getDialect(), start, end);
 				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
 				throw processException(e);
 			}
 			finally {
-				if (list == null) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
-				else {
-					cacheResult(list);
-
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
-
 				closeSession(session);
 			}
 		}
 
 		return list;
-	}
-
-	/**
-	 * Removes all the portlet preferenceses where plid = &#63; from the database.
-	 *
-	 * @param plid the plid
-	 * @throws SystemException if a system exception occurred
-	 */
-	public void removeByPlid(long plid) throws SystemException {
-		for (PortletPreferences portletPreferences : findByPlid(plid)) {
-			remove(portletPreferences);
-		}
-	}
-
-	/**
-	 * Removes all the portlet preferenceses where portletId = &#63; from the database.
-	 *
-	 * @param portletId the portlet ID
-	 * @throws SystemException if a system exception occurred
-	 */
-	public void removeByPortletId(String portletId) throws SystemException {
-		for (PortletPreferences portletPreferences : findByPortletId(portletId)) {
-			remove(portletPreferences);
-		}
-	}
-
-	/**
-	 * Removes all the portlet preferenceses where plid = &#63; and portletId = &#63; from the database.
-	 *
-	 * @param plid the plid
-	 * @param portletId the portlet ID
-	 * @throws SystemException if a system exception occurred
-	 */
-	public void removeByP_P(long plid, String portletId)
-		throws SystemException {
-		for (PortletPreferences portletPreferences : findByP_P(plid, portletId)) {
-			remove(portletPreferences);
-		}
-	}
-
-	/**
-	 * Removes all the portlet preferenceses where ownerId = &#63; and ownerType = &#63; and plid = &#63; from the database.
-	 *
-	 * @param ownerId the owner ID
-	 * @param ownerType the owner type
-	 * @param plid the plid
-	 * @throws SystemException if a system exception occurred
-	 */
-	public void removeByO_O_P(long ownerId, int ownerType, long plid)
-		throws SystemException {
-		for (PortletPreferences portletPreferences : findByO_O_P(ownerId,
-				ownerType, plid)) {
-			remove(portletPreferences);
-		}
-	}
-
-	/**
-	 * Removes all the portlet preferenceses where ownerType = &#63; and plid = &#63; and portletId = &#63; from the database.
-	 *
-	 * @param ownerType the owner type
-	 * @param plid the plid
-	 * @param portletId the portlet ID
-	 * @throws SystemException if a system exception occurred
-	 */
-	public void removeByO_P_P(int ownerType, long plid, String portletId)
-		throws SystemException {
-		for (PortletPreferences portletPreferences : findByO_P_P(ownerType,
-				plid, portletId)) {
-			remove(portletPreferences);
-		}
-	}
-
-	/**
-	 * Removes the portlet preferences where ownerId = &#63; and ownerType = &#63; and plid = &#63; and portletId = &#63; from the database.
-	 *
-	 * @param ownerId the owner ID
-	 * @param ownerType the owner type
-	 * @param plid the plid
-	 * @param portletId the portlet ID
-	 * @return the portlet preferences that was removed
-	 * @throws SystemException if a system exception occurred
-	 */
-	public PortletPreferences removeByO_O_P_P(long ownerId, int ownerType,
-		long plid, String portletId)
-		throws NoSuchPortletPreferencesException, SystemException {
-		PortletPreferences portletPreferences = findByO_O_P_P(ownerId,
-				ownerType, plid, portletId);
-
-		return remove(portletPreferences);
 	}
 
 	/**
@@ -3233,416 +4013,6 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 		for (PortletPreferences portletPreferences : findAll()) {
 			remove(portletPreferences);
 		}
-	}
-
-	/**
-	 * Returns the number of portlet preferenceses where plid = &#63;.
-	 *
-	 * @param plid the plid
-	 * @return the number of matching portlet preferenceses
-	 * @throws SystemException if a system exception occurred
-	 */
-	public int countByPlid(long plid) throws SystemException {
-		Object[] finderArgs = new Object[] { plid };
-
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_BY_PLID,
-				finderArgs, this);
-
-		if (count == null) {
-			StringBundler query = new StringBundler(2);
-
-			query.append(_SQL_COUNT_PORTLETPREFERENCES_WHERE);
-
-			query.append(_FINDER_COLUMN_PLID_PLID_2);
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(plid);
-
-				count = (Long)q.uniqueResult();
-			}
-			catch (Exception e) {
-				throw processException(e);
-			}
-			finally {
-				if (count == null) {
-					count = Long.valueOf(0);
-				}
-
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_PLID,
-					finderArgs, count);
-
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
-	}
-
-	/**
-	 * Returns the number of portlet preferenceses where portletId = &#63;.
-	 *
-	 * @param portletId the portlet ID
-	 * @return the number of matching portlet preferenceses
-	 * @throws SystemException if a system exception occurred
-	 */
-	public int countByPortletId(String portletId) throws SystemException {
-		Object[] finderArgs = new Object[] { portletId };
-
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_BY_PORTLETID,
-				finderArgs, this);
-
-		if (count == null) {
-			StringBundler query = new StringBundler(2);
-
-			query.append(_SQL_COUNT_PORTLETPREFERENCES_WHERE);
-
-			if (portletId == null) {
-				query.append(_FINDER_COLUMN_PORTLETID_PORTLETID_1);
-			}
-			else {
-				if (portletId.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_PORTLETID_PORTLETID_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_PORTLETID_PORTLETID_2);
-				}
-			}
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				if (portletId != null) {
-					qPos.add(portletId);
-				}
-
-				count = (Long)q.uniqueResult();
-			}
-			catch (Exception e) {
-				throw processException(e);
-			}
-			finally {
-				if (count == null) {
-					count = Long.valueOf(0);
-				}
-
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_PORTLETID,
-					finderArgs, count);
-
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
-	}
-
-	/**
-	 * Returns the number of portlet preferenceses where plid = &#63; and portletId = &#63;.
-	 *
-	 * @param plid the plid
-	 * @param portletId the portlet ID
-	 * @return the number of matching portlet preferenceses
-	 * @throws SystemException if a system exception occurred
-	 */
-	public int countByP_P(long plid, String portletId)
-		throws SystemException {
-		Object[] finderArgs = new Object[] { plid, portletId };
-
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_BY_P_P,
-				finderArgs, this);
-
-		if (count == null) {
-			StringBundler query = new StringBundler(3);
-
-			query.append(_SQL_COUNT_PORTLETPREFERENCES_WHERE);
-
-			query.append(_FINDER_COLUMN_P_P_PLID_2);
-
-			if (portletId == null) {
-				query.append(_FINDER_COLUMN_P_P_PORTLETID_1);
-			}
-			else {
-				if (portletId.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_P_P_PORTLETID_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_P_P_PORTLETID_2);
-				}
-			}
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(plid);
-
-				if (portletId != null) {
-					qPos.add(portletId);
-				}
-
-				count = (Long)q.uniqueResult();
-			}
-			catch (Exception e) {
-				throw processException(e);
-			}
-			finally {
-				if (count == null) {
-					count = Long.valueOf(0);
-				}
-
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_P_P, finderArgs,
-					count);
-
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
-	}
-
-	/**
-	 * Returns the number of portlet preferenceses where ownerId = &#63; and ownerType = &#63; and plid = &#63;.
-	 *
-	 * @param ownerId the owner ID
-	 * @param ownerType the owner type
-	 * @param plid the plid
-	 * @return the number of matching portlet preferenceses
-	 * @throws SystemException if a system exception occurred
-	 */
-	public int countByO_O_P(long ownerId, int ownerType, long plid)
-		throws SystemException {
-		Object[] finderArgs = new Object[] { ownerId, ownerType, plid };
-
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_BY_O_O_P,
-				finderArgs, this);
-
-		if (count == null) {
-			StringBundler query = new StringBundler(4);
-
-			query.append(_SQL_COUNT_PORTLETPREFERENCES_WHERE);
-
-			query.append(_FINDER_COLUMN_O_O_P_OWNERID_2);
-
-			query.append(_FINDER_COLUMN_O_O_P_OWNERTYPE_2);
-
-			query.append(_FINDER_COLUMN_O_O_P_PLID_2);
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(ownerId);
-
-				qPos.add(ownerType);
-
-				qPos.add(plid);
-
-				count = (Long)q.uniqueResult();
-			}
-			catch (Exception e) {
-				throw processException(e);
-			}
-			finally {
-				if (count == null) {
-					count = Long.valueOf(0);
-				}
-
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_O_O_P,
-					finderArgs, count);
-
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
-	}
-
-	/**
-	 * Returns the number of portlet preferenceses where ownerType = &#63; and plid = &#63; and portletId = &#63;.
-	 *
-	 * @param ownerType the owner type
-	 * @param plid the plid
-	 * @param portletId the portlet ID
-	 * @return the number of matching portlet preferenceses
-	 * @throws SystemException if a system exception occurred
-	 */
-	public int countByO_P_P(int ownerType, long plid, String portletId)
-		throws SystemException {
-		Object[] finderArgs = new Object[] { ownerType, plid, portletId };
-
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_BY_O_P_P,
-				finderArgs, this);
-
-		if (count == null) {
-			StringBundler query = new StringBundler(4);
-
-			query.append(_SQL_COUNT_PORTLETPREFERENCES_WHERE);
-
-			query.append(_FINDER_COLUMN_O_P_P_OWNERTYPE_2);
-
-			query.append(_FINDER_COLUMN_O_P_P_PLID_2);
-
-			if (portletId == null) {
-				query.append(_FINDER_COLUMN_O_P_P_PORTLETID_1);
-			}
-			else {
-				if (portletId.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_O_P_P_PORTLETID_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_O_P_P_PORTLETID_2);
-				}
-			}
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(ownerType);
-
-				qPos.add(plid);
-
-				if (portletId != null) {
-					qPos.add(portletId);
-				}
-
-				count = (Long)q.uniqueResult();
-			}
-			catch (Exception e) {
-				throw processException(e);
-			}
-			finally {
-				if (count == null) {
-					count = Long.valueOf(0);
-				}
-
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_O_P_P,
-					finderArgs, count);
-
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
-	}
-
-	/**
-	 * Returns the number of portlet preferenceses where ownerId = &#63; and ownerType = &#63; and plid = &#63; and portletId = &#63;.
-	 *
-	 * @param ownerId the owner ID
-	 * @param ownerType the owner type
-	 * @param plid the plid
-	 * @param portletId the portlet ID
-	 * @return the number of matching portlet preferenceses
-	 * @throws SystemException if a system exception occurred
-	 */
-	public int countByO_O_P_P(long ownerId, int ownerType, long plid,
-		String portletId) throws SystemException {
-		Object[] finderArgs = new Object[] { ownerId, ownerType, plid, portletId };
-
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_BY_O_O_P_P,
-				finderArgs, this);
-
-		if (count == null) {
-			StringBundler query = new StringBundler(5);
-
-			query.append(_SQL_COUNT_PORTLETPREFERENCES_WHERE);
-
-			query.append(_FINDER_COLUMN_O_O_P_P_OWNERID_2);
-
-			query.append(_FINDER_COLUMN_O_O_P_P_OWNERTYPE_2);
-
-			query.append(_FINDER_COLUMN_O_O_P_P_PLID_2);
-
-			if (portletId == null) {
-				query.append(_FINDER_COLUMN_O_O_P_P_PORTLETID_1);
-			}
-			else {
-				if (portletId.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_O_O_P_P_PORTLETID_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_O_O_P_P_PORTLETID_2);
-				}
-			}
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(ownerId);
-
-				qPos.add(ownerType);
-
-				qPos.add(plid);
-
-				if (portletId != null) {
-					qPos.add(portletId);
-				}
-
-				count = (Long)q.uniqueResult();
-			}
-			catch (Exception e) {
-				throw processException(e);
-			}
-			finally {
-				if (count == null) {
-					count = Long.valueOf(0);
-				}
-
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_O_O_P_P,
-					finderArgs, count);
-
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
 	}
 
 	/**
@@ -3664,18 +4034,17 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 				Query q = session.createQuery(_SQL_COUNT_PORTLETPREFERENCES);
 
 				count = (Long)q.uniqueResult();
-			}
-			catch (Exception e) {
-				throw processException(e);
-			}
-			finally {
-				if (count == null) {
-					count = Long.valueOf(0);
-				}
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
 					FINDER_ARGS_EMPTY, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_ALL,
+					FINDER_ARGS_EMPTY);
 
+				throw processException(e);
+			}
+			finally {
 				closeSession(session);
 			}
 		}
@@ -3711,6 +4080,7 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	public void destroy() {
 		EntityCacheUtil.removeCache(PortletPreferencesImpl.class.getName());
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_ENTITY);
+		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
@@ -3840,28 +4210,6 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	private static final String _SQL_SELECT_PORTLETPREFERENCES_WHERE = "SELECT portletPreferences FROM PortletPreferences portletPreferences WHERE ";
 	private static final String _SQL_COUNT_PORTLETPREFERENCES = "SELECT COUNT(portletPreferences) FROM PortletPreferences portletPreferences";
 	private static final String _SQL_COUNT_PORTLETPREFERENCES_WHERE = "SELECT COUNT(portletPreferences) FROM PortletPreferences portletPreferences WHERE ";
-	private static final String _FINDER_COLUMN_PLID_PLID_2 = "portletPreferences.plid = ?";
-	private static final String _FINDER_COLUMN_PORTLETID_PORTLETID_1 = "portletPreferences.portletId IS NULL";
-	private static final String _FINDER_COLUMN_PORTLETID_PORTLETID_2 = "portletPreferences.portletId = ?";
-	private static final String _FINDER_COLUMN_PORTLETID_PORTLETID_3 = "(portletPreferences.portletId IS NULL OR portletPreferences.portletId = ?)";
-	private static final String _FINDER_COLUMN_P_P_PLID_2 = "portletPreferences.plid = ? AND ";
-	private static final String _FINDER_COLUMN_P_P_PORTLETID_1 = "portletPreferences.portletId IS NULL";
-	private static final String _FINDER_COLUMN_P_P_PORTLETID_2 = "portletPreferences.portletId = ?";
-	private static final String _FINDER_COLUMN_P_P_PORTLETID_3 = "(portletPreferences.portletId IS NULL OR portletPreferences.portletId = ?)";
-	private static final String _FINDER_COLUMN_O_O_P_OWNERID_2 = "portletPreferences.ownerId = ? AND ";
-	private static final String _FINDER_COLUMN_O_O_P_OWNERTYPE_2 = "portletPreferences.ownerType = ? AND ";
-	private static final String _FINDER_COLUMN_O_O_P_PLID_2 = "portletPreferences.plid = ?";
-	private static final String _FINDER_COLUMN_O_P_P_OWNERTYPE_2 = "portletPreferences.ownerType = ? AND ";
-	private static final String _FINDER_COLUMN_O_P_P_PLID_2 = "portletPreferences.plid = ? AND ";
-	private static final String _FINDER_COLUMN_O_P_P_PORTLETID_1 = "portletPreferences.portletId IS NULL";
-	private static final String _FINDER_COLUMN_O_P_P_PORTLETID_2 = "portletPreferences.portletId = ?";
-	private static final String _FINDER_COLUMN_O_P_P_PORTLETID_3 = "(portletPreferences.portletId IS NULL OR portletPreferences.portletId = ?)";
-	private static final String _FINDER_COLUMN_O_O_P_P_OWNERID_2 = "portletPreferences.ownerId = ? AND ";
-	private static final String _FINDER_COLUMN_O_O_P_P_OWNERTYPE_2 = "portletPreferences.ownerType = ? AND ";
-	private static final String _FINDER_COLUMN_O_O_P_P_PLID_2 = "portletPreferences.plid = ? AND ";
-	private static final String _FINDER_COLUMN_O_O_P_P_PORTLETID_1 = "portletPreferences.portletId IS NULL";
-	private static final String _FINDER_COLUMN_O_O_P_P_PORTLETID_2 = "portletPreferences.portletId = ?";
-	private static final String _FINDER_COLUMN_O_O_P_P_PORTLETID_3 = "(portletPreferences.portletId IS NULL OR portletPreferences.portletId = ?)";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "portletPreferences.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No PortletPreferences exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No PortletPreferences exists with the key {";

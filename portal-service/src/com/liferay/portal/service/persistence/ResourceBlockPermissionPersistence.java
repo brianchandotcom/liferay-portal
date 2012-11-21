@@ -36,6 +36,255 @@ public interface ResourceBlockPermissionPersistence extends BasePersistence<Reso
 	 */
 
 	/**
+	* Returns all the resource block permissions where resourceBlockId = &#63;.
+	*
+	* @param resourceBlockId the resource block ID
+	* @return the matching resource block permissions
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portal.model.ResourceBlockPermission> findByResourceBlockId(
+		long resourceBlockId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns a range of all the resource block permissions where resourceBlockId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from ResourceBlockPermissionModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted in portal side by PK ASC order.
+	* </p>
+	*
+	* @param resourceBlockId the resource block ID
+	* @param start the lower bound of the range of resource block permissions
+	* @param end the upper bound of the range of resource block permissions (not inclusive)
+	* @return the range of matching resource block permissions
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portal.model.ResourceBlockPermission> findByResourceBlockId(
+		long resourceBlockId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the resource block permissions before and after the current resource block permission in the ordered set where resourceBlockId = &#63;.
+	*
+	* @param resourceBlockPermissionId the primary key of the current resource block permission
+	* @param resourceBlockId the resource block ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next resource block permission
+	* @throws com.liferay.portal.NoSuchResourceBlockPermissionException if a resource block permission with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.ResourceBlockPermission[] findByResourceBlockId_PrevAndNext(
+		long resourceBlockPermissionId, long resourceBlockId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.NoSuchResourceBlockPermissionException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns an ordered range of all the resource block permissions where resourceBlockId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from ResourceBlockPermissionModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted in portal side by PK ASC order.
+	* </p>
+	*
+	* @param resourceBlockId the resource block ID
+	* @param start the lower bound of the range of resource block permissions
+	* @param end the upper bound of the range of resource block permissions (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching resource block permissions
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portal.model.ResourceBlockPermission> findByResourceBlockId(
+		long resourceBlockId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first resource block permission in the default ordered set defined by {@link ResourceBlockPermissionModelImpl#ORDER_BY_JPQL} where resourceBlockId = &#63;.
+	*
+	* @param resourceBlockId the resource block ID
+	* @return the first matching resource block permission
+	* @throws com.liferay.portal.NoSuchResourceBlockPermissionException if a matching resource block permission could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.ResourceBlockPermission findByResourceBlockId_First(
+		long resourceBlockId)
+		throws com.liferay.portal.NoSuchResourceBlockPermissionException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first resource block permission in the ordered set where resourceBlockId = &#63;.
+	*
+	* @param resourceBlockId the resource block ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching resource block permission
+	* @throws com.liferay.portal.NoSuchResourceBlockPermissionException if a matching resource block permission could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.ResourceBlockPermission findByResourceBlockId_First(
+		long resourceBlockId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.NoSuchResourceBlockPermissionException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first resource block permission in the default ordered set defined by {@link ResourceBlockPermissionModelImpl#ORDER_BY_JPQL} where resourceBlockId = &#63;.
+	*
+	* @param resourceBlockId the resource block ID
+	* @return the first matching resource block permission, or <code>null</code> if a matching resource block permission could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.ResourceBlockPermission fetchByResourceBlockId_First(
+		long resourceBlockId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first resource block permission in the ordered set where resourceBlockId = &#63;.
+	*
+	* @param resourceBlockId the resource block ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching resource block permission, or <code>null</code> if a matching resource block permission could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.ResourceBlockPermission fetchByResourceBlockId_First(
+		long resourceBlockId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last resource block permission in the default ordered set defined by {@link ResourceBlockPermissionModelImpl#ORDER_BY_JPQL} where resourceBlockId = &#63;.
+	*
+	* @param resourceBlockId the resource block ID
+	* @return the last matching resource block permission
+	* @throws com.liferay.portal.NoSuchResourceBlockPermissionException if a matching resource block permission could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.ResourceBlockPermission findByResourceBlockId_Last(
+		long resourceBlockId)
+		throws com.liferay.portal.NoSuchResourceBlockPermissionException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last resource block permission in the ordered set where resourceBlockId = &#63;.
+	*
+	* @param resourceBlockId the resource block ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching resource block permission
+	* @throws com.liferay.portal.NoSuchResourceBlockPermissionException if a matching resource block permission could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.ResourceBlockPermission findByResourceBlockId_Last(
+		long resourceBlockId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.NoSuchResourceBlockPermissionException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last resource block permission in the default ordered set defined by {@link ResourceBlockPermissionModelImpl#ORDER_BY_JPQL} where resourceBlockId = &#63;.
+	*
+	* @param resourceBlockId the resource block ID
+	* @return the last matching resource block permission, or <code>null</code> if a matching resource block permission could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.ResourceBlockPermission fetchByResourceBlockId_Last(
+		long resourceBlockId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last resource block permission in the ordered set where resourceBlockId = &#63;.
+	*
+	* @param resourceBlockId the resource block ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching resource block permission, or <code>null</code> if a matching resource block permission could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.ResourceBlockPermission fetchByResourceBlockId_Last(
+		long resourceBlockId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Removes all the resource block permissions where resourceBlockId = &#63; from the database.
+	*
+	* @param resourceBlockId the resource block ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeByResourceBlockId(long resourceBlockId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of resource block permissions where resourceBlockId = &#63;.
+	*
+	* @param resourceBlockId the resource block ID
+	* @return the number of matching resource block permissions
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByResourceBlockId(long resourceBlockId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the resource block permission where resourceBlockId = &#63; and roleId = &#63; or throws a {@link com.liferay.portal.NoSuchResourceBlockPermissionException} if it could not be found.
+	*
+	* @param resourceBlockId the resource block ID
+	* @param roleId the role ID
+	* @return the matching resource block permission
+	* @throws com.liferay.portal.NoSuchResourceBlockPermissionException if a matching resource block permission could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.ResourceBlockPermission findByR_R(
+		long resourceBlockId, long roleId)
+		throws com.liferay.portal.NoSuchResourceBlockPermissionException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the resource block permission where resourceBlockId = &#63; and roleId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param resourceBlockId the resource block ID
+	* @param roleId the role ID
+	* @return the matching resource block permission, or <code>null</code> if a matching resource block permission could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.ResourceBlockPermission fetchByR_R(
+		long resourceBlockId, long roleId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the resource block permission where resourceBlockId = &#63; and roleId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param resourceBlockId the resource block ID
+	* @param roleId the role ID
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the matching resource block permission, or <code>null</code> if a matching resource block permission could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.ResourceBlockPermission fetchByR_R(
+		long resourceBlockId, long roleId, boolean retrieveFromCache)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Removes the resource block permission where resourceBlockId = &#63; and roleId = &#63; from the database.
+	*
+	* @param resourceBlockId the resource block ID
+	* @param roleId the role ID
+	* @return the resource block permission that was removed
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.ResourceBlockPermission removeByR_R(
+		long resourceBlockId, long roleId)
+		throws com.liferay.portal.NoSuchResourceBlockPermissionException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of resource block permissions where resourceBlockId = &#63; and roleId = &#63;.
+	*
+	* @param resourceBlockId the resource block ID
+	* @param roleId the role ID
+	* @return the number of matching resource block permissions
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByR_R(long resourceBlockId, long roleId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Caches the resource block permission in the entity cache if it is enabled.
 	*
 	* @param resourceBlockPermission the resource block permission
@@ -102,164 +351,6 @@ public interface ResourceBlockPermissionPersistence extends BasePersistence<Reso
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns all the resource block permissions where resourceBlockId = &#63;.
-	*
-	* @param resourceBlockId the resource block ID
-	* @return the matching resource block permissions
-	* @throws SystemException if a system exception occurred
-	*/
-	public java.util.List<com.liferay.portal.model.ResourceBlockPermission> findByResourceBlockId(
-		long resourceBlockId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns a range of all the resource block permissions where resourceBlockId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
-	* @param resourceBlockId the resource block ID
-	* @param start the lower bound of the range of resource block permissions
-	* @param end the upper bound of the range of resource block permissions (not inclusive)
-	* @return the range of matching resource block permissions
-	* @throws SystemException if a system exception occurred
-	*/
-	public java.util.List<com.liferay.portal.model.ResourceBlockPermission> findByResourceBlockId(
-		long resourceBlockId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns an ordered range of all the resource block permissions where resourceBlockId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
-	* @param resourceBlockId the resource block ID
-	* @param start the lower bound of the range of resource block permissions
-	* @param end the upper bound of the range of resource block permissions (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching resource block permissions
-	* @throws SystemException if a system exception occurred
-	*/
-	public java.util.List<com.liferay.portal.model.ResourceBlockPermission> findByResourceBlockId(
-		long resourceBlockId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the first resource block permission in the ordered set where resourceBlockId = &#63;.
-	*
-	* @param resourceBlockId the resource block ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching resource block permission
-	* @throws com.liferay.portal.NoSuchResourceBlockPermissionException if a matching resource block permission could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.ResourceBlockPermission findByResourceBlockId_First(
-		long resourceBlockId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchResourceBlockPermissionException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the first resource block permission in the ordered set where resourceBlockId = &#63;.
-	*
-	* @param resourceBlockId the resource block ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching resource block permission, or <code>null</code> if a matching resource block permission could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.ResourceBlockPermission fetchByResourceBlockId_First(
-		long resourceBlockId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the last resource block permission in the ordered set where resourceBlockId = &#63;.
-	*
-	* @param resourceBlockId the resource block ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching resource block permission
-	* @throws com.liferay.portal.NoSuchResourceBlockPermissionException if a matching resource block permission could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.ResourceBlockPermission findByResourceBlockId_Last(
-		long resourceBlockId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchResourceBlockPermissionException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the last resource block permission in the ordered set where resourceBlockId = &#63;.
-	*
-	* @param resourceBlockId the resource block ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching resource block permission, or <code>null</code> if a matching resource block permission could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.ResourceBlockPermission fetchByResourceBlockId_Last(
-		long resourceBlockId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the resource block permissions before and after the current resource block permission in the ordered set where resourceBlockId = &#63;.
-	*
-	* @param resourceBlockPermissionId the primary key of the current resource block permission
-	* @param resourceBlockId the resource block ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next resource block permission
-	* @throws com.liferay.portal.NoSuchResourceBlockPermissionException if a resource block permission with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.ResourceBlockPermission[] findByResourceBlockId_PrevAndNext(
-		long resourceBlockPermissionId, long resourceBlockId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchResourceBlockPermissionException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the resource block permission where resourceBlockId = &#63; and roleId = &#63; or throws a {@link com.liferay.portal.NoSuchResourceBlockPermissionException} if it could not be found.
-	*
-	* @param resourceBlockId the resource block ID
-	* @param roleId the role ID
-	* @return the matching resource block permission
-	* @throws com.liferay.portal.NoSuchResourceBlockPermissionException if a matching resource block permission could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.ResourceBlockPermission findByR_R(
-		long resourceBlockId, long roleId)
-		throws com.liferay.portal.NoSuchResourceBlockPermissionException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the resource block permission where resourceBlockId = &#63; and roleId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	*
-	* @param resourceBlockId the resource block ID
-	* @param roleId the role ID
-	* @return the matching resource block permission, or <code>null</code> if a matching resource block permission could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.ResourceBlockPermission fetchByR_R(
-		long resourceBlockId, long roleId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the resource block permission where resourceBlockId = &#63; and roleId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	*
-	* @param resourceBlockId the resource block ID
-	* @param roleId the role ID
-	* @param retrieveFromCache whether to use the finder cache
-	* @return the matching resource block permission, or <code>null</code> if a matching resource block permission could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.ResourceBlockPermission fetchByR_R(
-		long resourceBlockId, long roleId, boolean retrieveFromCache)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
 	* Returns all the resource block permissions.
 	*
 	* @return the resource block permissions
@@ -272,7 +363,7 @@ public interface ResourceBlockPermissionPersistence extends BasePersistence<Reso
 	* Returns a range of all the resource block permissions.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from ResourceBlockPermissionModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted in portal side by PK ASC order.
 	* </p>
 	*
 	* @param start the lower bound of the range of resource block permissions
@@ -288,7 +379,7 @@ public interface ResourceBlockPermissionPersistence extends BasePersistence<Reso
 	* Returns an ordered range of all the resource block permissions.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from ResourceBlockPermissionModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted in portal side by PK ASC order.
 	* </p>
 	*
 	* @param start the lower bound of the range of resource block permissions
@@ -303,54 +394,11 @@ public interface ResourceBlockPermissionPersistence extends BasePersistence<Reso
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Removes all the resource block permissions where resourceBlockId = &#63; from the database.
-	*
-	* @param resourceBlockId the resource block ID
-	* @throws SystemException if a system exception occurred
-	*/
-	public void removeByResourceBlockId(long resourceBlockId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Removes the resource block permission where resourceBlockId = &#63; and roleId = &#63; from the database.
-	*
-	* @param resourceBlockId the resource block ID
-	* @param roleId the role ID
-	* @return the resource block permission that was removed
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.ResourceBlockPermission removeByR_R(
-		long resourceBlockId, long roleId)
-		throws com.liferay.portal.NoSuchResourceBlockPermissionException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	/**
 	* Removes all the resource block permissions from the database.
 	*
 	* @throws SystemException if a system exception occurred
 	*/
 	public void removeAll()
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the number of resource block permissions where resourceBlockId = &#63;.
-	*
-	* @param resourceBlockId the resource block ID
-	* @return the number of matching resource block permissions
-	* @throws SystemException if a system exception occurred
-	*/
-	public int countByResourceBlockId(long resourceBlockId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the number of resource block permissions where resourceBlockId = &#63; and roleId = &#63;.
-	*
-	* @param resourceBlockId the resource block ID
-	* @param roleId the role ID
-	* @return the number of matching resource block permissions
-	* @throws SystemException if a system exception occurred
-	*/
-	public int countByR_R(long resourceBlockId, long roleId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

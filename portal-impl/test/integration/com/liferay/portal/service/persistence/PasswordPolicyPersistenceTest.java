@@ -372,11 +372,6 @@ public class PasswordPolicyPersistenceTest {
 
 		Assert.assertEquals(existingPasswordPolicyModelImpl.getCompanyId(),
 			existingPasswordPolicyModelImpl.getOriginalCompanyId());
-		Assert.assertEquals(existingPasswordPolicyModelImpl.getDefaultPolicy(),
-			existingPasswordPolicyModelImpl.getOriginalDefaultPolicy());
-
-		Assert.assertEquals(existingPasswordPolicyModelImpl.getCompanyId(),
-			existingPasswordPolicyModelImpl.getOriginalCompanyId());
 		Assert.assertTrue(Validator.equals(
 				existingPasswordPolicyModelImpl.getName(),
 				existingPasswordPolicyModelImpl.getOriginalName()));

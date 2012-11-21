@@ -377,15 +377,6 @@ public class ShoppingItemPersistenceTest {
 
 		ShoppingItemModelImpl existingShoppingItemModelImpl = (ShoppingItemModelImpl)_persistence.findByPrimaryKey(newShoppingItem.getPrimaryKey());
 
-		Assert.assertEquals(existingShoppingItemModelImpl.getSmallImageId(),
-			existingShoppingItemModelImpl.getOriginalSmallImageId());
-
-		Assert.assertEquals(existingShoppingItemModelImpl.getMediumImageId(),
-			existingShoppingItemModelImpl.getOriginalMediumImageId());
-
-		Assert.assertEquals(existingShoppingItemModelImpl.getLargeImageId(),
-			existingShoppingItemModelImpl.getOriginalLargeImageId());
-
 		Assert.assertEquals(existingShoppingItemModelImpl.getCompanyId(),
 			existingShoppingItemModelImpl.getOriginalCompanyId());
 		Assert.assertTrue(Validator.equals(

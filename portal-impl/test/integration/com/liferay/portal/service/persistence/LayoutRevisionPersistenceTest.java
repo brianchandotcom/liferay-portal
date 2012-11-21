@@ -25,13 +25,11 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.model.LayoutRevision;
-import com.liferay.portal.model.impl.LayoutRevisionModelImpl;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.persistence.BasePersistence;
 import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
 import com.liferay.portal.test.LiferayPersistenceIntegrationJUnitTestRunner;
 import com.liferay.portal.test.persistence.TransactionalPersistenceAdvice;
-import com.liferay.portal.util.PropsValues;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -352,26 +350,6 @@ public class LayoutRevisionPersistenceTest {
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
-	}
-
-	@Test
-	public void testResetOriginalValues() throws Exception {
-		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
-			return;
-		}
-
-		LayoutRevision newLayoutRevision = addLayoutRevision();
-
-		_persistence.clearCache();
-
-		LayoutRevisionModelImpl existingLayoutRevisionModelImpl = (LayoutRevisionModelImpl)_persistence.findByPrimaryKey(newLayoutRevision.getPrimaryKey());
-
-		Assert.assertEquals(existingLayoutRevisionModelImpl.getLayoutSetBranchId(),
-			existingLayoutRevisionModelImpl.getOriginalLayoutSetBranchId());
-		Assert.assertEquals(existingLayoutRevisionModelImpl.getHead(),
-			existingLayoutRevisionModelImpl.getOriginalHead());
-		Assert.assertEquals(existingLayoutRevisionModelImpl.getPlid(),
-			existingLayoutRevisionModelImpl.getOriginalPlid());
 	}
 
 	protected LayoutRevision addLayoutRevision() throws Exception {

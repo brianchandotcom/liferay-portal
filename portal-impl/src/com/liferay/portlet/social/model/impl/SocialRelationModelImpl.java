@@ -67,6 +67,8 @@ public class SocialRelationModelImpl extends BaseModelImpl<SocialRelation>
 		};
 	public static final String TABLE_SQL_CREATE = "create table SocialRelation (uuid_ VARCHAR(75) null,relationId LONG not null primary key,companyId LONG,createDate LONG,userId1 LONG,userId2 LONG,type_ INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table SocialRelation";
+	public static final String ORDER_BY_JPQL = " ORDER BY socialRelation.relationId ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY SocialRelation.relationId ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
@@ -84,6 +86,7 @@ public class SocialRelationModelImpl extends BaseModelImpl<SocialRelation>
 	public static long USERID1_COLUMN_BITMASK = 4L;
 	public static long USERID2_COLUMN_BITMASK = 8L;
 	public static long UUID_COLUMN_BITMASK = 16L;
+	public static long RELATIONID_COLUMN_BITMASK = 32L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.social.model.SocialRelation"));
 

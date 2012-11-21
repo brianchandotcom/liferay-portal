@@ -23,17 +23,14 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.Time;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.persistence.BasePersistence;
 import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
 import com.liferay.portal.test.LiferayPersistenceIntegrationJUnitTestRunner;
 import com.liferay.portal.test.persistence.TransactionalPersistenceAdvice;
-import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.softwarecatalog.NoSuchProductEntryException;
 import com.liferay.portlet.softwarecatalog.model.SCProductEntry;
-import com.liferay.portlet.softwarecatalog.model.impl.SCProductEntryModelImpl;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -293,26 +290,6 @@ public class SCProductEntryPersistenceTest {
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
-	}
-
-	@Test
-	public void testResetOriginalValues() throws Exception {
-		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
-			return;
-		}
-
-		SCProductEntry newSCProductEntry = addSCProductEntry();
-
-		_persistence.clearCache();
-
-		SCProductEntryModelImpl existingSCProductEntryModelImpl = (SCProductEntryModelImpl)_persistence.findByPrimaryKey(newSCProductEntry.getPrimaryKey());
-
-		Assert.assertTrue(Validator.equals(
-				existingSCProductEntryModelImpl.getRepoGroupId(),
-				existingSCProductEntryModelImpl.getOriginalRepoGroupId()));
-		Assert.assertTrue(Validator.equals(
-				existingSCProductEntryModelImpl.getRepoArtifactId(),
-				existingSCProductEntryModelImpl.getOriginalRepoArtifactId()));
 	}
 
 	protected SCProductEntry addSCProductEntry() throws Exception {

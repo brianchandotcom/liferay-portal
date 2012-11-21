@@ -690,7 +690,7 @@ public class LayoutExporter {
 				return;
 			}
 
-			layoutRevision = LayoutRevisionUtil.fetchByL_H_P(
+			layoutRevision = LayoutRevisionUtil.fetchByL_H_P_First(
 				layoutSetBranchId, true, layout.getPlid());
 
 			if (layoutRevision == null) {

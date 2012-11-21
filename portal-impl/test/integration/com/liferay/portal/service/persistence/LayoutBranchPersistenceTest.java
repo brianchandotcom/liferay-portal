@@ -286,13 +286,6 @@ public class LayoutBranchPersistenceTest {
 		Assert.assertTrue(Validator.equals(
 				existingLayoutBranchModelImpl.getName(),
 				existingLayoutBranchModelImpl.getOriginalName()));
-
-		Assert.assertEquals(existingLayoutBranchModelImpl.getLayoutSetBranchId(),
-			existingLayoutBranchModelImpl.getOriginalLayoutSetBranchId());
-		Assert.assertEquals(existingLayoutBranchModelImpl.getPlid(),
-			existingLayoutBranchModelImpl.getOriginalPlid());
-		Assert.assertEquals(existingLayoutBranchModelImpl.getMaster(),
-			existingLayoutBranchModelImpl.getOriginalMaster());
 	}
 
 	protected LayoutBranch addLayoutBranch() throws Exception {

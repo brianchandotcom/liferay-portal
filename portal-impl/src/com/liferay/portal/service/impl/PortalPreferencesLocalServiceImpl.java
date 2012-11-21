@@ -70,8 +70,8 @@ public class PortalPreferencesLocalServiceImpl
 						ownerType + "}");
 			}
 
-			portalPreferences = portalPreferencesPersistence.fetchByO_O(
-				ownerId, ownerType, false);
+			portalPreferences = portalPreferencesPersistence.fetchByO_O_First(
+				ownerId, ownerType);
 
 			if (portalPreferences == null) {
 				throw se;
@@ -142,7 +142,7 @@ public class PortalPreferencesLocalServiceImpl
 		throws SystemException {
 
 		PortalPreferences portalPreferences =
-			portalPreferencesPersistence.fetchByO_O(ownerId, ownerType);
+			portalPreferencesPersistence.fetchByO_O_First(ownerId, ownerType);
 
 		if (portalPreferences == null) {
 			long portalPreferencesId = counterLocalService.increment();
@@ -167,7 +167,7 @@ public class PortalPreferencesLocalServiceImpl
 		throws SystemException {
 
 		PortalPreferences portalPreferences =
-			portalPreferencesPersistence.fetchByO_O(ownerId, ownerType);
+			portalPreferencesPersistence.fetchByO_O_First(ownerId, ownerType);
 
 		if (portalPreferences == null) {
 			if (PortletPreferencesThreadLocal.isStrict() &&

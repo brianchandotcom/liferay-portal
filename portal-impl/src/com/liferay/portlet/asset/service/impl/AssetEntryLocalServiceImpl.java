@@ -195,7 +195,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 	public AssetEntry getEntry(long groupId, String classUuid)
 		throws PortalException, SystemException {
 
-		return assetEntryPersistence.findByG_CU(groupId, classUuid);
+		return assetEntryPersistence.findByG_CU_First(groupId, classUuid);
 	}
 
 	public AssetEntry getEntry(String className, long classPK)

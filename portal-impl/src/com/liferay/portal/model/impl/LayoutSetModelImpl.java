@@ -82,6 +82,8 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 		};
 	public static final String TABLE_SQL_CREATE = "create table LayoutSet (layoutSetId LONG not null primary key,groupId LONG,companyId LONG,createDate DATE null,modifiedDate DATE null,privateLayout BOOLEAN,logo BOOLEAN,logoId LONG,themeId VARCHAR(75) null,colorSchemeId VARCHAR(75) null,wapThemeId VARCHAR(75) null,wapColorSchemeId VARCHAR(75) null,css STRING null,pageCount INTEGER,settings_ STRING null,layoutSetPrototypeUuid VARCHAR(75) null,layoutSetPrototypeLinkEnabled BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table LayoutSet";
+	public static final String ORDER_BY_JPQL = " ORDER BY layoutSet.layoutSetId ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY LayoutSet.layoutSetId ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
@@ -97,6 +99,7 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 	public static long GROUPID_COLUMN_BITMASK = 1L;
 	public static long LAYOUTSETPROTOTYPEUUID_COLUMN_BITMASK = 2L;
 	public static long PRIVATELAYOUT_COLUMN_BITMASK = 4L;
+	public static long LAYOUTSETID_COLUMN_BITMASK = 8L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.

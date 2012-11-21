@@ -29,11 +29,9 @@ import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
 import com.liferay.portal.test.AssertUtils;
 import com.liferay.portal.test.LiferayPersistenceIntegrationJUnitTestRunner;
 import com.liferay.portal.test.persistence.TransactionalPersistenceAdvice;
-import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.messageboards.NoSuchThreadException;
 import com.liferay.portlet.messageboards.model.MBThread;
-import com.liferay.portlet.messageboards.model.impl.MBThreadModelImpl;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -290,22 +288,6 @@ public class MBThreadPersistenceTest {
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
-	}
-
-	@Test
-	public void testResetOriginalValues() throws Exception {
-		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
-			return;
-		}
-
-		MBThread newMBThread = addMBThread();
-
-		_persistence.clearCache();
-
-		MBThreadModelImpl existingMBThreadModelImpl = (MBThreadModelImpl)_persistence.findByPrimaryKey(newMBThread.getPrimaryKey());
-
-		Assert.assertEquals(existingMBThreadModelImpl.getRootMessageId(),
-			existingMBThreadModelImpl.getOriginalRootMessageId());
 	}
 
 	protected MBThread addMBThread() throws Exception {

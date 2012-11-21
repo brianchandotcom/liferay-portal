@@ -36,6 +36,192 @@ public interface OrgLaborPersistence extends BasePersistence<OrgLabor> {
 	 */
 
 	/**
+	* Returns all the org labors where organizationId = &#63;.
+	*
+	* @param organizationId the organization ID
+	* @return the matching org labors
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portal.model.OrgLabor> findByOrganizationId(
+		long organizationId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns a range of all the org labors where organizationId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from OrgLaborModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted in portal side by PK ASC order.
+	* </p>
+	*
+	* @param organizationId the organization ID
+	* @param start the lower bound of the range of org labors
+	* @param end the upper bound of the range of org labors (not inclusive)
+	* @return the range of matching org labors
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portal.model.OrgLabor> findByOrganizationId(
+		long organizationId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the org labors before and after the current org labor in the ordered set where organizationId = &#63;.
+	*
+	* @param orgLaborId the primary key of the current org labor
+	* @param organizationId the organization ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next org labor
+	* @throws com.liferay.portal.NoSuchOrgLaborException if a org labor with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.OrgLabor[] findByOrganizationId_PrevAndNext(
+		long orgLaborId, long organizationId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.NoSuchOrgLaborException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns an ordered range of all the org labors where organizationId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from OrgLaborModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted in portal side by PK ASC order.
+	* </p>
+	*
+	* @param organizationId the organization ID
+	* @param start the lower bound of the range of org labors
+	* @param end the upper bound of the range of org labors (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching org labors
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portal.model.OrgLabor> findByOrganizationId(
+		long organizationId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first org labor in the default ordered set defined by {@link OrgLaborModelImpl#ORDER_BY_JPQL} where organizationId = &#63;.
+	*
+	* @param organizationId the organization ID
+	* @return the first matching org labor
+	* @throws com.liferay.portal.NoSuchOrgLaborException if a matching org labor could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.OrgLabor findByOrganizationId_First(
+		long organizationId)
+		throws com.liferay.portal.NoSuchOrgLaborException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first org labor in the ordered set where organizationId = &#63;.
+	*
+	* @param organizationId the organization ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching org labor
+	* @throws com.liferay.portal.NoSuchOrgLaborException if a matching org labor could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.OrgLabor findByOrganizationId_First(
+		long organizationId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.NoSuchOrgLaborException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first org labor in the default ordered set defined by {@link OrgLaborModelImpl#ORDER_BY_JPQL} where organizationId = &#63;.
+	*
+	* @param organizationId the organization ID
+	* @return the first matching org labor, or <code>null</code> if a matching org labor could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.OrgLabor fetchByOrganizationId_First(
+		long organizationId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first org labor in the ordered set where organizationId = &#63;.
+	*
+	* @param organizationId the organization ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching org labor, or <code>null</code> if a matching org labor could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.OrgLabor fetchByOrganizationId_First(
+		long organizationId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last org labor in the default ordered set defined by {@link OrgLaborModelImpl#ORDER_BY_JPQL} where organizationId = &#63;.
+	*
+	* @param organizationId the organization ID
+	* @return the last matching org labor
+	* @throws com.liferay.portal.NoSuchOrgLaborException if a matching org labor could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.OrgLabor findByOrganizationId_Last(
+		long organizationId)
+		throws com.liferay.portal.NoSuchOrgLaborException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last org labor in the ordered set where organizationId = &#63;.
+	*
+	* @param organizationId the organization ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching org labor
+	* @throws com.liferay.portal.NoSuchOrgLaborException if a matching org labor could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.OrgLabor findByOrganizationId_Last(
+		long organizationId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.NoSuchOrgLaborException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last org labor in the default ordered set defined by {@link OrgLaborModelImpl#ORDER_BY_JPQL} where organizationId = &#63;.
+	*
+	* @param organizationId the organization ID
+	* @return the last matching org labor, or <code>null</code> if a matching org labor could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.OrgLabor fetchByOrganizationId_Last(
+		long organizationId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last org labor in the ordered set where organizationId = &#63;.
+	*
+	* @param organizationId the organization ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching org labor, or <code>null</code> if a matching org labor could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.OrgLabor fetchByOrganizationId_Last(
+		long organizationId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Removes all the org labors where organizationId = &#63; from the database.
+	*
+	* @param organizationId the organization ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeByOrganizationId(long organizationId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of org labors where organizationId = &#63;.
+	*
+	* @param organizationId the organization ID
+	* @return the number of matching org labors
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByOrganizationId(long organizationId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Caches the org labor in the entity cache if it is enabled.
 	*
 	* @param orgLabor the org labor
@@ -97,125 +283,6 @@ public interface OrgLaborPersistence extends BasePersistence<OrgLabor> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns all the org labors where organizationId = &#63;.
-	*
-	* @param organizationId the organization ID
-	* @return the matching org labors
-	* @throws SystemException if a system exception occurred
-	*/
-	public java.util.List<com.liferay.portal.model.OrgLabor> findByOrganizationId(
-		long organizationId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns a range of all the org labors where organizationId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
-	* @param organizationId the organization ID
-	* @param start the lower bound of the range of org labors
-	* @param end the upper bound of the range of org labors (not inclusive)
-	* @return the range of matching org labors
-	* @throws SystemException if a system exception occurred
-	*/
-	public java.util.List<com.liferay.portal.model.OrgLabor> findByOrganizationId(
-		long organizationId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns an ordered range of all the org labors where organizationId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
-	* @param organizationId the organization ID
-	* @param start the lower bound of the range of org labors
-	* @param end the upper bound of the range of org labors (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching org labors
-	* @throws SystemException if a system exception occurred
-	*/
-	public java.util.List<com.liferay.portal.model.OrgLabor> findByOrganizationId(
-		long organizationId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the first org labor in the ordered set where organizationId = &#63;.
-	*
-	* @param organizationId the organization ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching org labor
-	* @throws com.liferay.portal.NoSuchOrgLaborException if a matching org labor could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.OrgLabor findByOrganizationId_First(
-		long organizationId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchOrgLaborException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the first org labor in the ordered set where organizationId = &#63;.
-	*
-	* @param organizationId the organization ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching org labor, or <code>null</code> if a matching org labor could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.OrgLabor fetchByOrganizationId_First(
-		long organizationId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the last org labor in the ordered set where organizationId = &#63;.
-	*
-	* @param organizationId the organization ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching org labor
-	* @throws com.liferay.portal.NoSuchOrgLaborException if a matching org labor could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.OrgLabor findByOrganizationId_Last(
-		long organizationId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchOrgLaborException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the last org labor in the ordered set where organizationId = &#63;.
-	*
-	* @param organizationId the organization ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching org labor, or <code>null</code> if a matching org labor could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.OrgLabor fetchByOrganizationId_Last(
-		long organizationId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the org labors before and after the current org labor in the ordered set where organizationId = &#63;.
-	*
-	* @param orgLaborId the primary key of the current org labor
-	* @param organizationId the organization ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next org labor
-	* @throws com.liferay.portal.NoSuchOrgLaborException if a org labor with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.OrgLabor[] findByOrganizationId_PrevAndNext(
-		long orgLaborId, long organizationId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchOrgLaborException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	/**
 	* Returns all the org labors.
 	*
 	* @return the org labors
@@ -228,7 +295,7 @@ public interface OrgLaborPersistence extends BasePersistence<OrgLabor> {
 	* Returns a range of all the org labors.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from OrgLaborModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted in portal side by PK ASC order.
 	* </p>
 	*
 	* @param start the lower bound of the range of org labors
@@ -244,7 +311,7 @@ public interface OrgLaborPersistence extends BasePersistence<OrgLabor> {
 	* Returns an ordered range of all the org labors.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from OrgLaborModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted in portal side by PK ASC order.
 	* </p>
 	*
 	* @param start the lower bound of the range of org labors
@@ -259,30 +326,11 @@ public interface OrgLaborPersistence extends BasePersistence<OrgLabor> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Removes all the org labors where organizationId = &#63; from the database.
-	*
-	* @param organizationId the organization ID
-	* @throws SystemException if a system exception occurred
-	*/
-	public void removeByOrganizationId(long organizationId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
 	* Removes all the org labors from the database.
 	*
 	* @throws SystemException if a system exception occurred
 	*/
 	public void removeAll()
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the number of org labors where organizationId = &#63;.
-	*
-	* @param organizationId the organization ID
-	* @return the number of matching org labors
-	* @throws SystemException if a system exception occurred
-	*/
-	public int countByOrganizationId(long organizationId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

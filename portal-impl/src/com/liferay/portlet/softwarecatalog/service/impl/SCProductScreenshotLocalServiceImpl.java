@@ -55,7 +55,7 @@ public class SCProductScreenshotLocalServiceImpl
 			long productEntryId, int priority)
 		throws PortalException, SystemException {
 
-		return scProductScreenshotPersistence.findByP_P(
+		return scProductScreenshotPersistence.findByP_P_First(
 			productEntryId, priority);
 	}
 
@@ -63,14 +63,16 @@ public class SCProductScreenshotLocalServiceImpl
 			long fullImageId)
 		throws PortalException, SystemException {
 
-		return scProductScreenshotPersistence.findByFullImageId(fullImageId);
+		return scProductScreenshotPersistence.findByFullImageId_First(
+			fullImageId);
 	}
 
 	public SCProductScreenshot getProductScreenshotByThumbnailId(
 			long thumbnailId)
 		throws PortalException, SystemException {
 
-		return scProductScreenshotPersistence.findByThumbnailId(thumbnailId);
+		return scProductScreenshotPersistence.findByThumbnailId_First(
+			thumbnailId);
 	}
 
 	public List<SCProductScreenshot> getProductScreenshots(long productEntryId)

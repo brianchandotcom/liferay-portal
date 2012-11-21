@@ -171,7 +171,9 @@ public class GroupImpl extends GroupBaseImpl {
 			}
 
 			if (isStagingGroup()) {
-				return getLiveGroup().getLiveParentTypeSettingsProperties();
+				Group liveGroup = getLiveGroup();
+
+				return liveGroup.getTypeSettingsProperties();
 			}
 		}
 		catch (Exception e) {

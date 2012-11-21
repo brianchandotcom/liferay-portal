@@ -27,6 +27,7 @@ import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortalPreferences;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.messageboards.NoSuchMessageException;
+import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBMessageDisplay;
 import com.liferay.portlet.messageboards.service.MBMessageServiceUtil;
 
@@ -86,6 +87,16 @@ public class ViewMessageAction extends PortletAction {
 				MBMessageServiceUtil.getMessageDisplay(
 					messageId, WorkflowConstants.STATUS_ANY, threadView,
 					includePrevAndNext);
+
+			if (messageDisplay != null) {
+				MBMessage message = messageDisplay.getMessage();
+
+				if ((message != null) &&
+						(message.isInTrash() || message.isInTrashThread())) {
+
+					throw new NoSuchMessageException();
+				}
+			}
 
 			renderRequest.setAttribute(
 				WebKeys.MESSAGE_BOARDS_MESSAGE, messageDisplay);

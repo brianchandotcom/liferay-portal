@@ -109,6 +109,1503 @@ public class AddressUtil {
 	}
 
 	/**
+	* Returns all the addresses where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @return the matching addresses
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portal.model.Address> findByCompanyId(
+		long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByCompanyId(companyId);
+	}
+
+	/**
+	* Returns a range of all the addresses where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from AddressModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted in portal side by PK ASC order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param start the lower bound of the range of addresses
+	* @param end the upper bound of the range of addresses (not inclusive)
+	* @return the range of matching addresses
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portal.model.Address> findByCompanyId(
+		long companyId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByCompanyId(companyId, start, end);
+	}
+
+	/**
+	* Returns the addresses before and after the current address in the ordered set where companyId = &#63;.
+	*
+	* @param addressId the primary key of the current address
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next address
+	* @throws com.liferay.portal.NoSuchAddressException if a address with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Address[] findByCompanyId_PrevAndNext(
+		long addressId, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.NoSuchAddressException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByCompanyId_PrevAndNext(addressId, companyId,
+			orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the addresses where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from AddressModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted in portal side by PK ASC order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param start the lower bound of the range of addresses
+	* @param end the upper bound of the range of addresses (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching addresses
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portal.model.Address> findByCompanyId(
+		long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByCompanyId(companyId, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns the first address in the default ordered set defined by {@link AddressModelImpl#ORDER_BY_JPQL} where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @return the first matching address
+	* @throws com.liferay.portal.NoSuchAddressException if a matching address could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Address findByCompanyId_First(
+		long companyId)
+		throws com.liferay.portal.NoSuchAddressException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByCompanyId_First(companyId);
+	}
+
+	/**
+	* Returns the first address in the ordered set where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching address
+	* @throws com.liferay.portal.NoSuchAddressException if a matching address could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Address findByCompanyId_First(
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.NoSuchAddressException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByCompanyId_First(companyId, orderByComparator);
+	}
+
+	/**
+	* Returns the first address in the default ordered set defined by {@link AddressModelImpl#ORDER_BY_JPQL} where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @return the first matching address, or <code>null</code> if a matching address could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Address fetchByCompanyId_First(
+		long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByCompanyId_First(companyId);
+	}
+
+	/**
+	* Returns the first address in the ordered set where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching address, or <code>null</code> if a matching address could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Address fetchByCompanyId_First(
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByCompanyId_First(companyId, orderByComparator);
+	}
+
+	/**
+	* Returns the last address in the default ordered set defined by {@link AddressModelImpl#ORDER_BY_JPQL} where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @return the last matching address
+	* @throws com.liferay.portal.NoSuchAddressException if a matching address could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Address findByCompanyId_Last(
+		long companyId)
+		throws com.liferay.portal.NoSuchAddressException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByCompanyId_Last(companyId);
+	}
+
+	/**
+	* Returns the last address in the ordered set where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching address
+	* @throws com.liferay.portal.NoSuchAddressException if a matching address could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Address findByCompanyId_Last(
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.NoSuchAddressException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByCompanyId_Last(companyId, orderByComparator);
+	}
+
+	/**
+	* Returns the last address in the default ordered set defined by {@link AddressModelImpl#ORDER_BY_JPQL} where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @return the last matching address, or <code>null</code> if a matching address could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Address fetchByCompanyId_Last(
+		long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByCompanyId_Last(companyId);
+	}
+
+	/**
+	* Returns the last address in the ordered set where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching address, or <code>null</code> if a matching address could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Address fetchByCompanyId_Last(
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByCompanyId_Last(companyId, orderByComparator);
+	}
+
+	/**
+	* Removes all the addresses where companyId = &#63; from the database.
+	*
+	* @param companyId the company ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByCompanyId(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByCompanyId(companyId);
+	}
+
+	/**
+	* Returns the number of addresses where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @return the number of matching addresses
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByCompanyId(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByCompanyId(companyId);
+	}
+
+	/**
+	* Returns all the addresses where userId = &#63;.
+	*
+	* @param userId the user ID
+	* @return the matching addresses
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portal.model.Address> findByUserId(
+		long userId) throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByUserId(userId);
+	}
+
+	/**
+	* Returns a range of all the addresses where userId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from AddressModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted in portal side by PK ASC order.
+	* </p>
+	*
+	* @param userId the user ID
+	* @param start the lower bound of the range of addresses
+	* @param end the upper bound of the range of addresses (not inclusive)
+	* @return the range of matching addresses
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portal.model.Address> findByUserId(
+		long userId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByUserId(userId, start, end);
+	}
+
+	/**
+	* Returns the addresses before and after the current address in the ordered set where userId = &#63;.
+	*
+	* @param addressId the primary key of the current address
+	* @param userId the user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next address
+	* @throws com.liferay.portal.NoSuchAddressException if a address with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Address[] findByUserId_PrevAndNext(
+		long addressId, long userId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.NoSuchAddressException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByUserId_PrevAndNext(addressId, userId,
+			orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the addresses where userId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from AddressModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted in portal side by PK ASC order.
+	* </p>
+	*
+	* @param userId the user ID
+	* @param start the lower bound of the range of addresses
+	* @param end the upper bound of the range of addresses (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching addresses
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portal.model.Address> findByUserId(
+		long userId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByUserId(userId, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns the first address in the default ordered set defined by {@link AddressModelImpl#ORDER_BY_JPQL} where userId = &#63;.
+	*
+	* @param userId the user ID
+	* @return the first matching address
+	* @throws com.liferay.portal.NoSuchAddressException if a matching address could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Address findByUserId_First(
+		long userId)
+		throws com.liferay.portal.NoSuchAddressException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByUserId_First(userId);
+	}
+
+	/**
+	* Returns the first address in the ordered set where userId = &#63;.
+	*
+	* @param userId the user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching address
+	* @throws com.liferay.portal.NoSuchAddressException if a matching address could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Address findByUserId_First(
+		long userId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.NoSuchAddressException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByUserId_First(userId, orderByComparator);
+	}
+
+	/**
+	* Returns the first address in the default ordered set defined by {@link AddressModelImpl#ORDER_BY_JPQL} where userId = &#63;.
+	*
+	* @param userId the user ID
+	* @return the first matching address, or <code>null</code> if a matching address could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Address fetchByUserId_First(
+		long userId) throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByUserId_First(userId);
+	}
+
+	/**
+	* Returns the first address in the ordered set where userId = &#63;.
+	*
+	* @param userId the user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching address, or <code>null</code> if a matching address could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Address fetchByUserId_First(
+		long userId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByUserId_First(userId, orderByComparator);
+	}
+
+	/**
+	* Returns the last address in the default ordered set defined by {@link AddressModelImpl#ORDER_BY_JPQL} where userId = &#63;.
+	*
+	* @param userId the user ID
+	* @return the last matching address
+	* @throws com.liferay.portal.NoSuchAddressException if a matching address could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Address findByUserId_Last(
+		long userId)
+		throws com.liferay.portal.NoSuchAddressException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByUserId_Last(userId);
+	}
+
+	/**
+	* Returns the last address in the ordered set where userId = &#63;.
+	*
+	* @param userId the user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching address
+	* @throws com.liferay.portal.NoSuchAddressException if a matching address could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Address findByUserId_Last(
+		long userId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.NoSuchAddressException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByUserId_Last(userId, orderByComparator);
+	}
+
+	/**
+	* Returns the last address in the default ordered set defined by {@link AddressModelImpl#ORDER_BY_JPQL} where userId = &#63;.
+	*
+	* @param userId the user ID
+	* @return the last matching address, or <code>null</code> if a matching address could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Address fetchByUserId_Last(
+		long userId) throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByUserId_Last(userId);
+	}
+
+	/**
+	* Returns the last address in the ordered set where userId = &#63;.
+	*
+	* @param userId the user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching address, or <code>null</code> if a matching address could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Address fetchByUserId_Last(
+		long userId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByUserId_Last(userId, orderByComparator);
+	}
+
+	/**
+	* Removes all the addresses where userId = &#63; from the database.
+	*
+	* @param userId the user ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByUserId(long userId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByUserId(userId);
+	}
+
+	/**
+	* Returns the number of addresses where userId = &#63;.
+	*
+	* @param userId the user ID
+	* @return the number of matching addresses
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByUserId(long userId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByUserId(userId);
+	}
+
+	/**
+	* Returns all the addresses where companyId = &#63; and classNameId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @return the matching addresses
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portal.model.Address> findByC_C(
+		long companyId, long classNameId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByC_C(companyId, classNameId);
+	}
+
+	/**
+	* Returns a range of all the addresses where companyId = &#63; and classNameId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from AddressModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted in portal side by PK ASC order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param start the lower bound of the range of addresses
+	* @param end the upper bound of the range of addresses (not inclusive)
+	* @return the range of matching addresses
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portal.model.Address> findByC_C(
+		long companyId, long classNameId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByC_C(companyId, classNameId, start, end);
+	}
+
+	/**
+	* Returns the addresses before and after the current address in the ordered set where companyId = &#63; and classNameId = &#63;.
+	*
+	* @param addressId the primary key of the current address
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next address
+	* @throws com.liferay.portal.NoSuchAddressException if a address with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Address[] findByC_C_PrevAndNext(
+		long addressId, long companyId, long classNameId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.NoSuchAddressException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByC_C_PrevAndNext(addressId, companyId, classNameId,
+			orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the addresses where companyId = &#63; and classNameId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from AddressModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted in portal side by PK ASC order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param start the lower bound of the range of addresses
+	* @param end the upper bound of the range of addresses (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching addresses
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portal.model.Address> findByC_C(
+		long companyId, long classNameId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByC_C(companyId, classNameId, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the first address in the default ordered set defined by {@link AddressModelImpl#ORDER_BY_JPQL} where companyId = &#63; and classNameId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @return the first matching address
+	* @throws com.liferay.portal.NoSuchAddressException if a matching address could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Address findByC_C_First(
+		long companyId, long classNameId)
+		throws com.liferay.portal.NoSuchAddressException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByC_C_First(companyId, classNameId);
+	}
+
+	/**
+	* Returns the first address in the ordered set where companyId = &#63; and classNameId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching address
+	* @throws com.liferay.portal.NoSuchAddressException if a matching address could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Address findByC_C_First(
+		long companyId, long classNameId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.NoSuchAddressException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByC_C_First(companyId, classNameId, orderByComparator);
+	}
+
+	/**
+	* Returns the first address in the default ordered set defined by {@link AddressModelImpl#ORDER_BY_JPQL} where companyId = &#63; and classNameId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @return the first matching address, or <code>null</code> if a matching address could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Address fetchByC_C_First(
+		long companyId, long classNameId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByC_C_First(companyId, classNameId);
+	}
+
+	/**
+	* Returns the first address in the ordered set where companyId = &#63; and classNameId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching address, or <code>null</code> if a matching address could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Address fetchByC_C_First(
+		long companyId, long classNameId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByC_C_First(companyId, classNameId, orderByComparator);
+	}
+
+	/**
+	* Returns the last address in the default ordered set defined by {@link AddressModelImpl#ORDER_BY_JPQL} where companyId = &#63; and classNameId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @return the last matching address
+	* @throws com.liferay.portal.NoSuchAddressException if a matching address could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Address findByC_C_Last(
+		long companyId, long classNameId)
+		throws com.liferay.portal.NoSuchAddressException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByC_C_Last(companyId, classNameId);
+	}
+
+	/**
+	* Returns the last address in the ordered set where companyId = &#63; and classNameId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching address
+	* @throws com.liferay.portal.NoSuchAddressException if a matching address could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Address findByC_C_Last(
+		long companyId, long classNameId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.NoSuchAddressException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByC_C_Last(companyId, classNameId, orderByComparator);
+	}
+
+	/**
+	* Returns the last address in the default ordered set defined by {@link AddressModelImpl#ORDER_BY_JPQL} where companyId = &#63; and classNameId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @return the last matching address, or <code>null</code> if a matching address could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Address fetchByC_C_Last(
+		long companyId, long classNameId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByC_C_Last(companyId, classNameId);
+	}
+
+	/**
+	* Returns the last address in the ordered set where companyId = &#63; and classNameId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching address, or <code>null</code> if a matching address could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Address fetchByC_C_Last(
+		long companyId, long classNameId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByC_C_Last(companyId, classNameId, orderByComparator);
+	}
+
+	/**
+	* Removes all the addresses where companyId = &#63; and classNameId = &#63; from the database.
+	*
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByC_C(long companyId, long classNameId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByC_C(companyId, classNameId);
+	}
+
+	/**
+	* Returns the number of addresses where companyId = &#63; and classNameId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @return the number of matching addresses
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByC_C(long companyId, long classNameId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByC_C(companyId, classNameId);
+	}
+
+	/**
+	* Returns all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
+	*
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @return the matching addresses
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portal.model.Address> findByC_C_C(
+		long companyId, long classNameId, long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByC_C_C(companyId, classNameId, classPK);
+	}
+
+	/**
+	* Returns a range of all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from AddressModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted in portal side by PK ASC order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param start the lower bound of the range of addresses
+	* @param end the upper bound of the range of addresses (not inclusive)
+	* @return the range of matching addresses
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portal.model.Address> findByC_C_C(
+		long companyId, long classNameId, long classPK, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByC_C_C(companyId, classNameId, classPK, start, end);
+	}
+
+	/**
+	* Returns the addresses before and after the current address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
+	*
+	* @param addressId the primary key of the current address
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next address
+	* @throws com.liferay.portal.NoSuchAddressException if a address with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Address[] findByC_C_C_PrevAndNext(
+		long addressId, long companyId, long classNameId, long classPK,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.NoSuchAddressException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByC_C_C_PrevAndNext(addressId, companyId, classNameId,
+			classPK, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from AddressModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted in portal side by PK ASC order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param start the lower bound of the range of addresses
+	* @param end the upper bound of the range of addresses (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching addresses
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portal.model.Address> findByC_C_C(
+		long companyId, long classNameId, long classPK, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByC_C_C(companyId, classNameId, classPK, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the first address in the default ordered set defined by {@link AddressModelImpl#ORDER_BY_JPQL} where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
+	*
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @return the first matching address
+	* @throws com.liferay.portal.NoSuchAddressException if a matching address could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Address findByC_C_C_First(
+		long companyId, long classNameId, long classPK)
+		throws com.liferay.portal.NoSuchAddressException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByC_C_C_First(companyId, classNameId, classPK);
+	}
+
+	/**
+	* Returns the first address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
+	*
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching address
+	* @throws com.liferay.portal.NoSuchAddressException if a matching address could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Address findByC_C_C_First(
+		long companyId, long classNameId, long classPK,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.NoSuchAddressException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByC_C_C_First(companyId, classNameId, classPK,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the first address in the default ordered set defined by {@link AddressModelImpl#ORDER_BY_JPQL} where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
+	*
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @return the first matching address, or <code>null</code> if a matching address could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Address fetchByC_C_C_First(
+		long companyId, long classNameId, long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByC_C_C_First(companyId, classNameId, classPK);
+	}
+
+	/**
+	* Returns the first address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
+	*
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching address, or <code>null</code> if a matching address could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Address fetchByC_C_C_First(
+		long companyId, long classNameId, long classPK,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByC_C_C_First(companyId, classNameId, classPK,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last address in the default ordered set defined by {@link AddressModelImpl#ORDER_BY_JPQL} where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
+	*
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @return the last matching address
+	* @throws com.liferay.portal.NoSuchAddressException if a matching address could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Address findByC_C_C_Last(
+		long companyId, long classNameId, long classPK)
+		throws com.liferay.portal.NoSuchAddressException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByC_C_C_Last(companyId, classNameId, classPK);
+	}
+
+	/**
+	* Returns the last address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
+	*
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching address
+	* @throws com.liferay.portal.NoSuchAddressException if a matching address could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Address findByC_C_C_Last(
+		long companyId, long classNameId, long classPK,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.NoSuchAddressException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByC_C_C_Last(companyId, classNameId, classPK,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last address in the default ordered set defined by {@link AddressModelImpl#ORDER_BY_JPQL} where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
+	*
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @return the last matching address, or <code>null</code> if a matching address could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Address fetchByC_C_C_Last(
+		long companyId, long classNameId, long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByC_C_C_Last(companyId, classNameId, classPK);
+	}
+
+	/**
+	* Returns the last address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
+	*
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching address, or <code>null</code> if a matching address could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Address fetchByC_C_C_Last(
+		long companyId, long classNameId, long classPK,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByC_C_C_Last(companyId, classNameId, classPK,
+			orderByComparator);
+	}
+
+	/**
+	* Removes all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; from the database.
+	*
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByC_C_C(long companyId, long classNameId,
+		long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByC_C_C(companyId, classNameId, classPK);
+	}
+
+	/**
+	* Returns the number of addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
+	*
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @return the number of matching addresses
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByC_C_C(long companyId, long classNameId,
+		long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByC_C_C(companyId, classNameId, classPK);
+	}
+
+	/**
+	* Returns all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and mailing = &#63;.
+	*
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param mailing the mailing
+	* @return the matching addresses
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portal.model.Address> findByC_C_C_M(
+		long companyId, long classNameId, long classPK, boolean mailing)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByC_C_C_M(companyId, classNameId, classPK, mailing);
+	}
+
+	/**
+	* Returns a range of all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and mailing = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from AddressModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted in portal side by PK ASC order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param mailing the mailing
+	* @param start the lower bound of the range of addresses
+	* @param end the upper bound of the range of addresses (not inclusive)
+	* @return the range of matching addresses
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portal.model.Address> findByC_C_C_M(
+		long companyId, long classNameId, long classPK, boolean mailing,
+		int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByC_C_C_M(companyId, classNameId, classPK, mailing,
+			start, end);
+	}
+
+	/**
+	* Returns the addresses before and after the current address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and mailing = &#63;.
+	*
+	* @param addressId the primary key of the current address
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param mailing the mailing
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next address
+	* @throws com.liferay.portal.NoSuchAddressException if a address with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Address[] findByC_C_C_M_PrevAndNext(
+		long addressId, long companyId, long classNameId, long classPK,
+		boolean mailing,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.NoSuchAddressException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByC_C_C_M_PrevAndNext(addressId, companyId,
+			classNameId, classPK, mailing, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and mailing = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from AddressModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted in portal side by PK ASC order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param mailing the mailing
+	* @param start the lower bound of the range of addresses
+	* @param end the upper bound of the range of addresses (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching addresses
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portal.model.Address> findByC_C_C_M(
+		long companyId, long classNameId, long classPK, boolean mailing,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByC_C_C_M(companyId, classNameId, classPK, mailing,
+			start, end, orderByComparator);
+	}
+
+	/**
+	* Returns the first address in the default ordered set defined by {@link AddressModelImpl#ORDER_BY_JPQL} where companyId = &#63; and classNameId = &#63; and classPK = &#63; and mailing = &#63;.
+	*
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param mailing the mailing
+	* @return the first matching address
+	* @throws com.liferay.portal.NoSuchAddressException if a matching address could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Address findByC_C_C_M_First(
+		long companyId, long classNameId, long classPK, boolean mailing)
+		throws com.liferay.portal.NoSuchAddressException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByC_C_C_M_First(companyId, classNameId, classPK, mailing);
+	}
+
+	/**
+	* Returns the first address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and mailing = &#63;.
+	*
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param mailing the mailing
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching address
+	* @throws com.liferay.portal.NoSuchAddressException if a matching address could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Address findByC_C_C_M_First(
+		long companyId, long classNameId, long classPK, boolean mailing,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.NoSuchAddressException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByC_C_C_M_First(companyId, classNameId, classPK,
+			mailing, orderByComparator);
+	}
+
+	/**
+	* Returns the first address in the default ordered set defined by {@link AddressModelImpl#ORDER_BY_JPQL} where companyId = &#63; and classNameId = &#63; and classPK = &#63; and mailing = &#63;.
+	*
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param mailing the mailing
+	* @return the first matching address, or <code>null</code> if a matching address could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Address fetchByC_C_C_M_First(
+		long companyId, long classNameId, long classPK, boolean mailing)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByC_C_C_M_First(companyId, classNameId, classPK,
+			mailing);
+	}
+
+	/**
+	* Returns the first address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and mailing = &#63;.
+	*
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param mailing the mailing
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching address, or <code>null</code> if a matching address could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Address fetchByC_C_C_M_First(
+		long companyId, long classNameId, long classPK, boolean mailing,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByC_C_C_M_First(companyId, classNameId, classPK,
+			mailing, orderByComparator);
+	}
+
+	/**
+	* Returns the last address in the default ordered set defined by {@link AddressModelImpl#ORDER_BY_JPQL} where companyId = &#63; and classNameId = &#63; and classPK = &#63; and mailing = &#63;.
+	*
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param mailing the mailing
+	* @return the last matching address
+	* @throws com.liferay.portal.NoSuchAddressException if a matching address could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Address findByC_C_C_M_Last(
+		long companyId, long classNameId, long classPK, boolean mailing)
+		throws com.liferay.portal.NoSuchAddressException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByC_C_C_M_Last(companyId, classNameId, classPK, mailing);
+	}
+
+	/**
+	* Returns the last address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and mailing = &#63;.
+	*
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param mailing the mailing
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching address
+	* @throws com.liferay.portal.NoSuchAddressException if a matching address could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Address findByC_C_C_M_Last(
+		long companyId, long classNameId, long classPK, boolean mailing,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.NoSuchAddressException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByC_C_C_M_Last(companyId, classNameId, classPK,
+			mailing, orderByComparator);
+	}
+
+	/**
+	* Returns the last address in the default ordered set defined by {@link AddressModelImpl#ORDER_BY_JPQL} where companyId = &#63; and classNameId = &#63; and classPK = &#63; and mailing = &#63;.
+	*
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param mailing the mailing
+	* @return the last matching address, or <code>null</code> if a matching address could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Address fetchByC_C_C_M_Last(
+		long companyId, long classNameId, long classPK, boolean mailing)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByC_C_C_M_Last(companyId, classNameId, classPK, mailing);
+	}
+
+	/**
+	* Returns the last address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and mailing = &#63;.
+	*
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param mailing the mailing
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching address, or <code>null</code> if a matching address could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Address fetchByC_C_C_M_Last(
+		long companyId, long classNameId, long classPK, boolean mailing,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByC_C_C_M_Last(companyId, classNameId, classPK,
+			mailing, orderByComparator);
+	}
+
+	/**
+	* Removes all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and mailing = &#63; from the database.
+	*
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param mailing the mailing
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByC_C_C_M(long companyId, long classNameId,
+		long classPK, boolean mailing)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence()
+			.removeByC_C_C_M(companyId, classNameId, classPK, mailing);
+	}
+
+	/**
+	* Returns the number of addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and mailing = &#63;.
+	*
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param mailing the mailing
+	* @return the number of matching addresses
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByC_C_C_M(long companyId, long classNameId,
+		long classPK, boolean mailing)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .countByC_C_C_M(companyId, classNameId, classPK, mailing);
+	}
+
+	/**
+	* Returns all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and primary = &#63;.
+	*
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param primary the primary
+	* @return the matching addresses
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portal.model.Address> findByC_C_C_P(
+		long companyId, long classNameId, long classPK, boolean primary)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByC_C_C_P(companyId, classNameId, classPK, primary);
+	}
+
+	/**
+	* Returns a range of all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and primary = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from AddressModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted in portal side by PK ASC order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param primary the primary
+	* @param start the lower bound of the range of addresses
+	* @param end the upper bound of the range of addresses (not inclusive)
+	* @return the range of matching addresses
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portal.model.Address> findByC_C_C_P(
+		long companyId, long classNameId, long classPK, boolean primary,
+		int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByC_C_C_P(companyId, classNameId, classPK, primary,
+			start, end);
+	}
+
+	/**
+	* Returns the addresses before and after the current address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and primary = &#63;.
+	*
+	* @param addressId the primary key of the current address
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param primary the primary
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next address
+	* @throws com.liferay.portal.NoSuchAddressException if a address with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Address[] findByC_C_C_P_PrevAndNext(
+		long addressId, long companyId, long classNameId, long classPK,
+		boolean primary,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.NoSuchAddressException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByC_C_C_P_PrevAndNext(addressId, companyId,
+			classNameId, classPK, primary, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and primary = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from AddressModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted in portal side by PK ASC order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param primary the primary
+	* @param start the lower bound of the range of addresses
+	* @param end the upper bound of the range of addresses (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching addresses
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portal.model.Address> findByC_C_C_P(
+		long companyId, long classNameId, long classPK, boolean primary,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByC_C_C_P(companyId, classNameId, classPK, primary,
+			start, end, orderByComparator);
+	}
+
+	/**
+	* Returns the first address in the default ordered set defined by {@link AddressModelImpl#ORDER_BY_JPQL} where companyId = &#63; and classNameId = &#63; and classPK = &#63; and primary = &#63;.
+	*
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param primary the primary
+	* @return the first matching address
+	* @throws com.liferay.portal.NoSuchAddressException if a matching address could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Address findByC_C_C_P_First(
+		long companyId, long classNameId, long classPK, boolean primary)
+		throws com.liferay.portal.NoSuchAddressException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByC_C_C_P_First(companyId, classNameId, classPK, primary);
+	}
+
+	/**
+	* Returns the first address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and primary = &#63;.
+	*
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param primary the primary
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching address
+	* @throws com.liferay.portal.NoSuchAddressException if a matching address could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Address findByC_C_C_P_First(
+		long companyId, long classNameId, long classPK, boolean primary,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.NoSuchAddressException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByC_C_C_P_First(companyId, classNameId, classPK,
+			primary, orderByComparator);
+	}
+
+	/**
+	* Returns the first address in the default ordered set defined by {@link AddressModelImpl#ORDER_BY_JPQL} where companyId = &#63; and classNameId = &#63; and classPK = &#63; and primary = &#63;.
+	*
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param primary the primary
+	* @return the first matching address, or <code>null</code> if a matching address could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Address fetchByC_C_C_P_First(
+		long companyId, long classNameId, long classPK, boolean primary)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByC_C_C_P_First(companyId, classNameId, classPK,
+			primary);
+	}
+
+	/**
+	* Returns the first address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and primary = &#63;.
+	*
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param primary the primary
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching address, or <code>null</code> if a matching address could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Address fetchByC_C_C_P_First(
+		long companyId, long classNameId, long classPK, boolean primary,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByC_C_C_P_First(companyId, classNameId, classPK,
+			primary, orderByComparator);
+	}
+
+	/**
+	* Returns the last address in the default ordered set defined by {@link AddressModelImpl#ORDER_BY_JPQL} where companyId = &#63; and classNameId = &#63; and classPK = &#63; and primary = &#63;.
+	*
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param primary the primary
+	* @return the last matching address
+	* @throws com.liferay.portal.NoSuchAddressException if a matching address could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Address findByC_C_C_P_Last(
+		long companyId, long classNameId, long classPK, boolean primary)
+		throws com.liferay.portal.NoSuchAddressException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByC_C_C_P_Last(companyId, classNameId, classPK, primary);
+	}
+
+	/**
+	* Returns the last address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and primary = &#63;.
+	*
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param primary the primary
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching address
+	* @throws com.liferay.portal.NoSuchAddressException if a matching address could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Address findByC_C_C_P_Last(
+		long companyId, long classNameId, long classPK, boolean primary,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.NoSuchAddressException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByC_C_C_P_Last(companyId, classNameId, classPK,
+			primary, orderByComparator);
+	}
+
+	/**
+	* Returns the last address in the default ordered set defined by {@link AddressModelImpl#ORDER_BY_JPQL} where companyId = &#63; and classNameId = &#63; and classPK = &#63; and primary = &#63;.
+	*
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param primary the primary
+	* @return the last matching address, or <code>null</code> if a matching address could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Address fetchByC_C_C_P_Last(
+		long companyId, long classNameId, long classPK, boolean primary)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByC_C_C_P_Last(companyId, classNameId, classPK, primary);
+	}
+
+	/**
+	* Returns the last address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and primary = &#63;.
+	*
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param primary the primary
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching address, or <code>null</code> if a matching address could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Address fetchByC_C_C_P_Last(
+		long companyId, long classNameId, long classPK, boolean primary,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByC_C_C_P_Last(companyId, classNameId, classPK,
+			primary, orderByComparator);
+	}
+
+	/**
+	* Removes all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and primary = &#63; from the database.
+	*
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param primary the primary
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByC_C_C_P(long companyId, long classNameId,
+		long classPK, boolean primary)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence()
+			.removeByC_C_C_P(companyId, classNameId, classPK, primary);
+	}
+
+	/**
+	* Returns the number of addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and primary = &#63;.
+	*
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param primary the primary
+	* @return the number of matching addresses
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByC_C_C_P(long companyId, long classNameId,
+		long classPK, boolean primary)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .countByC_C_C_P(companyId, classNameId, classPK, primary);
+	}
+
+	/**
 	* Caches the address in the entity cache if it is enabled.
 	*
 	* @param address the address
@@ -186,954 +1683,6 @@ public class AddressUtil {
 	}
 
 	/**
-	* Returns all the addresses where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @return the matching addresses
-	* @throws SystemException if a system exception occurred
-	*/
-	public static java.util.List<com.liferay.portal.model.Address> findByCompanyId(
-		long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findByCompanyId(companyId);
-	}
-
-	/**
-	* Returns a range of all the addresses where companyId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param start the lower bound of the range of addresses
-	* @param end the upper bound of the range of addresses (not inclusive)
-	* @return the range of matching addresses
-	* @throws SystemException if a system exception occurred
-	*/
-	public static java.util.List<com.liferay.portal.model.Address> findByCompanyId(
-		long companyId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findByCompanyId(companyId, start, end);
-	}
-
-	/**
-	* Returns an ordered range of all the addresses where companyId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param start the lower bound of the range of addresses
-	* @param end the upper bound of the range of addresses (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching addresses
-	* @throws SystemException if a system exception occurred
-	*/
-	public static java.util.List<com.liferay.portal.model.Address> findByCompanyId(
-		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .findByCompanyId(companyId, start, end, orderByComparator);
-	}
-
-	/**
-	* Returns the first address in the ordered set where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching address
-	* @throws com.liferay.portal.NoSuchAddressException if a matching address could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portal.model.Address findByCompanyId_First(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchAddressException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .findByCompanyId_First(companyId, orderByComparator);
-	}
-
-	/**
-	* Returns the first address in the ordered set where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching address, or <code>null</code> if a matching address could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portal.model.Address fetchByCompanyId_First(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .fetchByCompanyId_First(companyId, orderByComparator);
-	}
-
-	/**
-	* Returns the last address in the ordered set where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching address
-	* @throws com.liferay.portal.NoSuchAddressException if a matching address could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portal.model.Address findByCompanyId_Last(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchAddressException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .findByCompanyId_Last(companyId, orderByComparator);
-	}
-
-	/**
-	* Returns the last address in the ordered set where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching address, or <code>null</code> if a matching address could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portal.model.Address fetchByCompanyId_Last(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .fetchByCompanyId_Last(companyId, orderByComparator);
-	}
-
-	/**
-	* Returns the addresses before and after the current address in the ordered set where companyId = &#63;.
-	*
-	* @param addressId the primary key of the current address
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next address
-	* @throws com.liferay.portal.NoSuchAddressException if a address with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portal.model.Address[] findByCompanyId_PrevAndNext(
-		long addressId, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchAddressException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .findByCompanyId_PrevAndNext(addressId, companyId,
-			orderByComparator);
-	}
-
-	/**
-	* Returns all the addresses where userId = &#63;.
-	*
-	* @param userId the user ID
-	* @return the matching addresses
-	* @throws SystemException if a system exception occurred
-	*/
-	public static java.util.List<com.liferay.portal.model.Address> findByUserId(
-		long userId) throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findByUserId(userId);
-	}
-
-	/**
-	* Returns a range of all the addresses where userId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
-	* @param userId the user ID
-	* @param start the lower bound of the range of addresses
-	* @param end the upper bound of the range of addresses (not inclusive)
-	* @return the range of matching addresses
-	* @throws SystemException if a system exception occurred
-	*/
-	public static java.util.List<com.liferay.portal.model.Address> findByUserId(
-		long userId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findByUserId(userId, start, end);
-	}
-
-	/**
-	* Returns an ordered range of all the addresses where userId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
-	* @param userId the user ID
-	* @param start the lower bound of the range of addresses
-	* @param end the upper bound of the range of addresses (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching addresses
-	* @throws SystemException if a system exception occurred
-	*/
-	public static java.util.List<com.liferay.portal.model.Address> findByUserId(
-		long userId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .findByUserId(userId, start, end, orderByComparator);
-	}
-
-	/**
-	* Returns the first address in the ordered set where userId = &#63;.
-	*
-	* @param userId the user ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching address
-	* @throws com.liferay.portal.NoSuchAddressException if a matching address could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portal.model.Address findByUserId_First(
-		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchAddressException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findByUserId_First(userId, orderByComparator);
-	}
-
-	/**
-	* Returns the first address in the ordered set where userId = &#63;.
-	*
-	* @param userId the user ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching address, or <code>null</code> if a matching address could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portal.model.Address fetchByUserId_First(
-		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().fetchByUserId_First(userId, orderByComparator);
-	}
-
-	/**
-	* Returns the last address in the ordered set where userId = &#63;.
-	*
-	* @param userId the user ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching address
-	* @throws com.liferay.portal.NoSuchAddressException if a matching address could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portal.model.Address findByUserId_Last(
-		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchAddressException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findByUserId_Last(userId, orderByComparator);
-	}
-
-	/**
-	* Returns the last address in the ordered set where userId = &#63;.
-	*
-	* @param userId the user ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching address, or <code>null</code> if a matching address could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portal.model.Address fetchByUserId_Last(
-		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().fetchByUserId_Last(userId, orderByComparator);
-	}
-
-	/**
-	* Returns the addresses before and after the current address in the ordered set where userId = &#63;.
-	*
-	* @param addressId the primary key of the current address
-	* @param userId the user ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next address
-	* @throws com.liferay.portal.NoSuchAddressException if a address with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portal.model.Address[] findByUserId_PrevAndNext(
-		long addressId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchAddressException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .findByUserId_PrevAndNext(addressId, userId,
-			orderByComparator);
-	}
-
-	/**
-	* Returns all the addresses where companyId = &#63; and classNameId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param classNameId the class name ID
-	* @return the matching addresses
-	* @throws SystemException if a system exception occurred
-	*/
-	public static java.util.List<com.liferay.portal.model.Address> findByC_C(
-		long companyId, long classNameId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findByC_C(companyId, classNameId);
-	}
-
-	/**
-	* Returns a range of all the addresses where companyId = &#63; and classNameId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param classNameId the class name ID
-	* @param start the lower bound of the range of addresses
-	* @param end the upper bound of the range of addresses (not inclusive)
-	* @return the range of matching addresses
-	* @throws SystemException if a system exception occurred
-	*/
-	public static java.util.List<com.liferay.portal.model.Address> findByC_C(
-		long companyId, long classNameId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findByC_C(companyId, classNameId, start, end);
-	}
-
-	/**
-	* Returns an ordered range of all the addresses where companyId = &#63; and classNameId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param classNameId the class name ID
-	* @param start the lower bound of the range of addresses
-	* @param end the upper bound of the range of addresses (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching addresses
-	* @throws SystemException if a system exception occurred
-	*/
-	public static java.util.List<com.liferay.portal.model.Address> findByC_C(
-		long companyId, long classNameId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .findByC_C(companyId, classNameId, start, end,
-			orderByComparator);
-	}
-
-	/**
-	* Returns the first address in the ordered set where companyId = &#63; and classNameId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param classNameId the class name ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching address
-	* @throws com.liferay.portal.NoSuchAddressException if a matching address could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portal.model.Address findByC_C_First(
-		long companyId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchAddressException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .findByC_C_First(companyId, classNameId, orderByComparator);
-	}
-
-	/**
-	* Returns the first address in the ordered set where companyId = &#63; and classNameId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param classNameId the class name ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching address, or <code>null</code> if a matching address could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portal.model.Address fetchByC_C_First(
-		long companyId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .fetchByC_C_First(companyId, classNameId, orderByComparator);
-	}
-
-	/**
-	* Returns the last address in the ordered set where companyId = &#63; and classNameId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param classNameId the class name ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching address
-	* @throws com.liferay.portal.NoSuchAddressException if a matching address could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portal.model.Address findByC_C_Last(
-		long companyId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchAddressException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .findByC_C_Last(companyId, classNameId, orderByComparator);
-	}
-
-	/**
-	* Returns the last address in the ordered set where companyId = &#63; and classNameId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param classNameId the class name ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching address, or <code>null</code> if a matching address could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portal.model.Address fetchByC_C_Last(
-		long companyId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .fetchByC_C_Last(companyId, classNameId, orderByComparator);
-	}
-
-	/**
-	* Returns the addresses before and after the current address in the ordered set where companyId = &#63; and classNameId = &#63;.
-	*
-	* @param addressId the primary key of the current address
-	* @param companyId the company ID
-	* @param classNameId the class name ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next address
-	* @throws com.liferay.portal.NoSuchAddressException if a address with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portal.model.Address[] findByC_C_PrevAndNext(
-		long addressId, long companyId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchAddressException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .findByC_C_PrevAndNext(addressId, companyId, classNameId,
-			orderByComparator);
-	}
-
-	/**
-	* Returns all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
-	*
-	* @param companyId the company ID
-	* @param classNameId the class name ID
-	* @param classPK the class p k
-	* @return the matching addresses
-	* @throws SystemException if a system exception occurred
-	*/
-	public static java.util.List<com.liferay.portal.model.Address> findByC_C_C(
-		long companyId, long classNameId, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findByC_C_C(companyId, classNameId, classPK);
-	}
-
-	/**
-	* Returns a range of all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param classNameId the class name ID
-	* @param classPK the class p k
-	* @param start the lower bound of the range of addresses
-	* @param end the upper bound of the range of addresses (not inclusive)
-	* @return the range of matching addresses
-	* @throws SystemException if a system exception occurred
-	*/
-	public static java.util.List<com.liferay.portal.model.Address> findByC_C_C(
-		long companyId, long classNameId, long classPK, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .findByC_C_C(companyId, classNameId, classPK, start, end);
-	}
-
-	/**
-	* Returns an ordered range of all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param classNameId the class name ID
-	* @param classPK the class p k
-	* @param start the lower bound of the range of addresses
-	* @param end the upper bound of the range of addresses (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching addresses
-	* @throws SystemException if a system exception occurred
-	*/
-	public static java.util.List<com.liferay.portal.model.Address> findByC_C_C(
-		long companyId, long classNameId, long classPK, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .findByC_C_C(companyId, classNameId, classPK, start, end,
-			orderByComparator);
-	}
-
-	/**
-	* Returns the first address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
-	*
-	* @param companyId the company ID
-	* @param classNameId the class name ID
-	* @param classPK the class p k
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching address
-	* @throws com.liferay.portal.NoSuchAddressException if a matching address could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portal.model.Address findByC_C_C_First(
-		long companyId, long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchAddressException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .findByC_C_C_First(companyId, classNameId, classPK,
-			orderByComparator);
-	}
-
-	/**
-	* Returns the first address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
-	*
-	* @param companyId the company ID
-	* @param classNameId the class name ID
-	* @param classPK the class p k
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching address, or <code>null</code> if a matching address could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portal.model.Address fetchByC_C_C_First(
-		long companyId, long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .fetchByC_C_C_First(companyId, classNameId, classPK,
-			orderByComparator);
-	}
-
-	/**
-	* Returns the last address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
-	*
-	* @param companyId the company ID
-	* @param classNameId the class name ID
-	* @param classPK the class p k
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching address
-	* @throws com.liferay.portal.NoSuchAddressException if a matching address could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portal.model.Address findByC_C_C_Last(
-		long companyId, long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchAddressException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .findByC_C_C_Last(companyId, classNameId, classPK,
-			orderByComparator);
-	}
-
-	/**
-	* Returns the last address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
-	*
-	* @param companyId the company ID
-	* @param classNameId the class name ID
-	* @param classPK the class p k
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching address, or <code>null</code> if a matching address could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portal.model.Address fetchByC_C_C_Last(
-		long companyId, long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .fetchByC_C_C_Last(companyId, classNameId, classPK,
-			orderByComparator);
-	}
-
-	/**
-	* Returns the addresses before and after the current address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
-	*
-	* @param addressId the primary key of the current address
-	* @param companyId the company ID
-	* @param classNameId the class name ID
-	* @param classPK the class p k
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next address
-	* @throws com.liferay.portal.NoSuchAddressException if a address with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portal.model.Address[] findByC_C_C_PrevAndNext(
-		long addressId, long companyId, long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchAddressException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .findByC_C_C_PrevAndNext(addressId, companyId, classNameId,
-			classPK, orderByComparator);
-	}
-
-	/**
-	* Returns all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and mailing = &#63;.
-	*
-	* @param companyId the company ID
-	* @param classNameId the class name ID
-	* @param classPK the class p k
-	* @param mailing the mailing
-	* @return the matching addresses
-	* @throws SystemException if a system exception occurred
-	*/
-	public static java.util.List<com.liferay.portal.model.Address> findByC_C_C_M(
-		long companyId, long classNameId, long classPK, boolean mailing)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .findByC_C_C_M(companyId, classNameId, classPK, mailing);
-	}
-
-	/**
-	* Returns a range of all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and mailing = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param classNameId the class name ID
-	* @param classPK the class p k
-	* @param mailing the mailing
-	* @param start the lower bound of the range of addresses
-	* @param end the upper bound of the range of addresses (not inclusive)
-	* @return the range of matching addresses
-	* @throws SystemException if a system exception occurred
-	*/
-	public static java.util.List<com.liferay.portal.model.Address> findByC_C_C_M(
-		long companyId, long classNameId, long classPK, boolean mailing,
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .findByC_C_C_M(companyId, classNameId, classPK, mailing,
-			start, end);
-	}
-
-	/**
-	* Returns an ordered range of all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and mailing = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param classNameId the class name ID
-	* @param classPK the class p k
-	* @param mailing the mailing
-	* @param start the lower bound of the range of addresses
-	* @param end the upper bound of the range of addresses (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching addresses
-	* @throws SystemException if a system exception occurred
-	*/
-	public static java.util.List<com.liferay.portal.model.Address> findByC_C_C_M(
-		long companyId, long classNameId, long classPK, boolean mailing,
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .findByC_C_C_M(companyId, classNameId, classPK, mailing,
-			start, end, orderByComparator);
-	}
-
-	/**
-	* Returns the first address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and mailing = &#63;.
-	*
-	* @param companyId the company ID
-	* @param classNameId the class name ID
-	* @param classPK the class p k
-	* @param mailing the mailing
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching address
-	* @throws com.liferay.portal.NoSuchAddressException if a matching address could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portal.model.Address findByC_C_C_M_First(
-		long companyId, long classNameId, long classPK, boolean mailing,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchAddressException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .findByC_C_C_M_First(companyId, classNameId, classPK,
-			mailing, orderByComparator);
-	}
-
-	/**
-	* Returns the first address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and mailing = &#63;.
-	*
-	* @param companyId the company ID
-	* @param classNameId the class name ID
-	* @param classPK the class p k
-	* @param mailing the mailing
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching address, or <code>null</code> if a matching address could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portal.model.Address fetchByC_C_C_M_First(
-		long companyId, long classNameId, long classPK, boolean mailing,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .fetchByC_C_C_M_First(companyId, classNameId, classPK,
-			mailing, orderByComparator);
-	}
-
-	/**
-	* Returns the last address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and mailing = &#63;.
-	*
-	* @param companyId the company ID
-	* @param classNameId the class name ID
-	* @param classPK the class p k
-	* @param mailing the mailing
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching address
-	* @throws com.liferay.portal.NoSuchAddressException if a matching address could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portal.model.Address findByC_C_C_M_Last(
-		long companyId, long classNameId, long classPK, boolean mailing,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchAddressException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .findByC_C_C_M_Last(companyId, classNameId, classPK,
-			mailing, orderByComparator);
-	}
-
-	/**
-	* Returns the last address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and mailing = &#63;.
-	*
-	* @param companyId the company ID
-	* @param classNameId the class name ID
-	* @param classPK the class p k
-	* @param mailing the mailing
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching address, or <code>null</code> if a matching address could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portal.model.Address fetchByC_C_C_M_Last(
-		long companyId, long classNameId, long classPK, boolean mailing,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .fetchByC_C_C_M_Last(companyId, classNameId, classPK,
-			mailing, orderByComparator);
-	}
-
-	/**
-	* Returns the addresses before and after the current address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and mailing = &#63;.
-	*
-	* @param addressId the primary key of the current address
-	* @param companyId the company ID
-	* @param classNameId the class name ID
-	* @param classPK the class p k
-	* @param mailing the mailing
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next address
-	* @throws com.liferay.portal.NoSuchAddressException if a address with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portal.model.Address[] findByC_C_C_M_PrevAndNext(
-		long addressId, long companyId, long classNameId, long classPK,
-		boolean mailing,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchAddressException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .findByC_C_C_M_PrevAndNext(addressId, companyId,
-			classNameId, classPK, mailing, orderByComparator);
-	}
-
-	/**
-	* Returns all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and primary = &#63;.
-	*
-	* @param companyId the company ID
-	* @param classNameId the class name ID
-	* @param classPK the class p k
-	* @param primary the primary
-	* @return the matching addresses
-	* @throws SystemException if a system exception occurred
-	*/
-	public static java.util.List<com.liferay.portal.model.Address> findByC_C_C_P(
-		long companyId, long classNameId, long classPK, boolean primary)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .findByC_C_C_P(companyId, classNameId, classPK, primary);
-	}
-
-	/**
-	* Returns a range of all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and primary = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param classNameId the class name ID
-	* @param classPK the class p k
-	* @param primary the primary
-	* @param start the lower bound of the range of addresses
-	* @param end the upper bound of the range of addresses (not inclusive)
-	* @return the range of matching addresses
-	* @throws SystemException if a system exception occurred
-	*/
-	public static java.util.List<com.liferay.portal.model.Address> findByC_C_C_P(
-		long companyId, long classNameId, long classPK, boolean primary,
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .findByC_C_C_P(companyId, classNameId, classPK, primary,
-			start, end);
-	}
-
-	/**
-	* Returns an ordered range of all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and primary = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param classNameId the class name ID
-	* @param classPK the class p k
-	* @param primary the primary
-	* @param start the lower bound of the range of addresses
-	* @param end the upper bound of the range of addresses (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching addresses
-	* @throws SystemException if a system exception occurred
-	*/
-	public static java.util.List<com.liferay.portal.model.Address> findByC_C_C_P(
-		long companyId, long classNameId, long classPK, boolean primary,
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .findByC_C_C_P(companyId, classNameId, classPK, primary,
-			start, end, orderByComparator);
-	}
-
-	/**
-	* Returns the first address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and primary = &#63;.
-	*
-	* @param companyId the company ID
-	* @param classNameId the class name ID
-	* @param classPK the class p k
-	* @param primary the primary
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching address
-	* @throws com.liferay.portal.NoSuchAddressException if a matching address could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portal.model.Address findByC_C_C_P_First(
-		long companyId, long classNameId, long classPK, boolean primary,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchAddressException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .findByC_C_C_P_First(companyId, classNameId, classPK,
-			primary, orderByComparator);
-	}
-
-	/**
-	* Returns the first address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and primary = &#63;.
-	*
-	* @param companyId the company ID
-	* @param classNameId the class name ID
-	* @param classPK the class p k
-	* @param primary the primary
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching address, or <code>null</code> if a matching address could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portal.model.Address fetchByC_C_C_P_First(
-		long companyId, long classNameId, long classPK, boolean primary,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .fetchByC_C_C_P_First(companyId, classNameId, classPK,
-			primary, orderByComparator);
-	}
-
-	/**
-	* Returns the last address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and primary = &#63;.
-	*
-	* @param companyId the company ID
-	* @param classNameId the class name ID
-	* @param classPK the class p k
-	* @param primary the primary
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching address
-	* @throws com.liferay.portal.NoSuchAddressException if a matching address could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portal.model.Address findByC_C_C_P_Last(
-		long companyId, long classNameId, long classPK, boolean primary,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchAddressException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .findByC_C_C_P_Last(companyId, classNameId, classPK,
-			primary, orderByComparator);
-	}
-
-	/**
-	* Returns the last address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and primary = &#63;.
-	*
-	* @param companyId the company ID
-	* @param classNameId the class name ID
-	* @param classPK the class p k
-	* @param primary the primary
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching address, or <code>null</code> if a matching address could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portal.model.Address fetchByC_C_C_P_Last(
-		long companyId, long classNameId, long classPK, boolean primary,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .fetchByC_C_C_P_Last(companyId, classNameId, classPK,
-			primary, orderByComparator);
-	}
-
-	/**
-	* Returns the addresses before and after the current address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and primary = &#63;.
-	*
-	* @param addressId the primary key of the current address
-	* @param companyId the company ID
-	* @param classNameId the class name ID
-	* @param classPK the class p k
-	* @param primary the primary
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next address
-	* @throws com.liferay.portal.NoSuchAddressException if a address with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portal.model.Address[] findByC_C_C_P_PrevAndNext(
-		long addressId, long companyId, long classNameId, long classPK,
-		boolean primary,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchAddressException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .findByC_C_C_P_PrevAndNext(addressId, companyId,
-			classNameId, classPK, primary, orderByComparator);
-	}
-
-	/**
 	* Returns all the addresses.
 	*
 	* @return the addresses
@@ -1148,7 +1697,7 @@ public class AddressUtil {
 	* Returns a range of all the addresses.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from AddressModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted in portal side by PK ASC order.
 	* </p>
 	*
 	* @param start the lower bound of the range of addresses
@@ -1166,7 +1715,7 @@ public class AddressUtil {
 	* Returns an ordered range of all the addresses.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from AddressModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted in portal side by PK ASC order.
 	* </p>
 	*
 	* @param start the lower bound of the range of addresses
@@ -1183,86 +1732,6 @@ public class AddressUtil {
 	}
 
 	/**
-	* Removes all the addresses where companyId = &#63; from the database.
-	*
-	* @param companyId the company ID
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void removeByCompanyId(long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByCompanyId(companyId);
-	}
-
-	/**
-	* Removes all the addresses where userId = &#63; from the database.
-	*
-	* @param userId the user ID
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void removeByUserId(long userId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByUserId(userId);
-	}
-
-	/**
-	* Removes all the addresses where companyId = &#63; and classNameId = &#63; from the database.
-	*
-	* @param companyId the company ID
-	* @param classNameId the class name ID
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void removeByC_C(long companyId, long classNameId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByC_C(companyId, classNameId);
-	}
-
-	/**
-	* Removes all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; from the database.
-	*
-	* @param companyId the company ID
-	* @param classNameId the class name ID
-	* @param classPK the class p k
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void removeByC_C_C(long companyId, long classNameId,
-		long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByC_C_C(companyId, classNameId, classPK);
-	}
-
-	/**
-	* Removes all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and mailing = &#63; from the database.
-	*
-	* @param companyId the company ID
-	* @param classNameId the class name ID
-	* @param classPK the class p k
-	* @param mailing the mailing
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void removeByC_C_C_M(long companyId, long classNameId,
-		long classPK, boolean mailing)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence()
-			.removeByC_C_C_M(companyId, classNameId, classPK, mailing);
-	}
-
-	/**
-	* Removes all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and primary = &#63; from the database.
-	*
-	* @param companyId the company ID
-	* @param classNameId the class name ID
-	* @param classPK the class p k
-	* @param primary the primary
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void removeByC_C_C_P(long companyId, long classNameId,
-		long classPK, boolean primary)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence()
-			.removeByC_C_C_P(companyId, classNameId, classPK, primary);
-	}
-
-	/**
 	* Removes all the addresses from the database.
 	*
 	* @throws SystemException if a system exception occurred
@@ -1270,92 +1739,6 @@ public class AddressUtil {
 	public static void removeAll()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		getPersistence().removeAll();
-	}
-
-	/**
-	* Returns the number of addresses where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @return the number of matching addresses
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int countByCompanyId(long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByCompanyId(companyId);
-	}
-
-	/**
-	* Returns the number of addresses where userId = &#63;.
-	*
-	* @param userId the user ID
-	* @return the number of matching addresses
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int countByUserId(long userId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByUserId(userId);
-	}
-
-	/**
-	* Returns the number of addresses where companyId = &#63; and classNameId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param classNameId the class name ID
-	* @return the number of matching addresses
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int countByC_C(long companyId, long classNameId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByC_C(companyId, classNameId);
-	}
-
-	/**
-	* Returns the number of addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
-	*
-	* @param companyId the company ID
-	* @param classNameId the class name ID
-	* @param classPK the class p k
-	* @return the number of matching addresses
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int countByC_C_C(long companyId, long classNameId,
-		long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByC_C_C(companyId, classNameId, classPK);
-	}
-
-	/**
-	* Returns the number of addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and mailing = &#63;.
-	*
-	* @param companyId the company ID
-	* @param classNameId the class name ID
-	* @param classPK the class p k
-	* @param mailing the mailing
-	* @return the number of matching addresses
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int countByC_C_C_M(long companyId, long classNameId,
-		long classPK, boolean mailing)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .countByC_C_C_M(companyId, classNameId, classPK, mailing);
-	}
-
-	/**
-	* Returns the number of addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and primary = &#63;.
-	*
-	* @param companyId the company ID
-	* @param classNameId the class name ID
-	* @param classPK the class p k
-	* @param primary the primary
-	* @return the number of matching addresses
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int countByC_C_C_P(long companyId, long classNameId,
-		long classPK, boolean primary)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .countByC_C_C_P(companyId, classNameId, classPK, primary);
 	}
 
 	/**

@@ -99,6 +99,8 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 		};
 	public static final String TABLE_SQL_CREATE = "create table AssetEntry (entryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,classUuid VARCHAR(75) null,classTypeId LONG,visible BOOLEAN,startDate DATE null,endDate DATE null,publishDate DATE null,expirationDate DATE null,mimeType VARCHAR(75) null,title STRING null,description STRING null,summary STRING null,url STRING null,layoutUuid VARCHAR(75) null,height INTEGER,width INTEGER,priority DOUBLE,viewCount INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table AssetEntry";
+	public static final String ORDER_BY_JPQL = " ORDER BY assetEntry.entryId ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY AssetEntry.entryId ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
@@ -120,6 +122,7 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 	public static long LAYOUTUUID_COLUMN_BITMASK = 64L;
 	public static long PUBLISHDATE_COLUMN_BITMASK = 128L;
 	public static long VISIBLE_COLUMN_BITMASK = 256L;
+	public static long ENTRYID_COLUMN_BITMASK = 512L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.

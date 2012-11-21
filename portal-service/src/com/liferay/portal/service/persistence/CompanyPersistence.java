@@ -36,6 +36,474 @@ public interface CompanyPersistence extends BasePersistence<Company> {
 	 */
 
 	/**
+	* Returns the company where webId = &#63; or throws a {@link com.liferay.portal.NoSuchCompanyException} if it could not be found.
+	*
+	* @param webId the web ID
+	* @return the matching company
+	* @throws com.liferay.portal.NoSuchCompanyException if a matching company could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Company findByWebId(java.lang.String webId)
+		throws com.liferay.portal.NoSuchCompanyException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the company where webId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param webId the web ID
+	* @return the matching company, or <code>null</code> if a matching company could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Company fetchByWebId(java.lang.String webId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the company where webId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param webId the web ID
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the matching company, or <code>null</code> if a matching company could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Company fetchByWebId(
+		java.lang.String webId, boolean retrieveFromCache)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Removes the company where webId = &#63; from the database.
+	*
+	* @param webId the web ID
+	* @return the company that was removed
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Company removeByWebId(
+		java.lang.String webId)
+		throws com.liferay.portal.NoSuchCompanyException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of companies where webId = &#63;.
+	*
+	* @param webId the web ID
+	* @return the number of matching companies
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByWebId(java.lang.String webId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first company in the default ordered set defined by {@link CompanyModelImpl#ORDER_BY_JPQL} where mx = &#63;.
+	*
+	* @param mx the mx
+	* @return the first matching company
+	* @throws com.liferay.portal.NoSuchCompanyException if a matching company could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Company findByMx_First(java.lang.String mx)
+		throws com.liferay.portal.NoSuchCompanyException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first company in the ordered set where mx = &#63;.
+	*
+	* @param mx the mx
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching company
+	* @throws com.liferay.portal.NoSuchCompanyException if a matching company could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Company findByMx_First(
+		java.lang.String mx,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.NoSuchCompanyException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first company in the default ordered set defined by {@link CompanyModelImpl#ORDER_BY_JPQL} where mx = &#63;.
+	*
+	* @param mx the mx
+	* @return the first matching company, or <code>null</code> if a matching company could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Company fetchByMx_First(java.lang.String mx)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first company in the ordered set where mx = &#63;.
+	*
+	* @param mx the mx
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching company, or <code>null</code> if a matching company could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Company fetchByMx_First(
+		java.lang.String mx,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last company in the default ordered set defined by {@link CompanyModelImpl#ORDER_BY_JPQL} where mx = &#63;.
+	*
+	* @param mx the mx
+	* @return the last matching company
+	* @throws com.liferay.portal.NoSuchCompanyException if a matching company could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Company findByMx_Last(java.lang.String mx)
+		throws com.liferay.portal.NoSuchCompanyException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last company in the ordered set where mx = &#63;.
+	*
+	* @param mx the mx
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching company
+	* @throws com.liferay.portal.NoSuchCompanyException if a matching company could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Company findByMx_Last(java.lang.String mx,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.NoSuchCompanyException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last company in the default ordered set defined by {@link CompanyModelImpl#ORDER_BY_JPQL} where mx = &#63;.
+	*
+	* @param mx the mx
+	* @return the last matching company, or <code>null</code> if a matching company could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Company fetchByMx_Last(java.lang.String mx)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last company in the ordered set where mx = &#63;.
+	*
+	* @param mx the mx
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching company, or <code>null</code> if a matching company could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Company fetchByMx_Last(
+		java.lang.String mx,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Removes all the companies where mx = &#63; from the database.
+	*
+	* @param mx the mx
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeByMx(java.lang.String mx)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of companies where mx = &#63;.
+	*
+	* @param mx the mx
+	* @return the number of matching companies
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByMx(java.lang.String mx)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first company in the default ordered set defined by {@link CompanyModelImpl#ORDER_BY_JPQL} where logoId = &#63;.
+	*
+	* @param logoId the logo ID
+	* @return the first matching company
+	* @throws com.liferay.portal.NoSuchCompanyException if a matching company could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Company findByLogoId_First(long logoId)
+		throws com.liferay.portal.NoSuchCompanyException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first company in the ordered set where logoId = &#63;.
+	*
+	* @param logoId the logo ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching company
+	* @throws com.liferay.portal.NoSuchCompanyException if a matching company could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Company findByLogoId_First(long logoId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.NoSuchCompanyException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first company in the default ordered set defined by {@link CompanyModelImpl#ORDER_BY_JPQL} where logoId = &#63;.
+	*
+	* @param logoId the logo ID
+	* @return the first matching company, or <code>null</code> if a matching company could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Company fetchByLogoId_First(long logoId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first company in the ordered set where logoId = &#63;.
+	*
+	* @param logoId the logo ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching company, or <code>null</code> if a matching company could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Company fetchByLogoId_First(long logoId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last company in the default ordered set defined by {@link CompanyModelImpl#ORDER_BY_JPQL} where logoId = &#63;.
+	*
+	* @param logoId the logo ID
+	* @return the last matching company
+	* @throws com.liferay.portal.NoSuchCompanyException if a matching company could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Company findByLogoId_Last(long logoId)
+		throws com.liferay.portal.NoSuchCompanyException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last company in the ordered set where logoId = &#63;.
+	*
+	* @param logoId the logo ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching company
+	* @throws com.liferay.portal.NoSuchCompanyException if a matching company could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Company findByLogoId_Last(long logoId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.NoSuchCompanyException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last company in the default ordered set defined by {@link CompanyModelImpl#ORDER_BY_JPQL} where logoId = &#63;.
+	*
+	* @param logoId the logo ID
+	* @return the last matching company, or <code>null</code> if a matching company could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Company fetchByLogoId_Last(long logoId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last company in the ordered set where logoId = &#63;.
+	*
+	* @param logoId the logo ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching company, or <code>null</code> if a matching company could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Company fetchByLogoId_Last(long logoId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Removes all the companies where logoId = &#63; from the database.
+	*
+	* @param logoId the logo ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeByLogoId(long logoId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of companies where logoId = &#63;.
+	*
+	* @param logoId the logo ID
+	* @return the number of matching companies
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByLogoId(long logoId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns all the companies where system = &#63;.
+	*
+	* @param system the system
+	* @return the matching companies
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portal.model.Company> findBySystem(
+		boolean system)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns a range of all the companies where system = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from CompanyModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted in portal side by PK ASC order.
+	* </p>
+	*
+	* @param system the system
+	* @param start the lower bound of the range of companies
+	* @param end the upper bound of the range of companies (not inclusive)
+	* @return the range of matching companies
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portal.model.Company> findBySystem(
+		boolean system, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the companies before and after the current company in the ordered set where system = &#63;.
+	*
+	* @param companyId the primary key of the current company
+	* @param system the system
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next company
+	* @throws com.liferay.portal.NoSuchCompanyException if a company with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Company[] findBySystem_PrevAndNext(
+		long companyId, boolean system,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.NoSuchCompanyException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns an ordered range of all the companies where system = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from CompanyModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted in portal side by PK ASC order.
+	* </p>
+	*
+	* @param system the system
+	* @param start the lower bound of the range of companies
+	* @param end the upper bound of the range of companies (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching companies
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portal.model.Company> findBySystem(
+		boolean system, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first company in the default ordered set defined by {@link CompanyModelImpl#ORDER_BY_JPQL} where system = &#63;.
+	*
+	* @param system the system
+	* @return the first matching company
+	* @throws com.liferay.portal.NoSuchCompanyException if a matching company could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Company findBySystem_First(boolean system)
+		throws com.liferay.portal.NoSuchCompanyException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first company in the ordered set where system = &#63;.
+	*
+	* @param system the system
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching company
+	* @throws com.liferay.portal.NoSuchCompanyException if a matching company could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Company findBySystem_First(boolean system,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.NoSuchCompanyException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first company in the default ordered set defined by {@link CompanyModelImpl#ORDER_BY_JPQL} where system = &#63;.
+	*
+	* @param system the system
+	* @return the first matching company, or <code>null</code> if a matching company could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Company fetchBySystem_First(boolean system)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first company in the ordered set where system = &#63;.
+	*
+	* @param system the system
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching company, or <code>null</code> if a matching company could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Company fetchBySystem_First(
+		boolean system,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last company in the default ordered set defined by {@link CompanyModelImpl#ORDER_BY_JPQL} where system = &#63;.
+	*
+	* @param system the system
+	* @return the last matching company
+	* @throws com.liferay.portal.NoSuchCompanyException if a matching company could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Company findBySystem_Last(boolean system)
+		throws com.liferay.portal.NoSuchCompanyException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last company in the ordered set where system = &#63;.
+	*
+	* @param system the system
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching company
+	* @throws com.liferay.portal.NoSuchCompanyException if a matching company could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Company findBySystem_Last(boolean system,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.NoSuchCompanyException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last company in the default ordered set defined by {@link CompanyModelImpl#ORDER_BY_JPQL} where system = &#63;.
+	*
+	* @param system the system
+	* @return the last matching company, or <code>null</code> if a matching company could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Company fetchBySystem_Last(boolean system)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last company in the ordered set where system = &#63;.
+	*
+	* @param system the system
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching company, or <code>null</code> if a matching company could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Company fetchBySystem_Last(boolean system,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Removes all the companies where system = &#63; from the database.
+	*
+	* @param system the system
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeBySystem(boolean system)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of companies where system = &#63;.
+	*
+	* @param system the system
+	* @return the number of matching companies
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countBySystem(boolean system)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Caches the company in the entity cache if it is enabled.
 	*
 	* @param company the company
@@ -97,224 +565,6 @@ public interface CompanyPersistence extends BasePersistence<Company> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the company where webId = &#63; or throws a {@link com.liferay.portal.NoSuchCompanyException} if it could not be found.
-	*
-	* @param webId the web ID
-	* @return the matching company
-	* @throws com.liferay.portal.NoSuchCompanyException if a matching company could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.Company findByWebId(java.lang.String webId)
-		throws com.liferay.portal.NoSuchCompanyException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the company where webId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	*
-	* @param webId the web ID
-	* @return the matching company, or <code>null</code> if a matching company could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.Company fetchByWebId(java.lang.String webId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the company where webId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	*
-	* @param webId the web ID
-	* @param retrieveFromCache whether to use the finder cache
-	* @return the matching company, or <code>null</code> if a matching company could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.Company fetchByWebId(
-		java.lang.String webId, boolean retrieveFromCache)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the company where mx = &#63; or throws a {@link com.liferay.portal.NoSuchCompanyException} if it could not be found.
-	*
-	* @param mx the mx
-	* @return the matching company
-	* @throws com.liferay.portal.NoSuchCompanyException if a matching company could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.Company findByMx(java.lang.String mx)
-		throws com.liferay.portal.NoSuchCompanyException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the company where mx = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	*
-	* @param mx the mx
-	* @return the matching company, or <code>null</code> if a matching company could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.Company fetchByMx(java.lang.String mx)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the company where mx = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	*
-	* @param mx the mx
-	* @param retrieveFromCache whether to use the finder cache
-	* @return the matching company, or <code>null</code> if a matching company could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.Company fetchByMx(java.lang.String mx,
-		boolean retrieveFromCache)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the company where logoId = &#63; or throws a {@link com.liferay.portal.NoSuchCompanyException} if it could not be found.
-	*
-	* @param logoId the logo ID
-	* @return the matching company
-	* @throws com.liferay.portal.NoSuchCompanyException if a matching company could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.Company findByLogoId(long logoId)
-		throws com.liferay.portal.NoSuchCompanyException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the company where logoId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	*
-	* @param logoId the logo ID
-	* @return the matching company, or <code>null</code> if a matching company could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.Company fetchByLogoId(long logoId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the company where logoId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	*
-	* @param logoId the logo ID
-	* @param retrieveFromCache whether to use the finder cache
-	* @return the matching company, or <code>null</code> if a matching company could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.Company fetchByLogoId(long logoId,
-		boolean retrieveFromCache)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns all the companies where system = &#63;.
-	*
-	* @param system the system
-	* @return the matching companies
-	* @throws SystemException if a system exception occurred
-	*/
-	public java.util.List<com.liferay.portal.model.Company> findBySystem(
-		boolean system)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns a range of all the companies where system = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
-	* @param system the system
-	* @param start the lower bound of the range of companies
-	* @param end the upper bound of the range of companies (not inclusive)
-	* @return the range of matching companies
-	* @throws SystemException if a system exception occurred
-	*/
-	public java.util.List<com.liferay.portal.model.Company> findBySystem(
-		boolean system, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns an ordered range of all the companies where system = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
-	* @param system the system
-	* @param start the lower bound of the range of companies
-	* @param end the upper bound of the range of companies (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching companies
-	* @throws SystemException if a system exception occurred
-	*/
-	public java.util.List<com.liferay.portal.model.Company> findBySystem(
-		boolean system, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the first company in the ordered set where system = &#63;.
-	*
-	* @param system the system
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching company
-	* @throws com.liferay.portal.NoSuchCompanyException if a matching company could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.Company findBySystem_First(boolean system,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchCompanyException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the first company in the ordered set where system = &#63;.
-	*
-	* @param system the system
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching company, or <code>null</code> if a matching company could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.Company fetchBySystem_First(
-		boolean system,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the last company in the ordered set where system = &#63;.
-	*
-	* @param system the system
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching company
-	* @throws com.liferay.portal.NoSuchCompanyException if a matching company could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.Company findBySystem_Last(boolean system,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchCompanyException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the last company in the ordered set where system = &#63;.
-	*
-	* @param system the system
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching company, or <code>null</code> if a matching company could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.Company fetchBySystem_Last(boolean system,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the companies before and after the current company in the ordered set where system = &#63;.
-	*
-	* @param companyId the primary key of the current company
-	* @param system the system
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next company
-	* @throws com.liferay.portal.NoSuchCompanyException if a company with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.Company[] findBySystem_PrevAndNext(
-		long companyId, boolean system,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchCompanyException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	/**
 	* Returns all the companies.
 	*
 	* @return the companies
@@ -327,7 +577,7 @@ public interface CompanyPersistence extends BasePersistence<Company> {
 	* Returns a range of all the companies.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from CompanyModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted in portal side by PK ASC order.
 	* </p>
 	*
 	* @param start the lower bound of the range of companies
@@ -342,7 +592,7 @@ public interface CompanyPersistence extends BasePersistence<Company> {
 	* Returns an ordered range of all the companies.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from CompanyModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted in portal side by PK ASC order.
 	* </p>
 	*
 	* @param start the lower bound of the range of companies
@@ -357,94 +607,11 @@ public interface CompanyPersistence extends BasePersistence<Company> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Removes the company where webId = &#63; from the database.
-	*
-	* @param webId the web ID
-	* @return the company that was removed
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.Company removeByWebId(
-		java.lang.String webId)
-		throws com.liferay.portal.NoSuchCompanyException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Removes the company where mx = &#63; from the database.
-	*
-	* @param mx the mx
-	* @return the company that was removed
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.Company removeByMx(java.lang.String mx)
-		throws com.liferay.portal.NoSuchCompanyException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Removes the company where logoId = &#63; from the database.
-	*
-	* @param logoId the logo ID
-	* @return the company that was removed
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.Company removeByLogoId(long logoId)
-		throws com.liferay.portal.NoSuchCompanyException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Removes all the companies where system = &#63; from the database.
-	*
-	* @param system the system
-	* @throws SystemException if a system exception occurred
-	*/
-	public void removeBySystem(boolean system)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
 	* Removes all the companies from the database.
 	*
 	* @throws SystemException if a system exception occurred
 	*/
 	public void removeAll()
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the number of companies where webId = &#63;.
-	*
-	* @param webId the web ID
-	* @return the number of matching companies
-	* @throws SystemException if a system exception occurred
-	*/
-	public int countByWebId(java.lang.String webId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the number of companies where mx = &#63;.
-	*
-	* @param mx the mx
-	* @return the number of matching companies
-	* @throws SystemException if a system exception occurred
-	*/
-	public int countByMx(java.lang.String mx)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the number of companies where logoId = &#63;.
-	*
-	* @param logoId the logo ID
-	* @return the number of matching companies
-	* @throws SystemException if a system exception occurred
-	*/
-	public int countByLogoId(long logoId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the number of companies where system = &#63;.
-	*
-	* @param system the system
-	* @return the number of matching companies
-	* @throws SystemException if a system exception occurred
-	*/
-	public int countBySystem(boolean system)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

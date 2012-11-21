@@ -36,6 +36,576 @@ public interface ContactPersistence extends BasePersistence<Contact> {
 	 */
 
 	/**
+	* Returns all the contacts where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @return the matching contacts
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portal.model.Contact> findByCompanyId(
+		long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns a range of all the contacts where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from ContactModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted in portal side by PK ASC order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param start the lower bound of the range of contacts
+	* @param end the upper bound of the range of contacts (not inclusive)
+	* @return the range of matching contacts
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portal.model.Contact> findByCompanyId(
+		long companyId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the contacts before and after the current contact in the ordered set where companyId = &#63;.
+	*
+	* @param contactId the primary key of the current contact
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next contact
+	* @throws com.liferay.portal.NoSuchContactException if a contact with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Contact[] findByCompanyId_PrevAndNext(
+		long contactId, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.NoSuchContactException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns an ordered range of all the contacts where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from ContactModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted in portal side by PK ASC order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param start the lower bound of the range of contacts
+	* @param end the upper bound of the range of contacts (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching contacts
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portal.model.Contact> findByCompanyId(
+		long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first contact in the default ordered set defined by {@link ContactModelImpl#ORDER_BY_JPQL} where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @return the first matching contact
+	* @throws com.liferay.portal.NoSuchContactException if a matching contact could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Contact findByCompanyId_First(
+		long companyId)
+		throws com.liferay.portal.NoSuchContactException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first contact in the ordered set where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching contact
+	* @throws com.liferay.portal.NoSuchContactException if a matching contact could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Contact findByCompanyId_First(
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.NoSuchContactException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first contact in the default ordered set defined by {@link ContactModelImpl#ORDER_BY_JPQL} where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @return the first matching contact, or <code>null</code> if a matching contact could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Contact fetchByCompanyId_First(
+		long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first contact in the ordered set where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching contact, or <code>null</code> if a matching contact could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Contact fetchByCompanyId_First(
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last contact in the default ordered set defined by {@link ContactModelImpl#ORDER_BY_JPQL} where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @return the last matching contact
+	* @throws com.liferay.portal.NoSuchContactException if a matching contact could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Contact findByCompanyId_Last(long companyId)
+		throws com.liferay.portal.NoSuchContactException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last contact in the ordered set where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching contact
+	* @throws com.liferay.portal.NoSuchContactException if a matching contact could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Contact findByCompanyId_Last(
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.NoSuchContactException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last contact in the default ordered set defined by {@link ContactModelImpl#ORDER_BY_JPQL} where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @return the last matching contact, or <code>null</code> if a matching contact could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Contact fetchByCompanyId_Last(
+		long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last contact in the ordered set where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching contact, or <code>null</code> if a matching contact could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Contact fetchByCompanyId_Last(
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Removes all the contacts where companyId = &#63; from the database.
+	*
+	* @param companyId the company ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeByCompanyId(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of contacts where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @return the number of matching contacts
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByCompanyId(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns all the contacts where accountId = &#63;.
+	*
+	* @param accountId the account ID
+	* @return the matching contacts
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portal.model.Contact> findByAccountId(
+		long accountId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns a range of all the contacts where accountId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from ContactModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted in portal side by PK ASC order.
+	* </p>
+	*
+	* @param accountId the account ID
+	* @param start the lower bound of the range of contacts
+	* @param end the upper bound of the range of contacts (not inclusive)
+	* @return the range of matching contacts
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portal.model.Contact> findByAccountId(
+		long accountId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the contacts before and after the current contact in the ordered set where accountId = &#63;.
+	*
+	* @param contactId the primary key of the current contact
+	* @param accountId the account ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next contact
+	* @throws com.liferay.portal.NoSuchContactException if a contact with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Contact[] findByAccountId_PrevAndNext(
+		long contactId, long accountId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.NoSuchContactException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns an ordered range of all the contacts where accountId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from ContactModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted in portal side by PK ASC order.
+	* </p>
+	*
+	* @param accountId the account ID
+	* @param start the lower bound of the range of contacts
+	* @param end the upper bound of the range of contacts (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching contacts
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portal.model.Contact> findByAccountId(
+		long accountId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first contact in the default ordered set defined by {@link ContactModelImpl#ORDER_BY_JPQL} where accountId = &#63;.
+	*
+	* @param accountId the account ID
+	* @return the first matching contact
+	* @throws com.liferay.portal.NoSuchContactException if a matching contact could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Contact findByAccountId_First(
+		long accountId)
+		throws com.liferay.portal.NoSuchContactException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first contact in the ordered set where accountId = &#63;.
+	*
+	* @param accountId the account ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching contact
+	* @throws com.liferay.portal.NoSuchContactException if a matching contact could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Contact findByAccountId_First(
+		long accountId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.NoSuchContactException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first contact in the default ordered set defined by {@link ContactModelImpl#ORDER_BY_JPQL} where accountId = &#63;.
+	*
+	* @param accountId the account ID
+	* @return the first matching contact, or <code>null</code> if a matching contact could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Contact fetchByAccountId_First(
+		long accountId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first contact in the ordered set where accountId = &#63;.
+	*
+	* @param accountId the account ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching contact, or <code>null</code> if a matching contact could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Contact fetchByAccountId_First(
+		long accountId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last contact in the default ordered set defined by {@link ContactModelImpl#ORDER_BY_JPQL} where accountId = &#63;.
+	*
+	* @param accountId the account ID
+	* @return the last matching contact
+	* @throws com.liferay.portal.NoSuchContactException if a matching contact could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Contact findByAccountId_Last(long accountId)
+		throws com.liferay.portal.NoSuchContactException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last contact in the ordered set where accountId = &#63;.
+	*
+	* @param accountId the account ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching contact
+	* @throws com.liferay.portal.NoSuchContactException if a matching contact could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Contact findByAccountId_Last(
+		long accountId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.NoSuchContactException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last contact in the default ordered set defined by {@link ContactModelImpl#ORDER_BY_JPQL} where accountId = &#63;.
+	*
+	* @param accountId the account ID
+	* @return the last matching contact, or <code>null</code> if a matching contact could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Contact fetchByAccountId_Last(
+		long accountId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last contact in the ordered set where accountId = &#63;.
+	*
+	* @param accountId the account ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching contact, or <code>null</code> if a matching contact could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Contact fetchByAccountId_Last(
+		long accountId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Removes all the contacts where accountId = &#63; from the database.
+	*
+	* @param accountId the account ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeByAccountId(long accountId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of contacts where accountId = &#63;.
+	*
+	* @param accountId the account ID
+	* @return the number of matching contacts
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByAccountId(long accountId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns all the contacts where classNameId = &#63; and classPK = &#63;.
+	*
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @return the matching contacts
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portal.model.Contact> findByC_C(
+		long classNameId, long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns a range of all the contacts where classNameId = &#63; and classPK = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from ContactModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted in portal side by PK ASC order.
+	* </p>
+	*
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param start the lower bound of the range of contacts
+	* @param end the upper bound of the range of contacts (not inclusive)
+	* @return the range of matching contacts
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portal.model.Contact> findByC_C(
+		long classNameId, long classPK, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the contacts before and after the current contact in the ordered set where classNameId = &#63; and classPK = &#63;.
+	*
+	* @param contactId the primary key of the current contact
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next contact
+	* @throws com.liferay.portal.NoSuchContactException if a contact with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Contact[] findByC_C_PrevAndNext(
+		long contactId, long classNameId, long classPK,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.NoSuchContactException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns an ordered range of all the contacts where classNameId = &#63; and classPK = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from ContactModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted in portal side by PK ASC order.
+	* </p>
+	*
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param start the lower bound of the range of contacts
+	* @param end the upper bound of the range of contacts (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching contacts
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portal.model.Contact> findByC_C(
+		long classNameId, long classPK, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first contact in the default ordered set defined by {@link ContactModelImpl#ORDER_BY_JPQL} where classNameId = &#63; and classPK = &#63;.
+	*
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @return the first matching contact
+	* @throws com.liferay.portal.NoSuchContactException if a matching contact could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Contact findByC_C_First(long classNameId,
+		long classPK)
+		throws com.liferay.portal.NoSuchContactException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first contact in the ordered set where classNameId = &#63; and classPK = &#63;.
+	*
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching contact
+	* @throws com.liferay.portal.NoSuchContactException if a matching contact could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Contact findByC_C_First(long classNameId,
+		long classPK,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.NoSuchContactException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first contact in the default ordered set defined by {@link ContactModelImpl#ORDER_BY_JPQL} where classNameId = &#63; and classPK = &#63;.
+	*
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @return the first matching contact, or <code>null</code> if a matching contact could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Contact fetchByC_C_First(long classNameId,
+		long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first contact in the ordered set where classNameId = &#63; and classPK = &#63;.
+	*
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching contact, or <code>null</code> if a matching contact could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Contact fetchByC_C_First(long classNameId,
+		long classPK,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last contact in the default ordered set defined by {@link ContactModelImpl#ORDER_BY_JPQL} where classNameId = &#63; and classPK = &#63;.
+	*
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @return the last matching contact
+	* @throws com.liferay.portal.NoSuchContactException if a matching contact could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Contact findByC_C_Last(long classNameId,
+		long classPK)
+		throws com.liferay.portal.NoSuchContactException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last contact in the ordered set where classNameId = &#63; and classPK = &#63;.
+	*
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching contact
+	* @throws com.liferay.portal.NoSuchContactException if a matching contact could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Contact findByC_C_Last(long classNameId,
+		long classPK,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.NoSuchContactException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last contact in the default ordered set defined by {@link ContactModelImpl#ORDER_BY_JPQL} where classNameId = &#63; and classPK = &#63;.
+	*
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @return the last matching contact, or <code>null</code> if a matching contact could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Contact fetchByC_C_Last(long classNameId,
+		long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last contact in the ordered set where classNameId = &#63; and classPK = &#63;.
+	*
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching contact, or <code>null</code> if a matching contact could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Contact fetchByC_C_Last(long classNameId,
+		long classPK,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Removes all the contacts where classNameId = &#63; and classPK = &#63; from the database.
+	*
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeByC_C(long classNameId, long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of contacts where classNameId = &#63; and classPK = &#63;.
+	*
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @return the number of matching contacts
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByC_C(long classNameId, long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Caches the contact in the entity cache if it is enabled.
 	*
 	* @param contact the contact
@@ -97,371 +667,6 @@ public interface ContactPersistence extends BasePersistence<Contact> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns all the contacts where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @return the matching contacts
-	* @throws SystemException if a system exception occurred
-	*/
-	public java.util.List<com.liferay.portal.model.Contact> findByCompanyId(
-		long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns a range of all the contacts where companyId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param start the lower bound of the range of contacts
-	* @param end the upper bound of the range of contacts (not inclusive)
-	* @return the range of matching contacts
-	* @throws SystemException if a system exception occurred
-	*/
-	public java.util.List<com.liferay.portal.model.Contact> findByCompanyId(
-		long companyId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns an ordered range of all the contacts where companyId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param start the lower bound of the range of contacts
-	* @param end the upper bound of the range of contacts (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching contacts
-	* @throws SystemException if a system exception occurred
-	*/
-	public java.util.List<com.liferay.portal.model.Contact> findByCompanyId(
-		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the first contact in the ordered set where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching contact
-	* @throws com.liferay.portal.NoSuchContactException if a matching contact could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.Contact findByCompanyId_First(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchContactException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the first contact in the ordered set where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching contact, or <code>null</code> if a matching contact could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.Contact fetchByCompanyId_First(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the last contact in the ordered set where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching contact
-	* @throws com.liferay.portal.NoSuchContactException if a matching contact could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.Contact findByCompanyId_Last(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchContactException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the last contact in the ordered set where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching contact, or <code>null</code> if a matching contact could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.Contact fetchByCompanyId_Last(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the contacts before and after the current contact in the ordered set where companyId = &#63;.
-	*
-	* @param contactId the primary key of the current contact
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next contact
-	* @throws com.liferay.portal.NoSuchContactException if a contact with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.Contact[] findByCompanyId_PrevAndNext(
-		long contactId, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchContactException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns all the contacts where accountId = &#63;.
-	*
-	* @param accountId the account ID
-	* @return the matching contacts
-	* @throws SystemException if a system exception occurred
-	*/
-	public java.util.List<com.liferay.portal.model.Contact> findByAccountId(
-		long accountId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns a range of all the contacts where accountId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
-	* @param accountId the account ID
-	* @param start the lower bound of the range of contacts
-	* @param end the upper bound of the range of contacts (not inclusive)
-	* @return the range of matching contacts
-	* @throws SystemException if a system exception occurred
-	*/
-	public java.util.List<com.liferay.portal.model.Contact> findByAccountId(
-		long accountId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns an ordered range of all the contacts where accountId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
-	* @param accountId the account ID
-	* @param start the lower bound of the range of contacts
-	* @param end the upper bound of the range of contacts (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching contacts
-	* @throws SystemException if a system exception occurred
-	*/
-	public java.util.List<com.liferay.portal.model.Contact> findByAccountId(
-		long accountId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the first contact in the ordered set where accountId = &#63;.
-	*
-	* @param accountId the account ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching contact
-	* @throws com.liferay.portal.NoSuchContactException if a matching contact could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.Contact findByAccountId_First(
-		long accountId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchContactException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the first contact in the ordered set where accountId = &#63;.
-	*
-	* @param accountId the account ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching contact, or <code>null</code> if a matching contact could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.Contact fetchByAccountId_First(
-		long accountId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the last contact in the ordered set where accountId = &#63;.
-	*
-	* @param accountId the account ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching contact
-	* @throws com.liferay.portal.NoSuchContactException if a matching contact could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.Contact findByAccountId_Last(
-		long accountId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchContactException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the last contact in the ordered set where accountId = &#63;.
-	*
-	* @param accountId the account ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching contact, or <code>null</code> if a matching contact could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.Contact fetchByAccountId_Last(
-		long accountId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the contacts before and after the current contact in the ordered set where accountId = &#63;.
-	*
-	* @param contactId the primary key of the current contact
-	* @param accountId the account ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next contact
-	* @throws com.liferay.portal.NoSuchContactException if a contact with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.Contact[] findByAccountId_PrevAndNext(
-		long contactId, long accountId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchContactException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns all the contacts where classNameId = &#63; and classPK = &#63;.
-	*
-	* @param classNameId the class name ID
-	* @param classPK the class p k
-	* @return the matching contacts
-	* @throws SystemException if a system exception occurred
-	*/
-	public java.util.List<com.liferay.portal.model.Contact> findByC_C(
-		long classNameId, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns a range of all the contacts where classNameId = &#63; and classPK = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
-	* @param classNameId the class name ID
-	* @param classPK the class p k
-	* @param start the lower bound of the range of contacts
-	* @param end the upper bound of the range of contacts (not inclusive)
-	* @return the range of matching contacts
-	* @throws SystemException if a system exception occurred
-	*/
-	public java.util.List<com.liferay.portal.model.Contact> findByC_C(
-		long classNameId, long classPK, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns an ordered range of all the contacts where classNameId = &#63; and classPK = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
-	* @param classNameId the class name ID
-	* @param classPK the class p k
-	* @param start the lower bound of the range of contacts
-	* @param end the upper bound of the range of contacts (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching contacts
-	* @throws SystemException if a system exception occurred
-	*/
-	public java.util.List<com.liferay.portal.model.Contact> findByC_C(
-		long classNameId, long classPK, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the first contact in the ordered set where classNameId = &#63; and classPK = &#63;.
-	*
-	* @param classNameId the class name ID
-	* @param classPK the class p k
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching contact
-	* @throws com.liferay.portal.NoSuchContactException if a matching contact could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.Contact findByC_C_First(long classNameId,
-		long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchContactException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the first contact in the ordered set where classNameId = &#63; and classPK = &#63;.
-	*
-	* @param classNameId the class name ID
-	* @param classPK the class p k
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching contact, or <code>null</code> if a matching contact could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.Contact fetchByC_C_First(long classNameId,
-		long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the last contact in the ordered set where classNameId = &#63; and classPK = &#63;.
-	*
-	* @param classNameId the class name ID
-	* @param classPK the class p k
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching contact
-	* @throws com.liferay.portal.NoSuchContactException if a matching contact could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.Contact findByC_C_Last(long classNameId,
-		long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchContactException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the last contact in the ordered set where classNameId = &#63; and classPK = &#63;.
-	*
-	* @param classNameId the class name ID
-	* @param classPK the class p k
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching contact, or <code>null</code> if a matching contact could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.Contact fetchByC_C_Last(long classNameId,
-		long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the contacts before and after the current contact in the ordered set where classNameId = &#63; and classPK = &#63;.
-	*
-	* @param contactId the primary key of the current contact
-	* @param classNameId the class name ID
-	* @param classPK the class p k
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next contact
-	* @throws com.liferay.portal.NoSuchContactException if a contact with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.Contact[] findByC_C_PrevAndNext(
-		long contactId, long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchContactException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	/**
 	* Returns all the contacts.
 	*
 	* @return the contacts
@@ -474,7 +679,7 @@ public interface ContactPersistence extends BasePersistence<Contact> {
 	* Returns a range of all the contacts.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from ContactModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted in portal side by PK ASC order.
 	* </p>
 	*
 	* @param start the lower bound of the range of contacts
@@ -489,7 +694,7 @@ public interface ContactPersistence extends BasePersistence<Contact> {
 	* Returns an ordered range of all the contacts.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from ContactModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted in portal side by PK ASC order.
 	* </p>
 	*
 	* @param start the lower bound of the range of contacts
@@ -504,70 +709,11 @@ public interface ContactPersistence extends BasePersistence<Contact> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Removes all the contacts where companyId = &#63; from the database.
-	*
-	* @param companyId the company ID
-	* @throws SystemException if a system exception occurred
-	*/
-	public void removeByCompanyId(long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Removes all the contacts where accountId = &#63; from the database.
-	*
-	* @param accountId the account ID
-	* @throws SystemException if a system exception occurred
-	*/
-	public void removeByAccountId(long accountId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Removes all the contacts where classNameId = &#63; and classPK = &#63; from the database.
-	*
-	* @param classNameId the class name ID
-	* @param classPK the class p k
-	* @throws SystemException if a system exception occurred
-	*/
-	public void removeByC_C(long classNameId, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
 	* Removes all the contacts from the database.
 	*
 	* @throws SystemException if a system exception occurred
 	*/
 	public void removeAll()
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the number of contacts where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @return the number of matching contacts
-	* @throws SystemException if a system exception occurred
-	*/
-	public int countByCompanyId(long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the number of contacts where accountId = &#63;.
-	*
-	* @param accountId the account ID
-	* @return the number of matching contacts
-	* @throws SystemException if a system exception occurred
-	*/
-	public int countByAccountId(long accountId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the number of contacts where classNameId = &#63; and classPK = &#63;.
-	*
-	* @param classNameId the class name ID
-	* @param classPK the class p k
-	* @return the number of matching contacts
-	* @throws SystemException if a system exception occurred
-	*/
-	public int countByC_C(long classNameId, long classPK)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

@@ -82,6 +82,8 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 		};
 	public static final String TABLE_SQL_CREATE = "create table Repository (uuid_ VARCHAR(75) null,repositoryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,name VARCHAR(75) null,description STRING null,portletId VARCHAR(75) null,typeSettings TEXT null,dlFolderId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table Repository";
+	public static final String ORDER_BY_JPQL = " ORDER BY repository.repositoryId ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY Repository.repositoryId ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
@@ -99,6 +101,7 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 	public static long NAME_COLUMN_BITMASK = 4L;
 	public static long PORTLETID_COLUMN_BITMASK = 8L;
 	public static long UUID_COLUMN_BITMASK = 16L;
+	public static long REPOSITORYID_COLUMN_BITMASK = 32L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.

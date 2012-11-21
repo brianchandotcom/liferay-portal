@@ -117,6 +117,7 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 	public static long TITLE_COLUMN_BITMASK = 32L;
 	public static long UUID_COLUMN_BITMASK = 64L;
 	public static long VERSION_COLUMN_BITMASK = 128L;
+	public static long CREATEDATE_COLUMN_BITMASK = 256L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.

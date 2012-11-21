@@ -24,13 +24,11 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.model.PasswordPolicyRel;
-import com.liferay.portal.model.impl.PasswordPolicyRelModelImpl;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.persistence.BasePersistence;
 import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
 import com.liferay.portal.test.LiferayPersistenceIntegrationJUnitTestRunner;
 import com.liferay.portal.test.persistence.TransactionalPersistenceAdvice;
-import com.liferay.portal.util.PropsValues;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -240,31 +238,6 @@ public class PasswordPolicyRelPersistenceTest {
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
-	}
-
-	@Test
-	public void testResetOriginalValues() throws Exception {
-		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
-			return;
-		}
-
-		PasswordPolicyRel newPasswordPolicyRel = addPasswordPolicyRel();
-
-		_persistence.clearCache();
-
-		PasswordPolicyRelModelImpl existingPasswordPolicyRelModelImpl = (PasswordPolicyRelModelImpl)_persistence.findByPrimaryKey(newPasswordPolicyRel.getPrimaryKey());
-
-		Assert.assertEquals(existingPasswordPolicyRelModelImpl.getClassNameId(),
-			existingPasswordPolicyRelModelImpl.getOriginalClassNameId());
-		Assert.assertEquals(existingPasswordPolicyRelModelImpl.getClassPK(),
-			existingPasswordPolicyRelModelImpl.getOriginalClassPK());
-
-		Assert.assertEquals(existingPasswordPolicyRelModelImpl.getPasswordPolicyId(),
-			existingPasswordPolicyRelModelImpl.getOriginalPasswordPolicyId());
-		Assert.assertEquals(existingPasswordPolicyRelModelImpl.getClassNameId(),
-			existingPasswordPolicyRelModelImpl.getOriginalClassNameId());
-		Assert.assertEquals(existingPasswordPolicyRelModelImpl.getClassPK(),
-			existingPasswordPolicyRelModelImpl.getOriginalClassPK());
 	}
 
 	protected PasswordPolicyRel addPasswordPolicyRel()

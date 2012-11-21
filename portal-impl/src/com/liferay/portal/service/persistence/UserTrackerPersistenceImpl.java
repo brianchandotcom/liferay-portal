@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnmodifiableList;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
@@ -72,6 +73,15 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 		".List1";
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY +
 		".List2";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_ALL = new FinderPath(UserTrackerModelImpl.ENTITY_CACHE_ENABLED,
+			UserTrackerModelImpl.FINDER_CACHE_ENABLED, UserTrackerImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL = new FinderPath(UserTrackerModelImpl.ENTITY_CACHE_ENABLED,
+			UserTrackerModelImpl.FINDER_CACHE_ENABLED, UserTrackerImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0]);
+	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(UserTrackerModelImpl.ENTITY_CACHE_ENABLED,
+			UserTrackerModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_COMPANYID =
 		new FinderPath(UserTrackerModelImpl.ENTITY_CACHE_ENABLED,
 			UserTrackerModelImpl.FINDER_CACHE_ENABLED, UserTrackerImpl.class,
@@ -79,8 +89,8 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 			new String[] {
 				Long.class.getName(),
 				
-			"java.lang.Integer", "java.lang.Integer",
-				"com.liferay.portal.kernel.util.OrderByComparator"
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
 			});
 	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID =
 		new FinderPath(UserTrackerModelImpl.ENTITY_CACHE_ENABLED,
@@ -92,14 +102,521 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 			UserTrackerModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
 			new String[] { Long.class.getName() });
+
+	/**
+	 * Returns all the user trackers where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @return the matching user trackers
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<UserTracker> findByCompanyId(long companyId)
+		throws SystemException {
+		return findByCompanyId(companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			null);
+	}
+
+	/**
+	 * Returns a range of all the user trackers where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from UserTrackerModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted in portal side by PK ASC order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of user trackers
+	 * @param end the upper bound of the range of user trackers (not inclusive)
+	 * @return the range of matching user trackers
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<UserTracker> findByCompanyId(long companyId, int start, int end)
+		throws SystemException {
+		return findByCompanyId(companyId, start, end, null);
+	}
+
+	/**
+	 * Returns the user trackers before and after the current user tracker in the ordered set where companyId = &#63;.
+	 *
+	 * @param userTrackerId the primary key of the current user tracker
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next user tracker
+	 * @throws com.liferay.portal.NoSuchUserTrackerException if a user tracker with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public UserTracker[] findByCompanyId_PrevAndNext(long userTrackerId,
+		long companyId, OrderByComparator orderByComparator)
+		throws NoSuchUserTrackerException, SystemException {
+		UserTracker userTracker = findByPrimaryKey(userTrackerId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			UserTracker[] array = new UserTrackerImpl[3];
+
+			array[0] = getByCompanyId_PrevAndNext(session, userTracker,
+					companyId, orderByComparator, true);
+
+			array[1] = userTracker;
+
+			array[2] = getByCompanyId_PrevAndNext(session, userTracker,
+					companyId, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected UserTracker getByCompanyId_PrevAndNext(Session session,
+		UserTracker userTracker, long companyId,
+		OrderByComparator orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_USERTRACKER_WHERE);
+
+		query.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(UserTrackerModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(companyId);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(userTracker);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<UserTracker> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Returns an ordered range of all the user trackers where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from UserTrackerModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted in portal side by PK ASC order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of user trackers
+	 * @param end the upper bound of the range of user trackers (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching user trackers
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<UserTracker> findByCompanyId(long companyId, int start,
+		int end, OrderByComparator orderByComparator) throws SystemException {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID;
+			finderArgs = new Object[] { companyId };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_COMPANYID;
+			finderArgs = new Object[] { companyId, start, end, orderByComparator };
+		}
+
+		List<UserTracker> list = (List<UserTracker>)FinderCacheUtil.getResult(finderPath,
+				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (UserTracker userTracker : list) {
+				if ((companyId != userTracker.getCompanyId())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(3 +
+						(orderByComparator.getOrderByFields().length * 3));
+			}
+			else {
+				query = new StringBundler(3);
+			}
+
+			query.append(_SQL_SELECT_USERTRACKER_WHERE);
+
+			query.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else if (pagination) {
+				query.append(UserTrackerModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(companyId);
+
+				if (!pagination) {
+					list = (List<UserTracker>)QueryUtil.list(q, getDialect(),
+							start, end, false);
+
+					Collections.sort(list);
+
+					list = new UnmodifiableList(list);
+				}
+				else {
+					list = (List<UserTracker>)QueryUtil.list(q, getDialect(),
+							start, end);
+				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first user tracker in the default ordered set defined by {@link UserTrackerModelImpl#ORDER_BY_JPQL} where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @return the first matching user tracker
+	 * @throws com.liferay.portal.NoSuchUserTrackerException if a matching user tracker could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public UserTracker findByCompanyId_First(long companyId)
+		throws NoSuchUserTrackerException, SystemException {
+		return findByCompanyId_First(companyId, null);
+	}
+
+	/**
+	 * Returns the first user tracker in the ordered set where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching user tracker
+	 * @throws com.liferay.portal.NoSuchUserTrackerException if a matching user tracker could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public UserTracker findByCompanyId_First(long companyId,
+		OrderByComparator orderByComparator)
+		throws NoSuchUserTrackerException, SystemException {
+		UserTracker userTracker = fetchByCompanyId_First(companyId,
+				orderByComparator);
+
+		if (userTracker != null) {
+			return userTracker;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("companyId=");
+		msg.append(companyId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchUserTrackerException(msg.toString());
+	}
+
+	/**
+	 * Returns the first user tracker in the default ordered set defined by {@link UserTrackerModelImpl#ORDER_BY_JPQL} where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @return the first matching user tracker, or <code>null</code> if a matching user tracker could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public UserTracker fetchByCompanyId_First(long companyId)
+		throws SystemException {
+		return fetchByCompanyId_First(companyId, null);
+	}
+
+	/**
+	 * Returns the first user tracker in the ordered set where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching user tracker, or <code>null</code> if a matching user tracker could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public UserTracker fetchByCompanyId_First(long companyId,
+		OrderByComparator orderByComparator) throws SystemException {
+		List<UserTracker> list = findByCompanyId(companyId, 0, 1,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last user tracker in the default ordered set defined by {@link UserTrackerModelImpl#ORDER_BY_JPQL} where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @return the last matching user tracker
+	 * @throws com.liferay.portal.NoSuchUserTrackerException if a matching user tracker could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public UserTracker findByCompanyId_Last(long companyId)
+		throws NoSuchUserTrackerException, SystemException {
+		return findByCompanyId_Last(companyId, null);
+	}
+
+	/**
+	 * Returns the last user tracker in the ordered set where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching user tracker
+	 * @throws com.liferay.portal.NoSuchUserTrackerException if a matching user tracker could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public UserTracker findByCompanyId_Last(long companyId,
+		OrderByComparator orderByComparator)
+		throws NoSuchUserTrackerException, SystemException {
+		UserTracker userTracker = fetchByCompanyId_Last(companyId,
+				orderByComparator);
+
+		if (userTracker != null) {
+			return userTracker;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("companyId=");
+		msg.append(companyId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchUserTrackerException(msg.toString());
+	}
+
+	/**
+	 * Returns the last user tracker in the default ordered set defined by {@link UserTrackerModelImpl#ORDER_BY_JPQL} where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @return the last matching user tracker, or <code>null</code> if a matching user tracker could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public UserTracker fetchByCompanyId_Last(long companyId)
+		throws SystemException {
+		return fetchByCompanyId_Last(companyId, null);
+	}
+
+	/**
+	 * Returns the last user tracker in the ordered set where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching user tracker, or <code>null</code> if a matching user tracker could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public UserTracker fetchByCompanyId_Last(long companyId,
+		OrderByComparator orderByComparator) throws SystemException {
+		int count = countByCompanyId(companyId);
+
+		List<UserTracker> list = findByCompanyId(companyId, count - 1, count,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Removes all the user trackers where companyId = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void removeByCompanyId(long companyId) throws SystemException {
+		for (UserTracker userTracker : findByCompanyId(companyId,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(userTracker);
+		}
+	}
+
+	/**
+	 * Returns the number of user trackers where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @return the number of matching user trackers
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int countByCompanyId(long companyId) throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_COMPANYID;
+
+		Object[] finderArgs = new Object[] { companyId };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_USERTRACKER_WHERE);
+
+			query.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(companyId);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_COMPANYID_COMPANYID_2 = "userTracker.companyId = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_USERID = new FinderPath(UserTrackerModelImpl.ENTITY_CACHE_ENABLED,
 			UserTrackerModelImpl.FINDER_CACHE_ENABLED, UserTrackerImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUserId",
 			new String[] {
 				Long.class.getName(),
 				
-			"java.lang.Integer", "java.lang.Integer",
-				"com.liferay.portal.kernel.util.OrderByComparator"
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
 			});
 	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID =
 		new FinderPath(UserTrackerModelImpl.ENTITY_CACHE_ENABLED,
@@ -111,6 +628,509 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 			UserTrackerModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUserId",
 			new String[] { Long.class.getName() });
+
+	/**
+	 * Returns all the user trackers where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @return the matching user trackers
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<UserTracker> findByUserId(long userId)
+		throws SystemException {
+		return findByUserId(userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the user trackers where userId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from UserTrackerModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted in portal side by PK ASC order.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param start the lower bound of the range of user trackers
+	 * @param end the upper bound of the range of user trackers (not inclusive)
+	 * @return the range of matching user trackers
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<UserTracker> findByUserId(long userId, int start, int end)
+		throws SystemException {
+		return findByUserId(userId, start, end, null);
+	}
+
+	/**
+	 * Returns the user trackers before and after the current user tracker in the ordered set where userId = &#63;.
+	 *
+	 * @param userTrackerId the primary key of the current user tracker
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next user tracker
+	 * @throws com.liferay.portal.NoSuchUserTrackerException if a user tracker with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public UserTracker[] findByUserId_PrevAndNext(long userTrackerId,
+		long userId, OrderByComparator orderByComparator)
+		throws NoSuchUserTrackerException, SystemException {
+		UserTracker userTracker = findByPrimaryKey(userTrackerId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			UserTracker[] array = new UserTrackerImpl[3];
+
+			array[0] = getByUserId_PrevAndNext(session, userTracker, userId,
+					orderByComparator, true);
+
+			array[1] = userTracker;
+
+			array[2] = getByUserId_PrevAndNext(session, userTracker, userId,
+					orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected UserTracker getByUserId_PrevAndNext(Session session,
+		UserTracker userTracker, long userId,
+		OrderByComparator orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_USERTRACKER_WHERE);
+
+		query.append(_FINDER_COLUMN_USERID_USERID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(UserTrackerModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(userId);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(userTracker);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<UserTracker> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Returns an ordered range of all the user trackers where userId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from UserTrackerModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted in portal side by PK ASC order.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param start the lower bound of the range of user trackers
+	 * @param end the upper bound of the range of user trackers (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching user trackers
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<UserTracker> findByUserId(long userId, int start, int end,
+		OrderByComparator orderByComparator) throws SystemException {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID;
+			finderArgs = new Object[] { userId };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_USERID;
+			finderArgs = new Object[] { userId, start, end, orderByComparator };
+		}
+
+		List<UserTracker> list = (List<UserTracker>)FinderCacheUtil.getResult(finderPath,
+				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (UserTracker userTracker : list) {
+				if ((userId != userTracker.getUserId())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(3 +
+						(orderByComparator.getOrderByFields().length * 3));
+			}
+			else {
+				query = new StringBundler(3);
+			}
+
+			query.append(_SQL_SELECT_USERTRACKER_WHERE);
+
+			query.append(_FINDER_COLUMN_USERID_USERID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else if (pagination) {
+				query.append(UserTrackerModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(userId);
+
+				if (!pagination) {
+					list = (List<UserTracker>)QueryUtil.list(q, getDialect(),
+							start, end, false);
+
+					Collections.sort(list);
+
+					list = new UnmodifiableList(list);
+				}
+				else {
+					list = (List<UserTracker>)QueryUtil.list(q, getDialect(),
+							start, end);
+				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first user tracker in the default ordered set defined by {@link UserTrackerModelImpl#ORDER_BY_JPQL} where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @return the first matching user tracker
+	 * @throws com.liferay.portal.NoSuchUserTrackerException if a matching user tracker could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public UserTracker findByUserId_First(long userId)
+		throws NoSuchUserTrackerException, SystemException {
+		return findByUserId_First(userId, null);
+	}
+
+	/**
+	 * Returns the first user tracker in the ordered set where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching user tracker
+	 * @throws com.liferay.portal.NoSuchUserTrackerException if a matching user tracker could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public UserTracker findByUserId_First(long userId,
+		OrderByComparator orderByComparator)
+		throws NoSuchUserTrackerException, SystemException {
+		UserTracker userTracker = fetchByUserId_First(userId, orderByComparator);
+
+		if (userTracker != null) {
+			return userTracker;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("userId=");
+		msg.append(userId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchUserTrackerException(msg.toString());
+	}
+
+	/**
+	 * Returns the first user tracker in the default ordered set defined by {@link UserTrackerModelImpl#ORDER_BY_JPQL} where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @return the first matching user tracker, or <code>null</code> if a matching user tracker could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public UserTracker fetchByUserId_First(long userId)
+		throws SystemException {
+		return fetchByUserId_First(userId, null);
+	}
+
+	/**
+	 * Returns the first user tracker in the ordered set where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching user tracker, or <code>null</code> if a matching user tracker could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public UserTracker fetchByUserId_First(long userId,
+		OrderByComparator orderByComparator) throws SystemException {
+		List<UserTracker> list = findByUserId(userId, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last user tracker in the default ordered set defined by {@link UserTrackerModelImpl#ORDER_BY_JPQL} where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @return the last matching user tracker
+	 * @throws com.liferay.portal.NoSuchUserTrackerException if a matching user tracker could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public UserTracker findByUserId_Last(long userId)
+		throws NoSuchUserTrackerException, SystemException {
+		return findByUserId_Last(userId, null);
+	}
+
+	/**
+	 * Returns the last user tracker in the ordered set where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching user tracker
+	 * @throws com.liferay.portal.NoSuchUserTrackerException if a matching user tracker could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public UserTracker findByUserId_Last(long userId,
+		OrderByComparator orderByComparator)
+		throws NoSuchUserTrackerException, SystemException {
+		UserTracker userTracker = fetchByUserId_Last(userId, orderByComparator);
+
+		if (userTracker != null) {
+			return userTracker;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("userId=");
+		msg.append(userId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchUserTrackerException(msg.toString());
+	}
+
+	/**
+	 * Returns the last user tracker in the default ordered set defined by {@link UserTrackerModelImpl#ORDER_BY_JPQL} where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @return the last matching user tracker, or <code>null</code> if a matching user tracker could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public UserTracker fetchByUserId_Last(long userId)
+		throws SystemException {
+		return fetchByUserId_Last(userId, null);
+	}
+
+	/**
+	 * Returns the last user tracker in the ordered set where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching user tracker, or <code>null</code> if a matching user tracker could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public UserTracker fetchByUserId_Last(long userId,
+		OrderByComparator orderByComparator) throws SystemException {
+		int count = countByUserId(userId);
+
+		List<UserTracker> list = findByUserId(userId, count - 1, count,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Removes all the user trackers where userId = &#63; from the database.
+	 *
+	 * @param userId the user ID
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void removeByUserId(long userId) throws SystemException {
+		for (UserTracker userTracker : findByUserId(userId, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null)) {
+			remove(userTracker);
+		}
+	}
+
+	/**
+	 * Returns the number of user trackers where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @return the number of matching user trackers
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int countByUserId(long userId) throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_USERID;
+
+		Object[] finderArgs = new Object[] { userId };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_USERTRACKER_WHERE);
+
+			query.append(_FINDER_COLUMN_USERID_USERID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(userId);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_USERID_USERID_2 = "userTracker.userId = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_SESSIONID =
 		new FinderPath(UserTrackerModelImpl.ENTITY_CACHE_ENABLED,
 			UserTrackerModelImpl.FINDER_CACHE_ENABLED, UserTrackerImpl.class,
@@ -118,8 +1138,8 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 			new String[] {
 				String.class.getName(),
 				
-			"java.lang.Integer", "java.lang.Integer",
-				"com.liferay.portal.kernel.util.OrderByComparator"
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
 			});
 	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_SESSIONID =
 		new FinderPath(UserTrackerModelImpl.ENTITY_CACHE_ENABLED,
@@ -131,15 +1151,551 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 			UserTrackerModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countBySessionId",
 			new String[] { String.class.getName() });
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_ALL = new FinderPath(UserTrackerModelImpl.ENTITY_CACHE_ENABLED,
-			UserTrackerModelImpl.FINDER_CACHE_ENABLED, UserTrackerImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL = new FinderPath(UserTrackerModelImpl.ENTITY_CACHE_ENABLED,
-			UserTrackerModelImpl.FINDER_CACHE_ENABLED, UserTrackerImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0]);
-	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(UserTrackerModelImpl.ENTITY_CACHE_ENABLED,
-			UserTrackerModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
+
+	/**
+	 * Returns all the user trackers where sessionId = &#63;.
+	 *
+	 * @param sessionId the session ID
+	 * @return the matching user trackers
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<UserTracker> findBySessionId(String sessionId)
+		throws SystemException {
+		return findBySessionId(sessionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			null);
+	}
+
+	/**
+	 * Returns a range of all the user trackers where sessionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from UserTrackerModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted in portal side by PK ASC order.
+	 * </p>
+	 *
+	 * @param sessionId the session ID
+	 * @param start the lower bound of the range of user trackers
+	 * @param end the upper bound of the range of user trackers (not inclusive)
+	 * @return the range of matching user trackers
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<UserTracker> findBySessionId(String sessionId, int start,
+		int end) throws SystemException {
+		return findBySessionId(sessionId, start, end, null);
+	}
+
+	/**
+	 * Returns the user trackers before and after the current user tracker in the ordered set where sessionId = &#63;.
+	 *
+	 * @param userTrackerId the primary key of the current user tracker
+	 * @param sessionId the session ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next user tracker
+	 * @throws com.liferay.portal.NoSuchUserTrackerException if a user tracker with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public UserTracker[] findBySessionId_PrevAndNext(long userTrackerId,
+		String sessionId, OrderByComparator orderByComparator)
+		throws NoSuchUserTrackerException, SystemException {
+		UserTracker userTracker = findByPrimaryKey(userTrackerId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			UserTracker[] array = new UserTrackerImpl[3];
+
+			array[0] = getBySessionId_PrevAndNext(session, userTracker,
+					sessionId, orderByComparator, true);
+
+			array[1] = userTracker;
+
+			array[2] = getBySessionId_PrevAndNext(session, userTracker,
+					sessionId, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected UserTracker getBySessionId_PrevAndNext(Session session,
+		UserTracker userTracker, String sessionId,
+		OrderByComparator orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_USERTRACKER_WHERE);
+
+		if (sessionId == null) {
+			query.append(_FINDER_COLUMN_SESSIONID_SESSIONID_1);
+		}
+		else {
+			if (sessionId.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_SESSIONID_SESSIONID_3);
+			}
+			else {
+				query.append(_FINDER_COLUMN_SESSIONID_SESSIONID_2);
+			}
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(UserTrackerModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		if (sessionId != null) {
+			qPos.add(sessionId);
+		}
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(userTracker);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<UserTracker> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Returns an ordered range of all the user trackers where sessionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from UserTrackerModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted in portal side by PK ASC order.
+	 * </p>
+	 *
+	 * @param sessionId the session ID
+	 * @param start the lower bound of the range of user trackers
+	 * @param end the upper bound of the range of user trackers (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching user trackers
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<UserTracker> findBySessionId(String sessionId, int start,
+		int end, OrderByComparator orderByComparator) throws SystemException {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_SESSIONID;
+			finderArgs = new Object[] { sessionId };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_SESSIONID;
+			finderArgs = new Object[] { sessionId, start, end, orderByComparator };
+		}
+
+		List<UserTracker> list = (List<UserTracker>)FinderCacheUtil.getResult(finderPath,
+				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (UserTracker userTracker : list) {
+				if (!Validator.equals(sessionId, userTracker.getSessionId())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(3 +
+						(orderByComparator.getOrderByFields().length * 3));
+			}
+			else {
+				query = new StringBundler(3);
+			}
+
+			query.append(_SQL_SELECT_USERTRACKER_WHERE);
+
+			if (sessionId == null) {
+				query.append(_FINDER_COLUMN_SESSIONID_SESSIONID_1);
+			}
+			else {
+				if (sessionId.equals(StringPool.BLANK)) {
+					query.append(_FINDER_COLUMN_SESSIONID_SESSIONID_3);
+				}
+				else {
+					query.append(_FINDER_COLUMN_SESSIONID_SESSIONID_2);
+				}
+			}
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else if (pagination) {
+				query.append(UserTrackerModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (sessionId != null) {
+					qPos.add(sessionId);
+				}
+
+				if (!pagination) {
+					list = (List<UserTracker>)QueryUtil.list(q, getDialect(),
+							start, end, false);
+
+					Collections.sort(list);
+
+					list = new UnmodifiableList(list);
+				}
+				else {
+					list = (List<UserTracker>)QueryUtil.list(q, getDialect(),
+							start, end);
+				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first user tracker in the default ordered set defined by {@link UserTrackerModelImpl#ORDER_BY_JPQL} where sessionId = &#63;.
+	 *
+	 * @param sessionId the session ID
+	 * @return the first matching user tracker
+	 * @throws com.liferay.portal.NoSuchUserTrackerException if a matching user tracker could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public UserTracker findBySessionId_First(String sessionId)
+		throws NoSuchUserTrackerException, SystemException {
+		return findBySessionId_First(sessionId, null);
+	}
+
+	/**
+	 * Returns the first user tracker in the ordered set where sessionId = &#63;.
+	 *
+	 * @param sessionId the session ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching user tracker
+	 * @throws com.liferay.portal.NoSuchUserTrackerException if a matching user tracker could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public UserTracker findBySessionId_First(String sessionId,
+		OrderByComparator orderByComparator)
+		throws NoSuchUserTrackerException, SystemException {
+		UserTracker userTracker = fetchBySessionId_First(sessionId,
+				orderByComparator);
+
+		if (userTracker != null) {
+			return userTracker;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("sessionId=");
+		msg.append(sessionId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchUserTrackerException(msg.toString());
+	}
+
+	/**
+	 * Returns the first user tracker in the default ordered set defined by {@link UserTrackerModelImpl#ORDER_BY_JPQL} where sessionId = &#63;.
+	 *
+	 * @param sessionId the session ID
+	 * @return the first matching user tracker, or <code>null</code> if a matching user tracker could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public UserTracker fetchBySessionId_First(String sessionId)
+		throws SystemException {
+		return fetchBySessionId_First(sessionId, null);
+	}
+
+	/**
+	 * Returns the first user tracker in the ordered set where sessionId = &#63;.
+	 *
+	 * @param sessionId the session ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching user tracker, or <code>null</code> if a matching user tracker could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public UserTracker fetchBySessionId_First(String sessionId,
+		OrderByComparator orderByComparator) throws SystemException {
+		List<UserTracker> list = findBySessionId(sessionId, 0, 1,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last user tracker in the default ordered set defined by {@link UserTrackerModelImpl#ORDER_BY_JPQL} where sessionId = &#63;.
+	 *
+	 * @param sessionId the session ID
+	 * @return the last matching user tracker
+	 * @throws com.liferay.portal.NoSuchUserTrackerException if a matching user tracker could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public UserTracker findBySessionId_Last(String sessionId)
+		throws NoSuchUserTrackerException, SystemException {
+		return findBySessionId_Last(sessionId, null);
+	}
+
+	/**
+	 * Returns the last user tracker in the ordered set where sessionId = &#63;.
+	 *
+	 * @param sessionId the session ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching user tracker
+	 * @throws com.liferay.portal.NoSuchUserTrackerException if a matching user tracker could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public UserTracker findBySessionId_Last(String sessionId,
+		OrderByComparator orderByComparator)
+		throws NoSuchUserTrackerException, SystemException {
+		UserTracker userTracker = fetchBySessionId_Last(sessionId,
+				orderByComparator);
+
+		if (userTracker != null) {
+			return userTracker;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("sessionId=");
+		msg.append(sessionId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchUserTrackerException(msg.toString());
+	}
+
+	/**
+	 * Returns the last user tracker in the default ordered set defined by {@link UserTrackerModelImpl#ORDER_BY_JPQL} where sessionId = &#63;.
+	 *
+	 * @param sessionId the session ID
+	 * @return the last matching user tracker, or <code>null</code> if a matching user tracker could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public UserTracker fetchBySessionId_Last(String sessionId)
+		throws SystemException {
+		return fetchBySessionId_Last(sessionId, null);
+	}
+
+	/**
+	 * Returns the last user tracker in the ordered set where sessionId = &#63;.
+	 *
+	 * @param sessionId the session ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching user tracker, or <code>null</code> if a matching user tracker could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public UserTracker fetchBySessionId_Last(String sessionId,
+		OrderByComparator orderByComparator) throws SystemException {
+		int count = countBySessionId(sessionId);
+
+		List<UserTracker> list = findBySessionId(sessionId, count - 1, count,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Removes all the user trackers where sessionId = &#63; from the database.
+	 *
+	 * @param sessionId the session ID
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void removeBySessionId(String sessionId) throws SystemException {
+		for (UserTracker userTracker : findBySessionId(sessionId,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(userTracker);
+		}
+	}
+
+	/**
+	 * Returns the number of user trackers where sessionId = &#63;.
+	 *
+	 * @param sessionId the session ID
+	 * @return the number of matching user trackers
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int countBySessionId(String sessionId) throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_SESSIONID;
+
+		Object[] finderArgs = new Object[] { sessionId };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_USERTRACKER_WHERE);
+
+			if (sessionId == null) {
+				query.append(_FINDER_COLUMN_SESSIONID_SESSIONID_1);
+			}
+			else {
+				if (sessionId.equals(StringPool.BLANK)) {
+					query.append(_FINDER_COLUMN_SESSIONID_SESSIONID_3);
+				}
+				else {
+					query.append(_FINDER_COLUMN_SESSIONID_SESSIONID_2);
+				}
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (sessionId != null) {
+					qPos.add(sessionId);
+				}
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_SESSIONID_SESSIONID_1 = "userTracker.sessionId IS NULL";
+	private static final String _FINDER_COLUMN_SESSIONID_SESSIONID_2 = "userTracker.sessionId = ?";
+	private static final String _FINDER_COLUMN_SESSIONID_SESSIONID_3 = "(userTracker.sessionId IS NULL OR userTracker.sessionId = ?)";
 
 	/**
 	 * Caches the user tracker in the entity cache if it is enabled.
@@ -516,1178 +2072,32 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 		if (userTracker == null) {
 			Session session = null;
 
-			boolean hasException = false;
-
 			try {
 				session = openSession();
 
 				userTracker = (UserTracker)session.get(UserTrackerImpl.class,
 						Long.valueOf(userTrackerId));
+
+				if (userTracker != null) {
+					cacheResult(userTracker);
+				}
+				else {
+					EntityCacheUtil.putResult(UserTrackerModelImpl.ENTITY_CACHE_ENABLED,
+						UserTrackerImpl.class, userTrackerId, _nullUserTracker);
+				}
 			}
 			catch (Exception e) {
-				hasException = true;
+				EntityCacheUtil.removeResult(UserTrackerModelImpl.ENTITY_CACHE_ENABLED,
+					UserTrackerImpl.class, userTrackerId);
 
 				throw processException(e);
 			}
 			finally {
-				if (userTracker != null) {
-					cacheResult(userTracker);
-				}
-				else if (!hasException) {
-					EntityCacheUtil.putResult(UserTrackerModelImpl.ENTITY_CACHE_ENABLED,
-						UserTrackerImpl.class, userTrackerId, _nullUserTracker);
-				}
-
 				closeSession(session);
 			}
 		}
 
 		return userTracker;
-	}
-
-	/**
-	 * Returns all the user trackers where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @return the matching user trackers
-	 * @throws SystemException if a system exception occurred
-	 */
-	public List<UserTracker> findByCompanyId(long companyId)
-		throws SystemException {
-		return findByCompanyId(companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the user trackers where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of user trackers
-	 * @param end the upper bound of the range of user trackers (not inclusive)
-	 * @return the range of matching user trackers
-	 * @throws SystemException if a system exception occurred
-	 */
-	public List<UserTracker> findByCompanyId(long companyId, int start, int end)
-		throws SystemException {
-		return findByCompanyId(companyId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the user trackers where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of user trackers
-	 * @param end the upper bound of the range of user trackers (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching user trackers
-	 * @throws SystemException if a system exception occurred
-	 */
-	public List<UserTracker> findByCompanyId(long companyId, int start,
-		int end, OrderByComparator orderByComparator) throws SystemException {
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID;
-			finderArgs = new Object[] { companyId };
-		}
-		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_COMPANYID;
-			finderArgs = new Object[] { companyId, start, end, orderByComparator };
-		}
-
-		List<UserTracker> list = (List<UserTracker>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
-
-		if ((list != null) && !list.isEmpty()) {
-			for (UserTracker userTracker : list) {
-				if ((companyId != userTracker.getCompanyId())) {
-					list = null;
-
-					break;
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler query = null;
-
-			if (orderByComparator != null) {
-				query = new StringBundler(3 +
-						(orderByComparator.getOrderByFields().length * 3));
-			}
-			else {
-				query = new StringBundler(2);
-			}
-
-			query.append(_SQL_SELECT_USERTRACKER_WHERE);
-
-			query.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
-			}
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(companyId);
-
-				list = (List<UserTracker>)QueryUtil.list(q, getDialect(),
-						start, end);
-			}
-			catch (Exception e) {
-				throw processException(e);
-			}
-			finally {
-				if (list == null) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
-				else {
-					cacheResult(list);
-
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
-
-				closeSession(session);
-			}
-		}
-
-		return list;
-	}
-
-	/**
-	 * Returns the first user tracker in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching user tracker
-	 * @throws com.liferay.portal.NoSuchUserTrackerException if a matching user tracker could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public UserTracker findByCompanyId_First(long companyId,
-		OrderByComparator orderByComparator)
-		throws NoSuchUserTrackerException, SystemException {
-		UserTracker userTracker = fetchByCompanyId_First(companyId,
-				orderByComparator);
-
-		if (userTracker != null) {
-			return userTracker;
-		}
-
-		StringBundler msg = new StringBundler(4);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("companyId=");
-		msg.append(companyId);
-
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-		throw new NoSuchUserTrackerException(msg.toString());
-	}
-
-	/**
-	 * Returns the first user tracker in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching user tracker, or <code>null</code> if a matching user tracker could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public UserTracker fetchByCompanyId_First(long companyId,
-		OrderByComparator orderByComparator) throws SystemException {
-		List<UserTracker> list = findByCompanyId(companyId, 0, 1,
-				orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last user tracker in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user tracker
-	 * @throws com.liferay.portal.NoSuchUserTrackerException if a matching user tracker could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public UserTracker findByCompanyId_Last(long companyId,
-		OrderByComparator orderByComparator)
-		throws NoSuchUserTrackerException, SystemException {
-		UserTracker userTracker = fetchByCompanyId_Last(companyId,
-				orderByComparator);
-
-		if (userTracker != null) {
-			return userTracker;
-		}
-
-		StringBundler msg = new StringBundler(4);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("companyId=");
-		msg.append(companyId);
-
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-		throw new NoSuchUserTrackerException(msg.toString());
-	}
-
-	/**
-	 * Returns the last user tracker in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user tracker, or <code>null</code> if a matching user tracker could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public UserTracker fetchByCompanyId_Last(long companyId,
-		OrderByComparator orderByComparator) throws SystemException {
-		int count = countByCompanyId(companyId);
-
-		List<UserTracker> list = findByCompanyId(companyId, count - 1, count,
-				orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the user trackers before and after the current user tracker in the ordered set where companyId = &#63;.
-	 *
-	 * @param userTrackerId the primary key of the current user tracker
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next user tracker
-	 * @throws com.liferay.portal.NoSuchUserTrackerException if a user tracker with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public UserTracker[] findByCompanyId_PrevAndNext(long userTrackerId,
-		long companyId, OrderByComparator orderByComparator)
-		throws NoSuchUserTrackerException, SystemException {
-		UserTracker userTracker = findByPrimaryKey(userTrackerId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			UserTracker[] array = new UserTrackerImpl[3];
-
-			array[0] = getByCompanyId_PrevAndNext(session, userTracker,
-					companyId, orderByComparator, true);
-
-			array[1] = userTracker;
-
-			array[2] = getByCompanyId_PrevAndNext(session, userTracker,
-					companyId, orderByComparator, false);
-
-			return array;
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	protected UserTracker getByCompanyId_PrevAndNext(Session session,
-		UserTracker userTracker, long companyId,
-		OrderByComparator orderByComparator, boolean previous) {
-		StringBundler query = null;
-
-		if (orderByComparator != null) {
-			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
-		}
-		else {
-			query = new StringBundler(3);
-		}
-
-		query.append(_SQL_SELECT_USERTRACKER_WHERE);
-
-		query.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
-
-		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
-
-			if (orderByConditionFields.length > 0) {
-				query.append(WHERE_AND);
-			}
-
-			for (int i = 0; i < orderByConditionFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByConditionFields[i]);
-
-				if ((i + 1) < orderByConditionFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN_HAS_NEXT);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN);
-					}
-				}
-			}
-
-			query.append(ORDER_BY_CLAUSE);
-
-			String[] orderByFields = orderByComparator.getOrderByFields();
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC_HAS_NEXT);
-					}
-					else {
-						query.append(ORDER_BY_DESC_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC);
-					}
-					else {
-						query.append(ORDER_BY_DESC);
-					}
-				}
-			}
-		}
-
-		String sql = query.toString();
-
-		Query q = session.createQuery(sql);
-
-		q.setFirstResult(0);
-		q.setMaxResults(2);
-
-		QueryPos qPos = QueryPos.getInstance(q);
-
-		qPos.add(companyId);
-
-		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(userTracker);
-
-			for (Object value : values) {
-				qPos.add(value);
-			}
-		}
-
-		List<UserTracker> list = q.list();
-
-		if (list.size() == 2) {
-			return list.get(1);
-		}
-		else {
-			return null;
-		}
-	}
-
-	/**
-	 * Returns all the user trackers where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @return the matching user trackers
-	 * @throws SystemException if a system exception occurred
-	 */
-	public List<UserTracker> findByUserId(long userId)
-		throws SystemException {
-		return findByUserId(userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the user trackers where userId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param start the lower bound of the range of user trackers
-	 * @param end the upper bound of the range of user trackers (not inclusive)
-	 * @return the range of matching user trackers
-	 * @throws SystemException if a system exception occurred
-	 */
-	public List<UserTracker> findByUserId(long userId, int start, int end)
-		throws SystemException {
-		return findByUserId(userId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the user trackers where userId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param start the lower bound of the range of user trackers
-	 * @param end the upper bound of the range of user trackers (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching user trackers
-	 * @throws SystemException if a system exception occurred
-	 */
-	public List<UserTracker> findByUserId(long userId, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID;
-			finderArgs = new Object[] { userId };
-		}
-		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_USERID;
-			finderArgs = new Object[] { userId, start, end, orderByComparator };
-		}
-
-		List<UserTracker> list = (List<UserTracker>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
-
-		if ((list != null) && !list.isEmpty()) {
-			for (UserTracker userTracker : list) {
-				if ((userId != userTracker.getUserId())) {
-					list = null;
-
-					break;
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler query = null;
-
-			if (orderByComparator != null) {
-				query = new StringBundler(3 +
-						(orderByComparator.getOrderByFields().length * 3));
-			}
-			else {
-				query = new StringBundler(2);
-			}
-
-			query.append(_SQL_SELECT_USERTRACKER_WHERE);
-
-			query.append(_FINDER_COLUMN_USERID_USERID_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
-			}
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(userId);
-
-				list = (List<UserTracker>)QueryUtil.list(q, getDialect(),
-						start, end);
-			}
-			catch (Exception e) {
-				throw processException(e);
-			}
-			finally {
-				if (list == null) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
-				else {
-					cacheResult(list);
-
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
-
-				closeSession(session);
-			}
-		}
-
-		return list;
-	}
-
-	/**
-	 * Returns the first user tracker in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching user tracker
-	 * @throws com.liferay.portal.NoSuchUserTrackerException if a matching user tracker could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public UserTracker findByUserId_First(long userId,
-		OrderByComparator orderByComparator)
-		throws NoSuchUserTrackerException, SystemException {
-		UserTracker userTracker = fetchByUserId_First(userId, orderByComparator);
-
-		if (userTracker != null) {
-			return userTracker;
-		}
-
-		StringBundler msg = new StringBundler(4);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("userId=");
-		msg.append(userId);
-
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-		throw new NoSuchUserTrackerException(msg.toString());
-	}
-
-	/**
-	 * Returns the first user tracker in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching user tracker, or <code>null</code> if a matching user tracker could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public UserTracker fetchByUserId_First(long userId,
-		OrderByComparator orderByComparator) throws SystemException {
-		List<UserTracker> list = findByUserId(userId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last user tracker in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user tracker
-	 * @throws com.liferay.portal.NoSuchUserTrackerException if a matching user tracker could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public UserTracker findByUserId_Last(long userId,
-		OrderByComparator orderByComparator)
-		throws NoSuchUserTrackerException, SystemException {
-		UserTracker userTracker = fetchByUserId_Last(userId, orderByComparator);
-
-		if (userTracker != null) {
-			return userTracker;
-		}
-
-		StringBundler msg = new StringBundler(4);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("userId=");
-		msg.append(userId);
-
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-		throw new NoSuchUserTrackerException(msg.toString());
-	}
-
-	/**
-	 * Returns the last user tracker in the ordered set where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user tracker, or <code>null</code> if a matching user tracker could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public UserTracker fetchByUserId_Last(long userId,
-		OrderByComparator orderByComparator) throws SystemException {
-		int count = countByUserId(userId);
-
-		List<UserTracker> list = findByUserId(userId, count - 1, count,
-				orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the user trackers before and after the current user tracker in the ordered set where userId = &#63;.
-	 *
-	 * @param userTrackerId the primary key of the current user tracker
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next user tracker
-	 * @throws com.liferay.portal.NoSuchUserTrackerException if a user tracker with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public UserTracker[] findByUserId_PrevAndNext(long userTrackerId,
-		long userId, OrderByComparator orderByComparator)
-		throws NoSuchUserTrackerException, SystemException {
-		UserTracker userTracker = findByPrimaryKey(userTrackerId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			UserTracker[] array = new UserTrackerImpl[3];
-
-			array[0] = getByUserId_PrevAndNext(session, userTracker, userId,
-					orderByComparator, true);
-
-			array[1] = userTracker;
-
-			array[2] = getByUserId_PrevAndNext(session, userTracker, userId,
-					orderByComparator, false);
-
-			return array;
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	protected UserTracker getByUserId_PrevAndNext(Session session,
-		UserTracker userTracker, long userId,
-		OrderByComparator orderByComparator, boolean previous) {
-		StringBundler query = null;
-
-		if (orderByComparator != null) {
-			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
-		}
-		else {
-			query = new StringBundler(3);
-		}
-
-		query.append(_SQL_SELECT_USERTRACKER_WHERE);
-
-		query.append(_FINDER_COLUMN_USERID_USERID_2);
-
-		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
-
-			if (orderByConditionFields.length > 0) {
-				query.append(WHERE_AND);
-			}
-
-			for (int i = 0; i < orderByConditionFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByConditionFields[i]);
-
-				if ((i + 1) < orderByConditionFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN_HAS_NEXT);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN);
-					}
-				}
-			}
-
-			query.append(ORDER_BY_CLAUSE);
-
-			String[] orderByFields = orderByComparator.getOrderByFields();
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC_HAS_NEXT);
-					}
-					else {
-						query.append(ORDER_BY_DESC_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC);
-					}
-					else {
-						query.append(ORDER_BY_DESC);
-					}
-				}
-			}
-		}
-
-		String sql = query.toString();
-
-		Query q = session.createQuery(sql);
-
-		q.setFirstResult(0);
-		q.setMaxResults(2);
-
-		QueryPos qPos = QueryPos.getInstance(q);
-
-		qPos.add(userId);
-
-		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(userTracker);
-
-			for (Object value : values) {
-				qPos.add(value);
-			}
-		}
-
-		List<UserTracker> list = q.list();
-
-		if (list.size() == 2) {
-			return list.get(1);
-		}
-		else {
-			return null;
-		}
-	}
-
-	/**
-	 * Returns all the user trackers where sessionId = &#63;.
-	 *
-	 * @param sessionId the session ID
-	 * @return the matching user trackers
-	 * @throws SystemException if a system exception occurred
-	 */
-	public List<UserTracker> findBySessionId(String sessionId)
-		throws SystemException {
-		return findBySessionId(sessionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the user trackers where sessionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
-	 * @param sessionId the session ID
-	 * @param start the lower bound of the range of user trackers
-	 * @param end the upper bound of the range of user trackers (not inclusive)
-	 * @return the range of matching user trackers
-	 * @throws SystemException if a system exception occurred
-	 */
-	public List<UserTracker> findBySessionId(String sessionId, int start,
-		int end) throws SystemException {
-		return findBySessionId(sessionId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the user trackers where sessionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
-	 * @param sessionId the session ID
-	 * @param start the lower bound of the range of user trackers
-	 * @param end the upper bound of the range of user trackers (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching user trackers
-	 * @throws SystemException if a system exception occurred
-	 */
-	public List<UserTracker> findBySessionId(String sessionId, int start,
-		int end, OrderByComparator orderByComparator) throws SystemException {
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_SESSIONID;
-			finderArgs = new Object[] { sessionId };
-		}
-		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_SESSIONID;
-			finderArgs = new Object[] { sessionId, start, end, orderByComparator };
-		}
-
-		List<UserTracker> list = (List<UserTracker>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
-
-		if ((list != null) && !list.isEmpty()) {
-			for (UserTracker userTracker : list) {
-				if (!Validator.equals(sessionId, userTracker.getSessionId())) {
-					list = null;
-
-					break;
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler query = null;
-
-			if (orderByComparator != null) {
-				query = new StringBundler(3 +
-						(orderByComparator.getOrderByFields().length * 3));
-			}
-			else {
-				query = new StringBundler(2);
-			}
-
-			query.append(_SQL_SELECT_USERTRACKER_WHERE);
-
-			if (sessionId == null) {
-				query.append(_FINDER_COLUMN_SESSIONID_SESSIONID_1);
-			}
-			else {
-				if (sessionId.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_SESSIONID_SESSIONID_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_SESSIONID_SESSIONID_2);
-				}
-			}
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
-			}
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				if (sessionId != null) {
-					qPos.add(sessionId);
-				}
-
-				list = (List<UserTracker>)QueryUtil.list(q, getDialect(),
-						start, end);
-			}
-			catch (Exception e) {
-				throw processException(e);
-			}
-			finally {
-				if (list == null) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
-				else {
-					cacheResult(list);
-
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
-
-				closeSession(session);
-			}
-		}
-
-		return list;
-	}
-
-	/**
-	 * Returns the first user tracker in the ordered set where sessionId = &#63;.
-	 *
-	 * @param sessionId the session ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching user tracker
-	 * @throws com.liferay.portal.NoSuchUserTrackerException if a matching user tracker could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public UserTracker findBySessionId_First(String sessionId,
-		OrderByComparator orderByComparator)
-		throws NoSuchUserTrackerException, SystemException {
-		UserTracker userTracker = fetchBySessionId_First(sessionId,
-				orderByComparator);
-
-		if (userTracker != null) {
-			return userTracker;
-		}
-
-		StringBundler msg = new StringBundler(4);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("sessionId=");
-		msg.append(sessionId);
-
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-		throw new NoSuchUserTrackerException(msg.toString());
-	}
-
-	/**
-	 * Returns the first user tracker in the ordered set where sessionId = &#63;.
-	 *
-	 * @param sessionId the session ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching user tracker, or <code>null</code> if a matching user tracker could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public UserTracker fetchBySessionId_First(String sessionId,
-		OrderByComparator orderByComparator) throws SystemException {
-		List<UserTracker> list = findBySessionId(sessionId, 0, 1,
-				orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last user tracker in the ordered set where sessionId = &#63;.
-	 *
-	 * @param sessionId the session ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user tracker
-	 * @throws com.liferay.portal.NoSuchUserTrackerException if a matching user tracker could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public UserTracker findBySessionId_Last(String sessionId,
-		OrderByComparator orderByComparator)
-		throws NoSuchUserTrackerException, SystemException {
-		UserTracker userTracker = fetchBySessionId_Last(sessionId,
-				orderByComparator);
-
-		if (userTracker != null) {
-			return userTracker;
-		}
-
-		StringBundler msg = new StringBundler(4);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("sessionId=");
-		msg.append(sessionId);
-
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-		throw new NoSuchUserTrackerException(msg.toString());
-	}
-
-	/**
-	 * Returns the last user tracker in the ordered set where sessionId = &#63;.
-	 *
-	 * @param sessionId the session ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching user tracker, or <code>null</code> if a matching user tracker could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public UserTracker fetchBySessionId_Last(String sessionId,
-		OrderByComparator orderByComparator) throws SystemException {
-		int count = countBySessionId(sessionId);
-
-		List<UserTracker> list = findBySessionId(sessionId, count - 1, count,
-				orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the user trackers before and after the current user tracker in the ordered set where sessionId = &#63;.
-	 *
-	 * @param userTrackerId the primary key of the current user tracker
-	 * @param sessionId the session ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next user tracker
-	 * @throws com.liferay.portal.NoSuchUserTrackerException if a user tracker with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public UserTracker[] findBySessionId_PrevAndNext(long userTrackerId,
-		String sessionId, OrderByComparator orderByComparator)
-		throws NoSuchUserTrackerException, SystemException {
-		UserTracker userTracker = findByPrimaryKey(userTrackerId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			UserTracker[] array = new UserTrackerImpl[3];
-
-			array[0] = getBySessionId_PrevAndNext(session, userTracker,
-					sessionId, orderByComparator, true);
-
-			array[1] = userTracker;
-
-			array[2] = getBySessionId_PrevAndNext(session, userTracker,
-					sessionId, orderByComparator, false);
-
-			return array;
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	protected UserTracker getBySessionId_PrevAndNext(Session session,
-		UserTracker userTracker, String sessionId,
-		OrderByComparator orderByComparator, boolean previous) {
-		StringBundler query = null;
-
-		if (orderByComparator != null) {
-			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
-		}
-		else {
-			query = new StringBundler(3);
-		}
-
-		query.append(_SQL_SELECT_USERTRACKER_WHERE);
-
-		if (sessionId == null) {
-			query.append(_FINDER_COLUMN_SESSIONID_SESSIONID_1);
-		}
-		else {
-			if (sessionId.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_SESSIONID_SESSIONID_3);
-			}
-			else {
-				query.append(_FINDER_COLUMN_SESSIONID_SESSIONID_2);
-			}
-		}
-
-		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
-
-			if (orderByConditionFields.length > 0) {
-				query.append(WHERE_AND);
-			}
-
-			for (int i = 0; i < orderByConditionFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByConditionFields[i]);
-
-				if ((i + 1) < orderByConditionFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN_HAS_NEXT);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN);
-					}
-				}
-			}
-
-			query.append(ORDER_BY_CLAUSE);
-
-			String[] orderByFields = orderByComparator.getOrderByFields();
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC_HAS_NEXT);
-					}
-					else {
-						query.append(ORDER_BY_DESC_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC);
-					}
-					else {
-						query.append(ORDER_BY_DESC);
-					}
-				}
-			}
-		}
-
-		String sql = query.toString();
-
-		Query q = session.createQuery(sql);
-
-		q.setFirstResult(0);
-		q.setMaxResults(2);
-
-		QueryPos qPos = QueryPos.getInstance(q);
-
-		if (sessionId != null) {
-			qPos.add(sessionId);
-		}
-
-		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(userTracker);
-
-			for (Object value : values) {
-				qPos.add(value);
-			}
-		}
-
-		List<UserTracker> list = q.list();
-
-		if (list.size() == 2) {
-			return list.get(1);
-		}
-		else {
-			return null;
-		}
 	}
 
 	/**
@@ -1704,7 +2114,7 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 	 * Returns a range of all the user trackers.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from UserTrackerModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted in portal side by PK ASC order.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of user trackers
@@ -1721,7 +2131,7 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 	 * Returns an ordered range of all the user trackers.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from UserTrackerModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted in portal side by PK ASC order.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of user trackers
@@ -1732,11 +2142,13 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 	 */
 	public List<UserTracker> findAll(int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
+		boolean pagination = true;
 		FinderPath finderPath = null;
-		Object[] finderArgs = new Object[] { start, end, orderByComparator };
+		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 				(orderByComparator == null)) {
+			pagination = false;
 			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL;
 			finderArgs = FINDER_ARGS_EMPTY;
 		}
@@ -1765,6 +2177,10 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 			}
 			else {
 				sql = _SQL_SELECT_USERTRACKER;
+
+				if (pagination) {
+					sql = sql.concat(UserTrackerModelImpl.ORDER_BY_JPQL);
+				}
 			}
 
 			Session session = null;
@@ -1774,71 +2190,34 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 
 				Query q = session.createQuery(sql);
 
-				if (orderByComparator == null) {
+				if (!pagination) {
 					list = (List<UserTracker>)QueryUtil.list(q, getDialect(),
 							start, end, false);
 
 					Collections.sort(list);
+
+					list = new UnmodifiableList(list);
 				}
 				else {
 					list = (List<UserTracker>)QueryUtil.list(q, getDialect(),
 							start, end);
 				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
 				throw processException(e);
 			}
 			finally {
-				if (list == null) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
-				else {
-					cacheResult(list);
-
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
-
 				closeSession(session);
 			}
 		}
 
 		return list;
-	}
-
-	/**
-	 * Removes all the user trackers where companyId = &#63; from the database.
-	 *
-	 * @param companyId the company ID
-	 * @throws SystemException if a system exception occurred
-	 */
-	public void removeByCompanyId(long companyId) throws SystemException {
-		for (UserTracker userTracker : findByCompanyId(companyId)) {
-			remove(userTracker);
-		}
-	}
-
-	/**
-	 * Removes all the user trackers where userId = &#63; from the database.
-	 *
-	 * @param userId the user ID
-	 * @throws SystemException if a system exception occurred
-	 */
-	public void removeByUserId(long userId) throws SystemException {
-		for (UserTracker userTracker : findByUserId(userId)) {
-			remove(userTracker);
-		}
-	}
-
-	/**
-	 * Removes all the user trackers where sessionId = &#63; from the database.
-	 *
-	 * @param sessionId the session ID
-	 * @throws SystemException if a system exception occurred
-	 */
-	public void removeBySessionId(String sessionId) throws SystemException {
-		for (UserTracker userTracker : findBySessionId(sessionId)) {
-			remove(userTracker);
-		}
 	}
 
 	/**
@@ -1850,177 +2229,6 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 		for (UserTracker userTracker : findAll()) {
 			remove(userTracker);
 		}
-	}
-
-	/**
-	 * Returns the number of user trackers where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @return the number of matching user trackers
-	 * @throws SystemException if a system exception occurred
-	 */
-	public int countByCompanyId(long companyId) throws SystemException {
-		Object[] finderArgs = new Object[] { companyId };
-
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_BY_COMPANYID,
-				finderArgs, this);
-
-		if (count == null) {
-			StringBundler query = new StringBundler(2);
-
-			query.append(_SQL_COUNT_USERTRACKER_WHERE);
-
-			query.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(companyId);
-
-				count = (Long)q.uniqueResult();
-			}
-			catch (Exception e) {
-				throw processException(e);
-			}
-			finally {
-				if (count == null) {
-					count = Long.valueOf(0);
-				}
-
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_COMPANYID,
-					finderArgs, count);
-
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
-	}
-
-	/**
-	 * Returns the number of user trackers where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @return the number of matching user trackers
-	 * @throws SystemException if a system exception occurred
-	 */
-	public int countByUserId(long userId) throws SystemException {
-		Object[] finderArgs = new Object[] { userId };
-
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_BY_USERID,
-				finderArgs, this);
-
-		if (count == null) {
-			StringBundler query = new StringBundler(2);
-
-			query.append(_SQL_COUNT_USERTRACKER_WHERE);
-
-			query.append(_FINDER_COLUMN_USERID_USERID_2);
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(userId);
-
-				count = (Long)q.uniqueResult();
-			}
-			catch (Exception e) {
-				throw processException(e);
-			}
-			finally {
-				if (count == null) {
-					count = Long.valueOf(0);
-				}
-
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_USERID,
-					finderArgs, count);
-
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
-	}
-
-	/**
-	 * Returns the number of user trackers where sessionId = &#63;.
-	 *
-	 * @param sessionId the session ID
-	 * @return the number of matching user trackers
-	 * @throws SystemException if a system exception occurred
-	 */
-	public int countBySessionId(String sessionId) throws SystemException {
-		Object[] finderArgs = new Object[] { sessionId };
-
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_BY_SESSIONID,
-				finderArgs, this);
-
-		if (count == null) {
-			StringBundler query = new StringBundler(2);
-
-			query.append(_SQL_COUNT_USERTRACKER_WHERE);
-
-			if (sessionId == null) {
-				query.append(_FINDER_COLUMN_SESSIONID_SESSIONID_1);
-			}
-			else {
-				if (sessionId.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_SESSIONID_SESSIONID_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_SESSIONID_SESSIONID_2);
-				}
-			}
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				if (sessionId != null) {
-					qPos.add(sessionId);
-				}
-
-				count = (Long)q.uniqueResult();
-			}
-			catch (Exception e) {
-				throw processException(e);
-			}
-			finally {
-				if (count == null) {
-					count = Long.valueOf(0);
-				}
-
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_SESSIONID,
-					finderArgs, count);
-
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
 	}
 
 	/**
@@ -2042,18 +2250,17 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 				Query q = session.createQuery(_SQL_COUNT_USERTRACKER);
 
 				count = (Long)q.uniqueResult();
-			}
-			catch (Exception e) {
-				throw processException(e);
-			}
-			finally {
-				if (count == null) {
-					count = Long.valueOf(0);
-				}
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
 					FINDER_ARGS_EMPTY, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_ALL,
+					FINDER_ARGS_EMPTY);
 
+				throw processException(e);
+			}
+			finally {
 				closeSession(session);
 			}
 		}
@@ -2089,6 +2296,7 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 	public void destroy() {
 		EntityCacheUtil.removeCache(UserTrackerImpl.class.getName());
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_ENTITY);
+		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
@@ -2218,11 +2426,6 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 	private static final String _SQL_SELECT_USERTRACKER_WHERE = "SELECT userTracker FROM UserTracker userTracker WHERE ";
 	private static final String _SQL_COUNT_USERTRACKER = "SELECT COUNT(userTracker) FROM UserTracker userTracker";
 	private static final String _SQL_COUNT_USERTRACKER_WHERE = "SELECT COUNT(userTracker) FROM UserTracker userTracker WHERE ";
-	private static final String _FINDER_COLUMN_COMPANYID_COMPANYID_2 = "userTracker.companyId = ?";
-	private static final String _FINDER_COLUMN_USERID_USERID_2 = "userTracker.userId = ?";
-	private static final String _FINDER_COLUMN_SESSIONID_SESSIONID_1 = "userTracker.sessionId IS NULL";
-	private static final String _FINDER_COLUMN_SESSIONID_SESSIONID_2 = "userTracker.sessionId = ?";
-	private static final String _FINDER_COLUMN_SESSIONID_SESSIONID_3 = "(userTracker.sessionId IS NULL OR userTracker.sessionId = ?)";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "userTracker.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No UserTracker exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No UserTracker exists with the key {";

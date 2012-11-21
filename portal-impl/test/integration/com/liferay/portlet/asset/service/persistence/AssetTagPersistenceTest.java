@@ -23,17 +23,14 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.Time;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.persistence.BasePersistence;
 import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
 import com.liferay.portal.test.LiferayPersistenceIntegrationJUnitTestRunner;
 import com.liferay.portal.test.persistence.TransactionalPersistenceAdvice;
-import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.asset.NoSuchTagException;
 import com.liferay.portlet.asset.model.AssetTag;
-import com.liferay.portlet.asset.model.impl.AssetTagModelImpl;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -260,25 +257,6 @@ public class AssetTagPersistenceTest {
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
-	}
-
-	@Test
-	public void testResetOriginalValues() throws Exception {
-		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
-			return;
-		}
-
-		AssetTag newAssetTag = addAssetTag();
-
-		_persistence.clearCache();
-
-		AssetTagModelImpl existingAssetTagModelImpl = (AssetTagModelImpl)_persistence.findByPrimaryKey(newAssetTag.getPrimaryKey());
-
-		Assert.assertEquals(existingAssetTagModelImpl.getGroupId(),
-			existingAssetTagModelImpl.getOriginalGroupId());
-		Assert.assertTrue(Validator.equals(
-				existingAssetTagModelImpl.getName(),
-				existingAssetTagModelImpl.getOriginalName()));
 	}
 
 	protected AssetTag addAssetTag() throws Exception {

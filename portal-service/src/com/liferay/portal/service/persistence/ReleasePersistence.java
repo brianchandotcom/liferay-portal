@@ -36,6 +36,64 @@ public interface ReleasePersistence extends BasePersistence<Release> {
 	 */
 
 	/**
+	* Returns the release where servletContextName = &#63; or throws a {@link com.liferay.portal.NoSuchReleaseException} if it could not be found.
+	*
+	* @param servletContextName the servlet context name
+	* @return the matching release
+	* @throws com.liferay.portal.NoSuchReleaseException if a matching release could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Release findByServletContextName(
+		java.lang.String servletContextName)
+		throws com.liferay.portal.NoSuchReleaseException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the release where servletContextName = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param servletContextName the servlet context name
+	* @return the matching release, or <code>null</code> if a matching release could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Release fetchByServletContextName(
+		java.lang.String servletContextName)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the release where servletContextName = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param servletContextName the servlet context name
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the matching release, or <code>null</code> if a matching release could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Release fetchByServletContextName(
+		java.lang.String servletContextName, boolean retrieveFromCache)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Removes the release where servletContextName = &#63; from the database.
+	*
+	* @param servletContextName the servlet context name
+	* @return the release that was removed
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Release removeByServletContextName(
+		java.lang.String servletContextName)
+		throws com.liferay.portal.NoSuchReleaseException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of releases where servletContextName = &#63;.
+	*
+	* @param servletContextName the servlet context name
+	* @return the number of matching releases
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByServletContextName(java.lang.String servletContextName)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Caches the release in the entity cache if it is enabled.
 	*
 	* @param release the release
@@ -97,42 +155,6 @@ public interface ReleasePersistence extends BasePersistence<Release> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the release where servletContextName = &#63; or throws a {@link com.liferay.portal.NoSuchReleaseException} if it could not be found.
-	*
-	* @param servletContextName the servlet context name
-	* @return the matching release
-	* @throws com.liferay.portal.NoSuchReleaseException if a matching release could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.Release findByServletContextName(
-		java.lang.String servletContextName)
-		throws com.liferay.portal.NoSuchReleaseException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the release where servletContextName = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	*
-	* @param servletContextName the servlet context name
-	* @return the matching release, or <code>null</code> if a matching release could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.Release fetchByServletContextName(
-		java.lang.String servletContextName)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the release where servletContextName = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	*
-	* @param servletContextName the servlet context name
-	* @param retrieveFromCache whether to use the finder cache
-	* @return the matching release, or <code>null</code> if a matching release could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.Release fetchByServletContextName(
-		java.lang.String servletContextName, boolean retrieveFromCache)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
 	* Returns all the releases.
 	*
 	* @return the releases
@@ -145,7 +167,7 @@ public interface ReleasePersistence extends BasePersistence<Release> {
 	* Returns a range of all the releases.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from ReleaseModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted in portal side by PK ASC order.
 	* </p>
 	*
 	* @param start the lower bound of the range of releases
@@ -160,7 +182,7 @@ public interface ReleasePersistence extends BasePersistence<Release> {
 	* Returns an ordered range of all the releases.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from ReleaseModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted in portal side by PK ASC order.
 	* </p>
 	*
 	* @param start the lower bound of the range of releases
@@ -175,33 +197,11 @@ public interface ReleasePersistence extends BasePersistence<Release> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Removes the release where servletContextName = &#63; from the database.
-	*
-	* @param servletContextName the servlet context name
-	* @return the release that was removed
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.Release removeByServletContextName(
-		java.lang.String servletContextName)
-		throws com.liferay.portal.NoSuchReleaseException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	/**
 	* Removes all the releases from the database.
 	*
 	* @throws SystemException if a system exception occurred
 	*/
 	public void removeAll()
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the number of releases where servletContextName = &#63;.
-	*
-	* @param servletContextName the servlet context name
-	* @return the number of matching releases
-	* @throws SystemException if a system exception occurred
-	*/
-	public int countByServletContextName(java.lang.String servletContextName)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

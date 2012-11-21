@@ -280,9 +280,6 @@ public class SocialActivityPersistenceTest {
 
 		SocialActivityModelImpl existingSocialActivityModelImpl = (SocialActivityModelImpl)_persistence.findByPrimaryKey(newSocialActivity.getPrimaryKey());
 
-		Assert.assertEquals(existingSocialActivityModelImpl.getMirrorActivityId(),
-			existingSocialActivityModelImpl.getOriginalMirrorActivityId());
-
 		Assert.assertEquals(existingSocialActivityModelImpl.getGroupId(),
 			existingSocialActivityModelImpl.getOriginalGroupId());
 		Assert.assertEquals(existingSocialActivityModelImpl.getUserId(),

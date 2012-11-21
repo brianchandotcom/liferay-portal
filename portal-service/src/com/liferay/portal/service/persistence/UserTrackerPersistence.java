@@ -36,6 +36,558 @@ public interface UserTrackerPersistence extends BasePersistence<UserTracker> {
 	 */
 
 	/**
+	* Returns all the user trackers where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @return the matching user trackers
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portal.model.UserTracker> findByCompanyId(
+		long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns a range of all the user trackers where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from UserTrackerModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted in portal side by PK ASC order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param start the lower bound of the range of user trackers
+	* @param end the upper bound of the range of user trackers (not inclusive)
+	* @return the range of matching user trackers
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portal.model.UserTracker> findByCompanyId(
+		long companyId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the user trackers before and after the current user tracker in the ordered set where companyId = &#63;.
+	*
+	* @param userTrackerId the primary key of the current user tracker
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next user tracker
+	* @throws com.liferay.portal.NoSuchUserTrackerException if a user tracker with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.UserTracker[] findByCompanyId_PrevAndNext(
+		long userTrackerId, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.NoSuchUserTrackerException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns an ordered range of all the user trackers where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from UserTrackerModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted in portal side by PK ASC order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param start the lower bound of the range of user trackers
+	* @param end the upper bound of the range of user trackers (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching user trackers
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portal.model.UserTracker> findByCompanyId(
+		long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first user tracker in the default ordered set defined by {@link UserTrackerModelImpl#ORDER_BY_JPQL} where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @return the first matching user tracker
+	* @throws com.liferay.portal.NoSuchUserTrackerException if a matching user tracker could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.UserTracker findByCompanyId_First(
+		long companyId)
+		throws com.liferay.portal.NoSuchUserTrackerException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first user tracker in the ordered set where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching user tracker
+	* @throws com.liferay.portal.NoSuchUserTrackerException if a matching user tracker could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.UserTracker findByCompanyId_First(
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.NoSuchUserTrackerException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first user tracker in the default ordered set defined by {@link UserTrackerModelImpl#ORDER_BY_JPQL} where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @return the first matching user tracker, or <code>null</code> if a matching user tracker could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.UserTracker fetchByCompanyId_First(
+		long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first user tracker in the ordered set where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching user tracker, or <code>null</code> if a matching user tracker could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.UserTracker fetchByCompanyId_First(
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last user tracker in the default ordered set defined by {@link UserTrackerModelImpl#ORDER_BY_JPQL} where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @return the last matching user tracker
+	* @throws com.liferay.portal.NoSuchUserTrackerException if a matching user tracker could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.UserTracker findByCompanyId_Last(
+		long companyId)
+		throws com.liferay.portal.NoSuchUserTrackerException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last user tracker in the ordered set where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching user tracker
+	* @throws com.liferay.portal.NoSuchUserTrackerException if a matching user tracker could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.UserTracker findByCompanyId_Last(
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.NoSuchUserTrackerException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last user tracker in the default ordered set defined by {@link UserTrackerModelImpl#ORDER_BY_JPQL} where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @return the last matching user tracker, or <code>null</code> if a matching user tracker could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.UserTracker fetchByCompanyId_Last(
+		long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last user tracker in the ordered set where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching user tracker, or <code>null</code> if a matching user tracker could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.UserTracker fetchByCompanyId_Last(
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Removes all the user trackers where companyId = &#63; from the database.
+	*
+	* @param companyId the company ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeByCompanyId(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of user trackers where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @return the number of matching user trackers
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByCompanyId(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns all the user trackers where userId = &#63;.
+	*
+	* @param userId the user ID
+	* @return the matching user trackers
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portal.model.UserTracker> findByUserId(
+		long userId) throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns a range of all the user trackers where userId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from UserTrackerModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted in portal side by PK ASC order.
+	* </p>
+	*
+	* @param userId the user ID
+	* @param start the lower bound of the range of user trackers
+	* @param end the upper bound of the range of user trackers (not inclusive)
+	* @return the range of matching user trackers
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portal.model.UserTracker> findByUserId(
+		long userId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the user trackers before and after the current user tracker in the ordered set where userId = &#63;.
+	*
+	* @param userTrackerId the primary key of the current user tracker
+	* @param userId the user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next user tracker
+	* @throws com.liferay.portal.NoSuchUserTrackerException if a user tracker with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.UserTracker[] findByUserId_PrevAndNext(
+		long userTrackerId, long userId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.NoSuchUserTrackerException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns an ordered range of all the user trackers where userId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from UserTrackerModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted in portal side by PK ASC order.
+	* </p>
+	*
+	* @param userId the user ID
+	* @param start the lower bound of the range of user trackers
+	* @param end the upper bound of the range of user trackers (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching user trackers
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portal.model.UserTracker> findByUserId(
+		long userId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first user tracker in the default ordered set defined by {@link UserTrackerModelImpl#ORDER_BY_JPQL} where userId = &#63;.
+	*
+	* @param userId the user ID
+	* @return the first matching user tracker
+	* @throws com.liferay.portal.NoSuchUserTrackerException if a matching user tracker could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.UserTracker findByUserId_First(long userId)
+		throws com.liferay.portal.NoSuchUserTrackerException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first user tracker in the ordered set where userId = &#63;.
+	*
+	* @param userId the user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching user tracker
+	* @throws com.liferay.portal.NoSuchUserTrackerException if a matching user tracker could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.UserTracker findByUserId_First(
+		long userId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.NoSuchUserTrackerException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first user tracker in the default ordered set defined by {@link UserTrackerModelImpl#ORDER_BY_JPQL} where userId = &#63;.
+	*
+	* @param userId the user ID
+	* @return the first matching user tracker, or <code>null</code> if a matching user tracker could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.UserTracker fetchByUserId_First(long userId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first user tracker in the ordered set where userId = &#63;.
+	*
+	* @param userId the user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching user tracker, or <code>null</code> if a matching user tracker could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.UserTracker fetchByUserId_First(
+		long userId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last user tracker in the default ordered set defined by {@link UserTrackerModelImpl#ORDER_BY_JPQL} where userId = &#63;.
+	*
+	* @param userId the user ID
+	* @return the last matching user tracker
+	* @throws com.liferay.portal.NoSuchUserTrackerException if a matching user tracker could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.UserTracker findByUserId_Last(long userId)
+		throws com.liferay.portal.NoSuchUserTrackerException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last user tracker in the ordered set where userId = &#63;.
+	*
+	* @param userId the user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching user tracker
+	* @throws com.liferay.portal.NoSuchUserTrackerException if a matching user tracker could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.UserTracker findByUserId_Last(long userId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.NoSuchUserTrackerException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last user tracker in the default ordered set defined by {@link UserTrackerModelImpl#ORDER_BY_JPQL} where userId = &#63;.
+	*
+	* @param userId the user ID
+	* @return the last matching user tracker, or <code>null</code> if a matching user tracker could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.UserTracker fetchByUserId_Last(long userId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last user tracker in the ordered set where userId = &#63;.
+	*
+	* @param userId the user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching user tracker, or <code>null</code> if a matching user tracker could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.UserTracker fetchByUserId_Last(
+		long userId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Removes all the user trackers where userId = &#63; from the database.
+	*
+	* @param userId the user ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeByUserId(long userId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of user trackers where userId = &#63;.
+	*
+	* @param userId the user ID
+	* @return the number of matching user trackers
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByUserId(long userId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns all the user trackers where sessionId = &#63;.
+	*
+	* @param sessionId the session ID
+	* @return the matching user trackers
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portal.model.UserTracker> findBySessionId(
+		java.lang.String sessionId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns a range of all the user trackers where sessionId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from UserTrackerModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted in portal side by PK ASC order.
+	* </p>
+	*
+	* @param sessionId the session ID
+	* @param start the lower bound of the range of user trackers
+	* @param end the upper bound of the range of user trackers (not inclusive)
+	* @return the range of matching user trackers
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portal.model.UserTracker> findBySessionId(
+		java.lang.String sessionId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the user trackers before and after the current user tracker in the ordered set where sessionId = &#63;.
+	*
+	* @param userTrackerId the primary key of the current user tracker
+	* @param sessionId the session ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next user tracker
+	* @throws com.liferay.portal.NoSuchUserTrackerException if a user tracker with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.UserTracker[] findBySessionId_PrevAndNext(
+		long userTrackerId, java.lang.String sessionId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.NoSuchUserTrackerException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns an ordered range of all the user trackers where sessionId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from UserTrackerModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted in portal side by PK ASC order.
+	* </p>
+	*
+	* @param sessionId the session ID
+	* @param start the lower bound of the range of user trackers
+	* @param end the upper bound of the range of user trackers (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching user trackers
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portal.model.UserTracker> findBySessionId(
+		java.lang.String sessionId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first user tracker in the default ordered set defined by {@link UserTrackerModelImpl#ORDER_BY_JPQL} where sessionId = &#63;.
+	*
+	* @param sessionId the session ID
+	* @return the first matching user tracker
+	* @throws com.liferay.portal.NoSuchUserTrackerException if a matching user tracker could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.UserTracker findBySessionId_First(
+		java.lang.String sessionId)
+		throws com.liferay.portal.NoSuchUserTrackerException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first user tracker in the ordered set where sessionId = &#63;.
+	*
+	* @param sessionId the session ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching user tracker
+	* @throws com.liferay.portal.NoSuchUserTrackerException if a matching user tracker could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.UserTracker findBySessionId_First(
+		java.lang.String sessionId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.NoSuchUserTrackerException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first user tracker in the default ordered set defined by {@link UserTrackerModelImpl#ORDER_BY_JPQL} where sessionId = &#63;.
+	*
+	* @param sessionId the session ID
+	* @return the first matching user tracker, or <code>null</code> if a matching user tracker could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.UserTracker fetchBySessionId_First(
+		java.lang.String sessionId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first user tracker in the ordered set where sessionId = &#63;.
+	*
+	* @param sessionId the session ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching user tracker, or <code>null</code> if a matching user tracker could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.UserTracker fetchBySessionId_First(
+		java.lang.String sessionId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last user tracker in the default ordered set defined by {@link UserTrackerModelImpl#ORDER_BY_JPQL} where sessionId = &#63;.
+	*
+	* @param sessionId the session ID
+	* @return the last matching user tracker
+	* @throws com.liferay.portal.NoSuchUserTrackerException if a matching user tracker could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.UserTracker findBySessionId_Last(
+		java.lang.String sessionId)
+		throws com.liferay.portal.NoSuchUserTrackerException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last user tracker in the ordered set where sessionId = &#63;.
+	*
+	* @param sessionId the session ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching user tracker
+	* @throws com.liferay.portal.NoSuchUserTrackerException if a matching user tracker could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.UserTracker findBySessionId_Last(
+		java.lang.String sessionId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.NoSuchUserTrackerException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last user tracker in the default ordered set defined by {@link UserTrackerModelImpl#ORDER_BY_JPQL} where sessionId = &#63;.
+	*
+	* @param sessionId the session ID
+	* @return the last matching user tracker, or <code>null</code> if a matching user tracker could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.UserTracker fetchBySessionId_Last(
+		java.lang.String sessionId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last user tracker in the ordered set where sessionId = &#63;.
+	*
+	* @param sessionId the session ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching user tracker, or <code>null</code> if a matching user tracker could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.UserTracker fetchBySessionId_Last(
+		java.lang.String sessionId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Removes all the user trackers where sessionId = &#63; from the database.
+	*
+	* @param sessionId the session ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeBySessionId(java.lang.String sessionId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of user trackers where sessionId = &#63;.
+	*
+	* @param sessionId the session ID
+	* @return the number of matching user trackers
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countBySessionId(java.lang.String sessionId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Caches the user tracker in the entity cache if it is enabled.
 	*
 	* @param userTracker the user tracker
@@ -99,361 +651,6 @@ public interface UserTrackerPersistence extends BasePersistence<UserTracker> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns all the user trackers where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @return the matching user trackers
-	* @throws SystemException if a system exception occurred
-	*/
-	public java.util.List<com.liferay.portal.model.UserTracker> findByCompanyId(
-		long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns a range of all the user trackers where companyId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param start the lower bound of the range of user trackers
-	* @param end the upper bound of the range of user trackers (not inclusive)
-	* @return the range of matching user trackers
-	* @throws SystemException if a system exception occurred
-	*/
-	public java.util.List<com.liferay.portal.model.UserTracker> findByCompanyId(
-		long companyId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns an ordered range of all the user trackers where companyId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param start the lower bound of the range of user trackers
-	* @param end the upper bound of the range of user trackers (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching user trackers
-	* @throws SystemException if a system exception occurred
-	*/
-	public java.util.List<com.liferay.portal.model.UserTracker> findByCompanyId(
-		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the first user tracker in the ordered set where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching user tracker
-	* @throws com.liferay.portal.NoSuchUserTrackerException if a matching user tracker could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.UserTracker findByCompanyId_First(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchUserTrackerException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the first user tracker in the ordered set where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching user tracker, or <code>null</code> if a matching user tracker could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.UserTracker fetchByCompanyId_First(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the last user tracker in the ordered set where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching user tracker
-	* @throws com.liferay.portal.NoSuchUserTrackerException if a matching user tracker could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.UserTracker findByCompanyId_Last(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchUserTrackerException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the last user tracker in the ordered set where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching user tracker, or <code>null</code> if a matching user tracker could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.UserTracker fetchByCompanyId_Last(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the user trackers before and after the current user tracker in the ordered set where companyId = &#63;.
-	*
-	* @param userTrackerId the primary key of the current user tracker
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next user tracker
-	* @throws com.liferay.portal.NoSuchUserTrackerException if a user tracker with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.UserTracker[] findByCompanyId_PrevAndNext(
-		long userTrackerId, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchUserTrackerException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns all the user trackers where userId = &#63;.
-	*
-	* @param userId the user ID
-	* @return the matching user trackers
-	* @throws SystemException if a system exception occurred
-	*/
-	public java.util.List<com.liferay.portal.model.UserTracker> findByUserId(
-		long userId) throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns a range of all the user trackers where userId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
-	* @param userId the user ID
-	* @param start the lower bound of the range of user trackers
-	* @param end the upper bound of the range of user trackers (not inclusive)
-	* @return the range of matching user trackers
-	* @throws SystemException if a system exception occurred
-	*/
-	public java.util.List<com.liferay.portal.model.UserTracker> findByUserId(
-		long userId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns an ordered range of all the user trackers where userId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
-	* @param userId the user ID
-	* @param start the lower bound of the range of user trackers
-	* @param end the upper bound of the range of user trackers (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching user trackers
-	* @throws SystemException if a system exception occurred
-	*/
-	public java.util.List<com.liferay.portal.model.UserTracker> findByUserId(
-		long userId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the first user tracker in the ordered set where userId = &#63;.
-	*
-	* @param userId the user ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching user tracker
-	* @throws com.liferay.portal.NoSuchUserTrackerException if a matching user tracker could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.UserTracker findByUserId_First(
-		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchUserTrackerException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the first user tracker in the ordered set where userId = &#63;.
-	*
-	* @param userId the user ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching user tracker, or <code>null</code> if a matching user tracker could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.UserTracker fetchByUserId_First(
-		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the last user tracker in the ordered set where userId = &#63;.
-	*
-	* @param userId the user ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching user tracker
-	* @throws com.liferay.portal.NoSuchUserTrackerException if a matching user tracker could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.UserTracker findByUserId_Last(long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchUserTrackerException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the last user tracker in the ordered set where userId = &#63;.
-	*
-	* @param userId the user ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching user tracker, or <code>null</code> if a matching user tracker could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.UserTracker fetchByUserId_Last(
-		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the user trackers before and after the current user tracker in the ordered set where userId = &#63;.
-	*
-	* @param userTrackerId the primary key of the current user tracker
-	* @param userId the user ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next user tracker
-	* @throws com.liferay.portal.NoSuchUserTrackerException if a user tracker with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.UserTracker[] findByUserId_PrevAndNext(
-		long userTrackerId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchUserTrackerException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns all the user trackers where sessionId = &#63;.
-	*
-	* @param sessionId the session ID
-	* @return the matching user trackers
-	* @throws SystemException if a system exception occurred
-	*/
-	public java.util.List<com.liferay.portal.model.UserTracker> findBySessionId(
-		java.lang.String sessionId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns a range of all the user trackers where sessionId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
-	* @param sessionId the session ID
-	* @param start the lower bound of the range of user trackers
-	* @param end the upper bound of the range of user trackers (not inclusive)
-	* @return the range of matching user trackers
-	* @throws SystemException if a system exception occurred
-	*/
-	public java.util.List<com.liferay.portal.model.UserTracker> findBySessionId(
-		java.lang.String sessionId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns an ordered range of all the user trackers where sessionId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
-	* @param sessionId the session ID
-	* @param start the lower bound of the range of user trackers
-	* @param end the upper bound of the range of user trackers (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching user trackers
-	* @throws SystemException if a system exception occurred
-	*/
-	public java.util.List<com.liferay.portal.model.UserTracker> findBySessionId(
-		java.lang.String sessionId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the first user tracker in the ordered set where sessionId = &#63;.
-	*
-	* @param sessionId the session ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching user tracker
-	* @throws com.liferay.portal.NoSuchUserTrackerException if a matching user tracker could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.UserTracker findBySessionId_First(
-		java.lang.String sessionId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchUserTrackerException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the first user tracker in the ordered set where sessionId = &#63;.
-	*
-	* @param sessionId the session ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching user tracker, or <code>null</code> if a matching user tracker could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.UserTracker fetchBySessionId_First(
-		java.lang.String sessionId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the last user tracker in the ordered set where sessionId = &#63;.
-	*
-	* @param sessionId the session ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching user tracker
-	* @throws com.liferay.portal.NoSuchUserTrackerException if a matching user tracker could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.UserTracker findBySessionId_Last(
-		java.lang.String sessionId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchUserTrackerException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the last user tracker in the ordered set where sessionId = &#63;.
-	*
-	* @param sessionId the session ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching user tracker, or <code>null</code> if a matching user tracker could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.UserTracker fetchBySessionId_Last(
-		java.lang.String sessionId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the user trackers before and after the current user tracker in the ordered set where sessionId = &#63;.
-	*
-	* @param userTrackerId the primary key of the current user tracker
-	* @param sessionId the session ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next user tracker
-	* @throws com.liferay.portal.NoSuchUserTrackerException if a user tracker with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.UserTracker[] findBySessionId_PrevAndNext(
-		long userTrackerId, java.lang.String sessionId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchUserTrackerException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	/**
 	* Returns all the user trackers.
 	*
 	* @return the user trackers
@@ -466,7 +663,7 @@ public interface UserTrackerPersistence extends BasePersistence<UserTracker> {
 	* Returns a range of all the user trackers.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from UserTrackerModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted in portal side by PK ASC order.
 	* </p>
 	*
 	* @param start the lower bound of the range of user trackers
@@ -482,7 +679,7 @@ public interface UserTrackerPersistence extends BasePersistence<UserTracker> {
 	* Returns an ordered range of all the user trackers.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from UserTrackerModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted in portal side by PK ASC order.
 	* </p>
 	*
 	* @param start the lower bound of the range of user trackers
@@ -497,68 +694,11 @@ public interface UserTrackerPersistence extends BasePersistence<UserTracker> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Removes all the user trackers where companyId = &#63; from the database.
-	*
-	* @param companyId the company ID
-	* @throws SystemException if a system exception occurred
-	*/
-	public void removeByCompanyId(long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Removes all the user trackers where userId = &#63; from the database.
-	*
-	* @param userId the user ID
-	* @throws SystemException if a system exception occurred
-	*/
-	public void removeByUserId(long userId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Removes all the user trackers where sessionId = &#63; from the database.
-	*
-	* @param sessionId the session ID
-	* @throws SystemException if a system exception occurred
-	*/
-	public void removeBySessionId(java.lang.String sessionId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
 	* Removes all the user trackers from the database.
 	*
 	* @throws SystemException if a system exception occurred
 	*/
 	public void removeAll()
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the number of user trackers where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @return the number of matching user trackers
-	* @throws SystemException if a system exception occurred
-	*/
-	public int countByCompanyId(long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the number of user trackers where userId = &#63;.
-	*
-	* @param userId the user ID
-	* @return the number of matching user trackers
-	* @throws SystemException if a system exception occurred
-	*/
-	public int countByUserId(long userId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the number of user trackers where sessionId = &#63;.
-	*
-	* @param sessionId the session ID
-	* @return the number of matching user trackers
-	* @throws SystemException if a system exception occurred
-	*/
-	public int countBySessionId(java.lang.String sessionId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

@@ -109,6 +109,221 @@ public class ListTypeUtil {
 	}
 
 	/**
+	* Returns all the list types where type = &#63;.
+	*
+	* @param type the type
+	* @return the matching list types
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portal.model.ListType> findByType(
+		java.lang.String type)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByType(type);
+	}
+
+	/**
+	* Returns a range of all the list types where type = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from ListTypeModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted in portal side by PK ASC order.
+	* </p>
+	*
+	* @param type the type
+	* @param start the lower bound of the range of list types
+	* @param end the upper bound of the range of list types (not inclusive)
+	* @return the range of matching list types
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portal.model.ListType> findByType(
+		java.lang.String type, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByType(type, start, end);
+	}
+
+	/**
+	* Returns the list types before and after the current list type in the ordered set where type = &#63;.
+	*
+	* @param listTypeId the primary key of the current list type
+	* @param type the type
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next list type
+	* @throws com.liferay.portal.NoSuchListTypeException if a list type with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.ListType[] findByType_PrevAndNext(
+		int listTypeId, java.lang.String type,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.NoSuchListTypeException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByType_PrevAndNext(listTypeId, type, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the list types where type = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from ListTypeModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted in portal side by PK ASC order.
+	* </p>
+	*
+	* @param type the type
+	* @param start the lower bound of the range of list types
+	* @param end the upper bound of the range of list types (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching list types
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portal.model.ListType> findByType(
+		java.lang.String type, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByType(type, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns the first list type in the default ordered set defined by {@link ListTypeModelImpl#ORDER_BY_JPQL} where type = &#63;.
+	*
+	* @param type the type
+	* @return the first matching list type
+	* @throws com.liferay.portal.NoSuchListTypeException if a matching list type could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.ListType findByType_First(
+		java.lang.String type)
+		throws com.liferay.portal.NoSuchListTypeException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByType_First(type);
+	}
+
+	/**
+	* Returns the first list type in the ordered set where type = &#63;.
+	*
+	* @param type the type
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching list type
+	* @throws com.liferay.portal.NoSuchListTypeException if a matching list type could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.ListType findByType_First(
+		java.lang.String type,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.NoSuchListTypeException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByType_First(type, orderByComparator);
+	}
+
+	/**
+	* Returns the first list type in the default ordered set defined by {@link ListTypeModelImpl#ORDER_BY_JPQL} where type = &#63;.
+	*
+	* @param type the type
+	* @return the first matching list type, or <code>null</code> if a matching list type could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.ListType fetchByType_First(
+		java.lang.String type)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByType_First(type);
+	}
+
+	/**
+	* Returns the first list type in the ordered set where type = &#63;.
+	*
+	* @param type the type
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching list type, or <code>null</code> if a matching list type could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.ListType fetchByType_First(
+		java.lang.String type,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByType_First(type, orderByComparator);
+	}
+
+	/**
+	* Returns the last list type in the default ordered set defined by {@link ListTypeModelImpl#ORDER_BY_JPQL} where type = &#63;.
+	*
+	* @param type the type
+	* @return the last matching list type
+	* @throws com.liferay.portal.NoSuchListTypeException if a matching list type could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.ListType findByType_Last(
+		java.lang.String type)
+		throws com.liferay.portal.NoSuchListTypeException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByType_Last(type);
+	}
+
+	/**
+	* Returns the last list type in the ordered set where type = &#63;.
+	*
+	* @param type the type
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching list type
+	* @throws com.liferay.portal.NoSuchListTypeException if a matching list type could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.ListType findByType_Last(
+		java.lang.String type,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.NoSuchListTypeException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByType_Last(type, orderByComparator);
+	}
+
+	/**
+	* Returns the last list type in the default ordered set defined by {@link ListTypeModelImpl#ORDER_BY_JPQL} where type = &#63;.
+	*
+	* @param type the type
+	* @return the last matching list type, or <code>null</code> if a matching list type could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.ListType fetchByType_Last(
+		java.lang.String type)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByType_Last(type);
+	}
+
+	/**
+	* Returns the last list type in the ordered set where type = &#63;.
+	*
+	* @param type the type
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching list type, or <code>null</code> if a matching list type could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.ListType fetchByType_Last(
+		java.lang.String type,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByType_Last(type, orderByComparator);
+	}
+
+	/**
+	* Removes all the list types where type = &#63; from the database.
+	*
+	* @param type the type
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByType(java.lang.String type)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByType(type);
+	}
+
+	/**
+	* Returns the number of list types where type = &#63;.
+	*
+	* @param type the type
+	* @return the number of matching list types
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByType(java.lang.String type)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByType(type);
+	}
+
+	/**
 	* Caches the list type in the entity cache if it is enabled.
 	*
 	* @param listType the list type
@@ -186,142 +401,6 @@ public class ListTypeUtil {
 	}
 
 	/**
-	* Returns all the list types where type = &#63;.
-	*
-	* @param type the type
-	* @return the matching list types
-	* @throws SystemException if a system exception occurred
-	*/
-	public static java.util.List<com.liferay.portal.model.ListType> findByType(
-		java.lang.String type)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findByType(type);
-	}
-
-	/**
-	* Returns a range of all the list types where type = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
-	* @param type the type
-	* @param start the lower bound of the range of list types
-	* @param end the upper bound of the range of list types (not inclusive)
-	* @return the range of matching list types
-	* @throws SystemException if a system exception occurred
-	*/
-	public static java.util.List<com.liferay.portal.model.ListType> findByType(
-		java.lang.String type, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findByType(type, start, end);
-	}
-
-	/**
-	* Returns an ordered range of all the list types where type = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
-	* @param type the type
-	* @param start the lower bound of the range of list types
-	* @param end the upper bound of the range of list types (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching list types
-	* @throws SystemException if a system exception occurred
-	*/
-	public static java.util.List<com.liferay.portal.model.ListType> findByType(
-		java.lang.String type, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findByType(type, start, end, orderByComparator);
-	}
-
-	/**
-	* Returns the first list type in the ordered set where type = &#63;.
-	*
-	* @param type the type
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching list type
-	* @throws com.liferay.portal.NoSuchListTypeException if a matching list type could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portal.model.ListType findByType_First(
-		java.lang.String type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchListTypeException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findByType_First(type, orderByComparator);
-	}
-
-	/**
-	* Returns the first list type in the ordered set where type = &#63;.
-	*
-	* @param type the type
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching list type, or <code>null</code> if a matching list type could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portal.model.ListType fetchByType_First(
-		java.lang.String type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().fetchByType_First(type, orderByComparator);
-	}
-
-	/**
-	* Returns the last list type in the ordered set where type = &#63;.
-	*
-	* @param type the type
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching list type
-	* @throws com.liferay.portal.NoSuchListTypeException if a matching list type could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portal.model.ListType findByType_Last(
-		java.lang.String type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchListTypeException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findByType_Last(type, orderByComparator);
-	}
-
-	/**
-	* Returns the last list type in the ordered set where type = &#63;.
-	*
-	* @param type the type
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching list type, or <code>null</code> if a matching list type could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portal.model.ListType fetchByType_Last(
-		java.lang.String type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().fetchByType_Last(type, orderByComparator);
-	}
-
-	/**
-	* Returns the list types before and after the current list type in the ordered set where type = &#63;.
-	*
-	* @param listTypeId the primary key of the current list type
-	* @param type the type
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next list type
-	* @throws com.liferay.portal.NoSuchListTypeException if a list type with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portal.model.ListType[] findByType_PrevAndNext(
-		int listTypeId, java.lang.String type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchListTypeException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .findByType_PrevAndNext(listTypeId, type, orderByComparator);
-	}
-
-	/**
 	* Returns all the list types.
 	*
 	* @return the list types
@@ -336,7 +415,7 @@ public class ListTypeUtil {
 	* Returns a range of all the list types.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from ListTypeModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted in portal side by PK ASC order.
 	* </p>
 	*
 	* @param start the lower bound of the range of list types
@@ -354,7 +433,7 @@ public class ListTypeUtil {
 	* Returns an ordered range of all the list types.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from ListTypeModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted in portal side by PK ASC order.
 	* </p>
 	*
 	* @param start the lower bound of the range of list types
@@ -371,17 +450,6 @@ public class ListTypeUtil {
 	}
 
 	/**
-	* Removes all the list types where type = &#63; from the database.
-	*
-	* @param type the type
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void removeByType(java.lang.String type)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByType(type);
-	}
-
-	/**
 	* Removes all the list types from the database.
 	*
 	* @throws SystemException if a system exception occurred
@@ -389,18 +457,6 @@ public class ListTypeUtil {
 	public static void removeAll()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		getPersistence().removeAll();
-	}
-
-	/**
-	* Returns the number of list types where type = &#63;.
-	*
-	* @param type the type
-	* @return the number of matching list types
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int countByType(java.lang.String type)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByType(type);
 	}
 
 	/**

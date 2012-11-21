@@ -103,6 +103,7 @@ public class ShoppingCouponModelImpl extends BaseModelImpl<ShoppingCoupon>
 			true);
 	public static long CODE_COLUMN_BITMASK = 1L;
 	public static long GROUPID_COLUMN_BITMASK = 2L;
+	public static long CREATEDATE_COLUMN_BITMASK = 4L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.

@@ -84,6 +84,7 @@ public class ShoppingItemPriceModelImpl extends BaseModelImpl<ShoppingItemPrice>
 				"value.object.column.bitmask.enabled.com.liferay.portlet.shopping.model.ShoppingItemPrice"),
 			true);
 	public static long ITEMID_COLUMN_BITMASK = 1L;
+	public static long ITEMPRICEID_COLUMN_BITMASK = 2L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.shopping.model.ShoppingItemPrice"));
 

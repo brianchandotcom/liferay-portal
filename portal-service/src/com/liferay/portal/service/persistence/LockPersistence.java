@@ -36,6 +36,778 @@ public interface LockPersistence extends BasePersistence<Lock> {
 	 */
 
 	/**
+	* Returns all the locks where uuid = &#63;.
+	*
+	* @param uuid the uuid
+	* @return the matching locks
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portal.model.Lock> findByUuid(
+		java.lang.String uuid)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns a range of all the locks where uuid = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from LockModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted in portal side by PK ASC order.
+	* </p>
+	*
+	* @param uuid the uuid
+	* @param start the lower bound of the range of locks
+	* @param end the upper bound of the range of locks (not inclusive)
+	* @return the range of matching locks
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portal.model.Lock> findByUuid(
+		java.lang.String uuid, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the locks before and after the current lock in the ordered set where uuid = &#63;.
+	*
+	* @param lockId the primary key of the current lock
+	* @param uuid the uuid
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next lock
+	* @throws com.liferay.portal.NoSuchLockException if a lock with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Lock[] findByUuid_PrevAndNext(long lockId,
+		java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.NoSuchLockException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns an ordered range of all the locks where uuid = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from LockModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted in portal side by PK ASC order.
+	* </p>
+	*
+	* @param uuid the uuid
+	* @param start the lower bound of the range of locks
+	* @param end the upper bound of the range of locks (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching locks
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portal.model.Lock> findByUuid(
+		java.lang.String uuid, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first lock in the default ordered set defined by {@link LockModelImpl#ORDER_BY_JPQL} where uuid = &#63;.
+	*
+	* @param uuid the uuid
+	* @return the first matching lock
+	* @throws com.liferay.portal.NoSuchLockException if a matching lock could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Lock findByUuid_First(java.lang.String uuid)
+		throws com.liferay.portal.NoSuchLockException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first lock in the ordered set where uuid = &#63;.
+	*
+	* @param uuid the uuid
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching lock
+	* @throws com.liferay.portal.NoSuchLockException if a matching lock could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Lock findByUuid_First(
+		java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.NoSuchLockException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first lock in the default ordered set defined by {@link LockModelImpl#ORDER_BY_JPQL} where uuid = &#63;.
+	*
+	* @param uuid the uuid
+	* @return the first matching lock, or <code>null</code> if a matching lock could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Lock fetchByUuid_First(
+		java.lang.String uuid)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first lock in the ordered set where uuid = &#63;.
+	*
+	* @param uuid the uuid
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching lock, or <code>null</code> if a matching lock could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Lock fetchByUuid_First(
+		java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last lock in the default ordered set defined by {@link LockModelImpl#ORDER_BY_JPQL} where uuid = &#63;.
+	*
+	* @param uuid the uuid
+	* @return the last matching lock
+	* @throws com.liferay.portal.NoSuchLockException if a matching lock could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Lock findByUuid_Last(java.lang.String uuid)
+		throws com.liferay.portal.NoSuchLockException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last lock in the ordered set where uuid = &#63;.
+	*
+	* @param uuid the uuid
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching lock
+	* @throws com.liferay.portal.NoSuchLockException if a matching lock could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Lock findByUuid_Last(
+		java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.NoSuchLockException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last lock in the default ordered set defined by {@link LockModelImpl#ORDER_BY_JPQL} where uuid = &#63;.
+	*
+	* @param uuid the uuid
+	* @return the last matching lock, or <code>null</code> if a matching lock could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Lock fetchByUuid_Last(java.lang.String uuid)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last lock in the ordered set where uuid = &#63;.
+	*
+	* @param uuid the uuid
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching lock, or <code>null</code> if a matching lock could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Lock fetchByUuid_Last(
+		java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Removes all the locks where uuid = &#63; from the database.
+	*
+	* @param uuid the uuid
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeByUuid(java.lang.String uuid)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of locks where uuid = &#63;.
+	*
+	* @param uuid the uuid
+	* @return the number of matching locks
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByUuid(java.lang.String uuid)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns all the locks where uuid = &#63; and companyId = &#63;.
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @return the matching locks
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portal.model.Lock> findByUuid_C(
+		java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns a range of all the locks where uuid = &#63; and companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from LockModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted in portal side by PK ASC order.
+	* </p>
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @param start the lower bound of the range of locks
+	* @param end the upper bound of the range of locks (not inclusive)
+	* @return the range of matching locks
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portal.model.Lock> findByUuid_C(
+		java.lang.String uuid, long companyId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the locks before and after the current lock in the ordered set where uuid = &#63; and companyId = &#63;.
+	*
+	* @param lockId the primary key of the current lock
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next lock
+	* @throws com.liferay.portal.NoSuchLockException if a lock with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Lock[] findByUuid_C_PrevAndNext(
+		long lockId, java.lang.String uuid, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.NoSuchLockException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns an ordered range of all the locks where uuid = &#63; and companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from LockModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted in portal side by PK ASC order.
+	* </p>
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @param start the lower bound of the range of locks
+	* @param end the upper bound of the range of locks (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching locks
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portal.model.Lock> findByUuid_C(
+		java.lang.String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first lock in the default ordered set defined by {@link LockModelImpl#ORDER_BY_JPQL} where uuid = &#63; and companyId = &#63;.
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @return the first matching lock
+	* @throws com.liferay.portal.NoSuchLockException if a matching lock could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Lock findByUuid_C_First(
+		java.lang.String uuid, long companyId)
+		throws com.liferay.portal.NoSuchLockException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first lock in the ordered set where uuid = &#63; and companyId = &#63;.
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching lock
+	* @throws com.liferay.portal.NoSuchLockException if a matching lock could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Lock findByUuid_C_First(
+		java.lang.String uuid, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.NoSuchLockException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first lock in the default ordered set defined by {@link LockModelImpl#ORDER_BY_JPQL} where uuid = &#63; and companyId = &#63;.
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @return the first matching lock, or <code>null</code> if a matching lock could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Lock fetchByUuid_C_First(
+		java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first lock in the ordered set where uuid = &#63; and companyId = &#63;.
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching lock, or <code>null</code> if a matching lock could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Lock fetchByUuid_C_First(
+		java.lang.String uuid, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last lock in the default ordered set defined by {@link LockModelImpl#ORDER_BY_JPQL} where uuid = &#63; and companyId = &#63;.
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @return the last matching lock
+	* @throws com.liferay.portal.NoSuchLockException if a matching lock could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Lock findByUuid_C_Last(
+		java.lang.String uuid, long companyId)
+		throws com.liferay.portal.NoSuchLockException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last lock in the ordered set where uuid = &#63; and companyId = &#63;.
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching lock
+	* @throws com.liferay.portal.NoSuchLockException if a matching lock could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Lock findByUuid_C_Last(
+		java.lang.String uuid, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.NoSuchLockException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last lock in the default ordered set defined by {@link LockModelImpl#ORDER_BY_JPQL} where uuid = &#63; and companyId = &#63;.
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @return the last matching lock, or <code>null</code> if a matching lock could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Lock fetchByUuid_C_Last(
+		java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last lock in the ordered set where uuid = &#63; and companyId = &#63;.
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching lock, or <code>null</code> if a matching lock could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Lock fetchByUuid_C_Last(
+		java.lang.String uuid, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Removes all the locks where uuid = &#63; and companyId = &#63; from the database.
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeByUuid_C(java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of locks where uuid = &#63; and companyId = &#63;.
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @return the number of matching locks
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByUuid_C(java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns all the locks where expirationDate &lt; &#63;.
+	*
+	* @param expirationDate the expiration date
+	* @return the matching locks
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portal.model.Lock> findByLtExpirationDate(
+		java.util.Date expirationDate)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns a range of all the locks where expirationDate &lt; &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from LockModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted in portal side by PK ASC order.
+	* </p>
+	*
+	* @param expirationDate the expiration date
+	* @param start the lower bound of the range of locks
+	* @param end the upper bound of the range of locks (not inclusive)
+	* @return the range of matching locks
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portal.model.Lock> findByLtExpirationDate(
+		java.util.Date expirationDate, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the locks before and after the current lock in the ordered set where expirationDate &lt; &#63;.
+	*
+	* @param lockId the primary key of the current lock
+	* @param expirationDate the expiration date
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next lock
+	* @throws com.liferay.portal.NoSuchLockException if a lock with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Lock[] findByLtExpirationDate_PrevAndNext(
+		long lockId, java.util.Date expirationDate,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.NoSuchLockException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns an ordered range of all the locks where expirationDate &lt; &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from LockModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted in portal side by PK ASC order.
+	* </p>
+	*
+	* @param expirationDate the expiration date
+	* @param start the lower bound of the range of locks
+	* @param end the upper bound of the range of locks (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching locks
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portal.model.Lock> findByLtExpirationDate(
+		java.util.Date expirationDate, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first lock in the default ordered set defined by {@link LockModelImpl#ORDER_BY_JPQL} where expirationDate &lt; &#63;.
+	*
+	* @param expirationDate the expiration date
+	* @return the first matching lock
+	* @throws com.liferay.portal.NoSuchLockException if a matching lock could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Lock findByLtExpirationDate_First(
+		java.util.Date expirationDate)
+		throws com.liferay.portal.NoSuchLockException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first lock in the ordered set where expirationDate &lt; &#63;.
+	*
+	* @param expirationDate the expiration date
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching lock
+	* @throws com.liferay.portal.NoSuchLockException if a matching lock could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Lock findByLtExpirationDate_First(
+		java.util.Date expirationDate,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.NoSuchLockException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first lock in the default ordered set defined by {@link LockModelImpl#ORDER_BY_JPQL} where expirationDate &lt; &#63;.
+	*
+	* @param expirationDate the expiration date
+	* @return the first matching lock, or <code>null</code> if a matching lock could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Lock fetchByLtExpirationDate_First(
+		java.util.Date expirationDate)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first lock in the ordered set where expirationDate &lt; &#63;.
+	*
+	* @param expirationDate the expiration date
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching lock, or <code>null</code> if a matching lock could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Lock fetchByLtExpirationDate_First(
+		java.util.Date expirationDate,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last lock in the default ordered set defined by {@link LockModelImpl#ORDER_BY_JPQL} where expirationDate &lt; &#63;.
+	*
+	* @param expirationDate the expiration date
+	* @return the last matching lock
+	* @throws com.liferay.portal.NoSuchLockException if a matching lock could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Lock findByLtExpirationDate_Last(
+		java.util.Date expirationDate)
+		throws com.liferay.portal.NoSuchLockException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last lock in the ordered set where expirationDate &lt; &#63;.
+	*
+	* @param expirationDate the expiration date
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching lock
+	* @throws com.liferay.portal.NoSuchLockException if a matching lock could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Lock findByLtExpirationDate_Last(
+		java.util.Date expirationDate,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.NoSuchLockException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last lock in the default ordered set defined by {@link LockModelImpl#ORDER_BY_JPQL} where expirationDate &lt; &#63;.
+	*
+	* @param expirationDate the expiration date
+	* @return the last matching lock, or <code>null</code> if a matching lock could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Lock fetchByLtExpirationDate_Last(
+		java.util.Date expirationDate)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last lock in the ordered set where expirationDate &lt; &#63;.
+	*
+	* @param expirationDate the expiration date
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching lock, or <code>null</code> if a matching lock could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Lock fetchByLtExpirationDate_Last(
+		java.util.Date expirationDate,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Removes all the locks where expirationDate &lt; &#63; from the database.
+	*
+	* @param expirationDate the expiration date
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeByLtExpirationDate(java.util.Date expirationDate)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of locks where expirationDate &lt; &#63;.
+	*
+	* @param expirationDate the expiration date
+	* @return the number of matching locks
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByLtExpirationDate(java.util.Date expirationDate)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first lock in the default ordered set defined by {@link LockModelImpl#ORDER_BY_JPQL} where className = &#63; and key = &#63;.
+	*
+	* @param className the class name
+	* @param key the key
+	* @return the first matching lock
+	* @throws com.liferay.portal.NoSuchLockException if a matching lock could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Lock findByC_K_First(
+		java.lang.String className, java.lang.String key)
+		throws com.liferay.portal.NoSuchLockException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first lock in the ordered set where className = &#63; and key = &#63;.
+	*
+	* @param className the class name
+	* @param key the key
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching lock
+	* @throws com.liferay.portal.NoSuchLockException if a matching lock could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Lock findByC_K_First(
+		java.lang.String className, java.lang.String key,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.NoSuchLockException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first lock in the default ordered set defined by {@link LockModelImpl#ORDER_BY_JPQL} where className = &#63; and key = &#63;.
+	*
+	* @param className the class name
+	* @param key the key
+	* @return the first matching lock, or <code>null</code> if a matching lock could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Lock fetchByC_K_First(
+		java.lang.String className, java.lang.String key)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first lock in the ordered set where className = &#63; and key = &#63;.
+	*
+	* @param className the class name
+	* @param key the key
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching lock, or <code>null</code> if a matching lock could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Lock fetchByC_K_First(
+		java.lang.String className, java.lang.String key,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last lock in the default ordered set defined by {@link LockModelImpl#ORDER_BY_JPQL} where className = &#63; and key = &#63;.
+	*
+	* @param className the class name
+	* @param key the key
+	* @return the last matching lock
+	* @throws com.liferay.portal.NoSuchLockException if a matching lock could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Lock findByC_K_Last(
+		java.lang.String className, java.lang.String key)
+		throws com.liferay.portal.NoSuchLockException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last lock in the ordered set where className = &#63; and key = &#63;.
+	*
+	* @param className the class name
+	* @param key the key
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching lock
+	* @throws com.liferay.portal.NoSuchLockException if a matching lock could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Lock findByC_K_Last(
+		java.lang.String className, java.lang.String key,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.NoSuchLockException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last lock in the default ordered set defined by {@link LockModelImpl#ORDER_BY_JPQL} where className = &#63; and key = &#63;.
+	*
+	* @param className the class name
+	* @param key the key
+	* @return the last matching lock, or <code>null</code> if a matching lock could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Lock fetchByC_K_Last(
+		java.lang.String className, java.lang.String key)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last lock in the ordered set where className = &#63; and key = &#63;.
+	*
+	* @param className the class name
+	* @param key the key
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching lock, or <code>null</code> if a matching lock could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Lock fetchByC_K_Last(
+		java.lang.String className, java.lang.String key,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Removes all the locks where className = &#63; and key = &#63; from the database.
+	*
+	* @param className the class name
+	* @param key the key
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeByC_K(java.lang.String className, java.lang.String key)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of locks where className = &#63; and key = &#63;.
+	*
+	* @param className the class name
+	* @param key the key
+	* @return the number of matching locks
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByC_K(java.lang.String className, java.lang.String key)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the lock where className = &#63; and key = &#63; and owner = &#63; or throws a {@link com.liferay.portal.NoSuchLockException} if it could not be found.
+	*
+	* @param className the class name
+	* @param key the key
+	* @param owner the owner
+	* @return the matching lock
+	* @throws com.liferay.portal.NoSuchLockException if a matching lock could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Lock findByC_K_O(
+		java.lang.String className, java.lang.String key, java.lang.String owner)
+		throws com.liferay.portal.NoSuchLockException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the lock where className = &#63; and key = &#63; and owner = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param className the class name
+	* @param key the key
+	* @param owner the owner
+	* @return the matching lock, or <code>null</code> if a matching lock could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Lock fetchByC_K_O(
+		java.lang.String className, java.lang.String key, java.lang.String owner)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the lock where className = &#63; and key = &#63; and owner = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param className the class name
+	* @param key the key
+	* @param owner the owner
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the matching lock, or <code>null</code> if a matching lock could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Lock fetchByC_K_O(
+		java.lang.String className, java.lang.String key,
+		java.lang.String owner, boolean retrieveFromCache)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Removes the lock where className = &#63; and key = &#63; and owner = &#63; from the database.
+	*
+	* @param className the class name
+	* @param key the key
+	* @param owner the owner
+	* @return the lock that was removed
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Lock removeByC_K_O(
+		java.lang.String className, java.lang.String key, java.lang.String owner)
+		throws com.liferay.portal.NoSuchLockException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of locks where className = &#63; and key = &#63; and owner = &#63;.
+	*
+	* @param className the class name
+	* @param key the key
+	* @param owner the owner
+	* @return the number of matching locks
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByC_K_O(java.lang.String className, java.lang.String key,
+		java.lang.String owner)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Caches the lock in the entity cache if it is enabled.
 	*
 	* @param lock the lock
@@ -96,454 +868,6 @@ public interface LockPersistence extends BasePersistence<Lock> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns all the locks where uuid = &#63;.
-	*
-	* @param uuid the uuid
-	* @return the matching locks
-	* @throws SystemException if a system exception occurred
-	*/
-	public java.util.List<com.liferay.portal.model.Lock> findByUuid(
-		java.lang.String uuid)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns a range of all the locks where uuid = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
-	* @param uuid the uuid
-	* @param start the lower bound of the range of locks
-	* @param end the upper bound of the range of locks (not inclusive)
-	* @return the range of matching locks
-	* @throws SystemException if a system exception occurred
-	*/
-	public java.util.List<com.liferay.portal.model.Lock> findByUuid(
-		java.lang.String uuid, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns an ordered range of all the locks where uuid = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
-	* @param uuid the uuid
-	* @param start the lower bound of the range of locks
-	* @param end the upper bound of the range of locks (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching locks
-	* @throws SystemException if a system exception occurred
-	*/
-	public java.util.List<com.liferay.portal.model.Lock> findByUuid(
-		java.lang.String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the first lock in the ordered set where uuid = &#63;.
-	*
-	* @param uuid the uuid
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching lock
-	* @throws com.liferay.portal.NoSuchLockException if a matching lock could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.Lock findByUuid_First(
-		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchLockException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the first lock in the ordered set where uuid = &#63;.
-	*
-	* @param uuid the uuid
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching lock, or <code>null</code> if a matching lock could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.Lock fetchByUuid_First(
-		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the last lock in the ordered set where uuid = &#63;.
-	*
-	* @param uuid the uuid
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching lock
-	* @throws com.liferay.portal.NoSuchLockException if a matching lock could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.Lock findByUuid_Last(
-		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchLockException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the last lock in the ordered set where uuid = &#63;.
-	*
-	* @param uuid the uuid
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching lock, or <code>null</code> if a matching lock could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.Lock fetchByUuid_Last(
-		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the locks before and after the current lock in the ordered set where uuid = &#63;.
-	*
-	* @param lockId the primary key of the current lock
-	* @param uuid the uuid
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next lock
-	* @throws com.liferay.portal.NoSuchLockException if a lock with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.Lock[] findByUuid_PrevAndNext(long lockId,
-		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchLockException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns all the locks where uuid = &#63; and companyId = &#63;.
-	*
-	* @param uuid the uuid
-	* @param companyId the company ID
-	* @return the matching locks
-	* @throws SystemException if a system exception occurred
-	*/
-	public java.util.List<com.liferay.portal.model.Lock> findByUuid_C(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns a range of all the locks where uuid = &#63; and companyId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
-	* @param uuid the uuid
-	* @param companyId the company ID
-	* @param start the lower bound of the range of locks
-	* @param end the upper bound of the range of locks (not inclusive)
-	* @return the range of matching locks
-	* @throws SystemException if a system exception occurred
-	*/
-	public java.util.List<com.liferay.portal.model.Lock> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns an ordered range of all the locks where uuid = &#63; and companyId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
-	* @param uuid the uuid
-	* @param companyId the company ID
-	* @param start the lower bound of the range of locks
-	* @param end the upper bound of the range of locks (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching locks
-	* @throws SystemException if a system exception occurred
-	*/
-	public java.util.List<com.liferay.portal.model.Lock> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the first lock in the ordered set where uuid = &#63; and companyId = &#63;.
-	*
-	* @param uuid the uuid
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching lock
-	* @throws com.liferay.portal.NoSuchLockException if a matching lock could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.Lock findByUuid_C_First(
-		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchLockException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the first lock in the ordered set where uuid = &#63; and companyId = &#63;.
-	*
-	* @param uuid the uuid
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching lock, or <code>null</code> if a matching lock could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.Lock fetchByUuid_C_First(
-		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the last lock in the ordered set where uuid = &#63; and companyId = &#63;.
-	*
-	* @param uuid the uuid
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching lock
-	* @throws com.liferay.portal.NoSuchLockException if a matching lock could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.Lock findByUuid_C_Last(
-		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchLockException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the last lock in the ordered set where uuid = &#63; and companyId = &#63;.
-	*
-	* @param uuid the uuid
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching lock, or <code>null</code> if a matching lock could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.Lock fetchByUuid_C_Last(
-		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the locks before and after the current lock in the ordered set where uuid = &#63; and companyId = &#63;.
-	*
-	* @param lockId the primary key of the current lock
-	* @param uuid the uuid
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next lock
-	* @throws com.liferay.portal.NoSuchLockException if a lock with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.Lock[] findByUuid_C_PrevAndNext(
-		long lockId, java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchLockException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns all the locks where expirationDate &lt; &#63;.
-	*
-	* @param expirationDate the expiration date
-	* @return the matching locks
-	* @throws SystemException if a system exception occurred
-	*/
-	public java.util.List<com.liferay.portal.model.Lock> findByLtExpirationDate(
-		java.util.Date expirationDate)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns a range of all the locks where expirationDate &lt; &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
-	* @param expirationDate the expiration date
-	* @param start the lower bound of the range of locks
-	* @param end the upper bound of the range of locks (not inclusive)
-	* @return the range of matching locks
-	* @throws SystemException if a system exception occurred
-	*/
-	public java.util.List<com.liferay.portal.model.Lock> findByLtExpirationDate(
-		java.util.Date expirationDate, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns an ordered range of all the locks where expirationDate &lt; &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
-	* @param expirationDate the expiration date
-	* @param start the lower bound of the range of locks
-	* @param end the upper bound of the range of locks (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching locks
-	* @throws SystemException if a system exception occurred
-	*/
-	public java.util.List<com.liferay.portal.model.Lock> findByLtExpirationDate(
-		java.util.Date expirationDate, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the first lock in the ordered set where expirationDate &lt; &#63;.
-	*
-	* @param expirationDate the expiration date
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching lock
-	* @throws com.liferay.portal.NoSuchLockException if a matching lock could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.Lock findByLtExpirationDate_First(
-		java.util.Date expirationDate,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchLockException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the first lock in the ordered set where expirationDate &lt; &#63;.
-	*
-	* @param expirationDate the expiration date
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching lock, or <code>null</code> if a matching lock could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.Lock fetchByLtExpirationDate_First(
-		java.util.Date expirationDate,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the last lock in the ordered set where expirationDate &lt; &#63;.
-	*
-	* @param expirationDate the expiration date
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching lock
-	* @throws com.liferay.portal.NoSuchLockException if a matching lock could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.Lock findByLtExpirationDate_Last(
-		java.util.Date expirationDate,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchLockException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the last lock in the ordered set where expirationDate &lt; &#63;.
-	*
-	* @param expirationDate the expiration date
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching lock, or <code>null</code> if a matching lock could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.Lock fetchByLtExpirationDate_Last(
-		java.util.Date expirationDate,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the locks before and after the current lock in the ordered set where expirationDate &lt; &#63;.
-	*
-	* @param lockId the primary key of the current lock
-	* @param expirationDate the expiration date
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next lock
-	* @throws com.liferay.portal.NoSuchLockException if a lock with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.Lock[] findByLtExpirationDate_PrevAndNext(
-		long lockId, java.util.Date expirationDate,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchLockException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the lock where className = &#63; and key = &#63; or throws a {@link com.liferay.portal.NoSuchLockException} if it could not be found.
-	*
-	* @param className the class name
-	* @param key the key
-	* @return the matching lock
-	* @throws com.liferay.portal.NoSuchLockException if a matching lock could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.Lock findByC_K(java.lang.String className,
-		java.lang.String key)
-		throws com.liferay.portal.NoSuchLockException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the lock where className = &#63; and key = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	*
-	* @param className the class name
-	* @param key the key
-	* @return the matching lock, or <code>null</code> if a matching lock could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.Lock fetchByC_K(
-		java.lang.String className, java.lang.String key)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the lock where className = &#63; and key = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	*
-	* @param className the class name
-	* @param key the key
-	* @param retrieveFromCache whether to use the finder cache
-	* @return the matching lock, or <code>null</code> if a matching lock could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.Lock fetchByC_K(
-		java.lang.String className, java.lang.String key,
-		boolean retrieveFromCache)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the lock where className = &#63; and key = &#63; and owner = &#63; or throws a {@link com.liferay.portal.NoSuchLockException} if it could not be found.
-	*
-	* @param className the class name
-	* @param key the key
-	* @param owner the owner
-	* @return the matching lock
-	* @throws com.liferay.portal.NoSuchLockException if a matching lock could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.Lock findByC_K_O(
-		java.lang.String className, java.lang.String key, java.lang.String owner)
-		throws com.liferay.portal.NoSuchLockException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the lock where className = &#63; and key = &#63; and owner = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	*
-	* @param className the class name
-	* @param key the key
-	* @param owner the owner
-	* @return the matching lock, or <code>null</code> if a matching lock could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.Lock fetchByC_K_O(
-		java.lang.String className, java.lang.String key, java.lang.String owner)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the lock where className = &#63; and key = &#63; and owner = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	*
-	* @param className the class name
-	* @param key the key
-	* @param owner the owner
-	* @param retrieveFromCache whether to use the finder cache
-	* @return the matching lock, or <code>null</code> if a matching lock could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.Lock fetchByC_K_O(
-		java.lang.String className, java.lang.String key,
-		java.lang.String owner, boolean retrieveFromCache)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
 	* Returns all the locks.
 	*
 	* @return the locks
@@ -556,7 +880,7 @@ public interface LockPersistence extends BasePersistence<Lock> {
 	* Returns a range of all the locks.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from LockModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted in portal side by PK ASC order.
 	* </p>
 	*
 	* @param start the lower bound of the range of locks
@@ -571,7 +895,7 @@ public interface LockPersistence extends BasePersistence<Lock> {
 	* Returns an ordered range of all the locks.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from LockModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted in portal side by PK ASC order.
 	* </p>
 	*
 	* @param start the lower bound of the range of locks
@@ -586,121 +910,11 @@ public interface LockPersistence extends BasePersistence<Lock> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Removes all the locks where uuid = &#63; from the database.
-	*
-	* @param uuid the uuid
-	* @throws SystemException if a system exception occurred
-	*/
-	public void removeByUuid(java.lang.String uuid)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Removes all the locks where uuid = &#63; and companyId = &#63; from the database.
-	*
-	* @param uuid the uuid
-	* @param companyId the company ID
-	* @throws SystemException if a system exception occurred
-	*/
-	public void removeByUuid_C(java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Removes all the locks where expirationDate &lt; &#63; from the database.
-	*
-	* @param expirationDate the expiration date
-	* @throws SystemException if a system exception occurred
-	*/
-	public void removeByLtExpirationDate(java.util.Date expirationDate)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Removes the lock where className = &#63; and key = &#63; from the database.
-	*
-	* @param className the class name
-	* @param key the key
-	* @return the lock that was removed
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.Lock removeByC_K(
-		java.lang.String className, java.lang.String key)
-		throws com.liferay.portal.NoSuchLockException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Removes the lock where className = &#63; and key = &#63; and owner = &#63; from the database.
-	*
-	* @param className the class name
-	* @param key the key
-	* @param owner the owner
-	* @return the lock that was removed
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.Lock removeByC_K_O(
-		java.lang.String className, java.lang.String key, java.lang.String owner)
-		throws com.liferay.portal.NoSuchLockException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	/**
 	* Removes all the locks from the database.
 	*
 	* @throws SystemException if a system exception occurred
 	*/
 	public void removeAll()
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the number of locks where uuid = &#63;.
-	*
-	* @param uuid the uuid
-	* @return the number of matching locks
-	* @throws SystemException if a system exception occurred
-	*/
-	public int countByUuid(java.lang.String uuid)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the number of locks where uuid = &#63; and companyId = &#63;.
-	*
-	* @param uuid the uuid
-	* @param companyId the company ID
-	* @return the number of matching locks
-	* @throws SystemException if a system exception occurred
-	*/
-	public int countByUuid_C(java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the number of locks where expirationDate &lt; &#63;.
-	*
-	* @param expirationDate the expiration date
-	* @return the number of matching locks
-	* @throws SystemException if a system exception occurred
-	*/
-	public int countByLtExpirationDate(java.util.Date expirationDate)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the number of locks where className = &#63; and key = &#63;.
-	*
-	* @param className the class name
-	* @param key the key
-	* @return the number of matching locks
-	* @throws SystemException if a system exception occurred
-	*/
-	public int countByC_K(java.lang.String className, java.lang.String key)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the number of locks where className = &#63; and key = &#63; and owner = &#63;.
-	*
-	* @param className the class name
-	* @param key the key
-	* @param owner the owner
-	* @return the number of matching locks
-	* @throws SystemException if a system exception occurred
-	*/
-	public int countByC_K_O(java.lang.String className, java.lang.String key,
-		java.lang.String owner)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

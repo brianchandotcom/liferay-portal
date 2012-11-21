@@ -273,12 +273,6 @@ public class CompanyPersistenceTest {
 		Assert.assertTrue(Validator.equals(
 				existingCompanyModelImpl.getWebId(),
 				existingCompanyModelImpl.getOriginalWebId()));
-
-		Assert.assertTrue(Validator.equals(existingCompanyModelImpl.getMx(),
-				existingCompanyModelImpl.getOriginalMx()));
-
-		Assert.assertEquals(existingCompanyModelImpl.getLogoId(),
-			existingCompanyModelImpl.getOriginalLogoId());
 	}
 
 	protected Company addCompany() throws Exception {

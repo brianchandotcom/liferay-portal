@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.Time;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.persistence.BasePersistence;
 import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
@@ -347,12 +346,6 @@ public class AssetEntryPersistenceTest {
 		_persistence.clearCache();
 
 		AssetEntryModelImpl existingAssetEntryModelImpl = (AssetEntryModelImpl)_persistence.findByPrimaryKey(newAssetEntry.getPrimaryKey());
-
-		Assert.assertEquals(existingAssetEntryModelImpl.getGroupId(),
-			existingAssetEntryModelImpl.getOriginalGroupId());
-		Assert.assertTrue(Validator.equals(
-				existingAssetEntryModelImpl.getClassUuid(),
-				existingAssetEntryModelImpl.getOriginalClassUuid()));
 
 		Assert.assertEquals(existingAssetEntryModelImpl.getClassNameId(),
 			existingAssetEntryModelImpl.getOriginalClassNameId());

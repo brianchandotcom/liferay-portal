@@ -23,15 +23,12 @@ import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Shard;
-import com.liferay.portal.model.impl.ShardModelImpl;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.persistence.BasePersistence;
 import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
 import com.liferay.portal.test.LiferayPersistenceIntegrationJUnitTestRunner;
 import com.liferay.portal.test.persistence.TransactionalPersistenceAdvice;
-import com.liferay.portal.util.PropsValues;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -235,27 +232,6 @@ public class ShardPersistenceTest {
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
-	}
-
-	@Test
-	public void testResetOriginalValues() throws Exception {
-		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
-			return;
-		}
-
-		Shard newShard = addShard();
-
-		_persistence.clearCache();
-
-		ShardModelImpl existingShardModelImpl = (ShardModelImpl)_persistence.findByPrimaryKey(newShard.getPrimaryKey());
-
-		Assert.assertTrue(Validator.equals(existingShardModelImpl.getName(),
-				existingShardModelImpl.getOriginalName()));
-
-		Assert.assertEquals(existingShardModelImpl.getClassNameId(),
-			existingShardModelImpl.getOriginalClassNameId());
-		Assert.assertEquals(existingShardModelImpl.getClassPK(),
-			existingShardModelImpl.getOriginalClassPK());
 	}
 
 	protected Shard addShard() throws Exception {

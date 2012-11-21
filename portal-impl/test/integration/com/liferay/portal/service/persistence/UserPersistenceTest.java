@@ -390,18 +390,10 @@ public class UserPersistenceTest {
 		Assert.assertEquals(existingUserModelImpl.getContactId(),
 			existingUserModelImpl.getOriginalContactId());
 
-		Assert.assertEquals(existingUserModelImpl.getPortraitId(),
-			existingUserModelImpl.getOriginalPortraitId());
-
 		Assert.assertEquals(existingUserModelImpl.getCompanyId(),
 			existingUserModelImpl.getOriginalCompanyId());
 		Assert.assertEquals(existingUserModelImpl.getUserId(),
 			existingUserModelImpl.getOriginalUserId());
-
-		Assert.assertEquals(existingUserModelImpl.getCompanyId(),
-			existingUserModelImpl.getOriginalCompanyId());
-		Assert.assertEquals(existingUserModelImpl.getDefaultUser(),
-			existingUserModelImpl.getOriginalDefaultUser());
 
 		Assert.assertEquals(existingUserModelImpl.getCompanyId(),
 			existingUserModelImpl.getOriginalCompanyId());
@@ -414,16 +406,6 @@ public class UserPersistenceTest {
 		Assert.assertTrue(Validator.equals(
 				existingUserModelImpl.getEmailAddress(),
 				existingUserModelImpl.getOriginalEmailAddress()));
-
-		Assert.assertEquals(existingUserModelImpl.getCompanyId(),
-			existingUserModelImpl.getOriginalCompanyId());
-		Assert.assertEquals(existingUserModelImpl.getFacebookId(),
-			existingUserModelImpl.getOriginalFacebookId());
-
-		Assert.assertEquals(existingUserModelImpl.getCompanyId(),
-			existingUserModelImpl.getOriginalCompanyId());
-		Assert.assertTrue(Validator.equals(existingUserModelImpl.getOpenId(),
-				existingUserModelImpl.getOriginalOpenId()));
 	}
 
 	protected User addUser() throws Exception {

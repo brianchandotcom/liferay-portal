@@ -79,6 +79,7 @@ public class ResourceActionModelImpl extends BaseModelImpl<ResourceAction>
 			true);
 	public static long ACTIONID_COLUMN_BITMASK = 1L;
 	public static long NAME_COLUMN_BITMASK = 2L;
+	public static long BITWISEVALUE_COLUMN_BITMASK = 4L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portal.model.ResourceAction"));
 

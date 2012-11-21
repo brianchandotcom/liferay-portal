@@ -286,9 +286,6 @@ public class GroupPersistenceTest {
 
 		GroupModelImpl existingGroupModelImpl = (GroupModelImpl)_persistence.findByPrimaryKey(newGroup.getPrimaryKey());
 
-		Assert.assertEquals(existingGroupModelImpl.getLiveGroupId(),
-			existingGroupModelImpl.getOriginalLiveGroupId());
-
 		Assert.assertEquals(existingGroupModelImpl.getCompanyId(),
 			existingGroupModelImpl.getOriginalCompanyId());
 		Assert.assertTrue(Validator.equals(existingGroupModelImpl.getName(),

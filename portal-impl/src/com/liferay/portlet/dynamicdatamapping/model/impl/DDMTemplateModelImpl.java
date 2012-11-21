@@ -94,6 +94,8 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 		};
 	public static final String TABLE_SQL_CREATE = "create table DDMTemplate (uuid_ VARCHAR(75) null,templateId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,templateKey VARCHAR(75) null,name STRING null,description STRING null,type_ VARCHAR(75) null,mode_ VARCHAR(75) null,language VARCHAR(75) null,script TEXT null,cacheable BOOLEAN,smallImage BOOLEAN,smallImageId LONG,smallImageURL VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table DDMTemplate";
+	public static final String ORDER_BY_JPQL = " ORDER BY ddmTemplate.templateId ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY DDMTemplate.templateId ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
@@ -115,6 +117,7 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 	public static long TEMPLATEKEY_COLUMN_BITMASK = 64L;
 	public static long TYPE_COLUMN_BITMASK = 128L;
 	public static long UUID_COLUMN_BITMASK = 256L;
+	public static long TEMPLATEID_COLUMN_BITMASK = 512L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.

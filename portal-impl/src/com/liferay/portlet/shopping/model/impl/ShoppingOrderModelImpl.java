@@ -139,6 +139,7 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 	public static long PPPAYMENTSTATUS_COLUMN_BITMASK = 4L;
 	public static long PPTXNID_COLUMN_BITMASK = 8L;
 	public static long USERID_COLUMN_BITMASK = 16L;
+	public static long CREATEDATE_COLUMN_BITMASK = 32L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.

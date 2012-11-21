@@ -448,10 +448,6 @@ public class ShoppingOrderPersistenceTest {
 		Assert.assertTrue(Validator.equals(
 				existingShoppingOrderModelImpl.getNumber(),
 				existingShoppingOrderModelImpl.getOriginalNumber()));
-
-		Assert.assertTrue(Validator.equals(
-				existingShoppingOrderModelImpl.getPpTxnId(),
-				existingShoppingOrderModelImpl.getOriginalPpTxnId()));
 	}
 
 	protected ShoppingOrder addShoppingOrder() throws Exception {

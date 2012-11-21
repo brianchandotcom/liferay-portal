@@ -124,6 +124,7 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 	public static long SOURCEPROTOTYPELAYOUTUUID_COLUMN_BITMASK = 256L;
 	public static long TYPE_COLUMN_BITMASK = 512L;
 	public static long UUID_COLUMN_BITMASK = 1024L;
+	public static long PRIORITY_COLUMN_BITMASK = 2048L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.

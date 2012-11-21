@@ -25,13 +25,11 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.model.WorkflowDefinitionLink;
-import com.liferay.portal.model.impl.WorkflowDefinitionLinkModelImpl;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.persistence.BasePersistence;
 import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
 import com.liferay.portal.test.LiferayPersistenceIntegrationJUnitTestRunner;
 import com.liferay.portal.test.persistence.TransactionalPersistenceAdvice;
-import com.liferay.portal.util.PropsValues;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -282,30 +280,6 @@ public class WorkflowDefinitionLinkPersistenceTest {
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
-	}
-
-	@Test
-	public void testResetOriginalValues() throws Exception {
-		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
-			return;
-		}
-
-		WorkflowDefinitionLink newWorkflowDefinitionLink = addWorkflowDefinitionLink();
-
-		_persistence.clearCache();
-
-		WorkflowDefinitionLinkModelImpl existingWorkflowDefinitionLinkModelImpl = (WorkflowDefinitionLinkModelImpl)_persistence.findByPrimaryKey(newWorkflowDefinitionLink.getPrimaryKey());
-
-		Assert.assertEquals(existingWorkflowDefinitionLinkModelImpl.getGroupId(),
-			existingWorkflowDefinitionLinkModelImpl.getOriginalGroupId());
-		Assert.assertEquals(existingWorkflowDefinitionLinkModelImpl.getCompanyId(),
-			existingWorkflowDefinitionLinkModelImpl.getOriginalCompanyId());
-		Assert.assertEquals(existingWorkflowDefinitionLinkModelImpl.getClassNameId(),
-			existingWorkflowDefinitionLinkModelImpl.getOriginalClassNameId());
-		Assert.assertEquals(existingWorkflowDefinitionLinkModelImpl.getClassPK(),
-			existingWorkflowDefinitionLinkModelImpl.getOriginalClassPK());
-		Assert.assertEquals(existingWorkflowDefinitionLinkModelImpl.getTypePK(),
-			existingWorkflowDefinitionLinkModelImpl.getOriginalTypePK());
 	}
 
 	protected WorkflowDefinitionLink addWorkflowDefinitionLink()

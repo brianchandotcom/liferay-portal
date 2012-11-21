@@ -66,6 +66,8 @@ public class MBDiscussionModelImpl extends BaseModelImpl<MBDiscussion>
 		};
 	public static final String TABLE_SQL_CREATE = "create table MBDiscussion (discussionId LONG not null primary key,classNameId LONG,classPK LONG,threadId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table MBDiscussion";
+	public static final String ORDER_BY_JPQL = " ORDER BY mbDiscussion.discussionId ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY MBDiscussion.discussionId ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
@@ -81,6 +83,7 @@ public class MBDiscussionModelImpl extends BaseModelImpl<MBDiscussion>
 	public static long CLASSNAMEID_COLUMN_BITMASK = 1L;
 	public static long CLASSPK_COLUMN_BITMASK = 2L;
 	public static long THREADID_COLUMN_BITMASK = 4L;
+	public static long DISCUSSIONID_COLUMN_BITMASK = 8L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.messageboards.model.MBDiscussion"));
 

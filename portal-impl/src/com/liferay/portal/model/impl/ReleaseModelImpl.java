@@ -69,6 +69,8 @@ public class ReleaseModelImpl extends BaseModelImpl<Release>
 		};
 	public static final String TABLE_SQL_CREATE = "create table Release_ (releaseId LONG not null primary key,createDate DATE null,modifiedDate DATE null,servletContextName VARCHAR(75) null,buildNumber INTEGER,buildDate DATE null,verified BOOLEAN,state_ INTEGER,testString VARCHAR(1024) null)";
 	public static final String TABLE_SQL_DROP = "drop table Release_";
+	public static final String ORDER_BY_JPQL = " ORDER BY release.releaseId ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY Release_.releaseId ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
@@ -82,6 +84,7 @@ public class ReleaseModelImpl extends BaseModelImpl<Release>
 				"value.object.column.bitmask.enabled.com.liferay.portal.model.Release"),
 			true);
 	public static long SERVLETCONTEXTNAME_COLUMN_BITMASK = 1L;
+	public static long RELEASEID_COLUMN_BITMASK = 2L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portal.model.Release"));
 

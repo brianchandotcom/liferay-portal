@@ -107,6 +107,8 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 	public static long COMPANYID_COLUMN_BITMASK = 8L;
 	public static long USERID_COLUMN_BITMASK = 16L;
 	public static long UUID_COLUMN_BITMASK = 32L;
+	public static long PRIORITY_COLUMN_BITMASK = 64L;
+	public static long MODIFIEDDATE_COLUMN_BITMASK = 128L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.

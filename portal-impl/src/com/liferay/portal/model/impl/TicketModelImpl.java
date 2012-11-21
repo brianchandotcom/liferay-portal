@@ -86,6 +86,7 @@ public class TicketModelImpl extends BaseModelImpl<Ticket>
 				"value.object.column.bitmask.enabled.com.liferay.portal.model.Ticket"),
 			true);
 	public static long KEY_COLUMN_BITMASK = 1L;
+	public static long TICKETID_COLUMN_BITMASK = 2L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portal.model.Ticket"));
 

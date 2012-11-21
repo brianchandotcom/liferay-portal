@@ -349,9 +349,6 @@ public class LayoutPersistenceTest {
 		Assert.assertEquals(existingLayoutModelImpl.getGroupId(),
 			existingLayoutModelImpl.getOriginalGroupId());
 
-		Assert.assertEquals(existingLayoutModelImpl.getIconImageId(),
-			existingLayoutModelImpl.getOriginalIconImageId());
-
 		Assert.assertEquals(existingLayoutModelImpl.getGroupId(),
 			existingLayoutModelImpl.getOriginalGroupId());
 		Assert.assertEquals(existingLayoutModelImpl.getPrivateLayout(),
@@ -366,14 +363,6 @@ public class LayoutPersistenceTest {
 		Assert.assertTrue(Validator.equals(
 				existingLayoutModelImpl.getFriendlyURL(),
 				existingLayoutModelImpl.getOriginalFriendlyURL()));
-
-		Assert.assertEquals(existingLayoutModelImpl.getGroupId(),
-			existingLayoutModelImpl.getOriginalGroupId());
-		Assert.assertEquals(existingLayoutModelImpl.getPrivateLayout(),
-			existingLayoutModelImpl.getOriginalPrivateLayout());
-		Assert.assertTrue(Validator.equals(
-				existingLayoutModelImpl.getSourcePrototypeLayoutUuid(),
-				existingLayoutModelImpl.getOriginalSourcePrototypeLayoutUuid()));
 	}
 
 	protected Layout addLayout() throws Exception {

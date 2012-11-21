@@ -155,7 +155,15 @@ Element contentEl = (Element)request.getAttribute(WebKeys.JOURNAL_ARTICLE_CONTEN
 				<c:if test='<%= elType.equals("text_area") %>'>
 
 					<%
-					String textAreaInputName = "structure_el_" + elName + elRepeatCount + "_content";
+					StringBundler sb = new StringBundler(5);
+
+					sb.append("structure_el_");
+					sb.append(elInstanceId);
+					sb.append(elName);
+					sb.append(elRepeatCount);
+					sb.append("_content");
+
+					String textAreaInputName = sb.toString();
 
 					if (Validator.isNull(elContent)) {
 						elContent = ParamUtil.getString(request, textAreaInputName);
@@ -398,7 +406,14 @@ Element contentEl = (Element)request.getAttribute(WebKeys.JOURNAL_ARTICLE_CONTEN
 				<c:if test='<%= elType.equals("link_to_layout") %>'>
 
 					<%
-					String linkSelectName = "structure_el" + elName + elRepeatCount + "_content";
+					StringBundler sb = new StringBundler(4);
+
+					sb.append("structure_el");
+					sb.append(elName);
+					sb.append(elRepeatCount);
+					sb.append("_content");
+
+					String linkSelectName = sb.toString();
 
 					if (Validator.isNull(elContent)) {
 						elContent = ParamUtil.getString(request, linkSelectName);

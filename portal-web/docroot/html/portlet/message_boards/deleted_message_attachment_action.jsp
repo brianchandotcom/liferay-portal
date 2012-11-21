@@ -21,7 +21,9 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 
 FileEntry attachmentsFileEntry = (FileEntry)row.getObject();
 
-long folderId = attachmentsFileEntry.getFolderId();
+DLFileEntry dlFileEntry = (DLFileEntry)attachmentsFileEntry.getModel();
+
+long folderId = dlFileEntry.getFolderId();
 
 Folder folder = PortletFileRepositoryUtil.getPortletFolder(folderId);
 
@@ -34,7 +36,7 @@ MBMessage message = MBMessageLocalServiceUtil.getMBMessage(messageId);
 	<c:if test="<%= MBCategoryPermission.contains(permissionChecker, scopeGroupId, message.getCategoryId(), ActionKeys.ADD_FILE) %>">
 
 		<%
-		TrashEntry trashEntry = TrashEntryLocalServiceUtil.getEntry(DLFileEntry.class.getName(), attachmentsFileEntry.getFileEntryId());
+		TrashEntry trashEntry = TrashEntryLocalServiceUtil.getEntry(DLFileEntry.class.getName(), dlFileEntry.getFileEntryId());
 		%>
 
 		<portlet:actionURL var="restoreEntryURL">
@@ -60,7 +62,7 @@ MBMessage message = MBMessageLocalServiceUtil.getMBMessage(messageId);
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="messageId" value="<%= String.valueOf(messageId) %>" />
-			<portlet:param name="fileName" value="<%= attachmentsFileEntry.getTitle() %>" />
+			<portlet:param name="fileName" value="<%= dlFileEntry.getTitle() %>" />
 		</portlet:actionURL>
 
 		<liferay-ui:icon-delete

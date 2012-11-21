@@ -1,36 +1,6 @@
 <#assign finderColsList = finder.getColumns()>
 
-<#if finder.isCollection()>
-	/**
-	 * Removes all the ${entity.humanNames} where ${finder.getHumanConditions(false)} from the database.
-	 *
-	<#list finderColsList as finderCol>
-	 * @param ${finderCol.name} the ${finderCol.humanName}
-	</#list>
-	 * @throws SystemException if a system exception occurred
-	 */
-	public void removeBy${finder.name}(
-
-	<#list finderColsList as finderCol>
-		${finderCol.type} ${finderCol.name}<#if finderCol_has_next>,</#if>
-	</#list>
-
-	) throws SystemException {
-		for (${entity.name} ${entity.varName} : findBy${finder.name}(
-
-		<#list finderColsList as finderCol>
-			${finderCol.name}
-
-			<#if finderCol_has_next>
-				,
-			</#if>
-		</#list>
-
-		)) {
-			remove(${entity.varName});
-		}
-	}
-<#else>
+<#if finder.isUnique()>
 	/**
 	 * Removes the ${entity.humanName} where ${finder.getHumanConditions(false)} from the database.
 	 *
@@ -64,5 +34,32 @@
 		);
 
 		return remove(${entity.varName});
+	}
+<#else>
+	/**
+	 * Removes all the ${entity.humanNames} where ${finder.getHumanConditions(false)} from the database.
+	 *
+	<#list finderColsList as finderCol>
+	 * @param ${finderCol.name} the ${finderCol.humanName}
+	</#list>
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void removeBy${finder.name}(
+
+	<#list finderColsList as finderCol>
+		${finderCol.type} ${finderCol.name}<#if finderCol_has_next>,</#if>
+	</#list>
+
+	) throws SystemException {
+		for (${entity.name} ${entity.varName} : findBy${finder.name}(
+
+		<#list finderColsList as finderCol>
+			${finderCol.name},
+		</#list>
+
+		QueryUtil.ALL_POS, QueryUtil.ALL_POS, null
+		)) {
+			remove(${entity.varName});
+		}
 	}
 </#if>

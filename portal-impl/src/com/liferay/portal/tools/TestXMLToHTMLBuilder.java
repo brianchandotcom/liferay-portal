@@ -60,6 +60,15 @@ public class TestXMLToHTMLBuilder extends SeleniumXMLToJavaBuilder {
 		}
 	}
 
+	protected void generateCSS(String testFilePath) throws Exception {
+		String sourcePath = basedir +
+			"/com/liferay/portalweb/blocks/styles/style.css";
+
+		String destinationPath = basedir + "/" + testFilePath + "/style.css";
+
+		FileUtil.copyFile(sourcePath, destinationPath);
+	}
+
 	protected void generateTest(String fileName) throws Exception {
 		if (!FileUtil.exists(basedir + "/" + fileName)) {
 			return;
@@ -73,30 +82,45 @@ public class TestXMLToHTMLBuilder extends SeleniumXMLToJavaBuilder {
 
 		String testFileName = testFilePath + "/" + testName + ".html";
 
+		generateCSS(testFilePath);
+
 		StringBundler sb = new StringBundler();
+
+		Element rootElement = getRootElement(fileName);
 
 		sb.append("<html>\n");
 
 		sb.append("<head>\n");
+		sb.append("<title>Test Outline:");
+
+		sb.append(rootElement.attributeValue("name"));
+		sb.append("</title>\n");
+		sb.append("<link rel='stylesheet' href='style.css'>");
 		sb.append("</head>\n");
 
 		sb.append("<body>\n");
 
-		Element rootElement = getRootElement(fileName);
+		sb.append("<div id='test-outline'>\n");
 
-		sb.append("<h1>");
+		sb.append("<div class='test-name'>\n");
 		sb.append(rootElement.attributeValue("name"));
-		sb.append("</h1>\n");
+		sb.append("</div>\n");
 
-		sb.append("<p>");
+		sb.append("<div class='block-head'>\n");
+		sb.append("Test Description");
+		sb.append("</div>\n");
+
+		sb.append("<div class='description-content'>\n");
 		sb.append(rootElement.attributeValue("description"));
-		sb.append("</p>\n");
+		sb.append("</div>\n");
 
 		sb.append(getSetup(rootElement));
 
 		sb.append(getSteps(rootElement));
 
 		sb.append(getTeardown(rootElement));
+
+		sb.append("</div>\n");
 
 		sb.append("</body>\n");
 
@@ -110,15 +134,21 @@ public class TestXMLToHTMLBuilder extends SeleniumXMLToJavaBuilder {
 
 		Element runBlock = rootElement.element("setup");
 
-		sb.append("<h2>Setup</h2>\n");
+		sb.append("<div class='block-head'>Setup</div>\n");
+
+		sb.append("<div class='test-block'>\n");
 
 		sb.append("<ol>\n");
 
-		sb.append("<li>Log into the portal as <strong>test@liferay.com</strong> with the password <strong>test</strong>.</li>\n");
+		sb.append("<li>Log into the portal as ");
+		sb.append("<strong>test@liferay.com</strong> ");
+		sb.append("with the password <strong>test</strong>.</li>\n");
 
 		sb.append(getCommands(runBlock));
 
 		sb.append("</ol>\n");
+
+		sb.append("</div>\n");
 
 		return sb.toString();
 	}
@@ -128,13 +158,17 @@ public class TestXMLToHTMLBuilder extends SeleniumXMLToJavaBuilder {
 
 		Element runBlock = rootElement.element("steps");
 
-		sb.append("<h2>Steps</h2>\n");
+		sb.append("<div class='block-head'>Steps</div>\n");
+
+		sb.append("<div class='test-block'>\n");
 
 		sb.append("<ol>\n");
 
 		sb.append(getCommands(runBlock));
 
 		sb.append("</ol>\n");
+
+		sb.append("</div>\n");
 
 		return sb.toString();
 	}
@@ -144,7 +178,9 @@ public class TestXMLToHTMLBuilder extends SeleniumXMLToJavaBuilder {
 
 		Element runBlock = rootElement.element("teardown");
 
-		sb.append("<h2>Teardown</h2>\n");
+		sb.append("<div class='block-head'>Teardown</div>\n");
+
+		sb.append("<div class='test-block'>\n");
 
 		sb.append("<ol>\n");
 
@@ -153,6 +189,8 @@ public class TestXMLToHTMLBuilder extends SeleniumXMLToJavaBuilder {
 		sb.append("<li>Log out of the portal.</li>\n");
 
 		sb.append("</ol>\n");
+
+		sb.append("</div>\n");
 
 		return sb.toString();
 	}
@@ -181,7 +219,8 @@ public class TestXMLToHTMLBuilder extends SeleniumXMLToJavaBuilder {
 
 				if (pathsMap.containsKey(pathKey)) {
 					String[] actionArray = pathsMap.get(pathKey);
-					String[] baseActionArray = baseActionsMap.get(actionCommand);
+					String[] baseActionArray = baseActionsMap.get(
+						actionCommand);
 
 					String finalString = baseActionArray[1];
 
@@ -197,7 +236,8 @@ public class TestXMLToHTMLBuilder extends SeleniumXMLToJavaBuilder {
 					sb.append(finalString);
 				}
 				else {
-					String[] baseActionArray = baseActionsMap.get(actionCommand);
+					String[] baseActionArray = baseActionsMap.get(
+						actionCommand);
 
 					String finalString = baseActionArray[1];
 

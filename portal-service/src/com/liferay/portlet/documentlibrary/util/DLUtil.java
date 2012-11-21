@@ -331,14 +331,14 @@ public class DLUtil {
 
 		List<DLFolder> dlFolders = dlFolder.getAncestors();
 
+		Collections.reverse(dlFolders);
+
 		StringBundler sb = new StringBundler((dlFolders.size() * 3) + 6);
 
 		sb.append(themeDisplay.translate("home"));
 		sb.append(StringPool.SPACE);
 
-		for (int i = dlFolders.size() - 1; i >= 0; i--) {
-			DLFolder curDLFolder = dlFolders.get(i);
-
+		for (DLFolder curDLFolder : dlFolders) {
 			sb.append(StringPool.RAQUO);
 			sb.append(StringPool.SPACE);
 			sb.append(curDLFolder.getName());

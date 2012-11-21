@@ -111,6 +111,39 @@ public class Creole10Parser]]></replacevalue>
 		<ant dir="../sql" target="build-db" />
 	</target>
 
+	<target name="build-derby">
+		<tstamp>
+			<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
+		</tstamp>
+
+		<jarjar jarfile="${tstamp.value}/liferay-derby.jar">
+			<rule pattern="org.apache.derby.**" result="com.liferay.apache.derby.@1" />
+			<zipfileset src="${project.dir}/tools/derby-10.9.1.jar" />
+		</jarjar>
+
+		<unzip src="${tstamp.value}/liferay-derby.jar" dest="${tstamp.value}">
+			<patternset>
+			    <include name="**/modules.properties"/>
+		    </patternset>
+		</unzip>
+
+		<replace dir="${tstamp.value}" includes="**/*.properties">
+			<replacefilter token="org.apache.derby" value="com.liferay.apache.derby" />
+			<replacefilter token="org/apache/derby" value="com/liferay/apache/derby" />
+		</replace>
+
+		<jar destfile="${tstamp.value}/liferay-derby.jar"
+		    basedir="${tstamp.value}"
+		    includes="**/*.properties"
+		    excludes="liferay-derby.jar"
+			update="true"
+		/>
+
+		<move file="${tstamp.value}/liferay-derby.jar" tofile="${project.dir}/lib/portal/liferay-derby.jar" />
+
+		<delete dir="${tstamp.value}" />
+	</target>
+
 	<target name="build-icu4j">
 		<tstamp>
 			<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />

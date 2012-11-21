@@ -99,7 +99,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "att
 
 				<liferay-ui:icon
 					cssClass="trash-attachments"
-					image="delete"
+					image="delete_attachment"
 					label="<%= true %>"
 					message='<%= LanguageUtil.format(pageContext, (deletedAttachmentsCount == 1) ? "x-recently-removed-attachment" : "x-recently-removed-attachments", deletedAttachmentsCount) %>'
 					url="<%= viewTrashAttachmentsURL %>"

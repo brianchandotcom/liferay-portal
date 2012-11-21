@@ -546,7 +546,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	public Company getCompanyByLogoId(long logoId)
 		throws PortalException, SystemException {
 
-		return companyPersistence.findByLogoId(logoId);
+		return companyPersistence.findByLogoId_First(logoId);
 	}
 
 	/**
@@ -561,7 +561,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	public Company getCompanyByMx(String mx)
 		throws PortalException, SystemException {
 
-		return companyPersistence.findByMx(mx);
+		return companyPersistence.findByMx_First(mx);
 	}
 
 	/**

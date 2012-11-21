@@ -39,7 +39,7 @@ public class LockFinderImpl
 		throws SystemException {
 
 		if (lockMode == null) {
-			return lockPersistence.fetchByC_K(className, key);
+			return lockPersistence.fetchByC_K_First(className, key);
 		}
 
 		Session session = null;

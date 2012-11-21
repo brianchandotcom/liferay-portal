@@ -134,7 +134,7 @@ public class JournalFolderLocalServiceImpl
 	public JournalFolder fetchFolder(long groupId, String name)
 		throws SystemException {
 
-		return journalFolderPersistence.fetchByG_N(groupId, name);
+		return journalFolderPersistence.fetchByG_N_First(groupId, name);
 	}
 
 	public List<JournalFolder> getCompanyFolders(

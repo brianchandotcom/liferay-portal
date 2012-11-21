@@ -142,7 +142,7 @@ public class LayoutBranchLocalServiceImpl
 	public LayoutBranch getMasterLayoutBranch(long layoutSetBranchId, long plid)
 		throws PortalException, SystemException {
 
-		return layoutBranchPersistence.findByL_P_M(
+		return layoutBranchPersistence.findByL_P_M_First(
 			layoutSetBranchId, plid, true);
 	}
 

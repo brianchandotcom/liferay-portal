@@ -1298,7 +1298,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	public Group getStagingGroup(long liveGroupId)
 		throws PortalException, SystemException {
 
-		return groupPersistence.findByLiveGroupId(liveGroupId);
+		return groupPersistence.findByLiveGroupId_First(liveGroupId);
 	}
 
 	/**
@@ -1570,7 +1570,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	public boolean hasStagingGroup(long liveGroupId) throws SystemException {
-		if (groupPersistence.fetchByLiveGroupId(liveGroupId) != null) {
+		if (groupPersistence.fetchByLiveGroupId_First(liveGroupId) != null) {
 			return true;
 		}
 		else {

@@ -57,13 +57,13 @@ public class TicketLocalServiceImpl extends TicketLocalServiceBaseImpl {
 	}
 
 	public Ticket fetchTicket(String key) throws SystemException {
-		return ticketPersistence.fetchByKey(key);
+		return ticketPersistence.fetchByKey_First(key);
 	}
 
 	public Ticket getTicket(String key)
 		throws PortalException, SystemException {
 
-		return ticketPersistence.findByKey(key);
+		return ticketPersistence.findByKey_First(key);
 	}
 
 }

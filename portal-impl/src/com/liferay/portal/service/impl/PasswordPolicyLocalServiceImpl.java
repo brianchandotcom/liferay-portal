@@ -193,7 +193,7 @@ public class PasswordPolicyLocalServiceImpl
 			return null;
 		}
 
-		return passwordPolicyPersistence.findByC_DP(companyId, true);
+		return passwordPolicyPersistence.findByC_DP_First(companyId, true);
 	}
 
 	/**
@@ -227,7 +227,7 @@ public class PasswordPolicyLocalServiceImpl
 		for (int i = 0; i < organizationIds.length; i++) {
 			long organizationId = organizationIds[i];
 
-			passwordPolicyRel = passwordPolicyRelPersistence.fetchByC_C(
+			passwordPolicyRel = passwordPolicyRelPersistence.fetchByC_C_First(
 				classNameId, organizationId);
 
 			if (passwordPolicyRel != null) {
@@ -253,7 +253,7 @@ public class PasswordPolicyLocalServiceImpl
 			User.class.getName());
 
 		PasswordPolicyRel passwordPolicyRel =
-			passwordPolicyRelPersistence.fetchByC_C(classNameId, userId);
+			passwordPolicyRelPersistence.fetchByC_C_First(classNameId, userId);
 
 		if (passwordPolicyRel != null) {
 			return getPasswordPolicy(passwordPolicyRel.getPasswordPolicyId());
@@ -263,7 +263,7 @@ public class PasswordPolicyLocalServiceImpl
 				userId);
 
 			if (organizations.isEmpty()) {
-				return passwordPolicyPersistence.findByC_DP(
+				return passwordPolicyPersistence.findByC_DP_First(
 					user.getCompanyId(), true);
 			}
 

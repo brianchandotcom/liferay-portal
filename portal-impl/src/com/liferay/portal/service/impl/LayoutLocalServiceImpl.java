@@ -1000,7 +1000,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	public Layout getLayoutByIconImageId(long iconImageId)
 		throws PortalException, SystemException {
 
-		return layoutPersistence.findByIconImageId(iconImageId);
+		return layoutPersistence.findByIconImageId_First(iconImageId);
 	}
 
 	/**

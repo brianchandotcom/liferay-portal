@@ -54,7 +54,7 @@ public class ShardLocalServiceImpl extends ShardLocalServiceBaseImpl {
 
 		long classNameId = PortalUtil.getClassNameId(className);
 
-		return shardPersistence.findByC_C(classNameId, classPK);
+		return shardPersistence.findByC_C_First(classNameId, classPK);
 	}
 
 }

@@ -815,7 +815,7 @@ public class PortletImporter {
 		AssetTag existingAssetTag = null;
 
 		try {
-			existingAssetTag = AssetTagUtil.findByG_N(
+			existingAssetTag = AssetTagUtil.findByG_N_First(
 				portletDataContext.getScopeGroupId(), assetTag.getName());
 		}
 		catch (NoSuchTagException nste) {

@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.social.NoSuchActivitySettingException;
 import com.liferay.portlet.social.model.SocialActivityCounterDefinition;
 import com.liferay.portlet.social.model.SocialActivityDefinition;
 import com.liferay.portlet.social.model.SocialActivitySetting;
@@ -52,12 +51,8 @@ public class SocialActivitySettingLocalServiceImpl
 		long classNameId = PortalUtil.getClassNameId(className);
 		String name = _PREFIX_CLASS_PK.concat(String.valueOf(classPK));
 
-		try {
-			socialActivitySettingPersistence.removeByG_C_A_N(
-				groupId, classNameId, 0, name);
-		}
-		catch (NoSuchActivitySettingException nsase) {
-		}
+		socialActivitySettingPersistence.removeByG_C_A_N(
+			groupId, classNameId, 0, name);
 	}
 
 	public void deleteActivitySettings(long groupId) throws SystemException {
@@ -126,7 +121,7 @@ public class SocialActivitySettingLocalServiceImpl
 		throws SystemException {
 
 		SocialActivitySetting activitySetting =
-			socialActivitySettingPersistence.fetchByG_C_A_N(
+			socialActivitySettingPersistence.fetchByG_C_A_N_First(
 				groupId, classNameId, 0,
 				SocialActivitySettingConstants.NAME_ENABLED);
 
@@ -143,7 +138,7 @@ public class SocialActivitySettingLocalServiceImpl
 		String name = _PREFIX_CLASS_PK.concat(String.valueOf(classPK));
 
 		SocialActivitySetting activitySetting =
-			socialActivitySettingPersistence.fetchByG_C_A_N(
+			socialActivitySettingPersistence.fetchByG_C_A_N_First(
 				groupId, classNameId, 0, name);
 
 		if (activitySetting == null) {
@@ -172,7 +167,7 @@ public class SocialActivitySettingLocalServiceImpl
 		long classNameId = PortalUtil.getClassNameId(className);
 
 		SocialActivitySetting activitySetting =
-			socialActivitySettingPersistence.fetchByG_C_A_N(
+			socialActivitySettingPersistence.fetchByG_C_A_N_First(
 				groupId, classNameId, 0,
 				SocialActivitySettingConstants.NAME_ENABLED);
 
@@ -212,7 +207,7 @@ public class SocialActivitySettingLocalServiceImpl
 				activityCounterDefinition.getName());
 
 		SocialActivitySetting activitySetting =
-			socialActivitySettingPersistence.fetchByG_C_A_N(
+			socialActivitySettingPersistence.fetchByG_C_A_N_First(
 				groupId, classNameId, activityType,
 				activityCounterDefinition.getName());
 
@@ -261,7 +256,7 @@ public class SocialActivitySettingLocalServiceImpl
 		String name = _PREFIX_CLASS_PK.concat(String.valueOf(classPK));
 
 		SocialActivitySetting activitySetting =
-			socialActivitySettingPersistence.fetchByG_C_A_N(
+			socialActivitySettingPersistence.fetchByG_C_A_N_First(
 				groupId, classNameId, 0, name);
 
 		if (activitySetting == null) {

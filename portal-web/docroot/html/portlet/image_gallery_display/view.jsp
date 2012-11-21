@@ -107,7 +107,6 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 
 		String[] mediaGalleryMimeTypes = null;
 
-		request.setAttribute("view.jsp-folderId", folderId);
 		request.setAttribute("view.jsp-mediaGalleryMimeTypes", mediaGalleryMimeTypes);
 		request.setAttribute("view.jsp-results", results);
 		request.setAttribute("view.jsp-searchContainer", searchContainer);
@@ -141,7 +140,6 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 
 			searchContainer.setResults(results);
 
-			request.setAttribute("view.jsp-folderId", folderId);
 			request.setAttribute("view.jsp-mediaGalleryMimeTypes", mediaGalleryMimeTypes);
 			request.setAttribute("view.jsp-results", results);
 			request.setAttribute("view.jsp-searchContainer", searchContainer);
@@ -238,7 +236,6 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 
 		searchContainer.setResults(results);
 
-		request.setAttribute("view.jsp-folderId", folderId);
 		request.setAttribute("view.jsp-mediaGalleryMimeTypes", mediaGalleryMimeTypes);
 		request.setAttribute("view.jsp-results", results);
 		request.setAttribute("view.jsp-searchContainer", searchContainer);

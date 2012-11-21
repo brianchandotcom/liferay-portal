@@ -132,7 +132,7 @@ boolean useAssetEntryQuery = false;
 
 		long folderId = BeanParamUtil.getLong(folder, request, "folderId", defaultFolderId);
 
-		request.setAttribute("view.jsp-folderId", folderId);
+		request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
 		request.setAttribute("view.jsp-mediaGalleryMimeTypes", mediaGalleryMimeTypes);
 		request.setAttribute("view.jsp-results", results);
 		request.setAttribute("view.jsp-searchContainer", searchContainer);

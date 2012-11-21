@@ -537,7 +537,7 @@ serverURL.setParameter("tabs3", tabs3);
 
 							<aui:input cssClass="lfr-input-text-container" label="password" name="smtpPassword" type="password" value="<%= PrefsPropsUtil.getString(PropsKeys.MAIL_SESSION_MAIL_SMTP_PASSWORD) %>" />
 
-							<aui:input cssClass="lfr-textarea-container" label="manually-specify-additional-javamail-properties-to-override-the-above-configuration" name='<%= "advancedProperties" + PrefsPropsUtil.getString(PropsKeys.MAIL_SESSION_MAIL_ADVANCED_PROPERTIES, StringPool.BLANK) %>' type="textarea" />
+							<aui:input cssClass="lfr-textarea-container" label="manually-specify-additional-javamail-properties-to-override-the-above-configuration" name="advancedProperties" value="<%= PrefsPropsUtil.getString(PropsKeys.MAIL_SESSION_MAIL_ADVANCED_PROPERTIES, StringPool.BLANK) %>" type="textarea" />
 						</liferay-ui:panel>
 					</liferay-ui:panel-container>
 				</aui:fieldset>

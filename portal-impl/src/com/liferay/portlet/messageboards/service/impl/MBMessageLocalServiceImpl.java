@@ -1228,18 +1228,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			userId, classNameId, classPK, status);
 	}
 
-	public void moveMessageAttachmentFromTrash(
-			long userId, long messageId, String deletedFileName)
-		throws PortalException, SystemException {
-
-		MBMessage message = getMessage(messageId);
-
-		PortletFileRepositoryUtil.restorePortletFileEntryFromTrash(
-			message.getGroupId(), userId, message.getAttachmentsFolderId(),
-			deletedFileName);
-	}
-
-	public String moveMessageAttachmentToTrash(
+	public void moveMessageAttachmentToTrash(
 			long userId, long messageId, String fileName)
 		throws PortalException, SystemException {
 
@@ -1248,8 +1237,17 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		PortletFileRepositoryUtil.movePortletFileEntryToTrash(
 			message.getGroupId(), userId, message.getAttachmentsFolderId(),
 			fileName);
+	}
 
-		return StringPool.BLANK;
+	public void restoreMessageAttachmentFromTrash(
+			long userId, long messageId, String deletedFileName)
+		throws PortalException, SystemException {
+
+		MBMessage message = getMessage(messageId);
+
+		PortletFileRepositoryUtil.restorePortletFileEntryFromTrash(
+			message.getGroupId(), userId, message.getAttachmentsFolderId(),
+			deletedFileName);
 	}
 
 	public void subscribeMessage(long userId, long messageId)

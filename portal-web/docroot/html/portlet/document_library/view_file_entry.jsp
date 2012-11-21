@@ -956,7 +956,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 						document.<portlet:namespace />fm.<portlet:namespace />redirect.value = '<%= viewFolderURL.toString() %>';
 						submitForm(document.<portlet:namespace />fm);
 					},
-					icon: 'delete',
+					icon: 'trash',
 					label: '<%= UnicodeLanguageUtil.get(pageContext, "move-to-the-recycle-bin") %>'
 				}
 			);

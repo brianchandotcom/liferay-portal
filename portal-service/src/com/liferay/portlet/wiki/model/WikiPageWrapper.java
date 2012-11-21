@@ -884,10 +884,10 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 		return _wikiPage.getAttachmentsFileEntries(start, end);
 	}
 
-	public int getAttachmentsFilesCount()
+	public int getAttachmentsFileEntriesCount()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _wikiPage.getAttachmentsFilesCount();
+		return _wikiPage.getAttachmentsFileEntriesCount();
 	}
 
 	public long getAttachmentsFolderId()

@@ -49,6 +49,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.model.Image;
 import com.liferay.portal.model.Lock;
+import com.liferay.portal.model.ModelHintsUtil;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
@@ -63,6 +64,7 @@ import com.liferay.portlet.asset.model.AssetLink;
 import com.liferay.portlet.asset.model.AssetLinkConstants;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.DuplicateFolderNameException;
+import com.liferay.portlet.documentlibrary.FileExtensionException;
 import com.liferay.portlet.documentlibrary.FileNameException;
 import com.liferay.portlet.documentlibrary.ImageSizeException;
 import com.liferay.portlet.documentlibrary.InvalidFileEntryTypeException;
@@ -2454,11 +2456,25 @@ public class DLFileEntryLocalServiceImpl
 			}
 		}
 
+		validateFileExtension(extension);
 		validateFileName(title);
 
 		DLStoreUtil.validate(title, false);
 
 		validateFile(groupId, folderId, fileEntryId, title, extension);
+	}
+
+	protected void validateFileExtension(String extension)
+		throws PortalException {
+
+		if (Validator.isNotNull(extension)) {
+			int maxLength = ModelHintsUtil.getMaxLength(
+				DLFileEntry.class.getName(), "extension");
+
+			if (extension.length() > maxLength) {
+				throw new FileExtensionException();
+			}
+		}
 	}
 
 	protected void validateFileName(String fileName) throws PortalException {

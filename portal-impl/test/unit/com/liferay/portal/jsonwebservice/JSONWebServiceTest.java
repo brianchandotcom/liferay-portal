@@ -282,12 +282,31 @@ public class JSONWebServiceTest extends BaseJSONWebServiceTestCase {
 
 		mockHttpServletRequest.setParameter("calendar", "1330419334285");
 		mockHttpServletRequest.setParameter("userIds", "1,2,3");
-		mockHttpServletRequest.setParameter("locales", "[en,fr]");
+		mockHttpServletRequest.setParameter("locales", "en,fr");
+		mockHttpServletRequest.setParameter("ids", "173,-7,007");
 
 		JSONWebServiceAction jsonWebServiceAction = lookupJSONWebServiceAction(
 			mockHttpServletRequest);
 
-		Assert.assertEquals("2012, 1/3, en/2", jsonWebServiceAction.invoke());
+		Assert.assertEquals(
+			"2012, 1/3, en/2, 173/3", jsonWebServiceAction.invoke());
+	}
+
+	@Test
+	public void testTypeConversion2() throws Exception {
+		MockHttpServletRequest mockHttpServletRequest = createHttpRequest(
+			"/foo/hey");
+
+		mockHttpServletRequest.setParameter("calendar", "1330419334285");
+		mockHttpServletRequest.setParameter("userIds", "[1,2,3]");
+		mockHttpServletRequest.setParameter("locales", "[en,fr]");
+		mockHttpServletRequest.setParameter("ids", "[173,-7,007]");
+
+		JSONWebServiceAction jsonWebServiceAction = lookupJSONWebServiceAction(
+			mockHttpServletRequest);
+
+		Assert.assertEquals(
+			"2012, 1/3, en/2, 173/3", jsonWebServiceAction.invoke());
 	}
 
 }

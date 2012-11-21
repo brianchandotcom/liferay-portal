@@ -181,6 +181,12 @@ public abstract class BaseTrashHandler implements TrashHandler {
 		return "deleted-in-x";
 	}
 
+	public List<ContainerModel> getParentContainerModels(long containerModelId)
+		throws PortalException, SystemException {
+
+		return null;
+	}
+
 	/**
 	 * Returns the link to the location to which the trash entry was restored.
 	 *

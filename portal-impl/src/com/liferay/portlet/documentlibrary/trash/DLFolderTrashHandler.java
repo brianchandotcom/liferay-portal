@@ -14,19 +14,14 @@
 
 package com.liferay.portlet.documentlibrary.trash;
 
-import com.liferay.portal.InvalidRepositoryException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.model.Folder;
-import com.liferay.portal.kernel.trash.BaseTrashHandler;
 import com.liferay.portal.kernel.trash.TrashActionKeys;
 import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.repository.liferayrepository.LiferayRepository;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.service.RepositoryServiceUtil;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
@@ -47,7 +42,7 @@ import javax.portlet.PortletRequest;
  * @author Alexander Chow
  * @author Zsolt Berentey
  */
-public class DLFolderTrashHandler extends BaseTrashHandler {
+public class DLFolderTrashHandler extends DLBaseTrashHandler {
 
 	public static final String CLASS_NAME = DLFolder.class.getName();
 
@@ -179,23 +174,6 @@ public class DLFolderTrashHandler extends BaseTrashHandler {
 		dlFolder.setName(name);
 
 		DLFolderLocalServiceUtil.updateDLFolder(dlFolder);
-	}
-
-	protected DLFolder getDLFolder(long classPK)
-		throws PortalException, SystemException {
-
-		Repository repository = RepositoryServiceUtil.getRepositoryImpl(
-			classPK, 0, 0);
-
-		if (!(repository instanceof LiferayRepository)) {
-			throw new InvalidRepositoryException(
-				"Repository " + repository.getRepositoryId() +
-					" does not support trash operations");
-		}
-
-		Folder folder = repository.getFolder(classPK);
-
-		return (DLFolder)folder.getModel();
 	}
 
 	@Override

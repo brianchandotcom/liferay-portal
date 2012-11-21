@@ -269,6 +269,9 @@ public interface TrashHandler {
 	 */
 	public String getDeleteMessage();
 
+	public List<ContainerModel> getParentContainerModels(long containerModelId)
+		throws PortalException, SystemException;
+
 	/**
 	 * Returns the link to the location to which the model entity was restored.
 	 *

@@ -23,8 +23,10 @@ import com.liferay.portal.kernel.util.CamelCaseUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MethodParameter;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.service.ServiceContext;
 
+import java.lang.reflect.Array;
 import java.lang.reflect.Method;
 
 import java.util.ArrayList;
@@ -79,6 +81,23 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 		}
 
 		return new JSONRPCResponse(jsonRPCRequest, result, exception);
+	}
+
+	private Object _convertListToArray(List<?> list, Class<?> componentType) {
+
+		Object array = Array.newInstance(componentType, list.size());
+
+		for (int i = 0; i < list.size(); i++) {
+			Object entry = list.get(i);
+
+			if (entry != null) {
+				entry = TypeConverterManager.convertType(entry, componentType);
+			}
+
+			Array.set(array, i, entry);
+		}
+
+		return array;
 	}
 
 	private Object _createDefaultParameterValue(
@@ -244,8 +263,15 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 					parameterValue = calendar;
 				}
 				else if (parameterType.equals(List.class)) {
+					String stringValue = value.toString().trim();
+
+					if (!stringValue.startsWith(StringPool.OPEN_BRACKET)) {
+						stringValue = StringPool.OPEN_BRACKET + stringValue +
+							StringPool.CLOSE_BRACKET;
+					}
+
 					List<?> list = JSONFactoryUtil.looseDeserializeSafe(
-						value.toString(), ArrayList.class);
+						stringValue, ArrayList.class);
 
 					list = _generifyList(
 						list, methodParameters[i].getGenericTypes());
@@ -264,6 +290,21 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 						map, methodParameters[i].getGenericTypes());
 
 					parameterValue = map;
+				}
+				else if (parameterType.isArray()) {
+					String stringValue = value.toString().trim();
+
+					if (!stringValue.startsWith(StringPool.OPEN_BRACKET)) {
+						stringValue = StringPool.OPEN_BRACKET + stringValue +
+							StringPool.CLOSE_BRACKET;
+					}
+
+					List<?> list = JSONFactoryUtil.looseDeserializeSafe(
+						stringValue, ArrayList.class);
+
+					parameterValue = _convertListToArray(
+						list, parameterType.getComponentType());
+
 				}
 				else {
 					parameterValue = TypeConverterManager.convertType(

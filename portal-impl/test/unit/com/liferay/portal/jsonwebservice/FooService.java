@@ -106,11 +106,11 @@ public class FooService {
 	}
 
 	public static String use1(FooDataImpl fooData) {
-		return "using #1: " + fooData.getValue();
+		return "using #1: " + fooData.toString();
 	}
 
 	public static String use2(FooData fooData) {
-		return "using #2: " + fooData.getValue();
+		return "using #2: " + fooData.toString();
 	}
 
 }

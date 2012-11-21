@@ -51,6 +51,11 @@ public class FooDataImpl implements FooData {
 		_value = value;
 	}
 
+	@Override
+	public String toString() {
+		return "h=" + _height + "/id=" + _id + "/n=" + _name + "/v=" + _value;
+	}
+
 	private int _height = 177;
 	private int _id = -1;
 	private String _name = "John Doe";

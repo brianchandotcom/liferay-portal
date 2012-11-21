@@ -89,7 +89,9 @@ public class JSONWebServiceTest extends BaseJSONWebServiceTestCase {
 		JSONWebServiceAction jsonWebServiceAction = lookupJSONWebServiceAction(
 			mockHttpServletRequest);
 
-		Assert.assertEquals("using #1: foo!", jsonWebServiceAction.invoke());
+		Assert.assertEquals(
+			"using #1: h=177/id=-1/n=John Doe/v=foo!",
+			jsonWebServiceAction.invoke());
 
 		mockHttpServletRequest = createHttpRequest("/foo/use2/+foo-data");
 
@@ -110,7 +112,42 @@ public class JSONWebServiceTest extends BaseJSONWebServiceTestCase {
 		jsonWebServiceAction = lookupJSONWebServiceAction(
 			mockHttpServletRequest);
 
-		Assert.assertEquals("using #2: foo!", jsonWebServiceAction.invoke());
+		Assert.assertEquals(
+			"using #2: h=177/id=-1/n=John Doe/v=foo!",
+			jsonWebServiceAction.invoke());
+	}
+
+	@Test
+	public void testCreateArgumentInstancesWithJSONData() throws Exception {
+		MockHttpServletRequest mockHttpServletRequest = createHttpRequest(
+			"/foo/use1");
+
+		mockHttpServletRequest.setParameter(
+			"fooData", "{height: 121, name:'Felix', value:'!!!'}");
+
+		JSONWebServiceAction jsonWebServiceAction = lookupJSONWebServiceAction(
+			mockHttpServletRequest);
+
+		Assert.assertEquals(
+			"using #1: h=121/id=-1/n=Felix/v=!!!",
+			jsonWebServiceAction.invoke());
+
+		mockHttpServletRequest = createHttpRequest(
+			"/foo/use2");
+
+		mockHttpServletRequest.setParameter(
+			"fooData", "{height: 121, name:'Felix', value:'!!!'}");
+
+		jsonWebServiceAction = lookupJSONWebServiceAction(
+			mockHttpServletRequest);
+
+		try {
+			jsonWebServiceAction.invoke();
+			Assert.fail();
+		}
+		catch (Exception e) {
+		}
+
 	}
 
 	@Test
@@ -133,7 +170,9 @@ public class JSONWebServiceTest extends BaseJSONWebServiceTestCase {
 		JSONWebServiceAction jsonWebServiceAction = lookupJSONWebServiceAction(
 			mockHttpServletRequest);
 
-		Assert.assertEquals("using #1: bar!", jsonWebServiceAction.invoke());
+		Assert.assertEquals(
+			"using #1: h=177/id=-1/n=John Doe/v=bar!",
+			jsonWebServiceAction.invoke());
 	}
 
 	@Test

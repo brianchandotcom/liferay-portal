@@ -280,12 +280,6 @@ public class TrashEntryLocalServiceWrapper implements TrashEntryLocalService,
 		_trashEntryLocalService.checkEntries();
 	}
 
-	public void checkEntriesAttachments()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		_trashEntryLocalService.checkEntriesAttachments();
-	}
-
 	/**
 	* Deletes the trash entry with the primary key.
 	*

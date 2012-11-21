@@ -36,8 +36,14 @@
 	else if (sites.equals(SitesDirectoryTag.SITES_SIBLINGS) && (branchGroups.size() > 1)) {
 		rootGroup = branchGroups.get(1);
 	}
+	else if (sites.equals(SitesDirectoryTag.SITES_SIBLINGS) && group.isRoot()) {
+		rootGroup = null;
+	}
 	else if (sites.equals(SitesDirectoryTag.SITES_PARENT) && (branchGroups.size() > 2)) {
 		rootGroup = branchGroups.get(2);
+	}
+	else if (sites.equals(SitesDirectoryTag.SITES_PARENT) && (branchGroups.size() == 2)) {
+		rootGroup = null;
 	}
 	else {
 		hidden = true;

@@ -74,8 +74,8 @@ public class MBMessageImpl extends MBMessageBaseImpl {
 	public long getAttachmentsFolderId()
 		throws PortalException, SystemException {
 
-		if (_attachmentFolderId > 0) {
-			return _attachmentFolderId;
+		if (_attachmentsFolderId > 0) {
+			return _attachmentsFolderId;
 		}
 
 		ServiceContext serviceContext = new ServiceContext();
@@ -90,9 +90,9 @@ public class MBMessageImpl extends MBMessageBaseImpl {
 			getUserId(), repositoryId, getThreadAttachmentsFolderId(),
 			String.valueOf(getMessageId()), serviceContext);
 
-		_attachmentFolderId = folder.getFolderId();
+		_attachmentsFolderId = folder.getFolderId();
 
-		return _attachmentFolderId;
+		return _attachmentsFolderId;
 	}
 
 	public String getBody(boolean translate) {
@@ -195,10 +195,10 @@ public class MBMessageImpl extends MBMessageBaseImpl {
 		}
 	}
 
-	public void setAttachmentsFolderId(long attachmentFolderId) {
-		_attachmentFolderId = attachmentFolderId;
+	public void setAttachmentsFolderId(long attachmentsFolderId) {
+		_attachmentsFolderId = attachmentsFolderId;
 	}
 
-	private long _attachmentFolderId;
+	private long _attachmentsFolderId;
 
 }

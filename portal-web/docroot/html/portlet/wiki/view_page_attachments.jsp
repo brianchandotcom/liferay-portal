@@ -147,7 +147,7 @@ iteratorURL.setParameter("viewTrashAttachments", String.valueOf(viewTrashAttachm
 		<c:otherwise>
 			<liferay-ui:search-container-results
 				results="<%= wikiPage.getAttachmentsFileEntries(searchContainer.getStart(), searchContainer.getEnd()) %>"
-				total="<%= wikiPage.getAttachmentsFilesCount() %>"
+				total="<%= wikiPage.getAttachmentsFileEntriesCount() %>"
 			/>
 		</c:otherwise>
 	</c:choose>

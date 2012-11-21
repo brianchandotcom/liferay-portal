@@ -20,6 +20,7 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
+import com.liferay.portlet.messageboards.NoSuchMessageException;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
 import com.liferay.portlet.messageboards.model.MBMessage;
@@ -94,6 +95,12 @@ public class ActionUtil {
 			message = MBMessageServiceUtil.getMessage(messageId);
 		}
 
+		if ((message != null) &&
+				(message.isInTrash() || message.isInTrashThread())) {
+
+			throw new NoSuchMessageException();
+		}
+
 		request.setAttribute(WebKeys.MESSAGE_BOARDS_MESSAGE, message);
 	}
 
@@ -118,6 +125,12 @@ public class ActionUtil {
 
 			message = MBMessageServiceUtil.getMessage(
 				thread.getRootMessageId());
+		}
+
+		if ((message != null) &&
+				(message.isInTrash() || message.isInTrashThread())) {
+
+			throw new NoSuchMessageException();
 		}
 
 		request.setAttribute(WebKeys.MESSAGE_BOARDS_MESSAGE, message);

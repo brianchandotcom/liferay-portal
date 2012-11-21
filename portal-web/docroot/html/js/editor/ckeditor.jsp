@@ -17,8 +17,6 @@
 <%@ include file="/html/taglib/init.jsp" %>
 
 <%
-System.out.println("test");
-
 String portletId = portletDisplay.getRootPortletId();
 
 String mainPath = themeDisplay.getPathMain();
@@ -102,6 +100,12 @@ if (!inlineEdit) {
 
 		<script src="<%= HtmlUtil.escape(PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNHost() + themeDisplay.getPathJavaScript() + "/editor/ckeditor/ckeditor.js", javaScriptLastModified)) %>" type="text/javascript"></script>
 
+		<c:if test="<%= inlineEdit && inlineEditSaveURL != null %>">
+
+		<script src="<%= HtmlUtil.escape(PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNHost() + themeDisplay.getPathJavaScript() + "/editor/ckeditor/main.js", javaScriptLastModified)) %>" type="text/javascript"></script>
+
+		</c:if>
+
 		<script type="text/javascript">
 			Liferay.namespace('EDITORS')['<%= editorImpl %>'] = true;
 		</script>
@@ -165,11 +169,15 @@ if (!inlineEdit) {
 
 <%
 	String textareaName = name;
+
+	String modules = StringPool.BLANK;
 %>
 
-<c:if test="<%= inlineEdit %>">
+<c:if test="<%= inlineEdit && inlineEditSaveURL != null %>">
 <%
 	textareaName = name + "_original";
+
+	modules = "ckeditor-inline";
 %>
 </c:if>
 
@@ -181,312 +189,10 @@ if (!inlineEdit) {
 	CKEDITOR.disableAutoInline = true;
 </script>
 
-<style>
-	div[contenteditable=true] {
-		border: 1px solid #FFB914;
-	}
-
-	.notice-inline-edit {
-		background-color: #ffc;
-		border-radius: 5px;
-		border: 1px solid #900;
-		padding: 10px;
-	}
-
-	.notice-inline-edit-close {
-		cursor: pointer;
-		font-weight: bold;
-		margin-left: 0.4em;
-		text-decoration: underline;
-	}
-
-	.notice-inline-edit-error .notice-inline-edit {
-		background-color: #ff0000;
-	}
-
-	.notice-inline-edit-error .notice-inline-edit-text {
-		color: #ffc;
-	}
-
-	.notice-inline-edit-error .notice-inline-edit-close {
-		color: #ffff64;
-	}
-
-	.notice-inline-edit-text {
-		color: #900;
-		font-weight: bold;
-	}
-</style>
-
-<aui:script use="overlay,node-scroll-info">
+<aui:script use="<%= modules %>" >
 	(function() {
-
-		<c:if test="<%= inlineEdit && inlineEditSaveURL != null %>">
-
-		var Lang = A.Lang;
-		
-		var saveTimer, closeTimer, scrollListener;
-
-		function afterSaveContentFailure(responseData, autosaved) {
-			var instance = this;
-
-			instance.resetDirty();
-
-			var notice = getEditNotice();
-
-			var boundingBox = notice.get('boundingBox');
-
-			boundingBox.addClass('notice-inline-edit-error');
-
-			boundingBox.one('.notice-inline-edit-text').html(Liferay.Language.get('the-draft-was-not-saved-successfully'));
-
-			notice.show();
-
-			updateNoticePosition();
-
-			addCloseNoticeListener();
-		}
-
-		function afterSaveContentSuccess(responseData, autosaved) {
-			var instance = this;
-
-			instance.resetDirty();
-
-			var notice = getEditNotice();
-			
-			var boundingBox = notice.get('boundingBox');
-
-			boundingBox.removeClass('.notice-inline-edit-error');
-
-			var message = Liferay.Language.get('the-draft-was-saved-successfully-at-x');
-
-			if (autosaved) {
-				message = Liferay.Language.get('the-draft-was-autosaved-successfully-at-x');
-			}
-
-			message = Lang.sub(
-				message,
-				[
-					new Date().toLocaleTimeString()
-				]
-			);
-
-			boundingBox.one('.notice-inline-edit-text').html(message);
-
-			notice.show();
-
-			updateNoticePosition();
-
-			addCloseNoticeListener();
-		}
-
-		function attachScrollListener() {
-			var notice = getEditNotice();
-
-			var noticeNode = notice.get('boundingBox');
-
-			if (!noticeNode.getData('bodyScrollListener')) {
-				var body = A.one('body');
-
-				body.plug(A.Plugin.ScrollInfo);
-
-				scrollListener = body.scrollInfo.on('scroll', updateNoticePosition);
-
-				noticeNode.setData('bodyScrollListener', scrollListener);
-			}
-		}
-
-		function attachCloseListener() {
-			var notice = getEditNotice();
-
-			var boundingBox = notice.get('boundingBox');
-
-			boundingBox.one('.notice-inline-edit-close').on('click', A.bind(notice.hide, notice));
-		}
-
-		function addCloseNoticeListener() {
-			window.clearTimeout(closeTimer);
-
-			closeTimer = window.setTimeout(
-				function() {
-					var notice = getEditNotice();
-
-					notice.hide();
-				},
-				CKEDITOR.config.closeNoticeTimeout
-			);
-		}
-
-		function getEditNotice() {
-			var triggerNode = A.one('#cke_<%= name %>');
-
-			var editNoticeNode = A.one('.notice-inline-edit');
-
-			if (!editNoticeNode) {
-				editNotice = new A.Overlay(
-					{
-						bodyContent:
-							'<div class="notice-inline-edit">' +
-								'<span class="notice-inline-edit-text"></span>' +
-								'<span class="notice-inline-edit-close" tab-index="0">Close</span>' +
-							'</div>',
-						visible: false,
-						zIndex: triggerNode.getStyle('zIndex') + 2
-					}
-				).render();
-
-				editNotice.get('boundingBox').one('.notice-inline-edit').setData('noticeInstance', editNotice);
-
-				attachCloseListener();
-			}
-			else {
-				editNotice = editNoticeNode.getData('noticeInstance');
-			}
-
-			return editNotice;
-		}
-
-		function onEditorBlur() {
-			var instance = this;
-
-			window.clearTimeout(saveTimer);
-
-			saveContent.call(instance);
-		}
-
-		function onEditorFocus() {
-			var instance = this;
-
-			var originalContentNode = A.one('#<%= name %>_original');
-
-			if (!originalContentNode.text()) {
-				originalContentNode.text(window['<%= name %>'].getHTML());
-			}
-
-			var notice = getEditNotice();
-
-			var noticeNode = notice.get('boundingBox');
-
-			if (notice.get('visible') && noticeNode.getData('editor') !== '<%= name %>') {
-				notice.set('visible', false);
-
-				noticeNode.setData('bodyScrollListener', null);
-
-				if (scrollListener) {
-					scrollListener.detach();
-				}
-			}
-
-			setNoticeEditor.call(instance);
-
-			setSaveTimer.call(instance);
-
-			attachScrollListener();
-
-			instance.resetDirty();
-		}
-
-		function restoreContent() {
-			var instance = this;
-
-			var originalContentNode = A.one('#<%= name %>_original');
-
-			var originalContent = originalContentNode.text();
-
-			window['<%= name %>'].setHTML(originalContent);
-
-			saveContent.call(instance);
-		}
-		
-		function saveContent(autosaved) {
-			var instance = this;
-
-			if (instance.checkDirty()) {
-				A.io.request(
-					'<%= inlineEditSaveURL %>',
-					{
-						after: {
-							failure: function() {
-								var responseData = this.get('responseData');
-
-								afterSaveContentFailure.call(instance, responseData, autosaved);
-							},
-							success: function() {
-								var responseData = this.get('responseData');
-
-								if (responseData.success) {
-									afterSaveContentSuccess.call(instance, responseData, autosaved);
-								}
-								else {
-									afterSaveContentFailure.call(instance, responseData, autosaved);
-								}
-							}
-						},
-						data: {
-							entryData: window['<%= name %>'].getHTML()
-						},
-						dataType: 'json'
-					}
-				);
-			}
-		}
-
-		function setNoticeEditor() {
-			var notice = getEditNotice();
-
-			var noticeNode = notice.get('boundingBox');
-
-			noticeNode.setData('editor', '<%= name %>');
-		}
-
-		function setSaveTimer() {
-			var instance = this;
-
-			window.clearTimeout(saveTimer);
-
-			saveTimer = window.setInterval(A.bind(saveContent, instance, true), CKEDITOR.config.autoSaveTimeout);
-		}
-
-		function updateNoticePosition() {
-			var notice = getEditNotice();
-
-			if (notice.get('visible')) {
-				var editorToolbarNode = A.one('#cke_<%= name %>');
-
-				var editorToolbarVisible = editorToolbarNode.getStyle('display') !== 'none';
-
-				var alignNode;
-
-				if (editorToolbarVisible) {
-					var noticePosition = 'tl';
-					var containerPostion = 'bl';
-
-					if (parseInt(editorToolbarNode.getStyle('top'), 10) > 30) {
-						noticePosition = 'bl';
-						containerPostion = 'tl';
-					}
-
-					alignNode = {
-						node: editorToolbarNode,
-						points: [noticePosition, containerPostion]
-					};
-
-					notice.set('align', alignNode);
-				}
-				else {
-					notice.set('align', null);
-
-					var viewport = A.DOM.viewportRegion();
-
-					notice.set('xy', [(viewport.right - viewport.left) / 2, viewport.top]);
-				}
-			}
-		}
-
-		</c:if>
-
 		function setData() {
-			<c:if test="<%= Validator.isNotNull(initMethod) %>">
+			<c:if test="<%= Validator.isNotNull(initMethod) && !(inlineEdit && inlineEditSaveURL != null) %>">
 				ckEditor.setData(<%= HtmlUtil.escapeJS(namespace + initMethod) %>());
 			</c:if>
 		}
@@ -528,6 +234,16 @@ if (!inlineEdit) {
 
 		var ckEditor = CKEDITOR.instances['<%= name %>'];
 
+		<c:if test="<%= inlineEdit && inlineEditSaveURL != null %>">
+			new Liferay.CKEditorInline(
+				{
+					editor: ckEditor,
+					editorName: '<%= name %>',
+					saveURL: '<%= inlineEditSaveURL %>'
+				}
+			);
+		</c:if>
+
 		var customDataProcessorLoaded = false;
 
 		<%
@@ -556,30 +272,15 @@ if (!inlineEdit) {
 			function() {
 
 			<c:choose>
-				<c:when test="<%= inlineEdit && inlineEditSaveURL != null %>">
-					var ckEditor = CKEDITOR.instances['<%= name %>'];
+				<c:when test="<%= useCustomDataProcessor %>">
+					instanceReady = true;
 
-					ckEditor.on('blur', A.bind(onEditorBlur, ckEditor));
-
-					ckEditor.on('focus', A.bind(onEditorFocus, ckEditor));
-
-					ckEditor.on('saveContent', A.bind(saveContent, ckEditor));
-
-					ckEditor.on('restoreContent', A.bind(restoreContent, ckEditor));
+					if (customDataProcessorLoaded) {
+						setData();
+					}
 				</c:when>
 				<c:otherwise>
-					<c:choose>
-						<c:when test="<%= useCustomDataProcessor %>">
-							instanceReady = true;
-
-							if (customDataProcessorLoaded) {
-								setData();
-							}
-						</c:when>
-						<c:otherwise>
-							setData();
-						</c:otherwise>
-					</c:choose>
+					setData();
 				</c:otherwise>
 			</c:choose>
 

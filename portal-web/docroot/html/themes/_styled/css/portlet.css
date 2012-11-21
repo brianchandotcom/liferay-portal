@@ -417,6 +417,34 @@ body.portlet {
 	cursor: pointer;
 }
 
+
+/* ---------- Inline edit messages ---------- */
+
+div[contenteditable=true] {
+	border: 1px solid #FFB914;
+}
+
+.lfr-notice-inline-edit {
+	@extend .portlet-msg-success;
+}
+
+.lfr-notice-inline-edit-error {
+	@extend .portlet-msg-error;
+}
+
+.lfr-notice-inline-edit, .lfr-notice-inline-edit-error {
+	.lfr-notice-inline-edit-close {
+		cursor: pointer;
+		font-weight: bold;
+		margin-left: 0.4em;
+		text-decoration: underline;
+	}
+
+	.lfr-notice-inline-edit-text {
+		font-weight: bold;
+	}
+}
+
 /* ---------- Sections ---------- */
 
 /* ---------- Table or section header ---------- */

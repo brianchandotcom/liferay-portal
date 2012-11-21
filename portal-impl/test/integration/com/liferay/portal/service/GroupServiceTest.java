@@ -39,16 +39,15 @@ import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.TransactionalCallbackAwareExecutionTestListener;
 import com.liferay.portal.util.TestPropsValues;
-
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
-import com.liferay.portlet.blogs.service.BlogsEntryServiceUtil;
+
+import java.io.InputStream;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import java.io.InputStream;
 
 /**
  * @author Julio Camarero
@@ -161,10 +160,7 @@ public class GroupServiceTest {
 
 		GroupLocalServiceUtil.deleteGroup(groupId);
 
-		BlogsEntry nullEntry = BlogsEntryLocalServiceUtil.fetchBlogsEntry(
-			entryId);
-
-		Assert.assertNull(nullEntry);
+		Assert.assertNull(BlogsEntryLocalServiceUtil.fetchBlogsEntry(entryId));
 	}
 
 	@Test
@@ -276,33 +272,6 @@ public class GroupServiceTest {
 			true);
 	}
 
-	private Group _addGroup(
-		String name, long parentGroupId, ServiceContext serviceContext)
-		throws Exception {
-
-		Group group = GroupLocalServiceUtil.fetchGroup(
-			TestPropsValues.getCompanyId(), name);
-
-		if (group != null) {
-			return group;
-		}
-
-		String description = "This is a test group.";
-		int type = GroupConstants.TYPE_SITE_OPEN;
-		String friendlyURL =
-			StringPool.SLASH + FriendlyURLNormalizerUtil.normalize(name);
-		boolean site = true;
-		boolean active = true;
-
-		if (serviceContext == null) {
-			serviceContext = ServiceTestUtil.getServiceContext();
-		}
-
-		return GroupServiceUtil.addGroup(
-			parentGroupId, GroupConstants.DEFAULT_LIVE_GROUP_ID, name,
-			description, type, friendlyURL, site, active, serviceContext);
-	}
-
 	private BlogsEntry _addBlogsEntry(long groupId, long userId)
 		throws Exception {
 
@@ -328,12 +297,40 @@ public class GroupServiceTest {
 		InputStream smallImageInputStream = null;
 
 		BlogsEntry blogsEntry = BlogsEntryLocalServiceUtil.addEntry(
-			userId, title, description, content, displayDateMonth, displayDateDay,
-			displayDateYear, displayDateHour, displayDateMinute, allowPingbacks,
-			allowTrackbacks, trackbacks, smallImage, smallImageURL,
-			smallImageFileName, smallImageInputStream, serviceContext);
+			userId, title, description, content, displayDateMonth,
+			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
+			allowPingbacks, allowTrackbacks, trackbacks, smallImage,
+			smallImageURL, smallImageFileName, smallImageInputStream,
+			serviceContext);
 
 		return blogsEntry;
+	}
+
+	private Group _addGroup(
+		String name, long parentGroupId, ServiceContext serviceContext)
+		throws Exception {
+
+		Group group = GroupLocalServiceUtil.fetchGroup(
+			TestPropsValues.getCompanyId(), name);
+
+		if (group != null) {
+			return group;
+		}
+
+		String description = "This is a test group.";
+		int type = GroupConstants.TYPE_SITE_OPEN;
+		String friendlyURL =
+			StringPool.SLASH + FriendlyURLNormalizerUtil.normalize(name);
+		boolean site = true;
+		boolean active = true;
+
+		if (serviceContext == null) {
+			serviceContext = ServiceTestUtil.getServiceContext();
+		}
+
+		return GroupServiceUtil.addGroup(
+			parentGroupId, GroupConstants.DEFAULT_LIVE_GROUP_ID, name,
+			description, type, friendlyURL, site, active, serviceContext);
 	}
 
 	private void _givePermissionToManageSubsites(User user, Group group)

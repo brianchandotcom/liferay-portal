@@ -32,6 +32,9 @@ import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLDecoder;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.ServletContext;
 
 import jodd.io.findfile.ClassFinder;
@@ -139,24 +142,26 @@ public class JSONWebServiceConfiguratorImpl extends ClassFinder
 			libDir = new File(classPathFile.getParent(), "lib");
 		}
 
-		File[] classPathFiles = new File[2];
+		List<File> classPathList = new ArrayList<File>();
 
-		classPathFiles[0] = classPathFile;
+		classPathList.add(classPathFile);
 
 		FindFile findFile = new RegExpFindFile(
 			".*-(hook|portlet|web)-service.*\\.jar");
 
 		findFile.searchPath(libDir);
 
-		classPathFiles[1] = findFile.nextFile();
+		File file = null;
 
-		if (classPathFiles[1] == null) {
-			File classesDir = new File(libDir.getParent(), "classes");
-
-			classPathFiles[1] = classesDir;
+		while ((file = findFile.nextFile()) != null) {
+			classPathList.add(file);
 		}
 
-		return classPathFiles;
+		File classesDir = new File(libDir.getParent(), "classes");
+
+		classPathList.add(classesDir);
+
+		return classPathList.toArray(new File[classPathList.size()]);
 	}
 
 	protected File[] getPortalClassPathFiles() {

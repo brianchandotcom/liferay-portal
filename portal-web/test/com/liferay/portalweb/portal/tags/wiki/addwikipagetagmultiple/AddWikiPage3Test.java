@@ -36,6 +36,7 @@ public class AddWikiPage3Test extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_36_title']",
 			RuntimeVariables.replace("Wiki Page3 Test"));
+		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Source"),
 			selenium.getText("//span[9]/span/span/a"));
 		selenium.clickAt("//span[9]/span/span/a",

@@ -36,6 +36,7 @@ public class AddFrontPageTest extends BaseTestCase {
 			RuntimeVariables.replace(
 				"This page is empty. Edit it to add some text."));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Source"),
 			selenium.getText("//span[9]/span/span/a"));
 		selenium.clickAt("//span[9]/span/span/a",

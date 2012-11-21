@@ -115,7 +115,7 @@ public class EditPageAttachmentsAction extends EditFileEntryAction {
 				emptyTrash(actionRequest);
 			}
 			else if (cmd.equals(Constants.MOVE_FROM_TRASH)) {
-				moveAttachmentFromTrash(actionRequest, actionResponse);
+				restoreAttachmentFromTrash(actionRequest, actionResponse);
 			}
 			else if (cmd.equals(Constants.MOVE_TO_TRASH)) {
 				deleteAttachment(
@@ -392,24 +392,6 @@ public class EditPageAttachmentsAction extends EditFileEntryAction {
 		WikiPageServiceUtil.deleteTrashPageAttachments(nodeId, title);
 	}
 
-	protected void moveAttachmentFromTrash(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		long nodeId = ParamUtil.getLong(actionRequest, "nodeId");
-		String title = ParamUtil.getString(actionRequest, "title");
-		String attachment = ParamUtil.getString(actionRequest, "fileName");
-
-		JSONObject jsonObject =
-			com.liferay.portlet.trash.action.ActionUtil.checkEntry(
-				actionRequest);
-
-		writeJSON(actionRequest, actionResponse, jsonObject);
-
-		WikiPageServiceUtil.restorePageAttachmentFromTrash(
-			nodeId, title, attachment);
-	}
-
 	protected void restoreAttachment(ActionRequest actionRequest)
 		throws Exception {
 
@@ -427,6 +409,24 @@ public class EditPageAttachmentsAction extends EditFileEntryAction {
 				wikiPage.getNodeId(), wikiPage.getTitle(),
 				fileEntry.getTitle());
 		}
+	}
+
+	protected void restoreAttachmentFromTrash(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		long nodeId = ParamUtil.getLong(actionRequest, "nodeId");
+		String title = ParamUtil.getString(actionRequest, "title");
+		String attachment = ParamUtil.getString(actionRequest, "fileName");
+
+		JSONObject jsonObject =
+			com.liferay.portlet.trash.action.ActionUtil.checkEntry(
+				actionRequest);
+
+		writeJSON(actionRequest, actionResponse, jsonObject);
+
+		WikiPageServiceUtil.restorePageAttachmentFromTrash(
+			nodeId, title, attachment);
 	}
 
 	private static final String _TEMP_FOLDER_NAME =

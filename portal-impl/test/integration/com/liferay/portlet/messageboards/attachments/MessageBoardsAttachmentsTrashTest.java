@@ -14,19 +14,19 @@
 
 package com.liferay.portlet.messageboards.attachments;
 
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ObjectValuePair;
-import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
-import com.liferay.portal.test.TransactionalCallbackAwareExecutionTestListener;
 import com.liferay.portal.util.TestPropsValues;
-import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
+import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBMessageConstants;
@@ -37,6 +37,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -47,15 +48,40 @@ import org.junit.runner.RunWith;
  */
 @ExecutionTestListeners(
 	listeners = {
-			EnvironmentExecutionTestListener.class,
-			TransactionalCallbackAwareExecutionTestListener.class
+			EnvironmentExecutionTestListener.class
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class MessageBoardsAttachmentsTrashTest {
 
 	@Before
 	public void setUp() throws Exception {
+		User user = TestPropsValues.getUser();
+
 		_group = ServiceTestUtil.addGroup();
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setScopeGroupId(_group.getGroupId());
+
+		_message = MBMessageLocalServiceUtil.addMessage(
+			user.getUserId(), user.getFullName(), _group.getGroupId(),
+			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, "Subject", "Body",
+			MBMessageConstants.DEFAULT_FORMAT,
+			getInputStreamOVPs("company_logo.png"), false, 0, false,
+			serviceContext);
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		if (_group != null) {
+			GroupLocalServiceUtil.deleteGroup(_group);
+
+			_group = null;
+		}
+
+		if (_message != null) {
+			_message = null;
+		}
 	}
 
 	@Test
@@ -98,82 +124,74 @@ public class MessageBoardsAttachmentsTrashTest {
 
 		serviceContext.setScopeGroupId(_group.getGroupId());
 
-		MBMessage message = MBMessageLocalServiceUtil.addMessage(
-			user.getUserId(), user.getFullName(), _group.getGroupId(),
-			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, "Subject", "Body",
-			MBMessageConstants.DEFAULT_FORMAT,
-			getInputStreamOVPs("company_logo.png"), false, 0, false,
-			serviceContext);
+		int initialNotInTrashCount = _message.getAttachmentsFileEntriesCount();
 
-		String[] attachmentsFiles = message.getAttachmentsFiles();
+		int initialTrashEntriesCount =
+			_message.getDeletedAttachmentsFileEntriesCount();
 
-		int initialNotInTrashCount = attachmentsFiles.length;
-
-		String[] deletedAttachmentsFiles = message.getDeletedAttachmentsFiles();
-
-		int initialTrashEntriesCount = deletedAttachmentsFiles.length;
-
-		String[] existingAttachments = DLStoreUtil.getFileNames(
-			message.getCompanyId(), CompanyConstants.SYSTEM,
-			message.getAttachmentsDir());
+		List<FileEntry> fileEntries = _message.getAttachmentsFileEntries();
 
 		List<String> existingFiles = new ArrayList<String>();
 
-		for (int i = 0; i < existingAttachments.length; i++) {
-			existingFiles.add(existingAttachments[i]);
+		for (FileEntry fileEntry : fileEntries) {
+			existingFiles.add(fileEntry.getTitle());
 		}
 
-		message = MBMessageLocalServiceUtil.updateMessage(
-			user.getUserId(), message.getMessageId(), "Subject", "Body",
+		_message = MBMessageLocalServiceUtil.updateMessage(
+			user.getUserId(), _message.getMessageId(), "Subject", "Body",
 			getInputStreamOVPs("OSX_Test.docx"), existingFiles, 0, false,
 			serviceContext);
 
-		attachmentsFiles = message.getAttachmentsFiles();
+		Assert.assertEquals(
+			initialNotInTrashCount + 1,
+			_message.getAttachmentsFileEntriesCount());
 
 		Assert.assertEquals(
-			initialNotInTrashCount + 1, attachmentsFiles.length);
+			initialTrashEntriesCount,
+			_message.getDeletedAttachmentsFileEntriesCount());
 
-		deletedAttachmentsFiles = message.getDeletedAttachmentsFiles();
-
-		Assert.assertEquals(
-			initialTrashEntriesCount, deletedAttachmentsFiles.length);
-
-		String fileName = attachmentsFiles[0];
+		FileEntry attachmentFileEntry = fileEntries.get(0);
 
 		MBMessageLocalServiceUtil.moveMessageAttachmentToTrash(
-			message.getMessageId(), fileName);
-
-		attachmentsFiles = message.getAttachmentsFiles();
-
-		Assert.assertEquals(initialNotInTrashCount, attachmentsFiles.length);
-
-		deletedAttachmentsFiles = message.getDeletedAttachmentsFiles();
+			user.getUserId(), _message.getMessageId(),
+			attachmentFileEntry.getTitle());
 
 		Assert.assertEquals(
-			initialTrashEntriesCount + 1, deletedAttachmentsFiles.length);
+			initialNotInTrashCount, _message.getAttachmentsFileEntriesCount());
 
-		fileName = deletedAttachmentsFiles[0];
+		Assert.assertEquals(
+			initialTrashEntriesCount + 1,
+			_message.getDeletedAttachmentsFileEntriesCount());
+
+		List<FileEntry> deletedAttachmentsFileEntries =
+			_message.getDeletedAttachmentsFileEntries(0, 1);
+
+		FileEntry deleteAttachmentFileEntry = deletedAttachmentsFileEntries.get(
+			0);
+
+		DLFileEntry dlFileEntry =
+			(DLFileEntry)deleteAttachmentFileEntry.getModel();
 
 		if (restore) {
-			MBMessageLocalServiceUtil.moveMessageAttachmentFromTrash(
-				message.getMessageId(), fileName);
-
-			attachmentsFiles = message.getAttachmentsFiles();
-
-			Assert.assertEquals(
-				initialNotInTrashCount + 1, attachmentsFiles.length);
-
-			deletedAttachmentsFiles = message.getDeletedAttachmentsFiles();
+			MBMessageLocalServiceUtil.restoreMessageAttachmentFromTrash(
+				user.getUserId(), _message.getMessageId(),
+				dlFileEntry.getTitle());
 
 			Assert.assertEquals(
-				initialTrashEntriesCount, deletedAttachmentsFiles.length);
+				initialNotInTrashCount + 1,
+				_message.getAttachmentsFileEntriesCount());
+
+			Assert.assertEquals(
+				initialTrashEntriesCount,
+				_message.getDeletedAttachmentsFileEntriesCount());
 		}
 		else {
 			MBMessageLocalServiceUtil.deleteMessageAttachment(
-				message.getMessageId(), fileName);
+				_message.getMessageId(), dlFileEntry.getTitle());
 		}
 	}
 
 	private Group _group;
+	private MBMessage _message;
 
 }

@@ -29,25 +29,34 @@
 
 	<target name="compile">
 		<if>
-			<available file="$${javac.destdir}" />
+			<not>
+				<uptodate targetfile="classes/.touch">
+					<srcfiles dir="src" includes="**/*.*" />
+				</uptodate>
+			</not>
 			<then>
+				<if>
+					<available file="$${javac.destdir}" />
+					<then>
 
-				<!--
-				Clean up stale dir that was accidentally introduced in
-				0b63ac06aec90d42d428a1b23140303324125042.
-				-->
+						<!--
+						Clean up stale dir that was accidentally introduced in
+						0b63ac06aec90d42d428a1b23140303324125042.
+						-->
 
-				<delete dir="$${javac.destdir}" />
+						<delete dir="$${javac.destdir}" />
+					</then>
+				</if>
+
+				<mkdir dir="classes" />
+
+				<antcall target="compile-java">
+					<param name="javac.classpathref" value="project.classpath" />
+					<param name="javac.destdir" value="classes" />
+					<param name="javac.srcdir" value="src" />
+				</antcall>
 			</then>
 		</if>
-
-		<mkdir dir="classes" />
-
-		<antcall target="compile-java">
-			<param name="javac.classpathref" value="project.classpath" />
-			<param name="javac.destdir" value="classes" />
-			<param name="javac.srcdir" value="src" />
-		</antcall>
 	</target>
 
 	<target name="compile-java">
@@ -66,43 +75,63 @@
 			nowarn="${javac.nowarn}"
 			srcdir="${javac.srcdir}"
 		/>
+
+		<echo file="${javac.destdir}/.touch"></echo>
 	</target>
 
 	<target name="deploy" depends="jar">
-		<copy file="${jar.file}.jar" todir="${deploy.dir}" />
+		<if>
+			<not>
+				<uptodate targetfile="${deploy.dir}/${jar.file}.jar">
+					<srcfiles dir="${basedir}" includes="${jar.file}.jar" />
+				</uptodate>
+			</not>
+			<then>
+				<copy file="${jar.file}.jar" todir="${deploy.dir}" />
+			</then>
+		</if>
 	</target>
 
 	<target name="jar" depends="compile">
 		<if>
-			<available file="bnd.bnd" />
+			<not>
+				<uptodate targetfile="${jar.file}.jar">
+					<srcfiles dir="classes" includes="**/*.*"/>
+				</uptodate>
+			</not>
 			<then>
-				<manifest-helper />
+				<if>
+					<available file="bnd.bnd" />
+					<then>
+						<manifest-helper />
 
-				<bndexpand propertyfile="${project.dir}/common.bnd" />
+						<bndexpand propertyfile="${project.dir}/common.bnd" />
 
-				<bnd
-					eclipse="false"
-					exceptions="true"
-					failok="false"
-					inherit="true"
-					output="."
-					sourcepath="."
-				>
-					<bndfiles path="bnd.bnd" />
-					<classpath>
-						<pathelement location="classes" />
-					</classpath>
-				</bnd>
+						<bnd
+							eclipse="false"
+							exceptions="true"
+							failok="false"
+							inherit="true"
+							output="."
+							sourcepath="."
+						>
+							<bndfiles path="bnd.bnd" />
+							<classpath>
+								<pathelement location="classes" />
+							</classpath>
+						</bnd>
+					</then>
+					<else>
+						<antcall target="manifest" />
+
+						<jar
+							basedir="classes"
+							jarfile="${jar.file}.jar"
+							manifest="classes/META-INF/MANIFEST.MF"
+						/>
+					</else>
+				</if>
 			</then>
-			<else>
-				<antcall target="manifest" />
-
-				<jar
-					basedir="classes"
-					jarfile="${jar.file}.jar"
-					manifest="classes/META-INF/MANIFEST.MF"
-				/>
-			</else>
 		</if>
 	</target>
 

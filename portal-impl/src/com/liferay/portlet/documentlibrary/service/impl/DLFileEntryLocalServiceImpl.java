@@ -2403,17 +2403,6 @@ public class DLFileEntryLocalServiceImpl
 		return dlFileVersion;
 	}
 
-	protected void validateExtension(String extension) throws PortalException {
-		if (Validator.isNotNull(extension)) {
-			int maxLength = ModelHintsUtil.getMaxLength(
-				DLFileEntry.class.getName(), "extension");
-
-			if (extension.length() > maxLength) {
-				throw new FileExtensionException();
-			}
-		}
-	}
-
 	protected void validateFile(
 			long groupId, long folderId, long fileEntryId, String title,
 			String extension)
@@ -2467,12 +2456,25 @@ public class DLFileEntryLocalServiceImpl
 			}
 		}
 
+		validateFileExtension(extension);
 		validateFileName(title);
-		validateExtension(extension);
 
 		DLStoreUtil.validate(title, false);
 
 		validateFile(groupId, folderId, fileEntryId, title, extension);
+	}
+
+	protected void validateFileExtension(String extension)
+		throws PortalException {
+
+		if (Validator.isNotNull(extension)) {
+			int maxLength = ModelHintsUtil.getMaxLength(
+				DLFileEntry.class.getName(), "extension");
+
+			if (extension.length() > maxLength) {
+				throw new FileExtensionException();
+			}
+		}
 	}
 
 	protected void validateFileName(String fileName) throws PortalException {

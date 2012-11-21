@@ -238,8 +238,6 @@ if (Validator.isNull(redirect)) {
 						for (int i = 0; i < existingAttachments.size(); i++) {
 							FileEntry fileEntry = existingAttachments.get(i);
 
-							DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
-
 							String taglibJavascript = "javascript:;";
 
 							if (!TrashUtil.isTrashEnabled(scopeGroupId)) {
@@ -249,12 +247,12 @@ if (Validator.isNull(redirect)) {
 
 							<li class="message-attachment">
 								<span id="<portlet:namespace />existingFile<%= i + 1 %>">
-									<aui:input id='<%= "existingPath" + (i + 1) %>' name='<%= "existingPath" + (i + 1) %>' type="hidden" value="<%= dlFileEntry.getTitle() %>" />
+									<aui:input id='<%= "existingPath" + (i + 1) %>' name='<%= "existingPath" + (i + 1) %>' type="hidden" value="<%= fileEntry.getTitle() %>" />
 
 									<liferay-ui:icon
-										image='<%= "../file_system/small/" + DLUtil.getFileIcon(dlFileEntry.getExtension()) %>'
+										image='<%= "../file_system/small/" + DLUtil.getFileIcon(fileEntry.getExtension()) %>'
 										label="<%= true %>"
-										message="<%= dlFileEntry.getTitle() %>"
+										message="<%= fileEntry.getTitle() %>"
 									/>
 								</span>
 
@@ -284,7 +282,7 @@ if (Validator.isNull(redirect)) {
 									%>
 
 									<span class="aui-helper-hidden" id="<portlet:namespace />undoFile<%= i + 1 %>">
-										<aui:input id='<%= "undoPath" + (i + 1) %>' name='<%= "undoPath" + (i + 1) %>' type="hidden" value="<%= dlFileEntry.getFileEntryId() %>" />
+										<aui:input id='<%= "undoPath" + (i + 1) %>' name='<%= "undoPath" + (i + 1) %>' type="hidden" value="<%= fileEntry.getFileEntryId() %>" />
 
 										<span class="undo">(<liferay-ui:message key="marked-as-removed" />)</span> <a class="trash-undo-link" href="<%= sb.toString() %>" id="<portlet:namespace />undo"><liferay-ui:message key="undo" /></a>
 									</span>

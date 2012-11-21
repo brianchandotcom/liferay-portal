@@ -294,7 +294,7 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 				List<FileEntry> deletedAttachments = message.getDeletedAttachmentsFileEntries();
 				%>
 
-				<c:if test="<%= ((message.isAttachments()) || ((deletedAttachments.size() > 0) && TrashUtil.isTrashEnabled(scopeGroupId) && MBMessagePermission.contains(permissionChecker, message, ActionKeys.UPDATE))) %>">
+				<c:if test="<%= (message.isAttachments() || ((deletedAttachments.size() > 0) && TrashUtil.isTrashEnabled(scopeGroupId) && MBMessagePermission.contains(permissionChecker, message, ActionKeys.UPDATE))) %>">
 					<div class="message-attachments">
 						<h3><liferay-ui:message key="attachments" />:</h3>
 
@@ -306,13 +306,11 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 							for (int j = 0; j < attachmentsFiles.size(); j++) {
 								FileEntry fileEntry = attachmentsFiles.get(j);
 
-								DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
-
-								if (MimeTypesUtil.isWebImage(dlFileEntry.getMimeType())) {
+								if (MimeTypesUtil.isWebImage(fileEntry.getMimeType())) {
 							%>
 
 									<div>
-										<img alt="<liferay-ui:message key="attachment" />" src="<%= themeDisplay.getPathMain() %>/message_boards/get_message_attachment?messageId=<%= message.getMessageId() %>&attachment=<%= HttpUtil.encodeURL(dlFileEntry.getTitle()) %>" />
+										<img alt="<liferay-ui:message key="attachment" />" src="<%= themeDisplay.getPathMain() %>/message_boards/get_message_attachment?messageId=<%= message.getMessageId() %>&attachment=<%= HttpUtil.encodeURL(fileEntry.getTitle()) %>" />
 									</div>
 
 									<br />
@@ -327,14 +325,12 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 								<%
 								for (int j = 0; j < attachmentsFiles.size(); j++) {
 									FileEntry fileEntry = attachmentsFiles.get(j);
-
-									DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
 								%>
 
 									<portlet:actionURL var="attachmentURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
 										<portlet:param name="struts_action" value="/message_boards/get_message_attachment" />
 										<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
-										<portlet:param name="attachment" value="<%= dlFileEntry.getTitle() %>" />
+										<portlet:param name="attachment" value="<%= fileEntry.getTitle() %>" />
 									</portlet:actionURL>
 
 									<li class="message-attachment">
@@ -342,14 +338,14 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 										<%
 										StringBundler sb = new StringBundler(4);
 
-										sb.append(dlFileEntry.getTitle());
+										sb.append(fileEntry.getTitle());
 										sb.append(StringPool.OPEN_PARENTHESIS);
-										sb.append(TextFormatter.formatStorageSize(dlFileEntry.getSize(), locale));
+										sb.append(TextFormatter.formatStorageSize(fileEntry.getSize(), locale));
 										sb.append(StringPool.CLOSE_PARENTHESIS);
 										%>
 
 										<liferay-ui:icon
-											image='<%= "../file_system/small/" + DLUtil.getFileIcon(dlFileEntry.getExtension()) %>'
+											image='<%= "../file_system/small/" + DLUtil.getFileIcon(fileEntry.getExtension()) %>'
 											label="<%= true %>"
 											message="<%= sb.toString() %>"
 											url="<%= attachmentURL %>"

@@ -5362,14 +5362,17 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 	private static final String _FINDER_COLUMN_TABLEID_TABLEID_2 = "expandoValue.tableId = ?";
 	private static final String _FINDER_COLUMN_COLUMNID_COLUMNID_2 = "expandoValue.columnId = ?";
 	private static final String _FINDER_COLUMN_ROWID_ROWID_2 = "expandoValue.rowId = ?";
+	private static final String _FINDER_COLUMN_ROWID_ROWID_2_ = "expandoValue.rowId_ = ?";
 	private static final String _FINDER_COLUMN_T_C_TABLEID_2 = "expandoValue.tableId = ? AND ";
 	private static final String _FINDER_COLUMN_T_C_COLUMNID_2 = "expandoValue.columnId = ?";
 	private static final String _FINDER_COLUMN_T_CPK_TABLEID_2 = "expandoValue.tableId = ? AND ";
 	private static final String _FINDER_COLUMN_T_CPK_CLASSPK_2 = "expandoValue.classPK = ?";
 	private static final String _FINDER_COLUMN_T_R_TABLEID_2 = "expandoValue.tableId = ? AND ";
 	private static final String _FINDER_COLUMN_T_R_ROWID_2 = "expandoValue.rowId = ?";
+	private static final String _FINDER_COLUMN_T_R_ROWID_2_ = "expandoValue.rowId_ = ?";
 	private static final String _FINDER_COLUMN_C_R_COLUMNID_2 = "expandoValue.columnId = ? AND ";
 	private static final String _FINDER_COLUMN_C_R_ROWID_2 = "expandoValue.rowId = ?";
+	private static final String _FINDER_COLUMN_C_R_ROWID_2_ = "expandoValue.rowId_ = ?";
 	private static final String _FINDER_COLUMN_C_C_CLASSNAMEID_2 = "expandoValue.classNameId = ? AND ";
 	private static final String _FINDER_COLUMN_C_C_CLASSPK_2 = "expandoValue.classPK = ?";
 	private static final String _FINDER_COLUMN_T_C_C_TABLEID_2 = "expandoValue.tableId = ? AND ";
@@ -5380,6 +5383,9 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 	private static final String _FINDER_COLUMN_T_C_D_DATA_1 = "expandoValue.data IS NULL";
 	private static final String _FINDER_COLUMN_T_C_D_DATA_2 = "expandoValue.data = ?";
 	private static final String _FINDER_COLUMN_T_C_D_DATA_3 = "(expandoValue.data IS NULL OR expandoValue.data = ?)";
+	private static final String _FINDER_COLUMN_T_C_D_DATA_1_ = "expandoValue.data_ IS NULL";
+	private static final String _FINDER_COLUMN_T_C_D_DATA_2_ = "expandoValue.data_ = ?";
+	private static final String _FINDER_COLUMN_T_C_D_DATA_3_ = "(expandoValue.data_ IS NULL OR expandoValue.data_ = ?)";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "expandoValue.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No ExpandoValue exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No ExpandoValue exists with the key {";

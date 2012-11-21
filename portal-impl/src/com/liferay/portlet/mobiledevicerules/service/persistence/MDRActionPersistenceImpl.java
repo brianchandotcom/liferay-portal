@@ -2506,13 +2506,22 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 	private static final String _FINDER_COLUMN_UUID_UUID_1 = "mdrAction.uuid IS NULL";
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "mdrAction.uuid = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(mdrAction.uuid IS NULL OR mdrAction.uuid = ?)";
+	private static final String _FINDER_COLUMN_UUID_UUID_1_ = "mdrAction.uuid_ IS NULL";
+	private static final String _FINDER_COLUMN_UUID_UUID_2_ = "mdrAction.uuid_ = ?";
+	private static final String _FINDER_COLUMN_UUID_UUID_3_ = "(mdrAction.uuid_ IS NULL OR mdrAction.uuid_ = ?)";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_1 = "mdrAction.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_2 = "mdrAction.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_3 = "(mdrAction.uuid IS NULL OR mdrAction.uuid = ?) AND ";
+	private static final String _FINDER_COLUMN_UUID_G_UUID_1_ = "mdrAction.uuid_ IS NULL AND ";
+	private static final String _FINDER_COLUMN_UUID_G_UUID_2_ = "mdrAction.uuid_ = ? AND ";
+	private static final String _FINDER_COLUMN_UUID_G_UUID_3_ = "(mdrAction.uuid_ IS NULL OR mdrAction.uuid_ = ?) AND ";
 	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 = "mdrAction.groupId = ?";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "mdrAction.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "mdrAction.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(mdrAction.uuid IS NULL OR mdrAction.uuid = ?) AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_1_ = "mdrAction.uuid_ IS NULL AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_2_ = "mdrAction.uuid_ = ? AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_3_ = "(mdrAction.uuid_ IS NULL OR mdrAction.uuid_ = ?) AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "mdrAction.companyId = ?";
 	private static final String _FINDER_COLUMN_RULEGROUPINSTANCEID_RULEGROUPINSTANCEID_2 =
 		"mdrAction.ruleGroupInstanceId = ?";

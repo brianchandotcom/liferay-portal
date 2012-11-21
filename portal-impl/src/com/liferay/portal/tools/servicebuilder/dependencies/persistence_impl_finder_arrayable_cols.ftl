@@ -1,6 +1,12 @@
 boolean conjunctionable = false;
 
 <#list finderColsList as finderCol>
+	<#if sqlQuery && (finderCol.name != finderCol.DBName)>
+		<#assign finderColNameSuffix = colNameEscapeSuffix>
+	<#else>
+		<#assign finderColNameSuffix = "">
+	</#if>
+
 	<#if finderCol.hasArrayableOperator()>
 		if ((${finderCol.names} == null) || (${finderCol.names}.length > 0)) {
 			if (conjunctionable) {
@@ -43,3 +49,5 @@ boolean conjunctionable = false;
 
 	query.append("${finder.where}");
 </#if>
+
+<#assign sqlQuery = false>

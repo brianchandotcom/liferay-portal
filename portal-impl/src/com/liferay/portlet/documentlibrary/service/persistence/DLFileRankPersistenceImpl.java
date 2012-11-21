@@ -3020,6 +3020,7 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 	private static final String _FINDER_COLUMN_G_U_A_GROUPID_2 = "dlFileRank.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_U_A_USERID_2 = "dlFileRank.userId = ? AND ";
 	private static final String _FINDER_COLUMN_G_U_A_ACTIVE_2 = "dlFileRank.active = ?";
+	private static final String _FINDER_COLUMN_G_U_A_ACTIVE_2_ = "dlFileRank.active_ = ?";
 	private static final String _FINDER_COLUMN_C_U_F_COMPANYID_2 = "dlFileRank.companyId = ? AND ";
 	private static final String _FINDER_COLUMN_C_U_F_USERID_2 = "dlFileRank.userId = ? AND ";
 	private static final String _FINDER_COLUMN_C_U_F_FILEENTRYID_2 = "dlFileRank.fileEntryId = ?";

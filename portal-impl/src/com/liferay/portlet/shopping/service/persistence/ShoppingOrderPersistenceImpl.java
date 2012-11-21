@@ -3133,6 +3133,9 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 	private static final String _FINDER_COLUMN_NUMBER_NUMBER_1 = "shoppingOrder.number IS NULL";
 	private static final String _FINDER_COLUMN_NUMBER_NUMBER_2 = "shoppingOrder.number = ?";
 	private static final String _FINDER_COLUMN_NUMBER_NUMBER_3 = "(shoppingOrder.number IS NULL OR shoppingOrder.number = ?)";
+	private static final String _FINDER_COLUMN_NUMBER_NUMBER_1_ = "shoppingOrder.number_ IS NULL";
+	private static final String _FINDER_COLUMN_NUMBER_NUMBER_2_ = "shoppingOrder.number_ = ?";
+	private static final String _FINDER_COLUMN_NUMBER_NUMBER_3_ = "(shoppingOrder.number_ IS NULL OR shoppingOrder.number_ = ?)";
 	private static final String _FINDER_COLUMN_PPTXNID_PPTXNID_1 = "shoppingOrder.ppTxnId IS NULL";
 	private static final String _FINDER_COLUMN_PPTXNID_PPTXNID_2 = "shoppingOrder.ppTxnId = ?";
 	private static final String _FINDER_COLUMN_PPTXNID_PPTXNID_3 = "(shoppingOrder.ppTxnId IS NULL OR shoppingOrder.ppTxnId = ?)";

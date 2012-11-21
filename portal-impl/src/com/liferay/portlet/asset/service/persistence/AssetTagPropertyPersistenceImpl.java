@@ -2507,10 +2507,16 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 	private static final String _FINDER_COLUMN_C_K_KEY_1 = "assetTagProperty.key IS NULL";
 	private static final String _FINDER_COLUMN_C_K_KEY_2 = "assetTagProperty.key = ?";
 	private static final String _FINDER_COLUMN_C_K_KEY_3 = "(assetTagProperty.key IS NULL OR assetTagProperty.key = ?)";
+	private static final String _FINDER_COLUMN_C_K_KEY_1_ = "assetTagProperty.key_ IS NULL";
+	private static final String _FINDER_COLUMN_C_K_KEY_2_ = "assetTagProperty.key_ = ?";
+	private static final String _FINDER_COLUMN_C_K_KEY_3_ = "(assetTagProperty.key_ IS NULL OR assetTagProperty.key_ = ?)";
 	private static final String _FINDER_COLUMN_T_K_TAGID_2 = "assetTagProperty.tagId = ? AND ";
 	private static final String _FINDER_COLUMN_T_K_KEY_1 = "assetTagProperty.key IS NULL";
 	private static final String _FINDER_COLUMN_T_K_KEY_2 = "assetTagProperty.key = ?";
 	private static final String _FINDER_COLUMN_T_K_KEY_3 = "(assetTagProperty.key IS NULL OR assetTagProperty.key = ?)";
+	private static final String _FINDER_COLUMN_T_K_KEY_1_ = "assetTagProperty.key_ IS NULL";
+	private static final String _FINDER_COLUMN_T_K_KEY_2_ = "assetTagProperty.key_ = ?";
+	private static final String _FINDER_COLUMN_T_K_KEY_3_ = "(assetTagProperty.key_ IS NULL OR assetTagProperty.key_ = ?)";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "assetTagProperty.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No AssetTagProperty exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No AssetTagProperty exists with the key {";

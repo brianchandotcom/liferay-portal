@@ -1896,6 +1896,9 @@ public class DDMStorageLinkPersistenceImpl extends BasePersistenceImpl<DDMStorag
 	private static final String _FINDER_COLUMN_UUID_UUID_1 = "ddmStorageLink.uuid IS NULL";
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "ddmStorageLink.uuid = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(ddmStorageLink.uuid IS NULL OR ddmStorageLink.uuid = ?)";
+	private static final String _FINDER_COLUMN_UUID_UUID_1_ = "ddmStorageLink.uuid_ IS NULL";
+	private static final String _FINDER_COLUMN_UUID_UUID_2_ = "ddmStorageLink.uuid_ = ?";
+	private static final String _FINDER_COLUMN_UUID_UUID_3_ = "(ddmStorageLink.uuid_ IS NULL OR ddmStorageLink.uuid_ = ?)";
 	private static final String _FINDER_COLUMN_CLASSPK_CLASSPK_2 = "ddmStorageLink.classPK = ?";
 	private static final String _FINDER_COLUMN_STRUCTUREID_STRUCTUREID_2 = "ddmStorageLink.structureId = ?";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "ddmStorageLink.";

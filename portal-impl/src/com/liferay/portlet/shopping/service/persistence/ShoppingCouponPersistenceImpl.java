@@ -1421,6 +1421,9 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 	private static final String _FINDER_COLUMN_CODE_CODE_1 = "shoppingCoupon.code IS NULL";
 	private static final String _FINDER_COLUMN_CODE_CODE_2 = "shoppingCoupon.code = ?";
 	private static final String _FINDER_COLUMN_CODE_CODE_3 = "(shoppingCoupon.code IS NULL OR shoppingCoupon.code = ?)";
+	private static final String _FINDER_COLUMN_CODE_CODE_1_ = "shoppingCoupon.code_ IS NULL";
+	private static final String _FINDER_COLUMN_CODE_CODE_2_ = "shoppingCoupon.code_ = ?";
+	private static final String _FINDER_COLUMN_CODE_CODE_3_ = "(shoppingCoupon.code_ IS NULL OR shoppingCoupon.code_ = ?)";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "shoppingCoupon.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No ShoppingCoupon exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No ShoppingCoupon exists with the key {";

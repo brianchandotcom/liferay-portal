@@ -5662,13 +5662,22 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	private static final String _FINDER_COLUMN_UUID_UUID_1 = "ddmStructure.uuid IS NULL";
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "ddmStructure.uuid = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(ddmStructure.uuid IS NULL OR ddmStructure.uuid = ?)";
+	private static final String _FINDER_COLUMN_UUID_UUID_1_ = "ddmStructure.uuid_ IS NULL";
+	private static final String _FINDER_COLUMN_UUID_UUID_2_ = "ddmStructure.uuid_ = ?";
+	private static final String _FINDER_COLUMN_UUID_UUID_3_ = "(ddmStructure.uuid_ IS NULL OR ddmStructure.uuid_ = ?)";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_1 = "ddmStructure.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_2 = "ddmStructure.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_3 = "(ddmStructure.uuid IS NULL OR ddmStructure.uuid = ?) AND ";
+	private static final String _FINDER_COLUMN_UUID_G_UUID_1_ = "ddmStructure.uuid_ IS NULL AND ";
+	private static final String _FINDER_COLUMN_UUID_G_UUID_2_ = "ddmStructure.uuid_ = ? AND ";
+	private static final String _FINDER_COLUMN_UUID_G_UUID_3_ = "(ddmStructure.uuid_ IS NULL OR ddmStructure.uuid_ = ?) AND ";
 	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 = "ddmStructure.groupId = ?";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "ddmStructure.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "ddmStructure.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(ddmStructure.uuid IS NULL OR ddmStructure.uuid = ?) AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_1_ = "ddmStructure.uuid_ IS NULL AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_2_ = "ddmStructure.uuid_ = ? AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_3_ = "(ddmStructure.uuid_ IS NULL OR ddmStructure.uuid_ = ?) AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "ddmStructure.companyId = ?";
 	private static final String _FINDER_COLUMN_GROUPID_GROUPID_2 = "ddmStructure.groupId = ?";
 	private static final String _FINDER_COLUMN_GROUPID_GROUPID_5 = "(" +

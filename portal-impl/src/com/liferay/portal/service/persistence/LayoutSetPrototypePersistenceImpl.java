@@ -1080,14 +1080,14 @@ public class LayoutSetPrototypePersistenceImpl extends BasePersistenceImpl<Layou
 		}
 
 		if (uuid == null) {
-			query.append(_FINDER_COLUMN_UUID_UUID_1);
+			query.append(_FINDER_COLUMN_UUID_UUID_1_);
 		}
 		else {
 			if (uuid.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_UUID_UUID_3);
+				query.append(_FINDER_COLUMN_UUID_UUID_3_);
 			}
 			else {
-				query.append(_FINDER_COLUMN_UUID_UUID_2);
+				query.append(_FINDER_COLUMN_UUID_UUID_2_);
 			}
 		}
 
@@ -1208,14 +1208,14 @@ public class LayoutSetPrototypePersistenceImpl extends BasePersistenceImpl<Layou
 		}
 
 		if (uuid == null) {
-			query.append(_FINDER_COLUMN_UUID_UUID_1);
+			query.append(_FINDER_COLUMN_UUID_UUID_1_);
 		}
 		else {
 			if (uuid.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_UUID_UUID_3);
+				query.append(_FINDER_COLUMN_UUID_UUID_3_);
 			}
 			else {
-				query.append(_FINDER_COLUMN_UUID_UUID_2);
+				query.append(_FINDER_COLUMN_UUID_UUID_2_);
 			}
 		}
 
@@ -1832,14 +1832,14 @@ public class LayoutSetPrototypePersistenceImpl extends BasePersistenceImpl<Layou
 		}
 
 		if (uuid == null) {
-			query.append(_FINDER_COLUMN_UUID_C_UUID_1);
+			query.append(_FINDER_COLUMN_UUID_C_UUID_1_);
 		}
 		else {
 			if (uuid.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_UUID_C_UUID_3);
+				query.append(_FINDER_COLUMN_UUID_C_UUID_3_);
 			}
 			else {
-				query.append(_FINDER_COLUMN_UUID_C_UUID_2);
+				query.append(_FINDER_COLUMN_UUID_C_UUID_2_);
 			}
 		}
 
@@ -1966,14 +1966,14 @@ public class LayoutSetPrototypePersistenceImpl extends BasePersistenceImpl<Layou
 		}
 
 		if (uuid == null) {
-			query.append(_FINDER_COLUMN_UUID_C_UUID_1);
+			query.append(_FINDER_COLUMN_UUID_C_UUID_1_);
 		}
 		else {
 			if (uuid.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_UUID_C_UUID_3);
+				query.append(_FINDER_COLUMN_UUID_C_UUID_3_);
 			}
 			else {
-				query.append(_FINDER_COLUMN_UUID_C_UUID_2);
+				query.append(_FINDER_COLUMN_UUID_C_UUID_2_);
 			}
 		}
 
@@ -3244,7 +3244,7 @@ public class LayoutSetPrototypePersistenceImpl extends BasePersistenceImpl<Layou
 
 		query.append(_FINDER_COLUMN_C_A_COMPANYID_2);
 
-		query.append(_FINDER_COLUMN_C_A_ACTIVE_2);
+		query.append(_FINDER_COLUMN_C_A_ACTIVE_2_);
 
 		if (!getDB().isSupportsInlineDistinct()) {
 			query.append(_FILTER_SQL_SELECT_LAYOUTSETPROTOTYPE_NO_INLINE_DISTINCT_WHERE_2);
@@ -3365,7 +3365,7 @@ public class LayoutSetPrototypePersistenceImpl extends BasePersistenceImpl<Layou
 
 		query.append(_FINDER_COLUMN_C_A_COMPANYID_2);
 
-		query.append(_FINDER_COLUMN_C_A_ACTIVE_2);
+		query.append(_FINDER_COLUMN_C_A_ACTIVE_2_);
 
 		if (!getDB().isSupportsInlineDistinct()) {
 			query.append(_FILTER_SQL_SELECT_LAYOUTSETPROTOTYPE_NO_INLINE_DISTINCT_WHERE_2);
@@ -3740,14 +3740,14 @@ public class LayoutSetPrototypePersistenceImpl extends BasePersistenceImpl<Layou
 		query.append(_FILTER_SQL_COUNT_LAYOUTSETPROTOTYPE_WHERE);
 
 		if (uuid == null) {
-			query.append(_FINDER_COLUMN_UUID_UUID_1);
+			query.append(_FINDER_COLUMN_UUID_UUID_1_);
 		}
 		else {
 			if (uuid.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_UUID_UUID_3);
+				query.append(_FINDER_COLUMN_UUID_UUID_3_);
 			}
 			else {
-				query.append(_FINDER_COLUMN_UUID_UUID_2);
+				query.append(_FINDER_COLUMN_UUID_UUID_2_);
 			}
 		}
 
@@ -3873,14 +3873,14 @@ public class LayoutSetPrototypePersistenceImpl extends BasePersistenceImpl<Layou
 		query.append(_FILTER_SQL_COUNT_LAYOUTSETPROTOTYPE_WHERE);
 
 		if (uuid == null) {
-			query.append(_FINDER_COLUMN_UUID_C_UUID_1);
+			query.append(_FINDER_COLUMN_UUID_C_UUID_1_);
 		}
 		else {
 			if (uuid.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_UUID_C_UUID_3);
+				query.append(_FINDER_COLUMN_UUID_C_UUID_3_);
 			}
 			else {
-				query.append(_FINDER_COLUMN_UUID_C_UUID_2);
+				query.append(_FINDER_COLUMN_UUID_C_UUID_2_);
 			}
 		}
 
@@ -4100,7 +4100,7 @@ public class LayoutSetPrototypePersistenceImpl extends BasePersistenceImpl<Layou
 
 		query.append(_FINDER_COLUMN_C_A_COMPANYID_2);
 
-		query.append(_FINDER_COLUMN_C_A_ACTIVE_2);
+		query.append(_FINDER_COLUMN_C_A_ACTIVE_2_);
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
 				LayoutSetPrototype.class.getName(),
@@ -4332,13 +4332,20 @@ public class LayoutSetPrototypePersistenceImpl extends BasePersistenceImpl<Layou
 	private static final String _FINDER_COLUMN_UUID_UUID_1 = "layoutSetPrototype.uuid IS NULL";
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "layoutSetPrototype.uuid = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(layoutSetPrototype.uuid IS NULL OR layoutSetPrototype.uuid = ?)";
+	private static final String _FINDER_COLUMN_UUID_UUID_1_ = "layoutSetPrototype.uuid_ IS NULL";
+	private static final String _FINDER_COLUMN_UUID_UUID_2_ = "layoutSetPrototype.uuid_ = ?";
+	private static final String _FINDER_COLUMN_UUID_UUID_3_ = "(layoutSetPrototype.uuid_ IS NULL OR layoutSetPrototype.uuid_ = ?)";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "layoutSetPrototype.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "layoutSetPrototype.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(layoutSetPrototype.uuid IS NULL OR layoutSetPrototype.uuid = ?) AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_1_ = "layoutSetPrototype.uuid_ IS NULL AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_2_ = "layoutSetPrototype.uuid_ = ? AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_3_ = "(layoutSetPrototype.uuid_ IS NULL OR layoutSetPrototype.uuid_ = ?) AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "layoutSetPrototype.companyId = ?";
 	private static final String _FINDER_COLUMN_COMPANYID_COMPANYID_2 = "layoutSetPrototype.companyId = ?";
 	private static final String _FINDER_COLUMN_C_A_COMPANYID_2 = "layoutSetPrototype.companyId = ? AND ";
 	private static final String _FINDER_COLUMN_C_A_ACTIVE_2 = "layoutSetPrototype.active = ?";
+	private static final String _FINDER_COLUMN_C_A_ACTIVE_2_ = "layoutSetPrototype.active_ = ?";
 	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "layoutSetPrototype.layoutSetPrototypeId";
 	private static final String _FILTER_SQL_SELECT_LAYOUTSETPROTOTYPE_WHERE = "SELECT DISTINCT {layoutSetPrototype.*} FROM LayoutSetPrototype layoutSetPrototype WHERE ";
 	private static final String _FILTER_SQL_SELECT_LAYOUTSETPROTOTYPE_NO_INLINE_DISTINCT_WHERE_1 =

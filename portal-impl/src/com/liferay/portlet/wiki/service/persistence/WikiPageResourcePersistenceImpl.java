@@ -1470,6 +1470,9 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 	private static final String _FINDER_COLUMN_UUID_UUID_1 = "wikiPageResource.uuid IS NULL";
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "wikiPageResource.uuid = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(wikiPageResource.uuid IS NULL OR wikiPageResource.uuid = ?)";
+	private static final String _FINDER_COLUMN_UUID_UUID_1_ = "wikiPageResource.uuid_ IS NULL";
+	private static final String _FINDER_COLUMN_UUID_UUID_2_ = "wikiPageResource.uuid_ = ?";
+	private static final String _FINDER_COLUMN_UUID_UUID_3_ = "(wikiPageResource.uuid_ IS NULL OR wikiPageResource.uuid_ = ?)";
 	private static final String _FINDER_COLUMN_N_T_NODEID_2 = "wikiPageResource.nodeId = ? AND ";
 	private static final String _FINDER_COLUMN_N_T_TITLE_1 = "wikiPageResource.title IS NULL";
 	private static final String _FINDER_COLUMN_N_T_TITLE_2 = "wikiPageResource.title = ?";

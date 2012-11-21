@@ -3372,7 +3372,7 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 
 		query.append(_FINDER_COLUMN_G_F_A_FOLDERID_2);
 
-		query.append(_FINDER_COLUMN_G_F_A_ACTIVE_2);
+		query.append(_FINDER_COLUMN_G_F_A_ACTIVE_2_);
 
 		if (!getDB().isSupportsInlineDistinct()) {
 			query.append(_FILTER_SQL_SELECT_DLFILESHORTCUT_NO_INLINE_DISTINCT_WHERE_2);
@@ -3498,7 +3498,7 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 
 		query.append(_FINDER_COLUMN_G_F_A_FOLDERID_2);
 
-		query.append(_FINDER_COLUMN_G_F_A_ACTIVE_2);
+		query.append(_FINDER_COLUMN_G_F_A_ACTIVE_2_);
 
 		if (!getDB().isSupportsInlineDistinct()) {
 			query.append(_FILTER_SQL_SELECT_DLFILESHORTCUT_NO_INLINE_DISTINCT_WHERE_2);
@@ -4153,7 +4153,7 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 
 		query.append(_FINDER_COLUMN_G_F_A_S_FOLDERID_2);
 
-		query.append(_FINDER_COLUMN_G_F_A_S_ACTIVE_2);
+		query.append(_FINDER_COLUMN_G_F_A_S_ACTIVE_2_);
 
 		query.append(_FINDER_COLUMN_G_F_A_S_STATUS_2);
 
@@ -4285,7 +4285,7 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 
 		query.append(_FINDER_COLUMN_G_F_A_S_FOLDERID_2);
 
-		query.append(_FINDER_COLUMN_G_F_A_S_ACTIVE_2);
+		query.append(_FINDER_COLUMN_G_F_A_S_ACTIVE_2_);
 
 		query.append(_FINDER_COLUMN_G_F_A_S_STATUS_2);
 
@@ -5093,7 +5093,7 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 
 		query.append(_FINDER_COLUMN_G_F_A_FOLDERID_2);
 
-		query.append(_FINDER_COLUMN_G_F_A_ACTIVE_2);
+		query.append(_FINDER_COLUMN_G_F_A_ACTIVE_2_);
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
 				DLFileShortcut.class.getName(),
@@ -5222,7 +5222,7 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 
 		query.append(_FINDER_COLUMN_G_F_A_S_FOLDERID_2);
 
-		query.append(_FINDER_COLUMN_G_F_A_S_ACTIVE_2);
+		query.append(_FINDER_COLUMN_G_F_A_S_ACTIVE_2_);
 
 		query.append(_FINDER_COLUMN_G_F_A_S_STATUS_2);
 
@@ -5364,13 +5364,22 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 	private static final String _FINDER_COLUMN_UUID_UUID_1 = "dlFileShortcut.uuid IS NULL";
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "dlFileShortcut.uuid = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(dlFileShortcut.uuid IS NULL OR dlFileShortcut.uuid = ?)";
+	private static final String _FINDER_COLUMN_UUID_UUID_1_ = "dlFileShortcut.uuid_ IS NULL";
+	private static final String _FINDER_COLUMN_UUID_UUID_2_ = "dlFileShortcut.uuid_ = ?";
+	private static final String _FINDER_COLUMN_UUID_UUID_3_ = "(dlFileShortcut.uuid_ IS NULL OR dlFileShortcut.uuid_ = ?)";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_1 = "dlFileShortcut.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_2 = "dlFileShortcut.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_3 = "(dlFileShortcut.uuid IS NULL OR dlFileShortcut.uuid = ?) AND ";
+	private static final String _FINDER_COLUMN_UUID_G_UUID_1_ = "dlFileShortcut.uuid_ IS NULL AND ";
+	private static final String _FINDER_COLUMN_UUID_G_UUID_2_ = "dlFileShortcut.uuid_ = ? AND ";
+	private static final String _FINDER_COLUMN_UUID_G_UUID_3_ = "(dlFileShortcut.uuid_ IS NULL OR dlFileShortcut.uuid_ = ?) AND ";
 	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 = "dlFileShortcut.groupId = ?";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "dlFileShortcut.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "dlFileShortcut.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(dlFileShortcut.uuid IS NULL OR dlFileShortcut.uuid = ?) AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_1_ = "dlFileShortcut.uuid_ IS NULL AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_2_ = "dlFileShortcut.uuid_ = ? AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_3_ = "(dlFileShortcut.uuid_ IS NULL OR dlFileShortcut.uuid_ = ?) AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "dlFileShortcut.companyId = ?";
 	private static final String _FINDER_COLUMN_TOFILEENTRYID_TOFILEENTRYID_2 = "dlFileShortcut.toFileEntryId = ?";
 	private static final String _FINDER_COLUMN_G_F_GROUPID_2 = "dlFileShortcut.groupId = ? AND ";
@@ -5378,9 +5387,11 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 	private static final String _FINDER_COLUMN_G_F_A_GROUPID_2 = "dlFileShortcut.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_F_A_FOLDERID_2 = "dlFileShortcut.folderId = ? AND ";
 	private static final String _FINDER_COLUMN_G_F_A_ACTIVE_2 = "dlFileShortcut.active = ?";
+	private static final String _FINDER_COLUMN_G_F_A_ACTIVE_2_ = "dlFileShortcut.active_ = ?";
 	private static final String _FINDER_COLUMN_G_F_A_S_GROUPID_2 = "dlFileShortcut.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_F_A_S_FOLDERID_2 = "dlFileShortcut.folderId = ? AND ";
 	private static final String _FINDER_COLUMN_G_F_A_S_ACTIVE_2 = "dlFileShortcut.active = ? AND ";
+	private static final String _FINDER_COLUMN_G_F_A_S_ACTIVE_2_ = "dlFileShortcut.active_ = ? AND ";
 	private static final String _FINDER_COLUMN_G_F_A_S_STATUS_2 = "dlFileShortcut.status = ?";
 	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "dlFileShortcut.fileShortcutId";
 	private static final String _FILTER_SQL_SELECT_DLFILESHORTCUT_WHERE = "SELECT DISTINCT {dlFileShortcut.*} FROM DLFileShortcut dlFileShortcut WHERE ";

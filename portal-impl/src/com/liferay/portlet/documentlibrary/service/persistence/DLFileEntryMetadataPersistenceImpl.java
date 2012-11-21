@@ -2945,6 +2945,9 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 	private static final String _FINDER_COLUMN_UUID_UUID_1 = "dlFileEntryMetadata.uuid IS NULL";
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "dlFileEntryMetadata.uuid = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(dlFileEntryMetadata.uuid IS NULL OR dlFileEntryMetadata.uuid = ?)";
+	private static final String _FINDER_COLUMN_UUID_UUID_1_ = "dlFileEntryMetadata.uuid_ IS NULL";
+	private static final String _FINDER_COLUMN_UUID_UUID_2_ = "dlFileEntryMetadata.uuid_ = ?";
+	private static final String _FINDER_COLUMN_UUID_UUID_3_ = "(dlFileEntryMetadata.uuid_ IS NULL OR dlFileEntryMetadata.uuid_ = ?)";
 	private static final String _FINDER_COLUMN_FILEENTRYTYPEID_FILEENTRYTYPEID_2 =
 		"dlFileEntryMetadata.fileEntryTypeId = ?";
 	private static final String _FINDER_COLUMN_FILEENTRYID_FILEENTRYID_2 = "dlFileEntryMetadata.fileEntryId = ?";

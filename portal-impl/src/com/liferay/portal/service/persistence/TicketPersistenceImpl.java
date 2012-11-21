@@ -1013,6 +1013,9 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 	private static final String _FINDER_COLUMN_KEY_KEY_1 = "ticket.key IS NULL";
 	private static final String _FINDER_COLUMN_KEY_KEY_2 = "ticket.key = ?";
 	private static final String _FINDER_COLUMN_KEY_KEY_3 = "(ticket.key IS NULL OR ticket.key = ?)";
+	private static final String _FINDER_COLUMN_KEY_KEY_1_ = "ticket.key_ IS NULL";
+	private static final String _FINDER_COLUMN_KEY_KEY_2_ = "ticket.key_ = ?";
+	private static final String _FINDER_COLUMN_KEY_KEY_3_ = "(ticket.key_ IS NULL OR ticket.key_ = ?)";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "ticket.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No Ticket exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No Ticket exists with the key {";

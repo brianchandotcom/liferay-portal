@@ -970,7 +970,7 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 			query.append(_FILTER_SQL_SELECT_SCLICENSE_NO_INLINE_DISTINCT_WHERE_1);
 		}
 
-		query.append(_FINDER_COLUMN_ACTIVE_ACTIVE_2);
+		query.append(_FINDER_COLUMN_ACTIVE_ACTIVE_2_);
 
 		if (!getDB().isSupportsInlineDistinct()) {
 			query.append(_FILTER_SQL_SELECT_SCLICENSE_NO_INLINE_DISTINCT_WHERE_2);
@@ -1091,7 +1091,7 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 			query.append(_FILTER_SQL_SELECT_SCLICENSE_NO_INLINE_DISTINCT_WHERE_1);
 		}
 
-		query.append(_FINDER_COLUMN_ACTIVE_ACTIVE_2);
+		query.append(_FINDER_COLUMN_ACTIVE_ACTIVE_2_);
 
 		if (!getDB().isSupportsInlineDistinct()) {
 			query.append(_FILTER_SQL_SELECT_SCLICENSE_NO_INLINE_DISTINCT_WHERE_2);
@@ -1694,7 +1694,7 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 			query.append(_FILTER_SQL_SELECT_SCLICENSE_NO_INLINE_DISTINCT_WHERE_1);
 		}
 
-		query.append(_FINDER_COLUMN_A_R_ACTIVE_2);
+		query.append(_FINDER_COLUMN_A_R_ACTIVE_2_);
 
 		query.append(_FINDER_COLUMN_A_R_RECOMMENDED_2);
 
@@ -1821,7 +1821,7 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 			query.append(_FILTER_SQL_SELECT_SCLICENSE_NO_INLINE_DISTINCT_WHERE_1);
 		}
 
-		query.append(_FINDER_COLUMN_A_R_ACTIVE_2);
+		query.append(_FINDER_COLUMN_A_R_ACTIVE_2_);
 
 		query.append(_FINDER_COLUMN_A_R_RECOMMENDED_2);
 
@@ -2166,7 +2166,7 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 
 		query.append(_FILTER_SQL_COUNT_SCLICENSE_WHERE);
 
-		query.append(_FINDER_COLUMN_ACTIVE_ACTIVE_2);
+		query.append(_FINDER_COLUMN_ACTIVE_ACTIVE_2_);
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
 				SCLicense.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
@@ -2274,7 +2274,7 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 
 		query.append(_FILTER_SQL_COUNT_SCLICENSE_WHERE);
 
-		query.append(_FINDER_COLUMN_A_R_ACTIVE_2);
+		query.append(_FINDER_COLUMN_A_R_ACTIVE_2_);
 
 		query.append(_FINDER_COLUMN_A_R_RECOMMENDED_2);
 
@@ -3063,7 +3063,9 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 	private static final String _SQL_GETSCPRODUCTENTRIESSIZE = "SELECT COUNT(*) AS COUNT_VALUE FROM SCLicenses_SCProductEntries WHERE licenseId = ?";
 	private static final String _SQL_CONTAINSSCPRODUCTENTRY = "SELECT COUNT(*) AS COUNT_VALUE FROM SCLicenses_SCProductEntries WHERE licenseId = ? AND productEntryId = ?";
 	private static final String _FINDER_COLUMN_ACTIVE_ACTIVE_2 = "scLicense.active = ?";
+	private static final String _FINDER_COLUMN_ACTIVE_ACTIVE_2_ = "scLicense.active_ = ?";
 	private static final String _FINDER_COLUMN_A_R_ACTIVE_2 = "scLicense.active = ? AND ";
+	private static final String _FINDER_COLUMN_A_R_ACTIVE_2_ = "scLicense.active_ = ? AND ";
 	private static final String _FINDER_COLUMN_A_R_RECOMMENDED_2 = "scLicense.recommended = ?";
 	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "scLicense.licenseId";
 	private static final String _FILTER_SQL_SELECT_SCLICENSE_WHERE = "SELECT DISTINCT {scLicense.*} FROM SCLicense scLicense WHERE ";

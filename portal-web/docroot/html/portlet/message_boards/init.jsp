@@ -18,7 +18,6 @@
 
 <%@ page import="com.liferay.portal.kernel.parsers.bbcode.BBCodeTranslatorUtil" %><%@
 page import="com.liferay.portal.kernel.repository.model.FileEntry" %><%@
-page import="com.liferay.portal.kernel.repository.model.Folder" %><%@
 page import="com.liferay.portal.kernel.search.Document" %><%@
 page import="com.liferay.portal.kernel.search.Hits" %><%@
 page import="com.liferay.portal.kernel.search.Indexer" %><%@
@@ -26,7 +25,6 @@ page import="com.liferay.portal.kernel.search.IndexerRegistryUtil" %><%@
 page import="com.liferay.portal.kernel.search.SearchContext" %><%@
 page import="com.liferay.portal.kernel.search.SearchContextFactory" %><%@
 page import="com.liferay.portal.kernel.util.MimeTypesUtil" %><%@
-page import="com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil" %><%@
 page import="com.liferay.portlet.asset.model.AssetEntry" %><%@
 page import="com.liferay.portlet.asset.model.AssetTag" %><%@
 page import="com.liferay.portlet.asset.service.AssetEntryServiceUtil" %><%@
@@ -89,7 +87,7 @@ page import="com.liferay.portlet.ratings.service.RatingsStatsLocalServiceUtil" %
 page import="com.liferay.portlet.trash.model.TrashEntry" %><%@
 page import="com.liferay.portlet.trash.service.TrashEntryLocalServiceUtil" %><%@
 page import="com.liferay.portlet.trash.util.TrashUtil" %><%@
-page import="com.liferay.util.RSSUtil" %>
+page import="com.liferay.util.RSSUtil" %><%@ page import="com.liferay.portlet.messageboards.util.MBAttachmentUtil" %>
 
 <%
 PortletPreferences preferences = renderRequest.getPreferences();

@@ -23,13 +23,7 @@ FileEntry attachmentsFileEntry = (FileEntry)row.getObject();
 
 DLFileEntry dlFileEntry = (DLFileEntry)attachmentsFileEntry.getModel();
 
-long folderId = dlFileEntry.getFolderId();
-
-Folder folder = PortletFileRepositoryUtil.getPortletFolder(folderId);
-
-long messageId = GetterUtil.getLong(folder.getName());
-
-MBMessage message = MBMessageLocalServiceUtil.getMBMessage(messageId);
+MBMessage message = MBAttachmentUtil.getMBMessageByFileEntryId(attachmentsFileEntry.getFileEntryId());
 %>
 
 <liferay-ui:icon-menu>
@@ -61,7 +55,7 @@ MBMessage message = MBMessageLocalServiceUtil.getMBMessage(messageId);
 			<portlet:param name="struts_action" value="/message_boards/edit_message_attachments" />
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="messageId" value="<%= String.valueOf(messageId) %>" />
+			<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
 			<portlet:param name="fileName" value="<%= dlFileEntry.getTitle() %>" />
 		</portlet:actionURL>
 

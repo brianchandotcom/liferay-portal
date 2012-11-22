@@ -208,21 +208,19 @@ public class TestXMLToHTMLBuilder extends SeleniumXMLToJavaBuilder {
 			if (commandName.equals("action")) {
 				String actionCommand = command.attributeValue("command");
 				String actionLocator = command.attributeValue("locator");
-				String actionName = command.attributeValue("name");
+				String actionFileName = command.attributeValue("name");
 				String actionPath = command.attributeValue("path");
 				String actionValue = command.attributeValue("value");
 
-				String pathKey = actionName + "__" + actionPath;
-				String pageNameKey = actionName + "__PAGE_NAME";
+				String pathKey = actionFileName + "__" + actionPath;
+				String pageNameKey = actionFileName + "__PAGE_NAME";
 
 				String pageName = pathsMap.get(pageNameKey)[2];
 
 				if (pathsMap.containsKey(pathKey)) {
 					String[] actionArray = pathsMap.get(pathKey);
-					String[] baseActionArray = baseActionsMap.get(
-						actionCommand);
 
-					String finalString = baseActionArray[1];
+					String finalString = baseActionsMap.get(actionCommand);
 
 					finalString = StringUtil.replace(
 						finalString, "${PATH.PAGE_NAME}", pageName);
@@ -236,10 +234,7 @@ public class TestXMLToHTMLBuilder extends SeleniumXMLToJavaBuilder {
 					sb.append(finalString);
 				}
 				else {
-					String[] baseActionArray = baseActionsMap.get(
-						actionCommand);
-
-					String finalString = baseActionArray[1];
+					String finalString = baseActionsMap.get(actionCommand);
 
 					finalString = StringUtil.replace(
 						finalString, "${PATH.PAGE_NAME}", pageName);
@@ -252,9 +247,9 @@ public class TestXMLToHTMLBuilder extends SeleniumXMLToJavaBuilder {
 			}
 			else if (commandName.equals("macro")) {
 				String macroCommand = command.attributeValue("command");
-				String macroName = command.attributeValue("name");
+				String macroFileName = command.attributeValue("name");
 
-				String macroKey = macroName + "__" + macroCommand;
+				String macroKey = macroFileName + "__" + macroCommand;
 
 				if (macrosMap.containsKey(macroKey)) {
 					String[] macroArray = macrosMap.get(macroKey);
@@ -281,6 +276,7 @@ public class TestXMLToHTMLBuilder extends SeleniumXMLToJavaBuilder {
 		return sb.toString();
 	}
 
+/*
 	private Map<String, String[]> getBaseActionsMap() throws Exception {
 		Map<String, String[]> hashMap = new HashMap<String, String[]>();
 
@@ -300,6 +296,28 @@ public class TestXMLToHTMLBuilder extends SeleniumXMLToJavaBuilder {
 			};
 
 			hashMap.put(actionName, actionValue);
+		}
+
+		return hashMap;
+	}
+
+*/
+
+	private Map<String, String> getBaseActionsMap() throws Exception {
+		Map<String, String> hashMap = new HashMap<String, String>();
+
+		String baseActionsXML =
+			"com/liferay/portalweb/blocks/base/actions/Base.actions";
+
+		Element rootElement = getRootElement(baseActionsXML);
+
+		List<Element> actionDefs = rootElement.elements("actiondef");
+
+		for (Element actionDef : actionDefs) {
+			String actionName = actionDef.attributeValue("name");
+			String actionDescription = actionDef.attributeValue("description");
+
+			hashMap.put(actionName, actionDescription);
 		}
 
 		return hashMap;
@@ -328,7 +346,7 @@ public class TestXMLToHTMLBuilder extends SeleniumXMLToJavaBuilder {
 	}
 
 	private Map<String, String[]> getMacrosMap() throws Exception {
-		Map<String, String[]> hashMap = new HashMap<String, String[]>();
+		Map<String, String[]> macrosMap = new HashMap<String, String[]>();
 
 		Set<String> macroFileNames = getMacroFileNames();
 
@@ -348,13 +366,13 @@ public class TestXMLToHTMLBuilder extends SeleniumXMLToJavaBuilder {
 
 				String macroKey = macroName + "__" + name;
 
-				String[] macroValue = { macroKey, description };
+				String[] macroValue = { name, description };
 
-				hashMap.put(macroKey, macroValue);
+				macrosMap.put(macroKey, macroValue);
 			}
 		}
 
-		return hashMap;
+		return macrosMap;
 	}
 
 	private Set<String> getPathFileNames() throws Exception {
@@ -380,7 +398,7 @@ public class TestXMLToHTMLBuilder extends SeleniumXMLToJavaBuilder {
 	}
 
 	private Map<String, String[]> getPathsMap() throws Exception {
-		Map<String, String[]> hashMap = new HashMap<String, String[]>();
+		Map<String, String[]> pathsMap = new HashMap<String, String[]>();
 
 		Set<String> pathFileNames = getPathFileNames();
 
@@ -409,11 +427,11 @@ public class TestXMLToHTMLBuilder extends SeleniumXMLToJavaBuilder {
 					pathsName, key, value
 				};
 
-				hashMap.put(pathKey, pathValue);
+				pathsMap.put(pathKey, pathValue);
 			}
 		}
 
-		return hashMap;
+		return pathsMap;
 	}
 
 	private Set<String> getTestFileNames() throws Exception {
@@ -438,7 +456,7 @@ public class TestXMLToHTMLBuilder extends SeleniumXMLToJavaBuilder {
 		return fileNames;
 	}
 
-	private Map<String, String[]> baseActionsMap;
+	private Map<String, String> baseActionsMap;
 	private Map<String, String[]> macrosMap;
 	private Map<String, String[]> pathsMap;
 

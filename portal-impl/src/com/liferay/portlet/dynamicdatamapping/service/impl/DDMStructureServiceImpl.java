@@ -101,6 +101,38 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 		return ddmStructurePersistence.findByPrimaryKey(structureId);
 	}
 
+	public DDMStructure getStructure(long groupId, String structureKey)
+		throws PortalException, SystemException {
+
+		DDMStructurePermission.check(
+			getPermissionChecker(), groupId, structureKey, ActionKeys.VIEW);
+
+		return ddmStructureLocalService.getStructure(groupId, structureKey);
+	}
+
+	public DDMStructure getStructure(
+		long groupId, String structureKey, boolean includeGlobalStructures)
+		throws PortalException, SystemException {
+
+		DDMStructurePermission.check(
+			getPermissionChecker(), groupId, structureKey, ActionKeys.VIEW);
+
+		return ddmStructureLocalService.getStructure(
+			groupId, structureKey, includeGlobalStructures);
+	}
+
+	public List<DDMStructure> getStructures(long groupId)
+		throws SystemException {
+
+		return ddmStructurePersistence.filterFindByGroupId(groupId);
+	}
+
+	public List<DDMStructure> getStructures(long[] groupIds)
+		throws SystemException {
+
+		return ddmStructurePersistence.filterFindByGroupId(groupIds);
+	}
+
 	public List<DDMStructure> search(
 			long companyId, long[] groupIds, long[] classNameIds,
 			String keywords, int start, int end,

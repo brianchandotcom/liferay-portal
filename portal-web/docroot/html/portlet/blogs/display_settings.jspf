@@ -45,16 +45,11 @@
 		displayStyles.add(RSSUtil.DISPLAY_STYLE_TITLE);
 		%>
 
-		<liferay-ui:ddm-template-menu
+		<liferay-ui:ddm-template-selector
 			classNameId="<%= PortalUtil.getClassNameId(portletDisplayTemplateHandler.getClassName()) %>"
 			displayStyles="<%= displayStyles %>"
 			preferenceName="pageDisplayStyle"
 			preferenceValue="<%= pageDisplayStyle %>"
-		/>
-
-		<liferay-ui:ddm-template-selector
-			classNameId="<%= PortalUtil.getClassNameId(portletDisplayTemplateHandler.getClassName()) %>"
-			message='<%= LanguageUtil.format(pageContext, "manage-display-templates-for-x", themeDisplay.getScopeGroupName(), false) %>'
 			refreshURL="<%= portletURL.toString() %>"
 		/>
 	</div>

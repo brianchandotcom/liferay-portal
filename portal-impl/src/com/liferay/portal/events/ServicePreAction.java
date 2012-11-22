@@ -1555,9 +1555,6 @@ public class ServicePreAction extends Action {
 		Layout layout = null;
 		List<Layout> layouts = null;
 
-		LayoutSet layoutSet = (LayoutSet)request.getAttribute(
-			WebKeys.VIRTUAL_HOST_LAYOUT_SET);
-
 		if (signedIn) {
 
 			// Check the user's personal layouts
@@ -1609,16 +1606,21 @@ public class ServicePreAction extends Action {
 				}
 			}
 		}
-		else if (layoutSet != null) {
+		else {
 
 			// Check the virtual host
 
-			layouts = LayoutLocalServiceUtil.getLayouts(
-				layoutSet.getGroupId(), layoutSet.isPrivateLayout(),
-				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+			LayoutSet layoutSet = (LayoutSet)request.getAttribute(
+				WebKeys.VIRTUAL_HOST_LAYOUT_SET);
 
-			if (layouts.size() > 0) {
-				layout = layouts.get(0);
+			if (layoutSet != null) {
+				layouts = LayoutLocalServiceUtil.getLayouts(
+					layoutSet.getGroupId(), layoutSet.isPrivateLayout(),
+					LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+
+				if (layouts.size() > 0) {
+					layout = layouts.get(0);
+				}
 			}
 		}
 

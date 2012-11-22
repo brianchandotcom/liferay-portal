@@ -129,7 +129,7 @@ public class UsersAdminImpl implements UsersAdmin {
 				request, ancestorOrganization.getName(), portletURL.toString());
 		}
 
-		Organization unescapedOrganization = organization.toEscapedModel();
+		Organization unescapedOrganization = organization.toUnescapedModel();
 
 		portletURL.setParameter(
 			"organizationId",

@@ -310,7 +310,7 @@ public class JournalUtil {
 			if (folder.getFolderId() !=
 				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
-				JournalFolder unescapedFolder = folder.toEscapedModel();
+				JournalFolder unescapedFolder = folder.toUnescapedModel();
 
 				Map<String, Object> data = new HashMap<String, Object>();
 

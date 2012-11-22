@@ -95,6 +95,7 @@ import com.liferay.portlet.usersadmin.search.GroupSearchTerms;
 import java.io.File;
 import java.io.InputStream;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -119,6 +120,38 @@ import javax.servlet.http.HttpServletResponse;
 public class SitesUtil {
 
 	public static final String ANALYTICS_PREFIX = "analytics_";
+
+	public static void addPortletBreadcrumbEntries(
+			Group group, HttpServletRequest request,
+			RenderResponse renderResponse)
+		throws Exception {
+
+		PortletURL portletURL = renderResponse.createRenderURL();
+
+		portletURL.setParameter("struts_action", "/sites_admin/view");
+
+		List<Group> ancestorGroups = group.getAncestors();
+
+		Collections.reverse(ancestorGroups);
+
+		for (Group ancestorGroup : ancestorGroups) {
+			portletURL.setParameter(
+				"groupId", String.valueOf(ancestorGroup.getGroupId()));
+
+			PortalUtil.addPortletBreadcrumbEntry(
+				request, ancestorGroup.getDescriptiveName(),
+				portletURL.toString());
+		}
+
+		Group unescapedGroup = group.toUnescapedModel();
+
+		portletURL.setParameter(
+			"groupId", String.valueOf(unescapedGroup.getGroupId()));
+
+		PortalUtil.addPortletBreadcrumbEntry(
+			request, unescapedGroup.getDescriptiveName(),
+			portletURL.toString());
+	}
 
 	public static void addPortletBreadcrumbEntries(
 			Group group, String pagesName, PortletURL redirectURL,

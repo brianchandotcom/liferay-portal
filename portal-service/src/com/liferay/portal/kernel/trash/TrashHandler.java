@@ -169,6 +169,9 @@ public interface TrashHandler {
 	public void deleteTrashEntry(long classPK, boolean checkPermission)
 		throws PortalException, SystemException;
 
+	public List<ContainerModel> getAncestors(long containerModelId)
+		throws PortalException, SystemException;
+
 	/**
 	 * Returns the class name handled by this trash handler.
 	 *
@@ -268,9 +271,6 @@ public interface TrashHandler {
 	 *         trash entry listed in a search result
 	 */
 	public String getDeleteMessage();
-
-	public List<ContainerModel> getParentContainerModels(long containerModelId)
-		throws PortalException, SystemException;
 
 	/**
 	 * Returns the link to the location to which the model entity was restored.

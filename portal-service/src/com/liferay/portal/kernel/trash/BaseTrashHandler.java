@@ -96,6 +96,12 @@ public abstract class BaseTrashHandler implements TrashHandler {
 		deleteTrashEntries(new long[] {classPK}, checkPermission);
 	}
 
+	public List<ContainerModel> getAncestors(long containerModelId)
+		throws PortalException, SystemException {
+
+		return null;
+	}
+
 	/**
 	 * Returns the container model with the primary key.
 	 *
@@ -179,12 +185,6 @@ public abstract class BaseTrashHandler implements TrashHandler {
 
 	public String getDeleteMessage() {
 		return "deleted-in-x";
-	}
-
-	public List<ContainerModel> getParentContainerModels(long containerModelId)
-		throws PortalException, SystemException {
-
-		return null;
 	}
 
 	/**

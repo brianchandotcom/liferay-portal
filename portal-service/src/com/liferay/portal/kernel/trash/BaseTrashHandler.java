@@ -228,6 +228,40 @@ public abstract class BaseTrashHandler implements TrashHandler {
 		return StringPool.BLANK;
 	}
 
+	public String getTrashContainedModelName() {
+		return StringPool.BLANK;
+	}
+
+	public List<TrashRenderer> getTrashContainedModels(
+			long classPK, int start, int end)
+		throws PortalException, SystemException {
+
+		return null;
+	}
+
+	public int getTrashContainedModelsCount(long classPK)
+		throws PortalException, SystemException {
+
+		return 0;
+	}
+
+	public String getTrashContainerModelName() {
+		return StringPool.BLANK;
+	}
+
+	public List<TrashRenderer> getTrashContainerModels(
+			long classPK, int start, int end)
+		throws PortalException, SystemException {
+
+		return null;
+	}
+
+	public int getTrashContainerModelsCount(long classPK)
+		throws PortalException, SystemException {
+
+		return 0;
+	}
+
 	public TrashRenderer getTrashRenderer(long classPK)
 		throws PortalException, SystemException {
 

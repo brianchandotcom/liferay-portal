@@ -17,6 +17,8 @@ package com.liferay.portlet.wiki.trash;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.trash.BaseTrashHandler;
+import com.liferay.portal.kernel.trash.TrashHandler;
+import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -25,9 +27,14 @@ import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.util.TrashUtil;
 import com.liferay.portlet.wiki.asset.WikiNodeTrashRenderer;
 import com.liferay.portlet.wiki.model.WikiNode;
+import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.service.WikiNodeLocalServiceUtil;
 import com.liferay.portlet.wiki.service.WikiNodeServiceUtil;
+import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.portlet.wiki.service.permission.WikiNodePermission;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Implements trash handling for the wiki node entity.
@@ -83,6 +90,43 @@ public class WikiNodeTrashHandler extends BaseTrashHandler {
 
 	public String getClassName() {
 		return CLASS_NAME;
+	}
+
+	@Override
+	public String getTrashContainedModelName() {
+		return "wiki-pages";
+	}
+
+	@Override
+	public List<TrashRenderer> getTrashContainedModels(
+			long classPK, int start, int end)
+		throws PortalException, SystemException {
+
+		List<TrashRenderer> trashContainedModels =
+			new ArrayList<TrashRenderer>();
+
+		List<WikiPage> wikiPages = WikiPageLocalServiceUtil.getPages(
+			classPK, start, end);
+
+		for (WikiPage wikiPage : wikiPages) {
+			TrashHandler trashHandler =
+				TrashHandlerRegistryUtil.getTrashHandler(
+					WikiPage.class.getName());
+
+			TrashRenderer trashRenderer = trashHandler.getTrashRenderer(
+				wikiPage.getResourcePrimKey());
+
+			trashContainedModels.add(trashRenderer);
+		}
+
+		return trashContainedModels;
+	}
+
+	@Override
+	public int getTrashContainedModelsCount(long classPK)
+		throws PortalException, SystemException {
+
+		return WikiPageLocalServiceUtil.getPagesCount(classPK);
 	}
 
 	@Override

@@ -314,6 +314,24 @@ public interface TrashHandler {
 	 */
 	public String getSubcontainerModelName();
 
+	public String getTrashContainedModelName();
+
+	public List<TrashRenderer> getTrashContainedModels(
+			long classPK, int start, int end)
+		throws PortalException, SystemException;
+
+	public int getTrashContainedModelsCount(long classPK)
+		throws PortalException, SystemException;
+
+	public String getTrashContainerModelName();
+
+	public List<TrashRenderer> getTrashContainerModels(
+			long classPK, int start, int end)
+		throws PortalException, SystemException;
+
+	public int getTrashContainerModelsCount(long classPK)
+		throws PortalException, SystemException;
+
 	/**
 	 * Returns the trash renderer associated to the model entity with the
 	 * primary key.

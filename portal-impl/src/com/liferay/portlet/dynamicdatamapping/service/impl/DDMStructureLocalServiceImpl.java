@@ -373,8 +373,46 @@ public class DDMStructureLocalServiceImpl
 		return ddmStructurePersistence.findByGroupId(groupIds);
 	}
 
+	public List<DDMStructure> getStructures(long groupId, long classNameId)
+		throws SystemException {
+
+		return ddmStructurePersistence.findByG_C(groupId, classNameId);
+	}
+
+	public List<DDMStructure> getStructures(
+			long groupId, long classNameId, int start, int end)
+		throws SystemException {
+
+		return ddmStructurePersistence.findByG_C(
+			groupId, classNameId, start, end);
+	}
+
+	public List<DDMStructure> getStructures(
+			long groupId, long classNameId, OrderByComparator orderByComparator)
+		throws SystemException {
+
+		return ddmStructurePersistence.findByG_C(
+			groupId, classNameId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			orderByComparator);
+	}
+
+	public List<DDMStructure> getStructures(
+			long groupId, long classNameId, int start, int end,
+			OrderByComparator orderByComparator)
+		throws SystemException {
+
+		return ddmStructurePersistence.findByG_C(
+			groupId, classNameId, start, end, orderByComparator);
+	}
+
 	public int getStructuresCount(long groupId) throws SystemException {
 		return ddmStructurePersistence.countByGroupId(groupId);
+	}
+
+	public int getStructuresCount(long groupId, long classNameId)
+		throws SystemException {
+
+		return ddmStructurePersistence.countByG_C(groupId, classNameId);
 	}
 
 	public List<DDMStructure> search(

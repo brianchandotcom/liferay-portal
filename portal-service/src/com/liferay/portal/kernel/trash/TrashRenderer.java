@@ -25,6 +25,10 @@ import javax.portlet.RenderResponse;
  */
 public interface TrashRenderer {
 
+	public String getClassName();
+
+	public long getClassPK();
+
 	public String getIconPath(PortletRequest portletRequest);
 
 	public String getPortletId();

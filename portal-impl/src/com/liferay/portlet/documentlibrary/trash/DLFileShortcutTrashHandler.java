@@ -16,7 +16,6 @@ package com.liferay.portlet.documentlibrary.trash;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.trash.BaseTrashHandler;
 import com.liferay.portal.kernel.trash.TrashActionKeys;
 import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.security.permission.ActionKeys;
@@ -36,7 +35,7 @@ import javax.portlet.PortletRequest;
  *
  * @author Zsolt Berentey
  */
-public class DLFileShortcutTrashHandler extends BaseTrashHandler {
+public class DLFileShortcutTrashHandler extends DLBaseTrashHandler {
 
 	public static final String CLASS_NAME = DLFileShortcut.class.getName();
 

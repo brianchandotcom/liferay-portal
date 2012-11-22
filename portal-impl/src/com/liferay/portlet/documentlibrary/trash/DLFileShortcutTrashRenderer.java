@@ -48,6 +48,14 @@ public class DLFileShortcutTrashRenderer extends BaseTrashRenderer {
 			fileShortcut.getToFileEntryId());
 	}
 
+	public String getClassName() {
+		return DLFileShortcut.class.getName();
+	}
+
+	public long getClassPK() {
+		return _fileShortcut.getPrimaryKey();
+	}
+
 	@Override
 	public String getIconPath(ThemeDisplay themeDisplay) {
 		return themeDisplay.getPathThemeImages() + "/file_system/small/" +

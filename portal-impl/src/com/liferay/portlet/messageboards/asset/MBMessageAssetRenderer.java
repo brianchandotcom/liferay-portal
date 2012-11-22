@@ -56,6 +56,10 @@ public class MBMessageAssetRenderer
 		return MBCategoryAssetRendererFactory.CLASS_NAME;
 	}
 
+	public String getClassName() {
+		return MBMessage.class.getName();
+	}
+
 	public long getClassPK() {
 		return _message.getMessageId();
 	}

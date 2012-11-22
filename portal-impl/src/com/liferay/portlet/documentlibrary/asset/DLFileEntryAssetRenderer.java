@@ -66,6 +66,10 @@ public class DLFileEntryAssetRenderer
 		return DLFileEntryAssetRendererFactory.CLASS_NAME;
 	}
 
+	public String getClassName() {
+		return DLFileEntry.class.getName();
+	}
+
 	public long getClassPK() {
 		if (!_fileVersion.isApproved() && _fileVersion.isDraft() &&
 			!_fileVersion.isPending() &&

@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.trash.BaseTrashHandler;
 import com.liferay.portal.kernel.trash.TrashActionKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.repository.liferayrepository.LiferayRepository;
@@ -51,7 +50,7 @@ import javax.portlet.PortletRequest;
  * @author Manuel de la Peña
  * @author Zsolt Berentey
  */
-public class DLFileEntryTrashHandler extends BaseTrashHandler {
+public class DLFileEntryTrashHandler extends DLBaseTrashHandler {
 
 	public static final String CLASS_NAME = DLFileEntry.class.getName();
 

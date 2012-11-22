@@ -42,6 +42,14 @@ public class DLFolderTrashRenderer extends BaseTrashRenderer {
 		_folder = folder;
 	}
 
+	public String getClassName() {
+		return DLFolder.class.getName();
+	}
+
+	public long getClassPK() {
+		return _folder.getPrimaryKey();
+	}
+
 	@Override
 	public String getIconPath(ThemeDisplay themeDisplay) {
 		int foldersCount = 0;

@@ -94,6 +94,10 @@ public class WikiNodeTrashHandler extends BaseTrashHandler {
 		return new WikiNodeTrashRenderer(node);
 	}
 
+	public boolean isContainerModel() {
+		return true;
+	}
+
 	public boolean isInTrash(long classPK)
 		throws PortalException, SystemException {
 

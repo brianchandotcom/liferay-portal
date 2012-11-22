@@ -145,6 +145,10 @@ public class DLFolderTrashHandler extends DLBaseTrashHandler {
 			permissionChecker, groupId, classPK, trashActionId);
 	}
 
+	public boolean isContainerModel() {
+		return true;
+	}
+
 	public boolean isInTrash(long classPK)
 		throws PortalException, SystemException {
 

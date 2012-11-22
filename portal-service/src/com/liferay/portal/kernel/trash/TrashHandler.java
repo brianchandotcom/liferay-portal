@@ -352,6 +352,8 @@ public interface TrashHandler {
 			String trashActionId)
 		throws PortalException, SystemException;
 
+	public boolean isContainerModel();
+
 	/**
 	 * Returns <code>true</code> if the model entity with the primary key is in
 	 * the Recycle Bin.

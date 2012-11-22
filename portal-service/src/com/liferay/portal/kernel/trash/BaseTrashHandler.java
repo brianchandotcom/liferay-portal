@@ -271,6 +271,10 @@ public abstract class BaseTrashHandler implements TrashHandler {
 		return hasPermission(permissionChecker, classPK, actionId);
 	}
 
+	public boolean isContainerModel() {
+		return false;
+	}
+
 	/**
 	 * Returns <code>true</code> if the trash entry can be restored to its
 	 * original location.

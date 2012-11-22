@@ -303,9 +303,7 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 							<%
 							List<FileEntry> attachmentsFiles = message.getAttachmentsFileEntries();
 
-							for (int j = 0; j < attachmentsFiles.size(); j++) {
-								FileEntry fileEntry = attachmentsFiles.get(j);
-
+							for (FileEntry fileEntry : attachmentsFiles) {
 								if (MimeTypesUtil.isWebImage(fileEntry.getMimeType())) {
 							%>
 
@@ -323,8 +321,7 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 							<ul>
 
 								<%
-								for (int j = 0; j < attachmentsFiles.size(); j++) {
-									FileEntry fileEntry = attachmentsFiles.get(j);
+								for (FileEntry fileEntry : attachmentsFiles) {
 								%>
 
 									<portlet:actionURL var="attachmentURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">

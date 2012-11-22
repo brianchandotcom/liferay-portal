@@ -1,6 +1,8 @@
 <#assign finderColsList = finder.getColumns()>
 
-<#if finder.isCollection()>
+<#-- Case 3 : finder.isUnique() == false && finder.isCollection()-->
+
+<#if !finder.isUnique() && finder.isCollection()>
 	/**
 	 * Removes all the ${entity.humanNames} where ${finder.getHumanConditions(false)} from the database.
 	 *
@@ -19,18 +21,18 @@
 		for (${entity.name} ${entity.varName} : findBy${finder.name}(
 
 		<#list finderColsList as finderCol>
-			${finderCol.name}
-
-			<#if finderCol_has_next>
-				,
-			</#if>
+			${finderCol.name},
 		</#list>
 
+		QueryUtil.ALL_POS, QueryUtil.ALL_POS, null
 		)) {
 			remove(${entity.varName});
 		}
 	}
 <#else>
+
+<#-- Case 9 : !finder.isCollection() || finder.isUnique() -->
+
 	/**
 	 * Removes the ${entity.humanName} where ${finder.getHumanConditions(false)} from the database.
 	 *

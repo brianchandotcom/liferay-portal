@@ -107,47 +107,49 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 
 	<#if entity.getOrder()??>
 		<#assign orderList = entity.getOrder().getColumns()>
-
-		<#assign orderByJPQL = "">
-
-		<#list orderList as order>
-			<#if entity.hasCompoundPK() && order.isPrimary()>
-				<#assign orderByJPQL = orderByJPQL + entity.alias + ".id." + order.name>
-			<#else>
-				<#assign orderByJPQL = orderByJPQL + entity.alias + "." + order.name>
-			</#if>
-
-			<#if order.isOrderByAscending()>
-				<#assign orderByJPQL = orderByJPQL + " ASC">
-			<#else>
-				<#assign orderByJPQL = orderByJPQL + " DESC">
-			</#if>
-
-			<#if order_has_next>
-				<#assign orderByJPQL = orderByJPQL + ", ">
-			</#if>
-		</#list>
-
-		public static final String ORDER_BY_JPQL = " ORDER BY ${orderByJPQL}";
-
-		<#assign orderBySQL = "">
-
-		<#list orderList as order>
-			<#assign orderBySQL = orderBySQL + entity.table + "." + order.DBName>
-
-			<#if order.isOrderByAscending()>
-				<#assign orderBySQL = orderBySQL + " ASC">
-			<#else>
-				<#assign orderBySQL = orderBySQL + " DESC">
-			</#if>
-
-			<#if order_has_next>
-				<#assign orderBySQL = orderBySQL + ", ">
-			</#if>
-		</#list>
-
-		public static final String ORDER_BY_SQL = " ORDER BY ${orderBySQL}";
+	<#else>
+		<#assign orderList = entity.getPKList()>
 	</#if>
+
+	<#assign orderByJPQL = "">
+
+	<#list orderList as order>
+		<#if entity.hasCompoundPK() && order.isPrimary()>
+			<#assign orderByJPQL = orderByJPQL + entity.alias + ".id." + order.name>
+		<#else>
+			<#assign orderByJPQL = orderByJPQL + entity.alias + "." + order.name>
+		</#if>
+
+		<#if order.isOrderByAscending()>
+			<#assign orderByJPQL = orderByJPQL + " ASC">
+		<#else>
+			<#assign orderByJPQL = orderByJPQL + " DESC">
+		</#if>
+
+		<#if order_has_next>
+			<#assign orderByJPQL = orderByJPQL + ", ">
+		</#if>
+	</#list>
+
+	public static final String ORDER_BY_JPQL = " ORDER BY ${orderByJPQL}";
+
+	<#assign orderBySQL = "">
+
+	<#list orderList as order>
+		<#assign orderBySQL = orderBySQL + entity.table + "." + order.DBName>
+
+		<#if order.isOrderByAscending()>
+			<#assign orderBySQL = orderBySQL + " ASC">
+		<#else>
+			<#assign orderBySQL = orderBySQL + " DESC">
+		</#if>
+
+		<#if order_has_next>
+			<#assign orderBySQL = orderBySQL + ", ">
+		</#if>
+	</#list>
+
+	public static final String ORDER_BY_SQL = " ORDER BY ${orderBySQL}";
 
 	public static final String DATA_SOURCE = "${entity.dataSource}";
 
@@ -203,6 +205,14 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 				public static long ${column.name?upper_case}_COLUMN_BITMASK = ${columnBitmask}L;
 
 				<#assign columnBitmask = columnBitmask * 2 >
+			</#list>
+
+			<#list orderList as order>
+				<#if !entity.finderColumnsList?seq_contains(order)>
+					public static long ${order.name?upper_case}_COLUMN_BITMASK = ${columnBitmask}L;
+
+					<#assign columnBitmask = columnBitmask * 2 >
+				</#if>
 			</#list>
 		</#if>
 	</#if>

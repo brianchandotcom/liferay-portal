@@ -383,7 +383,7 @@ public class Entity {
 		while (itr.hasNext()) {
 			EntityFinder finder = itr.next();
 
-			if (finder.isCollection()) {
+			if (!finder.isUnique() && finder.isCollection()) {
 				itr.remove();
 			}
 		}

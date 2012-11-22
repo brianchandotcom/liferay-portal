@@ -20,6 +20,13 @@ public int countBy${finder.name}(
 </#list>
 
 ) throws SystemException {
+	FinderPath finderPath =
+	<#if !finder.hasCustomComparator()>
+		FINDER_PATH_COUNT_BY_${finder.name?upper_case};
+	<#else>
+		FINDER_PATH_WITH_PAGINATION_COUNT_BY_${finder.name?upper_case};
+	</#if>
+
 	Object[] finderArgs = new Object[] {
 		<#list finderColsList as finderCol>
 			${finderCol.name}
@@ -30,13 +37,7 @@ public int countBy${finder.name}(
 		</#list>
 	};
 
-	Long count = (Long)FinderCacheUtil.getResult(
-		<#if !finder.hasCustomComparator()>
-			FINDER_PATH_COUNT_BY_${finder.name?upper_case},
-		<#else>
-			FINDER_PATH_WITH_PAGINATION_COUNT_BY_${finder.name?upper_case},
-		</#if>
-		finderArgs, this);
+	Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs, this);
 
 	if (count == null) {
 		<#include "persistence_impl_count_by_query.ftl">
@@ -55,23 +56,15 @@ public int countBy${finder.name}(
 			<#include "persistence_impl_finder_qpos.ftl">
 
 			count = (Long)q.uniqueResult();
+
+			FinderCacheUtil.putResult(finderPath, finderArgs, count);
 		}
 		catch (Exception e) {
+			FinderCacheUtil.removeResult(finderPath, finderArgs);
+
 			throw processException(e);
 		}
 		finally {
-			if (count == null) {
-				count = Long.valueOf(0);
-			}
-
-			FinderCacheUtil.putResult(
-				<#if !finder.hasCustomComparator()>
-					FINDER_PATH_COUNT_BY_${finder.name?upper_case},
-				<#else>
-					FINDER_PATH_WITH_PAGINATION_COUNT_BY_${finder.name?upper_case},
-				</#if>
-				finderArgs, count);
-
 			closeSession(session);
 		}
 	}
@@ -141,17 +134,15 @@ public int countBy${finder.name}(
 				<#include "persistence_impl_finder_arrayable_qpos.ftl">
 
 				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_${finder.name?upper_case}, finderArgs, count);
 			}
 			catch (Exception e) {
+				FinderCacheUtil.removeResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_${finder.name?upper_case}, finderArgs);
+
 				throw processException(e);
 			}
 			finally {
-				if (count == null) {
-					count = Long.valueOf(0);
-				}
-
-				FinderCacheUtil.putResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_${finder.name?upper_case}, finderArgs, count);
-
 				closeSession(session);
 			}
 		}

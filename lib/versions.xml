@@ -659,6 +659,28 @@
 		</licenses>
 	</library>
 	<library>
+		<file-name>development/osgi.cmpn.jar</file-name>
+		<version>4.3.1.201210102024</version>
+		<project-name>OSGi Compendium Specification</project-name>
+		<project-url>http://www.osgi.org/Release4/Download</project-url>
+		<licenses>
+			<license>
+				<license-name>Apache License 2.0</license-name>
+			</license>
+		</licenses>
+	</library>
+	<library>
+		<file-name>development/osgi.core.jar</file-name>
+		<version>4.3.1.201210102023</version>
+		<project-name>OSGi Core Specification</project-name>
+		<project-url>http://www.osgi.org/Release4/Download</project-url>
+		<licenses>
+			<license>
+				<license-name>Apache License 2.0</license-name>
+			</license>
+		</licenses>
+	</library>
+	<library>
 		<file-name>development/p6spy.jar</file-name>
 		<version>1.3</version>
 		<project-name>P6Spy</project-name>

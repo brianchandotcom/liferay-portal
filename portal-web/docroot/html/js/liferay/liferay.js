@@ -77,7 +77,7 @@ Liferay = window.Liferay || {};
 				var callbackIndex = 0;
 
 				while (args[callbackIndex++]) {
-					var callback = args[callbackIndex++];
+					var callback = args[callbackIndex];
 
 					if (Lang.isFunction(callback)) {
 						callbacks.push(callback);
@@ -126,13 +126,38 @@ Liferay = window.Liferay || {};
 		}
 	};
 
-	Liferay.Service = function() {
+	var Service = function() {
 		var instance = this;
 
 		var args = ServiceUtil.parseInvokeArgs(arguments);
 
 		ServiceUtil.invoke.apply(ServiceUtil, args);
 	};
+
+	Service.bind = function() {
+		var instance = this;
+
+		var args = A.Array(arguments, 0, true);
+
+		args.unshift(Liferay.Service, Liferay);
+
+		return A.bind.apply(A, args);
+	};
+
+	A.each(
+		['get', 'del', 'post', 'put', 'update'],
+		function(item, index, collection) {
+			Service[item] = A.rbind(
+				'Service',
+				Liferay,
+				{
+					method: item
+				}
+			);
+		}
+	);
+
+	Liferay.Service = Service;
 
 	var components = {};
 	var componentsFn = {};

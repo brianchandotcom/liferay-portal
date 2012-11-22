@@ -246,7 +246,7 @@ if (Validator.isNotNull(structureAvailableFields)) {
 	<c:when test="<%= type.equals(DDMTemplateConstants.TEMPLATE_TYPE_FORM) %>">
 		<%@ include file="/html/portlet/dynamic_data_mapping/form_builder.jspf" %>
 
-		<aui:script>
+		<aui:script use="liferay-portlet-dynamic-data-mapping">
 			var <portlet:namespace />hiddenAttributesMap = window.<portlet:namespace />formBuilder.MAP_HIDDEN_FIELD_ATTRS;
 
 			var <portlet:namespace />getFieldHiddenAttributes = function(mode, field) {
@@ -261,29 +261,22 @@ if (Validator.isNotNull(structureAvailableFields)) {
 				return hiddenAttributes;
 			};
 
-			var <portlet:namespace />setFieldsHiddenAttributes = function(item, index, collection) {
+			var <portlet:namespace />setFieldsHiddenAttributes = function(item, index, collection, mode) {
 				var hiddenAttributes = <portlet:namespace />getFieldHiddenAttributes(mode, item);
 
 				item.set('hiddenAttributes', hiddenAttributes);
 			};
 
-			Liferay.provide(
-				window,
-				'<portlet:namespace />toggleMode',
-				function(mode) {
-					var modeEdit = (mode === '<%= DDMTemplateConstants.TEMPLATE_MODE_EDIT %>');
+			window.<portlet:namespace />toggleMode = function(mode) {
+				var modeEdit = (mode === '<%= DDMTemplateConstants.TEMPLATE_MODE_EDIT %>');
 
-					window.<portlet:namespace />formBuilder.set('allowRemoveRequiredFields', modeEdit);
+				window.<portlet:namespace />formBuilder.set('allowRemoveRequiredFields', modeEdit);
 
-					window.<portlet:namespace />formBuilder.get('fields').each(<portlet:namespace />setFieldsHiddenAttributes);
+				window.<portlet:namespace />formBuilder.get('fields').each(A.rbind(<portlet:namespace />setFieldsHiddenAttributes, this, mode));
 
-					A.Array.each(window.<portlet:namespace />formBuilder.get('availableFields'), <portlet:namespace />setFieldsHiddenAttributes);
-				},
-				['aui-base']
-			);
-		</aui:script>
+				A.Array.each(window.<portlet:namespace />formBuilder.get('availableFields'), A.rbind(<portlet:namespace />setFieldsHiddenAttributes, this, mode));
+			};
 
-		<aui:script>
 			<portlet:namespace />toggleMode('<%= HtmlUtil.escape(mode) %>');
 		</aui:script>
 	</c:when>

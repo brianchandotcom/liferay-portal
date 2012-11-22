@@ -111,86 +111,6 @@ public class DDMContentUtil {
 	}
 
 	/**
-	* Caches the d d m content in the entity cache if it is enabled.
-	*
-	* @param ddmContent the d d m content
-	*/
-	public static void cacheResult(
-		com.liferay.portlet.dynamicdatamapping.model.DDMContent ddmContent) {
-		getPersistence().cacheResult(ddmContent);
-	}
-
-	/**
-	* Caches the d d m contents in the entity cache if it is enabled.
-	*
-	* @param ddmContents the d d m contents
-	*/
-	public static void cacheResult(
-		java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMContent> ddmContents) {
-		getPersistence().cacheResult(ddmContents);
-	}
-
-	/**
-	* Creates a new d d m content with the primary key. Does not add the d d m content to the database.
-	*
-	* @param contentId the primary key for the new d d m content
-	* @return the new d d m content
-	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMContent create(
-		long contentId) {
-		return getPersistence().create(contentId);
-	}
-
-	/**
-	* Removes the d d m content with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param contentId the primary key of the d d m content
-	* @return the d d m content that was removed
-	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchContentException if a d d m content with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMContent remove(
-		long contentId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatamapping.NoSuchContentException {
-		return getPersistence().remove(contentId);
-	}
-
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMContent updateImpl(
-		com.liferay.portlet.dynamicdatamapping.model.DDMContent ddmContent)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(ddmContent);
-	}
-
-	/**
-	* Returns the d d m content with the primary key or throws a {@link com.liferay.portlet.dynamicdatamapping.NoSuchContentException} if it could not be found.
-	*
-	* @param contentId the primary key of the d d m content
-	* @return the d d m content
-	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchContentException if a d d m content with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMContent findByPrimaryKey(
-		long contentId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatamapping.NoSuchContentException {
-		return getPersistence().findByPrimaryKey(contentId);
-	}
-
-	/**
-	* Returns the d d m content with the primary key or returns <code>null</code> if it could not be found.
-	*
-	* @param contentId the primary key of the d d m content
-	* @return the d d m content, or <code>null</code> if a d d m content with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMContent fetchByPrimaryKey(
-		long contentId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().fetchByPrimaryKey(contentId);
-	}
-
-	/**
 	* Returns all the d d m contents where uuid = &#63;.
 	*
 	* @param uuid the uuid
@@ -327,6 +247,29 @@ public class DDMContentUtil {
 	}
 
 	/**
+	* Removes all the d d m contents where uuid = &#63; from the database.
+	*
+	* @param uuid the uuid
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByUuid(java.lang.String uuid)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByUuid(uuid);
+	}
+
+	/**
+	* Returns the number of d d m contents where uuid = &#63;.
+	*
+	* @param uuid the uuid
+	* @return the number of matching d d m contents
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByUuid(java.lang.String uuid)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByUuid(uuid);
+	}
+
+	/**
 	* Returns the d d m content where uuid = &#63; and groupId = &#63; or throws a {@link com.liferay.portlet.dynamicdatamapping.NoSuchContentException} if it could not be found.
 	*
 	* @param uuid the uuid
@@ -369,6 +312,34 @@ public class DDMContentUtil {
 		java.lang.String uuid, long groupId, boolean retrieveFromCache)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
+	}
+
+	/**
+	* Removes the d d m content where uuid = &#63; and groupId = &#63; from the database.
+	*
+	* @param uuid the uuid
+	* @param groupId the group ID
+	* @return the d d m content that was removed
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMContent removeByUUID_G(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.dynamicdatamapping.NoSuchContentException {
+		return getPersistence().removeByUUID_G(uuid, groupId);
+	}
+
+	/**
+	* Returns the number of d d m contents where uuid = &#63; and groupId = &#63;.
+	*
+	* @param uuid the uuid
+	* @param groupId the group ID
+	* @return the number of matching d d m contents
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByUUID_G(java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByUUID_G(uuid, groupId);
 	}
 
 	/**
@@ -522,6 +493,31 @@ public class DDMContentUtil {
 	}
 
 	/**
+	* Removes all the d d m contents where uuid = &#63; and companyId = &#63; from the database.
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByUuid_C(java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByUuid_C(uuid, companyId);
+	}
+
+	/**
+	* Returns the number of d d m contents where uuid = &#63; and companyId = &#63;.
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @return the number of matching d d m contents
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByUuid_C(java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByUuid_C(uuid, companyId);
+	}
+
+	/**
 	* Returns all the d d m contents where groupId = &#63;.
 	*
 	* @param groupId the group ID
@@ -657,6 +653,29 @@ public class DDMContentUtil {
 		return getPersistence()
 				   .findByGroupId_PrevAndNext(contentId, groupId,
 			orderByComparator);
+	}
+
+	/**
+	* Removes all the d d m contents where groupId = &#63; from the database.
+	*
+	* @param groupId the group ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByGroupId(long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByGroupId(groupId);
+	}
+
+	/**
+	* Returns the number of d d m contents where groupId = &#63;.
+	*
+	* @param groupId the group ID
+	* @return the number of matching d d m contents
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByGroupId(long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByGroupId(groupId);
 	}
 
 	/**
@@ -802,6 +821,109 @@ public class DDMContentUtil {
 	}
 
 	/**
+	* Removes all the d d m contents where companyId = &#63; from the database.
+	*
+	* @param companyId the company ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByCompanyId(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByCompanyId(companyId);
+	}
+
+	/**
+	* Returns the number of d d m contents where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @return the number of matching d d m contents
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByCompanyId(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByCompanyId(companyId);
+	}
+
+	/**
+	* Caches the d d m content in the entity cache if it is enabled.
+	*
+	* @param ddmContent the d d m content
+	*/
+	public static void cacheResult(
+		com.liferay.portlet.dynamicdatamapping.model.DDMContent ddmContent) {
+		getPersistence().cacheResult(ddmContent);
+	}
+
+	/**
+	* Caches the d d m contents in the entity cache if it is enabled.
+	*
+	* @param ddmContents the d d m contents
+	*/
+	public static void cacheResult(
+		java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMContent> ddmContents) {
+		getPersistence().cacheResult(ddmContents);
+	}
+
+	/**
+	* Creates a new d d m content with the primary key. Does not add the d d m content to the database.
+	*
+	* @param contentId the primary key for the new d d m content
+	* @return the new d d m content
+	*/
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMContent create(
+		long contentId) {
+		return getPersistence().create(contentId);
+	}
+
+	/**
+	* Removes the d d m content with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param contentId the primary key of the d d m content
+	* @return the d d m content that was removed
+	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchContentException if a d d m content with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMContent remove(
+		long contentId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.dynamicdatamapping.NoSuchContentException {
+		return getPersistence().remove(contentId);
+	}
+
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMContent updateImpl(
+		com.liferay.portlet.dynamicdatamapping.model.DDMContent ddmContent)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().updateImpl(ddmContent);
+	}
+
+	/**
+	* Returns the d d m content with the primary key or throws a {@link com.liferay.portlet.dynamicdatamapping.NoSuchContentException} if it could not be found.
+	*
+	* @param contentId the primary key of the d d m content
+	* @return the d d m content
+	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchContentException if a d d m content with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMContent findByPrimaryKey(
+		long contentId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.dynamicdatamapping.NoSuchContentException {
+		return getPersistence().findByPrimaryKey(contentId);
+	}
+
+	/**
+	* Returns the d d m content with the primary key or returns <code>null</code> if it could not be found.
+	*
+	* @param contentId the primary key of the d d m content
+	* @return the d d m content, or <code>null</code> if a d d m content with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMContent fetchByPrimaryKey(
+		long contentId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByPrimaryKey(contentId);
+	}
+
+	/**
 	* Returns all the d d m contents.
 	*
 	* @return the d d m contents
@@ -851,66 +973,6 @@ public class DDMContentUtil {
 	}
 
 	/**
-	* Removes all the d d m contents where uuid = &#63; from the database.
-	*
-	* @param uuid the uuid
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void removeByUuid(java.lang.String uuid)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByUuid(uuid);
-	}
-
-	/**
-	* Removes the d d m content where uuid = &#63; and groupId = &#63; from the database.
-	*
-	* @param uuid the uuid
-	* @param groupId the group ID
-	* @return the d d m content that was removed
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMContent removeByUUID_G(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatamapping.NoSuchContentException {
-		return getPersistence().removeByUUID_G(uuid, groupId);
-	}
-
-	/**
-	* Removes all the d d m contents where uuid = &#63; and companyId = &#63; from the database.
-	*
-	* @param uuid the uuid
-	* @param companyId the company ID
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void removeByUuid_C(java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByUuid_C(uuid, companyId);
-	}
-
-	/**
-	* Removes all the d d m contents where groupId = &#63; from the database.
-	*
-	* @param groupId the group ID
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void removeByGroupId(long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByGroupId(groupId);
-	}
-
-	/**
-	* Removes all the d d m contents where companyId = &#63; from the database.
-	*
-	* @param companyId the company ID
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void removeByCompanyId(long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByCompanyId(companyId);
-	}
-
-	/**
 	* Removes all the d d m contents from the database.
 	*
 	* @throws SystemException if a system exception occurred
@@ -918,68 +980,6 @@ public class DDMContentUtil {
 	public static void removeAll()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		getPersistence().removeAll();
-	}
-
-	/**
-	* Returns the number of d d m contents where uuid = &#63;.
-	*
-	* @param uuid the uuid
-	* @return the number of matching d d m contents
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int countByUuid(java.lang.String uuid)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByUuid(uuid);
-	}
-
-	/**
-	* Returns the number of d d m contents where uuid = &#63; and groupId = &#63;.
-	*
-	* @param uuid the uuid
-	* @param groupId the group ID
-	* @return the number of matching d d m contents
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int countByUUID_G(java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByUUID_G(uuid, groupId);
-	}
-
-	/**
-	* Returns the number of d d m contents where uuid = &#63; and companyId = &#63;.
-	*
-	* @param uuid the uuid
-	* @param companyId the company ID
-	* @return the number of matching d d m contents
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int countByUuid_C(java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByUuid_C(uuid, companyId);
-	}
-
-	/**
-	* Returns the number of d d m contents where groupId = &#63;.
-	*
-	* @param groupId the group ID
-	* @return the number of matching d d m contents
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int countByGroupId(long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByGroupId(groupId);
-	}
-
-	/**
-	* Returns the number of d d m contents where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @return the number of matching d d m contents
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int countByCompanyId(long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByCompanyId(companyId);
 	}
 
 	/**

@@ -111,86 +111,6 @@ public class DDMTemplateUtil {
 	}
 
 	/**
-	* Caches the d d m template in the entity cache if it is enabled.
-	*
-	* @param ddmTemplate the d d m template
-	*/
-	public static void cacheResult(
-		com.liferay.portlet.dynamicdatamapping.model.DDMTemplate ddmTemplate) {
-		getPersistence().cacheResult(ddmTemplate);
-	}
-
-	/**
-	* Caches the d d m templates in the entity cache if it is enabled.
-	*
-	* @param ddmTemplates the d d m templates
-	*/
-	public static void cacheResult(
-		java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> ddmTemplates) {
-		getPersistence().cacheResult(ddmTemplates);
-	}
-
-	/**
-	* Creates a new d d m template with the primary key. Does not add the d d m template to the database.
-	*
-	* @param templateId the primary key for the new d d m template
-	* @return the new d d m template
-	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate create(
-		long templateId) {
-		return getPersistence().create(templateId);
-	}
-
-	/**
-	* Removes the d d m template with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param templateId the primary key of the d d m template
-	* @return the d d m template that was removed
-	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a d d m template with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate remove(
-		long templateId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
-		return getPersistence().remove(templateId);
-	}
-
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate updateImpl(
-		com.liferay.portlet.dynamicdatamapping.model.DDMTemplate ddmTemplate)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(ddmTemplate);
-	}
-
-	/**
-	* Returns the d d m template with the primary key or throws a {@link com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException} if it could not be found.
-	*
-	* @param templateId the primary key of the d d m template
-	* @return the d d m template
-	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a d d m template with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate findByPrimaryKey(
-		long templateId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
-		return getPersistence().findByPrimaryKey(templateId);
-	}
-
-	/**
-	* Returns the d d m template with the primary key or returns <code>null</code> if it could not be found.
-	*
-	* @param templateId the primary key of the d d m template
-	* @return the d d m template, or <code>null</code> if a d d m template with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate fetchByPrimaryKey(
-		long templateId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().fetchByPrimaryKey(templateId);
-	}
-
-	/**
 	* Returns all the d d m templates where uuid = &#63;.
 	*
 	* @param uuid the uuid
@@ -327,6 +247,29 @@ public class DDMTemplateUtil {
 	}
 
 	/**
+	* Removes all the d d m templates where uuid = &#63; from the database.
+	*
+	* @param uuid the uuid
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByUuid(java.lang.String uuid)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByUuid(uuid);
+	}
+
+	/**
+	* Returns the number of d d m templates where uuid = &#63;.
+	*
+	* @param uuid the uuid
+	* @return the number of matching d d m templates
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByUuid(java.lang.String uuid)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByUuid(uuid);
+	}
+
+	/**
 	* Returns the d d m template where uuid = &#63; and groupId = &#63; or throws a {@link com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException} if it could not be found.
 	*
 	* @param uuid the uuid
@@ -369,6 +312,34 @@ public class DDMTemplateUtil {
 		java.lang.String uuid, long groupId, boolean retrieveFromCache)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
+	}
+
+	/**
+	* Removes the d d m template where uuid = &#63; and groupId = &#63; from the database.
+	*
+	* @param uuid the uuid
+	* @param groupId the group ID
+	* @return the d d m template that was removed
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate removeByUUID_G(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		return getPersistence().removeByUUID_G(uuid, groupId);
+	}
+
+	/**
+	* Returns the number of d d m templates where uuid = &#63; and groupId = &#63;.
+	*
+	* @param uuid the uuid
+	* @param groupId the group ID
+	* @return the number of matching d d m templates
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByUUID_G(java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByUUID_G(uuid, groupId);
 	}
 
 	/**
@@ -519,6 +490,31 @@ public class DDMTemplateUtil {
 		return getPersistence()
 				   .findByUuid_C_PrevAndNext(templateId, uuid, companyId,
 			orderByComparator);
+	}
+
+	/**
+	* Removes all the d d m templates where uuid = &#63; and companyId = &#63; from the database.
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByUuid_C(java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByUuid_C(uuid, companyId);
+	}
+
+	/**
+	* Returns the number of d d m templates where uuid = &#63; and companyId = &#63;.
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @return the number of matching d d m templates
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByUuid_C(java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByUuid_C(uuid, companyId);
 	}
 
 	/**
@@ -734,6 +730,41 @@ public class DDMTemplateUtil {
 	}
 
 	/**
+	* Removes all the d d m templates where groupId = &#63; from the database.
+	*
+	* @param groupId the group ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByGroupId(long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByGroupId(groupId);
+	}
+
+	/**
+	* Returns the number of d d m templates where groupId = &#63;.
+	*
+	* @param groupId the group ID
+	* @return the number of matching d d m templates
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByGroupId(long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByGroupId(groupId);
+	}
+
+	/**
+	* Returns the number of d d m templates that the user has permission to view where groupId = &#63;.
+	*
+	* @param groupId the group ID
+	* @return the number of matching d d m templates that the user has permission to view
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int filterCountByGroupId(long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().filterCountByGroupId(groupId);
+	}
+
+	/**
 	* Returns all the d d m templates where classPK = &#63;.
 	*
 	* @param classPK the class p k
@@ -869,6 +900,29 @@ public class DDMTemplateUtil {
 		return getPersistence()
 				   .findByClassPK_PrevAndNext(templateId, classPK,
 			orderByComparator);
+	}
+
+	/**
+	* Removes all the d d m templates where classPK = &#63; from the database.
+	*
+	* @param classPK the class p k
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByClassPK(long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByClassPK(classPK);
+	}
+
+	/**
+	* Returns the number of d d m templates where classPK = &#63;.
+	*
+	* @param classPK the class p k
+	* @return the number of matching d d m templates
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByClassPK(long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByClassPK(classPK);
 	}
 
 	/**
@@ -1008,6 +1062,29 @@ public class DDMTemplateUtil {
 	}
 
 	/**
+	* Removes all the d d m templates where type = &#63; from the database.
+	*
+	* @param type the type
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByType(java.lang.String type)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByType(type);
+	}
+
+	/**
+	* Returns the number of d d m templates where type = &#63;.
+	*
+	* @param type the type
+	* @return the number of matching d d m templates
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByType(java.lang.String type)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByType(type);
+	}
+
+	/**
 	* Returns all the d d m templates where language = &#63;.
 	*
 	* @param language the language
@@ -1144,6 +1221,29 @@ public class DDMTemplateUtil {
 		return getPersistence()
 				   .findByLanguage_PrevAndNext(templateId, language,
 			orderByComparator);
+	}
+
+	/**
+	* Removes all the d d m templates where language = &#63; from the database.
+	*
+	* @param language the language
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByLanguage(java.lang.String language)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByLanguage(language);
+	}
+
+	/**
+	* Returns the number of d d m templates where language = &#63;.
+	*
+	* @param language the language
+	* @return the number of matching d d m templates
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByLanguage(java.lang.String language)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByLanguage(language);
 	}
 
 	/**
@@ -1377,6 +1477,44 @@ public class DDMTemplateUtil {
 	}
 
 	/**
+	* Removes all the d d m templates where groupId = &#63; and classNameId = &#63; from the database.
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByG_C(long groupId, long classNameId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByG_C(groupId, classNameId);
+	}
+
+	/**
+	* Returns the number of d d m templates where groupId = &#63; and classNameId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @return the number of matching d d m templates
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByG_C(long groupId, long classNameId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByG_C(groupId, classNameId);
+	}
+
+	/**
+	* Returns the number of d d m templates that the user has permission to view where groupId = &#63; and classNameId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @return the number of matching d d m templates that the user has permission to view
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int filterCountByG_C(long groupId, long classNameId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().filterCountByG_C(groupId, classNameId);
+	}
+
+	/**
 	* Returns the d d m template where groupId = &#63; and templateKey = &#63; or throws a {@link com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException} if it could not be found.
 	*
 	* @param groupId the group ID
@@ -1420,6 +1558,34 @@ public class DDMTemplateUtil {
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence()
 				   .fetchByG_T(groupId, templateKey, retrieveFromCache);
+	}
+
+	/**
+	* Removes the d d m template where groupId = &#63; and templateKey = &#63; from the database.
+	*
+	* @param groupId the group ID
+	* @param templateKey the template key
+	* @return the d d m template that was removed
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate removeByG_T(
+		long groupId, java.lang.String templateKey)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		return getPersistence().removeByG_T(groupId, templateKey);
+	}
+
+	/**
+	* Returns the number of d d m templates where groupId = &#63; and templateKey = &#63;.
+	*
+	* @param groupId the group ID
+	* @param templateKey the template key
+	* @return the number of matching d d m templates
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByG_T(long groupId, java.lang.String templateKey)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByG_T(groupId, templateKey);
 	}
 
 	/**
@@ -1671,6 +1837,49 @@ public class DDMTemplateUtil {
 	}
 
 	/**
+	* Removes all the d d m templates where groupId = &#63; and classNameId = &#63; and classPK = &#63; from the database.
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByG_C_C(long groupId, long classNameId,
+		long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByG_C_C(groupId, classNameId, classPK);
+	}
+
+	/**
+	* Returns the number of d d m templates where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @return the number of matching d d m templates
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByG_C_C(long groupId, long classNameId, long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByG_C_C(groupId, classNameId, classPK);
+	}
+
+	/**
+	* Returns the number of d d m templates that the user has permission to view where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @return the number of matching d d m templates that the user has permission to view
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int filterCountByG_C_C(long groupId, long classNameId,
+		long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().filterCountByG_C_C(groupId, classNameId, classPK);
+	}
+
+	/**
 	* Returns all the d d m templates where classNameId = &#63; and classPK = &#63; and type = &#63;.
 	*
 	* @param classNameId the class name ID
@@ -1833,6 +2042,35 @@ public class DDMTemplateUtil {
 		return getPersistence()
 				   .findByC_C_T_PrevAndNext(templateId, classNameId, classPK,
 			type, orderByComparator);
+	}
+
+	/**
+	* Removes all the d d m templates where classNameId = &#63; and classPK = &#63; and type = &#63; from the database.
+	*
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param type the type
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByC_C_T(long classNameId, long classPK,
+		java.lang.String type)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByC_C_T(classNameId, classPK, type);
+	}
+
+	/**
+	* Returns the number of d d m templates where classNameId = &#63; and classPK = &#63; and type = &#63;.
+	*
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param type the type
+	* @return the number of matching d d m templates
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByC_C_T(long classNameId, long classPK,
+		java.lang.String type)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByC_C_T(classNameId, classPK, type);
 	}
 
 	/**
@@ -2016,6 +2254,117 @@ public class DDMTemplateUtil {
 	}
 
 	/**
+	* Removes all the d d m templates where classNameId = &#63; and classPK = &#63; and type = &#63; and mode = &#63; from the database.
+	*
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param type the type
+	* @param mode the mode
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByC_C_T_M(long classNameId, long classPK,
+		java.lang.String type, java.lang.String mode)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByC_C_T_M(classNameId, classPK, type, mode);
+	}
+
+	/**
+	* Returns the number of d d m templates where classNameId = &#63; and classPK = &#63; and type = &#63; and mode = &#63;.
+	*
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param type the type
+	* @param mode the mode
+	* @return the number of matching d d m templates
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByC_C_T_M(long classNameId, long classPK,
+		java.lang.String type, java.lang.String mode)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByC_C_T_M(classNameId, classPK, type, mode);
+	}
+
+	/**
+	* Caches the d d m template in the entity cache if it is enabled.
+	*
+	* @param ddmTemplate the d d m template
+	*/
+	public static void cacheResult(
+		com.liferay.portlet.dynamicdatamapping.model.DDMTemplate ddmTemplate) {
+		getPersistence().cacheResult(ddmTemplate);
+	}
+
+	/**
+	* Caches the d d m templates in the entity cache if it is enabled.
+	*
+	* @param ddmTemplates the d d m templates
+	*/
+	public static void cacheResult(
+		java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> ddmTemplates) {
+		getPersistence().cacheResult(ddmTemplates);
+	}
+
+	/**
+	* Creates a new d d m template with the primary key. Does not add the d d m template to the database.
+	*
+	* @param templateId the primary key for the new d d m template
+	* @return the new d d m template
+	*/
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate create(
+		long templateId) {
+		return getPersistence().create(templateId);
+	}
+
+	/**
+	* Removes the d d m template with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param templateId the primary key of the d d m template
+	* @return the d d m template that was removed
+	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a d d m template with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate remove(
+		long templateId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		return getPersistence().remove(templateId);
+	}
+
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate updateImpl(
+		com.liferay.portlet.dynamicdatamapping.model.DDMTemplate ddmTemplate)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().updateImpl(ddmTemplate);
+	}
+
+	/**
+	* Returns the d d m template with the primary key or throws a {@link com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException} if it could not be found.
+	*
+	* @param templateId the primary key of the d d m template
+	* @return the d d m template
+	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a d d m template with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate findByPrimaryKey(
+		long templateId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		return getPersistence().findByPrimaryKey(templateId);
+	}
+
+	/**
+	* Returns the d d m template with the primary key or returns <code>null</code> if it could not be found.
+	*
+	* @param templateId the primary key of the d d m template
+	* @return the d d m template, or <code>null</code> if a d d m template with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate fetchByPrimaryKey(
+		long templateId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByPrimaryKey(templateId);
+	}
+
+	/**
 	* Returns all the d d m templates.
 	*
 	* @return the d d m templates
@@ -2065,158 +2414,6 @@ public class DDMTemplateUtil {
 	}
 
 	/**
-	* Removes all the d d m templates where uuid = &#63; from the database.
-	*
-	* @param uuid the uuid
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void removeByUuid(java.lang.String uuid)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByUuid(uuid);
-	}
-
-	/**
-	* Removes the d d m template where uuid = &#63; and groupId = &#63; from the database.
-	*
-	* @param uuid the uuid
-	* @param groupId the group ID
-	* @return the d d m template that was removed
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate removeByUUID_G(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
-		return getPersistence().removeByUUID_G(uuid, groupId);
-	}
-
-	/**
-	* Removes all the d d m templates where uuid = &#63; and companyId = &#63; from the database.
-	*
-	* @param uuid the uuid
-	* @param companyId the company ID
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void removeByUuid_C(java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByUuid_C(uuid, companyId);
-	}
-
-	/**
-	* Removes all the d d m templates where groupId = &#63; from the database.
-	*
-	* @param groupId the group ID
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void removeByGroupId(long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByGroupId(groupId);
-	}
-
-	/**
-	* Removes all the d d m templates where classPK = &#63; from the database.
-	*
-	* @param classPK the class p k
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void removeByClassPK(long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByClassPK(classPK);
-	}
-
-	/**
-	* Removes all the d d m templates where type = &#63; from the database.
-	*
-	* @param type the type
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void removeByType(java.lang.String type)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByType(type);
-	}
-
-	/**
-	* Removes all the d d m templates where language = &#63; from the database.
-	*
-	* @param language the language
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void removeByLanguage(java.lang.String language)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByLanguage(language);
-	}
-
-	/**
-	* Removes all the d d m templates where groupId = &#63; and classNameId = &#63; from the database.
-	*
-	* @param groupId the group ID
-	* @param classNameId the class name ID
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void removeByG_C(long groupId, long classNameId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByG_C(groupId, classNameId);
-	}
-
-	/**
-	* Removes the d d m template where groupId = &#63; and templateKey = &#63; from the database.
-	*
-	* @param groupId the group ID
-	* @param templateKey the template key
-	* @return the d d m template that was removed
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate removeByG_T(
-		long groupId, java.lang.String templateKey)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
-		return getPersistence().removeByG_T(groupId, templateKey);
-	}
-
-	/**
-	* Removes all the d d m templates where groupId = &#63; and classNameId = &#63; and classPK = &#63; from the database.
-	*
-	* @param groupId the group ID
-	* @param classNameId the class name ID
-	* @param classPK the class p k
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void removeByG_C_C(long groupId, long classNameId,
-		long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByG_C_C(groupId, classNameId, classPK);
-	}
-
-	/**
-	* Removes all the d d m templates where classNameId = &#63; and classPK = &#63; and type = &#63; from the database.
-	*
-	* @param classNameId the class name ID
-	* @param classPK the class p k
-	* @param type the type
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void removeByC_C_T(long classNameId, long classPK,
-		java.lang.String type)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByC_C_T(classNameId, classPK, type);
-	}
-
-	/**
-	* Removes all the d d m templates where classNameId = &#63; and classPK = &#63; and type = &#63; and mode = &#63; from the database.
-	*
-	* @param classNameId the class name ID
-	* @param classPK the class p k
-	* @param type the type
-	* @param mode the mode
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void removeByC_C_T_M(long classNameId, long classPK,
-		java.lang.String type, java.lang.String mode)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByC_C_T_M(classNameId, classPK, type, mode);
-	}
-
-	/**
 	* Removes all the d d m templates from the database.
 	*
 	* @throws SystemException if a system exception occurred
@@ -2224,203 +2421,6 @@ public class DDMTemplateUtil {
 	public static void removeAll()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		getPersistence().removeAll();
-	}
-
-	/**
-	* Returns the number of d d m templates where uuid = &#63;.
-	*
-	* @param uuid the uuid
-	* @return the number of matching d d m templates
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int countByUuid(java.lang.String uuid)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByUuid(uuid);
-	}
-
-	/**
-	* Returns the number of d d m templates where uuid = &#63; and groupId = &#63;.
-	*
-	* @param uuid the uuid
-	* @param groupId the group ID
-	* @return the number of matching d d m templates
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int countByUUID_G(java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByUUID_G(uuid, groupId);
-	}
-
-	/**
-	* Returns the number of d d m templates where uuid = &#63; and companyId = &#63;.
-	*
-	* @param uuid the uuid
-	* @param companyId the company ID
-	* @return the number of matching d d m templates
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int countByUuid_C(java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByUuid_C(uuid, companyId);
-	}
-
-	/**
-	* Returns the number of d d m templates where groupId = &#63;.
-	*
-	* @param groupId the group ID
-	* @return the number of matching d d m templates
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int countByGroupId(long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByGroupId(groupId);
-	}
-
-	/**
-	* Returns the number of d d m templates that the user has permission to view where groupId = &#63;.
-	*
-	* @param groupId the group ID
-	* @return the number of matching d d m templates that the user has permission to view
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int filterCountByGroupId(long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().filterCountByGroupId(groupId);
-	}
-
-	/**
-	* Returns the number of d d m templates where classPK = &#63;.
-	*
-	* @param classPK the class p k
-	* @return the number of matching d d m templates
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int countByClassPK(long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByClassPK(classPK);
-	}
-
-	/**
-	* Returns the number of d d m templates where type = &#63;.
-	*
-	* @param type the type
-	* @return the number of matching d d m templates
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int countByType(java.lang.String type)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByType(type);
-	}
-
-	/**
-	* Returns the number of d d m templates where language = &#63;.
-	*
-	* @param language the language
-	* @return the number of matching d d m templates
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int countByLanguage(java.lang.String language)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByLanguage(language);
-	}
-
-	/**
-	* Returns the number of d d m templates where groupId = &#63; and classNameId = &#63;.
-	*
-	* @param groupId the group ID
-	* @param classNameId the class name ID
-	* @return the number of matching d d m templates
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int countByG_C(long groupId, long classNameId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByG_C(groupId, classNameId);
-	}
-
-	/**
-	* Returns the number of d d m templates that the user has permission to view where groupId = &#63; and classNameId = &#63;.
-	*
-	* @param groupId the group ID
-	* @param classNameId the class name ID
-	* @return the number of matching d d m templates that the user has permission to view
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int filterCountByG_C(long groupId, long classNameId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().filterCountByG_C(groupId, classNameId);
-	}
-
-	/**
-	* Returns the number of d d m templates where groupId = &#63; and templateKey = &#63;.
-	*
-	* @param groupId the group ID
-	* @param templateKey the template key
-	* @return the number of matching d d m templates
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int countByG_T(long groupId, java.lang.String templateKey)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByG_T(groupId, templateKey);
-	}
-
-	/**
-	* Returns the number of d d m templates where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
-	*
-	* @param groupId the group ID
-	* @param classNameId the class name ID
-	* @param classPK the class p k
-	* @return the number of matching d d m templates
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int countByG_C_C(long groupId, long classNameId, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByG_C_C(groupId, classNameId, classPK);
-	}
-
-	/**
-	* Returns the number of d d m templates that the user has permission to view where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
-	*
-	* @param groupId the group ID
-	* @param classNameId the class name ID
-	* @param classPK the class p k
-	* @return the number of matching d d m templates that the user has permission to view
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int filterCountByG_C_C(long groupId, long classNameId,
-		long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().filterCountByG_C_C(groupId, classNameId, classPK);
-	}
-
-	/**
-	* Returns the number of d d m templates where classNameId = &#63; and classPK = &#63; and type = &#63;.
-	*
-	* @param classNameId the class name ID
-	* @param classPK the class p k
-	* @param type the type
-	* @return the number of matching d d m templates
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int countByC_C_T(long classNameId, long classPK,
-		java.lang.String type)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByC_C_T(classNameId, classPK, type);
-	}
-
-	/**
-	* Returns the number of d d m templates where classNameId = &#63; and classPK = &#63; and type = &#63; and mode = &#63;.
-	*
-	* @param classNameId the class name ID
-	* @param classPK the class p k
-	* @param type the type
-	* @param mode the mode
-	* @return the number of matching d d m templates
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int countByC_C_T_M(long classNameId, long classPK,
-		java.lang.String type, java.lang.String mode)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByC_C_T_M(classNameId, classPK, type, mode);
 	}
 
 	/**

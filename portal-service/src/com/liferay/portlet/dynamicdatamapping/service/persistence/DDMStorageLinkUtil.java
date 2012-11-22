@@ -111,86 +111,6 @@ public class DDMStorageLinkUtil {
 	}
 
 	/**
-	* Caches the d d m storage link in the entity cache if it is enabled.
-	*
-	* @param ddmStorageLink the d d m storage link
-	*/
-	public static void cacheResult(
-		com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink ddmStorageLink) {
-		getPersistence().cacheResult(ddmStorageLink);
-	}
-
-	/**
-	* Caches the d d m storage links in the entity cache if it is enabled.
-	*
-	* @param ddmStorageLinks the d d m storage links
-	*/
-	public static void cacheResult(
-		java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink> ddmStorageLinks) {
-		getPersistence().cacheResult(ddmStorageLinks);
-	}
-
-	/**
-	* Creates a new d d m storage link with the primary key. Does not add the d d m storage link to the database.
-	*
-	* @param storageLinkId the primary key for the new d d m storage link
-	* @return the new d d m storage link
-	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink create(
-		long storageLinkId) {
-		return getPersistence().create(storageLinkId);
-	}
-
-	/**
-	* Removes the d d m storage link with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param storageLinkId the primary key of the d d m storage link
-	* @return the d d m storage link that was removed
-	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchStorageLinkException if a d d m storage link with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink remove(
-		long storageLinkId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatamapping.NoSuchStorageLinkException {
-		return getPersistence().remove(storageLinkId);
-	}
-
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink updateImpl(
-		com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink ddmStorageLink)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(ddmStorageLink);
-	}
-
-	/**
-	* Returns the d d m storage link with the primary key or throws a {@link com.liferay.portlet.dynamicdatamapping.NoSuchStorageLinkException} if it could not be found.
-	*
-	* @param storageLinkId the primary key of the d d m storage link
-	* @return the d d m storage link
-	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchStorageLinkException if a d d m storage link with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink findByPrimaryKey(
-		long storageLinkId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatamapping.NoSuchStorageLinkException {
-		return getPersistence().findByPrimaryKey(storageLinkId);
-	}
-
-	/**
-	* Returns the d d m storage link with the primary key or returns <code>null</code> if it could not be found.
-	*
-	* @param storageLinkId the primary key of the d d m storage link
-	* @return the d d m storage link, or <code>null</code> if a d d m storage link with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink fetchByPrimaryKey(
-		long storageLinkId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().fetchByPrimaryKey(storageLinkId);
-	}
-
-	/**
 	* Returns all the d d m storage links where uuid = &#63;.
 	*
 	* @param uuid the uuid
@@ -328,6 +248,29 @@ public class DDMStorageLinkUtil {
 	}
 
 	/**
+	* Removes all the d d m storage links where uuid = &#63; from the database.
+	*
+	* @param uuid the uuid
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByUuid(java.lang.String uuid)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByUuid(uuid);
+	}
+
+	/**
+	* Returns the number of d d m storage links where uuid = &#63;.
+	*
+	* @param uuid the uuid
+	* @return the number of matching d d m storage links
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByUuid(java.lang.String uuid)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByUuid(uuid);
+	}
+
+	/**
 	* Returns the d d m storage link where classPK = &#63; or throws a {@link com.liferay.portlet.dynamicdatamapping.NoSuchStorageLinkException} if it could not be found.
 	*
 	* @param classPK the class p k
@@ -367,6 +310,32 @@ public class DDMStorageLinkUtil {
 		long classPK, boolean retrieveFromCache)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence().fetchByClassPK(classPK, retrieveFromCache);
+	}
+
+	/**
+	* Removes the d d m storage link where classPK = &#63; from the database.
+	*
+	* @param classPK the class p k
+	* @return the d d m storage link that was removed
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink removeByClassPK(
+		long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.dynamicdatamapping.NoSuchStorageLinkException {
+		return getPersistence().removeByClassPK(classPK);
+	}
+
+	/**
+	* Returns the number of d d m storage links where classPK = &#63;.
+	*
+	* @param classPK the class p k
+	* @return the number of matching d d m storage links
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByClassPK(long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByClassPK(classPK);
 	}
 
 	/**
@@ -512,6 +481,109 @@ public class DDMStorageLinkUtil {
 	}
 
 	/**
+	* Removes all the d d m storage links where structureId = &#63; from the database.
+	*
+	* @param structureId the structure ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByStructureId(long structureId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByStructureId(structureId);
+	}
+
+	/**
+	* Returns the number of d d m storage links where structureId = &#63;.
+	*
+	* @param structureId the structure ID
+	* @return the number of matching d d m storage links
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByStructureId(long structureId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByStructureId(structureId);
+	}
+
+	/**
+	* Caches the d d m storage link in the entity cache if it is enabled.
+	*
+	* @param ddmStorageLink the d d m storage link
+	*/
+	public static void cacheResult(
+		com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink ddmStorageLink) {
+		getPersistence().cacheResult(ddmStorageLink);
+	}
+
+	/**
+	* Caches the d d m storage links in the entity cache if it is enabled.
+	*
+	* @param ddmStorageLinks the d d m storage links
+	*/
+	public static void cacheResult(
+		java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink> ddmStorageLinks) {
+		getPersistence().cacheResult(ddmStorageLinks);
+	}
+
+	/**
+	* Creates a new d d m storage link with the primary key. Does not add the d d m storage link to the database.
+	*
+	* @param storageLinkId the primary key for the new d d m storage link
+	* @return the new d d m storage link
+	*/
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink create(
+		long storageLinkId) {
+		return getPersistence().create(storageLinkId);
+	}
+
+	/**
+	* Removes the d d m storage link with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param storageLinkId the primary key of the d d m storage link
+	* @return the d d m storage link that was removed
+	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchStorageLinkException if a d d m storage link with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink remove(
+		long storageLinkId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.dynamicdatamapping.NoSuchStorageLinkException {
+		return getPersistence().remove(storageLinkId);
+	}
+
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink updateImpl(
+		com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink ddmStorageLink)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().updateImpl(ddmStorageLink);
+	}
+
+	/**
+	* Returns the d d m storage link with the primary key or throws a {@link com.liferay.portlet.dynamicdatamapping.NoSuchStorageLinkException} if it could not be found.
+	*
+	* @param storageLinkId the primary key of the d d m storage link
+	* @return the d d m storage link
+	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchStorageLinkException if a d d m storage link with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink findByPrimaryKey(
+		long storageLinkId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.dynamicdatamapping.NoSuchStorageLinkException {
+		return getPersistence().findByPrimaryKey(storageLinkId);
+	}
+
+	/**
+	* Returns the d d m storage link with the primary key or returns <code>null</code> if it could not be found.
+	*
+	* @param storageLinkId the primary key of the d d m storage link
+	* @return the d d m storage link, or <code>null</code> if a d d m storage link with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink fetchByPrimaryKey(
+		long storageLinkId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByPrimaryKey(storageLinkId);
+	}
+
+	/**
 	* Returns all the d d m storage links.
 	*
 	* @return the d d m storage links
@@ -561,42 +633,6 @@ public class DDMStorageLinkUtil {
 	}
 
 	/**
-	* Removes all the d d m storage links where uuid = &#63; from the database.
-	*
-	* @param uuid the uuid
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void removeByUuid(java.lang.String uuid)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByUuid(uuid);
-	}
-
-	/**
-	* Removes the d d m storage link where classPK = &#63; from the database.
-	*
-	* @param classPK the class p k
-	* @return the d d m storage link that was removed
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink removeByClassPK(
-		long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatamapping.NoSuchStorageLinkException {
-		return getPersistence().removeByClassPK(classPK);
-	}
-
-	/**
-	* Removes all the d d m storage links where structureId = &#63; from the database.
-	*
-	* @param structureId the structure ID
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void removeByStructureId(long structureId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByStructureId(structureId);
-	}
-
-	/**
 	* Removes all the d d m storage links from the database.
 	*
 	* @throws SystemException if a system exception occurred
@@ -604,42 +640,6 @@ public class DDMStorageLinkUtil {
 	public static void removeAll()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		getPersistence().removeAll();
-	}
-
-	/**
-	* Returns the number of d d m storage links where uuid = &#63;.
-	*
-	* @param uuid the uuid
-	* @return the number of matching d d m storage links
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int countByUuid(java.lang.String uuid)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByUuid(uuid);
-	}
-
-	/**
-	* Returns the number of d d m storage links where classPK = &#63;.
-	*
-	* @param classPK the class p k
-	* @return the number of matching d d m storage links
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int countByClassPK(long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByClassPK(classPK);
-	}
-
-	/**
-	* Returns the number of d d m storage links where structureId = &#63;.
-	*
-	* @param structureId the structure ID
-	* @return the number of matching d d m storage links
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int countByStructureId(long structureId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByStructureId(structureId);
 	}
 
 	/**

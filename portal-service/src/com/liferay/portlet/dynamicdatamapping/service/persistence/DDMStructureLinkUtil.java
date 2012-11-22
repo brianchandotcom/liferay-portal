@@ -111,86 +111,6 @@ public class DDMStructureLinkUtil {
 	}
 
 	/**
-	* Caches the d d m structure link in the entity cache if it is enabled.
-	*
-	* @param ddmStructureLink the d d m structure link
-	*/
-	public static void cacheResult(
-		com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink ddmStructureLink) {
-		getPersistence().cacheResult(ddmStructureLink);
-	}
-
-	/**
-	* Caches the d d m structure links in the entity cache if it is enabled.
-	*
-	* @param ddmStructureLinks the d d m structure links
-	*/
-	public static void cacheResult(
-		java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink> ddmStructureLinks) {
-		getPersistence().cacheResult(ddmStructureLinks);
-	}
-
-	/**
-	* Creates a new d d m structure link with the primary key. Does not add the d d m structure link to the database.
-	*
-	* @param structureLinkId the primary key for the new d d m structure link
-	* @return the new d d m structure link
-	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink create(
-		long structureLinkId) {
-		return getPersistence().create(structureLinkId);
-	}
-
-	/**
-	* Removes the d d m structure link with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param structureLinkId the primary key of the d d m structure link
-	* @return the d d m structure link that was removed
-	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureLinkException if a d d m structure link with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink remove(
-		long structureLinkId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatamapping.NoSuchStructureLinkException {
-		return getPersistence().remove(structureLinkId);
-	}
-
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink updateImpl(
-		com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink ddmStructureLink)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(ddmStructureLink);
-	}
-
-	/**
-	* Returns the d d m structure link with the primary key or throws a {@link com.liferay.portlet.dynamicdatamapping.NoSuchStructureLinkException} if it could not be found.
-	*
-	* @param structureLinkId the primary key of the d d m structure link
-	* @return the d d m structure link
-	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureLinkException if a d d m structure link with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink findByPrimaryKey(
-		long structureLinkId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatamapping.NoSuchStructureLinkException {
-		return getPersistence().findByPrimaryKey(structureLinkId);
-	}
-
-	/**
-	* Returns the d d m structure link with the primary key or returns <code>null</code> if it could not be found.
-	*
-	* @param structureLinkId the primary key of the d d m structure link
-	* @return the d d m structure link, or <code>null</code> if a d d m structure link with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink fetchByPrimaryKey(
-		long structureLinkId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().fetchByPrimaryKey(structureLinkId);
-	}
-
-	/**
 	* Returns all the d d m structure links where classNameId = &#63;.
 	*
 	* @param classNameId the class name ID
@@ -333,6 +253,29 @@ public class DDMStructureLinkUtil {
 	}
 
 	/**
+	* Removes all the d d m structure links where classNameId = &#63; from the database.
+	*
+	* @param classNameId the class name ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByClassNameId(long classNameId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByClassNameId(classNameId);
+	}
+
+	/**
+	* Returns the number of d d m structure links where classNameId = &#63;.
+	*
+	* @param classNameId the class name ID
+	* @return the number of matching d d m structure links
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByClassNameId(long classNameId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByClassNameId(classNameId);
+	}
+
+	/**
 	* Returns the d d m structure link where classPK = &#63; or throws a {@link com.liferay.portlet.dynamicdatamapping.NoSuchStructureLinkException} if it could not be found.
 	*
 	* @param classPK the class p k
@@ -372,6 +315,32 @@ public class DDMStructureLinkUtil {
 		long classPK, boolean retrieveFromCache)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence().fetchByClassPK(classPK, retrieveFromCache);
+	}
+
+	/**
+	* Removes the d d m structure link where classPK = &#63; from the database.
+	*
+	* @param classPK the class p k
+	* @return the d d m structure link that was removed
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink removeByClassPK(
+		long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.dynamicdatamapping.NoSuchStructureLinkException {
+		return getPersistence().removeByClassPK(classPK);
+	}
+
+	/**
+	* Returns the number of d d m structure links where classPK = &#63;.
+	*
+	* @param classPK the class p k
+	* @return the number of matching d d m structure links
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByClassPK(long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByClassPK(classPK);
 	}
 
 	/**
@@ -517,6 +486,109 @@ public class DDMStructureLinkUtil {
 	}
 
 	/**
+	* Removes all the d d m structure links where structureId = &#63; from the database.
+	*
+	* @param structureId the structure ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByStructureId(long structureId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByStructureId(structureId);
+	}
+
+	/**
+	* Returns the number of d d m structure links where structureId = &#63;.
+	*
+	* @param structureId the structure ID
+	* @return the number of matching d d m structure links
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByStructureId(long structureId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByStructureId(structureId);
+	}
+
+	/**
+	* Caches the d d m structure link in the entity cache if it is enabled.
+	*
+	* @param ddmStructureLink the d d m structure link
+	*/
+	public static void cacheResult(
+		com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink ddmStructureLink) {
+		getPersistence().cacheResult(ddmStructureLink);
+	}
+
+	/**
+	* Caches the d d m structure links in the entity cache if it is enabled.
+	*
+	* @param ddmStructureLinks the d d m structure links
+	*/
+	public static void cacheResult(
+		java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink> ddmStructureLinks) {
+		getPersistence().cacheResult(ddmStructureLinks);
+	}
+
+	/**
+	* Creates a new d d m structure link with the primary key. Does not add the d d m structure link to the database.
+	*
+	* @param structureLinkId the primary key for the new d d m structure link
+	* @return the new d d m structure link
+	*/
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink create(
+		long structureLinkId) {
+		return getPersistence().create(structureLinkId);
+	}
+
+	/**
+	* Removes the d d m structure link with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param structureLinkId the primary key of the d d m structure link
+	* @return the d d m structure link that was removed
+	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureLinkException if a d d m structure link with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink remove(
+		long structureLinkId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.dynamicdatamapping.NoSuchStructureLinkException {
+		return getPersistence().remove(structureLinkId);
+	}
+
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink updateImpl(
+		com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink ddmStructureLink)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().updateImpl(ddmStructureLink);
+	}
+
+	/**
+	* Returns the d d m structure link with the primary key or throws a {@link com.liferay.portlet.dynamicdatamapping.NoSuchStructureLinkException} if it could not be found.
+	*
+	* @param structureLinkId the primary key of the d d m structure link
+	* @return the d d m structure link
+	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureLinkException if a d d m structure link with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink findByPrimaryKey(
+		long structureLinkId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.dynamicdatamapping.NoSuchStructureLinkException {
+		return getPersistence().findByPrimaryKey(structureLinkId);
+	}
+
+	/**
+	* Returns the d d m structure link with the primary key or returns <code>null</code> if it could not be found.
+	*
+	* @param structureLinkId the primary key of the d d m structure link
+	* @return the d d m structure link, or <code>null</code> if a d d m structure link with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink fetchByPrimaryKey(
+		long structureLinkId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByPrimaryKey(structureLinkId);
+	}
+
+	/**
 	* Returns all the d d m structure links.
 	*
 	* @return the d d m structure links
@@ -566,42 +638,6 @@ public class DDMStructureLinkUtil {
 	}
 
 	/**
-	* Removes all the d d m structure links where classNameId = &#63; from the database.
-	*
-	* @param classNameId the class name ID
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void removeByClassNameId(long classNameId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByClassNameId(classNameId);
-	}
-
-	/**
-	* Removes the d d m structure link where classPK = &#63; from the database.
-	*
-	* @param classPK the class p k
-	* @return the d d m structure link that was removed
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink removeByClassPK(
-		long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatamapping.NoSuchStructureLinkException {
-		return getPersistence().removeByClassPK(classPK);
-	}
-
-	/**
-	* Removes all the d d m structure links where structureId = &#63; from the database.
-	*
-	* @param structureId the structure ID
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void removeByStructureId(long structureId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByStructureId(structureId);
-	}
-
-	/**
 	* Removes all the d d m structure links from the database.
 	*
 	* @throws SystemException if a system exception occurred
@@ -609,42 +645,6 @@ public class DDMStructureLinkUtil {
 	public static void removeAll()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		getPersistence().removeAll();
-	}
-
-	/**
-	* Returns the number of d d m structure links where classNameId = &#63;.
-	*
-	* @param classNameId the class name ID
-	* @return the number of matching d d m structure links
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int countByClassNameId(long classNameId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByClassNameId(classNameId);
-	}
-
-	/**
-	* Returns the number of d d m structure links where classPK = &#63;.
-	*
-	* @param classPK the class p k
-	* @return the number of matching d d m structure links
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int countByClassPK(long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByClassPK(classPK);
-	}
-
-	/**
-	* Returns the number of d d m structure links where structureId = &#63;.
-	*
-	* @param structureId the structure ID
-	* @return the number of matching d d m structure links
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int countByStructureId(long structureId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByStructureId(structureId);
 	}
 
 	/**

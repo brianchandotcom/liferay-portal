@@ -73,6 +73,8 @@ public class PortletItemModelImpl extends BaseModelImpl<PortletItem>
 		};
 	public static final String TABLE_SQL_CREATE = "create table PortletItem (portletItemId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,portletId VARCHAR(75) null,classNameId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table PortletItem";
+	public static final String ORDER_BY_JPQL = " ORDER BY portletItem.portletItemId ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY PortletItem.portletItemId ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
@@ -89,6 +91,7 @@ public class PortletItemModelImpl extends BaseModelImpl<PortletItem>
 	public static long GROUPID_COLUMN_BITMASK = 2L;
 	public static long NAME_COLUMN_BITMASK = 4L;
 	public static long PORTLETID_COLUMN_BITMASK = 8L;
+	public static long PORTLETITEMID_COLUMN_BITMASK = 16L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portal.model.PortletItem"));
 

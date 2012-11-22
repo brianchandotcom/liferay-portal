@@ -38,70 +38,6 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	 */
 
 	/**
-	* Caches the cal event in the entity cache if it is enabled.
-	*
-	* @param calEvent the cal event
-	*/
-	public void cacheResult(
-		com.liferay.portlet.calendar.model.CalEvent calEvent);
-
-	/**
-	* Caches the cal events in the entity cache if it is enabled.
-	*
-	* @param calEvents the cal events
-	*/
-	public void cacheResult(
-		java.util.List<com.liferay.portlet.calendar.model.CalEvent> calEvents);
-
-	/**
-	* Creates a new cal event with the primary key. Does not add the cal event to the database.
-	*
-	* @param eventId the primary key for the new cal event
-	* @return the new cal event
-	*/
-	public com.liferay.portlet.calendar.model.CalEvent create(long eventId);
-
-	/**
-	* Removes the cal event with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param eventId the primary key of the cal event
-	* @return the cal event that was removed
-	* @throws com.liferay.portlet.calendar.NoSuchEventException if a cal event with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portlet.calendar.model.CalEvent remove(long eventId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.calendar.NoSuchEventException;
-
-	public com.liferay.portlet.calendar.model.CalEvent updateImpl(
-		com.liferay.portlet.calendar.model.CalEvent calEvent)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the cal event with the primary key or throws a {@link com.liferay.portlet.calendar.NoSuchEventException} if it could not be found.
-	*
-	* @param eventId the primary key of the cal event
-	* @return the cal event
-	* @throws com.liferay.portlet.calendar.NoSuchEventException if a cal event with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portlet.calendar.model.CalEvent findByPrimaryKey(
-		long eventId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.calendar.NoSuchEventException;
-
-	/**
-	* Returns the cal event with the primary key or returns <code>null</code> if it could not be found.
-	*
-	* @param eventId the primary key of the cal event
-	* @return the cal event, or <code>null</code> if a cal event with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portlet.calendar.model.CalEvent fetchByPrimaryKey(
-		long eventId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
 	* Returns all the cal events where uuid = &#63;.
 	*
 	* @param uuid the uuid
@@ -116,7 +52,7 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	* Returns a range of all the cal events where uuid = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from CalEventModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -133,7 +69,7 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	* Returns an ordered range of all the cal events where uuid = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from CalEventModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -221,6 +157,25 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 			com.liferay.portlet.calendar.NoSuchEventException;
 
 	/**
+	* Removes all the cal events where uuid = &#63; from the database.
+	*
+	* @param uuid the uuid
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeByUuid(java.lang.String uuid)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of cal events where uuid = &#63;.
+	*
+	* @param uuid the uuid
+	* @return the number of matching cal events
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByUuid(java.lang.String uuid)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Returns the cal event where uuid = &#63; and groupId = &#63; or throws a {@link com.liferay.portlet.calendar.NoSuchEventException} if it could not be found.
 	*
 	* @param uuid the uuid
@@ -260,6 +215,30 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Removes the cal event where uuid = &#63; and groupId = &#63; from the database.
+	*
+	* @param uuid the uuid
+	* @param groupId the group ID
+	* @return the cal event that was removed
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.calendar.model.CalEvent removeByUUID_G(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.calendar.NoSuchEventException;
+
+	/**
+	* Returns the number of cal events where uuid = &#63; and groupId = &#63;.
+	*
+	* @param uuid the uuid
+	* @param groupId the group ID
+	* @return the number of matching cal events
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByUUID_G(java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Returns all the cal events where uuid = &#63; and companyId = &#63;.
 	*
 	* @param uuid the uuid
@@ -275,7 +254,7 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	* Returns a range of all the cal events where uuid = &#63; and companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from CalEventModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -293,7 +272,7 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	* Returns an ordered range of all the cal events where uuid = &#63; and companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from CalEventModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -387,6 +366,27 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 			com.liferay.portlet.calendar.NoSuchEventException;
 
 	/**
+	* Removes all the cal events where uuid = &#63; and companyId = &#63; from the database.
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeByUuid_C(java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of cal events where uuid = &#63; and companyId = &#63;.
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @return the number of matching cal events
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByUuid_C(java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Returns all the cal events where companyId = &#63;.
 	*
 	* @param companyId the company ID
@@ -401,7 +401,7 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	* Returns a range of all the cal events where companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from CalEventModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param companyId the company ID
@@ -418,7 +418,7 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	* Returns an ordered range of all the cal events where companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from CalEventModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param companyId the company ID
@@ -506,6 +506,25 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 			com.liferay.portlet.calendar.NoSuchEventException;
 
 	/**
+	* Removes all the cal events where companyId = &#63; from the database.
+	*
+	* @param companyId the company ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeByCompanyId(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of cal events where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @return the number of matching cal events
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByCompanyId(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Returns all the cal events where groupId = &#63;.
 	*
 	* @param groupId the group ID
@@ -520,7 +539,7 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	* Returns a range of all the cal events where groupId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from CalEventModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -537,7 +556,7 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	* Returns an ordered range of all the cal events where groupId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from CalEventModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -639,7 +658,7 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	* Returns a range of all the cal events that the user has permission to view where groupId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from CalEventModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -656,7 +675,7 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	* Returns an ordered range of all the cal events that the user has permissions to view where groupId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from CalEventModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -688,6 +707,35 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 			com.liferay.portlet.calendar.NoSuchEventException;
 
 	/**
+	* Removes all the cal events where groupId = &#63; from the database.
+	*
+	* @param groupId the group ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeByGroupId(long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of cal events where groupId = &#63;.
+	*
+	* @param groupId the group ID
+	* @return the number of matching cal events
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByGroupId(long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of cal events that the user has permission to view where groupId = &#63;.
+	*
+	* @param groupId the group ID
+	* @return the number of matching cal events that the user has permission to view
+	* @throws SystemException if a system exception occurred
+	*/
+	public int filterCountByGroupId(long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Returns all the cal events where remindBy &ne; &#63;.
 	*
 	* @param remindBy the remind by
@@ -702,7 +750,7 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	* Returns a range of all the cal events where remindBy &ne; &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from CalEventModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param remindBy the remind by
@@ -719,7 +767,7 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	* Returns an ordered range of all the cal events where remindBy &ne; &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from CalEventModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param remindBy the remind by
@@ -807,6 +855,25 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 			com.liferay.portlet.calendar.NoSuchEventException;
 
 	/**
+	* Removes all the cal events where remindBy &ne; &#63; from the database.
+	*
+	* @param remindBy the remind by
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeByNotRemindBy(int remindBy)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of cal events where remindBy &ne; &#63;.
+	*
+	* @param remindBy the remind by
+	* @return the number of matching cal events
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByNotRemindBy(int remindBy)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Returns all the cal events where groupId = &#63; and type = &#63;.
 	*
 	* @param groupId the group ID
@@ -822,7 +889,7 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	* Returns a range of all the cal events where groupId = &#63; and type = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from CalEventModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -840,7 +907,7 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	* Returns an ordered range of all the cal events where groupId = &#63; and type = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from CalEventModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -934,60 +1001,6 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 			com.liferay.portlet.calendar.NoSuchEventException;
 
 	/**
-	* Returns all the cal events where groupId = &#63; and type = any &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
-	* @param groupId the group ID
-	* @param types the types
-	* @return the matching cal events
-	* @throws SystemException if a system exception occurred
-	*/
-	public java.util.List<com.liferay.portlet.calendar.model.CalEvent> findByG_T(
-		long groupId, java.lang.String[] types)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns a range of all the cal events where groupId = &#63; and type = any &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
-	* @param groupId the group ID
-	* @param types the types
-	* @param start the lower bound of the range of cal events
-	* @param end the upper bound of the range of cal events (not inclusive)
-	* @return the range of matching cal events
-	* @throws SystemException if a system exception occurred
-	*/
-	public java.util.List<com.liferay.portlet.calendar.model.CalEvent> findByG_T(
-		long groupId, java.lang.String[] types, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns an ordered range of all the cal events where groupId = &#63; and type = any &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
-	* @param groupId the group ID
-	* @param types the types
-	* @param start the lower bound of the range of cal events
-	* @param end the upper bound of the range of cal events (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching cal events
-	* @throws SystemException if a system exception occurred
-	*/
-	public java.util.List<com.liferay.portlet.calendar.model.CalEvent> findByG_T(
-		long groupId, java.lang.String[] types, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
 	* Returns all the cal events that the user has permission to view where groupId = &#63; and type = &#63;.
 	*
 	* @param groupId the group ID
@@ -1003,7 +1016,7 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	* Returns a range of all the cal events that the user has permission to view where groupId = &#63; and type = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from CalEventModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -1021,7 +1034,7 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	* Returns an ordered range of all the cal events that the user has permissions to view where groupId = &#63; and type = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from CalEventModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -1070,7 +1083,7 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	* Returns a range of all the cal events that the user has permission to view where groupId = &#63; and type = any &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from CalEventModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -1088,7 +1101,7 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	* Returns an ordered range of all the cal events that the user has permission to view where groupId = &#63; and type = any &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from CalEventModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -1102,6 +1115,114 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	public java.util.List<com.liferay.portlet.calendar.model.CalEvent> filterFindByG_T(
 		long groupId, java.lang.String[] types, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns all the cal events where groupId = &#63; and type = any &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from CalEventModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param types the types
+	* @return the matching cal events
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portlet.calendar.model.CalEvent> findByG_T(
+		long groupId, java.lang.String[] types)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns a range of all the cal events where groupId = &#63; and type = any &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from CalEventModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param types the types
+	* @param start the lower bound of the range of cal events
+	* @param end the upper bound of the range of cal events (not inclusive)
+	* @return the range of matching cal events
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portlet.calendar.model.CalEvent> findByG_T(
+		long groupId, java.lang.String[] types, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns an ordered range of all the cal events where groupId = &#63; and type = any &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from CalEventModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param types the types
+	* @param start the lower bound of the range of cal events
+	* @param end the upper bound of the range of cal events (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching cal events
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portlet.calendar.model.CalEvent> findByG_T(
+		long groupId, java.lang.String[] types, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Removes all the cal events where groupId = &#63; and type = &#63; from the database.
+	*
+	* @param groupId the group ID
+	* @param type the type
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeByG_T(long groupId, java.lang.String type)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of cal events where groupId = &#63; and type = &#63;.
+	*
+	* @param groupId the group ID
+	* @param type the type
+	* @return the number of matching cal events
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByG_T(long groupId, java.lang.String type)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of cal events where groupId = &#63; and type = any &#63;.
+	*
+	* @param groupId the group ID
+	* @param types the types
+	* @return the number of matching cal events
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByG_T(long groupId, java.lang.String[] types)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of cal events that the user has permission to view where groupId = &#63; and type = &#63;.
+	*
+	* @param groupId the group ID
+	* @param type the type
+	* @return the number of matching cal events that the user has permission to view
+	* @throws SystemException if a system exception occurred
+	*/
+	public int filterCountByG_T(long groupId, java.lang.String type)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of cal events that the user has permission to view where groupId = &#63; and type = any &#63;.
+	*
+	* @param groupId the group ID
+	* @param types the types
+	* @return the number of matching cal events that the user has permission to view
+	* @throws SystemException if a system exception occurred
+	*/
+	public int filterCountByG_T(long groupId, java.lang.String[] types)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
@@ -1120,7 +1241,7 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	* Returns a range of all the cal events where groupId = &#63; and repeating = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from CalEventModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -1138,7 +1259,7 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	* Returns an ordered range of all the cal events where groupId = &#63; and repeating = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from CalEventModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -1247,7 +1368,7 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	* Returns a range of all the cal events that the user has permission to view where groupId = &#63; and repeating = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from CalEventModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -1265,7 +1386,7 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	* Returns an ordered range of all the cal events that the user has permissions to view where groupId = &#63; and repeating = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from CalEventModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -1299,6 +1420,38 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 			com.liferay.portlet.calendar.NoSuchEventException;
 
 	/**
+	* Removes all the cal events where groupId = &#63; and repeating = &#63; from the database.
+	*
+	* @param groupId the group ID
+	* @param repeating the repeating
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeByG_R(long groupId, boolean repeating)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of cal events where groupId = &#63; and repeating = &#63;.
+	*
+	* @param groupId the group ID
+	* @param repeating the repeating
+	* @return the number of matching cal events
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByG_R(long groupId, boolean repeating)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of cal events that the user has permission to view where groupId = &#63; and repeating = &#63;.
+	*
+	* @param groupId the group ID
+	* @param repeating the repeating
+	* @return the number of matching cal events that the user has permission to view
+	* @throws SystemException if a system exception occurred
+	*/
+	public int filterCountByG_R(long groupId, boolean repeating)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Returns all the cal events where groupId = &#63; and type = &#63; and repeating = &#63;.
 	*
 	* @param groupId the group ID
@@ -1315,7 +1468,7 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	* Returns a range of all the cal events where groupId = &#63; and type = &#63; and repeating = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from CalEventModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -1334,7 +1487,7 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	* Returns an ordered range of all the cal events where groupId = &#63; and type = &#63; and repeating = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from CalEventModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -1435,64 +1588,6 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 			com.liferay.portlet.calendar.NoSuchEventException;
 
 	/**
-	* Returns all the cal events where groupId = &#63; and type = any &#63; and repeating = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
-	* @param groupId the group ID
-	* @param types the types
-	* @param repeating the repeating
-	* @return the matching cal events
-	* @throws SystemException if a system exception occurred
-	*/
-	public java.util.List<com.liferay.portlet.calendar.model.CalEvent> findByG_T_R(
-		long groupId, java.lang.String[] types, boolean repeating)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns a range of all the cal events where groupId = &#63; and type = any &#63; and repeating = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
-	* @param groupId the group ID
-	* @param types the types
-	* @param repeating the repeating
-	* @param start the lower bound of the range of cal events
-	* @param end the upper bound of the range of cal events (not inclusive)
-	* @return the range of matching cal events
-	* @throws SystemException if a system exception occurred
-	*/
-	public java.util.List<com.liferay.portlet.calendar.model.CalEvent> findByG_T_R(
-		long groupId, java.lang.String[] types, boolean repeating, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns an ordered range of all the cal events where groupId = &#63; and type = any &#63; and repeating = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
-	* @param groupId the group ID
-	* @param types the types
-	* @param repeating the repeating
-	* @param start the lower bound of the range of cal events
-	* @param end the upper bound of the range of cal events (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching cal events
-	* @throws SystemException if a system exception occurred
-	*/
-	public java.util.List<com.liferay.portlet.calendar.model.CalEvent> findByG_T_R(
-		long groupId, java.lang.String[] types, boolean repeating, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
 	* Returns all the cal events that the user has permission to view where groupId = &#63; and type = &#63; and repeating = &#63;.
 	*
 	* @param groupId the group ID
@@ -1509,7 +1604,7 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	* Returns a range of all the cal events that the user has permission to view where groupId = &#63; and type = &#63; and repeating = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from CalEventModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -1528,7 +1623,7 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	* Returns an ordered range of all the cal events that the user has permissions to view where groupId = &#63; and type = &#63; and repeating = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from CalEventModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -1581,7 +1676,7 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	* Returns a range of all the cal events that the user has permission to view where groupId = &#63; and type = any &#63; and repeating = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from CalEventModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -1600,7 +1695,7 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	* Returns an ordered range of all the cal events that the user has permission to view where groupId = &#63; and type = any &#63; and repeating = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from CalEventModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -1619,125 +1714,61 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns all the cal events.
+	* Returns all the cal events where groupId = &#63; and type = any &#63; and repeating = &#63;.
 	*
-	* @return the cal events
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from CalEventModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param types the types
+	* @param repeating the repeating
+	* @return the matching cal events
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.portlet.calendar.model.CalEvent> findAll()
+	public java.util.List<com.liferay.portlet.calendar.model.CalEvent> findByG_T_R(
+		long groupId, java.lang.String[] types, boolean repeating)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns a range of all the cal events.
+	* Returns a range of all the cal events where groupId = &#63; and type = any &#63; and repeating = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from CalEventModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
+	* @param groupId the group ID
+	* @param types the types
+	* @param repeating the repeating
 	* @param start the lower bound of the range of cal events
 	* @param end the upper bound of the range of cal events (not inclusive)
-	* @return the range of cal events
+	* @return the range of matching cal events
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.portlet.calendar.model.CalEvent> findAll(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public java.util.List<com.liferay.portlet.calendar.model.CalEvent> findByG_T_R(
+		long groupId, java.lang.String[] types, boolean repeating, int start,
+		int end) throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns an ordered range of all the cal events.
+	* Returns an ordered range of all the cal events where groupId = &#63; and type = any &#63; and repeating = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from CalEventModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
+	* @param groupId the group ID
+	* @param types the types
+	* @param repeating the repeating
 	* @param start the lower bound of the range of cal events
 	* @param end the upper bound of the range of cal events (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of cal events
+	* @return the ordered range of matching cal events
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.portlet.calendar.model.CalEvent> findAll(
-		int start, int end,
+	public java.util.List<com.liferay.portlet.calendar.model.CalEvent> findByG_T_R(
+		long groupId, java.lang.String[] types, boolean repeating, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Removes all the cal events where uuid = &#63; from the database.
-	*
-	* @param uuid the uuid
-	* @throws SystemException if a system exception occurred
-	*/
-	public void removeByUuid(java.lang.String uuid)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Removes the cal event where uuid = &#63; and groupId = &#63; from the database.
-	*
-	* @param uuid the uuid
-	* @param groupId the group ID
-	* @return the cal event that was removed
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portlet.calendar.model.CalEvent removeByUUID_G(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.calendar.NoSuchEventException;
-
-	/**
-	* Removes all the cal events where uuid = &#63; and companyId = &#63; from the database.
-	*
-	* @param uuid the uuid
-	* @param companyId the company ID
-	* @throws SystemException if a system exception occurred
-	*/
-	public void removeByUuid_C(java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Removes all the cal events where companyId = &#63; from the database.
-	*
-	* @param companyId the company ID
-	* @throws SystemException if a system exception occurred
-	*/
-	public void removeByCompanyId(long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Removes all the cal events where groupId = &#63; from the database.
-	*
-	* @param groupId the group ID
-	* @throws SystemException if a system exception occurred
-	*/
-	public void removeByGroupId(long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Removes all the cal events where remindBy &ne; &#63; from the database.
-	*
-	* @param remindBy the remind by
-	* @throws SystemException if a system exception occurred
-	*/
-	public void removeByNotRemindBy(int remindBy)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Removes all the cal events where groupId = &#63; and type = &#63; from the database.
-	*
-	* @param groupId the group ID
-	* @param type the type
-	* @throws SystemException if a system exception occurred
-	*/
-	public void removeByG_T(long groupId, java.lang.String type)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Removes all the cal events where groupId = &#63; and repeating = &#63; from the database.
-	*
-	* @param groupId the group ID
-	* @param repeating the repeating
-	* @throws SystemException if a system exception occurred
-	*/
-	public void removeByG_R(long groupId, boolean repeating)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
@@ -1750,152 +1781,6 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	*/
 	public void removeByG_T_R(long groupId, java.lang.String type,
 		boolean repeating)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Removes all the cal events from the database.
-	*
-	* @throws SystemException if a system exception occurred
-	*/
-	public void removeAll()
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the number of cal events where uuid = &#63;.
-	*
-	* @param uuid the uuid
-	* @return the number of matching cal events
-	* @throws SystemException if a system exception occurred
-	*/
-	public int countByUuid(java.lang.String uuid)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the number of cal events where uuid = &#63; and groupId = &#63;.
-	*
-	* @param uuid the uuid
-	* @param groupId the group ID
-	* @return the number of matching cal events
-	* @throws SystemException if a system exception occurred
-	*/
-	public int countByUUID_G(java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the number of cal events where uuid = &#63; and companyId = &#63;.
-	*
-	* @param uuid the uuid
-	* @param companyId the company ID
-	* @return the number of matching cal events
-	* @throws SystemException if a system exception occurred
-	*/
-	public int countByUuid_C(java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the number of cal events where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @return the number of matching cal events
-	* @throws SystemException if a system exception occurred
-	*/
-	public int countByCompanyId(long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the number of cal events where groupId = &#63;.
-	*
-	* @param groupId the group ID
-	* @return the number of matching cal events
-	* @throws SystemException if a system exception occurred
-	*/
-	public int countByGroupId(long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the number of cal events that the user has permission to view where groupId = &#63;.
-	*
-	* @param groupId the group ID
-	* @return the number of matching cal events that the user has permission to view
-	* @throws SystemException if a system exception occurred
-	*/
-	public int filterCountByGroupId(long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the number of cal events where remindBy &ne; &#63;.
-	*
-	* @param remindBy the remind by
-	* @return the number of matching cal events
-	* @throws SystemException if a system exception occurred
-	*/
-	public int countByNotRemindBy(int remindBy)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the number of cal events where groupId = &#63; and type = &#63;.
-	*
-	* @param groupId the group ID
-	* @param type the type
-	* @return the number of matching cal events
-	* @throws SystemException if a system exception occurred
-	*/
-	public int countByG_T(long groupId, java.lang.String type)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the number of cal events where groupId = &#63; and type = any &#63;.
-	*
-	* @param groupId the group ID
-	* @param types the types
-	* @return the number of matching cal events
-	* @throws SystemException if a system exception occurred
-	*/
-	public int countByG_T(long groupId, java.lang.String[] types)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the number of cal events that the user has permission to view where groupId = &#63; and type = &#63;.
-	*
-	* @param groupId the group ID
-	* @param type the type
-	* @return the number of matching cal events that the user has permission to view
-	* @throws SystemException if a system exception occurred
-	*/
-	public int filterCountByG_T(long groupId, java.lang.String type)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the number of cal events that the user has permission to view where groupId = &#63; and type = any &#63;.
-	*
-	* @param groupId the group ID
-	* @param types the types
-	* @return the number of matching cal events that the user has permission to view
-	* @throws SystemException if a system exception occurred
-	*/
-	public int filterCountByG_T(long groupId, java.lang.String[] types)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the number of cal events where groupId = &#63; and repeating = &#63;.
-	*
-	* @param groupId the group ID
-	* @param repeating the repeating
-	* @return the number of matching cal events
-	* @throws SystemException if a system exception occurred
-	*/
-	public int countByG_R(long groupId, boolean repeating)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the number of cal events that the user has permission to view where groupId = &#63; and repeating = &#63;.
-	*
-	* @param groupId the group ID
-	* @param repeating the repeating
-	* @return the number of matching cal events that the user has permission to view
-	* @throws SystemException if a system exception occurred
-	*/
-	public int filterCountByG_R(long groupId, boolean repeating)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
@@ -1948,6 +1833,121 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	*/
 	public int filterCountByG_T_R(long groupId, java.lang.String[] types,
 		boolean repeating)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Caches the cal event in the entity cache if it is enabled.
+	*
+	* @param calEvent the cal event
+	*/
+	public void cacheResult(
+		com.liferay.portlet.calendar.model.CalEvent calEvent);
+
+	/**
+	* Caches the cal events in the entity cache if it is enabled.
+	*
+	* @param calEvents the cal events
+	*/
+	public void cacheResult(
+		java.util.List<com.liferay.portlet.calendar.model.CalEvent> calEvents);
+
+	/**
+	* Creates a new cal event with the primary key. Does not add the cal event to the database.
+	*
+	* @param eventId the primary key for the new cal event
+	* @return the new cal event
+	*/
+	public com.liferay.portlet.calendar.model.CalEvent create(long eventId);
+
+	/**
+	* Removes the cal event with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param eventId the primary key of the cal event
+	* @return the cal event that was removed
+	* @throws com.liferay.portlet.calendar.NoSuchEventException if a cal event with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.calendar.model.CalEvent remove(long eventId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.calendar.NoSuchEventException;
+
+	public com.liferay.portlet.calendar.model.CalEvent updateImpl(
+		com.liferay.portlet.calendar.model.CalEvent calEvent)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the cal event with the primary key or throws a {@link com.liferay.portlet.calendar.NoSuchEventException} if it could not be found.
+	*
+	* @param eventId the primary key of the cal event
+	* @return the cal event
+	* @throws com.liferay.portlet.calendar.NoSuchEventException if a cal event with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.calendar.model.CalEvent findByPrimaryKey(
+		long eventId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.calendar.NoSuchEventException;
+
+	/**
+	* Returns the cal event with the primary key or returns <code>null</code> if it could not be found.
+	*
+	* @param eventId the primary key of the cal event
+	* @return the cal event, or <code>null</code> if a cal event with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.calendar.model.CalEvent fetchByPrimaryKey(
+		long eventId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns all the cal events.
+	*
+	* @return the cal events
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portlet.calendar.model.CalEvent> findAll()
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns a range of all the cal events.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from CalEventModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
+	* </p>
+	*
+	* @param start the lower bound of the range of cal events
+	* @param end the upper bound of the range of cal events (not inclusive)
+	* @return the range of cal events
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portlet.calendar.model.CalEvent> findAll(
+		int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns an ordered range of all the cal events.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from CalEventModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
+	* </p>
+	*
+	* @param start the lower bound of the range of cal events
+	* @param end the upper bound of the range of cal events (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of cal events
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portlet.calendar.model.CalEvent> findAll(
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Removes all the cal events from the database.
+	*
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeAll()
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

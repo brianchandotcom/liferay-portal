@@ -74,6 +74,8 @@ public class CompanyModelImpl extends BaseModelImpl<Company>
 		};
 	public static final String TABLE_SQL_CREATE = "create table Company (companyId LONG not null primary key,accountId LONG,webId VARCHAR(75) null,key_ TEXT null,mx VARCHAR(75) null,homeURL STRING null,logoId LONG,system BOOLEAN,maxUsers INTEGER,active_ BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table Company";
+	public static final String ORDER_BY_JPQL = " ORDER BY company.companyId ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY Company.companyId ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
@@ -90,6 +92,7 @@ public class CompanyModelImpl extends BaseModelImpl<Company>
 	public static long MX_COLUMN_BITMASK = 2L;
 	public static long SYSTEM_COLUMN_BITMASK = 4L;
 	public static long WEBID_COLUMN_BITMASK = 8L;
+	public static long COMPANYID_COLUMN_BITMASK = 16L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.

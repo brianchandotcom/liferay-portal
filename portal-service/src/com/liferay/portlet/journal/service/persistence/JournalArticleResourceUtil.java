@@ -113,86 +113,6 @@ public class JournalArticleResourceUtil {
 	}
 
 	/**
-	* Caches the journal article resource in the entity cache if it is enabled.
-	*
-	* @param journalArticleResource the journal article resource
-	*/
-	public static void cacheResult(
-		com.liferay.portlet.journal.model.JournalArticleResource journalArticleResource) {
-		getPersistence().cacheResult(journalArticleResource);
-	}
-
-	/**
-	* Caches the journal article resources in the entity cache if it is enabled.
-	*
-	* @param journalArticleResources the journal article resources
-	*/
-	public static void cacheResult(
-		java.util.List<com.liferay.portlet.journal.model.JournalArticleResource> journalArticleResources) {
-		getPersistence().cacheResult(journalArticleResources);
-	}
-
-	/**
-	* Creates a new journal article resource with the primary key. Does not add the journal article resource to the database.
-	*
-	* @param resourcePrimKey the primary key for the new journal article resource
-	* @return the new journal article resource
-	*/
-	public static com.liferay.portlet.journal.model.JournalArticleResource create(
-		long resourcePrimKey) {
-		return getPersistence().create(resourcePrimKey);
-	}
-
-	/**
-	* Removes the journal article resource with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param resourcePrimKey the primary key of the journal article resource
-	* @return the journal article resource that was removed
-	* @throws com.liferay.portlet.journal.NoSuchArticleResourceException if a journal article resource with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portlet.journal.model.JournalArticleResource remove(
-		long resourcePrimKey)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.journal.NoSuchArticleResourceException {
-		return getPersistence().remove(resourcePrimKey);
-	}
-
-	public static com.liferay.portlet.journal.model.JournalArticleResource updateImpl(
-		com.liferay.portlet.journal.model.JournalArticleResource journalArticleResource)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(journalArticleResource);
-	}
-
-	/**
-	* Returns the journal article resource with the primary key or throws a {@link com.liferay.portlet.journal.NoSuchArticleResourceException} if it could not be found.
-	*
-	* @param resourcePrimKey the primary key of the journal article resource
-	* @return the journal article resource
-	* @throws com.liferay.portlet.journal.NoSuchArticleResourceException if a journal article resource with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portlet.journal.model.JournalArticleResource findByPrimaryKey(
-		long resourcePrimKey)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.journal.NoSuchArticleResourceException {
-		return getPersistence().findByPrimaryKey(resourcePrimKey);
-	}
-
-	/**
-	* Returns the journal article resource with the primary key or returns <code>null</code> if it could not be found.
-	*
-	* @param resourcePrimKey the primary key of the journal article resource
-	* @return the journal article resource, or <code>null</code> if a journal article resource with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portlet.journal.model.JournalArticleResource fetchByPrimaryKey(
-		long resourcePrimKey)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().fetchByPrimaryKey(resourcePrimKey);
-	}
-
-	/**
 	* Returns all the journal article resources where uuid = &#63;.
 	*
 	* @param uuid the uuid
@@ -209,7 +129,7 @@ public class JournalArticleResourceUtil {
 	* Returns a range of all the journal article resources where uuid = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from JournalArticleResourceModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -228,7 +148,7 @@ public class JournalArticleResourceUtil {
 	* Returns an ordered range of all the journal article resources where uuid = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from JournalArticleResourceModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -330,6 +250,29 @@ public class JournalArticleResourceUtil {
 	}
 
 	/**
+	* Removes all the journal article resources where uuid = &#63; from the database.
+	*
+	* @param uuid the uuid
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByUuid(java.lang.String uuid)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByUuid(uuid);
+	}
+
+	/**
+	* Returns the number of journal article resources where uuid = &#63;.
+	*
+	* @param uuid the uuid
+	* @return the number of matching journal article resources
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByUuid(java.lang.String uuid)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByUuid(uuid);
+	}
+
+	/**
 	* Returns the journal article resource where uuid = &#63; and groupId = &#63; or throws a {@link com.liferay.portlet.journal.NoSuchArticleResourceException} if it could not be found.
 	*
 	* @param uuid the uuid
@@ -375,6 +318,34 @@ public class JournalArticleResourceUtil {
 	}
 
 	/**
+	* Removes the journal article resource where uuid = &#63; and groupId = &#63; from the database.
+	*
+	* @param uuid the uuid
+	* @param groupId the group ID
+	* @return the journal article resource that was removed
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.journal.model.JournalArticleResource removeByUUID_G(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.journal.NoSuchArticleResourceException {
+		return getPersistence().removeByUUID_G(uuid, groupId);
+	}
+
+	/**
+	* Returns the number of journal article resources where uuid = &#63; and groupId = &#63;.
+	*
+	* @param uuid the uuid
+	* @param groupId the group ID
+	* @return the number of matching journal article resources
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByUUID_G(java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByUUID_G(uuid, groupId);
+	}
+
+	/**
 	* Returns all the journal article resources where groupId = &#63;.
 	*
 	* @param groupId the group ID
@@ -391,7 +362,7 @@ public class JournalArticleResourceUtil {
 	* Returns a range of all the journal article resources where groupId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from JournalArticleResourceModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -410,7 +381,7 @@ public class JournalArticleResourceUtil {
 	* Returns an ordered range of all the journal article resources where groupId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from JournalArticleResourceModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -513,6 +484,29 @@ public class JournalArticleResourceUtil {
 	}
 
 	/**
+	* Removes all the journal article resources where groupId = &#63; from the database.
+	*
+	* @param groupId the group ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByGroupId(long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByGroupId(groupId);
+	}
+
+	/**
+	* Returns the number of journal article resources where groupId = &#63;.
+	*
+	* @param groupId the group ID
+	* @return the number of matching journal article resources
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByGroupId(long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByGroupId(groupId);
+	}
+
+	/**
 	* Returns the journal article resource where groupId = &#63; and articleId = &#63; or throws a {@link com.liferay.portlet.journal.NoSuchArticleResourceException} if it could not be found.
 	*
 	* @param groupId the group ID
@@ -558,6 +552,114 @@ public class JournalArticleResourceUtil {
 	}
 
 	/**
+	* Removes the journal article resource where groupId = &#63; and articleId = &#63; from the database.
+	*
+	* @param groupId the group ID
+	* @param articleId the article ID
+	* @return the journal article resource that was removed
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.journal.model.JournalArticleResource removeByG_A(
+		long groupId, java.lang.String articleId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.journal.NoSuchArticleResourceException {
+		return getPersistence().removeByG_A(groupId, articleId);
+	}
+
+	/**
+	* Returns the number of journal article resources where groupId = &#63; and articleId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param articleId the article ID
+	* @return the number of matching journal article resources
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByG_A(long groupId, java.lang.String articleId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByG_A(groupId, articleId);
+	}
+
+	/**
+	* Caches the journal article resource in the entity cache if it is enabled.
+	*
+	* @param journalArticleResource the journal article resource
+	*/
+	public static void cacheResult(
+		com.liferay.portlet.journal.model.JournalArticleResource journalArticleResource) {
+		getPersistence().cacheResult(journalArticleResource);
+	}
+
+	/**
+	* Caches the journal article resources in the entity cache if it is enabled.
+	*
+	* @param journalArticleResources the journal article resources
+	*/
+	public static void cacheResult(
+		java.util.List<com.liferay.portlet.journal.model.JournalArticleResource> journalArticleResources) {
+		getPersistence().cacheResult(journalArticleResources);
+	}
+
+	/**
+	* Creates a new journal article resource with the primary key. Does not add the journal article resource to the database.
+	*
+	* @param resourcePrimKey the primary key for the new journal article resource
+	* @return the new journal article resource
+	*/
+	public static com.liferay.portlet.journal.model.JournalArticleResource create(
+		long resourcePrimKey) {
+		return getPersistence().create(resourcePrimKey);
+	}
+
+	/**
+	* Removes the journal article resource with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param resourcePrimKey the primary key of the journal article resource
+	* @return the journal article resource that was removed
+	* @throws com.liferay.portlet.journal.NoSuchArticleResourceException if a journal article resource with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.journal.model.JournalArticleResource remove(
+		long resourcePrimKey)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.journal.NoSuchArticleResourceException {
+		return getPersistence().remove(resourcePrimKey);
+	}
+
+	public static com.liferay.portlet.journal.model.JournalArticleResource updateImpl(
+		com.liferay.portlet.journal.model.JournalArticleResource journalArticleResource)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().updateImpl(journalArticleResource);
+	}
+
+	/**
+	* Returns the journal article resource with the primary key or throws a {@link com.liferay.portlet.journal.NoSuchArticleResourceException} if it could not be found.
+	*
+	* @param resourcePrimKey the primary key of the journal article resource
+	* @return the journal article resource
+	* @throws com.liferay.portlet.journal.NoSuchArticleResourceException if a journal article resource with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.journal.model.JournalArticleResource findByPrimaryKey(
+		long resourcePrimKey)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.journal.NoSuchArticleResourceException {
+		return getPersistence().findByPrimaryKey(resourcePrimKey);
+	}
+
+	/**
+	* Returns the journal article resource with the primary key or returns <code>null</code> if it could not be found.
+	*
+	* @param resourcePrimKey the primary key of the journal article resource
+	* @return the journal article resource, or <code>null</code> if a journal article resource with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.journal.model.JournalArticleResource fetchByPrimaryKey(
+		long resourcePrimKey)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByPrimaryKey(resourcePrimKey);
+	}
+
+	/**
 	* Returns all the journal article resources.
 	*
 	* @return the journal article resources
@@ -572,7 +674,7 @@ public class JournalArticleResourceUtil {
 	* Returns a range of all the journal article resources.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from JournalArticleResourceModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param start the lower bound of the range of journal article resources
@@ -590,7 +692,7 @@ public class JournalArticleResourceUtil {
 	* Returns an ordered range of all the journal article resources.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from JournalArticleResourceModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param start the lower bound of the range of journal article resources
@@ -607,58 +709,6 @@ public class JournalArticleResourceUtil {
 	}
 
 	/**
-	* Removes all the journal article resources where uuid = &#63; from the database.
-	*
-	* @param uuid the uuid
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void removeByUuid(java.lang.String uuid)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByUuid(uuid);
-	}
-
-	/**
-	* Removes the journal article resource where uuid = &#63; and groupId = &#63; from the database.
-	*
-	* @param uuid the uuid
-	* @param groupId the group ID
-	* @return the journal article resource that was removed
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portlet.journal.model.JournalArticleResource removeByUUID_G(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.journal.NoSuchArticleResourceException {
-		return getPersistence().removeByUUID_G(uuid, groupId);
-	}
-
-	/**
-	* Removes all the journal article resources where groupId = &#63; from the database.
-	*
-	* @param groupId the group ID
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void removeByGroupId(long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByGroupId(groupId);
-	}
-
-	/**
-	* Removes the journal article resource where groupId = &#63; and articleId = &#63; from the database.
-	*
-	* @param groupId the group ID
-	* @param articleId the article ID
-	* @return the journal article resource that was removed
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portlet.journal.model.JournalArticleResource removeByG_A(
-		long groupId, java.lang.String articleId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.journal.NoSuchArticleResourceException {
-		return getPersistence().removeByG_A(groupId, articleId);
-	}
-
-	/**
 	* Removes all the journal article resources from the database.
 	*
 	* @throws SystemException if a system exception occurred
@@ -666,56 +716,6 @@ public class JournalArticleResourceUtil {
 	public static void removeAll()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		getPersistence().removeAll();
-	}
-
-	/**
-	* Returns the number of journal article resources where uuid = &#63;.
-	*
-	* @param uuid the uuid
-	* @return the number of matching journal article resources
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int countByUuid(java.lang.String uuid)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByUuid(uuid);
-	}
-
-	/**
-	* Returns the number of journal article resources where uuid = &#63; and groupId = &#63;.
-	*
-	* @param uuid the uuid
-	* @param groupId the group ID
-	* @return the number of matching journal article resources
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int countByUUID_G(java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByUUID_G(uuid, groupId);
-	}
-
-	/**
-	* Returns the number of journal article resources where groupId = &#63;.
-	*
-	* @param groupId the group ID
-	* @return the number of matching journal article resources
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int countByGroupId(long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByGroupId(groupId);
-	}
-
-	/**
-	* Returns the number of journal article resources where groupId = &#63; and articleId = &#63;.
-	*
-	* @param groupId the group ID
-	* @param articleId the article ID
-	* @return the number of matching journal article resources
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int countByG_A(long groupId, java.lang.String articleId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByG_A(groupId, articleId);
 	}
 
 	/**

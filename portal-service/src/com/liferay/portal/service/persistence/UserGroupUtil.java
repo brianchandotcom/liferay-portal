@@ -110,83 +110,6 @@ public class UserGroupUtil {
 	}
 
 	/**
-	* Caches the user group in the entity cache if it is enabled.
-	*
-	* @param userGroup the user group
-	*/
-	public static void cacheResult(com.liferay.portal.model.UserGroup userGroup) {
-		getPersistence().cacheResult(userGroup);
-	}
-
-	/**
-	* Caches the user groups in the entity cache if it is enabled.
-	*
-	* @param userGroups the user groups
-	*/
-	public static void cacheResult(
-		java.util.List<com.liferay.portal.model.UserGroup> userGroups) {
-		getPersistence().cacheResult(userGroups);
-	}
-
-	/**
-	* Creates a new user group with the primary key. Does not add the user group to the database.
-	*
-	* @param userGroupId the primary key for the new user group
-	* @return the new user group
-	*/
-	public static com.liferay.portal.model.UserGroup create(long userGroupId) {
-		return getPersistence().create(userGroupId);
-	}
-
-	/**
-	* Removes the user group with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param userGroupId the primary key of the user group
-	* @return the user group that was removed
-	* @throws com.liferay.portal.NoSuchUserGroupException if a user group with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portal.model.UserGroup remove(long userGroupId)
-		throws com.liferay.portal.NoSuchUserGroupException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().remove(userGroupId);
-	}
-
-	public static com.liferay.portal.model.UserGroup updateImpl(
-		com.liferay.portal.model.UserGroup userGroup)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(userGroup);
-	}
-
-	/**
-	* Returns the user group with the primary key or throws a {@link com.liferay.portal.NoSuchUserGroupException} if it could not be found.
-	*
-	* @param userGroupId the primary key of the user group
-	* @return the user group
-	* @throws com.liferay.portal.NoSuchUserGroupException if a user group with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portal.model.UserGroup findByPrimaryKey(
-		long userGroupId)
-		throws com.liferay.portal.NoSuchUserGroupException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findByPrimaryKey(userGroupId);
-	}
-
-	/**
-	* Returns the user group with the primary key or returns <code>null</code> if it could not be found.
-	*
-	* @param userGroupId the primary key of the user group
-	* @return the user group, or <code>null</code> if a user group with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portal.model.UserGroup fetchByPrimaryKey(
-		long userGroupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().fetchByPrimaryKey(userGroupId);
-	}
-
-	/**
 	* Returns all the user groups where companyId = &#63;.
 	*
 	* @param companyId the company ID
@@ -203,7 +126,7 @@ public class UserGroupUtil {
 	* Returns a range of all the user groups where companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from UserGroupModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param companyId the company ID
@@ -222,7 +145,7 @@ public class UserGroupUtil {
 	* Returns an ordered range of all the user groups where companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from UserGroupModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param companyId the company ID
@@ -345,7 +268,7 @@ public class UserGroupUtil {
 	* Returns a range of all the user groups that the user has permission to view where companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from UserGroupModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param companyId the company ID
@@ -364,7 +287,7 @@ public class UserGroupUtil {
 	* Returns an ordered range of all the user groups that the user has permissions to view where companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from UserGroupModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param companyId the company ID
@@ -404,6 +327,41 @@ public class UserGroupUtil {
 	}
 
 	/**
+	* Removes all the user groups where companyId = &#63; from the database.
+	*
+	* @param companyId the company ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByCompanyId(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByCompanyId(companyId);
+	}
+
+	/**
+	* Returns the number of user groups where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @return the number of matching user groups
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByCompanyId(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByCompanyId(companyId);
+	}
+
+	/**
+	* Returns the number of user groups that the user has permission to view where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @return the number of matching user groups that the user has permission to view
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int filterCountByCompanyId(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().filterCountByCompanyId(companyId);
+	}
+
+	/**
 	* Returns all the user groups where companyId = &#63; and parentUserGroupId = &#63;.
 	*
 	* @param companyId the company ID
@@ -421,7 +379,7 @@ public class UserGroupUtil {
 	* Returns a range of all the user groups where companyId = &#63; and parentUserGroupId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from UserGroupModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param companyId the company ID
@@ -442,7 +400,7 @@ public class UserGroupUtil {
 	* Returns an ordered range of all the user groups where companyId = &#63; and parentUserGroupId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from UserGroupModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param companyId the company ID
@@ -577,7 +535,7 @@ public class UserGroupUtil {
 	* Returns a range of all the user groups that the user has permission to view where companyId = &#63; and parentUserGroupId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from UserGroupModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param companyId the company ID
@@ -598,7 +556,7 @@ public class UserGroupUtil {
 	* Returns an ordered range of all the user groups that the user has permissions to view where companyId = &#63; and parentUserGroupId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from UserGroupModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param companyId the company ID
@@ -637,6 +595,44 @@ public class UserGroupUtil {
 		return getPersistence()
 				   .filterFindByC_P_PrevAndNext(userGroupId, companyId,
 			parentUserGroupId, orderByComparator);
+	}
+
+	/**
+	* Removes all the user groups where companyId = &#63; and parentUserGroupId = &#63; from the database.
+	*
+	* @param companyId the company ID
+	* @param parentUserGroupId the parent user group ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByC_P(long companyId, long parentUserGroupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByC_P(companyId, parentUserGroupId);
+	}
+
+	/**
+	* Returns the number of user groups where companyId = &#63; and parentUserGroupId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param parentUserGroupId the parent user group ID
+	* @return the number of matching user groups
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByC_P(long companyId, long parentUserGroupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByC_P(companyId, parentUserGroupId);
+	}
+
+	/**
+	* Returns the number of user groups that the user has permission to view where companyId = &#63; and parentUserGroupId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param parentUserGroupId the parent user group ID
+	* @return the number of matching user groups that the user has permission to view
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int filterCountByC_P(long companyId, long parentUserGroupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().filterCountByC_P(companyId, parentUserGroupId);
 	}
 
 	/**
@@ -685,6 +681,111 @@ public class UserGroupUtil {
 	}
 
 	/**
+	* Removes the user group where companyId = &#63; and name = &#63; from the database.
+	*
+	* @param companyId the company ID
+	* @param name the name
+	* @return the user group that was removed
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.UserGroup removeByC_N(
+		long companyId, java.lang.String name)
+		throws com.liferay.portal.NoSuchUserGroupException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().removeByC_N(companyId, name);
+	}
+
+	/**
+	* Returns the number of user groups where companyId = &#63; and name = &#63;.
+	*
+	* @param companyId the company ID
+	* @param name the name
+	* @return the number of matching user groups
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByC_N(long companyId, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByC_N(companyId, name);
+	}
+
+	/**
+	* Caches the user group in the entity cache if it is enabled.
+	*
+	* @param userGroup the user group
+	*/
+	public static void cacheResult(com.liferay.portal.model.UserGroup userGroup) {
+		getPersistence().cacheResult(userGroup);
+	}
+
+	/**
+	* Caches the user groups in the entity cache if it is enabled.
+	*
+	* @param userGroups the user groups
+	*/
+	public static void cacheResult(
+		java.util.List<com.liferay.portal.model.UserGroup> userGroups) {
+		getPersistence().cacheResult(userGroups);
+	}
+
+	/**
+	* Creates a new user group with the primary key. Does not add the user group to the database.
+	*
+	* @param userGroupId the primary key for the new user group
+	* @return the new user group
+	*/
+	public static com.liferay.portal.model.UserGroup create(long userGroupId) {
+		return getPersistence().create(userGroupId);
+	}
+
+	/**
+	* Removes the user group with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param userGroupId the primary key of the user group
+	* @return the user group that was removed
+	* @throws com.liferay.portal.NoSuchUserGroupException if a user group with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.UserGroup remove(long userGroupId)
+		throws com.liferay.portal.NoSuchUserGroupException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().remove(userGroupId);
+	}
+
+	public static com.liferay.portal.model.UserGroup updateImpl(
+		com.liferay.portal.model.UserGroup userGroup)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().updateImpl(userGroup);
+	}
+
+	/**
+	* Returns the user group with the primary key or throws a {@link com.liferay.portal.NoSuchUserGroupException} if it could not be found.
+	*
+	* @param userGroupId the primary key of the user group
+	* @return the user group
+	* @throws com.liferay.portal.NoSuchUserGroupException if a user group with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.UserGroup findByPrimaryKey(
+		long userGroupId)
+		throws com.liferay.portal.NoSuchUserGroupException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByPrimaryKey(userGroupId);
+	}
+
+	/**
+	* Returns the user group with the primary key or returns <code>null</code> if it could not be found.
+	*
+	* @param userGroupId the primary key of the user group
+	* @return the user group, or <code>null</code> if a user group with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.UserGroup fetchByPrimaryKey(
+		long userGroupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByPrimaryKey(userGroupId);
+	}
+
+	/**
 	* Returns all the user groups.
 	*
 	* @return the user groups
@@ -699,7 +800,7 @@ public class UserGroupUtil {
 	* Returns a range of all the user groups.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from UserGroupModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param start the lower bound of the range of user groups
@@ -717,7 +818,7 @@ public class UserGroupUtil {
 	* Returns an ordered range of all the user groups.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from UserGroupModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param start the lower bound of the range of user groups
@@ -734,44 +835,6 @@ public class UserGroupUtil {
 	}
 
 	/**
-	* Removes all the user groups where companyId = &#63; from the database.
-	*
-	* @param companyId the company ID
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void removeByCompanyId(long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByCompanyId(companyId);
-	}
-
-	/**
-	* Removes all the user groups where companyId = &#63; and parentUserGroupId = &#63; from the database.
-	*
-	* @param companyId the company ID
-	* @param parentUserGroupId the parent user group ID
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void removeByC_P(long companyId, long parentUserGroupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByC_P(companyId, parentUserGroupId);
-	}
-
-	/**
-	* Removes the user group where companyId = &#63; and name = &#63; from the database.
-	*
-	* @param companyId the company ID
-	* @param name the name
-	* @return the user group that was removed
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portal.model.UserGroup removeByC_N(
-		long companyId, java.lang.String name)
-		throws com.liferay.portal.NoSuchUserGroupException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().removeByC_N(companyId, name);
-	}
-
-	/**
 	* Removes all the user groups from the database.
 	*
 	* @throws SystemException if a system exception occurred
@@ -779,69 +842,6 @@ public class UserGroupUtil {
 	public static void removeAll()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		getPersistence().removeAll();
-	}
-
-	/**
-	* Returns the number of user groups where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @return the number of matching user groups
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int countByCompanyId(long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByCompanyId(companyId);
-	}
-
-	/**
-	* Returns the number of user groups that the user has permission to view where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @return the number of matching user groups that the user has permission to view
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int filterCountByCompanyId(long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().filterCountByCompanyId(companyId);
-	}
-
-	/**
-	* Returns the number of user groups where companyId = &#63; and parentUserGroupId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param parentUserGroupId the parent user group ID
-	* @return the number of matching user groups
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int countByC_P(long companyId, long parentUserGroupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByC_P(companyId, parentUserGroupId);
-	}
-
-	/**
-	* Returns the number of user groups that the user has permission to view where companyId = &#63; and parentUserGroupId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param parentUserGroupId the parent user group ID
-	* @return the number of matching user groups that the user has permission to view
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int filterCountByC_P(long companyId, long parentUserGroupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().filterCountByC_P(companyId, parentUserGroupId);
-	}
-
-	/**
-	* Returns the number of user groups where companyId = &#63; and name = &#63;.
-	*
-	* @param companyId the company ID
-	* @param name the name
-	* @return the number of matching user groups
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int countByC_N(long companyId, java.lang.String name)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByC_N(companyId, name);
 	}
 
 	/**
@@ -871,7 +871,7 @@ public class UserGroupUtil {
 	* Returns a range of all the groups associated with the user group.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from UserGroupModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param pk the primary key of the user group
@@ -890,7 +890,7 @@ public class UserGroupUtil {
 	* Returns an ordered range of all the groups associated with the user group.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from UserGroupModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param pk the primary key of the user group
@@ -1094,7 +1094,7 @@ public class UserGroupUtil {
 	* Returns a range of all the teams associated with the user group.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from UserGroupModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param pk the primary key of the user group
@@ -1113,7 +1113,7 @@ public class UserGroupUtil {
 	* Returns an ordered range of all the teams associated with the user group.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from UserGroupModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param pk the primary key of the user group
@@ -1317,7 +1317,7 @@ public class UserGroupUtil {
 	* Returns a range of all the users associated with the user group.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from UserGroupModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param pk the primary key of the user group
@@ -1336,7 +1336,7 @@ public class UserGroupUtil {
 	* Returns an ordered range of all the users associated with the user group.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from UserGroupModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param pk the primary key of the user group

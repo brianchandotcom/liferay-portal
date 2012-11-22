@@ -110,84 +110,6 @@ public class RepositoryUtil {
 	}
 
 	/**
-	* Caches the repository in the entity cache if it is enabled.
-	*
-	* @param repository the repository
-	*/
-	public static void cacheResult(
-		com.liferay.portal.model.Repository repository) {
-		getPersistence().cacheResult(repository);
-	}
-
-	/**
-	* Caches the repositories in the entity cache if it is enabled.
-	*
-	* @param repositories the repositories
-	*/
-	public static void cacheResult(
-		java.util.List<com.liferay.portal.model.Repository> repositories) {
-		getPersistence().cacheResult(repositories);
-	}
-
-	/**
-	* Creates a new repository with the primary key. Does not add the repository to the database.
-	*
-	* @param repositoryId the primary key for the new repository
-	* @return the new repository
-	*/
-	public static com.liferay.portal.model.Repository create(long repositoryId) {
-		return getPersistence().create(repositoryId);
-	}
-
-	/**
-	* Removes the repository with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param repositoryId the primary key of the repository
-	* @return the repository that was removed
-	* @throws com.liferay.portal.NoSuchRepositoryException if a repository with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portal.model.Repository remove(long repositoryId)
-		throws com.liferay.portal.NoSuchRepositoryException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().remove(repositoryId);
-	}
-
-	public static com.liferay.portal.model.Repository updateImpl(
-		com.liferay.portal.model.Repository repository)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(repository);
-	}
-
-	/**
-	* Returns the repository with the primary key or throws a {@link com.liferay.portal.NoSuchRepositoryException} if it could not be found.
-	*
-	* @param repositoryId the primary key of the repository
-	* @return the repository
-	* @throws com.liferay.portal.NoSuchRepositoryException if a repository with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portal.model.Repository findByPrimaryKey(
-		long repositoryId)
-		throws com.liferay.portal.NoSuchRepositoryException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findByPrimaryKey(repositoryId);
-	}
-
-	/**
-	* Returns the repository with the primary key or returns <code>null</code> if it could not be found.
-	*
-	* @param repositoryId the primary key of the repository
-	* @return the repository, or <code>null</code> if a repository with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portal.model.Repository fetchByPrimaryKey(
-		long repositoryId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().fetchByPrimaryKey(repositoryId);
-	}
-
-	/**
 	* Returns all the repositories where uuid = &#63;.
 	*
 	* @param uuid the uuid
@@ -204,7 +126,7 @@ public class RepositoryUtil {
 	* Returns a range of all the repositories where uuid = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from RepositoryModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -223,7 +145,7 @@ public class RepositoryUtil {
 	* Returns an ordered range of all the repositories where uuid = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from RepositoryModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -324,6 +246,29 @@ public class RepositoryUtil {
 	}
 
 	/**
+	* Removes all the repositories where uuid = &#63; from the database.
+	*
+	* @param uuid the uuid
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByUuid(java.lang.String uuid)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByUuid(uuid);
+	}
+
+	/**
+	* Returns the number of repositories where uuid = &#63;.
+	*
+	* @param uuid the uuid
+	* @return the number of matching repositories
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByUuid(java.lang.String uuid)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByUuid(uuid);
+	}
+
+	/**
 	* Returns the repository where uuid = &#63; and groupId = &#63; or throws a {@link com.liferay.portal.NoSuchRepositoryException} if it could not be found.
 	*
 	* @param uuid the uuid
@@ -369,6 +314,34 @@ public class RepositoryUtil {
 	}
 
 	/**
+	* Removes the repository where uuid = &#63; and groupId = &#63; from the database.
+	*
+	* @param uuid the uuid
+	* @param groupId the group ID
+	* @return the repository that was removed
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Repository removeByUUID_G(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.NoSuchRepositoryException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().removeByUUID_G(uuid, groupId);
+	}
+
+	/**
+	* Returns the number of repositories where uuid = &#63; and groupId = &#63;.
+	*
+	* @param uuid the uuid
+	* @param groupId the group ID
+	* @return the number of matching repositories
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByUUID_G(java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByUUID_G(uuid, groupId);
+	}
+
+	/**
 	* Returns all the repositories where uuid = &#63; and companyId = &#63;.
 	*
 	* @param uuid the uuid
@@ -386,7 +359,7 @@ public class RepositoryUtil {
 	* Returns a range of all the repositories where uuid = &#63; and companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from RepositoryModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -406,7 +379,7 @@ public class RepositoryUtil {
 	* Returns an ordered range of all the repositories where uuid = &#63; and companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from RepositoryModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -519,6 +492,31 @@ public class RepositoryUtil {
 	}
 
 	/**
+	* Removes all the repositories where uuid = &#63; and companyId = &#63; from the database.
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByUuid_C(java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByUuid_C(uuid, companyId);
+	}
+
+	/**
+	* Returns the number of repositories where uuid = &#63; and companyId = &#63;.
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @return the number of matching repositories
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByUuid_C(java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByUuid_C(uuid, companyId);
+	}
+
+	/**
 	* Returns all the repositories where groupId = &#63;.
 	*
 	* @param groupId the group ID
@@ -535,7 +533,7 @@ public class RepositoryUtil {
 	* Returns a range of all the repositories where groupId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from RepositoryModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -554,7 +552,7 @@ public class RepositoryUtil {
 	* Returns an ordered range of all the repositories where groupId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from RepositoryModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -657,6 +655,29 @@ public class RepositoryUtil {
 	}
 
 	/**
+	* Removes all the repositories where groupId = &#63; from the database.
+	*
+	* @param groupId the group ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByGroupId(long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByGroupId(groupId);
+	}
+
+	/**
+	* Returns the number of repositories where groupId = &#63;.
+	*
+	* @param groupId the group ID
+	* @return the number of matching repositories
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByGroupId(long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByGroupId(groupId);
+	}
+
+	/**
 	* Returns the repository where groupId = &#63; and name = &#63; and portletId = &#63; or throws a {@link com.liferay.portal.NoSuchRepositoryException} if it could not be found.
 	*
 	* @param groupId the group ID
@@ -707,6 +728,115 @@ public class RepositoryUtil {
 	}
 
 	/**
+	* Removes the repository where groupId = &#63; and name = &#63; and portletId = &#63; from the database.
+	*
+	* @param groupId the group ID
+	* @param name the name
+	* @param portletId the portlet ID
+	* @return the repository that was removed
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Repository removeByG_N_P(
+		long groupId, java.lang.String name, java.lang.String portletId)
+		throws com.liferay.portal.NoSuchRepositoryException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().removeByG_N_P(groupId, name, portletId);
+	}
+
+	/**
+	* Returns the number of repositories where groupId = &#63; and name = &#63; and portletId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param name the name
+	* @param portletId the portlet ID
+	* @return the number of matching repositories
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByG_N_P(long groupId, java.lang.String name,
+		java.lang.String portletId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByG_N_P(groupId, name, portletId);
+	}
+
+	/**
+	* Caches the repository in the entity cache if it is enabled.
+	*
+	* @param repository the repository
+	*/
+	public static void cacheResult(
+		com.liferay.portal.model.Repository repository) {
+		getPersistence().cacheResult(repository);
+	}
+
+	/**
+	* Caches the repositories in the entity cache if it is enabled.
+	*
+	* @param repositories the repositories
+	*/
+	public static void cacheResult(
+		java.util.List<com.liferay.portal.model.Repository> repositories) {
+		getPersistence().cacheResult(repositories);
+	}
+
+	/**
+	* Creates a new repository with the primary key. Does not add the repository to the database.
+	*
+	* @param repositoryId the primary key for the new repository
+	* @return the new repository
+	*/
+	public static com.liferay.portal.model.Repository create(long repositoryId) {
+		return getPersistence().create(repositoryId);
+	}
+
+	/**
+	* Removes the repository with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param repositoryId the primary key of the repository
+	* @return the repository that was removed
+	* @throws com.liferay.portal.NoSuchRepositoryException if a repository with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Repository remove(long repositoryId)
+		throws com.liferay.portal.NoSuchRepositoryException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().remove(repositoryId);
+	}
+
+	public static com.liferay.portal.model.Repository updateImpl(
+		com.liferay.portal.model.Repository repository)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().updateImpl(repository);
+	}
+
+	/**
+	* Returns the repository with the primary key or throws a {@link com.liferay.portal.NoSuchRepositoryException} if it could not be found.
+	*
+	* @param repositoryId the primary key of the repository
+	* @return the repository
+	* @throws com.liferay.portal.NoSuchRepositoryException if a repository with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Repository findByPrimaryKey(
+		long repositoryId)
+		throws com.liferay.portal.NoSuchRepositoryException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByPrimaryKey(repositoryId);
+	}
+
+	/**
+	* Returns the repository with the primary key or returns <code>null</code> if it could not be found.
+	*
+	* @param repositoryId the primary key of the repository
+	* @return the repository, or <code>null</code> if a repository with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Repository fetchByPrimaryKey(
+		long repositoryId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByPrimaryKey(repositoryId);
+	}
+
+	/**
 	* Returns all the repositories.
 	*
 	* @return the repositories
@@ -721,7 +851,7 @@ public class RepositoryUtil {
 	* Returns a range of all the repositories.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from RepositoryModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param start the lower bound of the range of repositories
@@ -739,7 +869,7 @@ public class RepositoryUtil {
 	* Returns an ordered range of all the repositories.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from RepositoryModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param start the lower bound of the range of repositories
@@ -756,71 +886,6 @@ public class RepositoryUtil {
 	}
 
 	/**
-	* Removes all the repositories where uuid = &#63; from the database.
-	*
-	* @param uuid the uuid
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void removeByUuid(java.lang.String uuid)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByUuid(uuid);
-	}
-
-	/**
-	* Removes the repository where uuid = &#63; and groupId = &#63; from the database.
-	*
-	* @param uuid the uuid
-	* @param groupId the group ID
-	* @return the repository that was removed
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portal.model.Repository removeByUUID_G(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.NoSuchRepositoryException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().removeByUUID_G(uuid, groupId);
-	}
-
-	/**
-	* Removes all the repositories where uuid = &#63; and companyId = &#63; from the database.
-	*
-	* @param uuid the uuid
-	* @param companyId the company ID
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void removeByUuid_C(java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByUuid_C(uuid, companyId);
-	}
-
-	/**
-	* Removes all the repositories where groupId = &#63; from the database.
-	*
-	* @param groupId the group ID
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void removeByGroupId(long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByGroupId(groupId);
-	}
-
-	/**
-	* Removes the repository where groupId = &#63; and name = &#63; and portletId = &#63; from the database.
-	*
-	* @param groupId the group ID
-	* @param name the name
-	* @param portletId the portlet ID
-	* @return the repository that was removed
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portal.model.Repository removeByG_N_P(
-		long groupId, java.lang.String name, java.lang.String portletId)
-		throws com.liferay.portal.NoSuchRepositoryException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().removeByG_N_P(groupId, name, portletId);
-	}
-
-	/**
 	* Removes all the repositories from the database.
 	*
 	* @throws SystemException if a system exception occurred
@@ -828,71 +893,6 @@ public class RepositoryUtil {
 	public static void removeAll()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		getPersistence().removeAll();
-	}
-
-	/**
-	* Returns the number of repositories where uuid = &#63;.
-	*
-	* @param uuid the uuid
-	* @return the number of matching repositories
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int countByUuid(java.lang.String uuid)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByUuid(uuid);
-	}
-
-	/**
-	* Returns the number of repositories where uuid = &#63; and groupId = &#63;.
-	*
-	* @param uuid the uuid
-	* @param groupId the group ID
-	* @return the number of matching repositories
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int countByUUID_G(java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByUUID_G(uuid, groupId);
-	}
-
-	/**
-	* Returns the number of repositories where uuid = &#63; and companyId = &#63;.
-	*
-	* @param uuid the uuid
-	* @param companyId the company ID
-	* @return the number of matching repositories
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int countByUuid_C(java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByUuid_C(uuid, companyId);
-	}
-
-	/**
-	* Returns the number of repositories where groupId = &#63;.
-	*
-	* @param groupId the group ID
-	* @return the number of matching repositories
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int countByGroupId(long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByGroupId(groupId);
-	}
-
-	/**
-	* Returns the number of repositories where groupId = &#63; and name = &#63; and portletId = &#63;.
-	*
-	* @param groupId the group ID
-	* @param name the name
-	* @param portletId the portlet ID
-	* @return the number of matching repositories
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int countByG_N_P(long groupId, java.lang.String name,
-		java.lang.String portletId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByG_N_P(groupId, name, portletId);
 	}
 
 	/**

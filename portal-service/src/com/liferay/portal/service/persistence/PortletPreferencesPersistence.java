@@ -36,72 +36,6 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	 */
 
 	/**
-	* Caches the portlet preferences in the entity cache if it is enabled.
-	*
-	* @param portletPreferences the portlet preferences
-	*/
-	public void cacheResult(
-		com.liferay.portal.model.PortletPreferences portletPreferences);
-
-	/**
-	* Caches the portlet preferenceses in the entity cache if it is enabled.
-	*
-	* @param portletPreferenceses the portlet preferenceses
-	*/
-	public void cacheResult(
-		java.util.List<com.liferay.portal.model.PortletPreferences> portletPreferenceses);
-
-	/**
-	* Creates a new portlet preferences with the primary key. Does not add the portlet preferences to the database.
-	*
-	* @param portletPreferencesId the primary key for the new portlet preferences
-	* @return the new portlet preferences
-	*/
-	public com.liferay.portal.model.PortletPreferences create(
-		long portletPreferencesId);
-
-	/**
-	* Removes the portlet preferences with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param portletPreferencesId the primary key of the portlet preferences
-	* @return the portlet preferences that was removed
-	* @throws com.liferay.portal.NoSuchPortletPreferencesException if a portlet preferences with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.PortletPreferences remove(
-		long portletPreferencesId)
-		throws com.liferay.portal.NoSuchPortletPreferencesException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	public com.liferay.portal.model.PortletPreferences updateImpl(
-		com.liferay.portal.model.PortletPreferences portletPreferences)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the portlet preferences with the primary key or throws a {@link com.liferay.portal.NoSuchPortletPreferencesException} if it could not be found.
-	*
-	* @param portletPreferencesId the primary key of the portlet preferences
-	* @return the portlet preferences
-	* @throws com.liferay.portal.NoSuchPortletPreferencesException if a portlet preferences with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.PortletPreferences findByPrimaryKey(
-		long portletPreferencesId)
-		throws com.liferay.portal.NoSuchPortletPreferencesException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the portlet preferences with the primary key or returns <code>null</code> if it could not be found.
-	*
-	* @param portletPreferencesId the primary key of the portlet preferences
-	* @return the portlet preferences, or <code>null</code> if a portlet preferences with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.PortletPreferences fetchByPrimaryKey(
-		long portletPreferencesId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
 	* Returns all the portlet preferenceses where plid = &#63;.
 	*
 	* @param plid the plid
@@ -115,7 +49,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	* Returns a range of all the portlet preferenceses where plid = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from PortletPreferencesModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param plid the plid
@@ -132,7 +66,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	* Returns an ordered range of all the portlet preferenceses where plid = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from PortletPreferencesModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param plid the plid
@@ -220,6 +154,25 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Removes all the portlet preferenceses where plid = &#63; from the database.
+	*
+	* @param plid the plid
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeByPlid(long plid)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of portlet preferenceses where plid = &#63;.
+	*
+	* @param plid the plid
+	* @return the number of matching portlet preferenceses
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByPlid(long plid)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Returns all the portlet preferenceses where portletId = &#63;.
 	*
 	* @param portletId the portlet ID
@@ -234,7 +187,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	* Returns a range of all the portlet preferenceses where portletId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from PortletPreferencesModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param portletId the portlet ID
@@ -251,7 +204,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	* Returns an ordered range of all the portlet preferenceses where portletId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from PortletPreferencesModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param portletId the portlet ID
@@ -339,6 +292,25 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Removes all the portlet preferenceses where portletId = &#63; from the database.
+	*
+	* @param portletId the portlet ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeByPortletId(java.lang.String portletId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of portlet preferenceses where portletId = &#63;.
+	*
+	* @param portletId the portlet ID
+	* @return the number of matching portlet preferenceses
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByPortletId(java.lang.String portletId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Returns all the portlet preferenceses where plid = &#63; and portletId = &#63;.
 	*
 	* @param plid the plid
@@ -354,7 +326,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	* Returns a range of all the portlet preferenceses where plid = &#63; and portletId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from PortletPreferencesModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param plid the plid
@@ -372,7 +344,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	* Returns an ordered range of all the portlet preferenceses where plid = &#63; and portletId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from PortletPreferencesModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param plid the plid
@@ -466,6 +438,27 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Removes all the portlet preferenceses where plid = &#63; and portletId = &#63; from the database.
+	*
+	* @param plid the plid
+	* @param portletId the portlet ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeByP_P(long plid, java.lang.String portletId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of portlet preferenceses where plid = &#63; and portletId = &#63;.
+	*
+	* @param plid the plid
+	* @param portletId the portlet ID
+	* @return the number of matching portlet preferenceses
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByP_P(long plid, java.lang.String portletId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Returns all the portlet preferenceses where ownerId = &#63; and ownerType = &#63; and plid = &#63;.
 	*
 	* @param ownerId the owner ID
@@ -482,7 +475,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	* Returns a range of all the portlet preferenceses where ownerId = &#63; and ownerType = &#63; and plid = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from PortletPreferencesModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param ownerId the owner ID
@@ -501,7 +494,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	* Returns an ordered range of all the portlet preferenceses where ownerId = &#63; and ownerType = &#63; and plid = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from PortletPreferencesModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param ownerId the owner ID
@@ -601,6 +594,29 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Removes all the portlet preferenceses where ownerId = &#63; and ownerType = &#63; and plid = &#63; from the database.
+	*
+	* @param ownerId the owner ID
+	* @param ownerType the owner type
+	* @param plid the plid
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeByO_O_P(long ownerId, int ownerType, long plid)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of portlet preferenceses where ownerId = &#63; and ownerType = &#63; and plid = &#63;.
+	*
+	* @param ownerId the owner ID
+	* @param ownerType the owner type
+	* @param plid the plid
+	* @return the number of matching portlet preferenceses
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByO_O_P(long ownerId, int ownerType, long plid)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Returns all the portlet preferenceses where ownerType = &#63; and plid = &#63; and portletId = &#63;.
 	*
 	* @param ownerType the owner type
@@ -617,7 +633,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	* Returns a range of all the portlet preferenceses where ownerType = &#63; and plid = &#63; and portletId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from PortletPreferencesModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param ownerType the owner type
@@ -636,7 +652,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	* Returns an ordered range of all the portlet preferenceses where ownerType = &#63; and plid = &#63; and portletId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from PortletPreferencesModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param ownerType the owner type
@@ -738,6 +754,30 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Removes all the portlet preferenceses where ownerType = &#63; and plid = &#63; and portletId = &#63; from the database.
+	*
+	* @param ownerType the owner type
+	* @param plid the plid
+	* @param portletId the portlet ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeByO_P_P(int ownerType, long plid,
+		java.lang.String portletId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of portlet preferenceses where ownerType = &#63; and plid = &#63; and portletId = &#63;.
+	*
+	* @param ownerType the owner type
+	* @param plid the plid
+	* @param portletId the portlet ID
+	* @return the number of matching portlet preferenceses
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByO_P_P(int ownerType, long plid, java.lang.String portletId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Returns the portlet preferences where ownerId = &#63; and ownerType = &#63; and plid = &#63; and portletId = &#63; or throws a {@link com.liferay.portal.NoSuchPortletPreferencesException} if it could not be found.
 	*
 	* @param ownerId the owner ID
@@ -784,100 +824,6 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns all the portlet preferenceses.
-	*
-	* @return the portlet preferenceses
-	* @throws SystemException if a system exception occurred
-	*/
-	public java.util.List<com.liferay.portal.model.PortletPreferences> findAll()
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns a range of all the portlet preferenceses.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
-	* @param start the lower bound of the range of portlet preferenceses
-	* @param end the upper bound of the range of portlet preferenceses (not inclusive)
-	* @return the range of portlet preferenceses
-	* @throws SystemException if a system exception occurred
-	*/
-	public java.util.List<com.liferay.portal.model.PortletPreferences> findAll(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns an ordered range of all the portlet preferenceses.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
-	* @param start the lower bound of the range of portlet preferenceses
-	* @param end the upper bound of the range of portlet preferenceses (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of portlet preferenceses
-	* @throws SystemException if a system exception occurred
-	*/
-	public java.util.List<com.liferay.portal.model.PortletPreferences> findAll(
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Removes all the portlet preferenceses where plid = &#63; from the database.
-	*
-	* @param plid the plid
-	* @throws SystemException if a system exception occurred
-	*/
-	public void removeByPlid(long plid)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Removes all the portlet preferenceses where portletId = &#63; from the database.
-	*
-	* @param portletId the portlet ID
-	* @throws SystemException if a system exception occurred
-	*/
-	public void removeByPortletId(java.lang.String portletId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Removes all the portlet preferenceses where plid = &#63; and portletId = &#63; from the database.
-	*
-	* @param plid the plid
-	* @param portletId the portlet ID
-	* @throws SystemException if a system exception occurred
-	*/
-	public void removeByP_P(long plid, java.lang.String portletId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Removes all the portlet preferenceses where ownerId = &#63; and ownerType = &#63; and plid = &#63; from the database.
-	*
-	* @param ownerId the owner ID
-	* @param ownerType the owner type
-	* @param plid the plid
-	* @throws SystemException if a system exception occurred
-	*/
-	public void removeByO_O_P(long ownerId, int ownerType, long plid)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Removes all the portlet preferenceses where ownerType = &#63; and plid = &#63; and portletId = &#63; from the database.
-	*
-	* @param ownerType the owner type
-	* @param plid the plid
-	* @param portletId the portlet ID
-	* @throws SystemException if a system exception occurred
-	*/
-	public void removeByO_P_P(int ownerType, long plid,
-		java.lang.String portletId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
 	* Removes the portlet preferences where ownerId = &#63; and ownerType = &#63; and plid = &#63; and portletId = &#63; from the database.
 	*
 	* @param ownerId the owner ID
@@ -893,69 +839,6 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Removes all the portlet preferenceses from the database.
-	*
-	* @throws SystemException if a system exception occurred
-	*/
-	public void removeAll()
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the number of portlet preferenceses where plid = &#63;.
-	*
-	* @param plid the plid
-	* @return the number of matching portlet preferenceses
-	* @throws SystemException if a system exception occurred
-	*/
-	public int countByPlid(long plid)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the number of portlet preferenceses where portletId = &#63;.
-	*
-	* @param portletId the portlet ID
-	* @return the number of matching portlet preferenceses
-	* @throws SystemException if a system exception occurred
-	*/
-	public int countByPortletId(java.lang.String portletId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the number of portlet preferenceses where plid = &#63; and portletId = &#63;.
-	*
-	* @param plid the plid
-	* @param portletId the portlet ID
-	* @return the number of matching portlet preferenceses
-	* @throws SystemException if a system exception occurred
-	*/
-	public int countByP_P(long plid, java.lang.String portletId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the number of portlet preferenceses where ownerId = &#63; and ownerType = &#63; and plid = &#63;.
-	*
-	* @param ownerId the owner ID
-	* @param ownerType the owner type
-	* @param plid the plid
-	* @return the number of matching portlet preferenceses
-	* @throws SystemException if a system exception occurred
-	*/
-	public int countByO_O_P(long ownerId, int ownerType, long plid)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the number of portlet preferenceses where ownerType = &#63; and plid = &#63; and portletId = &#63;.
-	*
-	* @param ownerType the owner type
-	* @param plid the plid
-	* @param portletId the portlet ID
-	* @return the number of matching portlet preferenceses
-	* @throws SystemException if a system exception occurred
-	*/
-	public int countByO_P_P(int ownerType, long plid, java.lang.String portletId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
 	* Returns the number of portlet preferenceses where ownerId = &#63; and ownerType = &#63; and plid = &#63; and portletId = &#63;.
 	*
 	* @param ownerId the owner ID
@@ -967,6 +850,123 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	*/
 	public int countByO_O_P_P(long ownerId, int ownerType, long plid,
 		java.lang.String portletId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Caches the portlet preferences in the entity cache if it is enabled.
+	*
+	* @param portletPreferences the portlet preferences
+	*/
+	public void cacheResult(
+		com.liferay.portal.model.PortletPreferences portletPreferences);
+
+	/**
+	* Caches the portlet preferenceses in the entity cache if it is enabled.
+	*
+	* @param portletPreferenceses the portlet preferenceses
+	*/
+	public void cacheResult(
+		java.util.List<com.liferay.portal.model.PortletPreferences> portletPreferenceses);
+
+	/**
+	* Creates a new portlet preferences with the primary key. Does not add the portlet preferences to the database.
+	*
+	* @param portletPreferencesId the primary key for the new portlet preferences
+	* @return the new portlet preferences
+	*/
+	public com.liferay.portal.model.PortletPreferences create(
+		long portletPreferencesId);
+
+	/**
+	* Removes the portlet preferences with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param portletPreferencesId the primary key of the portlet preferences
+	* @return the portlet preferences that was removed
+	* @throws com.liferay.portal.NoSuchPortletPreferencesException if a portlet preferences with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.PortletPreferences remove(
+		long portletPreferencesId)
+		throws com.liferay.portal.NoSuchPortletPreferencesException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public com.liferay.portal.model.PortletPreferences updateImpl(
+		com.liferay.portal.model.PortletPreferences portletPreferences)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the portlet preferences with the primary key or throws a {@link com.liferay.portal.NoSuchPortletPreferencesException} if it could not be found.
+	*
+	* @param portletPreferencesId the primary key of the portlet preferences
+	* @return the portlet preferences
+	* @throws com.liferay.portal.NoSuchPortletPreferencesException if a portlet preferences with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.PortletPreferences findByPrimaryKey(
+		long portletPreferencesId)
+		throws com.liferay.portal.NoSuchPortletPreferencesException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the portlet preferences with the primary key or returns <code>null</code> if it could not be found.
+	*
+	* @param portletPreferencesId the primary key of the portlet preferences
+	* @return the portlet preferences, or <code>null</code> if a portlet preferences with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.PortletPreferences fetchByPrimaryKey(
+		long portletPreferencesId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns all the portlet preferenceses.
+	*
+	* @return the portlet preferenceses
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portal.model.PortletPreferences> findAll()
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns a range of all the portlet preferenceses.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from PortletPreferencesModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
+	* </p>
+	*
+	* @param start the lower bound of the range of portlet preferenceses
+	* @param end the upper bound of the range of portlet preferenceses (not inclusive)
+	* @return the range of portlet preferenceses
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portal.model.PortletPreferences> findAll(
+		int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns an ordered range of all the portlet preferenceses.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from PortletPreferencesModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
+	* </p>
+	*
+	* @param start the lower bound of the range of portlet preferenceses
+	* @param end the upper bound of the range of portlet preferenceses (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of portlet preferenceses
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portal.model.PortletPreferences> findAll(
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Removes all the portlet preferenceses from the database.
+	*
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeAll()
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

@@ -110,86 +110,6 @@ public class ServiceComponentUtil {
 	}
 
 	/**
-	* Caches the service component in the entity cache if it is enabled.
-	*
-	* @param serviceComponent the service component
-	*/
-	public static void cacheResult(
-		com.liferay.portal.model.ServiceComponent serviceComponent) {
-		getPersistence().cacheResult(serviceComponent);
-	}
-
-	/**
-	* Caches the service components in the entity cache if it is enabled.
-	*
-	* @param serviceComponents the service components
-	*/
-	public static void cacheResult(
-		java.util.List<com.liferay.portal.model.ServiceComponent> serviceComponents) {
-		getPersistence().cacheResult(serviceComponents);
-	}
-
-	/**
-	* Creates a new service component with the primary key. Does not add the service component to the database.
-	*
-	* @param serviceComponentId the primary key for the new service component
-	* @return the new service component
-	*/
-	public static com.liferay.portal.model.ServiceComponent create(
-		long serviceComponentId) {
-		return getPersistence().create(serviceComponentId);
-	}
-
-	/**
-	* Removes the service component with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param serviceComponentId the primary key of the service component
-	* @return the service component that was removed
-	* @throws com.liferay.portal.NoSuchServiceComponentException if a service component with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portal.model.ServiceComponent remove(
-		long serviceComponentId)
-		throws com.liferay.portal.NoSuchServiceComponentException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().remove(serviceComponentId);
-	}
-
-	public static com.liferay.portal.model.ServiceComponent updateImpl(
-		com.liferay.portal.model.ServiceComponent serviceComponent)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(serviceComponent);
-	}
-
-	/**
-	* Returns the service component with the primary key or throws a {@link com.liferay.portal.NoSuchServiceComponentException} if it could not be found.
-	*
-	* @param serviceComponentId the primary key of the service component
-	* @return the service component
-	* @throws com.liferay.portal.NoSuchServiceComponentException if a service component with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portal.model.ServiceComponent findByPrimaryKey(
-		long serviceComponentId)
-		throws com.liferay.portal.NoSuchServiceComponentException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findByPrimaryKey(serviceComponentId);
-	}
-
-	/**
-	* Returns the service component with the primary key or returns <code>null</code> if it could not be found.
-	*
-	* @param serviceComponentId the primary key of the service component
-	* @return the service component, or <code>null</code> if a service component with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portal.model.ServiceComponent fetchByPrimaryKey(
-		long serviceComponentId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().fetchByPrimaryKey(serviceComponentId);
-	}
-
-	/**
 	* Returns all the service components where buildNamespace = &#63;.
 	*
 	* @param buildNamespace the build namespace
@@ -206,7 +126,7 @@ public class ServiceComponentUtil {
 	* Returns a range of all the service components where buildNamespace = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from ServiceComponentModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param buildNamespace the build namespace
@@ -225,7 +145,7 @@ public class ServiceComponentUtil {
 	* Returns an ordered range of all the service components where buildNamespace = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from ServiceComponentModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param buildNamespace the build namespace
@@ -334,6 +254,29 @@ public class ServiceComponentUtil {
 	}
 
 	/**
+	* Removes all the service components where buildNamespace = &#63; from the database.
+	*
+	* @param buildNamespace the build namespace
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByBuildNamespace(java.lang.String buildNamespace)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByBuildNamespace(buildNamespace);
+	}
+
+	/**
+	* Returns the number of service components where buildNamespace = &#63;.
+	*
+	* @param buildNamespace the build namespace
+	* @return the number of matching service components
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByBuildNamespace(java.lang.String buildNamespace)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByBuildNamespace(buildNamespace);
+	}
+
+	/**
 	* Returns the service component where buildNamespace = &#63; and buildNumber = &#63; or throws a {@link com.liferay.portal.NoSuchServiceComponentException} if it could not be found.
 	*
 	* @param buildNamespace the build namespace
@@ -382,6 +325,115 @@ public class ServiceComponentUtil {
 	}
 
 	/**
+	* Removes the service component where buildNamespace = &#63; and buildNumber = &#63; from the database.
+	*
+	* @param buildNamespace the build namespace
+	* @param buildNumber the build number
+	* @return the service component that was removed
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.ServiceComponent removeByBNS_BNU(
+		java.lang.String buildNamespace, long buildNumber)
+		throws com.liferay.portal.NoSuchServiceComponentException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().removeByBNS_BNU(buildNamespace, buildNumber);
+	}
+
+	/**
+	* Returns the number of service components where buildNamespace = &#63; and buildNumber = &#63;.
+	*
+	* @param buildNamespace the build namespace
+	* @param buildNumber the build number
+	* @return the number of matching service components
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByBNS_BNU(java.lang.String buildNamespace,
+		long buildNumber)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByBNS_BNU(buildNamespace, buildNumber);
+	}
+
+	/**
+	* Caches the service component in the entity cache if it is enabled.
+	*
+	* @param serviceComponent the service component
+	*/
+	public static void cacheResult(
+		com.liferay.portal.model.ServiceComponent serviceComponent) {
+		getPersistence().cacheResult(serviceComponent);
+	}
+
+	/**
+	* Caches the service components in the entity cache if it is enabled.
+	*
+	* @param serviceComponents the service components
+	*/
+	public static void cacheResult(
+		java.util.List<com.liferay.portal.model.ServiceComponent> serviceComponents) {
+		getPersistence().cacheResult(serviceComponents);
+	}
+
+	/**
+	* Creates a new service component with the primary key. Does not add the service component to the database.
+	*
+	* @param serviceComponentId the primary key for the new service component
+	* @return the new service component
+	*/
+	public static com.liferay.portal.model.ServiceComponent create(
+		long serviceComponentId) {
+		return getPersistence().create(serviceComponentId);
+	}
+
+	/**
+	* Removes the service component with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param serviceComponentId the primary key of the service component
+	* @return the service component that was removed
+	* @throws com.liferay.portal.NoSuchServiceComponentException if a service component with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.ServiceComponent remove(
+		long serviceComponentId)
+		throws com.liferay.portal.NoSuchServiceComponentException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().remove(serviceComponentId);
+	}
+
+	public static com.liferay.portal.model.ServiceComponent updateImpl(
+		com.liferay.portal.model.ServiceComponent serviceComponent)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().updateImpl(serviceComponent);
+	}
+
+	/**
+	* Returns the service component with the primary key or throws a {@link com.liferay.portal.NoSuchServiceComponentException} if it could not be found.
+	*
+	* @param serviceComponentId the primary key of the service component
+	* @return the service component
+	* @throws com.liferay.portal.NoSuchServiceComponentException if a service component with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.ServiceComponent findByPrimaryKey(
+		long serviceComponentId)
+		throws com.liferay.portal.NoSuchServiceComponentException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByPrimaryKey(serviceComponentId);
+	}
+
+	/**
+	* Returns the service component with the primary key or returns <code>null</code> if it could not be found.
+	*
+	* @param serviceComponentId the primary key of the service component
+	* @return the service component, or <code>null</code> if a service component with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.ServiceComponent fetchByPrimaryKey(
+		long serviceComponentId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByPrimaryKey(serviceComponentId);
+	}
+
+	/**
 	* Returns all the service components.
 	*
 	* @return the service components
@@ -396,7 +448,7 @@ public class ServiceComponentUtil {
 	* Returns a range of all the service components.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from ServiceComponentModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param start the lower bound of the range of service components
@@ -414,7 +466,7 @@ public class ServiceComponentUtil {
 	* Returns an ordered range of all the service components.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from ServiceComponentModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param start the lower bound of the range of service components
@@ -431,32 +483,6 @@ public class ServiceComponentUtil {
 	}
 
 	/**
-	* Removes all the service components where buildNamespace = &#63; from the database.
-	*
-	* @param buildNamespace the build namespace
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void removeByBuildNamespace(java.lang.String buildNamespace)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByBuildNamespace(buildNamespace);
-	}
-
-	/**
-	* Removes the service component where buildNamespace = &#63; and buildNumber = &#63; from the database.
-	*
-	* @param buildNamespace the build namespace
-	* @param buildNumber the build number
-	* @return the service component that was removed
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portal.model.ServiceComponent removeByBNS_BNU(
-		java.lang.String buildNamespace, long buildNumber)
-		throws com.liferay.portal.NoSuchServiceComponentException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().removeByBNS_BNU(buildNamespace, buildNumber);
-	}
-
-	/**
 	* Removes all the service components from the database.
 	*
 	* @throws SystemException if a system exception occurred
@@ -464,32 +490,6 @@ public class ServiceComponentUtil {
 	public static void removeAll()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		getPersistence().removeAll();
-	}
-
-	/**
-	* Returns the number of service components where buildNamespace = &#63;.
-	*
-	* @param buildNamespace the build namespace
-	* @return the number of matching service components
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int countByBuildNamespace(java.lang.String buildNamespace)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByBuildNamespace(buildNamespace);
-	}
-
-	/**
-	* Returns the number of service components where buildNamespace = &#63; and buildNumber = &#63;.
-	*
-	* @param buildNamespace the build namespace
-	* @param buildNumber the build number
-	* @return the number of matching service components
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int countByBNS_BNU(java.lang.String buildNamespace,
-		long buildNumber)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByBNS_BNU(buildNamespace, buildNumber);
 	}
 
 	/**

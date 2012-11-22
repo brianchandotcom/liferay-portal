@@ -104,6 +104,7 @@ public class SocialRequestModelImpl extends BaseModelImpl<SocialRequest>
 	public static long TYPE_COLUMN_BITMASK = 64L;
 	public static long USERID_COLUMN_BITMASK = 128L;
 	public static long UUID_COLUMN_BITMASK = 256L;
+	public static long REQUESTID_COLUMN_BITMASK = 512L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.

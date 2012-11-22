@@ -62,6 +62,8 @@ public class ResourceBlockPermissionModelImpl extends BaseModelImpl<ResourceBloc
 		};
 	public static final String TABLE_SQL_CREATE = "create table ResourceBlockPermission (resourceBlockPermissionId LONG not null primary key,resourceBlockId LONG,roleId LONG,actionIds LONG)";
 	public static final String TABLE_SQL_DROP = "drop table ResourceBlockPermission";
+	public static final String ORDER_BY_JPQL = " ORDER BY resourceBlockPermission.resourceBlockPermissionId ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY ResourceBlockPermission.resourceBlockPermissionId ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
@@ -76,6 +78,7 @@ public class ResourceBlockPermissionModelImpl extends BaseModelImpl<ResourceBloc
 			true);
 	public static long RESOURCEBLOCKID_COLUMN_BITMASK = 1L;
 	public static long ROLEID_COLUMN_BITMASK = 2L;
+	public static long RESOURCEBLOCKPERMISSIONID_COLUMN_BITMASK = 4L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portal.model.ResourceBlockPermission"));
 

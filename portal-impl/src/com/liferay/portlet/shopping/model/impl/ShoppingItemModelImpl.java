@@ -123,6 +123,7 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 	public static long MEDIUMIMAGEID_COLUMN_BITMASK = 16L;
 	public static long SKU_COLUMN_BITMASK = 32L;
 	public static long SMALLIMAGEID_COLUMN_BITMASK = 64L;
+	public static long ITEMID_COLUMN_BITMASK = 128L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.

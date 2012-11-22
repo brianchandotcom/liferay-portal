@@ -77,6 +77,8 @@ public class PollsVoteModelImpl extends BaseModelImpl<PollsVote>
 		};
 	public static final String TABLE_SQL_CREATE = "create table PollsVote (voteId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,questionId LONG,choiceId LONG,voteDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table PollsVote";
+	public static final String ORDER_BY_JPQL = " ORDER BY pollsVote.voteId ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY PollsVote.voteId ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
@@ -92,6 +94,7 @@ public class PollsVoteModelImpl extends BaseModelImpl<PollsVote>
 	public static long CHOICEID_COLUMN_BITMASK = 1L;
 	public static long QUESTIONID_COLUMN_BITMASK = 2L;
 	public static long USERID_COLUMN_BITMASK = 4L;
+	public static long VOTEID_COLUMN_BITMASK = 8L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.

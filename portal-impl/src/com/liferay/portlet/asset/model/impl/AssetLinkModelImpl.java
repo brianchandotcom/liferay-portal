@@ -89,6 +89,7 @@ public class AssetLinkModelImpl extends BaseModelImpl<AssetLink>
 	public static long ENTRYID1_COLUMN_BITMASK = 1L;
 	public static long ENTRYID2_COLUMN_BITMASK = 2L;
 	public static long TYPE_COLUMN_BITMASK = 4L;
+	public static long WEIGHT_COLUMN_BITMASK = 8L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.asset.model.AssetLink"));
 

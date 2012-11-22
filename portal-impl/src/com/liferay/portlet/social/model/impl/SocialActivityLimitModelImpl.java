@@ -72,6 +72,8 @@ public class SocialActivityLimitModelImpl extends BaseModelImpl<SocialActivityLi
 		};
 	public static final String TABLE_SQL_CREATE = "create table SocialActivityLimit (activityLimitId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,classNameId LONG,classPK LONG,activityType INTEGER,activityCounterName VARCHAR(75) null,value VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table SocialActivityLimit";
+	public static final String ORDER_BY_JPQL = " ORDER BY socialActivityLimit.activityLimitId ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY SocialActivityLimit.activityLimitId ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
@@ -90,6 +92,7 @@ public class SocialActivityLimitModelImpl extends BaseModelImpl<SocialActivityLi
 	public static long CLASSPK_COLUMN_BITMASK = 8L;
 	public static long GROUPID_COLUMN_BITMASK = 16L;
 	public static long USERID_COLUMN_BITMASK = 32L;
+	public static long ACTIVITYLIMITID_COLUMN_BITMASK = 64L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.social.model.SocialActivityLimit"));
 

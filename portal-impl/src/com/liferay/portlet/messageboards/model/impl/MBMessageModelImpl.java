@@ -122,6 +122,8 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 	public static long THREADID_COLUMN_BITMASK = 256L;
 	public static long USERID_COLUMN_BITMASK = 512L;
 	public static long UUID_COLUMN_BITMASK = 1024L;
+	public static long CREATEDATE_COLUMN_BITMASK = 2048L;
+	public static long MESSAGEID_COLUMN_BITMASK = 4096L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.

@@ -111,86 +111,6 @@ public class MDRActionUtil {
 	}
 
 	/**
-	* Caches the m d r action in the entity cache if it is enabled.
-	*
-	* @param mdrAction the m d r action
-	*/
-	public static void cacheResult(
-		com.liferay.portlet.mobiledevicerules.model.MDRAction mdrAction) {
-		getPersistence().cacheResult(mdrAction);
-	}
-
-	/**
-	* Caches the m d r actions in the entity cache if it is enabled.
-	*
-	* @param mdrActions the m d r actions
-	*/
-	public static void cacheResult(
-		java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRAction> mdrActions) {
-		getPersistence().cacheResult(mdrActions);
-	}
-
-	/**
-	* Creates a new m d r action with the primary key. Does not add the m d r action to the database.
-	*
-	* @param actionId the primary key for the new m d r action
-	* @return the new m d r action
-	*/
-	public static com.liferay.portlet.mobiledevicerules.model.MDRAction create(
-		long actionId) {
-		return getPersistence().create(actionId);
-	}
-
-	/**
-	* Removes the m d r action with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param actionId the primary key of the m d r action
-	* @return the m d r action that was removed
-	* @throws com.liferay.portlet.mobiledevicerules.NoSuchActionException if a m d r action with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portlet.mobiledevicerules.model.MDRAction remove(
-		long actionId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.mobiledevicerules.NoSuchActionException {
-		return getPersistence().remove(actionId);
-	}
-
-	public static com.liferay.portlet.mobiledevicerules.model.MDRAction updateImpl(
-		com.liferay.portlet.mobiledevicerules.model.MDRAction mdrAction)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(mdrAction);
-	}
-
-	/**
-	* Returns the m d r action with the primary key or throws a {@link com.liferay.portlet.mobiledevicerules.NoSuchActionException} if it could not be found.
-	*
-	* @param actionId the primary key of the m d r action
-	* @return the m d r action
-	* @throws com.liferay.portlet.mobiledevicerules.NoSuchActionException if a m d r action with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portlet.mobiledevicerules.model.MDRAction findByPrimaryKey(
-		long actionId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.mobiledevicerules.NoSuchActionException {
-		return getPersistence().findByPrimaryKey(actionId);
-	}
-
-	/**
-	* Returns the m d r action with the primary key or returns <code>null</code> if it could not be found.
-	*
-	* @param actionId the primary key of the m d r action
-	* @return the m d r action, or <code>null</code> if a m d r action with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portlet.mobiledevicerules.model.MDRAction fetchByPrimaryKey(
-		long actionId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().fetchByPrimaryKey(actionId);
-	}
-
-	/**
 	* Returns all the m d r actions where uuid = &#63;.
 	*
 	* @param uuid the uuid
@@ -207,7 +127,7 @@ public class MDRActionUtil {
 	* Returns a range of all the m d r actions where uuid = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from MDRActionModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -226,7 +146,7 @@ public class MDRActionUtil {
 	* Returns an ordered range of all the m d r actions where uuid = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from MDRActionModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -327,6 +247,29 @@ public class MDRActionUtil {
 	}
 
 	/**
+	* Removes all the m d r actions where uuid = &#63; from the database.
+	*
+	* @param uuid the uuid
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByUuid(java.lang.String uuid)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByUuid(uuid);
+	}
+
+	/**
+	* Returns the number of m d r actions where uuid = &#63;.
+	*
+	* @param uuid the uuid
+	* @return the number of matching m d r actions
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByUuid(java.lang.String uuid)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByUuid(uuid);
+	}
+
+	/**
 	* Returns the m d r action where uuid = &#63; and groupId = &#63; or throws a {@link com.liferay.portlet.mobiledevicerules.NoSuchActionException} if it could not be found.
 	*
 	* @param uuid the uuid
@@ -372,6 +315,34 @@ public class MDRActionUtil {
 	}
 
 	/**
+	* Removes the m d r action where uuid = &#63; and groupId = &#63; from the database.
+	*
+	* @param uuid the uuid
+	* @param groupId the group ID
+	* @return the m d r action that was removed
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.mobiledevicerules.model.MDRAction removeByUUID_G(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.mobiledevicerules.NoSuchActionException {
+		return getPersistence().removeByUUID_G(uuid, groupId);
+	}
+
+	/**
+	* Returns the number of m d r actions where uuid = &#63; and groupId = &#63;.
+	*
+	* @param uuid the uuid
+	* @param groupId the group ID
+	* @return the number of matching m d r actions
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByUUID_G(java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByUUID_G(uuid, groupId);
+	}
+
+	/**
 	* Returns all the m d r actions where uuid = &#63; and companyId = &#63;.
 	*
 	* @param uuid the uuid
@@ -389,7 +360,7 @@ public class MDRActionUtil {
 	* Returns a range of all the m d r actions where uuid = &#63; and companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from MDRActionModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -409,7 +380,7 @@ public class MDRActionUtil {
 	* Returns an ordered range of all the m d r actions where uuid = &#63; and companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from MDRActionModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -522,6 +493,31 @@ public class MDRActionUtil {
 	}
 
 	/**
+	* Removes all the m d r actions where uuid = &#63; and companyId = &#63; from the database.
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByUuid_C(java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByUuid_C(uuid, companyId);
+	}
+
+	/**
+	* Returns the number of m d r actions where uuid = &#63; and companyId = &#63;.
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @return the number of matching m d r actions
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByUuid_C(java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByUuid_C(uuid, companyId);
+	}
+
+	/**
 	* Returns all the m d r actions where ruleGroupInstanceId = &#63;.
 	*
 	* @param ruleGroupInstanceId the rule group instance ID
@@ -538,7 +534,7 @@ public class MDRActionUtil {
 	* Returns a range of all the m d r actions where ruleGroupInstanceId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from MDRActionModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param ruleGroupInstanceId the rule group instance ID
@@ -558,7 +554,7 @@ public class MDRActionUtil {
 	* Returns an ordered range of all the m d r actions where ruleGroupInstanceId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from MDRActionModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param ruleGroupInstanceId the rule group instance ID
@@ -670,6 +666,109 @@ public class MDRActionUtil {
 	}
 
 	/**
+	* Removes all the m d r actions where ruleGroupInstanceId = &#63; from the database.
+	*
+	* @param ruleGroupInstanceId the rule group instance ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByRuleGroupInstanceId(long ruleGroupInstanceId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByRuleGroupInstanceId(ruleGroupInstanceId);
+	}
+
+	/**
+	* Returns the number of m d r actions where ruleGroupInstanceId = &#63;.
+	*
+	* @param ruleGroupInstanceId the rule group instance ID
+	* @return the number of matching m d r actions
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByRuleGroupInstanceId(long ruleGroupInstanceId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByRuleGroupInstanceId(ruleGroupInstanceId);
+	}
+
+	/**
+	* Caches the m d r action in the entity cache if it is enabled.
+	*
+	* @param mdrAction the m d r action
+	*/
+	public static void cacheResult(
+		com.liferay.portlet.mobiledevicerules.model.MDRAction mdrAction) {
+		getPersistence().cacheResult(mdrAction);
+	}
+
+	/**
+	* Caches the m d r actions in the entity cache if it is enabled.
+	*
+	* @param mdrActions the m d r actions
+	*/
+	public static void cacheResult(
+		java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRAction> mdrActions) {
+		getPersistence().cacheResult(mdrActions);
+	}
+
+	/**
+	* Creates a new m d r action with the primary key. Does not add the m d r action to the database.
+	*
+	* @param actionId the primary key for the new m d r action
+	* @return the new m d r action
+	*/
+	public static com.liferay.portlet.mobiledevicerules.model.MDRAction create(
+		long actionId) {
+		return getPersistence().create(actionId);
+	}
+
+	/**
+	* Removes the m d r action with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param actionId the primary key of the m d r action
+	* @return the m d r action that was removed
+	* @throws com.liferay.portlet.mobiledevicerules.NoSuchActionException if a m d r action with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.mobiledevicerules.model.MDRAction remove(
+		long actionId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.mobiledevicerules.NoSuchActionException {
+		return getPersistence().remove(actionId);
+	}
+
+	public static com.liferay.portlet.mobiledevicerules.model.MDRAction updateImpl(
+		com.liferay.portlet.mobiledevicerules.model.MDRAction mdrAction)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().updateImpl(mdrAction);
+	}
+
+	/**
+	* Returns the m d r action with the primary key or throws a {@link com.liferay.portlet.mobiledevicerules.NoSuchActionException} if it could not be found.
+	*
+	* @param actionId the primary key of the m d r action
+	* @return the m d r action
+	* @throws com.liferay.portlet.mobiledevicerules.NoSuchActionException if a m d r action with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.mobiledevicerules.model.MDRAction findByPrimaryKey(
+		long actionId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.mobiledevicerules.NoSuchActionException {
+		return getPersistence().findByPrimaryKey(actionId);
+	}
+
+	/**
+	* Returns the m d r action with the primary key or returns <code>null</code> if it could not be found.
+	*
+	* @param actionId the primary key of the m d r action
+	* @return the m d r action, or <code>null</code> if a m d r action with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.mobiledevicerules.model.MDRAction fetchByPrimaryKey(
+		long actionId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByPrimaryKey(actionId);
+	}
+
+	/**
 	* Returns all the m d r actions.
 	*
 	* @return the m d r actions
@@ -684,7 +783,7 @@ public class MDRActionUtil {
 	* Returns a range of all the m d r actions.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from MDRActionModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param start the lower bound of the range of m d r actions
@@ -702,7 +801,7 @@ public class MDRActionUtil {
 	* Returns an ordered range of all the m d r actions.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from MDRActionModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param start the lower bound of the range of m d r actions
@@ -719,55 +818,6 @@ public class MDRActionUtil {
 	}
 
 	/**
-	* Removes all the m d r actions where uuid = &#63; from the database.
-	*
-	* @param uuid the uuid
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void removeByUuid(java.lang.String uuid)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByUuid(uuid);
-	}
-
-	/**
-	* Removes the m d r action where uuid = &#63; and groupId = &#63; from the database.
-	*
-	* @param uuid the uuid
-	* @param groupId the group ID
-	* @return the m d r action that was removed
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portlet.mobiledevicerules.model.MDRAction removeByUUID_G(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.mobiledevicerules.NoSuchActionException {
-		return getPersistence().removeByUUID_G(uuid, groupId);
-	}
-
-	/**
-	* Removes all the m d r actions where uuid = &#63; and companyId = &#63; from the database.
-	*
-	* @param uuid the uuid
-	* @param companyId the company ID
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void removeByUuid_C(java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByUuid_C(uuid, companyId);
-	}
-
-	/**
-	* Removes all the m d r actions where ruleGroupInstanceId = &#63; from the database.
-	*
-	* @param ruleGroupInstanceId the rule group instance ID
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void removeByRuleGroupInstanceId(long ruleGroupInstanceId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByRuleGroupInstanceId(ruleGroupInstanceId);
-	}
-
-	/**
 	* Removes all the m d r actions from the database.
 	*
 	* @throws SystemException if a system exception occurred
@@ -775,56 +825,6 @@ public class MDRActionUtil {
 	public static void removeAll()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		getPersistence().removeAll();
-	}
-
-	/**
-	* Returns the number of m d r actions where uuid = &#63;.
-	*
-	* @param uuid the uuid
-	* @return the number of matching m d r actions
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int countByUuid(java.lang.String uuid)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByUuid(uuid);
-	}
-
-	/**
-	* Returns the number of m d r actions where uuid = &#63; and groupId = &#63;.
-	*
-	* @param uuid the uuid
-	* @param groupId the group ID
-	* @return the number of matching m d r actions
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int countByUUID_G(java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByUUID_G(uuid, groupId);
-	}
-
-	/**
-	* Returns the number of m d r actions where uuid = &#63; and companyId = &#63;.
-	*
-	* @param uuid the uuid
-	* @param companyId the company ID
-	* @return the number of matching m d r actions
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int countByUuid_C(java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByUuid_C(uuid, companyId);
-	}
-
-	/**
-	* Returns the number of m d r actions where ruleGroupInstanceId = &#63;.
-	*
-	* @param ruleGroupInstanceId the rule group instance ID
-	* @return the number of matching m d r actions
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int countByRuleGroupInstanceId(long ruleGroupInstanceId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByRuleGroupInstanceId(ruleGroupInstanceId);
 	}
 
 	/**

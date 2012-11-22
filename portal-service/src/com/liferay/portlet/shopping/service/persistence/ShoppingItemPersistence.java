@@ -38,69 +38,6 @@ public interface ShoppingItemPersistence extends BasePersistence<ShoppingItem> {
 	 */
 
 	/**
-	* Caches the shopping item in the entity cache if it is enabled.
-	*
-	* @param shoppingItem the shopping item
-	*/
-	public void cacheResult(
-		com.liferay.portlet.shopping.model.ShoppingItem shoppingItem);
-
-	/**
-	* Caches the shopping items in the entity cache if it is enabled.
-	*
-	* @param shoppingItems the shopping items
-	*/
-	public void cacheResult(
-		java.util.List<com.liferay.portlet.shopping.model.ShoppingItem> shoppingItems);
-
-	/**
-	* Creates a new shopping item with the primary key. Does not add the shopping item to the database.
-	*
-	* @param itemId the primary key for the new shopping item
-	* @return the new shopping item
-	*/
-	public com.liferay.portlet.shopping.model.ShoppingItem create(long itemId);
-
-	/**
-	* Removes the shopping item with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param itemId the primary key of the shopping item
-	* @return the shopping item that was removed
-	* @throws com.liferay.portlet.shopping.NoSuchItemException if a shopping item with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portlet.shopping.model.ShoppingItem remove(long itemId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.shopping.NoSuchItemException;
-
-	public com.liferay.portlet.shopping.model.ShoppingItem updateImpl(
-		com.liferay.portlet.shopping.model.ShoppingItem shoppingItem)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the shopping item with the primary key or throws a {@link com.liferay.portlet.shopping.NoSuchItemException} if it could not be found.
-	*
-	* @param itemId the primary key of the shopping item
-	* @return the shopping item
-	* @throws com.liferay.portlet.shopping.NoSuchItemException if a shopping item with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portlet.shopping.model.ShoppingItem findByPrimaryKey(
-		long itemId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.shopping.NoSuchItemException;
-
-	/**
-	* Returns the shopping item with the primary key or returns <code>null</code> if it could not be found.
-	*
-	* @param itemId the primary key of the shopping item
-	* @return the shopping item, or <code>null</code> if a shopping item with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portlet.shopping.model.ShoppingItem fetchByPrimaryKey(
-		long itemId) throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
 	* Returns the shopping item where smallImageId = &#63; or throws a {@link com.liferay.portlet.shopping.NoSuchItemException} if it could not be found.
 	*
 	* @param smallImageId the small image ID
@@ -134,6 +71,28 @@ public interface ShoppingItemPersistence extends BasePersistence<ShoppingItem> {
 	*/
 	public com.liferay.portlet.shopping.model.ShoppingItem fetchBySmallImageId(
 		long smallImageId, boolean retrieveFromCache)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Removes the shopping item where smallImageId = &#63; from the database.
+	*
+	* @param smallImageId the small image ID
+	* @return the shopping item that was removed
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.shopping.model.ShoppingItem removeBySmallImageId(
+		long smallImageId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.shopping.NoSuchItemException;
+
+	/**
+	* Returns the number of shopping items where smallImageId = &#63;.
+	*
+	* @param smallImageId the small image ID
+	* @return the number of matching shopping items
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countBySmallImageId(long smallImageId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
@@ -173,6 +132,28 @@ public interface ShoppingItemPersistence extends BasePersistence<ShoppingItem> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Removes the shopping item where mediumImageId = &#63; from the database.
+	*
+	* @param mediumImageId the medium image ID
+	* @return the shopping item that was removed
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.shopping.model.ShoppingItem removeByMediumImageId(
+		long mediumImageId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.shopping.NoSuchItemException;
+
+	/**
+	* Returns the number of shopping items where mediumImageId = &#63;.
+	*
+	* @param mediumImageId the medium image ID
+	* @return the number of matching shopping items
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByMediumImageId(long mediumImageId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Returns the shopping item where largeImageId = &#63; or throws a {@link com.liferay.portlet.shopping.NoSuchItemException} if it could not be found.
 	*
 	* @param largeImageId the large image ID
@@ -209,6 +190,28 @@ public interface ShoppingItemPersistence extends BasePersistence<ShoppingItem> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Removes the shopping item where largeImageId = &#63; from the database.
+	*
+	* @param largeImageId the large image ID
+	* @return the shopping item that was removed
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.shopping.model.ShoppingItem removeByLargeImageId(
+		long largeImageId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.shopping.NoSuchItemException;
+
+	/**
+	* Returns the number of shopping items where largeImageId = &#63;.
+	*
+	* @param largeImageId the large image ID
+	* @return the number of matching shopping items
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByLargeImageId(long largeImageId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Returns all the shopping items where groupId = &#63; and categoryId = &#63;.
 	*
 	* @param groupId the group ID
@@ -224,7 +227,7 @@ public interface ShoppingItemPersistence extends BasePersistence<ShoppingItem> {
 	* Returns a range of all the shopping items where groupId = &#63; and categoryId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from ShoppingItemModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -242,7 +245,7 @@ public interface ShoppingItemPersistence extends BasePersistence<ShoppingItem> {
 	* Returns an ordered range of all the shopping items where groupId = &#63; and categoryId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from ShoppingItemModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -351,7 +354,7 @@ public interface ShoppingItemPersistence extends BasePersistence<ShoppingItem> {
 	* Returns a range of all the shopping items that the user has permission to view where groupId = &#63; and categoryId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from ShoppingItemModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -369,7 +372,7 @@ public interface ShoppingItemPersistence extends BasePersistence<ShoppingItem> {
 	* Returns an ordered range of all the shopping items that the user has permissions to view where groupId = &#63; and categoryId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from ShoppingItemModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -401,6 +404,38 @@ public interface ShoppingItemPersistence extends BasePersistence<ShoppingItem> {
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.shopping.NoSuchItemException;
+
+	/**
+	* Removes all the shopping items where groupId = &#63; and categoryId = &#63; from the database.
+	*
+	* @param groupId the group ID
+	* @param categoryId the category ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeByG_C(long groupId, long categoryId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of shopping items where groupId = &#63; and categoryId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param categoryId the category ID
+	* @return the number of matching shopping items
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByG_C(long groupId, long categoryId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of shopping items that the user has permission to view where groupId = &#63; and categoryId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param categoryId the category ID
+	* @return the number of matching shopping items that the user has permission to view
+	* @throws SystemException if a system exception occurred
+	*/
+	public int filterCountByG_C(long groupId, long categoryId)
+		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
 	* Returns the shopping item where companyId = &#63; and sku = &#63; or throws a {@link com.liferay.portlet.shopping.NoSuchItemException} if it could not be found.
@@ -442,6 +477,93 @@ public interface ShoppingItemPersistence extends BasePersistence<ShoppingItem> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Removes the shopping item where companyId = &#63; and sku = &#63; from the database.
+	*
+	* @param companyId the company ID
+	* @param sku the sku
+	* @return the shopping item that was removed
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.shopping.model.ShoppingItem removeByC_S(
+		long companyId, java.lang.String sku)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.shopping.NoSuchItemException;
+
+	/**
+	* Returns the number of shopping items where companyId = &#63; and sku = &#63;.
+	*
+	* @param companyId the company ID
+	* @param sku the sku
+	* @return the number of matching shopping items
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByC_S(long companyId, java.lang.String sku)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Caches the shopping item in the entity cache if it is enabled.
+	*
+	* @param shoppingItem the shopping item
+	*/
+	public void cacheResult(
+		com.liferay.portlet.shopping.model.ShoppingItem shoppingItem);
+
+	/**
+	* Caches the shopping items in the entity cache if it is enabled.
+	*
+	* @param shoppingItems the shopping items
+	*/
+	public void cacheResult(
+		java.util.List<com.liferay.portlet.shopping.model.ShoppingItem> shoppingItems);
+
+	/**
+	* Creates a new shopping item with the primary key. Does not add the shopping item to the database.
+	*
+	* @param itemId the primary key for the new shopping item
+	* @return the new shopping item
+	*/
+	public com.liferay.portlet.shopping.model.ShoppingItem create(long itemId);
+
+	/**
+	* Removes the shopping item with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param itemId the primary key of the shopping item
+	* @return the shopping item that was removed
+	* @throws com.liferay.portlet.shopping.NoSuchItemException if a shopping item with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.shopping.model.ShoppingItem remove(long itemId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.shopping.NoSuchItemException;
+
+	public com.liferay.portlet.shopping.model.ShoppingItem updateImpl(
+		com.liferay.portlet.shopping.model.ShoppingItem shoppingItem)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the shopping item with the primary key or throws a {@link com.liferay.portlet.shopping.NoSuchItemException} if it could not be found.
+	*
+	* @param itemId the primary key of the shopping item
+	* @return the shopping item
+	* @throws com.liferay.portlet.shopping.NoSuchItemException if a shopping item with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.shopping.model.ShoppingItem findByPrimaryKey(
+		long itemId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.shopping.NoSuchItemException;
+
+	/**
+	* Returns the shopping item with the primary key or returns <code>null</code> if it could not be found.
+	*
+	* @param itemId the primary key of the shopping item
+	* @return the shopping item, or <code>null</code> if a shopping item with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.shopping.model.ShoppingItem fetchByPrimaryKey(
+		long itemId) throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Returns all the shopping items.
 	*
 	* @return the shopping items
@@ -454,7 +576,7 @@ public interface ShoppingItemPersistence extends BasePersistence<ShoppingItem> {
 	* Returns a range of all the shopping items.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from ShoppingItemModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param start the lower bound of the range of shopping items
@@ -470,7 +592,7 @@ public interface ShoppingItemPersistence extends BasePersistence<ShoppingItem> {
 	* Returns an ordered range of all the shopping items.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from ShoppingItemModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param start the lower bound of the range of shopping items
@@ -485,133 +607,11 @@ public interface ShoppingItemPersistence extends BasePersistence<ShoppingItem> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Removes the shopping item where smallImageId = &#63; from the database.
-	*
-	* @param smallImageId the small image ID
-	* @return the shopping item that was removed
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portlet.shopping.model.ShoppingItem removeBySmallImageId(
-		long smallImageId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.shopping.NoSuchItemException;
-
-	/**
-	* Removes the shopping item where mediumImageId = &#63; from the database.
-	*
-	* @param mediumImageId the medium image ID
-	* @return the shopping item that was removed
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portlet.shopping.model.ShoppingItem removeByMediumImageId(
-		long mediumImageId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.shopping.NoSuchItemException;
-
-	/**
-	* Removes the shopping item where largeImageId = &#63; from the database.
-	*
-	* @param largeImageId the large image ID
-	* @return the shopping item that was removed
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portlet.shopping.model.ShoppingItem removeByLargeImageId(
-		long largeImageId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.shopping.NoSuchItemException;
-
-	/**
-	* Removes all the shopping items where groupId = &#63; and categoryId = &#63; from the database.
-	*
-	* @param groupId the group ID
-	* @param categoryId the category ID
-	* @throws SystemException if a system exception occurred
-	*/
-	public void removeByG_C(long groupId, long categoryId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Removes the shopping item where companyId = &#63; and sku = &#63; from the database.
-	*
-	* @param companyId the company ID
-	* @param sku the sku
-	* @return the shopping item that was removed
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portlet.shopping.model.ShoppingItem removeByC_S(
-		long companyId, java.lang.String sku)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.shopping.NoSuchItemException;
-
-	/**
 	* Removes all the shopping items from the database.
 	*
 	* @throws SystemException if a system exception occurred
 	*/
 	public void removeAll()
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the number of shopping items where smallImageId = &#63;.
-	*
-	* @param smallImageId the small image ID
-	* @return the number of matching shopping items
-	* @throws SystemException if a system exception occurred
-	*/
-	public int countBySmallImageId(long smallImageId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the number of shopping items where mediumImageId = &#63;.
-	*
-	* @param mediumImageId the medium image ID
-	* @return the number of matching shopping items
-	* @throws SystemException if a system exception occurred
-	*/
-	public int countByMediumImageId(long mediumImageId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the number of shopping items where largeImageId = &#63;.
-	*
-	* @param largeImageId the large image ID
-	* @return the number of matching shopping items
-	* @throws SystemException if a system exception occurred
-	*/
-	public int countByLargeImageId(long largeImageId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the number of shopping items where groupId = &#63; and categoryId = &#63;.
-	*
-	* @param groupId the group ID
-	* @param categoryId the category ID
-	* @return the number of matching shopping items
-	* @throws SystemException if a system exception occurred
-	*/
-	public int countByG_C(long groupId, long categoryId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the number of shopping items that the user has permission to view where groupId = &#63; and categoryId = &#63;.
-	*
-	* @param groupId the group ID
-	* @param categoryId the category ID
-	* @return the number of matching shopping items that the user has permission to view
-	* @throws SystemException if a system exception occurred
-	*/
-	public int filterCountByG_C(long groupId, long categoryId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the number of shopping items where companyId = &#63; and sku = &#63;.
-	*
-	* @param companyId the company ID
-	* @param sku the sku
-	* @return the number of matching shopping items
-	* @throws SystemException if a system exception occurred
-	*/
-	public int countByC_S(long companyId, java.lang.String sku)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
@@ -637,7 +637,7 @@ public interface ShoppingItemPersistence extends BasePersistence<ShoppingItem> {
 	* Returns a range of all the shopping item prices associated with the shopping item.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from ShoppingItemModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param pk the primary key of the shopping item
@@ -654,7 +654,7 @@ public interface ShoppingItemPersistence extends BasePersistence<ShoppingItem> {
 	* Returns an ordered range of all the shopping item prices associated with the shopping item.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from ShoppingItemModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param pk the primary key of the shopping item

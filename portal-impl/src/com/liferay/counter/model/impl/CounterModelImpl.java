@@ -59,6 +59,8 @@ public class CounterModelImpl extends BaseModelImpl<Counter>
 		};
 	public static final String TABLE_SQL_CREATE = "create table Counter (name VARCHAR(75) not null primary key,currentId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table Counter";
+	public static final String ORDER_BY_JPQL = " ORDER BY counter.name ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY Counter.name ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";

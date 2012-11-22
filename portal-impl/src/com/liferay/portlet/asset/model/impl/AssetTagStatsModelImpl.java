@@ -82,6 +82,7 @@ public class AssetTagStatsModelImpl extends BaseModelImpl<AssetTagStats>
 			true);
 	public static long CLASSNAMEID_COLUMN_BITMASK = 1L;
 	public static long TAGID_COLUMN_BITMASK = 2L;
+	public static long ASSETCOUNT_COLUMN_BITMASK = 4L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.asset.model.AssetTagStats"));
 

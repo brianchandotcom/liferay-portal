@@ -111,86 +111,6 @@ public class WorkflowInstanceLinkUtil {
 	}
 
 	/**
-	* Caches the workflow instance link in the entity cache if it is enabled.
-	*
-	* @param workflowInstanceLink the workflow instance link
-	*/
-	public static void cacheResult(
-		com.liferay.portal.model.WorkflowInstanceLink workflowInstanceLink) {
-		getPersistence().cacheResult(workflowInstanceLink);
-	}
-
-	/**
-	* Caches the workflow instance links in the entity cache if it is enabled.
-	*
-	* @param workflowInstanceLinks the workflow instance links
-	*/
-	public static void cacheResult(
-		java.util.List<com.liferay.portal.model.WorkflowInstanceLink> workflowInstanceLinks) {
-		getPersistence().cacheResult(workflowInstanceLinks);
-	}
-
-	/**
-	* Creates a new workflow instance link with the primary key. Does not add the workflow instance link to the database.
-	*
-	* @param workflowInstanceLinkId the primary key for the new workflow instance link
-	* @return the new workflow instance link
-	*/
-	public static com.liferay.portal.model.WorkflowInstanceLink create(
-		long workflowInstanceLinkId) {
-		return getPersistence().create(workflowInstanceLinkId);
-	}
-
-	/**
-	* Removes the workflow instance link with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param workflowInstanceLinkId the primary key of the workflow instance link
-	* @return the workflow instance link that was removed
-	* @throws com.liferay.portal.NoSuchWorkflowInstanceLinkException if a workflow instance link with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portal.model.WorkflowInstanceLink remove(
-		long workflowInstanceLinkId)
-		throws com.liferay.portal.NoSuchWorkflowInstanceLinkException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().remove(workflowInstanceLinkId);
-	}
-
-	public static com.liferay.portal.model.WorkflowInstanceLink updateImpl(
-		com.liferay.portal.model.WorkflowInstanceLink workflowInstanceLink)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(workflowInstanceLink);
-	}
-
-	/**
-	* Returns the workflow instance link with the primary key or throws a {@link com.liferay.portal.NoSuchWorkflowInstanceLinkException} if it could not be found.
-	*
-	* @param workflowInstanceLinkId the primary key of the workflow instance link
-	* @return the workflow instance link
-	* @throws com.liferay.portal.NoSuchWorkflowInstanceLinkException if a workflow instance link with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portal.model.WorkflowInstanceLink findByPrimaryKey(
-		long workflowInstanceLinkId)
-		throws com.liferay.portal.NoSuchWorkflowInstanceLinkException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findByPrimaryKey(workflowInstanceLinkId);
-	}
-
-	/**
-	* Returns the workflow instance link with the primary key or returns <code>null</code> if it could not be found.
-	*
-	* @param workflowInstanceLinkId the primary key of the workflow instance link
-	* @return the workflow instance link, or <code>null</code> if a workflow instance link with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portal.model.WorkflowInstanceLink fetchByPrimaryKey(
-		long workflowInstanceLinkId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().fetchByPrimaryKey(workflowInstanceLinkId);
-	}
-
-	/**
 	* Returns all the workflow instance links where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63;.
 	*
 	* @param groupId the group ID
@@ -211,7 +131,7 @@ public class WorkflowInstanceLinkUtil {
 	* Returns a range of all the workflow instance links where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from WorkflowInstanceLinkModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -236,7 +156,7 @@ public class WorkflowInstanceLinkUtil {
 	* Returns an ordered range of all the workflow instance links where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from WorkflowInstanceLinkModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -368,55 +288,6 @@ public class WorkflowInstanceLinkUtil {
 	}
 
 	/**
-	* Returns all the workflow instance links.
-	*
-	* @return the workflow instance links
-	* @throws SystemException if a system exception occurred
-	*/
-	public static java.util.List<com.liferay.portal.model.WorkflowInstanceLink> findAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findAll();
-	}
-
-	/**
-	* Returns a range of all the workflow instance links.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
-	* @param start the lower bound of the range of workflow instance links
-	* @param end the upper bound of the range of workflow instance links (not inclusive)
-	* @return the range of workflow instance links
-	* @throws SystemException if a system exception occurred
-	*/
-	public static java.util.List<com.liferay.portal.model.WorkflowInstanceLink> findAll(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findAll(start, end);
-	}
-
-	/**
-	* Returns an ordered range of all the workflow instance links.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
-	* @param start the lower bound of the range of workflow instance links
-	* @param end the upper bound of the range of workflow instance links (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of workflow instance links
-	* @throws SystemException if a system exception occurred
-	*/
-	public static java.util.List<com.liferay.portal.model.WorkflowInstanceLink> findAll(
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findAll(start, end, orderByComparator);
-	}
-
-	/**
 	* Removes all the workflow instance links where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; from the database.
 	*
 	* @param groupId the group ID
@@ -430,16 +301,6 @@ public class WorkflowInstanceLinkUtil {
 		throws com.liferay.portal.kernel.exception.SystemException {
 		getPersistence()
 			.removeByG_C_C_C(groupId, companyId, classNameId, classPK);
-	}
-
-	/**
-	* Removes all the workflow instance links from the database.
-	*
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void removeAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeAll();
 	}
 
 	/**
@@ -457,6 +318,145 @@ public class WorkflowInstanceLinkUtil {
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence()
 				   .countByG_C_C_C(groupId, companyId, classNameId, classPK);
+	}
+
+	/**
+	* Caches the workflow instance link in the entity cache if it is enabled.
+	*
+	* @param workflowInstanceLink the workflow instance link
+	*/
+	public static void cacheResult(
+		com.liferay.portal.model.WorkflowInstanceLink workflowInstanceLink) {
+		getPersistence().cacheResult(workflowInstanceLink);
+	}
+
+	/**
+	* Caches the workflow instance links in the entity cache if it is enabled.
+	*
+	* @param workflowInstanceLinks the workflow instance links
+	*/
+	public static void cacheResult(
+		java.util.List<com.liferay.portal.model.WorkflowInstanceLink> workflowInstanceLinks) {
+		getPersistence().cacheResult(workflowInstanceLinks);
+	}
+
+	/**
+	* Creates a new workflow instance link with the primary key. Does not add the workflow instance link to the database.
+	*
+	* @param workflowInstanceLinkId the primary key for the new workflow instance link
+	* @return the new workflow instance link
+	*/
+	public static com.liferay.portal.model.WorkflowInstanceLink create(
+		long workflowInstanceLinkId) {
+		return getPersistence().create(workflowInstanceLinkId);
+	}
+
+	/**
+	* Removes the workflow instance link with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param workflowInstanceLinkId the primary key of the workflow instance link
+	* @return the workflow instance link that was removed
+	* @throws com.liferay.portal.NoSuchWorkflowInstanceLinkException if a workflow instance link with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.WorkflowInstanceLink remove(
+		long workflowInstanceLinkId)
+		throws com.liferay.portal.NoSuchWorkflowInstanceLinkException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().remove(workflowInstanceLinkId);
+	}
+
+	public static com.liferay.portal.model.WorkflowInstanceLink updateImpl(
+		com.liferay.portal.model.WorkflowInstanceLink workflowInstanceLink)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().updateImpl(workflowInstanceLink);
+	}
+
+	/**
+	* Returns the workflow instance link with the primary key or throws a {@link com.liferay.portal.NoSuchWorkflowInstanceLinkException} if it could not be found.
+	*
+	* @param workflowInstanceLinkId the primary key of the workflow instance link
+	* @return the workflow instance link
+	* @throws com.liferay.portal.NoSuchWorkflowInstanceLinkException if a workflow instance link with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.WorkflowInstanceLink findByPrimaryKey(
+		long workflowInstanceLinkId)
+		throws com.liferay.portal.NoSuchWorkflowInstanceLinkException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByPrimaryKey(workflowInstanceLinkId);
+	}
+
+	/**
+	* Returns the workflow instance link with the primary key or returns <code>null</code> if it could not be found.
+	*
+	* @param workflowInstanceLinkId the primary key of the workflow instance link
+	* @return the workflow instance link, or <code>null</code> if a workflow instance link with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.WorkflowInstanceLink fetchByPrimaryKey(
+		long workflowInstanceLinkId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByPrimaryKey(workflowInstanceLinkId);
+	}
+
+	/**
+	* Returns all the workflow instance links.
+	*
+	* @return the workflow instance links
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portal.model.WorkflowInstanceLink> findAll()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findAll();
+	}
+
+	/**
+	* Returns a range of all the workflow instance links.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from WorkflowInstanceLinkModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
+	* </p>
+	*
+	* @param start the lower bound of the range of workflow instance links
+	* @param end the upper bound of the range of workflow instance links (not inclusive)
+	* @return the range of workflow instance links
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portal.model.WorkflowInstanceLink> findAll(
+		int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findAll(start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the workflow instance links.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from WorkflowInstanceLinkModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
+	* </p>
+	*
+	* @param start the lower bound of the range of workflow instance links
+	* @param end the upper bound of the range of workflow instance links (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of workflow instance links
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portal.model.WorkflowInstanceLink> findAll(
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findAll(start, end, orderByComparator);
+	}
+
+	/**
+	* Removes all the workflow instance links from the database.
+	*
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeAll()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeAll();
 	}
 
 	/**

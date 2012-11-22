@@ -82,6 +82,7 @@ public class PasswordTrackerModelImpl extends BaseModelImpl<PasswordTracker>
 				"value.object.column.bitmask.enabled.com.liferay.portal.model.PasswordTracker"),
 			true);
 	public static long USERID_COLUMN_BITMASK = 1L;
+	public static long CREATEDATE_COLUMN_BITMASK = 2L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portal.model.PasswordTracker"));
 

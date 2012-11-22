@@ -109,83 +109,6 @@ public class CompanyUtil {
 	}
 
 	/**
-	* Caches the company in the entity cache if it is enabled.
-	*
-	* @param company the company
-	*/
-	public static void cacheResult(com.liferay.portal.model.Company company) {
-		getPersistence().cacheResult(company);
-	}
-
-	/**
-	* Caches the companies in the entity cache if it is enabled.
-	*
-	* @param companies the companies
-	*/
-	public static void cacheResult(
-		java.util.List<com.liferay.portal.model.Company> companies) {
-		getPersistence().cacheResult(companies);
-	}
-
-	/**
-	* Creates a new company with the primary key. Does not add the company to the database.
-	*
-	* @param companyId the primary key for the new company
-	* @return the new company
-	*/
-	public static com.liferay.portal.model.Company create(long companyId) {
-		return getPersistence().create(companyId);
-	}
-
-	/**
-	* Removes the company with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param companyId the primary key of the company
-	* @return the company that was removed
-	* @throws com.liferay.portal.NoSuchCompanyException if a company with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portal.model.Company remove(long companyId)
-		throws com.liferay.portal.NoSuchCompanyException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().remove(companyId);
-	}
-
-	public static com.liferay.portal.model.Company updateImpl(
-		com.liferay.portal.model.Company company)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(company);
-	}
-
-	/**
-	* Returns the company with the primary key or throws a {@link com.liferay.portal.NoSuchCompanyException} if it could not be found.
-	*
-	* @param companyId the primary key of the company
-	* @return the company
-	* @throws com.liferay.portal.NoSuchCompanyException if a company with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portal.model.Company findByPrimaryKey(
-		long companyId)
-		throws com.liferay.portal.NoSuchCompanyException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findByPrimaryKey(companyId);
-	}
-
-	/**
-	* Returns the company with the primary key or returns <code>null</code> if it could not be found.
-	*
-	* @param companyId the primary key of the company
-	* @return the company, or <code>null</code> if a company with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portal.model.Company fetchByPrimaryKey(
-		long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().fetchByPrimaryKey(companyId);
-	}
-
-	/**
 	* Returns the company where webId = &#63; or throws a {@link com.liferay.portal.NoSuchCompanyException} if it could not be found.
 	*
 	* @param webId the web ID
@@ -225,6 +148,32 @@ public class CompanyUtil {
 		java.lang.String webId, boolean retrieveFromCache)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence().fetchByWebId(webId, retrieveFromCache);
+	}
+
+	/**
+	* Removes the company where webId = &#63; from the database.
+	*
+	* @param webId the web ID
+	* @return the company that was removed
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Company removeByWebId(
+		java.lang.String webId)
+		throws com.liferay.portal.NoSuchCompanyException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().removeByWebId(webId);
+	}
+
+	/**
+	* Returns the number of companies where webId = &#63;.
+	*
+	* @param webId the web ID
+	* @return the number of matching companies
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByWebId(java.lang.String webId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByWebId(webId);
 	}
 
 	/**
@@ -269,6 +218,32 @@ public class CompanyUtil {
 	}
 
 	/**
+	* Removes the company where mx = &#63; from the database.
+	*
+	* @param mx the mx
+	* @return the company that was removed
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Company removeByMx(
+		java.lang.String mx)
+		throws com.liferay.portal.NoSuchCompanyException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().removeByMx(mx);
+	}
+
+	/**
+	* Returns the number of companies where mx = &#63;.
+	*
+	* @param mx the mx
+	* @return the number of matching companies
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByMx(java.lang.String mx)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByMx(mx);
+	}
+
+	/**
 	* Returns the company where logoId = &#63; or throws a {@link com.liferay.portal.NoSuchCompanyException} if it could not be found.
 	*
 	* @param logoId the logo ID
@@ -309,6 +284,31 @@ public class CompanyUtil {
 	}
 
 	/**
+	* Removes the company where logoId = &#63; from the database.
+	*
+	* @param logoId the logo ID
+	* @return the company that was removed
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Company removeByLogoId(long logoId)
+		throws com.liferay.portal.NoSuchCompanyException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().removeByLogoId(logoId);
+	}
+
+	/**
+	* Returns the number of companies where logoId = &#63;.
+	*
+	* @param logoId the logo ID
+	* @return the number of matching companies
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByLogoId(long logoId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByLogoId(logoId);
+	}
+
+	/**
 	* Returns all the companies where system = &#63;.
 	*
 	* @param system the system
@@ -325,7 +325,7 @@ public class CompanyUtil {
 	* Returns a range of all the companies where system = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from CompanyModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param system the system
@@ -344,7 +344,7 @@ public class CompanyUtil {
 	* Returns an ordered range of all the companies where system = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from CompanyModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param system the system
@@ -447,6 +447,106 @@ public class CompanyUtil {
 	}
 
 	/**
+	* Removes all the companies where system = &#63; from the database.
+	*
+	* @param system the system
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeBySystem(boolean system)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeBySystem(system);
+	}
+
+	/**
+	* Returns the number of companies where system = &#63;.
+	*
+	* @param system the system
+	* @return the number of matching companies
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countBySystem(boolean system)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countBySystem(system);
+	}
+
+	/**
+	* Caches the company in the entity cache if it is enabled.
+	*
+	* @param company the company
+	*/
+	public static void cacheResult(com.liferay.portal.model.Company company) {
+		getPersistence().cacheResult(company);
+	}
+
+	/**
+	* Caches the companies in the entity cache if it is enabled.
+	*
+	* @param companies the companies
+	*/
+	public static void cacheResult(
+		java.util.List<com.liferay.portal.model.Company> companies) {
+		getPersistence().cacheResult(companies);
+	}
+
+	/**
+	* Creates a new company with the primary key. Does not add the company to the database.
+	*
+	* @param companyId the primary key for the new company
+	* @return the new company
+	*/
+	public static com.liferay.portal.model.Company create(long companyId) {
+		return getPersistence().create(companyId);
+	}
+
+	/**
+	* Removes the company with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param companyId the primary key of the company
+	* @return the company that was removed
+	* @throws com.liferay.portal.NoSuchCompanyException if a company with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Company remove(long companyId)
+		throws com.liferay.portal.NoSuchCompanyException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().remove(companyId);
+	}
+
+	public static com.liferay.portal.model.Company updateImpl(
+		com.liferay.portal.model.Company company)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().updateImpl(company);
+	}
+
+	/**
+	* Returns the company with the primary key or throws a {@link com.liferay.portal.NoSuchCompanyException} if it could not be found.
+	*
+	* @param companyId the primary key of the company
+	* @return the company
+	* @throws com.liferay.portal.NoSuchCompanyException if a company with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Company findByPrimaryKey(
+		long companyId)
+		throws com.liferay.portal.NoSuchCompanyException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByPrimaryKey(companyId);
+	}
+
+	/**
+	* Returns the company with the primary key or returns <code>null</code> if it could not be found.
+	*
+	* @param companyId the primary key of the company
+	* @return the company, or <code>null</code> if a company with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Company fetchByPrimaryKey(
+		long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByPrimaryKey(companyId);
+	}
+
+	/**
 	* Returns all the companies.
 	*
 	* @return the companies
@@ -461,7 +561,7 @@ public class CompanyUtil {
 	* Returns a range of all the companies.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from CompanyModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param start the lower bound of the range of companies
@@ -479,7 +579,7 @@ public class CompanyUtil {
 	* Returns an ordered range of all the companies.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from CompanyModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param start the lower bound of the range of companies
@@ -496,58 +596,6 @@ public class CompanyUtil {
 	}
 
 	/**
-	* Removes the company where webId = &#63; from the database.
-	*
-	* @param webId the web ID
-	* @return the company that was removed
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portal.model.Company removeByWebId(
-		java.lang.String webId)
-		throws com.liferay.portal.NoSuchCompanyException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().removeByWebId(webId);
-	}
-
-	/**
-	* Removes the company where mx = &#63; from the database.
-	*
-	* @param mx the mx
-	* @return the company that was removed
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portal.model.Company removeByMx(
-		java.lang.String mx)
-		throws com.liferay.portal.NoSuchCompanyException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().removeByMx(mx);
-	}
-
-	/**
-	* Removes the company where logoId = &#63; from the database.
-	*
-	* @param logoId the logo ID
-	* @return the company that was removed
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portal.model.Company removeByLogoId(long logoId)
-		throws com.liferay.portal.NoSuchCompanyException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().removeByLogoId(logoId);
-	}
-
-	/**
-	* Removes all the companies where system = &#63; from the database.
-	*
-	* @param system the system
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void removeBySystem(boolean system)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeBySystem(system);
-	}
-
-	/**
 	* Removes all the companies from the database.
 	*
 	* @throws SystemException if a system exception occurred
@@ -555,54 +603,6 @@ public class CompanyUtil {
 	public static void removeAll()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		getPersistence().removeAll();
-	}
-
-	/**
-	* Returns the number of companies where webId = &#63;.
-	*
-	* @param webId the web ID
-	* @return the number of matching companies
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int countByWebId(java.lang.String webId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByWebId(webId);
-	}
-
-	/**
-	* Returns the number of companies where mx = &#63;.
-	*
-	* @param mx the mx
-	* @return the number of matching companies
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int countByMx(java.lang.String mx)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByMx(mx);
-	}
-
-	/**
-	* Returns the number of companies where logoId = &#63;.
-	*
-	* @param logoId the logo ID
-	* @return the number of matching companies
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int countByLogoId(long logoId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByLogoId(logoId);
-	}
-
-	/**
-	* Returns the number of companies where system = &#63;.
-	*
-	* @param system the system
-	* @return the number of matching companies
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int countBySystem(boolean system)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countBySystem(system);
 	}
 
 	/**

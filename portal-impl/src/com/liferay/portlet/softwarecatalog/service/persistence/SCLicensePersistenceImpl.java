@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnmodifiableList;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
@@ -82,44 +83,6 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 		".List1";
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY +
 		".List2";
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_ACTIVE = new FinderPath(SCLicenseModelImpl.ENTITY_CACHE_ENABLED,
-			SCLicenseModelImpl.FINDER_CACHE_ENABLED, SCLicenseImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByActive",
-			new String[] {
-				Boolean.class.getName(),
-				
-			"java.lang.Integer", "java.lang.Integer",
-				"com.liferay.portal.kernel.util.OrderByComparator"
-			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ACTIVE =
-		new FinderPath(SCLicenseModelImpl.ENTITY_CACHE_ENABLED,
-			SCLicenseModelImpl.FINDER_CACHE_ENABLED, SCLicenseImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByActive",
-			new String[] { Boolean.class.getName() },
-			SCLicenseModelImpl.ACTIVE_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_ACTIVE = new FinderPath(SCLicenseModelImpl.ENTITY_CACHE_ENABLED,
-			SCLicenseModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByActive",
-			new String[] { Boolean.class.getName() });
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_A_R = new FinderPath(SCLicenseModelImpl.ENTITY_CACHE_ENABLED,
-			SCLicenseModelImpl.FINDER_CACHE_ENABLED, SCLicenseImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByA_R",
-			new String[] {
-				Boolean.class.getName(), Boolean.class.getName(),
-				
-			"java.lang.Integer", "java.lang.Integer",
-				"com.liferay.portal.kernel.util.OrderByComparator"
-			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_A_R = new FinderPath(SCLicenseModelImpl.ENTITY_CACHE_ENABLED,
-			SCLicenseModelImpl.FINDER_CACHE_ENABLED, SCLicenseImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByA_R",
-			new String[] { Boolean.class.getName(), Boolean.class.getName() },
-			SCLicenseModelImpl.ACTIVE_COLUMN_BITMASK |
-			SCLicenseModelImpl.RECOMMENDED_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_A_R = new FinderPath(SCLicenseModelImpl.ENTITY_CACHE_ENABLED,
-			SCLicenseModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByA_R",
-			new String[] { Boolean.class.getName(), Boolean.class.getName() });
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_ALL = new FinderPath(SCLicenseModelImpl.ENTITY_CACHE_ENABLED,
 			SCLicenseModelImpl.FINDER_CACHE_ENABLED, SCLicenseImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
@@ -129,6 +92,1721 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(SCLicenseModelImpl.ENTITY_CACHE_ENABLED,
 			SCLicenseModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_ACTIVE = new FinderPath(SCLicenseModelImpl.ENTITY_CACHE_ENABLED,
+			SCLicenseModelImpl.FINDER_CACHE_ENABLED, SCLicenseImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByActive",
+			new String[] {
+				Boolean.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ACTIVE =
+		new FinderPath(SCLicenseModelImpl.ENTITY_CACHE_ENABLED,
+			SCLicenseModelImpl.FINDER_CACHE_ENABLED, SCLicenseImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByActive",
+			new String[] { Boolean.class.getName() },
+			SCLicenseModelImpl.ACTIVE_COLUMN_BITMASK |
+			SCLicenseModelImpl.NAME_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_ACTIVE = new FinderPath(SCLicenseModelImpl.ENTITY_CACHE_ENABLED,
+			SCLicenseModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByActive",
+			new String[] { Boolean.class.getName() });
+
+	/**
+	 * Returns all the s c licenses where active = &#63;.
+	 *
+	 * @param active the active
+	 * @return the matching s c licenses
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<SCLicense> findByActive(boolean active)
+		throws SystemException {
+		return findByActive(active, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the s c licenses where active = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from SCLicenseModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
+	 * </p>
+	 *
+	 * @param active the active
+	 * @param start the lower bound of the range of s c licenses
+	 * @param end the upper bound of the range of s c licenses (not inclusive)
+	 * @return the range of matching s c licenses
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<SCLicense> findByActive(boolean active, int start, int end)
+		throws SystemException {
+		return findByActive(active, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the s c licenses where active = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from SCLicenseModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
+	 * </p>
+	 *
+	 * @param active the active
+	 * @param start the lower bound of the range of s c licenses
+	 * @param end the upper bound of the range of s c licenses (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching s c licenses
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<SCLicense> findByActive(boolean active, int start, int end,
+		OrderByComparator orderByComparator) throws SystemException {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ACTIVE;
+			finderArgs = new Object[] { active };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_ACTIVE;
+			finderArgs = new Object[] { active, start, end, orderByComparator };
+		}
+
+		List<SCLicense> list = (List<SCLicense>)FinderCacheUtil.getResult(finderPath,
+				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (SCLicense scLicense : list) {
+				if ((active != scLicense.getActive())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(3 +
+						(orderByComparator.getOrderByFields().length * 3));
+			}
+			else {
+				query = new StringBundler(3);
+			}
+
+			query.append(_SQL_SELECT_SCLICENSE_WHERE);
+
+			query.append(_FINDER_COLUMN_ACTIVE_ACTIVE_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else if (pagination) {
+				query.append(SCLicenseModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(active);
+
+				if (!pagination) {
+					list = (List<SCLicense>)QueryUtil.list(q, getDialect(),
+							start, end, false);
+
+					Collections.sort(list);
+
+					list = new UnmodifiableList(list);
+				}
+				else {
+					list = (List<SCLicense>)QueryUtil.list(q, getDialect(),
+							start, end);
+				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first s c license in the ordered set where active = &#63;.
+	 *
+	 * @param active the active
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching s c license
+	 * @throws com.liferay.portlet.softwarecatalog.NoSuchLicenseException if a matching s c license could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public SCLicense findByActive_First(boolean active,
+		OrderByComparator orderByComparator)
+		throws NoSuchLicenseException, SystemException {
+		SCLicense scLicense = fetchByActive_First(active, orderByComparator);
+
+		if (scLicense != null) {
+			return scLicense;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("active=");
+		msg.append(active);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchLicenseException(msg.toString());
+	}
+
+	/**
+	 * Returns the first s c license in the ordered set where active = &#63;.
+	 *
+	 * @param active the active
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching s c license, or <code>null</code> if a matching s c license could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public SCLicense fetchByActive_First(boolean active,
+		OrderByComparator orderByComparator) throws SystemException {
+		List<SCLicense> list = findByActive(active, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last s c license in the ordered set where active = &#63;.
+	 *
+	 * @param active the active
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching s c license
+	 * @throws com.liferay.portlet.softwarecatalog.NoSuchLicenseException if a matching s c license could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public SCLicense findByActive_Last(boolean active,
+		OrderByComparator orderByComparator)
+		throws NoSuchLicenseException, SystemException {
+		SCLicense scLicense = fetchByActive_Last(active, orderByComparator);
+
+		if (scLicense != null) {
+			return scLicense;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("active=");
+		msg.append(active);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchLicenseException(msg.toString());
+	}
+
+	/**
+	 * Returns the last s c license in the ordered set where active = &#63;.
+	 *
+	 * @param active the active
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching s c license, or <code>null</code> if a matching s c license could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public SCLicense fetchByActive_Last(boolean active,
+		OrderByComparator orderByComparator) throws SystemException {
+		int count = countByActive(active);
+
+		List<SCLicense> list = findByActive(active, count - 1, count,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the s c licenses before and after the current s c license in the ordered set where active = &#63;.
+	 *
+	 * @param licenseId the primary key of the current s c license
+	 * @param active the active
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next s c license
+	 * @throws com.liferay.portlet.softwarecatalog.NoSuchLicenseException if a s c license with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public SCLicense[] findByActive_PrevAndNext(long licenseId, boolean active,
+		OrderByComparator orderByComparator)
+		throws NoSuchLicenseException, SystemException {
+		SCLicense scLicense = findByPrimaryKey(licenseId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SCLicense[] array = new SCLicenseImpl[3];
+
+			array[0] = getByActive_PrevAndNext(session, scLicense, active,
+					orderByComparator, true);
+
+			array[1] = scLicense;
+
+			array[2] = getByActive_PrevAndNext(session, scLicense, active,
+					orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected SCLicense getByActive_PrevAndNext(Session session,
+		SCLicense scLicense, boolean active,
+		OrderByComparator orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_SCLICENSE_WHERE);
+
+		query.append(_FINDER_COLUMN_ACTIVE_ACTIVE_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(SCLicenseModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(active);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(scLicense);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<SCLicense> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Returns all the s c licenses that the user has permission to view where active = &#63;.
+	 *
+	 * @param active the active
+	 * @return the matching s c licenses that the user has permission to view
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<SCLicense> filterFindByActive(boolean active)
+		throws SystemException {
+		return filterFindByActive(active, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			null);
+	}
+
+	/**
+	 * Returns a range of all the s c licenses that the user has permission to view where active = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from SCLicenseModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
+	 * </p>
+	 *
+	 * @param active the active
+	 * @param start the lower bound of the range of s c licenses
+	 * @param end the upper bound of the range of s c licenses (not inclusive)
+	 * @return the range of matching s c licenses that the user has permission to view
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<SCLicense> filterFindByActive(boolean active, int start, int end)
+		throws SystemException {
+		return filterFindByActive(active, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the s c licenses that the user has permissions to view where active = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from SCLicenseModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
+	 * </p>
+	 *
+	 * @param active the active
+	 * @param start the lower bound of the range of s c licenses
+	 * @param end the upper bound of the range of s c licenses (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching s c licenses that the user has permission to view
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<SCLicense> filterFindByActive(boolean active, int start,
+		int end, OrderByComparator orderByComparator) throws SystemException {
+		if (!InlineSQLHelperUtil.isEnabled()) {
+			return findByActive(active, start, end, orderByComparator);
+		}
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(3 +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_SCLICENSE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_SCLICENSE_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_ACTIVE_ACTIVE_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_SCLICENSE_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			if (getDB().isSupportsInlineDistinct()) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
+					orderByComparator);
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(SCLicenseModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(SCLicenseModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				SCLicense.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSQLQuery(sql);
+
+			if (getDB().isSupportsInlineDistinct()) {
+				q.addEntity(_FILTER_ENTITY_ALIAS, SCLicenseImpl.class);
+			}
+			else {
+				q.addEntity(_FILTER_ENTITY_TABLE, SCLicenseImpl.class);
+			}
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(active);
+
+			return (List<SCLicense>)QueryUtil.list(q, getDialect(), start, end);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
+	 * Returns the s c licenses before and after the current s c license in the ordered set of s c licenses that the user has permission to view where active = &#63;.
+	 *
+	 * @param licenseId the primary key of the current s c license
+	 * @param active the active
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next s c license
+	 * @throws com.liferay.portlet.softwarecatalog.NoSuchLicenseException if a s c license with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public SCLicense[] filterFindByActive_PrevAndNext(long licenseId,
+		boolean active, OrderByComparator orderByComparator)
+		throws NoSuchLicenseException, SystemException {
+		if (!InlineSQLHelperUtil.isEnabled()) {
+			return findByActive_PrevAndNext(licenseId, active, orderByComparator);
+		}
+
+		SCLicense scLicense = findByPrimaryKey(licenseId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SCLicense[] array = new SCLicenseImpl[3];
+
+			array[0] = filterGetByActive_PrevAndNext(session, scLicense,
+					active, orderByComparator, true);
+
+			array[1] = scLicense;
+
+			array[2] = filterGetByActive_PrevAndNext(session, scLicense,
+					active, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected SCLicense filterGetByActive_PrevAndNext(Session session,
+		SCLicense scLicense, boolean active,
+		OrderByComparator orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_SCLICENSE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_SCLICENSE_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_ACTIVE_ACTIVE_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_SCLICENSE_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(_ORDER_BY_ENTITY_ALIAS);
+				}
+				else {
+					query.append(_ORDER_BY_ENTITY_TABLE);
+				}
+
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(_ORDER_BY_ENTITY_ALIAS);
+				}
+				else {
+					query.append(_ORDER_BY_ENTITY_TABLE);
+				}
+
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(SCLicenseModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(SCLicenseModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				SCLicense.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
+
+		SQLQuery q = session.createSQLQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		if (getDB().isSupportsInlineDistinct()) {
+			q.addEntity(_FILTER_ENTITY_ALIAS, SCLicenseImpl.class);
+		}
+		else {
+			q.addEntity(_FILTER_ENTITY_TABLE, SCLicenseImpl.class);
+		}
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(active);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(scLicense);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<SCLicense> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the s c licenses where active = &#63; from the database.
+	 *
+	 * @param active the active
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void removeByActive(boolean active) throws SystemException {
+		for (SCLicense scLicense : findByActive(active, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null)) {
+			remove(scLicense);
+		}
+	}
+
+	/**
+	 * Returns the number of s c licenses where active = &#63;.
+	 *
+	 * @param active the active
+	 * @return the number of matching s c licenses
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int countByActive(boolean active) throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_ACTIVE;
+
+		Object[] finderArgs = new Object[] { active };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_SCLICENSE_WHERE);
+
+			query.append(_FINDER_COLUMN_ACTIVE_ACTIVE_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(active);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	/**
+	 * Returns the number of s c licenses that the user has permission to view where active = &#63;.
+	 *
+	 * @param active the active
+	 * @return the number of matching s c licenses that the user has permission to view
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int filterCountByActive(boolean active) throws SystemException {
+		if (!InlineSQLHelperUtil.isEnabled()) {
+			return countByActive(active);
+		}
+
+		StringBundler query = new StringBundler(2);
+
+		query.append(_FILTER_SQL_COUNT_SCLICENSE_WHERE);
+
+		query.append(_FINDER_COLUMN_ACTIVE_ACTIVE_2);
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				SCLicense.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME,
+				com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(active);
+
+			Long count = (Long)q.uniqueResult();
+
+			return count.intValue();
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	private static final String _FINDER_COLUMN_ACTIVE_ACTIVE_2 = "scLicense.active = ?";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_A_R = new FinderPath(SCLicenseModelImpl.ENTITY_CACHE_ENABLED,
+			SCLicenseModelImpl.FINDER_CACHE_ENABLED, SCLicenseImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByA_R",
+			new String[] {
+				Boolean.class.getName(), Boolean.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_A_R = new FinderPath(SCLicenseModelImpl.ENTITY_CACHE_ENABLED,
+			SCLicenseModelImpl.FINDER_CACHE_ENABLED, SCLicenseImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByA_R",
+			new String[] { Boolean.class.getName(), Boolean.class.getName() },
+			SCLicenseModelImpl.ACTIVE_COLUMN_BITMASK |
+			SCLicenseModelImpl.RECOMMENDED_COLUMN_BITMASK |
+			SCLicenseModelImpl.NAME_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_A_R = new FinderPath(SCLicenseModelImpl.ENTITY_CACHE_ENABLED,
+			SCLicenseModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByA_R",
+			new String[] { Boolean.class.getName(), Boolean.class.getName() });
+
+	/**
+	 * Returns all the s c licenses where active = &#63; and recommended = &#63;.
+	 *
+	 * @param active the active
+	 * @param recommended the recommended
+	 * @return the matching s c licenses
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<SCLicense> findByA_R(boolean active, boolean recommended)
+		throws SystemException {
+		return findByA_R(active, recommended, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the s c licenses where active = &#63; and recommended = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from SCLicenseModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
+	 * </p>
+	 *
+	 * @param active the active
+	 * @param recommended the recommended
+	 * @param start the lower bound of the range of s c licenses
+	 * @param end the upper bound of the range of s c licenses (not inclusive)
+	 * @return the range of matching s c licenses
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<SCLicense> findByA_R(boolean active, boolean recommended,
+		int start, int end) throws SystemException {
+		return findByA_R(active, recommended, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the s c licenses where active = &#63; and recommended = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from SCLicenseModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
+	 * </p>
+	 *
+	 * @param active the active
+	 * @param recommended the recommended
+	 * @param start the lower bound of the range of s c licenses
+	 * @param end the upper bound of the range of s c licenses (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching s c licenses
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<SCLicense> findByA_R(boolean active, boolean recommended,
+		int start, int end, OrderByComparator orderByComparator)
+		throws SystemException {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_A_R;
+			finderArgs = new Object[] { active, recommended };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_A_R;
+			finderArgs = new Object[] {
+					active, recommended,
+					
+					start, end, orderByComparator
+				};
+		}
+
+		List<SCLicense> list = (List<SCLicense>)FinderCacheUtil.getResult(finderPath,
+				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (SCLicense scLicense : list) {
+				if ((active != scLicense.getActive()) ||
+						(recommended != scLicense.getRecommended())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(4 +
+						(orderByComparator.getOrderByFields().length * 3));
+			}
+			else {
+				query = new StringBundler(4);
+			}
+
+			query.append(_SQL_SELECT_SCLICENSE_WHERE);
+
+			query.append(_FINDER_COLUMN_A_R_ACTIVE_2);
+
+			query.append(_FINDER_COLUMN_A_R_RECOMMENDED_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else if (pagination) {
+				query.append(SCLicenseModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(active);
+
+				qPos.add(recommended);
+
+				if (!pagination) {
+					list = (List<SCLicense>)QueryUtil.list(q, getDialect(),
+							start, end, false);
+
+					Collections.sort(list);
+
+					list = new UnmodifiableList(list);
+				}
+				else {
+					list = (List<SCLicense>)QueryUtil.list(q, getDialect(),
+							start, end);
+				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first s c license in the ordered set where active = &#63; and recommended = &#63;.
+	 *
+	 * @param active the active
+	 * @param recommended the recommended
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching s c license
+	 * @throws com.liferay.portlet.softwarecatalog.NoSuchLicenseException if a matching s c license could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public SCLicense findByA_R_First(boolean active, boolean recommended,
+		OrderByComparator orderByComparator)
+		throws NoSuchLicenseException, SystemException {
+		SCLicense scLicense = fetchByA_R_First(active, recommended,
+				orderByComparator);
+
+		if (scLicense != null) {
+			return scLicense;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("active=");
+		msg.append(active);
+
+		msg.append(", recommended=");
+		msg.append(recommended);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchLicenseException(msg.toString());
+	}
+
+	/**
+	 * Returns the first s c license in the ordered set where active = &#63; and recommended = &#63;.
+	 *
+	 * @param active the active
+	 * @param recommended the recommended
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching s c license, or <code>null</code> if a matching s c license could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public SCLicense fetchByA_R_First(boolean active, boolean recommended,
+		OrderByComparator orderByComparator) throws SystemException {
+		List<SCLicense> list = findByA_R(active, recommended, 0, 1,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last s c license in the ordered set where active = &#63; and recommended = &#63;.
+	 *
+	 * @param active the active
+	 * @param recommended the recommended
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching s c license
+	 * @throws com.liferay.portlet.softwarecatalog.NoSuchLicenseException if a matching s c license could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public SCLicense findByA_R_Last(boolean active, boolean recommended,
+		OrderByComparator orderByComparator)
+		throws NoSuchLicenseException, SystemException {
+		SCLicense scLicense = fetchByA_R_Last(active, recommended,
+				orderByComparator);
+
+		if (scLicense != null) {
+			return scLicense;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("active=");
+		msg.append(active);
+
+		msg.append(", recommended=");
+		msg.append(recommended);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchLicenseException(msg.toString());
+	}
+
+	/**
+	 * Returns the last s c license in the ordered set where active = &#63; and recommended = &#63;.
+	 *
+	 * @param active the active
+	 * @param recommended the recommended
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching s c license, or <code>null</code> if a matching s c license could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public SCLicense fetchByA_R_Last(boolean active, boolean recommended,
+		OrderByComparator orderByComparator) throws SystemException {
+		int count = countByA_R(active, recommended);
+
+		List<SCLicense> list = findByA_R(active, recommended, count - 1, count,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the s c licenses before and after the current s c license in the ordered set where active = &#63; and recommended = &#63;.
+	 *
+	 * @param licenseId the primary key of the current s c license
+	 * @param active the active
+	 * @param recommended the recommended
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next s c license
+	 * @throws com.liferay.portlet.softwarecatalog.NoSuchLicenseException if a s c license with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public SCLicense[] findByA_R_PrevAndNext(long licenseId, boolean active,
+		boolean recommended, OrderByComparator orderByComparator)
+		throws NoSuchLicenseException, SystemException {
+		SCLicense scLicense = findByPrimaryKey(licenseId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SCLicense[] array = new SCLicenseImpl[3];
+
+			array[0] = getByA_R_PrevAndNext(session, scLicense, active,
+					recommended, orderByComparator, true);
+
+			array[1] = scLicense;
+
+			array[2] = getByA_R_PrevAndNext(session, scLicense, active,
+					recommended, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected SCLicense getByA_R_PrevAndNext(Session session,
+		SCLicense scLicense, boolean active, boolean recommended,
+		OrderByComparator orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_SCLICENSE_WHERE);
+
+		query.append(_FINDER_COLUMN_A_R_ACTIVE_2);
+
+		query.append(_FINDER_COLUMN_A_R_RECOMMENDED_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(SCLicenseModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(active);
+
+		qPos.add(recommended);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(scLicense);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<SCLicense> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Returns all the s c licenses that the user has permission to view where active = &#63; and recommended = &#63;.
+	 *
+	 * @param active the active
+	 * @param recommended the recommended
+	 * @return the matching s c licenses that the user has permission to view
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<SCLicense> filterFindByA_R(boolean active, boolean recommended)
+		throws SystemException {
+		return filterFindByA_R(active, recommended, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the s c licenses that the user has permission to view where active = &#63; and recommended = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from SCLicenseModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
+	 * </p>
+	 *
+	 * @param active the active
+	 * @param recommended the recommended
+	 * @param start the lower bound of the range of s c licenses
+	 * @param end the upper bound of the range of s c licenses (not inclusive)
+	 * @return the range of matching s c licenses that the user has permission to view
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<SCLicense> filterFindByA_R(boolean active, boolean recommended,
+		int start, int end) throws SystemException {
+		return filterFindByA_R(active, recommended, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the s c licenses that the user has permissions to view where active = &#63; and recommended = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from SCLicenseModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
+	 * </p>
+	 *
+	 * @param active the active
+	 * @param recommended the recommended
+	 * @param start the lower bound of the range of s c licenses
+	 * @param end the upper bound of the range of s c licenses (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching s c licenses that the user has permission to view
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<SCLicense> filterFindByA_R(boolean active, boolean recommended,
+		int start, int end, OrderByComparator orderByComparator)
+		throws SystemException {
+		if (!InlineSQLHelperUtil.isEnabled()) {
+			return findByA_R(active, recommended, start, end, orderByComparator);
+		}
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(4 +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(4);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_SCLICENSE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_SCLICENSE_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_A_R_ACTIVE_2);
+
+		query.append(_FINDER_COLUMN_A_R_RECOMMENDED_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_SCLICENSE_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			if (getDB().isSupportsInlineDistinct()) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
+					orderByComparator);
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(SCLicenseModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(SCLicenseModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				SCLicense.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSQLQuery(sql);
+
+			if (getDB().isSupportsInlineDistinct()) {
+				q.addEntity(_FILTER_ENTITY_ALIAS, SCLicenseImpl.class);
+			}
+			else {
+				q.addEntity(_FILTER_ENTITY_TABLE, SCLicenseImpl.class);
+			}
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(active);
+
+			qPos.add(recommended);
+
+			return (List<SCLicense>)QueryUtil.list(q, getDialect(), start, end);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
+	 * Returns the s c licenses before and after the current s c license in the ordered set of s c licenses that the user has permission to view where active = &#63; and recommended = &#63;.
+	 *
+	 * @param licenseId the primary key of the current s c license
+	 * @param active the active
+	 * @param recommended the recommended
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next s c license
+	 * @throws com.liferay.portlet.softwarecatalog.NoSuchLicenseException if a s c license with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public SCLicense[] filterFindByA_R_PrevAndNext(long licenseId,
+		boolean active, boolean recommended, OrderByComparator orderByComparator)
+		throws NoSuchLicenseException, SystemException {
+		if (!InlineSQLHelperUtil.isEnabled()) {
+			return findByA_R_PrevAndNext(licenseId, active, recommended,
+				orderByComparator);
+		}
+
+		SCLicense scLicense = findByPrimaryKey(licenseId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SCLicense[] array = new SCLicenseImpl[3];
+
+			array[0] = filterGetByA_R_PrevAndNext(session, scLicense, active,
+					recommended, orderByComparator, true);
+
+			array[1] = scLicense;
+
+			array[2] = filterGetByA_R_PrevAndNext(session, scLicense, active,
+					recommended, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected SCLicense filterGetByA_R_PrevAndNext(Session session,
+		SCLicense scLicense, boolean active, boolean recommended,
+		OrderByComparator orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_SCLICENSE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_SCLICENSE_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_A_R_ACTIVE_2);
+
+		query.append(_FINDER_COLUMN_A_R_RECOMMENDED_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_SCLICENSE_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(_ORDER_BY_ENTITY_ALIAS);
+				}
+				else {
+					query.append(_ORDER_BY_ENTITY_TABLE);
+				}
+
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(_ORDER_BY_ENTITY_ALIAS);
+				}
+				else {
+					query.append(_ORDER_BY_ENTITY_TABLE);
+				}
+
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(SCLicenseModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(SCLicenseModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				SCLicense.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
+
+		SQLQuery q = session.createSQLQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		if (getDB().isSupportsInlineDistinct()) {
+			q.addEntity(_FILTER_ENTITY_ALIAS, SCLicenseImpl.class);
+		}
+		else {
+			q.addEntity(_FILTER_ENTITY_TABLE, SCLicenseImpl.class);
+		}
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(active);
+
+		qPos.add(recommended);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(scLicense);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<SCLicense> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the s c licenses where active = &#63; and recommended = &#63; from the database.
+	 *
+	 * @param active the active
+	 * @param recommended the recommended
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void removeByA_R(boolean active, boolean recommended)
+		throws SystemException {
+		for (SCLicense scLicense : findByA_R(active, recommended,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(scLicense);
+		}
+	}
+
+	/**
+	 * Returns the number of s c licenses where active = &#63; and recommended = &#63;.
+	 *
+	 * @param active the active
+	 * @param recommended the recommended
+	 * @return the number of matching s c licenses
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int countByA_R(boolean active, boolean recommended)
+		throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_A_R;
+
+		Object[] finderArgs = new Object[] { active, recommended };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_SCLICENSE_WHERE);
+
+			query.append(_FINDER_COLUMN_A_R_ACTIVE_2);
+
+			query.append(_FINDER_COLUMN_A_R_RECOMMENDED_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(active);
+
+				qPos.add(recommended);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	/**
+	 * Returns the number of s c licenses that the user has permission to view where active = &#63; and recommended = &#63;.
+	 *
+	 * @param active the active
+	 * @param recommended the recommended
+	 * @return the number of matching s c licenses that the user has permission to view
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int filterCountByA_R(boolean active, boolean recommended)
+		throws SystemException {
+		if (!InlineSQLHelperUtil.isEnabled()) {
+			return countByA_R(active, recommended);
+		}
+
+		StringBundler query = new StringBundler(3);
+
+		query.append(_FILTER_SQL_COUNT_SCLICENSE_WHERE);
+
+		query.append(_FINDER_COLUMN_A_R_ACTIVE_2);
+
+		query.append(_FINDER_COLUMN_A_R_RECOMMENDED_2);
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				SCLicense.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME,
+				com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(active);
+
+			qPos.add(recommended);
+
+			Long count = (Long)q.uniqueResult();
+
+			return count.intValue();
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	private static final String _FINDER_COLUMN_A_R_ACTIVE_2 = "scLicense.active = ? AND ";
+	private static final String _FINDER_COLUMN_A_R_RECOMMENDED_2 = "scLicense.recommended = ?";
 
 	/**
 	 * Caches the s c license in the entity cache if it is enabled.
@@ -494,1455 +2172,32 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 		if (scLicense == null) {
 			Session session = null;
 
-			boolean hasException = false;
-
 			try {
 				session = openSession();
 
 				scLicense = (SCLicense)session.get(SCLicenseImpl.class,
 						Long.valueOf(licenseId));
+
+				if (scLicense != null) {
+					cacheResult(scLicense);
+				}
+				else {
+					EntityCacheUtil.putResult(SCLicenseModelImpl.ENTITY_CACHE_ENABLED,
+						SCLicenseImpl.class, licenseId, _nullSCLicense);
+				}
 			}
 			catch (Exception e) {
-				hasException = true;
+				EntityCacheUtil.removeResult(SCLicenseModelImpl.ENTITY_CACHE_ENABLED,
+					SCLicenseImpl.class, licenseId);
 
 				throw processException(e);
 			}
 			finally {
-				if (scLicense != null) {
-					cacheResult(scLicense);
-				}
-				else if (!hasException) {
-					EntityCacheUtil.putResult(SCLicenseModelImpl.ENTITY_CACHE_ENABLED,
-						SCLicenseImpl.class, licenseId, _nullSCLicense);
-				}
-
 				closeSession(session);
 			}
 		}
 
 		return scLicense;
-	}
-
-	/**
-	 * Returns all the s c licenses where active = &#63;.
-	 *
-	 * @param active the active
-	 * @return the matching s c licenses
-	 * @throws SystemException if a system exception occurred
-	 */
-	public List<SCLicense> findByActive(boolean active)
-		throws SystemException {
-		return findByActive(active, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the s c licenses where active = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
-	 * @param active the active
-	 * @param start the lower bound of the range of s c licenses
-	 * @param end the upper bound of the range of s c licenses (not inclusive)
-	 * @return the range of matching s c licenses
-	 * @throws SystemException if a system exception occurred
-	 */
-	public List<SCLicense> findByActive(boolean active, int start, int end)
-		throws SystemException {
-		return findByActive(active, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the s c licenses where active = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
-	 * @param active the active
-	 * @param start the lower bound of the range of s c licenses
-	 * @param end the upper bound of the range of s c licenses (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching s c licenses
-	 * @throws SystemException if a system exception occurred
-	 */
-	public List<SCLicense> findByActive(boolean active, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ACTIVE;
-			finderArgs = new Object[] { active };
-		}
-		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_ACTIVE;
-			finderArgs = new Object[] { active, start, end, orderByComparator };
-		}
-
-		List<SCLicense> list = (List<SCLicense>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
-
-		if ((list != null) && !list.isEmpty()) {
-			for (SCLicense scLicense : list) {
-				if ((active != scLicense.getActive())) {
-					list = null;
-
-					break;
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler query = null;
-
-			if (orderByComparator != null) {
-				query = new StringBundler(3 +
-						(orderByComparator.getOrderByFields().length * 3));
-			}
-			else {
-				query = new StringBundler(3);
-			}
-
-			query.append(_SQL_SELECT_SCLICENSE_WHERE);
-
-			query.append(_FINDER_COLUMN_ACTIVE_ACTIVE_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
-			}
-
-			else {
-				query.append(SCLicenseModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(active);
-
-				list = (List<SCLicense>)QueryUtil.list(q, getDialect(), start,
-						end);
-			}
-			catch (Exception e) {
-				throw processException(e);
-			}
-			finally {
-				if (list == null) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
-				else {
-					cacheResult(list);
-
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
-
-				closeSession(session);
-			}
-		}
-
-		return list;
-	}
-
-	/**
-	 * Returns the first s c license in the ordered set where active = &#63;.
-	 *
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching s c license
-	 * @throws com.liferay.portlet.softwarecatalog.NoSuchLicenseException if a matching s c license could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public SCLicense findByActive_First(boolean active,
-		OrderByComparator orderByComparator)
-		throws NoSuchLicenseException, SystemException {
-		SCLicense scLicense = fetchByActive_First(active, orderByComparator);
-
-		if (scLicense != null) {
-			return scLicense;
-		}
-
-		StringBundler msg = new StringBundler(4);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("active=");
-		msg.append(active);
-
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-		throw new NoSuchLicenseException(msg.toString());
-	}
-
-	/**
-	 * Returns the first s c license in the ordered set where active = &#63;.
-	 *
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching s c license, or <code>null</code> if a matching s c license could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public SCLicense fetchByActive_First(boolean active,
-		OrderByComparator orderByComparator) throws SystemException {
-		List<SCLicense> list = findByActive(active, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last s c license in the ordered set where active = &#63;.
-	 *
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching s c license
-	 * @throws com.liferay.portlet.softwarecatalog.NoSuchLicenseException if a matching s c license could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public SCLicense findByActive_Last(boolean active,
-		OrderByComparator orderByComparator)
-		throws NoSuchLicenseException, SystemException {
-		SCLicense scLicense = fetchByActive_Last(active, orderByComparator);
-
-		if (scLicense != null) {
-			return scLicense;
-		}
-
-		StringBundler msg = new StringBundler(4);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("active=");
-		msg.append(active);
-
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-		throw new NoSuchLicenseException(msg.toString());
-	}
-
-	/**
-	 * Returns the last s c license in the ordered set where active = &#63;.
-	 *
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching s c license, or <code>null</code> if a matching s c license could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public SCLicense fetchByActive_Last(boolean active,
-		OrderByComparator orderByComparator) throws SystemException {
-		int count = countByActive(active);
-
-		List<SCLicense> list = findByActive(active, count - 1, count,
-				orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the s c licenses before and after the current s c license in the ordered set where active = &#63;.
-	 *
-	 * @param licenseId the primary key of the current s c license
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next s c license
-	 * @throws com.liferay.portlet.softwarecatalog.NoSuchLicenseException if a s c license with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public SCLicense[] findByActive_PrevAndNext(long licenseId, boolean active,
-		OrderByComparator orderByComparator)
-		throws NoSuchLicenseException, SystemException {
-		SCLicense scLicense = findByPrimaryKey(licenseId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SCLicense[] array = new SCLicenseImpl[3];
-
-			array[0] = getByActive_PrevAndNext(session, scLicense, active,
-					orderByComparator, true);
-
-			array[1] = scLicense;
-
-			array[2] = getByActive_PrevAndNext(session, scLicense, active,
-					orderByComparator, false);
-
-			return array;
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	protected SCLicense getByActive_PrevAndNext(Session session,
-		SCLicense scLicense, boolean active,
-		OrderByComparator orderByComparator, boolean previous) {
-		StringBundler query = null;
-
-		if (orderByComparator != null) {
-			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
-		}
-		else {
-			query = new StringBundler(3);
-		}
-
-		query.append(_SQL_SELECT_SCLICENSE_WHERE);
-
-		query.append(_FINDER_COLUMN_ACTIVE_ACTIVE_2);
-
-		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
-
-			if (orderByConditionFields.length > 0) {
-				query.append(WHERE_AND);
-			}
-
-			for (int i = 0; i < orderByConditionFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByConditionFields[i]);
-
-				if ((i + 1) < orderByConditionFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN_HAS_NEXT);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN);
-					}
-				}
-			}
-
-			query.append(ORDER_BY_CLAUSE);
-
-			String[] orderByFields = orderByComparator.getOrderByFields();
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC_HAS_NEXT);
-					}
-					else {
-						query.append(ORDER_BY_DESC_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC);
-					}
-					else {
-						query.append(ORDER_BY_DESC);
-					}
-				}
-			}
-		}
-
-		else {
-			query.append(SCLicenseModelImpl.ORDER_BY_JPQL);
-		}
-
-		String sql = query.toString();
-
-		Query q = session.createQuery(sql);
-
-		q.setFirstResult(0);
-		q.setMaxResults(2);
-
-		QueryPos qPos = QueryPos.getInstance(q);
-
-		qPos.add(active);
-
-		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(scLicense);
-
-			for (Object value : values) {
-				qPos.add(value);
-			}
-		}
-
-		List<SCLicense> list = q.list();
-
-		if (list.size() == 2) {
-			return list.get(1);
-		}
-		else {
-			return null;
-		}
-	}
-
-	/**
-	 * Returns all the s c licenses that the user has permission to view where active = &#63;.
-	 *
-	 * @param active the active
-	 * @return the matching s c licenses that the user has permission to view
-	 * @throws SystemException if a system exception occurred
-	 */
-	public List<SCLicense> filterFindByActive(boolean active)
-		throws SystemException {
-		return filterFindByActive(active, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the s c licenses that the user has permission to view where active = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
-	 * @param active the active
-	 * @param start the lower bound of the range of s c licenses
-	 * @param end the upper bound of the range of s c licenses (not inclusive)
-	 * @return the range of matching s c licenses that the user has permission to view
-	 * @throws SystemException if a system exception occurred
-	 */
-	public List<SCLicense> filterFindByActive(boolean active, int start, int end)
-		throws SystemException {
-		return filterFindByActive(active, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the s c licenses that the user has permissions to view where active = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
-	 * @param active the active
-	 * @param start the lower bound of the range of s c licenses
-	 * @param end the upper bound of the range of s c licenses (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching s c licenses that the user has permission to view
-	 * @throws SystemException if a system exception occurred
-	 */
-	public List<SCLicense> filterFindByActive(boolean active, int start,
-		int end, OrderByComparator orderByComparator) throws SystemException {
-		if (!InlineSQLHelperUtil.isEnabled()) {
-			return findByActive(active, start, end, orderByComparator);
-		}
-
-		StringBundler query = null;
-
-		if (orderByComparator != null) {
-			query = new StringBundler(3 +
-					(orderByComparator.getOrderByFields().length * 3));
-		}
-		else {
-			query = new StringBundler(3);
-		}
-
-		if (getDB().isSupportsInlineDistinct()) {
-			query.append(_FILTER_SQL_SELECT_SCLICENSE_WHERE);
-		}
-		else {
-			query.append(_FILTER_SQL_SELECT_SCLICENSE_NO_INLINE_DISTINCT_WHERE_1);
-		}
-
-		query.append(_FINDER_COLUMN_ACTIVE_ACTIVE_2);
-
-		if (!getDB().isSupportsInlineDistinct()) {
-			query.append(_FILTER_SQL_SELECT_SCLICENSE_NO_INLINE_DISTINCT_WHERE_2);
-		}
-
-		if (orderByComparator != null) {
-			if (getDB().isSupportsInlineDistinct()) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
-			}
-			else {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
-					orderByComparator);
-			}
-		}
-
-		else {
-			if (getDB().isSupportsInlineDistinct()) {
-				query.append(SCLicenseModelImpl.ORDER_BY_JPQL);
-			}
-			else {
-				query.append(SCLicenseModelImpl.ORDER_BY_SQL);
-			}
-		}
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				SCLicense.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery q = session.createSQLQuery(sql);
-
-			if (getDB().isSupportsInlineDistinct()) {
-				q.addEntity(_FILTER_ENTITY_ALIAS, SCLicenseImpl.class);
-			}
-			else {
-				q.addEntity(_FILTER_ENTITY_TABLE, SCLicenseImpl.class);
-			}
-
-			QueryPos qPos = QueryPos.getInstance(q);
-
-			qPos.add(active);
-
-			return (List<SCLicense>)QueryUtil.list(q, getDialect(), start, end);
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	/**
-	 * Returns the s c licenses before and after the current s c license in the ordered set of s c licenses that the user has permission to view where active = &#63;.
-	 *
-	 * @param licenseId the primary key of the current s c license
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next s c license
-	 * @throws com.liferay.portlet.softwarecatalog.NoSuchLicenseException if a s c license with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public SCLicense[] filterFindByActive_PrevAndNext(long licenseId,
-		boolean active, OrderByComparator orderByComparator)
-		throws NoSuchLicenseException, SystemException {
-		if (!InlineSQLHelperUtil.isEnabled()) {
-			return findByActive_PrevAndNext(licenseId, active, orderByComparator);
-		}
-
-		SCLicense scLicense = findByPrimaryKey(licenseId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SCLicense[] array = new SCLicenseImpl[3];
-
-			array[0] = filterGetByActive_PrevAndNext(session, scLicense,
-					active, orderByComparator, true);
-
-			array[1] = scLicense;
-
-			array[2] = filterGetByActive_PrevAndNext(session, scLicense,
-					active, orderByComparator, false);
-
-			return array;
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	protected SCLicense filterGetByActive_PrevAndNext(Session session,
-		SCLicense scLicense, boolean active,
-		OrderByComparator orderByComparator, boolean previous) {
-		StringBundler query = null;
-
-		if (orderByComparator != null) {
-			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
-		}
-		else {
-			query = new StringBundler(3);
-		}
-
-		if (getDB().isSupportsInlineDistinct()) {
-			query.append(_FILTER_SQL_SELECT_SCLICENSE_WHERE);
-		}
-		else {
-			query.append(_FILTER_SQL_SELECT_SCLICENSE_NO_INLINE_DISTINCT_WHERE_1);
-		}
-
-		query.append(_FINDER_COLUMN_ACTIVE_ACTIVE_2);
-
-		if (!getDB().isSupportsInlineDistinct()) {
-			query.append(_FILTER_SQL_SELECT_SCLICENSE_NO_INLINE_DISTINCT_WHERE_2);
-		}
-
-		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
-
-			if (orderByConditionFields.length > 0) {
-				query.append(WHERE_AND);
-			}
-
-			for (int i = 0; i < orderByConditionFields.length; i++) {
-				if (getDB().isSupportsInlineDistinct()) {
-					query.append(_ORDER_BY_ENTITY_ALIAS);
-				}
-				else {
-					query.append(_ORDER_BY_ENTITY_TABLE);
-				}
-
-				query.append(orderByConditionFields[i]);
-
-				if ((i + 1) < orderByConditionFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN_HAS_NEXT);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN);
-					}
-				}
-			}
-
-			query.append(ORDER_BY_CLAUSE);
-
-			String[] orderByFields = orderByComparator.getOrderByFields();
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				if (getDB().isSupportsInlineDistinct()) {
-					query.append(_ORDER_BY_ENTITY_ALIAS);
-				}
-				else {
-					query.append(_ORDER_BY_ENTITY_TABLE);
-				}
-
-				query.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC_HAS_NEXT);
-					}
-					else {
-						query.append(ORDER_BY_DESC_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC);
-					}
-					else {
-						query.append(ORDER_BY_DESC);
-					}
-				}
-			}
-		}
-
-		else {
-			if (getDB().isSupportsInlineDistinct()) {
-				query.append(SCLicenseModelImpl.ORDER_BY_JPQL);
-			}
-			else {
-				query.append(SCLicenseModelImpl.ORDER_BY_SQL);
-			}
-		}
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				SCLicense.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
-
-		SQLQuery q = session.createSQLQuery(sql);
-
-		q.setFirstResult(0);
-		q.setMaxResults(2);
-
-		if (getDB().isSupportsInlineDistinct()) {
-			q.addEntity(_FILTER_ENTITY_ALIAS, SCLicenseImpl.class);
-		}
-		else {
-			q.addEntity(_FILTER_ENTITY_TABLE, SCLicenseImpl.class);
-		}
-
-		QueryPos qPos = QueryPos.getInstance(q);
-
-		qPos.add(active);
-
-		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(scLicense);
-
-			for (Object value : values) {
-				qPos.add(value);
-			}
-		}
-
-		List<SCLicense> list = q.list();
-
-		if (list.size() == 2) {
-			return list.get(1);
-		}
-		else {
-			return null;
-		}
-	}
-
-	/**
-	 * Returns all the s c licenses where active = &#63; and recommended = &#63;.
-	 *
-	 * @param active the active
-	 * @param recommended the recommended
-	 * @return the matching s c licenses
-	 * @throws SystemException if a system exception occurred
-	 */
-	public List<SCLicense> findByA_R(boolean active, boolean recommended)
-		throws SystemException {
-		return findByA_R(active, recommended, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the s c licenses where active = &#63; and recommended = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
-	 * @param active the active
-	 * @param recommended the recommended
-	 * @param start the lower bound of the range of s c licenses
-	 * @param end the upper bound of the range of s c licenses (not inclusive)
-	 * @return the range of matching s c licenses
-	 * @throws SystemException if a system exception occurred
-	 */
-	public List<SCLicense> findByA_R(boolean active, boolean recommended,
-		int start, int end) throws SystemException {
-		return findByA_R(active, recommended, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the s c licenses where active = &#63; and recommended = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
-	 * @param active the active
-	 * @param recommended the recommended
-	 * @param start the lower bound of the range of s c licenses
-	 * @param end the upper bound of the range of s c licenses (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching s c licenses
-	 * @throws SystemException if a system exception occurred
-	 */
-	public List<SCLicense> findByA_R(boolean active, boolean recommended,
-		int start, int end, OrderByComparator orderByComparator)
-		throws SystemException {
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_A_R;
-			finderArgs = new Object[] { active, recommended };
-		}
-		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_A_R;
-			finderArgs = new Object[] {
-					active, recommended,
-					
-					start, end, orderByComparator
-				};
-		}
-
-		List<SCLicense> list = (List<SCLicense>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
-
-		if ((list != null) && !list.isEmpty()) {
-			for (SCLicense scLicense : list) {
-				if ((active != scLicense.getActive()) ||
-						(recommended != scLicense.getRecommended())) {
-					list = null;
-
-					break;
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler query = null;
-
-			if (orderByComparator != null) {
-				query = new StringBundler(4 +
-						(orderByComparator.getOrderByFields().length * 3));
-			}
-			else {
-				query = new StringBundler(4);
-			}
-
-			query.append(_SQL_SELECT_SCLICENSE_WHERE);
-
-			query.append(_FINDER_COLUMN_A_R_ACTIVE_2);
-
-			query.append(_FINDER_COLUMN_A_R_RECOMMENDED_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
-			}
-
-			else {
-				query.append(SCLicenseModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(active);
-
-				qPos.add(recommended);
-
-				list = (List<SCLicense>)QueryUtil.list(q, getDialect(), start,
-						end);
-			}
-			catch (Exception e) {
-				throw processException(e);
-			}
-			finally {
-				if (list == null) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
-				else {
-					cacheResult(list);
-
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
-
-				closeSession(session);
-			}
-		}
-
-		return list;
-	}
-
-	/**
-	 * Returns the first s c license in the ordered set where active = &#63; and recommended = &#63;.
-	 *
-	 * @param active the active
-	 * @param recommended the recommended
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching s c license
-	 * @throws com.liferay.portlet.softwarecatalog.NoSuchLicenseException if a matching s c license could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public SCLicense findByA_R_First(boolean active, boolean recommended,
-		OrderByComparator orderByComparator)
-		throws NoSuchLicenseException, SystemException {
-		SCLicense scLicense = fetchByA_R_First(active, recommended,
-				orderByComparator);
-
-		if (scLicense != null) {
-			return scLicense;
-		}
-
-		StringBundler msg = new StringBundler(6);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("active=");
-		msg.append(active);
-
-		msg.append(", recommended=");
-		msg.append(recommended);
-
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-		throw new NoSuchLicenseException(msg.toString());
-	}
-
-	/**
-	 * Returns the first s c license in the ordered set where active = &#63; and recommended = &#63;.
-	 *
-	 * @param active the active
-	 * @param recommended the recommended
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching s c license, or <code>null</code> if a matching s c license could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public SCLicense fetchByA_R_First(boolean active, boolean recommended,
-		OrderByComparator orderByComparator) throws SystemException {
-		List<SCLicense> list = findByA_R(active, recommended, 0, 1,
-				orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last s c license in the ordered set where active = &#63; and recommended = &#63;.
-	 *
-	 * @param active the active
-	 * @param recommended the recommended
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching s c license
-	 * @throws com.liferay.portlet.softwarecatalog.NoSuchLicenseException if a matching s c license could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public SCLicense findByA_R_Last(boolean active, boolean recommended,
-		OrderByComparator orderByComparator)
-		throws NoSuchLicenseException, SystemException {
-		SCLicense scLicense = fetchByA_R_Last(active, recommended,
-				orderByComparator);
-
-		if (scLicense != null) {
-			return scLicense;
-		}
-
-		StringBundler msg = new StringBundler(6);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("active=");
-		msg.append(active);
-
-		msg.append(", recommended=");
-		msg.append(recommended);
-
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-		throw new NoSuchLicenseException(msg.toString());
-	}
-
-	/**
-	 * Returns the last s c license in the ordered set where active = &#63; and recommended = &#63;.
-	 *
-	 * @param active the active
-	 * @param recommended the recommended
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching s c license, or <code>null</code> if a matching s c license could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public SCLicense fetchByA_R_Last(boolean active, boolean recommended,
-		OrderByComparator orderByComparator) throws SystemException {
-		int count = countByA_R(active, recommended);
-
-		List<SCLicense> list = findByA_R(active, recommended, count - 1, count,
-				orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the s c licenses before and after the current s c license in the ordered set where active = &#63; and recommended = &#63;.
-	 *
-	 * @param licenseId the primary key of the current s c license
-	 * @param active the active
-	 * @param recommended the recommended
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next s c license
-	 * @throws com.liferay.portlet.softwarecatalog.NoSuchLicenseException if a s c license with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public SCLicense[] findByA_R_PrevAndNext(long licenseId, boolean active,
-		boolean recommended, OrderByComparator orderByComparator)
-		throws NoSuchLicenseException, SystemException {
-		SCLicense scLicense = findByPrimaryKey(licenseId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SCLicense[] array = new SCLicenseImpl[3];
-
-			array[0] = getByA_R_PrevAndNext(session, scLicense, active,
-					recommended, orderByComparator, true);
-
-			array[1] = scLicense;
-
-			array[2] = getByA_R_PrevAndNext(session, scLicense, active,
-					recommended, orderByComparator, false);
-
-			return array;
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	protected SCLicense getByA_R_PrevAndNext(Session session,
-		SCLicense scLicense, boolean active, boolean recommended,
-		OrderByComparator orderByComparator, boolean previous) {
-		StringBundler query = null;
-
-		if (orderByComparator != null) {
-			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
-		}
-		else {
-			query = new StringBundler(3);
-		}
-
-		query.append(_SQL_SELECT_SCLICENSE_WHERE);
-
-		query.append(_FINDER_COLUMN_A_R_ACTIVE_2);
-
-		query.append(_FINDER_COLUMN_A_R_RECOMMENDED_2);
-
-		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
-
-			if (orderByConditionFields.length > 0) {
-				query.append(WHERE_AND);
-			}
-
-			for (int i = 0; i < orderByConditionFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByConditionFields[i]);
-
-				if ((i + 1) < orderByConditionFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN_HAS_NEXT);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN);
-					}
-				}
-			}
-
-			query.append(ORDER_BY_CLAUSE);
-
-			String[] orderByFields = orderByComparator.getOrderByFields();
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC_HAS_NEXT);
-					}
-					else {
-						query.append(ORDER_BY_DESC_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC);
-					}
-					else {
-						query.append(ORDER_BY_DESC);
-					}
-				}
-			}
-		}
-
-		else {
-			query.append(SCLicenseModelImpl.ORDER_BY_JPQL);
-		}
-
-		String sql = query.toString();
-
-		Query q = session.createQuery(sql);
-
-		q.setFirstResult(0);
-		q.setMaxResults(2);
-
-		QueryPos qPos = QueryPos.getInstance(q);
-
-		qPos.add(active);
-
-		qPos.add(recommended);
-
-		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(scLicense);
-
-			for (Object value : values) {
-				qPos.add(value);
-			}
-		}
-
-		List<SCLicense> list = q.list();
-
-		if (list.size() == 2) {
-			return list.get(1);
-		}
-		else {
-			return null;
-		}
-	}
-
-	/**
-	 * Returns all the s c licenses that the user has permission to view where active = &#63; and recommended = &#63;.
-	 *
-	 * @param active the active
-	 * @param recommended the recommended
-	 * @return the matching s c licenses that the user has permission to view
-	 * @throws SystemException if a system exception occurred
-	 */
-	public List<SCLicense> filterFindByA_R(boolean active, boolean recommended)
-		throws SystemException {
-		return filterFindByA_R(active, recommended, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the s c licenses that the user has permission to view where active = &#63; and recommended = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
-	 * @param active the active
-	 * @param recommended the recommended
-	 * @param start the lower bound of the range of s c licenses
-	 * @param end the upper bound of the range of s c licenses (not inclusive)
-	 * @return the range of matching s c licenses that the user has permission to view
-	 * @throws SystemException if a system exception occurred
-	 */
-	public List<SCLicense> filterFindByA_R(boolean active, boolean recommended,
-		int start, int end) throws SystemException {
-		return filterFindByA_R(active, recommended, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the s c licenses that the user has permissions to view where active = &#63; and recommended = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
-	 * @param active the active
-	 * @param recommended the recommended
-	 * @param start the lower bound of the range of s c licenses
-	 * @param end the upper bound of the range of s c licenses (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching s c licenses that the user has permission to view
-	 * @throws SystemException if a system exception occurred
-	 */
-	public List<SCLicense> filterFindByA_R(boolean active, boolean recommended,
-		int start, int end, OrderByComparator orderByComparator)
-		throws SystemException {
-		if (!InlineSQLHelperUtil.isEnabled()) {
-			return findByA_R(active, recommended, start, end, orderByComparator);
-		}
-
-		StringBundler query = null;
-
-		if (orderByComparator != null) {
-			query = new StringBundler(4 +
-					(orderByComparator.getOrderByFields().length * 3));
-		}
-		else {
-			query = new StringBundler(4);
-		}
-
-		if (getDB().isSupportsInlineDistinct()) {
-			query.append(_FILTER_SQL_SELECT_SCLICENSE_WHERE);
-		}
-		else {
-			query.append(_FILTER_SQL_SELECT_SCLICENSE_NO_INLINE_DISTINCT_WHERE_1);
-		}
-
-		query.append(_FINDER_COLUMN_A_R_ACTIVE_2);
-
-		query.append(_FINDER_COLUMN_A_R_RECOMMENDED_2);
-
-		if (!getDB().isSupportsInlineDistinct()) {
-			query.append(_FILTER_SQL_SELECT_SCLICENSE_NO_INLINE_DISTINCT_WHERE_2);
-		}
-
-		if (orderByComparator != null) {
-			if (getDB().isSupportsInlineDistinct()) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
-			}
-			else {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
-					orderByComparator);
-			}
-		}
-
-		else {
-			if (getDB().isSupportsInlineDistinct()) {
-				query.append(SCLicenseModelImpl.ORDER_BY_JPQL);
-			}
-			else {
-				query.append(SCLicenseModelImpl.ORDER_BY_SQL);
-			}
-		}
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				SCLicense.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery q = session.createSQLQuery(sql);
-
-			if (getDB().isSupportsInlineDistinct()) {
-				q.addEntity(_FILTER_ENTITY_ALIAS, SCLicenseImpl.class);
-			}
-			else {
-				q.addEntity(_FILTER_ENTITY_TABLE, SCLicenseImpl.class);
-			}
-
-			QueryPos qPos = QueryPos.getInstance(q);
-
-			qPos.add(active);
-
-			qPos.add(recommended);
-
-			return (List<SCLicense>)QueryUtil.list(q, getDialect(), start, end);
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	/**
-	 * Returns the s c licenses before and after the current s c license in the ordered set of s c licenses that the user has permission to view where active = &#63; and recommended = &#63;.
-	 *
-	 * @param licenseId the primary key of the current s c license
-	 * @param active the active
-	 * @param recommended the recommended
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next s c license
-	 * @throws com.liferay.portlet.softwarecatalog.NoSuchLicenseException if a s c license with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public SCLicense[] filterFindByA_R_PrevAndNext(long licenseId,
-		boolean active, boolean recommended, OrderByComparator orderByComparator)
-		throws NoSuchLicenseException, SystemException {
-		if (!InlineSQLHelperUtil.isEnabled()) {
-			return findByA_R_PrevAndNext(licenseId, active, recommended,
-				orderByComparator);
-		}
-
-		SCLicense scLicense = findByPrimaryKey(licenseId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SCLicense[] array = new SCLicenseImpl[3];
-
-			array[0] = filterGetByA_R_PrevAndNext(session, scLicense, active,
-					recommended, orderByComparator, true);
-
-			array[1] = scLicense;
-
-			array[2] = filterGetByA_R_PrevAndNext(session, scLicense, active,
-					recommended, orderByComparator, false);
-
-			return array;
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	protected SCLicense filterGetByA_R_PrevAndNext(Session session,
-		SCLicense scLicense, boolean active, boolean recommended,
-		OrderByComparator orderByComparator, boolean previous) {
-		StringBundler query = null;
-
-		if (orderByComparator != null) {
-			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
-		}
-		else {
-			query = new StringBundler(3);
-		}
-
-		if (getDB().isSupportsInlineDistinct()) {
-			query.append(_FILTER_SQL_SELECT_SCLICENSE_WHERE);
-		}
-		else {
-			query.append(_FILTER_SQL_SELECT_SCLICENSE_NO_INLINE_DISTINCT_WHERE_1);
-		}
-
-		query.append(_FINDER_COLUMN_A_R_ACTIVE_2);
-
-		query.append(_FINDER_COLUMN_A_R_RECOMMENDED_2);
-
-		if (!getDB().isSupportsInlineDistinct()) {
-			query.append(_FILTER_SQL_SELECT_SCLICENSE_NO_INLINE_DISTINCT_WHERE_2);
-		}
-
-		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
-
-			if (orderByConditionFields.length > 0) {
-				query.append(WHERE_AND);
-			}
-
-			for (int i = 0; i < orderByConditionFields.length; i++) {
-				if (getDB().isSupportsInlineDistinct()) {
-					query.append(_ORDER_BY_ENTITY_ALIAS);
-				}
-				else {
-					query.append(_ORDER_BY_ENTITY_TABLE);
-				}
-
-				query.append(orderByConditionFields[i]);
-
-				if ((i + 1) < orderByConditionFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN_HAS_NEXT);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN);
-					}
-				}
-			}
-
-			query.append(ORDER_BY_CLAUSE);
-
-			String[] orderByFields = orderByComparator.getOrderByFields();
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				if (getDB().isSupportsInlineDistinct()) {
-					query.append(_ORDER_BY_ENTITY_ALIAS);
-				}
-				else {
-					query.append(_ORDER_BY_ENTITY_TABLE);
-				}
-
-				query.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC_HAS_NEXT);
-					}
-					else {
-						query.append(ORDER_BY_DESC_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC);
-					}
-					else {
-						query.append(ORDER_BY_DESC);
-					}
-				}
-			}
-		}
-
-		else {
-			if (getDB().isSupportsInlineDistinct()) {
-				query.append(SCLicenseModelImpl.ORDER_BY_JPQL);
-			}
-			else {
-				query.append(SCLicenseModelImpl.ORDER_BY_SQL);
-			}
-		}
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				SCLicense.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
-
-		SQLQuery q = session.createSQLQuery(sql);
-
-		q.setFirstResult(0);
-		q.setMaxResults(2);
-
-		if (getDB().isSupportsInlineDistinct()) {
-			q.addEntity(_FILTER_ENTITY_ALIAS, SCLicenseImpl.class);
-		}
-		else {
-			q.addEntity(_FILTER_ENTITY_TABLE, SCLicenseImpl.class);
-		}
-
-		QueryPos qPos = QueryPos.getInstance(q);
-
-		qPos.add(active);
-
-		qPos.add(recommended);
-
-		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(scLicense);
-
-			for (Object value : values) {
-				qPos.add(value);
-			}
-		}
-
-		List<SCLicense> list = q.list();
-
-		if (list.size() == 2) {
-			return list.get(1);
-		}
-		else {
-			return null;
-		}
 	}
 
 	/**
@@ -1959,7 +2214,7 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 	 * Returns a range of all the s c licenses.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from SCLicenseModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of s c licenses
@@ -1976,7 +2231,7 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 	 * Returns an ordered range of all the s c licenses.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from SCLicenseModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of s c licenses
@@ -1987,11 +2242,13 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 	 */
 	public List<SCLicense> findAll(int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
+		boolean pagination = true;
 		FinderPath finderPath = null;
-		Object[] finderArgs = new Object[] { start, end, orderByComparator };
+		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 				(orderByComparator == null)) {
+			pagination = false;
 			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL;
 			finderArgs = FINDER_ARGS_EMPTY;
 		}
@@ -2019,7 +2276,11 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 				sql = query.toString();
 			}
 			else {
-				sql = _SQL_SELECT_SCLICENSE.concat(SCLicenseModelImpl.ORDER_BY_JPQL);
+				sql = _SQL_SELECT_SCLICENSE;
+
+				if (pagination) {
+					sql = sql.concat(SCLicenseModelImpl.ORDER_BY_JPQL);
+				}
 			}
 
 			Session session = null;
@@ -2029,61 +2290,34 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 
 				Query q = session.createQuery(sql);
 
-				if (orderByComparator == null) {
+				if (!pagination) {
 					list = (List<SCLicense>)QueryUtil.list(q, getDialect(),
 							start, end, false);
 
 					Collections.sort(list);
+
+					list = new UnmodifiableList(list);
 				}
 				else {
 					list = (List<SCLicense>)QueryUtil.list(q, getDialect(),
 							start, end);
 				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
 				throw processException(e);
 			}
 			finally {
-				if (list == null) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
-				else {
-					cacheResult(list);
-
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
-
 				closeSession(session);
 			}
 		}
 
 		return list;
-	}
-
-	/**
-	 * Removes all the s c licenses where active = &#63; from the database.
-	 *
-	 * @param active the active
-	 * @throws SystemException if a system exception occurred
-	 */
-	public void removeByActive(boolean active) throws SystemException {
-		for (SCLicense scLicense : findByActive(active)) {
-			remove(scLicense);
-		}
-	}
-
-	/**
-	 * Removes all the s c licenses where active = &#63; and recommended = &#63; from the database.
-	 *
-	 * @param active the active
-	 * @param recommended the recommended
-	 * @throws SystemException if a system exception occurred
-	 */
-	public void removeByA_R(boolean active, boolean recommended)
-		throws SystemException {
-		for (SCLicense scLicense : findByA_R(active, recommended)) {
-			remove(scLicense);
-		}
 	}
 
 	/**
@@ -2094,218 +2328,6 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 	public void removeAll() throws SystemException {
 		for (SCLicense scLicense : findAll()) {
 			remove(scLicense);
-		}
-	}
-
-	/**
-	 * Returns the number of s c licenses where active = &#63;.
-	 *
-	 * @param active the active
-	 * @return the number of matching s c licenses
-	 * @throws SystemException if a system exception occurred
-	 */
-	public int countByActive(boolean active) throws SystemException {
-		Object[] finderArgs = new Object[] { active };
-
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_BY_ACTIVE,
-				finderArgs, this);
-
-		if (count == null) {
-			StringBundler query = new StringBundler(2);
-
-			query.append(_SQL_COUNT_SCLICENSE_WHERE);
-
-			query.append(_FINDER_COLUMN_ACTIVE_ACTIVE_2);
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(active);
-
-				count = (Long)q.uniqueResult();
-			}
-			catch (Exception e) {
-				throw processException(e);
-			}
-			finally {
-				if (count == null) {
-					count = Long.valueOf(0);
-				}
-
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_ACTIVE,
-					finderArgs, count);
-
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
-	}
-
-	/**
-	 * Returns the number of s c licenses that the user has permission to view where active = &#63;.
-	 *
-	 * @param active the active
-	 * @return the number of matching s c licenses that the user has permission to view
-	 * @throws SystemException if a system exception occurred
-	 */
-	public int filterCountByActive(boolean active) throws SystemException {
-		if (!InlineSQLHelperUtil.isEnabled()) {
-			return countByActive(active);
-		}
-
-		StringBundler query = new StringBundler(2);
-
-		query.append(_FILTER_SQL_COUNT_SCLICENSE_WHERE);
-
-		query.append(_FINDER_COLUMN_ACTIVE_ACTIVE_2);
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				SCLicense.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery q = session.createSQLQuery(sql);
-
-			q.addScalar(COUNT_COLUMN_NAME,
-				com.liferay.portal.kernel.dao.orm.Type.LONG);
-
-			QueryPos qPos = QueryPos.getInstance(q);
-
-			qPos.add(active);
-
-			Long count = (Long)q.uniqueResult();
-
-			return count.intValue();
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	/**
-	 * Returns the number of s c licenses where active = &#63; and recommended = &#63;.
-	 *
-	 * @param active the active
-	 * @param recommended the recommended
-	 * @return the number of matching s c licenses
-	 * @throws SystemException if a system exception occurred
-	 */
-	public int countByA_R(boolean active, boolean recommended)
-		throws SystemException {
-		Object[] finderArgs = new Object[] { active, recommended };
-
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_BY_A_R,
-				finderArgs, this);
-
-		if (count == null) {
-			StringBundler query = new StringBundler(3);
-
-			query.append(_SQL_COUNT_SCLICENSE_WHERE);
-
-			query.append(_FINDER_COLUMN_A_R_ACTIVE_2);
-
-			query.append(_FINDER_COLUMN_A_R_RECOMMENDED_2);
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(active);
-
-				qPos.add(recommended);
-
-				count = (Long)q.uniqueResult();
-			}
-			catch (Exception e) {
-				throw processException(e);
-			}
-			finally {
-				if (count == null) {
-					count = Long.valueOf(0);
-				}
-
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_A_R, finderArgs,
-					count);
-
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
-	}
-
-	/**
-	 * Returns the number of s c licenses that the user has permission to view where active = &#63; and recommended = &#63;.
-	 *
-	 * @param active the active
-	 * @param recommended the recommended
-	 * @return the number of matching s c licenses that the user has permission to view
-	 * @throws SystemException if a system exception occurred
-	 */
-	public int filterCountByA_R(boolean active, boolean recommended)
-		throws SystemException {
-		if (!InlineSQLHelperUtil.isEnabled()) {
-			return countByA_R(active, recommended);
-		}
-
-		StringBundler query = new StringBundler(3);
-
-		query.append(_FILTER_SQL_COUNT_SCLICENSE_WHERE);
-
-		query.append(_FINDER_COLUMN_A_R_ACTIVE_2);
-
-		query.append(_FINDER_COLUMN_A_R_RECOMMENDED_2);
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				SCLicense.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery q = session.createSQLQuery(sql);
-
-			q.addScalar(COUNT_COLUMN_NAME,
-				com.liferay.portal.kernel.dao.orm.Type.LONG);
-
-			QueryPos qPos = QueryPos.getInstance(q);
-
-			qPos.add(active);
-
-			qPos.add(recommended);
-
-			Long count = (Long)q.uniqueResult();
-
-			return count.intValue();
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
 		}
 	}
 
@@ -2328,18 +2350,17 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 				Query q = session.createQuery(_SQL_COUNT_SCLICENSE);
 
 				count = (Long)q.uniqueResult();
-			}
-			catch (Exception e) {
-				throw processException(e);
-			}
-			finally {
-				if (count == null) {
-					count = Long.valueOf(0);
-				}
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
 					FINDER_ARGS_EMPTY, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_ALL,
+					FINDER_ARGS_EMPTY);
 
+				throw processException(e);
+			}
+			finally {
 				closeSession(session);
 			}
 		}
@@ -2363,7 +2384,7 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 	 * Returns a range of all the s c product entries associated with the s c license.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from SCLicenseModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	 * </p>
 	 *
 	 * @param pk the primary key of the s c license
@@ -2383,8 +2404,8 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 			SCLicenseModelImpl.MAPPING_TABLE_SCLICENSES_SCPRODUCTENTRIES_NAME,
 			"getSCProductEntries",
 			new String[] {
-				Long.class.getName(), "java.lang.Integer", "java.lang.Integer",
-				"com.liferay.portal.kernel.util.OrderByComparator"
+				Long.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
 			});
 
 	static {
@@ -2395,7 +2416,7 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 	 * Returns an ordered range of all the s c product entries associated with the s c license.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from SCLicenseModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	 * </p>
 	 *
 	 * @param pk the primary key of the s c license
@@ -2408,7 +2429,17 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 	public List<com.liferay.portlet.softwarecatalog.model.SCProductEntry> getSCProductEntries(
 		long pk, int start, int end, OrderByComparator orderByComparator)
 		throws SystemException {
-		Object[] finderArgs = new Object[] { pk, start, end, orderByComparator };
+		boolean pagination = true;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderArgs = new Object[] { pk };
+		}
+		else {
+			finderArgs = new Object[] { pk, start, end, orderByComparator };
+		}
 
 		List<com.liferay.portlet.softwarecatalog.model.SCProductEntry> list = (List<com.liferay.portlet.softwarecatalog.model.SCProductEntry>)FinderCacheUtil.getResult(FINDER_PATH_GET_SCPRODUCTENTRIES,
 				finderArgs, this);
@@ -2426,7 +2457,11 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 												  .concat(orderByComparator.getOrderBy());
 				}
 				else {
-					sql = _SQL_GETSCPRODUCTENTRIES.concat(com.liferay.portlet.softwarecatalog.model.impl.SCProductEntryModelImpl.ORDER_BY_SQL);
+					sql = _SQL_GETSCPRODUCTENTRIES;
+
+					if (pagination) {
+						sql = sql.concat(com.liferay.portlet.softwarecatalog.model.impl.SCProductEntryModelImpl.ORDER_BY_SQL);
+					}
 				}
 
 				SQLQuery q = session.createSQLQuery(sql);
@@ -2438,24 +2473,31 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 
 				qPos.add(pk);
 
-				list = (List<com.liferay.portlet.softwarecatalog.model.SCProductEntry>)QueryUtil.list(q,
-						getDialect(), start, end);
+				if (!pagination) {
+					list = (List<com.liferay.portlet.softwarecatalog.model.SCProductEntry>)QueryUtil.list(q,
+							getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = new UnmodifiableList(list);
+				}
+				else {
+					list = (List<com.liferay.portlet.softwarecatalog.model.SCProductEntry>)QueryUtil.list(q,
+							getDialect(), start, end);
+				}
+
+				scProductEntryPersistence.cacheResult(list);
+
+				FinderCacheUtil.putResult(FINDER_PATH_GET_SCPRODUCTENTRIES,
+					finderArgs, list);
 			}
 			catch (Exception e) {
+				FinderCacheUtil.removeResult(FINDER_PATH_GET_SCPRODUCTENTRIES,
+					finderArgs);
+
 				throw processException(e);
 			}
 			finally {
-				if (list == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_GET_SCPRODUCTENTRIES,
-						finderArgs);
-				}
-				else {
-					scProductEntryPersistence.cacheResult(list);
-
-					FinderCacheUtil.putResult(FINDER_PATH_GET_SCPRODUCTENTRIES,
-						finderArgs, list);
-				}
-
 				closeSession(session);
 			}
 		}
@@ -2502,18 +2544,17 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 				qPos.add(pk);
 
 				count = (Long)q.uniqueResult();
-			}
-			catch (Exception e) {
-				throw processException(e);
-			}
-			finally {
-				if (count == null) {
-					count = Long.valueOf(0);
-				}
 
 				FinderCacheUtil.putResult(FINDER_PATH_GET_SCPRODUCTENTRIES_SIZE,
 					finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(FINDER_PATH_GET_SCPRODUCTENTRIES_SIZE,
+					finderArgs);
 
+				throw processException(e);
+			}
+			finally {
 				closeSession(session);
 			}
 		}
@@ -2547,17 +2588,15 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 			try {
 				value = Boolean.valueOf(containsSCProductEntry.contains(pk,
 							scProductEntryPK));
-			}
-			catch (Exception e) {
-				throw processException(e);
-			}
-			finally {
-				if (value == null) {
-					value = Boolean.FALSE;
-				}
 
 				FinderCacheUtil.putResult(FINDER_PATH_CONTAINS_SCPRODUCTENTRY,
 					finderArgs, value);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(FINDER_PATH_CONTAINS_SCPRODUCTENTRY,
+					finderArgs);
+
+				throw processException(e);
 			}
 		}
 
@@ -2868,6 +2907,7 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 	public void destroy() {
 		EntityCacheUtil.removeCache(SCLicenseImpl.class.getName());
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_ENTITY);
+		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
@@ -3062,9 +3102,6 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 	private static final String _SQL_GETSCPRODUCTENTRIES = "SELECT {SCProductEntry.*} FROM SCProductEntry INNER JOIN SCLicenses_SCProductEntries ON (SCLicenses_SCProductEntries.productEntryId = SCProductEntry.productEntryId) WHERE (SCLicenses_SCProductEntries.licenseId = ?)";
 	private static final String _SQL_GETSCPRODUCTENTRIESSIZE = "SELECT COUNT(*) AS COUNT_VALUE FROM SCLicenses_SCProductEntries WHERE licenseId = ?";
 	private static final String _SQL_CONTAINSSCPRODUCTENTRY = "SELECT COUNT(*) AS COUNT_VALUE FROM SCLicenses_SCProductEntries WHERE licenseId = ? AND productEntryId = ?";
-	private static final String _FINDER_COLUMN_ACTIVE_ACTIVE_2 = "scLicense.active = ?";
-	private static final String _FINDER_COLUMN_A_R_ACTIVE_2 = "scLicense.active = ? AND ";
-	private static final String _FINDER_COLUMN_A_R_RECOMMENDED_2 = "scLicense.recommended = ?";
 	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "scLicense.licenseId";
 	private static final String _FILTER_SQL_SELECT_SCLICENSE_WHERE = "SELECT DISTINCT {scLicense.*} FROM SCLicense scLicense WHERE ";
 	private static final String _FILTER_SQL_SELECT_SCLICENSE_NO_INLINE_DISTINCT_WHERE_1 =

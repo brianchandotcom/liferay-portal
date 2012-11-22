@@ -112,86 +112,6 @@ public class ShoppingItemPriceUtil {
 	}
 
 	/**
-	* Caches the shopping item price in the entity cache if it is enabled.
-	*
-	* @param shoppingItemPrice the shopping item price
-	*/
-	public static void cacheResult(
-		com.liferay.portlet.shopping.model.ShoppingItemPrice shoppingItemPrice) {
-		getPersistence().cacheResult(shoppingItemPrice);
-	}
-
-	/**
-	* Caches the shopping item prices in the entity cache if it is enabled.
-	*
-	* @param shoppingItemPrices the shopping item prices
-	*/
-	public static void cacheResult(
-		java.util.List<com.liferay.portlet.shopping.model.ShoppingItemPrice> shoppingItemPrices) {
-		getPersistence().cacheResult(shoppingItemPrices);
-	}
-
-	/**
-	* Creates a new shopping item price with the primary key. Does not add the shopping item price to the database.
-	*
-	* @param itemPriceId the primary key for the new shopping item price
-	* @return the new shopping item price
-	*/
-	public static com.liferay.portlet.shopping.model.ShoppingItemPrice create(
-		long itemPriceId) {
-		return getPersistence().create(itemPriceId);
-	}
-
-	/**
-	* Removes the shopping item price with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param itemPriceId the primary key of the shopping item price
-	* @return the shopping item price that was removed
-	* @throws com.liferay.portlet.shopping.NoSuchItemPriceException if a shopping item price with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portlet.shopping.model.ShoppingItemPrice remove(
-		long itemPriceId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.shopping.NoSuchItemPriceException {
-		return getPersistence().remove(itemPriceId);
-	}
-
-	public static com.liferay.portlet.shopping.model.ShoppingItemPrice updateImpl(
-		com.liferay.portlet.shopping.model.ShoppingItemPrice shoppingItemPrice)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(shoppingItemPrice);
-	}
-
-	/**
-	* Returns the shopping item price with the primary key or throws a {@link com.liferay.portlet.shopping.NoSuchItemPriceException} if it could not be found.
-	*
-	* @param itemPriceId the primary key of the shopping item price
-	* @return the shopping item price
-	* @throws com.liferay.portlet.shopping.NoSuchItemPriceException if a shopping item price with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portlet.shopping.model.ShoppingItemPrice findByPrimaryKey(
-		long itemPriceId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.shopping.NoSuchItemPriceException {
-		return getPersistence().findByPrimaryKey(itemPriceId);
-	}
-
-	/**
-	* Returns the shopping item price with the primary key or returns <code>null</code> if it could not be found.
-	*
-	* @param itemPriceId the primary key of the shopping item price
-	* @return the shopping item price, or <code>null</code> if a shopping item price with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portlet.shopping.model.ShoppingItemPrice fetchByPrimaryKey(
-		long itemPriceId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().fetchByPrimaryKey(itemPriceId);
-	}
-
-	/**
 	* Returns all the shopping item prices where itemId = &#63;.
 	*
 	* @param itemId the item ID
@@ -207,7 +127,7 @@ public class ShoppingItemPriceUtil {
 	* Returns a range of all the shopping item prices where itemId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from ShoppingItemPriceModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param itemId the item ID
@@ -226,7 +146,7 @@ public class ShoppingItemPriceUtil {
 	* Returns an ordered range of all the shopping item prices where itemId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from ShoppingItemPriceModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param itemId the item ID
@@ -329,6 +249,109 @@ public class ShoppingItemPriceUtil {
 	}
 
 	/**
+	* Removes all the shopping item prices where itemId = &#63; from the database.
+	*
+	* @param itemId the item ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByItemId(long itemId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByItemId(itemId);
+	}
+
+	/**
+	* Returns the number of shopping item prices where itemId = &#63;.
+	*
+	* @param itemId the item ID
+	* @return the number of matching shopping item prices
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByItemId(long itemId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByItemId(itemId);
+	}
+
+	/**
+	* Caches the shopping item price in the entity cache if it is enabled.
+	*
+	* @param shoppingItemPrice the shopping item price
+	*/
+	public static void cacheResult(
+		com.liferay.portlet.shopping.model.ShoppingItemPrice shoppingItemPrice) {
+		getPersistence().cacheResult(shoppingItemPrice);
+	}
+
+	/**
+	* Caches the shopping item prices in the entity cache if it is enabled.
+	*
+	* @param shoppingItemPrices the shopping item prices
+	*/
+	public static void cacheResult(
+		java.util.List<com.liferay.portlet.shopping.model.ShoppingItemPrice> shoppingItemPrices) {
+		getPersistence().cacheResult(shoppingItemPrices);
+	}
+
+	/**
+	* Creates a new shopping item price with the primary key. Does not add the shopping item price to the database.
+	*
+	* @param itemPriceId the primary key for the new shopping item price
+	* @return the new shopping item price
+	*/
+	public static com.liferay.portlet.shopping.model.ShoppingItemPrice create(
+		long itemPriceId) {
+		return getPersistence().create(itemPriceId);
+	}
+
+	/**
+	* Removes the shopping item price with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param itemPriceId the primary key of the shopping item price
+	* @return the shopping item price that was removed
+	* @throws com.liferay.portlet.shopping.NoSuchItemPriceException if a shopping item price with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.shopping.model.ShoppingItemPrice remove(
+		long itemPriceId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.shopping.NoSuchItemPriceException {
+		return getPersistence().remove(itemPriceId);
+	}
+
+	public static com.liferay.portlet.shopping.model.ShoppingItemPrice updateImpl(
+		com.liferay.portlet.shopping.model.ShoppingItemPrice shoppingItemPrice)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().updateImpl(shoppingItemPrice);
+	}
+
+	/**
+	* Returns the shopping item price with the primary key or throws a {@link com.liferay.portlet.shopping.NoSuchItemPriceException} if it could not be found.
+	*
+	* @param itemPriceId the primary key of the shopping item price
+	* @return the shopping item price
+	* @throws com.liferay.portlet.shopping.NoSuchItemPriceException if a shopping item price with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.shopping.model.ShoppingItemPrice findByPrimaryKey(
+		long itemPriceId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.shopping.NoSuchItemPriceException {
+		return getPersistence().findByPrimaryKey(itemPriceId);
+	}
+
+	/**
+	* Returns the shopping item price with the primary key or returns <code>null</code> if it could not be found.
+	*
+	* @param itemPriceId the primary key of the shopping item price
+	* @return the shopping item price, or <code>null</code> if a shopping item price with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.shopping.model.ShoppingItemPrice fetchByPrimaryKey(
+		long itemPriceId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByPrimaryKey(itemPriceId);
+	}
+
+	/**
 	* Returns all the shopping item prices.
 	*
 	* @return the shopping item prices
@@ -343,7 +366,7 @@ public class ShoppingItemPriceUtil {
 	* Returns a range of all the shopping item prices.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from ShoppingItemPriceModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param start the lower bound of the range of shopping item prices
@@ -361,7 +384,7 @@ public class ShoppingItemPriceUtil {
 	* Returns an ordered range of all the shopping item prices.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from ShoppingItemPriceModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param start the lower bound of the range of shopping item prices
@@ -378,17 +401,6 @@ public class ShoppingItemPriceUtil {
 	}
 
 	/**
-	* Removes all the shopping item prices where itemId = &#63; from the database.
-	*
-	* @param itemId the item ID
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void removeByItemId(long itemId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByItemId(itemId);
-	}
-
-	/**
 	* Removes all the shopping item prices from the database.
 	*
 	* @throws SystemException if a system exception occurred
@@ -396,18 +408,6 @@ public class ShoppingItemPriceUtil {
 	public static void removeAll()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		getPersistence().removeAll();
-	}
-
-	/**
-	* Returns the number of shopping item prices where itemId = &#63;.
-	*
-	* @param itemId the item ID
-	* @return the number of matching shopping item prices
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int countByItemId(long itemId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByItemId(itemId);
 	}
 
 	/**

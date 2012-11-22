@@ -87,6 +87,7 @@ public class SCLicenseModelImpl extends BaseModelImpl<SCLicense>
 			true);
 	public static long ACTIVE_COLUMN_BITMASK = 1L;
 	public static long RECOMMENDED_COLUMN_BITMASK = 2L;
+	public static long NAME_COLUMN_BITMASK = 4L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.

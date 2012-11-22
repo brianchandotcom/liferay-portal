@@ -66,6 +66,8 @@ public class MBThreadFlagModelImpl extends BaseModelImpl<MBThreadFlag>
 		};
 	public static final String TABLE_SQL_CREATE = "create table MBThreadFlag (threadFlagId LONG not null primary key,userId LONG,modifiedDate DATE null,threadId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table MBThreadFlag";
+	public static final String ORDER_BY_JPQL = " ORDER BY mbThreadFlag.threadFlagId ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY MBThreadFlag.threadFlagId ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
@@ -80,6 +82,7 @@ public class MBThreadFlagModelImpl extends BaseModelImpl<MBThreadFlag>
 			true);
 	public static long THREADID_COLUMN_BITMASK = 1L;
 	public static long USERID_COLUMN_BITMASK = 2L;
+	public static long THREADFLAGID_COLUMN_BITMASK = 4L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.messageboards.model.MBThreadFlag"));
 

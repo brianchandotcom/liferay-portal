@@ -69,6 +69,8 @@ public class PortletModelImpl extends BaseModelImpl<Portlet>
 		};
 	public static final String TABLE_SQL_CREATE = "create table Portlet (id_ LONG not null primary key,companyId LONG,portletId VARCHAR(200) null,roles STRING null,active_ BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table Portlet";
+	public static final String ORDER_BY_JPQL = " ORDER BY portlet.id ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY Portlet.id_ ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
@@ -83,6 +85,7 @@ public class PortletModelImpl extends BaseModelImpl<Portlet>
 			true);
 	public static long COMPANYID_COLUMN_BITMASK = 1L;
 	public static long PORTLETID_COLUMN_BITMASK = 2L;
+	public static long ID_COLUMN_BITMASK = 4L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.

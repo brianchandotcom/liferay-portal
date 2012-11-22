@@ -111,86 +111,6 @@ public class AssetCategoryUtil {
 	}
 
 	/**
-	* Caches the asset category in the entity cache if it is enabled.
-	*
-	* @param assetCategory the asset category
-	*/
-	public static void cacheResult(
-		com.liferay.portlet.asset.model.AssetCategory assetCategory) {
-		getPersistence().cacheResult(assetCategory);
-	}
-
-	/**
-	* Caches the asset categories in the entity cache if it is enabled.
-	*
-	* @param assetCategories the asset categories
-	*/
-	public static void cacheResult(
-		java.util.List<com.liferay.portlet.asset.model.AssetCategory> assetCategories) {
-		getPersistence().cacheResult(assetCategories);
-	}
-
-	/**
-	* Creates a new asset category with the primary key. Does not add the asset category to the database.
-	*
-	* @param categoryId the primary key for the new asset category
-	* @return the new asset category
-	*/
-	public static com.liferay.portlet.asset.model.AssetCategory create(
-		long categoryId) {
-		return getPersistence().create(categoryId);
-	}
-
-	/**
-	* Removes the asset category with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param categoryId the primary key of the asset category
-	* @return the asset category that was removed
-	* @throws com.liferay.portlet.asset.NoSuchCategoryException if a asset category with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portlet.asset.model.AssetCategory remove(
-		long categoryId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.asset.NoSuchCategoryException {
-		return getPersistence().remove(categoryId);
-	}
-
-	public static com.liferay.portlet.asset.model.AssetCategory updateImpl(
-		com.liferay.portlet.asset.model.AssetCategory assetCategory)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(assetCategory);
-	}
-
-	/**
-	* Returns the asset category with the primary key or throws a {@link com.liferay.portlet.asset.NoSuchCategoryException} if it could not be found.
-	*
-	* @param categoryId the primary key of the asset category
-	* @return the asset category
-	* @throws com.liferay.portlet.asset.NoSuchCategoryException if a asset category with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portlet.asset.model.AssetCategory findByPrimaryKey(
-		long categoryId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.asset.NoSuchCategoryException {
-		return getPersistence().findByPrimaryKey(categoryId);
-	}
-
-	/**
-	* Returns the asset category with the primary key or returns <code>null</code> if it could not be found.
-	*
-	* @param categoryId the primary key of the asset category
-	* @return the asset category, or <code>null</code> if a asset category with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portlet.asset.model.AssetCategory fetchByPrimaryKey(
-		long categoryId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().fetchByPrimaryKey(categoryId);
-	}
-
-	/**
 	* Returns all the asset categories where uuid = &#63;.
 	*
 	* @param uuid the uuid
@@ -207,7 +127,7 @@ public class AssetCategoryUtil {
 	* Returns a range of all the asset categories where uuid = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from AssetCategoryModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -226,7 +146,7 @@ public class AssetCategoryUtil {
 	* Returns an ordered range of all the asset categories where uuid = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from AssetCategoryModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -327,6 +247,29 @@ public class AssetCategoryUtil {
 	}
 
 	/**
+	* Removes all the asset categories where uuid = &#63; from the database.
+	*
+	* @param uuid the uuid
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByUuid(java.lang.String uuid)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByUuid(uuid);
+	}
+
+	/**
+	* Returns the number of asset categories where uuid = &#63;.
+	*
+	* @param uuid the uuid
+	* @return the number of matching asset categories
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByUuid(java.lang.String uuid)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByUuid(uuid);
+	}
+
+	/**
 	* Returns the asset category where uuid = &#63; and groupId = &#63; or throws a {@link com.liferay.portlet.asset.NoSuchCategoryException} if it could not be found.
 	*
 	* @param uuid the uuid
@@ -372,6 +315,34 @@ public class AssetCategoryUtil {
 	}
 
 	/**
+	* Removes the asset category where uuid = &#63; and groupId = &#63; from the database.
+	*
+	* @param uuid the uuid
+	* @param groupId the group ID
+	* @return the asset category that was removed
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.asset.model.AssetCategory removeByUUID_G(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.asset.NoSuchCategoryException {
+		return getPersistence().removeByUUID_G(uuid, groupId);
+	}
+
+	/**
+	* Returns the number of asset categories where uuid = &#63; and groupId = &#63;.
+	*
+	* @param uuid the uuid
+	* @param groupId the group ID
+	* @return the number of matching asset categories
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByUUID_G(java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByUUID_G(uuid, groupId);
+	}
+
+	/**
 	* Returns all the asset categories where uuid = &#63; and companyId = &#63;.
 	*
 	* @param uuid the uuid
@@ -389,7 +360,7 @@ public class AssetCategoryUtil {
 	* Returns a range of all the asset categories where uuid = &#63; and companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from AssetCategoryModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -409,7 +380,7 @@ public class AssetCategoryUtil {
 	* Returns an ordered range of all the asset categories where uuid = &#63; and companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from AssetCategoryModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -522,6 +493,31 @@ public class AssetCategoryUtil {
 	}
 
 	/**
+	* Removes all the asset categories where uuid = &#63; and companyId = &#63; from the database.
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByUuid_C(java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByUuid_C(uuid, companyId);
+	}
+
+	/**
+	* Returns the number of asset categories where uuid = &#63; and companyId = &#63;.
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @return the number of matching asset categories
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByUuid_C(java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByUuid_C(uuid, companyId);
+	}
+
+	/**
 	* Returns all the asset categories where groupId = &#63;.
 	*
 	* @param groupId the group ID
@@ -538,7 +534,7 @@ public class AssetCategoryUtil {
 	* Returns a range of all the asset categories where groupId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from AssetCategoryModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -557,7 +553,7 @@ public class AssetCategoryUtil {
 	* Returns an ordered range of all the asset categories where groupId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from AssetCategoryModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -676,7 +672,7 @@ public class AssetCategoryUtil {
 	* Returns a range of all the asset categories that the user has permission to view where groupId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from AssetCategoryModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -695,7 +691,7 @@ public class AssetCategoryUtil {
 	* Returns an ordered range of all the asset categories that the user has permissions to view where groupId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from AssetCategoryModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -734,6 +730,41 @@ public class AssetCategoryUtil {
 	}
 
 	/**
+	* Removes all the asset categories where groupId = &#63; from the database.
+	*
+	* @param groupId the group ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByGroupId(long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByGroupId(groupId);
+	}
+
+	/**
+	* Returns the number of asset categories where groupId = &#63;.
+	*
+	* @param groupId the group ID
+	* @return the number of matching asset categories
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByGroupId(long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByGroupId(groupId);
+	}
+
+	/**
+	* Returns the number of asset categories that the user has permission to view where groupId = &#63;.
+	*
+	* @param groupId the group ID
+	* @return the number of matching asset categories that the user has permission to view
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int filterCountByGroupId(long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().filterCountByGroupId(groupId);
+	}
+
+	/**
 	* Returns all the asset categories where parentCategoryId = &#63;.
 	*
 	* @param parentCategoryId the parent category ID
@@ -750,7 +781,7 @@ public class AssetCategoryUtil {
 	* Returns a range of all the asset categories where parentCategoryId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from AssetCategoryModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param parentCategoryId the parent category ID
@@ -770,7 +801,7 @@ public class AssetCategoryUtil {
 	* Returns an ordered range of all the asset categories where parentCategoryId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from AssetCategoryModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param parentCategoryId the parent category ID
@@ -882,6 +913,29 @@ public class AssetCategoryUtil {
 	}
 
 	/**
+	* Removes all the asset categories where parentCategoryId = &#63; from the database.
+	*
+	* @param parentCategoryId the parent category ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByParentCategoryId(long parentCategoryId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByParentCategoryId(parentCategoryId);
+	}
+
+	/**
+	* Returns the number of asset categories where parentCategoryId = &#63;.
+	*
+	* @param parentCategoryId the parent category ID
+	* @return the number of matching asset categories
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByParentCategoryId(long parentCategoryId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByParentCategoryId(parentCategoryId);
+	}
+
+	/**
 	* Returns all the asset categories where vocabularyId = &#63;.
 	*
 	* @param vocabularyId the vocabulary ID
@@ -898,7 +952,7 @@ public class AssetCategoryUtil {
 	* Returns a range of all the asset categories where vocabularyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from AssetCategoryModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param vocabularyId the vocabulary ID
@@ -917,7 +971,7 @@ public class AssetCategoryUtil {
 	* Returns an ordered range of all the asset categories where vocabularyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from AssetCategoryModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param vocabularyId the vocabulary ID
@@ -1025,6 +1079,29 @@ public class AssetCategoryUtil {
 	}
 
 	/**
+	* Removes all the asset categories where vocabularyId = &#63; from the database.
+	*
+	* @param vocabularyId the vocabulary ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByVocabularyId(long vocabularyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByVocabularyId(vocabularyId);
+	}
+
+	/**
+	* Returns the number of asset categories where vocabularyId = &#63;.
+	*
+	* @param vocabularyId the vocabulary ID
+	* @return the number of matching asset categories
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByVocabularyId(long vocabularyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByVocabularyId(vocabularyId);
+	}
+
+	/**
 	* Returns all the asset categories where groupId = &#63; and vocabularyId = &#63;.
 	*
 	* @param groupId the group ID
@@ -1042,7 +1119,7 @@ public class AssetCategoryUtil {
 	* Returns a range of all the asset categories where groupId = &#63; and vocabularyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from AssetCategoryModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -1062,7 +1139,7 @@ public class AssetCategoryUtil {
 	* Returns an ordered range of all the asset categories where groupId = &#63; and vocabularyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from AssetCategoryModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -1193,7 +1270,7 @@ public class AssetCategoryUtil {
 	* Returns a range of all the asset categories that the user has permission to view where groupId = &#63; and vocabularyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from AssetCategoryModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -1214,7 +1291,7 @@ public class AssetCategoryUtil {
 	* Returns an ordered range of all the asset categories that the user has permissions to view where groupId = &#63; and vocabularyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from AssetCategoryModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -1256,6 +1333,44 @@ public class AssetCategoryUtil {
 	}
 
 	/**
+	* Removes all the asset categories where groupId = &#63; and vocabularyId = &#63; from the database.
+	*
+	* @param groupId the group ID
+	* @param vocabularyId the vocabulary ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByG_V(long groupId, long vocabularyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByG_V(groupId, vocabularyId);
+	}
+
+	/**
+	* Returns the number of asset categories where groupId = &#63; and vocabularyId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param vocabularyId the vocabulary ID
+	* @return the number of matching asset categories
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByG_V(long groupId, long vocabularyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByG_V(groupId, vocabularyId);
+	}
+
+	/**
+	* Returns the number of asset categories that the user has permission to view where groupId = &#63; and vocabularyId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param vocabularyId the vocabulary ID
+	* @return the number of matching asset categories that the user has permission to view
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int filterCountByG_V(long groupId, long vocabularyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().filterCountByG_V(groupId, vocabularyId);
+	}
+
+	/**
 	* Returns all the asset categories where parentCategoryId = &#63; and name = &#63;.
 	*
 	* @param parentCategoryId the parent category ID
@@ -1273,7 +1388,7 @@ public class AssetCategoryUtil {
 	* Returns a range of all the asset categories where parentCategoryId = &#63; and name = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from AssetCategoryModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param parentCategoryId the parent category ID
@@ -1293,7 +1408,7 @@ public class AssetCategoryUtil {
 	* Returns an ordered range of all the asset categories where parentCategoryId = &#63; and name = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from AssetCategoryModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param parentCategoryId the parent category ID
@@ -1407,6 +1522,31 @@ public class AssetCategoryUtil {
 	}
 
 	/**
+	* Removes all the asset categories where parentCategoryId = &#63; and name = &#63; from the database.
+	*
+	* @param parentCategoryId the parent category ID
+	* @param name the name
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByP_N(long parentCategoryId, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByP_N(parentCategoryId, name);
+	}
+
+	/**
+	* Returns the number of asset categories where parentCategoryId = &#63; and name = &#63;.
+	*
+	* @param parentCategoryId the parent category ID
+	* @param name the name
+	* @return the number of matching asset categories
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByP_N(long parentCategoryId, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByP_N(parentCategoryId, name);
+	}
+
+	/**
 	* Returns all the asset categories where parentCategoryId = &#63; and vocabularyId = &#63;.
 	*
 	* @param parentCategoryId the parent category ID
@@ -1424,7 +1564,7 @@ public class AssetCategoryUtil {
 	* Returns a range of all the asset categories where parentCategoryId = &#63; and vocabularyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from AssetCategoryModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param parentCategoryId the parent category ID
@@ -1445,7 +1585,7 @@ public class AssetCategoryUtil {
 	* Returns an ordered range of all the asset categories where parentCategoryId = &#63; and vocabularyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from AssetCategoryModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param parentCategoryId the parent category ID
@@ -1563,6 +1703,31 @@ public class AssetCategoryUtil {
 	}
 
 	/**
+	* Removes all the asset categories where parentCategoryId = &#63; and vocabularyId = &#63; from the database.
+	*
+	* @param parentCategoryId the parent category ID
+	* @param vocabularyId the vocabulary ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByP_V(long parentCategoryId, long vocabularyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByP_V(parentCategoryId, vocabularyId);
+	}
+
+	/**
+	* Returns the number of asset categories where parentCategoryId = &#63; and vocabularyId = &#63;.
+	*
+	* @param parentCategoryId the parent category ID
+	* @param vocabularyId the vocabulary ID
+	* @return the number of matching asset categories
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByP_V(long parentCategoryId, long vocabularyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByP_V(parentCategoryId, vocabularyId);
+	}
+
+	/**
 	* Returns all the asset categories where name = &#63; and vocabularyId = &#63;.
 	*
 	* @param name the name
@@ -1580,7 +1745,7 @@ public class AssetCategoryUtil {
 	* Returns a range of all the asset categories where name = &#63; and vocabularyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from AssetCategoryModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param name the name
@@ -1600,7 +1765,7 @@ public class AssetCategoryUtil {
 	* Returns an ordered range of all the asset categories where name = &#63; and vocabularyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from AssetCategoryModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param name the name
@@ -1713,6 +1878,31 @@ public class AssetCategoryUtil {
 	}
 
 	/**
+	* Removes all the asset categories where name = &#63; and vocabularyId = &#63; from the database.
+	*
+	* @param name the name
+	* @param vocabularyId the vocabulary ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByN_V(java.lang.String name, long vocabularyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByN_V(name, vocabularyId);
+	}
+
+	/**
+	* Returns the number of asset categories where name = &#63; and vocabularyId = &#63;.
+	*
+	* @param name the name
+	* @param vocabularyId the vocabulary ID
+	* @return the number of matching asset categories
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByN_V(java.lang.String name, long vocabularyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByN_V(name, vocabularyId);
+	}
+
+	/**
 	* Returns all the asset categories where groupId = &#63; and parentCategoryId = &#63; and name = &#63;.
 	*
 	* @param groupId the group ID
@@ -1731,7 +1921,7 @@ public class AssetCategoryUtil {
 	* Returns a range of all the asset categories where groupId = &#63; and parentCategoryId = &#63; and name = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from AssetCategoryModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -1753,7 +1943,7 @@ public class AssetCategoryUtil {
 	* Returns an ordered range of all the asset categories where groupId = &#63; and parentCategoryId = &#63; and name = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from AssetCategoryModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -1898,7 +2088,7 @@ public class AssetCategoryUtil {
 	* Returns a range of all the asset categories that the user has permission to view where groupId = &#63; and parentCategoryId = &#63; and name = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from AssetCategoryModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -1921,7 +2111,7 @@ public class AssetCategoryUtil {
 	* Returns an ordered range of all the asset categories that the user has permissions to view where groupId = &#63; and parentCategoryId = &#63; and name = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from AssetCategoryModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -1964,6 +2154,51 @@ public class AssetCategoryUtil {
 		return getPersistence()
 				   .filterFindByG_P_N_PrevAndNext(categoryId, groupId,
 			parentCategoryId, name, orderByComparator);
+	}
+
+	/**
+	* Removes all the asset categories where groupId = &#63; and parentCategoryId = &#63; and name = &#63; from the database.
+	*
+	* @param groupId the group ID
+	* @param parentCategoryId the parent category ID
+	* @param name the name
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByG_P_N(long groupId, long parentCategoryId,
+		java.lang.String name)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByG_P_N(groupId, parentCategoryId, name);
+	}
+
+	/**
+	* Returns the number of asset categories where groupId = &#63; and parentCategoryId = &#63; and name = &#63;.
+	*
+	* @param groupId the group ID
+	* @param parentCategoryId the parent category ID
+	* @param name the name
+	* @return the number of matching asset categories
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByG_P_N(long groupId, long parentCategoryId,
+		java.lang.String name)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByG_P_N(groupId, parentCategoryId, name);
+	}
+
+	/**
+	* Returns the number of asset categories that the user has permission to view where groupId = &#63; and parentCategoryId = &#63; and name = &#63;.
+	*
+	* @param groupId the group ID
+	* @param parentCategoryId the parent category ID
+	* @param name the name
+	* @return the number of matching asset categories that the user has permission to view
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int filterCountByG_P_N(long groupId, long parentCategoryId,
+		java.lang.String name)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .filterCountByG_P_N(groupId, parentCategoryId, name);
 	}
 
 	/**
@@ -2019,188 +2254,6 @@ public class AssetCategoryUtil {
 	}
 
 	/**
-	* Returns all the asset categories.
-	*
-	* @return the asset categories
-	* @throws SystemException if a system exception occurred
-	*/
-	public static java.util.List<com.liferay.portlet.asset.model.AssetCategory> findAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findAll();
-	}
-
-	/**
-	* Returns a range of all the asset categories.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
-	* @param start the lower bound of the range of asset categories
-	* @param end the upper bound of the range of asset categories (not inclusive)
-	* @return the range of asset categories
-	* @throws SystemException if a system exception occurred
-	*/
-	public static java.util.List<com.liferay.portlet.asset.model.AssetCategory> findAll(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findAll(start, end);
-	}
-
-	/**
-	* Returns an ordered range of all the asset categories.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
-	* @param start the lower bound of the range of asset categories
-	* @param end the upper bound of the range of asset categories (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of asset categories
-	* @throws SystemException if a system exception occurred
-	*/
-	public static java.util.List<com.liferay.portlet.asset.model.AssetCategory> findAll(
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findAll(start, end, orderByComparator);
-	}
-
-	/**
-	* Removes all the asset categories where uuid = &#63; from the database.
-	*
-	* @param uuid the uuid
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void removeByUuid(java.lang.String uuid)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByUuid(uuid);
-	}
-
-	/**
-	* Removes the asset category where uuid = &#63; and groupId = &#63; from the database.
-	*
-	* @param uuid the uuid
-	* @param groupId the group ID
-	* @return the asset category that was removed
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portlet.asset.model.AssetCategory removeByUUID_G(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.asset.NoSuchCategoryException {
-		return getPersistence().removeByUUID_G(uuid, groupId);
-	}
-
-	/**
-	* Removes all the asset categories where uuid = &#63; and companyId = &#63; from the database.
-	*
-	* @param uuid the uuid
-	* @param companyId the company ID
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void removeByUuid_C(java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByUuid_C(uuid, companyId);
-	}
-
-	/**
-	* Removes all the asset categories where groupId = &#63; from the database.
-	*
-	* @param groupId the group ID
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void removeByGroupId(long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByGroupId(groupId);
-	}
-
-	/**
-	* Removes all the asset categories where parentCategoryId = &#63; from the database.
-	*
-	* @param parentCategoryId the parent category ID
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void removeByParentCategoryId(long parentCategoryId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByParentCategoryId(parentCategoryId);
-	}
-
-	/**
-	* Removes all the asset categories where vocabularyId = &#63; from the database.
-	*
-	* @param vocabularyId the vocabulary ID
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void removeByVocabularyId(long vocabularyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByVocabularyId(vocabularyId);
-	}
-
-	/**
-	* Removes all the asset categories where groupId = &#63; and vocabularyId = &#63; from the database.
-	*
-	* @param groupId the group ID
-	* @param vocabularyId the vocabulary ID
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void removeByG_V(long groupId, long vocabularyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByG_V(groupId, vocabularyId);
-	}
-
-	/**
-	* Removes all the asset categories where parentCategoryId = &#63; and name = &#63; from the database.
-	*
-	* @param parentCategoryId the parent category ID
-	* @param name the name
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void removeByP_N(long parentCategoryId, java.lang.String name)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByP_N(parentCategoryId, name);
-	}
-
-	/**
-	* Removes all the asset categories where parentCategoryId = &#63; and vocabularyId = &#63; from the database.
-	*
-	* @param parentCategoryId the parent category ID
-	* @param vocabularyId the vocabulary ID
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void removeByP_V(long parentCategoryId, long vocabularyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByP_V(parentCategoryId, vocabularyId);
-	}
-
-	/**
-	* Removes all the asset categories where name = &#63; and vocabularyId = &#63; from the database.
-	*
-	* @param name the name
-	* @param vocabularyId the vocabulary ID
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void removeByN_V(java.lang.String name, long vocabularyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByN_V(name, vocabularyId);
-	}
-
-	/**
-	* Removes all the asset categories where groupId = &#63; and parentCategoryId = &#63; and name = &#63; from the database.
-	*
-	* @param groupId the group ID
-	* @param parentCategoryId the parent category ID
-	* @param name the name
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void removeByG_P_N(long groupId, long parentCategoryId,
-		java.lang.String name)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByG_P_N(groupId, parentCategoryId, name);
-	}
-
-	/**
 	* Removes the asset category where parentCategoryId = &#63; and name = &#63; and vocabularyId = &#63; from the database.
 	*
 	* @param parentCategoryId the parent category ID
@@ -2218,198 +2271,6 @@ public class AssetCategoryUtil {
 	}
 
 	/**
-	* Removes all the asset categories from the database.
-	*
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void removeAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeAll();
-	}
-
-	/**
-	* Returns the number of asset categories where uuid = &#63;.
-	*
-	* @param uuid the uuid
-	* @return the number of matching asset categories
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int countByUuid(java.lang.String uuid)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByUuid(uuid);
-	}
-
-	/**
-	* Returns the number of asset categories where uuid = &#63; and groupId = &#63;.
-	*
-	* @param uuid the uuid
-	* @param groupId the group ID
-	* @return the number of matching asset categories
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int countByUUID_G(java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByUUID_G(uuid, groupId);
-	}
-
-	/**
-	* Returns the number of asset categories where uuid = &#63; and companyId = &#63;.
-	*
-	* @param uuid the uuid
-	* @param companyId the company ID
-	* @return the number of matching asset categories
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int countByUuid_C(java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByUuid_C(uuid, companyId);
-	}
-
-	/**
-	* Returns the number of asset categories where groupId = &#63;.
-	*
-	* @param groupId the group ID
-	* @return the number of matching asset categories
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int countByGroupId(long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByGroupId(groupId);
-	}
-
-	/**
-	* Returns the number of asset categories that the user has permission to view where groupId = &#63;.
-	*
-	* @param groupId the group ID
-	* @return the number of matching asset categories that the user has permission to view
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int filterCountByGroupId(long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().filterCountByGroupId(groupId);
-	}
-
-	/**
-	* Returns the number of asset categories where parentCategoryId = &#63;.
-	*
-	* @param parentCategoryId the parent category ID
-	* @return the number of matching asset categories
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int countByParentCategoryId(long parentCategoryId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByParentCategoryId(parentCategoryId);
-	}
-
-	/**
-	* Returns the number of asset categories where vocabularyId = &#63;.
-	*
-	* @param vocabularyId the vocabulary ID
-	* @return the number of matching asset categories
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int countByVocabularyId(long vocabularyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByVocabularyId(vocabularyId);
-	}
-
-	/**
-	* Returns the number of asset categories where groupId = &#63; and vocabularyId = &#63;.
-	*
-	* @param groupId the group ID
-	* @param vocabularyId the vocabulary ID
-	* @return the number of matching asset categories
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int countByG_V(long groupId, long vocabularyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByG_V(groupId, vocabularyId);
-	}
-
-	/**
-	* Returns the number of asset categories that the user has permission to view where groupId = &#63; and vocabularyId = &#63;.
-	*
-	* @param groupId the group ID
-	* @param vocabularyId the vocabulary ID
-	* @return the number of matching asset categories that the user has permission to view
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int filterCountByG_V(long groupId, long vocabularyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().filterCountByG_V(groupId, vocabularyId);
-	}
-
-	/**
-	* Returns the number of asset categories where parentCategoryId = &#63; and name = &#63;.
-	*
-	* @param parentCategoryId the parent category ID
-	* @param name the name
-	* @return the number of matching asset categories
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int countByP_N(long parentCategoryId, java.lang.String name)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByP_N(parentCategoryId, name);
-	}
-
-	/**
-	* Returns the number of asset categories where parentCategoryId = &#63; and vocabularyId = &#63;.
-	*
-	* @param parentCategoryId the parent category ID
-	* @param vocabularyId the vocabulary ID
-	* @return the number of matching asset categories
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int countByP_V(long parentCategoryId, long vocabularyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByP_V(parentCategoryId, vocabularyId);
-	}
-
-	/**
-	* Returns the number of asset categories where name = &#63; and vocabularyId = &#63;.
-	*
-	* @param name the name
-	* @param vocabularyId the vocabulary ID
-	* @return the number of matching asset categories
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int countByN_V(java.lang.String name, long vocabularyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByN_V(name, vocabularyId);
-	}
-
-	/**
-	* Returns the number of asset categories where groupId = &#63; and parentCategoryId = &#63; and name = &#63;.
-	*
-	* @param groupId the group ID
-	* @param parentCategoryId the parent category ID
-	* @param name the name
-	* @return the number of matching asset categories
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int countByG_P_N(long groupId, long parentCategoryId,
-		java.lang.String name)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByG_P_N(groupId, parentCategoryId, name);
-	}
-
-	/**
-	* Returns the number of asset categories that the user has permission to view where groupId = &#63; and parentCategoryId = &#63; and name = &#63;.
-	*
-	* @param groupId the group ID
-	* @param parentCategoryId the parent category ID
-	* @param name the name
-	* @return the number of matching asset categories that the user has permission to view
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int filterCountByG_P_N(long groupId, long parentCategoryId,
-		java.lang.String name)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .filterCountByG_P_N(groupId, parentCategoryId, name);
-	}
-
-	/**
 	* Returns the number of asset categories where parentCategoryId = &#63; and name = &#63; and vocabularyId = &#63;.
 	*
 	* @param parentCategoryId the parent category ID
@@ -2423,6 +2284,145 @@ public class AssetCategoryUtil {
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence()
 				   .countByP_N_V(parentCategoryId, name, vocabularyId);
+	}
+
+	/**
+	* Caches the asset category in the entity cache if it is enabled.
+	*
+	* @param assetCategory the asset category
+	*/
+	public static void cacheResult(
+		com.liferay.portlet.asset.model.AssetCategory assetCategory) {
+		getPersistence().cacheResult(assetCategory);
+	}
+
+	/**
+	* Caches the asset categories in the entity cache if it is enabled.
+	*
+	* @param assetCategories the asset categories
+	*/
+	public static void cacheResult(
+		java.util.List<com.liferay.portlet.asset.model.AssetCategory> assetCategories) {
+		getPersistence().cacheResult(assetCategories);
+	}
+
+	/**
+	* Creates a new asset category with the primary key. Does not add the asset category to the database.
+	*
+	* @param categoryId the primary key for the new asset category
+	* @return the new asset category
+	*/
+	public static com.liferay.portlet.asset.model.AssetCategory create(
+		long categoryId) {
+		return getPersistence().create(categoryId);
+	}
+
+	/**
+	* Removes the asset category with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param categoryId the primary key of the asset category
+	* @return the asset category that was removed
+	* @throws com.liferay.portlet.asset.NoSuchCategoryException if a asset category with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.asset.model.AssetCategory remove(
+		long categoryId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.asset.NoSuchCategoryException {
+		return getPersistence().remove(categoryId);
+	}
+
+	public static com.liferay.portlet.asset.model.AssetCategory updateImpl(
+		com.liferay.portlet.asset.model.AssetCategory assetCategory)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().updateImpl(assetCategory);
+	}
+
+	/**
+	* Returns the asset category with the primary key or throws a {@link com.liferay.portlet.asset.NoSuchCategoryException} if it could not be found.
+	*
+	* @param categoryId the primary key of the asset category
+	* @return the asset category
+	* @throws com.liferay.portlet.asset.NoSuchCategoryException if a asset category with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.asset.model.AssetCategory findByPrimaryKey(
+		long categoryId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.asset.NoSuchCategoryException {
+		return getPersistence().findByPrimaryKey(categoryId);
+	}
+
+	/**
+	* Returns the asset category with the primary key or returns <code>null</code> if it could not be found.
+	*
+	* @param categoryId the primary key of the asset category
+	* @return the asset category, or <code>null</code> if a asset category with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.asset.model.AssetCategory fetchByPrimaryKey(
+		long categoryId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByPrimaryKey(categoryId);
+	}
+
+	/**
+	* Returns all the asset categories.
+	*
+	* @return the asset categories
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.asset.model.AssetCategory> findAll()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findAll();
+	}
+
+	/**
+	* Returns a range of all the asset categories.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from AssetCategoryModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
+	* </p>
+	*
+	* @param start the lower bound of the range of asset categories
+	* @param end the upper bound of the range of asset categories (not inclusive)
+	* @return the range of asset categories
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.asset.model.AssetCategory> findAll(
+		int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findAll(start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the asset categories.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from AssetCategoryModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
+	* </p>
+	*
+	* @param start the lower bound of the range of asset categories
+	* @param end the upper bound of the range of asset categories (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of asset categories
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.asset.model.AssetCategory> findAll(
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findAll(start, end, orderByComparator);
+	}
+
+	/**
+	* Removes all the asset categories from the database.
+	*
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeAll()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeAll();
 	}
 
 	/**
@@ -2452,7 +2452,7 @@ public class AssetCategoryUtil {
 	* Returns a range of all the asset entries associated with the asset category.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from AssetCategoryModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param pk the primary key of the asset category
@@ -2471,7 +2471,7 @@ public class AssetCategoryUtil {
 	* Returns an ordered range of all the asset entries associated with the asset category.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from AssetCategoryModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param pk the primary key of the asset category

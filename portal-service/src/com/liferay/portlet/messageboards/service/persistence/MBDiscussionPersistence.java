@@ -38,72 +38,6 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	 */
 
 	/**
-	* Caches the message boards discussion in the entity cache if it is enabled.
-	*
-	* @param mbDiscussion the message boards discussion
-	*/
-	public void cacheResult(
-		com.liferay.portlet.messageboards.model.MBDiscussion mbDiscussion);
-
-	/**
-	* Caches the message boards discussions in the entity cache if it is enabled.
-	*
-	* @param mbDiscussions the message boards discussions
-	*/
-	public void cacheResult(
-		java.util.List<com.liferay.portlet.messageboards.model.MBDiscussion> mbDiscussions);
-
-	/**
-	* Creates a new message boards discussion with the primary key. Does not add the message boards discussion to the database.
-	*
-	* @param discussionId the primary key for the new message boards discussion
-	* @return the new message boards discussion
-	*/
-	public com.liferay.portlet.messageboards.model.MBDiscussion create(
-		long discussionId);
-
-	/**
-	* Removes the message boards discussion with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param discussionId the primary key of the message boards discussion
-	* @return the message boards discussion that was removed
-	* @throws com.liferay.portlet.messageboards.NoSuchDiscussionException if a message boards discussion with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portlet.messageboards.model.MBDiscussion remove(
-		long discussionId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchDiscussionException;
-
-	public com.liferay.portlet.messageboards.model.MBDiscussion updateImpl(
-		com.liferay.portlet.messageboards.model.MBDiscussion mbDiscussion)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the message boards discussion with the primary key or throws a {@link com.liferay.portlet.messageboards.NoSuchDiscussionException} if it could not be found.
-	*
-	* @param discussionId the primary key of the message boards discussion
-	* @return the message boards discussion
-	* @throws com.liferay.portlet.messageboards.NoSuchDiscussionException if a message boards discussion with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portlet.messageboards.model.MBDiscussion findByPrimaryKey(
-		long discussionId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchDiscussionException;
-
-	/**
-	* Returns the message boards discussion with the primary key or returns <code>null</code> if it could not be found.
-	*
-	* @param discussionId the primary key of the message boards discussion
-	* @return the message boards discussion, or <code>null</code> if a message boards discussion with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portlet.messageboards.model.MBDiscussion fetchByPrimaryKey(
-		long discussionId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
 	* Returns all the message boards discussions where classNameId = &#63;.
 	*
 	* @param classNameId the class name ID
@@ -118,7 +52,7 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	* Returns a range of all the message boards discussions where classNameId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from MBDiscussionModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param classNameId the class name ID
@@ -135,7 +69,7 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	* Returns an ordered range of all the message boards discussions where classNameId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from MBDiscussionModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param classNameId the class name ID
@@ -223,6 +157,25 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 			com.liferay.portlet.messageboards.NoSuchDiscussionException;
 
 	/**
+	* Removes all the message boards discussions where classNameId = &#63; from the database.
+	*
+	* @param classNameId the class name ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeByClassNameId(long classNameId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of message boards discussions where classNameId = &#63;.
+	*
+	* @param classNameId the class name ID
+	* @return the number of matching message boards discussions
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByClassNameId(long classNameId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Returns the message boards discussion where threadId = &#63; or throws a {@link com.liferay.portlet.messageboards.NoSuchDiscussionException} if it could not be found.
 	*
 	* @param threadId the thread ID
@@ -256,6 +209,28 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	*/
 	public com.liferay.portlet.messageboards.model.MBDiscussion fetchByThreadId(
 		long threadId, boolean retrieveFromCache)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Removes the message boards discussion where threadId = &#63; from the database.
+	*
+	* @param threadId the thread ID
+	* @return the message boards discussion that was removed
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.messageboards.model.MBDiscussion removeByThreadId(
+		long threadId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.messageboards.NoSuchDiscussionException;
+
+	/**
+	* Returns the number of message boards discussions where threadId = &#63;.
+	*
+	* @param threadId the thread ID
+	* @return the number of matching message boards discussions
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByThreadId(long threadId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
@@ -298,6 +273,96 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Removes the message boards discussion where classNameId = &#63; and classPK = &#63; from the database.
+	*
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @return the message boards discussion that was removed
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.messageboards.model.MBDiscussion removeByC_C(
+		long classNameId, long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.messageboards.NoSuchDiscussionException;
+
+	/**
+	* Returns the number of message boards discussions where classNameId = &#63; and classPK = &#63;.
+	*
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @return the number of matching message boards discussions
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByC_C(long classNameId, long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Caches the message boards discussion in the entity cache if it is enabled.
+	*
+	* @param mbDiscussion the message boards discussion
+	*/
+	public void cacheResult(
+		com.liferay.portlet.messageboards.model.MBDiscussion mbDiscussion);
+
+	/**
+	* Caches the message boards discussions in the entity cache if it is enabled.
+	*
+	* @param mbDiscussions the message boards discussions
+	*/
+	public void cacheResult(
+		java.util.List<com.liferay.portlet.messageboards.model.MBDiscussion> mbDiscussions);
+
+	/**
+	* Creates a new message boards discussion with the primary key. Does not add the message boards discussion to the database.
+	*
+	* @param discussionId the primary key for the new message boards discussion
+	* @return the new message boards discussion
+	*/
+	public com.liferay.portlet.messageboards.model.MBDiscussion create(
+		long discussionId);
+
+	/**
+	* Removes the message boards discussion with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param discussionId the primary key of the message boards discussion
+	* @return the message boards discussion that was removed
+	* @throws com.liferay.portlet.messageboards.NoSuchDiscussionException if a message boards discussion with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.messageboards.model.MBDiscussion remove(
+		long discussionId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.messageboards.NoSuchDiscussionException;
+
+	public com.liferay.portlet.messageboards.model.MBDiscussion updateImpl(
+		com.liferay.portlet.messageboards.model.MBDiscussion mbDiscussion)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the message boards discussion with the primary key or throws a {@link com.liferay.portlet.messageboards.NoSuchDiscussionException} if it could not be found.
+	*
+	* @param discussionId the primary key of the message boards discussion
+	* @return the message boards discussion
+	* @throws com.liferay.portlet.messageboards.NoSuchDiscussionException if a message boards discussion with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.messageboards.model.MBDiscussion findByPrimaryKey(
+		long discussionId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.messageboards.NoSuchDiscussionException;
+
+	/**
+	* Returns the message boards discussion with the primary key or returns <code>null</code> if it could not be found.
+	*
+	* @param discussionId the primary key of the message boards discussion
+	* @return the message boards discussion, or <code>null</code> if a message boards discussion with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.messageboards.model.MBDiscussion fetchByPrimaryKey(
+		long discussionId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Returns all the message boards discussions.
 	*
 	* @return the message boards discussions
@@ -310,7 +375,7 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	* Returns a range of all the message boards discussions.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from MBDiscussionModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param start the lower bound of the range of message boards discussions
@@ -326,7 +391,7 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	* Returns an ordered range of all the message boards discussions.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from MBDiscussionModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param start the lower bound of the range of message boards discussions
@@ -341,76 +406,11 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Removes all the message boards discussions where classNameId = &#63; from the database.
-	*
-	* @param classNameId the class name ID
-	* @throws SystemException if a system exception occurred
-	*/
-	public void removeByClassNameId(long classNameId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Removes the message boards discussion where threadId = &#63; from the database.
-	*
-	* @param threadId the thread ID
-	* @return the message boards discussion that was removed
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portlet.messageboards.model.MBDiscussion removeByThreadId(
-		long threadId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchDiscussionException;
-
-	/**
-	* Removes the message boards discussion where classNameId = &#63; and classPK = &#63; from the database.
-	*
-	* @param classNameId the class name ID
-	* @param classPK the class p k
-	* @return the message boards discussion that was removed
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portlet.messageboards.model.MBDiscussion removeByC_C(
-		long classNameId, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchDiscussionException;
-
-	/**
 	* Removes all the message boards discussions from the database.
 	*
 	* @throws SystemException if a system exception occurred
 	*/
 	public void removeAll()
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the number of message boards discussions where classNameId = &#63;.
-	*
-	* @param classNameId the class name ID
-	* @return the number of matching message boards discussions
-	* @throws SystemException if a system exception occurred
-	*/
-	public int countByClassNameId(long classNameId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the number of message boards discussions where threadId = &#63;.
-	*
-	* @param threadId the thread ID
-	* @return the number of matching message boards discussions
-	* @throws SystemException if a system exception occurred
-	*/
-	public int countByThreadId(long threadId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the number of message boards discussions where classNameId = &#63; and classPK = &#63;.
-	*
-	* @param classNameId the class name ID
-	* @param classPK the class p k
-	* @return the number of matching message boards discussions
-	* @throws SystemException if a system exception occurred
-	*/
-	public int countByC_C(long classNameId, long classPK)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

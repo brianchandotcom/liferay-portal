@@ -111,86 +111,6 @@ public class ShoppingCouponUtil {
 	}
 
 	/**
-	* Caches the shopping coupon in the entity cache if it is enabled.
-	*
-	* @param shoppingCoupon the shopping coupon
-	*/
-	public static void cacheResult(
-		com.liferay.portlet.shopping.model.ShoppingCoupon shoppingCoupon) {
-		getPersistence().cacheResult(shoppingCoupon);
-	}
-
-	/**
-	* Caches the shopping coupons in the entity cache if it is enabled.
-	*
-	* @param shoppingCoupons the shopping coupons
-	*/
-	public static void cacheResult(
-		java.util.List<com.liferay.portlet.shopping.model.ShoppingCoupon> shoppingCoupons) {
-		getPersistence().cacheResult(shoppingCoupons);
-	}
-
-	/**
-	* Creates a new shopping coupon with the primary key. Does not add the shopping coupon to the database.
-	*
-	* @param couponId the primary key for the new shopping coupon
-	* @return the new shopping coupon
-	*/
-	public static com.liferay.portlet.shopping.model.ShoppingCoupon create(
-		long couponId) {
-		return getPersistence().create(couponId);
-	}
-
-	/**
-	* Removes the shopping coupon with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param couponId the primary key of the shopping coupon
-	* @return the shopping coupon that was removed
-	* @throws com.liferay.portlet.shopping.NoSuchCouponException if a shopping coupon with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portlet.shopping.model.ShoppingCoupon remove(
-		long couponId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.shopping.NoSuchCouponException {
-		return getPersistence().remove(couponId);
-	}
-
-	public static com.liferay.portlet.shopping.model.ShoppingCoupon updateImpl(
-		com.liferay.portlet.shopping.model.ShoppingCoupon shoppingCoupon)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().updateImpl(shoppingCoupon);
-	}
-
-	/**
-	* Returns the shopping coupon with the primary key or throws a {@link com.liferay.portlet.shopping.NoSuchCouponException} if it could not be found.
-	*
-	* @param couponId the primary key of the shopping coupon
-	* @return the shopping coupon
-	* @throws com.liferay.portlet.shopping.NoSuchCouponException if a shopping coupon with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portlet.shopping.model.ShoppingCoupon findByPrimaryKey(
-		long couponId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.shopping.NoSuchCouponException {
-		return getPersistence().findByPrimaryKey(couponId);
-	}
-
-	/**
-	* Returns the shopping coupon with the primary key or returns <code>null</code> if it could not be found.
-	*
-	* @param couponId the primary key of the shopping coupon
-	* @return the shopping coupon, or <code>null</code> if a shopping coupon with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portlet.shopping.model.ShoppingCoupon fetchByPrimaryKey(
-		long couponId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().fetchByPrimaryKey(couponId);
-	}
-
-	/**
 	* Returns all the shopping coupons where groupId = &#63;.
 	*
 	* @param groupId the group ID
@@ -207,7 +127,7 @@ public class ShoppingCouponUtil {
 	* Returns a range of all the shopping coupons where groupId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from ShoppingCouponModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -226,7 +146,7 @@ public class ShoppingCouponUtil {
 	* Returns an ordered range of all the shopping coupons where groupId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from ShoppingCouponModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -329,6 +249,29 @@ public class ShoppingCouponUtil {
 	}
 
 	/**
+	* Removes all the shopping coupons where groupId = &#63; from the database.
+	*
+	* @param groupId the group ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByGroupId(long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByGroupId(groupId);
+	}
+
+	/**
+	* Returns the number of shopping coupons where groupId = &#63;.
+	*
+	* @param groupId the group ID
+	* @return the number of matching shopping coupons
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByGroupId(long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByGroupId(groupId);
+	}
+
+	/**
 	* Returns the shopping coupon where code = &#63; or throws a {@link com.liferay.portlet.shopping.NoSuchCouponException} if it could not be found.
 	*
 	* @param code the code
@@ -371,6 +314,112 @@ public class ShoppingCouponUtil {
 	}
 
 	/**
+	* Removes the shopping coupon where code = &#63; from the database.
+	*
+	* @param code the code
+	* @return the shopping coupon that was removed
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.shopping.model.ShoppingCoupon removeByCode(
+		java.lang.String code)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.shopping.NoSuchCouponException {
+		return getPersistence().removeByCode(code);
+	}
+
+	/**
+	* Returns the number of shopping coupons where code = &#63;.
+	*
+	* @param code the code
+	* @return the number of matching shopping coupons
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByCode(java.lang.String code)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByCode(code);
+	}
+
+	/**
+	* Caches the shopping coupon in the entity cache if it is enabled.
+	*
+	* @param shoppingCoupon the shopping coupon
+	*/
+	public static void cacheResult(
+		com.liferay.portlet.shopping.model.ShoppingCoupon shoppingCoupon) {
+		getPersistence().cacheResult(shoppingCoupon);
+	}
+
+	/**
+	* Caches the shopping coupons in the entity cache if it is enabled.
+	*
+	* @param shoppingCoupons the shopping coupons
+	*/
+	public static void cacheResult(
+		java.util.List<com.liferay.portlet.shopping.model.ShoppingCoupon> shoppingCoupons) {
+		getPersistence().cacheResult(shoppingCoupons);
+	}
+
+	/**
+	* Creates a new shopping coupon with the primary key. Does not add the shopping coupon to the database.
+	*
+	* @param couponId the primary key for the new shopping coupon
+	* @return the new shopping coupon
+	*/
+	public static com.liferay.portlet.shopping.model.ShoppingCoupon create(
+		long couponId) {
+		return getPersistence().create(couponId);
+	}
+
+	/**
+	* Removes the shopping coupon with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param couponId the primary key of the shopping coupon
+	* @return the shopping coupon that was removed
+	* @throws com.liferay.portlet.shopping.NoSuchCouponException if a shopping coupon with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.shopping.model.ShoppingCoupon remove(
+		long couponId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.shopping.NoSuchCouponException {
+		return getPersistence().remove(couponId);
+	}
+
+	public static com.liferay.portlet.shopping.model.ShoppingCoupon updateImpl(
+		com.liferay.portlet.shopping.model.ShoppingCoupon shoppingCoupon)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().updateImpl(shoppingCoupon);
+	}
+
+	/**
+	* Returns the shopping coupon with the primary key or throws a {@link com.liferay.portlet.shopping.NoSuchCouponException} if it could not be found.
+	*
+	* @param couponId the primary key of the shopping coupon
+	* @return the shopping coupon
+	* @throws com.liferay.portlet.shopping.NoSuchCouponException if a shopping coupon with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.shopping.model.ShoppingCoupon findByPrimaryKey(
+		long couponId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.shopping.NoSuchCouponException {
+		return getPersistence().findByPrimaryKey(couponId);
+	}
+
+	/**
+	* Returns the shopping coupon with the primary key or returns <code>null</code> if it could not be found.
+	*
+	* @param couponId the primary key of the shopping coupon
+	* @return the shopping coupon, or <code>null</code> if a shopping coupon with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.shopping.model.ShoppingCoupon fetchByPrimaryKey(
+		long couponId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByPrimaryKey(couponId);
+	}
+
+	/**
 	* Returns all the shopping coupons.
 	*
 	* @return the shopping coupons
@@ -385,7 +434,7 @@ public class ShoppingCouponUtil {
 	* Returns a range of all the shopping coupons.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from ShoppingCouponModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param start the lower bound of the range of shopping coupons
@@ -403,7 +452,7 @@ public class ShoppingCouponUtil {
 	* Returns an ordered range of all the shopping coupons.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from ShoppingCouponModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param start the lower bound of the range of shopping coupons
@@ -420,31 +469,6 @@ public class ShoppingCouponUtil {
 	}
 
 	/**
-	* Removes all the shopping coupons where groupId = &#63; from the database.
-	*
-	* @param groupId the group ID
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void removeByGroupId(long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByGroupId(groupId);
-	}
-
-	/**
-	* Removes the shopping coupon where code = &#63; from the database.
-	*
-	* @param code the code
-	* @return the shopping coupon that was removed
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portlet.shopping.model.ShoppingCoupon removeByCode(
-		java.lang.String code)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.shopping.NoSuchCouponException {
-		return getPersistence().removeByCode(code);
-	}
-
-	/**
 	* Removes all the shopping coupons from the database.
 	*
 	* @throws SystemException if a system exception occurred
@@ -452,30 +476,6 @@ public class ShoppingCouponUtil {
 	public static void removeAll()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		getPersistence().removeAll();
-	}
-
-	/**
-	* Returns the number of shopping coupons where groupId = &#63;.
-	*
-	* @param groupId the group ID
-	* @return the number of matching shopping coupons
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int countByGroupId(long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByGroupId(groupId);
-	}
-
-	/**
-	* Returns the number of shopping coupons where code = &#63;.
-	*
-	* @param code the code
-	* @return the number of matching shopping coupons
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int countByCode(java.lang.String code)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByCode(code);
 	}
 
 	/**

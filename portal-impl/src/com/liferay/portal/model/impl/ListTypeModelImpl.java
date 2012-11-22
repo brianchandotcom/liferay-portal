@@ -78,6 +78,7 @@ public class ListTypeModelImpl extends BaseModelImpl<ListType>
 				"value.object.column.bitmask.enabled.com.liferay.portal.model.ListType"),
 			true);
 	public static long TYPE_COLUMN_BITMASK = 1L;
+	public static long NAME_COLUMN_BITMASK = 2L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.

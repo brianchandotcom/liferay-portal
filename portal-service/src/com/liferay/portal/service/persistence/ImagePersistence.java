@@ -36,67 +36,6 @@ public interface ImagePersistence extends BasePersistence<Image> {
 	 */
 
 	/**
-	* Caches the image in the entity cache if it is enabled.
-	*
-	* @param image the image
-	*/
-	public void cacheResult(com.liferay.portal.model.Image image);
-
-	/**
-	* Caches the images in the entity cache if it is enabled.
-	*
-	* @param images the images
-	*/
-	public void cacheResult(
-		java.util.List<com.liferay.portal.model.Image> images);
-
-	/**
-	* Creates a new image with the primary key. Does not add the image to the database.
-	*
-	* @param imageId the primary key for the new image
-	* @return the new image
-	*/
-	public com.liferay.portal.model.Image create(long imageId);
-
-	/**
-	* Removes the image with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param imageId the primary key of the image
-	* @return the image that was removed
-	* @throws com.liferay.portal.NoSuchImageException if a image with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.Image remove(long imageId)
-		throws com.liferay.portal.NoSuchImageException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	public com.liferay.portal.model.Image updateImpl(
-		com.liferay.portal.model.Image image)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the image with the primary key or throws a {@link com.liferay.portal.NoSuchImageException} if it could not be found.
-	*
-	* @param imageId the primary key of the image
-	* @return the image
-	* @throws com.liferay.portal.NoSuchImageException if a image with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.Image findByPrimaryKey(long imageId)
-		throws com.liferay.portal.NoSuchImageException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the image with the primary key or returns <code>null</code> if it could not be found.
-	*
-	* @param imageId the primary key of the image
-	* @return the image, or <code>null</code> if a image with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.portal.model.Image fetchByPrimaryKey(long imageId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
 	* Returns all the images where size &lt; &#63;.
 	*
 	* @param size the size
@@ -110,7 +49,7 @@ public interface ImagePersistence extends BasePersistence<Image> {
 	* Returns a range of all the images where size &lt; &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from ImageModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param size the size
@@ -127,7 +66,7 @@ public interface ImagePersistence extends BasePersistence<Image> {
 	* Returns an ordered range of all the images where size &lt; &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from ImageModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param size the size
@@ -211,6 +150,86 @@ public interface ImagePersistence extends BasePersistence<Image> {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Removes all the images where size &lt; &#63; from the database.
+	*
+	* @param size the size
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeByLtSize(int size)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of images where size &lt; &#63;.
+	*
+	* @param size the size
+	* @return the number of matching images
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByLtSize(int size)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Caches the image in the entity cache if it is enabled.
+	*
+	* @param image the image
+	*/
+	public void cacheResult(com.liferay.portal.model.Image image);
+
+	/**
+	* Caches the images in the entity cache if it is enabled.
+	*
+	* @param images the images
+	*/
+	public void cacheResult(
+		java.util.List<com.liferay.portal.model.Image> images);
+
+	/**
+	* Creates a new image with the primary key. Does not add the image to the database.
+	*
+	* @param imageId the primary key for the new image
+	* @return the new image
+	*/
+	public com.liferay.portal.model.Image create(long imageId);
+
+	/**
+	* Removes the image with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param imageId the primary key of the image
+	* @return the image that was removed
+	* @throws com.liferay.portal.NoSuchImageException if a image with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Image remove(long imageId)
+		throws com.liferay.portal.NoSuchImageException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public com.liferay.portal.model.Image updateImpl(
+		com.liferay.portal.model.Image image)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the image with the primary key or throws a {@link com.liferay.portal.NoSuchImageException} if it could not be found.
+	*
+	* @param imageId the primary key of the image
+	* @return the image
+	* @throws com.liferay.portal.NoSuchImageException if a image with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Image findByPrimaryKey(long imageId)
+		throws com.liferay.portal.NoSuchImageException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the image with the primary key or returns <code>null</code> if it could not be found.
+	*
+	* @param imageId the primary key of the image
+	* @return the image, or <code>null</code> if a image with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Image fetchByPrimaryKey(long imageId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Returns all the images.
 	*
 	* @return the images
@@ -223,7 +242,7 @@ public interface ImagePersistence extends BasePersistence<Image> {
 	* Returns a range of all the images.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from ImageModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param start the lower bound of the range of images
@@ -238,7 +257,7 @@ public interface ImagePersistence extends BasePersistence<Image> {
 	* Returns an ordered range of all the images.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from ImageModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	* </p>
 	*
 	* @param start the lower bound of the range of images
@@ -253,30 +272,11 @@ public interface ImagePersistence extends BasePersistence<Image> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Removes all the images where size &lt; &#63; from the database.
-	*
-	* @param size the size
-	* @throws SystemException if a system exception occurred
-	*/
-	public void removeByLtSize(int size)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
 	* Removes all the images from the database.
 	*
 	* @throws SystemException if a system exception occurred
 	*/
 	public void removeAll()
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the number of images where size &lt; &#63;.
-	*
-	* @param size the size
-	* @return the number of matching images
-	* @throws SystemException if a system exception occurred
-	*/
-	public int countByLtSize(int size)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

@@ -89,6 +89,8 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 		};
 	public static final String TABLE_SQL_CREATE = "create table DDMStructure (uuid_ VARCHAR(75) null,structureId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentStructureId LONG,classNameId LONG,structureKey VARCHAR(75) null,name STRING null,description STRING null,xsd TEXT null,storageType VARCHAR(75) null,type_ INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table DDMStructure";
+	public static final String ORDER_BY_JPQL = " ORDER BY ddmStructure.structureId ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY DDMStructure.structureId ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
@@ -108,6 +110,7 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 	public static long NAME_COLUMN_BITMASK = 16L;
 	public static long STRUCTUREKEY_COLUMN_BITMASK = 32L;
 	public static long UUID_COLUMN_BITMASK = 64L;
+	public static long STRUCTUREID_COLUMN_BITMASK = 128L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.

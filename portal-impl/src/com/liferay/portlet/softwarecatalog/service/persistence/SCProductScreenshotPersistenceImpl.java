@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnmodifiableList;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.service.persistence.ImagePersistence;
@@ -74,57 +75,6 @@ public class SCProductScreenshotPersistenceImpl extends BasePersistenceImpl<SCPr
 		".List1";
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY +
 		".List2";
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_PRODUCTENTRYID =
-		new FinderPath(SCProductScreenshotModelImpl.ENTITY_CACHE_ENABLED,
-			SCProductScreenshotModelImpl.FINDER_CACHE_ENABLED,
-			SCProductScreenshotImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByProductEntryId",
-			new String[] {
-				Long.class.getName(),
-				
-			"java.lang.Integer", "java.lang.Integer",
-				"com.liferay.portal.kernel.util.OrderByComparator"
-			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_PRODUCTENTRYID =
-		new FinderPath(SCProductScreenshotModelImpl.ENTITY_CACHE_ENABLED,
-			SCProductScreenshotModelImpl.FINDER_CACHE_ENABLED,
-			SCProductScreenshotImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByProductEntryId",
-			new String[] { Long.class.getName() },
-			SCProductScreenshotModelImpl.PRODUCTENTRYID_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_PRODUCTENTRYID = new FinderPath(SCProductScreenshotModelImpl.ENTITY_CACHE_ENABLED,
-			SCProductScreenshotModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByProductEntryId",
-			new String[] { Long.class.getName() });
-	public static final FinderPath FINDER_PATH_FETCH_BY_THUMBNAILID = new FinderPath(SCProductScreenshotModelImpl.ENTITY_CACHE_ENABLED,
-			SCProductScreenshotModelImpl.FINDER_CACHE_ENABLED,
-			SCProductScreenshotImpl.class, FINDER_CLASS_NAME_ENTITY,
-			"fetchByThumbnailId", new String[] { Long.class.getName() },
-			SCProductScreenshotModelImpl.THUMBNAILID_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_THUMBNAILID = new FinderPath(SCProductScreenshotModelImpl.ENTITY_CACHE_ENABLED,
-			SCProductScreenshotModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByThumbnailId",
-			new String[] { Long.class.getName() });
-	public static final FinderPath FINDER_PATH_FETCH_BY_FULLIMAGEID = new FinderPath(SCProductScreenshotModelImpl.ENTITY_CACHE_ENABLED,
-			SCProductScreenshotModelImpl.FINDER_CACHE_ENABLED,
-			SCProductScreenshotImpl.class, FINDER_CLASS_NAME_ENTITY,
-			"fetchByFullImageId", new String[] { Long.class.getName() },
-			SCProductScreenshotModelImpl.FULLIMAGEID_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_FULLIMAGEID = new FinderPath(SCProductScreenshotModelImpl.ENTITY_CACHE_ENABLED,
-			SCProductScreenshotModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByFullImageId",
-			new String[] { Long.class.getName() });
-	public static final FinderPath FINDER_PATH_FETCH_BY_P_P = new FinderPath(SCProductScreenshotModelImpl.ENTITY_CACHE_ENABLED,
-			SCProductScreenshotModelImpl.FINDER_CACHE_ENABLED,
-			SCProductScreenshotImpl.class, FINDER_CLASS_NAME_ENTITY,
-			"fetchByP_P",
-			new String[] { Long.class.getName(), Integer.class.getName() },
-			SCProductScreenshotModelImpl.PRODUCTENTRYID_COLUMN_BITMASK |
-			SCProductScreenshotModelImpl.PRIORITY_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_P_P = new FinderPath(SCProductScreenshotModelImpl.ENTITY_CACHE_ENABLED,
-			SCProductScreenshotModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByP_P",
-			new String[] { Long.class.getName(), Integer.class.getName() });
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_ALL = new FinderPath(SCProductScreenshotModelImpl.ENTITY_CACHE_ENABLED,
 			SCProductScreenshotModelImpl.FINDER_CACHE_ENABLED,
 			SCProductScreenshotImpl.class,
@@ -136,6 +86,1160 @@ public class SCProductScreenshotPersistenceImpl extends BasePersistenceImpl<SCPr
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(SCProductScreenshotModelImpl.ENTITY_CACHE_ENABLED,
 			SCProductScreenshotModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_PRODUCTENTRYID =
+		new FinderPath(SCProductScreenshotModelImpl.ENTITY_CACHE_ENABLED,
+			SCProductScreenshotModelImpl.FINDER_CACHE_ENABLED,
+			SCProductScreenshotImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByProductEntryId",
+			new String[] {
+				Long.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_PRODUCTENTRYID =
+		new FinderPath(SCProductScreenshotModelImpl.ENTITY_CACHE_ENABLED,
+			SCProductScreenshotModelImpl.FINDER_CACHE_ENABLED,
+			SCProductScreenshotImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByProductEntryId",
+			new String[] { Long.class.getName() },
+			SCProductScreenshotModelImpl.PRODUCTENTRYID_COLUMN_BITMASK |
+			SCProductScreenshotModelImpl.PRIORITY_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_PRODUCTENTRYID = new FinderPath(SCProductScreenshotModelImpl.ENTITY_CACHE_ENABLED,
+			SCProductScreenshotModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByProductEntryId",
+			new String[] { Long.class.getName() });
+
+	/**
+	 * Returns all the s c product screenshots where productEntryId = &#63;.
+	 *
+	 * @param productEntryId the product entry ID
+	 * @return the matching s c product screenshots
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<SCProductScreenshot> findByProductEntryId(long productEntryId)
+		throws SystemException {
+		return findByProductEntryId(productEntryId, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the s c product screenshots where productEntryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from SCProductScreenshotModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
+	 * </p>
+	 *
+	 * @param productEntryId the product entry ID
+	 * @param start the lower bound of the range of s c product screenshots
+	 * @param end the upper bound of the range of s c product screenshots (not inclusive)
+	 * @return the range of matching s c product screenshots
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<SCProductScreenshot> findByProductEntryId(long productEntryId,
+		int start, int end) throws SystemException {
+		return findByProductEntryId(productEntryId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the s c product screenshots where productEntryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from SCProductScreenshotModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
+	 * </p>
+	 *
+	 * @param productEntryId the product entry ID
+	 * @param start the lower bound of the range of s c product screenshots
+	 * @param end the upper bound of the range of s c product screenshots (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching s c product screenshots
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<SCProductScreenshot> findByProductEntryId(long productEntryId,
+		int start, int end, OrderByComparator orderByComparator)
+		throws SystemException {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_PRODUCTENTRYID;
+			finderArgs = new Object[] { productEntryId };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_PRODUCTENTRYID;
+			finderArgs = new Object[] {
+					productEntryId,
+					
+					start, end, orderByComparator
+				};
+		}
+
+		List<SCProductScreenshot> list = (List<SCProductScreenshot>)FinderCacheUtil.getResult(finderPath,
+				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (SCProductScreenshot scProductScreenshot : list) {
+				if ((productEntryId != scProductScreenshot.getProductEntryId())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(3 +
+						(orderByComparator.getOrderByFields().length * 3));
+			}
+			else {
+				query = new StringBundler(3);
+			}
+
+			query.append(_SQL_SELECT_SCPRODUCTSCREENSHOT_WHERE);
+
+			query.append(_FINDER_COLUMN_PRODUCTENTRYID_PRODUCTENTRYID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else if (pagination) {
+				query.append(SCProductScreenshotModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(productEntryId);
+
+				if (!pagination) {
+					list = (List<SCProductScreenshot>)QueryUtil.list(q,
+							getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = new UnmodifiableList(list);
+				}
+				else {
+					list = (List<SCProductScreenshot>)QueryUtil.list(q,
+							getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first s c product screenshot in the ordered set where productEntryId = &#63;.
+	 *
+	 * @param productEntryId the product entry ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching s c product screenshot
+	 * @throws com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException if a matching s c product screenshot could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public SCProductScreenshot findByProductEntryId_First(long productEntryId,
+		OrderByComparator orderByComparator)
+		throws NoSuchProductScreenshotException, SystemException {
+		SCProductScreenshot scProductScreenshot = fetchByProductEntryId_First(productEntryId,
+				orderByComparator);
+
+		if (scProductScreenshot != null) {
+			return scProductScreenshot;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("productEntryId=");
+		msg.append(productEntryId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchProductScreenshotException(msg.toString());
+	}
+
+	/**
+	 * Returns the first s c product screenshot in the ordered set where productEntryId = &#63;.
+	 *
+	 * @param productEntryId the product entry ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching s c product screenshot, or <code>null</code> if a matching s c product screenshot could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public SCProductScreenshot fetchByProductEntryId_First(
+		long productEntryId, OrderByComparator orderByComparator)
+		throws SystemException {
+		List<SCProductScreenshot> list = findByProductEntryId(productEntryId,
+				0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last s c product screenshot in the ordered set where productEntryId = &#63;.
+	 *
+	 * @param productEntryId the product entry ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching s c product screenshot
+	 * @throws com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException if a matching s c product screenshot could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public SCProductScreenshot findByProductEntryId_Last(long productEntryId,
+		OrderByComparator orderByComparator)
+		throws NoSuchProductScreenshotException, SystemException {
+		SCProductScreenshot scProductScreenshot = fetchByProductEntryId_Last(productEntryId,
+				orderByComparator);
+
+		if (scProductScreenshot != null) {
+			return scProductScreenshot;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("productEntryId=");
+		msg.append(productEntryId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchProductScreenshotException(msg.toString());
+	}
+
+	/**
+	 * Returns the last s c product screenshot in the ordered set where productEntryId = &#63;.
+	 *
+	 * @param productEntryId the product entry ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching s c product screenshot, or <code>null</code> if a matching s c product screenshot could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public SCProductScreenshot fetchByProductEntryId_Last(long productEntryId,
+		OrderByComparator orderByComparator) throws SystemException {
+		int count = countByProductEntryId(productEntryId);
+
+		List<SCProductScreenshot> list = findByProductEntryId(productEntryId,
+				count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the s c product screenshots before and after the current s c product screenshot in the ordered set where productEntryId = &#63;.
+	 *
+	 * @param productScreenshotId the primary key of the current s c product screenshot
+	 * @param productEntryId the product entry ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next s c product screenshot
+	 * @throws com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException if a s c product screenshot with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public SCProductScreenshot[] findByProductEntryId_PrevAndNext(
+		long productScreenshotId, long productEntryId,
+		OrderByComparator orderByComparator)
+		throws NoSuchProductScreenshotException, SystemException {
+		SCProductScreenshot scProductScreenshot = findByPrimaryKey(productScreenshotId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SCProductScreenshot[] array = new SCProductScreenshotImpl[3];
+
+			array[0] = getByProductEntryId_PrevAndNext(session,
+					scProductScreenshot, productEntryId, orderByComparator, true);
+
+			array[1] = scProductScreenshot;
+
+			array[2] = getByProductEntryId_PrevAndNext(session,
+					scProductScreenshot, productEntryId, orderByComparator,
+					false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected SCProductScreenshot getByProductEntryId_PrevAndNext(
+		Session session, SCProductScreenshot scProductScreenshot,
+		long productEntryId, OrderByComparator orderByComparator,
+		boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_SCPRODUCTSCREENSHOT_WHERE);
+
+		query.append(_FINDER_COLUMN_PRODUCTENTRYID_PRODUCTENTRYID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(SCProductScreenshotModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(productEntryId);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(scProductScreenshot);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<SCProductScreenshot> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the s c product screenshots where productEntryId = &#63; from the database.
+	 *
+	 * @param productEntryId the product entry ID
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void removeByProductEntryId(long productEntryId)
+		throws SystemException {
+		for (SCProductScreenshot scProductScreenshot : findByProductEntryId(
+				productEntryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(scProductScreenshot);
+		}
+	}
+
+	/**
+	 * Returns the number of s c product screenshots where productEntryId = &#63;.
+	 *
+	 * @param productEntryId the product entry ID
+	 * @return the number of matching s c product screenshots
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int countByProductEntryId(long productEntryId)
+		throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_PRODUCTENTRYID;
+
+		Object[] finderArgs = new Object[] { productEntryId };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_SCPRODUCTSCREENSHOT_WHERE);
+
+			query.append(_FINDER_COLUMN_PRODUCTENTRYID_PRODUCTENTRYID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(productEntryId);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_PRODUCTENTRYID_PRODUCTENTRYID_2 = "scProductScreenshot.productEntryId = ?";
+	public static final FinderPath FINDER_PATH_FETCH_BY_THUMBNAILID = new FinderPath(SCProductScreenshotModelImpl.ENTITY_CACHE_ENABLED,
+			SCProductScreenshotModelImpl.FINDER_CACHE_ENABLED,
+			SCProductScreenshotImpl.class, FINDER_CLASS_NAME_ENTITY,
+			"fetchByThumbnailId", new String[] { Long.class.getName() },
+			SCProductScreenshotModelImpl.THUMBNAILID_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_THUMBNAILID = new FinderPath(SCProductScreenshotModelImpl.ENTITY_CACHE_ENABLED,
+			SCProductScreenshotModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByThumbnailId",
+			new String[] { Long.class.getName() });
+
+	/**
+	 * Returns the s c product screenshot where thumbnailId = &#63; or throws a {@link com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException} if it could not be found.
+	 *
+	 * @param thumbnailId the thumbnail ID
+	 * @return the matching s c product screenshot
+	 * @throws com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException if a matching s c product screenshot could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public SCProductScreenshot findByThumbnailId(long thumbnailId)
+		throws NoSuchProductScreenshotException, SystemException {
+		SCProductScreenshot scProductScreenshot = fetchByThumbnailId(thumbnailId);
+
+		if (scProductScreenshot == null) {
+			StringBundler msg = new StringBundler(4);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("thumbnailId=");
+			msg.append(thumbnailId);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(msg.toString());
+			}
+
+			throw new NoSuchProductScreenshotException(msg.toString());
+		}
+
+		return scProductScreenshot;
+	}
+
+	/**
+	 * Returns the s c product screenshot where thumbnailId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param thumbnailId the thumbnail ID
+	 * @return the matching s c product screenshot, or <code>null</code> if a matching s c product screenshot could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public SCProductScreenshot fetchByThumbnailId(long thumbnailId)
+		throws SystemException {
+		return fetchByThumbnailId(thumbnailId, true);
+	}
+
+	/**
+	 * Returns the s c product screenshot where thumbnailId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param thumbnailId the thumbnail ID
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the matching s c product screenshot, or <code>null</code> if a matching s c product screenshot could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public SCProductScreenshot fetchByThumbnailId(long thumbnailId,
+		boolean retrieveFromCache) throws SystemException {
+		Object[] finderArgs = new Object[] { thumbnailId };
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_THUMBNAILID,
+					finderArgs, this);
+		}
+
+		if (result instanceof SCProductScreenshot) {
+			SCProductScreenshot scProductScreenshot = (SCProductScreenshot)result;
+
+			if ((thumbnailId != scProductScreenshot.getThumbnailId())) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_SELECT_SCPRODUCTSCREENSHOT_WHERE);
+
+			query.append(_FINDER_COLUMN_THUMBNAILID_THUMBNAILID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(thumbnailId);
+
+				List<SCProductScreenshot> list = q.list();
+
+				if (list.isEmpty()) {
+					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_THUMBNAILID,
+						finderArgs, list);
+				}
+				else {
+					if ((list.size() > 1) && _log.isWarnEnabled()) {
+						_log.warn(
+							"SCProductScreenshotPersistenceImpl.fetchByThumbnailId(long, boolean) with parameters (" +
+							StringUtil.merge(finderArgs) +
+							") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+					}
+
+					SCProductScreenshot scProductScreenshot = list.get(0);
+
+					result = scProductScreenshot;
+
+					cacheResult(scProductScreenshot);
+
+					if ((scProductScreenshot.getThumbnailId() != thumbnailId)) {
+						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_THUMBNAILID,
+							finderArgs, scProductScreenshot);
+					}
+				}
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_THUMBNAILID,
+					finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (SCProductScreenshot)result;
+		}
+	}
+
+	/**
+	 * Removes the s c product screenshot where thumbnailId = &#63; from the database.
+	 *
+	 * @param thumbnailId the thumbnail ID
+	 * @return the s c product screenshot that was removed
+	 * @throws SystemException if a system exception occurred
+	 */
+	public SCProductScreenshot removeByThumbnailId(long thumbnailId)
+		throws NoSuchProductScreenshotException, SystemException {
+		SCProductScreenshot scProductScreenshot = findByThumbnailId(thumbnailId);
+
+		return remove(scProductScreenshot);
+	}
+
+	/**
+	 * Returns the number of s c product screenshots where thumbnailId = &#63;.
+	 *
+	 * @param thumbnailId the thumbnail ID
+	 * @return the number of matching s c product screenshots
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int countByThumbnailId(long thumbnailId) throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_THUMBNAILID;
+
+		Object[] finderArgs = new Object[] { thumbnailId };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_SCPRODUCTSCREENSHOT_WHERE);
+
+			query.append(_FINDER_COLUMN_THUMBNAILID_THUMBNAILID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(thumbnailId);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_THUMBNAILID_THUMBNAILID_2 = "scProductScreenshot.thumbnailId = ?";
+	public static final FinderPath FINDER_PATH_FETCH_BY_FULLIMAGEID = new FinderPath(SCProductScreenshotModelImpl.ENTITY_CACHE_ENABLED,
+			SCProductScreenshotModelImpl.FINDER_CACHE_ENABLED,
+			SCProductScreenshotImpl.class, FINDER_CLASS_NAME_ENTITY,
+			"fetchByFullImageId", new String[] { Long.class.getName() },
+			SCProductScreenshotModelImpl.FULLIMAGEID_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_FULLIMAGEID = new FinderPath(SCProductScreenshotModelImpl.ENTITY_CACHE_ENABLED,
+			SCProductScreenshotModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByFullImageId",
+			new String[] { Long.class.getName() });
+
+	/**
+	 * Returns the s c product screenshot where fullImageId = &#63; or throws a {@link com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException} if it could not be found.
+	 *
+	 * @param fullImageId the full image ID
+	 * @return the matching s c product screenshot
+	 * @throws com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException if a matching s c product screenshot could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public SCProductScreenshot findByFullImageId(long fullImageId)
+		throws NoSuchProductScreenshotException, SystemException {
+		SCProductScreenshot scProductScreenshot = fetchByFullImageId(fullImageId);
+
+		if (scProductScreenshot == null) {
+			StringBundler msg = new StringBundler(4);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("fullImageId=");
+			msg.append(fullImageId);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(msg.toString());
+			}
+
+			throw new NoSuchProductScreenshotException(msg.toString());
+		}
+
+		return scProductScreenshot;
+	}
+
+	/**
+	 * Returns the s c product screenshot where fullImageId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param fullImageId the full image ID
+	 * @return the matching s c product screenshot, or <code>null</code> if a matching s c product screenshot could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public SCProductScreenshot fetchByFullImageId(long fullImageId)
+		throws SystemException {
+		return fetchByFullImageId(fullImageId, true);
+	}
+
+	/**
+	 * Returns the s c product screenshot where fullImageId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param fullImageId the full image ID
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the matching s c product screenshot, or <code>null</code> if a matching s c product screenshot could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public SCProductScreenshot fetchByFullImageId(long fullImageId,
+		boolean retrieveFromCache) throws SystemException {
+		Object[] finderArgs = new Object[] { fullImageId };
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_FULLIMAGEID,
+					finderArgs, this);
+		}
+
+		if (result instanceof SCProductScreenshot) {
+			SCProductScreenshot scProductScreenshot = (SCProductScreenshot)result;
+
+			if ((fullImageId != scProductScreenshot.getFullImageId())) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_SELECT_SCPRODUCTSCREENSHOT_WHERE);
+
+			query.append(_FINDER_COLUMN_FULLIMAGEID_FULLIMAGEID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(fullImageId);
+
+				List<SCProductScreenshot> list = q.list();
+
+				if (list.isEmpty()) {
+					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_FULLIMAGEID,
+						finderArgs, list);
+				}
+				else {
+					if ((list.size() > 1) && _log.isWarnEnabled()) {
+						_log.warn(
+							"SCProductScreenshotPersistenceImpl.fetchByFullImageId(long, boolean) with parameters (" +
+							StringUtil.merge(finderArgs) +
+							") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+					}
+
+					SCProductScreenshot scProductScreenshot = list.get(0);
+
+					result = scProductScreenshot;
+
+					cacheResult(scProductScreenshot);
+
+					if ((scProductScreenshot.getFullImageId() != fullImageId)) {
+						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_FULLIMAGEID,
+							finderArgs, scProductScreenshot);
+					}
+				}
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_FULLIMAGEID,
+					finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (SCProductScreenshot)result;
+		}
+	}
+
+	/**
+	 * Removes the s c product screenshot where fullImageId = &#63; from the database.
+	 *
+	 * @param fullImageId the full image ID
+	 * @return the s c product screenshot that was removed
+	 * @throws SystemException if a system exception occurred
+	 */
+	public SCProductScreenshot removeByFullImageId(long fullImageId)
+		throws NoSuchProductScreenshotException, SystemException {
+		SCProductScreenshot scProductScreenshot = findByFullImageId(fullImageId);
+
+		return remove(scProductScreenshot);
+	}
+
+	/**
+	 * Returns the number of s c product screenshots where fullImageId = &#63;.
+	 *
+	 * @param fullImageId the full image ID
+	 * @return the number of matching s c product screenshots
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int countByFullImageId(long fullImageId) throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_FULLIMAGEID;
+
+		Object[] finderArgs = new Object[] { fullImageId };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_SCPRODUCTSCREENSHOT_WHERE);
+
+			query.append(_FINDER_COLUMN_FULLIMAGEID_FULLIMAGEID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(fullImageId);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_FULLIMAGEID_FULLIMAGEID_2 = "scProductScreenshot.fullImageId = ?";
+	public static final FinderPath FINDER_PATH_FETCH_BY_P_P = new FinderPath(SCProductScreenshotModelImpl.ENTITY_CACHE_ENABLED,
+			SCProductScreenshotModelImpl.FINDER_CACHE_ENABLED,
+			SCProductScreenshotImpl.class, FINDER_CLASS_NAME_ENTITY,
+			"fetchByP_P",
+			new String[] { Long.class.getName(), Integer.class.getName() },
+			SCProductScreenshotModelImpl.PRODUCTENTRYID_COLUMN_BITMASK |
+			SCProductScreenshotModelImpl.PRIORITY_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_P_P = new FinderPath(SCProductScreenshotModelImpl.ENTITY_CACHE_ENABLED,
+			SCProductScreenshotModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByP_P",
+			new String[] { Long.class.getName(), Integer.class.getName() });
+
+	/**
+	 * Returns the s c product screenshot where productEntryId = &#63; and priority = &#63; or throws a {@link com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException} if it could not be found.
+	 *
+	 * @param productEntryId the product entry ID
+	 * @param priority the priority
+	 * @return the matching s c product screenshot
+	 * @throws com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException if a matching s c product screenshot could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public SCProductScreenshot findByP_P(long productEntryId, int priority)
+		throws NoSuchProductScreenshotException, SystemException {
+		SCProductScreenshot scProductScreenshot = fetchByP_P(productEntryId,
+				priority);
+
+		if (scProductScreenshot == null) {
+			StringBundler msg = new StringBundler(6);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("productEntryId=");
+			msg.append(productEntryId);
+
+			msg.append(", priority=");
+			msg.append(priority);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(msg.toString());
+			}
+
+			throw new NoSuchProductScreenshotException(msg.toString());
+		}
+
+		return scProductScreenshot;
+	}
+
+	/**
+	 * Returns the s c product screenshot where productEntryId = &#63; and priority = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param productEntryId the product entry ID
+	 * @param priority the priority
+	 * @return the matching s c product screenshot, or <code>null</code> if a matching s c product screenshot could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public SCProductScreenshot fetchByP_P(long productEntryId, int priority)
+		throws SystemException {
+		return fetchByP_P(productEntryId, priority, true);
+	}
+
+	/**
+	 * Returns the s c product screenshot where productEntryId = &#63; and priority = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param productEntryId the product entry ID
+	 * @param priority the priority
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the matching s c product screenshot, or <code>null</code> if a matching s c product screenshot could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public SCProductScreenshot fetchByP_P(long productEntryId, int priority,
+		boolean retrieveFromCache) throws SystemException {
+		Object[] finderArgs = new Object[] { productEntryId, priority };
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_P_P,
+					finderArgs, this);
+		}
+
+		if (result instanceof SCProductScreenshot) {
+			SCProductScreenshot scProductScreenshot = (SCProductScreenshot)result;
+
+			if ((productEntryId != scProductScreenshot.getProductEntryId()) ||
+					(priority != scProductScreenshot.getPriority())) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(4);
+
+			query.append(_SQL_SELECT_SCPRODUCTSCREENSHOT_WHERE);
+
+			query.append(_FINDER_COLUMN_P_P_PRODUCTENTRYID_2);
+
+			query.append(_FINDER_COLUMN_P_P_PRIORITY_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(productEntryId);
+
+				qPos.add(priority);
+
+				List<SCProductScreenshot> list = q.list();
+
+				if (list.isEmpty()) {
+					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_P_P,
+						finderArgs, list);
+				}
+				else {
+					if ((list.size() > 1) && _log.isWarnEnabled()) {
+						_log.warn(
+							"SCProductScreenshotPersistenceImpl.fetchByP_P(long, int, boolean) with parameters (" +
+							StringUtil.merge(finderArgs) +
+							") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+					}
+
+					SCProductScreenshot scProductScreenshot = list.get(0);
+
+					result = scProductScreenshot;
+
+					cacheResult(scProductScreenshot);
+
+					if ((scProductScreenshot.getProductEntryId() != productEntryId) ||
+							(scProductScreenshot.getPriority() != priority)) {
+						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_P_P,
+							finderArgs, scProductScreenshot);
+					}
+				}
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_P_P,
+					finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (SCProductScreenshot)result;
+		}
+	}
+
+	/**
+	 * Removes the s c product screenshot where productEntryId = &#63; and priority = &#63; from the database.
+	 *
+	 * @param productEntryId the product entry ID
+	 * @param priority the priority
+	 * @return the s c product screenshot that was removed
+	 * @throws SystemException if a system exception occurred
+	 */
+	public SCProductScreenshot removeByP_P(long productEntryId, int priority)
+		throws NoSuchProductScreenshotException, SystemException {
+		SCProductScreenshot scProductScreenshot = findByP_P(productEntryId,
+				priority);
+
+		return remove(scProductScreenshot);
+	}
+
+	/**
+	 * Returns the number of s c product screenshots where productEntryId = &#63; and priority = &#63;.
+	 *
+	 * @param productEntryId the product entry ID
+	 * @param priority the priority
+	 * @return the number of matching s c product screenshots
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int countByP_P(long productEntryId, int priority)
+		throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_P_P;
+
+		Object[] finderArgs = new Object[] { productEntryId, priority };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_SCPRODUCTSCREENSHOT_WHERE);
+
+			query.append(_FINDER_COLUMN_P_P_PRODUCTENTRYID_2);
+
+			query.append(_FINDER_COLUMN_P_P_PRIORITY_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(productEntryId);
+
+				qPos.add(priority);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_P_P_PRODUCTENTRYID_2 = "scProductScreenshot.productEntryId = ? AND ";
+	private static final String _FINDER_COLUMN_P_P_PRIORITY_2 = "scProductScreenshot.priority = ?";
 
 	/**
 	 * Caches the s c product screenshot in the entity cache if it is enabled.
@@ -585,853 +1689,33 @@ public class SCProductScreenshotPersistenceImpl extends BasePersistenceImpl<SCPr
 		if (scProductScreenshot == null) {
 			Session session = null;
 
-			boolean hasException = false;
-
 			try {
 				session = openSession();
 
 				scProductScreenshot = (SCProductScreenshot)session.get(SCProductScreenshotImpl.class,
 						Long.valueOf(productScreenshotId));
-			}
-			catch (Exception e) {
-				hasException = true;
 
-				throw processException(e);
-			}
-			finally {
 				if (scProductScreenshot != null) {
 					cacheResult(scProductScreenshot);
 				}
-				else if (!hasException) {
+				else {
 					EntityCacheUtil.putResult(SCProductScreenshotModelImpl.ENTITY_CACHE_ENABLED,
 						SCProductScreenshotImpl.class, productScreenshotId,
 						_nullSCProductScreenshot);
 				}
+			}
+			catch (Exception e) {
+				EntityCacheUtil.removeResult(SCProductScreenshotModelImpl.ENTITY_CACHE_ENABLED,
+					SCProductScreenshotImpl.class, productScreenshotId);
 
+				throw processException(e);
+			}
+			finally {
 				closeSession(session);
 			}
 		}
 
 		return scProductScreenshot;
-	}
-
-	/**
-	 * Returns all the s c product screenshots where productEntryId = &#63;.
-	 *
-	 * @param productEntryId the product entry ID
-	 * @return the matching s c product screenshots
-	 * @throws SystemException if a system exception occurred
-	 */
-	public List<SCProductScreenshot> findByProductEntryId(long productEntryId)
-		throws SystemException {
-		return findByProductEntryId(productEntryId, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the s c product screenshots where productEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
-	 * @param productEntryId the product entry ID
-	 * @param start the lower bound of the range of s c product screenshots
-	 * @param end the upper bound of the range of s c product screenshots (not inclusive)
-	 * @return the range of matching s c product screenshots
-	 * @throws SystemException if a system exception occurred
-	 */
-	public List<SCProductScreenshot> findByProductEntryId(long productEntryId,
-		int start, int end) throws SystemException {
-		return findByProductEntryId(productEntryId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the s c product screenshots where productEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
-	 * @param productEntryId the product entry ID
-	 * @param start the lower bound of the range of s c product screenshots
-	 * @param end the upper bound of the range of s c product screenshots (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching s c product screenshots
-	 * @throws SystemException if a system exception occurred
-	 */
-	public List<SCProductScreenshot> findByProductEntryId(long productEntryId,
-		int start, int end, OrderByComparator orderByComparator)
-		throws SystemException {
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_PRODUCTENTRYID;
-			finderArgs = new Object[] { productEntryId };
-		}
-		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_PRODUCTENTRYID;
-			finderArgs = new Object[] {
-					productEntryId,
-					
-					start, end, orderByComparator
-				};
-		}
-
-		List<SCProductScreenshot> list = (List<SCProductScreenshot>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
-
-		if ((list != null) && !list.isEmpty()) {
-			for (SCProductScreenshot scProductScreenshot : list) {
-				if ((productEntryId != scProductScreenshot.getProductEntryId())) {
-					list = null;
-
-					break;
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler query = null;
-
-			if (orderByComparator != null) {
-				query = new StringBundler(3 +
-						(orderByComparator.getOrderByFields().length * 3));
-			}
-			else {
-				query = new StringBundler(3);
-			}
-
-			query.append(_SQL_SELECT_SCPRODUCTSCREENSHOT_WHERE);
-
-			query.append(_FINDER_COLUMN_PRODUCTENTRYID_PRODUCTENTRYID_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
-			}
-
-			else {
-				query.append(SCProductScreenshotModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(productEntryId);
-
-				list = (List<SCProductScreenshot>)QueryUtil.list(q,
-						getDialect(), start, end);
-			}
-			catch (Exception e) {
-				throw processException(e);
-			}
-			finally {
-				if (list == null) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
-				else {
-					cacheResult(list);
-
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
-
-				closeSession(session);
-			}
-		}
-
-		return list;
-	}
-
-	/**
-	 * Returns the first s c product screenshot in the ordered set where productEntryId = &#63;.
-	 *
-	 * @param productEntryId the product entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching s c product screenshot
-	 * @throws com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException if a matching s c product screenshot could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public SCProductScreenshot findByProductEntryId_First(long productEntryId,
-		OrderByComparator orderByComparator)
-		throws NoSuchProductScreenshotException, SystemException {
-		SCProductScreenshot scProductScreenshot = fetchByProductEntryId_First(productEntryId,
-				orderByComparator);
-
-		if (scProductScreenshot != null) {
-			return scProductScreenshot;
-		}
-
-		StringBundler msg = new StringBundler(4);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("productEntryId=");
-		msg.append(productEntryId);
-
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-		throw new NoSuchProductScreenshotException(msg.toString());
-	}
-
-	/**
-	 * Returns the first s c product screenshot in the ordered set where productEntryId = &#63;.
-	 *
-	 * @param productEntryId the product entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching s c product screenshot, or <code>null</code> if a matching s c product screenshot could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public SCProductScreenshot fetchByProductEntryId_First(
-		long productEntryId, OrderByComparator orderByComparator)
-		throws SystemException {
-		List<SCProductScreenshot> list = findByProductEntryId(productEntryId,
-				0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last s c product screenshot in the ordered set where productEntryId = &#63;.
-	 *
-	 * @param productEntryId the product entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching s c product screenshot
-	 * @throws com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException if a matching s c product screenshot could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public SCProductScreenshot findByProductEntryId_Last(long productEntryId,
-		OrderByComparator orderByComparator)
-		throws NoSuchProductScreenshotException, SystemException {
-		SCProductScreenshot scProductScreenshot = fetchByProductEntryId_Last(productEntryId,
-				orderByComparator);
-
-		if (scProductScreenshot != null) {
-			return scProductScreenshot;
-		}
-
-		StringBundler msg = new StringBundler(4);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("productEntryId=");
-		msg.append(productEntryId);
-
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-		throw new NoSuchProductScreenshotException(msg.toString());
-	}
-
-	/**
-	 * Returns the last s c product screenshot in the ordered set where productEntryId = &#63;.
-	 *
-	 * @param productEntryId the product entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching s c product screenshot, or <code>null</code> if a matching s c product screenshot could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public SCProductScreenshot fetchByProductEntryId_Last(long productEntryId,
-		OrderByComparator orderByComparator) throws SystemException {
-		int count = countByProductEntryId(productEntryId);
-
-		List<SCProductScreenshot> list = findByProductEntryId(productEntryId,
-				count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the s c product screenshots before and after the current s c product screenshot in the ordered set where productEntryId = &#63;.
-	 *
-	 * @param productScreenshotId the primary key of the current s c product screenshot
-	 * @param productEntryId the product entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next s c product screenshot
-	 * @throws com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException if a s c product screenshot with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public SCProductScreenshot[] findByProductEntryId_PrevAndNext(
-		long productScreenshotId, long productEntryId,
-		OrderByComparator orderByComparator)
-		throws NoSuchProductScreenshotException, SystemException {
-		SCProductScreenshot scProductScreenshot = findByPrimaryKey(productScreenshotId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SCProductScreenshot[] array = new SCProductScreenshotImpl[3];
-
-			array[0] = getByProductEntryId_PrevAndNext(session,
-					scProductScreenshot, productEntryId, orderByComparator, true);
-
-			array[1] = scProductScreenshot;
-
-			array[2] = getByProductEntryId_PrevAndNext(session,
-					scProductScreenshot, productEntryId, orderByComparator,
-					false);
-
-			return array;
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	protected SCProductScreenshot getByProductEntryId_PrevAndNext(
-		Session session, SCProductScreenshot scProductScreenshot,
-		long productEntryId, OrderByComparator orderByComparator,
-		boolean previous) {
-		StringBundler query = null;
-
-		if (orderByComparator != null) {
-			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
-		}
-		else {
-			query = new StringBundler(3);
-		}
-
-		query.append(_SQL_SELECT_SCPRODUCTSCREENSHOT_WHERE);
-
-		query.append(_FINDER_COLUMN_PRODUCTENTRYID_PRODUCTENTRYID_2);
-
-		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
-
-			if (orderByConditionFields.length > 0) {
-				query.append(WHERE_AND);
-			}
-
-			for (int i = 0; i < orderByConditionFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByConditionFields[i]);
-
-				if ((i + 1) < orderByConditionFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN_HAS_NEXT);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN);
-					}
-				}
-			}
-
-			query.append(ORDER_BY_CLAUSE);
-
-			String[] orderByFields = orderByComparator.getOrderByFields();
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC_HAS_NEXT);
-					}
-					else {
-						query.append(ORDER_BY_DESC_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC);
-					}
-					else {
-						query.append(ORDER_BY_DESC);
-					}
-				}
-			}
-		}
-
-		else {
-			query.append(SCProductScreenshotModelImpl.ORDER_BY_JPQL);
-		}
-
-		String sql = query.toString();
-
-		Query q = session.createQuery(sql);
-
-		q.setFirstResult(0);
-		q.setMaxResults(2);
-
-		QueryPos qPos = QueryPos.getInstance(q);
-
-		qPos.add(productEntryId);
-
-		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(scProductScreenshot);
-
-			for (Object value : values) {
-				qPos.add(value);
-			}
-		}
-
-		List<SCProductScreenshot> list = q.list();
-
-		if (list.size() == 2) {
-			return list.get(1);
-		}
-		else {
-			return null;
-		}
-	}
-
-	/**
-	 * Returns the s c product screenshot where thumbnailId = &#63; or throws a {@link com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException} if it could not be found.
-	 *
-	 * @param thumbnailId the thumbnail ID
-	 * @return the matching s c product screenshot
-	 * @throws com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException if a matching s c product screenshot could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public SCProductScreenshot findByThumbnailId(long thumbnailId)
-		throws NoSuchProductScreenshotException, SystemException {
-		SCProductScreenshot scProductScreenshot = fetchByThumbnailId(thumbnailId);
-
-		if (scProductScreenshot == null) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("thumbnailId=");
-			msg.append(thumbnailId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			if (_log.isWarnEnabled()) {
-				_log.warn(msg.toString());
-			}
-
-			throw new NoSuchProductScreenshotException(msg.toString());
-		}
-
-		return scProductScreenshot;
-	}
-
-	/**
-	 * Returns the s c product screenshot where thumbnailId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param thumbnailId the thumbnail ID
-	 * @return the matching s c product screenshot, or <code>null</code> if a matching s c product screenshot could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public SCProductScreenshot fetchByThumbnailId(long thumbnailId)
-		throws SystemException {
-		return fetchByThumbnailId(thumbnailId, true);
-	}
-
-	/**
-	 * Returns the s c product screenshot where thumbnailId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param thumbnailId the thumbnail ID
-	 * @param retrieveFromCache whether to use the finder cache
-	 * @return the matching s c product screenshot, or <code>null</code> if a matching s c product screenshot could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public SCProductScreenshot fetchByThumbnailId(long thumbnailId,
-		boolean retrieveFromCache) throws SystemException {
-		Object[] finderArgs = new Object[] { thumbnailId };
-
-		Object result = null;
-
-		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_THUMBNAILID,
-					finderArgs, this);
-		}
-
-		if (result instanceof SCProductScreenshot) {
-			SCProductScreenshot scProductScreenshot = (SCProductScreenshot)result;
-
-			if ((thumbnailId != scProductScreenshot.getThumbnailId())) {
-				result = null;
-			}
-		}
-
-		if (result == null) {
-			StringBundler query = new StringBundler(3);
-
-			query.append(_SQL_SELECT_SCPRODUCTSCREENSHOT_WHERE);
-
-			query.append(_FINDER_COLUMN_THUMBNAILID_THUMBNAILID_2);
-
-			query.append(SCProductScreenshotModelImpl.ORDER_BY_JPQL);
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(thumbnailId);
-
-				List<SCProductScreenshot> list = q.list();
-
-				result = list;
-
-				SCProductScreenshot scProductScreenshot = null;
-
-				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_THUMBNAILID,
-						finderArgs, list);
-				}
-				else {
-					scProductScreenshot = list.get(0);
-
-					cacheResult(scProductScreenshot);
-
-					if ((scProductScreenshot.getThumbnailId() != thumbnailId)) {
-						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_THUMBNAILID,
-							finderArgs, scProductScreenshot);
-					}
-				}
-
-				return scProductScreenshot;
-			}
-			catch (Exception e) {
-				throw processException(e);
-			}
-			finally {
-				if (result == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_THUMBNAILID,
-						finderArgs);
-				}
-
-				closeSession(session);
-			}
-		}
-		else {
-			if (result instanceof List<?>) {
-				return null;
-			}
-			else {
-				return (SCProductScreenshot)result;
-			}
-		}
-	}
-
-	/**
-	 * Returns the s c product screenshot where fullImageId = &#63; or throws a {@link com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException} if it could not be found.
-	 *
-	 * @param fullImageId the full image ID
-	 * @return the matching s c product screenshot
-	 * @throws com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException if a matching s c product screenshot could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public SCProductScreenshot findByFullImageId(long fullImageId)
-		throws NoSuchProductScreenshotException, SystemException {
-		SCProductScreenshot scProductScreenshot = fetchByFullImageId(fullImageId);
-
-		if (scProductScreenshot == null) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("fullImageId=");
-			msg.append(fullImageId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			if (_log.isWarnEnabled()) {
-				_log.warn(msg.toString());
-			}
-
-			throw new NoSuchProductScreenshotException(msg.toString());
-		}
-
-		return scProductScreenshot;
-	}
-
-	/**
-	 * Returns the s c product screenshot where fullImageId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param fullImageId the full image ID
-	 * @return the matching s c product screenshot, or <code>null</code> if a matching s c product screenshot could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public SCProductScreenshot fetchByFullImageId(long fullImageId)
-		throws SystemException {
-		return fetchByFullImageId(fullImageId, true);
-	}
-
-	/**
-	 * Returns the s c product screenshot where fullImageId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param fullImageId the full image ID
-	 * @param retrieveFromCache whether to use the finder cache
-	 * @return the matching s c product screenshot, or <code>null</code> if a matching s c product screenshot could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public SCProductScreenshot fetchByFullImageId(long fullImageId,
-		boolean retrieveFromCache) throws SystemException {
-		Object[] finderArgs = new Object[] { fullImageId };
-
-		Object result = null;
-
-		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_FULLIMAGEID,
-					finderArgs, this);
-		}
-
-		if (result instanceof SCProductScreenshot) {
-			SCProductScreenshot scProductScreenshot = (SCProductScreenshot)result;
-
-			if ((fullImageId != scProductScreenshot.getFullImageId())) {
-				result = null;
-			}
-		}
-
-		if (result == null) {
-			StringBundler query = new StringBundler(3);
-
-			query.append(_SQL_SELECT_SCPRODUCTSCREENSHOT_WHERE);
-
-			query.append(_FINDER_COLUMN_FULLIMAGEID_FULLIMAGEID_2);
-
-			query.append(SCProductScreenshotModelImpl.ORDER_BY_JPQL);
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(fullImageId);
-
-				List<SCProductScreenshot> list = q.list();
-
-				result = list;
-
-				SCProductScreenshot scProductScreenshot = null;
-
-				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_FULLIMAGEID,
-						finderArgs, list);
-				}
-				else {
-					scProductScreenshot = list.get(0);
-
-					cacheResult(scProductScreenshot);
-
-					if ((scProductScreenshot.getFullImageId() != fullImageId)) {
-						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_FULLIMAGEID,
-							finderArgs, scProductScreenshot);
-					}
-				}
-
-				return scProductScreenshot;
-			}
-			catch (Exception e) {
-				throw processException(e);
-			}
-			finally {
-				if (result == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_FULLIMAGEID,
-						finderArgs);
-				}
-
-				closeSession(session);
-			}
-		}
-		else {
-			if (result instanceof List<?>) {
-				return null;
-			}
-			else {
-				return (SCProductScreenshot)result;
-			}
-		}
-	}
-
-	/**
-	 * Returns the s c product screenshot where productEntryId = &#63; and priority = &#63; or throws a {@link com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException} if it could not be found.
-	 *
-	 * @param productEntryId the product entry ID
-	 * @param priority the priority
-	 * @return the matching s c product screenshot
-	 * @throws com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException if a matching s c product screenshot could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public SCProductScreenshot findByP_P(long productEntryId, int priority)
-		throws NoSuchProductScreenshotException, SystemException {
-		SCProductScreenshot scProductScreenshot = fetchByP_P(productEntryId,
-				priority);
-
-		if (scProductScreenshot == null) {
-			StringBundler msg = new StringBundler(6);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("productEntryId=");
-			msg.append(productEntryId);
-
-			msg.append(", priority=");
-			msg.append(priority);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			if (_log.isWarnEnabled()) {
-				_log.warn(msg.toString());
-			}
-
-			throw new NoSuchProductScreenshotException(msg.toString());
-		}
-
-		return scProductScreenshot;
-	}
-
-	/**
-	 * Returns the s c product screenshot where productEntryId = &#63; and priority = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param productEntryId the product entry ID
-	 * @param priority the priority
-	 * @return the matching s c product screenshot, or <code>null</code> if a matching s c product screenshot could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public SCProductScreenshot fetchByP_P(long productEntryId, int priority)
-		throws SystemException {
-		return fetchByP_P(productEntryId, priority, true);
-	}
-
-	/**
-	 * Returns the s c product screenshot where productEntryId = &#63; and priority = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param productEntryId the product entry ID
-	 * @param priority the priority
-	 * @param retrieveFromCache whether to use the finder cache
-	 * @return the matching s c product screenshot, or <code>null</code> if a matching s c product screenshot could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public SCProductScreenshot fetchByP_P(long productEntryId, int priority,
-		boolean retrieveFromCache) throws SystemException {
-		Object[] finderArgs = new Object[] { productEntryId, priority };
-
-		Object result = null;
-
-		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_P_P,
-					finderArgs, this);
-		}
-
-		if (result instanceof SCProductScreenshot) {
-			SCProductScreenshot scProductScreenshot = (SCProductScreenshot)result;
-
-			if ((productEntryId != scProductScreenshot.getProductEntryId()) ||
-					(priority != scProductScreenshot.getPriority())) {
-				result = null;
-			}
-		}
-
-		if (result == null) {
-			StringBundler query = new StringBundler(4);
-
-			query.append(_SQL_SELECT_SCPRODUCTSCREENSHOT_WHERE);
-
-			query.append(_FINDER_COLUMN_P_P_PRODUCTENTRYID_2);
-
-			query.append(_FINDER_COLUMN_P_P_PRIORITY_2);
-
-			query.append(SCProductScreenshotModelImpl.ORDER_BY_JPQL);
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(productEntryId);
-
-				qPos.add(priority);
-
-				List<SCProductScreenshot> list = q.list();
-
-				result = list;
-
-				SCProductScreenshot scProductScreenshot = null;
-
-				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_P_P,
-						finderArgs, list);
-				}
-				else {
-					scProductScreenshot = list.get(0);
-
-					cacheResult(scProductScreenshot);
-
-					if ((scProductScreenshot.getProductEntryId() != productEntryId) ||
-							(scProductScreenshot.getPriority() != priority)) {
-						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_P_P,
-							finderArgs, scProductScreenshot);
-					}
-				}
-
-				return scProductScreenshot;
-			}
-			catch (Exception e) {
-				throw processException(e);
-			}
-			finally {
-				if (result == null) {
-					FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_P_P,
-						finderArgs);
-				}
-
-				closeSession(session);
-			}
-		}
-		else {
-			if (result instanceof List<?>) {
-				return null;
-			}
-			else {
-				return (SCProductScreenshot)result;
-			}
-		}
 	}
 
 	/**
@@ -1448,7 +1732,7 @@ public class SCProductScreenshotPersistenceImpl extends BasePersistenceImpl<SCPr
 	 * Returns a range of all the s c product screenshots.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from SCProductScreenshotModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of s c product screenshots
@@ -1465,7 +1749,7 @@ public class SCProductScreenshotPersistenceImpl extends BasePersistenceImpl<SCPr
 	 * Returns an ordered range of all the s c product screenshots.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. When orderByComparator is specified, the query will include the given ORDER BY logic. When orderByComparator is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), the query will include the default ORDER BY logic from SCProductScreenshotModelImpl. If both orderByComparator and pagination are absent, for performance reason, the query will not have a ORDER BY clause, on returning the result set will be sorted on portal side by PK ASC order.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of s c product screenshots
@@ -1476,11 +1760,13 @@ public class SCProductScreenshotPersistenceImpl extends BasePersistenceImpl<SCPr
 	 */
 	public List<SCProductScreenshot> findAll(int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
+		boolean pagination = true;
 		FinderPath finderPath = null;
-		Object[] finderArgs = new Object[] { start, end, orderByComparator };
+		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 				(orderByComparator == null)) {
+			pagination = false;
 			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL;
 			finderArgs = FINDER_ARGS_EMPTY;
 		}
@@ -1508,7 +1794,11 @@ public class SCProductScreenshotPersistenceImpl extends BasePersistenceImpl<SCPr
 				sql = query.toString();
 			}
 			else {
-				sql = _SQL_SELECT_SCPRODUCTSCREENSHOT.concat(SCProductScreenshotModelImpl.ORDER_BY_JPQL);
+				sql = _SQL_SELECT_SCPRODUCTSCREENSHOT;
+
+				if (pagination) {
+					sql = sql.concat(SCProductScreenshotModelImpl.ORDER_BY_JPQL);
+				}
 			}
 
 			Session session = null;
@@ -1518,93 +1808,34 @@ public class SCProductScreenshotPersistenceImpl extends BasePersistenceImpl<SCPr
 
 				Query q = session.createQuery(sql);
 
-				if (orderByComparator == null) {
+				if (!pagination) {
 					list = (List<SCProductScreenshot>)QueryUtil.list(q,
 							getDialect(), start, end, false);
 
 					Collections.sort(list);
+
+					list = new UnmodifiableList(list);
 				}
 				else {
 					list = (List<SCProductScreenshot>)QueryUtil.list(q,
 							getDialect(), start, end);
 				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
 				throw processException(e);
 			}
 			finally {
-				if (list == null) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
-				else {
-					cacheResult(list);
-
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
-
 				closeSession(session);
 			}
 		}
 
 		return list;
-	}
-
-	/**
-	 * Removes all the s c product screenshots where productEntryId = &#63; from the database.
-	 *
-	 * @param productEntryId the product entry ID
-	 * @throws SystemException if a system exception occurred
-	 */
-	public void removeByProductEntryId(long productEntryId)
-		throws SystemException {
-		for (SCProductScreenshot scProductScreenshot : findByProductEntryId(
-				productEntryId)) {
-			remove(scProductScreenshot);
-		}
-	}
-
-	/**
-	 * Removes the s c product screenshot where thumbnailId = &#63; from the database.
-	 *
-	 * @param thumbnailId the thumbnail ID
-	 * @return the s c product screenshot that was removed
-	 * @throws SystemException if a system exception occurred
-	 */
-	public SCProductScreenshot removeByThumbnailId(long thumbnailId)
-		throws NoSuchProductScreenshotException, SystemException {
-		SCProductScreenshot scProductScreenshot = findByThumbnailId(thumbnailId);
-
-		return remove(scProductScreenshot);
-	}
-
-	/**
-	 * Removes the s c product screenshot where fullImageId = &#63; from the database.
-	 *
-	 * @param fullImageId the full image ID
-	 * @return the s c product screenshot that was removed
-	 * @throws SystemException if a system exception occurred
-	 */
-	public SCProductScreenshot removeByFullImageId(long fullImageId)
-		throws NoSuchProductScreenshotException, SystemException {
-		SCProductScreenshot scProductScreenshot = findByFullImageId(fullImageId);
-
-		return remove(scProductScreenshot);
-	}
-
-	/**
-	 * Removes the s c product screenshot where productEntryId = &#63; and priority = &#63; from the database.
-	 *
-	 * @param productEntryId the product entry ID
-	 * @param priority the priority
-	 * @return the s c product screenshot that was removed
-	 * @throws SystemException if a system exception occurred
-	 */
-	public SCProductScreenshot removeByP_P(long productEntryId, int priority)
-		throws NoSuchProductScreenshotException, SystemException {
-		SCProductScreenshot scProductScreenshot = findByP_P(productEntryId,
-				priority);
-
-		return remove(scProductScreenshot);
 	}
 
 	/**
@@ -1616,225 +1847,6 @@ public class SCProductScreenshotPersistenceImpl extends BasePersistenceImpl<SCPr
 		for (SCProductScreenshot scProductScreenshot : findAll()) {
 			remove(scProductScreenshot);
 		}
-	}
-
-	/**
-	 * Returns the number of s c product screenshots where productEntryId = &#63;.
-	 *
-	 * @param productEntryId the product entry ID
-	 * @return the number of matching s c product screenshots
-	 * @throws SystemException if a system exception occurred
-	 */
-	public int countByProductEntryId(long productEntryId)
-		throws SystemException {
-		Object[] finderArgs = new Object[] { productEntryId };
-
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_BY_PRODUCTENTRYID,
-				finderArgs, this);
-
-		if (count == null) {
-			StringBundler query = new StringBundler(2);
-
-			query.append(_SQL_COUNT_SCPRODUCTSCREENSHOT_WHERE);
-
-			query.append(_FINDER_COLUMN_PRODUCTENTRYID_PRODUCTENTRYID_2);
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(productEntryId);
-
-				count = (Long)q.uniqueResult();
-			}
-			catch (Exception e) {
-				throw processException(e);
-			}
-			finally {
-				if (count == null) {
-					count = Long.valueOf(0);
-				}
-
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_PRODUCTENTRYID,
-					finderArgs, count);
-
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
-	}
-
-	/**
-	 * Returns the number of s c product screenshots where thumbnailId = &#63;.
-	 *
-	 * @param thumbnailId the thumbnail ID
-	 * @return the number of matching s c product screenshots
-	 * @throws SystemException if a system exception occurred
-	 */
-	public int countByThumbnailId(long thumbnailId) throws SystemException {
-		Object[] finderArgs = new Object[] { thumbnailId };
-
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_BY_THUMBNAILID,
-				finderArgs, this);
-
-		if (count == null) {
-			StringBundler query = new StringBundler(2);
-
-			query.append(_SQL_COUNT_SCPRODUCTSCREENSHOT_WHERE);
-
-			query.append(_FINDER_COLUMN_THUMBNAILID_THUMBNAILID_2);
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(thumbnailId);
-
-				count = (Long)q.uniqueResult();
-			}
-			catch (Exception e) {
-				throw processException(e);
-			}
-			finally {
-				if (count == null) {
-					count = Long.valueOf(0);
-				}
-
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_THUMBNAILID,
-					finderArgs, count);
-
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
-	}
-
-	/**
-	 * Returns the number of s c product screenshots where fullImageId = &#63;.
-	 *
-	 * @param fullImageId the full image ID
-	 * @return the number of matching s c product screenshots
-	 * @throws SystemException if a system exception occurred
-	 */
-	public int countByFullImageId(long fullImageId) throws SystemException {
-		Object[] finderArgs = new Object[] { fullImageId };
-
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_BY_FULLIMAGEID,
-				finderArgs, this);
-
-		if (count == null) {
-			StringBundler query = new StringBundler(2);
-
-			query.append(_SQL_COUNT_SCPRODUCTSCREENSHOT_WHERE);
-
-			query.append(_FINDER_COLUMN_FULLIMAGEID_FULLIMAGEID_2);
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(fullImageId);
-
-				count = (Long)q.uniqueResult();
-			}
-			catch (Exception e) {
-				throw processException(e);
-			}
-			finally {
-				if (count == null) {
-					count = Long.valueOf(0);
-				}
-
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_FULLIMAGEID,
-					finderArgs, count);
-
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
-	}
-
-	/**
-	 * Returns the number of s c product screenshots where productEntryId = &#63; and priority = &#63;.
-	 *
-	 * @param productEntryId the product entry ID
-	 * @param priority the priority
-	 * @return the number of matching s c product screenshots
-	 * @throws SystemException if a system exception occurred
-	 */
-	public int countByP_P(long productEntryId, int priority)
-		throws SystemException {
-		Object[] finderArgs = new Object[] { productEntryId, priority };
-
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_BY_P_P,
-				finderArgs, this);
-
-		if (count == null) {
-			StringBundler query = new StringBundler(3);
-
-			query.append(_SQL_COUNT_SCPRODUCTSCREENSHOT_WHERE);
-
-			query.append(_FINDER_COLUMN_P_P_PRODUCTENTRYID_2);
-
-			query.append(_FINDER_COLUMN_P_P_PRIORITY_2);
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(productEntryId);
-
-				qPos.add(priority);
-
-				count = (Long)q.uniqueResult();
-			}
-			catch (Exception e) {
-				throw processException(e);
-			}
-			finally {
-				if (count == null) {
-					count = Long.valueOf(0);
-				}
-
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_P_P, finderArgs,
-					count);
-
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
 	}
 
 	/**
@@ -1856,18 +1868,17 @@ public class SCProductScreenshotPersistenceImpl extends BasePersistenceImpl<SCPr
 				Query q = session.createQuery(_SQL_COUNT_SCPRODUCTSCREENSHOT);
 
 				count = (Long)q.uniqueResult();
-			}
-			catch (Exception e) {
-				throw processException(e);
-			}
-			finally {
-				if (count == null) {
-					count = Long.valueOf(0);
-				}
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
 					FINDER_ARGS_EMPTY, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_ALL,
+					FINDER_ARGS_EMPTY);
 
+				throw processException(e);
+			}
+			finally {
 				closeSession(session);
 			}
 		}
@@ -1903,6 +1914,7 @@ public class SCProductScreenshotPersistenceImpl extends BasePersistenceImpl<SCPr
 	public void destroy() {
 		EntityCacheUtil.removeCache(SCProductScreenshotImpl.class.getName());
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_ENTITY);
+		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
@@ -1924,11 +1936,6 @@ public class SCProductScreenshotPersistenceImpl extends BasePersistenceImpl<SCPr
 	private static final String _SQL_SELECT_SCPRODUCTSCREENSHOT_WHERE = "SELECT scProductScreenshot FROM SCProductScreenshot scProductScreenshot WHERE ";
 	private static final String _SQL_COUNT_SCPRODUCTSCREENSHOT = "SELECT COUNT(scProductScreenshot) FROM SCProductScreenshot scProductScreenshot";
 	private static final String _SQL_COUNT_SCPRODUCTSCREENSHOT_WHERE = "SELECT COUNT(scProductScreenshot) FROM SCProductScreenshot scProductScreenshot WHERE ";
-	private static final String _FINDER_COLUMN_PRODUCTENTRYID_PRODUCTENTRYID_2 = "scProductScreenshot.productEntryId = ?";
-	private static final String _FINDER_COLUMN_THUMBNAILID_THUMBNAILID_2 = "scProductScreenshot.thumbnailId = ?";
-	private static final String _FINDER_COLUMN_FULLIMAGEID_FULLIMAGEID_2 = "scProductScreenshot.fullImageId = ?";
-	private static final String _FINDER_COLUMN_P_P_PRODUCTENTRYID_2 = "scProductScreenshot.productEntryId = ? AND ";
-	private static final String _FINDER_COLUMN_P_P_PRIORITY_2 = "scProductScreenshot.priority = ?";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "scProductScreenshot.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No SCProductScreenshot exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No SCProductScreenshot exists with the key {";

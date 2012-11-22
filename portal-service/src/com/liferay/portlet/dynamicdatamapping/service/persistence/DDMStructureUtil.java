@@ -1034,6 +1034,236 @@ public class DDMStructureUtil {
 	}
 
 	/**
+	* Returns all the d d m structures where groupId = &#63; and classNameId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @return the matching d d m structures
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> findByG_C(
+		long groupId, long classNameId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByG_C(groupId, classNameId);
+	}
+
+	/**
+	* Returns a range of all the d d m structures where groupId = &#63; and classNameId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param start the lower bound of the range of d d m structures
+	* @param end the upper bound of the range of d d m structures (not inclusive)
+	* @return the range of matching d d m structures
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> findByG_C(
+		long groupId, long classNameId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByG_C(groupId, classNameId, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the d d m structures where groupId = &#63; and classNameId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param start the lower bound of the range of d d m structures
+	* @param end the upper bound of the range of d d m structures (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching d d m structures
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> findByG_C(
+		long groupId, long classNameId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByG_C(groupId, classNameId, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the first d d m structure in the ordered set where groupId = &#63; and classNameId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching d d m structure
+	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureException if a matching d d m structure could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructure findByG_C_First(
+		long groupId, long classNameId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.dynamicdatamapping.NoSuchStructureException {
+		return getPersistence()
+				   .findByG_C_First(groupId, classNameId, orderByComparator);
+	}
+
+	/**
+	* Returns the first d d m structure in the ordered set where groupId = &#63; and classNameId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching d d m structure, or <code>null</code> if a matching d d m structure could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructure fetchByG_C_First(
+		long groupId, long classNameId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByG_C_First(groupId, classNameId, orderByComparator);
+	}
+
+	/**
+	* Returns the last d d m structure in the ordered set where groupId = &#63; and classNameId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching d d m structure
+	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureException if a matching d d m structure could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructure findByG_C_Last(
+		long groupId, long classNameId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.dynamicdatamapping.NoSuchStructureException {
+		return getPersistence()
+				   .findByG_C_Last(groupId, classNameId, orderByComparator);
+	}
+
+	/**
+	* Returns the last d d m structure in the ordered set where groupId = &#63; and classNameId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching d d m structure, or <code>null</code> if a matching d d m structure could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructure fetchByG_C_Last(
+		long groupId, long classNameId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByG_C_Last(groupId, classNameId, orderByComparator);
+	}
+
+	/**
+	* Returns the d d m structures before and after the current d d m structure in the ordered set where groupId = &#63; and classNameId = &#63;.
+	*
+	* @param structureId the primary key of the current d d m structure
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next d d m structure
+	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureException if a d d m structure with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructure[] findByG_C_PrevAndNext(
+		long structureId, long groupId, long classNameId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.dynamicdatamapping.NoSuchStructureException {
+		return getPersistence()
+				   .findByG_C_PrevAndNext(structureId, groupId, classNameId,
+			orderByComparator);
+	}
+
+	/**
+	* Returns all the d d m structures that the user has permission to view where groupId = &#63; and classNameId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @return the matching d d m structures that the user has permission to view
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> filterFindByG_C(
+		long groupId, long classNameId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().filterFindByG_C(groupId, classNameId);
+	}
+
+	/**
+	* Returns a range of all the d d m structures that the user has permission to view where groupId = &#63; and classNameId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param start the lower bound of the range of d d m structures
+	* @param end the upper bound of the range of d d m structures (not inclusive)
+	* @return the range of matching d d m structures that the user has permission to view
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> filterFindByG_C(
+		long groupId, long classNameId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().filterFindByG_C(groupId, classNameId, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the d d m structures that the user has permissions to view where groupId = &#63; and classNameId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param start the lower bound of the range of d d m structures
+	* @param end the upper bound of the range of d d m structures (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching d d m structures that the user has permission to view
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> filterFindByG_C(
+		long groupId, long classNameId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .filterFindByG_C(groupId, classNameId, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the d d m structures before and after the current d d m structure in the ordered set of d d m structures that the user has permission to view where groupId = &#63; and classNameId = &#63;.
+	*
+	* @param structureId the primary key of the current d d m structure
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next d d m structure
+	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureException if a d d m structure with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructure[] filterFindByG_C_PrevAndNext(
+		long structureId, long groupId, long classNameId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.dynamicdatamapping.NoSuchStructureException {
+		return getPersistence()
+				   .filterFindByG_C_PrevAndNext(structureId, groupId,
+			classNameId, orderByComparator);
+	}
+
+	/**
 	* Returns all the d d m structures where companyId = &#63; and classNameId = &#63;.
 	*
 	* @param companyId the company ID
@@ -1563,6 +1793,18 @@ public class DDMStructureUtil {
 	}
 
 	/**
+	* Removes all the d d m structures where groupId = &#63; and classNameId = &#63; from the database.
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByG_C(long groupId, long classNameId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByG_C(groupId, classNameId);
+	}
+
+	/**
 	* Removes all the d d m structures where companyId = &#63; and classNameId = &#63; from the database.
 	*
 	* @param companyId the company ID
@@ -1707,6 +1949,32 @@ public class DDMStructureUtil {
 	public static int countByG_S(long groupId, java.lang.String structureKey)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence().countByG_S(groupId, structureKey);
+	}
+
+	/**
+	* Returns the number of d d m structures where groupId = &#63; and classNameId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @return the number of matching d d m structures
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByG_C(long groupId, long classNameId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByG_C(groupId, classNameId);
+	}
+
+	/**
+	* Returns the number of d d m structures that the user has permission to view where groupId = &#63; and classNameId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @return the number of matching d d m structures that the user has permission to view
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int filterCountByG_C(long groupId, long classNameId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().filterCountByG_C(groupId, classNameId);
 	}
 
 	/**

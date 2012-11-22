@@ -38,6 +38,12 @@ public interface DDMXSD {
 			String namespace, String mode, boolean readOnly, Locale locale)
 		throws Exception;
 
+	public String getFieldHTMLByName(
+			PageContext pageContext, String className, long classPK,
+			String fieldName, int repeatableIndex, Fields fields,
+			String namespace, String mode, boolean readOnly, Locale locale)
+		throws Exception;
+
 	public String getHTML(
 			PageContext pageContext, DDMStructure ddmStructure, Fields fields,
 			String namespace, boolean readOnly, Locale locale)

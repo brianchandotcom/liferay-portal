@@ -16,190 +16,241 @@
 
 <%@ include file="/html/taglib/ddm/html/init.jsp" %>
 
-<div class="lfr-ddm-container" id="<%= containerId %>">
+<div class="lfr-ddm-container" id="<portlet:namespace /><%= containerId %>">
 
 	<c:if test="<%= Validator.isNotNull(xsd) %>">
 		<%= DDMXSDUtil.getHTML(pageContext, xsd, fields, fieldsNamespace, readOnly, locale) %>
 
 		<c:if test="<%= repeatable %>">
+			<aui:input id='<%= containerId + "repeatabaleFieldsMap" %>' name="__repeatabaleFieldsMap" type="hidden" />
 
-			<aui:input name="__repeatabaleFieldsMap" type="hidden" />
+			<liferay-util:html-top outputKey="ddm_html_repetable_util">
 
-			<liferay-portlet:resourceURL portletName="<%= PortletKeys.DYNAMIC_DATA_MAPPING %>" var="renderFieldURL">
-				<portlet:param name="struts_action" value="/dynamic_data_mapping/edit_structure" />
-				<portlet:param name="<%= Constants.CMD %>" value="fieldHTML" />
-				<portlet:param name="className" value="<%= className %>" />
-				<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
-				<portlet:param name="readOnly" value="<%= String.valueOf(readOnly) %>" />
-				<portlet:param name="fieldName" value="{fieldName}" />
-				<portlet:param name="repeatableIndex" value="{repeatableIndex}" />
-			</liferay-portlet:resourceURL>
+				<aui:script>
+					AUI.add(
+						'liferay-ddm-repeatable',
+						function(A) {
+							var TPL_ADD_REPEATABLE = '<a class="lfr-ddm-repeatable-add-button" href="javascript:;"></a>';
+							var TPL_DELETE_REPEATABLE = '<a class="lfr-ddm-repeatable-delete-button" href="javascript:;"></a>';
 
-			<aui:script use="liferay-portlet-url">
-			var TPL_ADD_REPEATABLE = '<a class="lfr-ddm-repeatable-add-button" href="javascript:;"></a>';
-			var TPL_DELETE_REPEATABLE = '<a class="lfr-ddm-repeatable-delete-button" href="javascript:;"></a>';
+							var RepeatableUtil = A.Component.create(
+								{
+									ATTRS: {
+										container: {
+											setter: A.one,
+											validator: A.Lang.isNode,
+											value: null
+										},
 
-			var container = A.one('#<%= containerId %>');
-			var fieldsMapInput = A.one('#<portlet:namespace />__repeatabaleFieldsMap');
+										fieldsMapInput: {
+											setter: A.one,
+											validator: A.Lang.isNode,
+											value: null
+										}
+									},
 
-			var RepeatableUtil = {
+									EXTENDS: A.Base,
 
-				fieldsCountMap: {},
+									NAME: 'liferay-ddm-repeatable-util',
 
-				fieldsMap: {},
+									prototype: {
 
-				addField: function(fieldName, repeatableIndex) {
-					var instance = this;
+										fieldsCountMap: null,
 
-					var fieldsList = instance.getFieldsList(fieldName);
-					var fieldWrapper = fieldsList.item(repeatableIndex);
+										fieldsMap: null,
 
-					instance.getField(
-						fieldName,
-						++instance.fieldsCountMap[fieldName],
-						function(fieldHTML) {
-							fieldWrapper.insert(fieldHTML, 'after');
+										initializer: function() {
+											var instance = this;
 
-							fieldsList.refresh();
+											instance.fieldsCountMap = {};
+											instance.fieldsMap = {};
 
-							instance.makeFieldRepeatable(fieldsList.item(repeatableIndex + 1));
+											instance.getFieldsList().each(
+												function(item, index, collection) {
+													var fieldName = item.attr('data-fieldName');
 
-							instance.syncFieldsMap(fieldName);
-						}
-					);
-				},
+													if (!instance.fieldsCountMap.hasOwnProperty(fieldName)) {
+														instance.fieldsCountMap[fieldName] = 0;
+													}
+													else {
+														instance.fieldsCountMap[fieldName]++;
+													}
 
-				deleteField: function(fieldName, repeatableIndex) {
-					var instance = this;
+													instance.makeFieldRepeatable(item);
 
-					var fieldsList = RepeatableUtil.getFieldsList(fieldName);
+													instance.syncFieldsMap(fieldName);
+												}
+											);
 
-					fieldsList.item(repeatableIndex).remove();
+											instance.bindUI();
+										},
 
-					instance.syncFieldsMap(fieldName);
-				},
+										bindUI: function() {
+											var instance = this;
 
-				getFieldsList: function(fieldName) {
-					var instance = this;
+											var container = instance.get('container');
 
-					var query = '.aui-field-wrapper';
+											container.delegate('click', A.bind(instance._onClickRepeatableButton, instance), '.lfr-ddm-repeatable-add-button, .lfr-ddm-repeatable-delete-button');
 
-					if (fieldName) {
-						query += '[data-fieldName="' + fieldName + '"]';
-					}
+											var hoverHandler = A.bind(instance._onHoverRepeatableButton, instance);
 
-					query += '[data-repeatable="true"]';
+											container.delegate('hover', hoverHandler, hoverHandler, '.lfr-ddm-repeatable-add-button, .lfr-ddm-repeatable-delete-button');
+										},
 
-					return container.all(query);
-				},
+										addField: function(fieldName, repeatableIndex) {
+											var instance = this;
 
-				getField: function(fieldName, repeatableIndex, callback) {
-					var instance = this;
+											var fieldsList = instance.getFieldsList(fieldName);
+											var fieldWrapper = fieldsList.item(repeatableIndex);
 
-					var renderFieldURL = A.Lang.sub(
-						decodeURIComponent('<%= renderFieldURL %>'),
-						{
-							fieldName: fieldName,
-							repeatableIndex: repeatableIndex
-						}
-					);
+											instance.getField(
+												fieldName,
+												++instance.fieldsCountMap[fieldName],
+												function(fieldHTML) {
+													fieldWrapper.insert(fieldHTML, 'after');
 
-					A.io.request(
-						renderFieldURL,
-						{
-							on: {
-								success: function(event, id, xhr) {
-									if (callback) {
-										callback.call(instance, xhr.responseText);
+													fieldsList.refresh();
+
+													instance.makeFieldRepeatable(fieldsList.item(repeatableIndex + 1));
+
+													instance.syncFieldsMap(fieldName);
+												}
+											);
+										},
+
+										deleteField: function(fieldName, repeatableIndex) {
+											var instance = this;
+
+											var fieldsList = instance.getFieldsList(fieldName);
+
+											fieldsList.item(repeatableIndex).remove();
+
+											instance.syncFieldsMap(fieldName);
+										},
+
+										getFieldsList: function(fieldName) {
+											var instance = this;
+
+											var container = instance.get('container');
+											var query = '.aui-field-wrapper';
+
+											if (fieldName) {
+												query += '[data-fieldName="' + fieldName + '"]';
+											}
+
+											query += '[data-repeatable="true"]';
+
+											return container.all(query);
+										},
+
+										getField: function(fieldName, repeatableIndex, callback) {
+											var instance = this;
+
+											A.io.request(
+												'<%= themeDisplay.getPortalURL() + themeDisplay.getPathMain() + "/dynamic_data_mapping/render_structure_field" %>',
+												{
+													data: {
+														className: '<%= className %>',
+														classPK: <%= classPK %>,
+														readOnly: <%= readOnly %>,
+														fieldName: fieldName,
+														repeatableIndex: repeatableIndex
+													},
+													on: {
+														success: function(event, id, xhr) {
+															if (callback) {
+																callback.call(instance, xhr.responseText);
+															}
+														}
+													}
+												}
+											);
+										},
+
+										makeFieldRepeatable: function(fieldWrapper) {
+											var instance = this;
+
+											var fieldName = fieldWrapper.attr('data-fieldName');
+											var fieldsList = instance.getFieldsList(fieldName);
+
+											fieldWrapper.append(TPL_ADD_REPEATABLE);
+
+											if (fieldsList.indexOf(fieldWrapper) > 0) {
+												fieldWrapper.append(TPL_DELETE_REPEATABLE);
+											}
+
+											fieldWrapper.plug(A.Plugin.ParseContent);
+										},
+
+										syncFieldsMap: function(fieldName) {
+											var instance = this;
+
+											var fieldsMapInput = instance.get('fieldsMapInput');
+											var fieldsList = instance.getFieldsList(fieldName);
+
+											instance.fieldsMap[fieldName] = [];
+
+											fieldsList.each(
+												function(item, index, collection) {
+													var repeatableIndex = item.attr('data-repeatableIndex');
+
+													if (repeatableIndex) {
+														instance.fieldsMap[fieldName].push(repeatableIndex);
+													}
+												}
+											);
+
+											fieldsMapInput.val(JSON.stringify(instance.fieldsMap));
+										},
+
+										_onClickRepeatableButton: function(event) {
+											var instance = this;
+
+											var currentTarget = event.currentTarget;
+											var fieldWrapper = currentTarget.ancestor('.aui-field-wrapper');
+											var fieldName = fieldWrapper.attr('data-fieldName');
+											var repeatableIndex = instance.getFieldsList(fieldName).indexOf(fieldWrapper);
+
+											if (currentTarget.test('.lfr-ddm-repeatable-add-button')) {
+												instance.addField(fieldName, repeatableIndex);
+											}
+											else if (currentTarget.test('.lfr-ddm-repeatable-delete-button')) {
+												instance.deleteField(fieldName, repeatableIndex);
+											}
+										},
+
+										_onHoverRepeatableButton: function(event) {
+											var instance = this;
+
+											var fieldWrapper = event.currentTarget.ancestor('.aui-field-wrapper');
+
+											if (fieldWrapper) {
+												fieldWrapper.toggleClass('lfr-ddm-repeatable-active', (event.phase === 'over'));
+											}
+										}
+
 									}
 								}
-							}
+							);
+
+							Liferay.DDMRepeatableUtil = RepeatableUtil;
+						},
+						'',
+						{
+							requires: ['liferay-portlet-url']
 						}
 					);
-				},
+				</aui:script>
 
-				makeFieldRepeatable: function(fieldWrapper) {
-					var instance = this;
+			</liferay-util:html-top>
 
-					var fieldName = fieldWrapper.attr('data-fieldName');
-					var fieldsList = RepeatableUtil.getFieldsList(fieldName);
-
-					fieldWrapper.append(TPL_ADD_REPEATABLE);
-
-					if (fieldsList.indexOf(fieldWrapper) > 0) {
-						fieldWrapper.append(TPL_DELETE_REPEATABLE);
+			<aui:script use="liferay-ddm-repeatable">
+				new Liferay.DDMRepeatableUtil(
+					{
+						container: '#<portlet:namespace /><%= containerId %>',
+						fieldsMapInput: '#<portlet:namespace /><%= containerId %>repeatabaleFieldsMap'
 					}
-
-					fieldWrapper.plug(A.Plugin.ParseContent);
-				},
-
-				syncFieldsMap: function(fieldName) {
-					var instance = this;
-
-					var fieldsList = RepeatableUtil.getFieldsList(fieldName);
-
-					instance.fieldsMap[fieldName] = [];
-
-					fieldsList.each(
-						function(item, index, collection) {
-							var repeatableIndex = item.attr('data-repeatableIndex');
-
-							if (repeatableIndex) {
-								instance.fieldsMap[fieldName].push(repeatableIndex);
-							}
-						}
-					);
-
-					fieldsMapInput.val(JSON.stringify(instance.fieldsMap));
-				}
-
-			};
-
-			RepeatableUtil.getFieldsList().each(
-				function(item, index, collection) {
-					var fieldName = item.attr('data-fieldName');
-
-					if (!RepeatableUtil.fieldsCountMap[fieldName]) {
-						RepeatableUtil.fieldsCountMap[fieldName] = 0;
-					}
-					else {
-						RepeatableUtil.fieldsCountMap[fieldName]++;
-					}
-
-					RepeatableUtil.makeFieldRepeatable(item);
-
-					RepeatableUtil.syncFieldsMap(fieldName);
-				}
-			);
-
-			container.delegate(
-				'click',
-				function(event) {
-					var currentTarget = event.currentTarget;
-					var fieldWrapper = currentTarget.ancestor('.aui-field-wrapper');
-					var fieldName = fieldWrapper.attr('data-fieldName');
-					var repeatableIndex = RepeatableUtil.getFieldsList(fieldName).indexOf(fieldWrapper);
-
-					if (currentTarget.test('.lfr-ddm-repeatable-add-button')) {
-						RepeatableUtil.addField(fieldName, repeatableIndex);
-					}
-					else if (currentTarget.test('.lfr-ddm-repeatable-delete-button')) {
-						RepeatableUtil.deleteField(fieldName, repeatableIndex);
-					}
-				},
-				'.lfr-ddm-repeatable-add-button, .lfr-ddm-repeatable-delete-button'
-			);
-
-			var hoverHandler = function(event) {
-				var fieldWrapper = event.currentTarget.ancestor('.aui-field-wrapper');
-
-				if (fieldWrapper) {
-					fieldWrapper.toggleClass('lfr-ddm-repeatable-active', (event.phase === 'over'));
-				}
-			}
-
-			container.delegate('hover', hoverHandler, hoverHandler, '.lfr-ddm-repeatable-add-button, .lfr-ddm-repeatable-delete-button');
+				);
 			</aui:script>
-
 		</c:if>
 	</c:if>

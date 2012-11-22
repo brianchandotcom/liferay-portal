@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.template.URLTemplateResource;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -39,7 +40,9 @@ import com.liferay.portal.kernel.xml.Attribute;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.kernel.xml.XPath;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
@@ -178,6 +181,36 @@ public class DDMXSDImpl implements DDMXSD {
 		}
 
 		return processFTL(pageContext, template);
+	}
+
+	public String getFieldHTMLByName(
+			PageContext pageContext, String className, long classPK,
+			String fieldName, int repeatableIndex, Fields fields,
+			String namespace, String mode, boolean readOnly, Locale locale)
+		throws Exception {
+
+		String xPathExpression =
+			"dynamic-element[@name=".concat(
+				HtmlUtil.escapeXPathAttribute(fieldName)).concat("]");
+
+		XPath xPathSelector = SAXReaderUtil.createXPath(xPathExpression);
+
+		String xsd = DDMXSDUtil.getXSD(className, classPK);
+
+		Document document = SAXReaderUtil.read(xsd);
+
+		Node node = xPathSelector.selectSingleNode(document.getRootElement());
+
+		Element fieldElement = (Element)node.asXPathResult(node.getParent());
+
+		if (repeatableIndex > 0) {
+			fieldElement.addAttribute(
+				"repeatableIndex", String.valueOf(repeatableIndex));
+		}
+
+		return DDMXSDUtil.getFieldHTML(
+			pageContext, fieldElement, fields, namespace, mode, readOnly,
+			locale);
 	}
 
 	public String getHTML(

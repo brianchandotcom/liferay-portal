@@ -50,6 +50,17 @@ public class DDMXSDUtil {
 			locale);
 	}
 
+	public static String getFieldHTMLByName(
+			PageContext pageContext, String className, long classPK,
+			String fieldName, int repeatableIndex, Fields fields,
+			String namespace, String mode, boolean readOnly, Locale locale)
+		throws Exception {
+
+		return getDDMXSD().getFieldHTMLByName(
+			pageContext, className, classPK, fieldName, repeatableIndex, fields,
+			namespace, mode, readOnly, locale);
+	}
+
 	public static String getHTML(
 			PageContext pageContext, DDMStructure ddmStructure, Fields fields,
 			String namespace, boolean readOnly, Locale locale)

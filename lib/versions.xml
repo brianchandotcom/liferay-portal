@@ -922,6 +922,83 @@
 		</comments>
 	</library>
 	<library>
+		<file-name>framework/equinox/libs/org.eclipse.osgi.services.jar</file-name>
+		<version>3.3.100.v20120522-1822</version>
+		<project-name>Eclipse OSGi Services</project-name>
+		<project-url>http://www.eclipse.org/equinox</project-url>
+		<licenses>
+			<license>
+				<license-name>Eclipse Public License Version 1.0</license-name>
+			</license>
+		</licenses>
+	</library>
+	<library>
+		<file-name>framework/equinox/libs/org.eclipse.osgi.util.jar</file-name>
+		<version>3.2.300.v20120522-1822</version>
+		<project-name>Eclipse OSGi Utils</project-name>
+		<project-url>http://www.eclipse.org/equinox</project-url>
+		<licenses>
+			<license>
+				<license-name>Eclipse Public License Version 1.0</license-name>
+			</license>
+		</licenses>
+	</library>
+	<library>
+		<file-name>framework/equinox/org.eclipse.osgi.jar</file-name>
+		<version>3.8.0.v20120529-1548</version>
+		<project-name>Eclipse OSGi Platform</project-name>
+		<project-url>http://www.eclipse.org/equinox</project-url>
+		<licenses>
+			<license>
+				<license-name>Eclipse Public License Version 1.0</license-name>
+			</license>
+		</licenses>
+	</library>
+	<library>
+		<file-name>framework/felix/org.apache.felix.framework.jar</file-name>
+		<version>4.0.3</version>
+		<project-name>Apache Felix</project-name>
+		<project-url>http://felix.apache.org</project-url>
+		<licenses>
+			<license>
+				<license-name>Apache License 2.0</license-name>
+			</license>
+		</licenses>
+	</library>
+	<library>
+		<file-name>framework/felix/libs/org.apache.felix.framework.security.jar</file-name>
+		<version>2.0.1</version>
+		<project-name>Apache Felix Security Provider</project-name>
+		<project-url>http://felix.apache.org</project-url>
+		<licenses>
+			<license>
+				<license-name>Apache License 2.0</license-name>
+			</license>
+		</licenses>
+	</library>
+	<library>
+		<file-name>framework/felix/libs/org.apache.felix.log.jar</file-name>
+		<version>1.0.1</version>
+		<project-name>Apache Felix Log Service</project-name>
+		<project-url>http://felix.apache.org</project-url>
+		<licenses>
+			<license>
+				<license-name>Apache License 2.0</license-name>
+			</license>
+		</licenses>
+	</library>
+	<library>
+		<file-name>framework/osgi.enterprise.jar</file-name>
+		<version>4.2.0.201003190513</version>
+		<project-name>OSGi Enterprise Specification</project-name>
+		<project-url>http://www.osgi.org/Release4/HomePage</project-url>
+		<licenses>
+			<license>
+				<license-name>Apache License 2.0</license-name>
+			</license>
+		</licenses>
+	</library>
+	<library>
 		<file-name>global/portlet.jar</file-name>
 		<version>2.0</version>
 		<project-name>JSR 286 Portlet 2.0 Specification</project-name>
@@ -1693,17 +1770,6 @@
 		<version>1.4.0</version>
 		<project-name>Ehcache</project-name>
 		<project-url>http://ehcache.sourceforge.net</project-url>
-		<licenses>
-			<license>
-				<license-name>Apache License 2.0</license-name>
-			</license>
-		</licenses>
-	</library>
-	<library>
-		<file-name>portal/equinox.jar</file-name>
-		<version>3.7.0.v20110613</version>
-		<project-name>Eclipse OSGi Platform</project-name>
-		<project-url>http://www.eclipse.org/equinox</project-url>
 		<licenses>
 			<license>
 				<license-name>Apache License 2.0</license-name>
@@ -2571,28 +2637,28 @@
 			</license>
 		</licenses>
 	</library>
-    <library>
-        <file-name>portal/oauth.jar</file-name>
-        <version>20100601</version>
-        <project-name>OAuth Core</project-name>
-        <project-url>http://code.google.com/p/oauth</project-url>
-        <licenses>
-            <license>
-                <license-name>Apache License 2.0</license-name>
-            </license>
-        </licenses>
-    </library>
-    <library>
-        <file-name>portal/oauth-provider.jar</file-name>
-        <version>20100601</version>
-        <project-name>OAuth Core: Provider</project-name>
-        <project-url>http://code.google.com/p/oauth</project-url>
-        <licenses>
-            <license>
-                <license-name>Apache License 2.0</license-name>
-            </license>
-        </licenses>
-    </library>
+	<library>
+		<file-name>portal/oauth.jar</file-name>
+		<version>20100601</version>
+		<project-name>OAuth Core</project-name>
+		<project-url>http://code.google.com/p/oauth</project-url>
+		<licenses>
+			<license>
+				<license-name>Apache License 2.0</license-name>
+			</license>
+		</licenses>
+	</library>
+	<library>
+		<file-name>portal/oauth-provider.jar</file-name>
+		<version>20100601</version>
+		<project-name>OAuth Core: Provider</project-name>
+		<project-url>http://code.google.com/p/oauth</project-url>
+		<licenses>
+			<license>
+				<license-name>Apache License 2.0</license-name>
+			</license>
+		</licenses>
+	</library>
 	<library>
 		<file-name>portal/odmg.jar</file-name>
 		<version></version>

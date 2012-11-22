@@ -47,6 +47,10 @@
 		<fileset dir="${project.dir}/lib/development" includes="*.jar" />
 		<fileset dir="${project.dir}/lib/global" includes="*.jar" />
 		<fileset dir="${project.dir}/lib/portal" includes="*.jar" />
+
+		<!-- All other libs should take precedence over these -->
+
+		<fileset dir="${project.dir}/lib/framework" includes="*.jar" />
 	</path>
 
 	<path id="project.classpath">

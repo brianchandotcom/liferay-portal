@@ -40,7 +40,7 @@ MBMessage message = MBMessageLocalServiceUtil.getMBMessage(messageId);
 		%>
 
 		<portlet:actionURL var="restoreEntryURL">
-			<portlet:param name="struts_action" value="/message_boards/restore_page_attachment" />
+			<portlet:param name="struts_action" value="/message_boards/restore_message_attachment" />
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="trashEntryId" value="<%= String.valueOf(trashEntry.getEntryId()) %>" />

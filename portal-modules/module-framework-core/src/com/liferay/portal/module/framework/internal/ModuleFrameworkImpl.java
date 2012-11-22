@@ -15,26 +15,30 @@
 package com.liferay.portal.module.framework.internal;
 
 import aQute.libg.header.OSGiHeader;
+import aQute.libg.version.Version;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.ServiceLoader;
-import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.ServiceLoaderCondition;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UniqueList;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.module.framework.LogBridge;
+import com.liferay.portal.module.framework.ModuleFramework;
 import com.liferay.portal.module.framework.ModuleFrameworkConstants;
 import com.liferay.portal.module.framework.ModuleFrameworkException;
 import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.util.PropsValues;
 
+import java.io.BufferedInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 
 import java.net.URL;
@@ -42,22 +46,28 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Enumeration;
+import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Hashtable;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 import java.util.jar.Attributes;
+import java.util.jar.JarInputStream;
 import java.util.jar.Manifest;
 
 import javax.servlet.ServletContext;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.BundleEvent;
 import org.osgi.framework.BundleException;
+import org.osgi.framework.BundleListener;
 import org.osgi.framework.Constants;
+import org.osgi.framework.FrameworkEvent;
 import org.osgi.framework.FrameworkListener;
 import org.osgi.framework.launch.Framework;
 import org.osgi.framework.launch.FrameworkFactory;
@@ -70,99 +80,40 @@ import org.springframework.context.ApplicationContext;
 /**
  * @author Raymond Augé
  */
-public class ModuleFrameworkImpl implements ModuleFrameworkConstants {
+public class ModuleFrameworkImpl
+	implements ModuleFrameworkConstants, ModuleFramework {
 
-	public static Object addBundle(String location) throws PortalException {
+	public Object addBundle(String location) throws PortalException {
 		return addBundle(location, null);
 	}
 
-	public static Object addBundle(String location, InputStream inputStream)
+	public Object addBundle(String location, InputStream inputStream)
 		throws PortalException {
 
-		return _instance._addBundle(location, inputStream);
+		return addBundle(location, inputStream, true);
 	}
 
-	public static Framework getFramework() {
-		return _instance._getFramework();
-	}
-
-	public static String getState(long bundleId) throws PortalException {
-		return _instance._getState(bundleId);
-	}
-
-	public static void registerContext(Object context) {
-		_instance._registerContext(context);
-	}
-
-	public static void setBundleStartLevel(long bundleId, int startLevel)
+	public Object addBundle(
+			String location, InputStream inputStream, boolean checkPermissions)
 		throws PortalException {
 
-		_instance._setBundleStartLevel(bundleId, startLevel);
-	}
-
-	public static void startBundle(long bundleId) throws PortalException {
-		_instance._startBundle(bundleId);
-	}
-
-	public static void startBundle(long bundleId, int options)
-		throws PortalException {
-
-		_instance._startBundle(bundleId, options);
-	}
-
-	public static void startFramework() throws Exception {
-		_instance._startFramework();
-	}
-
-	public static void startRuntime() throws Exception {
-		_instance._startRuntime();
-	}
-
-	public static void stopBundle(long bundleId) throws PortalException {
-		_instance._stopBundle(bundleId);
-	}
-
-	public static void stopBundle(long bundleId, int options)
-		throws PortalException {
-
-		_instance._stopBundle(bundleId, options);
-	}
-
-	public static void stopFramework() throws Exception {
-		_instance._stopFramework();
-	}
-
-	public static void stopRuntime() throws Exception {
-		_instance._stopRuntime();
-	}
-
-	public static void uninstallBundle(long bundleId) throws PortalException {
-		_instance._uninstallBundle(bundleId);
-	}
-
-	public static void updateBundle(long bundleId) throws PortalException {
-		_instance._updateBundle(bundleId);
-	}
-
-	public static void updateBundle(long bundleId, InputStream inputStream)
-		throws PortalException {
-
-		_instance._updateBundle(bundleId, inputStream);
-	}
-
-	private ModuleFrameworkImpl() {
-	}
-
-	private Object _addBundle(String location, InputStream inputStream)
-		throws PortalException {
-
-		_checkPermission();
+		if (checkPermissions) {
+			_checkPermission();
+		}
 
 		if (_framework == null) {
 			return null;
 		}
 
 		BundleContext bundleContext = _framework.getBundleContext();
+
+		if (inputStream != null) {
+			Bundle bundle = getBundle(bundleContext, inputStream);
+
+			if (bundle != null) {
+				return bundle;
+			}
+		}
 
 		try {
 			return bundleContext.installBundle(location, inputStream);
@@ -174,57 +125,7 @@ public class ModuleFrameworkImpl implements ModuleFrameworkConstants {
 		}
 	}
 
-	private Map<String, String> _buildProperties() {
-		Map<String, String> properties = new HashMap<String, String>();
-
-		properties.put(
-			Constants.BUNDLE_DESCRIPTION, ReleaseInfo.getReleaseInfo());
-		properties.put(Constants.BUNDLE_NAME, ReleaseInfo.getName());
-		properties.put(Constants.BUNDLE_VENDOR, ReleaseInfo.getVendor());
-		properties.put(Constants.BUNDLE_VERSION, ReleaseInfo.getVersion());
-		properties.put(
-			Constants.FRAMEWORK_BEGINNING_STARTLEVEL,
-			String.valueOf(PropsValues.MODULE_FRAMEWORK_BEGINNING_START_LEVEL));
-		properties.put(
-			Constants.FRAMEWORK_BUNDLE_PARENT,
-			Constants.FRAMEWORK_BUNDLE_PARENT_APP);
-		properties.put(
-			Constants.FRAMEWORK_STORAGE,
-			PropsValues.MODULE_FRAMEWORK_STATE_DIR);
-
-		UniqueList<String> packages = new UniqueList<String>();
-
-		try {
-			_getBundleExportPackages(
-				PropsValues.MODULE_FRAMEWORK_SYSTEM_BUNDLE_EXPORT_PACKAGES,
-				packages);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
-
-		packages.addAll(
-			Arrays.asList(PropsValues.MODULE_FRAMEWORK_SYSTEM_PACKAGES_EXTRA));
-
-		Collections.sort(packages);
-
-		properties.put(
-			Constants.FRAMEWORK_SYSTEMPACKAGES_EXTRA,
-			StringUtil.merge(packages));
-
-		return properties;
-	}
-
-	private void _checkPermission() throws PrincipalException {
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		if ((permissionChecker == null) || !permissionChecker.isOmniadmin()) {
-			throw new PrincipalException();
-		}
-	}
-
-	private Bundle _getBundle(long bundleId) {
+	public Bundle getBundle(long bundleId) {
 		if (_framework == null) {
 			return null;
 		}
@@ -234,102 +135,74 @@ public class ModuleFrameworkImpl implements ModuleFrameworkConstants {
 		return bundleContext.getBundle(bundleId);
 	}
 
-	private void _getBundleExportPackages(
-			String[] bundleSymbolicNames, List<String> packages)
-		throws Exception {
+	public Bundle getBundle(
+			BundleContext bundleContext, InputStream inputStream)
+		throws PortalException {
 
-		ClassLoader classLoader = PACLClassLoaderUtil.getPortalClassLoader();
+		try {
+			if (inputStream.markSupported()) {
 
-		Enumeration<URL> enu = classLoader.getResources("META-INF/MANIFEST.MF");
+				// 200Kb is a very large manifest file, should be enough
 
-		while (enu.hasMoreElements()) {
-			URL url = enu.nextElement();
+				inputStream.mark(1024 * 1000);
+			}
 
-			Manifest manifest = new Manifest(url.openStream());
+			JarInputStream jarInputStream = new JarInputStream(inputStream);
+
+			Manifest manifest = jarInputStream.getManifest();
+
+			if (inputStream.markSupported()) {
+				inputStream.reset();
+			}
 
 			Attributes attributes = manifest.getMainAttributes();
 
-			String bundleSymbolicName = attributes.getValue(
+			String bundleSymbolicNameAttribute = attributes.getValue(
 				Constants.BUNDLE_SYMBOLICNAME);
 
-			if (Validator.isNull(bundleSymbolicName)) {
-				continue;
+			Map<String, Map<String, String>> bundleSymbolicNamesMap =
+				OSGiHeader.parseHeader(bundleSymbolicNameAttribute);
+
+			Set<String> bundleSymbolicNamesSet =
+				bundleSymbolicNamesMap.keySet();
+
+			Iterator<String> bundleSymbolicNamesIterator =
+				bundleSymbolicNamesSet.iterator();
+
+			String bundleSymbolicName = bundleSymbolicNamesIterator.next();
+
+			String bundleVersionAttribute = attributes.getValue(
+				Constants.BUNDLE_VERSION);
+
+			Version bundleVersion = Version.parseVersion(
+				bundleVersionAttribute);
+
+			for (Bundle bundle : bundleContext.getBundles()) {
+				Version curBundleVersion = Version.parseVersion(
+					bundle.getVersion().toString());
+
+				if (bundleSymbolicName.equals(bundle.getSymbolicName()) &&
+					bundleVersion.equals(curBundleVersion)) {
+
+					return bundle;
+				}
 			}
 
-			for (String curBundleSymbolicName : bundleSymbolicNames) {
-				if (!bundleSymbolicName.startsWith(curBundleSymbolicName)) {
-					continue;
-				}
-
-				String exportPackage = attributes.getValue(
-					Constants.EXPORT_PACKAGE);
-
-				Map<String, Map<String, String>> exportPackageMap =
-					OSGiHeader.parseHeader(exportPackage);
-
-				for (Map.Entry<String, Map<String, String>> entry :
-						exportPackageMap.entrySet()) {
-
-					String javaPackage = entry.getKey();
-					Map<String, String> javaPackageMap = entry.getValue();
-
-					StringBundler sb = new StringBundler(4);
-
-					sb.append(javaPackage);
-					sb.append(";version=\"");
-
-					if (javaPackageMap.containsKey("version")) {
-						String version = javaPackageMap.get("version");
-
-						sb.append(version);
-					}
-					else {
-						String bundleVersionString = attributes.getValue(
-							Constants.BUNDLE_VERSION);
-
-						sb.append(bundleVersionString);
-					}
-
-					sb.append("\"");
-
-					javaPackage = sb.toString();
-
-					packages.add(javaPackage);
-				}
-
-				break;
-			}
+			return null;
+		}
+		catch (IOException ioe) {
+			throw new PortalException(ioe);
 		}
 	}
 
-	private Framework _getFramework() {
+	public Framework getFramework() {
 		return _framework;
 	}
 
-	private Set<Class<?>> _getInterfaces(Object bean) {
-		Set<Class<?>> interfaces = new HashSet<Class<?>>();
-
-		Class<?> beanClass = bean.getClass();
-
-		for (Class<?> interfaceClass : beanClass.getInterfaces()) {
-			interfaces.add(interfaceClass);
-		}
-
-		while ((beanClass = beanClass.getSuperclass()) != null) {
-			for (Class<?> interfaceClass : beanClass.getInterfaces()) {
-				if (!interfaces.contains(interfaceClass)) {
-					interfaces.add(interfaceClass);
-				}
-			}
-		}
-
-		return interfaces;
-	}
-
-	private String _getState(long bundleId) throws PortalException {
+	public String getState(long bundleId) throws PortalException {
 		_checkPermission();
 
-		Bundle bundle = _getBundle(bundleId);
+		Bundle bundle = getBundle(bundleId);
 
 		if (bundle == null) {
 			throw new ModuleFrameworkException("No bundle with ID " + bundleId);
@@ -360,30 +233,7 @@ public class ModuleFrameworkImpl implements ModuleFrameworkConstants {
 		}
 	}
 
-	private void _registerApplicationContext(
-		ApplicationContext applicationContext) {
-
-		BundleContext bundleContext = _framework.getBundleContext();
-
-		for (String beanName : applicationContext.getBeanDefinitionNames()) {
-			Object bean = null;
-
-			try {
-				bean = applicationContext.getBean(beanName);
-			}
-			catch (BeanIsAbstractException biae) {
-			}
-			catch (Exception e) {
-				_log.error(e, e);
-			}
-
-			if (bean != null) {
-				_registerService(bundleContext, beanName, bean);
-			}
-		}
-	}
-
-	private void _registerContext(Object context) {
+	public void registerContext(Object context) {
 		if (context == null) {
 			return;
 		}
@@ -399,6 +249,463 @@ public class ModuleFrameworkImpl implements ModuleFrameworkConstants {
 			ServletContext servletContext = (ServletContext)context;
 
 			_registerServletContext(servletContext);
+		}
+	}
+
+	public void setBundleStartLevel(long bundleId, int startLevel)
+		throws PortalException {
+
+		_checkPermission();
+
+		Bundle bundle = getBundle(bundleId);
+
+		if (bundle == null) {
+			throw new ModuleFrameworkException("No bundle with ID " + bundleId);
+		}
+
+		BundleStartLevel bundleStartLevel = bundle.adapt(
+			BundleStartLevel.class);
+
+		bundleStartLevel.setStartLevel(startLevel);
+	}
+
+	private void _setupLogBridge() throws Exception {
+		BundleContext bundleContext = _framework.getBundleContext();
+
+		_logBridge = new LogBridge();
+
+		_logBridge.start(bundleContext);
+	 }
+
+	public void startBundle(long bundleId) throws PortalException {
+		startBundle(bundleId, 0);
+	}
+
+	public void startBundle(long bundleId, int options) throws PortalException {
+		Bundle bundle = getBundle(bundleId);
+
+		if (bundle == null) {
+			throw new ModuleFrameworkException("No bundle with ID " + bundleId);
+		}
+
+		startBundle(bundle, options, true);
+	}
+
+	public void startBundle(
+			Bundle bundle, int options, boolean checkPermissions)
+		throws PortalException {
+
+		if (checkPermissions) {
+			_checkPermission();
+		}
+
+		try {
+			bundle.start(options);
+		}
+		catch (BundleException be) {
+			_log.error(be, be);
+
+			throw new ModuleFrameworkException(be);
+		}
+	}
+
+	public void startFramework() throws Exception {
+		ServiceLoaderCondition serviceLoaderFilterCondition =
+			new ServiceLoaderCondition() {
+				public boolean isLoad(URL url) {
+					return url.getPath().contains(
+						PropsValues.MODULE_FRAMEWORK_CORE_DIR);
+				}
+			};
+
+		List<FrameworkFactory> frameworkFactories = ServiceLoader.load(
+			FrameworkFactory.class, serviceLoaderFilterCondition);
+
+		if (frameworkFactories.isEmpty()) {
+			return;
+		}
+
+		FrameworkFactory frameworkFactory = frameworkFactories.get(0);
+
+		Map<String, String> properties = _buildProperties();
+
+		_framework = frameworkFactory.newFramework(properties);
+
+		_framework.init();
+
+		_setupLogBridge();
+
+		_framework.getBundleContext().addFrameworkListener(
+			new FrameworkListener() {
+
+				public void frameworkEvent(FrameworkEvent event) {
+					_log.info(event, event.getThrowable());
+				}
+
+			}
+		);
+
+		_framework.getBundleContext().addBundleListener(
+			new BundleListener() {
+
+				public void bundleChanged(BundleEvent event) {
+					_log.info(event);
+				}
+
+			}
+		);
+
+		_framework.start();
+	}
+
+	public void startRuntime() throws Exception {
+		if (_framework == null) {
+			return;
+		}
+
+		FrameworkStartLevel frameworkStartLevel = _framework.adapt(
+			FrameworkStartLevel.class);
+
+		frameworkStartLevel.setStartLevel(
+			PropsValues.MODULE_FRAMEWORK_RUNTIME_START_LEVEL);
+	}
+
+	public void stopBundle(long bundleId) throws PortalException {
+		_checkPermission();
+
+		Bundle bundle = getBundle(bundleId);
+
+		if (bundle == null) {
+			throw new ModuleFrameworkException("No bundle with ID " + bundleId);
+		}
+
+		try {
+			bundle.stop();
+		}
+		catch (BundleException be) {
+			_log.error(be, be);
+
+			throw new ModuleFrameworkException(be);
+		}
+	}
+
+	public void stopBundle(long bundleId, int options) throws PortalException {
+		_checkPermission();
+
+		Bundle bundle = getBundle(bundleId);
+
+		if (bundle == null) {
+			throw new ModuleFrameworkException("No bundle with ID " + bundleId);
+		}
+
+		try {
+			bundle.stop(options);
+		}
+		catch (BundleException be) {
+			_log.error(be, be);
+
+			throw new ModuleFrameworkException(be);
+		}
+	}
+
+	public void stopFramework() throws Exception {
+		if (_framework == null) {
+			return;
+		}
+
+		_framework.stop();
+	}
+
+	public void stopRuntime() throws Exception {
+		if (_framework == null) {
+			return;
+		}
+
+		FrameworkStartLevel frameworkStartLevel = _framework.adapt(
+			FrameworkStartLevel.class);
+
+		frameworkStartLevel.setStartLevel(
+			PropsValues.MODULE_FRAMEWORK_BEGINNING_START_LEVEL);
+	}
+
+	public void uninstallBundle(long bundleId) throws PortalException {
+		_checkPermission();
+
+		Bundle bundle = getBundle(bundleId);
+
+		if (bundle == null) {
+			throw new ModuleFrameworkException("No bundle with ID " + bundleId);
+		}
+
+		try {
+			bundle.uninstall();
+		}
+		catch (BundleException be) {
+			_log.error(be, be);
+
+			throw new ModuleFrameworkException(be);
+		}
+	}
+
+	public void updateBundle(long bundleId) throws PortalException {
+		_checkPermission();
+
+		Bundle bundle = getBundle(bundleId);
+
+		if (bundle == null) {
+			throw new ModuleFrameworkException("No bundle with ID " + bundleId);
+		}
+
+		try {
+			bundle.update();
+		}
+		catch (BundleException be) {
+			_log.error(be, be);
+
+			throw new ModuleFrameworkException(be);
+		}
+	}
+
+	public void updateBundle(long bundleId, InputStream inputStream)
+		throws PortalException {
+
+		_checkPermission();
+
+		Bundle bundle = getBundle(bundleId);
+
+		if (bundle == null) {
+			throw new ModuleFrameworkException("No bundle with ID " + bundleId);
+		}
+
+		try {
+			bundle.update(inputStream);
+		}
+		catch (BundleException be) {
+			_log.error(be, be);
+
+			throw new ModuleFrameworkException(be);
+		}
+	}
+
+	private Map<String, String> _buildProperties() {
+		Map<String, String> properties = new HashMap<String, String>();
+
+		properties.put(
+			Constants.BUNDLE_DESCRIPTION, ReleaseInfo.getReleaseInfo());
+		properties.put(Constants.BUNDLE_NAME, ReleaseInfo.getName());
+		properties.put(Constants.BUNDLE_VENDOR, ReleaseInfo.getVendor());
+		properties.put(Constants.BUNDLE_VERSION, ReleaseInfo.getVersion());
+		properties.put(
+			Constants.FRAMEWORK_BEGINNING_STARTLEVEL,
+			String.valueOf(PropsValues.MODULE_FRAMEWORK_BEGINNING_START_LEVEL));
+		properties.put(
+			Constants.FRAMEWORK_BUNDLE_PARENT,
+			Constants.FRAMEWORK_BUNDLE_PARENT_APP);
+		properties.put(
+			Constants.FRAMEWORK_STORAGE,
+			PropsValues.MODULE_FRAMEWORK_STATE_DIR);
+
+		Properties extraProperties = PropsUtil.getProperties(
+			"module.framework.properties.", true);
+
+		for (Object key : extraProperties.keySet()) {
+			String propertyKey = (String)key;
+
+			properties.put(
+				propertyKey, (String)extraProperties.get(propertyKey));
+		}
+
+		UniqueList<String> packages = new UniqueList<String>();
+
+		packages.addAll(
+			Arrays.asList(PropsValues.MODULE_FRAMEWORK_SYSTEM_PACKAGES_EXTRA));
+
+		Collections.sort(packages);
+
+		if (_log.isTraceEnabled()) {
+			_log.trace(
+				"The portal's system bundle is exporting the following " +
+					"packages: \n" +
+						StringUtil.merge(packages).replace(",", "\n"));
+		}
+
+		properties.put(
+			Constants.FRAMEWORK_SYSTEMPACKAGES_EXTRA,
+			StringUtil.merge(packages));
+
+		return properties;
+	}
+
+	private void _checkPermission() throws PrincipalException {
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		if ((permissionChecker == null) || !permissionChecker.isOmniadmin()) {
+			throw new PrincipalException();
+		}
+	}
+
+	private Set<Class<?>> _getInterfaces(Object bean) {
+		Set<Class<?>> interfaces = new HashSet<Class<?>>();
+
+		Class<?> beanClass = bean.getClass();
+
+		for (Class<?> interfaceClass : beanClass.getInterfaces()) {
+			interfaces.add(interfaceClass);
+		}
+
+		while ((beanClass = beanClass.getSuperclass()) != null) {
+			for (Class<?> interfaceClass : beanClass.getInterfaces()) {
+				if (!interfaces.contains(interfaceClass)) {
+					interfaces.add(interfaceClass);
+				}
+			}
+		}
+
+		return interfaces;
+	}
+
+	private boolean _hasLazyActivationPolicy(Bundle bundle) {
+		Dictionary<String, String> headers = bundle.getHeaders();
+
+		String fragmentHost = headers.get(Constants.FRAGMENT_HOST);
+
+		if (fragmentHost != null) {
+			return false;
+		}
+
+		String activationPolicy = headers.get(
+			Constants.BUNDLE_ACTIVATIONPOLICY);
+
+		if (activationPolicy != null) {
+			Map<String, Map<String, String>> header = OSGiHeader.parseHeader(
+				activationPolicy);
+
+			if ((header.size() > 0) &&
+				header.containsKey(Constants.ACTIVATION_LAZY)) {
+
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private void _installInitialBundle(
+		String location, List<Bundle> lazyActivationBundles,
+		List<Bundle> startBundles, List<Bundle> refreshBundles) {
+
+		int defaultStartLevel =
+			PropsValues.MODULE_FRAMEWORK_BEGINNING_START_LEVEL;
+		boolean start = false;
+		int startLevel = defaultStartLevel;
+
+		int pos = location.lastIndexOf(StringPool.AT);
+
+		if (pos != -1) {
+			String[] attributes = StringUtil.split(
+				location.substring(pos + 1), StringPool.COLON);
+
+			for (String attribute : attributes) {
+				if (attribute.equals("start")) {
+					start = true;
+				}
+				else {
+					startLevel = GetterUtil.getInteger(attribute);
+				}
+			}
+
+			location = location.substring(0, pos);
+		}
+
+		InputStream inputStream = null;
+
+		try {
+			if (!location.startsWith("file:")) {
+				location = "file:".concat(
+					PropsValues.LIFERAY_LIB_PORTAL_DIR.concat(location));
+			}
+
+			URL initialBundleURL = new URL(location);
+
+			try {
+				inputStream = new BufferedInputStream(
+					initialBundleURL.openStream());
+			}
+			catch (IOException ioe) {
+				_log.error(ioe.getMessage());
+
+				return;
+			}
+
+			Bundle bundle = (Bundle)addBundle(
+				initialBundleURL.toString(), inputStream, false);
+
+			if (bundle == null) {
+				return;
+			}
+
+			if (_hasLazyActivationPolicy(bundle)) {
+				lazyActivationBundles.add(bundle);
+
+				return;
+			}
+
+			if (((bundle.getState() & Bundle.UNINSTALLED) == 0) &&
+				(startLevel > 0)) {
+
+				BundleStartLevel bundleStartLevel = bundle.adapt(
+					BundleStartLevel.class);
+
+				bundleStartLevel.setStartLevel(startLevel);
+			}
+
+			if (start) {
+				startBundles.add(bundle);
+			}
+
+			if ((bundle.getState() & Bundle.INSTALLED) != 0) {
+				refreshBundles.add(bundle);
+			}
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+		finally {
+			if (inputStream != null) {
+				try {
+					inputStream.close();
+				}
+				catch (IOException e) {
+					_log.error(e, e);
+				}
+			}
+		}
+	}
+
+	private void _registerApplicationContext(
+		ApplicationContext applicationContext) {
+
+		BundleContext bundleContext = _framework.getBundleContext();
+
+		for (String beanName : applicationContext.getBeanDefinitionNames()) {
+			Object bean = null;
+
+			try {
+				bean = applicationContext.getBean(beanName);
+			}
+			catch (BeanIsAbstractException biae) {
+
+				// Ignore this case
+
+			}
+			catch (Exception e) {
+				_log.error(e, e);
+			}
+
+			if (bean != null) {
+				_registerService(bundleContext, beanName, bean);
+			}
 		}
 	}
 
@@ -441,232 +748,7 @@ public class ModuleFrameworkImpl implements ModuleFrameworkConstants {
 			properties);
 	}
 
-	private void _setBundleStartLevel(long bundleId, int startLevel)
-		throws PortalException {
-
-		_checkPermission();
-
-		Bundle bundle = _getBundle(bundleId);
-
-		if (bundle == null) {
-			throw new ModuleFrameworkException("No bundle with ID " + bundleId);
-		}
-
-		BundleStartLevel bundleStartLevel = bundle.adapt(
-			BundleStartLevel.class);
-
-		bundleStartLevel.setStartLevel(startLevel);
-	}
-
-	private void _setupLogBridge() throws Exception {
-		BundleContext bundleContext = _framework.getBundleContext();
-
-		_logBridge = new LogBridge();
-
-		_logBridge.start(bundleContext);
-	}
-
-	private void _startBundle(long bundleId) throws PortalException {
-		_checkPermission();
-
-		Bundle bundle = _getBundle(bundleId);
-
-		if (bundle == null) {
-			throw new ModuleFrameworkException("No bundle with ID " + bundleId);
-		}
-
-		try {
-			bundle.start();
-		}
-		catch (BundleException be) {
-			_log.error(be, be);
-
-			throw new ModuleFrameworkException(be);
-		}
-	}
-
-	private void _startBundle(long bundleId, int options)
-		throws PortalException {
-
-		_checkPermission();
-
-		Bundle bundle = _getBundle(bundleId);
-
-		if (bundle == null) {
-			throw new ModuleFrameworkException("No bundle with ID " + bundleId);
-		}
-
-		try {
-			bundle.start(options);
-		}
-		catch (BundleException be) {
-			_log.error(be, be);
-
-			throw new ModuleFrameworkException(be);
-		}
-	}
-
-	private void _startFramework() throws Exception {
-		List<FrameworkFactory> frameworkFactories = ServiceLoader.load(
-			FrameworkFactory.class);
-
-		if (frameworkFactories.isEmpty()) {
-			return;
-		}
-
-		FrameworkFactory frameworkFactory = frameworkFactories.get(0);
-
-		Map<String, String> properties = _buildProperties();
-
-		_framework = frameworkFactory.newFramework(properties);
-
-		_framework.init();
-
-		_setupLogBridge();
-
-		_framework.start();
-	}
-
-	private void _startRuntime() throws Exception {
-		if (_framework == null) {
-			return;
-		}
-
-		FrameworkStartLevel frameworkStartLevel = _framework.adapt(
-			FrameworkStartLevel.class);
-
-		frameworkStartLevel.setStartLevel(
-			PropsValues.MODULE_FRAMEWORK_RUNTIME_START_LEVEL,
-			(FrameworkListener)null);
-	}
-
-	private void _stopBundle(long bundleId) throws PortalException {
-		_checkPermission();
-
-		Bundle bundle = _getBundle(bundleId);
-
-		if (bundle == null) {
-			throw new ModuleFrameworkException("No bundle with ID " + bundleId);
-		}
-
-		try {
-			bundle.stop();
-		}
-		catch (BundleException be) {
-			_log.error(be, be);
-
-			throw new ModuleFrameworkException(be);
-		}
-	}
-
-	private void _stopBundle(long bundleId, int options)
-		throws PortalException {
-
-		_checkPermission();
-
-		Bundle bundle = _getBundle(bundleId);
-
-		if (bundle == null) {
-			throw new ModuleFrameworkException("No bundle with ID " + bundleId);
-		}
-
-		try {
-			bundle.stop(options);
-		}
-		catch (BundleException be) {
-			_log.error(be, be);
-
-			throw new ModuleFrameworkException(be);
-		}
-	}
-
-	private void _stopFramework() throws Exception {
-		if (_framework == null) {
-			return;
-		}
-
-		BundleContext bundleContext = _framework.getBundleContext();
-
-		_logBridge.stop(bundleContext);
-
-		_framework.stop();
-	}
-
-	private void _stopRuntime() throws Exception {
-		if (_framework == null) {
-			return;
-		}
-
-		FrameworkStartLevel frameworkStartLevel = _framework.adapt(
-			FrameworkStartLevel.class);
-
-		frameworkStartLevel.setStartLevel(
-			PropsValues.MODULE_FRAMEWORK_BEGINNING_START_LEVEL,
-			(FrameworkListener)null);
-	}
-
-	private void _uninstallBundle(long bundleId) throws PortalException {
-		_checkPermission();
-
-		Bundle bundle = _getBundle(bundleId);
-
-		if (bundle == null) {
-			throw new ModuleFrameworkException("No bundle with ID " + bundleId);
-		}
-
-		try {
-			bundle.uninstall();
-		}
-		catch (BundleException be) {
-			_log.error(be, be);
-
-			throw new ModuleFrameworkException(be);
-		}
-	}
-
-	private void _updateBundle(long bundleId) throws PortalException {
-		_checkPermission();
-
-		Bundle bundle = _getBundle(bundleId);
-
-		if (bundle == null) {
-			throw new ModuleFrameworkException("No bundle with ID " + bundleId);
-		}
-
-		try {
-			bundle.update();
-		}
-		catch (BundleException be) {
-			_log.error(be, be);
-
-			throw new ModuleFrameworkException(be);
-		}
-	}
-
-	private void _updateBundle(long bundleId, InputStream inputStream)
-		throws PortalException {
-
-		_checkPermission();
-
-		Bundle bundle = _getBundle(bundleId);
-
-		if (bundle == null) {
-			throw new ModuleFrameworkException("No bundle with ID " + bundleId);
-		}
-
-		try {
-			bundle.update(inputStream);
-		}
-		catch (BundleException be) {
-			_log.error(be, be);
-
-			throw new ModuleFrameworkException(be);
-		}
-	}
-
 	private static Log _log = LogFactoryUtil.getLog(ModuleFrameworkImpl.class);
-
-	private static ModuleFrameworkImpl _instance = new ModuleFrameworkImpl();
 
 	private Framework _framework;
 	private LogBridge _logBridge;

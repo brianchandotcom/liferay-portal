@@ -34,10 +34,12 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.xml.XPath;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
 import com.liferay.portlet.dynamicdatamapping.RequiredStructureException;
 import com.liferay.portlet.dynamicdatamapping.StructureDuplicateElementException;
 import com.liferay.portlet.dynamicdatamapping.StructureDuplicateStructureKeyException;
@@ -318,6 +320,51 @@ public class DDMStructureLocalServiceImpl
 		return ddmStructurePersistence.findByG_S(groupId, structureKey);
 	}
 
+	public DDMStructure getStructure(
+			long groupId, String structureKey, boolean includeGlobalStructures)
+		throws PortalException, SystemException {
+
+		structureKey = structureKey.trim().toUpperCase();
+
+		if (groupId == 0) {
+			_log.error(
+				"No group id was passed for " + structureKey + ". Group id is" +
+					"required since 4.2.0. Please update all custom code and " +
+					"data that references structures without a group id.");
+
+			List<DDMStructure> ddmStructures =
+				ddmStructurePersistence.findByStructureKey(structureKey);
+
+			if (!ddmStructures.isEmpty()) {
+				return ddmStructures.get(0);
+			}
+
+			throw new NoSuchStructureException(
+				"No DDMStructure exists with the structure id " + structureKey);
+		}
+
+		DDMStructure structure = ddmStructurePersistence.fetchByG_S(
+			groupId, structureKey);
+
+		if (structure != null) {
+			return structure;
+		}
+
+		if (!includeGlobalStructures) {
+			throw new NoSuchStructureException(
+				"No JournalStructure exists with the structure id " +
+					structureKey);
+		}
+
+		Group group = groupPersistence.findByPrimaryKey(groupId);
+
+		Group companyGroup = groupLocalService.getCompanyGroup(
+			group.getCompanyId());
+
+		return ddmStructurePersistence.findByG_S(
+			companyGroup.getGroupId(), structureKey);
+	}
+
 	public List<DDMStructure> getStructure(
 			long groupId, String name, String description)
 		throws SystemException {
@@ -367,6 +414,29 @@ public class DDMStructureLocalServiceImpl
 		return ddmStructurePersistence.findByGroupId(groupId, start, end);
 	}
 
+	public List<DDMStructure> getStructures(long groupId, long classNameId)
+		throws SystemException {
+
+		return ddmStructurePersistence.findByG_C(groupId, classNameId);
+	}
+
+	public List<DDMStructure> getStructures(
+			long groupId, long classNameId, int start, int end)
+		throws SystemException {
+
+		return ddmStructurePersistence.findByG_C(
+			groupId, classNameId, start, end);
+	}
+
+	public List<DDMStructure> getStructures(
+			long groupId, long classNameId, int start, int end,
+			OrderByComparator orderByComparator)
+		throws SystemException {
+
+		return ddmStructurePersistence.findByG_C(
+			groupId, classNameId, start, end, orderByComparator);
+	}
+
 	public List<DDMStructure> getStructures(long[] groupIds)
 		throws SystemException {
 
@@ -375,6 +445,12 @@ public class DDMStructureLocalServiceImpl
 
 	public int getStructuresCount(long groupId) throws SystemException {
 		return ddmStructurePersistence.countByGroupId(groupId);
+	}
+
+	public int getStructuresCount(long groupId, long classNameId)
+		throws SystemException {
+
+		return ddmStructurePersistence.countByG_C(groupId, classNameId);
 	}
 
 	public List<DDMStructure> search(

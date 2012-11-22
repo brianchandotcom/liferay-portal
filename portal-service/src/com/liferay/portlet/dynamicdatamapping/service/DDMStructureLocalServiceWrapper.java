@@ -416,6 +416,15 @@ public class DDMStructureLocalServiceWrapper implements DDMStructureLocalService
 		return _ddmStructureLocalService.getStructure(groupId, structureKey);
 	}
 
+	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure getStructure(
+		long groupId, java.lang.String structureKey,
+		boolean includeGlobalStructures)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _ddmStructureLocalService.getStructure(groupId, structureKey,
+			includeGlobalStructures);
+	}
+
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getStructure(
 		long groupId, java.lang.String name, java.lang.String description)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -466,6 +475,27 @@ public class DDMStructureLocalServiceWrapper implements DDMStructureLocalService
 	}
 
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getStructures(
+		long groupId, long classNameId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _ddmStructureLocalService.getStructures(groupId, classNameId);
+	}
+
+	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getStructures(
+		long groupId, long classNameId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _ddmStructureLocalService.getStructures(groupId, classNameId,
+			start, end);
+	}
+
+	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getStructures(
+		long groupId, long classNameId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _ddmStructureLocalService.getStructures(groupId, classNameId,
+			start, end, orderByComparator);
+	}
+
+	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getStructures(
 		long[] groupIds)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _ddmStructureLocalService.getStructures(groupIds);
@@ -474,6 +504,11 @@ public class DDMStructureLocalServiceWrapper implements DDMStructureLocalService
 	public int getStructuresCount(long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _ddmStructureLocalService.getStructuresCount(groupId);
+	}
+
+	public int getStructuresCount(long groupId, long classNameId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _ddmStructureLocalService.getStructuresCount(groupId, classNameId);
 	}
 
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> search(

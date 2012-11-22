@@ -94,9 +94,16 @@
 		<finder name="ClassNameId" return-type="Collection">
 			<finder-column name="classNameId" />
 		</finder>
+		<finder name="StructureKey" return-type="Collection">
+			<finder-column name="structureKey" />
+		</finder>
 		<finder name="G_S" return-type="DDMStructure" unique="true">
 			<finder-column name="groupId" />
 			<finder-column name="structureKey" />
+		</finder>
+		<finder name="G_C" return-type="Collection" >
+			<finder-column name="groupId" />
+			<finder-column name="classNameId" />
 		</finder>
 		<finder name="C_C" return-type="Collection">
 			<finder-column name="companyId" />
@@ -111,6 +118,7 @@
 		<!-- References -->
 
 		<reference package-path="com.liferay.portlet.documentlibrary" entity="DLFileEntryType" />
+		<reference package-path="com.liferay.portal" entity="Group" />
 	</entity>
 	<entity name="DDMStructureLink" local-service="true" remote-service="false">
 

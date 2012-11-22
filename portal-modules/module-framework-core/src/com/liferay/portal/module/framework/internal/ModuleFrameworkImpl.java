@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.module.framework;
+package com.liferay.portal.module.framework.internal;
 
 import aQute.libg.header.OSGiHeader;
 
@@ -26,6 +26,9 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UniqueList;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.module.framework.LogBridge;
+import com.liferay.portal.module.framework.ModuleFrameworkConstants;
+import com.liferay.portal.module.framework.ModuleFrameworkException;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -67,7 +70,7 @@ import org.springframework.context.ApplicationContext;
 /**
  * @author Raymond Augé
  */
-public class ModuleFrameworkUtil implements ModuleFrameworkConstants {
+public class ModuleFrameworkImpl implements ModuleFrameworkConstants {
 
 	public static Object addBundle(String location) throws PortalException {
 		return addBundle(location, null);
@@ -147,7 +150,7 @@ public class ModuleFrameworkUtil implements ModuleFrameworkConstants {
 		_instance._updateBundle(bundleId, inputStream);
 	}
 
-	private ModuleFrameworkUtil() {
+	private ModuleFrameworkImpl() {
 	}
 
 	private Object _addBundle(String location, InputStream inputStream)
@@ -661,9 +664,9 @@ public class ModuleFrameworkUtil implements ModuleFrameworkConstants {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(ModuleFrameworkUtil.class);
+	private static Log _log = LogFactoryUtil.getLog(ModuleFrameworkImpl.class);
 
-	private static ModuleFrameworkUtil _instance = new ModuleFrameworkUtil();
+	private static ModuleFrameworkImpl _instance = new ModuleFrameworkImpl();
 
 	private Framework _framework;
 	private LogBridge _logBridge;

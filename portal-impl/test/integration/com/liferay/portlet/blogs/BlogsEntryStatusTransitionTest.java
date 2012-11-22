@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.User;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
@@ -28,6 +29,7 @@ import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.portlet.blogs.social.BlogsActivityKeys;
+import com.liferay.portlet.blogs.util.BlogsTestUtil;
 import com.liferay.portlet.social.model.SocialActivity;
 import com.liferay.portlet.social.service.SocialActivityLocalServiceUtil;
 
@@ -58,7 +60,12 @@ public class BlogsEntryStatusTransitionTest extends BaseBlogsEntryTestCase {
 
 		group = ServiceTestUtil.addGroup();
 
-		blogsEntry = addBlogsEntry(group, false);
+		User user = ServiceTestUtil.addUser(
+			ServiceTestUtil.randomString(), false,
+			new long[] {group.getGroupId()});
+
+		blogsEntry = BlogsTestUtil.addBlogsEntry(
+			group, user.getUserId(), false);
 	}
 
 	@After

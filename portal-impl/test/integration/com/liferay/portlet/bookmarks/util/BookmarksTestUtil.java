@@ -12,28 +12,22 @@
  * details.
  */
 
-package com.liferay.portlet.bookmarks.service;
+package com.liferay.portlet.bookmarks.util;
 
-import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.bookmarks.model.BookmarksEntry;
 import com.liferay.portlet.bookmarks.model.BookmarksFolder;
 import com.liferay.portlet.bookmarks.model.BookmarksFolderConstants;
-
-import org.junit.Before;
+import com.liferay.portlet.bookmarks.service.BookmarksEntryServiceUtil;
+import com.liferay.portlet.bookmarks.service.BookmarksFolderServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class BaseBookmarksServiceTestCase {
+public class BookmarksTestUtil {
 
-	@Before
-	public void setUp() throws Exception {
-		group = ServiceTestUtil.addGroup();
-	}
-
-	protected BookmarksEntry addEntry() throws Exception {
+	public static BookmarksEntry addEntry() throws Exception {
 		BookmarksFolder folder = addFolder();
 
 		String name = "Test Entry";
@@ -50,13 +44,15 @@ public class BaseBookmarksServiceTestCase {
 			serviceContext);
 	}
 
-	protected BookmarksFolder addFolder() throws Exception {
+	public static BookmarksFolder addFolder() throws Exception {
 		long parentFolderId = BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 
 		return addFolder(parentFolderId);
 	}
 
-	protected BookmarksFolder addFolder(long parentFolderId) throws Exception {
+	public static BookmarksFolder addFolder(long parentFolderId)
+		throws Exception {
+
 		String name = "Test Folder";
 		String description = "This is a test folder.";
 
@@ -64,12 +60,10 @@ public class BaseBookmarksServiceTestCase {
 
 		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAddGuestPermissions(true);
-		serviceContext.setScopeGroupId(group.getGroupId());
+		serviceContext.setScopeGroupId(TestPropsValues.getGroupId());
 
 		return BookmarksFolderServiceUtil.addFolder(
 			parentFolderId, name, description, serviceContext);
 	}
-
-	protected Group group;
 
 }

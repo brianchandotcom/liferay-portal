@@ -25,9 +25,7 @@ import com.liferay.portlet.social.util.SocialConfigurationUtil;
 
 import java.util.List;
 
-import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -42,22 +40,6 @@ import org.junit.runner.RunWith;
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class SocialActivitySettingLocalServiceTest
 	extends BaseSocialActivityTestCase {
-
-	@BeforeClass
-	public static void setUp() throws Exception {
-		BaseSocialActivityTestCase.setUp();
-
-		addGroup();
-
-		addUsers();
-
-		addAsset();
-	}
-
-	@AfterClass
-	public static void tearDown() throws Exception {
-		BaseSocialActivityTestCase.tearDown();
-	}
 
 	@Test
 	public void testGetActivityDefinition() throws Exception {

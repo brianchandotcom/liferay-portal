@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Layout;
@@ -41,8 +40,7 @@ import com.liferay.portal.test.TransactionalCallbackAwareExecutionTestListener;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
-
-import java.io.InputStream;
+import com.liferay.portlet.blogs.util.BlogsTestUtil;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -149,8 +147,8 @@ public class GroupServiceTest {
 			ServiceTestUtil.randomString(), false,
 			new long[] {group.getGroupId()});
 
-		BlogsEntry blogsEntry = addBlogsEntry(
-			group.getGroupId(), user.getUserId());
+		BlogsEntry blogsEntry = BlogsTestUtil.addBlogsEntry(
+			group, user.getUserId(), true);
 
 		Assert.assertNotNull(
 			BlogsEntryLocalServiceUtil.fetchBlogsEntry(
@@ -271,40 +269,6 @@ public class GroupServiceTest {
 		testGroup(
 			user, group1, group11, null, false, true, false, true, false, true,
 			true);
-	}
-
-	protected BlogsEntry addBlogsEntry(long groupId, long userId)
-		throws Exception {
-
-		String title = "Title";
-		String description = "Description";
-		String content = "Content";
-		int displayDateMonth = 1;
-		int displayDateDay = 1;
-		int displayDateYear = 2012;
-		int displayDateHour = 12;
-		int displayDateMinute = 0;
-		boolean allowPingbacks = true;
-		boolean allowTrackbacks = true;
-		String[] trackbacks = new String[0];
-		boolean smallImage = false;
-		String smallImageURL = StringPool.BLANK;
-		String smallImageFileName = StringPool.BLANK;
-		InputStream smallImageInputStream = null;
-
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext();
-
-		serviceContext.setScopeGroupId(groupId);
-		serviceContext.setWorkflowAction(WorkflowConstants.STATUS_APPROVED);
-
-		BlogsEntry blogsEntry = BlogsEntryLocalServiceUtil.addEntry(
-			userId, title, description, content, displayDateMonth,
-			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
-			allowPingbacks, allowTrackbacks, trackbacks, smallImage,
-			smallImageURL, smallImageFileName, smallImageInputStream,
-			serviceContext);
-
-		return blogsEntry;
 	}
 
 	protected Group addGroup(

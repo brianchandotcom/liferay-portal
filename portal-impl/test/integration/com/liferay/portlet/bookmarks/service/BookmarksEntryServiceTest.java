@@ -20,6 +20,7 @@ import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.TransactionalCallbackAwareExecutionTestListener;
 import com.liferay.portlet.bookmarks.model.BookmarksEntry;
+import com.liferay.portlet.bookmarks.util.BookmarksTestUtil;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -34,23 +35,23 @@ import org.junit.runner.RunWith;
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 @Transactional
-public class BookmarksEntryServiceTest extends BaseBookmarksServiceTestCase {
+public class BookmarksEntryServiceTest {
 
 	@Test
 	public void testAddEntry() throws Exception {
-		addEntry();
+		BookmarksTestUtil.addEntry();
 	}
 
 	@Test
 	public void testDeleteEntry() throws Exception {
-		BookmarksEntry entry = addEntry();
+		BookmarksEntry entry = BookmarksTestUtil.addEntry();
 
 		BookmarksEntryServiceUtil.deleteEntry(entry.getEntryId());
 	}
 
 	@Test
 	public void testGetEntry() throws Exception {
-		BookmarksEntry entry = addEntry();
+		BookmarksEntry entry = BookmarksTestUtil.addEntry();
 
 		BookmarksEntryServiceUtil.getEntry(entry.getEntryId());
 	}

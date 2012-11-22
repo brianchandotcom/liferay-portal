@@ -38,6 +38,7 @@ import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portal.webdav.methods.Method;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
+import com.liferay.portlet.documentlibrary.util.DLAppTestUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -95,7 +96,9 @@ public class WebServerTrashTest extends BaseWebServerTestCase {
 
 	@Test
 	public void testRequestFileInTrash() throws Exception {
-		FileEntry fileEntry = addFileEntry(false, "Test Trash.txt");
+		FileEntry fileEntry = DLAppTestUtil.addFileEntry(
+			group.getGroupId(), parentFolder.getFolderId(), false,
+			"Test Trash.txt");
 
 		MockHttpServletResponse mockHttpServletResponse =  testRequestFile(
 			fileEntry, _user, false);

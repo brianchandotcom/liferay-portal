@@ -25,6 +25,7 @@ import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portlet.documentlibrary.InvalidFileVersionException;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
+import com.liferay.portlet.documentlibrary.util.DLAppTestUtil;
 
 import java.util.List;
 
@@ -118,19 +119,23 @@ public class DLFileVersionHistoryTest extends BaseDLAppTestCase {
 	protected void deleteVersion(boolean versioned, boolean leaveCheckedOut)
 		throws Exception {
 
-		_fileEntry = addFileEntry(false, _VERSION_1_0);
+		_fileEntry = DLAppTestUtil.addFileEntry(
+			group.getGroupId(), parentFolder.getFolderId(), false,
+			_VERSION_1_0);
 
 		long fileEntryId = _fileEntry.getFileEntryId();
 
 		if (versioned) {
-			updateFileEntry(fileEntryId, null, _VERSION_1_1);
+			DLAppTestUtil.updateFileEntry(
+				group.getGroupId(), fileEntryId, null, _VERSION_1_1);
 		}
 
 		if (leaveCheckedOut) {
 			DLAppServiceUtil.checkOutFileEntry(
 				fileEntryId, new ServiceContext());
 
-			updateFileEntry(fileEntryId, null, _VERSION_PWC);
+			DLAppTestUtil.updateFileEntry(
+				group.getGroupId(), fileEntryId, null, _VERSION_PWC);
 		}
 
 		if (versioned && leaveCheckedOut) {
@@ -212,19 +217,23 @@ public class DLFileVersionHistoryTest extends BaseDLAppTestCase {
 	protected void revertVersion(boolean versioned, boolean leaveCheckedOut)
 		throws Exception {
 
-		_fileEntry = addFileEntry(false, _VERSION_1_0);
+		_fileEntry = DLAppTestUtil.addFileEntry(
+			group.getGroupId(), parentFolder.getFolderId(), false,
+			_VERSION_1_0);
 
 		long fileEntryId = _fileEntry.getFileEntryId();
 
 		if (versioned) {
-			updateFileEntry(fileEntryId, null, _VERSION_1_1);
+			DLAppTestUtil.updateFileEntry(
+				group.getGroupId(), fileEntryId, null, _VERSION_1_1);
 		}
 
 		if (leaveCheckedOut) {
 			DLAppServiceUtil.checkOutFileEntry(
 				fileEntryId, new ServiceContext());
 
-			updateFileEntry(fileEntryId, null, _VERSION_PWC);
+			DLAppTestUtil.updateFileEntry(
+				group.getGroupId(), fileEntryId, null, _VERSION_PWC);
 		}
 
 		if (versioned && leaveCheckedOut) {

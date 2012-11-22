@@ -1175,7 +1175,7 @@
 
 		<action path="/message_boards/restore_entry" forward="portlet.trash.restore_entry" />
 
-		<action path="/message_boards/restore_page_attachment" type="com.liferay.portlet.trash.action.EditEntryAction">
+		<action path="/message_boards/restore_message_attachment" type="com.liferay.portlet.trash.action.EditEntryAction">
 			<forward name="portlet.trash.view" path="portlet.message_boards.view_message" />
 		</action>
 

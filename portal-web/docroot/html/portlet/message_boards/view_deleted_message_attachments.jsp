@@ -117,13 +117,13 @@ iteratorURL.setParameter("messageId", String.valueOf(messageId));
 
 <aui:script use="liferay-restore-entry">
 	<portlet:actionURL var="restoreEntryURL">
-		<portlet:param name="struts_action" value="/message_boards/restore_page_attachment" />
+		<portlet:param name="struts_action" value="/message_boards/restore_message_attachment" />
 		<portlet:param name="redirect" value="<%= redirect %>" />
 	</portlet:actionURL>
 
 	new Liferay.RestoreEntry(
 		{
-			checkEntryURL: '<portlet:actionURL><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.CHECK %>" /><portlet:param name="struts_action" value="/message_boards/restore_page_attachment" /></portlet:actionURL>',
+			checkEntryURL: '<portlet:actionURL><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.CHECK %>" /><portlet:param name="struts_action" value="/message_boards/restore_message_attachment" /></portlet:actionURL>',
 			namespace: '<portlet:namespace />',
 			restoreEntryURL: '<portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="struts_action" value="/message_boards/restore_entry" /><portlet:param name="redirect" value="<%= currentURL %>" /><portlet:param name="restoreEntryURL" value="<%= restoreEntryURL %>" /></portlet:renderURL>'
 		}
